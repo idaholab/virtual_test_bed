@@ -1,3 +1,10 @@
+htgr/pbmr400/oecd_pbmr400_ss0_rsnk_eigen_value_ix_dep/gold/oecd_pbmr400_ss0_rsnk_eigen_value_ix_dep.e filter=lfs diff=lfs merge=lfs -text
+htgr/pbmr400/oecd_pbmr400_ss0_rsnk_eigen_value_ix_dep/gold/oecd_pbmr400_ss1_phtn_flow_path.e filter=lfs diff=lfs merge=lfs -text
+htgr/pbmr400/oecd_pbmr400_tr0_pplofc_rsnk_keff_calc/gold/oecd_pbmr400_tr0_pplofc_rsnk_keff_calc.e filter=lfs diff=lfs merge=lfs -text
+htgr/pbmr400/oecd_pbmr400_tr0_pplofc_rsnk_keff_calc/gold/oecd_pbmr400_tr1_pplofc_phtn_flow_path.e filter=lfs diff=lfs merge=lfs -text
+htgr/pbmr400/_shared/oecd_pbmr400_base_mesh_original.e filter=lfs diff=lfs merge=lfs -text
+htgr/pbmr400/oecd_pbmr400_tr0_pplofc_rsnk_keff_calc/gold/log.out filter=lfs diff=lfs merge=lfs -text
+htgr/pbmr400/_shared/oecd_pbmr400_tabulated_xs.xml filter=lfs diff=lfs merge=lfs -text
 msfr/steady/sample_output/*e[[:space:]]pbfhr/reflector/conduction/conduction.fld[[:space:]]pbfhr/reflector/meshes/solid.e[[:space:]]pbfhr/reflector/meshes/fluid.re2[[:space:]]mrad/mesh/mrad_mesh.e filter=lfs diff=lfs merge=lfs -text
 msfr/steady/sample_output/*e filter=lfs diff=lfs merge=lfs -text
 pbfhr/reflector/conduction/conduction.fld filter=lfs diff=lfs merge=lfs -text
