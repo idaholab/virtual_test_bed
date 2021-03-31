@@ -8,6 +8,9 @@ The VTB MSFR model is based off of the EVOL MSFR design
 
 ## NEAMS model
 
+!media msfr_geometry.svg
+       style=width:80%
+
 !media msfr_mesh.png
        style=width:40%
        caption=The coarse MSFR mesh used for Griffin and Pronghorn calculations. Red indicates the bulk fuel salt. Blue and green represent the pump and heat exchanger regions. Purplande and orange are reflector/shield regions.
