@@ -127,3 +127,54 @@ kernel for the $y$-momentum equation. The additional Boussinesq kernel for this
 equation is,
 
 !listing /msfr/steady/run_ns.i block=FVKernels/v_buoyancy
+
+The steady-state conservation of energy can be expressed as,
+\begin{equation}
+  \nabla \cdot \rho h \vec{u} - \nabla \cdot \lambda \nabla T = Q_q
+\end{equation}
+where $h$ is the fluid specific enthalpy, $\lambda$ is the thermal conductivity,
+$T$ is the temperature, and $Q_q$ is the volumetric heat generation rate.
+
+Here it is expected that the energy released from nuclear reactions will be very
+large compared to pressure work terms. Consequently, we will use the simplified form,
+\begin{equation}
+  \nabla \cdot \rho c_p T \vec{u} - \nabla \cdot \lambda \nabla T = Q_q
+\end{equation}
+
+As with the momentum equations, a practical solver requires a model for the
+turbulent transport of energy,
+\begin{equation}
+  \nabla \cdot \rho c_p T \vec{u} - \nabla \cdot \lambda \nabla T
+  - \nabla \cdot \rho c_p \epsilon_q \nabla T = Q_q
+\end{equation}
+where $\epsilon_q$ is the eddy diffusivity for heat. It is related to the eddy
+diffusivity for momentum (i.e. the kinematic eddy viscosity) as
+$\text{Pr}_t = \nu_t / \epsilon_q$ where $\text{Pr}_t$ is the turbulent
+Prandtl number.
+
+As with the molecular viscosity in the momentum equations, the simple
+turbulence model used here will overwhelm the thermal conductivity. Neglecting
+that term and moving the heat generation to the left-hand-side of the equation
+gives,
+\begin{equation}
+  \nabla \cdot \rho c_p T \vec{u} - \nabla \cdot \rho c_p \epsilon_q \nabla T
+  - Q_q = 0
+\end{equation}
+
+Note that all material properties, including $\rho$ and $c_p$, are assumed
+constant. It will therefore be convenient to move the $\rho c_p$ factors outside
+of the divergence operators and divide the entire equation by that factor,
+\begin{equation}
+  \nabla \cdot T \vec{u} - \nabla \cdot \epsilon_q \nabla T
+  - \frac{1}{\rho c_p} Q_q = 0
+  \label{eq:energy}
+\end{equation}
+
+[eq:energy] is the final equation that is implemented in this model. The first
+term---energy advection---is captured by the kernel,
+
+!listing /msfr/steady/run_ns.i block=FVKernels/heat_advection
+
+The second term---the turbulent diffusion of heat---corresponds to the kernel,
+
+!listing /msfr/steady/run_ns.i block=FVKernels/heat_turb_diffusion
