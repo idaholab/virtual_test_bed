@@ -40,7 +40,7 @@ z_shoulder = 70.0
 r_outer_hx = 233.0
 
 ################################################################################
-# Define the vertecies for the top half of the core region
+# Define the vertices for the top half of the core region
 ################################################################################
 
 cubit.cmd('reset')
