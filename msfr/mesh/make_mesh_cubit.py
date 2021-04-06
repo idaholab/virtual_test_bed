@@ -1,5 +1,8 @@
 import math
 
+# This Cubit script will generate a 2D Exodus mesh for the MSFR intended to be
+# used for axisymmetric simulations.
+
 # Scaling factor applied to the model before export.
 scaling = 0.01  # Conversion from cm to m
 
