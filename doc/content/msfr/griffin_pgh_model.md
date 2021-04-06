@@ -1,27 +1,8 @@
-# Molten Salt Fast Reactor (MSFR)
+# MSFR Griffin-Pronghorn model
 
-## Reactor description
+## Conservation of fluid mass and momentum
 
-The VTB MSFR model is based off of the EVOL MSFR design
-[!citep](brovchenko2019). It is a fast-spectrum, LiF salt reactor that produces
-3 GW of thermal power.
-
-## NEAMS model
-
-!media msfr_geometry.svg
-       style=width:80%
-
-!media msfr_mesh.png
-       style=width:40%
-       caption=The coarse MSFR mesh used for Griffin and Pronghorn calculations. Red indicates the bulk fuel salt. Blue and green represent the pump and heat exchanger regions. Purplande and orange are reflector/shield regions.
-
-!media msfr_steady_T.png
-       style=width:40%
-       caption=Steady-state temperature in the MSFR.
-
-### Fluid conservation equations
-
-The MultiApp system is used to seperate the neutronics and the fluid dynamics
+The MultiApp system is used to separate the neutronics and the fluid dynamics
 problems. The fluid system is solved by the subapp and it uses the `run_ns.i`
 input files. (The phrase "ns" is an abbreviation for Navier-Stokes.)
 
@@ -127,6 +108,8 @@ kernel for the $y$-momentum equation. The additional Boussinesq kernel for this
 equation is,
 
 !listing /msfr/steady/run_ns.i block=FVKernels/v_buoyancy
+
+## Conservation of fluid energy
 
 The steady-state conservation of energy can be expressed as,
 \begin{equation}

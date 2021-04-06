@@ -526,22 +526,6 @@ beta6 = 0.000184087
   []
 []
 
-# Uncommenting this block (and changing the end_time in the Executioner to a
-# large value like 20) will enable PID tuning of the pump head in order to get
-# a 100 C DeltaT across the heat exchanger.
-#[Controls]
-#  [pump_adjuster]
-#    type = PIDControl
-#    pp = dT
-#    target = 100
-#    Kdi = -500.0
-#    Ki = 0
-#    Kde = 0
-#    parameter = "FVKernels/pump/value"
-#    start_time = 5
-#  []
-#[]
-
 [Materials]
   [mu]
     type = ADGenericFunctionMaterial
