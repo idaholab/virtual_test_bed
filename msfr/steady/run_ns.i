@@ -52,7 +52,6 @@ beta6 = 0.000184087
 
 [Problem]
   kernel_coverage_check = false
-  fv_bcs_integrity_check = true
   coord_type = 'RZ'
 []
 
@@ -226,6 +225,12 @@ beta6 = 0.000184087
     rho = ${rho}
     ref_temperature = 700
     momentum_component = 'y'
+    block = 'fuel pump hx'
+  []
+  [v_gravity]
+    type = FVBodyForce
+    variable = v_y
+    value = ${fparse -9.81 * rho}
     block = 'fuel pump hx'
   []
 
@@ -565,7 +570,6 @@ beta6 = 0.000184087
   type = Transient
   start_time = 0.0
   end_time = 4
-  #end_time = 30
   dt = 1.0
   solve_type = 'PJFNK'
   petsc_options_iname = '-pc_type -ksp_gmres_reset'
