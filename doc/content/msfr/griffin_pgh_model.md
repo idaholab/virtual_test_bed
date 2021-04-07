@@ -13,6 +13,7 @@ The conservation of mass is,
 \begin{equation}
   \nabla \cdot \rho \vec{u} = 0
 \end{equation}
+where $\rho$ is the fluid density and $\vec{u}$ is the velocity vector.
 
 Here the system will be simplified by modeling the flow as incompressible.  (The
 effect of Buoyancy will be re-introduced later with the Boussinesq
@@ -41,6 +42,9 @@ fairly general form of the steady-state condition is,
   + \nabla \cdot \underline{\tau} \cdot \hat{x}
   + \rho \vec{g} \cdot \hat{x}
 \end{equation}
+where $u$ is the $x$ component of the velocity, $P$ is the pressure,
+$\underline{\tau}$ is the viscous stress tensor, and $\vec{g}$ is the gravity
+vector.
 
 In this model, gravity will point in the negative $y$-direction so the quantity
 $\vec{g} \cdot \hat{x}$ is zero,
@@ -59,6 +63,7 @@ modeled with a term analogous to viscous shear,
   + \nabla \cdot \underline{\tau} \cdot \hat{x}
   + \nu_t \nabla^2 u
 \end{equation}
+where $nu_t$ is the eddy viscosity.
 
 Here, an extremely simple turbulence model will be used for the purposes of this
 demonstration. A large, uniform, fixed value of the eddy viscosity will be
@@ -102,6 +107,8 @@ the fluid density is uniform and constant,
   \nabla \cdot \rho \vec{u} v + \frac{\partial}{\partial y} P
   - \nu_t \nabla^2 v - \rho \alpha \vec{g} \left( T - T_0 \right) = 0
 \end{equation}
+where $alpha$ is the expansion coefficient, $T$ is the fluid temperature, and
+$T_0$ is a reference temperature value.
 
 For each kernel describing the $x$-momentum equation, there is a corresponding
 kernel for the $y$-momentum equation. The additional Boussinesq kernel for this
@@ -116,7 +123,7 @@ The steady-state conservation of energy can be expressed as,
   \nabla \cdot \rho h \vec{u} - \nabla \cdot \lambda \nabla T = Q_q
 \end{equation}
 where $h$ is the fluid specific enthalpy, $\lambda$ is the thermal conductivity,
-$T$ is the temperature, and $Q_q$ is the volumetric heat generation rate.
+and $Q_q$ is the volumetric heat generation rate.
 
 Here it is expected that the energy released from nuclear reactions will be very
 large compared to pressure work terms. Consequently, we will use the simplified form,
