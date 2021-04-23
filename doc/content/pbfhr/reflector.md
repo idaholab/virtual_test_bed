@@ -88,10 +88,20 @@ MOOSE applications, the agnostic formulations of the [MultiApps](https://moosefr
 used to equally extract heat flux from Pronghorn, BISON, the MOOSE heat conduction
 module, and so on.
 
-Cardinal includes capabilities for:
-
-- Conjugate heat transfer boundary coupling to MOOSE
-- Volumetric temperature, density, and heat source coupling to MOOSE and OpenMC
+!alert tip title=Why Use Cardinal?
+Cardinal allows nekRS and OpenMC to couple seamlessly with the MOOSE framework,
+enabling in-memory coupling, distributed parallel meshes for very large-scale
+applications, and fairly straightforward multiphysics problem setup. Cardinal has
+capabilities for conjugate heat transfer coupling of nekRS and MOOSE, concurrent
+conjugate heat transfer and volumetric heat source coupling of nekRS and MOOSE,
+and volumetric density, temperature, and heat source coupling of OpenMC to MOOSE.
+Together, the OpenMC and nekRS wrappings augment the finite element MOOSE framework
+by expanding the framework to include high-resolution spectral element [!ac](CFD) and Monte Carlo
+particle transport. For conjugate heat transfer applications in particular,
+the libMesh-based interpolations of fields between meshes enables fluid-solid
+heat transfer simulations on meshes that are not necessarily continuous on phase
+interfaces, allowing mesh resolution to be specified based on the underlying physics,
+rather than rigid continuity restrictions in single-application heat transfer codes.
 
 The remainder of this example will only describe the conjugate heat transfer aspects
 of Cardinal via an application to the [!ac](PB-FHR) outer reflector with heat flux
@@ -185,6 +195,7 @@ boundary conditions, the MOOSE heat conduction module will
 solve the steady state energy conservation equation for a solid,
 
 \begin{equation}
+\label{eq:hf}
 -\nabla\cdot(k_s\nabla T_s)=\dot{q}
 \end{equation}
 
@@ -232,22 +243,27 @@ But to summarize, non-dimensional formulations for velocity, pressure, temperatu
 and time are defined as
 
 \begin{equation}
+\label{eq:u_ref}
 u_i^\dagger=\frac{u_i}{U_{ref}}
 \end{equation}
 
 \begin{equation}
+\label{eq:p_ref}
 P^\dagger=\frac{P}{\rho_0U_{ref}^2}
 \end{equation}
 
 \begin{equation}
+\label{eq:T_ref}
 T^\dagger=\frac{T-T_{ref}}{\Delta T}
 \end{equation}
 
 \begin{equation}
+\label{eq:x_ref}
 x_i^\dagger=\frac{x_i}{L_{ref}}
 \end{equation}
 
 \begin{equation}
+\label{eq:t_ref}
 t^\dagger=\frac{t}{L_{ref}/U_{ref}}
 \end{equation}
 
@@ -275,13 +291,14 @@ New terms in these non-dimensional equations are $Re$ and $Pe$, the Reynolds and
 respectively:
 
 \begin{equation}
+\label{eq:Re}
 Re\equiv\frac{\rho_0 UL}{\mu_0}
 \end{equation}
 
 \begin{equation}
+\label{eq:Pe}
 Pe\equiv\frac{LU}{\alpha}
 \end{equation}
-
 
 So, nekRS solves for $\mathbf u^\dagger$, $P^\dagger$, and $T^\dagger$; Cardinal will handle
 conversions from a non-dimensional solution to a dimensional MOOSE heat conduction application,
@@ -292,7 +309,20 @@ In this model, the reference length scale is selected as the block gap width, or
 to obtain a mesh with a gap width of unity (in non-dimensional units), the entire nekRS mesh must
 be multiplied by $1/0.006$. The characteristic velocity is selected to obtain a Reynolds number of 100,
 which corresponds to $U_{ref}=0.0575$ based on the values for density and viscosity for FLiBe
-evaluated at 650&deg;C. Finally, $T_{ref}$ is taken equal to the inlet temperature of 923.15 K; the
+evaluated at 650&deg;C. A Reynolds number of 100 corresponds to a bypass fraction of about 7%, considering
+that $Re$ can be written equivalent to [eq:Re] as
+
+\begin{equation}
+\label{eq:Re2}
+Re\equiv\frac{\dot{m}L}{A\mu}
+\end{equation}
+
+where $\dot{m}$ is the mass flowrate (a fraction of the total core mass flowrate, distributed
+among 48 half-reflector blocks) and $A$ is the inlet area. Further parametric studies for other
+bypass fractions can be performed by varying the fluid Reynolds and Peclet numbers in the input
+files described in [#fluid_model].
+
+Finally, $T_{ref}$ is taken equal to the inlet temperature of 923.15 K; the
 $\Delta T$ parameter is arbitrary, and does not necessarily need to equal any expected temperature rise
 in the fluid. So for this example, $\Delta T$ is simply taken equal to 10 K.
 
@@ -327,6 +357,7 @@ the heat flux comes from a Pronghorn postprocessor. TODO On the surface of the b
 convection boundary condition is imposed,
 
 \begin{equation}
+\label{eq:hfc}
 q^{''}=h\left(T_s-T_\infty\right)
 \end{equation}
 
@@ -340,10 +371,11 @@ paired with the nearest quadrature point on boundary B. Then, a radiation heat f
 between pairs of quadrature points as
 
 \begin{equation}
+\label{eq:hfr}
 q^{''}=\sigma\frac{\left(T^4-T_{gap}^4\right)}{\frac{1}{\varepsilon_A}+\frac{1}{\varepsilon_B}-1}
 \end{equation}
 
-where $q^{''}$ is the heat flux, $\sigma$ is the Stefan-Boltzmann constant, $T$ is the temperature
+where $\sigma$ is the Stefan-Boltzmann constant, $T$ is the temperature
 at a quadrature point, $T_{gap}$ is the temperature of the nearest quadrature point across the
 gap, and $\varepsilon_A$ and $\varepsilon_B$ are the emissivities of boundary A and B, respectively.
 
@@ -491,6 +523,19 @@ sequentially beginning from 1.
 !media fluid_mesh.png
   id=fluid_mesh
   caption=Fluid mesh for the FLiBe flowing around the reflector blocks, along with boundary names and IDs. It is difficult to see, but the `porous_inner_surface` boundary corresponds to the thin surface at the interface between the reflector region and the pebble bed.
+
+As mentioned previously, a strength of Cardinal for conjugate heat transfer applications
+is that the fluid and solid meshes do not need to share nodes on a common surface; libMesh
+mesh-to-mesh data interpolations apply to surfaces of very different refinement and position in
+space; meshes may even overlap, such as for curvilinear applications. [zoom_mesh] shows
+a zoom-in of the two mesh files (for the fluid and solid phases); rather than being limited
+with a continuous mesh mapping from the fluid phase inwards to the solid phase, a mesh refinement
+level particular to each phase is used.
+
+!media zoom_mesh.png
+  id=zoom_mesh
+  caption=Zoomed-in view of the fluid and solid meshes, overlaid in Paraview. Lines are element boundaries.
+  style=width:50%;margin-left:auto;margin-right:auto
 
 Creating the fluid mesh is significantly more involved than creating the solid mesh.
 First, a series of boolean operations is performed to obtain an un-meshed volume
@@ -667,13 +712,14 @@ Next, the solution methodology is specified. Although the solid phase only
 includes time-independent kernels, the heat conduction is run as a transient because nekRS
 ultimately must be run as a transient (nekRS lacks a steady solver). A nonlinear tolerance
 of $10^{-8}$ is used for each solid time step, and the overall coupled simulation is considered
-converged once the relative change in the solution between time steps is less than $10^{-5}$.
+converged once the relative change in the solution between time steps is less than $10^{-3}$.
 Finally, an output format of Exodus II is specified.
 
 !listing /pbfhr/reflector/conduction/solid.i
   start=Executioner
 
 ### Fluid Input Files
+  id=fluid_model
 
 The fluid phase is solved with Cardinal, which under-the-hood performs the solution with nekRS.
 The mesh is generated with Cubit, as described in [#fluid_mesh]. The wrapping of nekRS as a MOOSE
@@ -782,6 +828,7 @@ temperature passive scalar equation. $\rho_fC_{p,f}$ is set to unity because the
 solve is conducted in non-dimensional form, such that
 
 \begin{equation}
+\label{eq:nek1}
 \rho^\dagger C_{p,f}^\dagger\equiv\frac{\rho_fC_{p,f}}{\rho_0C_{p,0}}=1
 \end{equation}
 
@@ -831,13 +878,36 @@ conditions are applied. The `.udf` file is shown below.
 
 !listing /pbfhr/reflector/conduction/fluid.udf
 
-In `UDF_Setup`, the initial condition is applied "manually" by looping over all
+In `UDF_Setup`, the initial condition is applied manually by looping over all
 the [!ac](GLL) points and setting zero to each (recall that this is a non-dimensional
 simulation, such that $T^\dagger=0$ corresponds to a dimensional temperature of $T_{ref}$).
 Here, `nrs->cds->S` is the array holding the nekRS passive scalar solutions (of which
 there is only one for this example).
 
 ### Execution and Postprocessing
+
+To run the pseudo-steady conduction model, run the following from a command line or
+through a job submission script on a [!ac](HPC) system.
+
+```
+$ mpiexec -np 48 cardinal-opt -i solid.i --nekrs-setup fluid
+```
+
+where `mpiexec` is an [!ac](MPI) compiler wrapper, `-np 48` indicates that the input
+should be run with 48 processes, `-i solid.i` specifies the input file to run in Cardinal,
+and `--nekrs-setup fluid` indicates the base name for the nekRS input files,
+`fluid.re2`, `fluid.par`, `fluid.oudf`, and `fluid.udf`. Both MOOSE and nekRS will be run
+with 48 processes.
+
+When the simulation has completed, you will have created a number of different output files:
+
+- `fluid0.f<n>`, where `<n>` is a five-digit number indicating the output file number
+  created by nekRS (a separate output file is written for each time step written to file
+  according to the settings in the `.par` file). An extra program is required to visualize
+  nekRS output files in Paraview; see the instructions [here](https://nekrsdoc.readthedocs.io/en/latest/detailed_usage.html#visualizing-output-files).
+- `solid_out.e`, an Exodus II output file with the solid mesh and solution.
+- `solid_out_nek0.e`, an Exodus II output file with the fluid mirror mesh
+  and data that was ultimately transferred in/out of nekRS.
 
 ## Part 2: Conjugate Heat Transfer Coupling
   id=part2
