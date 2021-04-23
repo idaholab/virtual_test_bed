@@ -22,3 +22,7 @@ Extensions:
         remove: !include ${MOOSE_DIR}/framework/doc/remove.yml
         includes:
             - include
+    MooseDocs.extensions.acronym:
+        acronyms:
+            moose: !include ${MOOSE_DIR}/framework/doc/acronyms.yml
+            vtb: !include ${ROOT_DIR}/doc/acronyms.yml
