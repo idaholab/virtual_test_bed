@@ -6,6 +6,7 @@ ECP: Exascale Computing Project
 GLL: Gauss-Lobatto-Legendre
 GPU: Graphics Processing Unit
 HPC: High-Performance Computing
+MPI: Message Passing Interface
 NEAMS: Nuclear Energy Advanced Modeling and Simulation
 OCCA: Open Concurrent Compute Abstraction
 PB-FHR: Pebble Bed Fluoride-Salt-Cooled High-Temperature Reactor
