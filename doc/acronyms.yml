@@ -1,5 +1,6 @@
 API: Application Programming Interface
 CFD: Computational Fluid Dynamics
+CFL: Courant-Friedrichs-Lewy
 CPU: Central Processing Unit
 ECP: Exascale Computing Project
 GPU: Graphics Processing Unit
@@ -7,3 +8,4 @@ HPC: High-Performance Computing
 NEAMS: Nuclear Energy Advanced Modeling and Simulation
 OCCA: Open Concurrent Compute Abstraction
 PB-FHR: Pebble Bed Fluoride-Salt-Cooled High-Temperature Reactor
+THTR: Thorium High Temperature Reactor
