@@ -253,4 +253,4 @@ cubit.cmd('sideset 8 surface 1')
 cubit.cmd('sideset 8 name "porous_inner_surface"')
 
 cubit.cmd('set large exodus file on')
-cubit.cmd('export Genesis "' + directory + "pbfhr/reflector/meshes" + 'fluid.exo" dimension 3 overwrite')
+cubit.cmd('export Genesis "' + directory + "pbfhr/reflector/meshes/" + 'fluid.exo" dimension 3 overwrite')
