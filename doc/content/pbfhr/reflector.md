@@ -255,14 +255,17 @@ where a $\dagger$ superscript indicates a non-dimensional quantity. Inserting th
 [eq:mass], [eq:momentum], and [eq:energy] gives
 
 \begin{equation}
+\label{eq:mass_nondim}
 \frac{\partial u_i^\dagger}{\partial x_i^\dagger}=0
 \end{equation}
 
 \begin{equation}
+\label{eq:momentum_nondim}
 \rho^\dagger\left(\frac{\partial u_i^\dagger}{\partial t^\dagger}+u_j^\dagger\frac{\partial u_i^\dagger}{\partial x_j^\dagger}\right)=-\frac{\partial P^\dagger}{\partial x_i^\dagger}+\frac{1}{Re}\frac{\partial \tau_{ij}^\dagger}{\partial x_j^\dagger}+\rho^\dagger f_i^\dagger
 \end{equation}
 
 \begin{equation}
+\label{eq:energy_nondim}
 \rho^\dagger C_p^\dagger\left(\frac{\partial T^\dagger}{\partial t^\dagger}+u_i^\dagger\frac{\partial T^\dagger}{\partial x_i^\dagger}\right)=\frac{1}{Pe}\frac{\partial}{\partial x_i^\dagger}\left(k^\dagger\frac{\partial T^\dagger}{\partial x_i^\dagger}\right)+\dot{q}^\dagger
 \end{equation}
 
@@ -720,7 +723,7 @@ Finally, several postprocessors are included; the `flux_integral` postprocessor 
 receives the value of the heat flux integral from MOOSE for internal normalization in nekRS.
 The other three postprocessors are all Cardinal-specific postprocessors that perform
 integrals and global min/max calculations over the nekRS domain. Here, the `boundary_flux`
-postprocessor computes `-k\nabla T\cdot\hat{n}` over a boundary in the nekRS mesh. This
+postprocessor computes $-k\nabla T\cdot\hat{n}$ over a boundary in the nekRS mesh. This
 value should approximately match the imposed heat flux, `flux_integral`, though perfect
 agreement is not to be expected since flux boundary conditions are only weakly imposed
 in the spectral element method. The `max_nek_T` and `min_nek_T` then compute the maximum
@@ -729,8 +732,110 @@ heat transfer coupling surfaces).
 
 !listing /pbfhr/reflector/conduction/nek.i
   start=Postprocessors
- 
 
+!alert note
+Note that `fluid.re2` does not appear anywhere in `nek.i` - the `fluid.re2` file is
+a mesh used directly by nekRS, while `NekRSMesh` is a mirror of the boundaries in `fluid.re2`
+through which boundary coupling with MOOSE will be performed.
+
+You will likely notice that many of the almost-always-included MOOSE blocks are absent
+from the `nek.i` input file - for instance, there are no nonlinear or auxiliary variables.
+The `NekRSProblem` assists in input file setup by declaring many of these coupling fields
+automatically. For this example, two auxiliary variables named `temp` and `avg_flux` are
+added automatically; these variables receive incoming and outgoing transfers to/from nekRS.
+
+The `nek.i` input file only describes how nekRS is wrapped within the MOOSE framework;
+in addition to the `fluid.re2` mesh file, each nekRS simulation requires at least three
+additional files, that share the same case name `fluid` but with different extensions.
+The additional nekRS files are:
+
+- `fluid.par`: High-level settings for the solver, boundary
+  condition mappings to sidesets, and the equations to solve.
+- `fluid.udf`: User-defined C++ functions for on-line postprocessing and model setup
+- `fluid.oudf`: User-defined [!ac](OCCA) kernels for boundary conditions and
+  source terms
+
+A detailed description of all of the available parameters, settings, and use cases
+for these input files is available on the
+[nekRS documentation website](https://nekrsdoc.readthedocs.io/en/latest/input_files.html).
+Because the purpose of this analysis is to demonstrate Cardinal's capabilties, only
+the aspects of nekRS required to understand the present case will be covered. First,
+begin with the `.par` file, shown in entirety below.
+
+!listing /pbfhr/reflector/conduction/fluid.par
+
+The input consists of blocks and parameters. The `[GENERAL]` block describes the
+time stepping, simulation end control, and the polynomial order. Here, a time step
+of 0.01 seconds is used; a nekRS output file is written every 100 time steps.
+Because nekRS is run as a sub-application to MOOSE, the `stopAt` and `numSteps`
+fields are actually ignored, so that the steady state tolerance in the MOOSE master
+application dictates when a simulation terminates. Because the purpose of this
+simulation is only to obtain a reasonable initial condition, a low polynomial order
+of 2 is used.
+
+Next, the `[VELOCITY]` and `[PRESSURE]` blocks describe the solution of the
+pressure Poisson equation and velocity Helmholtz equations. In the velocity block,
+setting `solver = none` turns off the velocity solution; therefore, none of the
+parameters specified here are of consequence, so their description will be deferred
+to [#part2]. Finally, the `[TEMPERATURE]` block describes the solution of the
+temperature passive scalar equation. $\rho_fC_{p,f}$ is set to unity because the
+solve is conducted in non-dimensional form, such that
+
+\begin{equation}
+\rho^\dagger C_{p,f}^\dagger\equiv\frac{\rho_fC_{p,f}}{\rho_0C_{p,0}}=1
+\end{equation}
+
+The coefficient on the diffusive equation term, as shown in [eq:energy_nondim],
+is equal to $1/Pe$. In nekRS, specifying `conductivity = -1500.5` is equivalent
+to specifying `conductivity = 0.00066644` (i.e. $1/1500.5$), or a Peclet number of
+1500.5.
+
+Next, `residualTol` specifies the solver tolerance for the temperature equation
+to $10^{-8}$. Finally, the `boundaryTypeMap` is used to specify the mapping of
+boundary IDs to types of boundary conditions. nekRS uses short character strings
+to represent the type of boundary condition; boundary conditions used in this example
+include:
+
+- `W`: no-slip wall
+- `symy`: symmetry in the $y$-direction
+- `v`: user-defined velocity
+- `o`: zero-gradient outlet
+- `f`: user-defined flux
+- `I`: insulated
+- `t`: user-defined temperature
+
+Therefore, in reference to [fluid_mesh], boundaries 1, 2, and 7 are flux boundaries
+(these boundaries will receive a heat flux from MOOSE), boundaries 3, 4, and 8 are
+insulated, boundary 5 is a specified temperature, and boundary 6 is a zero-gradient
+outlet. The actual assignment of numeric values to these boundary conditions is then
+performed in the `.oudf` file. The `.oudf` file contains [!ac](OCCA) kernels that
+will be run on a [!ac](GPU) (if present). Because this case does not have any user-defined
+source terms in nekRS, these [!ac](OCCA) kernels are only used to apply boundary conditions.
+The `.oudf` file is shown below.
+
+!listing /pbfhr/reflector/conduction/fluid.oudf
+
+The names of these functions correspond to the boundary conditions that were applied
+in the `.par` file - only the user-defined temperature and flux boundaries require user
+input in the `.oudf` file. For each function, the `bcData * bc` object contains all information
+about the current boundary that is "calling" the function; `bc->id` is the boundary ID,
+`bc->s` is the scalar (temperature) solution at the present [!ac](GLL) point, and
+`bc->flux` is the flux (of temperature) at the present [!ac](GLL) point. The
+`bc->wrk` array is a scratch space to which the heat flux values coming from MOOSE are
+written. These OCCA functions then get called directly within nekRS.
+
+Finally, the `.udf` file contains C++ functions that are user-defined functions through
+which interaction with the nekRS solution are performed. Here, the `UDF_Setup` function
+is called once at the very start of the nekRS simulation, and it is here that initial
+conditions are applied. The `.udf` file is shown below.
+
+!listing /pbfhr/reflector/conduction/fluid.udf
+
+In `UDF_Setup`, the initial condition is applied "manually" by looping over all
+the [!ac](GLL) points and setting zero to each (recall that this is a non-dimensional
+simulation, such that $T^\dagger=0$ corresponds to a dimensional temperature of $T_{ref}$).
+Here, `nrs->cds->S` is the array holding the nekRS passive scalar solutions (of which
+there is only one for this example).
 
 ### Execution and Postprocessing
 
