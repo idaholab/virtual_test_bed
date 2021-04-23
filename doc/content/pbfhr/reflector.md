@@ -650,13 +650,89 @@ However, proper conservation of a field within nekRS (which uses a completely di
 spatial discretization from MOOSE) requires performing such conservations in nekRS itself.
 Hence, an integral postprocessor must explicitly be passed in this case.
 
-The `Postprocessors` block is used to compute the integral heat flux as a
+Next, postprocessors are used to compute the integral heat flux as a
 [SideIntegralVariablePostprocessor](https://mooseframework.inl.gov/source/postprocessors/SideIntegralVariablePostprocessor.html).
 For diagnostic purposes, two other postprocessors are applied to compute the
 heat flux on the barrel surface and the interface with the pebble bed with
 the [SideFluxIntegral](https://mooseframework.inl.gov/source/postprocessors/SideFluxIntegral.html).
 
+!listing /pbfhr/reflector/conduction/solid.i
+  start=Postprocessors
+  end=Executioner
+
+Next, the solution methodology is specified. Although the solid phase only
+includes time-independent kernels, the heat conduction is run as a transient because nekRS
+ultimately must be run as a transient (nekRS lacks a steady solver). A nonlinear tolerance
+of $10^{-8}$ is used for each solid time step, and the overall coupled simulation is considered
+converged once the relative change in the solution between time steps is less than $10^{-5}$.
+Finally, an output format of Exodus II is specified.
+
+!listing /pbfhr/reflector/conduction/solid.i
+  start=Executioner
+
 ### Fluid Input Files
+
+The fluid phase is solved with Cardinal, which under-the-hood performs the solution with nekRS.
+The mesh is generated with Cubit, as described in [#fluid_mesh]. The wrapping of nekRS as a MOOSE
+application is specified in the `nek.i` file; this file will now be described from beginning to end.
+Compared to the solid input file, the fluid input file is quite minimal, as the specification
+of the nekRS problem setup is performed using the nekRS input files that would be required to
+run nekRS as a standalone application.
+
+First, a local variable, `fluid_solid_interface`, is used to define all the boundary IDs through which nekRS is coupled
+via conjugate heat transfer to MOOSE. Next, a `NekRSMesh`, a class specific to Cardinal, is
+used to construct a "mirror" of the surfaces in the nekRS mesh through which boundaruy condition
+coupling is performed. In order for MOOSE's [MultiAppNearestNodeTransfer](https://mooseframework.inl.gov/source/transfers/MultiAppNearestNodeTransfer.html)
+to match nodes in the solid mesh to nodes in this fluid mesh mirror, the entire mesh must be
+scaled by a factor of $L_{ref}$ to return to dimensional units.
+
+!listing /pbfhr/reflector/conduction/nek.i
+  end=Problem
+
+Next, `Problem` block describes all objects necessary for the actual physics solve; for
+the solid input file, the default of [FEProblem](https://mooseframework.inl.gov/source/problems/FEProblem.html)
+was implicitly assumed.  However, to replace MOOSE finite element calculations with nekRS
+spectral element calculations, a Cardinal-specific `NekRSProblem` class is used. Like all
+MOOSE-wrapped apps, the problem class that wraps nekRS derives from
+[ExternalProblem](https://mooseframework.inl.gov/source/problems/ExternalProblem.html).
+To allow conversion between a non-dimensional nekRS solve and a dimensional MOOSE coupled
+heat conduction application, the characteristic scales used to establish the non-dimensional
+problem are provided.
+
+!listing /pbfhr/reflector/conduction/nek.i
+  start=Problem
+  end=Executioner
+
+Next, a [Transient](https://mooseframework.inl.gov/source/executioners/Transient.html) executioner
+is specified. This is the same executioner used for the solid case, except now a
+Cardinal-specific time stepper, `NekTimeStepper` is provided. This time stepper simply
+reads the time step specified in nekRS's `.par` file (to be described shortly),
+and converts it to dimensional form if needed. An Exodus II output format is specified.
+It is important to note that this output file only outputs the temperature and heat
+flux solutions on the surface mirror mesh; the solution over the entire nekRS domain is output
+with the usual `.fld` field file format used by standalone nekRS calculations.
+
+!listing /pbfhr/reflector/conduction/nek.i
+  start=Executioner
+  end=Postprocessors
+
+Finally, several postprocessors are included; the `flux_integral` postprocessor simply
+receives the value of the heat flux integral from MOOSE for internal normalization in nekRS.
+The other three postprocessors are all Cardinal-specific postprocessors that perform
+integrals and global min/max calculations over the nekRS domain. Here, the `boundary_flux`
+postprocessor computes `-k\nabla T\cdot\hat{n}` over a boundary in the nekRS mesh. This
+value should approximately match the imposed heat flux, `flux_integral`, though perfect
+agreement is not to be expected since flux boundary conditions are only weakly imposed
+in the spectral element method. The `max_nek_T` and `min_nek_T` then compute the maximum
+and minimum temperatures throughout the entire nekRS domain (i.e. not only on the conjugate
+heat transfer coupling surfaces).
+
+!listing /pbfhr/reflector/conduction/nek.i
+  start=Postprocessors
+ 
+
+
+### Execution and Postprocessing
 
 ## Part 2: Conjugate Heat Transfer Coupling
   id=part2

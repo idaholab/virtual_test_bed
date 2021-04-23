@@ -3,6 +3,7 @@ CFD: Computational Fluid Dynamics
 CFL: Courant-Friedrichs-Lewy
 CPU: Central Processing Unit
 ECP: Exascale Computing Project
+GLL: Gauss-Lobatto-Legendre
 GPU: Graphics Processing Unit
 HPC: High-Performance Computing
 NEAMS: Nuclear Energy Advanced Modeling and Simulation
