@@ -85,6 +85,7 @@ of Cardinal via an application to the [!ac](PB-FHR) outer reflector with heat fl
 coupling to the MOOSE heat conduction module.
 
 ## Geometry and Computational Model
+  id=model
 
 This section describes the [!ac](PB-FHR) reflector geometry and the simplifications
 made in constructing a computational model of this system.
@@ -140,11 +141,11 @@ outlet compose any remaining height not evenly divisible by 0.52 m).
 
 In both the pebble bed region and through the small gaps between the reflector
 blocks and between the reflector blocks and the barrel, FLiBe coolant flows. This bypass
-flow path is shown as yellow dashed lines in [top-down]; in these gaps, coolant
+flow path is shown as yellow dashed lines in [top_down]; in these gaps, coolant
 flows both from the pebble bed and outward in the radial direction, as well as vertically
 from lower reflector rings.
 Each ring of blocks is separated from the rings above and below it by very thin horizontal
-gaps that form as the graphite thermally expands (not shown in [top-down]; these flow paths also
+gaps that form as the graphite thermally expands (not shown in [top_down]; these flow paths also
 contribute to bypass flows, allowing a second radial flow path from the pebble
 bed towards the barrel. For simplicity, this second radial flow path is neglected here.
 
@@ -181,14 +182,17 @@ in lieu of the transient equation will accelerate the approach to the coupled ps
 nekRS solves the incompressible Navier-Stokes equations,
 
 \begin{equation}
+\label{eq:mass}
 \nabla\cdot\mathbf u=0
 \end{equation}
 
 \begin{equation}
+\label{eq:momentum}
 \rho_f\left(\frac{\partial\mathbf u}{\partial t}+\mathbf u\cdot\nabla\mathbf u\right)=-\nabla P=\nabla\cdot\tau+\rho\ \mathbf f
 \end{equation}
 
 \begin{equation}
+\label{eq:energy}
 \rho_f C_{p,f}\left(\frac{\partial T_f}{\partial t}+\mathbf u\cdot\nabla T_f\right)=\nabla\cdot\left(k_f\nabla T_f\right)+\dot{q}_f
 \end{equation}
 
@@ -204,6 +208,77 @@ Because the expected temperature range is small (on the order of the nominal
 blocks high), all material properties are taken as constant (though this is not a limitation of nekRS).
 In addition, the expected flowrate through the reflector block is sufficiently low to be laminar,
 so the $k$-$\tau$ turbulence model in nekRS is not needed.
+
+nekRS can be solved in either dimensional or non-dimensional form; in the present case,
+nekRS is solved in non-dimensional form. That is, characteristic scales for velocity,
+temperature, length, and time are defined and substituted into the governing equations
+so that all solution fields (velocity, pressure, temperature) are of order unity.
+A full derivation of the non-dimensional governing equations in nekRS is available
+[here](https://nekrsdoc.readthedocs.io/en/latest/theory.html#non-dimensional-formulation).
+But to summarize, non-dimensional formulations for velocity, pressure, temperature, length,
+and time are defined as
+
+\begin{equation}
+u_i^\dagger=\frac{u_i}{U_{ref}}
+\end{equation}
+
+\begin{equation}
+P^\dagger=\frac{P}{\rho_0U_{ref}^2}
+\end{equation}
+
+\begin{equation}
+T^\dagger=\frac{T-T_{ref}}{\Delta T}
+\end{equation}
+
+\begin{equation}
+x_i^\dagger=\frac{x_i}{L_{ref}}
+\end{equation}
+
+\begin{equation}
+t^\dagger=\frac{t}{L_{ref}/U_{ref}}
+\end{equation}
+
+where a $\dagger$ superscript indicates a non-dimensional quantity. Inserting these definitions into 
+[eq:mass], [eq:momentum], and [eq:energy] gives
+
+\begin{equation}
+\frac{\partial u_i^\dagger}{\partial x_i^\dagger}=0
+\end{equation}
+
+\begin{equation}
+\rho^\dagger\left(\frac{\partial u_i^\dagger}{\partial t^\dagger}+u_j^\dagger\frac{\partial u_i^\dagger}{\partial x_j^\dagger}\right)=-\frac{\partial P^\dagger}{\partial x_i^\dagger}+\frac{1}{Re}\frac{\partial \tau_{ij}^\dagger}{\partial x_j^\dagger}+\rho^\dagger f_i^\dagger
+\end{equation}
+
+\begin{equation}
+\rho^\dagger C_p^\dagger\left(\frac{\partial T^\dagger}{\partial t^\dagger}+u_i^\dagger\frac{\partial T^\dagger}{\partial x_i^\dagger}\right)=\frac{1}{Pe}\frac{\partial}{\partial x_i^\dagger}\left(k^\dagger\frac{\partial T^\dagger}{\partial x_i^\dagger}\right)+\dot{q}^\dagger
+\end{equation}
+
+where $\dagger$ superscripts indicates a non-dimensional quantity, complete definitions
+of which are available [here](https://nekrsdoc.readthedocs.io/en/latest/theory.html#non-dimensional-formulation).
+New terms in these non-dimensional equations are $Re$ and $Pe$, the Reynolds and Peclet numbers,
+respectively:
+
+\begin{equation}
+Re\equiv\frac{\rho_0 UL}{\mu_0}
+\end{equation}
+
+\begin{equation}
+Pe\equiv\frac{LU}{\alpha}
+\end{equation}
+
+
+So, nekRS solves for $\mathbf u^\dagger$, $P^\dagger$, and $T^\dagger$; Cardinal will handle
+conversions from a non-dimensional solution to a dimensional MOOSE heat conduction application,
+but awareness of this non-dimensional formulation will be important for describing the
+nekRS input files.
+
+In this model, the reference length scale is selected as the block gap width, or $L_{ref}=0.006$. Therefore,
+to obtain a mesh with a gap width of unity (in non-dimensional units), the entire nekRS mesh must
+be multiplied by $1/0.006$. The characteristic velocity is selected to obtain a Reynolds number of 100,
+which corresponds to $U_{ref}=0.0575$ based on the values for density and viscosity for FLiBe
+evaluated at 650&deg;C. Finally, $T_{ref}$ is taken equal to the inlet temperature of 923.15 K; the
+$\Delta T$ parameter is arbitrary, and does not necessarily need to equal any expected temperature rise
+in the fluid. So for this example, $\Delta T$ is simply taken equal to 10 K.
 
 ### Boundary Conditions
 
@@ -273,7 +348,7 @@ in half because we are modeling only half a block) should also be imposed as a s
 boundary in the nekRS model. However, nekRS is currently limited to symmetry
 boundaries only for boundaries aligned with the $x$, $y$, and $z$ coordinate
 axes. Here, a no-slip boundary condition is used instead, so the correspondence of
-the nekRS computational model to the depiction in [top-down] is imperfect.
+the nekRS computational model to the depiction in [#model] is imperfect.
 
 At fluid-solid interfaces, the heat flux is imposed as a Neumann condition, where MOOSE
 computes the surface heat flux.
@@ -288,6 +363,147 @@ initial conditions for the conjugate heat transfer simulation use the temperatur
 from the conduction simulation, with a uniform axial velocity and zero pressure.
 The process to run Cardinal in conduction mode is described in [#part1].
 
+## Meshing
+
+This section describes how the meshes are generated for MOOSE and nekRS.
+For both applications, the Cubit meshing software [!cite](cubit) is used to
+programmatically create meshes with user-defined geometry and customizable
+boundary layers. Journal files, or Python-scripted Cubit inputs, are used
+to create meshes in Exodus II format. The MOOSE framework accepts meshes in
+a wide range of formats that can be generated with many commercial and free
+meshing tools; Cubit is used for this example because the content creator
+is most familiar with this software, though similar meshes can be generated
+with your preferred meshing tool.
+
+#### Solid MOOSE Heat Conduction Mesh
+
+The `solid.jou` file is a Cubit script that is used to generate the solid mesh,
+shown below:
+
+!listing /pbfhr/reflector/meshes/solid.jou
+
+At the top of this file, is a `#!python` shebang that allows Python to be used
+to programmatically create the mesh. Any valid Python code (including imported
+modules) can be used; the actual commands passed to the Cubit
+meshing tool are written as `cubit.cmd(<string command>)`, where
+`<string command>` is a string containing the Cubit command that, in interactive mode,
+would be manually typed into the Cubit command line. For complex meshes, scripting
+the mesh process is essential for reproducibility and easing the burden of making
+modifications to the geometry or mesh.
+
+The complete solid mesh is shown below; the boundary names are illustrated towards
+the right by showing only the highlighted surface to which each boundary corresponds.
+Names are shown in Courier font. A unique block ID is used for the set of elements
+corresponding to the inner ring, outer ring, and barrel. Material properties in MOOSE
+are typically restricted by block, and setting three separate IDs allows us to set
+different properties in each of these blocks.
+
+!media solid_mesh.png
+  id=solid_mesh
+  caption=Solid mesh for the reflector blocks and barrel and a subset of the boundary names
+
+Unique boundary names are set for each boundary to which we will apply a unique
+boundary condition; we define the boundaries on the top and bottom of the block,
+the symmetry boundaries that reflect the fact that we've reduced the full [!ac](PB-FHR)
+reflector to a half-block domain, and boundaries at the interface between the
+reflector and the bed and on the barrel surface.
+
+To facilitate radiation heat transfer between the thin block gaps,
+additional boundaries must be defined on the faces on either side of the gaps.
+Two boundaries are defined per gap - one on either side of the gap. These are
+shown below, where the naming convention `three_to_two` indicates a boundary
+on block 3, across a gap from block 2.
+
+!media solid_mesh_radiation.png
+  id=solid_radiation
+  caption=Sidesets defined for enforcing radiation heat transfer boundary conditions
+  style=width:50%;margin-left:auto;margin-right:auto
+
+One convenient aspect of MOOSE is that the same elements
+can be assigned to more than one boundary ID. To help in applying heat flux and
+temperature boundary conditions between nekRS and MOOSE, we define another boundary
+that contains all of the fluid-solid interfaces through which we will exchange
+heat flux and temperature, as `fluid_solid_interface`. Some of the elements on
+the `fluid_solid_interface` boundary are also present on the boundaries between
+blocks used for the radiation boundary conditions shown in [solid_radiation].
+
+Now that the overall structure of the mesh has been introduced, a brief
+description of the process of how the mesh was actually constructed is provided.
+First, the block geometry is formed by creating cylinders and bricks and subtracting
+them from one another to get angular sectors of cylindrical annuli. Then, the
+Cubit `boundary_layer` feature is used to programmatically refine the mesh
+near surfaces; we perform this refinement because, on some of these surfaces (those
+exchanging heat with the fluid and radiation across gaps), we expect to have higher
+thermal gradients that we would like to resolve with a finer mesh. For each boundary
+layer, we specify a starting element width perpendicular to the surface, a growth
+factor, and a number of boundary layers we would like to mesh. Finally, the mesh
+is saved in Exodus II format to disk.
+
+For the steady conduction analysis in [#part1], a slightly coarser mesh is used
+to accelerate the calculation; this coarser mesh is obtained by setting the value
+of the `initial_steady` Python variable in the journal file. Therefore, the meshes
+for the solid phase are:
+
+- `solid_coarse.e` is a fairly coarse mesh for the solid phase that will be used
+  in [#part1]; this is generated by setting `initial_steady = True`
+- `solid.e` is a finer mesh for the solid phase that will be used in [#part2];
+  this is generated by setting `initial_steady = False`
+
+#### Fluid nekRS Mesh
+
+The `fluid.jou` is a Cubit script that is used to generate the fluid mesh, shown below.
+
+!listing /pbfhr/reflector/meshes/fluid.jou
+
+Because nekRS uses a custom binary mesh format with a `.re2` extension, the mesh generation
+process for nekRS is slightly more involved than the setup for MOOSE, though we still
+begin by generating a mesh with Cubit.
+nekRS also imposes several additional restrictions that are important to acknowledge
+that do not exist for meshes used directly in native MOOSE applications.
+
+The complete fluid mesh is shown below; the boundary names are illustrated towards
+the right by showing only the highlighted surface to which each boundary corresponds.
+Names are shown in Courier font. While the names of the surfaces are shown in Courier
+font, nekRS does not directly use these names - rather, nekRS assigns boundary
+conditions based on the numeric value of the boundary name; these are shown as "ID"
+in the figure. An important restriction in nekRS is that the boundary IDs be ordered
+sequentially beginning from 1.
+
+!media fluid_mesh.png
+  id=fluid_mesh
+  caption=Fluid mesh for the FLiBe flowing around the reflector blocks, along with boundary names and IDs
+
+Creating the fluid mesh is significantly more involved than creating the solid mesh.
+First, a series of boolean operations is performed to obtain an un-meshed volume
+that the fluid will flow through. Rather than create a single volume, the fluid region
+is created as 7 separate volumes; this allows full customzation of the meshing near the
+corners where we would like the boundary layer scheme to extend from the interior corners
+(with angles greater than 180 degrees) across the fluid gaps. Like the solid mesh,
+boundary layers are applied on all surfaces (even if the particular boundary condition
+on a surface is not necessarily "no-slip"). Finally, the boundary IDs are created; while
+names are assigned in the Cubit script, these names are not accessible to nekRS, and the
+numeric boundary IDs are instead used for designating boundaries.
+
+nekRS relies on a conversion utility that converts from
+an Exodus II format to nekRS's `.re2` nekRS format. This utility, or the `exo2nek` program,
+requires the Exodus mesh elements to be type `HEX20` (a twenty-node hexahedral element),
+so we set this element type from Cubit. Finally, we export the mesh to Exodus II format.
+
+To use this mesh in nekRS, it must be converted to the `.re2` format. Instructinos
+for building the `exo2nek` program are available [here](https://nekrsdoc.readthedocs.io/en/latest/detailed_usage.html).
+After this script has been compiled, you simply need to run
+
+```
+$ exo2nek
+```
+
+and then follow the prompts for the information that must be added about the mesh
+to perform the conversion. Above, `$` indicates the terminal prompt.
+For this example, there is no solid mesh, there are no periodic surface pairs,
+and we want a scaling factor of $1/0.006$ (for the non-dimensional formulation)
+and no translation (our mesh is located in space such that the faces match spatially
+with the MOOSE solid mesh).
+
 ## Computing Requirements
 
 While nekRS is developed targeting [!ac](GPU) computing resources, the use
@@ -301,8 +517,12 @@ and opportunities for high-resolution thermal-hydraulics within the MOOSE framew
 ## Part 1: Initial Steady State Conduction Coupling
   id=part1
 
+### Input Files
+
 ## Part 2: Conjugate Heat Transfer Coupling
   id=part2
+
+### Input Files
 
 ## Acknowledgements
 
