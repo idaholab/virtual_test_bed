@@ -1,9 +1,9 @@
 # core heat flux, from a Pronghorn postprocessor supplied off-line
-core_heat_flux      = 2e4
+core_heat_flux = 2e4
 
 [Mesh]
   type = FileMesh
-  file = solid.e
+  file = ../meshes/solid_coarse.e
 []
 
 [Variables]
@@ -173,8 +173,6 @@ core_heat_flux      = 2e4
   type = Transient
   dt = 0.01
   nl_abs_tol = 1e-8
-  num_steps = 500
-  l_max_its = 100
 
   steady_state_detection = true
   steady_state_tolerance = 1e-5
