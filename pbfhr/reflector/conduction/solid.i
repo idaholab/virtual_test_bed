@@ -1,9 +1,9 @@
-# core heat flux, from a Pronghorn postprocessor supplied off-line
-core_heat_flux = 2e4
+# core average heat flux from the pebbles to the blocks
+core_heat_flux = 5e3
 
 [Mesh]
   type = FileMesh
-  file = ../meshes/solid_coarse.e
+  file = ../meshes/solid.e
 []
 
 [Variables]
@@ -137,8 +137,8 @@ core_heat_flux = 2e4
     direction = to_multiapp
     multi_app = nek
     variable = avg_flux
-    source_boundary = 'fluid_solid_interface'
     fixed_meshes = true
+    source_boundary = 'fluid_solid_interface'
   []
   [flux_integral]
     type = MultiAppPostprocessorTransfer
@@ -155,27 +155,16 @@ core_heat_flux = 2e4
     variable = flux
     boundary = 'fluid_solid_interface'
   []
-  [heat_loss_from_barrel]
-    type = SideFluxIntegral
-    diffusivity = 'thermal_conductivity'
-    variable = T
-    boundary = 'barrel_surface'
-  []
-  [heat_gain_from_pebbles]
-    type = SideFluxIntegral
-    diffusivity = 'thermal_conductivity'
-    variable = T
-    boundary = 'inner_surface'
-  []
 []
 
 [Executioner]
   type = Transient
-  dt = 0.01
-  nl_abs_tol = 1e-8
+  dt = 0.005
+  nl_abs_tol = 1e-6
+  num_steps = 2000
 
   steady_state_detection = true
-  steady_state_tolerance = 1e-5
+  steady_state_tolerance = 5e-4
 []
 
 [Outputs]

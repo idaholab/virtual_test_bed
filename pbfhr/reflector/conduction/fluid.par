@@ -6,7 +6,7 @@
 # V_ref  = 0.0575   (velocity needed to get the specified Reynolds number)
 # T_ref  = 923.15   (the inlet temperature)
 # dT_ref = 10.0     (arbitrary temperature range value)
-# t_ref  = 0.0208   (reference time scale)
+# t_ref  = 0.1043   (reference time scale)
 # rho_0  = 1962.13
 # mu_0   = 6.77e-3
 # Cp_0   = 2416
@@ -16,7 +16,7 @@
 [GENERAL]
   stopAt = numSteps
   numSteps = 2000
-  dt = 0.01
+  dt = 0.025
   timeStepper = tombo2
   writeControl = numSteps
   writeInterval = 100
