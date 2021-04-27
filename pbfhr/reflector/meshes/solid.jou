@@ -5,21 +5,12 @@
 
 import math
 
-# Whether this script should be run for the initial steady-state conduction
-# calculation (part 1) or for the coupled CHT analysis (part 2)
-initial_steady = False
-
 # multiplicative factor to apply to the gap width; the nominal gap width cited
 # in Shaver et. al (2019) corresponds to a gap amplification factor of 1.0.
 gap_amplification = 3
 
 # Path to the virtual_test_bed repository on your computer
 directory = '/Users/anovak/projects/virtual_test_bed/'
-
-if (initial_steady == True):
-  name = 'solid_coarse'
-else:
-  name = 'solid'
 
 core_radius       = 2.6
 layer1_thickness  = 0.3
@@ -97,29 +88,26 @@ cubit.cmd('block 3 volume 3')
 
 # create boundary layers on all the surfaces
 cubit.cmd('create boundary_layer 1')
-cubit.cmd('modify boundary_layer 1 uniform height 4e-3 growth 1.2 layers 4')
+cubit.cmd('modify boundary_layer 1 uniform height 3e-3 growth 1.2 layers 4')
 cubit.cmd('modify boundary_layer 1 add surface 1 volume 1 surface 2 volume 2 surface 3 volume 3')
 
 cubit.cmd('create boundary_layer 2')
-cubit.cmd('modify boundary_layer 2 uniform height 4e-3 growth 1.2 layers 4')
+cubit.cmd('modify boundary_layer 2 uniform height 3e-3 growth 1.2 layers 4')
 cubit.cmd('modify boundary_layer 2 add surface 9 volume 1 surface 14 volume 2 surface 4 volume 3')
 
 cubit.cmd('create boundary_layer 3')
-cubit.cmd('modify boundary_layer 3 uniform height 4e-3 growth 1.2 layers 4')
+cubit.cmd('modify boundary_layer 3 uniform height 2e-3 growth 1.2 layers 8')
 cubit.cmd('modify boundary_layer 3 add surface 10 volume 1 surface 15 volume 2 surface 5 volume 3')
 
 cubit.cmd('create boundary_layer 4')
-cubit.cmd('modify boundary_layer 4 uniform height 4e-3 growth 1.2 layers 4')
+cubit.cmd('modify boundary_layer 4 uniform height 2e-3 growth 1.2 layers 8')
 cubit.cmd('modify boundary_layer 4 add surface 13 volume 1 surface 18 volume 2 surface 8 volume 3')
 
 cubit.cmd('create boundary_layer 5')
 cubit.cmd('modify boundary_layer 5 uniform height 1.5e-3 growth 1.2 layers 4')
 cubit.cmd('modify boundary_layer 5 add surface 12 volume 1 surface 11 volume 1 surface 17 volume 2 surface 16 volume 2 surface 7 volume 3 surface 6 volume 3')
 
-if (initial_steady == True):
-  size_division = 30
-else:
-  size_division = 50
+size_division = 50
 
 cubit.cmd('volume 1 2 3 size ' + str(layer1_thickness / size_division))
 
@@ -157,4 +145,4 @@ cubit.cmd('sideset 100 surface 3 7 16 14 17 11')
 cubit.cmd('sideset 100 name "fluid_solid_interface"')
 
 cubit.cmd('set large exodus file on')
-cubit.cmd('export Genesis "' + directory + "pbfhr/reflector/meshes/" + name + '.e" dimension 3 overwrite')
+cubit.cmd('export Genesis "' + directory + 'pbfhr/reflector/meshes/solid.e" dimension 3 overwrite')
