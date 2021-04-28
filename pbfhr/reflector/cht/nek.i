@@ -33,17 +33,11 @@ fluid_solid_interface = '1 2 7'
 
 [Outputs]
   exodus = true
-  hide = 'impose_max_T impose_min_T synchronization_in'
+  hide = 'synchronization_in'
 []
 
 [Postprocessors]
   [synchronization_in]
-    type = Receiver
-  []
-  [impose_min_T]
-    type = Receiver
-  []
-  [impose_max_T]
     type = Receiver
   []
   [flux_integral]
@@ -62,11 +56,6 @@ fluid_solid_interface = '1 2 7'
     type = NekVolumeExtremeValue
     field = temperature
     value_type = min
-  []
-  [outlet_T]
-    type = NekSideAverage
-    field = temperature
-    boundary = '6'
   []
   [pressure_in]
     type = NekSideAverage

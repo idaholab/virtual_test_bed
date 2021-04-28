@@ -2,7 +2,7 @@ core_heat_flux = 5e3
 
 [Mesh]
   type = FileMesh
-  file = solid.e
+  file = ../meshes/solid.e
 []
 
 [Variables]
@@ -166,20 +166,6 @@ core_heat_flux = 5e3
     from_postprocessor = flux_integral
     multi_app = nek
   []
-  [max_T]
-    type = MultiAppPostprocessorTransfer
-    to_postprocessor = impose_max_T
-    direction = to_multiapp
-    from_postprocessor = max_T
-    multi_app = nek
-  []
-  [min_T]
-    type = MultiAppPostprocessorTransfer
-    to_postprocessor = impose_min_T
-    direction = to_multiapp
-    from_postprocessor = min_T_barrel_surface
-    multi_app = nek
-  []
   [synchronization_in]
     type = MultiAppPostprocessorTransfer
     to_postprocessor = synchronization_in
@@ -195,34 +181,6 @@ core_heat_flux = 5e3
     variable = flux
     boundary = 'fluid_solid_interface'
   []
-  [area_facing_pebbles]
-    type = AreaPostprocessor
-    boundary = 'inner_surface'
-    execute_on = 'initial'
-  []
-  [heat_loss_from_barrel]
-    type = SideFluxIntegral
-    diffusivity = 'thermal_conductivity'
-    variable = T
-    boundary = 'barrel_surface'
-  []
-  [heat_gain_from_pebbles]
-    type = SideFluxIntegral
-    diffusivity = 'thermal_conductivity'
-    variable = T
-    boundary = 'inner_surface'
-  []
-  [max_T]
-    type = NodalExtremeValue
-    variable = T
-    value_type = max
-  []
-  [min_T_barrel_surface]
-    type = NodalExtremeValue
-    variable = T
-    value_type = min
-    boundary = 'barrel_surface'
-  []
   [synchronization_in]
     type = Receiver
     default = 1
@@ -231,9 +189,10 @@ core_heat_flux = 5e3
 
 [Executioner]
   type = Transient
-  dt = 0.002
-  nl_abs_tol = 1e-8
-  num_steps = 1000
+  dt = 0.001
+  nl_abs_tol = 1e-5
+  l_max_its = 100
+  num_steps = 400
 []
 
 [Outputs]
