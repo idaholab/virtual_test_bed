@@ -1076,7 +1076,7 @@ The calculation workflow would be as follows:
 
 An example showing this workflow for the [!ac](pbfhr) (albeit with a significantly
 different reflector block geometry) using COMSOL is available in the literature
-[!ac](novak2021).
+[!cite](novak2021).
 
 Similar calculation procedures would be used to predict the Nusselt number, or other
 porous media closures such as effective solid conductivities - parameterize the
