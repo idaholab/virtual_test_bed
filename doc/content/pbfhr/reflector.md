@@ -1074,7 +1074,7 @@ The calculation workflow would be as follows:
    quadratic terms in `Darcy_coefficient` (the linear proportionality) and
    `Forchheimer_coefficient` (the quadratic proportionality).
 
-An example showing this workflow for the [!ac](pbfhr) (albeit with a significantly
+An example showing this workflow for the [!ac](PB-FHR) (albeit with a significantly
 different reflector block geometry) using COMSOL is available in the literature
 [!cite](novak2021).
 
