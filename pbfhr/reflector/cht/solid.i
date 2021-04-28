@@ -166,13 +166,6 @@ core_heat_flux = 5e3
     from_postprocessor = flux_integral
     multi_app = nek
   []
-  [synchronization_in]
-    type = MultiAppPostprocessorTransfer
-    to_postprocessor = synchronization_in
-    direction = to_multiapp
-    from_postprocessor = synchronization_in
-    multi_app = nek
-  []
 []
 
 [Postprocessors]
@@ -180,10 +173,6 @@ core_heat_flux = 5e3
     type = SideIntegralVariablePostprocessor
     variable = flux
     boundary = 'fluid_solid_interface'
-  []
-  [synchronization_in]
-    type = Receiver
-    default = 1
   []
 []
 

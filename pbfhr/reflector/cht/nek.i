@@ -9,10 +9,6 @@ fluid_solid_interface = '1 2 7'
 [Problem]
   type = NekRSProblem
 
-  minimize_transfers_in = true
-  minimize_transfers_out = true
-  transfer_in = synchronization_in
-
   nondimensional = true
   U_ref = 0.0575
   T_ref = 923.15
@@ -33,13 +29,9 @@ fluid_solid_interface = '1 2 7'
 
 [Outputs]
   exodus = true
-  hide = 'synchronization_in'
 []
 
 [Postprocessors]
-  [synchronization_in]
-    type = Receiver
-  []
   [flux_integral]
     type = Receiver
   []

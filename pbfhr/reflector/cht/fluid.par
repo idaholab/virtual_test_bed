@@ -24,7 +24,7 @@
   polynomialOrder = 4
 
 [VELOCITY]
-  viscosity = -100.0     # This is shorthand for Reynolds number = 100
+  viscosity = -100.0
   density = 1.0
   residualTol = 1.0e-8
   residualProj = no
