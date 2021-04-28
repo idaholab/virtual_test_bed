@@ -932,8 +932,8 @@ conduction case in [#part1].
 
 ### Solid Input Files
 
-The solid phase is again solved with the MOOSE heat conduction module, with the mesh generated
-with Cubit as described in [#solid_mesh]. The input file is largely the same as the conduction
+The solid phase is again solved with the MOOSE heat conduction module.
+The input file is largely the same as the conduction
 case, except that now the gap radiation heat flux between blocks is included with a
 [ThermalContact](https://mooseframework.inl.gov/source/actions/ThermalContactAction.html) action.
 
@@ -958,10 +958,70 @@ solution. The postprocessors used for the nekRS wrapping are shown below.
 !listing /pbfhr/reflector/cht/nek.i
   start=Postprocessors
 
+We have added postprocessors to compute the average inlet pressure, and the average
+inlet and outlet mass flowrates. Like the `NekVolumeExtremeValue`, these postprocessors
+operate directly on nekRS's internal solution arrays to provide diagnostic information.
+Because the outlet pressure is set to zero, `pressure_in` corresponds to the pressure
+drop in the fluid.
+
+As in [#part1], four additional files are required to set up the nekRS simulation -
+`fluid.re2`, `fluid.par`, `fluid.udf`, and `fluid.oudf`. These files are largely the
+same as those used in the steady conduction model, so only the differences will be
+emphasized here.
+
+The `fluid.par` file is shown below. Here, `startFrom` provides a restart file,
+`conduction.fld` and specifies that we only want to read temperature from the
+file (by appending `+T` to the file name). We increase the polynomial order as well.
+
+!listing /pbfhr/reflector/cht/fluid.par
+
+In the `[VELOCITY]` block, the density is set to unity, because the solve is conducted
+in nondimensional form, such that
+
+\begin{equation}
+\label{eq:nondim_p}
+\rho^\dagger\equiv\frac{\rho_f}{\rho_0}=1
+\end{equation}
+
+The coefficient on the diffusive term, as shown in [eq:momentum_nondim], is equal to
+$1/Re$. In nekRS, specifying `diffusivity = -100.0` is equivalent to specifying
+`diffusivity = 0.001` (i.e. $1/100.0$), or a Reynolds number of 100.0. All other parameters
+have similar interpretations as described in [#part1].
+
+The `fluid.udf` file is shown below. The `UDF_Setup` function is again used to apply initial
+conditions; because temperature is read from the restart file, only initial conditions on
+velocity and pressure are required. `nrs->U` is an array storing the three components of
+velocity (padded with length `nrs->fieldOffset`), while `nrs->P` is the array storing the
+pressure solution. Due to the non-dimensional formulation, all values for the axial
+velocity are set to unity.
+
+!listing /pbfhr/reflector/cht/fluid.udf
+
+This file also includes the `UDF_LoadKernels` function, which is used to propagate
+quantities to variables accessibly through [!ac](OCCA) kernels. The `kernelInfo`
+object is used to define two variables - `Vz` and `inlet_T` that will be accessible
+through the [!ac](GPU) kernels, eliminating some burden on the user if the problem
+setup must be changed in multiple locations throughout the nekRS input files.
+
+Finally, the `fluid.oudf` file is shown below. Because the velocity is enabled,
+additional boundary condition functions must be specified in addition to those
+in [#part1]. The `velocityDirichletConditions` function applies Dirichlet
+conditions to velocity, where `bc->u` is the $x$-component of velocity,
+`bc->v` is the $y$-component of velocity, and `bc->z` is the $z$-component of velocity.
+In this function, the kernel variable `Vz` that was defined in the `fluid.udf` file
+is accessible to simplify the boundary condition setup. The other boundary conditions,
+the Dirichlet temperature conditions and the Neumann heat flux conditions, are the
+same as for the steady conduction case.
+
+!listing /pbfhr/reflector/cht/fluid.oudf
+
 ### Execution and Postprocessing
 
 The instructions to run the conjugate heat transfer model are the same as those
-given in [#ep].
+given in [#ep]. The temperature and heat flux distributions are qualitatively quite
+similar to those in [#part1] because temperature differences across the block
+gaps are not very large. Therefore, only the fluid pressure and velocity distributions
+are shown below, both in non-dimensional form.
 
 !media fhr_pressure.png
   id=pressure_cht
@@ -973,8 +1033,56 @@ given in [#ep].
   caption=Velocity (nondimensional) for conjugate heat tranfser coupling between MOOSE and nekRS
   style=width:60%;margin-left:auto;margin-right:auto
 
+The no-slip condition on the solid surface,
+and the symmetry condition on the $y=0$ surface, are clear in [velocity_cht]. The pressure
+loss is highest in the gap along the $\theta=7.5^\circ$ boundary due to the imposition of
+no-slip conditions on both sides of the half-gap width due to limitations in nekRS's
+boundary conditions. Therefore, these pressure predictions are likely to change once nekRS's
+symmetry conditions are expanded to non-$x$/$y$/$z$-aligned surfaces.
+
 ## Pronghorn Closures
 
+This analysis has only predicted the conjugate heat transfer solution for a single value of
+Reynolds number and a single value of gap width. This section briefly describes the procedure
+necessary to use Cardinal for generating porous media closures for Pronghorn - specifically,
+the friction coefficient. Pronghorn's momentum conservation equation contains a distributed loss
+term [!cite](pronghorn_manual) that relates the friction pressure drop to a closure, $W$,
+
+\begin{equation}
+\label{eq:W}
+\epsilon\frac{\partial P}{\partial x_i}=-W_{ij}\rho_fV_j
+\end{equation}
+
+where $\epsilon$ is the porosity, $W$ is a diagonal tensor that is related to the conventional
+definition of a friction coefficient, and $V$ is the interstitial velocity. The present
+model can be used to predict $W$ as a function of the block geometry and the Reynolds number.
+The calculation workflow would be as follows:
+
+1. Re-run the `solid.jou` and `fluid.jou` scripts for a range of block gap widths.
+2. Re-run the steady conduction initial condition calculation in [#part1] and the
+   conjugate heat transfer calculation in [#part2] for the range of block gap widths,
+   for a range of Reynolds numbers.
+3. For each individual run, compute the overall porosity of the block-fluid domain,
+   and express $\partial P/\partial x_i$ in [eq:W] as $\Delta P/H$, where $\Delta P$
+   is the pressure drop given by the `pressure_in` postprocessor in the
+   `nek.i` input file, and $H$ is the height of the block, or 0.502 m.
+4. Correlate the pressure drop results according to [eq:W] and obtain a functional fit
+   to $W$ (with terms linear and quadratic in velocity, according to dimensional
+   considerations for pressure loss).
+5. Use a `FunctionAnisotropicDragCoefficients` friction factor model in Pronghorn,
+   and provide the functional fit in the Pronghorn input file for the linear and
+   quadratic terms in `Darcy_coefficient` (the linear proportionality) and
+   `Forchheimer_coefficient` (the quadratic proportionality).
+
+An example showing this workflow for the [!ac](pbfhr) (albeit with a significantly
+different reflector block geometry) using COMSOL is available in the literature
+[!ac](novak2021).
+
+Similar calculation procedures would be used to predict the Nusselt number, or other
+porous media closures such as effective solid conductivities - parameterize the
+operating space and geometry that affects the physics of interest, run repeated
+high-resolution calculations, and correlate the data into a form that can then
+be inserted into Pronghorn using existing material property classes.
 
 ## Acknowledgements
 
