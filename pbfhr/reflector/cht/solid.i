@@ -187,5 +187,4 @@ core_heat_flux = 5e3
 [Outputs]
   exodus = true
   print_linear_residuals = false
-  hide = 'synchronization_in'
 []
