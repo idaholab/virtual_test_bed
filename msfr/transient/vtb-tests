@@ -1,0 +1,14 @@
+[Tests]
+  [neutronics]
+    type = RunApp
+    input = 'run_neutronics.i'
+    check_input = True
+    ad_indexing_type = 'global'
+  []
+  [fluids]
+    type = RunApp
+    input = 'run_ns.i'
+    check_input = True
+    ad_indexing_type = 'global'
+  []
+[]
