@@ -108,7 +108,7 @@ The third term---the Reynolds stress---with,
 
 Recall that the fourth term, the viscous force, is treated with a unique model
 for the heat exchanger region. Consequently, the `block` parameter is used to
-restrict the relevant to kernel to the heat exchanger,
+restrict the relevant kernel to the heat exchanger,
 
 !listing /msfr/steady/run_ns.i block=FVKernels/friction_hx_x
 
@@ -173,9 +173,10 @@ solver, and this distribution will be used directly in the $Q_q$ term. The
 effect of the heat exchanger will also be included in the $Q_q$ term as a
 volumetric heat loss per the model,
 \begin{equation}
-  Q_q = \alpha (T - T_\text{ambient})
+  Q_q = -\alpha (T - T_\text{ambient})
 \end{equation}
-where $\alpha$ is a tunable coefficient and $T_\text{ambient}$ is the
+where $\alpha$ is a coefficient (equal to the surface area density times the
+heat transfer coefficient) and $T_\text{ambient}$ is the
 temperature of the coolant on the secondary side of the heat exchanger.
 
 Note that all material properties, including $\rho$ and $c_p$, are assumed
@@ -225,8 +226,8 @@ parameter is referencing the `dnp` `AuxVariable` which is defined as,
 
 !listing /msfr/steady/run_neutronics.i block=AuxVariables/dnp
 
-Note that this is an array aux variable with 6 components, corresponding to the
-6 delayed neutron precursor groups used here.
+Note that this is an array auxiliary variable with 6 components, corresponding
+to the 6 delayed neutron precursor groups used here.
 
 Support within the Framework for array variables is somewhat limited. For
 example, not all of the multiapp transfers work with array variables, and the
