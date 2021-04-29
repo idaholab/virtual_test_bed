@@ -20,8 +20,8 @@ epsilon_q = ${fparse nu_t / Pr_t}  # eddy diffusivity for heat
 epsilon_c = ${fparse nu_t / Sc_t}  # eddy diffusivity for precursors
 
 # Mass flow rate tuning
-friction = 5.e3
-pump_power = -71401.4
+friction = 5.e3  # [kg / m^4]
+pump_force = -71401.4  # [N / m^3]
 
 # Delayed neutron precursor parameters. Lambda values are decay constants in
 # [1 / s]. Beta values are production fractions.
@@ -258,7 +258,7 @@ beta6 = 0.000184087
   [pump]
     type = FVBodyForce
     variable = v_y
-    value = ${pump_power}
+    value = ${pump_force}
     block = 'pump'
   []
 
@@ -575,8 +575,8 @@ beta6 = 0.000184087
 [Functions]
   [pump_fun]
     type = PiecewiseConstant
-    xy_data = '0.0 ${pump_power}
-               2.0 ${fparse 0.5*pump_power}'
+    xy_data = '0.0 ${pump_force}
+               2.0 ${fparse 0.5*pump_force}'
     direction = 'left'
   []
 []

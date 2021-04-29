@@ -1,6 +1,6 @@
 # Molten Salt Fast Reactor (MSFR) Description
 
-The VTB MSFR model is based off of the MSFR design created under the Euratorm
+The VTB MSFR model is based off of the MSFR design created under the Euratom
 EVOL (Evaluation and Viability of Liquid Fuel Fast Reactor Systems) and ROSATOM
 MARS (Minor Actinides Recycling in Molten Salt) projects
 [!citep](brovchenko2019). It is a fast-spectrum reactor that produces 3 GW of
