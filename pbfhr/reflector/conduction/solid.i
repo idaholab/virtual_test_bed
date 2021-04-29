@@ -50,9 +50,11 @@ core_heat_flux = 5e3
 
 [AuxKernels]
   [flux]
-    type = NormalDiffusionFluxAux
+    type = DiffusionFluxAux
     variable = flux
-    coupled = T
+    diffusion_variable = T
+    component = normal
+    check_boundary_restricted = false
     diffusivity = thermal_conductivity
     boundary = 'fluid_solid_interface'
   []
