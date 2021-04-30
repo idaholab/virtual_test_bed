@@ -1,3 +1,4 @@
+# core average heat flux from the pebbles to the blocks
 core_heat_flux = 5e3
 
 [Mesh]

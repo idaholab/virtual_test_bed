@@ -203,7 +203,7 @@ solve the steady state energy conservation equation for a solid,
 where $k_s$ is the solid thermal conductivity, $T_s$ is the solid temperature,
 and $\dot{q}_s$ is the solid volumetric heat source, which for this application is zero.
 Solving the steady energy conservation
-in lieu of the transient equation will accelerate the approach to the coupled psuedo-steady state.
+in lieu of the transient equation will accelerate the approach to the coupled pseudo-steady state.
 
 nekRS solves the incompressible Navier-Stokes equations,
 
@@ -214,7 +214,7 @@ nekRS solves the incompressible Navier-Stokes equations,
 
 \begin{equation}
 \label{eq:momentum}
-\rho_f\left(\frac{\partial\mathbf u}{\partial t}+\mathbf u\cdot\nabla\mathbf u\right)=-\nabla P=\nabla\cdot\tau+\rho\ \mathbf f
+\rho_f\left(\frac{\partial\mathbf u}{\partial t}+\mathbf u\cdot\nabla\mathbf u\right)=-\nabla P+\nabla\cdot\tau+\rho\ \mathbf f
 \end{equation}
 
 \begin{equation}
@@ -339,8 +339,7 @@ of Pronghorn and Griffin - despite the fact that the reflector flow and heat tra
 is tightly coupled to the core thermal-hydraulics. Two simplifications are made:
 
 - The heat flux at the pebble bed-reflector interface is given as a fixed value
-  of 5 kW/m$^2$, though this value can also be extracted using a
-  [SideFluxAverage](https://mooseframework.inl.gov/source/postprocessors/SideFluxAverage.html)
+  of 5 kW/m$^2$, though this value can also be extracted using a flux
   postprocessor evaluated over the bed-reflector interface in a full-core Pronghorn model.
 - The coupled Pronghorn-Griffin [!ac](PB-FHR) model elsewhere in this repository does not model flow through
   the outer reflector - the reflector is treated as a solid conducting block. Therefore,
@@ -364,7 +363,7 @@ where $q^{''}$ is the heat flux, $h$ is the convective heat transfer coefficient
 is the far-field ambient temperature.
 
 Between the reflector blocks, the MOOSE heat conduction module is used to apply quadrature-based
-radiation heat transfer across a transpent fluid.
+radiation heat transfer across a transparent fluid.
 For a paired set of boundaries, each quadrature point on boundary A is
 paired with the nearest quadrature point on boundary B. Then, a radiation heat flux is imposed
 between pairs of quadrature points as
