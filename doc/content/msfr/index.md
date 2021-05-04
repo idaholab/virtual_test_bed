@@ -11,3 +11,7 @@
 [Nek5000 CFD model](msfr/nek5000_cfd_model.md)
 
 [Nek5000 CFD results](msfr/nek5000_cfd_results.md)
+
+!alert note
+To request access to Griffin, please submit a request on the
+[INL modeling and software website](https://modsimcode.inl.gov/SitePages/Home.aspx).
