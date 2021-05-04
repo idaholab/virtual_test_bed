@@ -17,6 +17,7 @@
 *-prof
 *-devel
 *.e
+*.bin
 *.nav
 *.log
 *.aux
