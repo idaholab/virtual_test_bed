@@ -38,7 +38,6 @@ fis_fract            = ${fparse 1 - dh_fract} # Fission power fraction at t = 0.
   equation_type = eigenvalue
 
   G = 8
-  # for_adjoint = true
 
   ReflectingBoundary = 'reflector_surface'
   VacuumBoundary = 'brick_surface IR_horizontal_top bed_horizontal_top OR_horizontal_top
@@ -465,12 +464,10 @@ restart_file = 'mk1_fhr.e'  # uncomment near bottom of input file to use restart
 
 [Outputs]
   file_base = mk1_fhr
-  print_linear_residuals = false
   exodus = true
   csv = true
   [Checkpoint]
     type = Checkpoint
-    num_files = 2
     execute_on = 'FINAL'
   []
 []
