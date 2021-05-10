@@ -1,0 +1,10 @@
+[Tests]
+  [conduction]
+    type = RunApp
+    input = solid.i
+    check_input = true
+    cli_args = "MultiApps/active='' Transfers/active='' Executioner/num_steps=2"
+    requirement = "The conduction heat transfer input shall not deprecate syntax from the "
+                  "MOOSE master application."
+  []
+[]
