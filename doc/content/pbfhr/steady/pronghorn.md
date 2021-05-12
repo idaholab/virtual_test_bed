@@ -111,7 +111,7 @@ $\vec{g} \cdot \hat{x}$ is zero for $u$, the x-direction velocity,
 \end{equation}
 
 The effective viscosity is the Brinkman viscosity. There is insufficient agreement in the literature about whether
-this term should be considered and its magnitude. The study on which this model is based neglected it [!citep](Novak2021).
+this term should be considered and its magnitude. The study on which this model is based neglected it [!citep](novak2021).
 We simply used the regular fluid viscosity as a placeholder for future refinements.
 
 The drag term $-W_x \rho u$ represents the interphase drag. It accounts for both viscous and inertial effects.
@@ -192,7 +192,7 @@ the fluid. We use a closure with a linear Peclet number dependence valid at low 
 \end{equation}
 
 The interphase heat transfer coefficient represents convective heat transfer between the solid and fluid phase.
-We use the Wakao correlation [!citep](Wakao1979), detailed in the [Pronghorn manual](https://inldigitallibrary.inl.gov/sites/sti/sti/Sort_24425.pdf) and commonly used in pebble-bed
+We use the Wakao correlation [!citep](wakao1979), detailed in the [Pronghorn manual](https://inldigitallibrary.inl.gov/sites/sti/sti/Sort_24425.pdf) and commonly used in pebble-bed
 reactor analysis.
 
 The first term of [eq:energy]---the energy time derivative---is captured by the kernel,
@@ -272,7 +272,7 @@ time to relax to its steady state value, so a closer reasonable flat guess can s
 Another important part of the simulation initialization is the viscosity ramp-down. It is very difficult to
 initialize a high-Reynolds number fluid simulation from an initial guess and let it relax to the steady state
 simulation. To avoid those numerical difficulties, we initialize the simulation with a very high viscosity, making
-the flow very slow and easy to solve for. We then ramp-down viscosity to its value from [!citep](Serrano) over a few
+the flow very slow and easy to solve for. We then ramp-down viscosity to its value from [!citep](serrano2013) over a few
 seconds. This is not particularly expensive considering the length of the relaxation pseudo-transient. It
 is done using the control system, which allows the functionalization of MOOSE input files.
 

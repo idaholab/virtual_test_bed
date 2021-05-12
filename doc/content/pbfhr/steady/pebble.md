@@ -73,7 +73,7 @@ the pebble as a 1D spherical system, with each zone defined as a different subdo
 
 !listing /pbfhr/steady/ss4_fuel_pebble.i block=Mesh/mesh Problem
 
-We use a Heat Source Decomposition approach [!citep](Novak2021) to solve the multiscale heat conduction
+We use a Heat Source Decomposition approach [!citep](novak2021) to solve the multiscale heat conduction
 problem with sources. The heat source is decomposed in its mean and fluctuation (of zero average) terms, corresponding to
 the meso- and micro-scale. This approach is a decomposition of the heat conduction equations.
 
