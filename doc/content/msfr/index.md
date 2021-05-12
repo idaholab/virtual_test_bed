@@ -15,3 +15,4 @@
 !alert note
 To request access to Griffin, please submit a request on the
 [INL modeling and software website](https://modsimcode.inl.gov/SitePages/Home.aspx).
+Griffin is currently the only code necessary to run these input files.
