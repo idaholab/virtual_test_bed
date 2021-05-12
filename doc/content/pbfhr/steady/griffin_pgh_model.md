@@ -1,8 +1,8 @@
 # FHR steady state model
 
-These input files may be used to performed a coupled multiphysics steady state simulation of the
+These input files may be used to perform a coupled multiphysics steady state simulation of the
 Mk1-FHR. Each physics is solved by the relevant MOOSE application: the [neutronics](steady/griffin.md) by Griffin, the
-[thermal hydraulics](steady/pronghorn.md) by Pronghorn and the [fuel performance](steady/pebble.md) by the MOOSE heat conduction module. A
+[thermal hydraulics](steady/pronghorn.md) by Pronghorn and the [fuel performance](steady/pebble.md) by the combined usage of Pronghorn and the MOOSE heat conduction module. A
 combined application, Direwolf (all users) or BlueCRAB (NRC only), is necessary to run the multiphysics coupled problem.
 
 The physics coupling is performed using the MultiApp system. In MOOSE vocabulary, the neutronics application is

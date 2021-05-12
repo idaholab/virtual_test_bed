@@ -26,28 +26,41 @@ will be addressed in the near future.
 - document validation basis for TH closures
 
 
-## Neutronics model
+## Neutronics
+
+### Model & Physics
 
 - add decay heat model
 
 - add rod cusping treatment
 
+- add pebble depletion tracking
+
+### Cross sections
+
 - tone down transients to stay in XS validity range
+
+- add on-the-fly cross section generation
+
+### Code
 
 - switch to new eigenvalue executioner
 
 - verify quadrature block for control rod material
 
-- add depletion tracking (PTT)
+## Thermal hydraulics
 
-
-## Thermal hydraulics model
+### Model
 
 - add flow in the outer reflector and a porosity interface
 
+- primary and secondary loop SAM coupling
+
+### Physics
+
 - CFD informed correlations for pressure drop, heat exchange in porous flow, especially at the wall
 
-- primary and secondary loop coupling
+### Input file / code
 
 - output core balance in TH with all terms (diffusion, convection..)
 
@@ -56,7 +69,6 @@ will be addressed in the near future.
 - switch to radiation BC on outer wall
 
 - separate solid temperature BCs between the bed and the top/bottom walls
-
 
 ## Fuel performance model
 

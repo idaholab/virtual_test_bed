@@ -3,7 +3,7 @@
 The neutronics and thermal hydraulics simulation provide us with the power distribution and
 the fluid and solid phase temperature on the macroscale. They do not resolve the individual pebbles,
 and therefore cannot directly inform us on local effects such as temperature gradients within a pebble.
-These are important to lead fuel performance study, to verify that the pebbled-fuel remains within
+These are important to lead fuel performance studies, to verify that the pebbled-fuel remains within
 design limitations in terms of temperature and burnup.
 
 We use a multiscale approach to resolve the pebble conditions within the reactor. We sample pebble locations
@@ -19,7 +19,7 @@ The `app_type` may be specified to use a smaller, faster application to run a si
 on how the computing environment is set up, the `library_path` may need to be specified to indicate where to load
 this smaller application.
 
-In the fueled pebble bed, each sub-app is itself a multiscale heat conduction simulation.
+As is the case with the graphite pebbles, the fuel pebbles are treated using a sub-app; fuel pebbles are modeled with a 1-D multiscale heat conduction model.
 
 !listing /pbfhr/steady/ss3_coarse_pebble_mesh.i block=MultiApps/fuel_pebble
 
@@ -69,13 +69,13 @@ Bison simulations in future iterations of the model.
 
 The fueled pebble is modeled using a similar approach, except the sphere is not uniform.
 Its center is a graphite core, surrounded by a fuel matrix then a graphite shell. We still represent
-the pebble as a 1D spherical system, which each zone defined as a different subdomain.
+the pebble as a 1D spherical system, with each zone defined as a different subdomain.
 
 !listing /pbfhr/steady/ss4_fuel_pebble.i block=Mesh/mesh Problem
 
 We use a Heat Source Decomposition approach [!citep](Novak2021) to solve the multiscale heat conduction
 problem with sources. The heat source is decomposed in its mean and fluctuation (of zero average) terms, corresponding to
-the meso- and micro-scale. This approach is a linearization of the heat conduction equations.
+the meso- and micro-scale. This approach is a decomposition of the heat conduction equations.
 
 \begin{equation}
 \dot{q} = <\dot{q}> + \hat{\dot{q}}
@@ -116,9 +116,11 @@ no heat source in those subdomains.
 
 The fuel matrix temperature and the graphite temperatures match on their interfaces. We use an interface kernel to impose the equality conditions on both sides of the fuel matrix.
 
+\begin{equation}
 T(x_{left/right}) = T_{meso}(x_{left/right}) + T_{micro}(x_{outer}) = T_{graphite}(x_{left/right})
+\end{equation}
 
-where $x_{outer}$ is the outer boundary of the microscale domain, which will be detailed further in the next section. $T_{micro}(x_{outer})$ is obtained from the triso scale calculation.
+where $x_{outer}$ is the outer boundary of the microscale domain, which will be detailed further in the next section. $T_{micro}(x_{outer})$ is obtained from the TRISO scale calculation.
 
 !listing /pbfhr/steady/ss4_fuel_pebble.i block=InterfaceKernels
 
@@ -137,4 +139,4 @@ We cover the microscale equation treatment in the [fuel matrix microscale simula
 !alert note
 INL has recently developed a continuous tracking algorithm to assess
 pebble depletion as they move through the core. This capability will complement
-this model in the near future.
+this model in the near future, as it is expended to study core depletion.

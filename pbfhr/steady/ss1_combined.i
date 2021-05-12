@@ -122,11 +122,11 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
     # initial_from_file_var = 'vel_y'
     # initial_from_file_timestep = 'LATEST'
   []
-  [press]
+  [pressure]
     type = INSFVPressureVariable
     block = ${blocks_fluid}
     initial_condition = 1e5
-    # initial_from_file_var = 'press'
+    # initial_from_file_var = 'pressure'
     # initial_from_file_timestep = 'LATEST'
   []
   [temp_fluid]
@@ -150,43 +150,43 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
   # Mass Equation.
   [mass]
     type = PINSFVMassAdvection
-    variable = 'press'
+    variable = pressure
     vel = 'superficial_velocity'
     u = vel_x
     v = vel_y
-    pressure = press
+    pressure = pressure
     mu = 'mu'
   []
 
   # Momentum x component equation.
   [vel_x_time]
     type = PINSFVMomentumTimeDerivative
-    variable = 'vel_x'
+    variable = vel_x
   []
   [vel_x_advection]
     type = PINSFVMomentumAdvection
-    variable = 'vel_x'
+    variable = vel_x
     advected_quantity = 'superficial_rho_u'
     vel = 'superficial_velocity'
-    pressure = press
+    pressure = pressure
     u = vel_x
     v = vel_y
     mu = 'mu'
   []
   [vel_x_viscosity]
     type = PINSFVMomentumDiffusion
-    variable = 'vel_x'
+    variable = vel_x
     mu = 'mu'
   []
   [u_pressure]
     type = PINSFVMomentumPressure
-    variable = 'vel_x'
-    p = press
+    variable = vel_x
+    p = pressure
     momentum_component = 'x'
   []
   [u_friction]
     type = PINSFVMomentumFriction
-    variable = 'vel_x'
+    variable = vel_x
     Darcy_name = 'Darcy_coefficient'
     Forchheimer_name = 'Forchheimer_coefficient'
     momentum_component = 'x'
@@ -195,45 +195,45 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
   # Momentum y component equation.
   [vel_y_time]
     type = PINSFVMomentumTimeDerivative
-    variable = 'vel_y'
+    variable = vel_y
   []
   [vel_y_advection]
     type = PINSFVMomentumAdvection
-    variable = 'vel_y'
+    variable = vel_y
     advected_quantity = 'superficial_rho_v'
     vel = 'superficial_velocity'
-    pressure = press
+    pressure = pressure
     u = vel_x
     v = vel_y
     mu = 'mu'
   []
   [vel_y_viscosity]
     type = PINSFVMomentumDiffusion
-    variable = 'vel_y'
+    variable = vel_y
     mu = 'mu'
   []
   [v_pressure]
     type = PINSFVMomentumPressure
-    variable = 'vel_y'
-    p = press
+    variable = vel_y
+    p = pressure
     momentum_component = 'y'
   []
   [v_friction]
     type = PINSFVMomentumFriction
-    variable = 'vel_y'
+    variable = vel_y
     Darcy_name = 'Darcy_coefficient'
     Forchheimer_name = 'Forchheimer_coefficient'
     momentum_component = 'y'
   []
   [gravity]
     type = PINSFVMomentumGravity
-    variable = 'vel_y'
+    variable = vel_y
     gravity = '0 -9.81 0'
     momentum_component = 'y'
   []
   [buoyancy_boussinesq]
     type = PINSFVMomentumBoussinesq
-    variable = 'vel_y'
+    variable = vel_y
     gravity = '0 -9.81 0'
     ref_temperature = ${inlet_T_fluid}
     temperature = 'temp_fluid'
@@ -244,36 +244,36 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
   # Fluid Energy equation.
   [temp_fluid_time]
     type = PINSFVEnergyTimeDerivative
-    variable = 'temp_fluid'
+    variable = temp_fluid
     cp_name = 'cp'
     is_solid = false
   []
   [temp_fluid_advection]
     type = PINSFVEnergyAdvection
-    variable = 'temp_fluid'
+    variable = temp_fluid
     vel = 'superficial_velocity'
     advected_quantity = 'rho_cp_temp'
-    pressure = press
+    pressure = pressure
     u = vel_x
     v = vel_y
     mu = 'mu'
   []
   [temp_fluid_conduction]
     type = PINSFVEnergyEffectiveDiffusion
-    variable = 'temp_fluid'
+    variable = temp_fluid
     kappa = 'kappa'
   []
   [temp_solid_to_fluid]
     type = PINSFVEnergyConvection
-    variable = 'temp_fluid'
-    temp_fluid = 'temp_fluid'
-    temp_solid = 'temp_solid'
+    variable = temp_fluid
+    temp_fluid = temp_fluid
+    temp_solid = temp_solid
     is_solid = false
     h_solid_fluid = 'alpha'
   []
   # [temp_fluid_source]
   #   type = FVCoupledForce
-  #   variable = 'temp_fluid'
+  #   variable = temp_fluid'
   #   v = power_distribution
   #   block = '3'
   # []
@@ -281,7 +281,7 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
   # Solid Energy equation.
   [temp_solid_time_core]
     type = PINSFVEnergyTimeDerivative
-    variable = 'temp_solid'
+    variable = temp_solid
     cp_name = 'cp_s'
     rho = ${solid_rho} # FIXME
     is_solid = true
@@ -289,33 +289,33 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
   []
   [temp_solid_time]
     type = INSFVEnergyTimeDerivative
-    variable = 'temp_solid'
+    variable = temp_solid
     cp_name = 'cp_s'
     block = ${blocks_solid}
   []
   [temp_solid_conduction_core]
     type = FVDiffusion
-    variable = 'temp_solid'
+    variable = temp_solid
     coeff = 'kappa_s'
     block = ${blocks_fluid}
     force_boundary_execution = true # to connect with the reflector
   []
   [temp_solid_conduction]
     type = FVDiffusion
-    variable = 'temp_solid'
+    variable = temp_solid
     coeff = 'k_s'
     block = ${blocks_solid}
     # boundaries_to_not_force = 'bed_left bed_right'
   []
   [temp_solid_source]
     type = FVCoupledForce
-    variable = 'temp_solid'
+    variable = temp_solid
     v = power_distribution
     block = '3'
   []
   [temp_fluid_to_solid]
     type = PINSFVEnergyConvection
-    variable = 'temp_solid'
+    variable = temp_solid
     temp_fluid = 'temp_fluid'
     temp_solid = 'temp_solid'
     is_solid = true
@@ -387,11 +387,6 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
     x = '1 3 5 10'
     y = '1e3 1e2 1e1 1'
   []
-  [inlet_vel_y]
-    type = PiecewiseLinear
-    x = '0 10000'
-    y = '${inlet_vel_y} ${inlet_vel_y}'
-  []
 []
 
 [Controls]
@@ -409,20 +404,20 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
 [FVBCs]
   [inlet_vel_x]
     type = INSFVInletVelocityBC
-    variable = 'vel_x'
+    variable = vel_x
     function = 1e-12
     boundary = 'bed_horizontal_bottom'
   []
   [inlet_vel_y]
     type = INSFVInletVelocityBC
-    variable = 'vel_y'
-    function = ${fparse inlet_vel_y}
+    variable = vel_y
+    function = ${inlet_vel_y}
     boundary = 'bed_horizontal_bottom'
   []
   #TODO: Switch to a flux BC (eps * phi * T)
   [inlet_temp_fluid]
     type = FVDirichletBC
-    variable = 'temp_fluid'
+    variable = temp_fluid
     value = ${fparse inlet_T_fluid}
     boundary = 'bed_horizontal_bottom'
   []
@@ -440,14 +435,14 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
 
   [outer]
     type = FVDirichletBC
-    variable = 'temp_solid'
+    variable = temp_solid
     boundary = 'brick_surface'
     value = ${fparse 35 + 273.15}
   []
 
   [outlet_p]
     type = INSFVOutletPressureBC
-    variable = 'press'
+    variable = pressure
     function = 2e5   # not too far from atm for matprop evaluations
     boundary = 'bed_horizontal_top'
   []
@@ -459,7 +454,6 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
 [FluidProperties]
   [fp]
     type = FlibeFluidProperties
-    drho_dp = 1e-8  # doesnt matter
   []
 []
 
@@ -503,7 +497,7 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
     type = INSFVPrimitiveSuperficialVarMaterial
     superficial_vel_x = 'vel_x'
     superficial_vel_y = 'vel_y'
-    pressure = 'press'
+    pressure = pressure
     T_fluid = 'temp_fluid'
     T_solid = 'temp_solid'
     block = ${blocks_fluid}
@@ -708,12 +702,12 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
   # []
   [max_Tf]
     type = ElementExtremeValue
-    variable = 'temp_fluid'
+    variable = temp_fluid
     block = ${blocks_fluid}
   []
   [max_vy]
     type = ElementExtremeValue
-    variable = 'vel_y'
+    variable = vel_y
     block = ${blocks_fluid}
   []
   [power]
@@ -733,19 +727,19 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
   [T_flow_out]
     type = SideAverageValue
     boundary = 'bed_horizontal_top'
-    variable = 'temp_fluid'
+    variable = temp_fluid
     execute_on = 'INITIAL TIMESTEP_END'
   []
   [pressure_in]
     type = SideAverageValue
     boundary = 'bed_horizontal_bottom'
-    variable = 'press'
+    variable = pressure
     execute_on = 'INITIAL TIMESTEP_END'
   []
   [heat_loss]
     type = ADSideFluxIntegral
     boundary = 'brick_surface'
-    variable = 'temp_solid'
+    variable = temp_solid
     diffusivity = 'k_s'
     execute_on = 'INITIAL TIMESTEP_END'
   []

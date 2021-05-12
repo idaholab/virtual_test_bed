@@ -1,7 +1,7 @@
 # Pronghorn thermal hydraulics steady state simulation
 
 Pronghorn is the thermal hydraulics solver we use to simulate fluid flow and conjugate heat transfer in the FHR
-core. It is also modeling in the same simulation heat transfer in the solid phase in the core and heat conduction
+core. In the same input file, we model the heat transfer in the solid phase in the core and heat conduction
 in the solid components around the core, for a total of five equations: conservation of mass, x- and y-momentum (in RZ),
 fluid and solid energy.
 
@@ -14,14 +14,14 @@ simplified.
 We are using newly implemented finite volume capabilities in MOOSE to model all these physics. We use an
 incompressible approximation for the fluid flow, with a Boussinesq approximation to model buoyancy. There are
 various closures used in the pebble bed for the heat transfer coefficients, the drag models, which are
-detailed in the Pronghorn manual.
+detailed in the [Pronghorn manual](https://inldigitallibrary.inl.gov/sites/sti/sti/Sort_24425.pdf).
 
 We first define in the input file header physical quantities such as the pebble geometry, the material compositions as well as some constant material properties.
 
 !listing /pbfhr/steady/ss1_combined.i start=blocks_fluid =  end=power_density =
 
 We also define a few global parameters that will be added to every block that may use them. This is
-done to reduce the length of the input file and improve its readability. Once the `Actions` syntax is implemented, this will not be a concern anymore.
+done to reduce the length of the input file and improve its readability. Once the `Actions` syntax is implemented, this will be automatically streamlined for the user.
 
 !listing /pbfhr/steady/ss1_combined.i block=GlobalParams
 
@@ -34,9 +34,9 @@ mesh should also be as orthogonal as possible as there is no skewness correction
 
 !listing /pbfhr/steady/ss1_combined.i block=Mesh
 
-The geometry is also sepcified in the `WallDistance` model, which is used to account for the presence
+The geometry is also specified in the `WallDistance` model, which is used to account for the presence
 of the wall in material closures. For the Mk1-FHR we use a `WallDistanceAngledCylindricalBed` which
-is specific to the shape of this core.
+is specific to the shape of this core. This is defined in the `[UserObjects]` block.
 
 !listing /pbfhr/steady/ss1_combined.i block=UserObjects/wall_dist
 
@@ -44,7 +44,8 @@ is specific to the shape of this core.
 
 We define the fluid variables, the two velocity components, pressure and temperature over
 the active region and the pebble reflector, the two fluid flow regions. The model may evolve in the future to model flow in the inner and outer reflectors. We use INSFV-
-and PINSFV-specific variables for the fluid, such as [INSFVPressureVariable](https://mooseframework.inl.gov/source/variables/INSFVPressureVariable.html). These variables
+and PINSFV-specific (stands Porous flow Incompressible Navier Stokes Finite Volume) variables
+for the fluid, such as [INSFVPressureVariable](https://mooseframework.inl.gov/source/variables/INSFVPressureVariable.html). These variables
 types are `CONSTANT` `MONOMIAL`, which means that they are constant over elements. This is the regular discretization for finite volume variables. The solid temperature
 is defined in the entire domain, as the solid phase temperature in the pebble bed, and as the regular solid temperature in the rest of the core.
 
@@ -57,14 +58,22 @@ energy. The conservation of energy for the solid / solid phase is solved simulta
 
 The conservation of mass is,
 \begin{equation}
-  \nabla \cdot \rho \vec{u} = 0
+  \nabla \cdot \rho \epsilon \vec{u} = 0
 \end{equation}
 
-Here the system will be simplified by modeling the flow as incompressible.  (The
+with $\rho$ the density of the fluid, $\epsilon$ the porosity of the homogenized medium
+and $u$ the interstitial velocity. We reformulate this equation in terms of the
+superficial or Darcy velocity $\vec{u}_D = \epsilon \vec{u}$.
+
+\begin{equation}
+  \nabla \cdot \rho \vec{u}_D = 0
+\end{equation}
+
+Here the system will be simplified by modeling the flow as incompressible. (The
 effect of buoyancy will be re-introduced later with the Boussinesq
 approximation.)  The simplified conservation of mass is then given by,
 \begin{equation}
-  \nabla \cdot \vec{u} = 0
+  \nabla \cdot \vec{u}_D = 0
 \end{equation}
 
 This conservation is expressed by the `FVKernels/mass` kernel:
@@ -86,35 +95,39 @@ This system also includes the conservation of momentum in the $x$-direction.
 We use a transient simulation to reach steady state, and the porous media Navier Stokes
 equation can be written as:
 \begin{equation}
-  \rho \dfrac{du}{dt} + \nabla \cdot \rho \vec{u} u = -\frac{\partial}{\partial x} P
+  \rho \epsilon \dfrac{\partial u}{\partial t} + \nabla \cdot \rho \epsilon \vec{u} u =
+  - \epsilon \frac{\partial}{\partial x} P
   + \nabla \cdot \underline{\tau} \cdot \hat{x}
-  + \rho \vec{g} \cdot \hat{x}
-  - W_x u
+  + \epsilon \rho \vec{g} \cdot \hat{x}
+  - W_x \rho u
 \end{equation}
 
 In this model, gravity will point in the negative $y$-direction so the quantity
 $\vec{g} \cdot \hat{x}$ is zero for $u$, the x-direction velocity,
 \begin{equation}
-  \rho \dfrac{du}{dt} + \nabla \cdot \rho \vec{u} u = -\frac{\partial}{\partial x} P
-  + \nabla \cdot \underline{\tau} \cdot \hat{x} - W_x u
+  \rho \epsilon \dfrac{\partial u}{\partial t} + \nabla \cdot \rho \epsilon \vec{u} u =
+  - \epsilon \frac{\partial}{\partial x} P
+  + \nabla \cdot \underline{\tau} \cdot \hat{x} - W_x \rho u
 \end{equation}
 
 The effective viscosity is the Brinkman viscosity. There is insufficient agreement in the literature about whether
 this term should be considered and its magnitude. The study on which this model is based neglected it [!citep](Novak2021).
 We simply used the regular fluid viscosity as a placeholder for future refinements.
 
-The drag term $-W_x u$ represents the interphase drag. It accounts for both viscous and inertial effects.
+The drag term $-W_x \rho u$ represents the interphase drag. It accounts for both viscous and inertial effects.
 It can be anisotropic in solid components such as the reflector and isotropic in the pebble bed. It's a superposition
 of a linear and quadratic in velocity terms, which are dominant in low/high velocity regions respectively.
-A common correlation for the pebble bed is to use an Ergun drag coefficient, detailed in the Pronghorn manual.
+A common correlation for the pebble bed is to use an Ergun drag coefficient, detailed in the [Pronghorn manual](https://inldigitallibrary.inl.gov/sites/sti/sti/Sort_24425.pdf).
 To model the outer reflector using a porous medium, we would need to tune the anisotropic drag coefficient using
 CFD simulations.
 
-Finally, we must collect all of the terms on one side of the equation. This
+Finally, we must collect all of the terms on one side of the equation and express the
+equation in terms of the superficial velocity. This
 gives the form that is implemented for the FHR model,
 \begin{equation}
-  \rho \dfrac{du}{dt} + \nabla \cdot \rho \vec{u} u + \frac{\partial}{\partial x} P
-  - \nu \nabla^2 u + W_x u = 0
+  \rho \dfrac{\partial u_D}{\partial t} + \nabla \cdot \rho \vec{u}_D \dfrac{u_D}{\epsilon} +
+   \epsilon \frac{\partial}{\partial x} P
+  - \nu \nabla^2 \dfrac{u_D}{\epsilon} + W_x \dfrac{\rho u_D}{\epsilon} = 0
   \label{eq:x_mom}
 \end{equation}
 
@@ -143,8 +156,8 @@ includes the Boussinesq approximation in order to capture the effect of
 buoyancy. Note that this extra term is needed because of the approximation that
 the fluid density is uniform and constant,
 \begin{equation}
-  \rho \dfrac{dv}{dt} + \nabla \cdot \rho \vec{u} v + \frac{\partial}{\partial y} P
-  - \nu \nabla^2 v - \rho \alpha \vec{g} \left( T - T_0 \right) -\rho g = 0
+  \rho \dfrac{\partial v_D}{\partial t} + \nabla \cdot \rho \vec{u}_D \dfrac{v_D}{\epsilon} + \epsilon \frac{\partial}{\partial y} P
+  - \nu \nabla^2 \dfrac{v_D}{\epsilon} - \epsilon \rho \alpha_b \vec{g} \left( T - T_0 \right) -\epsilon \rho g + W_y \dfrac{\rho v_D}{\epsilon} = 0
 \end{equation}
 
 For each kernel describing the $x$-momentum equation, there is a corresponding
@@ -157,7 +170,7 @@ equation are,
 
 The conservation of the fluid energy can be expressed as,
 \begin{equation}
-  \rho \dfrac{d \epsilon h}{dt} + \nabla \cdot \rho \epsilon h \vec{u} - \nabla \cdot \kappa_f \nabla T_f = h_{fs} (T_s - T_f)
+  \rho \dfrac{\partial \epsilon h}{\partial t} + \nabla \cdot \rho \epsilon h \vec{u} - \nabla \cdot \kappa_f \nabla T_f = h_{fs} (T_s - T_f)
   \label{eq:energy}
 \end{equation}
 where $h$ is the fluid specific enthalpy, $\kappa_f$ is the fluid effective thermal conductivity,
@@ -179,7 +192,7 @@ the fluid. We use a closure with a linear Peclet number dependence valid at low 
 \end{equation}
 
 The interphase heat transfer coefficient represents convective heat transfer between the solid and fluid phase.
-We use the Wakao correlation [!citep](Wakao1979), detailed in the Pronghorn manual and commonly used in pebble-bed
+We use the Wakao correlation [!citep](Wakao1979), detailed in the [Pronghorn manual](https://inldigitallibrary.inl.gov/sites/sti/sti/Sort_24425.pdf) and commonly used in pebble-bed
 reactor analysis.
 
 The first term of [eq:energy]---the energy time derivative---is captured by the kernel,
@@ -203,7 +216,7 @@ The final term---the fluid-solid heat convection---is added by the kernel,
 
 The conservation of energy in the solid phase may be written in terms of the temperature as:
 \begin{equation}
-  \rho (1-\epsilon) \dfrac{d c_{ps} T_s}{dt} + \nabla \cdot \rho c_{ps} T_s \vec{u} - \nabla \cdot \kappa_s \nabla T_s = h_{fs} (T_f - T_s) + \dot{Q}
+  \rho (1-\epsilon) c_{ps} \dfrac{\partial T_s}{\partial t} - \nabla \cdot \kappa_s \nabla T_s = h_{fs} (T_f - T_s) + \dot{Q}
   \label{eq:solid_energy}
 \end{equation}
 
@@ -240,7 +253,7 @@ The final term---the heat source---is added by the kernel,
 ## Auxiliary system and initialization
 
 We define two auxiliary variables in this simulation: porosity and the power distribution. While porosity is
-intrinsically more of a material property, we may need to compute its gradient on cell faces in the future versions
+intrinsically more of a material property for the homogenized medium, we may need to compute its gradient on cell faces in the future versions
 of the models, something which is currently not possible with material properties. Power distribution is an
 auxiliary field that is passed on from the neutronics simulation, and used to compute the energy conservation
 in the solid phase.
@@ -263,13 +276,7 @@ the flow very slow and easy to solve for. We then ramp-down viscosity to its val
 seconds. This is not particularly expensive considering the length of the relaxation pseudo-transient. It
 is done using the control system, which allows the functionalization of MOOSE input files.
 
-!listing /pbfhr/steady/ss1_combined.i block=Functions/mu_func Controls
-
-We use a function to define the mass flow rate at the inlet of the reactor. This is in prevision for some flow
-transient simulations where we will artificially set the inlet mass flow rate time dependence. This function may
-be removed if using SAM to simulate the primary loop.
-
-!listing /pbfhr/steady/ss1_combined.i block=Functions/inlet_vel_y
+!listing /pbfhr/steady/ss1_combined.i block=Functions Controls
 
 ## Boundary conditions
 
@@ -291,7 +298,7 @@ with the pebbles, so wall friction may be neglected.
 
 The outflow boundary condition is a pressure boundary condition. Since this model does not include flow in the
 outer reflector, all the flow goes through the defueling chute. The velocity is very high in this region, causing a
-large pressure drop. This is a known issue of the simplified model. This boundary condition is a fully developed
+large pressure drop. This is a known result of the simplified model. This boundary condition is a fully developed
 flow boundary condition. It may only be used sufficiently far from modifications of the flow path.
 
 !listing /pbfhr/steady/ss1_combined.i block=FVBCs/outlet_p
@@ -307,16 +314,17 @@ cylindrical boundary of the model, we define a fixed temperature boundary condit
 ## Material properties
 
 There are four main types of materials that may be found in Pronghorn input files:
-- generic / constant and solid material properties
 
-- closure relations
+- solid material properties
 
-- 'variable materials (varmats)'
+- closure relations ($\kappa_f$, $\kappa_f$, $\alpha$)
+
+- variable materials (`VarMats`)
 
 - fluid properties
 
 
-### Generic / constant and solid material properties
+### Solid material properties
 
 The properties of the firebrick around the core are specified directly, using an `ADGenericConstantMaterial`, neglecting their temperature dependence.
 
@@ -330,7 +338,7 @@ properties of each type of graphite, UO2 and other materials are defined first:
 Then these properties are mixed using `CompositeSolidProperties`. We specify the volumetric fraction of
 each material and how the properties should be combined. The default option is simply volume
 averaging. The Chiew correlation is used for mixing thermal conductivities in the fuel matrix in the
-pebble. Note that this obtaining macroscopic phase solid properties, the temperature inside the pellet
+pebble. Note that this step is obtaining macroscopic phase solid properties, the temperature inside the pellet
 is resolved later on using a MultiApp. The effective thermal conductivity is determined by a closure
 relation, further detailed below.
 
@@ -342,22 +350,23 @@ Finally, these materials, defined as user objects, are placed in each subdomain 
 
 ### Closure relations
 
-The closure relations used for friction and effective thermal diffusivities are documented in the Pronghorn manual.
+The closure relations used for friction and effective thermal diffusivities are documented in the [Pronghorn manual](https://inldigitallibrary.inl.gov/sites/sti/sti/Sort_24425.pdf).
+
 !listing /pbfhr/steady/ss1_combined.i block=Materials/alpha Materials/drag Materials/kappa Materials/kappa_s
 
 ### Variable materials
 
-Variable materials or VarMats are simply constructs that hold a copy of the variables as
+Variable materials or `VarMats` are simply constructs that hold a copy of the variables as
 material properties. This makes it easier to formulate kernels in terms of quantities based on the
 primary variables. For example, the fluid energy equation is specified in terms of $\rho c_{pf} T_f$
-instead of $T_f$. Similarly the momentum advection kernels are specified in terms of $rho u$,
+instead of $T_f$. Similarly the momentum advection kernels are specified in terms of $\rho u$,
 the momentum, instead of $u$, the velocity variable.
 
 !listing /pbfhr/steady/ss1_combined.i block=Materials/ins_fv
 
 ### Fluid properties
 
-The fluid properties are similar to Variable Materials but are specific to Pronghorn. They
+The fluid properties are similar to variable materials but are specific to Pronghorn. They
 act as an aggregator of both materials properties and variables and allow the computation of
 closure inputs such as the Reynolds and Prandtl number.
 
@@ -370,7 +379,7 @@ closure inputs such as the Reynolds and Prandtl number.
 The `[Executioner]` block defines how the non-linear system will be solved. Since this is a transient problem,
 we are using a `Transient` executioner. Pronghorn makes use of automatic differentiation, more information
 [here](https://mooseframework.inl.gov/magpie/automatic_differentiation/index.html), to compute an exact Jacobian,
-so we make use of the Newton method to solve the non-linear system.  The `petsc options` specify a reasonably scaling
+so we make use of the Newton method to solve the non-linear system.  The `petsc_options_iname/ivalue` specify a reasonably scaling
 pre-conditioner. The factor shift avoids numerical issues when there are zeros in the diagonal of the Jacobian,
 for example when using Lagrange multipliers to enforce constraints, which some iterations of this model used.
 MOOSE defaults to GMRES for the linear solver, and we increase the size of the base used as using too small a Krylov
