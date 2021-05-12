@@ -1,2 +1,0 @@
-run_neutronics_out.e filter=lfs diff=lfs merge=lfs -text
-run_neutronics_out_ns0.e filter=lfs diff=lfs merge=lfs -text
