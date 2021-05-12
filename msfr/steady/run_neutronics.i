@@ -142,7 +142,7 @@
 []
 
 [Postprocessors]
-  [eigenvalue]
+  [eigenvalue_out]
     type = VectorPostprocessorComponent
     vectorpostprocessor = eigenvalues
     vector_name = eigen_values_real
