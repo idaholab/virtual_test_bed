@@ -25,6 +25,8 @@ will be addressed in the near future.
 
 - document validation basis for TH closures
 
+- check for dark-mode browser support
+
 
 ## Neutronics
 

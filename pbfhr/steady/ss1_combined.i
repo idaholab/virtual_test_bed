@@ -264,7 +264,7 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
     kappa = 'kappa'
   []
   [temp_solid_to_fluid]
-    type = PINSFVEnergyConvection
+    type = PINSFVEnergyAmbientConvection
     variable = temp_fluid
     temp_fluid = temp_fluid
     temp_solid = temp_solid
@@ -314,7 +314,7 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
     block = '3'
   []
   [temp_fluid_to_solid]
-    type = PINSFVEnergyConvection
+    type = PINSFVEnergyAmbientConvection
     variable = temp_solid
     temp_fluid = 'temp_fluid'
     temp_solid = 'temp_solid'
