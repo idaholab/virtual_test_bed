@@ -137,7 +137,7 @@ power_density = ${fparse total_power / model_vol}
     output_in_position = true
     block = '3'
     # app_type = PronghornApp
-    library_path = "/Users/giudgl-mac/projects/pronghorn/lib"
+    # library_path = "/Users/giudgl-mac/projects/pronghorn/lib"
     max_procs_per_app = 1
   []
   [graphite_pebble]
@@ -146,8 +146,8 @@ power_density = ${fparse total_power / model_vol}
     input_files = 'ss4_graphite_pebble.i'
     output_in_position = true
     block = '4'
-    # app_type = PronghornApp #HeatConductionApp
-    library_path = "/Users/giudgl-mac/projects/moose/modules/heat_conduction/lib"
+    # app_type = HeatConductionApp
+    # library_path = "/Users/giudgl-mac/projects/moose/modules/heat_conduction/lib"
     max_procs_per_app = 1
   []
 []

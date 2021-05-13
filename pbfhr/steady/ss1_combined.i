@@ -112,37 +112,26 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
     type = PINSFVSuperficialVelocityVariable
     block = ${blocks_fluid}
     initial_condition = 1e-12
-    # initial_from_file_var = 'vel_x'
-    # initial_from_file_timestep = 'LATEST'
   []
   [vel_y]
     type = PINSFVSuperficialVelocityVariable
     block = ${blocks_fluid}
     initial_condition = ${inlet_vel_y}
-    # initial_from_file_var = 'vel_y'
-    # initial_from_file_timestep = 'LATEST'
   []
   [pressure]
     type = INSFVPressureVariable
     block = ${blocks_fluid}
     initial_condition = 1e5
-    # initial_from_file_var = 'pressure'
-    # initial_from_file_timestep = 'LATEST'
   []
   [temp_fluid]
     type = INSFVEnergyVariable
     block = ${blocks_fluid}
     initial_condition = 900
-    # initial_from_file_var = 'temp_fluid'
-    # initial_from_file_timestep = 'LATEST'
   []
   [temp_solid]
     order = CONSTANT
     family = MONOMIAL
     fv = true
-    # initial_condition = 800.0
-    # initial_from_file_var = 'temp_solid'
-    # initial_from_file_timestep = 'LATEST'
   []
 []
 
@@ -271,12 +260,6 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
     is_solid = false
     h_solid_fluid = 'alpha'
   []
-  # [temp_fluid_source]
-  #   type = FVCoupledForce
-  #   variable = temp_fluid'
-  #   v = power_distribution
-  #   block = '3'
-  # []
 
   # Solid Energy equation.
   [temp_solid_time_core]
@@ -345,8 +328,6 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
     family = MONOMIAL
     fv = true
     block = '3'
-    # initial_from_file_var = 'power_distribution'
-    # initial_from_file_timestep = 'LATEST'
   []
   [porosity]
     family = MONOMIAL
