@@ -141,7 +141,7 @@ which is 0.022 m thick. The gap between the outer ring of blocks and the barrel
 is ten times larger than the gap between the inner and outer ring of blocks,
 or 0.02 m.
 
-!media top_down.png
+!media pbfhr/reflector/top_down.png
   id=top_down
   caption=Top-down schematic of the [!ac](PB-FHR) reactor core (only roughly to scale).
   style=width:60%;margin-left:auto;margin-right:auto
@@ -447,7 +447,7 @@ corresponding to the inner ring, outer ring, and barrel. Material properties in 
 are typically restricted by block, and setting three separate IDs allows us to set
 different properties in each of these blocks.
 
-!media solid_mesh.png
+!media pbfhr/reflector/solid_mesh.png
   id=solid_mesh
   caption=Solid mesh for the reflector blocks and barrel and a subset of the boundary names, before a series of mesh refinements
 
@@ -464,7 +464,7 @@ Two boundaries are defined per gap - one on either side of the gap. These are
 shown below, where the naming convention `three_to_two` indicates a boundary
 on block 3, across a gap from block 2.
 
-!media solid_mesh_radiation.png
+!media pbfhr/reflector/solid_mesh_radiation.png
   id=solid_radiation
   caption=Sidesets defined for enforcing radiation heat transfer boundary conditions
   style=width:50%;margin-left:auto;margin-right:auto
@@ -504,7 +504,7 @@ conditions based on the numeric value of the boundary name; these are shown as "
 in the figure. An important restriction in nekRS is that the boundary IDs be ordered
 sequentially beginning from 1.
 
-!media fluid_mesh.png
+!media pbfhr/reflector/fluid_mesh.png
   id=fluid_mesh
   caption=Fluid mesh for the FLiBe flowing around the reflector blocks, along with boundary names and IDs. It is difficult to see, but the `porous_inner_surface` boundary corresponds to the thin surface at the interface between the reflector region and the pebble bed.
 
@@ -516,7 +516,7 @@ a zoom-in of the two mesh files (for the fluid and solid phases); rather than be
 with a continuous mesh mapping from the fluid phase inwards to the solid phase, each phase
 can be meshed according to its physics requirements.
 
-!media zoom_mesh.png
+!media pbfhr/reflector/zoom_mesh.png
   id=zoom_mesh
   caption=Zoomed-in view of the fluid and solid meshes, overlaid in Paraview. Lines are element boundaries.
   style=width:50%;margin-left:auto;margin-right:auto
@@ -900,17 +900,17 @@ better display the temperature variation around the inner reflector block.
 The domain shown in [solid_steady_flux] exactly corresponds to the "mirror" mesh
 constructed by `NekRSMesh`.
 
-!media fhr_reflector_solid_conduction.png
+!media pbfhr/reflector/fhr_reflector_solid_conduction.png
   id=solid_steady
   caption=Solid temperature for steady state conduction coupling between MOOSE and nekRS
   style=width:60%;margin-left:auto;margin-right:auto
 
-!media fhr_reflector_solid_conduction_flux.png
+!media pbfhr/reflector/fhr_reflector_solid_conduction_flux.png
   id=solid_steady_flux
   caption=Solid surface heat flux for steady state conduction coupling between MOOSE and nekRS
   style=width:60%;margin-left:auto;margin-right:auto
 
-!media fhr_reflector_fluid_conduction.png
+!media pbfhr/reflector/fhr_reflector_fluid_conduction.png
   id=fluid_steady
   caption=Fluid temperature (nondimensional) for steady state conduction coupling between MOOSE and nekRS
   style=width:60%;margin-left:auto;margin-right:auto
@@ -1022,12 +1022,12 @@ similar to those in [#part1] because temperature differences across the block
 gaps are not very large. Therefore, only the fluid pressure and velocity distributions
 are shown below, both in non-dimensional form.
 
-!media fhr_pressure.png
+!media pbfhr/reflector/fhr_pressure.png
   id=pressure_cht
   caption=Pressure (nondimensional) for conjugate heat transfer coupling between MOOSE and nekRS
   style=width:60%;margin-left:auto;margin-right:auto
 
-!media fhr_velocity.png
+!media pbfhr/reflector/fhr_velocity.png
   id=velocity_cht
   caption=Velocity (nondimensional) for conjugate heat tranfser coupling between MOOSE and nekRS
   style=width:60%;margin-left:auto;margin-right:auto
