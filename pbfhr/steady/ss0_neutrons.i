@@ -57,16 +57,13 @@ fis_fract            = ${fparse 1 - dh_fract} # Fission power fraction at t = 0.
 # GEOMETRY AND MESH
 # ==============================================================================
 
-# Saves time
+# Save time by using a previously computed solution
 restart_file = 'mk1_fhr.e'  # uncomment near bottom of input file to use restart
-# expected keff :  1.13759
 
 [Mesh]
-  # uniform_refine = 1
   [mesh_reader]
     type = FileMeshGenerator
     file = '../meshes/core_with_reflectors_0.0625.e'
-    # use_for_exodus_restart = true
   []
   [new_boundary]
     type = SideSetsBetweenSubdomainsGenerator
