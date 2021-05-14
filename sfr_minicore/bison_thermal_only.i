@@ -10,16 +10,15 @@ slug_diameter        = 0.00568375
 fuel_height          = 1.
 plenum_height        = 1.
 wire_wrap_diameter   = 0.001
-rod_pitch            =${fparse rod_outside_diameter + wire_wrap_diameter}
+rod_pitch            = ${fparse rod_outside_diameter + wire_wrap_diameter}
 
 [GlobalParams]
    #  Parameters that are used in multiple blocks can be included here so that
    #  they only need to be specified one time.
    order = FIRST
    family = LAGRANGE
-#   displacements = 'disp_x disp_y'
    temperature = Temperature
-   #the following are needed in multiple UPuZr Materials
+   # the following are needed in multiple UPuZr Materials
    X_Zr = 0.225
    X_Pu = 0.171
    density = 11120.0 # kg/m3 at hot operating condition
@@ -133,7 +132,7 @@ rod_pitch            =${fparse rod_outside_diameter + wire_wrap_diameter}
 []
 
 [BCs]
-  #for coupling with SAM (provides both htc and tcool)
+  # for coupling with SAM (provides both htc and tcool)
   [convection_outer_clad]
     type = CoupledConvectiveHeatFluxBC
     boundary = 'clad_outside_bottom clad_outside_right clad_outside_top'
@@ -190,7 +189,8 @@ rod_pitch            =${fparse rod_outside_diameter + wire_wrap_diameter}
 
 
 [AuxKernels]
-  active = 'GetPowerDensity_from_griffin SetTwall SetTfuel' # replace _from_griffin by _from_func for standalone runs
+  # replace _from_griffin by _from_func for standalone runs
+  active = 'GetPowerDensity_from_griffin SetTwall SetTfuel'
   [GetPowerDensity_from_griffin]
     type = NormalizationAux
     variable = power_density_scaled
@@ -233,8 +233,8 @@ rod_pitch            =${fparse rod_outside_diameter + wire_wrap_diameter}
      block = pellet
   []
 
-  #fuel
-  # mechanics materials
+  # fuel
+  #mechanics materials
   [fuel_elasticity_tensor]
      type = UPuZrElasticityTensor
      block = pellet

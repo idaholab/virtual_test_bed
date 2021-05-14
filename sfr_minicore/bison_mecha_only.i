@@ -39,7 +39,7 @@ rod_pitch            =${fparse rod_outside_diameter + wire_wrap_diameter}
     clad_thickness = ${clad_thickness}
     pellet_outer_radius = ${fparse slug_diameter/2}
     pellet_height = ${fuel_height}
-    clad_top_gap_height = ${plenum_height} # fixme assumes no Na bond sodium
+    clad_top_gap_height = ${plenum_height} # FIXME assumes no Na bond sodium
     clad_gap_width = ${gap}
     top_bot_clad_height = ${clad_thickness}
     clad_bot_gap_height = 0.
@@ -251,7 +251,6 @@ active = 'fuel_elasticity_tensor fuel_elastic_stress fuel_thermal_expansion
 []
 
 [Postprocessors]
-
   [disp_x_max]
     type = NodalExtremeValue
     variable = disp_x
