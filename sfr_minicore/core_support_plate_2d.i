@@ -8,11 +8,11 @@
 #---------------------------------------------------------------------------
 
 
-Tinlet = 1083.8# inlet temperature matching 1% dl/l expansion
+Tinlet = 1083.8 # inlet temperature matching 1% dl/l expansion
 
 Tref   = 293.15 # reference temperature for the linear thermal expansion for SS316
 
-Tsf    = 623.15 # 623.15 # stress-free temperature for the ComputeMeanThermalExpansionFunctionEigenstrain
+Tsf    = 623.15 # stress-free temperature for the ComputeMeanThermalExpansionFunctionEigenstrain
 
 
 [Mesh]
@@ -36,7 +36,7 @@ Tsf    = 623.15 # 623.15 # stress-free temperature for the ComputeMeanThermalExp
 []
 
 [AuxVariables]
-  [temp]    #core support plate temperature is set to inlet temperature
+  [temp] # core support plate temperature is set to inlet temperature
     initial_condition = ${Tinlet}
   []
 []
@@ -106,13 +106,12 @@ Tsf    = 623.15 # 623.15 # stress-free temperature for the ComputeMeanThermalExp
     petsc_options_iname = '-ksp_gmres_restart -pc_type'
     petsc_options_value = '100 lu'
   []
-
-[] # End preconditioning block
+[]
 
 [Executioner]
 
   type = Steady
-  #use default convergence criterion
+  # use default convergence criterion
 []
 
 [Postprocessors]

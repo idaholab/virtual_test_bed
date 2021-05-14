@@ -75,7 +75,7 @@
 []
 
 [PowerDensity]
-  power = 4545454.5 # (1/66)*300e6
+  power = 4545454.5 # in W
   power_density_variable = power_density # name of AuxVariable to be created
 []
 
@@ -90,7 +90,7 @@
   nl_abs_tol = 1e-8
 
 
-  #picard specific
+  # Multiphysics coupling iteration parameters
   picard_rel_tol = 1e-08
   picard_abs_tol = 1e-10
   picard_max_its = 10
