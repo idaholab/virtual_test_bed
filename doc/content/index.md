@@ -7,4 +7,6 @@ of NEAMS tools for advanced reactor modeling and simulation.
 
 [Molten Salt Fast Reactor (MSFR)](msfr/index.md)
 
+[Modular High Temperature Gas-Cooled Reactor (MHTGR)](mhtgr/index.md)
+
 [Pebble Bed Fluoride-Salt-Cooled High-Temperature Reactor (PB-FHR)](pbfhr/index.md)
