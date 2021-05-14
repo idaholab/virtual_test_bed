@@ -106,7 +106,7 @@ A 2D model of the core support plate is built using the MOOSE tensor mechanics m
 
 ## How to run the model
 
-The model relies on the BlueCrab app, which incorporates the different required applications (Griffin, BISON, SAM). Owing to the simplified geometry, the computational cost of this model is very small. Only one or two processors are sufficient, and the solution should be obtained in less than a minute. The total number of Picard iterations is 5.
+The model relies on the BlueCrab app, which incorporates the different required applications (Griffin, BISON, SAM). Owing to the simplified geometry, the computational cost of this model is very small. Only one or two processors  are sufficient, and the solution should be obtained in less than a minute. The total number of Picard iterations is 5.
 
 Run it via:
 
