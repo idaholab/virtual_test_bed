@@ -1,0 +1,27 @@
+[Tests]
+  [bison_mecha_only]
+    type = RunApp
+    input = 'bison_mecha_only.i'
+    check_input = True
+  []
+  [bison_thermal_only]
+    type = RunApp
+    input = 'bison_thermal_only.i'
+    check_input = True
+  []
+  [support_plate]
+    type = RunApp
+    input = 'core_support_plate_2d.i'
+    check_input = True
+  []
+  [neutronics]
+    type = RunApp
+    input = 'griffin.i'
+    check_input = True
+  []
+  [subchannel]
+    type = RunApp
+    input = 'sam_channel.i'
+    check_input = True
+  []
+[]

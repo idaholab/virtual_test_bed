@@ -3,7 +3,6 @@
     type = RunApp
     input = 'ss0_neutrons.i'
     check_input = True
-    ad_indexing_type = 'global'
   []
   [fluids]
     type = RunApp
@@ -15,24 +14,20 @@
     type = RunApp
     input = 'ss3_coarse_pebble_mesh.i'
     check_input = True
-    ad_indexing_type = 'global'
   []
   [fuel_pebble]
     type = RunApp
     input = 'ss4_fuel_pebble.i'
     check_input = True
-    ad_indexing_type = 'global'
   []
   [graphite_pebble]
     type = RunApp
     input = 'ss4_graphite_pebble.i'
     check_input = True
-    ad_indexing_type = 'global'
   []
   [triso]
     type = RunApp
     input = 'ss5_fuel_matrix.i'
     check_input = True
-    ad_indexing_type = 'global'
   []
 []
