@@ -23,7 +23,7 @@ Users will need to request access to the controlled NEAMS software from the Nucl
 !alert note
 [Current link to the repository](https://gitlab.software.inl.gov/idaholab/virtual_test_bed)
 
-!media nric_logo.png style=width:60%
+!media nric_logo.png style=width:40%
 
-!media neams_logo.jpeg style=width:60%
+!media neams_logo.jpeg style=width:30%
 
