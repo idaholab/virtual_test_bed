@@ -1,10 +1,19 @@
 [Tests]
   [cht]
     type = RunApp
-    input = solid.i.i
+    input = solid.i
     check_input = true
     cli_args = "MultiApps/active='' Transfers/active='' Executioner/num_steps=2"
-    requirement = "The conjugate heat transfer input shall not deprecate syntax from the "
+    requirement = "The pbfhr reflector conjugate heat transfer input shall not deprecate syntax from the "
                   "MOOSE master application."
+    executable_pattern = 'moose*|blue_crab*|direwolf*|fenix*'
+  []
+  [nek]
+    type = RunApp
+    input = nek.i
+    check_input = true
+    requirement = "The pbfhr reflector  fluid flow input shall not deprecate syntax from the "
+                  "MOOSE master application."
+    executable_pattern = 'cardinal*'
   []
 []
