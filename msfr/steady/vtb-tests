@@ -1,14 +1,23 @@
 [Tests]
-  [neutronics]
+  [neutronics_griffin]
     type = RunApp
     input = 'run_neutronics.i'
     check_input = True
     ad_indexing_type = 'global'
+    executable_pattern = 'griffin* || fenix*'
   []
   [fluids]
     type = RunApp
     input = 'run_ns.i'
     check_input = True
     ad_indexing_type = 'global'
+    executable_pattern = 'fenix*'
+  []
+  [fluids_test]
+    type = RunApp
+    input = 'run_ns.i'
+    check_input = True
+    ad_indexing_type = 'global'
+    executable_pattern = 'griffin*'
   []
 []
