@@ -41,13 +41,11 @@ file are described in the order as they appear.
 Before the first block entries, users can define variables and specify 
 their values which are subsequently used in the input model.  For example,
 
-```language=bash
-
+!listing 
 rad_R-1		    =	0  		    # the radius of Ring 1
 w_R-1		    =	1.48		# the thickness of Ring 1
 power_total     =   600e6		# the total power
 
-```
 
 In SAM, comments are entered after the `#` sign
 
@@ -76,32 +74,12 @@ helium, sodium, molten salts, etc. The user can also input the
 properties of the fluid as constants or function of temperature. 
 For example,  the built-in eos for air can be input as
 
-```language=bash
-
-[./eos_air]
-    type = AirEquationOfState
-[../]
-
-```
+!listing htgr/mhtgr/MHTGR.i block=eos_air language=cpp
 
 Water is used as coolant at the RCCS, and its properties 
-in SI unites are input as follow. 
+in SI unites are input as follows. 
 
-```language=bash
-
-[./eos_water]
-    type = PTConstantEOS
-    p_0 = 70e5    
-    rho_0 = 905
-    beta = 0
-    cp = 4330
-    h_0 = 705000
-    T_0 = 439
-    mu = 0.00016
-    k = 0.68
-[../]
-
-```
+!listing htgr/mhtgr/MHTGR.i block=eos_water language=cpp
 
 ## Functions
 
@@ -112,15 +90,7 @@ power history as a function of time, or power profile as a
 function of position. The input below specifies graphite thermal 
 conductivity as a function of temperature (in K)
 
-```language=bash
-
-[./kgraphite]					   #G-348 graphite therm. cond; x- Temperature [K], y-Thermal condiuctivity [W/m-K]
-    type = PiecewiseLinear
-	x ='295.75	374.15	472.45	574.75	674.75	774.75	874.75	974.85	1074.45	1173.95	1274.05'
-	y ='133.02	128.54	117.62	106.03	96.7	88.61	82.22	76.52	71.78	67.88	64.26'
-[../]
-
-```
+!listing htgr/mhtgr/MHTGR.i block=kgraphite language=cpp
 
 ## MaterialProperties
 
@@ -129,16 +99,7 @@ can be constants or temperature dependent as defined in
 the Functions block. For example, the properties of graphite 
 are input as
 
-```language=bash
-
-[./graphite-mat]                                 # Material name
-    type = SolidMaterialProps
-    k = kgraphite                                # Thermal conductivity
-    Cp = cpgraphite                              # Specific heat
-    rho = rhographite                            # Density
-[../]
-
-```
+!listing htgr/mhtgr/MHTGR.i block=graphite-mat language=cpp
 
 The thermal conductivity is defined by the function `kgraphite` 
 which appears under the `Functions` block. 
@@ -163,14 +124,7 @@ blower and junctions for connecting components. In the reactor
 component, the reactor power is an input and this includes 
 normal operating power and decay heat.  
 
-```language=bash
-
-[./reactor]
-    type = ReactorPower
-    initial_power = 600e6
-  [../]
-
-```
+!listing htgr/mhtgr/MHTGR.i block=reactor language=cpp
 
 The coolant channels are modeled as 1-D fluid flow components, 
 and heat structures are modeled as 2-D components. Table 1
@@ -201,69 +155,21 @@ its two adjacent heat structures through the variable
 `HT_surface_area_density_right` and  
 `HT_surface_area_density_left` such as shown below
 
-```
-
-[./R4_9-L]
-    type = PBCoupledHeatStructure
-    input_parameters = R4_LHS_param
-    name_comp_right= R4C-9
-    HT_surface_area_density_right = ${aw_R4-9-L}
-    width_of_hs = ${w_R4-9-L}
-    radius_i = ${rad_R4-9-L}
-[../]
-
-[./R4C-9]
-    type = PBOneDFluidComponent
-    position = '0 ${rad_R4C-9} 0'
-    input_parameters = R4_channelParam
-[../]
-
-[./R4_9-R]
-    type = PBCoupledHeatStructure
-    input_parameters = R4_RHS_param
-    name_comp_left= R4C-9
-    HT_surface_area_density_left = ${aw_R4-9-R}
-    width_of_hs = ${w_R4-9-R}
-    radius_i = ${rad_R4-9-R}
-[../]
-
-```
+!listing htgr/mhtgr/MHTGR.i language=cpp
+        start=R4_9-L
+        end=R4_10-L
 
 Adjacent heat structures are connected using `SurfaceCoupling`
 to assure temperature continuity 
 
-```
-
-[./Gap_R4_9]
-    type = SurfaceCoupling
-    use_displaced_mesh = true
-    coupling_type = GapHeatTransfer
-    surface1_name = 'R4_9-R:outer_wall'
-    surface2_name = 'R4_10-L:inner_wall'
-    width = 1e-20
-    radius_1 = ${rad_R4-9-L}
-    length = ${axial_length_1}
-    eos = eos
-    h_gap =  ${hGap_cond}
-[../]
-
-```
+!listing htgr/mhtgr/MHTGR.i block=Gap_R4_9 language=cpp
 
 In SAM, 1-D components are connected using 
 `PBSingleJunction`.  The following input is 
 used to connect  the outlet of component `R4C-1` to 
 the inlet of component `R4CUP-1`. 
 
-```
-
-[./Branch_R4CUP-1]
-   	 type = PBSingleJunction
-     inputs = 'R4C-1(out)'
-     outputs = 'R4CUP-1(in)'
-   	 eos = eos
-[../]
-
-```
+!listing htgr/mhtgr/MHTGR.i block=Branch_R4CUP-1 language=cpp
 
 Heat exchangers are modeled using `PBHeatExchanger` including the 
 fluid flow in the primary and secondary sides, convective heat transfer, 
@@ -272,41 +178,21 @@ and heat conduction in tube wall.  Pumps are modeled using `PBPump`.
 ## Postprocessors
 
 This block is used to specify the output variables written 
-to a `csv` file that can be further processed in Excel. 
+to a `csv` file that can be further processed in Excel or Python. 
 For example, to output the temperature and velocity in `R3C-11`:
 
-```
-
-[./R3C11_T_in]
-    type = ComponentBoundaryVariableValue
-    variable = temperature
-    input = R3C-11(in)
-[../]
-
-[./R3C11_V_in]
-    type = ComponentBoundaryVariableValue
-    variable = velocity
-    input = R3C-11(in)
-[../]
-
-```
+!listing htgr/mhtgr/MHTGR.i language=cpp
+        start=R3C11_T_in
+        end=R4C11_T_in
 
 To output the maximum temperature in `R6`:
 
-```
-
-[./R6_max]
-    type = NodalMaxValue
-    block = 'R6:hs0'
-    variable = T_solid
-[../]
-
-```
+!listing htgr/mhtgr/MHTGR.i block=R6_max language=cpp
 
 ## Preconditioning
 
 This block describes the preconditioner used by the solver.  
-New user can leave this block unchanged.
+New users can leave this block unchanged.
 
 ## Executioner
 
