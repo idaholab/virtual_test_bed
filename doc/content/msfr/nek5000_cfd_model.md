@@ -108,7 +108,7 @@ and exits from the other side.
 In this section, we are going through the detailed setup of the Nek5000 case. 
 The 2-D axisymmetric core case will be solved with the 
 $k-\tau$ RANS model. To turn on the $k-\tau$ model, one can specify the model flag
-to 4 in the Nek user file. An exmaple is given below. 
+to 4 in the Nek user file. An example is given below. 
 
 ```language=fortran
       subroutine usrdat3()
@@ -149,8 +149,8 @@ c     id_w = 1 ! cheap_dist (path to wall, may work better for periodic boundari
 
 As for the initial conditions, one can either utilize the trivial fields of zero 
 for velocity and scalars, or load the existing solutions by providing the path 
-to the restart file in the par file. In the case of user-specified initial 
-conditions, one can update the useric function in the user file. 
+to the restart file in the `par` file. In the case of user-specified initial 
+conditions, one can update the `useric` function in the user file. 
 
 ```language=fortran
       subroutine useric(ix,iy,iz,eg) ! set up initial conditions
@@ -213,7 +213,7 @@ axisymmetric axis can be handled in a default manner, the `userbc()` only
 contains the specifications of inlet boundary. A constant velocity is 
 given at the inlet, and the direction of inlet
 velocity is parallel to the inlet channel. 
-Note that a turb_in function is used to compute the proper bc values 
+Note that a `turb_in` function is used to compute the proper bc values 
 for $k$ and $\tau$ variables on the inlet boundary. 
 
 ```language=fortran
@@ -248,7 +248,7 @@ It is recommended to use non-dimensional parameters for Nek5000 simulations.
 As a result, a set of dimensionless input parameters are provided in the 
 current case. One of key parameters is the Reynolds number ($UL/\nu$), 
 which indicates the level of turbulence intensity in the system. All the key 
-input parameters are given in the par file, and a code snippet of the velocity
+input parameters are given in the `par` file, and a code snippet of the velocity
 solving is as follows
 
 ```language=bash

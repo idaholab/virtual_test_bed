@@ -1,12 +1,12 @@
 # Running the Input File
 
 SAM can be run in Linux, Unix, and MacOS.  Due to its 
-dependence on MOOSE, SAM is not compatible with Windows machine.  
+dependence on MOOSE, SAM is not compatible with Windows.  
 SAM can be run from the shell prompt as shown below
 
 ```language=bash
 
-sam-opt -i mhtgr.i
+/projects/SAM/sam-opt -i mhtgr.i
 
 ```
 
