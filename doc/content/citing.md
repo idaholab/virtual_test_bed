@@ -12,11 +12,13 @@ the following:
          title = {A Workflow Leveraging MOOSE Transient Multiphysics Simulations to Evaluate the Impact of Thermophysical Property Uncertainties on Molten-Salt Reactors},
          author = {A. Abou-Jaoude and S. Harper and G. Giudicelli and P. Balestra and S. Schunert and N.Martin and A. Lindsay and M. Tano},
          journal = {Submitted to Annals of Nuclear Energy},
-         year = 2021}
+         year = 2021
+       }
 ```
 
 - Molten Salt Fast Reactor (Nek5000 model)
 !alert construction title=In preparation
+
 
 - Pebble bed fluoride-salt cooled high temperature reactor (Pronghorn-Griffin core model)
 
@@ -26,14 +28,16 @@ the following:
          author = {Guillaume Giudicelli and Alexander Lindsay and Paolo Balestra and Robert Carlsen and Javier Ortensi and Derek Gaston and Mark DeHart and Abdalla Abou-Jaoude and April J Novak},
          year = {2021},
          journal = {Proceedings of the International Conference of Mathematics and Computation for Nuclear Science and Engineering}
-}
+       }
 ```
 
 - Pebble bed fluoride-salt cooled high temperature reactor reflector model
 !alert construction title=In preparation
 
+
 - Sodium Fast Reactor
 !alert construction title=In preparation
+
 
 - High Temperature Gas Reactor
 !alert construction title=In preparation
@@ -70,7 +74,8 @@ Griffin
             institution = "Idaho National Laboratory",
             author = {Mark DeHart, Fredrick N. Gleicher, Vincent Laboure, Javier Ortensi, Zachary Prince, Sebastian Schunert, Yaqi Wang},
             number = {INL/EXT-19-54247},
-            year = 2020}
+            year = 2020
+          }
 ```
 
 Nek5000
@@ -80,10 +85,12 @@ Nek5000
       Author = "Paul F. Fischer, James W. Lottes and Stefan G. Kerkemeier",
       Title  = "{nek5000} Open source spectral element {CFD} solver}",
       Note   = "http://nek5000.mcs.anl.gov",
-      Year   = "2008"}
+      Year   = "2008"
+    }
 ```
 
 NekRS
+
 ```
 @misc{fischer2021nekrs,
       title={NekRS, a GPU-Accelerated Spectral Element Navier-Stokes Solver},
@@ -92,7 +99,7 @@ NekRS
       eprint={2104.05829},
       archivePrefix={arXiv},
       primaryClass={cs.PF}
-}
+    }
 ```
 
 Pronghorn
@@ -106,7 +113,7 @@ Pronghorn
          doi = {https://doi.org/10.1080/00295450.2020.1825307},
          url = {https://www.tandfonline.com/doi/full/10.1080/00295450.2020.1825307},
          keywords = {Pronghorn, pebble bed reactor, MOOSE}
-}
+       }
 ```
 
 SAM
@@ -117,5 +124,6 @@ SAM
             institution = {Argonne National Laboratory},
             author = R. Hu,
             number = {ANL/NE-17/4},
-            year = 2017}
+            year = 2017
+          }
 ```
