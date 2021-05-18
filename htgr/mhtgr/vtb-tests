@@ -1,0 +1,14 @@
+[Tests]
+  [mhtgr_sam]
+    type = RunApp
+    input = 'MHTGR.i'
+    check_input = True
+    executable_pattern = 'sam*'
+  []
+  [mhtgr_bluecrab]
+    type = RunApp
+    input = 'MHTGR.i'
+    check_input = True
+    executable_pattern = 'blue_crab*'
+  []
+[]
