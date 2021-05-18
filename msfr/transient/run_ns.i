@@ -41,7 +41,7 @@ beta6 = 0.000184087
 [Mesh]
   [fmg]
     type = FileMeshGenerator
-    file = '../steady/run_neutronics_out_ns0.e'
+    file = '../steady/sample_output/run_neutronics_out_ns0.e'
     use_for_exodus_restart = true
   []
 []

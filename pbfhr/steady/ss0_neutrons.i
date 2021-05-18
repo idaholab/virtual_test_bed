@@ -22,7 +22,7 @@ initial_salt_temperature = 923.15  # (K)
 
 # Power ------------------------------------------------------------------------
 total_power          = ${fparse 236.0e6} # Total reactor Power (W)
-dh_fract             = 0 #6.426e-2               # Decay heat fraction at t = 0.0s.
+dh_fract             = 6.426e-2               # Decay heat fraction at t = 0.0s.
 fis_fract            = ${fparse 1 - dh_fract} # Fission power fraction at t = 0.0s.
 
 # ==============================================================================

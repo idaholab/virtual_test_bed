@@ -1,7 +1,7 @@
 [Mesh]
   [fmg]
     type = FileMeshGenerator
-    file = '../steady/run_neutronics_out.e'
+    file = '../steady/sample_output/run_neutronics_out.e'
   []
 []
 
