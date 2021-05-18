@@ -349,9 +349,9 @@ restart_file = 'mk1_fhr.e'  # uncomment near bottom of input file to use restart
 [Executioner]
   type = PicardEigen
 
-  solve_type = 'PJFNK'  # -pc_factor_mat_solver_package  superlu_dist
-  petsc_options_iname = '-pc_type -ksp_gmres_restart'
-  petsc_options_value = 'lu 50'
+  solve_type = 'PJFNK'
+  petsc_options_iname = '-pc_type -pc_hypre_type -ksp_gmres_restart'
+  petsc_options_value = 'hypre boomeramg 100'
   line_search = none
   snesmf_reuse_base = false
 
