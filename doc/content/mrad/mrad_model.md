@@ -26,6 +26,6 @@ Multiphysics simulations performed leverage the MOOSE MultiApps system to couple
 !media media/mrad/mrad_geometry/mrad_coupling.png
        style=width:50%
 
-The list and location of each heat-pipe in the 1/5 code is provided in:
+The list and location of each heat-pipe in the 1/6 code is provided in:
 
 !listing /mrad/steady/hp_centers.txt 

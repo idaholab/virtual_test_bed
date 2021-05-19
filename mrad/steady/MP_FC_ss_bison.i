@@ -10,7 +10,7 @@
 []
 
 [Mesh]
-  file = ../../MESH/3D_Full_core_FY21_density_level_9.e
+  file = ../mesh/mrad_mesh.e
 []
 
 [Variables]

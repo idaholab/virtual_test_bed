@@ -4,7 +4,7 @@
 ## Heat Pipe Effective Heat Conduction Model                                  ##
 ################################################################################
 
-# Total heat removed/added to heat pipe
+# Average heat removed/added to heat pipe
 Q_hp = 1800.
 
 # Wick characteristics
@@ -112,7 +112,6 @@ num_sides = 28 # full_core level 9
 alpha = ${fparse 2 * pi / num_sides}
 perimeter_correction = ${fparse 0.5 * alpha / sin(0.5 * alpha)} # polygonization correction factor for perimeter
 area_correction = ${fparse sqrt(alpha / sin(alpha))} # polygonization correction factor for area
-#corr_factor = ${fparse 2 / R_clad_o / area_correction / area_correction} #unit cell
 corr_factor = ${fparse 2 * R_clad_o / R_hp_hole / R_hp_hole / area_correction / area_correction} #full-core
 
 [FluidProperties]
@@ -227,14 +226,6 @@ corr_factor = ${fparse 2 * R_clad_o / R_hp_hole / R_hp_hole / area_correction / 
     value_column = master_flux
     vectorpostprocessor_name = flux_vpp
   []
-  # JWT: ? Not sure if this is used
-  # JWT:? Is "heat_flux" from the code? It's not from the input file.
-  #[scaled_heat_flux_fcn]
-  #  type = ParsedFunction
-  #  vars = 'heat_flux scale_fcn'
-  #  vals = 'evaporator_boundary:integral scale_fcn'
-  #  value = 'heat_flux * scale_fcn'
-  #[]
   [scale_fcn]
     type = ParsedFunction
     vars = 'catastrophic_pp recoverable_pp operational_pp'
@@ -302,7 +293,7 @@ corr_factor = ${fparse 2 * R_clad_o / R_hp_hole / R_hp_hole / area_correction / 
     value2 = Integral_BC_Cond
     execute_on = 'INITIAL TIMESTEP_END'
   []
-  [bc_scale_pp] # A trivial unity PP
+  [bc_scale_pp] 
     type = FunctionValuePostprocessor
     function = 1.0
     execute_on = 'INITIAL TIMESTEP_END'
@@ -312,14 +303,6 @@ corr_factor = ${fparse 2 * R_clad_o / R_hp_hole / R_hp_hole / area_correction / 
     variable = operational_aux
     execute_on = 'initial timestep_begin TIMESTEP_END'
   []
-  # JWT:? Not sure if this gets used
-  #[scaled_heat_flux]
-  #  type = FunctionValuePostprocessor
-  #  function = scaled_heat_flux_fcn
-  #  execute_on = 'initial timestep_end'
-  #[]
-  # JWT: ? If we want to actually use the limits (i.e. bc_scale_pp is not just 1.0),
-  # then we probably need to set limit_condenser_side = true.
   [catastrophic_pp]
     type = HeatRemovalRateLimitScale
     heat_addition_pps = 'evaporator_boundary:integral'
