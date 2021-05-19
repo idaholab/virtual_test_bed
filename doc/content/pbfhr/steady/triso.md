@@ -9,7 +9,7 @@ from the fuel matrix.
 ## Geometry
 
 Similar to the pebbles, we represent the extended TRISO particle with a 1D spherical mesh.
-The `CartesianMeshGenerator` allows us to align mesh boundaries with the geometrical
+The [CartesianMeshGenerator](https://mooseframework.inl.gov/source/meshgenerators/CartesianMeshGenerator.html) allows us to align mesh boundaries with the geometrical
 boundaries of each material in the TRISO. The graphite matrix around the TRISO particles is
 represented by an additional layer of graphite, sized to preserve the total packing fraction of graphite.
 
@@ -19,7 +19,7 @@ represented by an additional layer of graphite, sized to preserve the total pack
 
 The temperature variable in this simulation is the unshifted temperature, or the
 temperature solution of the microscale equation, not the physical temperature. We use the
-auxiliary system, an `AuxKernel` and an `AuxVariable` to compute the physical temperature, which
+auxiliary system, an [AuxKernel](https://mooseframework.inl.gov/moose/syntax/AuxKernels/) and an [AuxVariable](https://mooseframework.inl.gov/syntax/AuxVariables/) to compute the physical temperature, which
 would be used to compute the material properties.
 
 !listing /pbfhr/steady/ss5_fuel_matrix.i block=Variables AuxVariables AuxKernels
@@ -60,7 +60,7 @@ superseded by the normalization condition imposed later on the shifted temperatu
 
 ## Outputs
 
-We measure using `Postprocessors` the maximum and average temperatures of each phase, which will be transferred for
+We measure using [Postprocessors](https://mooseframework.inl.gov/syntax/Postprocessors/index.html) the maximum and average temperatures of each phase, which will be transferred for
 visualization and analysis purposes to a core-scale application.
 
 !listing /pbfhr/steady/ss5_fuel_matrix.i block=Postprocessors

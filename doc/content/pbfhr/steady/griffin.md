@@ -14,9 +14,9 @@ We first define in the header:
   Griffin has the capability to handle decay heat generation.
 
 
-The next block is a `[GlobalParams]` block. These parameters will be inserted in every block in the input,
+The next block is a [GlobalParams](https://mooseframework.inl.gov/syntax/GlobalParams/index.html) block. These parameters will be inserted in every block in the input,
 and are used to reduce the size of the input file. Here we specify the group cross section library. We will give
-additional details about the group cross sections in the `[Materials]` block.
+additional details about the group cross sections in the [Materials](https://mooseframework.inl.gov/moose/syntax/Materials/) block.
 
 !listing /pbfhr/steady/ss0_neutrons.i block=GlobalParams
 
@@ -34,25 +34,25 @@ The next part of the input specifies the geometry. The geometry in MOOSE is desc
 MOOSE also contains basic mesh generation capabilities which can be leveraged to generated rectilinear meshes.
 However, for realistic reactor models, it is more common to use an external meshing software. We used [Cubit](https://cubit.sandia.gov/) to
 generate meshes for the Mk1-FHR. The mesh may be shared between applications, but it is generally recommended to
-tailor the mesh to the physics equations being solved. We specify the external mesh using a `FileMeshGenerator`.
+tailor the mesh to the physics equations being solved. We specify the external mesh using a [FileMeshGenerator](https://mooseframework.inl.gov/source/meshgenerators/FileMeshGenerator.html).
 
 !listing /pbfhr/steady/ss0_neutrons.i block=Mesh/mesh_reader
 
 This mesh is then modified using MOOSE mesh generators. We remove the brick insulation from the system using a
-`BlockDeletionGenerator` as its influence on the neutronics is negligible. Before that, we added a sideset, a
+[BlockDeletionGenerator](https://mooseframework.inl.gov/source/meshgenerators/BlockDeletionGenerator.html) as its influence on the neutronics is negligible. Before that, we added a sideset, a
 collection of element sides, to the mesh. This new sideset is used to define the boundary condition for the outer
 boundary of the core.
 
 !listing /pbfhr/steady/ss0_neutrons.i block=Mesh/new_boundary
 
-Variables and kernels need not be defined when using Griffin, as the `TransportSystems` block is an `Action` in
+Variables and kernels need not be defined when using Griffin, as the `TransportSystems` block is an [Action](https://mooseframework.inl.gov/source/actions/Action.html) in
 MOOSE vocabulary that takes care of defining those. We will explain those blocks more in details for the Pronghorn
-input, which does not use an `Action`.
+input, which does not use an [Action](https://mooseframework.inl.gov/source/actions/Action.html).
 
-`AuxVariables` are used to define fields/variables that are not solved for. They may be used for coupling, for
+[AuxVariables](https://mooseframework.inl.gov/syntax/AuxVariables/) are used to define fields/variables that are not solved for. They may be used for coupling, for
 computing material properties, for outputting quantities of interests, and many other uses. In this input file,
 `Tfuel` and `Tsalt` are used to couple to the thermal hydraulics simulation. These fields are populated by
-`Transfers` from the Pronghorn app, further in the input file.
+[Transfers](https://mooseframework.inl.gov/syntax/Transfers/) from the Pronghorn app, further in the input file.
 
 !listing /pbfhr/steady/ss0_neutrons.i block=AuxVariables/Tfuel AuxVariables/Tsalt
 
@@ -61,7 +61,7 @@ The `CR_insertion` auxiliary variable is the insertion of the control rod in the
 
 !listing /pbfhr/steady/ss0_neutrons.i block=AuxVariables/CR_insertion
 
-The next three `AuxVariables` are the fission, decay heat and total power densities. They are computed
+The next three [AuxVariables](https://mooseframework.inl.gov/syntax/AuxVariables/) are the fission, decay heat and total power densities. They are computed
 from `inst_power_density` which is computed by Griffin. The decay heat is important to track for loss of flow
 transients, the total power density will be required as the heat source in the thermal hydraulics simulation.
 
@@ -69,19 +69,19 @@ transients, the total power density will be required as the heat source in the t
 
 The fluxes output by Griffin are normalized with regards to the solver fission source. To output the physical fluxes
 normalized to the real core power, which may be used to compute material damage in the fuel for example,
-we define the `scaled_sflux_gi` `AuxVariables`.
+we define the `scaled_sflux_gi` [AuxVariables](https://mooseframework.inl.gov/syntax/AuxVariables/).
 
 !listing /pbfhr/steady/ss0_neutrons.i block=AuxVariables/scaled_sflux_g0
 
-`AuxKernels` are used to operate on `AuxVariables`. They may scale, multiply, add and perform many other operations.
-They may be block restricted, as some `AuxVariables` are not defined over the entire domain, or they may inherit the
+[AuxKernels](https://mooseframework.inl.gov/moose/syntax/AuxKernels/) are used to operate on [AuxVariables](https://mooseframework.inl.gov/syntax/AuxVariables/). They may scale, multiply, add and perform many other operations.
+They may be block restricted, as some [AuxVariables](https://mooseframework.inl.gov/syntax/AuxVariables/) are not defined over the entire domain, or they may inherit the
 same block restriction as the variable.
 
 !listing /pbfhr/steady/ss0_neutrons.i block=AuxKernels
 
-Functions may be defined in MOOSE in a `Functions` block. The control rod position is set in this input using
+Functions may be defined in MOOSE in a [Functions](https://mooseframework.inl.gov/syntax/Functions/index.html) block. The control rod position is set in this input using
 a function. Since it's a steady state calculation, we could also have simply used an initial condition. The
-`FunctionAux` is using the function to set the `CR_insertion` auxiliary variable.
+[FunctionAux](https://mooseframework.inl.gov/source/auxkernels/FunctionAux.html) is using the function to set the `CR_insertion` auxiliary variable.
 
 !listing /pbfhr/steady/ss0_neutrons.i block=Functions
 
@@ -97,13 +97,13 @@ discontinuities in the fission group cross sections
 
 !listing /pbfhr/steady/ss0_neutrons.i block=PowerDensity
 
-The group cross secions are distributed through the geometry using the `[Materials]` block. Each block in this
+The group cross secions are distributed through the geometry using the [Materials](https://mooseframework.inl.gov/moose/syntax/Materials/) block. Each block in this
 section is a `Material` object defining the group cross section in a block. We will go over the `pebble_bed`
 material, the group cross section of the salt-pebble homogenized mixture in the bed.
 
 The `CoupledFeedbackNeutronicsMaterial` is used to take into account the effect of the fuel and salt temperature on
 the group cross section. The cross section library name and the file containing it are specified using the
-`GlobalParams` block. The temperature dependence is captured using a tabulation. The names used in the tabulation
+[GlobalParams](https://mooseframework.inl.gov/syntax/GlobalParams/index.html) block. The temperature dependence is captured using a tabulation. The names used in the tabulation
 are matched to the variables in the simulation using `grid_names` and `grid_variables`. The correct entry in the
 library is selected using the `material_id`. Since macroscopic group cross sections are used, the isotopes aren't
 specified and a pseudo-isotope is used.
@@ -113,10 +113,9 @@ specified and a pseudo-isotope is used.
 The boundary conditions were already specified by the `TransportSystems` action so no additional boundary condition
 is specified.
 
-The `[Executioner]` block specifies how to solve the equation system. We choose an eigenvalue executioner,
+The [Executioner](https://mooseframework.inl.gov/source/executioners/Executioner.html) block specifies how to solve the equation system. We choose an eigenvalue executioner,
 `PicardEigen`, as a criticality calculation is
 an eigenvalue problem.
-SOLVER
 
 The number of non-linear iterations and the non-linear relative and absolute convergence criteria may be
 respectively reduced and loosened to reduce the computational cost of the solution at the expense of its
@@ -124,20 +123,20 @@ convergence.
 
 !listing /pbfhr/steady/ss0_neutrons.i block=Executioner
 
-The Pronghorn sub-application is created by the `[MultiApps]` block. Since we are seeking a steady state solution, we
+The Pronghorn sub-application is created by the [MultiApps](https://mooseframework.inl.gov/syntax/MultiApps/index.html) block. Since we are seeking a steady state solution, we
 want the thermal hydraulics problem to be fully solved at every multiphysics iteration. This is accomplished by a
-`FullSolveMultiApp`. The `execute_on` field is set to `timestep_end` to have the thermal hydraulics solve be
+[FullSolveMultiApp](https://mooseframework.inl.gov/source/multiapps/FullSolveMultiApp.html). The `execute_on` field is set to `timestep_end` to have the thermal hydraulics solve be
 performed after the neutronics solve. This means that for the first multiphysics iteration, the temperature fields
 in the neutronics solve will be set to an initial guess, while the power distribution in the thermal hydraulics
 solve will be updated once already. `0 0 0` is specified for the position since the two meshes are aligned.
 
 !listing /pbfhr/steady/ss0_neutrons.i block=MultiApps
 
-The coupling to the thermal hydraulics simulation is done by using a `MultiAppProjectionTransfer` of the power
+The coupling to the thermal hydraulics simulation is done by using a [MultiAppProjectionTransfer](https://mooseframework.inl.gov/source/transfers/MultiAppProjectionTransfer.html) of the power
 density. This transfer is conservative, in that the total power in both applications is preserved. This is
 important for the multiphysics coupling, as the power will not fluctuate in the thermal hydraulics simulation based
 on the power density profile and the difference between the neutronics and thermal hydraulics meshes.
-`MultiAppInterpolationTransfer` are used to transfer the solid and fluid phase temperature fields. Conservation is
+[MultiAppInterpolationTransfer](https://mooseframework.inl.gov/source/transfers/MultiAppInterpolationTransfer.html) are used to transfer the solid and fluid phase temperature fields. Conservation is
 not as important in this direction, as discretization errors on the temperature do not propagate to large errors in
 the flux distribution.
 
@@ -148,16 +147,16 @@ run instead of calculating it again. It is important that both main and auxiliar
 multiapp is executed at the end of the timestep, the restarted solver would not have access to the coupled
 calculation temperature fields when it restarts.
 
-Finally, the `[Outputs]` block indicates which types of outputs the simulation should return. We specify here three
+Finally, the [Outputs](https://mooseframework.inl.gov/syntax/Outputs/index.html) block indicates which types of outputs the simulation should return. We specify here three
 types:
 
-- exodus. Exodus files contain the mesh, the (aux)variables and global quantities such as postprocessors. We can
+- exodus. [Exodus](https://mooseframework.inl.gov/source/outputs/Exodus.html) files contain the mesh, the (aux)variables and global quantities such as postprocessors. We can
   use Paraview to view the spatial dependence of each field. They may be used to restart simulations.
 
-- comma-separated values, or csv. This file reports the values of the postprocessors at each timestep. They are
+- comma-separated values, or [csv](https://mooseframework.inl.gov/source/outputs/CSV.html). This file reports the values of the postprocessors at each timestep. They are
   useful for easily importing then plotting the simulation results using Python or Matlab.
 
-- checkpoint files. Checkpoint files are used solely for restarting simulations. Unlike Exodus files, they also
+- checkpoint files. [Checkpoint](https://mooseframework.inl.gov/source/outputs/Checkpoint.html) files are used solely for restarting simulations. Unlike Exodus files, they also
   contain all the subapp information, so only the master app checkpoint files are necessary. Checkpoint files are
   output at a regular interval, specified by the `num_files` field.
 

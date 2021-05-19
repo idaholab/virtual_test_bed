@@ -5,7 +5,7 @@ core. In the same input file, we model the heat transfer in the solid phase in t
 in the solid components around the core, for a total of five equations: conservation of mass, x- and y-momentum (in RZ),
 fluid and solid energy.
 
-We could have used another multiapp setup to compute the solid temperature, with the
+We could have used another [MultiApp](https://mooseframework.inl.gov/syntax/MultiApps/index.html) setup to compute the solid temperature, with the
 justification that it evolves on a longer timescale so it takes longer to reach steady state. However, the cost of
 the more expensive full-core solves and of the additional fluid flow solves, while the solid temperature is converging,
 is sufficiently offset by not needing to iterate the coupling between two applications. The workflow is also generally
@@ -21,13 +21,13 @@ We first define in the input file header physical quantities such as the pebble 
 !listing /pbfhr/steady/ss1_combined.i start=blocks_fluid =  end=power_density =
 
 We also define a few global parameters that will be added to every block that may use them. This is
-done to reduce the length of the input file and improve its readability. Once the `Actions` syntax is implemented, this will be automatically streamlined for the user.
+done to reduce the length of the input file and improve its readability. Once the [Actions](https://mooseframework.inl.gov/source/actions/Action.html) syntax is implemented, this will be automatically streamlined for the user.
 
 !listing /pbfhr/steady/ss1_combined.i block=GlobalParams
 
 ## Mesh and geometry
 
-The mesh input is standardized across MOOSE applications. The `[Mesh]` block is similar to the
+The mesh input is standardized across MOOSE applications. The [Mesh](https://mooseframework.inl.gov/application_usage/mesh_block_type.html) block is similar to the
 one we saw for Griffin. We load a different mesh file for this application. The mesh for a CFD simulation should be
 as aligned as possible to the flow lines to avoid false diffusion. The CFD
 mesh should also be as orthogonal as possible as there is no skewness correction implemented.
@@ -36,7 +36,7 @@ mesh should also be as orthogonal as possible as there is no skewness correction
 
 The geometry is also specified in the `WallDistance` model, which is used to account for the presence
 of the wall in material closures. For the Mk1-FHR we use a `WallDistanceAngledCylindricalBed` which
-is specific to the shape of this core. This is defined in the `[UserObjects]` block.
+is specific to the shape of this core. This is defined in the [UserObjects](https://mooseframework.inl.gov/syntax/UserObjects/) block.
 
 !listing /pbfhr/steady/ss1_combined.i block=UserObjects/wall_dist
 
@@ -135,19 +135,19 @@ The first term in [eq:x_mom]---the momentum time derivative---is input with the 
 
 !listing /pbfhr/steady/ss1_combined.i block=FVKernels/vel_x_time
 
-The second term---the advection of momentum---is handled by a `PINSFVMomentumAdvection` kernel
+The second term---the advection of momentum---is handled by a [PINSFVMomentumAdvection](https://mooseframework.inl.gov/source/fvkernels/PINSFVMomentumAdvection.html) kernel
 
 !listing /pbfhr/steady/ss1_combined.i block=FVKernels/vel_x_advection
 
-The third term---the pressure gradient---is handled by a `PINSFVMomentumPressure` kernel,
+The third term---the pressure gradient---is handled by a [PINSFVMomentumPressure](https://mooseframework.inl.gov/source/fvkernels/PINSFVMomentumPressure.html) kernel,
 
 !listing /pbfhr/steady/ss1_combined.i block=FVKernels/u_pressure
 
-The third term---the effective diffusion---with a `PINSFVMomentDiffusion` kernel,
+The third term---the effective diffusion---with a [PINSFVMomentumDiffusion](https://mooseframework.inl.gov/source/fvkernels/PINSFVMomentumDiffusion.html) kernel,
 
 !listing /pbfhr/steady/ss1_combined.i block=FVKernels/vel_x_viscosity
 
-And the fourth term--the friction term---with a `PINSFVMomentumFriction` kernel,
+And the fourth term--the friction term---with a [PINSFVMomentumFriction](https://mooseframework.inl.gov/source/fvkernels/PINSFVMomentumFriction.html) kernel,
 
 !listing /pbfhr/steady/ss1_combined.i block=FVKernels/u_friction
 
@@ -260,8 +260,8 @@ in the solid phase.
 
 !listing /pbfhr/steady/ss1_combined.i block=AuxVariables
 
-There are numerous options to initialize a `Variable` or an `AuxVariable` in MOOSE. The `initial_condition` can
-be set directly in the relevant `Variables` block. It can also be set using an initial condition, `[ICs]`, block.
+There are numerous options to initialize a [Variable](https://mooseframework.inl.gov/syntax/Variables/) or an [AuxVariable](https://mooseframework.inl.gov/syntax/AuxVariables/) in MOOSE. The `initial_condition` can
+be set directly in the relevant [Variables](https://mooseframework.inl.gov/syntax/Variables/) block. It can also be set using an initial condition, [ICs](https://mooseframework.inl.gov/syntax/ICs/index.html), block.
 The velocity variables have to be initialized to a non-zero value, to avoid numerical
 issues with advection at 0 velocity. We initialize in this block the power distribution, which will be overriden
 by the power distribution provided by Griffin, and the solid temperature. The solid temperature can take a long
@@ -280,7 +280,7 @@ is done using the control system, which allows the functionalization of MOOSE in
 
 ## Boundary conditions
 
-Pronghorn finite-volume currently does not have an `Actions` system so the boundary conditions have to be explicitly
+Pronghorn finite-volume currently does not have an [Actions](https://mooseframework.inl.gov/source/actions/Action.html) system so the boundary conditions have to be explicitly
 defined for each equation, rather than simply indicate which boundary is a wall, inflow or outflow boundary.
 
 We first define the inlet of the core. We specify the velocity of the fluid at the inlet and its temperature. In
@@ -313,7 +313,7 @@ cylindrical boundary of the model, we define a fixed temperature boundary condit
 
 ## Material properties
 
-There are four main types of materials that may be found in Pronghorn input files:
+There are four main types of [materials](https://mooseframework.inl.gov/moose/syntax/Materials/) that may be found in Pronghorn input files:
 
 - solid material properties
 
@@ -326,7 +326,7 @@ There are four main types of materials that may be found in Pronghorn input file
 
 ### Solid material properties
 
-The properties of the firebrick around the core are specified directly, using an `ADGenericConstantMaterial`, neglecting their temperature dependence.
+The properties of the firebrick around the core are specified directly, using an [ADGenericConstantMaterial](https://mooseframework.inl.gov/source/materials/GenericConstantMaterial.html), neglecting their temperature dependence.
 
 !listing /pbfhr/steady/ss1_combined.i block=Materials/firebrick_properties
 
@@ -344,7 +344,7 @@ relation, further detailed below.
 
 !listing /pbfhr/steady/ss1_combined.i block=UserObjects/TRISO UserObjects/fuel_matrix UserObjects/pebble UserObjects/inner_reflector
 
-Finally, these materials, defined as user objects, are placed in each subdomain of the mesh in the `[Materials]` block.
+Finally, these materials, defined as user objects, are placed in each subdomain of the mesh in the [Materials](https://mooseframework.inl.gov/moose/syntax/Materials/) block.
 
 !listing /pbfhr/steady/ss1_combined.i block=Materials/solid_fuel_pebbles Materials/solid_blanket_pebbles Materials/plenum_and_OR Materials/IR Materials/barrel_and_vessel
 
@@ -376,8 +376,8 @@ closure inputs such as the Reynolds and Prandtl number.
 
 ## Solving the equations
 
-The `[Executioner]` block defines how the non-linear system will be solved. Since this is a transient problem,
-we are using a `Transient` executioner. Pronghorn makes use of automatic differentiation, more information
+The [Executioner](https://mooseframework.inl.gov/syntax/Executioner/index.html) block defines how the non-linear system will be solved. Since this is a transient problem,
+we are using a [Transient](https://mooseframework.inl.gov/moose/source/executioners/Transient.html) executioner. Pronghorn makes use of automatic differentiation, more information
 [here](https://mooseframework.inl.gov/magpie/automatic_differentiation/index.html), to compute an exact Jacobian,
 so we make use of the Newton method to solve the non-linear system.  The `petsc_options_iname/ivalue` specify a reasonably scaling
 pre-conditioner. The factor shift avoids numerical issues when there are zeros in the diagonal of the Jacobian,
@@ -399,7 +399,7 @@ An alternative strategy is to artificially decrease the specific heat capacity o
 
 We couple the thermal-hydraulics simulation with simulation of the pebbles spread throughout the core. The solid
 phase temperature is then the boundary condition to a heat conduction problem that allows us to examine the
-temperature profile in fueled and reflector pebbles. The sub-application is defined using the `[MultiApps]` block.
+temperature profile in fueled and reflector pebbles. The sub-application is defined using the [MultiApps](https://mooseframework.inl.gov/syntax/MultiApps/index.html) block.
 
 !listing /pbfhr/steady/ss1_combined.i block=MultiApps
 
@@ -430,7 +430,7 @@ We first define a few postprocessors to:
 !listing /pbfhr/steady/ss1_combined.i block=Postprocessors/heat_loss Postprocessors/energy_in_neg Postprocessors/energy_out Postprocessors/core_balance
 
 
-We then define an `Exodus` output. This will have the multi-dimensional distributions of the quantities Pronghorn
+We then define an [Exodus](https://mooseframework.inl.gov/source/outputs/Exodus.html) output. This will have the multi-dimensional distributions of the quantities Pronghorn
 solved for: the fluid velocities, the pressure and the temperature fields. We also include the material properties
 to help us understand the behavior of the core.
 

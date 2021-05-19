@@ -7,7 +7,7 @@ These are important to lead fuel performance studies, to verify that the pebbled
 design limitations in terms of temperature and burnup.
 
 We use a multiscale approach to resolve the pebble conditions within the reactor. We sample pebble locations
-over a coarse mesh using a `CentroidMultiApp`. There are two kinds of pebbles in the core: graphite pebbles in the
+over a coarse mesh using a [CentroidMultiApp](https://mooseframework.inl.gov/source/multiapps/CentroidMultiApp.html). There are two kinds of pebbles in the core: graphite pebbles in the
 outer reflector and fueled pebbles in the active region of the core.
 In the reflector, each sub-app is a 1D spherical heat conduction simulation.
 
@@ -23,18 +23,18 @@ As is the case with the graphite pebbles, the fuel pebbles are treated using a s
 
 !listing /pbfhr/steady/ss3_coarse_pebble_mesh.i block=MultiApps/fuel_pebble
 
-`MultiAppVariableValueSamplePostprocessorTransfer` and `MultiAppVariableValueSampleTransfer` allow us to sample the temperature
+[MultiAppVariableValueSamplePostprocessorTransfer](https://mooseframework.inl.gov/source/transfers/MultiAppVariableValueSamplePostprocessorTransfer.html) and [MultiAppVariableValueSampleTransfer](https://mooseframework.inl.gov/source/transfers/MultiAppVariableValueSampleTransfer.html) allow us to sample the temperature
 of the solid phase and the power density at these locations and populate a postprocessor / a variable respectively in the
 sub-app.
 
 !listing /pbfhr/steady/ss3_coarse_pebble_mesh.i block=Transfers/fuel_matrix_heat_source Transfers/pebble_surface_temp_1
 
-`MultiAppPostprocessorInterpolationTransfer` can interpolate from postprocessors in each of subapp at their
+[MultiAppPostprocessorInterpolationTransfer](https://mooseframework.inl.gov/source/transfers/MultiAppPostprocessorInterpolationTransfer.html) can interpolate from postprocessors in each of subapp at their
 specified location into auxiliary variables in the macroscale simulation.
 We use that to obtain the distribution throughout the core of the UO2, graphite matrix and outer shell temperatures.
 
 This can help the reactor analyst examine the most challenging regions in terms of fuel
-performance. They may also leverage the `Adaptivity` system to automatically refine the mesh, and therefore
+performance. They may also leverage the [Adaptivity](https://mooseframework.inl.gov/syntax/Adaptivity/) system to automatically refine the mesh, and therefore
 spawn more pebble simulations, in the regions of interest. Finally, having access to the temperature of each
 solid phase in the pebble allows for more accurate self-shielding calculations, for group cross section
 generation.
@@ -49,21 +49,20 @@ a 1D mesh in spherical coordinates.
 !listing /pbfhr/steady/ss4_graphite_pebble.i block=Mesh Problem
 
 The heat conduction equation with no source is described with a time derivative kernel
-and a diffusion kernel, specialized as `HeatConduction` kernels in the heat conduction module.
+and a diffusion kernel, specialized as [HeatConduction](https://mooseframework.inl.gov/modules/heat_conduction/index.html) kernels in the heat conduction module.
 
 !listing /pbfhr/steady/ss4_graphite_pebble.i block=Kernels
 
 The center of this spherical pebble is naturally a zero flux symmetry boundary condition. The
 temperature at the outer surface of the pebble is the temperature of the solid phase. This
-temperature is received from the main-app in a `Receiver` postprocessor. It is then used by a
-`PostprocessorDirichletBC` to set the boundary condition.
+temperature is received from the main-app in a [Receiver](https://mooseframework.inl.gov/source/postprocessors/Receiver.html) postprocessor. It is then used by a
+[PostprocessorDirichletBC](https://mooseframework.inl.gov/source/bcs/PostprocessorDirichletBC.html) to set the boundary condition.
 
 !listing /pbfhr/steady/ss4_graphite_pebble.i block=Postprocessors/pebble_surface_T BCs
 
 !alert note
 The pebble conduction simulations are led using a finite element discretization. While the kernels
-also exist for the finite volume discretization, the finite element discretization will remain in
-Bison simulations in future iterations of the model.
+also exist for the finite volume discretization, the finite element discretization will remain for future iterations of the model using Bison.
 
 ## Fueled pebble heat conduction multiscale simulation
 
@@ -128,7 +127,7 @@ The material definitions, and the mixing of material properties from different c
 is covered in the [macroscale thermal-hydraulics simulation input](pbfhr/steady/pronghorn.md).
 
 We solve the microscale equation in the fuel matrix with a separate simulation, using the
-`MultiApp` system. We pass the heat source to the microscale simulation, and receive the outer
+[MultiApp](https://mooseframework.inl.gov/syntax/MultiApps/index.html) system. We pass the heat source to the microscale simulation, and receive the outer
 surface temperature of the microscale particle. The maximum and average temperatures reached in
 the microscale simulations are also passed for postprocessing purposes.
 

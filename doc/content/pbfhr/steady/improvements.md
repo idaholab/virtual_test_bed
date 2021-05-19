@@ -5,34 +5,14 @@ will be addressed in the near future.
 
 ## Documentation
 
-- add mini summary with link to each block
-
-- add link to MOOSE pages (Direwolf, specific objects, object types)
-
-- add references
-
-- add a citing page
-
-- add reactor description
-
-- add coupling figure
-
-- add results section
+- add more references
 
 - add more information about all the executioners
-
-- add acknowledgement page
-
-- document validation basis for TH closures
-
-- check for dark-mode browser support
 
 
 ## Neutronics
 
 ### Model & Physics
-
-- add decay heat model
 
 - add rod cusping treatment
 
