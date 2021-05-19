@@ -17,6 +17,7 @@ the following:
 ```
 
 - Molten Salt Fast Reactor (Nek5000 model)
+
 !alert construction title=In preparation
 
 
@@ -32,14 +33,17 @@ the following:
 ```
 
 - Pebble bed fluoride-salt cooled high temperature reactor reflector model
+
 !alert construction title=In preparation
 
 
 - Sodium Fast Reactor
+
 !alert construction title=In preparation
 
 
 - High Temperature Gas Reactor
+
 !alert construction title=In preparation
 
 
