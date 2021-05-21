@@ -23,7 +23,8 @@
 # ==============================================================================
 # Problem Parameters -----------------------------------------------------------
 
-blocks_fluid = '3 4'
+blocks_pebbles = '3 4'
+blocks_fluid = '3 4 5'
 blocks_solid = '1 2 5 6 7 8 9'
 
 # Material compositions
@@ -50,14 +51,24 @@ solid_rho = 1780.0
 # solid_k = 26.0
 solid_cp = ${fparse 1697.0*heat_capacity_multiplier}
 
+# Outer reflector drag parameters
+# TODO: tune using CFD
+Ah          = 1337.76
+Bh          = 2.58
+Av          = 599.30
+Bv          = 0.95
+Dh          = 0.02582
+Dv          = 0.02006
+
 # Computation parameters
-velocity_interp_method = 'rc'
+velocity_interp_method = 'average'
 advected_interp_method = 'upwind'
 
 # Core geometry
 pebble_diameter  = 0.03
 bed_porosity     = 0.4
 IR_porosity      = 0
+OR_porosity      = 0.1123
 model_inlet_rin  = 0.45
 model_inlet_rout = 0.8574
 model_vol        = 10.4
@@ -77,10 +88,32 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
 
 [Mesh]
   # Mesh should be fairly orthogonal for finite volume fluid flow
+  # If you are running this input file for the first time, run core_with_reflectors.py
+  # in pbfhr/meshes using Cubit to generate the mesh
   [fmg]
     type = FileMeshGenerator
     file = '../meshes/core_CFD_0.06.e'
-    use_for_exodus_restart = true
+  []
+  [barrel]
+    type = SideSetsBetweenSubdomainsGenerator
+    primary_block = 5
+    paired_block = 6
+    input = fmg
+    new_boundary = 'barrel_wall'
+  []
+  [OR_inlet]
+    type = ParsedGenerateSideset
+    combinatorial_geometry = 'abs(y) < 1e-10'
+    new_sideset_name = 'OR_horizontal_bottom'
+    included_subdomain_ids = '5'
+    input = barrel
+  []
+  [OR_outlet]
+    type = ParsedGenerateSideset
+    combinatorial_geometry = 'abs(y - 5.3125) < 1e-10'
+    new_sideset_name = 'OR_horizontal_top'
+    included_subdomain_ids = '5'
+    input = OR_inlet
   []
 []
 
@@ -102,6 +135,7 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
 [Debug]
   # show_var_residual_norms = true
   # show_material_props = true
+  # show_actions = true
 []
 
 # ==============================================================================
@@ -129,9 +163,7 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
     initial_condition = 900
   []
   [temp_solid]
-    order = CONSTANT
-    family = MONOMIAL
-    fv = true
+    type = MooseVariableFVReal
   []
 []
 
@@ -281,14 +313,13 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
     variable = temp_solid
     coeff = 'kappa_s'
     block = ${blocks_fluid}
-    force_boundary_execution = true # to connect with the reflector
+    #TODO dont execute on the diffusion interface
   []
   [temp_solid_conduction]
     type = FVDiffusion
     variable = temp_solid
     coeff = 'k_s'
     block = ${blocks_solid}
-    # boundaries_to_not_force = 'bed_left bed_right'
   []
   [temp_solid_source]
     type = FVCoupledForce
@@ -311,8 +342,8 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
   [diffusion_interface]
     type = FVOneVarDiffusionInterface
     boundary = 'bed_left'
-    subdomain1 = '3 4'
-    subdomain2 = '1 2 5'
+    subdomain1 = '3 4 5'
+    subdomain2 = '1 2 6'
     coeff1 = 'kappa_s'
     coeff2 = 'k_s'
     variable1 = 'temp_solid'
@@ -333,8 +364,7 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
     family = MONOMIAL
     order = CONSTANT
     fv = true
-    initial_condition = ${bed_porosity}
-    block = '3 4'
+    block = ${blocks_fluid}
   []
 []
 
@@ -360,6 +390,18 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
     function = 350
     block = '9'
   []
+  [bed_porosity]
+    type = FunctionIC
+    variable = porosity
+    function = ${bed_porosity}
+    block = ${blocks_pebbles}
+  []
+  [OR_porosity]
+    type = FunctionIC
+    variable = porosity
+    function = ${OR_porosity}
+    block = '5'
+  []
 []
 
 [Functions]
@@ -367,15 +409,6 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
     type = PiecewiseLinear
     x = '1 3 5 10'
     y = '1e3 1e2 1e1 1'
-  []
-[]
-
-[Controls]
-  [mu_control]
-    type = RealFunctionControl
-    parameter = 'Materials/fluidprops/mu_multiplier'
-    function = 'mu_func'
-    execute_on = 'initial timestep_begin'
   []
 []
 
@@ -395,6 +428,19 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
     function = ${inlet_vel_y}
     boundary = 'bed_horizontal_bottom'
   []
+  [OR_inlet_vel_x]
+    type = INSFVInletVelocityBC
+    variable = vel_x
+    function = 1e-12
+    boundary = 'OR_horizontal_bottom'
+  []
+  [OR_inlet_vel_y]
+    type = INSFVInletVelocityBC
+    variable = vel_y
+    function = 1e-12
+    boundary = 'OR_horizontal_bottom'
+  []
+
   #TODO: Switch to a flux BC (eps * phi * T)
   [inlet_temp_fluid]
     type = FVDirichletBC
@@ -405,12 +451,12 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
 
   [free-slip-wall-x]
     type = INSFVNaturalFreeSlipBC
-    boundary = 'bed_left bed_right'
+    boundary = 'bed_left barrel_wall'
     variable = vel_x
   []
   [free-slip-wall-y]
     type = INSFVNaturalFreeSlipBC
-    boundary = 'bed_left bed_right'
+    boundary = 'bed_left barrel_wall'
     variable = vel_y
   []
 
@@ -425,7 +471,7 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
     type = INSFVOutletPressureBC
     variable = pressure
     function = 2e5   # not too far from atm for matprop evaluations
-    boundary = 'bed_horizontal_top'
+    boundary = 'bed_horizontal_top OR_horizontal_top'
   []
 []
 
@@ -494,21 +540,21 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
   [fluidprops]
     type = PronghornFluidProps
     block = ${blocks_fluid}
-    mu_multiplier = 1e3
+    mu_multiplier = mu_func
   []
 
   # closures in the pebble bed
   [alpha]
     type = WakaoPebbleBedHTC
-    block = ${blocks_fluid}
+    block = ${blocks_pebbles}
   []
   [drag]
     type = ErgunDragCoefficients
-    block = ${blocks_fluid}
+    block = ${blocks_pebbles}
   []
   [kappa]
     type = LinearPecletKappaFluid
-    block = ${blocks_fluid}
+    block = ${blocks_pebbles}
   []
   [kappa_s]
     type = PebbleBedKappaSolid
@@ -516,9 +562,31 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
     Youngs_modulus = 9e9
     Poisson_ratio = 0.136
     wall_distance = wall_dist
-    block = ${blocks_fluid}
+    block = ${blocks_pebbles}
     T_solid = temp_solid
     acceleration = '0 -9.81 0'
+  []
+
+  # closures in the outer reflector
+  [drag_OR]
+    type = FunctionAnisotropicDragCoefficients
+    Darcy_coefficient = '${fparse OR_porosity * Ah / Dh / Dh} ${fparse OR_porosity * Av / Dv / Dv} ${fparse OR_porosity * Av / Dv / Dv}'
+    Forchheimer_coefficient = '${fparse OR_porosity * Bh / Dh} ${fparse OR_porosity * Bv / Dv} ${fparse OR_porosity * Bv / Dv}'
+    block = '5'
+  []
+  [alpha_OR]
+    type = ADGenericConstantMaterial
+    prop_names = 'alpha'
+    prop_values = '0.0'
+    block = '5'
+  []
+  [kappa_OR]
+    type = KappaFluid
+    block = '5'
+  []
+  [kappa_s_OR]
+    type = VolumeAverageKappaSolid
+    block = '5'
   []
 []
 
@@ -615,7 +683,7 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
   l_tol     = 1e-8
   nl_max_its = 25
   nl_rel_tol = 5e-7
-  nl_abs_tol = 2e-7
+  nl_abs_tol = 5e-7
 
   # Automatic scaling
   automatic_scaling = true
@@ -699,7 +767,7 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
   []
   [mass_flow_out]
     type = VolumetricFlowRate
-    boundary = 'bed_horizontal_top'
+    boundary = 'bed_horizontal_top OR_horizontal_top'
     vel_x = 'vel_x'
     vel_y = 'vel_y'
     advected_variable = ${rho_fluid}
@@ -717,8 +785,10 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
     variable = pressure
     execute_on = 'INITIAL TIMESTEP_END'
   []
+
+  # Energy balance
   [heat_loss]
-    type = ADSideFluxIntegral
+    type = ADSideDiffusiveFluxIntegral
     boundary = 'brick_surface'
     variable = temp_solid
     diffusivity = 'k_s'
@@ -748,16 +818,32 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
     value1 = energy_out
     value2 = energy_in
   []
+
+  # Bypass
+  [mass_flow_OR]
+    type = VolumetricFlowRate
+    boundary = 'OR_horizontal_top'
+    vel_x = 'vel_x'
+    vel_y = 'vel_y'
+    advected_variable = ${rho_fluid}
+    execute_on = 'INITIAL TIMESTEP_END'
+  []
+  [bypass_fraction]
+    type = ParsedPostprocessor
+    pp_names = 'mass_flow_out mass_flow_OR'
+    function = 'mass_flow_OR / mass_flow_out'
+  []
 []
 
 [Outputs]
   csv = true
   hide = 'energy_in energy_in_neg energy_out'
-  [Exodus]
+  [exodus]
     type = Exodus
-    output_material_properties = true
+    # renaming variables for this is necessary for now, see #17905
+    # output_material_properties = true
   []
-  [CheckPoint]
+  [checkpoint]
     type = Checkpoint
     num_files = 2
     execute_on = 'FINAL'

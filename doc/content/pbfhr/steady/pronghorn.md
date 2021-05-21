@@ -273,10 +273,10 @@ Another important part of the simulation initialization is the viscosity ramp-do
 initialize a high-Reynolds number fluid simulation from an initial guess and let it relax to the steady state
 simulation. To avoid those numerical difficulties, we initialize the simulation with a very high viscosity, making
 the flow very slow and easy to solve for. We then ramp-down viscosity to its value from [!citep](serrano2013) over a few
-seconds. This is not particularly expensive considering the length of the relaxation pseudo-transient. It
-is done using the control system, which allows the functionalization of MOOSE input files.
+seconds. This is not particularly expensive considering the length of the relaxation pseudo-transient. The
+ramp down is performed using a piecewise linear function and a functionalized material property.
 
-!listing /pbfhr/steady/ss1_combined.i block=Functions Controls
+!listing /pbfhr/steady/ss1_combined.i block=Functions/mu_func
 
 ## Boundary conditions
 
