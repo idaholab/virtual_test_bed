@@ -1,6 +1,6 @@
 !config navigation breadcrumbs=False scrollspy=False
 
-# Virtual test bed
+# Virtual Test Bed
 
 Welcome to the Virtual Test Bed (VTB) repository!
 
@@ -23,7 +23,7 @@ Users will need to request access to the controlled NEAMS software from the [Nuc
 !alert note
 [Current link to the repository](https://gitlab.software.inl.gov/idaholab/virtual_test_bed)
 
-!media nric_logo.png style=width:40%
+!media nric_logo.png style=width:60%;float:Center
 
-!media neams_logo.jpeg style=width:30%
+!media neams_logo.jpeg style=width:30%;float:Center
 
