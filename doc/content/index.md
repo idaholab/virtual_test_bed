@@ -18,7 +18,7 @@ Users will need to request access to the controlled NEAMS software from the [Nuc
 
 [Pebble Bed Fluoride-Salt-Cooled High-Temperature Reactor (PB-FHR)](pbfhr/index.md)
 
-[Sodium Fast Reactor (SFR)](sfr/sfr.md)
+![Sodium Fast Reactor (SFR)](sfr/sfr.md)
 
 !alert note
 [Current link to the repository](https://gitlab.software.inl.gov/idaholab/virtual_test_bed)
