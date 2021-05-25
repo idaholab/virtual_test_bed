@@ -11,5 +11,3 @@ pbfhr/reflector/meshes/fluid.re2 filter=lfs diff=lfs merge=lfs -text
 msfr/steady/sample_output/run_neutronics_out.e filter=lfs diff=lfs merge=lfs -text
 msfr/steady/sample_output/run_neutronics_out_ns0.e filter=lfs diff=lfs merge=lfs -text
 fluid.re2 filter=lfs diff=lfs merge=lfs -text
-*.fld filter=lfs diff=lfs merge=lfs -text
-*.e filter=lfs diff=lfs merge=lfs -text
