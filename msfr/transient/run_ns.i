@@ -239,7 +239,7 @@ beta6 = 0.000184087
     block = 'fuel pump hx'
   []
   [v_buoyancy]
-    type = INSFVBoussinesqBodyForce
+    type = INSFVMomentumBoussinesq
     variable = v_y
     temperature = T
     gravity = '0 -9.81 0'
