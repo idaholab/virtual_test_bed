@@ -10,7 +10,7 @@
     type = RunApp
     input = 'bison_thermal_only.i'
     check_input = True
-    cli_args = "AuxKernels/active='GetPowerDensity_from_griffin' Transfers/active='temperature_to_mechanics disp_x_from_mechanics disp_y_from_mechanics'"
+    cli_args = "AuxKernels/active='GetPowerDensity_from_griffin' MultiApps/active='' Transfers/active=''"
     executable_pattern = 'bison*|blue_crab*|direwolf*'
   []
   [support_plate]

@@ -9,7 +9,7 @@ This repo is a National Reactor Innovation Center ([NRIC](https://nric.inl.gov/)
 The VTB repo hosts a wide variety of example challenge problems based on advanced reactor designs. This website contains the background and documentation for each use case. Click on a reactor type below to find out more. To access the corresponding inputs and supporting file, refer to the [repository](https://github.com/idaholab/virtual_test_bed).
 
 
-Users will need to request access to the controlled NEAMS software from the [Nuclear Computational Resource Center](https://inl.gov/ncrc/). For additional information on the VTB, please reach out to Dr. Abou-Jaoude at abdalla.aboujaoude.at.inl.gov. 
+Users will need to request access to the controlled NEAMS software from the [Nuclear Computational Resource Center](https://inl.gov/ncrc/). For additional information on the VTB, please reach out to Dr. Abou-Jaoude at abdalla.aboujaoude.at.inl.gov.
 
 
 [Molten Salt Fast Reactor (MSFR)](msfr/index.md)
@@ -20,11 +20,13 @@ Users will need to request access to the controlled NEAMS software from the [Nuc
 
 [Sodium Fast Reactor (SFR)](sfr/sfr.md)
 
+For contributing a new model, please see the [contribution guidelines](contributing.md).
+
 !alert note
-[Current link to the repository](https://gitlab.software.inl.gov/idaholab/virtual_test_bed)
+[Current link to the public repository](https://github.com/idaholab/virtual_test_bed)
+[Current link to the internal repository](https://gitlab.software.inl.gov/idaholab/virtual_test_bed)
 
 
 !media nric_logo.png style=width:60%;margin-left:20%;margin-right:auto
 
 !media neams_logo.jpeg style=width:30%;margin-left:35%;margin-right:auto
-
