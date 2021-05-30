@@ -9,8 +9,8 @@ clad_thickness       = 0.000625
 slug_diameter        = 0.00568375
 fuel_height          = 1.
 plenum_height        = 1.
-wire_wrap_diameter   = 0.001
-rod_pitch            =${fparse rod_outside_diameter + wire_wrap_diameter}
+# wire_wrap_diameter   = 0.001
+# rod_pitch            =${fparse rod_outside_diameter + wire_wrap_diameter} # unused
 
 [GlobalParams]
    #  Parameters that are used in multiple blocks can be included here so that
@@ -22,7 +22,7 @@ rod_pitch            =${fparse rod_outside_diameter + wire_wrap_diameter}
    #the following are needed in multiple UPuZr Materials
    X_Zr = 0.225 #  U-20Pu-10Zr (from Excel spreadsheet)
    X_Pu = 0.171
-   density = 15770.0 # kg/m3 fresh, room temperature (UPuZr fuel Table 2 from ECAR-4647)
+   # density = 15770.0 # kg/m3 fresh, room temperature (UPuZr fuel Table 2 from ECAR-4647)  #unused
 []
 
 [Problem]

@@ -9,8 +9,8 @@ clad_thickness       = 0.000625
 slug_diameter        = 0.00568375
 fuel_height          = 1.
 plenum_height        = 1.
-wire_wrap_diameter   = 0.001
-rod_pitch            = ${fparse rod_outside_diameter + wire_wrap_diameter}
+# wire_wrap_diameter   = 0.001
+# rod_pitch            = ${fparse rod_outside_diameter + wire_wrap_diameter}
 
 [GlobalParams]
    #  Parameters that are used in multiple blocks can be included here so that
