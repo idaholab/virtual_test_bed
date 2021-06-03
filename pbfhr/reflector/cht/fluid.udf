@@ -2,7 +2,7 @@
 
 void UDF_LoadKernels(nrs_t *nrs)
 {
-  setupAide & options = nrs->options;
+  setupAide & options = platform->options;
   occa::properties & kernelInfo = *nrs->kernelInfo;
 
   // Compute the inlet velocity boundary condition and propagate it to a kernel variable
@@ -14,7 +14,7 @@ void UDF_LoadKernels(nrs_t *nrs)
 
 void UDF_Setup(nrs_t *nrs)
 {
-  mesh_t * mesh = nrs->cds->mesh;
+  mesh_t * mesh = nrs->cds->mesh[0];
 
   // loop over all the GLL points and assign directly to the solution arrays by
   // indexing according to the field offset necessary to hold the data for each
