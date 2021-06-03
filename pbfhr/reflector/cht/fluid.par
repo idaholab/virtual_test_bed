@@ -27,12 +27,12 @@
   viscosity = -100.0
   density = 1.0
   residualTol = 1.0e-8
-  residualProj = no
+  residualProj = false
   boundaryTypeMap = W, W, symy, W, v, o, W, W
 
 [PRESSURE]
   residualTol = 1.0e-8
-  residualProj = yes
+  residualProj = false
   preconditioner = semg_amg
 
 [TEMPERATURE]
