@@ -11,7 +11,7 @@
     Tsolid_sf = 1e-3
 
 [./PBModelParams]               # new user should not make changes to this block
-	pbm_scaling_factors = '1 1e-2 1e-6'
+ pbm_scaling_factors = '1 1e-2 1e-6'
     pspg = true
     supg_max = false
     p_order = 2
@@ -54,37 +54,37 @@
     axis = x                                 # x-co-ordinate is used for x
     direction = right
     xy_data =
-		'0.176153846153846	0.0939862040
-		0.352307692307692	0.2648701900
-		0.528461538461539	0.4186657800
-		0.704615384615385	0.5895497920
-		0.880769230769231	0.7689779760
-		1.056923076923080	0.9056851700
-		1.233076923076920	0.9825829780
-		1.409230769230770	1.0082155720
-		1.585384615384620	1.0167597700
-		1.761538461538460	1.0167597700
-		1.937692307692310	1.0509365880
-		2.113846153846150	1.1363785680
-		2.290000000000000	1.2047321780
-		2.466153846153850	1.2218205740
-		2.642307692307690	1.2303647720
-		2.818461538461540	1.2559973660
-		2.994615384615380	1.2389089700
-		3.170769230769230	1.1961879800
-		3.346923076923080	1.1278343700
-		3.523076923076920	1.0509365880
-		3.699230769230770	1.0851133800
-		3.875384615384620	1.1192901720
-		4.051538461538460	1.1876437820
-		4.227692307692310	1.2645415640
-		4.403846153846150	1.3499835700
-		4.580000000000000	1.2132763760'
+  '0.176153846153846 0.0939862040
+  0.352307692307692 0.2648701900
+  0.528461538461539 0.4186657800
+  0.704615384615385 0.5895497920
+  0.880769230769231 0.7689779760
+  1.056923076923080 0.9056851700
+  1.233076923076920 0.9825829780
+  1.409230769230770 1.0082155720
+  1.585384615384620 1.0167597700
+  1.761538461538460 1.0167597700
+  1.937692307692310 1.0509365880
+  2.113846153846150 1.1363785680
+  2.290000000000000 1.2047321780
+  2.466153846153850 1.2218205740
+  2.642307692307690 1.2303647720
+  2.818461538461540 1.2559973660
+  2.994615384615380 1.2389089700
+  3.170769230769230 1.1961879800
+  3.346923076923080 1.1278343700
+  3.523076923076920 1.0509365880
+  3.699230769230770 1.0851133800
+  3.875384615384620 1.1192901720
+  4.051538461538460 1.1876437820
+  4.227692307692310 1.2645415640
+  4.403846153846150 1.3499835700
+  4.580000000000000 1.2132763760'
   [../]
 
   [./Phead]
     type = PiecewiseLinear
-    x = '0 	 400    404.5  409 	  413.5 418   422.5 427  431.5 436   440.5 445   448   450.5 452    454   457.5 460   480   500   600   10000'
+    x = '0   400    404.5  409    413.5 418   422.5 427  431.5 436   440.5 445   448   450.5 452    454   457.5 460   480   500   600   10000'
     y = '367475 367475 182810 89969  43302 19845 8054  2128 -851  -1500 -1700 -1720 -1720 -1730 -1760 -1790 -1830 -1870 -2150 -2350 -2500 -2500'
   [../]
 
@@ -100,7 +100,7 @@
 
   [./reactor]
     type = ReactorPower
-    initial_power = 2.36e8				# Initial total reactor power
+    initial_power = 2.36e8    # Initial total reactor power
     decay_heat = shutdownPower          # decay heat profile
   [../]
 
@@ -121,14 +121,14 @@
     WF_user_option = User
     User_defined_WF_parameters = '5.467 847.17 -1.0'
 
-    HT_surface_area_density = 133.33		#Preserves surface area
+    HT_surface_area_density = 133.33  #Preserves surface area
     Ts_init = 950
     elem_number_of_hs = '5 5 2'
     material_hs = 'h451 fuel h451'
     n_heatstruct = 3
     fuel_type = cylinder
     name_of_hs = 'inner fuel outer'
-    width_of_hs = '0.007896334	0.001463164	0.001020503'
+    width_of_hs = '0.007896334 0.001463164 0.001020503'
 
     power_fraction = '0 1 0'
     power_shape_function = Paxial
@@ -153,12 +153,12 @@
 
   [./Branch030]                          #Outlet plenum (3)
     type = PBVolumeBranch
-    inputs = 'pipe010(out) pipe020(out)' # A = 1.327511 (0.2524495)	A = 0.065
-    outputs = 'pipe040(in)'   			 # A = 0.2512732
+    inputs = 'pipe010(out) pipe020(out)' # A = 1.327511 (0.2524495) A = 0.065
+    outputs = 'pipe040(in)'       # A = 0.2512732
     center = '0 4.94445 -0.76'
     volume = 0.99970002
-    K = '0.3668 0.35336 0.0006'			 # loss coefficients
-    Area = 0.2524495					 # L = 3.96
+    K = '0.3668 0.35336 0.0006'    # loss coefficients
+    Area = 0.2524495      # L = 3.96
     eos = eos
     initial_V = 2.040
     initial_T = 970
@@ -254,9 +254,9 @@
     initial_V = 1.207
     initial_T = 920
     initial_P = 4.1e5
- 
+
     HS_BC_type = Temperature
-    Hw = 2000 		#cut for transient
+    Hw = 2000   #cut for transient
     Ph = 392.9818537
     T_wall = 873.15
     Twall_init = 900
@@ -505,12 +505,12 @@
 
   [./Branch260]                         #Top branch (26)
     type = PBVolumeBranch
-    inputs = 'pipe180(out) pipe040(out)'	# A = 0.03534292	A = 0.2512732
-    outputs = 'pipe050(in)'   			# A = 0.264208
+    inputs = 'pipe180(out) pipe040(out)' # A = 0.03534292 A = 0.2512732
+    outputs = 'pipe050(in)'      # A = 0.264208
     center = '0 4.21445 3.01'
     volume = 0.132104
-    K = '0.3713 0.00636 0.0'			# loss coefficients
-    Area = 0.264208						# L = 0.5
+    K = '0.3713 0.00636 0.0'   # loss coefficients
+    Area = 0.264208      # L = 0.5
     eos = eos
     initial_V = 2.052
     initial_T = 970
@@ -520,12 +520,12 @@
 
   [./Branch270]                         #Middle branch (27)
     type = PBVolumeBranch
-    inputs = 'pipe140(out)'				# A = 0.3019068
-    outputs = 'pipe150(in) pipe160(in)' # A = 0.3038791	A = 0.03534292
+    inputs = 'pipe140(out)'    # A = 0.3019068
+    outputs = 'pipe150(in) pipe160(in)' # A = 0.3038791 A = 0.03534292
     center = '0 8.12445 -0.33'
     volume = 0.15193955
     K = '0.0 0.0 0.3727'
-    Area = 0.3038791					# L = 0.5
+    Area = 0.3038791     # L = 0.5
     eos = eos
     initial_V = 1.784
     initial_P = 2.5e5
@@ -534,13 +534,13 @@
 
   [./Branch280]                         #Bottom branch (28)
     type = PBVolumeBranch
-    inputs = 'pipe150(out)'				# A = 0.3038791
-    outputs = 'pipe010(in) pipe020(in)' # A = 1.327511 	A = 0.065
+    inputs = 'pipe150(out)'    # A = 0.3038791
+    outputs = 'pipe010(in) pipe020(in)' # A = 1.327511  A = 0.065
     center = '0 6.53445 -5.34'
     volume = 0.2655022
     #K = '0.35964 0.0 0.3750'
     K = '0.35964 0.0 0.6000'
-    Area = 1.327511						# L = 0.2
+    Area = 1.327511      # L = 0.2
     eos = eos
     initial_V = 0.388
     initial_P = 3.4e5
@@ -578,22 +578,22 @@
   [../]
 
   [./cover_gas2]
-	type = CoverGas
-	n_liquidvolume = 1
-	name_of_liquidvolume = 'pool2'
-	initial_P = 9e4
-	initial_Vol = 0.5
-	initial_T = 970
+ type = CoverGas
+ n_liquidvolume = 1
+ name_of_liquidvolume = 'pool2'
+ initial_P = 9e4
+ initial_Vol = 0.5
+ initial_T = 970
   [../]
 
   [./Branch501]                         #Primary tank branch
     type = PBVolumeBranch
-    inputs = 'pipe050(out)'				# A = 0.264208
-    outputs = 'pipe060(in) pipe2(in)'   # A = 3.3145 (0.264208)	A = 1 (0.264208)
+    inputs = 'pipe050(out)'    # A = 0.264208
+    outputs = 'pipe060(in) pipe2(in)'   # A = 3.3145 (0.264208) A = 1 (0.264208)
     center = '0 8.25 3.09'
     volume = 0.0264208
     K = '0 0.3744 0.35187'
-    Area = 0.264208 					# L = 0.2
+    Area = 0.264208      # L = 0.2
     eos = eos
     initial_V = 2.052
     initial_T = 970
@@ -629,17 +629,17 @@
   [../]
 
   [./cover_gas1]
-	type = CoverGas
-	n_liquidvolume = 1
-	name_of_liquidvolume = 'pool1'
-	initial_P = 2e5
-	initial_Vol = 0.5
-	initial_T = 852.7
+ type = CoverGas
+ n_liquidvolume = 1
+ name_of_liquidvolume = 'pool1'
+ initial_P = 2e5
+ initial_Vol = 0.5
+ initial_T = 852.7
   [../]
 
   [./Branch502]                         #DRACS tank branch
     type = PBVolumeBranch
-    inputs = 'pipe200(out)'			    # A = 0.1836403
+    inputs = 'pipe200(out)'       # A = 0.1836403
     outputs = 'pipe210(in) pipe1(in)'   # A = 0.1836403 A = 1
     center = '0 -0.1 5.95'
     volume = 0.003534292
@@ -650,8 +650,8 @@
 
   [./Branch601] # In to hot manifold
     type = PBBranch
-    inputs = 'pipe070(out)'			    # A = 0.3041
-    outputs = 'pipe080(in)'			    # A = 0.4926017
+    inputs = 'pipe070(out)'       # A = 0.3041
+    outputs = 'pipe080(in)'       # A = 0.4926017
     eos = eos
     K = '0.16804 0.16804'
     Area = 0.3041
@@ -662,8 +662,8 @@
 
   [./Branch602]                         # In to CTAH salt side
     type = PBBranch
-    inputs = 'pipe080(out)'			    # A = 0.4926017
-    outputs = 'pipe090(in)'			    # A = 0.4491779
+    inputs = 'pipe080(out)'       # A = 0.4926017
+    outputs = 'pipe090(in)'       # A = 0.4491779
     eos = eos
     K = '0.01146 0.01146'
     Area = 0.4491779
@@ -674,8 +674,8 @@
 
   [./Branch603] # In to cold manifold
     type = PBBranch
-    inputs = 'pipe090(out)'			    # A = 0.4491779
-    outputs = 'pipe100(in)'			    # A = 0.1924226
+    inputs = 'pipe090(out)'       # A = 0.4491779
+    outputs = 'pipe100(in)'       # A = 0.1924226
     eos = eos
     K = '0.28882 0.28882'
     Area = 0.1924226
@@ -685,8 +685,8 @@
 
   [./Branch604] # In to pipe to drain tank
     type = PBPump #PBBranch
-    inputs = 'pipe100(out)'			    # A = 0.1924226
-    outputs = 'pipe110(in)'			    # A = 0.3019068
+    inputs = 'pipe100(out)'       # A = 0.1924226
+    outputs = 'pipe110(in)'       # A = 0.3019068
     eos = eos
     K = '0.15422 0.15422'
     K_reverse = '2000000 2000000'
@@ -720,8 +720,8 @@
 
   [./Diode608]                          # Fluidic diode
     type = PBPump
-    inputs = 'pipe160(out)'			    # A = 0.03534292
-    outputs = 'DHX(primary_in)'		    # A = 0.2224163
+    inputs = 'pipe160(out)'       # A = 0.03534292
+    outputs = 'DHX(primary_in)'      # A = 0.2224163
     eos = eos
     K = '50.0 50.0'
     K_reverse = '1.0 1.0'
@@ -732,8 +732,8 @@
 
   [./Branch609]                         # Out of DHX
     type = PBBranch
-    inputs = 'DHX(primary_out)'		    # A = 0.2224163
-    outputs = 'pipe180(in)'			    # A = 0.03534292
+    inputs = 'DHX(primary_out)'      # A = 0.2224163
+    outputs = 'pipe180(in)'       # A = 0.03534292
     eos = eos
     K = '94.8693 94.8693'
     Area = 0.03534292
@@ -743,8 +743,8 @@
 
   [./Branch610]                         #In to DRACS hot leg 1
     type = PBBranch
-    inputs = 'DHX(secondary_in)'		# A = 0.1836403
-    outputs = 'pipe200(in)'			    # A = 0.03534292
+    inputs = 'DHX(secondary_in)'  # A = 0.1836403
+    outputs = 'pipe200(in)'       # A = 0.03534292
     eos = eos
     K = '56.3666 56.3666'
     Area = 0.03534292
@@ -759,8 +759,8 @@
 
   [./Branch612]                         #In to TCHX salt tube
     type = PBBranch
-    inputs = 'pipe220(out)' 			# A = 0.03534292
-    outputs = 'pipe230(in)' 			# A = 0.1746822
+    inputs = 'pipe220(out)'    # A = 0.03534292
+    outputs = 'pipe230(in)'    # A = 0.1746822
     eos = eos
     K = '0.3655 0.3655'
     #K = '0.0 0.3655'
@@ -769,8 +769,8 @@
 
   [./Branch613]                         #In to DRACS cold leg 1
     type = PBBranch
-    inputs = 'pipe230(out)' 			# A = 0.1746822
-    outputs = 'pipe240(in)' 			# A = 0.03534292
+    inputs = 'pipe230(out)'    # A = 0.1746822
+    outputs = 'pipe240(in)'    # A = 0.03534292
     eos = eos
     K = '0.3655 0.3655'
     #K = '0.3655 0.0'
@@ -786,8 +786,8 @@
 
   [./Branch615]                         #In to DHX tube side
     type = PBBranch
-    inputs = 'pipe250(out)' 			# A = 0.03534292
-    outputs = 'DHX(secondary_out)' 	    # A = 0.1836403
+    inputs = 'pipe250(out)'    # A = 0.03534292
+    outputs = 'DHX(secondary_out)'      # A = 0.1836403
     eos = eos
     K = '0.3666 0.3666'
     #K = '0.0 0.3666'
