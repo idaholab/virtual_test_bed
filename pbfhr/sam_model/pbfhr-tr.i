@@ -923,7 +923,7 @@
 []
 
 [Problem]
-  restart_file_base = 'pbfhr-ss_out_cp/0402'
+  restart_file_base = 'pbfhr-ss_out_cp/LATEST'
 []
 
 [Outputs]

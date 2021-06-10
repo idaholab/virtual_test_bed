@@ -1,0 +1,18 @@
+[Tests]
+  [steady_state]
+    type = RunApp
+    input = pbfhr-ss.i
+    check_input = true
+    executable_pattern = 'sam*|blue_crab*'
+    allow_warnings = true
+  []
+  [transient]
+    type = RunApp
+    input = pbfhr-tr.i
+    check_input = true
+    executable_pattern = 'sam*|blue_crab*'
+    prereq = steady_state
+    cli_args = "Problem/active=''"
+    allow_warnings = true
+  []
+[]
