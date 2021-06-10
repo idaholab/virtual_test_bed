@@ -368,11 +368,11 @@ restart_file = 'mk1_fhr.e'  # uncomment near bottom of input file to use restart
   output_after_power_iterations = false
   output_before_normalization = false
 
-  # Picard iterations
-  picard_abs_tol = 1e-6
-  picard_rel_tol = 1e-6
-  picard_max_its = 10
-  disable_picard_residual_norm_check = false
+  # Fixed point iterations
+  fixed_point_abs_tol = 1e-6
+  fixed_point_rel_tol = 1e-6
+  fixed_point_max_its = 10
+  disable_fixed_point_residual_norm_check = false
 
   # Quadrature for CR material
   [Quadrature]

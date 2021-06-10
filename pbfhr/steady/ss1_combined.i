@@ -313,7 +313,6 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
     variable = temp_solid
     coeff = 'kappa_s'
     block = ${blocks_fluid}
-    #TODO dont execute on the diffusion interface
   []
   [temp_solid_conduction]
     type = FVDiffusion
@@ -340,13 +339,14 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
 
 [FVInterfaceKernels]
   [diffusion_interface]
-    type = FVOneVarDiffusionInterface
+    type = FVDiffusionInterface
     boundary = 'bed_left'
     subdomain1 = '3 4 5'
     subdomain2 = '1 2 6'
     coeff1 = 'kappa_s'
     coeff2 = 'k_s'
     variable1 = 'temp_solid'
+    variable2 = 'temp_solid'
   []
 []
 
@@ -714,6 +714,7 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
     type = TransientMultiApp
     execute_on = 'TIMESTEP_END'
     input_files = 'ss3_coarse_pebble_mesh.i'
+    cli_args = 'Outputs/console=false'
   []
 []
 
