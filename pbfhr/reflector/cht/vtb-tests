@@ -6,7 +6,7 @@
     cli_args = "MultiApps/active='' Transfers/active='' Executioner/num_steps=2"
     requirement = "The pbfhr reflector conjugate heat transfer input shall not deprecate syntax from the "
                   "MOOSE master application."
-    executable_pattern = 'moose*|blue_crab*|direwolf*|fenix*'
+    executable_pattern = 'moose*|blue_crab*|dire_wolf*|fenix*'
   []
   [nek]
     type = RunApp

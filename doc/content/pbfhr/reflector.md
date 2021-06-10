@@ -745,8 +745,9 @@ with the usual `.fld` field file format used by standalone nekRS calculations.
   start=Executioner
   end=Postprocessors
 
-Finally, several postprocessors are included; the `flux_integral` postprocessor simply
-receives the value of the heat flux integral from MOOSE for internal normalization in nekRS.
+Finally, several postprocessors are included. A postprocessor named `flux_integral`
+is added automatically by `NekRSProblem` to receive the value of the heat flux
+integral from MOOSE for internal normalization in nekRS.
 The other three postprocessors are all Cardinal-specific postprocessors that perform
 integrals and global min/max calculations over the nekRS domain. Here, the `boundary_flux`
 postprocessor computes $-k\nabla T\cdot\hat{n}$ over a boundary in the nekRS mesh. This

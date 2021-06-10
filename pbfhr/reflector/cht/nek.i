@@ -32,9 +32,6 @@ fluid_solid_interface = '1 2 7'
 []
 
 [Postprocessors]
-  [flux_integral]
-    type = Receiver
-  []
   [boundary_flux]
     type = NekHeatFluxIntegral
     boundary = ${fluid_solid_interface}
