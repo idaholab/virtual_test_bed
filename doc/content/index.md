@@ -22,6 +22,8 @@ Users will need to request access to the controlled NEAMS software from the [Nuc
 
 [Heat-Pipe Micro Reactor (MR)](mrad/index.md)
 
+For contributing a new model, please review the [contribution guidelines](contributing.md).
+
 !alert note
 [Current link to the internal repository](https://gitlab.software.inl.gov/idaholab/virtual_test_bed)\\
 [Current link to the external repository](https://github.com/idaholab/virtual_test_bed)
