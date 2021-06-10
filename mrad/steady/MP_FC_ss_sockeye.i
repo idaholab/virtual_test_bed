@@ -273,8 +273,9 @@ corr_factor = ${fparse 2 * R_clad_o / R_hp_hole / R_hp_hole / area_correction / 
     execute_on = 'initial timestep_begin TIMESTEP_END'
   []
   [Integral_BC_Total]
-    type = SumPostprocessor
-    values = 'condenser_boundary:integral evaporator_boundary:integral'
+    type = ParsedPostprocessor
+    pp_names = 'condenser_boundary:integral evaporator_boundary:integral'
+    function = 'condenser_boundary:integral+evaporator_boundary:integral'
     execute_on = 'INITIAL TIMESTEP_END'
   []
   [ZeroPP]
