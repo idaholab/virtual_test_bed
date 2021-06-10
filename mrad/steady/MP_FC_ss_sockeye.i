@@ -4,11 +4,11 @@
 ## Heat Pipe Effective Heat Conduction Model                                  ##
 ################################################################################
 
-# Average heat removed/added to heat pipe
+# Average heat removed/added to heat pipe (W)
 Q_hp = 1800.
 
 # Wick characteristics
-R_pore = 15.0e-6
+R_pore = 15.0e-6 # m
 D_h_pore = ${fparse 2.0 * R_pore}
 permeability = 2e-9
 porosity =  0.70
@@ -55,7 +55,7 @@ k_wick = ${fparse porosity * k_liquid + (1.0 - porosity) * k_env}
 # From Table 1.1, no temperature data given
 cp_wick = ${fparse porosity * cp_liquid + (1.0 - porosity) * cp_env}
 
-# Elevations and lengths
+# Elevations and lengths (m)
 # Note: For blackbox model -- manually update "length" input
 length_evap = 180.0e-2
 length_adia =  30.0e-2
@@ -71,43 +71,42 @@ nelem_evap = ${fparse mesh_density*nelem_base_evap}
 nelem_adia = ${fparse mesh_density*nelem_base_adia}
 nelem_cond = ${fparse mesh_density*nelem_base_cond}
 
-# Envelope thickness
+# Envelope thickness (m)
 t_env = 0.08e-2
-# Liquid annulus thickness
+# Liquid annulus thickness (m)
 t_ann = 0.07e-2
-# Wick thickness
+# Wick thickness (m)
 t_wick = 0.1e-2
 
 # Radial geometry
-# Envelope outer
+# Envelope outer (m)
 R_hp_o = 1.05e-2
 #R_clad_o = ${R_hp_o}
 D_hp_o = ${fparse 2.0 * R_hp_o}
-# Inner Envelope/outer annulus
+# Inner Envelope/outer annulus (m)
 R_hp_i = ${fparse R_hp_o - t_env}
 D_hp_i = ${fparse 2.0 * R_hp_i}
-# Inner annulus/wick outer
+# Inner annulus/wick outer (m)
 R_wick_o = ${fparse R_hp_i - t_ann}
 D_wick_o = ${fparse 2.0 * R_wick_o}
-# Inner wick/vapor core outer
+# Inner wick/vapor core outer (m)
 R_wick_i = ${fparse R_wick_o - t_wick}
 D_wick_i = ${fparse 2.0 * R_wick_i}
 
 # BCs for condenser
-#T_ext_cond = 725.
-T_ext_cond = 800.
+T_ext_cond = 800. # K
 # JWT: coupled problem uses 1.0e6
-#htc_ext_cond = 326.
-htc_ext_cond = 1.0e6
+#htc_ext_cond = 326. # (W/m2/K)
+htc_ext_cond = 1.0e6 # (W/m2/K)
 
 # Evaporator parameters
 htc_wall_initial = 750 #air gap k=0.15 W/mK, th=0.0002 m
 S_evap = ${fparse pi * D_hp_o * length_evap}
 q_evap = ${fparse Q_hp / S_evap}
 
-#flux correction
-R_clad_o = 0.0105 # heat pipe outer radius
-R_hp_hole = 0.0107 # heat pipe + gap
+# Flux correction
+R_clad_o = 0.0105 # heat pipe outer radius (m)
+R_hp_hole = 0.0107 # heat pipe + gap (m)
 num_sides = 28 # full_core level 9
 alpha = ${fparse 2 * pi / num_sides}
 perimeter_correction = ${fparse 0.5 * alpha / sin(0.5 * alpha)} # polygonization correction factor for perimeter
@@ -293,7 +292,7 @@ corr_factor = ${fparse 2 * R_clad_o / R_hp_hole / R_hp_hole / area_correction / 
     value2 = Integral_BC_Cond
     execute_on = 'INITIAL TIMESTEP_END'
   []
-  [bc_scale_pp] 
+  [bc_scale_pp]
     type = FunctionValuePostprocessor
     function = 1.0
     execute_on = 'INITIAL TIMESTEP_END'
