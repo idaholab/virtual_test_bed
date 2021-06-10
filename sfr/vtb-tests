@@ -3,20 +3,20 @@
     type = RunApp
     input = 'bison_mecha_only.i'
     check_input = True
-    executable_pattern = 'bison*|blue_crab*|direwolf*'
+    executable_pattern = 'bison*|blue_crab*|dire_wolf*'
   []
   [bison_thermal_only]
     type = RunApp
     input = 'bison_thermal_only.i'
     check_input = True
     cli_args = "AuxKernels/active='GetPowerDensity_from_griffin'"
-    executable_pattern = 'bison*|blue_crab*|direwolf*'
+    executable_pattern = 'bison*|blue_crab*|dire_wolf*'
   []
   [support_plate]
     type = RunApp
     input = 'core_support_plate_2d.i'
     check_input = True
-    executable_pattern = 'bison*|blue_crab*|direwolf*'
+    executable_pattern = 'bison*|blue_crab*|dire_wolf*'
   []
   [neutronics_with_multiapp]
     type = RunApp
@@ -29,7 +29,7 @@
     input = 'griffin.i'
     check_input = True
     cli_args = "MultiApps/active='' Transfers/active=''"
-    executable_pattern = 'griffin*|blue_crab*|direwolf*|fenix*'
+    executable_pattern = 'griffin*|blue_crab*|dire_wolf*|fenix*'
   []
   [subchannel]
     type = RunApp
