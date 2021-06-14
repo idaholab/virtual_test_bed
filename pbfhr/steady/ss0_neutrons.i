@@ -29,7 +29,7 @@ fis_fract            = ${fparse 1 - dh_fract} # Fission power fraction at t = 0.
 # GLOBAL PARAMETERS
 # ==============================================================================
 [GlobalParams]
-  library_file = "../cross_sections/2-D_8Gt_multiregions_transient.xml"
+  library_file = "cross_sections/2-D_8Gt_multiregions_transient.xml"
   library_name = 2-D_8Gt
 []
 
@@ -63,7 +63,7 @@ restart_file = 'mk1_fhr.e'  # uncomment near bottom of input file to use restart
 [Mesh]
   [mesh_reader]
     type = FileMeshGenerator
-    file = '../meshes/core_with_reflectors_0.0625.e'
+    file = '../meshes/core_neutronics.e'
   []
   [new_boundary]
     type = SideSetsBetweenSubdomainsGenerator

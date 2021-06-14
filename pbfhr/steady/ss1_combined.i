@@ -38,7 +38,7 @@ core_phase_fraction          = 5.12000000e-01
 fuel_matrix_phase_fraction   = 3.01037037e-01
 shell_phase_fraction         = 1.86962963e-01
 
-# FLiBe properties
+# FLiBe properties #TODO: Rely only on PronghornFluidProps
 # fluid_mu = 7.5e-3  # Pa.s at 900K [3]
 # k_fluid =  1.1     # suggested constant [3]
 # cp_fluid = 2385    # suggested constant [3]
@@ -53,6 +53,7 @@ solid_cp = ${fparse 1697.0*heat_capacity_multiplier}
 
 # Outer reflector drag parameters
 # TODO: tune using CFD
+# TODO: verify current values (imported from [1])
 Ah          = 1337.76
 Bh          = 2.58
 Av          = 599.30
@@ -61,7 +62,7 @@ Dh          = 0.02582
 Dv          = 0.02006
 
 # Computation parameters
-velocity_interp_method = 'average'
+velocity_interp_method = 'rc'
 advected_interp_method = 'upwind'
 
 # Core geometry
@@ -79,7 +80,7 @@ model_inlet_area = ${fparse 3.14159265 * (model_inlet_rout * model_inlet_rout -
 mfr = 976.0            # kg/s, from [2]
 total_power = 236.0e6  # W, from [2]
 inlet_T_fluid = 873.15 # K, from [2]
-inlet_vel_y = ${fparse mfr / model_inlet_area / rho_fluid}
+inlet_vel_y = ${fparse bed_porosity * mfr / model_inlet_area / rho_fluid} # superficial
 power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using power pp
 
 # ==============================================================================
@@ -90,9 +91,11 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
   # Mesh should be fairly orthogonal for finite volume fluid flow
   # If you are running this input file for the first time, run core_with_reflectors.py
   # in pbfhr/meshes using Cubit to generate the mesh
+  # Modify the parameters (mesh size, refinement areas) for each application
+  # neutronics, thermal hydraulics and fuel performance
   [fmg]
     type = FileMeshGenerator
-    file = '../meshes/core_CFD_0.06.e'
+    file = '../meshes/core_pronghorn.e'
   []
   [barrel]
     type = SideSetsBetweenSubdomainsGenerator
@@ -150,7 +153,6 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
   [vel_y]
     type = PINSFVSuperficialVelocityVariable
     block = ${blocks_fluid}
-    initial_condition = ${inlet_vel_y}
   []
   [pressure]
     type = INSFVPressureVariable
@@ -402,6 +404,12 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
     function = ${OR_porosity}
     block = '5'
   []
+  [vel_core]
+    type = FunctionIC
+    variable = vel_y
+    function = ${inlet_vel_y}
+    block = '3 4'
+  []
 []
 
 [Functions]
@@ -570,8 +578,10 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
   # closures in the outer reflector
   [drag_OR]
     type = FunctionAnisotropicDragCoefficients
-    Darcy_coefficient = '${fparse OR_porosity * Ah / Dh / Dh} ${fparse OR_porosity * Av / Dv / Dv} ${fparse OR_porosity * Av / Dv / Dv}'
-    Forchheimer_coefficient = '${fparse OR_porosity * Bh / Dh} ${fparse OR_porosity * Bv / Dv} ${fparse OR_porosity * Bv / Dv}'
+    Darcy_coefficient = '${fparse OR_porosity * Ah / Dh / Dh}
+    ${fparse OR_porosity * Av / Dv / Dv} ${fparse OR_porosity * Av / Dv / Dv}'
+    Forchheimer_coefficient = '${fparse OR_porosity * Bh / Dh}
+    ${fparse OR_porosity * Bv / Dv} ${fparse OR_porosity * Bv / Dv}'
     block = '5'
   []
   [alpha_OR]
@@ -689,7 +699,7 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
   automatic_scaling = true
 
   # Problem time parameters
-  dtmin = 1
+  dtmin = 0.1
   dtmax = 2e4
   end_time = 1e6
 
@@ -697,7 +707,7 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
     type = IterationAdaptiveDT
     dt                 = 1
     cutback_factor     = 0.5
-    growth_factor      = 4.0
+    growth_factor      = 2.0
   []
 
   # Steady state detection.
@@ -743,12 +753,14 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
   # [inlet_vel_y]
   #   type = Receiver
   #   default = ${inlet_vel_y}
-  #   execute_on = INITIAL
+  # []
+  # [inlet_temp_fluid]
+  #   type = Receiver
+  #   default = ${inlet_T_fluid}
   # []
   # [outlet_pressure]
   #   type = Receiver
   #   default = ${outlet_pressure}
-  #   execute_on = INITIAL
   # []
   [max_Tf]
     type = ElementExtremeValue
@@ -776,7 +788,7 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
   []
   [T_flow_out]
     type = SideAverageValue
-    boundary = 'bed_horizontal_top'
+    boundary = 'bed_horizontal_top OR_horizontal_top'
     variable = temp_fluid
     execute_on = 'INITIAL TIMESTEP_END'
   []
@@ -786,38 +798,52 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
     variable = pressure
     execute_on = 'INITIAL TIMESTEP_END'
   []
+  [pressure_out]
+    type = SideAverageValue
+    boundary = 'bed_horizontal_top OR_horizontal_top'
+    variable = pressure
+    execute_on = 'INITIAL TIMESTEP_END'
+  []
+  [pressure_drop]
+    type = DifferencePostprocessor
+    value1 = pressure_out
+    value2 = pressure_in
+  []
 
   # Energy balance
-  [heat_loss]
+  # Energy balance will be shown once #18119 #18123 are merged in MOOSE
+  [outer_heat_loss]
     type = ADSideDiffusiveFluxIntegral
     boundary = 'brick_surface'
     variable = temp_solid
     diffusivity = 'k_s'
     execute_on = 'INITIAL TIMESTEP_END'
   []
-  [energy_in_neg]
+  [flow_in_m]
     type = VolumetricFlowRate
-    boundary = 'bed_horizontal_bottom'
+    boundary = 'bed_horizontal_bottom OR_horizontal_bottom'
     vel_x = 'vel_x'
     vel_y = 'vel_y'
     advected_mat_prop = 'rho_cp_temp'
   []
-  [energy_in]
-    type = ScalePostprocessor
-    value = energy_in_neg
-    scaling_factor = -1
+  [diffusion_in]
+    type = ADSideVectorDiffusivityFluxIntegral
+    variable = temp_fluid
+    boundary = 'bed_horizontal_bottom OR_horizontal_bottom'
+    diffusivity = 'kappa'
   []
-  [energy_out]
+  # diffusion at the top is 0 because of the fully developped flow assumption
+  [flow_out]
     type = VolumetricFlowRate
-    boundary = 'bed_horizontal_top'
+    boundary = 'bed_horizontal_top OR_horizontal_top'
     vel_x = 'vel_x'
     vel_y = 'vel_y'
     advected_mat_prop = 'rho_cp_temp'
   []
   [core_balance]
-    type = DifferencePostprocessor
-    value1 = energy_out
-    value2 = energy_in
+    type = ParsedPostprocessor
+    pp_names = 'power flow_in_m diffusion_in flow_out outer_heat_loss'
+    function = 'power - flow_in_m + diffusion_in - flow_out - outer_heat_loss'
   []
 
   # Bypass
@@ -834,14 +860,22 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
     pp_names = 'mass_flow_out mass_flow_OR'
     function = 'mass_flow_OR / mass_flow_out'
   []
+
+  # Miscellaneous
+  [h]
+    type = AverageElementSize
+    outputs = 'console csv'
+    execute_on = 'timestep_end'
+  []
 []
 
 [Outputs]
   csv = true
-  hide = 'energy_in energy_in_neg energy_out'
+  hide = 'pressure_in pressure_out mass_flow_OR mass_flow_out max_vy '
+         'bypass_fraction max_Tf h pressure_drop'
   [exodus]
     type = Exodus
-    # renaming variables for this is necessary for now, see #17905
+    # renaming variables to use this option would be necessary for now, see #17905
     # output_material_properties = true
   []
   [checkpoint]
