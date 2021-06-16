@@ -1,3 +1,4 @@
+#!python
 import math
 
 # This Cubit script will generate a 2D Exodus mesh for the MSFR intended to be
@@ -240,8 +241,8 @@ cubit.cmd('create surface curve 121 122 123 124 34 35 25 26 27 28 106 118 116 79
 cubit.cmd('merge all')
 
 cubit.cmd('curve 120 121 122 123 124 scheme equal')
-cubit.cmd('curve 121 122 123 interval 40')
-cubit.cmd('curve 120 124 interval 6')
+cubit.cmd('curve 121 122 123 interval 52')
+cubit.cmd('curve 120 124 interval 12')
 
 cubit.cmd('surface 35 36 scheme pave')
 cubit.cmd('mesh surface 35 36')
@@ -300,3 +301,4 @@ cubit.cmd('volume all scale {:g}'.format(scaling))
 cubit.cmd('set exodus netcdf4 off')
 cubit.cmd('set large exodus on')
 cubit.cmd("export mesh 'msfr_rz_mesh.e' dimension 2 overwrite")
+
