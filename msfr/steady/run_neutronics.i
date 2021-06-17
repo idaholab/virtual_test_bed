@@ -7,6 +7,7 @@
 
 [Outputs]
   exodus = true
+  perf_graph = true
 []
 
 [Problem]
@@ -42,7 +43,7 @@
   [tfuel]
     order = CONSTANT
     family = MONOMIAL
-    initial_condition = 700 # in degree C
+    initial_condition = 973.15 # in degree K
   []
   [c1]
     order = CONSTANT
@@ -127,9 +128,13 @@
 [Executioner]
   type = Eigenvalue
   solve_type = PJFNK
-  petsc_options_iname = '-pc_type -c_factor_mat_solver_package'
-  petsc_options_value = 'lu superlu_dist'
-  free_power_iterations = 4
+
+  petsc_options_iname = '-pc_type -pc_hypre_type -ksp_gmres_restart '
+  petsc_options_value = 'hypre boomeramg 50'
+  l_max_its = 50
+
+  free_power_iterations = 4  # important to obtain fundamental mode eigenvalue
+
   nl_abs_tol = 1e-9
   picard_max_its = 100
 []

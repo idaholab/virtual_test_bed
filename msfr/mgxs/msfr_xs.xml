@@ -2,7 +2,7 @@
   <Multigroup_Cross_Section_Libraries Name="msfr_xs" NGroup="6" Description="MSFR XS gen">
     <Multigroup_Cross_Section_Library ID="1" Ver="1.0" Generator="INL" TimeCreated="Fri Mar 12 10:57:42 2021" Description="">
       <Tabulation>tfuel</Tabulation>
-      <tfuel>327 700 927</tfuel>
+      <tfuel>600 973 1200</tfuel>
       <ReferenceGridIndex>1</ReferenceGridIndex>
       <AllReactions>Flux Absorption Total NeutronVelocity Scattering Transport Removal NeutronVelocity</AllReactions>
       <TablewiseReactions/>
@@ -130,7 +130,7 @@
     </Multigroup_Cross_Section_Library>
     <Multigroup_Cross_Section_Library ID="2" Ver="1.0" Generator="INL" TimeCreated="Fri Mar 12 10:57:42 2021" Description="">
       <Tabulation>tfuel</Tabulation>
-      <tfuel>327 700 927</tfuel>
+      <tfuel>600 973 1200</tfuel>
       <ReferenceGridIndex>1</ReferenceGridIndex>
       <AllReactions>Flux Absorption Total NeutronVelocity Scattering Transport Removal NeutronVelocity nuFission kappaFission FissionSpectrum DNFraction DNSpectrum DNPlambda</AllReactions>
       <TablewiseReactions/>
@@ -276,7 +276,7 @@
     </Multigroup_Cross_Section_Library>
     <Multigroup_Cross_Section_Library ID="5" Ver="1.0" Generator="INL" TimeCreated="Fri Mar 12 10:57:42 2021" Description="">
       <Tabulation>tfuel</Tabulation>
-      <tfuel>327 700 927</tfuel>
+      <tfuel>600 973 1200</tfuel>
       <ReferenceGridIndex>1</ReferenceGridIndex>
       <AllReactions>Flux Absorption Total NeutronVelocity Scattering Transport Removal NeutronVelocity</AllReactions>
       <TablewiseReactions/>

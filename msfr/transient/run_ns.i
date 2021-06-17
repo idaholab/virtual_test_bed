@@ -312,7 +312,7 @@ beta6 = 0.000184087
     # transfer coefficient of 20 kW / m^2 / K
     alpha = ${fparse 600 * 20e3 / rho / cp}
     block = 'hx'
-    T_ambient = 600
+    T_ambient = 873.15
   []
 
   [c1_time]
