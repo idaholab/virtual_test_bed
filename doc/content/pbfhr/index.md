@@ -7,3 +7,5 @@
 [Griffin-Pronghorn rod movement transient model](pbfhr/cr_transient/griffin_pgh_model.md)
 
 [Reflector Bypass Flow Modeling](pbfhr/reflector.md)
+
+[Mark 1 PB-FHR SAM Modeling](pbfhr/pbfhr_sam/pbfhr_sam.md)
