@@ -39,6 +39,7 @@ beta5 = 0.000549185
 beta6 = 0.000184087
 
 [Mesh]
+  uniform_refine = 1
   [fmg]
     type = FileMeshGenerator
     file = '../mesh/msfr_rz_mesh.e'

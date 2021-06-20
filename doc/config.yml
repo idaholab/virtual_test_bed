@@ -15,9 +15,10 @@ Renderer:
 Extensions:
     MooseDocs.extensions.navigation:
         name: vtb
-        repo: https://gitlab.software.inl.gov/idaholab/virtual_test_bed
+        repo: https://github.com/idaholab/virtual_test_bed
         home: https://hpcsc.hpc.inl.gov/ssl/VIRTUAL_TEST_BED/site/
         menu:
+            Contributing: contributing.md
             Citing: citing.md
     MooseDocs.extensions.appsyntax:
         executable: ${ROOT_DIR}
