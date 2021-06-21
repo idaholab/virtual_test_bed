@@ -34,9 +34,9 @@ will be addressed in the near future.
 
 ### Model
 
-- add flow in the outer reflector and a porosity interface
-
 - primary and secondary loop SAM coupling
+
+- use a field split executioner to improve solve performance
 
 ### Physics
 
@@ -45,8 +45,6 @@ will be addressed in the near future.
 ### Input file / code
 
 - output core balance in TH with all terms (diffusion, convection..)
-
-- remove control system for viscosity control
 
 - switch to radiation BC on outer wall
 
@@ -66,4 +64,4 @@ will be addressed in the near future.
 If you would like to have a particular feature of pebble-bed reactors
 be modeled and featured in the virtual test bed, please reach out to:
 
-Guillaume Giudicelli, Computational Scientist, guillaume.giudicelli.at.inl.gov
+Dr. Guillaume Giudicelli, Computational Scientist, guillaume.giudicelli.at.inl.gov

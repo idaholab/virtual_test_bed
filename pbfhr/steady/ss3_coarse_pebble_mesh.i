@@ -28,7 +28,7 @@ power_density = ${fparse total_power / model_vol}
 [Mesh]
   [read_mesh]
     type = FileMeshGenerator
-    file = '../meshes/core_with_reflectors_0.25.e'
+    file = '../meshes/core_fuel_performance.e'
   []
   [delete_1]
     type = BlockDeletionGenerator

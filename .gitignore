@@ -35,6 +35,7 @@
 *.e.*
 *.e-s*
 *.cfg
+*.cc
 *.lbd.*
 *.nem
 *.spd
@@ -64,6 +65,7 @@ temp_print_trace.*
 *.xml
 *.gmv
 *.plt
+*.png
 *.slh
 *.eps
 *.dat

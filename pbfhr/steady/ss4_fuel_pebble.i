@@ -299,9 +299,11 @@ pebble_diameter            = 0.03
   petsc_options_value = 'hypre boomeramg'
   solve_type = PJFNK
   nl_abs_tol = 1e-6
-  picard_force_norms = true
-  picard_abs_tol = 1e-2
-  picard_max_its = 5
+
+  # Fixed point iteration parameters
+  fixed_point_force_norms = true
+  fixed_point_abs_tol = 1e-2
+  fixed_point_max_its = 5
 
   [TimeStepper]
     type = IterationAdaptiveDT

@@ -5,6 +5,7 @@ problem. While the Griffin manual is ultimately the most complete reference on t
 try to provide enough details here for a complete comprehension of this input.
 
 We first define in the header:
+
 - initial conditions for the temperatures. These may be specified directly in the AuxVariables block,
   and will be overriden by the values provided by the thermal hydraulics solve.
 
@@ -87,10 +88,15 @@ a function. Since it's a steady state calculation, we could also have simply use
 
 Grffin uses the `PowerDensity` as a shorthand to define variables and postprocessors related to the power of the
 core. The following fields are used:
+
 - power: to define the numerical value of the core power
+
 - power_density_variable: a variable for the power density distribution
+
 - integrated_power_postprocessor: a postprocessor to compute the total core power
+
 - power_scaling_postprocessor: a postprocessor used to scale the fluxes to the real core power
+
 
 The `CONSTANT MONOMIAL` basis is used to represent the power distribution. This will be able to match the
 discontinuities in the fission group cross sections

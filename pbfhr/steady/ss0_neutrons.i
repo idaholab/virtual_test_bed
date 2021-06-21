@@ -29,7 +29,7 @@ fis_fract            = ${fparse 1 - dh_fract} # Fission power fraction at t = 0.
 # GLOBAL PARAMETERS
 # ==============================================================================
 [GlobalParams]
-  library_file = "../cross_sections/2-D_8Gt_multiregions_transient.xml"
+  library_file = "cross_sections/2-D_8Gt_multiregions_transient.xml"
   library_name = 2-D_8Gt
 []
 
@@ -63,7 +63,7 @@ restart_file = 'mk1_fhr.e'  # uncomment near bottom of input file to use restart
 [Mesh]
   [mesh_reader]
     type = FileMeshGenerator
-    file = '../meshes/core_with_reflectors_0.0625.e'
+    file = '../meshes/core_neutronics.e'
   []
   [new_boundary]
     type = SideSetsBetweenSubdomainsGenerator
@@ -368,11 +368,11 @@ restart_file = 'mk1_fhr.e'  # uncomment near bottom of input file to use restart
   output_after_power_iterations = false
   output_before_normalization = false
 
-  # Picard iterations
-  picard_abs_tol = 1e-6
-  picard_rel_tol = 1e-6
-  picard_max_its = 10
-  disable_picard_residual_norm_check = false
+  # Fixed point iterations
+  fixed_point_abs_tol = 1e-6
+  fixed_point_rel_tol = 1e-6
+  fixed_point_max_its = 10
+  disable_fixed_point_residual_norm_check = false
 
   # Quadrature for CR material
   [Quadrature]
