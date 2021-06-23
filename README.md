@@ -6,9 +6,9 @@ The VTB repository hosts a wide variety of example challenge problems based on a
 
 <div class="row">
   <div class="column">
-    <img src="doc/content/media/nric_logo.png" style="width:100%">
+    <img src="doc/content/media/nric_logo.png" style="width:49%">
   </div>
   <div class="column">
-    <img src="doc/content/media/neams_logo.jpeg" style="width:100%">
+    <img src="doc/content/media/neams_logo.jpeg" style="width:49%">
   </div>
 </div>
