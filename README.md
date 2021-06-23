@@ -9,5 +9,5 @@ The VTB repository hosts a wide variety of example challenge problems based on a
 </p>
 
 <p align="center">
-  <img src="doc/content/media/neams_logo.jpeg" width=80%>
+  <img src="doc/content/media/neams_logo.jpeg" width=60%>
 </p>
