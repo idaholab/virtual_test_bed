@@ -4,11 +4,9 @@ This repo is a National Reactor Innovation Center ([NRIC](https://nric.inl.gov/)
 
 The VTB repository hosts a wide variety of example challenge problems based on advanced reactor designs. Please refer to the [documentation website](https://mooseframework.inl.gov/virtual_test_bed/) for background and documentation for each use case.
 
-<div class="row">
   <div class="column">
     <img src="doc/content/media/nric_logo.png" width=200>
   </div>
   <div class="column">
     <img src="doc/content/media/neams_logo.jpeg" width=200>
   </div>
-</div>
