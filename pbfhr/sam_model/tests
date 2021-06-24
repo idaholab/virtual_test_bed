@@ -2,8 +2,8 @@
   [steady_state]
     type = RunApp
     input = pbfhr-ss.i
-    check_input = true
     executable_pattern = 'sam*|blue_crab*'
+    cli_args = 'Executioner/num_steps=2'
     allow_warnings = true
   []
   [transient]
