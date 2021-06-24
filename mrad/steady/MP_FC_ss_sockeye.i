@@ -170,6 +170,8 @@ corr_factor = ${fparse 2 * R_clad_o / R_hp_hole / R_hp_hole / area_correction / 
     initial_T = ${T_ext_cond}
     # Melting temperature (hard limit on minimum coolant temperature)
     T_operating = ${T_melting}
+    # Temperature to evaluate heat pipe limit approximations
+    T_ref = T_evap_inner
   []
 
   [condenser_boundary]
