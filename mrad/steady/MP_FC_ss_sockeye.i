@@ -200,7 +200,7 @@ corr_factor = ${fparse 2 * R_clad_o / R_hp_hole / R_hp_hole / area_correction / 
 
 [UserObjects]
   [flux_uo]
-    type = LayeredSideFluxAverage
+    type = LayeredSideDiffusiveFluxAverage
     direction = z
     num_layers = 100
     variable = T_solid
