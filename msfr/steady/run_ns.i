@@ -1,3 +1,10 @@
+################################################################################
+## Molten Salt Fast Reactor - Euratom EVOL + Rosatom MARS Design              ##
+## Pronghorn Sub-Application input file                                       ##
+## Steady state 3D thermal hydraulics model                                   ##
+## Relaxation transient for laminar flow, addition of turbulence is WIP       ##
+################################################################################
+
 advected_interp_method='upwind'
 velocity_interp_method='rc'
 
@@ -52,7 +59,6 @@ beta6 = 0.000184087
 []
 
 [Problem]
-  kernel_coverage_check = false
   coord_type = 'RZ'
 []
 

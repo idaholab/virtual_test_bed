@@ -1,7 +1,11 @@
-#  SFR fuel rod, derived from BISON assessment case IFR1.i
-#  Units are in standard SI: J, K, kg, m, Pa, s.
-#
+################################################################################
+## SFR fuel rod, derived from BISON assessment case IFR1.i                    ##
+## Bison Sub-Application                                                      ##
+## Thermal conduction in fuel, closed gap and clad                            ##
+## Convection on clad outer surface with SAM coupling                         ##
+################################################################################
 
+#  Units are in standard SI: J, K, kg, m, Pa, s.
 # dimensions are representative of a SFR fuel assembly
 gap                  = 0. # assume gap is closed
 rod_outside_diameter = 0.0078125

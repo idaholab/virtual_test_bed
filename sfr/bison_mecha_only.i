@@ -1,6 +1,11 @@
-#  SFR fuel rod, derived from BISON assessment case IFR1.i
+################################################################################
+## SFR fuel rod, derived from BISON assessment case IFR1.i                    ##
+## Bison lower level Sub-Application                                          ##
+## Fuel and clad mechanical deformation                                       ##
+## Small strain model                                                         ##
+################################################################################
+
 #  Units are in standard SI: J, K, kg, m, Pa, s.
-#
 #  This input file does not include friction.
 # dimensions are representative of a SFR fuel assembly
 gap                  = 0. # assume gap is closed

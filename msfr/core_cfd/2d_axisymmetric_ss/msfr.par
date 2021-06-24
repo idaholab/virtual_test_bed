@@ -1,3 +1,10 @@
+################################################################################
+## Molten Salt Fast Reactor - Euratom EVOL + Rosatom MARS Design              ##
+## Nek5000                                                                    ##
+## RANS                                                                       ##
+## Incompressible flow - K-omega turbulence                                   ##
+################################################################################
+
 #Nek5000 parameter file
 [GENERAL]
 startFrom = msfr.solutions
@@ -29,12 +36,12 @@ residualPROJ = yes
 [TEMPERATURE]
 solver = none
 
-[SCALAR01] 
+[SCALAR01]
 density = 1.0
 diffusivity =-5.0E+04
 residualTol = 1e-8
 
-[SCALAR02] 
+[SCALAR02]
 density = 1.0
 diffusivity =-5.0E+04
 residualTol = 1e-8

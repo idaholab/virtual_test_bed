@@ -1,4 +1,10 @@
-## HTGR LOOP (Prismatic MHTGR -GA) ##
+################################################################################
+## HTGR LOOP (Prismatic MHTGR -GA)                                            ##
+## SAM Single-Application                                                     ##
+## 1D thermal hydraulics                                                      ##
+## Primary + secondary loop                                                   ##
+################################################################################
+
 ### For reactor trasients the following variables needs to change####
 ##1.  EHX coefficient
 ##2.  Pump Head =0, comment out desired mass flow rate
@@ -9063,5 +9069,3 @@ T_out = 623.15  #1000
   []
 
 []
-
-
