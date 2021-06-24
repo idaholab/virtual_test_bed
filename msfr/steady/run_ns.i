@@ -51,6 +51,11 @@ beta6 = 0.000184087
     type = FileMeshGenerator
     file = '../mesh/msfr_rz_mesh.e'
   []
+  [inactive]
+    type = BlockDeletionGenerator
+    input = fmg
+    block = 'shield reflector'
+  []
 []
 
 [Outputs]
@@ -562,12 +567,6 @@ beta6 = 0.000184087
     pressure = 'pressure'
     rho = ${rho}
     block = 'fuel pump hx'
-  []
-  [not_used]
-    type = ADGenericConstantMaterial
-    prop_names = 'not_used'
-    prop_values = 0
-    block = 'shield reflector'
   []
   [friction]
     type = ADGenericConstantMaterial
