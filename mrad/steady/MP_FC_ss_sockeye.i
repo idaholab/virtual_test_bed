@@ -109,7 +109,7 @@ R_clad_o = 0.0105 # heat pipe outer radius (m)
 R_hp_hole = 0.0107 # heat pipe + gap (m)
 num_sides = 28 # full_core level 9
 alpha = ${fparse 2 * pi / num_sides}
-perimeter_correction = ${fparse 0.5 * alpha / sin(0.5 * alpha)} # polygonization correction factor for perimeter
+# perimeter_correction = ${fparse 0.5 * alpha / sin(0.5 * alpha)} # polygonization correction factor for perimeter (unused)
 area_correction = ${fparse sqrt(alpha / sin(alpha))} # polygonization correction factor for area
 corr_factor = ${fparse 2 * R_clad_o / R_hp_hole / R_hp_hole / area_correction / area_correction} #full-core
 
