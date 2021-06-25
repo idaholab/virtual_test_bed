@@ -1,7 +1,8 @@
 [Tests]
   [steady_state]
-    type = RunApp
+    type = CSVDiff
     input = pbfhr-ss.i
+    csvdiff = 'pbfhr-ss_csv.csv'
     executable_pattern = 'sam*|blue_crab*'
     cli_args = 'Executioner/num_steps=2'
     allow_warnings = true
