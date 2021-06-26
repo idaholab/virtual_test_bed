@@ -1,3 +1,10 @@
+################################################################################
+## Molten Salt Fast Reactor - Euratom EVOL + Rosatom MARS Design              ##
+## Pronghorn Sub-Application input file                                       ##
+## Steady state 3D thermal hydraulics model                                   ##
+## Relaxation transient for laminar flow, addition of turbulence is WIP       ##
+################################################################################
+
 advected_interp_method='upwind'
 velocity_interp_method='rc'
 
@@ -44,6 +51,11 @@ beta6 = 0.000184087
     type = FileMeshGenerator
     file = '../mesh/msfr_rz_mesh.e'
   []
+  [inactive]
+    type = BlockDeletionGenerator
+    input = fmg
+    block = 'shield reflector'
+  []
 []
 
 [Outputs]
@@ -52,7 +64,6 @@ beta6 = 0.000184087
 []
 
 [Problem]
-  kernel_coverage_check = false
   coord_type = 'RZ'
 []
 
@@ -556,12 +567,6 @@ beta6 = 0.000184087
     pressure = 'pressure'
     rho = ${rho}
     block = 'fuel pump hx'
-  []
-  [not_used]
-    type = ADGenericConstantMaterial
-    prop_names = 'not_used'
-    prop_values = 0
-    block = 'shield reflector'
   []
   [friction]
     type = ADGenericConstantMaterial

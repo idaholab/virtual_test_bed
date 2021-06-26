@@ -1,7 +1,7 @@
 # Steady state simulation results
 
 !alert note
-Under construction
+Under construction. These results were obtained with the previous iteration of the model, which did not model the outer reflector. We will update them shortly.
 
 We report here the steady state results of this coupled multiphysics simulation.
 

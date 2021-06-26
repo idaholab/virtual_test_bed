@@ -1,4 +1,8 @@
-
+################################################################################
+## SFR assembly model                                                         ##
+## SAM Sub-Application                                                        ##
+## Steady state 1D thermal hydraulics                                         ##
+################################################################################
 
 m_dot_in = 29.8 #kg/s
 
@@ -79,9 +83,8 @@ V_init = ${fparse m_dot_in/rho_in/A_channel}
     htc_name = htc_external
     T_wall_name = T_wall_external
   []
-
-
 []
+
 
 [Preconditioning]
   [SMP_PJFNK]
@@ -112,7 +115,6 @@ V_init = ${fparse m_dot_in/rho_in/A_channel}
     order = FIRST                     # Order of the quadrature
   []
 [] # close Executioner section
-
 
 
 [Postprocessors]
@@ -198,6 +200,7 @@ V_init = ${fparse m_dot_in/rho_in/A_channel}
     execute_on = 'TIMESTEP_END'
   []
 []
+
 
 [Outputs]
   # csv = true

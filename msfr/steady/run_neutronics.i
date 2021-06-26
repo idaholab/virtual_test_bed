@@ -1,3 +1,10 @@
+################################################################################
+## Molten Salt Fast Reactor - Euratom EVOL + Rosatom MARS Design              ##
+## Griffin Main Application input file                                        ##
+## Steady state neutronics model                                              ##
+## Neutron diffusion with delayed precursor source, no equivalence            ##
+################################################################################
+
 [Mesh]
   [fmg]
     type = FileMeshGenerator

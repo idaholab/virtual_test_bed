@@ -109,7 +109,7 @@ R_clad_o = 0.0105 # heat pipe outer radius (m)
 R_hp_hole = 0.0107 # heat pipe + gap (m)
 num_sides = 28 # full_core level 9
 alpha = ${fparse 2 * pi / num_sides}
-perimeter_correction = ${fparse 0.5 * alpha / sin(0.5 * alpha)} # polygonization correction factor for perimeter
+# perimeter_correction = ${fparse 0.5 * alpha / sin(0.5 * alpha)} # polygonization correction factor for perimeter (unused)
 area_correction = ${fparse sqrt(alpha / sin(alpha))} # polygonization correction factor for area
 corr_factor = ${fparse 2 * R_clad_o / R_hp_hole / R_hp_hole / area_correction / area_correction} #full-core
 
@@ -170,6 +170,8 @@ corr_factor = ${fparse 2 * R_clad_o / R_hp_hole / R_hp_hole / area_correction / 
     initial_T = ${T_ext_cond}
     # Melting temperature (hard limit on minimum coolant temperature)
     T_operating = ${T_melting}
+    # Temperature to evaluate heat pipe limit approximations
+    T_ref = T_evap_inner
   []
 
   [condenser_boundary]
@@ -200,7 +202,7 @@ corr_factor = ${fparse 2 * R_clad_o / R_hp_hole / R_hp_hole / area_correction / 
 
 [UserObjects]
   [flux_uo]
-    type = LayeredSideFluxAverage
+    type = LayeredSideDiffusiveFluxAverage
     direction = z
     num_layers = 100
     variable = T_solid
@@ -273,9 +275,9 @@ corr_factor = ${fparse 2 * R_clad_o / R_hp_hole / R_hp_hole / area_correction / 
     execute_on = 'initial timestep_begin TIMESTEP_END'
   []
   [Integral_BC_Total]
-    type = ParsedPostprocessor
+    type = LinearCombinationPostprocessor
     pp_names = 'condenser_boundary:integral evaporator_boundary:integral'
-    function = 'condenser_boundary:integral+evaporator_boundary:integral'
+    pp_coefs = '1 1'
     execute_on = 'INITIAL TIMESTEP_END'
   []
   [ZeroPP]

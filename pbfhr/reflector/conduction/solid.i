@@ -1,3 +1,9 @@
+################################################################################
+## FHR bypass flow in outer reflector                                         ##
+## Cardinal Main Application                                                  ##
+## Heat conduction in solid phase                                             ##
+################################################################################
+
 # core average heat flux from the pebbles to the blocks
 core_heat_flux = 5e3
 

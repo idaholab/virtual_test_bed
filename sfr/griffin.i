@@ -1,3 +1,10 @@
+################################################################################
+## SFR assembly model                                                         ##
+## Griffin main application                                                   ##
+## Steady state neutronics model                                              ##
+## 6-group continuous neutron diffusion without equivalence                   ##
+################################################################################
+
 [Mesh]
   [fmg]
    type = FileMeshGenerator

@@ -1,3 +1,9 @@
+################################################################################
+## FHR bypass flow in outer reflector                                         ##
+## Cardinal Sub Application to run NekRS                                      ##
+## 3D RANS model                                                              ##
+################################################################################
+
 fluid_solid_interface = '1 2 7'
 
 [Mesh]
