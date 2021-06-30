@@ -1,0 +1,8 @@
+[Tests]
+  [check_input]
+    type = RunApp
+    input = 'oecd_pbmr400_tr0_pplofc_rsnk_keff_calc.i'
+    check_input = True
+    executable_pattern = 'blue_crab*|dire_wolf*|fenix*'
+  []
+[]

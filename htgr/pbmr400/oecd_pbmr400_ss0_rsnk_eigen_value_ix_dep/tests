@@ -1,0 +1,8 @@
+[Tests]
+  [check_input]
+    type = RunApp
+    input = 'oecd_pbmr400_ss0_rsnk_eigen_value_ix_dep.i'
+    check_input = True
+    executable_pattern = 'blue_crab*|dire_wolf*|fenix*'
+  []
+[]
