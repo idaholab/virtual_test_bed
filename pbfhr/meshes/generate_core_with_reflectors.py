@@ -17,7 +17,7 @@ plenum = True
 scheme = 'Map'
 
 # approximate element size
-dx = 0.06
+# dx = 0.06
 
 cubit.cmd('reset')
 
@@ -302,9 +302,9 @@ cubit.cmd('sideset 101 name "bed_horizontal_bottom"')
 
 # Outflow
 cubit.cmd('sideset 102 curve 31 wrt surface 11')
-cubit.cmd('sideset 102 curve 42 wrt surface 16')
+cubit.cmd('sideset 102 curve 43 wrt surface 16')
 cubit.cmd('sideset 102 name "bed_horizontal_top"')
-cubit.cmd('sideset 103 curve 46 wrt surface 17')
+cubit.cmd('sideset 103 curve 49 wrt surface 17')
 cubit.cmd('sideset 103 name "plenum_top"')
 
 # Inner
@@ -312,7 +312,7 @@ cubit.cmd('sideset 104 curve 12 13 14 7 8 15 16 wrt volume 3')
 cubit.cmd('sideset 104 name "bed_left"')
 
 # Right-most boundary
-cubit.cmd('sideset 105 curve 64 wrt volume 9')
+cubit.cmd('sideset 105 curve 65 wrt volume 9')
 cubit.cmd('sideset 105 name "brick_surface"')
 
 ################################################################################
@@ -355,8 +355,9 @@ cubit.cmd('sideset 105 name "brick_surface"')
 ################################################################################
 
 # Select file name
-filename = 'core_CFD'
-filename += "_" + str(dx)
+filename = 'core_pronghorn'
+# Mesh size is controlled by intervals
+# filename += "_" + str(dx)
 
 # save file
 cubit.cmd('set large exodus file on')

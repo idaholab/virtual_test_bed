@@ -24,8 +24,8 @@
 # Problem Parameters -----------------------------------------------------------
 
 blocks_pebbles = '3 4'
-blocks_fluid = '3 4 5'
-blocks_solid = '1 2 5 6 7 8 9'
+blocks_fluid = '3 4 5 6'
+blocks_solid = '1 2 6 7 8 9 10'
 
 # Material compositions
 UO2_phase_fraction           = 1.20427291e-01
@@ -54,12 +54,16 @@ solid_cp = ${fparse 1697.0*heat_capacity_multiplier}
 # Outer reflector drag parameters
 # TODO: tune using CFD
 # TODO: verify current values (imported from [1])
-Ah          = 1337.76
-Bh          = 2.58
-Av          = 599.30
-Bv          = 0.95
-Dh          = 0.02582
-Dv          = 0.02006
+Ah = 1337.76
+Bh = 2.58
+Av = 599.30
+Bv = 0.95
+Dh = 0.02582
+Dv = 0.02006
+
+# Plenum drag parameters. The core hot legs cannot be represented in 2D RZ
+# accurately, so this should be tuned to obtain the desired mass flow rates
+plenum_friction = 0.5
 
 # Computation parameters
 velocity_interp_method = 'rc'
@@ -70,6 +74,7 @@ pebble_diameter  = 0.03
 bed_porosity     = 0.4
 IR_porosity      = 0
 OR_porosity      = 0.1123
+plenum_porosity  = 0.5
 model_inlet_rin  = 0.45
 model_inlet_rout = 0.8574
 model_vol        = 10.4
@@ -93,14 +98,15 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
   # in pbfhr/meshes using Cubit to generate the mesh
   # Modify the parameters (mesh size, refinement areas) for each application
   # neutronics, thermal hydraulics and fuel performance
+  uniform_refine = 2
   [fmg]
     type = FileMeshGenerator
     file = '../meshes/core_pronghorn.e'
   []
   [barrel]
     type = SideSetsBetweenSubdomainsGenerator
-    primary_block = 5
-    paired_block = 6
+    primary_block = 6
+    paired_block = 7
     input = fmg
     new_boundary = 'barrel_wall'
   []
@@ -108,14 +114,14 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
     type = ParsedGenerateSideset
     combinatorial_geometry = 'abs(y) < 1e-10'
     new_sideset_name = 'OR_horizontal_bottom'
-    included_subdomain_ids = '5'
+    included_subdomain_ids = '6'
     input = barrel
   []
   [OR_outlet]
     type = ParsedGenerateSideset
     combinatorial_geometry = 'abs(y - 5.3125) < 1e-10'
     new_sideset_name = 'OR_horizontal_top'
-    included_subdomain_ids = '5'
+    included_subdomain_ids = '6'
     input = OR_inlet
   []
 []
@@ -398,11 +404,17 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
     function = ${bed_porosity}
     block = ${blocks_pebbles}
   []
+  [plenum_porosity]
+    type = FunctionIC
+    variable = porosity
+    function = ${plenum_porosity}
+    block = '5'
+  []
   [OR_porosity]
     type = FunctionIC
     variable = porosity
     function = ${OR_porosity}
-    block = '5'
+    block = '6'
   []
   [vel_core]
     type = FunctionIC
@@ -479,7 +491,7 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
     type = INSFVOutletPressureBC
     variable = pressure
     function = 2e5   # not too far from atm for matprop evaluations
-    boundary = 'bed_horizontal_top OR_horizontal_top'
+    boundary = 'bed_horizontal_top OR_horizontal_top plenum_top'
   []
 []
 
@@ -497,7 +509,7 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
     type = ADGenericConstantMaterial
     prop_names = 'rho_s         cp_s        k_s'
     prop_values = '${solid_rho} ${solid_cp} 0.26'
-    block = '9'
+    block = '10'
   []
 
   # material properties
@@ -514,7 +526,7 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
   [plenum_and_OR]
     type = PronghornSolidMaterialPT
     solid = graphite
-    block = '5 7'
+    block = '5 6 8'
   []
   [IR]
     type = PronghornSolidMaterialPT
@@ -524,7 +536,7 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
   [barrel_and_vessel]
     type = PronghornSolidMaterialPT
     solid = stainless_steel
-    block = '6 8'
+    block = '7 9'
   []
 
   # FLUID
@@ -575,28 +587,33 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
     acceleration = '0 -9.81 0'
   []
 
-  # closures in the outer reflector
+  # closures in the outer reflector and the plenum
   [drag_OR]
     type = FunctionAnisotropicDragCoefficients
     Darcy_coefficient = '${fparse OR_porosity * Ah / Dh / Dh}
     ${fparse OR_porosity * Av / Dv / Dv} ${fparse OR_porosity * Av / Dv / Dv}'
     Forchheimer_coefficient = '${fparse OR_porosity * Bh / Dh}
     ${fparse OR_porosity * Bv / Dv} ${fparse OR_porosity * Bv / Dv}'
+    block = '6'
+  []
+  [drag_plenum]
+    type = FunctionSimpleIsotropicDragCoefficients
+    W = ${plenum_friction}
     block = '5'
   []
-  [alpha_OR]
+  [alpha_OR_plenum]
     type = ADGenericConstantMaterial
     prop_names = 'alpha'
     prop_values = '0.0'
-    block = '5'
+    block = '5 6'
   []
-  [kappa_OR]
+  [kappa_OR_plenum]
     type = KappaFluid
-    block = '5'
+    block = '5 6'
   []
-  [kappa_s_OR]
+  [kappa_s_OR_plenum]
     type = VolumeAverageKappaSolid
-    block = '5'
+    block = '5 6'
   []
 []
 
@@ -689,7 +706,7 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
   line_search = 'none'
 
   # Iterations parameters
-  l_max_its = 100
+  l_max_its = 500
   l_tol     = 1e-8
   nl_max_its = 25
   nl_rel_tol = 5e-7
@@ -780,7 +797,7 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
   []
   [mass_flow_out]
     type = VolumetricFlowRate
-    boundary = 'bed_horizontal_top OR_horizontal_top'
+    boundary = 'bed_horizontal_top plenum_top OR_horizontal_top'
     vel_x = 'vel_x'
     vel_y = 'vel_y'
     advected_variable = ${rho_fluid}
@@ -788,7 +805,7 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
   []
   [T_flow_out]
     type = SideAverageValue
-    boundary = 'bed_horizontal_top OR_horizontal_top'
+    boundary = 'bed_horizontal_top plenum_top OR_horizontal_top'
     variable = temp_fluid
     execute_on = 'INITIAL TIMESTEP_END'
   []
@@ -800,7 +817,7 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
   []
   [pressure_out]
     type = SideAverageValue
-    boundary = 'bed_horizontal_top OR_horizontal_top'
+    boundary = 'bed_horizontal_top plenum_top OR_horizontal_top'
     variable = pressure
     execute_on = 'INITIAL TIMESTEP_END'
   []
@@ -835,7 +852,7 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
   # diffusion at the top is 0 because of the fully developped flow assumption
   [flow_out]
     type = VolumetricFlowRate
-    boundary = 'bed_horizontal_top OR_horizontal_top'
+    boundary = 'bed_horizontal_top plenum_top OR_horizontal_top'
     vel_x = 'vel_x'
     vel_y = 'vel_y'
     advected_mat_prop = 'rho_cp_temp'
@@ -855,10 +872,23 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
     advected_variable = ${rho_fluid}
     execute_on = 'INITIAL TIMESTEP_END'
   []
+  [mass_flow_plenum]
+    type = VolumetricFlowRate
+    boundary = 'plenum_top'
+    vel_x = 'vel_x'
+    vel_y = 'vel_y'
+    advected_variable = ${rho_fluid}
+    execute_on = 'INITIAL TIMESTEP_END'
+  []
   [bypass_fraction]
     type = ParsedPostprocessor
-    pp_names = 'mass_flow_out mass_flow_OR'
+    pp_names = 'mass_flow_OR mass_flow_out'
     function = 'mass_flow_OR / mass_flow_out'
+  []
+  [plenum_fraction]
+    type = ParsedPostprocessor
+    pp_names = 'mass_flow_plenum mass_flow_out'
+    function = 'mass_flow_plenum / mass_flow_out'
   []
 
   # Miscellaneous
@@ -871,8 +901,8 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
 
 [Outputs]
   csv = true
-  hide = 'pressure_in pressure_out mass_flow_OR mass_flow_out max_vy '
-         'bypass_fraction max_Tf h pressure_drop'
+  hide = 'pressure_in pressure_out mass_flow_OR mass_flow_out mass_flow_plenum max_vy '
+        # 'bypass_fraction plenum_fraction max_Tf h pressure_drop'
   [exodus]
     type = Exodus
     # renaming variables to use this option would be necessary for now, see #17905
