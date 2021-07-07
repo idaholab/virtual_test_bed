@@ -28,7 +28,7 @@ power_density = ${fparse total_power / model_vol}
 [Mesh]
   [read_mesh]
     type = FileMeshGenerator
-    file = '../meshes/core_fuel_performance.e'
+    file = '../meshes/core_coarse.e'
   []
   [delete_1]
     type = BlockDeletionGenerator
@@ -136,6 +136,7 @@ power_density = ${fparse total_power / model_vol}
     input_files = 'ss4_fuel_pebble.i'
     output_in_position = true
     block = '3'
+    # Use a lighter application for performance
     # app_type = PronghornApp
     # library_path = "/Users/giudgl-mac/projects/pronghorn/lib"
     max_procs_per_app = 1
@@ -146,6 +147,7 @@ power_density = ${fparse total_power / model_vol}
     input_files = 'ss4_graphite_pebble.i'
     output_in_position = true
     block = '4'
+    # Use a lighter application for performance
     # app_type = HeatConductionApp
     # library_path = "/Users/giudgl-mac/projects/moose/modules/heat_conduction/lib"
     max_procs_per_app = 1

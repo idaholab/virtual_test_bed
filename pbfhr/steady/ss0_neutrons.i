@@ -40,9 +40,7 @@ fis_fract            = ${fparse 1 - dh_fract} # Fission power fraction at t = 0.
   G = 8
 
   ReflectingBoundary = 'reflector_surface'
-  VacuumBoundary = 'brick_surface IR_horizontal_top bed_horizontal_top OR_horizontal_top
-                    IR_horizontal_bottom bed_horizontal_bottom OR_horizontal_bottom
-                    IRC_horizontal_top IRC_horizontal_bottom bottop_surfaces'
+  VacuumBoundary = 'brick_surface top bottom'
 
   [diff]
     scheme = CFEM-Diffusion
@@ -58,24 +56,38 @@ fis_fract            = ${fparse 1 - dh_fract} # Fission power fraction at t = 0.
 # ==============================================================================
 
 # Save time by using a previously computed solution
-restart_file = 'mk1_fhr.e'  # uncomment near bottom of input file to use restart
+# restart_file = 'mk1_fhr.e'  # uncomment near bottom of input file to use restart
 
 [Mesh]
+  uniform_refine = 2
   [mesh_reader]
     type = FileMeshGenerator
-    file = '../meshes/core_neutronics.e'
+    file = '../meshes/core_pronghorn.e'
   []
   [new_boundary]
     type = SideSetsBetweenSubdomainsGenerator
     input = mesh_reader
-    primary_block = '8'
-    paired_block = '9'
+    primary_block = '9'
+    paired_block = '10'
     new_boundary = 'brick_surface'
   []
-  [delete_9]
+  [delete_bricks]
     type = BlockDeletionGenerator
     input = new_boundary
-    block = '9'
+    block = '10'
+  []
+  [reflector]
+    type = SideSetsFromNormalsGenerator
+    input = delete_bricks
+    new_boundary = 'reflector_surface'
+    normals = '-1 0 0'
+  []
+  [top_bottom]
+    type = SideSetsFromNormalsGenerator
+    input = reflector
+    new_boundary = 'top bottom'
+    normals = '0 1 0 0 -1 0'
+    show_info = true
   []
 []
 
@@ -100,13 +112,13 @@ restart_file = 'mk1_fhr.e'  # uncomment near bottom of input file to use restart
     family = MONOMIAL
     order = CONSTANT
     initial_condition = ${initial_fuel_temperature}
-    block = '1 2 3 4 5 6 7 8'  #FIXME
+    block = '1 2 3 4 5 6 7 8 9'  #FIXME
   []
   [Tsalt]
     family = MONOMIAL
     order = CONSTANT
     initial_condition = ${initial_salt_temperature}
-    block = '1 2 3 4 5 6 7 8'  #FIXME
+    block = '1 2 3 4 5 6 7 8 9'  #FIXME
   []
   [CR_insertion]
     family = MONOMIAL
@@ -245,7 +257,6 @@ restart_file = 'mk1_fhr.e'  # uncomment near bottom of input file to use restart
     type = PiecewiseLinear
     x = '0 10'
     y = '2 2'
-    direction = left
   []
 []
 
@@ -263,6 +274,7 @@ restart_file = 'mk1_fhr.e'  # uncomment near bottom of input file to use restart
 
 [Materials]
   # TODO: Make a Tsalt_ave variable to propagate effect of Tsalt to other regions
+  # TODO: Generate cross sections for the plenum region separately
   [inner_reflector]
     type = CoupledFeedbackNeutronicsMaterial  #FIXME
     grid_names = 'Tfuel Tsalt CR'
@@ -321,7 +333,7 @@ restart_file = 'mk1_fhr.e'  # uncomment near bottom of input file to use restart
     densities = '1.0'
     is_meter = true
     material_id = 100008
-    block = 5
+    block = '5 6'
   []
   [barrel_vessel]
     type = CoupledFeedbackNeutronicsMaterial  #FIXME
@@ -333,7 +345,7 @@ restart_file = 'mk1_fhr.e'  # uncomment near bottom of input file to use restart
     densities = '1.0'
     is_meter = true
     material_id = 100009
-    block = '6 7 8'
+    block = '7 8 9'
   []
 []
 
@@ -457,10 +469,22 @@ restart_file = 'mk1_fhr.e'  # uncomment near bottom of input file to use restart
     block = '3'
     execute_on = 'transfer'
   []
+
+  # For convergence study
+  [h]
+    type = AverageElementSize
+    outputs = 'console csv'
+    execute_on = 'timestep_end'
+  []
+  [max_power]
+    type = ElementExtremeValue
+    variable = total_power_density
+    block = '3'
+  []
 []
 
 [Outputs]
-  file_base = mk1_fhr
+  # file_base = mk1_fhr
   exodus = true
   csv = true
   [Checkpoint]
