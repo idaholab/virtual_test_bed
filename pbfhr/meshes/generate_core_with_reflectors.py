@@ -11,13 +11,13 @@ sys.path.append(os.getcwd())
 import pbfhr as fhr
 
 # whether to include orificing along the outflow boundary
-orifice = False
+plenum = True
 
 # meshing scheme
 scheme = 'Map'
 
 # approximate element size
-dx = 0.06
+# dx = 0.06
 
 cubit.cmd('reset')
 
@@ -126,13 +126,51 @@ vertices = "16 17 18 19 25 24"
 cubit.cmd('create surface vertex ' + vertices)
 vertices = "19 20 26 25"
 cubit.cmd('create surface vertex ' + vertices)
-vertices = "20 21 27 26"
+if (not plenum):
+    vertices = "20 21 27 26"
+else:
+    cubit.cmd('create vertex 0.94333 4.42014 0')
+    cubit.cmd('compress all')
+    cubit.cmd('merge all')
+    index += 1
+    vertices = "26 39 27 21 20"  # should be 29!
 cubit.cmd('create surface vertex ' + vertices)
 vertices = "21 22 28 27"
 cubit.cmd('create surface vertex ' + vertices)
 cubit.cmd('compress all')
 cubit.cmd('merge all')
-#
+
+# ####
+# # Plenum
+
+if plenum:
+    # split the curve on the right to permit different boundary condition specifications.
+    # First we need to split the curve according which part of the boundary is outflow.
+    # cubit.cmd('split curve 40 fraction ' + str(1.0 - fhr.bcs['outflow_h_fraction']))
+    # cubit.cmd('merge all')
+    # cubit.cmd('compress all')
+    #
+    # Create the rest of the plenum outlet
+    #TODO Create orifices for the connection to the plenum
+    #TODO Add a component limiting flow from the plenum to reflector
+    # We have not found specifications, so all of this is assumed
+    cubit.cmd('create vertex 1.05 4.47017 0')
+    cubit.cmd('create vertex 1.05 5.3125 0')
+    cubit.cmd('create vertex 1.25 5.3125 0')
+    cubit.cmd('create vertex 1.25 4.47017 0')
+    cubit.cmd('compress all')
+    cubit.cmd('merge all')
+    #
+    index += 4
+    vertices = '29 30 33 26'
+    cubit.cmd('create surface vertex ' + vertices)
+    vertices = '30 31 32 33'
+    cubit.cmd('compress all')
+    cubit.cmd('merge all')
+    cubit.cmd('create surface vertex ' + vertices)
+    cubit.cmd('compress all')
+    cubit.cmd('merge all')
+
 # ####
 # # Outer reflector surface (surface 7, block 5)
 #
@@ -144,8 +182,16 @@ index += 2
 cubit.cmd('compress all')
 cubit.cmd('merge all')
 
-vertices = "28 27 26 25 24 23 30 29"
-cubit.cmd('create surface vertex ' + vertices)
+if not plenum:
+    vertices = "28 27 26 25 24 23 30 29"
+    cubit.cmd('create surface vertex ' + vertices)
+else:
+    # Between defueling chute and plenum
+    vertices = "28 27 29 30 31"
+    cubit.cmd('create surface vertex ' + vertices)
+    # Outside of plenum
+    vertices = "35 34 32 33 26 25 24 23"
+    cubit.cmd('create surface vertex ' + vertices)
 cubit.cmd('merge all')
 cubit.cmd('compress all')
 
@@ -193,20 +239,57 @@ cubit.cmd('create surface vertex '+str(ind['vessel']+1)+' '+str(ind['vessel'])+'
 cubit.cmd('merge all')
 cubit.cmd('compress all')
 
+################################################################################
+# Mesh generation
+################################################################################
+refinement = 1
+
+# Set intervals for each curves
+# Oulet regions
+cubit.cmd('curve 16 30 interval '+str(4*refinement))
+cubit.cmd('curve 40 interval '+str(3*refinement))
+cubit.cmd('curve 41 interval '+str(refinement))
+cubit.cmd('curve 15 32 43 interval '+str(5*refinement))
+# Main pebble region
+cubit.cmd('curve 7 28 39 interval '+str(10*refinement))
+# Inlet regions
+cubit.cmd('curve 8 26 interval '+str(2*refinement))
+cubit.cmd('curve 14 24 interval '+str(refinement))
+cubit.cmd('curve 13 22 interval '+str(refinement))
+cubit.cmd('curve 12 19 interval '+str(3*refinement))
+# Plenum bottom
+cubit.cmd('curve 45 interval '+str(refinement))
+cubit.cmd('curve 47 interval '+str(2*refinement))
+# cubit.cmd('surface 17 size '+str(0.02/refinement**2))
+# Plenum top
+cubit.cmd('curve 48 50 interval '+str(6*refinement))
+cubit.cmd('curve 46 49 interval '+str(2*refinement))
+
+# Inner reflector side
+# cubit.cmd('curve 6 interval 5')
+# cubit.cmd('curve 1 3 interval 30')
+# cubit.cmd('curve 9 interval 5')
+cubit.cmd('curve 2 4 interval '+str(refinement))
+cubit.cmd('curve 10 5 interval '+str(refinement))
+# cubit.cmd('curve 11 17 interval 1')
+# Horizontal for flow regions
+cubit.cmd('curve 31 29 27 25 23 21 18 20 interval '+str(3*refinement))
+cubit.cmd('curve 35 33 36 38 43 42 interval '+str(refinement))
 
 # mesh the entire domain
-cubit.cmd('surface 1 2 3 4 5 6 7 8 9 10 11 size ' + str(dx))
-cubit.cmd('surface 1 2 3 4 5 6 7 8 9 10 11 scheme ' + scheme)
+# cubit.cmd('surface 1 2 3 4 5 6 7 8 9 10 11 12 size ' + str(dx))
+cubit.cmd('surface 1 2 3 4 5 6 7 8 9 10 11 12 scheme ' + scheme)
 cubit.cmd('block 1 surface 1 3 4') # inner reflector
 cubit.cmd('block 2 surface 2')     # control rod channel
-cubit.cmd('block 3 surface 5 6 7 8 9 10 11')     # core
+cubit.cmd('block 3 surface 5 6 7 8 9 10 11')    # core
 cubit.cmd('block 4 surface 12 13 14 15 16')     # pebble reflector
-cubit.cmd('block 5 surface 17')     # outer reflector
-cubit.cmd('block 6 surface 18')     # core barrel
-cubit.cmd('block 7 surface 19')     # downcomer
-cubit.cmd('block 8 surface 20')    # vessel
-cubit.cmd('block 9 surface 21')    # bricks
-cubit.cmd('mesh surface 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21')
+cubit.cmd('block 5 surface 17 18')     # plenum
+cubit.cmd('block 6 surface 19 20')  # outer reflector
+cubit.cmd('block 7 surface 21')     # core barrel
+cubit.cmd('block 8 surface 22')     # downcomer
+cubit.cmd('block 9 surface 23')     # vessel
+cubit.cmd('block 10 surface 24')    # bricks
+cubit.cmd('mesh surface 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24')
 
 ################################################################################
 # Curves and sideset definitions
@@ -219,19 +302,17 @@ cubit.cmd('sideset 101 name "bed_horizontal_bottom"')
 
 # Outflow
 cubit.cmd('sideset 102 curve 31 wrt surface 11')
-cubit.cmd('sideset 102 curve 42 wrt surface 16')
+cubit.cmd('sideset 102 curve 43 wrt surface 16')
 cubit.cmd('sideset 102 name "bed_horizontal_top"')
+cubit.cmd('sideset 103 curve 49 wrt surface 17')
+cubit.cmd('sideset 103 name "plenum_top"')
 
 # Inner
-cubit.cmd('sideset 103 curve 12 13 14 7 8 15 16 wrt volume 3')
-cubit.cmd('sideset 103 name "bed_left"')
-
-# Outer
-cubit.cmd('sideset 104 curve 34 37 39 41 43 wrt volume 4')
-cubit.cmd('sideset 104 name "bed_right"')
+cubit.cmd('sideset 104 curve 12 13 14 7 8 15 16 wrt volume 3')
+cubit.cmd('sideset 104 name "bed_left"')
 
 # Right-most boundary
-cubit.cmd('sideset 105 curve 57 wrt volume 9')
+cubit.cmd('sideset 105 curve 65 wrt volume 9')
 cubit.cmd('sideset 105 name "brick_surface"')
 
 ################################################################################
@@ -274,11 +355,10 @@ cubit.cmd('sideset 105 name "brick_surface"')
 ################################################################################
 
 # Select file name
-filename = 'core_CFD'
-if (orifice == True):
-    filename += '_orificing'
-filename += "_" + str(dx)
+filename = 'core_pronghorn'
+# Mesh size is controlled by intervals
+# filename += "_" + str(dx)
 
 # save file
 cubit.cmd('set large exodus file on')
-cubit.cmd('export Genesis  "/Users/giudgl-mac/projects/VTB/meshes/' + filename + '.e" dimension 2  overwrite')
+cubit.cmd('export Genesis  "/Users/giudgl/projects/virtual_test_bed/pbfhr/meshes/' + filename + '.e" dimension 2  overwrite')
