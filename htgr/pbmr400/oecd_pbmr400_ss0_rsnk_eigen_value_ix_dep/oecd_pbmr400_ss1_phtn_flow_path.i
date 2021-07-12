@@ -541,8 +541,8 @@ riser_superficial_rho_v         = ${fparse reactor_total_mfr/riser_free_flow_are
   [rho]
     type = FluidDensityAux
     variable = rho
-    pressure = pressure
-    T_fluid = T_fluid
+    p = pressure
+    T = T_fluid
     block = ' 1 2 14 15 16 17 18 '
   []
   [vel_x]
@@ -653,7 +653,7 @@ riser_superficial_rho_v         = ${fparse reactor_total_mfr/riser_free_flow_are
   [power_function]
     type = PiecewiseMulticonstant
     direction = ' left  left ' # Direction to look to find value for each interpolation dimension.
-    data_file = power.txt
+    data_file = '../shared/power.txt'
   []
 []
 

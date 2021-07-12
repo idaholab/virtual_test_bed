@@ -93,7 +93,7 @@ fis_fract            = ${fparse 1 - dh_fract} # Fission power fraction at t = 0.
 # GLOBAL PARAMETERS
 # ==============================================================================
 [GlobalParams]
-  library_file = '../_shared/oecd_pbmr400_tabulated_xs.xml'
+  library_file = '../shared/oecd_pbmr400_tabulated_xs.xml'
   library_name = 'PBMR-400'
   scalar_fluxes = 'sflux_g0 sflux_g1'
   isotopes = 'pseudo'
@@ -420,7 +420,7 @@ fis_fract            = ${fparse 1 - dh_fract} # Fission power fraction at t = 0.
   ## interpolate the yields using NEMTABReader
   [fission_yield_material]
     type = NEMTABMaterial
-    nemtab_filename = '../_shared/oecd_pbmr400_yields_xs.txt'
+    nemtab_filename = '../shared/oecd_pbmr400_yields_xs.txt'
     region_id_type = material_id
     property_names = 'iodine_yield xenon_yield'
     grid_variables = 'T_fuel T_mod B1 B2 NXe'
@@ -754,11 +754,11 @@ fis_fract            = ${fparse 1 - dh_fract} # Fission power fraction at t = 0.
   output_after_power_iterations = false
   output_before_normalization = false
 
-  # Picard iterationa.
-  picard_abs_tol = 1e-7
-  picard_rel_tol = 1e-6
-  picard_max_its = 20
-  disable_picard_residual_norm_check = false
+  # Multiphysics coupling iterationa.
+  fixed_point_abs_tol = 1e-7
+  fixed_point_rel_tol = 1e-6
+  fixed_point_max_its = 20
+  disable_fixed_point_residual_norm_check = false
 []
 
 # ==============================================================================

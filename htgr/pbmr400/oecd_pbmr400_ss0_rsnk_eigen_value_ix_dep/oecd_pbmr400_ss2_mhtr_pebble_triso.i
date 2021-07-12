@@ -289,7 +289,6 @@ pebble_bed_porosity        = 0.39 # Pebble bed porosity (//)
 
   # Linear/nonlinear iterations.
   nl_abs_tol = 1e-8
-
 []
 
 # ==============================================================================

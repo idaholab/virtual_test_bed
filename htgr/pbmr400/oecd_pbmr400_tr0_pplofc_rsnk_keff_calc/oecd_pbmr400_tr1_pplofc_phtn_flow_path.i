@@ -6,8 +6,9 @@
 # Idaho Falls, INL, 10/12/2019
 # Author(s): Dr. Paolo Balestra, Dr. Sebastian Schunert
 # ==============================================================================
-# - all units in meters
-# -
+# - This input may only be run after a checkpoint has been generated with the
+# steady state input
+# - all units in SI
 # ==============================================================================
 # MODEL PARAMETERS
 # ==============================================================================
@@ -15,8 +16,8 @@
 heat_capacity_multiplier  = 1.0 # Multiply reflector solid heat structures heat capacity for steady state to speed convergence / stabilize (//).
 # Geometry ---------------------------------------------------------------------
 pebble_bed_top_height        = 15.35    # Z-coordinate of the top of the pebble bed (m).
-inner_radius                 = 1.000  # X-coordinate of inner wall of the pebble bed (m).
-outer_radius                 = 1.850  # X-coordinate of outer wall of the pebble bed (m).
+inner_radius                 = 1.000    # X-coordinate of inner wall of the pebble bed (m).
+outer_radius                 = 1.850    # X-coordinate of outer wall of the pebble bed (m).
 global_emissivity            = 0.80     # All the materials has the same emissivity (//).
 pebble_bed_porosity          = 0.39     # Pebble bed porosity (//).
 fluid_channels_porosity      = 0.20     # 20% is assumed in regions where the He flows in graphite areas (//).
@@ -42,7 +43,7 @@ reactor_inlet_rho_u      = ${fparse reactor_inlet_free_rho_u/fluid_channels_poro
 # ==============================================================================
 
 [Mesh]
-  file = oecd_pbmr400_ss1_phtn_flow_path_cp/LATEST
+  file = '../oecd_pbmr400_ss0_rsnk_eigen_value_ix_dep/oecd_pbmr400_ss1_phtn_flow_path_cp/LATEST'
 []
 
 [Problem]
