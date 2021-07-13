@@ -9,6 +9,7 @@
 # - This input may only be run after a checkpoint has been generated with the
 # steady state input (for the fluid flow)
 # - all units in meters
+# - The cross section files are stored using git lfs
 # ==============================================================================
 # MODEL PARAMETERS
 # ==============================================================================

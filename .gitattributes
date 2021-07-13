@@ -1,9 +1,7 @@
-htgr/pbmr400/shared/oecd_pbmr400_tabulated_xs.xml filter=lfs diff=lfs merge=lfs -text
 pbfhr/reflector/conduction/conduction.fld filter=lfs diff=lfs merge=lfs -text
 pbfhr/reflector/meshes/solid.e filter=lfs diff=lfs merge=lfs -text
 pbfhr/reflector/meshes/fluid.re2 filter=lfs diff=lfs merge=lfs -text
 msfr/steady/sample_output/run_neutronics_out.e filter=lfs diff=lfs merge=lfs -text
 msfr/steady/sample_output/run_neutronics_out_ns0.e filter=lfs diff=lfs merge=lfs -text
-msfr/steady/sample_output/*e[[:space:]]pbfhr/reflector/conduction/conduction.fld[[:space:]]pbfhr/reflector/meshes/solid.e[[:space:]]pbfhr/reflector/meshes/fluid.re2[[:space:]]mrad/mesh/mrad_mesh.e filter=lfs diff=lfs merge=lfs -text
-msfr/steady/sample_output/*e filter=lfs diff=lfs merge=lfs -text
 mrad/mesh/mrad_mesh.e filter=lfs diff=lfs merge=lfs -text
+htgr/pbmr400/shared/oecd_pbmr400_tabulated_xs.xml filter=lfs diff=lfs merge=lfs -text

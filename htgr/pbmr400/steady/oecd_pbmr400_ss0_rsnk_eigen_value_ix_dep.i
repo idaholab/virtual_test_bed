@@ -8,6 +8,7 @@
 # ==============================================================================
 # - The Model has been built based on [1], and some of the initial results
 #   has been published in [2].
+# - The cross section files are stored using git lfs
 # ------------------------------------------------------------------------------
 # [1] OECD/NEA, 'PBMR Coupled Neutronics/Thermal-hydraulics Transient Benchmark
 #     - The PBMR-400 Core Design', NEA/NSC/DOC(2013)10, Technical Report, (2013)

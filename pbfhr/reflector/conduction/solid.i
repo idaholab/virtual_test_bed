@@ -7,6 +7,7 @@
 # core average heat flux from the pebbles to the blocks
 core_heat_flux = 5e3
 
+# Note: the mesh is stored using git large file system (LFS)
 [Mesh]
   type = FileMesh
   file = ../meshes/solid.e
