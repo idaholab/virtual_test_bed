@@ -43,14 +43,15 @@ reactor_inlet_rho_u      = ${fparse reactor_inlet_free_rho_u/fluid_channels_poro
 # ==============================================================================
 
 [Mesh]
-  file = '../oecd_pbmr400_ss0_rsnk_eigen_value_ix_dep/oecd_pbmr400_ss1_phtn_flow_path_cp/LATEST'
+  file = '../steady/oecd_pbmr400_ss1_phtn_flow_path_cp/LATEST'
 []
 
 [Problem]
-  restart_file_base = oecd_pbmr400_ss1_phtn_flow_path_cp/LATEST
-  skip_additional_restart_data = true
   coord_type = RZ
   kernel_coverage_check = false
+
+  restart_file_base = oecd_pbmr400_ss1_phtn_flow_path_cp/LATEST
+  skip_additional_restart_data = true
   force_restart = true
 []
 

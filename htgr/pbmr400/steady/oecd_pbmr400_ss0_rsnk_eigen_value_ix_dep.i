@@ -502,115 +502,40 @@ fis_fract            = ${fparse 1 - dh_fract} # Fission power fraction at t = 0.
 []
 
 [UserObjects]
-  [SS_NXe]
+  # Save variables from the steady solve to re-use for the transient
+  # NOTE: The checkpoint system may alternatively be utilized to reload variables
+  [steady_poisons]
     type = SolutionVectorFile
-    var = NXe
+    var = 'NXe NI micro_xe_absorption_rate'
     writing = true
     execute_on = 'FINAL'
   []
-  [SS_NI]
+  [steady_fluxes]
     type = SolutionVectorFile
-    var = NI
+    var = 'scaled_sflux_g0 scaled_sflux_g1 sflux_g0 sflux_g1'
     writing = true
     execute_on = 'FINAL'
   []
-  [SS_FissionRR]
+  [steady_power]
     type = SolutionVectorFile
-    var = FissionRR
+    var = 'inst_power_density fission_power_density decay_heat_power_density
+           total_power_density FissionRR'
     writing = true
     execute_on = 'FINAL'
   []
-  [SS_scaled_sflux_g0]
+  [steady_temperatures]
     type = SolutionVectorFile
-    var = scaled_sflux_g0
+    var = 'T_fuel T_mod T_refl'
     writing = true
     execute_on = 'FINAL'
   []
-  [SS_scaled_sflux_g1]
+  [steady_buckling]
     type = SolutionVectorFile
-    var = scaled_sflux_g1
+    var = 'B1 B2'
     writing = true
     execute_on = 'FINAL'
   []
-  [SS_inst_power_density]
-    type = SolutionVectorFile
-    var = inst_power_density
-    writing = true
-    execute_on = 'FINAL'
-  []
-  [SS_normalized_power_density]
-    type = SolutionVectorFile
-    var = normalized_power_density
-    writing = true
-    execute_on = 'FINAL'
-  []
-  [SS_fission_power_density]
-    type = SolutionVectorFile
-    var = fission_power_density
-    writing = true
-    execute_on = 'FINAL'
-  []
-  [SS_decay_heat_power_density]
-    type = SolutionVectorFile
-    var = decay_heat_power_density
-    writing = true
-    execute_on = 'FINAL'
-  []
-  [SS_total_power_density]
-    type = SolutionVectorFile
-    var = total_power_density
-    writing = true
-    execute_on = 'FINAL'
-  []
-  [SS_T_fuel]
-    type = SolutionVectorFile
-    var = T_fuel
-    writing = true
-    execute_on = 'FINAL'
-  []
-  [SS_T_mod]
-    type = SolutionVectorFile
-    var = T_mod
-    writing = true
-    execute_on = 'FINAL'
-  []
-  [SS_T_refl]
-    type = SolutionVectorFile
-    var = T_refl
-    writing = true
-    execute_on = 'FINAL'
-  []
-  [SS_sflux_g0]
-    type = SolutionVectorFile
-    var = sflux_g0
-    writing = true
-    execute_on = 'FINAL'
-  []
-  [SS_sflux_g1]
-    type = SolutionVectorFile
-    var = sflux_g1
-    writing = true
-    execute_on = 'FINAL'
-  []
-  [SS_B1]
-    type = SolutionVectorFile
-    var = B1
-    writing = true
-    execute_on = 'FINAL'
-  []
-  [SS_B2]
-    type = SolutionVectorFile
-    var = B2
-    writing = true
-    execute_on = 'FINAL'
-  []
-  [SS_micro_xe_absorption_rate]
-    type = SolutionVectorFile
-    var = micro_xe_absorption_rate
-    writing = true
-    execute_on = 'FINAL'
-  []
-  [SS_transport_sol]
+  [steady_transport_sol]
     type = TransportSolutionVectorFile
     transport_system = diff
     writing = true

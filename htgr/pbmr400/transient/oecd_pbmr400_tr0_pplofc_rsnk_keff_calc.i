@@ -520,111 +520,42 @@ fis_fract            = ${fparse 1 - dh_fract} # Fission power fraction at t = 0.
 []
 
 [UserObjects]
-  [SS_inst_power_density]
+  # Restart variables from the steady solve
+  # NOTE: The checkpoint system may alternatively be utilized to load variables
+  [steady_poisons]
     type = SolutionVectorFile
-    var = inst_power_density
+    var = 'NXe NI micro_xe_absorption_rate'
     writing = false
     execute_on = 'INITIAL'
   []
-  [SS_fission_power_density]
+  [steady_fluxes]
     type = SolutionVectorFile
-    var = fission_power_density
+    var = 'scaled_sflux_g0 scaled_sflux_g1 sflux_g0 sflux_g1'
     writing = false
     execute_on = 'INITIAL'
   []
-  [SS_decay_heat_power_density]
+  [steady_power]
     type = SolutionVectorFile
-    var = decay_heat_power_density
+    var = 'inst_power_density fission_power_density decay_heat_power_density
+           total_power_density FissionRR'
     writing = false
     execute_on = 'INITIAL'
   []
-  [SS_total_power_density]
+  [steady_temperatures]
     type = SolutionVectorFile
-    var = total_power_density
+    var = 'T_fuel T_mod T_refl'
     writing = false
     execute_on = 'INITIAL'
   []
-  [SS_T_fuel]
+  [steady_buckling]
     type = SolutionVectorFile
-    var = T_fuel
+    var = 'B1 B2'
     writing = false
     execute_on = 'INITIAL'
   []
-  [SS_T_mod]
-    type = SolutionVectorFile
-    var = T_mod
-    writing = false
-    execute_on = 'INITIAL'
-  []
-  [SS_T_refl]
-    type = SolutionVectorFile
-    var = T_refl
-    writing = false
-    execute_on = 'INITIAL'
-  []
-  [SS_NI]
-    type = SolutionVectorFile
-    var = NI
-    writing = false
-    execute_on = 'INITIAL'
-  []
-  [SS_NXe]
-    type = SolutionVectorFile
-    var = NXe
-    writing = false
-    execute_on = 'INITIAL'
-  []
-  [SS_FissionRR]
-    type = SolutionVectorFile
-    var = FissionRR
-    writing = false
-    execute_on = 'INITIAL'
-  []
-  [SS_scaled_sflux_g0]
-    type = SolutionVectorFile
-    var = scaled_sflux_g0
-    writing = false
-    execute_on = 'INITIAL'
-  []
-  [SS_scaled_sflux_g1]
-    type = SolutionVectorFile
-    var = scaled_sflux_g1
-    writing = false
-    execute_on = 'INITIAL'
-  []
-  [SS_sflux_g0]
-    type = SolutionVectorFile
-    var = sflux_g0
-    writing = false
-    execute_on = 'INITIAL'
-  []
-  [SS_sflux_g1]
-    type = SolutionVectorFile
-    var = sflux_g1
-    writing = false
-    execute_on = 'INITIAL'
-  []
-  [SS_transport_sol]
+  [steady_transport_sol]
     type = TransportSolutionVectorFile
     transport_system = diff
-    writing = false
-    execute_on = 'INITIAL'
-  []
-  [SS_B1]
-    type = SolutionVectorFile
-    var = B1
-    writing = false
-    execute_on = 'INITIAL'
-  []
-  [SS_B2]
-    type = SolutionVectorFile
-    var = B2
-    writing = false
-    execute_on = 'INITIAL'
-  []
-  [SS_micro_xe_absorption_rate]
-    type = SolutionVectorFile
-    var = micro_xe_absorption_rate
     writing = false
     execute_on = 'INITIAL'
   []
