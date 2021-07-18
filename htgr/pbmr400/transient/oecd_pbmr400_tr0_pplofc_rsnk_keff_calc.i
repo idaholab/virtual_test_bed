@@ -476,6 +476,7 @@ fis_fract            = ${fparse 1 - dh_fract} # Fission power fraction at t = 0.
                       4.2789 0.  0.  0.  22.8055 0.  0.   0.  0.'
     sigma_r = '0.0 0.0'
     sigma_s = '0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0'
+    sigma_t = '0.07790164138 0.01461635716'
     neutron_speed = '1.33333333e+07 5.00000000e+05'
     material_id = 111
     block = '111'
@@ -490,6 +491,7 @@ fis_fract            = ${fparse 1 - dh_fract} # Fission power fraction at t = 0.
                       0.268625 0.  0.  0.  8.280125 0.  0.   0.  0.    '
     sigma_r = '0.0 0.0'
     sigma_s = '0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0'
+    sigma_t = '1.24088723437 0.0402570412'
     neutron_speed = '1.33333333e+07 5.00000000e+05'
     material_id = 189
     block = '189'
@@ -528,12 +530,14 @@ fis_fract            = ${fparse 1 - dh_fract} # Fission power fraction at t = 0.
     var = 'NXe NI micro_xe_absorption_rate'
     writing = false
     execute_on = 'INITIAL'
+    folder = '../steady'
   []
   [steady_fluxes]
     type = SolutionVectorFile
     var = 'scaled_sflux_g0 scaled_sflux_g1 sflux_g0 sflux_g1'
     writing = false
     execute_on = 'INITIAL'
+    folder = '../steady'
   []
   [steady_power]
     type = SolutionVectorFile
@@ -541,24 +545,28 @@ fis_fract            = ${fparse 1 - dh_fract} # Fission power fraction at t = 0.
            total_power_density FissionRR'
     writing = false
     execute_on = 'INITIAL'
+    folder = '../steady'
   []
   [steady_temperatures]
     type = SolutionVectorFile
     var = 'T_fuel T_mod T_refl'
     writing = false
     execute_on = 'INITIAL'
+    folder = '../steady'
   []
   [steady_buckling]
     type = SolutionVectorFile
     var = 'B1 B2'
     writing = false
     execute_on = 'INITIAL'
+    folder = '../steady'
   []
   [steady_transport_sol]
     type = TransportSolutionVectorFile
     transport_system = diff
     writing = false
     execute_on = 'INITIAL'
+    folder = '../steady'
   []
 
   ## buckling computation
