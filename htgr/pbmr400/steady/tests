@@ -29,7 +29,6 @@
   # This will fail until:
   # - griffin can load restart binary files from another folder
   # - the issue with cross sections (diffusion coef?) is figured out
-  # - the issue with the TH restart is figured out. Missing some recov file apprarently
   [transient_multiphysics]
     type = RunApp
     input = 'oecd_pbmr400_ss0_rsnk_eigen_value_ix_dep.i'

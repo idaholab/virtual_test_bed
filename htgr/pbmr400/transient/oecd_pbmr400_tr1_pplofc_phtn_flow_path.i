@@ -29,11 +29,9 @@ reactor_total_mfr        = 192.70   # Total reactor He mass flow rate (kg/s).
 reactor_inlet_T_fluid    = 773.15   # He temperature  at the inlet of the lower inlet plenum (K).
 core_outlet_pressure     = 9e+6     # Pressure at the at the outlet of the outlet plenum (Pa)
 reactor_inlet_free_rho_u = ${fparse -reactor_total_mfr/reactor_inlet_free_flow_area } # Inlet free  mass flux in the  -x direction  (kg/m2s).
-reactor_inlet_rho_u      = ${fparse reactor_inlet_free_rho_u/fluid_channels_porosity} # Inlet mass flux in the  -x direction  (kg/m2s).
 
 [GlobalParams]
   pebble_diameter = ${pebbles_diameter}
-  bed_top = ${pebble_bed_top_height}
   acceleration = ' 0.00 -9.81 0.00 ' # Gravity acceleration (m/s2).
   fp = fluid_properties_obj
 []
@@ -50,7 +48,7 @@ reactor_inlet_rho_u      = ${fparse reactor_inlet_free_rho_u/fluid_channels_poro
   coord_type = RZ
   kernel_coverage_check = false
 
-  restart_file_base = oecd_pbmr400_ss1_phtn_flow_path_cp/LATEST
+  restart_file_base = '../steady/oecd_pbmr400_ss1_phtn_flow_path_cp/LATEST'
   skip_additional_restart_data = true
   force_restart = true
 []
@@ -134,27 +132,17 @@ reactor_inlet_rho_u      = ${fparse reactor_inlet_free_rho_u/fluid_channels_poro
     block = ' 1 2 14 15 16 17 18 '
   []
   [T_fuel]
-    # family = MONOMIAL
-    # order = CONSTANT
     block = ' 1 '
   []
   [T_mod]
-    # family = MONOMIAL
-    # order = CONSTANT
     block = ' 1 '
   []
   [T_kernel]
-    # family = MONOMIAL
-    # order = CONSTANT
     block = ' 1 '
   []
 []
 
 [Functions]
-  # [mfr_scaling_function]
-  #    type = ConstantFunction
-  #    value = ${reactor_inlet_free_rho_u}
-  # []
   [mfr_scaling_function]
     # A reduction in reactor inlet coolant mass flow from nominal (192.7 kg/s)
     # to 0.0 kg/s over 13 seconds. The mass flow ramp is assumed linear.
@@ -164,10 +152,6 @@ reactor_inlet_rho_u      = ${fparse reactor_inlet_free_rho_u/fluid_channels_poro
         0.0
         0.0'
   []
-  # [pressure_scaling_function]
-  #    type = ConstantFunction
-  #    value = ${core_outlet_pressure}
-  # []
   [pressure_scaling_function]
     # A reduction in reactor helium outlet pressure from nominal (90 bar) to 60
     # bar over 13 seconds. The pressure ramp is assumed linear.
@@ -182,17 +166,6 @@ reactor_inlet_rho_u      = ${fparse reactor_inlet_free_rho_u/fluid_channels_poro
          60.0e5
          60.0e5'
   []
-  # [pressure_scaling_function]
-  #   # A reduction in reactor helium outlet pressure from nominal (90 bar) to 60
-  #   # bar over 13 seconds. The pressure ramp is assumed linear.
-  #   type = PiecewiseLinear
-  #   x = '0.0 13.0 180000.0'
-  #   y = '${core_outlet_pressure}
-  #       60.0e5
-  #       60.0e5'
-  #       # 73.0e5
-  #       # 73.0e5'
-  # []
   [drag_function]
     # A reduction in reactor helium outlet pressure from nominal (90 bar) to 60
     # bar over 13 seconds. The pressure ramp is assumed linear.
@@ -206,24 +179,13 @@ reactor_inlet_rho_u      = ${fparse reactor_inlet_free_rho_u/fluid_channels_poro
      value = 't >= 13.0 & switch>0'
      vals = switch
      vars = switch
-     direction = left
   []
-  # [conditional_function]
-  #    type = ParsedFunction
-  #    value = 't >= 0.0'
-  # []
   [courant_condition_fun]
     type = ParsedFunction
     value = 'a/b'
     vars = 'a b'
     vals = 'time_step_pp min_courant_num'
   []
-  # [dts]
-  #    type = PiecewiseConstant
-  #    x = '0.0   13.0  16.0  5000.0 60000.0 125000 180000.0'
-  #    y = '1.0   0.1   120.0 1800.0  3600.0  3600.0 3600.0'
-  #    direction = left
-  # []
   [dts]
      type = PiecewiseLinear
      x = '0.0   13.0  16.0  5000.0 60000.0 125000 180000.0'
@@ -248,12 +210,6 @@ reactor_inlet_rho_u      = ${fparse reactor_inlet_free_rho_u/fluid_channels_poro
     porosity = porosity
     block = ' 1 2 14 15 16 17 18 '
   []
-  # [mass_stabilization]
-  #   type = PressureEquationStab
-  #   variable = pressure
-  #   porosity = porosity
-  #   block = ' 1 2 14 15 16 17 18 '
-  # []
 
   # Equation 1 (x momentum conservation).
   [x_momentum_pressure]
@@ -391,8 +347,8 @@ reactor_inlet_rho_u      = ${fparse reactor_inlet_free_rho_u/fluid_channels_poro
   [rho]
     type = FluidDensityAux
     variable = rho
-    pressure = pressure
-    T_fluid = T_fluid
+    p = pressure
+    T = T_fluid
     block = ' 1 2 14 15 16 17 18 '
   []
   [vel_x]
@@ -505,10 +461,6 @@ reactor_inlet_rho_u      = ${fparse reactor_inlet_free_rho_u/fluid_channels_poro
     porosity = porosity
     block = ' 1 '
   []
-  # [pebble_bed_fluid_effective_conductivity]
-  #   type = KappaFluid
-  #   block = ' 1 '
-  # []
   [partial_density_cavity_fluid_effective_conductivity]
     type = KappaFluid
     block = ' 2 14 15 16 17 18 '
@@ -551,12 +503,6 @@ reactor_inlet_rho_u      = ${fparse reactor_inlet_free_rho_u/fluid_channels_poro
     wall_distance = bed_geometry # Requested by solid_conduction = ZBS
     block = ' 1 '
   []
-  # [pebble_bed_solid_effective_conductivity]
-  #   type = ADGenericConstantMaterial
-  #   prop_names = 'kappa_s'
-  #   prop_values = '200.0'
-  #   block = ' 1 '
-  # []
   [pebble_bed_full_density_graphite]
     type = ADGenericConstantMaterial
     prop_names = ' rho_s cp_s k_s '
@@ -796,10 +742,6 @@ reactor_inlet_rho_u      = ${fparse reactor_inlet_free_rho_u/fluid_channels_poro
   nl_rel_tol = 1e-3
   nl_abs_tol = 1e-2
 
-  # [TimeIntegrator]
-  #   type = ExplicitEuler
-  # []
-
   # [TimeStepper]
   #   type = PostprocessorDT
   #   postprocessor = min_courant_num
@@ -813,7 +755,6 @@ reactor_inlet_rho_u      = ${fparse reactor_inlet_free_rho_u/fluid_channels_poro
     cutback_factor     = 0.5
     growth_factor      = 2.00
     # time_t = '0.0   13.0  16.0  5000.0 60000.0 125000 180000.0'
-    # time_dt = '1.0   0.1   120.0 1800.0  3600.0  3600.0 3600.0'
     # reject_large_step = true
     # timestep_limiting_function = dts
     timestep_limiting_postprocessor = timestep_pp
