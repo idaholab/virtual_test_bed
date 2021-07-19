@@ -98,10 +98,10 @@
 
 
   # Multiphysics coupling iteration parameters
-  picard_rel_tol = 1e-08
-  picard_abs_tol = 1e-10
-  picard_max_its = 10
-  accept_on_max_picard_iteration = true
+  fixed_point_rel_tol = 1e-08
+  fixed_point_abs_tol = 1e-10
+  fixed_point_max_its = 10
+  accept_on_max_fixed_point_iteration = true
 
   output_after_power_iterations = false
   output_before_normalization = false

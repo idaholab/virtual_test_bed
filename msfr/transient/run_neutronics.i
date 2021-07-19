@@ -164,9 +164,9 @@
   nl_forced_its = 1
   l_abs_tol = 1e-8
   l_max_its = 200
-  picard_max_its = 3
-  accept_on_max_picard_iteration = true
-  picard_abs_tol = 1e-50
+  fixed_point_max_its = 3
+  accept_on_max_fixed_point_iteration = true
+  fixed_point_abs_tol = 1e-50
   line_search = 'none'
 []
 
