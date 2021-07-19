@@ -210,7 +210,7 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
   [u_pressure]
     type = PINSFVMomentumPressure
     variable = vel_x
-    p = pressure
+    pressure = pressure
     momentum_component = 'x'
   []
   [u_friction]
@@ -244,7 +244,7 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
   [v_pressure]
     type = PINSFVMomentumPressure
     variable = vel_y
-    p = pressure
+    pressure = pressure
     momentum_component = 'y'
   []
   [v_friction]
