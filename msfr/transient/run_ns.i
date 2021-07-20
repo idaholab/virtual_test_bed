@@ -51,11 +51,12 @@ beta6 = 0.000184087
     file = '../steady/sample_output/run_neutronics_out_ns0.e'
     use_for_exodus_restart = true
   []
-  [inactive]
-    type = BlockDeletionGenerator
-    input = fmg
-    block = 'shield reflector'
-  []
+  # Already deleted in sample_output
+  # [inactive]
+  #   type = BlockDeletionGenerator
+  #   input = fmg
+  #   block = 'shield reflector'
+  # []
 []
 
 [Outputs]
