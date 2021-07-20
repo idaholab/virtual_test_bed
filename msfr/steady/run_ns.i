@@ -202,7 +202,7 @@ beta6 = 0.000184087
     type = INSFVMomentumPressure
     variable = v_x
     momentum_component = 'x'
-    p = pressure
+    pressure = pressure
     block = 'fuel pump hx'
   []
 
@@ -230,7 +230,7 @@ beta6 = 0.000184087
     type = INSFVMomentumPressure
     variable = v_y
     momentum_component = 'y'
-    p = pressure
+    pressure = pressure
     block = 'fuel pump hx'
   []
   [v_buoyancy]

@@ -143,7 +143,7 @@
   free_power_iterations = 4  # important to obtain fundamental mode eigenvalue
 
   nl_abs_tol = 1e-9
-  picard_max_its = 100
+  fixed_point_max_its = 100
 []
 
 [VectorPostprocessors]
