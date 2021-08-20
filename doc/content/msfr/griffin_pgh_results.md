@@ -3,7 +3,7 @@
 As a coarse mesh CFD code, Pronghorn requires high fidelity data to be able to
 model small scales phenomena. Turbulence modeling in Pronghorn currently supports
 a zero-equation model, a capped mixing length model, which is a modification of
-the original Prandtl's mixing length model. [ADD REF ESCUDIER] In this
+the original Prandtl's mixing length model [!citep](escudier1966). In this
 formulation, the mixing length grows linearly up to a distance dependent on
 a parameter $\delta$, which is representative of the boundary layer thickness.
 Using Nek5000 data, this parameter is tuned for Reynolds numbers 40K and 1M.
