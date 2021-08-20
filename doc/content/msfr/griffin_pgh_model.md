@@ -22,7 +22,7 @@ The conservation of mass is,
 
   \begin{equation}
     \nabla \cdot \rho \vec{u} = 0
-  \end{equation}`
+  \end{equation}
 
 where $\rho$ is the fluid density and $\vec{u}$ is the velocity vector.
 
@@ -49,23 +49,25 @@ equation.)
 
 This system also includes the conservation of momentum in the $x$-direction. A
 fairly general form of the steady-state condition is,
+
 \begin{equation}
   \nabla \cdot \rho \vec{u} u = -\frac{\partial}{\partial x} P
-  + \mu \nabla^2 u + f_{\text{pump},x} + f_{\text{fric},x} +
+  + \mu \nabla^2 u + f_{\text{fric},x} +
   \rho \vec{g} \cdot \hat{x}
 \end{equation}
+
 where $u$ is the $x$ component of the velocity, $P$ is the pressure,
-$f_{\text{fric},x}$ is the $x$ component of the viscous friction force,
-$\vec{g}$ is the gravity vector and $f_{\text{pump},x}$ is the pump head. The
-last two terms are tuned to impose an operational mass flow rate of ~18500 kg/s.
+$f_{\text{fric},x}$ is the $x$ component of the viscous friction force, and
+$\vec{g}$ is the gravity vector.
 
 The viscous friction force in the heat exchanger combined with the
 
 In this model, gravity will point in the negative $y$-direction so the quantity
 $\vec{g} \cdot \hat{x}$ is zero,
+
 \begin{equation}
   \nabla \cdot \rho \vec{u} u = -\frac{\partial}{\partial x} P
-  + \mu \nabla^2 u + f_{\text{fric},x} +  f_{\text{pump},x}
+  + \mu \nabla^2 u + f_{\text{fric},x}
 \end{equation}
 
 Practical simulations require modifications to the momentum equations in order
@@ -73,11 +75,12 @@ to model the effects of turbulence without explicitly resolving the turbulent
 structures. Here, we will apply the Reynolds-averaging procedure and the
 Boussinesq hypothesis so that the effect of turbulent momentum transfer is
 modeled with a term analogous to viscous shear,
+
 \begin{equation}
   \nabla \cdot \rho \vec{u} u = -\frac{\partial}{\partial x} P
-  + \left( \mu + \mu_t \right) \nabla^2 u + f_{\text{fric},x} +
-   f_{\text{pump},x}
+  + \left( \mu + \mu_t \right) \nabla^2 u + f_{\text{fric},x}
 \end{equation}
+
 where $\mu_t$ is the turbulent viscosity.
 
 Here, a zero-equation model based on the mixing length model is used. In this
@@ -124,17 +127,17 @@ will be neglected outside of the heat exchanger,
 
 By convention, we must collect all of the terms on one side of the equation.
 This gives the form that is implemented for the MSFR model,
+
 \begin{equation}
   \nabla \cdot \rho \vec{u} u + \frac{\partial}{\partial x} P
-  - \left( \mu + \mu_t \right) \nabla^2 u - f_{\text{fric},x}
-  -  f_{\text{pump},x} = 0
+  - \left( \mu + \mu_t \right) \nabla^2 u - f_{\text{fric},x} = 0
   \label{eq:x_mom}
 \end{equation}
 
 The first term in [eq:x_mom]---the advection of momentum---is handled with the
 kernel,
 
-!listing ../../msfr/steady/msfr_ns.i block=FVKernels/u_advection
+!listing /msfr/steady/msfr_ns.i block=FVKernels/u_advection
 
 The second term---the pressure gradient---is handled with,
 
@@ -146,6 +149,7 @@ The third and fourth term---the Reynolds Stress and the Viscous Tensor---with,
 !listing /msfr/steady/msfr_ns.i block=FVKernels/u_molecular_diffusion
 
 The definition of the mixing length is handled with,
+
 !listing /msfr/steady/msfr_ns_initial.i block=AuxKernels/mixing_len
 
 Recall that the fifth term, the viscous force, is treated with a unique model
@@ -157,27 +161,31 @@ restrict the relevant kernel to the heat exchanger,
 This model does not include a friction force for the other blocks so no kernel
 needs to be specified for those blocks.
 
-The sixth term is a constant body force,
-
-!listing /msfr/steady/msfr_ns.i block=FVKernels/pump
-
 The conservation of momentum in the $y$-direction is analogous, but it also
 includes the Boussinesq approximation in order to capture the effect of
-buoyancy. Note that this extra term is needed because of the approximation that
-the fluid density is uniform and constant,
+buoyancy and a body force in the pump region. Note that the Boussinesq term  is
+needed because of the approximation that the fluid density is uniform and
+constant,
+
 \begin{equation}
   \nabla \cdot \rho \vec{u} v + \frac{\partial}{\partial y} P
   - \left( \mu + \mu_t \right) \nabla^2 v - f_{\text{fric}, y}
-  - \rho \alpha \vec{g} \left( T - T_0 \right) = 0
+  - f_{\text{pump}} - \rho \alpha \vec{g} \left( T - T_0 \right) = 0
 \end{equation}
-where $\alpha$ is the expansion coefficient, $T$ is the fluid temperature, and
-$T_0$ is a reference temperature value.
+
+where f_{\text{pump}} is the pump head driving the flow, $\alpha$ is the
+expansion coefficient, $T$ is the fluid temperature, and $T_0$ is a reference
+temperature value. The heat exchanger friction factor and the pump head are
+tuned such that the imposed mass flow rate is ~18500 kg/s.
 
 For each kernel describing the $x$-momentum equation, there is a corresponding
-kernel for the $y$-momentum equation. The additional Boussinesq kernel for this
-equation is,
+kernel for the $y$-momentum equation. The additional Boussinesq kernel and the
+pump kernel for this equation are,
 
 !listing /msfr/steady/msfr_ns.i block=FVKernels/v_buoyancy
+
+!listing /msfr/steady/msfr_ns.i block=FVKernels/pump
+
 
 Boundary conditions include standard velocity wall functions at the walls to
 account for the non-linearity of the velocity in the boundary layer given the
