@@ -669,7 +669,7 @@ beta6 = 0.000184087
     prop_values = 'artificial_mu_func'
   []
   [total_viscosity]
-    type = INSADMixingLengthTurbulentViscosityMaterial
+    type = MixingLengthTurbulentViscosityMaterial
     u = 'v_x'                             #computes total viscosity = mu_t + mu
     v = 'v_y'                             #property is called total_viscosity
     mixing_length = mixing_len

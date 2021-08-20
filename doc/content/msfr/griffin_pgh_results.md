@@ -52,8 +52,7 @@ momentum diffusion at the core of the reactor is relatively higher in Pronghorn.
 This comes as a result of the limitation in the zero-equation turbulence model,
 which assumes a constant mixing length in the bulk region.
 
-Pronghorn's total simulation time is 4 minutes using 4 cores. Nek 5000 total simulation time
-using 128 cores is 12.5 hs.
+Pronghorn's total simulation time is 4 minutes using 4 cores.
 
 ## Results for Reynolds number 1,000,000
 
@@ -65,7 +64,7 @@ equation for relaxation purposes.
 An exponentially decaying viscosity ramp is used for convergence purposes.
 
 \begin{equation}
-  \nabla \mu_{sim} = \mu_{phys} \cdot (exp(-3 \cdot t) + 1)
+  \mu_{sim} = \mu_{phys} \cdot (exp(-3 \cdot t) + 1)
 \end{equation}
 
 Velocity magnitude and pressure fields obtained in Nek5000 and Pronghorn are
@@ -99,8 +98,7 @@ momentum diffusion at the core of the reactor is slightly higher in Pronghorn.
     style=width:60%
     caption=Velocity magnitude at the minimum core radius.
 
-Pronghorn's total simulation time is 15 minutes using 4 cores. Nek 5000 total simulation time
-using 128 cores is 12.5 hs.
+Pronghorn's total simulation time is 15 minutes using 4 cores.
 
 ## General Remarks
 
