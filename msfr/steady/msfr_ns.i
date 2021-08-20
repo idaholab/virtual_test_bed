@@ -22,9 +22,6 @@ Sc_t = 1  # turbulent Schmidt number
 # Derived material properties
 alpha = ${fparse drho_dT / rho}  # thermal expansion coefficient
 
-#epsilon_q = ${fparse nu_t / Pr_t}  # eddy diffusivity for heat
-#epsilon_c = ${fparse nu_t / Sc_t}  # eddy diffusivity for precursors
-
 # Mass flow rate tuning
 friction = 4.0e3  # [kg / m^4]
 pump_force = -20000. # [N / m^3]
@@ -45,11 +42,6 @@ beta5 = 0.000549185
 beta6 = 0.000184087
 
 [Mesh]
-  #uniform_refine = 1
-  #[fmg]
-  #  type = FileMeshGenerator
-  #  file = 'msfr_rz_mesh.e'
-  #[]
   [restart]
     type = FileMeshGenerator
     file = msfr_ns_initial_out.e
@@ -65,10 +57,7 @@ beta6 = 0.000184087
 []
 
 [Outputs]
-  #exodus = true
-  [other]
-   type = Exodus
-  []
+  exodus = true
   csv = true
 []
 
@@ -85,13 +74,11 @@ beta6 = 0.000184087
 [Variables]
   [v_x]
     type = INSFVVelocityVariable
-    #initial_condition = 1e-6
     block = 'fuel pump hx'
     initial_from_file_var = v_x
   []
   [v_y]
     type = INSFVVelocityVariable
-    #initial_condition = 1e-6
     block = 'fuel pump hx'
     initial_from_file_var = v_y
   []
@@ -104,7 +91,6 @@ beta6 = 0.000184087
   [lambda]
     family = SCALAR
     order = FIRST
-    #initial_condition = 1e-6
     block = 'fuel pump hx'
     initial_from_file_var = lambda
   []
@@ -112,7 +98,6 @@ beta6 = 0.000184087
     order = CONSTANT
     family = MONOMIAL
     fv = true
-    #initial_condition = 800
     block = 'fuel pump hx'
     scaling = 100
   []
@@ -191,7 +176,6 @@ beta6 = 0.000184087
     order = CONSTANT
     family = MONOMIAL
     fv = true
-    #initial_from_file_var = eddy_viscosity
   []
 []
 
@@ -243,7 +227,7 @@ beta6 = 0.000184087
     u = v_x
     v = v_y
   []
-  [u_molecular_diffusion]      #Modify this
+  [u_molecular_diffusion]
     type = FVDiffusion
     variable = v_x
     coeff = 'mu'
@@ -285,7 +269,7 @@ beta6 = 0.000184087
     u = v_x
     v = v_y
   []
-  [v_molecular_diffusion]      #Modify this
+  [v_molecular_diffusion]
     type = FVDiffusion
     variable = v_y
     coeff = 'mu'
@@ -308,12 +292,6 @@ beta6 = 0.000184087
     momentum_component = 'y'
     block = 'fuel'
   []
-  #[v_gravity]
-  #  type = FVBodyForce
-  #  variable = v_y
-  #  value = ${fparse -9.81 * rho}        #Absorbed in the pressure gradient term
-  #  block = 'fuel'
-  #[]
 
   [pump]
     type = FVBodyForce
@@ -381,7 +359,6 @@ beta6 = 0.000184087
     variable = T
     # Compute the coefficient as 600 m^2 / m^3 surface area density times a heat
     # transfer coefficient of 20 kW / m^2 / K
-    #alpha = ${fparse 600 * 20e3 / rho / cp}
     alpha = ${fparse 600 * 20e3 / rho / cp}
     block = 'hx'
     T_ambient = 873.15
@@ -600,14 +577,6 @@ beta6 = 0.000184087
 []
 
 [AuxKernels]
-  #[mixing_len]
-  #  type = WallDistanceMixingLengthAux
-  #  walls = 'shield_wall reflector_wall'
-  #  variable = mixing_len
-  #  execute_on = 'initial'
-  #  block = 'fuel'
-  #  von_karman_const = ${von_karman_const}
-  #[]
   [wall_shear_stress]
     type = WallFunctionWallShearStressAux
     variable = wall_shear_stress
@@ -640,8 +609,8 @@ beta6 = 0.000184087
 
 [FVBCs]
   [walls_u]
-    type = INSFVWallFunctionBC    #rethink if we should put noslip just for the hx and pump.For this I need
-    variable = v_x                #an intersection between shield_walls, reflector_walls and hx and pump.
+    type = INSFVWallFunctionBC
+    variable = v_x
     boundary = 'shield_wall reflector_wall'
     u = v_x
     v = v_y
@@ -659,18 +628,6 @@ beta6 = 0.000184087
     rho = ${rho}
     momentum_component = y
   []
-  #[no-slip-wall-u]
-  #  type = INSFVNoSlipWallBC
-  #  boundary = 'shield_wall reflector_wall'
-  #  variable = v_x
-  #  function = 0
-  #[]
-  #[no-slip-wall-v]
-  #  type = INSFVNoSlipWallBC
-  #  boundary = 'shield_wall reflector_wall'
-  #  variable = v_y
-  #  function = 0
-  #[]
 
   [symmetry_u]
     type = INSFVSymmetryVelocityBC
@@ -701,8 +658,6 @@ beta6 = 0.000184087
   [artificial_mu_func]
     type = PiecewiseLinear
     x = '1 2 3'
-    #y = '${fparse 1e5*mu} ${fparse 1e3*mu} ${mu}'
-    #x = '1 2'
     y = '${mu} ${mu} ${mu}'
   []
 []
@@ -763,9 +718,7 @@ beta6 = 0.000184087
   type = Transient
   start_time = 0.0
   end_time = 20.
-  dt = 0.5
-  #automatic_scaling = true
-  #solve_type = 'PJFNK'
+  dt = 1.0
   petsc_options_iname = '-pc_type -ksp_gmres_reset'
   petsc_options_value = 'lu 50'
   line_search = 'none'

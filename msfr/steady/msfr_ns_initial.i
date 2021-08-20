@@ -1,3 +1,8 @@
+################################################################################
+## Molten Salt Fast Reactor - Euratom EVOL + Rosatom MARS Design              ##
+## Pronghorn input file to initialize velocity fields                         ##
+################################################################################
+
 advected_interp_method='upwind'
 velocity_interp_method='rc'
 
@@ -15,14 +20,8 @@ pump_force = -20000. # [N / m^3]
   uniform_refine = 1
   [fmg]
     type = FileMeshGenerator
-    file = 'msfr_rz_mesh_finer.e'
+    file = '../msfr_rz_mesh.e'
   []
-  #[restart]
-  #  type = FileMeshGenerator
-  #  #file = msfr_SS_wallfunctions.e
-  #  file = msfr_ns_other.e
-  #  use_for_exodus_restart = true
-  #[]
   [min_radius]
     type = ParsedGenerateSideset
     combinatorial_geometry = 'abs(y-0.) < 1e-10 & x < 1.8'

@@ -1,8 +1,15 @@
+################################################################################
+## Molten Salt Fast Reactor - Euratom EVOL + Rosatom MARS Design              ##
+## Griffin Main Application input file                                        ##
+## Steady state neutronics model                                              ##
+## Neutron diffusion with delayed precursor source, no equivalence            ##
+################################################################################
+
 [Mesh]
   uniform_refine = 1
   [fmg]
     type = FileMeshGenerator
-    file = 'msfr_rz_mesh.e'
+    file = '../msfr_rz_mesh.e'
   []
 []
 
@@ -184,45 +191,9 @@
     execute_on = 'timestep_end'
     no_backup_and_restore = true
   []
-  #[TH_initialization]
-  #  type = FullSolveMultiApp
-  #  input_files = 'msfr_ns_2_initial.i'
-  #  execute_on = 'INITIAL'
-  #[]
 []
 
 [Transfers]
-
-  #Initialization Transfers
-  #[v_x_initial]
-  #  type = MultiAppProjectionTransfer
-  #  multi_app = TH_initialization
-  #  direction = from_multiapp
-  #  source_variable = v_x
-  #  variable = v_x
-  #[]
-  #[v_y_initial]
-  #  type = MultiAppProjectionTransfer
-  #  multi_app = TH_initialization
-  #  direction = from_multiapp
-  #  source_variable = v_y
-  #  variable = v_y
-  #[]
-  #[pressure_initial]
-  #  type = MultiAppProjectionTransfer
-  #  multi_app = TH_initialization
-  #  direction = from_multiapp
-  #  source_variable = pressure
-  #  variable = pressure
-  #[]
-  #[T_initial]
-  #  type = MultiAppProjectionTransfer
-  #  multi_app = TH_initialization
-  #  direction = from_multiapp
-  #  source_variable = T
-  #  variable = tfuel
-  #[]
-
   [power_density]
     type = MultiAppProjectionTransfer
     multi_app = ns
@@ -244,27 +215,6 @@
     source_variable = tfuel
     variable = T
   []
-  #[v_x_to]
-  #  type = MultiAppProjectionTransfer
-  #  multi_app = ns
-  #  direction = to_multiapp
-  #  source_variable = v_x
-  #  variable = v_x
-  #[]
-  #[v_y_to]
-  #  type = MultiAppProjectionTransfer
-  #  multi_app = ns
-  #  direction = to_multiapp
-  #  source_variable = v_y
-  #  variable = v_y
-  #[]
-  #[pressure_to]
-  #  type = MultiAppProjectionTransfer
-  #  multi_app = ns
-  #  direction = to_multiapp
-  #  source_variable = pressure
-  #  variable = pressure
-  #[]
   [c1_to]
     type = MultiAppProjectionTransfer
     multi_app = ns
@@ -357,34 +307,4 @@
     source_variable = 'T'
     variable = 'tfuel'
   []
-  #[v_x_from]
-  #  type = MultiAppProjectionTransfer
-  #  multi_app = ns
-  #  direction = from_multiapp
-  #  source_variable = v_x
-  #  variable = v_x
-  #[]
-  #[v_y_from]
-  #  type = MultiAppProjectionTransfer
-  #  multi_app = ns
-  #  direction = from_multiapp
-  #  source_variable = v_y
-  #  variable = v_y
-  #[]
-  #[pressure_from]
-  #  type = MultiAppProjectionTransfer
-  #  multi_app = ns
-  #  direction = from_multiapp
-  #  source_variable = pressure
-  #  variable = pressure
-  #[]
-  #[lambda_from]
-  #  type = MultiAppProjectionTransfer
-  #  multi_app = ns
-  #  direction = from_multiapp
-  #  source_variable = lambda
-  #  variable = lambda
-  #[]
-
-
 []
