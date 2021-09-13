@@ -6,9 +6,10 @@
 ################################################################################
 
 [Mesh]
+  uniform_refine = 1
   [fmg]
     type = FileMeshGenerator
-    file = '../mesh/msfr_rz_mesh.e'
+    file = '../msfr_rz_mesh.e'
   []
 []
 
@@ -50,7 +51,7 @@
   [tfuel]
     order = CONSTANT
     family = MONOMIAL
-    initial_condition = 973.15 # in degree K
+    initial_condition = 873.15 # in degree K
   []
   [c1]
     order = CONSTANT
@@ -165,8 +166,9 @@
 [MultiApps]
   [ns]
     type = FullSolveMultiApp
-    input_files = 'run_ns.i'
+    input_files = 'msfr_ns.i'
     execute_on = 'timestep_end'
+    no_backup_and_restore = true
   []
 []
 
@@ -185,6 +187,56 @@
     source_variable = fission_source
     variable = fission_source
   []
+  [fuel_temperature]
+    type = MultiAppProjectionTransfer
+    multi_app = ns
+    direction = to_multiapp
+    source_variable = tfuel
+    variable = T
+  []
+  [c1_to]
+    type = MultiAppProjectionTransfer
+    multi_app = ns
+    direction = to_multiapp
+    source_variable = 'c1'
+    variable = 'c1'
+  []
+  [c2_to]
+    type = MultiAppProjectionTransfer
+    multi_app = ns
+    direction = to_multiapp
+    source_variable = 'c2'
+    variable = 'c2'
+  []
+  [c3_to]
+    type = MultiAppProjectionTransfer
+    multi_app = ns
+    direction = to_multiapp
+    source_variable = 'c3'
+    variable = 'c3'
+  []
+  [c4_to]
+    type = MultiAppProjectionTransfer
+    multi_app = ns
+    direction = to_multiapp
+    source_variable = 'c4'
+    variable = 'c4'
+  []
+  [c5_to]
+    type = MultiAppProjectionTransfer
+    multi_app = ns
+    direction = to_multiapp
+    source_variable = 'c5'
+    variable = 'c5'
+  []
+  [c6_to]
+    type = MultiAppProjectionTransfer
+    multi_app = ns
+    direction = to_multiapp
+    source_variable = 'c6'
+    variable = 'c6'
+  []
+
   [c1]
     type = MultiAppProjectionTransfer
     multi_app = ns

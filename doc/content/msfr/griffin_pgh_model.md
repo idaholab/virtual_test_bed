@@ -10,14 +10,17 @@ The fluid system includes conservation equations for fluid mass, momentum, and
 energy as well as the conservation of delayed neutron precursors.
 
 The conservation of mass is,
-\begin{equation}
-  \nabla \cdot \rho \vec{u} = 0
-\end{equation}
+
+  \begin{equation}
+    \nabla \cdot \rho \vec{u} = 0
+  \end{equation}
+
 where $\rho$ is the fluid density and $\vec{u}$ is the velocity vector.
 
 Here the system will be simplified by modeling the flow as incompressible.  (The
 effect of Buoyancy will be re-introduced later with the Boussinesq
 approximation.)  The simplified conservation of mass is then given by,
+
 \begin{equation}
   \nabla \cdot \vec{u} = 0
 \end{equation}
@@ -37,19 +40,23 @@ equation.)
 
 This system also includes the conservation of momentum in the $x$-direction. A
 fairly general form of the steady-state condition is,
+
 \begin{equation}
   \nabla \cdot \rho \vec{u} u = -\frac{\partial}{\partial x} P
-  + f_{\text{fric},x} + \rho \vec{g} \cdot \hat{x}
+  + \mu \nabla^2 u + f_{\text{fric},x} +
+  \rho \vec{g} \cdot \hat{x}
 \end{equation}
+
 where $u$ is the $x$ component of the velocity, $P$ is the pressure,
 $f_{\text{fric},x}$ is the $x$ component of the viscous friction force, and
 $\vec{g}$ is the gravity vector.
 
 In this model, gravity will point in the negative $y$-direction so the quantity
 $\vec{g} \cdot \hat{x}$ is zero,
+
 \begin{equation}
   \nabla \cdot \rho \vec{u} u = -\frac{\partial}{\partial x} P
-  + f_{\text{fric},x}
+  + \mu \nabla^2 u + f_{\text{fric},x}
 \end{equation}
 
 Practical simulations require modifications to the momentum equations in order
@@ -57,15 +64,37 @@ to model the effects of turbulence without explicitly resolving the turbulent
 structures. Here, we will apply the Reynolds-averaging procedure and the
 Boussinesq hypothesis so that the effect of turbulent momentum transfer is
 modeled with a term analogous to viscous shear,
+
 \begin{equation}
   \nabla \cdot \rho \vec{u} u = -\frac{\partial}{\partial x} P
-  + \nu_t \nabla^2 u + f_{\text{fric},x}
+  + \left( \mu + \mu_t \right) \nabla^2 u + f_{\text{fric},x}
 \end{equation}
-where $\nu_t$ is the eddy viscosity.
 
-Here, an extremely simple turbulence model will be used for the purposes of this
-demonstration. A large, uniform, fixed value of the eddy viscosity will be
-assumed everywhere.
+where $\mu_t$ is the turbulent viscosity.
+
+Here, a zero-equation model based on the mixing length model is used. In this
+model the turbulent viscosity is defined as:
+\begin{equation}
+  \mu_t = \rho \cdot {l_m}^2 \cdot |2\overline{\overline S} : \overline{\overline S}|
+\end{equation}
+and
+\begin{equation}
+  \overline{\overline S} = 0.5 \cdot \left( \nabla u + \nabla u^t \right)
+\end{equation}
+
+The standard Prandtl's mixing length model dictates that $l_m$ has a linear
+dependence on the distance to the nearest wall. However, for this simulation we
+implement a capped mixing length model [!citep](escudier1966) that defines the mixing
+length as
+
+\begin{equation}
+  l_m = \kappa y_d \quad if \: \kappa y_d < \kappa_0 \delta \\
+  l_m = \kappa_0 \delta \quad if \: \kappa y_d \geq \kappa_0 \delta
+\end{equation}
+
+where $\kappa =0.41$ is the Von Karman constant, $\kappa_0 = 0.09$ as in
+Escudier's model and $\delta$ has length units and represents the thickness of
+the velocity boundary layer.
 
 The viscous friction is treated with two different models for different regions
 of the reactor. The bulk of the friction is expected to occur in the heat
@@ -87,9 +116,10 @@ will be neglected outside of the heat exchanger,
 
 By convention, we must collect all of the terms on one side of the equation.
 This gives the form that is implemented for the MSFR model,
+
 \begin{equation}
   \nabla \cdot \rho \vec{u} u + \frac{\partial}{\partial x} P
-  - \nu_t \nabla^2 u - f_{\text{fric},x} = 0
+  - \left( \mu + \mu_t \right) \nabla^2 u - f_{\text{fric},x} = 0
   \label{eq:x_mom}
 \end{equation}
 
@@ -102,11 +132,15 @@ The second term---the pressure gradient---is handled with,
 
 !listing /msfr/steady/run_ns.i block=FVKernels/u_pressure
 
-The third term---the Reynolds stress---with,
+The third and fourth term---the Reynolds Stress and the Viscous Tensor---with,
 
-!listing /msfr/steady/run_ns.i block=FVKernels/u_turb_viscosity
+!listing /msfr/steady/run_ns.i block=FVKernels/u_turbulent_diffusion_rans FVKernels/u_molecular_diffusion
 
-Recall that the fourth term, the viscous force, is treated with a unique model
+The definition of the mixing length is handled with,
+
+!listing /msfr/steady/run_ns_initial.i block=AuxKernels/mixing_len
+
+Recall that the fifth term, the viscous force, is treated with a unique model
 for the heat exchanger region. Consequently, the `block` parameter is used to
 restrict the relevant kernel to the heat exchanger,
 
@@ -117,21 +151,49 @@ needs to be specified for those blocks.
 
 The conservation of momentum in the $y$-direction is analogous, but it also
 includes the Boussinesq approximation in order to capture the effect of
-buoyancy. Note that this extra term is needed because of the approximation that
-the fluid density is uniform and constant,
+buoyancy and a body force in the pump region. Note that the Boussinesq term  is
+needed because of the approximation that the fluid density is uniform and
+constant,
+
 \begin{equation}
   \nabla \cdot \rho \vec{u} v + \frac{\partial}{\partial y} P
-  - \nu_t \nabla^2 v - f_{\text{fric}, y}
-  - \rho \alpha \vec{g} \left( T - T_0 \right) = 0
+  - \left( \mu + \mu_t \right) \nabla^2 v - f_{\text{fric}, y}
+  - f_{\text{pump}} - \rho \alpha \vec{g} \left( T - T_0 \right) = 0
 \end{equation}
-where $\alpha$ is the expansion coefficient, $T$ is the fluid temperature, and
-$T_0$ is a reference temperature value.
+
+where f_{\text{pump}} is the pump head driving the flow, $\alpha$ is the
+expansion coefficient, $T$ is the fluid temperature, and $T_0$ is a reference
+temperature value. The pump head is tuned such that the imposed mass flow rate
+is ~18500 kg/s.
 
 For each kernel describing the $x$-momentum equation, there is a corresponding
-kernel for the $y$-momentum equation. The additional Boussinesq kernel for this
-equation is,
+kernel for the $y$-momentum equation. The additional Boussinesq kernel and the
+pump kernel for this equation are,
 
 !listing /msfr/steady/run_ns.i block=FVKernels/v_buoyancy
+
+!listing /msfr/steady/run_ns.i block=FVKernels/pump
+
+
+Boundary conditions include standard velocity wall functions at the walls to
+account for the non-linearity of the velocity in the boundary layer given the
+coarse mesh and symmetry at the center axis of the MSFR,
+
+!listing /msfr/steady/run_ns.i block=FVBCs
+
+Auxkernels are used to compute the wall shear stress obtained by the standard
+wall function model, the dimensionless wall distance $y^+$ and the value for the
+eddy viscosity.
+
+!listing /msfr/steady/run_ns.i block=AuxKernels
+
+The mixing length value is obtained from the restart file, as it is constant
+throughout the simulation. 
+
+For relaxation purposes, time derivatives are added to the momentum equations
+until a steady state is attained.
+
+!listing /msfr/steady/run_ns.i block=FVKernels/u_time
 
 ## Conservation of fluid energy
 
