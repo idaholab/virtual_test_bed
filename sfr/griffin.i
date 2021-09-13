@@ -15,11 +15,6 @@
   displacements = 'disp_x disp_y disp_z'
 []
 
-[Debug]
-  add_aux_var_for_element_ids = true # need this to write the material_id, equivalence_id into output Exodus
-[]
-
-
 [GlobalParams]
   is_meter = true
   grid_names = 'tfuel tcool'
@@ -89,7 +84,7 @@
 
 [Executioner]
   automatic_scaling = True
-  type = PicardEigen
+  type = Eigenvalue
   solve_type = 'PJFNK'
   petsc_options_iname = '-pc_type -pc_hypre_type -ksp_gmres_restart'
   petsc_options_value = 'hypre boomeramg 100'
@@ -102,10 +97,6 @@
   fixed_point_abs_tol = 1e-10
   fixed_point_max_its = 10
   accept_on_max_fixed_point_iteration = true
-
-  output_after_power_iterations = false
-  output_before_normalization = false
-  output_on_final = true
 []
 
 #  STM global variables passed from stochastic tools to sub-apps (BISON/SAM)
