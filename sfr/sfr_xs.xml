@@ -5,7 +5,7 @@
       <tfuel>600 900 1800</tfuel>
       <tcool>600 698 900</tcool>
       <ReferenceGridIndex>1 1</ReferenceGridIndex>
-      <AllReactions>Flux Absorption Total NeutronVelocity Scattering Transport Removal NeutronVelocity</AllReactions>
+      <AllReactions>Flux Absorption Total NeutronVelocity Scattering Transport Removal</AllReactions>
       <TablewiseReactions/>
       <LibrarywiseReactions/>
       <Table gridIndex="1 1">
@@ -374,7 +374,7 @@
       <tfuel>600 900 1800</tfuel>
       <tcool>600 698 900</tcool>
       <ReferenceGridIndex>1 1</ReferenceGridIndex>
-      <AllReactions>Flux Absorption Total NeutronVelocity Scattering Transport Removal NeutronVelocity</AllReactions>
+      <AllReactions>Flux Absorption Total NeutronVelocity Scattering Transport Removal</AllReactions>
       <TablewiseReactions/>
       <LibrarywiseReactions/>
       <Table gridIndex="1 1">
@@ -743,7 +743,7 @@
       <tfuel>600 900 1800</tfuel>
       <tcool>600 698 900</tcool>
       <ReferenceGridIndex>1 1</ReferenceGridIndex>
-      <AllReactions>Flux Absorption Total NeutronVelocity Scattering Transport Removal NeutronVelocity</AllReactions>
+      <AllReactions>Flux Absorption Total NeutronVelocity Scattering Transport Removal</AllReactions>
       <TablewiseReactions/>
       <LibrarywiseReactions/>
       <Table gridIndex="1 1">
@@ -1112,7 +1112,7 @@
       <tfuel>600 900 1800</tfuel>
       <tcool>600 698 900</tcool>
       <ReferenceGridIndex>1 1</ReferenceGridIndex>
-      <AllReactions>Flux Absorption Total NeutronVelocity Scattering Transport Removal NeutronVelocity nuFission kappaFission FissionSpectrum DNFraction DNSpectrum DNPlambda</AllReactions>
+      <AllReactions>Flux Absorption Total NeutronVelocity Scattering Transport Removal nuFission kappaFission FissionSpectrum DNFraction DNSpectrum DNPlambda</AllReactions>
       <TablewiseReactions/>
       <LibrarywiseReactions/>
       <Table gridIndex="1 1">
