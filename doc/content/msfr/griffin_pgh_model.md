@@ -104,7 +104,8 @@ geometry, a simple, tunable model will be used,
 \begin{equation}
   f_{\text{fric},x} = -C_q u | u |
 \end{equation}
-where $C_q$ is a tunable coefficient.
+where $C_q$ is a tunable volumetric friction coefficient, which is selected to match the
+desired pressure drop, in conjunction with the pump head value.
 
 A typical viscous friction model could be used for the regions outside of the
 heat exchanger. However, the viscous effects will be negligible due to the
@@ -188,7 +189,7 @@ eddy viscosity.
 !listing /msfr/steady/run_ns.i block=AuxKernels
 
 The mixing length value is obtained from the restart file, as it is constant
-throughout the simulation. 
+throughout the simulation.
 
 For relaxation purposes, time derivatives are added to the momentum equations
 until a steady state is attained.
