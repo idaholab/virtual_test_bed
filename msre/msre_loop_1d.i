@@ -21,7 +21,7 @@
     x    = '750        1200'
     y    = '1.51E+06   2.41E+06'
   [../]
-  [./fuel_salt_mu_func] 
+  [./fuel_salt_mu_func]
     type = PiecewiseLinear
     x    = '750  760  770  780  790  800  810  820
             830  840  850  860  870  880  890  900
@@ -82,7 +82,7 @@
     inputs  = 'downcomer(out)'
     outputs = 'iplnm(in)'
   [../]
-  [./iplnm]        # inlet plenum is connected to core bottom 
+  [./iplnm]        # inlet plenum is connected to core bottom
     type           = PBOneDFluidComponent
     A              = 0.3932
     Dh             = 0.6997
@@ -159,7 +159,7 @@
     Area    = 0.01292
     K       = '0.0 0.0'
     eos     = fuel_salt_eos
-    inputs  = 'pipe1_s1(out)' 
+    inputs  = 'pipe1_s1(out)'
     outputs = 'pipe1_s2(in)'
   [../]
 
@@ -194,7 +194,7 @@
     type        = PBOneDFluidComponent
     A           = 0.01267
     Dh          = 0.127
-    length      = 1.0668 
+    length      = 1.0668
     n_elems     = 11
     orientation = '-1 0 0'
     position    = '1.8288 2.9746 0'
@@ -270,7 +270,7 @@
     type        = PBOneDFluidComponent
     position    = '0.762 2.873 0'
     orientation = '-1 0 0'
-    length      = 2.5298 
+    length      = 2.5298
     n_elems     = 26
     eos         = hx_salt_eos
     heat_source = 0
@@ -311,7 +311,7 @@
     HS_BC_type                    = 'Coupled Coupled'
     eos_left                      = hx_salt_eos
     name_comp_left                = hx_tube1
-    HT_surface_area_density_left  = 8.6290E+02 
+    HT_surface_area_density_left  = 8.6290E+02
     eos_right                     = fuel_salt_eos
     name_comp_right               = hx_shell
     HT_surface_area_density_right = 2.3629E+02
@@ -419,7 +419,7 @@
     variable = velocity
     input    = core(in)
   [../]
-  [./Core_T_out] 
+  [./Core_T_out]
     type     = ComponentBoundaryVariableValue
     variable = temperature
     input    = core(out)
