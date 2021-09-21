@@ -15,7 +15,7 @@ The current 1-D MSRE model focuses on the primary loop with all the key reactor 
 
 ## Material Properties and MSRE Setup
 
-The fuel salt in the primary loop was LiF-BeF4-ZrF4-UF4 according to the design specifications of the MSRE [!citep](Beall1964,Cantor1968), 
+The fuel salt in the MSRE primary loop was LiF-BeF4-ZrF4-UF4 according to the design specifications of the MSRE [!citep](Beall1964,Cantor1968), 
 of which the thermophysical properties are listed in [fuel_salt_properties]
 
 !table id=fuel_salt_properties caption=Thermophysical properties of the fuel salt.
