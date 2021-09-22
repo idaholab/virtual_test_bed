@@ -3,6 +3,7 @@
     type = 'CSVdiff'
     input = 'msre_loop_1d.i'
     csvdiff = 'msre_loop_1d_csv.csv'
-    custom_cmp = 'csvdiff.cmp'
+    cli_args = 'Executioner/num_steps=10'
+    allow_warnings = true
   []
 []
