@@ -93,6 +93,7 @@ fis_fract            = ${fparse 1 - dh_fract} # Fission power fraction at t = 0.
 
 [Problem]
   coord_type = RZ
+  # restart_file_base = 'ss0_neutrons_Checkpoint_cp/LATEST'
 []
 
 # ==============================================================================
@@ -359,7 +360,7 @@ fis_fract            = ${fparse 1 - dh_fract} # Fission power fraction at t = 0.
 # EXECUTION PARAMETERS
 # ==============================================================================
 [Executioner]
-  type = PicardEigen
+  type = Eigenvalue
 
   solve_type = 'PJFNK'
   petsc_options_iname = '-pc_type -pc_hypre_type -ksp_gmres_restart'
@@ -376,9 +377,7 @@ fis_fract            = ${fparse 1 - dh_fract} # Fission power fraction at t = 0.
   nl_abs_tol = 1e-5
 
   # Power iterations, before the non-linear solve
-  free_power_iterations = 0
-  output_after_power_iterations = false
-  output_before_normalization = false
+  free_power_iterations = 2
 
   # Fixed point iterations
   fixed_point_abs_tol = 1e-6

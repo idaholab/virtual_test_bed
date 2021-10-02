@@ -85,7 +85,7 @@ model_inlet_area = ${fparse 3.14159265 * (model_inlet_rout * model_inlet_rout -
 mfr = 976.0            # kg/s, from [2]
 total_power = 236.0e6  # W, from [2]
 inlet_T_fluid = 873.15 # K, from [2]
-inlet_vel_y = ${fparse bed_porosity * mfr / model_inlet_area / rho_fluid} # superficial
+inlet_vel_y = ${fparse mfr / model_inlet_area / rho_fluid} # superficial
 power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using power pp
 
 # ==============================================================================
@@ -149,6 +149,8 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
 
   vel_x = 'vel_x'
   vel_y = 'vel_y'
+
+  two_term_boundary_expansion = true
 []
 
 [Debug]
@@ -720,7 +722,7 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
   # Steady state detection.
   steady_state_detection = true
   steady_state_tolerance = 1e-8
-  steady_state_start_time = 400
+  steady_state_start_time = 200000
 []
 
 # ==============================================================================
@@ -881,7 +883,7 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
 
 [Outputs]
   csv = true
-  hide = 'pressure_in pressure_out mass_flow_OR mass_flow_out mass_flow_plenum max_vy '
+  hide = 'pressure_in pressure_out mass_flow_OR mass_flow_plenum max_vy '
         # 'bypass_fraction plenum_fraction max_Tf h pressure_drop'
   [exodus]
     type = Exodus
