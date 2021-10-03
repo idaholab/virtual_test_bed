@@ -558,8 +558,9 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
     block = ${blocks_pebbles}
   []
   [drag]
-    type = ErgunDragCoefficients
+    type = KTATypeDragCoefficients
     block = ${blocks_pebbles}
+    bed_height = 5
   []
   [kappa]
     type = LinearPecletKappaFluid
