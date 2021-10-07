@@ -134,6 +134,7 @@ power_density = ${fparse total_power / model_vol}
     type = CentroidMultiApp
     execute_on = 'TIMESTEP_END'
     input_files = 'ss4_fuel_pebble.i'
+    cli_args = 'Outputs/console=false'
     output_in_position = true
     block = '3'
     # Use a lighter application for performance
@@ -145,6 +146,7 @@ power_density = ${fparse total_power / model_vol}
     type = CentroidMultiApp
     execute_on = 'TIMESTEP_END'
     input_files = 'ss4_graphite_pebble.i'
+    cli_args = 'Outputs/console=false'
     output_in_position = true
     block = '4'
     # Use a lighter application for performance

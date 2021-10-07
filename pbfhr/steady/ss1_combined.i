@@ -85,7 +85,7 @@ model_inlet_area = ${fparse 3.14159265 * (model_inlet_rout * model_inlet_rout -
 mfr = 976.0            # kg/s, from [2]
 total_power = 236.0e6  # W, from [2]
 inlet_T_fluid = 873.15 # K, from [2]
-inlet_vel_y = ${fparse bed_porosity * mfr / model_inlet_area / rho_fluid} # superficial
+inlet_vel_y = ${fparse mfr / model_inlet_area / rho_fluid} # superficial
 power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using power pp
 
 # ==============================================================================
@@ -98,7 +98,7 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
   # in pbfhr/meshes using Cubit to generate the mesh
   # Modify the parameters (mesh size, refinement areas) for each application
   # neutronics, thermal hydraulics and fuel performance
-  uniform_refine = 2
+  uniform_refine = 1
   [fmg]
     type = FileMeshGenerator
     file = '../meshes/core_pronghorn.e'
@@ -137,8 +137,20 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
   fp = fp
   T_solid = temp_solid
 
+  vel = 'superficial_velocity'
+  pressure = pressure
+  u = vel_x
+  v = vel_y
+  mu = 'mu'
+
   velocity_interp_method = ${velocity_interp_method}
   advected_interp_method = ${advected_interp_method}
+  fv = true
+
+  vel_x = 'vel_x'
+  vel_y = 'vel_y'
+
+  two_term_boundary_expansion = true
 []
 
 [Debug]
@@ -196,25 +208,18 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
     type = PINSFVMomentumAdvection
     variable = vel_x
     advected_quantity = 'superficial_rho_u'
-    vel = 'superficial_velocity'
-    pressure = pressure
-    u = vel_x
-    v = vel_y
-    mu = 'mu'
   []
   [vel_x_viscosity]
     type = PINSFVMomentumDiffusion
     variable = vel_x
-    mu = 'mu'
   []
   [u_pressure]
     type = PINSFVMomentumPressure
     variable = vel_x
-    pressure = pressure
     momentum_component = 'x'
   []
   [u_friction]
-    type = PINSFVMomentumFriction
+    type = PNSFVMomentumFriction
     variable = vel_x
     Darcy_name = 'Darcy_coefficient'
     Forchheimer_name = 'Forchheimer_coefficient'
@@ -230,16 +235,10 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
     type = PINSFVMomentumAdvection
     variable = vel_y
     advected_quantity = 'superficial_rho_v'
-    vel = 'superficial_velocity'
-    pressure = pressure
-    u = vel_x
-    v = vel_y
-    mu = 'mu'
   []
   [vel_y_viscosity]
     type = PINSFVMomentumDiffusion
     variable = vel_y
-    mu = 'mu'
   []
   [v_pressure]
     type = PINSFVMomentumPressure
@@ -248,14 +247,14 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
     momentum_component = 'y'
   []
   [v_friction]
-    type = PINSFVMomentumFriction
+    type = PNSFVMomentumFriction
     variable = vel_y
     Darcy_name = 'Darcy_coefficient'
     Forchheimer_name = 'Forchheimer_coefficient'
     momentum_component = 'y'
   []
   [gravity]
-    type = PINSFVMomentumGravity
+    type = PNSFVMomentumGravity
     variable = vel_y
     gravity = '0 -9.81 0'
     momentum_component = 'y'
@@ -282,10 +281,6 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
     variable = temp_fluid
     vel = 'superficial_velocity'
     advected_quantity = 'rho_cp_temp'
-    pressure = pressure
-    u = vel_x
-    v = vel_y
-    mu = 'mu'
   []
   [temp_fluid_conduction]
     type = PINSFVEnergyEffectiveDiffusion
@@ -363,15 +358,11 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
 # ==============================================================================
 [AuxVariables]
   [power_distribution]
-    order = CONSTANT
-    family = MONOMIAL
-    fv = true
+    type = MooseVariableFVReal
     block = '3'
   []
   [porosity]
-    family = MONOMIAL
-    order = CONSTANT
-    fv = true
+    type = MooseVariableFVReal
     block = ${blocks_fluid}
   []
 []
@@ -569,8 +560,9 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
     block = ${blocks_pebbles}
   []
   [drag]
-    type = ErgunDragCoefficients
+    type = KTATypeDragCoefficients
     block = ${blocks_pebbles}
+    bed_height = 5
   []
   [kappa]
     type = LinearPecletKappaFluid
@@ -730,7 +722,7 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
   # Steady state detection.
   steady_state_detection = true
   steady_state_tolerance = 1e-8
-  steady_state_start_time = 400
+  steady_state_start_time = 200000
 []
 
 # ==============================================================================
@@ -798,8 +790,6 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
   [mass_flow_out]
     type = VolumetricFlowRate
     boundary = 'bed_horizontal_top plenum_top OR_horizontal_top'
-    vel_x = 'vel_x'
-    vel_y = 'vel_y'
     advected_variable = ${rho_fluid}
     execute_on = 'INITIAL TIMESTEP_END'
   []
@@ -839,8 +829,6 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
   [flow_in_m]
     type = VolumetricFlowRate
     boundary = 'bed_horizontal_bottom OR_horizontal_bottom'
-    vel_x = 'vel_x'
-    vel_y = 'vel_y'
     advected_mat_prop = 'rho_cp_temp'
   []
   [diffusion_in]
@@ -853,30 +841,24 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
   [flow_out]
     type = VolumetricFlowRate
     boundary = 'bed_horizontal_top plenum_top OR_horizontal_top'
-    vel_x = 'vel_x'
-    vel_y = 'vel_y'
     advected_mat_prop = 'rho_cp_temp'
   []
   [core_balance]
     type = ParsedPostprocessor
     pp_names = 'power flow_in_m diffusion_in flow_out outer_heat_loss'
-    function = 'power - flow_in_m + diffusion_in - flow_out - outer_heat_loss'
+    function = 'power - flow_in_m + diffusion_in - flow_out + outer_heat_loss'
   []
 
   # Bypass
   [mass_flow_OR]
     type = VolumetricFlowRate
     boundary = 'OR_horizontal_top'
-    vel_x = 'vel_x'
-    vel_y = 'vel_y'
     advected_variable = ${rho_fluid}
     execute_on = 'INITIAL TIMESTEP_END'
   []
   [mass_flow_plenum]
     type = VolumetricFlowRate
     boundary = 'plenum_top'
-    vel_x = 'vel_x'
-    vel_y = 'vel_y'
     advected_variable = ${rho_fluid}
     execute_on = 'INITIAL TIMESTEP_END'
   []
@@ -901,7 +883,7 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
 
 [Outputs]
   csv = true
-  hide = 'pressure_in pressure_out mass_flow_OR mass_flow_out mass_flow_plenum max_vy '
+  hide = 'pressure_in pressure_out mass_flow_OR mass_flow_plenum max_vy '
         # 'bypass_fraction plenum_fraction max_Tf h pressure_drop'
   [exodus]
     type = Exodus

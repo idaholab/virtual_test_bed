@@ -147,7 +147,7 @@ The third term---the effective diffusion---with a [PINSFVMomentumDiffusion](http
 
 !listing /pbfhr/steady/ss1_combined.i block=FVKernels/vel_x_viscosity
 
-And the fourth term--the friction term---with a [PINSFVMomentumFriction](https://mooseframework.inl.gov/source/fvkernels/PINSFVMomentumFriction.html) kernel,
+And the fourth term--the friction term---with a [PNSFVMomentumFriction](https://mooseframework.inl.gov/source/fvkernels/PINSFVMomentumFriction.html) kernel,
 
 !listing /pbfhr/steady/ss1_combined.i block=FVKernels/u_friction
 
