@@ -451,8 +451,9 @@
     type                = SMP
     full                = true
     solve_type          = 'PJFNK'
-    petsc_options_iname = '-pc_type -ksp_gmres_restart'
-    petsc_options_value = 'lu 101'
+    # pc_factor_shift are added automatically by SAM, they are added here for BlueCRAB
+    petsc_options_iname = '-pc_type -ksp_gmres_restart -pc_factor_shift_type -pc_factor_shift_amount'
+    petsc_options_value = 'lu 101 NONZERO 1e-9'
   [../]
 []
 
