@@ -43,8 +43,6 @@ k_liquid = 40.08
 # Specific heat capacity (J/kg-K)
 # From Table 1.1, no temperature data given
 cp_liquid = 810.
-# Melting point, Table 3.1, lists 62C, rounding up
-T_melting = 340.
 
 # Wick, homogenize envelope and fluid
 # Density (kg/m3)
@@ -168,8 +166,6 @@ corr_factor = ${fparse 2 * R_clad_o / R_hp_hole / R_hp_hole / area_correction / 
     evaporator_at_start_end = true
     # Initial temperature of block
     initial_T = ${T_ext_cond}
-    # Melting temperature (hard limit on minimum coolant temperature)
-    T_operating = ${T_melting}
     # Temperature to evaluate heat pipe limit approximations
     T_ref = T_evap_inner
   []
@@ -276,7 +272,7 @@ corr_factor = ${fparse 2 * R_clad_o / R_hp_hole / R_hp_hole / area_correction / 
   []
   [Integral_BC_Total]
     type = LinearCombinationPostprocessor
-    pp_names = 'condenser_boundary:integral evaporator_boundary:integral'
+    pp_names = 'condenser_boundary_integral evaporator_boundary_integral'
     pp_coefs = '1 1'
     execute_on = 'INITIAL TIMESTEP_END'
   []
@@ -286,12 +282,12 @@ corr_factor = ${fparse 2 * R_clad_o / R_hp_hole / R_hp_hole / area_correction / 
   [Integral_BC_Cond]
     type = DifferencePostprocessor
     value1 = ZeroPP
-    value2 = condenser_boundary:integral
+    value2 = condenser_boundary_integral
     execute_on = 'INITIAL TIMESTEP_END'
   []
   [Integral_BC_RelErr]
     type = RelativeDifferencePostprocessor
-    value1 = evaporator_boundary:integral
+    value1 = evaporator_boundary_integral
     value2 = Integral_BC_Cond
     execute_on = 'INITIAL TIMESTEP_END'
   []
@@ -307,22 +303,22 @@ corr_factor = ${fparse 2 * R_clad_o / R_hp_hole / R_hp_hole / area_correction / 
   []
   [catastrophic_pp]
     type = HeatRemovalRateLimitScale
-    heat_addition_pps = 'evaporator_boundary:integral'
+    heat_addition_pps = 'evaporator_boundary_integral'
     limit_condenser_side = false
-    catastrophic_heat_removal_limit_pps = 'hp:boiling_limit hp:capillary_limit '
-                                          'hp:entrainment_limit'
+    catastrophic_heat_removal_limit_pps = 'hp_boiling_limit hp_capillary_limit '
+                                          'hp_entrainment_limit'
     recoverable_heat_removal_limit_pps = ''
-    T_operating = ${T_melting}
+    fp_2phase = fp_2phase
     T = T_inner_avg
     execute_on = 'INITIAL TIMESTEP_END'
   []
   [recoverable_pp]
     type = HeatRemovalRateLimitScale
-    heat_addition_pps = 'evaporator_boundary:integral'
+    heat_addition_pps = 'evaporator_boundary_integral'
     limit_condenser_side = false
     catastrophic_heat_removal_limit_pps = ''
-    recoverable_heat_removal_limit_pps = 'hp:sonic_limit hp:viscous_limit'
-    T_operating = ${T_melting}
+    recoverable_heat_removal_limit_pps = 'hp_sonic_limit hp_viscous_limit'
+    fp_2phase = fp_2phase
     T = T_inner_avg
     execute_on = 'INITIAL linear nonlinear TIMESTEP_END'
   []
