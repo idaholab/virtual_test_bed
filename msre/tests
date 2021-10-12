@@ -1,0 +1,10 @@
+[Tests]
+  [msre_sam]
+    type = 'CSVDiff'
+    input = 'msre_loop_1d.i'
+    csvdiff = 'msre_loop_1d_csv.csv'
+    cli_args = 'Executioner/num_steps=10'
+    allow_warnings = true
+    executable_pattern = 'sam*|blue_crab*'
+  []
+[]

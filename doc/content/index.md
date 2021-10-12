@@ -14,6 +14,8 @@ Users will need to request access to the controlled NEAMS software from the [Nuc
 
 [Molten Salt Fast Reactor (MSFR)](msfr/index.md)
 
+[Molten Salt Reactor Experiment (MSRE)](msre/msre_sam_model.md)
+
 [Modular High Temperature Gas-Cooled Reactor (MHTGR)](mhtgr/index.md)
 
 [Pebble Bed Fluoride-Salt-Cooled High-Temperature Reactor (PB-FHR)](pbfhr/index.md)
