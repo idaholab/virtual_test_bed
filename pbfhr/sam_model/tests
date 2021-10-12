@@ -1,18 +1,35 @@
 [Tests]
-  [steady_state]
+  [steady_state_sam]
     type = CSVDiff
     input = pbfhr-ss.i
     csvdiff = 'pbfhr-ss_csv.csv'
-    executable_pattern = 'sam*|blue_crab*'
-    cli_args = 'Executioner/num_steps=2  DefaultElementQuality/failure_type=Warning'
+    executable_pattern = 'sam*'
+    cli_args = 'Executioner/num_steps=2'
     allow_warnings = true
   []
-  [transient]
+  [transient_sam]
     type = RunApp
     input = pbfhr-tr.i
     check_input = true
-    executable_pattern = 'sam*|blue_crab*'
-    prereq = steady_state
+    executable_pattern = 'sam*'
+    prereq = steady_state_sam
+    cli_args = "Problem/active=''"
+    allow_warnings = true
+  []
+  [steady_state_crab]
+    type = CSVDiff
+    input = pbfhr-ss.i
+    csvdiff = 'pbfhr-ss_csv.csv'
+    executable_pattern = 'blue_crab*'
+    cli_args = 'Executioner/num_steps=2 DefaultElementQuality/failure_type=Warning'
+    allow_warnings = true
+  []
+  [transient_crab]
+    type = RunApp
+    input = pbfhr-tr.i
+    check_input = true
+    executable_pattern = 'blue_crab*'
+    prereq = steady_state_crab
     cli_args = "Problem/active='' DefaultElementQuality/failure_type=Warning"
     allow_warnings = true
   []

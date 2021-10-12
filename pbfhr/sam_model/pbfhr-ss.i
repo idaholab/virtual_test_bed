@@ -886,8 +886,8 @@
   #type = Steady
   type = Transient
 
-  petsc_options_iname = '-ksp_gmres_restart'
-  petsc_options_value = '300'
+  petsc_options_iname = '-ksp_gmres_restart -pc_factor_shift_type -pc_factor_shift_amount'
+  petsc_options_value = '300 NONZERO 1e-9'
 
   dt = 1
   dtmin = 1e-3
