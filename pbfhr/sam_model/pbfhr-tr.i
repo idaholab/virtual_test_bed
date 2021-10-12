@@ -572,7 +572,6 @@
     initial_level = 0.4
     initial_T = 970
     initial_V = 0.0
-    display_pps = false
     covergas_component = 'cover_gas2'
     eos = eos
   [../]
@@ -623,7 +622,6 @@
     initial_level = 0.4
     initial_T = 852.7
     initial_V = 0.0
-    display_pps = true
     covergas_component = 'cover_gas1'
     eos = eos #eos3
   [../]

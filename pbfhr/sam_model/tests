@@ -21,7 +21,7 @@
     input = pbfhr-ss.i
     csvdiff = 'pbfhr-ss_csv.csv'
     executable_pattern = 'blue_crab*'
-    cli_args = 'Executioner/num_steps=2 DefaultElementQuality/failure_type=Warning'
+    cli_args = "Executioner/num_steps=2 DefaultElementQuality/failure_type=Warning Outputs/hide='pool1:volume_change pool2:volume_change'"
     allow_warnings = true
   []
   [transient_crab]
