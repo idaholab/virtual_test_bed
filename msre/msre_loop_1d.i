@@ -1,3 +1,7 @@
+# Modeling the MSRE
+# Steady state simulation
+# Application : SAM
+
 [GlobalParams]
   global_init_P = 1e5                        # Global initial fluid pressure
   global_init_V = 0.0                        # Global initial fluid velocity

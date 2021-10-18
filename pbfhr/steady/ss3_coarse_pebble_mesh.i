@@ -1,5 +1,6 @@
 # ==============================================================================
 # Model description
+# Application : any MOOSE application
 # ------------------------------------------------------------------------------
 # Idaho Falls, INL, August 10, 2020
 # Author(s): Dr. Guillaume Giudicelli, Dr. Paolo Balestra

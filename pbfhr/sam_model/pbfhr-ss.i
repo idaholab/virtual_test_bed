@@ -3,6 +3,7 @@
 # Includes DRACS loop for emergency heat removal
 # Steady state and transient simulation (loss of forced flow with SCRAM)
 # Work supported under the DOE NEAMS program
+# Application : SAM
 
 [GlobalParams]                  # global parameters initialization
     global_init_P = 1.0e5
