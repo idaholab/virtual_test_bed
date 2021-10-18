@@ -12,19 +12,19 @@ the [steady-state model](msfr/griffin_pgh_model.md). One major difference is
 that extra kernels must be added to account for the time derivative terms such
 as,
 
-!listing /msfr/transient/run_ns.i block=FVKernels/u_time
+!listing msr/msfr/transient/run_ns.i block=FVKernels/u_time
 
-!listing /msfr/transient/run_ns.i block=FVKernels/v_time
+!listing msr/msfr/transient/run_ns.i block=FVKernels/v_time
 
-!listing /msfr/transient/run_ns.i block=FVKernels/heat_time
+!listing msr/msfr/transient/run_ns.i block=FVKernels/heat_time
 
-!listing /msfr/transient/run_ns.i block=FVKernels/c1_time
+!listing msr/msfr/transient/run_ns.i block=FVKernels/c1_time
 
 The neutronics model can be made transient by simply switching the parameter
 `equation_type = eigenvalue` to `equation_type = transient` in the
 `TransportSystems` block,
 
-!listing /msfr/transient/run_neutronics.i block=TransportSystems
+!listing msr/msfr/transient/run_neutronics.i block=TransportSystems
 
 ## Initialization
 
@@ -46,13 +46,13 @@ The fluid dynamics app, in particular, will use the Exodus method. Note that the
 (An Exodus file might contain just a mesh, or it might contain a mesh and a set
 of solution fields.) Also note the parameter, `use_for_exodus_restart = true`:
 
-!listing /msfr/transient/run_ns.i block=Mesh/fmg
+!listing msr/msfr/transient/run_ns.i block=Mesh/fmg
 
 With an Exodus restart, we must also specify which variables will be initialized
 from the input Exodus file. Here, all of the variables are initialized from
 Exodus. Note the `initial_from_file_var` parameters in these variables,
 
-!listing /msfr/transient/run_ns.i block=Variables
+!listing msr/msfr/transient/run_ns.i block=Variables
 
 The Exodus restart method is desirable because it allows the user to run many
 transient simulations without having to repeatedly re-initialize the solution.
@@ -66,21 +66,21 @@ output of the steady-state simulation. This ensures mesh consistency between the
 steady and transient simulations. However, the `use_for_exodus_restart`
 parameter is not included:
 
-!listing /msfr/transient/run_neutronics.i block=Mesh/fmg
+!listing msr/msfr/transient/run_neutronics.i block=Mesh/fmg
 
 Here the steady-state simulation is included as a MultiApp. Note the
 `execute_on = initial` parameter:
 
-!listing /msfr/transient/run_neutronics.i block=MultiApps/init
+!listing msr/msfr/transient/run_neutronics.i block=MultiApps/init
 
 Transfers must also be specified so that the steady-state solution is copied
 over to the transient app. Here are a subset of those transfers:
 
-!listing /msfr/transient/run_neutronics.i block=Transfers/init_solution
+!listing msr/msfr/transient/run_neutronics.i block=Transfers/init_solution
 
-!listing /msfr/transient/run_neutronics.i block=Transfers/init_power_scaling
+!listing msr/msfr/transient/run_neutronics.i block=Transfers/init_power_scaling
 
-!listing /msfr/transient/run_neutronics.i block=Transfers/init_c1
+!listing msr/msfr/transient/run_neutronics.i block=Transfers/init_c1
 
 ## Pump control
 
@@ -89,11 +89,11 @@ is done through the Control system. The following block will modify the relevant
 parameter at each time step, and it will evaluate the specified function
 (`pump_fun`) to find the desired value:
 
-!listing /msfr/transient/run_ns.i block=Controls/pump_control
+!listing msr/msfr/transient/run_ns.i block=Controls/pump_control
 
 The function is defined elsewhere in the input file as,
 
-!listing /msfr/transient/run_ns.i block=Functions/pump_fun
+!listing msr/msfr/transient/run_ns.i block=Functions/pump_fun
 
 Note that a step function is used here. At $t = 2~\text{s}$, the pumping force
 instantly drops to half its initial value. Note that a more complex model could

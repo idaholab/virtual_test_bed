@@ -11,9 +11,9 @@ energy as well as the conservation of delayed neutron precursors.
 
 The conservation of mass is,
 
-  \begin{equation}
-    \nabla \cdot \rho \vec{u} = 0
-  \end{equation}
+\begin{equation}
+  \nabla \cdot \rho \vec{u} = 0
+\end{equation}
 
 where $\rho$ is the fluid density and $\vec{u}$ is the velocity vector.
 
@@ -27,7 +27,7 @@ approximation.)  The simplified conservation of mass is then given by,
 
 This conservation is expressed by the `FVKernels/mass` kernel:
 
-!listing /msfr/steady/run_ns.i block=FVKernels/mass
+!listing msr/msfr/steady/run_ns.i block=FVKernels/mass
 
 (Note that this kernel uses `variable = pressure` even though pressure does not
 appear in the mass conservation equation. This is an artifact of the way systems
@@ -127,25 +127,25 @@ This gives the form that is implemented for the MSFR model,
 The first term in [eq:x_mom]---the advection of momentum---is handled with the
 kernel,
 
-!listing /msfr/steady/run_ns.i block=FVKernels/u_advection
+!listing msr/msfr/steady/run_ns.i block=FVKernels/u_advection
 
 The second term---the pressure gradient---is handled with,
 
-!listing /msfr/steady/run_ns.i block=FVKernels/u_pressure
+!listing msr/msfr/steady/run_ns.i block=FVKernels/u_pressure
 
 The third and fourth term---the Reynolds Stress and the Viscous Tensor---with,
 
-!listing /msfr/steady/run_ns.i block=FVKernels/u_turbulent_diffusion_rans FVKernels/u_molecular_diffusion
+!listing msr/msfr/steady/run_ns.i block=FVKernels/u_turbulent_diffusion_rans FVKernels/u_molecular_diffusion
 
 The definition of the mixing length is handled with,
 
-!listing /msfr/steady/run_ns_initial.i block=AuxKernels/mixing_len
+!listing msr/msfr/steady/run_ns_initial.i block=AuxKernels/mixing_len
 
 Recall that the fifth term, the viscous force, is treated with a unique model
 for the heat exchanger region. Consequently, the `block` parameter is used to
 restrict the relevant kernel to the heat exchanger,
 
-!listing /msfr/steady/run_ns.i block=FVKernels/friction_hx_x
+!listing msr/msfr/steady/run_ns.i block=FVKernels/friction_hx_x
 
 This model does not include a friction force for the other blocks so no kernel
 needs to be specified for those blocks.
@@ -171,22 +171,22 @@ For each kernel describing the $x$-momentum equation, there is a corresponding
 kernel for the $y$-momentum equation. The additional Boussinesq kernel and the
 pump kernel for this equation are,
 
-!listing /msfr/steady/run_ns.i block=FVKernels/v_buoyancy
+!listing msr/msfr/steady/run_ns.i block=FVKernels/v_buoyancy
 
-!listing /msfr/steady/run_ns.i block=FVKernels/pump
+!listing msr/msfr/steady/run_ns.i block=FVKernels/pump
 
 
 Boundary conditions include standard velocity wall functions at the walls to
 account for the non-linearity of the velocity in the boundary layer given the
 coarse mesh and symmetry at the center axis of the MSFR,
 
-!listing /msfr/steady/run_ns.i block=FVBCs
+!listing msr/msfr/steady/run_ns.i block=FVBCs
 
 Auxkernels are used to compute the wall shear stress obtained by the standard
 wall function model, the dimensionless wall distance $y^+$ and the value for the
 eddy viscosity.
 
-!listing /msfr/steady/run_ns.i block=AuxKernels
+!listing msr/msfr/steady/run_ns.i block=AuxKernels
 
 The mixing length value is obtained from the restart file, as it is constant
 throughout the simulation.
@@ -194,7 +194,7 @@ throughout the simulation.
 For relaxation purposes, time derivatives are added to the momentum equations
 until a steady state is attained.
 
-!listing /msfr/steady/run_ns.i block=FVKernels/u_time
+!listing msr/msfr/steady/run_ns.i block=FVKernels/u_time
 
 ## Conservation of fluid energy
 
@@ -254,28 +254,28 @@ of the divergence operators and divide the entire equation by that factor,
 [eq:energy] is the final equation that is implemented in this model. The first
 term---energy advection---is captured by the kernel,
 
-!listing /msfr/steady/run_ns.i block=FVKernels/heat_advection
+!listing msr/msfr/steady/run_ns.i block=FVKernels/heat_advection
 
 The second term---the turbulent diffusion of heat---corresponds to the kernel,
 
-!listing /msfr/steady/run_ns.i block=FVKernels/heat_turb_diffusion
+!listing msr/msfr/steady/run_ns.i block=FVKernels/heat_turb_diffusion
 
 The third term---heat source and loss---is covered by two kernels. First, the
 nuclear heating computed by the neutronics solver is included with,
 
-!listing /msfr/steady/run_ns.i block=FVKernels/heat_src
+!listing msr/msfr/steady/run_ns.i block=FVKernels/heat_src
 
 And second, the heat loss through the heat exchanger is implemented with the
 kernel,
 
-!listing /msfr/steady/run_ns.i block=FVKernels/heat_sink
+!listing msr/msfr/steady/run_ns.i block=FVKernels/heat_sink
 
 ## Neutronics
 
 With Griffin, the process of converting the basic conservation equations into
 MOOSE variables and kernels is automated with the `TransportSystems` block:
 
-!listing /msfr/steady/run_neutronics.i block=TransportSystems
+!listing msr/msfr/steady/run_neutronics.i block=TransportSystems
 
 Here we are specifying an eigenvalue neutronics problem using 6 energy groups
 (`G = 6`) solved via the diffusion approximation with a continuous finite
@@ -287,7 +287,7 @@ the delayed neutron precursors will be handled "externally" from the default
 Griffin implementation which assumes that the precursors do not move. This
 parameter is referencing the `dnp` `AuxVariable` which is defined as,
 
-!listing /msfr/steady/run_neutronics.i block=AuxVariables/dnp
+!listing msr/msfr/steady/run_neutronics.i block=AuxVariables/dnp
 
 Note that this is an array auxiliary variable with 6 components, corresponding
 to the 6 delayed neutron precursor groups used here.
@@ -298,18 +298,18 @@ Navier-Stokes module does not include the kernels that are needed to advect an
 array variable. For this reason, there is also a separate AuxVariable for each
 of the delayed neutron precursors. For example,
 
-!listing /msfr/steady/run_neutronics.i block=AuxVariables/c1
+!listing msr/msfr/steady/run_neutronics.i block=AuxVariables/c1
 
 The `run_ns.i` subapp is responsible for computing the precursor distributions,
 and the distributions are transferred from the subapp to the main app by blocks
 like this one,
 
-!listing /msfr/steady/run_neutronics.i block=Transfers/c1
+!listing msr/msfr/steady/run_neutronics.i block=Transfers/c1
 
 The values are then copied from the `c1`, `c2`, etc. variables into the `dnp`
 variable by this aux kernel:
 
-!listing /msfr/steady/run_neutronics.i block=AuxKernels/build_dnp
+!listing msr/msfr/steady/run_neutronics.i block=AuxKernels/build_dnp
 
 Also note that solving the neutronics problem requires a set of multigroup
 cross sections. Generating cross sections is a topic that is left outside the
@@ -317,4 +317,4 @@ scope of this example. A set has been generated for the MSFR problem and stored
 in the repository using Griffin's XML format. These cross sections are included
 by the blocks,
 
-!listing /msfr/steady/run_neutronics.i block=Materials
+!listing msr/msfr/steady/run_neutronics.i block=Materials
