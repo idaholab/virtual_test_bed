@@ -194,13 +194,13 @@ pump_force = -20000. # [N / m^3]
   []
 
   [friction_hx_x]
-    type = NSFVMomentumFriction
+    type = INSFVMomentumFriction
     variable = v_x
     quadratic_coef_name = 'friction_coef'
     block = 'hx'
   []
   [friction_hx_y]
-    type = NSFVMomentumFriction
+    type = INSFVMomentumFriction
     variable = v_y
     quadratic_coef_name = 'friction_coef'
     block = 'hx'
@@ -222,12 +222,14 @@ pump_force = -20000. # [N / m^3]
     variable = wall_shear_stress
     walls = 'shield_wall reflector_wall'
     block = 'fuel'
+    mu = 'mu_mat'
   []
   [wall_yplus]
     type = WallFunctionYPlusAux
     variable = wall_yplus
     walls = 'shield_wall reflector_wall'
     block = 'fuel'
+    mu = 'mu_mat'
   []
   [turbulent_viscosity]
     type = INSFVMixingLengthTurbulentViscosityAux
@@ -286,8 +288,13 @@ pump_force = -20000. # [N / m^3]
 []
 
 [Materials]
-  [mu]
+  [mu_mat]  # Yplus kernel not migrated to functor materials
     type = ADGenericFunctionMaterial      #defines mu artificially for numerical convergence
+    prop_names = 'mu_mat'                     #it converges to the real mu eventually.
+    prop_values = 'rampdown_mu_func'
+  []
+  [mu]
+    type = ADGenericFunctionFunctorMaterial      #defines mu artificially for numerical convergence
     prop_names = 'mu'                     #it converges to the real mu eventually.
     prop_values = 'rampdown_mu_func'
   []
@@ -302,13 +309,13 @@ pump_force = -20000. # [N / m^3]
     block = 'fuel pump hx'
   []
   [not_used]
-    type = ADGenericConstantMaterial
+    type = ADGenericConstantFunctorMaterial
     prop_names = 'not_used'
     prop_values = 0
     block = 'shield reflector'
   []
   [friction]
-    type = ADGenericConstantMaterial
+    type = ADGenericConstantFunctorMaterial
     prop_names = 'friction_coef'
     prop_values = ${friction}
     block = 'hx'

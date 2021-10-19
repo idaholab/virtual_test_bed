@@ -274,13 +274,13 @@ beta6 = 0.000184087
   []
 
   [friction_hx_x]
-    type = NSFVMomentumFriction
+    type = INSFVMomentumFriction
     variable = v_x
     quadratic_coef_name = 'friction_coef'
     block = 'hx'
   []
   [friction_hx_y]
-    type = NSFVMomentumFriction
+    type = INSFVMomentumFriction
     variable = v_y
     quadratic_coef_name = 'friction_coef'
     block = 'hx'
@@ -602,16 +602,10 @@ beta6 = 0.000184087
 []
 
 [Materials]
-  [mu]
-    type = ADGenericConstantMaterial
-    prop_names = 'mu_t'
-    prop_values = '${mu_t}'
-    block = 'fuel pump hx'
-  []
-  [alpha]
-    type = ADGenericConstantMaterial
-    prop_names = 'alpha'
-    prop_values = '${alpha}'
+  [matprops_former_type]  # Yplus kernel not migrated to functor materials
+    type = ADGenericFunctionMaterial      #defines mu artificially for numerical convergence
+    prop_names = 'alpha alpha_b'                     #it converges to the real mu eventually.
+    prop_values = '${fparse 600 * 20e3 / rho / cp} ${alpha}'
     block = 'fuel pump hx'
   []
   [ins_fv]
@@ -623,11 +617,18 @@ beta6 = 0.000184087
     block = 'fuel pump hx'
   []
   [friction]
-    type = ADGenericConstantMaterial
+    type = ADGenericConstantFunctorMaterial
     prop_names = 'friction_coef'
-    prop_values = ${friction}
+    prop_values = '${friction} '
     block = 'hx'
   []
+  [functor_mat_properties]
+    type = ADGenericConstantFunctorMaterial
+    prop_names = 'cp_unitary mu_t'
+    prop_values = '1 ${mu_t}'
+    block = 'fuel pump hx'
+  []
+
 []
 
 [Executioner]
