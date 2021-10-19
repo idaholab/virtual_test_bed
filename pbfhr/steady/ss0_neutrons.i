@@ -1,5 +1,6 @@
 # ==============================================================================
 # Model description
+# Application : Griffin
 # ------------------------------------------------------------------------------
 # Idaho Falls, INL, September 7th, 2020
 # Author(s): Dr. Guillaume Giudicelli, Dr. Paolo Balestra

@@ -22,19 +22,19 @@ relaxation purposes.
 Velocity magnitude and pressure fields obtained in Nek5000 and Pronghorn are
 shown next.
 
-!media media/msfr/Nek_Re40000_vfield.png
+!media media/msr/msfr/Nek_Re40000_vfield.png
     style=width:30%
     caption=Nek5000 Velocity magnitude field for Re 40K.
 
-!media media/msfr/PH_Re40000_vfield.png
+!media media/msr/msfr/PH_Re40000_vfield.png
     style=width:30%
     caption=Pronghorn Velocity magnitude field for Re 40K.
 
-!media media/msfr/Nek_Re40000_pfield.png
+!media media/msr/msfr/Nek_Re40000_pfield.png
     style=width:30%
     caption=Nek5000 Pressure field for Re 40K.
 
-!media media/msfr/PH_Re40000_pfield.png
+!media media/msr/msfr/PH_Re40000_pfield.png
     style=width:30%
     caption=Pronghorn Pressure field for Re 40K.
 
@@ -43,7 +43,7 @@ of a parametric study focused on minimizing the error of the velocity field,
 specifically at the minimum core radius. The velocity magnitude at the minimum
 core radius is plotted in the following figure.
 
-!media media/msfr/Velocity_LinePlot_Re40K.png
+!media media/msr/msfr/Velocity_LinePlot_Re40K.png
     style=width:60%
     caption=Velocity magnitude at the minimum core radius.
 
@@ -70,19 +70,19 @@ An exponentially decaying viscosity ramp is used for convergence purposes.
 Velocity magnitude and pressure fields obtained in Nek5000 and Pronghorn are
 shown next.
 
-!media media/msfr/Nek_Re1M_vfield.png
+!media media/msr/msfr/Nek_Re1M_vfield.png
     style=width:30%
     caption=Nek5000 Velocity magnitude field for Re 1M.
 
-!media media/msfr/PH_Re1M_vfield.png
+!media media/msr/msfr/PH_Re1M_vfield.png
     style=width:30%
     caption=Pronghorn Velocity magnitude field for Re 1M.
 
-!media media/msfr/Nek_Re1M_pfield.png
+!media media/msr/msfr/Nek_Re1M_pfield.png
     style=width:30%
     caption=Nek5000 Pressure field for Re 1M.
 
-!media media/msfr/PH_Re1M_pfield.png
+!media media/msr/msfr/PH_Re1M_pfield.png
     style=width:30%
     caption=Pronghorn Pressure field for Re 1M.
 
@@ -94,7 +94,7 @@ core radius is plotted in the following figure.
 The behavior of the velocity fields are similar between both codes. The
 momentum diffusion at the center of the reactor is slightly higher in Pronghorn.
 
-!media media/msfr/Velocity_LinePlot_Re1M.png
+!media media/msr/msfr/Velocity_LinePlot_Re1M.png
     style=width:60%
     caption=Velocity magnitude at the minimum core radius.
 
@@ -128,7 +128,7 @@ Nek5000.
 The steady state velocity magnitude fields for the MSFR Griffin-Pronghorn model
 is depicted below.
 
-!media media/msfr/PH_Griffin_SteadyState_NS.png
+!media media/msr/msfr/PH_Griffin_SteadyState_NS.png
        style=width:30%
 
 ## Full Model Steady State
@@ -136,10 +136,10 @@ is depicted below.
 The Griffin-Pronghorn model predicts the following steady-state velocity and
 temperature fields in the MSFR:
 
-!media media/msfr/PH_Griffin_v_SS.png
+!media media/msr/msfr/PH_Griffin_v_SS.png
        style=width:30%
 
-!media media/msfr/PH_Griffin_T_SS.png
+!media media/msr/msfr/PH_Griffin_T_SS.png
        style=width:30%
 
 The maximum temperature of the simulation is around 1280 K. Note that despite  
@@ -147,7 +147,7 @@ some momentum diffusion occurring in the reactor core, the flow at the center is
 low where the power density has a maximum. This leads to high temperatures in
 the center region, which in turn drives the flow vertically through buoyancy.
 
-We can also observe a low degree of flow separation along the shield wall. The 
+We can also observe a low degree of flow separation along the shield wall. The
 salt here will be in direct contact with the core structure and may challenge
 the temperature limitations of the structural material.
 
@@ -160,7 +160,7 @@ delayed neutron precursors. The distributions of 3 (of the 6) groups are shown
 below. For this plot, the concentrations have been normalized so that the
 maximum value for each group is unity.
 
-!media media/msfr/PH_Griffin_DNP_SS.png
+!media media/msr/msfr/PH_Griffin_DNP_SS.png
        style=width:100%
 
 Group 6 has the shortest half-life (240 ms), and its behavior is dominated by
