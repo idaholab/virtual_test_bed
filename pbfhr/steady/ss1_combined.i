@@ -220,7 +220,7 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
     momentum_component = 'x'
   []
   [u_friction]
-    type = PNSFVMomentumFriction
+    type = PINSFVMomentumFriction
     variable = vel_x
     Darcy_name = 'Darcy_coefficient'
     Forchheimer_name = 'Forchheimer_coefficient'
@@ -248,14 +248,14 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
     momentum_component = 'y'
   []
   [v_friction]
-    type = PNSFVMomentumFriction
+    type = PINSFVMomentumFriction
     variable = vel_y
     Darcy_name = 'Darcy_coefficient'
     Forchheimer_name = 'Forchheimer_coefficient'
     momentum_component = 'y'
   []
   [gravity]
-    type = PNSFVMomentumGravity
+    type = PINSFVMomentumGravity
     variable = vel_y
     gravity = '0 -9.81 0'
     momentum_component = 'y'
@@ -272,7 +272,7 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
 
   # Fluid Energy equation.
   [temp_fluid_time]
-    type = PINSFVEnergyTimeDerivative
+    type = PNSFVEnergyTimeDerivative
     variable = temp_fluid
     cp_name = 'cp'
     is_solid = false
@@ -365,6 +365,19 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
   [porosity]
     type = MooseVariableFVReal
     block = ${blocks_fluid}
+  []
+  [interstitial_velocity_norm]
+    type = MooseVariableFVReal
+    block = ${blocks_fluid}
+  []
+[]
+
+[AuxKernels]
+  [compute_speed]
+    type = ParsedAux
+    variable = interstitial_velocity_norm
+    args = 'vel_x vel_y porosity'
+    function = 'sqrt(vel_x * vel_x + vel_y * vel_y) / porosity'
   []
 []
 
@@ -549,10 +562,21 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
     prop_values = '${alpha_b}'
     block = ${blocks_fluid}
   []
-  [fluidprops]
-    type = PronghornFluidProps
+  [fluidprops_old]
+    type = GeneralFluidProps
     block = ${blocks_fluid}
-    mu_multiplier = mu_func
+    mu_rampdown = mu_func
+    T_fluid = 'temp_fluid'
+    speed = 'interstitial_velocity_norm'
+    characteristic_length = ${pebble_diameter}
+  []
+  [fluidprops]
+    type = GeneralFunctorFluidProps
+    block = ${blocks_fluid}
+    mu_rampdown = mu_func
+    T_fluid = 'temp_fluid'
+    speed = 'interstitial_velocity_norm'
+    characteristic_length = ${pebble_diameter}
   []
 
   # closures in the pebble bed
@@ -729,31 +753,31 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
 # ==============================================================================
 # MULTIAPPS FOR PEBBLE MODEL
 # ==============================================================================
-[MultiApps]
-  [coarse_mesh]
-    type = TransientMultiApp
-    execute_on = 'TIMESTEP_END'
-    input_files = 'ss3_coarse_pebble_mesh.i'
-    cli_args = 'Outputs/console=false'
-  []
-[]
-
-[Transfers]
-  [fuel_matrix_heat_source]
-    type = MultiAppProjectionTransfer
-    direction = to_multiapp
-    multi_app = coarse_mesh
-    source_variable = power_distribution
-    variable = power_distribution
-  []
-  [pebble_surface_temp]
-    type = MultiAppProjectionTransfer
-    direction = to_multiapp
-    multi_app = coarse_mesh
-    source_variable = temp_solid
-    variable = temp_solid
-  []
-[]
+# [MultiApps]
+#   [coarse_mesh]
+#     type = TransientMultiApp
+#     execute_on = 'TIMESTEP_END'
+#     input_files = 'ss3_coarse_pebble_mesh.i'
+#     cli_args = 'Outputs/console=false'
+#   []
+# []
+#
+# [Transfers]
+#   [fuel_matrix_heat_source]
+#     type = MultiAppProjectionTransfer
+#     direction = to_multiapp
+#     multi_app = coarse_mesh
+#     source_variable = power_distribution
+#     variable = power_distribution
+#   []
+#   [pebble_surface_temp]
+#     type = MultiAppProjectionTransfer
+#     direction = to_multiapp
+#     multi_app = coarse_mesh
+#     source_variable = temp_solid
+#     variable = temp_solid
+#   []
+# []
 
 # ==============================================================================
 # POSTPROCESSORS DEBUG AND OUTPUTS
