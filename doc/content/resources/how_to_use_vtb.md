@@ -2,6 +2,7 @@
 
 In this short tutorial, we will feature how the Virtual Test Bed should be used for the Molten Salt Reactor
 multiphysics core simulation using Griffin and Pronghorn, starting from the very beginning: a fresh install.
+Instructions for updating the Virtual Test Bed on your local machine are situated at the bottom of this page.
 
 ## Step 1: Clone the repository
 
@@ -27,7 +28,7 @@ To install `git-lfs`, see instructions [here](https://git-lfs.github.com/) for e
 ### Cloning the repository
 
 To clone the repository, navigate to the `projects` directory first, then use `git clone`. The `git` part should be
-done very fast. Downloading the large files may take several minutes.
+done very fast. Downloading the large files will take longer depending on your internet connection.
 
 ```
     cd ~/projects  # this directory is often created when installing NEAMS tools
@@ -58,11 +59,38 @@ If interested in a particular simulation type rather than a particular reactor, 
 
 ## Step 3: Use the relevant application to run the input file
 
-- installing the application
+Once you have located the inputs, the first step is to select the right application to run it.
+This information may be found in multiple locations, including the documentation and the header of the input
+file.
 
-- running
+### From the command line
 
-- peacock
+To run an input file from the command line, it must be provided to the executable, for code `<code_name>`, like this:
+```
+  ~/projects/<code_name>/<code_name>-opt -i <input_file>
+```
+For the MSFR simulation, multiple applications, Griffin and Pronghorn, need to be used. They are
+gathered in combined applications such as `blue_crab`.
+
+```
+  cd ~/projects/virtual_test_bed/msr/msfr/steady
+  ~/projects/blue_crab/blue_crab-opt -i run_neutronics.i # for coupled multiphysics model
+  ~/projects/blue_crab/blue_crab-opt -i run_ns.i         # to run only the fluid simulation
+```
+
+### Using the Peacock GUI
+
+An alternative to running NEAMS tools from the command line is to use the Peacock GUI.
+Peacock should be provided an executable and an input file. Its interface contains five tabs:
+
+- Input file tab, an integrated text editor to modify the input file
+- Execute tab, to set execution parameters and view the log during the simulation
+- ExodusViewer, to view multidimensional results during the simulation, such as variable values
+- PostprocessorViewer, to view the time evolution of Postprocessors during the simulation
+- VectorPostprocessorViewer, to view the time evolution of vectors of Postprocessors during the simulation
+
+
+More information may be about about Peacock on [this page](https://mooseframework.inl.gov/moose/application_usage/peacock.html).
 
 ## Step 4: Adapt the model for your reactor or your simulation
 
@@ -88,5 +116,39 @@ out on the [Discussions forum](https://github.com/idaholab/virtual_test_bed/disc
 
 ### Postprocessing resources
 
+Once you have ran your simulation the results may be output in numerous ways. More details are provided in
+the [MOOSE Outputs documentation](https://mooseframework.inl.gov/syntax/Outputs/index.html). For `Exodus` output,
+there are two main options to visualize your results:
+
+- Paraview \\
+  Paraview is a free visualization software provided by Kitware \copyright. It has a flexible GUI which will
+  allow you to visualize your results through time and space and output results to videos or image files.
+
+- chigger and python VTK libraries \\
+  Chigger is an in-house python library used to make highly customizable visualization scripts. It lets you adjust
+  visualization parameters such as the angle, the pixel count, the positions of the objects and easily generate outputs
+  consistently for different variables in a simulation or between different simulations. See [this page](https://mooseframework.inl.gov/python/chigger/)
+  for more information
+
+- Peacock \\
+  Peacock is an in-house visualization application for MOOSE-based apps. It has many less options than Paraview,
+  and is generally more recommended in the modeling phase than for postprocessing. Peacock leverages Chigger.
+
 
 # Updating the Virtual Test Bed
+
+The Virtual Test Bed is very regularly updated. This is because NEAMS tools are always evolving and inputs are rapidly deprecated if
+they are not kept up to date with the latest syntax. To update your local copy of the repository, run the following commands
+
+```
+  git pull origin main
+```
+
+This will update the `main` branch. If you are working on modifying inputs in a local branch, you may
+use this instead to rebase your branch. This will move your work on top of the latest state of the virtual test
+bed. If your work and the VTB updated conflict, this will warn you and let you address the conflicts.
+
+```
+  git fetch origin
+  git rebase origin/main
+```
