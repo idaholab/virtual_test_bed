@@ -11,6 +11,23 @@ The VTB repo hosts a wide variety of example challenge problems based on advance
 
 Users will need to request access to the controlled NEAMS software from the [Nuclear Computational Resource Center](https://inl.gov/ncrc/). For additional information on the VTB, please reach out to Dr. Abou-Jaoude at abdalla.aboujaoude.at.inl.gov.
 
+<details>
+<summary>Information about the Virtual Test Bed</summary>
+
+[How to use the Virtual Test Bed?](resources/how_to_use_vtb.md)
+
+[Multiphysics reactor modeling using the MultiApps system](resources/multiapps.md)
+
+[Frequently Asked Questions and Discussion Forum](https://github.com/idaholab/virtual_test_bed/discussions)
+
+[Contribution guidelines to add a new model](contributing.md)
+
+</details>
+
+<details>
+<summary>Reactor Models</summary>
+
+[Models sorted by type of simulation](resources/simulation_type.md)
 
 [Molten Salt Fast Reactor (MSFR)](msfr/index.md)
 
@@ -24,7 +41,7 @@ Users will need to request access to the controlled NEAMS software from the [Nuc
 
 [Heat-Pipe Micro Reactor (MR)](mrad/index.md)
 
-For contributing a new model, please review the [contribution guidelines](contributing.md).
+</details>
 
 !alert note
 [Current link to the internal repository](https://gitlab.software.inl.gov/idaholab/virtual_test_bed)\\
