@@ -21,9 +21,8 @@ Users will need to request access to the controlled NEAMS software from the [Nuc
 ## Reactor Models
 
 - [Models sorted by type of simulation](resources/simulation_type.md) \\
-- [Molten Salt Fast Reactor (MSFR)](msfr/index.md) \\
-- [Molten Salt Reactor Experiment (MSRE)](msre/msre_sam_model.md) \\
-- [Modular High Temperature Gas-Cooled Reactor (MHTGR)](mhtgr/index.md) \\
+- [Molten Salt Reactor (MSR)](msr/index.md) \\
+- [High Temperature Gas-Cooled Reactor (HTGR)](htgr/index.md) \\
 - [Pebble Bed Fluoride-Salt-Cooled High-Temperature Reactor (PB-FHR)](pbfhr/index.md) \\
 - [Sodium Fast Reactor (SFR)](sfr/sfr.md) \\
 - [Heat-Pipe Micro Reactor (MR)](mrad/index.md)
