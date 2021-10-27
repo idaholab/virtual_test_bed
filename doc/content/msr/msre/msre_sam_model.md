@@ -137,7 +137,7 @@ The fuel salt enters the MSRE core at an average temeprature of 908K, and throug
 The primary pump is located at the top-right corner, driving the fuel salt in the system.
 The U-tube primiary heat exchanger cools down the fuel salt, which returns to the core through the connecting pipes, downcomer and the core inlet plenum. The overall layout shown in [msre_sam] follows that of the original MSRE designs.
 
-!media msre/SAM_MSRE_1D.png
+!media msr/msre/SAM_MSRE_1D.png
        style=width:60%
        id=msre_sam
        caption=The steady-state temperature distribution in the 1-D MSRE primary loop.
