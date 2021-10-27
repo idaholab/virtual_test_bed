@@ -5,7 +5,7 @@ If you make use of the Virtual Test Bed, please reference this paper as well as 
 ```
 @inproceedings{vtb2021,
                title = {The Virtual Test Bed Repository : A Library of Multiphysics Reference Reactor Models using NEAMS Tools},
-               author = {A. Abou-Jaoude, D. Gaston, G. Giudicelli, B. Feng and C. Permann},
+               author = {A. Abou-Jaoude and D. Gaston and G. Giudicelli and B. Feng and C. Permann},
                year = {2021},
                booktitle = {Transactions of the American Nuclear Society},
                booksubtitle = {Winter Meeting}
@@ -45,12 +45,13 @@ the following:
                booksubtitle = {Winter Meeting}
               }
 ```
+
 - Molten Salt Reactor Experiment (SAM model)
 
 ```
 @techreport{Hu2021,
             title = {FY21 SAM Developments for MSR Modeling.},
-            author = {Hu, R., Hu, G., Gorman, M., Fang, J., Mui, T., O’Grady, D., Fei, T. and Salko R.},
+            author = {Hu R. and Hu G. and Gorman M. and Fang J. and Mui T. and O’Grady D. and Fei T. and Salko R.},
             institution = {Argonne National Laboratory},
             number = {ANL/NSE-21/74},
             year = 2021
@@ -63,7 +64,7 @@ the following:
 
 ```
 @article{giudicelli2021,
-         title = {Coupled Multiphysics Multiscale Transient Simulationsof The Mk1-Fhr Reactor Using Finite Volume Capabilitiesof The Moose Framework},
+         title = {Coupled Multiphysics Multiscale Transient Simulations of The Mk1-Fhr Reactor Using Finite Volume Capabilities of The Moose Framework},
          author = {Guillaume Giudicelli and Alexander Lindsay and Paolo Balestra and Robert Carlsen and Javier Ortensi and Derek Gaston and Mark DeHart and Abdalla Abou-Jaoude and April J Novak},
          year = {2021},
          journal = {Proceedings of the International Conference of Mathematics and Computation for Nuclear Science and Engineering}
@@ -75,7 +76,7 @@ the following:
 ```
 @inproceedings{novak2021,
                title = {Conjugate Heat Transfer Coupling of NekRS and MOOSE for Bypass Flow Modeling},
-               author = {April J. Novak, Dillon Shaver, and Bo Feng},
+               author = {April J. Novak and Dillon Shaver and Bo Feng},
                year = {2021},
                booktitle = {Transactions of the American Nuclear Society},
                booksubtitle = {ANS Winter Meeting}
@@ -87,7 +88,7 @@ the following:
 ```
 @inproceedings{Ahmed2017,
                address = {Xi'an, China},
-               author = {Ahmed, K K and Scarlat, R O and Hu, R},
+               author = {Ahmed K K and Scarlat R O and Hu R},
                booktitle = {17th International Topical Meeting on Nuclear Reactor Thermal Hydraulics
         	        (NURETH-17)},
                language = {English},
@@ -107,7 +108,7 @@ the following:
 ```
 @techreport{vtbExtReport2021,
             title = {Overview of Advanced Reactor Simulation Capabilities to Support Demonstrations},
-            author = {Abdalla Abou-Jaoude, Guillaume Giudicelli, Derek Gaston, Paolo Balestra, Nicolas Martin, Cody Permann, Bo Feng, Jun Fang, April Novak, Nicolas Stauff, Thanh Hua, Dillon Shaver, and Ling Zou},
+            author = {Abdalla Abou-Jaoude and Guillaume Giudicelli and Derek Gaston and Paolo Balestra and Nicolas Martin and Cody Permann and Bo Feng and Jun Fang and April Novak and Nicolas Stauff and Thanh Hua and Dillon Shaver and and Ling Zou},
             number = {INL/EXT-21-63162-Rev000},
             doi = {10.2172/1804658},
             institution = {Idaho National Laboratory and Argonne National Laboratory},
@@ -121,7 +122,7 @@ the following:
 
 ```
 @techreport{Vegendla2019,
-            author = {Vegendla, Prasad and Hu, Rui and Zou, Ling},
+            author = {Vegendla Prasad and Hu Rui and Zou Ling},
             number = {ANL-19/35},
             mendeley-tags = {ANL-19/35},
             institution = {Argonne National Laboratory},
@@ -173,7 +174,7 @@ Griffin
 @techreport{Griffin2020,
             title = "Griffin User Manual",
             institution = "Idaho National Laboratory",
-            author = {Mark DeHart, Fredrick N. Gleicher, Vincent Laboure, Javier Ortensi, Zachary Prince, Sebastian Schunert, Yaqi Wang},
+            author = {Mark DeHart and Fredrick N. Gleicher and Vincent Laboure and Javier Ortensi and Zachary Prince and Sebastian Schunert and Yaqi Wang},
             number = {INL/EXT-19-54247},
             year = 2020
            }
@@ -183,8 +184,8 @@ Nek5000
 
 ```
 @Misc{nek5000-web-page,
-      Author = "Paul F. Fischer, James W. Lottes and Stefan G. Kerkemeier",
-      Title  = "{nek5000} Open source spectral element {CFD} solver}",
+      Author = "Paul F. Fischer and James W. Lottes and Stefan G. Kerkemeier",
+      Title  = "{nek5000 Open source spectral element {CFD} solver}",
       Note   = "http://nek5000.mcs.anl.gov",
       Year   = "2008"
      }
@@ -208,7 +209,7 @@ Pronghorn
 ```
 @article{pronghorn2020NT,
          title = {{Pronghorn}: A Multidimensional Coarse-Mesh Application for Advanced Reactor Thermal Hydraulics},
-         author = {A.J. Novak and R.W. Carlsen and S. Schunert and P. Balestra and D. Reger and R.N. Slaybaugh and R.C. Martineau}
+         author = {A.J. Novak and R.W. Carlsen and S. Schunert and P. Balestra and D. Reger and R.N. Slaybaugh and R.C. Martineau},
          year = {2021},
          journal = {{Nuclear Technology}},
          doi = {https://doi.org/10.1080/00295450.2020.1825307},
@@ -223,7 +224,7 @@ SAM
 @techreport{SAM2017,
             title = "SAM Theory Manual",
             institution = {Argonne National Laboratory},
-            author = R. Hu,
+            author = {R. Hu},
             number = {ANL/NE-17/4},
             year = 2017
            }
