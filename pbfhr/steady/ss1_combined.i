@@ -265,16 +265,16 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
     variable = vel_y
     gravity = '0 -9.81 0'
     ref_temperature = ${inlet_T_fluid}
-    temperature = 'temp_fluid'
+    T_fluid = 'temp_fluid'
     momentum_component = 'y'
     alpha_name = 'alpha_b'
   []
 
   # Fluid Energy equation.
   [temp_fluid_time]
-    type = PNSFVEnergyTimeDerivative
+    type = PINSFVEnergyTimeDerivative
     variable = temp_fluid
-    cp_name = 'cp'
+    cp = 'cp'
     is_solid = false
   []
   [temp_fluid_advection]
@@ -284,15 +284,16 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
     advected_quantity = 'rho_cp_temp'
   []
   [temp_fluid_conduction]
-    type = PINSFVEnergyEffectiveDiffusion
+    type = PINSFVEnergyAnisotropicDiffusion
     variable = temp_fluid
+    effective_diffusion = false
     kappa = 'kappa'
   []
   [temp_solid_to_fluid]
     type = PINSFVEnergyAmbientConvection
     variable = temp_fluid
-    temp_fluid = temp_fluid
-    temp_solid = temp_solid
+    T_fluid = temp_fluid
+    T_solid = temp_solid
     is_solid = false
     h_solid_fluid = 'alpha'
   []
@@ -301,7 +302,7 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
   [temp_solid_time_core]
     type = PINSFVEnergyTimeDerivative
     variable = temp_solid
-    cp_name = 'cp_s'
+    cp = 'cp_s'
     rho = ${solid_rho} # FIXME
     is_solid = true
     block = ${blocks_fluid}
@@ -333,8 +334,8 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
   [temp_fluid_to_solid]
     type = PINSFVEnergyAmbientConvection
     variable = temp_solid
-    temp_fluid = 'temp_fluid'
-    temp_solid = 'temp_solid'
+    T_fluid = 'temp_fluid'
+    T_solid = 'temp_solid'
     is_solid = true
     h_solid_fluid = 'alpha'
     block = ${blocks_fluid}
@@ -545,30 +546,11 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
   []
 
   # FLUID
-  [ins_fv]
-    type = INSFVPrimitiveSuperficialVarMaterial
-    superficial_vel_x = 'vel_x'
-    superficial_vel_y = 'vel_y'
-    pressure = pressure
-    T_fluid = 'temp_fluid'
-    T_solid = 'temp_solid'
-    block = ${blocks_fluid}
-    p_constant = 1e5
-    T_constant = 900
-  []
   [alpha_boussinesq]
     type = ADGenericConstantMaterial
     prop_names = 'alpha_b'
     prop_values = '${alpha_b}'
     block = ${blocks_fluid}
-  []
-  [fluidprops_old]
-    type = GeneralFluidProps
-    block = ${blocks_fluid}
-    mu_rampdown = mu_func
-    T_fluid = 'temp_fluid'
-    speed = 'interstitial_velocity_norm'
-    characteristic_length = ${pebble_diameter}
   []
   [fluidprops]
     type = GeneralFunctorFluidProps
@@ -585,7 +567,7 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
     block = ${blocks_pebbles}
   []
   [drag]
-    type = KTATypeDragCoefficients
+    type = FunctorKTADragCoefficients
     block = ${blocks_pebbles}
     bed_height = 5
   []
