@@ -6,7 +6,8 @@ Instructions for updating the Virtual Test Bed on your local machine are situate
 
 ## Step 1: Clone the repository
 
-### Using git to download the repository
+### Using git to download the repository style=font-size:125%
+
 
 Cloning the repository using `git` will make a local copy of the repository on your machine. It will download
 most files and place them in the same file/folder structure as can be found on the online interface. Only the
@@ -16,7 +17,8 @@ then a `git clone` will download both the regular and large files.
 !alert note
 To install `git`, see instructions [here](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) for example
 
-### git Large File System : meshes and sample outputs
+### git Large File System : meshes and sample outputs style=font-size:125%
+
 
 For several models, the mesh files are too large to be hosted on github directly. We leverage `git-lfs` to
 store them. This application is not natively installed on most machines, so you will have to install it yourself.
@@ -25,7 +27,8 @@ If you are not interested by these models, feel free to skip this step.
 !alert note
 To install `git-lfs`, see instructions [here](https://git-lfs.github.com/) for example
 
-### Cloning the repository
+### Cloning the repository style=font-size:125%
+
 
 To clone the repository, navigate to the `projects` directory first, then use `git clone`. The `git` part should be
 done very fast. Downloading the large files will take longer depending on your internet connection.
@@ -42,20 +45,22 @@ with the latest changes of the Virtual Test Bed. Using zip files will also not d
 
 ## Step 2: Navigate to the model of interest
 
-The local directory structure mirrors the one on the [online repository](https://github.com/idaholab/virtual_test_bed).
-The input files are sorted by reactor types. If we are interested in the Molten Salt Fast Reactor inputs, we go to their
-folder with
+The local directory structure mirrors the [online repository](https://github.com/idaholab/virtual_test_bed).
+The input files are sorted by reactor class then model then by simulation type. If we are interested in the Molten Salt
+Fast Reactor inputs, we go to the msr folder, then the msfr folder.
 
 ```
   cd ~/projects/virtual_test_bed/msr/msfr
 ```
 
 Simultaneously, we navigate on the documentation website to the [page for the MSFR](https://mooseframework.inl.gov/virtual_test_bed/msfr/index.html)
-to have information about the model and the input file.
+to have information about the model and the different simulations available. We are interested in the steady state
+core analysis, so we navigate to the `steady` folder next.
 
 !alert note
 If interested in a particular simulation type rather than a particular reactor, please see this
-[index of simulations](resources/simulation_type.md).
+[index of simulations](resources/simulation_type.md), which sorts the inputs by simulation type rather
+than by reactor.
 
 ## Step 3: Use the relevant application to run the input file
 
@@ -63,7 +68,8 @@ Once you have located the inputs, the first step is to select the right applicat
 This information may be found in multiple locations, including the documentation and the header of the input
 file.
 
-### From the command line
+### From the command line style=font-size:125%
+
 
 To run an input file from the command line, it must be provided to the executable, for code `<code_name>`, like this:
 ```
@@ -78,7 +84,8 @@ gathered in combined applications such as `blue_crab`.
   ~/projects/blue_crab/blue_crab-opt -i run_ns.i         # to run only the fluid simulation
 ```
 
-### Using the Peacock GUI
+### Using the Peacock GUI style=font-size:125%
+
 
 An alternative to running NEAMS tools from the command line is to use the Peacock GUI.
 Peacock should be provided an executable and an input file. Its interface contains five tabs:
@@ -94,7 +101,8 @@ More information may be about about Peacock on [this page](https://mooseframewor
 
 ## Step 4: Adapt the model for your reactor or your simulation
 
-### Changing the mesh file
+### Changing the mesh file style=font-size:125%
+
 
 If you are modeling a similar reactor type and are trying to model the same physics in the same
 conditions, then only very limited changes to the input file may be required. The mesh file may be
@@ -108,13 +116,15 @@ The names of those spatial regions are most likely different between the origina
 provided. In most input files, `Variables`, `AuxVariables` and `Materials` are only defined on some blocks,
 and `BCs` (boundary conditions) are only defined on certain boundaries.
 
-### Changing the simulation
+### Changing the simulation style=font-size:125%
+
 
 Modifying the simulation may require more effort and is highly dependent on the application you are using.
 We will refer you to the documentation for this application for more information. Please feel free to reach
 out on the [Discussions forum](https://github.com/idaholab/virtual_test_bed/discussions) for help.
 
-### Postprocessing resources
+### Postprocessing resources style=font-size:125%
+
 
 Once you have ran your simulation the results may be output in numerous ways. More details are provided in
 the [MOOSE Outputs documentation](https://mooseframework.inl.gov/syntax/Outputs/index.html). For `Exodus` output,

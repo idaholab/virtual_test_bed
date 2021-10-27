@@ -17,7 +17,7 @@ If you make use of the Virtual Test Bed, please reference this paper as well as 
 If you make use of models in the repository to build models for a published study, please reference
 the following:
 
-### Molten Salt Reactor
+### Molten Salt Reactor style=font-size:125%
 
 - Molten Salt Fast Reactor (Pronghorn-Griffin core model)
 
@@ -57,7 +57,7 @@ the following:
            }
 ```
 
-### Pebble bed fluoride-salt cooled high temperature reactor
+### Pebble bed fluoride-salt cooled high temperature reactor style=font-size:125%
 
 - Core multiphysics analysis (Pronghorn-Griffin core model)
 
@@ -100,7 +100,7 @@ the following:
 ```
 
 
-### Sodium Fast Reactor
+### Sodium Fast Reactor style=font-size:125%
 
 - Sodium Fast Reactor assembly model. No specific paper, please use:
 
@@ -115,7 +115,7 @@ the following:
            }
 ```
 
-### High Temperature Gas Cooled Reactor
+### High Temperature Gas Cooled Reactor style=font-size:125%
 
 - Modular High Temperature Gas Reactor
 
@@ -131,7 +131,7 @@ the following:
            }
 ```
 
-### Micro Reactor
+### Micro Reactor style=font-size:125%
 
 - Heat Pipe Micro Reactor
 
