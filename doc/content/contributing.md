@@ -46,3 +46,9 @@ team ahead of time so we can design the appropriate process.
 If the model or the documentation you wish to contribute needs to be cleared for export control
 by your home institution, please either make the pull request to the internal gitlab repository,
 or wait for clearance before making a pull request to the public GitHub repository.
+
+## Contributing fixes or improvements
+
+Bug fixes and improvements of existing models are welcome. Those should be made using the pull request system.
+Please first report the bug or potential for improvement as an issue in order to engage the discussion
+with the relevant developers and analysts.

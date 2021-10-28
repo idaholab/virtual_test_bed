@@ -11,20 +11,21 @@ The VTB repo hosts a wide variety of example challenge problems based on advance
 
 Users will need to request access to the controlled NEAMS software from the [Nuclear Computational Resource Center](https://inl.gov/ncrc/). For additional information on the VTB, please reach out to Dr. Abou-Jaoude at abdalla.aboujaoude.at.inl.gov.
 
+## Information about the Virtual Test Bed
 
-[Molten Salt Fast Reactor (MSFR)](msfr/index.md)
+- [How to use the Virtual Test Bed?](resources/how_to_use_vtb.md) \\
+- [Multiphysics reactor modeling using the MultiApps system](resources/multiapps.md) \\
+- [Frequently Asked Questions and Discussion Forum](https://github.com/idaholab/virtual_test_bed/discussions) \\
+- [Contribution guidelines to add a new model](contributing.md)
 
-[Molten Salt Reactor Experiment (MSRE)](msre/msre_sam_model.md)
+## Reactor Models
 
-[Modular High Temperature Gas-Cooled Reactor (MHTGR)](mhtgr/index.md)
-
-[Pebble Bed Fluoride-Salt-Cooled High-Temperature Reactor (PB-FHR)](pbfhr/index.md)
-
-[Sodium Fast Reactor (SFR)](sfr/sfr.md)
-
-[Heat-Pipe Micro Reactor (MR)](mrad/index.md)
-
-For contributing a new model, please review the [contribution guidelines](contributing.md).
+- [Models sorted by type of simulation](resources/simulation_type.md) \\
+- [Molten Salt Reactor (MSR)](msr/index.md) \\
+- [High Temperature Gas-Cooled Reactor (HTGR)](htgr/index.md) \\
+- [Pebble Bed Fluoride-Salt-Cooled High-Temperature Reactor (PB-FHR)](pbfhr/index.md) \\
+- [Sodium Fast Reactor (SFR)](sfr/sfr.md) \\
+- [Heat-Pipe Micro Reactor (MR)](mrad/index.md)
 
 !alert note
 [Current link to the internal repository](https://gitlab.software.inl.gov/idaholab/virtual_test_bed)\\
