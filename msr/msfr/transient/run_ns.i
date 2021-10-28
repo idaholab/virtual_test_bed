@@ -52,11 +52,11 @@ beta6 = 0.000184087
     use_for_exodus_restart = true
   []
   # Already deleted in sample_output
-  # [inactive]
-  #   type = BlockDeletionGenerator
-  #   input = fmg
-  #   block = 'shield reflector'
-  # []
+  [inactive]
+    type = BlockDeletionGenerator
+    input = fmg
+    block = 'shield reflector'
+  []
 []
 
 [Outputs]
@@ -252,7 +252,7 @@ beta6 = 0.000184087
   [v_buoyancy]
     type = INSFVMomentumBoussinesq
     variable = v_y
-    temperature = T
+    T_fluid = T
     gravity = '0 -9.81 0'
     rho = ${rho}
     ref_temperature = 700
