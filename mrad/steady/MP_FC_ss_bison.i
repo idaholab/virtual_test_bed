@@ -286,7 +286,7 @@
     execute_on = 'initial timestep_end'
   []
   [hp_heat_integral]
-    type = SideFluxIntegral
+    type = SideDiffusiveFluxIntegral
     variable = temp
     boundary = 'heat_pipe_boundary_up_side heat_pipe_boundary_core_side'
     diffusivity = thermal_conductivity

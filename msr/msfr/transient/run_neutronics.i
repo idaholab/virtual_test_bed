@@ -35,6 +35,7 @@
     external_dnp_variable = 'dnp'
     family = LAGRANGE
     order = FIRST
+    fission_source_aux = true
   []
 []
 
@@ -42,6 +43,10 @@
   [tfuel]
     order = CONSTANT
     family = MONOMIAL
+    initial_condition = 600
+    # TODO: This remains constant in the reflector because the trasnfer does not overwrite it
+    # Either: - model heat conduction in the reflector
+    #         - compute the average temperature and set that to be the tfuel in the reflector
   []
   [c1]
     order = CONSTANT

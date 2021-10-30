@@ -46,8 +46,6 @@ beta5 = 0.000549185
 beta6 = 0.000184087
 
 [GlobalParams]
-  two_term_boundary_expansion = true
-
   u = v_x
   v = v_y
   pressure = pressure
@@ -251,6 +249,7 @@ beta6 = 0.000184087
     ref_temperature = 1000
     momentum_component = 'y'
     block = 'fuel'
+    alpha_name = 'alpha_b'
   []
 
   [pump]
@@ -261,13 +260,13 @@ beta6 = 0.000184087
   []
 
   [friction_hx_x]
-    type = NSFVMomentumFriction
+    type = INSFVMomentumFriction
     variable = v_x
     quadratic_coef_name = 'friction_coef'
     block = 'hx'
   []
   [friction_hx_y]
-    type = NSFVMomentumFriction
+    type = INSFVMomentumFriction
     variable = v_y
     quadratic_coef_name = 'friction_coef'
     block = 'hx'
@@ -319,7 +318,7 @@ beta6 = 0.000184087
     variable = T
     # Compute the coefficient as 600 m^2 / m^3 surface area density times a heat
     # transfer coefficient of 20 kW / m^2 / K
-    alpha = ${fparse 600 * 20e3 / rho / cp}
+    alpha = 'alpha'
     block = 'hx'
     T_ambient = 873.15
   []
@@ -482,12 +481,14 @@ beta6 = 0.000184087
     variable = wall_shear_stress
     walls = 'shield_wall reflector_wall'
     block = 'fuel'
+    mu = 'mu_mat'
   []
   [wall_yplus]
     type = WallFunctionYPlusAux
     variable = wall_yplus
     walls = 'shield_wall reflector_wall'
     block = 'fuel'
+    mu = 'mu_mat'
   []
   [turbulent_viscosity]
     type = INSFVMixingLengthTurbulentViscosityAux
@@ -544,10 +545,17 @@ beta6 = 0.000184087
 []
 
 [Materials]
-  [mu]
+  [mu_mat]  # Yplus kernel not migrated to functor materials
     type = ADGenericFunctionMaterial      #defines mu artificially for numerical convergence
+    prop_names = 'mu_mat  alpha alpha_b'                     #it converges to the real mu eventually.
+    prop_values = 'rampdown_mu_func ${fparse 600 * 20e3 / rho / cp} ${alpha}'
+    block = 'fuel pump hx'
+  []
+  [mu]
+    type = ADGenericFunctionFunctorMaterial      #defines mu artificially for numerical convergence
     prop_names = 'mu'                     #it converges to the real mu eventually.
     prop_values = 'rampdown_mu_func'
+    block = 'fuel pump hx'
   []
   [total_viscosity]
     type = MixingLengthTurbulentViscosityMaterial
@@ -555,28 +563,27 @@ beta6 = 0.000184087
     mu = 'mu'
     block = 'fuel pump hx'
   []
-  [alpha]
-    type = ADGenericConstantMaterial
-    prop_names = 'alpha k cp  cp_unitary'  #cp_unitary defined for time kernel, to set rho_cp = 1
-    prop_values = '${alpha} ${k} ${cp} 1'
-    block = 'fuel pump hx'
-  []
   [ins_fv]
     type = INSFVMaterial
-    temperature = 'T'
     block = 'fuel pump hx'
   []
   [not_used]
-    type = ADGenericConstantMaterial
+    type = ADGenericConstantFunctorMaterial
     prop_names = 'not_used'
     prop_values = 0
     block = 'shield reflector'
   []
   [friction]
-    type = ADGenericConstantMaterial
+    type = ADGenericConstantFunctorMaterial
     prop_names = 'friction_coef'
-    prop_values = ${friction}
+    prop_values = '${friction} '
     block = 'hx'
+  []
+  [cp]
+    type = ADGenericConstantFunctorMaterial
+    prop_names = 'cp_unitary'
+    prop_values = '1'
+    block = 'fuel pump hx'
   []
 []
 
