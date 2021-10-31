@@ -563,7 +563,7 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
 
   # closures in the pebble bed
   [alpha]
-    type = WakaoPebbleBedHTC
+    type = FunctorWakaoPebbleBedHTC
     block = ${blocks_pebbles}
   []
   [drag]
@@ -572,7 +572,7 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
     bed_height = 5
   []
   [kappa]
-    type = LinearPecletKappaFluid
+    type = FunctorLinearPecletKappaFluid
     block = ${blocks_pebbles}
   []
   [kappa_s]
@@ -607,11 +607,11 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
     block = '5 6'
   []
   [kappa_OR_plenum]
-    type = KappaFluid
+    type = FunctorKappaFluid
     block = '5 6'
   []
   [kappa_s_OR_plenum]
-    type = VolumeAverageKappaSolid
+    type = FunctorVolumeAverageKappaSolid
     block = '5 6'
   []
 []
