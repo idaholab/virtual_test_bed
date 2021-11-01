@@ -1,0 +1,21 @@
+[submodule "apps/bison"]
+	path = apps/bison
+	url = git@hpcgitlab.hpc.inl.gov:idaholab/bison
+[submodule "apps/griffin"]
+	path = apps/griffin
+	url = git@gitlab.software.inl.gov:idaholab/griffin
+[submodule "apps/pronghorn"]
+	path = apps/pronghorn
+	url = git@hpcgitlab.hpc.inl.gov:idaholab/pronghorn
+[submodule "apps/SAM"]
+	path = apps/SAM
+	url = git@hpcgitlab.hpc.inl.gov:idaholab/SAM
+[submodule "apps/sockeye"]
+	path = apps/sockeye
+	url = git@hpcgitlab.hpc.inl.gov:idaholab/sockeye
+[submodule "apps/dire_wolf"]
+	path = apps/dire_wolf
+	url = git@hpcgitlab.hpc.inl.gov:idaholab/dire_wolf
+[submodule "apps/blue_crab"]
+	path = apps/blue_crab
+	url = git@hpcgitlab.hpc.inl.gov:idaholab/blue_crab
