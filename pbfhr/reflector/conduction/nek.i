@@ -14,6 +14,7 @@ fluid_solid_interface = '1 2 7'
 
 [Problem]
   type = NekRSProblem
+  casename = 'fluid'
 
   nondimensional = true
   U_ref = 0.0575
@@ -28,9 +29,9 @@ fluid_solid_interface = '1 2 7'
   type = Transient
   timestep_tolerance = 1e-9
 
-  [./TimeStepper]
+  [TimeStepper]
     type = NekTimeStepper
-  [../]
+  []
 []
 
 [Outputs]

@@ -100,27 +100,6 @@ core_heat_flux = 5e3
   []
 []
 
-[ThermalContact]
-  [one_to_two]
-    type = GapHeatTransfer
-    variable = T
-    primary = one_to_two
-    secondary = two_to_one
-    quadrature = true
-    emissivity_primary = 0.8
-    emissivity_secondary = 0.8
-  []
-  [two_to_three]
-    type = GapHeatTransfer
-    variable = T
-    primary = two_to_three
-    secondary = three_to_two
-    quadrature = true
-    emissivity_primary = 0.8
-    emissivity_secondary = 0.8
-  []
-[]
-
 [Materials]
   [k_graphite]
     type = GenericConstantMaterial
