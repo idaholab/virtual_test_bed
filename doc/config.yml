@@ -16,7 +16,6 @@ Extensions:
     MooseDocs.extensions.navigation:
         name: vtb
         repo: https://github.com/idaholab/virtual_test_bed
-        home: https://mooseframework.inl.gov/virtual_test_bed
         menu:
             Contributing: contributing.md
             Citing: citing.md
