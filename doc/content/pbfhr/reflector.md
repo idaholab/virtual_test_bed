@@ -362,21 +362,6 @@ q^{''}=h\left(T_s-T_\infty\right)
 where $q^{''}$ is the heat flux, $h$ is the convective heat transfer coefficient, and $T_\infty$
 is the far-field ambient temperature.
 
-Between the reflector blocks, the MOOSE heat conduction module is used to apply quadrature-based
-radiation heat transfer across a transparent fluid.
-For a paired set of boundaries, each quadrature point on boundary A is
-paired with the nearest quadrature point on boundary B. Then, a radiation heat flux is imposed
-between pairs of quadrature points as
-
-\begin{equation}
-\label{eq:hfr}
-q^{''}=\sigma\frac{\left(T^4-T_{gap}^4\right)}{\frac{1}{\varepsilon_A}+\frac{1}{\varepsilon_B}-1}
-\end{equation}
-
-where $\sigma$ is the Stefan-Boltzmann constant, $T$ is the temperature
-at a quadrature point, $T_{gap}$ is the temperature of the nearest quadrature point across the
-gap, and $\varepsilon_A$ and $\varepsilon_B$ are the emissivities of boundary A and B, respectively.
-
 At fluid-solid interfaces, the solid temperature is imposed as a Dirichlet condition,
 where nekRS computes the surface temperature.
 Finally, the top and bottom of the block, as well as all symmetry boundaries, are treated
@@ -429,7 +414,7 @@ with your preferred meshing tool.
 The `solid.jou` file is a Cubit script that is used to generate the solid mesh,
 shown below:
 
-!listing /pbfhr/reflector/meshes/solid.jou
+!listing /pbfhr/reflector/meshes/solid.jou language=python
 
 At the top of this file, is a `#!python` shebang that allows Python to be used
 to programmatically create the mesh. Any valid Python code (including imported
@@ -451,31 +436,13 @@ different properties in each of these blocks.
   id=solid_mesh
   caption=Solid mesh for the reflector blocks and barrel and a subset of the boundary names, before a series of mesh refinements
 
-
 Unique boundary names are set for each boundary to which we will apply a unique
 boundary condition; we define the boundaries on the top and bottom of the block,
 the symmetry boundaries that reflect the fact that we've reduced the full [!ac](PB-FHR)
 reflector to a half-block domain, and boundaries at the interface between the
-reflector and the bed and on the barrel surface.
-
-To facilitate radiation heat transfer between the thin block gaps,
-additional boundaries must be defined on the faces on either side of the gaps.
-Two boundaries are defined per gap - one on either side of the gap. These are
-shown below, where the naming convention `three_to_two` indicates a boundary
-on block 3, across a gap from block 2.
-
-!media pbfhr/reflector/solid_mesh_radiation.png
-  id=solid_radiation
-  caption=Sidesets defined for enforcing radiation heat transfer boundary conditions
-  style=width:50%;margin-left:auto;margin-right:auto
-
-One convenient aspect of MOOSE is that the same elements
-can be assigned to more than one boundary ID. To help in applying heat flux and
-temperature boundary conditions between nekRS and MOOSE, we define another boundary
-that contains all of the fluid-solid interfaces through which we will exchange
-heat flux and temperature, as `fluid_solid_interface`. Some of the elements on
-the `fluid_solid_interface` boundary are also present on the boundaries between
-blocks used for the radiation boundary conditions shown in [solid_radiation].
+reflector and the bed and on the barrel surface. The boundary that contains
+all fluid-solid interfaces through which we will exchange heat flux and temperature
+is named `fluid_solid_interface`.
 
 Now that the overall structure of the mesh has been introduced, a brief
 description of the process of how the mesh was actually constructed is provided.
@@ -483,7 +450,7 @@ First, the block geometry is formed by creating cylinders and bricks and subtrac
 them from one another to get angular sectors of cylindrical annuli. Then, the
 Cubit `boundary_layer` feature is used to programmatically refine the mesh
 near surfaces; we perform this refinement because, on some of these surfaces (those
-exchanging heat with the fluid and radiation across gaps), we expect to have higher
+exchanging heat with the fluid), we expect to have higher
 thermal gradients that we would like to resolve with a finer mesh. For each boundary
 layer, we specify a starting element width perpendicular to the surface, a growth
 factor, and a number of boundary layers we would like to mesh. Finally, the mesh
@@ -494,7 +461,7 @@ is saved in Exodus II format to disk.
 
 The `fluid.jou` is a Cubit script that is used to generate the fluid mesh, shown below.
 
-!listing /pbfhr/reflector/meshes/fluid.jou
+!listing /pbfhr/reflector/meshes/fluid.jou language=python
 
 The complete fluid mesh is shown below; the boundary names are illustrated towards
 the right by showing only the highlighted surface to which each boundary corresponds.
@@ -558,9 +525,6 @@ In this section, nekRS and MOOSE are coupled for conduction heat transfer in the
 blocks and barrel, and through a stagnant fluid. The purpose of this stage of
 the analysis is to obtain a restart file for use as an initial condition in [#part2] to accelerate the nekRS
 calculation for conjugate heat transfer, since the energy equation is slowest to converge.
-Because this initial condition is only used for
-accelerating a later calculation, applying the radiation quadrature-based boundary conditions
-is deferred to [#part2].
 
 All input files for this stage of the analysis are present in the
 `pbfhr/reflector/conduction` directory. The following sub-sections describe these files.
@@ -842,7 +806,7 @@ will be run on a [!ac](GPU) (if present). Because this case does not have any us
 source terms in nekRS, these [!ac](OCCA) kernels are only used to apply boundary conditions.
 The `fluid.oudf` file is shown below.
 
-!listing /pbfhr/reflector/conduction/fluid.oudf
+!listing /pbfhr/reflector/conduction/fluid.oudf language=cpp
 
 The names of these functions correspond to the boundary conditions that were applied
 in the `.par` file - only the user-defined temperature and flux boundaries require user
@@ -858,7 +822,7 @@ which interaction with the nekRS solution are performed. Here, the `UDF_Setup` f
 is called once at the very start of the nekRS simulation, and it is here that initial
 conditions are applied. The `fluid.udf` file is shown below.
 
-!listing /pbfhr/reflector/conduction/fluid.udf
+!listing /pbfhr/reflector/conduction/fluid.udf language=cpp
 
 The initial condition is applied manually by looping over all
 the [!ac](GLL) points and setting zero to each (recall that this is a non-dimensional
@@ -874,13 +838,12 @@ To run the pseudo-steady conduction model, run the following from a command line
 through a job submission script on a [!ac](HPC) system.
 
 ```
-$ mpiexec -np 48 cardinal-opt -i solid.i --nekrs-setup fluid
+$ mpiexec -np 48 cardinal-opt -i solid.i
 ```
 
 where `mpiexec` is an [!ac](MPI) compiler wrapper, `-np 48` indicates that the input
-should be run with 48 processes, `-i solid.i` specifies the input file to run in Cardinal,
-and `--nekrs-setup fluid` indicates the base name for the nekRS input files,
-`fluid.re2`, `fluid.par`, `fluid.oudf`, and `fluid.udf`. Both MOOSE and nekRS will be run
+should be run with 48 processes, and `-i solid.i` specifies the input file to run in Cardinal.
+Both MOOSE and nekRS will be run
 with 48 processes.
 
 When the simulation has completed, you will have created a number of different output files:
@@ -933,20 +896,7 @@ conduction case in [#part1].
 ### Solid Input Files
 
 The solid phase is again solved with the MOOSE heat conduction module.
-The input file is largely the same as the conduction
-case, except that now the gap radiation heat flux between blocks is included with a
-[ThermalContact](https://mooseframework.inl.gov/source/actions/ThermalContactAction.html) action.
-
-!listing /pbfhr/reflector/cht/solid.i
-  start=ThermalContact
-  end=Materials
-
-This adds radiation heat transfer across the gap between the inner and outer reflector
-blocks and across the gap between the outer reflector block and the barrel. The emissivity
-for all surfaces is assumed to be 0.8. This action then adds all requisite MOOSE objects
-to add quadrature-based radiation boundary conditions, such as paired auxiliary variables
-to match a node on surface A with a node on surface B and the ensuing heat flux boundary
-condition objects.
+The input file is essentially the same as the conduction case, so is not discussed further.
 
 ### Fluid Input Files
 
@@ -995,7 +945,7 @@ velocity (padded with length `nrs->fieldOffset`), while `nrs->P` is the array st
 pressure solution. Due to the non-dimensional formulation, all values for the axial
 velocity are set to unity.
 
-!listing /pbfhr/reflector/cht/fluid.udf
+!listing /pbfhr/reflector/cht/fluid.udf language=cpp
 
 This file also includes the `UDF_LoadKernels` function, which is used to propagate
 quantities to variables accessibly through [!ac](OCCA) kernels. The `kernelInfo`
@@ -1007,13 +957,13 @@ Finally, the `fluid.oudf` file is shown below. Because the velocity is enabled,
 additional boundary condition functions must be specified in addition to those
 in [#part1]. The `velocityDirichletConditions` function applies Dirichlet
 conditions to velocity, where `bc->u` is the $x$-component of velocity,
-`bc->v` is the $y$-component of velocity, and `bc->z` is the $z$-component of velocity.
+`bc->v` is the $y$-component of velocity, and `bc->w` is the $z$-component of velocity.
 In this function, the kernel variable `Vz` that was defined in the `fluid.udf` file
 is accessible to simplify the boundary condition setup. The other boundary conditions,
 the Dirichlet temperature conditions and the Neumann heat flux conditions, are the
 same as for the steady conduction case.
 
-!listing /pbfhr/reflector/cht/fluid.oudf
+!listing /pbfhr/reflector/cht/fluid.oudf language=cpp
 
 ### Execution and Postprocessing
 
@@ -1065,7 +1015,7 @@ The calculation workflow would be as follows:
 3. For each individual run, compute the overall porosity of the block-fluid domain,
    and express $\partial P/\partial x_i$ in [eq:W] as $\Delta P/H$, where $\Delta P$
    is the pressure drop given by the `pressure_in` postprocessor in the
-   `nek.i` input file, and $H$ is the height of the block, or 0.502 m.
+   `nek.i` input file, and $H$ is the height of the block, or 0.52 m.
 4. Correlate the pressure drop results according to [eq:W] and obtain a functional fit
    to $W$ (with terms linear and quadratic in velocity, according to dimensional
    considerations for pressure loss).
