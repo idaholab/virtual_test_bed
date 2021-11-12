@@ -14,6 +14,7 @@ fluid_solid_interface = '1 2 7'
 
 [Problem]
   type = NekRSProblem
+  casename = 'fluid'
 
   nondimensional = true
   U_ref = 0.0575
