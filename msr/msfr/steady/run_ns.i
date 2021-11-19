@@ -4,8 +4,18 @@
 ## Relaxation towards Steady state 3D thermal hydraulics model                ##
 ################################################################################
 
-advected_interp_method='upwind'
-velocity_interp_method='rc'
+# The flow in this simulation should be initialized with a previous flow
+# solution (isothermal, heated or multiphysics) OR using a viscosity rampdown
+# An isothermal solution can be generated using 'run_ns_initial.i', and is
+# saved in 'restart/run_ns_initial_restart.e'
+# A heated solution, with a flat power distribution, can be generated with
+# this script 'run_ns.i', and is saved in 'restart/run_ns_restart.e'
+# A coupled neutronics-coarse TH solution can be generated with
+# 'run_neutronics.i', saved in 'run_neutronics_ns_restart.e'
+
+# Numerical scheme
+advected_interp_method = 'upwind'
+velocity_interp_method = 'rc'
 
 # Material properties
 rho = 4284  # density [kg / m^3]  (@1000K)
@@ -26,8 +36,11 @@ Sc_t = 1  # turbulent Schmidt number
 # Derived material properties
 alpha = ${fparse drho_dT / rho}  # thermal expansion coefficient
 
-# Mass flow rate tuning
-friction = 4.0e3  # [kg / m^4]
+# Operating parameters
+T_HX = 873.15 # heat exchanger temperature [K]
+
+# Mass flow rate tuning, for heat exchanger pressure and temperature drop
+friction = 3.5e3  # [kg / m^4]
 pump_force = -20000. # [N / m^3]
 
 # Delayed neutron precursor parameters. Lambda values are decay constants in
@@ -65,8 +78,15 @@ beta6 = 0.000184087
 [Mesh]
   [restart]
     type = FileMeshGenerator
-    file = 'gold/run_ns_initial_out.e'
     use_for_exodus_restart = true
+    # Depending on the file chosen, the initialization of variables should be
+    # adjusted. The following variables can be initalized:
+    # - v_x, v_y, p, lambda from isothermal simulation
+    # file = 'restart/run_ns_initial_restart.e'
+    # - v_x, v_y, p, T, lambda, c_ifrom cosine heated simulation
+    file = 'restart/run_ns_restart.e'
+    # - v_x, v_y, p, T, lambda, c_i from coupled multiphysics simulation
+    # file = 'restart/run_neutronics_ns_restart.e'
   []
   [min_radius]
     type = ParsedGenerateSideset
@@ -74,6 +94,26 @@ beta6 = 0.000184087
     input = restart
     new_sideset_name = min_core_radius
     normal = '0 1 0'
+  []
+  [hx_top]
+    type = ParsedGenerateSideset
+    combinatorial_geometry = 'y > 0'
+    included_subdomain_ids = '3'
+    included_neighbor_ids = '1'
+    fixed_normal = true
+    normal = '0 1 0'
+    new_sideset_name = 'hx_top'
+    input = 'min_radius'
+  []
+  [hx_bot]
+    type = ParsedGenerateSideset
+    combinatorial_geometry = 'y <-0.6'
+    included_subdomain_ids = '3'
+    included_neighbor_ids = '1'
+    fixed_normal = true
+    normal = '0 -1 0'
+    new_sideset_name = 'hx_bot'
+    input = 'hx_top'
   []
 []
 
@@ -115,36 +155,44 @@ beta6 = 0.000184087
     type = MooseVariableFVReal
     block = 'fuel pump hx'
     scaling = 100
+    # initial_condition = ${T_HX}
+    initial_from_file_var = T
   []
   [c1]
     type = MooseVariableFVReal
     block = 'fuel pump hx'
     scaling = 1e4
+    initial_from_file_var = c1
   []
   [c2]
     type = MooseVariableFVReal
     block = 'fuel pump hx'
     scaling = 1e4
+    initial_from_file_var = c2
   []
   [c3]
     type = MooseVariableFVReal
     block = 'fuel pump hx'
     scaling = 1e4
+    initial_from_file_var = c3
   []
   [c4]
     type = MooseVariableFVReal
     block = 'fuel pump hx'
     scaling = 1e5
+    initial_from_file_var = c4
   []
   [c5]
     type = MooseVariableFVReal
     block = 'fuel pump hx'
     scaling = 1e5
+    initial_from_file_var = c5
   []
   [c6]
     type = MooseVariableFVReal
     scaling = 1e6
     block = 'fuel pump hx'
+    initial_from_file_var = c6
   []
 []
 
@@ -152,21 +200,50 @@ beta6 = 0.000184087
   [mixing_len]
     type = MooseVariableFVReal
     initial_from_file_var = mixing_len
+    block = 'fuel pump hx'
   []
   [wall_shear_stress]
     type = MooseVariableFVReal
+    block = 'fuel pump hx'
   []
   [wall_yplus]
     type = MooseVariableFVReal
+    block = 'fuel pump hx'
   []
   [power_density]
     type = MooseVariableFVReal
+    block = 'fuel pump hx'
+    # Power density is re-initalized by a transfer from neutronics
+    [InitialCondition]
+      type = FunctionIC
+      function = 'power_guess'
+    []
   []
   [fission_source]
     type = MooseVariableFVReal
+    # Fission source is re-initalized by a transfer from neutronics
+    [InitialCondition]
+      type = FunctionIC
+      function = 'fission_guess'
+    []
+    block = 'fuel pump hx'
   []
   [eddy_viscosity]
     type = MooseVariableFVReal
+    block = 'fuel pump hx'
+  []
+[]
+
+[Functions]
+  # Guess to have a 3D power distribution
+  # TODO: use a Bessel function radially
+  [power_guess]
+    type = ParsedFunction
+    value = '3e9/2.81543 * max(0, cos(x*pi/2/1.2))*max(0, cos(y*pi/2/1.1))'
+  []
+  [fission_guess]
+    type = ParsedFunction
+    value = '6.303329e+01/2.81543 * max(0, cos(x*pi/2/1.2))*max(0, cos(y*pi/2/1.1))'
   []
 []
 
@@ -244,7 +321,7 @@ beta6 = 0.000184087
   [v_buoyancy]
     type = INSFVMomentumBoussinesq
     variable = v_y
-    temperature = T
+    T_fluid = T
     gravity = '0 -9.81 0'
     ref_temperature = 1000
     momentum_component = 'y'
@@ -320,7 +397,7 @@ beta6 = 0.000184087
     # transfer coefficient of 20 kW / m^2 / K
     alpha = 'alpha'
     block = 'hx'
-    T_ambient = 873.15
+    T_ambient = ${T_HX}
   []
 
   [c1_advection]
@@ -536,25 +613,28 @@ beta6 = 0.000184087
 # MATERIALS
 ################################################################################
 
-[Functions]
-  [rampdown_mu_func]
-    type = PiecewiseLinear
-    x = '1 2 3'
-    y = '${mu} ${mu} ${mu}'
-  []
-[]
-
 [Materials]
   [mu_mat]  # Yplus kernel not migrated to functor materials
-    type = ADGenericFunctionMaterial      #defines mu artificially for numerical convergence
-    prop_names = 'mu_mat  alpha alpha_b'                     #it converges to the real mu eventually.
-    prop_values = 'rampdown_mu_func ${fparse 600 * 20e3 / rho / cp} ${alpha}'
+    type = ADGenericFunctionMaterial
+    prop_names = 'mu_mat'
+    prop_values = '${mu}'
     block = 'fuel pump hx'
   []
+  [heat_exchanger_coefficient]
+    type = ADGenericFunctionMaterial
+    prop_names = 'alpha'
+    prop_values = '${fparse 600 * 20e3 / rho / cp}'
+    block = 'fuel pump hx'
+  []
+  [boussinesq]
+    type = ADGenericFunctionFunctorMaterial
+    prop_names = 'alpha_b'
+    prop_values = '${alpha}'
+  []
   [mu]
-    type = ADGenericFunctionFunctorMaterial      #defines mu artificially for numerical convergence
-    prop_names = 'mu'                     #it converges to the real mu eventually.
-    prop_values = 'rampdown_mu_func'
+    type = ADGenericFunctionFunctorMaterial
+    prop_names = 'mu'
+    prop_values = '${mu}'
     block = 'fuel pump hx'
   []
   [total_viscosity]
@@ -568,19 +648,19 @@ beta6 = 0.000184087
     block = 'fuel pump hx'
   []
   [not_used]
-    type = ADGenericConstantFunctorMaterial
+    type = ADGenericFunctionFunctorMaterial
     prop_names = 'not_used'
     prop_values = 0
     block = 'shield reflector'
   []
   [friction]
-    type = ADGenericConstantFunctorMaterial
+    type = ADGenericFunctionFunctorMaterial
     prop_names = 'friction_coef'
     prop_values = '${friction} '
     block = 'hx'
   []
   [cp]
-    type = ADGenericConstantFunctorMaterial
+    type = ADGenericFunctionFunctorMaterial
     prop_names = 'cp_unitary'
     prop_values = '1'
     block = 'fuel pump hx'
@@ -595,39 +675,48 @@ beta6 = 0.000184087
   [SMP]
     type = SMP
     full = true
-    solve_type = 'NEWTON'
   []
 []
 
 [Functions]
   [dts]
     type = PiecewiseConstant
-    x = '0    5 20'
-    y = '0.25 0.5  1'
+    x = '0    100'
+    y = '1.25 2.5'
   []
 []
 
 [Executioner]
   type = Transient
+
+  # Time stepping parameters
   start_time = 0.0
-  end_time = 20.
-  petsc_options_iname = '-pc_type -ksp_gmres_restart'
-  petsc_options_value = 'lu 50'
+  end_time = 20
+  # [TimeStepper]
+  #   # This time stepper makes the time step grow exponentially
+  #   # It can only be used with proper initialization
+  #   type = IterationAdaptiveDT
+  #   dt = 10  # chosen to obtain convergence with first coupled iteration
+  #   growth_factor = 2
+  # []
+  [TimeStepper]
+    type = FunctionDT
+    function = dts
+  []
+  steady_state_detection  = true
+  steady_state_tolerance  = 1e-8
+  steady_state_start_time = 10
+
+  # Solver parameters
+  solve_type = 'NEWTON'
+  petsc_options_iname = '-pc_type -pc_factor_shift_type -ksp_gmres_restart'
+  petsc_options_value = 'lu NONZERO 50'
   line_search = 'none'
 
   nl_rel_tol = 1e-10
   nl_abs_tol = 2e-8
-  nl_max_its = 30
+  nl_max_its = 15
   l_max_its = 50
-
-  # automatic_scaling = true
-  compute_scaling_once = false
-
-  [TimeStepper]
-    type = FunctionDT
-    function = dts
-    min_dt = 0.1
-  []
 []
 
 ################################################################################
@@ -637,10 +726,10 @@ beta6 = 0.000184087
 [Outputs]
   exodus = true
   csv = true
-[]
-
-[Debug]
-  show_var_residual_norms = true
+  [restart]
+    type = Exodus
+    execute_on = 'final'
+  []
 []
 
 [Postprocessors]
@@ -659,30 +748,51 @@ beta6 = 0.000184087
     advected_mat_prop = ${rho}
     fv = false # see MOOSE #18817
   []
-  [max_hx_T]
-    type = ElementExtremeValue
-    variable = T
-    value_type = max
-    block = 'hx'
-    outputs = none
+  [mdot_hx_bot]
+    type = InternalVolumetricFlowRate
+    boundary = 'hx_bot'
+    vel_x = v_x
+    vel_y = v_y
+    # advected_variable = 'rho_var'  # add when postprocessor uses face values properly
+    fv = false # see MOOSE #18817
   []
-  [min_hx_T]
-    type = ElementExtremeValue
-    variable = T
-    value_type = min
-    block = 'hx'
-    outputs = none
+  [mdot_hx_top]
+    type = InternalVolumetricFlowRate
+    boundary = 'hx_top'
+    vel_x = v_x
+    vel_y = v_y
+    # advected_variable = 'rho_var'
+    fv = false # see MOOSE #18817
   []
-  [max_pump_T]
-    type = ElementExtremeValue
-    variable = T
-    value_type = max
-    block = 'pump'
-    outputs = none
+  [max_mdot_T]
+    type = InternalVolumetricFlowRate
+    boundary = 'hx_top'
+    vel_x = v_x
+    vel_y = v_y
+    advected_variable = 'T'
+    fv = false # see MOOSE #18817
+  []
+  [min_mdot_T]
+    type = InternalVolumetricFlowRate
+    boundary = 'hx_bot'
+    vel_x = v_x
+    vel_y = v_y
+    advected_variable = 'T'
+    fv = false # see MOOSE #18817
   []
   [dT]
-    type = DifferencePostprocessor
-    value1 = max_pump_T
-    value2 = min_hx_T
+    type = ParsedPostprocessor
+    function = '-max_mdot_T / mdot_hx_bot + min_mdot_T / mdot_hx_top'
+    pp_names = 'max_mdot_T min_mdot_T mdot_hx_bot mdot_hx_top'
+  []
+  [total_power]
+    type = ElementIntegralVariablePostprocessor
+    variable = power_density
+    block = 'fuel pump hx'
+  []
+  [total_fission_source]
+    type = ElementIntegralVariablePostprocessor
+    variable = fission_source
+    block = 'fuel pump hx'
   []
 []

@@ -43,6 +43,10 @@
   order = CONSTANT
 []
 
+################################################################################
+# AUXILIARY SYSTEM
+################################################################################
+
 [AuxVariables]
   [tfuel]
     order = CONSTANT
@@ -89,6 +93,10 @@
   []
 []
 
+################################################################################
+# CROSS SECTIONS
+################################################################################
+
 [Materials]
   [fuel]
     type = CoupledFeedbackNeutronicsMaterial
@@ -129,6 +137,10 @@
   []
 []
 
+################################################################################
+# EXECUTION / SOLVE
+################################################################################
+
 [Executioner]
   type = Eigenvalue
   solve_type = PJFNK
@@ -143,27 +155,9 @@
   fixed_point_max_its = 100
 []
 
-[VectorPostprocessors]
-  [eigenvalues]
-    type = Eigenvalues
-    inverse_eigenvalue = true
-  []
-[]
-
-[Postprocessors]
-  [eigenvalue_out]
-    type = VectorPostprocessorComponent
-    vectorpostprocessor = eigenvalues
-    vector_name = eigen_values_real
-    index = 0
-  []
-[]
-
-[Outputs]
-  exodus = true
-  perf_graph = true
-[]
-
+################################################################################
+# MULTIAPPS and TRANSFERS for flow simulation
+################################################################################
 
 [MultiApps]
   [ns]
@@ -238,5 +232,35 @@
     direction = from_multiapp
     source_variable = 'T'
     variable = 'tfuel'
+  []
+[]
+
+################################################################################
+# SIMULATION OUTPUTS
+################################################################################
+
+[Outputs]
+  exodus = true
+  csv = true
+  [restart]
+    type = Exodus
+    execute_on = 'final'
+    file_base = 'run_neutronics_restart'
+  []
+[]
+
+[VectorPostprocessors]
+  [eigenvalues]
+    type = Eigenvalues
+    inverse_eigenvalue = true
+  []
+[]
+
+[Postprocessors]
+  [eigenvalue_out]
+    type = VectorPostprocessorComponent
+    vectorpostprocessor = eigenvalues
+    vector_name = eigen_values_real
+    index = 0
   []
 []

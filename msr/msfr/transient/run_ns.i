@@ -45,6 +45,10 @@ beta4 = 0.00103883
 beta5 = 0.000549185
 beta6 = 0.000184087
 
+################################################################################
+# GEOMETRY
+################################################################################
+
 [Mesh]
   [fmg]
     type = FileMeshGenerator
@@ -59,14 +63,13 @@ beta6 = 0.000184087
   []
 []
 
-[Outputs]
-  exodus = true
-  csv = true
-[]
-
 [Problem]
   coord_type = 'RZ'
 []
+
+################################################################################
+# EQUATIONS: VARIABLES, KERNELS & BCS
+################################################################################
 
 [Variables]
   [v_x]
@@ -547,6 +550,10 @@ beta6 = 0.000184087
 [AuxKernels]
 []
 
+################################################################################
+# BOUNDARY CONDITIONS
+################################################################################
+
 [FVBCs]
   [walls_u]
     type = INSFVNaturalFreeSlipBC
@@ -601,6 +608,10 @@ beta6 = 0.000184087
   []
 []
 
+################################################################################
+# MATERIALS
+################################################################################
+
 [Materials]
   [matprops_former_type]  # Yplus kernel not migrated to functor materials
     type = ADGenericFunctionMaterial      #defines mu artificially for numerical convergence
@@ -631,12 +642,21 @@ beta6 = 0.000184087
 
 []
 
+################################################################################
+# EXECUTION / SOLVE
+################################################################################
+
 [Executioner]
   type = Transient
+
+  # Time-stepping parameters
+  # The time step is imposed by the neutronics app
   start_time = 0.0
   end_time = 1e10
   dt = 1e10
-  solve_type = 'PJFNK'
+
+  # Solver parameters
+  solve_type = 'PJFNK'  ################################
   petsc_options_iname = '-pc_type -ksp_gmres_reset'
   petsc_options_value = 'lu 50'
   line_search = 'none'
@@ -644,6 +664,15 @@ beta6 = 0.000184087
   nl_abs_tol = 1e-08
   nl_max_its = 20
   l_max_its = 50
+[]
+
+################################################################################
+# SIMULATION OUTPUTS
+################################################################################
+
+[Outputs]
+  exodus = true
+  csv = true
 []
 
 [Postprocessors]
