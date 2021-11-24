@@ -9,17 +9,21 @@ advected_interp_method='upwind'
 velocity_interp_method='rc'
 
 # Material properties
-rho = 4125  # density [kg / m^3]
+rho = 4284  # density [kg / m^3]
 cp = 1594  # specific heat capacity [J / kg / K]
 drho_dT = 0.882  # derivative of density w.r.t. temperature [kg / m^3 / K]
+mu = 0.0166 # viscosity [Pa s], see steady/ reference
+k = 1.7
 
 # Derived material properties
 alpha = ${fparse drho_dT / rho}  # thermal expansion coefficient
 
 # Turbulent properties
-nu_t = 1e-1  # kinematic eddy viscosity / eddy diffusivity for momentum
 Pr_t = 1  # turbulent Prandtl number
 Sc_t = 1  # turbulent Schmidt number
+
+# Operating parameters
+T_HX = 873.15 # heat exchanger temperature [K]
 
 # Derived turbulent properties
 mu_t = ${fparse nu_t * rho}  # dynamic eddy viscosity
@@ -27,7 +31,7 @@ epsilon_q = ${fparse nu_t / Pr_t}  # eddy diffusivity for heat
 epsilon_c = ${fparse nu_t / Sc_t}  # eddy diffusivity for precursors
 
 # Mass flow rate tuning
-friction = 5.e3  # [kg / m^4]
+friction = 3.5.e3  # [kg / m^4]
 pump_force = -71401.4  # [N / m^3]
 
 # Delayed neutron precursor parameters. Lambda values are decay constants in
@@ -139,6 +143,11 @@ beta6 = 0.000184087
 []
 
 [AuxVariables]
+  [mixing_len]
+    type = MooseVariableFVReal
+    initial_from_file_var = mixing_len
+    block = 'fuel pump hx'
+  []
   [power_density]
     type = MooseVariableFVReal
     initial_from_file_var = power_density
@@ -188,10 +197,16 @@ beta6 = 0.000184087
     rho = ${rho}
     block = 'fuel pump hx'
   []
-  [u_turb_viscosity]
+  [u_turbulent_diffusion_rans]
+    type = INSFVMixingLengthReynoldsStress
+    variable = v_x
+    mixing_length = mixing_len
+    momentum_component = 'x'
+  []
+  [u_molecular_diffusion]
     type = FVDiffusion
     variable = v_x
-    coeff = 'mu_t'
+    coeff = 'mu'
     block = 'fuel pump hx'
   []
   [u_pressure]
@@ -221,10 +236,16 @@ beta6 = 0.000184087
     rho = ${rho}
     block = 'fuel pump hx'
   []
-  [v_turb_viscosity]
+  [v_turbulent_diffusion_rans]
+    type = INSFVMixingLengthReynoldsStress
+    variable = v_y
+    mixing_length = mixing_len
+    momentum_component = 'y'
+  []
+  [v_molecular_diffusion]
     type = FVDiffusion
     variable = v_y
-    coeff = 'mu_t'
+    coeff = 'mu'
     block = 'fuel pump hx'
   []
   [v_pressure]
@@ -288,11 +309,20 @@ beta6 = 0.000184087
     rho = ${rho}
     block = 'fuel pump hx'
   []
-  [heat_turb_diffusion]
+  [heat_diffusion]
     type = FVDiffusion
-    coeff = ${epsilon_q}
+    coeff = ${fparse k / rho / cp}
     variable = T
     block = 'fuel pump hx'
+  []
+  [heat_turb_diffusion]
+    type = INSFVMixingLengthScalarDiffusion
+    schmidt_number = ${Pr_t}
+    variable = T
+    block = 'fuel pump hx'
+    u = v_x
+    v = v_y
+    mixing_length = mixing_len
   []
   [heat_src]
     type = FVCoupledForce
@@ -414,40 +444,46 @@ beta6 = 0.000184087
     block = 'fuel pump hx'
   []
   [c1_turb_diffusion]
-    type = FVDiffusion
-    coeff = ${epsilon_c}
+    type = INSFVMixingLengthScalarDiffusion
+    schmidt_number = ${Sc_t}
     variable = c1
     block = 'fuel pump hx'
+    mixing_length = mixing_len
   []
   [c2_turb_diffusion]
-    type = FVDiffusion
-    coeff = ${epsilon_c}
+    type = INSFVMixingLengthScalarDiffusion
+    schmidt_number = ${Sc_t}
     variable = c2
     block = 'fuel pump hx'
+    mixing_length = mixing_len
   []
   [c3_turb_diffusion]
-    type = FVDiffusion
-    coeff = ${epsilon_c}
+    type = INSFVMixingLengthScalarDiffusion
+    schmidt_number = ${Sc_t}
     variable = c3
     block = 'fuel pump hx'
+    mixing_length = mixing_len
   []
   [c4_turb_diffusion]
-    type = FVDiffusion
-    coeff = ${epsilon_c}
+    type = INSFVMixingLengthScalarDiffusion
+    schmidt_number = ${Sc_t}
     variable = c4
     block = 'fuel pump hx'
+    mixing_length = mixing_len
   []
   [c5_turb_diffusion]
-    type = FVDiffusion
-    coeff = ${epsilon_c}
+    type = INSFVMixingLengthScalarDiffusion
+    schmidt_number = ${Sc_t}
     variable = c5
     block = 'fuel pump hx'
+    mixing_length = mixing_len
   []
   [c6_turb_diffusion]
-    type = FVDiffusion
-    coeff = ${epsilon_c}
+    type = INSFVMixingLengthScalarDiffusion
+    schmidt_number = ${Sc_t}
     variable = c6
     block = 'fuel pump hx'
+    mixing_length = mixing_len
   []
   [c1_src]
     type = FVCoupledForce
@@ -607,6 +643,12 @@ beta6 = 0.000184087
     v = 'v_y'
     pressure = 'pressure'
     rho = ${rho}
+    block = 'fuel pump hx'
+  []
+  [total_viscosity]
+    type = MixingLengthTurbulentViscosityMaterial
+    mixing_length = mixing_len
+    mu = 'mu'
     block = 'fuel pump hx'
   []
   [friction]
