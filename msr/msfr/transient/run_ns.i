@@ -52,7 +52,7 @@ beta6 = 0.000184087
 [Mesh]
   [fmg]
     type = FileMeshGenerator
-    file = '../steady/sample_output/run_neutronics_out_ns0.e'
+    file = '../steady/restart/run_ns_coupled_restart.e'
     use_for_exodus_restart = true
   []
   # Already deleted in sample_output
@@ -95,57 +95,43 @@ beta6 = 0.000184087
     block = 'fuel pump hx'
   []
   [T]
-    order = CONSTANT
-    family = MONOMIAL
-    fv = true
+    type = MooseVariableFVReal
     initial_from_file_var = T
     block = 'fuel pump hx'
     scaling = 100
   []
   [c1]
-    order = CONSTANT
-    family = MONOMIAL
-    fv = true
+    type = MooseVariableFVReal
     initial_from_file_var = c1
     block = 'fuel pump hx'
     scaling = 1e6
   []
   [c2]
-    order = CONSTANT
-    family = MONOMIAL
-    fv = true
+    type = MooseVariableFVReal
     initial_from_file_var = c2
     block = 'fuel pump hx'
     scaling = 1e6
   []
   [c3]
-    order = CONSTANT
-    family = MONOMIAL
-    fv = true
+    type = MooseVariableFVReal
     initial_from_file_var = c3
     block = 'fuel pump hx'
     scaling = 1e6
   []
   [c4]
-    order = CONSTANT
-    family = MONOMIAL
-    fv = true
+    type = MooseVariableFVReal
     initial_from_file_var = c4
     block = 'fuel pump hx'
     scaling = 1e7
   []
   [c5]
-    order = CONSTANT
-    family = MONOMIAL
-    fv = true
+    type = MooseVariableFVReal
     initial_from_file_var = c5
     block = 'fuel pump hx'
     scaling = 1e7
   []
   [c6]
-    order = CONSTANT
-    family = MONOMIAL
-    fv = true
+    type = MooseVariableFVReal
     initial_from_file_var = c6
     block = 'fuel pump hx'
     scaling = 1e8
@@ -154,15 +140,11 @@ beta6 = 0.000184087
 
 [AuxVariables]
   [power_density]
-    order = CONSTANT
-    family = MONOMIAL
-    fv = true
+    type = MooseVariableFVReal
     initial_from_file_var = power_density
   []
   [fission_source]
-    order = CONSTANT
-    family = MONOMIAL
-    fv = true
+    type = MooseVariableFVReal
     initial_from_file_var = fission_source
   []
 []
@@ -614,9 +596,9 @@ beta6 = 0.000184087
 
 [Materials]
   [matprops_former_type]  # Yplus kernel not migrated to functor materials
-    type = ADGenericFunctionMaterial      #defines mu artificially for numerical convergence
-    prop_names = 'alpha alpha_b'                     #it converges to the real mu eventually.
-    prop_values = '${fparse 600 * 20e3 / rho / cp} ${alpha}'
+    type = ADGenericFunctionMaterial
+    prop_names = 'alpha'
+    prop_values = '${fparse 600 * 20e3 / rho / cp}'
     block = 'fuel pump hx'
   []
   [ins_fv]
@@ -635,11 +617,10 @@ beta6 = 0.000184087
   []
   [functor_mat_properties]
     type = ADGenericConstantFunctorMaterial
-    prop_names = 'cp_unitary mu_t'
-    prop_values = '1 ${mu_t}'
+    prop_names = 'cp_unitary mu_t alpha_b'
+    prop_values = '1 ${mu_t} ${alpha}'
     block = 'fuel pump hx'
   []
-
 []
 
 ################################################################################
@@ -656,7 +637,7 @@ beta6 = 0.000184087
   dt = 1e10
 
   # Solver parameters
-  solve_type = 'PJFNK'  ################################
+  solve_type = 'NEWTON'
   petsc_options_iname = '-pc_type -ksp_gmres_reset'
   petsc_options_value = 'lu 50'
   line_search = 'none'
@@ -696,29 +677,42 @@ beta6 = 0.000184087
     advected_interp_method = ${advected_interp_method}
     advected_mat_prop = ${rho}
   []
-  [max_hx_T]
-    type = ElementExtremeValue
-    variable = T
-    value_type = max
-    block = 'hx'
+  [mdot_hx_bot]
+    type = InternalVolumetricFlowRate
+    boundary = 'hx_bot'
+    vel_x = v_x
+    vel_y = v_y
+    # advected_variable = 'rho_var'  # add when postprocessor uses face values properly
+    fv = false # see MOOSE #18817
   []
-  [min_hx_T]
-    type = ElementExtremeValue
-    variable = T
-    value_type = min
-    block = 'hx'
+  [mdot_hx_top]
+    type = InternalVolumetricFlowRate
+    boundary = 'hx_top'
+    vel_x = v_x
+    vel_y = v_y
+    # advected_variable = 'rho_var'
+    fv = false # see MOOSE #18817
   []
-  [max_pump_T]
-    type = ElementExtremeValue
-    variable = T
-    value_type = max
-    block = 'pump'
-    outputs = none
+  [max_mdot_T]
+    type = InternalVolumetricFlowRate
+    boundary = 'hx_top'
+    vel_x = v_x
+    vel_y = v_y
+    advected_variable = 'T'
+    fv = false # see MOOSE #18817
+  []
+  [min_mdot_T]
+    type = InternalVolumetricFlowRate
+    boundary = 'hx_bot'
+    vel_x = v_x
+    vel_y = v_y
+    advected_variable = 'T'
+    fv = false # see MOOSE #18817
   []
   [dT]
-    type = DifferencePostprocessor
-    value1 = max_pump_T
-    value2 = min_hx_T
+    type = ParsedPostprocessor
+    function = '-max_mdot_T / mdot_hx_bot + min_mdot_T / mdot_hx_top'
+    pp_names = 'max_mdot_T min_mdot_T mdot_hx_bot mdot_hx_top'
   []
   [power]
     type = Receiver
