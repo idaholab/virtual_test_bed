@@ -1,5 +1,7 @@
 # MSFR Griffin-Pronghorn model
 
+*Contact: Mauricio Tano, mauricio.tanoretamales.at.inl.gov*
+
 ## Conservation of fluid mass and momentum
 
 The MultiApp system is used to separate the neutronics and the fluid dynamics

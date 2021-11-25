@@ -1,5 +1,7 @@
 # MSFR Nek5000 CFD model
 
+*Contact: Jun Fang, fangj.at.anl.gov*
+
 [Nek5000](https://github.com/Nek5000/Nek5000)
 is an open source CFD code based on the spectral element method (SEM) with
 a long history of application in reactor thermal-hydraulics
@@ -88,7 +90,7 @@ the $k-\tau$ application and validation in fuel rod bundles.
 
 A 2-D axisymmetric core model is first studied with the Nek5000 RANS solver.
 Based on the core dimensions listed in the
-[description of the reactor](msfr/reactor_description.md), 
+[description of the reactor](msfr/reactor_description.md),
 a 2-D geometric model is generated using the open source meshing software,
 [GMSH](https://gmsh.info/).  The entire model include the core region
 and part of the inlet and outlet channels. A pure hexahedral mesh is produced

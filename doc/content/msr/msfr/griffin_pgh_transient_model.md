@@ -1,5 +1,7 @@
 # MSFR Griffin-Pronghorn transient model
 
+*Contact: Mauricio Tano, mauricio.tanoretamales.at.inl.gov*
+
 In addition to the steady-state MSFR model, the Virtual Test Bed also contains
 an example transient model. This model is intended to represent a partial
 loss-of-flow accident. The exact mechanism is unspecified here (it could be a
