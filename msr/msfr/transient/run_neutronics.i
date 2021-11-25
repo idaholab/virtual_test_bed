@@ -98,7 +98,7 @@
     type = BuildArrayVariableAux
     variable = dnp
     component_variables = 'c1 c2 c3 c4 c5 c6'
-    execute_on = 'initial nonlinear'
+    execute_on = 'timestep_begin'
   []
   [power_density]
     type = VectorReactionRate
@@ -200,6 +200,7 @@
 [Outputs]
   csv = true
   exodus = true
+  hide = 'dnp'
 []
 
 [Postprocessors]

@@ -28,8 +28,7 @@ mu = 0.0166 # viscosity [Pa s], from
 # for-the-molten-salt-fast-reactor.pdf
 k = 1.7
 
-# Derived turbulent properties
-#von_karman_const = 0.41
+# Turbulent properties
 Pr_t = 1  # turbulent Prandtl number
 Sc_t = 1  # turbulent Schmidt number
 
@@ -86,7 +85,7 @@ beta6 = 0.000184087
     # - v_x, v_y, p, T, lambda, c_ifrom cosine heated simulation
     file = 'restart/run_ns_restart.e'
     # - v_x, v_y, p, T, lambda, c_i from coupled multiphysics simulation
-    # file = 'restart/run_neutronics_ns_restart.e'
+    # file = 'restart/run_ns_coupled_restart.e'
   []
   [min_radius]
     type = ParsedGenerateSideset
@@ -328,6 +327,12 @@ beta6 = 0.000184087
     block = 'fuel'
     alpha_name = 'alpha_b'
   []
+  # [v_gravity]
+  #   type = FVBodyForce
+  #   variable = v_y
+  #   value = ${fparse -9.81 * rho}
+  #   block = 'fuel pump hx'
+  # []
 
   [pump]
     type = FVBodyForce
@@ -358,14 +363,6 @@ beta6 = 0.000184087
   [heat_advection]
     type = INSFVScalarFieldAdvection
     variable = T
-    vel = 'velocity'
-    velocity_interp_method = ${velocity_interp_method}
-    advected_interp_method = ${advected_interp_method}
-    pressure = pressure
-    u = v_x
-    v = v_y
-    mu = 'mu'
-    rho = ${rho}
     block = 'fuel pump hx'
   []
   [heat_diffusion]
@@ -379,9 +376,6 @@ beta6 = 0.000184087
     schmidt_number = ${Pr_t}
     variable = T
     block = 'fuel pump hx'
-    u = v_x
-    v = v_y
-    mixing_length = mixing_len
   []
   [heat_src]
     type = FVCoupledForce
@@ -558,14 +552,14 @@ beta6 = 0.000184087
     variable = wall_shear_stress
     walls = 'shield_wall reflector_wall'
     block = 'fuel'
-    mu = 'mu_mat'
+    mu = 'mu_mat' # FIXME, transition to functors, use total_viscosity
   []
   [wall_yplus]
     type = WallFunctionYPlusAux
     variable = wall_yplus
     walls = 'shield_wall reflector_wall'
     block = 'fuel'
-    mu = 'mu_mat'
+    mu = 'mu_mat' # FIXME, transition to functors, use total_viscosity
   []
   [turbulent_viscosity]
     type = INSFVMixingLengthTurbulentViscosityAux
@@ -593,14 +587,14 @@ beta6 = 0.000184087
     boundary = 'fluid_symmetry'
     variable = v_x
     momentum_component = 'x'
-    mu = total_viscosity
+    mu = 'total_viscosity'
   []
   [symmetry_v]
     type = INSFVSymmetryVelocityBC
     boundary = 'fluid_symmetry'
     variable = v_y
     momentum_component = 'y'
-    mu = total_viscosity
+    mu = 'total_viscosity'
   []
   [symmetry_pressure]
     type = INSFVSymmetryPressureBC
@@ -627,12 +621,12 @@ beta6 = 0.000184087
     block = 'fuel pump hx'
   []
   [boussinesq]
-    type = ADGenericFunctionFunctorMaterial
+    type = ADGenericFunctorMaterial
     prop_names = 'alpha_b'
     prop_values = '${alpha}'
   []
   [mu]
-    type = ADGenericFunctionFunctorMaterial
+    type = ADGenericFunctorMaterial
     prop_names = 'mu'
     prop_values = '${mu}'
     block = 'fuel pump hx'
@@ -648,19 +642,19 @@ beta6 = 0.000184087
     block = 'fuel pump hx'
   []
   [not_used]
-    type = ADGenericFunctionFunctorMaterial
+    type = ADGenericFunctorMaterial
     prop_names = 'not_used'
     prop_values = 0
     block = 'shield reflector'
   []
   [friction]
-    type = ADGenericFunctionFunctorMaterial
+    type = ADGenericFunctorMaterial
     prop_names = 'friction_coef'
     prop_values = '${friction} '
     block = 'hx'
   []
   [cp]
-    type = ADGenericFunctionFunctorMaterial
+    type = ADGenericFunctorMaterial
     prop_names = 'cp_unitary'
     prop_values = '1'
     block = 'fuel pump hx'
