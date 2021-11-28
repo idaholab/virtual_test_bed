@@ -573,7 +573,6 @@
     initial_level = 0.4
     initial_T = 970
     initial_V = 0.0
-    display_pps = false
     covergas_component = 'cover_gas2'
     eos = eos
   [../]
@@ -624,7 +623,6 @@
     initial_level = 0.4
     initial_T = 852.7
     initial_V = 0.0
-    display_pps = true
     covergas_component = 'cover_gas1'
     eos = eos #eos3
   [../]
@@ -888,8 +886,8 @@
 [Executioner]
   type = Transient
 
-  petsc_options_iname = '-ksp_gmres_restart'
-  petsc_options_value = '300'
+  petsc_options_iname = '-ksp_gmres_restart -pc_factor_shift_type -pc_factor_shift_amount'
+  petsc_options_value = '300 NONZERO 1e-9'
 
   dt = 1
   dtmin = 1e-3
