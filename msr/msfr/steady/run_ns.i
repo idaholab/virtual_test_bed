@@ -153,7 +153,7 @@ beta6 = 0.000184087
   [T]
     type = MooseVariableFVReal
     block = 'fuel pump hx'
-    scaling = 100
+    scaling = 1
     # initial_condition = ${T_HX}
     initial_from_file_var = T
   []
