@@ -6,16 +6,12 @@
     check_input = True
     ad_indexing_type = 'global'
     executable_pattern = 'blue_crab*|dire_wolf*|fenix*'
-    # Missing nu and fuel temperature is out of bounds for MGXS
-    allow_warnings = true
   []
   [neutronics_only_syntax]
     type = RunApp
     input = 'run_neutronics.i'
     check_input = True
     executable_pattern = 'griffin*|blue_crab*|dire_wolf*|fenix*'
-    # Missing nu and fuel temperature is out of bounds for MGXS
-    allow_warnings = true
   []
   [fluids_initial_syntax]
     type = RunApp
@@ -41,6 +37,9 @@
     ad_indexing_type = 'global'
     executable_pattern = 'blue_crab*|dire_wolf*|fenix*'
     cli_args = "Executioner/nl_abs_tol=1 Executioner/fixed_point_max_its=1 Executioner/accept_on_max_fixed_point_iteration=true Outputs/file_base=multiphysics_out MultiApps/ns/cli_args='Executioner/num_steps=1'"
+    # Fuel temperature is out of bounds for MGXS
+    allow_warnings = true
+    min_parallel = 4
   []
   [neutronics_only]
     prereq = neutronics_only_syntax
@@ -49,6 +48,8 @@
     csvdiff = run_neutronics_out.csv
     executable_pattern = 'griffin*|blue_crab*|dire_wolf*|fenix*'
     cli_args = "Executioner/nl_abs_tol=1 MultiApps/active='' Transfers/active=''"
+    # Fuel temperature is out of bounds for MGXS
+    allow_warnings = true
   []
   [fluids_initial]
     prereq = fluids_initial_syntax
@@ -67,5 +68,6 @@
     ad_indexing_type = 'global'
     executable_pattern = 'moose*|blue_crab*|dire_wolf*|pronghorn*|fenix*'
     cli_args = 'Executioner/num_steps=2'
+    min_parallel = 4
   []
 []

@@ -6,7 +6,8 @@
     check_input = True
     ad_indexing_type = 'global'
     executable_pattern = 'blue_crab*|dire_wolf*|fenix*'
-    allow_warnings = true # multiapps and transfers execute_on are different
+    # multiapps and transfers execute_on are different
+    allow_warnings = true
   []
   [neutronics_syntax]
     type = RunApp
@@ -14,7 +15,8 @@
     check_input = True
     ad_indexing_type = 'global'
     executable_pattern = 'griffin*|blue_crab*|dire_wolf*|fenix*'
-    allow_warnings = true # multiapps and transfers execute_on are different
+    # multiapps and transfers execute_on are different
+    allow_warnings = true
     cli_args = "Executioner/nl_abs_tol=1 MultiApps/active='' Transfers/active=''"
   []
   [fluids_syntax]
@@ -35,6 +37,7 @@
     cli_args = "Executioner/num_steps=2 Executioner/fixed_point_max_its=1 Executioner/accept_on_max_fixed_point_iteration=true Outputs/file_base=multiphysics_out"
     # Fuel temperature is out of bounds for MGXS
     allow_warnings = true
+    min_parallel = 4
   []
   [neutronics_only]
     prereq = neutronics_syntax
@@ -54,5 +57,6 @@
     ad_indexing_type = 'global'
     executable_pattern = 'moose*|blue_crab*|dire_wolf*|pronghorn*|fenix*'
     cli_args = 'Executioner/num_steps=2'
+    min_parallel = 4
   []
 []
