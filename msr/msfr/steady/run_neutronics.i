@@ -247,6 +247,7 @@
     execute_on = 'final'
     file_base = 'run_neutronics_restart'
   []
+  # hide = 'dnp'
 []
 
 [VectorPostprocessors]

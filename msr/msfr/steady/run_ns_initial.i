@@ -99,12 +99,6 @@ pump_force = -20000. # [N / m^3]
   [wall_yplus]
     type = MooseVariableFVReal
   []
-  [power_density]
-    type = MooseVariableFVReal
-  []
-  [fission_source]
-    type = MooseVariableFVReal
-  []
   [eddy_viscosity]
     type = MooseVariableFVReal
     #initial_from_file_var = eddy_viscosity
@@ -182,6 +176,12 @@ pump_force = -20000. # [N / m^3]
     momentum_component = 'y'
     block = 'fuel pump hx'
   []
+  # [v_gravity]
+  #   type = FVBodyForce
+  #   variable = v_y
+  #   value = ${fparse -9.81 * rho}
+  #   block = 'fuel pump hx'
+  # []
 
   [pump]
     type = FVBodyForce

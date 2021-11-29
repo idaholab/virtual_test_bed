@@ -183,14 +183,17 @@
                           true   2      1
                           asm   asm
                           1     rcm'
+
+  line_search = 'none'
   nl_abs_tol = 1e-8
   nl_forced_its = 1
   l_abs_tol = 1e-8
   l_max_its = 200
+
+  # Fixed point iteration parameters
   fixed_point_max_its = 3
   accept_on_max_fixed_point_iteration = true
   fixed_point_abs_tol = 1e-50
-  line_search = 'none'
 []
 
 ################################################################################
@@ -226,6 +229,7 @@
     type = TransientMultiApp
     input_files = 'run_ns.i'
     execute_on = 'timestep_begin'
+    catch_up = true
   []
 []
 
