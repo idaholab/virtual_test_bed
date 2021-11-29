@@ -48,6 +48,7 @@
     cli_args = "Executioner/num_steps=2 MultiApps/active='' Transfers/active=''"
     # Fuel temperature is out of bounds for MGXS
     allow_warnings = true
+    method = 'opt'
   []
   [fluids]
     prereq = fluids_syntax
