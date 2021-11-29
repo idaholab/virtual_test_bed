@@ -281,6 +281,13 @@ pump_force = -20000. # [N / m^3]
 
 [Functions]
   [rampdown_mu_func]
+    type = ParsedFunction
+    value = mu*(100*exp(-3*t)+1)
+    vars = 'mu'
+    vals = ${mu}
+  []
+  # Functor materials expect AD functors, to fix with MOOSE
+  [ad_rampdown_mu_func]
     type = ADParsedFunction
     value = mu*(100*exp(-3*t)+1)
     vars = 'mu'
@@ -295,9 +302,9 @@ pump_force = -20000. # [N / m^3]
     prop_values = 'rampdown_mu_func'
   []
   [mu]
-    type = ADGenericFunctionFunctorMaterial      #defines mu artificially for numerical convergence
+    type = ADGenericFunctorMaterial      #defines mu artificially for numerical convergence
     prop_names = 'mu'                     #it converges to the real mu eventually.
-    prop_values = 'rampdown_mu_func'
+    prop_values = 'ad_rampdown_mu_func'
   []
   [total_viscosity]
     type = MixingLengthTurbulentViscosityMaterial
@@ -310,13 +317,13 @@ pump_force = -20000. # [N / m^3]
     block = 'fuel pump hx'
   []
   [not_used]
-    type = ADGenericConstantFunctorMaterial
+    type = ADGenericFunctorMaterial
     prop_names = 'not_used'
     prop_values = 0
     block = 'shield reflector'
   []
   [friction]
-    type = ADGenericConstantFunctorMaterial
+    type = ADGenericFunctorMaterial
     prop_names = 'friction_coef'
     prop_values = ${friction}
     block = 'hx'
