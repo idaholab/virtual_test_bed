@@ -72,9 +72,11 @@ file.
 
 
 To run an input file from the command line, it must be provided to the executable, for code `<code_name>`, like this:
+
 ```
   ~/projects/<code_name>/<code_name>-opt -i <input_file>
 ```
+
 For the MSFR simulation, multiple applications, Griffin and Pronghorn, need to be used. They are
 gathered in combined applications such as `blue_crab`.
 
@@ -120,7 +122,7 @@ and `BCs` (boundary conditions) are only defined on certain boundaries.
 
 
 Modifying the simulation may require more effort and is highly dependent on the application you are using.
-We will refer you to the documentation for this application for more information. Please feel free to reach
+We will refer you to the documentation for the application of interest (i.e. Pronghorn, Griffin, etc.) for more information. Please feel free to reach
 out on the [Discussions forum](https://github.com/idaholab/virtual_test_bed/discussions) for help.
 
 ### Postprocessing resources style=font-size:125%
@@ -131,14 +133,14 @@ the [MOOSE Outputs documentation](https://mooseframework.inl.gov/syntax/Outputs/
 there are two main options to visualize your results:
 
 - Paraview \\
-  Paraview is a free visualization software provided by Kitware \copyright. It has a flexible GUI which will
+  Paraview is a free visualization software provided by Kitware. It has a flexible GUI which will
   allow you to visualize your results through time and space and output results to videos or image files.
 
 - chigger and python VTK libraries \\
   Chigger is an in-house python library used to make highly customizable visualization scripts. It lets you adjust
   visualization parameters such as the angle, the pixel count, the positions of the objects and easily generate outputs
   consistently for different variables in a simulation or between different simulations. See [this page](https://mooseframework.inl.gov/python/chigger/)
-  for more information
+  for more information.
 
 - Peacock \\
   Peacock is an in-house visualization application for MOOSE-based apps. It has many less options than Paraview,

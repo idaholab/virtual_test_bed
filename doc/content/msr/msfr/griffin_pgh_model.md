@@ -162,7 +162,7 @@ constant,
   - f_{\text{pump}} - \rho \alpha \vec{g} \left( T - T_0 \right) = 0
 \end{equation}
 
-where f_{\text{pump}} is the pump head driving the flow, $\alpha$ is the
+where $f_{\text{pump}}$ is the pump head driving the flow, $\alpha$ is the
 expansion coefficient, $T$ is the fluid temperature, and $T_0$ is a reference
 temperature value. The pump head is tuned such that the imposed mass flow rate
 is ~18500 kg/s.
