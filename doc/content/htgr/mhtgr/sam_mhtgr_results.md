@@ -16,7 +16,8 @@ There are three types of output files:
 
 1. +MHTGR_csv.csv+: this is a `csv` file that writes the user-specified scalar
     and vector variables to a comma-separated-values file. The data can be imported
-    to Excel for further processing.
+    to Excel for further processing or in Python using the `csv` module, Pandas,
+    or other methods.
 
 2. +MHTGR_checkpoint_cp+: this is a sub-folder that save snapshots of the simulation
     data including all meshes, solutions. Users can restart the run from where it ended

@@ -62,7 +62,7 @@ global_init_P	 = 	1.e5
 
 ```
 
-This block also contains a sub-block PBModelParams which specifies 
+This block also contains a sub-block `PBModelParams` which specifies 
 the modeling parameters associated with the primitive-variable based 
 fluid model. New users should leave this sub-block unchanged.
 
@@ -77,7 +77,7 @@ For example,  the built-in eos for air can be input as
 !listing htgr/mhtgr/MHTGR.i block=eos_air language=cpp
 
 Water is used as coolant at the RCCS, and its properties 
-in SI unites are input as follows. 
+in SI units are input as follows. 
 
 !listing htgr/mhtgr/MHTGR.i block=eos_water language=cpp
 
@@ -111,8 +111,10 @@ This block is used to input common features for `Components`
 be repeated in the inputs for `Components` later on. For example, 
 if pipes are used in various parts of the model and the pipes 
 all have the same diameter, then the diameter can be specified 
-in ComponentsInputParameters and it applies to all pipes used 
+in `ComponentsInputParameters` and it applies to all pipes used 
 in the model. 
+
+!listing htgr/mhtgr/MHTGR.i block=ComponentInputParameters
 
 ## Components
 
@@ -194,9 +196,14 @@ To output the maximum temperature in `R6`:
 This block describes the preconditioner used by the solver.  
 New users can leave this block unchanged.
 
+!listing htgr/mhtgr/MHTGR.i block=Preconditioning
+
 ## Executioner
 
 This block describes the calculation process flow. The user can specify 
 the start time, end time, time step size for the simulation. Other inputs 
 in this block include PETSc solver options, convergence tolerance, 
 quadrature for elements, etc. which can be left unchanged. 
+
+!listing htgr/mhtgr/MHTGR.i block=Executioner
+

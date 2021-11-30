@@ -93,7 +93,7 @@ This is the most important block that defines all the reactor components represe
 
 Specifically, the MSRE core is modeled with a 1-D channel and total heat source of 10 MW is uniformly distributed along the channel in this simplified demonstration model.
 The primary pump is placed between the core and the heat exchanger. As for the shell-and-tube heat exchanger, the shell side is modeled with one 1-D channel while the tube side is modeled with three 1-D channels, 2 long ones and 1 short connecting in a U-structure.
-The heat is exchanged through the 1-D wall coupling the shell and tube sides. The coolant slat temperature and velocity are specified at the inlet of the tube side as shown in the code snippet below.
+The heat is exchanged through the 1-D wall coupling the shell and tube sides. The coolant salt temperature and velocity are specified at the inlet of the tube side as shown in the code snippet below.
 A reference pipe is connected to the system to ensure a fixed pressure boundary condition at the exit of HX primary side, which helps the SAM model better converge.
 The component types involved include `PBOneDFluidComponent`, `PBPump`, `PBCoupledHeatStructure`, and `PBBranch`, and the boundary conditions involved include `PBTDV`, `PBTDJ`.
 The detailed instructions of these SAM components can be found in the SAM user manual, which are not repeated here for brevity.
@@ -110,10 +110,13 @@ The Postprocessors block is used to monitor the SAM solutions during the simulat
 
 This block describes the preconditioner used by the solver.  New user can leave this block unchanged.
 
+!listing msr/msre/msre_loop_1d.i block=Preconditioning
+
 ### Executioner
 
 This block describes the calculation process flow. The user can specify the start time, end time, time step size for the simulation. Other inputs in this block include PETSc solver options, convergence tolerance, quadrature for elements, etc., which can be left unchanged.
 
+!listing msr/msre/msre_loop_1d.i block=Executioner
 
 ## Results
 
@@ -121,13 +124,14 @@ There are three types of output files:
 
 1. +msre_loop_1d_csv.csv+: this is a `csv` file that writes the user-specified scalar
     and vector variables to a comma-separated-values file. The data can be imported
-    to Excel for further processing.
+    to Excel for further processing or read in Python using the `csv` module, Pandas,
+    or other methods.
 
-2. +msre_loop_1d_checkpoint_cp+: this is a sub-folder that save snapshots of the simulation
+2. +msre_loop_1d_checkpoint_cp+: this is a sub-folder that saves snapshots of the simulation
     data including all meshes, solutions. Users can restart the run from where it ended
     using the file in the checkpoint folder.
 
-3. +msre_loop_1d_out.displaced.e+: this is a `EXodusII` file that has all mesh and
+3. +msre_loop_1d_out.displaced.e+: this is a `ExodusII` file that has all mesh and
     solution data. Users can use Paraview to open this .e file to visualize, plot,
     and analyze the data.
 

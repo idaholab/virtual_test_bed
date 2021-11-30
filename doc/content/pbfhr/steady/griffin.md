@@ -23,9 +23,9 @@ additional details about the group cross sections in the [Materials](https://moo
 
 The `[TransportSystems]` block is used to specify the solver parameters. We chose a diffusion solver
 as accuracy is generally satisfactory with graphite-moderated reactors, as we confirmed by benchmarking
-with Serpent[!citep](giudicelli2021). We select the `eigenvalue` equation type as the steady state coupling is an
+with Serpent [!citep](giudicelli2021). We select the `eigenvalue` equation type as the steady state coupling is an
 eigenvalue calculation for neutron transport. The steady state is the eigenpair of the $k_{eff}$ and the
-a steady flux distribution. We also specify the boundary conditions in this block. This is a 2D RZ model,
+steady flux distribution. We also specify the boundary conditions in this block. This is a 2D RZ model,
 so the center of the geometry is an axis of symmetry. A vacuum boundary condition is placed on the other
 boundaries. This approximation is appropriate when the boundaries are sufficiently far from the active region.
 
@@ -58,7 +58,6 @@ computing material properties, for outputting quantities of interests, and many 
 !listing /pbfhr/steady/ss0_neutrons.i block=AuxVariables/Tfuel AuxVariables/Tsalt
 
 The `CR_insertion` auxiliary variable is the insertion of the control rod in the system.
-#TODO Use RoddedNeutronicsMaterial
 
 !listing /pbfhr/steady/ss0_neutrons.i block=AuxVariables/CR_insertion
 
