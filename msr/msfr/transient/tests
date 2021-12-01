@@ -38,6 +38,7 @@
     # Fuel temperature is out of bounds for MGXS
     allow_warnings = true
     min_parallel = 4
+    method = 'opt'  # times out in devel
   []
   [neutronics_only]
     prereq = neutronics_syntax
@@ -57,7 +58,7 @@
     input = 'run_ns.i'
     ad_indexing_type = 'global'
     executable_pattern = 'moose*|blue_crab*|dire_wolf*|pronghorn*|fenix*'
-    cli_args = 'Executioner/num_steps=2 Executioner/dt=1'
+    cli_args = 'Executioner/num_steps=2 Executioner/dt=0.5'
     min_parallel = 4
   []
 []

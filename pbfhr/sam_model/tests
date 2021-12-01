@@ -30,7 +30,7 @@
     check_input = true
     executable_pattern = 'blue_crab*'
     prereq = steady_state_crab
-    cli_args = "Problem/active='' DefaultElementQuality/failure_type=Warning"
+    cli_args = "Problem/active='' DefaultElementQuality/failure_type=Warning Problem/restart_file_base=pbfhr-ss_bc_cp/LATEST"
     allow_warnings = true
   []
 []
