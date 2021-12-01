@@ -531,10 +531,10 @@ riser_superficial_rho_v         = ${fparse reactor_total_mfr/riser_free_flow_are
 
 [AuxKernels]
   [power_density]
-    type = ScaleAux
-    multiplier = ${reactor_total_power}
-    source_variable = normalized_power_density
+    type = ParsedAux
     variable = power_density
+    args = normalized_power_density
+    function = '${reactor_total_power} * normalized_power_density'
     block = ' 1 '
     execute_on = 'INITIAL LINEAR TIMESTEP_END'
   []
