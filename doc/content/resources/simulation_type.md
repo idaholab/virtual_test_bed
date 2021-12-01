@@ -17,6 +17,7 @@ help creating it.
 
 - Micro-Reactor [documentation](mrad/index.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/mrad/steady)
 
+- Pebble Bed Modular Reactor [documentation](htgr/pbmr/index.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/pbmr/steady)
 
 ### Component analysis
 
@@ -40,6 +41,9 @@ help creating it.
 
 - Upcoming for PB-FHR
 
+### Protected loss of coolant flow
+
+- Pebble Bed Modular Reactor [documentation](htgr/pbmr/index.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/pbmr/transient)
 
 ### Unprotected loss of coolant flow (ULOF)
 

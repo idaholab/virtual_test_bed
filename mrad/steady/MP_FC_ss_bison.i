@@ -9,6 +9,7 @@
   flux_conversion_factor = 1
 []
 
+# Note: the mesh is stored using git large file system (LFS)
 [Mesh]
   file = ../mesh/mrad_mesh.e
 []

@@ -132,6 +132,18 @@ the following:
            }
 ```
 
+- PBMR-400 numerical benchmark
+
+```
+@article{balestra2021,
+         title = {PBMR-400 benchmark solution of exercise 1 and 2 using the moose based applications: MAMMOTH, Pronghorn},
+         author = {Paolo Balestra and Sebastian Schunert and Robert W Carlsen and April J Novak and Mark D DeHart and Richard C Martineau},
+         year = {2021},
+         journal = {EPJ Web of Conferences},
+         pages = {247}
+       }
+```
+
 ### Micro Reactor style=font-size:125%
 
 - Heat Pipe Micro Reactor
