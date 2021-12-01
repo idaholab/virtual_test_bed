@@ -8,22 +8,24 @@
 [Mesh]
   [fmg]
     type = FileMeshGenerator
-    file = '../steady/sample_output/run_neutronics_out.e'
+    file = '../steady/restart/run_neutronics_restart.e'
+    use_for_exodus_restart = true
   []
-[]
-
-[Outputs]
-  csv = true
-  exodus = true
 []
 
 [Problem]
   coord_type = 'RZ'
 []
 
+################################################################################
+# EQUATION SYSTEM SETUP
+################################################################################
+
 [TransportSystems]
   particle = neutron
   equation_type = transient
+  restart_transport_system = true
+  scaling_eigenkernels = 1.0233728934387
 
   G = 6
 
@@ -43,39 +45,47 @@
   [tfuel]
     order = CONSTANT
     family = MONOMIAL
-    initial_condition = 600
-    # TODO: This remains constant in the reflector because the trasnfer does not overwrite it
+    # initial_condition = 600
+    # TODO: This remains constant in the reflector because the transfer does not overwrite it
     # Either: - model heat conduction in the reflector
     #         - compute the average temperature and set that to be the tfuel in the reflector
+    initial_from_file_var = tfuel
   []
   [c1]
     order = CONSTANT
     family = MONOMIAL
+    initial_from_file_var = c1
   []
   [c2]
     order = CONSTANT
     family = MONOMIAL
+    initial_from_file_var = c2
   []
   [c3]
     order = CONSTANT
     family = MONOMIAL
+    initial_from_file_var = c3
   []
   [c4]
     order = CONSTANT
     family = MONOMIAL
+    initial_from_file_var = c4
   []
   [c5]
     order = CONSTANT
     family = MONOMIAL
+    initial_from_file_var = c5
   []
   [c6]
     order = CONSTANT
     family = MONOMIAL
+    initial_from_file_var = c6
   []
   [dnp]
     order = CONSTANT
     family = MONOMIAL
     components = 6
+    initial_from_file_var = dnp
   []
   [power_density]
     order = CONSTANT
@@ -88,7 +98,7 @@
     type = BuildArrayVariableAux
     variable = dnp
     component_variables = 'c1 c2 c3 c4 c5 c6'
-    execute_on = 'initial nonlinear'
+    execute_on = 'timestep_begin'
   []
   [power_density]
     type = VectorReactionRate
@@ -100,6 +110,10 @@
     block = 'fuel pump hx'
   []
 []
+
+################################################################################
+# CROSS SECTIONS
+################################################################################
 
 [Materials]
   [fuel]
@@ -141,6 +155,10 @@
   []
 []
 
+################################################################################
+# EXECUTION / SOLVE
+################################################################################
+
 [Functions]
   [timestep]
     type = PiecewiseConstant
@@ -165,33 +183,34 @@
                           true   2      1
                           asm   asm
                           1     rcm'
+
+  line_search = 'none'
   nl_abs_tol = 1e-8
   nl_forced_its = 1
   l_abs_tol = 1e-8
   l_max_its = 200
+
+  # Fixed point iteration parameters
   fixed_point_max_its = 3
   accept_on_max_fixed_point_iteration = true
   fixed_point_abs_tol = 1e-50
-  line_search = 'none'
 []
 
-[MultiApps]
-  [init]
-    type = FullSolveMultiApp
-    input_files = '../steady/run_neutronics.i'
-    execute_on = 'initial'
-  []
-  [ns]
-    type = TransientMultiApp
-    input_files = 'run_ns.i'
-    execute_on = 'timestep_begin'
-  []
+################################################################################
+# SIMULATION OUTPUT
+################################################################################
+
+[Outputs]
+  csv = true
+  exodus = true
+  hide = 'dnp'
 []
 
 [Postprocessors]
   [power_scaling]
     type = Receiver
     outputs = none
+    default = 4.1708757e+18
   []
   [power]
     type = ElementIntegralVariablePostprocessor
@@ -201,71 +220,20 @@
   []
 []
 
+################################################################################
+# MULTIAPPS and TRANSFERS for flow simulation
+################################################################################
+
+[MultiApps]
+  [ns]
+    type = TransientMultiApp
+    input_files = 'run_ns.i'
+    execute_on = 'timestep_begin'
+    catch_up = true
+  []
+[]
+
 [Transfers]
-  [init_solution]
-    type = TransportSystemVariableTransfer
-    multi_app = init
-    direction = from_multiapp
-    from_transport_system = diff
-    to_transport_system = diff
-  []
-  [init_power_scaling]
-    type = MultiAppPostprocessorTransfer
-    multi_app = init
-    direction = from_multiapp
-    reduction_type = minimum
-    from_postprocessor = power_scaling
-    to_postprocessor = power_scaling
-  []
-  [init_tfuel]
-    type = MultiAppCopyTransfer
-    multi_app = init
-    direction = from_multiapp
-    source_variable = tfuel
-    variable = tfuel
-  []
-  [init_c1]
-    type = MultiAppCopyTransfer
-    multi_app = init
-    direction = from_multiapp
-    source_variable = c1
-    variable = c1
-  []
-  [init_c2]
-    type = MultiAppCopyTransfer
-    multi_app = init
-    direction = from_multiapp
-    source_variable = c2
-    variable = c2
-  []
-  [init_c3]
-    type = MultiAppCopyTransfer
-    multi_app = init
-    direction = from_multiapp
-    source_variable = c3
-    variable = c3
-  []
-  [init_c4]
-    type = MultiAppCopyTransfer
-    multi_app = init
-    direction = from_multiapp
-    source_variable = c4
-    variable = c4
-  []
-  [init_c5]
-    type = MultiAppCopyTransfer
-    multi_app = init
-    direction = from_multiapp
-    source_variable = c5
-    variable = c5
-  []
-  [init_c6]
-    type = MultiAppCopyTransfer
-    multi_app = init
-    direction = from_multiapp
-    source_variable = c6
-    variable = c6
-  []
   [power_density]
     type = MultiAppProjectionTransfer
     multi_app = ns
@@ -344,3 +312,84 @@
     variable = 'tfuel'
   []
 []
+
+################################################################################
+# MULTIAPPS and TRANSFERS for flow initialization
+################################################################################
+# no longer needed
+# used to run the full coupled multiphysics problem for a steady state
+
+# [MultiApps]
+#   [init]
+#     type = FullSolveMultiApp
+#     input_files = '../steady/run_neutronics.i'
+#     execute_on = 'initial'
+#   []
+# []
+
+# [Transfers]
+#   [init_solution]
+#     type = TransportSystemVariableTransfer
+#     multi_app = init
+#     direction = from_multiapp
+#     from_transport_system = diff
+#     to_transport_system = diff
+#   []
+#   [init_power_scaling]
+#     type = MultiAppPostprocessorTransfer
+#     multi_app = init
+#     direction = from_multiapp
+#     reduction_type = minimum
+#     from_postprocessor = power_scaling
+#     to_postprocessor = power_scaling
+#   []
+#   [init_tfuel]
+#     type = MultiAppCopyTransfer
+#     multi_app = init
+#     direction = from_multiapp
+#     source_variable = tfuel
+#     variable = tfuel
+#   []
+#   [init_c1]
+#     type = MultiAppCopyTransfer
+#     multi_app = init
+#     direction = from_multiapp
+#     source_variable = c1
+#     variable = c1
+#   []
+#   [init_c2]
+#     type = MultiAppCopyTransfer
+#     multi_app = init
+#     direction = from_multiapp
+#     source_variable = c2
+#     variable = c2
+#   []
+#   [init_c3]
+#     type = MultiAppCopyTransfer
+#     multi_app = init
+#     direction = from_multiapp
+#     source_variable = c3
+#     variable = c3
+#   []
+#   [init_c4]
+#     type = MultiAppCopyTransfer
+#     multi_app = init
+#     direction = from_multiapp
+#     source_variable = c4
+#     variable = c4
+#   []
+#   [init_c5]
+#     type = MultiAppCopyTransfer
+#     multi_app = init
+#     direction = from_multiapp
+#     source_variable = c5
+#     variable = c5
+#   []
+#   [init_c6]
+#     type = MultiAppCopyTransfer
+#     multi_app = init
+#     direction = from_multiapp
+#     source_variable = c6
+#     variable = c6
+#   []
+# []

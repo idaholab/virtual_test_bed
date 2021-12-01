@@ -22,8 +22,6 @@ friction = 4.0e3  # [kg / m^4]
 pump_force = -20000. # [N / m^3]
 
 [GlobalParams]
-  two_term_boundary_expansion = true
-
   u = v_x
   v = v_y
   pressure = pressure
@@ -80,7 +78,6 @@ pump_force = -20000. # [N / m^3]
   [pressure]
     type = INSFVPressureVariable
     block = 'fuel pump hx'
-    scaling = 100
     #initial_from_file_var = pressure
   []
   [lambda]
@@ -100,12 +97,6 @@ pump_force = -20000. # [N / m^3]
     type = MooseVariableFVReal
   []
   [wall_yplus]
-    type = MooseVariableFVReal
-  []
-  [power_density]
-    type = MooseVariableFVReal
-  []
-  [fission_source]
     type = MooseVariableFVReal
   []
   [eddy_viscosity]
@@ -143,7 +134,7 @@ pump_force = -20000. # [N / m^3]
     mixing_length = mixing_len
     momentum_component = 'x'
   []
-  [u_molecular_diffusion]      #Modify this
+  [u_molecular_diffusion]
     type = FVDiffusion
     variable = v_x
     coeff = 'mu'
@@ -173,7 +164,7 @@ pump_force = -20000. # [N / m^3]
     mixing_length = mixing_len
     momentum_component = 'y'
   []
-  [v_molecular_diffusion]      #Modify this
+  [v_molecular_diffusion]
     type = FVDiffusion
     variable = v_y
     coeff = 'mu'
@@ -185,6 +176,12 @@ pump_force = -20000. # [N / m^3]
     momentum_component = 'y'
     block = 'fuel pump hx'
   []
+  # [v_gravity]
+  #   type = FVBodyForce
+  #   variable = v_y
+  #   value = ${fparse -9.81 * rho}
+  #   block = 'fuel pump hx'
+  # []
 
   [pump]
     type = FVBodyForce
@@ -239,6 +236,10 @@ pump_force = -20000. # [N / m^3]
   []
 []
 
+################################################################################
+# BOUNDARY CONDITIONS
+################################################################################
+
 [FVBCs]
   [walls_u]
     type = INSFVWallFunctionBC    #rethink if we should put noslip just for the hx and pump.For this I need
@@ -285,6 +286,13 @@ pump_force = -20000. # [N / m^3]
     vars = 'mu'
     vals = ${mu}
   []
+  # Functor materials expect AD functors, to fix with MOOSE
+  [ad_rampdown_mu_func]
+    type = ADParsedFunction
+    value = mu*(100*exp(-3*t)+1)
+    vars = 'mu'
+    vals = ${mu}
+  []
 []
 
 [Materials]
@@ -294,9 +302,9 @@ pump_force = -20000. # [N / m^3]
     prop_values = 'rampdown_mu_func'
   []
   [mu]
-    type = ADGenericFunctionFunctorMaterial      #defines mu artificially for numerical convergence
+    type = ADGenericFunctorMaterial      #defines mu artificially for numerical convergence
     prop_names = 'mu'                     #it converges to the real mu eventually.
-    prop_values = 'rampdown_mu_func'
+    prop_values = 'ad_rampdown_mu_func'
   []
   [total_viscosity]
     type = MixingLengthTurbulentViscosityMaterial
@@ -309,13 +317,13 @@ pump_force = -20000. # [N / m^3]
     block = 'fuel pump hx'
   []
   [not_used]
-    type = ADGenericConstantFunctorMaterial
+    type = ADGenericFunctorMaterial
     prop_names = 'not_used'
     prop_values = 0
     block = 'shield reflector'
   []
   [friction]
-    type = ADGenericConstantFunctorMaterial
+    type = ADGenericFunctorMaterial
     prop_names = 'friction_coef'
     prop_values = ${friction}
     block = 'hx'
@@ -330,25 +338,38 @@ pump_force = -20000. # [N / m^3]
   [SMP]
     type = SMP
     full = true
-    solve_type = 'NEWTON'
+  []
+[]
+
+[Functions]
+  [dts]
+    type = PiecewiseConstant
+    x = '0   0.4 0.8 1   2.2 4.0  4.3 5   8.8 9.2 9.8'
+    y = '0.2 0.4 0.2 0.4 0.1 0.05 0.1 0.2 0.4 0.8 2'
   []
 []
 
 [Executioner]
   type = Transient
 
+  # Time-stepping parameters
   start_time = 0.0
   end_time = 15
-  dt = 0.1
+
+  [TimeStepper]
+    type = FunctionDT
+    function = dts
+  []
   timestep_tolerance = 1e-13 # to avoid round off errors
 
+  # Solver parameters
   solve_type = 'NEWTON'
   petsc_options_iname = '-pc_type -ksp_gmres_restart'
   petsc_options_value = 'lu 50'
   line_search = 'none'
   nl_rel_tol = 1e-12
-  nl_abs_tol = 2e-8
-  nl_max_its = 22
+  nl_abs_tol = 1e-6
+  nl_max_its = 12    # fail early and try again with a shorter time step
   l_max_its = 50
   automatic_scaling = true
 []
@@ -358,9 +379,11 @@ pump_force = -20000. # [N / m^3]
 ################################################################################
 
 [Outputs]
-  exodus = true
   csv = true
-  execute_on = 'final'
+  [restart]
+    type = Exodus
+    execute_on = 'final'
+  []
 []
 
 [Postprocessors]

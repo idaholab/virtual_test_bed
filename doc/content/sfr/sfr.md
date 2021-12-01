@@ -1,5 +1,6 @@
 # Sodium Fast Reactor (SFR)
 
+*Contact: Nicholas Martin, nicolas.martin.at.inl.gov*
 
 ## SFR model description
 
@@ -56,13 +57,14 @@ The grid selected for each parameter is:
  - $T_{fuel}=[600,900,1800]$ $K$.
  - $T_{cool}=[595,698,801]$ $K$
 
-The maximum fuel temperature was selected to coincide with the value used for generating Doppler coefficient in the ARC reference calculation (1800 K), so as to avoid extrapolation. No changes in density was applied when varying the fuel temperature during the cross section generation process. It is justified since the BISON model documented in Section~\ref{sec:bison} will provide the change in fuel temperature. Changes in the fuel density, e.g. due to thermal expansion, will be accounted for by the mesh deformation capability of Griffin and will be presented later.
+The maximum fuel temperature was selected to coincide with the value used for generating Doppler coefficient in the ARC reference calculation (1800 K), so as to avoid extrapolation. No changes in density was applied when varying the fuel temperature during the cross section generation process. It is justified since the BISON model in [#bison] will provide the change in fuel temperature. Changes in the fuel density, e.g. due to thermal expansion, will be accounted for by the mesh deformation capability of Griffin and will be presented later.
 
-The change in coolant temperature is actually capturing the change in coolant density, and the cross sections were generated in Serpent by using the sodium density $\rho(T)$ corresponding to each temperature. The temperatures selected correspond to a $\pm$ 3\% change in sodium density, which was arbitrarily selected to cover the perturbation range used for the sodium density coefficient (+1\%). Using the sodium density correlation, a $\pm$ 3\% change in density corresponds to $\mp$ 103 K. Both parameter could be then used in Griffin (either temperature or density, since density is a bijective function of the temperature), as long as the consistent data is passed from the thermal hydraulic model. Note that the Serpent model includes an axial variation in coolant density/temperature, corresponding for the nominal case to 623 K at the bottom inlet and bottom reflector region, 698 K in the active core region, and 773 K in the top region. The temperature axial profile is uniformly increased or decreased by a value corresponding to $T_{cool}^{region}\pm 103$ K for the perturbed cases.
+The change in coolant temperature is actually capturing the change in coolant density, and the cross sections were generated in Serpent by using the sodium density $\rho(T)$ corresponding to each temperature. The temperatures selected correspond to a $\pm$ 3% change in sodium density, which was arbitrarily selected to cover the perturbation range used for the sodium density coefficient (+1%). Using the sodium density correlation, a $\pm$ 3% change in density corresponds to $\mp$ 103 K. Both parameters could be then used in Griffin (either temperature or density, since density is a bijective function of the temperature), as long as the consistent data is passed from the thermal hydraulic model. Note that the Serpent model includes an axial variation in coolant density/temperature, corresponding for the nominal case to 623 K at the bottom inlet and bottom reflector region, 698 K in the active core region, and 773 K in the top region. The temperature axial profile is uniformly increased or decreased by a value corresponding to $T_{cool}^{region}\pm 103$ K for the perturbed cases.
 
 ## BISON thermo-mechanical model
+  id=bison
 
-The purpose of this model is multiple for this analysis. First, it captures changes in fuel temperature due to changes in power density, and thus is tightly coupled to the neutronics model, as a change in fuel temperature will change the multigroup cross sections, which will change the power density, and so forth. It also models the axial thermal expansion of the fuel rod resulting from an increase in the fuel temperature. The axial expansion of the fuel is also tightly coupled to the neutronics model, via a geometrical effect (increased fuel rod dimensions, thus increased leakage) combined with a density effect (less fissile material per volume), which will change the power density, thus the fuel temperature, and therefore the axial expansion itself. Solving both the heat conduction and the momentum conservation PDEs into a fully coupled approach by a single solve was found difficult from a numerical standpoint and often resulted in solve failures. A more robust approach was to dissociate the thermal feedback from the mechanical one. For each fuel assembly, two BISON inputs were thus created, sharing the exact same geometry but upon which different physics are solved:
+There are multiple purposes for this model in this analysis. First, it captures changes in fuel temperature due to changes in power density, and thus is tightly coupled to the neutronics model, as a change in fuel temperature will change the multigroup cross sections, which will change the power density, and so forth. It also models the axial thermal expansion of the fuel rod resulting from an increase in the fuel temperature. The axial expansion of the fuel is also tightly coupled to the neutronics model, via a geometrical effect (increased fuel rod dimensions, thus increased leakage) combined with a density effect (less fissile material per volume), which will change the power density, thus the fuel temperature, and therefore the axial expansion itself. Solving both the heat conduction and the momentum conservation PDEs into a fully coupled approach by a single solve was found difficult from a numerical standpoint and often resulted in solve failures. A more robust approach was to dissociate the thermal feedback from the mechanical one. For each fuel assembly, two BISON inputs were thus created, sharing the exact same geometry but upon which different physics are solved:
 
 1.  One input solving only the heat conduction problem across the fuel rod.
 
@@ -98,7 +100,7 @@ The mesh is 1D as shown in [sam_mesh].
 A 2D model of the core support plate is built using the MOOSE tensor mechanics module and is provided in [csp_mesh]. The displacements are connected to the neutronics model in the multiphysics scheme, so the thermal expansion of the core support plates leads to an increase in fuel assembly pitch, which leads to a decrease in reactivity.
 
 !media core_plate_mesh.png
-       style=width:100%;margin-left:auto;margin-right:auto
+       style=width:50%;margin-left:auto;margin-right:auto
        id=csp_mesh
        caption=2D Mesh used for the Core Support Plate.
 

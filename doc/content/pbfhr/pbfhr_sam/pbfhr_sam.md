@@ -1,5 +1,7 @@
 # Introduction
 
+*Contact: Jun Fang, fangj.at.anl.gov*
+
 The SAM [!citep](Hu2017) input files (`PBFHR-SS.i` for steady state and
 `PBFHR-TR.i` for loss of flow transient) were built to model the +Mark 1+
 pebble-bed fluoride-salt-cooled high temperature reactor (FHR)

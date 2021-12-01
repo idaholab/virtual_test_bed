@@ -7,7 +7,7 @@ including, but not limited to, regulatory, industrial and academic institutions.
 
 Any contribution must:
 
-- use NEAMS tool, at least partially. The objective of this repository is also to show how to use NEAMS tool for nuclear reactor
+- use NEAMS tools, at least partially. The objective of this repository is also to show how to use NEAMS tools for nuclear reactor
   modeling
 
 - utilize MooseDocs for documentation. MooseDocs files should be placed in `doc/content/<relevant_reactor>`
