@@ -13,6 +13,6 @@
 [Nek5000 CFD results](msfr/nek5000_cfd_results.md)
 
 !alert note
+Nek5000 is open source and may be found [here](https://github.com/Nek5000)
 To request access to Griffin, please submit a request on the
 [INL modeling and software website](https://modsimcode.inl.gov/SitePages/Home.aspx).
-Griffin is currently the only code necessary to run these input files.

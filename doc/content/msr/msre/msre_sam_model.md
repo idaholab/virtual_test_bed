@@ -1,5 +1,7 @@
 # Molten Salt Reactor Experiment (MSRE) SAM Modeling
 
+*Contact: Jun Fang, fangj.at.anl.gov*
+
 ## MSRE Description
 
 The MSRE was a graphite moderated flowing salt type reactor with a design maximum operating power of 10 MW(th) developed by Oak Ridge National Laboratory [!citep](Robertson1965).

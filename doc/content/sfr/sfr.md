@@ -1,5 +1,6 @@
 # Sodium Fast Reactor (SFR)
 
+*Contact: Nicholas Martin, nicolas.martin.at.inl.gov*
 
 ## SFR model description
 
