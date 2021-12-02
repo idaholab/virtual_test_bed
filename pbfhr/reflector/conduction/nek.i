@@ -6,6 +6,7 @@
 
 fluid_solid_interface = '1 2 7'
 
+# Note: the mesh is stored using git large file system (LFS)
 [Mesh]
   type = NekRSMesh
   boundary = ${fluid_solid_interface}
