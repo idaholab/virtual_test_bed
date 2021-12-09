@@ -22,7 +22,7 @@ model are listed [here](steady/improvements.md).
 
 !alert note
 To request access to Direwolf, Pronghorn or Griffin, please submit a request on the
-[INL modeling and software website](https://modsimcode.inl.gov/SitePages/Home.aspx).
+[INL modeling and software website](https://inl.gov/ncrc/).
 
 ## Quick links:
 
