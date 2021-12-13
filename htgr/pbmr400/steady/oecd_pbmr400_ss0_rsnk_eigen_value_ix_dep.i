@@ -147,11 +147,11 @@ fis_fract            = ${fparse 1 - dh_fract} # Fission power fraction at t = 0.
                      133 133 133 133 155 116 113 113 113 113 113 135 164 144 144 152 152 152 189 190 '
   []
   [cartesian_mesh_ids]
-    type = SubdomainElementIDs
+    type = SubdomainExtraElementIDGenerator
     input = cartesian_mesh
-    subdomains   = ${all_bloks}
-    equivalence_ids = ${all_bloks}
-    material_ids = ${material_ids}
+    subdomains = ${all_bloks}
+    extra_element_id_names = 'material_id equivalence_id'
+    extra_element_ids = '${material_ids}; ${all_bloks}'
   []
   uniform_refine = 0
 []
