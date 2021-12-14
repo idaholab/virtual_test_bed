@@ -303,7 +303,7 @@ plenum_height        = 1.
   []
   #thermal materials
   [clad_thermal]
-    type = ThermalHT9
+    type = HT9Thermal
     block = 'clad 4'
   []
   [clad_density]
