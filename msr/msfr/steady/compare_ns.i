@@ -13,19 +13,23 @@
 # A coupled neutronics-coarse TH solution can be generated with
 # 'run_neutronics.i', saved in 'run_neutronics_ns_restart.e'
 
+# Numerical scheme
+advected_interp_method = 'upwind'
+velocity_interp_method = 'rc'
+
 # Material properties
 rho = 4284  # density [kg / m^3]  (@1000K)
 cp = 1594  # specific heat capacity [J / kg / K]
 drho_dT = 0.882  # derivative of density w.r.t. temperature [kg / m^3 / K]
-mu = 0.0166 # viscosity [Pa s]
-k = 1.7 # thermal conductivity [W / m / K]
+mu = 0.0166 # viscosity [Pa s], from
 # https://www.researchgate.net/publication/337161399_Development_of_a_control-\
 # oriented_power_plant_simulator_for_the_molten_salt_fast_reactor/fulltext/5dc9\
 # 5c9da6fdcc57503eec39/Development-of-a-control-oriented-power-plant-simulator-\
 # for-the-molten-salt-fast-reactor.pdf
+k = 1.7
 
 # Turbulent properties
-Pr_t = 10 # turbulent Prandtl number
+Pr_t = 1  # turbulent Prandtl number
 Sc_t = 1  # turbulent Schmidt number
 
 # Derived material properties
@@ -35,7 +39,7 @@ alpha = ${fparse drho_dT / rho}  # thermal expansion coefficient
 T_HX = 873.15 # heat exchanger temperature [K]
 
 # Mass flow rate tuning, for heat exchanger pressure and temperature drop
-friction = 4e3  # [kg / m^4]
+friction = 3.5e3  # [kg / m^4]
 pump_force = -20000. # [N / m^3]
 
 # Delayed neutron precursor parameters. Lambda values are decay constants in
@@ -59,12 +63,20 @@ beta6 = 0.000184087
   pressure = pressure
   temperature = T
 
-  rhie_chow_user_object = 'rc'
-  advected_interp_method = 'upwind'
-  velocity_interp_method = 'rc'
+  advected_interp_method = ${advected_interp_method}
+  velocity_interp_method = ${velocity_interp_method}
   mu = 'mu'
   rho = ${rho}
   mixing_length = 'mixing_len'
+  rhie_chow_user_object = 'rc'
+[]
+
+[UserObjects]
+  [rc]
+    type = INSFVRhieChowInterpolator
+    block = 'fuel pump hx'
+    standard_body_forces = true
+  []
 []
 
 ################################################################################
@@ -78,9 +90,9 @@ beta6 = 0.000184087
     # Depending on the file chosen, the initialization of variables should be
     # adjusted. The following variables can be initalized:
     # - v_x, v_y, p, lambda from isothermal simulation
-    file = 'restart_rc/run_ns_initial_restart.e'
+    # file = 'restart/run_ns_initial_restart.e'
     # - v_x, v_y, p, T, lambda, c_ifrom cosine heated simulation
-    # file = 'restart/run_ns_restart.e'
+    file = 'restart/run_ns_restart.e'
     # - v_x, v_y, p, T, lambda, c_i from coupled multiphysics simulation
     # file = 'restart/run_ns_coupled_restart.e'
   []
@@ -150,75 +162,45 @@ beta6 = 0.000184087
   [T]
     type = MooseVariableFVReal
     block = 'fuel pump hx'
-    scaling = 1e-2
-    initial_condition = ${T_HX}
-    # initial_from_file_var = T
+    scaling = 1
+    # initial_condition = ${T_HX}
+    initial_from_file_var = T
   []
   [c1]
     type = MooseVariableFVReal
     block = 'fuel pump hx'
     scaling = 1e4
-    # initial_from_file_var = c1
-    [InitialCondition]
-      type = FunctionIC
-      function = 'cosine_guess'
-      scaling_factor = 0.017
-    []
+    initial_from_file_var = c1
   []
   [c2]
     type = MooseVariableFVReal
     block = 'fuel pump hx'
     scaling = 1e4
-    # initial_from_file_var = c2
-    [InitialCondition]
-      type = FunctionIC
-      function = 'cosine_guess'
-      scaling_factor = 0.06
-    []
+    initial_from_file_var = c2
   []
   [c3]
     type = MooseVariableFVReal
     block = 'fuel pump hx'
     scaling = 1e4
-    # initial_from_file_var = c3
-    [InitialCondition]
-      type = FunctionIC
-      function = 'cosine_guess'
-      scaling_factor = 0.011
-    []
+    initial_from_file_var = c3
   []
   [c4]
     type = MooseVariableFVReal
     block = 'fuel pump hx'
     scaling = 1e5
-    # initial_from_file_var = c4
-    [InitialCondition]
-      type = FunctionIC
-      function = 'cosine_guess'
-      scaling_factor = 0.009
-    []
+    initial_from_file_var = c4
   []
   [c5]
     type = MooseVariableFVReal
     block = 'fuel pump hx'
     scaling = 1e5
-    # initial_from_file_var = c5
-    [InitialCondition]
-      type = FunctionIC
-      function = 'cosine_guess'
-      scaling_factor = 0.002
-    []
+    initial_from_file_var = c5
   []
   [c6]
     type = MooseVariableFVReal
     scaling = 1e6
     block = 'fuel pump hx'
-    # initial_from_file_var = c6
-    [InitialCondition]
-      type = FunctionIC
-      function = 'cosine_guess'
-      scaling_factor = 0.0002
-    []
+    initial_from_file_var = c6
   []
 []
 
@@ -242,8 +224,7 @@ beta6 = 0.000184087
     # Power density is re-initalized by a transfer from neutronics
     [InitialCondition]
       type = FunctionIC
-      function = 'cosine_guess'
-      scaling_factor = ${fparse 3e9/2.81543}
+      function = 'power_guess'
     []
   []
   [fission_source]
@@ -251,8 +232,7 @@ beta6 = 0.000184087
     # Fission source is re-initalized by a transfer from neutronics
     [InitialCondition]
       type = FunctionIC
-      function = 'cosine_guess'
-      scaling_factor = ${fparse 6.303329e+01/2.81543}
+      function = 'fission_guess'
     []
     block = 'fuel pump hx'
   []
@@ -260,20 +240,133 @@ beta6 = 0.000184087
     type = MooseVariableFVReal
     block = 'fuel pump hx'
   []
+
+  # Variables for comparing
+  [v_x_var]
+    type = INSFVVelocityVariable
+    block = 'fuel pump hx'
+    initial_from_file_var = v_x
+  []
+  [v_y_var]
+    type = INSFVVelocityVariable
+    block = 'fuel pump hx'
+    initial_from_file_var = v_y
+  []
+  [pressure_var]
+    type = INSFVPressureVariable
+    block = 'fuel pump hx'
+    scaling = 0.1
+    initial_from_file_var = pressure
+  []
+  [T_var]
+    type = MooseVariableFVReal
+    block = 'fuel pump hx'
+    scaling = 1
+    # initial_condition = ${T_HX}
+    initial_from_file_var = T
+  []
+  [c1_var]
+    type = MooseVariableFVReal
+    block = 'fuel pump hx'
+    scaling = 1e4
+    initial_from_file_var = c1
+  []
+  [c2_var]
+    type = MooseVariableFVReal
+    block = 'fuel pump hx'
+    scaling = 1e4
+    initial_from_file_var = c2
+  []
+  [c3_var]
+    type = MooseVariableFVReal
+    block = 'fuel pump hx'
+    scaling = 1e4
+    initial_from_file_var = c3
+  []
+  [c4_var]
+    type = MooseVariableFVReal
+    block = 'fuel pump hx'
+    scaling = 1e5
+    initial_from_file_var = c4
+  []
+  [c5_var]
+    type = MooseVariableFVReal
+    block = 'fuel pump hx'
+    scaling = 1e5
+    initial_from_file_var = c5
+  []
+  [c6_var]
+    type = MooseVariableFVReal
+    scaling = 1e6
+    block = 'fuel pump hx'
+    initial_from_file_var = c6
+  []
+
+  # Variables for comparing
+  [v_x_comp]
+    type = INSFVVelocityVariable
+    block = 'fuel pump hx'
+  []
+  [v_y_comp]
+    type = INSFVVelocityVariable
+    block = 'fuel pump hx'
+  []
+  [pressure_comp]
+    type = INSFVPressureVariable
+    block = 'fuel pump hx'
+  []
+  [T_comp]
+    type = MooseVariableFVReal
+    block = 'fuel pump hx'
+  []
+  [c1_comp]
+    type = MooseVariableFVReal
+    block = 'fuel pump hx'
+  []
+  [c2_comp]
+    type = MooseVariableFVReal
+    block = 'fuel pump hx'
+  []
+  [c3_comp]
+    type = MooseVariableFVReal
+    block = 'fuel pump hx'
+  []
+  [c4_comp]
+    type = MooseVariableFVReal
+    block = 'fuel pump hx'
+  []
+  [c5_comp]
+    type = MooseVariableFVReal
+    block = 'fuel pump hx'
+  []
+  [c6_comp]
+    type = MooseVariableFVReal
+    block = 'fuel pump hx'
+  []
 []
 
 [Functions]
   # Guess to have a 3D power distribution
-  [cosine_guess]
+  # TODO: use a Bessel function radially
+  [power_guess]
     type = ParsedFunction
-    value = 'max(0, cos(x*pi/2/1.2))*max(0, cos(y*pi/2/1.1))'
+    value = '3e9/2.81543 * max(0, cos(x*pi/2/1.2))*max(0, cos(y*pi/2/1.1))'
   []
-[]
-
-[UserObjects]
-  [rc]
-    type = INSFVRhieChowInterpolator
-    block = 'fuel pump hx'
+  [fission_guess]
+    type = ParsedFunction
+    value = '6.303329e+01/2.81543 * max(0, cos(x*pi/2/1.2))*max(0, cos(y*pi/2/1.1))'
+  []
+  [rampdown_mu_func]
+    type = ParsedFunction
+    value = mu*(100*exp(-3*t)+1)
+    vars = 'mu'
+    vals = ${mu}
+  []
+  [ad_rampdown_mu_func]
+    type = ADParsedFunction
+    value = mu*(100*exp(-3*t)+1)
+    vars = 'mu'
+    vals = ${mu}
   []
 []
 
@@ -304,6 +397,7 @@ beta6 = 0.000184087
   [u_turbulent_diffusion_rans]
     type = INSFVMixingLengthReynoldsStress
     variable = v_x
+    mixing_length = mixing_len
     momentum_component = 'x'
   []
   [u_molecular_diffusion]
@@ -333,6 +427,7 @@ beta6 = 0.000184087
   [v_turbulent_diffusion_rans]
     type = INSFVMixingLengthReynoldsStress
     variable = v_y
+    mixing_length = mixing_len
     momentum_component = 'y'
   []
   [v_molecular_diffusion]
@@ -357,13 +452,13 @@ beta6 = 0.000184087
     block = 'fuel'
     alpha_name = 'alpha_b'
   []
-  [v_gravity]
-   type = INSFVMomentumGravity
-   variable = v_y
-   gravity = '0 -9.81 0'
-   block = 'fuel pump hx'
-   momentum_component = 'y'
-  []
+  #[v_gravity]
+  #  type = INSFVMomentumGravity
+  #  variable = v_y
+  #  gravity = '0 -9.81 0'
+  #  block = 'fuel pump hx'
+  #  momentum_component = 'y'
+  #[]
 
   [pump]
     type = INSFVBodyForce
@@ -387,6 +482,46 @@ beta6 = 0.000184087
     block = 'hx'
     momentum_component = 'y'
   []
+
+  # [heat_time]
+  #   type = INSFVEnergyTimeDerivative
+  #   variable = T
+  #   rho = '1'
+  #   cp_name = 'cp_unitary'
+  # []
+  # [heat_advection]
+  #   type = INSFVScalarFieldAdvection
+  #   variable = T
+  #   block = 'fuel pump hx'
+  # []
+  # [heat_diffusion]
+  #   type = FVDiffusion
+  #   coeff = ${fparse k / rho / cp}
+  #   variable = T
+  #   block = 'fuel pump hx'
+  # []
+  # [heat_turb_diffusion]
+  #   type = INSFVMixingLengthScalarDiffusion
+  #   schmidt_number = ${Pr_t}
+  #   variable = T
+  #   block = 'fuel pump hx'
+  # []
+  # [heat_src]
+  #   type = FVCoupledForce
+  #   variable = T
+  #   v = power_density
+  #   coef = ${fparse 1 / rho / cp}
+  #   block = 'fuel pump hx'
+  # []
+  # [heat_sink]
+  #   type = NSFVEnergyAmbientConvection
+  #   variable = T
+  #   # Compute the coefficient as 600 m^2 / m^3 surface area density times a heat
+  #   # transfer coefficient of 20 kW / m^2 / K
+  #   alpha = 'alpha'
+  #   block = 'hx'
+  #   T_ambient = ${T_HX}
+  # []
 
   [heat_time]
     type = INSFVEnergyTimeDerivative
@@ -462,36 +597,42 @@ beta6 = 0.000184087
     schmidt_number = ${Sc_t}
     variable = c1
     block = 'fuel pump hx'
+    mixing_length = mixing_len
   []
   [c2_turb_diffusion]
     type = INSFVMixingLengthScalarDiffusion
     schmidt_number = ${Sc_t}
     variable = c2
     block = 'fuel pump hx'
+    mixing_length = mixing_len
   []
   [c3_turb_diffusion]
     type = INSFVMixingLengthScalarDiffusion
     schmidt_number = ${Sc_t}
     variable = c3
     block = 'fuel pump hx'
+    mixing_length = mixing_len
   []
   [c4_turb_diffusion]
     type = INSFVMixingLengthScalarDiffusion
     schmidt_number = ${Sc_t}
     variable = c4
     block = 'fuel pump hx'
+    mixing_length = mixing_len
   []
   [c5_turb_diffusion]
     type = INSFVMixingLengthScalarDiffusion
     schmidt_number = ${Sc_t}
     variable = c5
     block = 'fuel pump hx'
+    mixing_length = mixing_len
   []
   [c6_turb_diffusion]
     type = INSFVMixingLengthScalarDiffusion
     schmidt_number = ${Sc_t}
     variable = c6
     block = 'fuel pump hx'
+    mixing_length = mixing_len
   []
   [c1_src]
     type = FVCoupledForce
@@ -592,7 +733,74 @@ beta6 = 0.000184087
     type = INSFVMixingLengthTurbulentViscosityAux
     variable = eddy_viscosity
     block = 'fuel pump hx'
-    execute_on = 'initial'
+  []
+
+  [comp_vx]
+    type = ParsedAux
+    variable = 'v_x_comp'
+    args = 'v_x v_x_var'
+    function = '(v_x - v_x_var) / v_x_var * 100'
+  []
+  [comp_vy]
+    type = ParsedAux
+    variable = 'v_y_comp'
+    args = 'v_y v_y_var'
+    function = '(v_y - v_y_var) / v_y_var * 100'
+  []
+  [comp_pressure]
+    type = ParsedAux
+    variable = 'pressure_comp'
+    args = 'pressure pressure_var'
+    function = '(pressure - pressure_var) / pressure_var * 100'
+  []
+  [comp_T]
+    type = ParsedAux
+    variable = 'T_comp'
+    args = 'T T_var'
+    function = '(T - T_var) / T_var * 100'
+    block = 'fuel pump hx'
+  []
+  [comp_c1]
+    type = ParsedAux
+    variable = 'c1_comp'
+    args = 'c1 c1_var'
+    function = '(c1 - c1_var) / c1_var * 100'
+    block = 'fuel pump hx'
+  []
+  [comp_c2]
+    type = ParsedAux
+    variable = 'c2_comp'
+    args = 'c2 c2_var'
+    function = '(c2 - c2_var) / c2_var * 100'
+    block = 'fuel pump hx'
+  []
+  [comp_c3]
+    type = ParsedAux
+    variable = 'c3_comp'
+    args = 'c3 c3_var'
+    function = '(c3 - c3_var) / c3_var * 100'
+    block = 'fuel pump hx'
+  []
+  [comp_c4]
+    type = ParsedAux
+    variable = 'c4_comp'
+    args = 'c4 c4_var'
+    function = '(c4 - c4_var) / c4_var * 100'
+    block = 'fuel pump hx'
+  []
+  [comp_c5]
+    type = ParsedAux
+    variable = 'c5_comp'
+    args = 'c5 c5_var'
+    function = '(c5 - c5_var) / c5_var * 100'
+    block = 'fuel pump hx'
+  []
+  [comp_c6]
+    type = ParsedAux
+    variable = 'c6_comp'
+    args = 'c6 c6_var'
+    function = '(c6 - c6_var) / c6_var * 100'
+    block = 'fuel pump hx'
   []
 []
 
@@ -601,13 +809,13 @@ beta6 = 0.000184087
     type = INSFVWallFunctionBC
     variable = v_x
     boundary = 'shield_wall reflector_wall'
-    momentum_component = 'x'
+    momentum_component = x
   []
   [walls_v]
     type = INSFVWallFunctionBC
     variable = v_y
     boundary = 'shield_wall reflector_wall'
-    momentum_component = 'y'
+    momentum_component = y
   []
 
   [symmetry_u]
@@ -639,7 +847,7 @@ beta6 = 0.000184087
   [mu_mat]  # Yplus kernel not migrated to functor materials
     type = ADGenericFunctionMaterial
     prop_names = 'mu_mat'
-    prop_values = '${mu}'
+    prop_values = 'rampdown_mu_func'
     block = 'fuel pump hx'
   []
   [heat_exchanger_coefficient]
@@ -656,11 +864,12 @@ beta6 = 0.000184087
   [mu]
     type = ADGenericFunctorMaterial
     prop_names = 'mu'
-    prop_values = '${mu}'
+    prop_values = 'ad_rampdown_mu_func'
     block = 'fuel pump hx'
   []
   [total_viscosity]
     type = MixingLengthTurbulentViscosityMaterial
+    mixing_length = mixing_len
     mu = 'mu'
     block = 'fuel pump hx'
   []
@@ -668,12 +877,12 @@ beta6 = 0.000184087
     type = INSFVMaterial
     block = 'fuel pump hx'
   []
-  # [not_used]
-  #   type = ADGenericFunctorMaterial
-  #   prop_names = 'not_used'
-  #   prop_values = 0
-  #   block = 'shield reflector'
-  # []
+  [not_used]
+    type = ADGenericFunctorMaterial
+    prop_names = 'not_used'
+    prop_values = 0
+    block = 'shield reflector'
+  []
   [friction]
     type = ADGenericFunctorMaterial
     prop_names = 'friction_coef'
@@ -696,7 +905,7 @@ beta6 = 0.000184087
   [dts]
     type = PiecewiseConstant
     x = '0    100'
-    y = '1. 2.5'
+    y = '0.1 2.5'
   []
 []
 
@@ -705,7 +914,7 @@ beta6 = 0.000184087
 
   # Time stepping parameters
   start_time = 0.0
-  end_time = 40
+  end_time = 20
   # [TimeStepper]
   #   # This time stepper makes the time step grow exponentially
   #   # It can only be used with proper initialization
@@ -740,7 +949,6 @@ beta6 = 0.000184087
 [Outputs]
   exodus = true
   csv = true
-  hide = 'flow_hx_bot flow_hx_top min_flow_T max_flow_T'
   [restart]
     type = Exodus
     execute_on = 'final'
@@ -759,39 +967,46 @@ beta6 = 0.000184087
     boundary = 'min_core_radius'
     vel_x = v_x
     vel_y = v_y
+    advected_interp_method = ${advected_interp_method}
     advected_mat_prop = ${rho}
+    fv = false # see MOOSE #18817
   []
-  # TODO: weakly compressible, switch to mass flow rate
-  [flow_hx_bot]
+  [mdot_hx_bot]
     type = InternalVolumetricFlowRate
     boundary = 'hx_bot'
     vel_x = v_x
     vel_y = v_y
+    # advected_variable = 'rho_var'  # add when postprocessor uses face values properly
+    fv = false # see MOOSE #18817
   []
-  [flow_hx_top]
+  [mdot_hx_top]
     type = InternalVolumetricFlowRate
     boundary = 'hx_top'
     vel_x = v_x
     vel_y = v_y
+    # advected_variable = 'rho_var'
+    fv = false # see MOOSE #18817
   []
-  [max_flow_T]
+  [max_mdot_T]
     type = InternalVolumetricFlowRate
     boundary = 'hx_top'
     vel_x = v_x
     vel_y = v_y
     advected_variable = 'T'
+    fv = false # see MOOSE #18817
   []
-  [min_flow_T]
+  [min_mdot_T]
     type = InternalVolumetricFlowRate
     boundary = 'hx_bot'
     vel_x = v_x
     vel_y = v_y
     advected_variable = 'T'
+    fv = false # see MOOSE #18817
   []
   [dT]
     type = ParsedPostprocessor
-    function = '-max_flow_T / flow_hx_bot + min_flow_T / flow_hx_top'
-    pp_names = 'max_flow_T min_flow_T flow_hx_bot flow_hx_top'
+    function = '-max_mdot_T / mdot_hx_bot + min_mdot_T / mdot_hx_top'
+    pp_names = 'max_mdot_T min_mdot_T mdot_hx_bot mdot_hx_top'
   []
   [total_power]
     type = ElementIntegralVariablePostprocessor

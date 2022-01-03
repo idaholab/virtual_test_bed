@@ -154,7 +154,15 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
   superficial_vel_x = 'vel_x'
   superficial_vel_y = 'vel_y'
 
+  rhie_chow_user_object = rc
   two_term_boundary_expansion = true
+[]
+
+[UserObjects]
+  [rc]
+    type = PINSFVRhieChowInterpolator
+    #standard_body_forces = true
+  []
 []
 
 [Debug]
@@ -206,15 +214,18 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
   [vel_x_time]
     type = PINSFVMomentumTimeDerivative
     variable = vel_x
+    momentum_component = x
   []
   [vel_x_advection]
     type = PINSFVMomentumAdvection
     variable = vel_x
     advected_quantity = 'superficial_rho_u'
+    momentum_component = x
   []
   [vel_x_viscosity]
     type = PINSFVMomentumDiffusion
     variable = vel_x
+    momentum_component = x
   []
   [u_pressure]
     type = PINSFVMomentumPressure
@@ -233,15 +244,18 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
   [vel_y_time]
     type = PINSFVMomentumTimeDerivative
     variable = vel_y
+    momentum_component = y
   []
   [vel_y_advection]
     type = PINSFVMomentumAdvection
     variable = vel_y
     advected_quantity = 'superficial_rho_v'
+    momentum_component = y
   []
   [vel_y_viscosity]
     type = PINSFVMomentumDiffusion
     variable = vel_y
+    momentum_component = y
   []
   [v_pressure]
     type = PINSFVMomentumPressure
@@ -468,11 +482,13 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
     type = INSFVNaturalFreeSlipBC
     boundary = 'bed_left barrel_wall'
     variable = vel_x
+    momentum_component = x
   []
   [free-slip-wall-y]
     type = INSFVNaturalFreeSlipBC
     boundary = 'bed_left barrel_wall'
     variable = vel_y
+    momentum_component = y
   []
 
   [outer]
@@ -731,31 +747,31 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
 # ==============================================================================
 # MULTIAPPS FOR PEBBLE MODEL
 # ==============================================================================
-[MultiApps]
-  [coarse_mesh]
-    type = TransientMultiApp
-    execute_on = 'TIMESTEP_END'
-    input_files = 'ss3_coarse_pebble_mesh.i'
-    cli_args = 'Outputs/console=false'
-  []
-[]
+#[MultiApps]
+#  [coarse_mesh]
+#    type = TransientMultiApp
+#    execute_on = 'TIMESTEP_END'
+#    input_files = 'ss3_coarse_pebble_mesh.i'
+#    cli_args = 'Outputs/console=false'
+#  []
+#[]
 
-[Transfers]
-  [fuel_matrix_heat_source]
-    type = MultiAppProjectionTransfer
-    direction = to_multiapp
-    multi_app = coarse_mesh
-    source_variable = power_distribution
-    variable = power_distribution
-  []
-  [pebble_surface_temp]
-    type = MultiAppProjectionTransfer
-    direction = to_multiapp
-    multi_app = coarse_mesh
-    source_variable = temp_solid
-    variable = temp_solid
-  []
-[]
+#[Transfers]
+#  [fuel_matrix_heat_source]
+#    type = MultiAppProjectionTransfer
+#    direction = to_multiapp
+#    multi_app = coarse_mesh
+#    source_variable = power_distribution
+#    variable = power_distribution
+#  []
+#  [pebble_surface_temp]
+#    type = MultiAppProjectionTransfer
+#    direction = to_multiapp
+#    multi_app = coarse_mesh
+#    source_variable = temp_solid
+#    variable = temp_solid
+#  []
+#[]
 
 # ==============================================================================
 # POSTPROCESSORS DEBUG AND OUTPUTS
