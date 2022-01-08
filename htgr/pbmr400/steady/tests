@@ -5,6 +5,7 @@
     executable_pattern = 'blue_crab*|fenix*'
     cli_args = 'Executioner/fixed_point_max_its=1'
     method = 'opt' # see Griffin #230
+    min_parallel = 4
   []
   [neutronics]
     type = RunApp
