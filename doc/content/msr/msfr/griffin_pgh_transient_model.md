@@ -42,7 +42,7 @@ several different methods for initializing one model with the result of another.
   system, and the resulting solution can then be transferred over to the main
   application.
 
-This example will use both the Exodus restart and the initial MultiApp methods.
+This example will use both the Exodus restart.
 The fluid dynamics app, in particular, will use the Exodus method. Note that the
 `[Mesh]` block references an output file created by the steady-state simulation.
 (An Exodus file might contain just a mesh, or it might contain a mesh and a set
@@ -65,24 +65,26 @@ MultiApp approach.
 
 Like the fluids app, the mesh for the neutronics app will be set using the
 output of the steady-state simulation. This ensures mesh consistency between the
-steady and transient simulations. However, the `use_for_exodus_restart`
-parameter is not included:
+steady and transient simulations.
 
 !listing msr/msfr/transient/run_neutronics.i block=Mesh/fmg
 
+<!---
+NO LONGER DONE THAT WAY
 Here the steady-state simulation is included as a MultiApp. Note the
 `execute_on = initial` parameter:
-
+//
 !listing msr/msfr/transient/run_neutronics.i block=MultiApps/init
-
+//
 Transfers must also be specified so that the steady-state solution is copied
 over to the transient app. Here are a subset of those transfers:
-
+//
 !listing msr/msfr/transient/run_neutronics.i block=Transfers/init_solution
-
+//
 !listing msr/msfr/transient/run_neutronics.i block=Transfers/init_power_scaling
-
+//
 !listing msr/msfr/transient/run_neutronics.i block=Transfers/init_c1
+-->
 
 ## Pump control
 
