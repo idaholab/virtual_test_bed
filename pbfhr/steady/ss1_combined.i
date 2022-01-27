@@ -86,6 +86,7 @@ model_inlet_area = ${fparse 3.14159265 * (model_inlet_rout * model_inlet_rout -
 mfr = 976.0            # kg/s, from [2]
 total_power = 236.0e6  # W, from [2]
 inlet_T_fluid = 873.15 # K, from [2]
+outlet_pressure = 2e5  # Pa
 inlet_vel_y = ${fparse mfr / model_inlet_area / rho_fluid} # superficial
 power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using power pp
 
@@ -430,6 +431,10 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
 # ==============================================================================
 # BOUNDARY CONDITIONS
 # ==============================================================================
+[Problem]
+  fv_bcs_integrity_check = false
+[]
+
 [FVBCs]
   [inlet_vel_x]
     type = INSFVInletVelocityBC
@@ -437,10 +442,18 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
     function = 1e-12
     boundary = 'bed_horizontal_bottom'
   []
-  [inlet_vel_y]
-    type = INSFVInletVelocityBC
+  [inlet_vel_y_mass]
+    type = WCNSFVMassFluxBC
+    variable = pressure
+    mdot_pp = 'inlet_mdot'
+    area_pp = ${model_inlet_area}
+    boundary = 'bed_horizontal_bottom'
+  []
+  [inlet_vel_y_momentum]
+    type = WCNSFVMomentumFluxBC
     variable = vel_y
-    function = ${inlet_vel_y}
+    mdot_pp = 'inlet_mdot'
+    area_pp = ${model_inlet_area}
     boundary = 'bed_horizontal_bottom'
   []
   [OR_inlet_vel_x]
@@ -456,11 +469,40 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
     boundary = 'OR_horizontal_bottom'
   []
 
-  #TODO: Switch to a flux BC (eps * phi * T)
-  [inlet_temp_fluid]
-    type = FVDirichletBC
+  # Option 1
+  # [inlet_temp_fluid]
+  #   type = WCNSFVInletTemperatureBC
+  #   variable = temp_fluid
+  #   temperature_pp = ${fparse inlet_T_fluid}
+  #   boundary = 'bed_horizontal_bottom'
+  # []
+  # Option 2
+  # [inlet_temp_fluid]
+  #   type = WCNSFVInletTemperatureBC
+  #   variable = temp_fluid
+  #   energy_pp = '${fparse mfr * 2385 * inlet_T_fluid}'
+  #   cp = 2385
+  #   mdot_pp = 'inlet_mdot'
+  #   boundary = 'bed_horizontal_bottom'
+  # []
+  [inlet_flow_energy]
+    type =  WCNSFVEnergyFluxBC
     variable = temp_fluid
-    value = ${fparse inlet_T_fluid}
+    # 1
+    # energy_pp = '${fparse mfr * 2385 * inlet_T_fluid}'
+    # area_pp = ${model_inlet_area}
+
+    # Common params to 2 & 3
+    cp = 2385
+    temperature_pp = 'inlet_temp_fluid'
+
+    # 2
+    # velocity_pp = ${inlet_vel_y}
+
+    # 3
+    mdot_pp = 'inlet_mdot'
+    area_pp = ${model_inlet_area}
+
     boundary = 'bed_horizontal_bottom'
   []
 
@@ -485,7 +527,7 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
   [outlet_p]
     type = INSFVOutletPressureBC
     variable = pressure
-    function = 2e5   # not too far from atm for matprop evaluations
+    function = ${outlet_pressure}   # not too far from atm for matprop evaluations
     boundary = 'bed_horizontal_top OR_horizontal_top plenum_top'
   []
 []
@@ -552,7 +594,6 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
     block = ${blocks_fluid}
     mu_multiplier = mu_func
     T_fluid = 'temp_fluid'
-    speed = 'speed'
     characteristic_length = ${pebble_diameter}
   []
 
@@ -731,49 +772,58 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
 # ==============================================================================
 # MULTIAPPS FOR PEBBLE MODEL
 # ==============================================================================
-[MultiApps]
-  [coarse_mesh]
-    type = TransientMultiApp
-    execute_on = 'TIMESTEP_END'
-    input_files = 'ss3_coarse_pebble_mesh.i'
-    cli_args = 'Outputs/console=false'
-  []
-[]
-
-[Transfers]
-  [fuel_matrix_heat_source]
-    type = MultiAppProjectionTransfer
-    direction = to_multiapp
-    multi_app = coarse_mesh
-    source_variable = power_distribution
-    variable = power_distribution
-  []
-  [pebble_surface_temp]
-    type = MultiAppProjectionTransfer
-    direction = to_multiapp
-    multi_app = coarse_mesh
-    source_variable = temp_solid
-    variable = temp_solid
-  []
-[]
+# [MultiApps]
+#   [coarse_mesh]
+#     type = TransientMultiApp
+#     execute_on = 'TIMESTEP_END'
+#     input_files = 'ss3_coarse_pebble_mesh.i'
+#     cli_args = 'Outputs/console=false'
+#   []
+# []
+#
+# [Transfers]
+#   [fuel_matrix_heat_source]
+#     type = MultiAppProjectionTransfer
+#     direction = to_multiapp
+#     multi_app = coarse_mesh
+#     source_variable = power_distribution
+#     variable = power_distribution
+#   []
+#   [pebble_surface_temp]
+#     type = MultiAppProjectionTransfer
+#     direction = to_multiapp
+#     multi_app = coarse_mesh
+#     source_variable = temp_solid
+#     variable = temp_solid
+#   []
+# []
 
 # ==============================================================================
 # POSTPROCESSORS DEBUG AND OUTPUTS
 # ==============================================================================
 [Postprocessors]
-  # For future SAM coupling
+  # For SAM coupling
   # [inlet_vel_y]
   #   type = Receiver
   #   default = ${inlet_vel_y}
   # []
-  # [inlet_temp_fluid]
+  [inlet_temp_fluid]
+    type = Receiver
+    default = ${inlet_T_fluid}
+  []
+  # [inlet_density]
   #   type = Receiver
-  #   default = ${inlet_T_fluid}
+  #   default = ${rho_fluid}
   # []
-  # [outlet_pressure]
-  #   type = Receiver
-  #   default = ${outlet_pressure}
-  # []
+  [inlet_mdot]
+    type = Receiver
+    default = ${mfr}
+  []
+  [outlet_pressure]
+    type = Receiver
+    default = ${outlet_pressure}
+  []
+
   [max_Tf]
     type = ElementExtremeValue
     variable = temp_fluid
@@ -796,11 +846,20 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
     advected_variable = ${rho_fluid}
     execute_on = 'INITIAL TIMESTEP_END'
   []
+  [v_out_normalized_for_SAM]
+    type = ParsedPostprocessor
+    function = 'mass_flow_out / area_SAM / density'
+    pp_names = 'mass_flow_out'
+    constant_names = 'area_SAM density'
+    constant_expressions = '1.327511 ${rho_fluid}'
+  []
+  # We need the temperature output to conserve energy   ####### NOT QUITE
   [T_flow_out]
-    type = SideAverageValue
-    boundary = 'bed_horizontal_top plenum_top OR_horizontal_top'
-    variable = temp_fluid
-    execute_on = 'INITIAL TIMESTEP_END'
+    type = ParsedPostprocessor
+    function = 'eflow_out / mass_flow_out / cp'
+    pp_names = 'eflow_out mass_flow_out'
+    constant_names = 'cp'
+    constant_expressions = '2385'
   []
   [pressure_in]
     type = SideAverageValue
@@ -829,7 +888,7 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
   #   diffusivity = 'k_s'
   #   execute_on = 'INITIAL TIMESTEP_END'
   # []
-  [flow_in_m]
+  [eflow_in]
     type = VolumetricFlowRate
     boundary = 'bed_horizontal_bottom OR_horizontal_bottom'
     advected_mat_prop = 'rho_cp_temp'
@@ -841,15 +900,15 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
   #   diffusivity = 'kappa'
   # []
   # diffusion at the top is 0 because of the fully developped flow assumption
-  [flow_out]
+  [eflow_out]
     type = VolumetricFlowRate
     boundary = 'bed_horizontal_top plenum_top OR_horizontal_top'
     advected_mat_prop = 'rho_cp_temp'
   []
   # [core_balance]
   #   type = ParsedPostprocessor
-  #   pp_names = 'power flow_in_m diffusion_in flow_out outer_heat_loss'
-  #   function = 'power - flow_in_m + diffusion_in - flow_out + outer_heat_loss'
+  #   pp_names = 'power eflow_in diffusion_in flow_out outer_heat_loss'
+  #   function = 'power - eflow_in + diffusion_in - eflow_out + outer_heat_loss'
   # []
 
   # Bypass
