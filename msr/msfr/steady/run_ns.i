@@ -11,7 +11,7 @@
 # A heated solution, with a flat power distribution, can be generated with
 # this script 'run_ns.i', and is saved in 'restart/run_ns_restart.e'
 # A coupled neutronics-coarse TH solution can be generated with
-# 'run_neutronics.i', saved in 'run_neutronics_ns_restart.e'
+# 'run_neutronics.i', saved in 'restart/run_neutronics_ns_restart.e'
 
 # Material properties
 rho = 4284  # density [kg / m^3]  (@1000K)
@@ -78,9 +78,9 @@ beta6 = 0.000184087
     # Depending on the file chosen, the initialization of variables should be
     # adjusted. The following variables can be initalized:
     # - v_x, v_y, p, lambda from isothermal simulation
-    file = 'restart_rc/run_ns_initial_restart.e'
+    # file = 'restart/run_ns_initial_restart.e'
     # - v_x, v_y, p, T, lambda, c_ifrom cosine heated simulation
-    # file = 'restart/run_ns_restart.e'
+    file = 'restart/run_ns_restart.e'
     # - v_x, v_y, p, T, lambda, c_i from coupled multiphysics simulation
     # file = 'restart/run_ns_coupled_restart.e'
   []
@@ -114,13 +114,12 @@ beta6 = 0.000184087
 []
 
 [Problem]
-  kernel_coverage_check = false
   coord_type = 'RZ'
   rz_coord_axis = Y
 []
 
 ################################################################################
-# EQUATIONS: VARIABLES, KERNELS & BCS
+# EQUATIONS: VARIABLES, KERNELS
 ################################################################################
 
 [Variables]
@@ -137,7 +136,6 @@ beta6 = 0.000184087
   [pressure]
     type = INSFVPressureVariable
     block = 'fuel pump hx'
-    scaling = 0.1
     initial_from_file_var = pressure
   []
   [lambda]
@@ -145,79 +143,71 @@ beta6 = 0.000184087
     order = FIRST
     block = 'fuel pump hx'
     initial_from_file_var = lambda
-    scaling = 1000
   []
   [T]
     type = MooseVariableFVReal
     block = 'fuel pump hx'
-    scaling = 1e-2
     initial_condition = ${T_HX}
     # initial_from_file_var = T
   []
   [c1]
     type = MooseVariableFVReal
     block = 'fuel pump hx'
-    scaling = 1e4
     # initial_from_file_var = c1
     [InitialCondition]
       type = FunctionIC
       function = 'cosine_guess'
-      scaling_factor = 0.017
+      scaling_factor = 0.02
     []
   []
   [c2]
     type = MooseVariableFVReal
     block = 'fuel pump hx'
-    scaling = 1e4
     # initial_from_file_var = c2
     [InitialCondition]
       type = FunctionIC
       function = 'cosine_guess'
-      scaling_factor = 0.06
+      scaling_factor = 0.1
     []
   []
   [c3]
     type = MooseVariableFVReal
     block = 'fuel pump hx'
-    scaling = 1e4
     # initial_from_file_var = c3
     [InitialCondition]
       type = FunctionIC
       function = 'cosine_guess'
-      scaling_factor = 0.011
+      scaling_factor = 0.03
     []
   []
   [c4]
     type = MooseVariableFVReal
     block = 'fuel pump hx'
-    scaling = 1e5
     # initial_from_file_var = c4
     [InitialCondition]
       type = FunctionIC
       function = 'cosine_guess'
-      scaling_factor = 0.009
+      scaling_factor = 0.04
     []
   []
   [c5]
     type = MooseVariableFVReal
     block = 'fuel pump hx'
-    scaling = 1e5
     # initial_from_file_var = c5
     [InitialCondition]
       type = FunctionIC
       function = 'cosine_guess'
-      scaling_factor = 0.002
+      scaling_factor = 0.01
     []
   []
   [c6]
     type = MooseVariableFVReal
-    scaling = 1e6
     block = 'fuel pump hx'
     # initial_from_file_var = c6
     [InitialCondition]
       type = FunctionIC
       function = 'cosine_guess'
-      scaling_factor = 0.0002
+      scaling_factor = 0.001
     []
   []
 []
@@ -226,14 +216,6 @@ beta6 = 0.000184087
   [mixing_len]
     type = MooseVariableFVReal
     initial_from_file_var = mixing_len
-    block = 'fuel pump hx'
-  []
-  [wall_shear_stress]
-    type = MooseVariableFVReal
-    block = 'fuel pump hx'
-  []
-  [wall_yplus]
-    type = MooseVariableFVReal
     block = 'fuel pump hx'
   []
   [power_density]
@@ -256,7 +238,17 @@ beta6 = 0.000184087
     []
     block = 'fuel pump hx'
   []
+
+  # For visualization purposes
   [eddy_viscosity]
+    type = MooseVariableFVReal
+    block = 'fuel pump hx'
+  []
+  [wall_shear_stress]
+    type = MooseVariableFVReal
+    block = 'fuel pump hx'
+  []
+  [wall_yplus]
     type = MooseVariableFVReal
     block = 'fuel pump hx'
   []
@@ -596,6 +588,10 @@ beta6 = 0.000184087
   []
 []
 
+################################################################################
+# BOUNDARY CONDITIONS
+################################################################################
+
 [FVBCs]
   [walls_u]
     type = INSFVWallFunctionBC
@@ -612,15 +608,15 @@ beta6 = 0.000184087
 
   [symmetry_u]
     type = INSFVSymmetryVelocityBC
-    boundary = 'fluid_symmetry'
     variable = v_x
+    boundary = 'fluid_symmetry'
     momentum_component = 'x'
     mu = 'total_viscosity'
   []
   [symmetry_v]
     type = INSFVSymmetryVelocityBC
-    boundary = 'fluid_symmetry'
     variable = v_y
+    boundary = 'fluid_symmetry'
     momentum_component = 'y'
     mu = 'total_viscosity'
   []
@@ -665,7 +661,7 @@ beta6 = 0.000184087
     block = 'fuel pump hx'
   []
   [ins_fv]
-    type = INSFVMaterial
+    type = INSFVEnthalpyMaterial
     block = 'fuel pump hx'
   []
   # [not_used]
@@ -705,7 +701,7 @@ beta6 = 0.000184087
 
   # Time stepping parameters
   start_time = 0.0
-  end_time = 40
+  end_time = 20
   # [TimeStepper]
   #   # This time stepper makes the time step grow exponentially
   #   # It can only be used with proper initialization
@@ -727,10 +723,13 @@ beta6 = 0.000184087
   petsc_options_value = 'lu NONZERO 50'
   line_search = 'none'
 
-  nl_rel_tol = 1e-10
+  nl_rel_tol = 1e-9
   nl_abs_tol = 2e-8
   nl_max_its = 15
   l_max_its = 50
+
+  automatic_scaling = true
+  resid_vs_jac_scaling_param = 1
 []
 
 ################################################################################
@@ -745,6 +744,10 @@ beta6 = 0.000184087
     type = Exodus
     execute_on = 'final'
   []
+  # Reduce base output
+  print_linear_converged_reason = false
+  print_linear_residuals = false
+  print_nonlinear_converged_reason = false
 []
 
 [Postprocessors]

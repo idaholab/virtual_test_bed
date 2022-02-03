@@ -242,12 +242,16 @@
 [Outputs]
   exodus = true
   csv = true
+  checkpoint = true
   [restart]
     type = Exodus
     execute_on = 'final'
     file_base = 'run_neutronics_restart'
   []
-  # hide = 'dnp'
+  # Reduce base output
+  print_linear_converged_reason = false
+  print_linear_residuals = false
+  print_nonlinear_converged_reason = false
 []
 
 [VectorPostprocessors]

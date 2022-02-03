@@ -74,7 +74,7 @@ beta6 = 0.000184087
 [Mesh]
   [fmg]
     type = FileMeshGenerator
-    file = '../steady/restart_40/run_neutronics_out_ns0.e'
+    file = '../steady/restart_rc/run_ns_coupled_restart.e'
     use_for_exodus_restart = true
   []
   # If already deleted in the restart exodus, then remove this block
@@ -90,7 +90,7 @@ beta6 = 0.000184087
 []
 
 ################################################################################
-# EQUATIONS: VARIABLES, KERNELS & BCS
+# EQUATIONS: VARIABLES & KERNELS
 ################################################################################
 
 [Variables]
@@ -108,56 +108,47 @@ beta6 = 0.000184087
     type = INSFVPressureVariable
     block = 'fuel pump hx'
     initial_from_file_var = pressure
-    scaling = 0.1
   []
   [lambda]
     family = SCALAR
     order = FIRST
     initial_from_file_var = lambda
     block = 'fuel pump hx'
-    scaling = 1000
   []
   [T]
     type = MooseVariableFVReal
     initial_from_file_var = T
     block = 'fuel pump hx'
-    scaling = 1e-2
   []
   [c1]
     type = MooseVariableFVReal
     initial_from_file_var = c1
     block = 'fuel pump hx'
-    scaling = 1e4
   []
   [c2]
     type = MooseVariableFVReal
     initial_from_file_var = c2
     block = 'fuel pump hx'
-    scaling = 1e4
   []
   [c3]
     type = MooseVariableFVReal
     initial_from_file_var = c3
     block = 'fuel pump hx'
-    scaling = 1e4
   []
   [c4]
     type = MooseVariableFVReal
     initial_from_file_var = c4
     block = 'fuel pump hx'
-    scaling = 1e5
   []
   [c5]
     type = MooseVariableFVReal
     initial_from_file_var = c5
     block = 'fuel pump hx'
-    scaling = 1e5
   []
   [c6]
     type = MooseVariableFVReal
     initial_from_file_var = c6
     block = 'fuel pump hx'
-    scaling = 1e6
   []
 []
 
@@ -549,7 +540,7 @@ beta6 = 0.000184087
     block = 'fuel pump hx'
   []
   [ins_fv]
-    type = INSFVMaterial
+    type = INSFVEnthalpyMaterial
     block = 'fuel pump hx'
   []
   [total_viscosity]
@@ -611,10 +602,13 @@ beta6 = 0.000184087
   petsc_options_iname = '-pc_type -pc_factor_shift_type -ksp_gmres_restart'
   petsc_options_value = 'lu NONZERO 50'
   line_search = 'none'
-  nl_rel_tol = 1e-10
+  nl_rel_tol = 1e-9
   nl_abs_tol = 2e-08
   nl_max_its = 20
   l_max_its = 50
+
+  automatic_scaling = true
+  resid_vs_jac_scaling_param = 1
 []
 
 ################################################################################
@@ -624,6 +618,11 @@ beta6 = 0.000184087
 [Outputs]
   exodus = true
   csv = true
+  # Reduce base output
+  print_linear_converged_reason = false
+  print_linear_residuals = false
+  print_nonlinear_converged_reason = false
+  hide = 'max_v flow_hx_bot flow_hx_top min_flow_T max_flow_T'
 []
 
 [Postprocessors]
@@ -641,11 +640,12 @@ beta6 = 0.000184087
   []
   [mdot]
     type = InternalVolumetricFlowRate
-    boundary = 'hx_in'
+    boundary = 'min_core_radius'
     vel_x = v_x
     vel_y = v_y
     advected_mat_prop = ${rho}
   []
+  # TODO: weakly compressible, switch to mass flow rate
   [flow_hx_bot]
     type = InternalVolumetricFlowRate
     boundary = 'hx_bot'
@@ -679,5 +679,9 @@ beta6 = 0.000184087
   []
   [power]
     type = Receiver
+  []
+  [pump]
+    type = FunctionValuePostprocessor
+    function = 'pump_fun'
   []
 []

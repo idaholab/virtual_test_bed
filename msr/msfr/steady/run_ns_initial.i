@@ -323,10 +323,6 @@ pump_force = -20000. # [N / m^3]
     mu = 'mu'
     block = 'fuel pump hx'
   []
-  [ins_fv]
-    type = INSFVMaterial
-    block = 'fuel pump hx'
-  []
   #[not_used]
   #  type = ADGenericFunctorMaterial
   #  prop_names = 'not_used'
@@ -381,6 +377,10 @@ pump_force = -20000. # [N / m^3]
     type = Exodus
     execute_on = 'final'
   []
+  # Reduce base output
+  print_linear_converged_reason = false
+  print_linear_residuals = false
+  print_nonlinear_converged_reason = false
 []
 
 [Postprocessors]
