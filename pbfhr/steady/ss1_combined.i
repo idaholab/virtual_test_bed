@@ -125,6 +125,12 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
     included_subdomain_ids = '6'
     input = OR_inlet
   []
+
+  # [delete_stuff]
+  #   type = BlockDeletionGenerator
+  #   input = 'OR_outlet'
+  #   block = '1 2 7 8 9 10'
+  # []
 []
 
 [Problem]
@@ -133,13 +139,13 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
 
 [GlobalParams]
   rho = ${rho_fluid}
-  porosity = porosity
+  porosity = porosity_viz
   pebble_diameter = ${pebble_diameter}
   fp = fp
   T_solid = temp_solid
   T_fluid = temp_fluid
+  gravity = '0 -9.81 0'
 
-  vel = 'superficial_velocity'
   pressure = pressure
   u = vel_x
   v = vel_y
@@ -155,19 +161,19 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
   superficial_vel_y = 'vel_y'
 
   rhie_chow_user_object = rc
-  two_term_boundary_expansion = true
 []
 
 [UserObjects]
   [rc]
     type = PINSFVRhieChowInterpolator
-    #standard_body_forces = true
+    block = ${blocks_fluid}
+    standard_body_forces = true
+    # smoothing_layers = 10
   []
 []
 
 [Debug]
-  # show_var_residual_norms = true
-  # show_material_props = true
+  show_var_residual_norms = true
   # show_actions = true
 []
 
@@ -204,10 +210,6 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
   [mass]
     type = PINSFVMassAdvection
     variable = pressure
-    u = vel_x
-    v = vel_y
-    pressure = pressure
-    mu = 'mu'
   []
 
   # Momentum x component equation.
@@ -219,7 +221,6 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
   [vel_x_advection]
     type = PINSFVMomentumAdvection
     variable = vel_x
-    advected_quantity = 'superficial_rho_u'
     momentum_component = x
   []
   [vel_x_viscosity]
@@ -249,7 +250,6 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
   [vel_y_advection]
     type = PINSFVMomentumAdvection
     variable = vel_y
-    advected_quantity = 'superficial_rho_v'
     momentum_component = y
   []
   [vel_y_viscosity]
@@ -260,7 +260,6 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
   [v_pressure]
     type = PINSFVMomentumPressure
     variable = vel_y
-    pressure = pressure
     momentum_component = 'y'
   []
   [v_friction]
@@ -273,15 +272,12 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
   [gravity]
     type = PINSFVMomentumGravity
     variable = vel_y
-    gravity = '0 -9.81 0'
     momentum_component = 'y'
   []
   [buoyancy_boussinesq]
     type = PINSFVMomentumBoussinesq
     variable = vel_y
-    gravity = '0 -9.81 0'
     ref_temperature = ${inlet_T_fluid}
-    T_fluid = 'temp_fluid'
     momentum_component = 'y'
     alpha_name = 'alpha_b'
   []
@@ -296,7 +292,6 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
   [temp_fluid_advection]
     type = PINSFVEnergyAdvection
     variable = temp_fluid
-    vel = 'superficial_velocity'
     advected_quantity = 'rho_cp_temp'
   []
   [temp_fluid_conduction]
@@ -308,8 +303,6 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
   [temp_solid_to_fluid]
     type = PINSFVEnergyAmbientConvection
     variable = temp_fluid
-    T_fluid = temp_fluid
-    T_solid = temp_solid
     is_solid = false
     h_solid_fluid = 'alpha'
   []
@@ -350,8 +343,6 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
   [temp_fluid_to_solid]
     type = PINSFVEnergyAmbientConvection
     variable = temp_solid
-    T_fluid = 'temp_fluid'
-    T_solid = 'temp_solid'
     is_solid = true
     h_solid_fluid = 'alpha'
     block = ${blocks_fluid}
@@ -379,9 +370,19 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
     type = MooseVariableFVReal
     block = '3'
   []
-  [porosity]
+  [porosity_viz]
     type = MooseVariableFVReal
     block = ${blocks_fluid}
+  []
+[]
+
+[AuxKernels]
+  [eps]
+    type = ADFunctorElementalAux
+    variable = porosity_viz
+    functor = porosity
+    block = ${blocks_fluid}
+    execute_on = 'INITIAL'
   []
 []
 
@@ -406,24 +407,6 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
     variable = temp_solid
     function = 350
     block = '9 10'
-  []
-  [bed_porosity]
-    type = FunctionIC
-    variable = porosity
-    function = ${bed_porosity}
-    block = ${blocks_pebbles}
-  []
-  [plenum_porosity]
-    type = FunctionIC
-    variable = porosity
-    function = ${plenum_porosity}
-    block = '5'
-  []
-  [OR_porosity]
-    type = FunctionIC
-    variable = porosity
-    function = ${OR_porosity}
-    block = '6'
   []
   [vel_core]
     type = FunctionIC
@@ -567,9 +550,6 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
     type = PronghornFluidFunctorProps
     block = ${blocks_fluid}
     mu_multiplier = mu_func
-    T_fluid = 'temp_fluid'
-    speed = 'speed'
-    characteristic_length = ${pebble_diameter}
   []
 
   # closures in the pebble bed
@@ -613,7 +593,7 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
     block = '5'
   []
   [alpha_OR_plenum]
-    type = ADGenericConstantFunctorMaterial
+    type = ADGenericFunctorMaterial
     prop_names = 'alpha'
     prop_values = '0.0'
     block = '5 6'
@@ -625,6 +605,16 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
   [kappa_s_OR_plenum]
     type = FunctorVolumeAverageKappaSolid
     block = '5 6'
+  []
+
+  # porosity
+  [porosity]
+    type = ADPiecewiseByBlockFunctorMaterial
+    prop_name = 'porosity'
+    subdomain_to_prop_value = '3 ${bed_porosity}
+                               4 ${bed_porosity}
+                               5 ${plenum_porosity}
+                               6 ${OR_porosity}'
   []
 []
 
@@ -810,6 +800,7 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
     type = VolumetricFlowRate
     boundary = 'bed_horizontal_top plenum_top OR_horizontal_top'
     advected_variable = ${rho_fluid}
+    advected_quantity = ${rho_fluid}
     execute_on = 'INITIAL TIMESTEP_END'
   []
   [T_flow_out]
@@ -848,7 +839,7 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
   [flow_in_m]
     type = VolumetricFlowRate
     boundary = 'bed_horizontal_bottom OR_horizontal_bottom'
-    advected_mat_prop = 'rho_cp_temp'
+    advected_quantity = 'rho_cp_temp'
   []
   # [diffusion_in]
   #   type = ADSideVectorDiffusivityFluxIntegral
@@ -860,7 +851,7 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
   [flow_out]
     type = VolumetricFlowRate
     boundary = 'bed_horizontal_top plenum_top OR_horizontal_top'
-    advected_mat_prop = 'rho_cp_temp'
+    advected_quantity = 'rho_cp_temp'
   []
   # [core_balance]
   #   type = ParsedPostprocessor
@@ -872,13 +863,13 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
   [mass_flow_OR]
     type = VolumetricFlowRate
     boundary = 'OR_horizontal_top'
-    advected_variable = ${rho_fluid}
+    advected_quantity = ${rho_fluid}
     execute_on = 'INITIAL TIMESTEP_END'
   []
   [mass_flow_plenum]
     type = VolumetricFlowRate
     boundary = 'plenum_top'
-    advected_variable = ${rho_fluid}
+    advected_quantity = ${rho_fluid}
     execute_on = 'INITIAL TIMESTEP_END'
   []
   [bypass_fraction]
@@ -898,16 +889,20 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
     outputs = 'console csv'
     execute_on = 'timestep_end'
   []
+  [mu_factor]
+    type = FunctionValuePostprocessor
+    function = 'mu_func'
+  []
 []
 
 [Outputs]
   csv = true
-  hide = 'pressure_in pressure_out mass_flow_OR mass_flow_plenum max_vy '
-        # 'bypass_fraction plenum_fraction max_Tf h pressure_drop'
+  [console]
+    type = Console
+    hide = 'pressure_in pressure_out mass_flow_OR mass_flow_plenum max_vy flow_in_m flow_out h'
+  []
   [exodus]
     type = Exodus
-    # renaming variables to use this option would be necessary for now, see #17905
-    # output_material_properties = true
   []
   [checkpoint]
     type = Checkpoint
