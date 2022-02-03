@@ -167,8 +167,6 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
   [rc]
     type = PINSFVRhieChowInterpolator
     block = ${blocks_fluid}
-    standard_body_forces = true
-    # smoothing_layers = 10
   []
 []
 
@@ -702,8 +700,8 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
   type = Transient
 
   solve_type = 'NEWTON'
-  petsc_options_iname = '-pc_type -sub_pc_type -sub_pc_factor_shift_type -ksp_gmres_restart'
-  petsc_options_value = 'asm      lu           NONZERO                   200'
+  petsc_options_iname = '-pc_type -pc_factor_shift_type'
+  petsc_options_value = 'lu       NONZERO'
   line_search = 'none'
 
   # Iterations parameters
@@ -723,7 +721,7 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
 
   [TimeStepper]
     type = IterationAdaptiveDT
-    dt                 = 1
+    dt                 = 1e-2
     cutback_factor     = 0.5
     growth_factor      = 2.0
   []
