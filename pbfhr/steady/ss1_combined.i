@@ -725,29 +725,29 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
 # MULTIAPPS FOR PEBBLE MODEL
 # ==============================================================================
 [MultiApps]
- [coarse_mesh]
-   type = TransientMultiApp
-   execute_on = 'TIMESTEP_END'
-   input_files = 'ss3_coarse_pebble_mesh.i'
-   cli_args = 'Outputs/console=false'
- []
+  [coarse_mesh]
+    type = TransientMultiApp
+    execute_on = 'TIMESTEP_END'
+    input_files = 'ss3_coarse_pebble_mesh.i'
+    cli_args = 'Outputs/console=false'
+  []
 []
 
 [Transfers]
- [fuel_matrix_heat_source]
-   type = MultiAppProjectionTransfer
-   direction = to_multiapp
-   multi_app = coarse_mesh
-   source_variable = power_distribution
-   variable = power_distribution
- []
- [pebble_surface_temp]
-   type = MultiAppProjectionTransfer
-   direction = to_multiapp
-   multi_app = coarse_mesh
-   source_variable = temp_solid
-   variable = temp_solid
- []
+  [fuel_matrix_heat_source]
+    type = MultiAppProjectionTransfer
+    direction = to_multiapp
+    multi_app = coarse_mesh
+    source_variable = power_distribution
+    variable = power_distribution
+  []
+  [pebble_surface_temp]
+    type = MultiAppProjectionTransfer
+    direction = to_multiapp
+    multi_app = coarse_mesh
+    source_variable = temp_solid
+    variable = temp_solid
+  []
 []
 
 # ==============================================================================
@@ -840,11 +840,11 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
     boundary = 'bed_horizontal_top plenum_top OR_horizontal_top'
     advected_quantity = 'rho_cp_temp'
   []
-  # [core_balance]
-  #   type = ParsedPostprocessor
-  #   pp_names = 'power flow_in_m diffusion_in flow_out outer_heat_loss'
-  #   function = 'power - flow_in_m + diffusion_in - flow_out + outer_heat_loss'
-  # []
+  [core_balance]
+    type = ParsedPostprocessor
+    pp_names = 'power flow_in_m flow_out' #diffusion_in  outer_heat_loss'
+    function = 'power - flow_in_m - flow_out' # + diffusion_in + outer_heat_loss'
+  []
 
   # Bypass
   [mass_flow_OR]

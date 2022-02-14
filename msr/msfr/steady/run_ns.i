@@ -350,11 +350,11 @@ beta6 = 0.000184087
     alpha_name = 'alpha_b'
   []
   [v_gravity]
-   type = INSFVMomentumGravity
-   variable = v_y
-   gravity = '0 -9.81 0'
-   block = 'fuel pump hx'
-   momentum_component = 'y'
+    type = INSFVMomentumGravity
+    variable = v_y
+    gravity = '0 -9.81 0'
+    block = 'fuel pump hx'
+    momentum_component = 'y'
   []
 
   [pump]

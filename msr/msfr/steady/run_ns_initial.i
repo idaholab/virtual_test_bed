@@ -186,11 +186,11 @@ pump_force = -20000. # [N / m^3]
     block = 'fuel pump hx'
   []
   [v_gravity]
-   type = INSFVMomentumGravity
-   variable = v_y
-   gravity = '0 -9.81 0'
-   block = 'fuel pump hx'
-   momentum_component = 'y'
+    type = INSFVMomentumGravity
+    variable = v_y
+    gravity = '0 -9.81 0'
+    block = 'fuel pump hx'
+    momentum_component = 'y'
   []
 
   [pump]

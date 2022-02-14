@@ -425,9 +425,9 @@ We first define a few postprocessors to:
 
 !listing /pbfhr/steady/ss1_combined.i block=Postprocessors/mass_flow_out
 
-- examine conservation of energy
+- examine conservation of energy (missing diffusion term, under development)
 
-!listing /pbfhr/steady/ss1_combined.i block=Postprocessors/outer_heat_loss Postprocessors/flow_in_m Postprocessors/flow_out Postprocessors/core_balance
+!listing /pbfhr/steady/ss1_combined.i Postprocessors/flow_in_m Postprocessors/flow_out Postprocessors/core_balance
 
 
 We then define an [Exodus](https://mooseframework.inl.gov/source/outputs/Exodus.html) output. This will have the multi-dimensional distributions of the quantities Pronghorn
