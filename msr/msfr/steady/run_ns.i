@@ -692,7 +692,7 @@ beta6 = 0.000184087
   [dts]
     type = PiecewiseConstant
     x = '0    100'
-    y = '1. 2.5'
+    y = '0.75 2.5'
   []
 []
 
@@ -742,7 +742,7 @@ beta6 = 0.000184087
   hide = 'flow_hx_bot flow_hx_top min_flow_T max_flow_T'
   [restart]
     type = Exodus
-    execute_on = 'final'
+    overwrite = true
   []
   # Reduce base output
   print_linear_converged_reason = false

@@ -74,7 +74,7 @@ beta6 = 0.000184087
 [Mesh]
   [fmg]
     type = FileMeshGenerator
-    file = '../steady/restart_rc/run_ns_coupled_restart.e'
+    file = '../steady/restart/run_ns_coupled_restart.e'
     use_for_exodus_restart = true
   []
   # If already deleted in the restart exodus, then remove this block
