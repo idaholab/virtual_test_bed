@@ -25,7 +25,7 @@
   particle = neutron
   equation_type = transient
   restart_transport_system = true
-  scaling_eigenkernels = 1.0233728934387
+  scaling_eigenkernels = 1.0233305925653
 
   G = 6
 
@@ -203,6 +203,10 @@
 [Outputs]
   csv = true
   exodus = true
+  # Reduce base output
+  print_linear_converged_reason = false
+  print_linear_residuals = false
+  print_nonlinear_converged_reason = false
   hide = 'dnp'
 []
 
@@ -312,84 +316,3 @@
     variable = 'tfuel'
   []
 []
-
-################################################################################
-# MULTIAPPS and TRANSFERS for flow initialization
-################################################################################
-# no longer needed
-# used to run the full coupled multiphysics problem for a steady state
-
-# [MultiApps]
-#   [init]
-#     type = FullSolveMultiApp
-#     input_files = '../steady/run_neutronics.i'
-#     execute_on = 'initial'
-#   []
-# []
-
-# [Transfers]
-#   [init_solution]
-#     type = TransportSystemVariableTransfer
-#     multi_app = init
-#     direction = from_multiapp
-#     from_transport_system = diff
-#     to_transport_system = diff
-#   []
-#   [init_power_scaling]
-#     type = MultiAppPostprocessorTransfer
-#     multi_app = init
-#     direction = from_multiapp
-#     reduction_type = minimum
-#     from_postprocessor = power_scaling
-#     to_postprocessor = power_scaling
-#   []
-#   [init_tfuel]
-#     type = MultiAppCopyTransfer
-#     multi_app = init
-#     direction = from_multiapp
-#     source_variable = tfuel
-#     variable = tfuel
-#   []
-#   [init_c1]
-#     type = MultiAppCopyTransfer
-#     multi_app = init
-#     direction = from_multiapp
-#     source_variable = c1
-#     variable = c1
-#   []
-#   [init_c2]
-#     type = MultiAppCopyTransfer
-#     multi_app = init
-#     direction = from_multiapp
-#     source_variable = c2
-#     variable = c2
-#   []
-#   [init_c3]
-#     type = MultiAppCopyTransfer
-#     multi_app = init
-#     direction = from_multiapp
-#     source_variable = c3
-#     variable = c3
-#   []
-#   [init_c4]
-#     type = MultiAppCopyTransfer
-#     multi_app = init
-#     direction = from_multiapp
-#     source_variable = c4
-#     variable = c4
-#   []
-#   [init_c5]
-#     type = MultiAppCopyTransfer
-#     multi_app = init
-#     direction = from_multiapp
-#     source_variable = c5
-#     variable = c5
-#   []
-#   [init_c6]
-#     type = MultiAppCopyTransfer
-#     multi_app = init
-#     direction = from_multiapp
-#     source_variable = c6
-#     variable = c6
-#   []
-# []

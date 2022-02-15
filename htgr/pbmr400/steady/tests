@@ -34,7 +34,7 @@
   # - the issue with cross sections (tensor diffusion coef) is fixed
   [transient_multiphysics]
     type = RunApp
-    input = 'oecd_pbmr400_ss0_rsnk_eigen_value_ix_dep.i'
+    input = 'oecd_pbmr400_tr0_pplofc_rsnk_keff_calc.i'
     executable_pattern = 'blue_crab*|fenix*'
     working_directory = '../transient'
     cli_args = 'Executioner/num_steps=1'
