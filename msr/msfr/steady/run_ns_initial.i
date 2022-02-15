@@ -5,9 +5,6 @@
 ## viscosity.                                                                 ##
 ################################################################################
 
-advected_interp_method='upwind'
-velocity_interp_method='rc'
-
 # Material properties
 rho = 4284  # density [kg / m^3]  (@1000K)
 mu = 0.0166 # viscosity [Pa s]
@@ -26,11 +23,12 @@ pump_force = -20000. # [N / m^3]
   v = v_y
   pressure = pressure
 
-  vel = 'velocity'
-  advected_interp_method = ${advected_interp_method}
-  velocity_interp_method = ${velocity_interp_method}
+  rhie_chow_user_object = 'rc'
+  advected_interp_method = 'upwind'
+  velocity_interp_method = 'rc'
   mu = 'mu'
   rho = ${rho}
+  mixing_length = 'mixing_len'
 []
 
 ################################################################################
@@ -49,6 +47,11 @@ pump_force = -20000. # [N / m^3]
     input = fmg
     new_sideset_name = min_core_radius
     normal = '0 1 0'
+  []
+  [delete_unused]
+    type = BlockDeletionGenerator
+    input = min_radius
+    block = 'shield reflector'
   []
 []
 
@@ -88,10 +91,10 @@ pump_force = -20000. # [N / m^3]
     #initial_from_file_var = lambda
   []
 []
+
 [AuxVariables]
   [mixing_len]
     type = MooseVariableFVReal
-    #initial_from_file_var = mixing_len
   []
   [wall_shear_stress]
     type = MooseVariableFVReal
@@ -101,7 +104,13 @@ pump_force = -20000. # [N / m^3]
   []
   [eddy_viscosity]
     type = MooseVariableFVReal
-    #initial_from_file_var = eddy_viscosity
+  []
+[]
+
+[UserObjects]
+  [rc]
+    type = INSFVRhieChowInterpolator
+    block = 'fuel pump hx'
   []
 []
 
@@ -121,24 +130,24 @@ pump_force = -20000. # [N / m^3]
   [u_time]
     type = INSFVMomentumTimeDerivative
     variable = v_x
+    momentum_component = 'x'
   []
   [u_advection]
     type = INSFVMomentumAdvection
     variable = v_x
-    advected_quantity = 'rhou'
     block = 'fuel pump hx'
+    momentum_component = 'x'
   []
   [u_turbulent_diffusion_rans]
     type = INSFVMixingLengthReynoldsStress
     variable = v_x
-    mixing_length = mixing_len
     momentum_component = 'x'
   []
   [u_molecular_diffusion]
-    type = FVDiffusion
+    type = INSFVMomentumDiffusion
     variable = v_x
-    coeff = 'mu'
     block = 'fuel pump hx'
+    momentum_component = 'x'
   []
   [u_pressure]
     type = INSFVMomentumPressure
@@ -150,25 +159,25 @@ pump_force = -20000. # [N / m^3]
   [v_time]
     type = INSFVMomentumTimeDerivative
     variable = v_y
+    momentum_component = 'y'
   []
   [v_advection]
     type = INSFVMomentumAdvection
     variable = v_y
-    advected_quantity = 'rhov'
     block = 'fuel pump hx'
+    momentum_component = 'y'
   []
   [v_turbulent_diffusion_rans]
     type = INSFVMixingLengthReynoldsStress
     variable = v_y
     rho = ${rho}
-    mixing_length = mixing_len
     momentum_component = 'y'
   []
   [v_molecular_diffusion]
-    type = FVDiffusion
+    type = INSFVMomentumDiffusion
     variable = v_y
-    coeff = 'mu'
     block = 'fuel pump hx'
+    momentum_component = 'y'
   []
   [v_pressure]
     type = INSFVMomentumPressure
@@ -176,18 +185,20 @@ pump_force = -20000. # [N / m^3]
     momentum_component = 'y'
     block = 'fuel pump hx'
   []
-  # [v_gravity]
-  #   type = FVBodyForce
-  #   variable = v_y
-  #   value = ${fparse -9.81 * rho}
-  #   block = 'fuel pump hx'
-  # []
+  [v_gravity]
+    type = INSFVMomentumGravity
+    variable = v_y
+    gravity = '0 -9.81 0'
+    block = 'fuel pump hx'
+    momentum_component = 'y'
+  []
 
   [pump]
-    type = FVBodyForce
+    type = INSFVBodyForce
     variable = v_y
-    value = ${pump_force}
+    functor = ${pump_force}
     block = 'pump'
+    momentum_component = 'y'
   []
 
   [friction_hx_x]
@@ -195,12 +206,14 @@ pump_force = -20000. # [N / m^3]
     variable = v_x
     quadratic_coef_name = 'friction_coef'
     block = 'hx'
+    momentum_component = 'x'
   []
   [friction_hx_y]
     type = INSFVMomentumFriction
     variable = v_y
     quadratic_coef_name = 'friction_coef'
     block = 'hx'
+    momentum_component = 'y'
   []
 []
 
@@ -231,7 +244,6 @@ pump_force = -20000. # [N / m^3]
   [turbulent_viscosity]
     type = INSFVMixingLengthTurbulentViscosityAux
     variable = eddy_viscosity
-    mixing_length = mixing_len
     block = 'fuel pump hx'
   []
 []
@@ -242,8 +254,8 @@ pump_force = -20000. # [N / m^3]
 
 [FVBCs]
   [walls_u]
-    type = INSFVWallFunctionBC    #rethink if we should put noslip just for the hx and pump.For this I need
-    variable = v_x                #an intersection between shield_walls, reflector_walls and hx and pump.
+    type = INSFVWallFunctionBC
+    variable = v_x
     boundary = 'shield_wall reflector_wall'
     momentum_component = x
   []
@@ -308,20 +320,15 @@ pump_force = -20000. # [N / m^3]
   []
   [total_viscosity]
     type = MixingLengthTurbulentViscosityMaterial
-    mixing_length = mixing_len
     mu = 'mu'
     block = 'fuel pump hx'
   []
-  [ins_fv]
-    type = INSFVMaterial
-    block = 'fuel pump hx'
-  []
-  [not_used]
-    type = ADGenericFunctorMaterial
-    prop_names = 'not_used'
-    prop_values = 0
-    block = 'shield reflector'
-  []
+  #[not_used]
+  #  type = ADGenericFunctorMaterial
+  #  prop_names = 'not_used'
+  #  prop_values = 0
+  #  block = 'shield reflector'
+  #[]
   [friction]
     type = ADGenericFunctorMaterial
     prop_names = 'friction_coef'
@@ -334,21 +341,6 @@ pump_force = -20000. # [N / m^3]
 # EXECUTION / SOLVE
 ################################################################################
 
-[Preconditioning]
-  [SMP]
-    type = SMP
-    full = true
-  []
-[]
-
-[Functions]
-  [dts]
-    type = PiecewiseConstant
-    x = '0   0.4 0.8 1   2.2 4.0  4.3 5   8.8 9.2 9.8'
-    y = '0.2 0.4 0.2 0.4 0.1 0.05 0.1 0.2 0.4 0.8 2'
-  []
-[]
-
 [Executioner]
   type = Transient
 
@@ -357,15 +349,16 @@ pump_force = -20000. # [N / m^3]
   end_time = 15
 
   [TimeStepper]
-    type = FunctionDT
-    function = dts
+    type = IterationAdaptiveDT
+    optimal_iterations = 10
+    dt = 0.3
+    timestep_limiting_postprocessor = 1
   []
-  timestep_tolerance = 1e-13 # to avoid round off errors
 
   # Solver parameters
   solve_type = 'NEWTON'
-  petsc_options_iname = '-pc_type -ksp_gmres_restart'
-  petsc_options_value = 'lu 50'
+  petsc_options_iname = '-pc_type -pc_factor_shift_type -ksp_gmres_restart'
+  petsc_options_value = 'lu NONZERO 50'
   line_search = 'none'
   nl_rel_tol = 1e-12
   nl_abs_tol = 1e-6
@@ -384,6 +377,10 @@ pump_force = -20000. # [N / m^3]
     type = Exodus
     execute_on = 'final'
   []
+  # Reduce base output
+  print_linear_converged_reason = false
+  print_linear_residuals = false
+  print_nonlinear_converged_reason = false
 []
 
 [Postprocessors]
@@ -403,6 +400,5 @@ pump_force = -20000. # [N / m^3]
     vel_x = v_x
     vel_y = v_y
     advected_mat_prop = ${rho}
-    fv = false # see MOOSE #18817
   []
 []

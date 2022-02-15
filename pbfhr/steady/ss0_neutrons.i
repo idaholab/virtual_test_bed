@@ -48,7 +48,7 @@ fis_fract            = ${fparse 1 - dh_fract} # Fission power fraction at t = 0.
     n_delay_groups = 6
     family = LAGRANGE
     order = FIRST
-    verbose = 2
+    # verbose = 2
   []
 []
 
@@ -88,7 +88,6 @@ fis_fract            = ${fparse 1 - dh_fract} # Fission power fraction at t = 0.
     input = reflector
     new_boundary = 'top bottom'
     normals = '0 1 0 0 -1 0'
-    show_info = true
   []
 []
 
@@ -384,12 +383,6 @@ fis_fract            = ${fparse 1 - dh_fract} # Fission power fraction at t = 0.
   fixed_point_abs_tol = 1e-6
   fixed_point_rel_tol = 1e-6
   fixed_point_max_its = 10
-  disable_fixed_point_residual_norm_check = false
-
-  # Quadrature for CR material
-  [Quadrature]
-    order = FOURTH
-  []
 []
 
 # ==============================================================================
@@ -458,10 +451,6 @@ fis_fract            = ${fparse 1 - dh_fract} # Fission power fraction at t = 0.
 # POSTPROCESSORS DEBUG AND OUTPUTS
 # ==============================================================================
 
-[Debug]
-  show_var_residual_norms = false
-[]
-
 [Postprocessors]
   [power]
     type = ElementIntegralVariablePostprocessor
@@ -484,11 +473,14 @@ fis_fract            = ${fparse 1 - dh_fract} # Fission power fraction at t = 0.
 []
 
 [Outputs]
-  # file_base = mk1_fhr
   exodus = true
   csv = true
   [Checkpoint]
     type = Checkpoint
     execute_on = 'FINAL'
   []
+  # Reduce base output
+  print_linear_converged_reason = false
+  print_linear_residuals = false
+  print_nonlinear_converged_reason = false
 []
