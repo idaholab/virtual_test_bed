@@ -32,6 +32,10 @@
     family = LAGRANGE
     order = FIRST
     fission_source_aux = true
+
+    # For PJFNKMO
+    assemble_scattering_jacobian = true
+    assemble_fission_jacobian = true
   []
 []
 
@@ -143,7 +147,7 @@
 
 [Executioner]
   type = Eigenvalue
-  solve_type = PJFNK
+  solve_type = PJFNKMO
 
   petsc_options_iname = '-pc_type -pc_hypre_type -ksp_gmres_restart '
   petsc_options_value = 'hypre boomeramg 50'
