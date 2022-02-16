@@ -17,7 +17,7 @@
     executable_pattern = 'griffin*|blue_crab*|dire_wolf*|fenix*'
     # multiapps and transfers execute_on are different
     allow_warnings = true
-    cli_args = "Executioner/nl_abs_tol=1 MultiApps/active='' Transfers/active=''"
+    cli_args = "MultiApps/active='' Transfers/active=''"
   []
   [fluids_syntax]
     type = RunApp
