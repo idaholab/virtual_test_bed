@@ -21,7 +21,7 @@
     input = pbfhr-ss.i
     csvdiff = 'pbfhr-ss_bc.csv'
     executable_pattern = 'blue_crab*'
-    cli_args = "Outputs/file_base=pbfhr-ss_bc Executioner/num_steps=2 DefaultElementQuality/failure_type=Warning Outputs/hide='pool1:volume_change pool2:volume_change' "
+    cli_args = "--app SamApp Outputs/file_base=pbfhr-ss_bc Executioner/num_steps=2 DefaultElementQuality/failure_type=Warning Outputs/hide='pool1:volume_change pool2:volume_change'"
     allow_warnings = true
   []
   [transient_crab]
@@ -30,7 +30,7 @@
     check_input = true
     executable_pattern = 'blue_crab*'
     prereq = steady_state_crab
-    cli_args = "Problem/active='' DefaultElementQuality/failure_type=Warning Problem/restart_file_base=pbfhr-ss_bc_cp/LATEST"
+    cli_args = "--app SamApp Problem/active='' DefaultElementQuality/failure_type=Warning Problem/restart_file_base=pbfhr-ss_bc_cp/LATEST"
     allow_warnings = true
   []
 []
