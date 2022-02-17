@@ -571,14 +571,14 @@ beta6 = 0.000184087
     variable = wall_shear_stress
     walls = 'shield_wall reflector_wall'
     block = 'fuel'
-    mu = 'mu_mat' # FIXME, transition to functors, use total_viscosity
+    mu = 'total_viscosity'
   []
   [wall_yplus]
     type = WallFunctionYPlusAux
     variable = wall_yplus
     walls = 'shield_wall reflector_wall'
     block = 'fuel'
-    mu = 'mu_mat' # FIXME, transition to functors, use total_viscosity
+    mu = 'total_viscosity'
   []
   [turbulent_viscosity]
     type = INSFVMixingLengthTurbulentViscosityAux
@@ -632,12 +632,6 @@ beta6 = 0.000184087
 ################################################################################
 
 [Materials]
-  [mu_mat]  # Yplus kernel not migrated to functor materials
-    type = ADGenericFunctionMaterial
-    prop_names = 'mu_mat'
-    prop_values = '${mu}'
-    block = 'fuel pump hx'
-  []
   [heat_exchanger_coefficient]
     type = ADGenericFunctionMaterial
     prop_names = 'alpha'
