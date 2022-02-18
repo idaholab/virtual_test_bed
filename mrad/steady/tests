@@ -1,5 +1,6 @@
 [Tests]
-  [mechanics_bison]
+  # Syntax checks
+  [mechanics_bison_syntax]
     type = RunApp
     input = 'MP_FC_ss_bison.i'
     check_input = True
@@ -7,11 +8,36 @@
     executable_pattern = 'bison*|blue_crab*|dire_wolf*'
     cli_args = "MultiApps/active='' Transfers/active=''"
   []
-  [fluids_sockeye]
+  [fluids_sockeye_syntax]
     type = RunApp
     input = 'MP_FC_ss_sockeye.i'
     check_input = True
     ad_indexing_type = 'global'
     executable_pattern = 'sockeye*|dire_wolf*'
+  []
+
+  # Regression tests
+  [mechanics_bison]
+    type = CSVDiff
+    input = 'MP_FC_ss_bison.i'
+    csvdiff = ''
+    ad_indexing_type = 'global'
+    executable_pattern = 'bison*|blue_crab*|dire_wolf*'
+    cli_args = "MultiApps/active='' Transfers/active=''"
+  []
+  [fluids_sockeye]
+    type = CSVDiff
+    input = 'MP_FC_ss_sockeye.i'
+    csvdiff = ''
+    ad_indexing_type = 'global'
+    executable_pattern = 'sockeye*|dire_wolf*'
+  []
+  [coupled_simulation]
+    type = CSVDiff
+    input = 'MP_FC_ss_bison.i'
+    csvdiff = ''
+    ad_indexing_type = 'global'
+    executable_pattern = 'dire_wolf*'
+    cli_args = ""
   []
 []

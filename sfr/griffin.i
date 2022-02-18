@@ -129,8 +129,7 @@
 
 [Transfers]
 
-  # master -> sub-app
-
+  # main app -> sub-app
 
   #-----------------------
   # power_density to BISON
@@ -143,7 +142,8 @@
     source_variable = power_density
     multi_app = bison
   []
-  # sub-app -> master
+
+  # sub-app -> main app
 
   #------------------
   # tfuel from BISON

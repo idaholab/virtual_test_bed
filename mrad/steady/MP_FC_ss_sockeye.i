@@ -220,7 +220,7 @@ corr_factor = ${fparse 2 * R_clad_o / R_hp_hole / R_hp_hole / area_correction / 
     type = VectorPostprocessorFunction
     argument_column = z
     component  = z
-    value_column = master_flux
+    value_column = main_flux
     vectorpostprocessor_name = flux_vpp
   []
   [scale_fcn]
@@ -241,7 +241,7 @@ corr_factor = ${fparse 2 * R_clad_o / R_hp_hole / R_hp_hole / area_correction / 
   [operational_aux]
     initial_condition = 1
   []
-  [master_flux]
+  [main_flux]
     initial_condition = ${q_evap}
   []
   [hp_temp_aux]
@@ -405,7 +405,7 @@ corr_factor = ${fparse 2 * R_clad_o / R_hp_hole / R_hp_hole / area_correction / 
   []
   [flux_vpp]
     type = SideValueSampler
-    variable = master_flux
+    variable = main_flux
     boundary = 'hp:evap:inner'
     sort_by = z
     execute_on = 'timestep_begin TIMESTEP_END'

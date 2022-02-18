@@ -1,6 +1,6 @@
 # ==============================================================================
 # PBMR-400 steady-state phase 1 exercise 3, NEA/NSC/DOC(2013)10.
-# MASTER0 Neutron kinetic model, T_fuel and T_mod feedback supplied by TH subapp.
+# MAIN0 Neutron kinetic model, T_fuel and T_mod feedback supplied by TH subapp.
 # FENIX input file
 # ------------------------------------------------------------------------------
 # Idaho Falls, INL, 02/22/2020
