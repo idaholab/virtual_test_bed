@@ -143,16 +143,9 @@ fis_fract            = ${fparse 1 - dh_fract} # Fission power fraction at t = 0.
   [cartesian_mesh_ids]
     type = SubdomainExtraElementIDGenerator
     input = cartesian_mesh
-    subdomains   = ${all_bloks}
-    extra_element_id_names = 'material_id'
-    extra_element_ids = ${material_ids}
-  []
-  [cartesian_mesh_ids_2]
-    type = SubdomainExtraElementIDGenerator
-    input = cartesian_mesh
-    subdomains   = ${all_bloks}
-    extra_element_id_names = 'equivalence_id'
-    extra_element_ids = ${all_bloks}
+    subdomains = ${all_bloks}
+    extra_element_id_names = 'material_id equivalence_id'
+    extra_element_ids = '${material_ids}; ${all_bloks}'
   []
   uniform_refine = 0
 []
@@ -680,7 +673,7 @@ fis_fract            = ${fparse 1 - dh_fract} # Fission power fraction at t = 0.
     n_delay_groups = 6
     family = LAGRANGE
     order = FIRST
-    fission_source_as_material = true
+    fission_source_aux = true
     assemble_scattering_jacobian = true
     assemble_fission_jacobian = true
     diffusion_kernel_type = tensor

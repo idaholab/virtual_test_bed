@@ -640,7 +640,7 @@ fis_fract            = ${fparse 1 - dh_fract} # Fission power fraction at t = 0.
     n_delay_groups = 6
     family = LAGRANGE
     order = FIRST
-    fission_source_as_material = true
+    fission_source_aux = true
     assemble_scattering_jacobian = true
     assemble_fission_jacobian = true
     diffusion_kernel_type = tensor
@@ -656,8 +656,8 @@ fis_fract            = ${fparse 1 - dh_fract} # Fission power fraction at t = 0.
 []
 
 [Executioner]
-  type = PicardEigen # Picard iteration to reach stable NK+TH solution.
-  solve_type = 'PJFNK'
+  type = Eigenvalue # Picard iteration to reach stable NK+TH solution.
+  solve_type = 'PJFNKMO'
   petsc_options_iname = '-pc_type -pc_hypre_type -ksp_gmres_restart'
   petsc_options_value = 'hypre boomeramg 50'
   line_search = none
@@ -677,10 +677,7 @@ fis_fract            = ${fparse 1 - dh_fract} # Fission power fraction at t = 0.
   []
 
   # Power iterations.
-  free_power_iterations = 2
-  extra_free_pi = 2
-  output_after_power_iterations = false
-  output_before_normalization = false
+  free_power_iterations = 4
 
   # Multiphysics coupling iterationa.
   fixed_point_abs_tol = 1e-7
