@@ -110,6 +110,8 @@ reactor_inlet_free_rho_u = ${fparse -reactor_total_mfr/reactor_inlet_free_flow_a
   []
   [courant_number]
     block = ' 1 2 14 15 16 17 18 '
+    family = MONOMIAL
+    order = CONSTANT
   []
   [alpha]
     family = MONOMIAL
@@ -329,10 +331,10 @@ reactor_inlet_free_rho_u = ${fparse -reactor_total_mfr/reactor_inlet_free_flow_a
 
 [AuxKernels]
   [T_solid_element_average]
-    type = ScaleAux
-    multiplier = 1.0
-    source_variable = T_solid
+    type = ParsedAux
     variable = T_solid_element_average
+    function = T_solid
+    args = T_solid
     block = ' 1 '
   []
 
@@ -826,10 +828,10 @@ reactor_inlet_free_rho_u = ${fparse -reactor_total_mfr/reactor_inlet_free_flow_a
 []
 
 [Postprocessors]
-    [timestep_pp]
-      type = FunctionValuePostprocessor
-      function = dts
-    []
+  [timestep_pp]
+    type = FunctionValuePostprocessor
+    function = dts
+  []
   [min_courant_num]
     type = ElementExtremeValue
     value_type = 'min'

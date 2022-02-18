@@ -20,24 +20,28 @@
   [mechanics_bison]
     type = CSVDiff
     input = 'MP_FC_ss_bison.i'
-    csvdiff = ''
+    csvdiff = 'MP_FC_ss_bison_out.csv'
     ad_indexing_type = 'global'
     executable_pattern = 'bison*|blue_crab*|dire_wolf*'
-    cli_args = "MultiApps/active='' Transfers/active=''"
+    cli_args = "MultiApps/active='' Transfers/active='' Executioner/num_steps=2 Executioner/nl_abs_tol=1e-1 Outputs/csv=true"
+    min_parallel = 16
+    method = 'opt'
   []
   [fluids_sockeye]
     type = CSVDiff
     input = 'MP_FC_ss_sockeye.i'
-    csvdiff = ''
+    csvdiff = 'MP_FC_ss_sockeye_csv.csv'
     ad_indexing_type = 'global'
     executable_pattern = 'sockeye*|dire_wolf*'
   []
   [coupled_simulation]
     type = CSVDiff
     input = 'MP_FC_ss_bison.i'
-    csvdiff = ''
+    csvdiff = 'mrad_bison_out.csv mrad_bison_out_sockeye001_csv.csv'
     ad_indexing_type = 'global'
     executable_pattern = 'dire_wolf*'
-    cli_args = ""
+    cli_args = "Executioner/num_steps=2 Executioner/nl_abs_tol=1e-1 Outputs/csv=true Outputs/file_base=mrad_bison_out"
+    min_parallel = 48
+    # takes about 9 minutes on 48 cores
   []
 []

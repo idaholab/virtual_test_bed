@@ -724,10 +724,9 @@ fis_fract            = ${fparse 1 - dh_fract} # Fission power fraction at t = 0.
 [MultiApps]
   [th_sub]
     type = TransientMultiApp
-    app_type = FenixApp
     input_files = 'oecd_pbmr400_tr1_pplofc_phtn_flow_path.i'
     positions = '0.0 -2.8500 0.0' # Vertical offset between the two meshes.
-    # sub_cycling = true
+    sub_cycling = true
   []
 []
 
