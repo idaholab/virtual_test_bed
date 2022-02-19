@@ -232,14 +232,14 @@ pump_force = -20000. # [N / m^3]
     variable = wall_shear_stress
     walls = 'shield_wall reflector_wall'
     block = 'fuel'
-    mu = 'mu_mat'
+    mu = 'total_viscosity'
   []
   [wall_yplus]
     type = WallFunctionYPlusAux
     variable = wall_yplus
     walls = 'shield_wall reflector_wall'
     block = 'fuel'
-    mu = 'mu_mat'
+    mu = 'total_viscosity'
   []
   [turbulent_viscosity]
     type = INSFVMixingLengthTurbulentViscosityAux
@@ -308,11 +308,6 @@ pump_force = -20000. # [N / m^3]
 []
 
 [Materials]
-  [mu_mat]  # Yplus kernel not migrated to functor materials
-    type = ADGenericFunctionMaterial      #defines mu artificially for numerical convergence
-    prop_names = 'mu_mat'                     #it converges to the real mu eventually.
-    prop_values = 'rampdown_mu_func'
-  []
   [mu]
     type = ADGenericFunctorMaterial      #defines mu artificially for numerical convergence
     prop_names = 'mu'                     #it converges to the real mu eventually.
