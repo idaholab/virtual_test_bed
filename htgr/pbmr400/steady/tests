@@ -1,13 +1,6 @@
 [Tests]
-  [multiphysics]
-    type = RunApp
-    input = 'oecd_pbmr400_ss0_rsnk_eigen_value_ix_dep.i'
-    executable_pattern = 'blue_crab*|fenix*'
-    cli_args = 'Executioner/fixed_point_max_its=1'
-    method = 'opt' # see Griffin #230
-    min_parallel = 4
-  []
-  [neutronics]
+  # Individual steady syntax checks
+  [neutronics_syntax_only]
     type = RunApp
     input = 'oecd_pbmr400_ss0_rsnk_eigen_value_ix_dep.i'
     check_input = True
@@ -15,30 +8,128 @@
     cli_args = "MultiApps/active='' Transfers/active=''"
     method = 'opt' # see Griffin #230
   []
-  [fluid_flow]
+  [fluid_flow_syntax_only]
     type = RunApp
     input = 'oecd_pbmr400_ss1_phtn_flow_path.i'
     check_input = True
     executable_pattern = 'pronghorn*|blue_crab*|fenix*'
     cli_args = "MultiApps/active='' Transfers/active=''"
   []
-  [fuel_performance]
+  [fuel_performance_syntax_only]
     type = RunApp
     input = 'oecd_pbmr400_ss2_mhtr_pebble_triso.i'
     check_input = True
     executable_pattern = 'pronghorn*|blue_crab*|fenix*'
     cli_args = 'Executioner/num_steps=1'
   []
+
+  # Steady regression tests
+  # Run these before so they dont overwrite the good checkpoint file for transients
+  [neutronics_only]
+    type = CSVDiff
+    input = 'oecd_pbmr400_ss0_rsnk_eigen_value_ix_dep.i'
+    csvdiff = 'oecd_pbmr400_ss0_rsnk_eigen_value_ix_dep.csv'
+    executable_pattern = 'griffin*|blue_crab*|dire_wolf*|fenix*'
+    cli_args = "MultiApps/active='' Transfers/active='' Executioner/nl_abs_tol=0.1"
+    method = 'opt' # see Griffin #230
+  []
+  [fluid_flow_only]
+    type = CSVDiff
+    input = 'oecd_pbmr400_ss1_phtn_flow_path.i'
+    csvdiff = 'oecd_pbmr400_ss1_phtn_flow_path.csv'
+    executable_pattern = 'pronghorn*|blue_crab*|fenix*'
+    cli_args = "MultiApps/active='' Transfers/active='' Executioner/num_steps=5"
+  []
+  [fuel_performance_only]
+    type = CSVDiff
+    input = 'oecd_pbmr400_ss2_mhtr_pebble_triso.i'
+    csvdiff = 'oecd_pbmr400_ss2_mhtr_pebble_triso.csv'
+    executable_pattern = 'pronghorn*|blue_crab*|fenix*'
+    cli_args = 'Executioner/num_steps=2 Outputs/csv=true'
+  []
+
+  # Individual transient syntax checks
+  [transient_neutronics_syntax_only]
+    type = RunApp
+    working_directory = '../transient'
+    input = 'oecd_pbmr400_tr0_pplofc_rsnk_keff_calc.i'
+    check_input = True
+    executable_pattern = 'griffin*|blue_crab*|dire_wolf*|fenix*'
+    cli_args = "MultiApps/active='' Transfers/active=''"
+    prereq = 'neutronics_only'
+    method = 'opt' # see Griffin #230
+  []
+  [transient_fluid_flow_syntax_only]
+    type = RunApp
+    working_directory = '../transient'
+    input = 'oecd_pbmr400_tr1_pplofc_phtn_flow_path.i'
+    check_input = True
+    executable_pattern = 'pronghorn*|blue_crab*|fenix*'
+    cli_args = "MultiApps/active='' Transfers/active=''"
+    prereq = 'fluid_flow_only'
+  []
+  [transient_fuel_performance_syntax_only]
+    type = RunApp
+    working_directory = '../transient'
+    input = 'oecd_pbmr400_tr2_pplofc_mhtr_pebble_triso.i'
+    check_input = True
+    executable_pattern = 'pronghorn*|blue_crab*|fenix*'
+    cli_args = 'Executioner/num_steps=1'
+  []
+
+  # Run simulation, no results checking
+  [steady_multiphysics]
+    type = RunApp
+    input = 'oecd_pbmr400_ss0_rsnk_eigen_value_ix_dep.i'
+    executable_pattern = 'blue_crab*|fenix*'
+    cli_args = 'Executioner/fixed_point_max_its=1'
+    method = 'opt' # see Griffin #230
+    min_parallel = 8
+    # require the others so the restart files dont get overwritten
+    prereq = 'transient_neutronics_only transient_fluid_flow_only'
+  []
+
   # This will fail until:
   # - griffin can load restart binary files from another folder
   # - the issue with cross sections (tensor diffusion coef) is fixed
   [transient_multiphysics]
     type = RunApp
+    working_directory = '../transient'
     input = 'oecd_pbmr400_tr0_pplofc_rsnk_keff_calc.i'
     executable_pattern = 'blue_crab*|fenix*'
-    working_directory = '../transient'
-    cli_args = 'Executioner/num_steps=1'
-    prereq = 'multiphysics'
+    cli_args = 'Executioner/fixed_point_max_its=2 Executioner/num_steps=1 MultiApps/th_sub/cli_args=Executioner/end_time=800'
     method = 'opt' # see Griffin #230
+    # Checkpoint file must have been generated with same number of ranks
+    prereq = 'steady_multiphysics'
+    min_parallel = 8
+  []
+
+  # Transient regression tests
+  [transient_neutronics_only]
+    type = CSVDiff
+    working_directory = '../transient'
+    input = 'oecd_pbmr400_tr0_pplofc_rsnk_keff_calc.i'
+    csvdiff = 'oecd_pbmr400_tr0_pplofc_rsnk_keff_calc.csv'
+    executable_pattern = 'griffin*|blue_crab*|dire_wolf*|fenix*'
+    cli_args = "MultiApps/active='' Transfers/active='' Executioner/num_steps=2"
+    method = 'opt' # see Griffin #230
+    prereq = 'neutronics_only'
+  []
+  [transient_fluid_flow_only]
+    type = CSVDiff
+    working_directory = '../transient'
+    input = 'oecd_pbmr400_tr1_pplofc_phtn_flow_path.i'
+    csvdiff = 'oecd_pbmr400_tr1_pplofc_phtn_flow_path.csv'
+    executable_pattern = 'pronghorn*|blue_crab*|fenix*'
+    cli_args = "MultiApps/active='' Transfers/active='' Executioner/num_steps=5"
+    prereq = 'fluid_flow_only'
+  []
+  [transient_fuel_performance_only]
+    type = CSVDiff
+    working_directory = '../transient'
+    input = 'oecd_pbmr400_tr2_pplofc_mhtr_pebble_triso.i'
+    csvdiff = 'oecd_pbmr400_tr2_lf40_mhtr_pebble_triso.csv'
+    executable_pattern = 'pronghorn*|blue_crab*|fenix*'
+    cli_args = 'Executioner/num_steps=2 Outputs/csv=true'
   []
 []

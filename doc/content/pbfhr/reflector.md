@@ -619,11 +619,11 @@ in the graphite and steel.
 Next, the [MultiApps](https://mooseframework.inl.gov/syntax/MultiApps/index.html)
  and [Transfers](https://mooseframework.inl.gov/syntax/Transfers/index.html)
 blocks describe the interaction between Cardinal
-and MOOSE. The MOOSE heat conduction module is here run as the master application, with
+and MOOSE. The MOOSE heat conduction module is here run as the main application, with
 the nekRS wrapping run as the sub-application. We specify that MOOSE will run first on each
 time step. Allowing sub-cycling means that, if the MOOSE time step is 0.05 seconds, but
 the nekRS time step is 0.02 seconds, that for every MOOSE time step, nekRS will perform
-three time steps, of length 0.02, 0.02, and 0.01 seconds to "catch up" to the MOOSE master
+three time steps, of length 0.02, 0.02, and 0.01 seconds to "catch up" to the MOOSE main
 application. If sub-cycling is turned off, then the smallest time step among all the various
 applications is used.
 
@@ -762,7 +762,7 @@ The input consists of blocks and parameters. The `[GENERAL]` block describes the
 time stepping, simulation end control, and the polynomial order. Here, a time step
 of 0.025 (non-dimensional) is used; a nekRS output file is written every 100 time steps.
 Because nekRS is run as a sub-application to MOOSE, the `stopAt` and `numSteps`
-fields are actually ignored, so that the steady state tolerance in the MOOSE master
+fields are actually ignored, so that the steady state tolerance in the MOOSE main
 application dictates when a simulation terminates. Because the purpose of this
 simulation is only to obtain a reasonable initial condition, a low polynomial order
 of 2 is used.

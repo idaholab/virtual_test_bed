@@ -38,5 +38,6 @@
     input = 'sam_channel.i'
     check_input = True
     executable_pattern = 'sam*|blue_crab*'
+    cli_args = '--app SamApp'
   []
 []

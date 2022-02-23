@@ -1,7 +1,7 @@
 # ==============================================================================
 # PBMR-400 pebble/TRISO 1-D model, NEA/NSC/DOC(2013)10
 # SUBAPP2 Pebble/TRISO 1-D model, Pebble surface temp and power density supplied
-# by TH MASTER1 TH app.
+# by TH MAIN1 TH app.
 # FENIX input file
 # ------------------------------------------------------------------------------
 # Idaho Falls, INL, 01/20/2020
@@ -293,7 +293,7 @@ pebble_bed_porosity        = 0.39 # Pebble bed porosity (//)
   line_search = l2
 
   # Problem time parameters.
-  dt = 1e+15 # Let the master app control time steps.
+  dt = 1e+15 # Let the parent app control time steps.
   reset_dt = true
   start_time = 0.0
 
@@ -321,12 +321,12 @@ pebble_bed_porosity        = 0.39 # Pebble bed porosity (//)
     execute_on = 'LINEAR'
   []
 
-  # Feedbacks from the master.
+  # Feedbacks from the fluid app
   [pebble_surface_temp]
     type = Receiver
   []
 
-  # Feedbacks to the master.
+  # Feedbacks to the fluid app
   [moderator_average_temp]
     type = ElementAverageValue
     variable = T_pebble

@@ -1,6 +1,6 @@
 # ==============================================================================
 # PBMR-400 steady-state phase 1 exercise 3, NEA/NSC/DOC(2013)10.
-# MASTER0 Neutron kinetic model, T_fuel and T_mod feedback supplied by TH subapp.
+# MAIN0 Neutron kinetic model, T_fuel and T_mod feedback supplied by TH subapp.
 # FENIX input file
 # ------------------------------------------------------------------------------
 # Idaho Falls, INL, 02/22/2020
@@ -141,11 +141,11 @@ fis_fract            = ${fparse 1 - dh_fract} # Fission power fraction at t = 0.
                      133 133 133 133 155 116 113 113 113 113 113 135 164 144 144 152 152 152 189 190 '
   []
   [cartesian_mesh_ids]
-    type = SubdomainElementIDs
+    type = SubdomainExtraElementIDGenerator
     input = cartesian_mesh
-    subdomains   = ${all_bloks}
-    equivalence_ids = ${all_bloks}
-    material_ids = ${material_ids}
+    subdomains = ${all_bloks}
+    extra_element_id_names = 'material_id equivalence_id'
+    extra_element_ids = '${material_ids}; ${all_bloks}'
   []
   uniform_refine = 0
 []
@@ -673,7 +673,7 @@ fis_fract            = ${fparse 1 - dh_fract} # Fission power fraction at t = 0.
     n_delay_groups = 6
     family = LAGRANGE
     order = FIRST
-    fission_source_as_material = true
+    fission_source_aux = true
     assemble_scattering_jacobian = true
     assemble_fission_jacobian = true
     diffusion_kernel_type = tensor
@@ -695,7 +695,7 @@ fis_fract            = ${fparse 1 - dh_fract} # Fission power fraction at t = 0.
 
   # end_time = 6000.0
   end_time = 180000.0
-  dt = 1e+15 # Let the master app control time steps.
+  dt = 1e+15 # Let the fluid control time steps.
 
   l_tol = 1e-4
   nl_rel_tol = 1e-7
@@ -724,10 +724,9 @@ fis_fract            = ${fparse 1 - dh_fract} # Fission power fraction at t = 0.
 [MultiApps]
   [th_sub]
     type = TransientMultiApp
-    app_type = FenixApp
     input_files = 'oecd_pbmr400_tr1_pplofc_phtn_flow_path.i'
     positions = '0.0 -2.8500 0.0' # Vertical offset between the two meshes.
-    # sub_cycling = true
+    sub_cycling = true
   []
 []
 

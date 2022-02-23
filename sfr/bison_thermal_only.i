@@ -355,7 +355,7 @@ plenum_height        = 1.
 [MultiApps]
   [sam]
     type = FullSolveMultiApp
-    app_type = BlueCrabApp
+    app_type = SamApp
     positions = '0 0 0'
     input_files = sam_channel.i
     execute_on = 'TIMESTEP_END'

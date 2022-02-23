@@ -76,8 +76,10 @@
   []
   [temp_uo] #auxvariable to hold heat pipe surface temperature from UserObject
     initial_condition = 800
+    block = 'heat_pipes'
   []
   [hp_flux_aux]
+    block = 'heat_pipes'
   []
 []
 
@@ -235,11 +237,12 @@
 [Transfers]
   [from_sockeye_flux] # Transfer heat pipe heat flux from Sockeye subapps
     type = MultiAppNearestNodeTransfer
-     direction = from_multiapp
-     multi_app = sockeye
-     source_variable = flux_uo
-     variable = hp_flux_aux
+    direction = from_multiapp
+    multi_app = sockeye
+    source_variable = flux_uo
+    variable = hp_flux_aux
     execute_on = 'timestep_begin'
+    fixed_meshes = true
   []
   [to_sockeye_temp] # Transfer heat pipe surface temperature to Sockeye subapps
     type = MultiAppNearestNodeTransfer
@@ -248,6 +251,7 @@
     source_variable = temp_uo
     variable = T_wall_var
     execute_on = 'timestep_begin'
+    fixed_meshes = true
   []
 []
 

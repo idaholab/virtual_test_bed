@@ -1,6 +1,6 @@
 # ==============================================================================
 # PBMR-400 steady-state phase 1 exercise 3, NEA/NSC/DOC(2013)10.
-# SUBAPP1 MASTER1 Thermal-hydraulics only with provided power density
+# SUBAPP1 Thermal-hydraulics only with provided power density
 # FENIX input file
 # ------------------------------------------------------------------------------
 # Idaho Falls, INL, 10/12/2019
@@ -110,6 +110,8 @@ reactor_inlet_free_rho_u = ${fparse -reactor_total_mfr/reactor_inlet_free_flow_a
   []
   [courant_number]
     block = ' 1 2 14 15 16 17 18 '
+    family = MONOMIAL
+    order = CONSTANT
   []
   [alpha]
     family = MONOMIAL
@@ -329,10 +331,10 @@ reactor_inlet_free_rho_u = ${fparse -reactor_total_mfr/reactor_inlet_free_flow_a
 
 [AuxKernels]
   [T_solid_element_average]
-    type = ScaleAux
-    multiplier = 1.0
-    source_variable = T_solid
+    type = ParsedAux
     variable = T_solid_element_average
+    function = T_solid
+    args = T_solid
     block = ' 1 '
   []
 
@@ -730,7 +732,7 @@ reactor_inlet_free_rho_u = ${fparse -reactor_total_mfr/reactor_inlet_free_flow_a
   line_search = 'l2'
 
   # Problem time parameters.
-  dt = 1e+15 # Let the master app control time steps.
+  dt = 1e+15 # Let the main app control time steps.
   reset_dt = true
   start_time = 0.0
 
@@ -826,10 +828,10 @@ reactor_inlet_free_rho_u = ${fparse -reactor_total_mfr/reactor_inlet_free_flow_a
 []
 
 [Postprocessors]
-    [timestep_pp]
-      type = FunctionValuePostprocessor
-      function = dts
-    []
+  [timestep_pp]
+    type = FunctionValuePostprocessor
+    function = dts
+  []
   [min_courant_num]
     type = ElementExtremeValue
     value_type = 'min'
