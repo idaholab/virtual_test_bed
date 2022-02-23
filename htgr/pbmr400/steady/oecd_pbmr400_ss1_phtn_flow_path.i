@@ -1,12 +1,12 @@
 # ==============================================================================
 # PBMR-400 steady-state phase 1 exercise 3, NEA/NSC/DOC(2013)10.
-# SUBAPP1 MASTER1 thermal-hydraulics model, power supplied by NK MASTER0 app.
+# SUBAPP1 MAIN1 thermal-hydraulics model, power supplied by NK MAIN0 app.
 # FENIX input file
 # ------------------------------------------------------------------------------
 # Idaho Falls, Idaho National Laboratory, 02/03/2020
 # Author(s): Dr. Paolo Balestra, Dr. Sebastian Schunert
 # ==============================================================================
-# - ss1: Steady state simulation master app level 1
+# - ss1: Steady state simulation main app level 1
 # - phth: ProngHorn for thermal hydraulics
 # - lgcy: Legacy kernels
 # - supmix: Mixed superficial variables
@@ -904,7 +904,7 @@ riser_superficial_rho_v         = ${fparse reactor_total_mfr/riser_free_flow_are
   [barrel_to_rpv]
     type = GapHeatTransfer
     variable = T_solid
-    emissivity_master = ${global_emissivity}
+    emissivity_primary = ${global_emissivity}
     emissivity_secondary = ${global_emissivity}
     gap_geometry_type = CYLINDER
     primary = barrel_rpv_gap_outer

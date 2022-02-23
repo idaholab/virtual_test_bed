@@ -1,6 +1,6 @@
 # Griffin steady state input
 
-We will first cover the input for the master application, Griffin, which tackles the neutronics
+We will first cover the input for the main application, Griffin, which tackles the neutronics
 problem. While the Griffin manual is ultimately the most complete reference on this input, we will
 try to provide enough details here for a complete comprehension of this input.
 
@@ -162,7 +162,7 @@ types:
   useful for easily importing then plotting the simulation results using Python or Matlab.
 
 - checkpoint files. [Checkpoint](https://mooseframework.inl.gov/source/outputs/Checkpoint.html) files are used solely for restarting simulations. Unlike Exodus files, they also
-  contain all the subapp information, so only the master app checkpoint files are necessary. Checkpoint files are
+  contain all the subapp information, so only the main app checkpoint files are necessary. Checkpoint files are
   output at a regular interval, specified by the `num_files` field.
 
 
