@@ -23,7 +23,7 @@
     csvdiff = 'MP_FC_ss_bison_out.csv'
     ad_indexing_type = 'global'
     executable_pattern = 'bison*|blue_crab*|dire_wolf*'
-    cli_args = "MultiApps/active='' Transfers/active='' Executioner/num_steps=2 Executioner/nl_abs_tol=1e-1 Outputs/csv=true"
+    cli_args = "MultiApps/active='' Transfers/active='' Executioner/num_steps=2 Executioner/nl_abs_tol=1e-1 Outputs/csv=true --distributed-mesh Outputs/exodus=false"
     min_parallel = 16
     method = 'opt'
   []
@@ -40,7 +40,7 @@
     csvdiff = 'mrad_bison_out.csv mrad_bison_out_sockeye001_csv.csv'
     ad_indexing_type = 'global'
     executable_pattern = 'dire_wolf*'
-    cli_args = "Executioner/num_steps=2 Executioner/nl_abs_tol=1e-1 Outputs/csv=true Outputs/file_base=mrad_bison_out"
+    cli_args = "Executioner/num_steps=2 Executioner/nl_abs_tol=1e-1 Outputs/csv=true Outputs/file_base=mrad_bison_out --distributed-mesh Outputs/exodus=false"
     min_parallel = 48
     # takes about 9 minutes on 48 cores
   []
