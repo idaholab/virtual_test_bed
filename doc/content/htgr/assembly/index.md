@@ -5,6 +5,8 @@
 In this tutorial, we couple OpenMC Monte Carlo transport to the MOOSE heat conduction module
 and the MOOSE [!ac](THM), a set of 1-D systems-level thermal-hydraulics kernels in MOOSE
 [!cite](relap7), for application to a generic [!ac](TRISO)-fueled [!ac](HTGR) assembly.
+This coupling will be performed with Cardinal, an open-source application
+[available on GitHub](https://github.com/neams-th-coe/cardinal).
 OpenMC will receive temperature feedback from both
 the MOOSE heat conduction module (for the solid regions) and from [!ac](THM)
 (for the fluid regions). Density feedback will be provided by [!ac](THM)
@@ -120,7 +122,7 @@ Next, we loop over 50 axial layers and create a unique hexagonal lattice for eac
 This hexagonal lattice defines the fuel assembly structure, and consists of four different
 universes:
 
-- A fuel pin plus surronding matrix (`f`),
+- A fuel pin plus surrounding matrix (`f`),
 - A coolant channel plus surrounding matrix (`c`),
 - A boron carbide poision pin plus surrounding matrix (`p`), and
 - A homogeneous graphite hexagonal pincell to fill
@@ -438,7 +440,7 @@ throw an error if the tallied OpenMC cells map to different volumes in the MOOSE
 Because we know *a priori* that the equal-volume OpenMC tally cells *should* all map
 to equal volumes, this will help ensure that the volumes used for heat source normalization
 are also all equal. For further discussion of this setting and a pictorial description
-of the possible effect of non-equal mapped vlumes, please see the
+of the possible effect of non-equal mapped volumes, please see the
 [OpenMCCellAverageProblem](https://cardinal.cels.anl.gov/source/problems/OpenMCCellAverageProblem.html) documentation.
 
 Because the blocks in the OpenMC mesh mirror
