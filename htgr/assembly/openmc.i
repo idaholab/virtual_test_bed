@@ -167,6 +167,12 @@ num_layers_for_THM = 50      # number of elements in the THM model; for the conv
   output = 'fission_tally_std_dev'
   check_equal_mapped_tally_volumes = true
 
+  # optimizations to increase tracking rate by assuring that the tallies
+  # are spatially independent
+  check_tally_sum = false
+  normalize_by_global_tally = false
+  assume_separate_tallies = true
+
   power = ${fparse power / n_bundles}
   scaling = 100.0
   solid_blocks = '1 2 4'
