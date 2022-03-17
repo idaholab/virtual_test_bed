@@ -5,6 +5,8 @@
 In this tutorial, we couple OpenMC Monte Carlo transport to the MOOSE heat conduction module
 and the MOOSE [!ac](THM), a set of 1-D systems-level thermal-hydraulics kernels in MOOSE
 [!cite](relap7), for application to a generic [!ac](TRISO)-fueled [!ac](HTGR) assembly.
+This coupling will be performed with Cardinal, an open-source application
+[available on GitHub](https://github.com/neams-th-coe/cardinal).
 OpenMC will receive temperature feedback from both
 the MOOSE heat conduction module (for the solid regions) and from [!ac](THM)
 (for the fluid regions). Density feedback will be provided by [!ac](THM)

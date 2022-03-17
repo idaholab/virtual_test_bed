@@ -52,7 +52,8 @@ and opportunities for high-resolution thermal-hydraulics within the MOOSE framew
 The analysis shown here is performed with Cardinal, a MOOSE application
 that "wraps" [nekRS](https://nekrsdoc.readthedocs.io/en/latest/index.html),
 a [!ac](CFD) code, and [OpenMC](https://docs.openmc.org/en/latest/), a Monte Carlo particle transport
-code. As this example focuses on heat transfer modeling, there will be no further
+code. Cardinal is an open-source application, [available on GitHub](https://github.com/neams-th-coe/cardinal).
+As this example focuses on heat transfer modeling, there will be no further
 discussion of the OpenMC wrapping in Cardinal.
 "Wrapping" means that, for all intents and purposes, nekRS simulations can
 be run within the MOOSE framework and interacted with as if the physics
