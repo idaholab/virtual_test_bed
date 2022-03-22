@@ -25,7 +25,6 @@
   particle = neutron
   equation_type = transient
   restart_transport_system = true
-  scaling_eigenkernels = 1.0233305925653
 
   G = 6
 
