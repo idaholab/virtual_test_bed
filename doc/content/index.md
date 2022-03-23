@@ -37,4 +37,4 @@ NRIC Tech Talk by the VTB team: State-of-the-Art Modeling and Simulation to Supp
 
 !media nric_logo.png style=width:60%;margin-left:20%;margin-right:auto
 
-!media neams_logo.jpeg style=width:30%;margin-left:35%;margin-right:auto
+!media neams_logo_new.png style=width:30%;margin-left:35%;margin-right:auto
