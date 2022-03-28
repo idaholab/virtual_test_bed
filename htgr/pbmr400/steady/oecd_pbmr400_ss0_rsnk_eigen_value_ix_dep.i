@@ -666,7 +666,7 @@ fis_fract            = ${fparse 1 - dh_fract} # Fission power fraction at t = 0.
 
   # Linear/nonlinear iterations.
   l_max_its = 50
-  l_tol = 1e-3
+  l_tol = 1e-6
 
   nl_max_its = 50
   nl_rel_tol = 1e-7

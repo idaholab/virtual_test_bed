@@ -697,7 +697,7 @@ fis_fract            = ${fparse 1 - dh_fract} # Fission power fraction at t = 0.
   end_time = 180000.0
   dt = 1e+15 # Let the fluid control time steps.
 
-  l_tol = 1e-4
+  l_tol = 1e-6
   nl_rel_tol = 1e-7
   nl_abs_tol = 1e-8
   l_max_its = 75
