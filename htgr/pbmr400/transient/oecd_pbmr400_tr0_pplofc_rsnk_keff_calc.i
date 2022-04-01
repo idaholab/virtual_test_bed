@@ -705,6 +705,7 @@ fis_fract            = ${fparse 1 - dh_fract} # Fission power fraction at t = 0.
 
   petsc_options_iname = '-pc_type -pc_factor_mat_solver_package -ksp_gmres_restart'
   petsc_options_value = 'lu superlu_dist 75'
+  line_search = 'none'
 
   # Time step control.
   # [TimeStepper]

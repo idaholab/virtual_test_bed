@@ -735,14 +735,15 @@ reactor_inlet_free_rho_u = ${fparse -reactor_total_mfr/reactor_inlet_free_flow_a
   dt = 1e+15 # Let the main app control time steps.
   reset_dt = true
   start_time = 0.0
+  timestep_tolerance = 1e-6
 
   # Iterations parameters.
   l_max_its = 50
   l_tol     = 1e-3
 
   nl_max_its = 25
-  nl_rel_tol = 1e-3
-  nl_abs_tol = 1e-2
+  nl_rel_tol = 1e-5
+  nl_abs_tol = 1e-4
 
   # [TimeStepper]
   #   type = PostprocessorDT
