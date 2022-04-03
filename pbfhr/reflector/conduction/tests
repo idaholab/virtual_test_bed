@@ -1,19 +1,32 @@
 [Tests]
-  [conduction]
+  [syntax_conduction]
     type = RunApp
     input = solid.i
     check_input = true
     cli_args = "MultiApps/active='' Transfers/active='' Executioner/num_steps=2"
     requirement = "The conduction heat transfer input shall not deprecate syntax from the "
                   "MOOSE main application."
-    executable_pattern = 'cardinal*'
+    executable_pattern = 'cardinal*|moose*|pronghorn*'
   []
-  [nek]
+  [syntax_nek]
     type = RunApp
     input = nek.i
     check_input = true
     requirement = "The pbfhr reflector  fluid flow input shall not deprecate syntax from the "
                   "MOOSE main application."
+    executable_pattern = 'cardinal*'
+  []
+  [run_nek]
+    type = RunApp
+    min_parallel = 16
+    input = nek.i
+    executable_pattern = 'cardinal*'
+  []
+  [run_conduction]
+    type = RunApp
+    check_input = True
+    min_parallel = 16
+    input = solid.i
     executable_pattern = 'cardinal*'
   []
 []
