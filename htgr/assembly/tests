@@ -1,0 +1,38 @@
+[Tests]
+  [syntax_openmc]
+    type = RunApp
+    input = 'common_input.i openmc.i'
+    check_input = true
+    executable_pattern = 'cardinal*'
+  []
+  [syntax_conduction]
+    type = RunApp
+    input = 'common_input.i solid.i'
+    check_input = true
+    executable_pattern = 'cardinal*'
+  []
+  [syntax_thm]
+    type = RunApp
+    input = 'common_input.i thm.i'
+    check_input = true
+    executable_pattern = 'cardinal*|thermal_hydraulics*'
+  []
+  [run_openmc]
+    type = RunApp
+    input = 'common_input.i openmc.i'
+    cli_args = "MultiApps/active='' Transfers/active='' Executioner/num_steps=2"
+    executable_pattern = 'cardinal*'
+  []
+  [run_conduction]
+    type = RunApp
+    check_input = True
+    input = 'common_input.i solid.i'
+    executable_pattern = 'cardinal*'
+  []
+  [run_thm]
+    type = RunApp
+    input = 'common_input.i thm.i'
+    check_input = true
+    executable_pattern = 'cardinal*|thermal_hydraulics*'
+  []
+[]
