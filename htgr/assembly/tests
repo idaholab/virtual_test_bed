@@ -1,38 +1,51 @@
 [Tests]
   [syntax_openmc]
     type = RunApp
-    input = 'common_input.i openmc.i'
+    input = 'openmc.i'
     check_input = true
     executable_pattern = 'cardinal*'
   []
   [syntax_conduction]
     type = RunApp
-    input = 'common_input.i solid.i'
+    input = 'solid.i'
     check_input = true
     executable_pattern = 'cardinal*'
   []
   [syntax_thm]
     type = RunApp
-    input = 'common_input.i thm.i'
+    input = 'thm.i'
     check_input = true
     executable_pattern = 'cardinal*|thermal_hydraulics*'
   []
+
   [run_openmc]
     type = RunApp
-    input = 'common_input.i openmc.i'
+    input = 'openmc.i'
     cli_args = "MultiApps/active='' Transfers/active='' Executioner/num_steps=2"
     executable_pattern = 'cardinal*'
   []
   [run_conduction]
     type = RunApp
     check_input = True
-    input = 'common_input.i solid.i'
+    input = 'solid.i'
     executable_pattern = 'cardinal*'
   []
   [run_thm]
     type = RunApp
-    input = 'common_input.i thm.i'
+    input = 'thm.i'
     check_input = true
     executable_pattern = 'cardinal*|thermal_hydraulics*'
+  []
+
+  # Check input generation
+  [run_python_generation]
+    type = RunCommand
+    command = 'mkdir test_dir; cp assembly.py test_dir/assembly.py; cd test_dir; python assembly.py'
+    required_python_packages = 'matplotlib uncertainties h5py'
+  []
+  [check_openmc_input_generated]
+    type = CheckFiles
+    check_files = 'test_dir/materials.xml test_dir/geometry.xml test_dir/plots.xml test_dir/settings.xml'
+    prereq = 'run_python_generation'
   []
 []
