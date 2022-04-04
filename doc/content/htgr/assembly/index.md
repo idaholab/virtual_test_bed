@@ -122,7 +122,7 @@ Next, we loop over 50 axial layers and create a unique hexagonal lattice for eac
 This hexagonal lattice defines the fuel assembly structure, and consists of four different
 universes:
 
-- A fuel pin plus surronding matrix (`f`),
+- A fuel pin plus surrounding matrix (`f`),
 - A coolant channel plus surrounding matrix (`c`),
 - A boron carbide poision pin plus surrounding matrix (`p`), and
 - A homogeneous graphite hexagonal pincell to fill
@@ -440,7 +440,7 @@ throw an error if the tallied OpenMC cells map to different volumes in the MOOSE
 Because we know *a priori* that the equal-volume OpenMC tally cells *should* all map
 to equal volumes, this will help ensure that the volumes used for heat source normalization
 are also all equal. For further discussion of this setting and a pictorial description
-of the possible effect of non-equal mapped vlumes, please see the
+of the possible effect of non-equal mapped volumes, please see the
 [OpenMCCellAverageProblem](https://cardinal.cels.anl.gov/source/problems/OpenMCCellAverageProblem.html) documentation.
 
 Because the blocks in the OpenMC mesh mirror
