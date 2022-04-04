@@ -6,7 +6,9 @@ The [multiphysics core model](pbfhr/steady/griffin_pgh_model.md), which uses Gri
 coarse mesh porous media CFD, is coupled with the [balance of plant model](pbfhr/pbfhr_sam/pbfhr_sam.md),
 which uses SAM for 1D thermal hydraulics of the primary and secondary loops.
 
-!media scheme of the coupling  TODO tomorrow
+!media media/pbfhr/plant/salt_temp.png
+       caption=Coupling scheme for the Mk1-FHR plant model
+       style=width:100%
 
 ## Modifications to the core 2D-RZ model
 
@@ -85,9 +87,11 @@ inflated in Paraview, for legibility. Both the pressure and salt temperature sho
 between SAM and Pronghorn, ensured by the boundary conditions.
 
 !media media/pbfhr/plant/salt_temp.png
+       caption=Salt temperature through the Mk1-FHR plant model
        style=width:100%
 
 !media media/pbfhr/plant/pressure.png
+       caption=Pressure through the Mk1-FHR plant model
        style=width:100%
 
 ## Acknowledgements
