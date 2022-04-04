@@ -735,6 +735,7 @@ reactor_inlet_free_rho_u = ${fparse -reactor_total_mfr/reactor_inlet_free_flow_a
   dt = 1e+15 # Let the main app control time steps.
   reset_dt = true
   start_time = 0.0
+  timestep_tolerance = 1e-6
 
   # Iterations parameters.
   l_max_its = 50
