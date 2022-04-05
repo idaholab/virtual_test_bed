@@ -489,6 +489,9 @@ outlet_pressure_val = 2e5 # Pa, default, for initialization
     type = INSFVOutletPressureBC
     variable = pressure
     postprocessor = 'outlet_pressure'
+
+    # This is temporary, a branch of moose can use the postprocessor, will be merged soon
+    function='${outlet_pressure_val}'
     boundary = 'bed_horizontal_top OR_horizontal_top plenum_top'
   []
 []
@@ -734,12 +737,15 @@ outlet_pressure_val = 2e5 # Pa, default, for initialization
   accept_on_max_fixed_point_iteration = true
   transformed_variables = 'vel_x vel_y pressure temp_fluid temp_solid'
 
-  [TimeStepper]
-    type = IterationAdaptiveDT
-    dt                 = 0.15
-    cutback_factor     = 0.5
-    growth_factor      = 2.0
-  []
+  num_steps = 400
+  dt = 0.2
+  # See MOOSE #20701
+  # [TimeStepper]
+  #   type = IterationAdaptiveDT
+  #   dt                 = 0.15
+  #   cutback_factor     = 0.5
+  #   growth_factor      = 2.0
+  # []
 
   # Steady state detection.
   steady_state_detection = true
