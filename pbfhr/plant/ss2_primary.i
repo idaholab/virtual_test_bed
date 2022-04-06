@@ -5,6 +5,17 @@
 # Work supported under the DOE NEAMS program
 # Application : SAM
 
+# Tuned to get 976 kg/s mdot
+# with SAM core
+# pump_head = 4.89e5
+# with SAM uncoupled PP boundaries
+# pump_head = 2e4  #roughly, 1140 kg/s
+# with Pronghorn core
+pump_head = 4.9e5
+# 5.9e5 -> 1200
+# 4.7e5 -> 870
+area_inlet = 1
+
 [GlobalParams]                  # global parameters initialization
     global_init_P = 1.0e5
     global_init_V = 1.796
@@ -85,8 +96,8 @@
 
   [Phead]
     type = PiecewiseLinear
-    x = '0   400    404.5  409    413.5 418   422.5 427  431.5 436   440.5 445   448   450.5 452    454   457.5 460   480   500   600   10000'
-    y = '367475 367475 182810 89969  43302 19845 8054  2128 -851  -1500 -1700 -1720 -1720 -1730 -1760 -1790 -1830 -1870 -2150 -2350 -2500 -2500'
+    x = '0 400'
+    y = '${pump_head} ${pump_head}'
   []
 
   [shutdownPower]
@@ -99,44 +110,87 @@
 
 [Components]
 
-  [reactor]
-    type = ReactorPower
-    initial_power = 2.36e8    # Initial total reactor power
-    decay_heat = shutdownPower          # decay heat profile
-  []
-
-  [pipe010]                           #Active core region (1)
-    type = PBCoreChannel
+  [fueling]
+    type = PBOneDFluidComponent
     eos = eos
-    position = '0 4.94445 -5.34'
+    position = '0 4.94445 -5.265'
     orientation = '0 0 1'
-    roughness = 0.000015
-    A = 1.327511
-    Dh = 0.03
-    length = 4.58
-    n_elems = 13 #26
-    initial_V = 0.290
-    initial_T = 920
-    initial_P = 2.6e5
-
+    A = ${area_inlet}
+    Dh = 0.1
+    length = 0.3
+    n_elems = 2
+    initial_T = 823.15
+    initial_P = 593416
+    initial_V = 1.43079
     WF_user_option = User
-    User_defined_WF_parameters = '5.467 847.17 -1.0'
-
-    HT_surface_area_density = 133.33  #Preserves surface area
-    Ts_init = 950
-    elem_number_of_hs = '5 5 2'
-    material_hs = 'h451 fuel h451'
-    n_heatstruct = 3
-    fuel_type = cylinder
-    name_of_hs = 'inner fuel outer'
-    width_of_hs = '0.007896334 0.001463164 0.001020503'
-
-    power_fraction = '0 1 0'
-    power_shape_function = Paxial
-    HTC_geometry_type = Bundle
-    PoD = 1.1
-    dim_hs = 2
+    User_defined_WF_parameters = '0.0 0.0 0.1'
   []
+
+  [core_inlet] # we pass V and T, we get p and back T
+    type              = CoupledPPSTDV
+    input             = 'fueling(out)'
+    eos               = eos
+    postprocessor_pbc = Core_inlet_pressure
+    postprocessor_Tbc = Core_inlet_T_reversal
+  []
+
+  [core_outlet] #we pass p and get v and T
+    type              = CoupledPPSTDJ
+    input             = 'defueling(in)'
+    eos               = eos
+    v_bc              = 1.86240832931
+    T_bc              = 9.229715e+02
+    postprocessor_vbc = Core_outlet_v
+    postprocessor_Tbc = Core_outlet_T
+  []
+
+  [defueling] #Upper Hot salt extraction pipe
+    type = PBOneDFluidComponent
+    input_parameters = SC80-24in
+    position = '0 4.94445 -0.86'
+    orientation = '0 0 -1'
+    length = 0.3
+    eos = eos
+    A = 1
+    Dh = 0.1
+    n_elems = 11
+    initial_V = 1.43079
+    initial_T = 923.15
+    initial_P = 145485.2923
+  []
+
+  # [pipe010]                           #Active core region (1)
+  #   type = PBCoreChannel
+  #   eos = eos
+  #   position = '0 4.94445 -5.34'
+  #   orientation = '0 0 1'
+  #   roughness = 0.000015
+  #   A = 1.327511
+  #   Dh = 0.03
+  #   length = 4.58
+  #   n_elems = 13 #26
+  #   initial_V = 0.290
+  #   initial_T = 920
+  #   initial_P = 2.6e5
+  #
+  #   WF_user_option = User
+  #   User_defined_WF_parameters = '5.467 847.17 -1.0'
+  #
+  #   HT_surface_area_density = 133.33  #Preserves surface area
+  #   Ts_init = 950
+  #   elem_number_of_hs = '5 5 2'
+  #   material_hs = 'h451 fuel h451'
+  #   n_heatstruct = 3
+  #   fuel_type = cylinder
+  #   name_of_hs = 'inner fuel outer'
+  #   width_of_hs = '0.007896334 0.001463164 0.001020503'
+  #
+  #   power_fraction = '0 1 0'
+  #   power_shape_function = Paxial
+  #   HTC_geometry_type = Bundle
+  #   PoD = 1.1
+  #   dim_hs = 2
+  # []
 
   [pipe020]                           #Core bypass (2)
     type = PBOneDFluidComponent
@@ -154,7 +208,7 @@
 
   [Branch030]                          #Outlet plenum (3)
     type = PBVolumeBranch
-    inputs = 'pipe010(out) pipe020(out)' # A = 1.327511 (0.2524495) A = 0.065
+    inputs = 'defueling(out) pipe020(out)' # A = 1.327511 (0.2524495) A = 0.065
     outputs = 'pipe040(in)'       # A = 0.2512732
     center = '0 4.94445 -0.76'
     volume = 0.99970002
@@ -536,7 +590,7 @@
   [Branch280]                         #Bottom branch (28)
     type = PBVolumeBranch
     inputs = 'pipe150(out)'    # A = 0.3038791
-    outputs = 'pipe010(in) pipe020(in)' # A = 1.327511  A = 0.065
+    outputs = 'fueling(in) pipe020(in)' # A = 1.327511  A = 0.065
     center = '0 6.53445 -5.34'
     volume = 0.2655022
     #K = '0.35964 0.0 0.3750'
@@ -578,12 +632,12 @@
   []
 
   [cover_gas2]
- type = CoverGas
- n_liquidvolume = 1
- name_of_liquidvolume = 'pool2'
- initial_P = 9e4
- initial_Vol = 0.5
- initial_T = 970
+    type = CoverGas
+    n_liquidvolume = 1
+    name_of_liquidvolume = 'pool2'
+    initial_P = 9e4
+    initial_Vol = 0.5
+    initial_T = 970
   []
 
   [Branch501]                         #Primary tank branch
@@ -628,12 +682,12 @@
   []
 
   [cover_gas1]
- type = CoverGas
- n_liquidvolume = 1
- name_of_liquidvolume = 'pool1'
- initial_P = 2e5
- initial_Vol = 0.5
- initial_T = 852.7
+    type = CoverGas
+    n_liquidvolume = 1
+    name_of_liquidvolume = 'pool1'
+    initial_P = 2e5
+    initial_Vol = 0.5
+    initial_T = 852.7
   []
 
   [Branch502]                         #DRACS tank branch
@@ -802,6 +856,7 @@
     K_reverse = '2000000 2000000'
     Area = 0.3041
     Head_fn = Phead
+    # Desired_mass_flow_rate = 976
     initial_V = 1.783
     initial_T = 970
     initial_P = 2.7e5
@@ -841,16 +896,74 @@
     input = 'DHX:secondary_pipe(out)'
     variable = 'temperature'
   []
-  [Corev]
+
+  # Boundary conditions to send to Pronghorn
+  [Core_inlet_v]
     type = ComponentBoundaryVariableValue
-    input = 'pipe010(in)'
+    input = 'fueling(out)'
     variable = 'velocity'
+    execute_on = 'INITIAL TIMESTEP_BEGIN TIMESTEP_END TRANSFER'
   []
-  [Corerho]
+  [Core_inlet_rho]
     type = ComponentBoundaryVariableValue
-    input = 'pipe010(in)'
+    input = 'fueling(out)'
     variable = 'rho'
+    execute_on = 'INITIAL TIMESTEP_BEGIN TIMESTEP_END TRANSFER'
   []
+  [Core_inlet_mdot]
+    type = ParsedPostprocessor
+    function = 'Core_inlet_rho * Core_inlet_v * ${area_inlet}'
+    pp_names = 'Core_inlet_rho Core_inlet_v'
+    execute_on = 'INITIAL TIMESTEP_BEGIN TIMESTEP_END TRANSFER'
+  []
+  [Core_inlet_T]
+    type = ComponentBoundaryVariableValue
+    input = 'fueling(out)'
+    variable = 'temperature'
+    execute_on = 'INITIAL TIMESTEP_BEGIN TIMESTEP_END TRANSFER'
+  []
+  [Core_outlet_p]
+    type = ComponentBoundaryVariableValue
+    input = 'defueling(in)'
+    variable = 'pressure'
+    execute_on = 'INITIAL TIMESTEP_BEGIN TIMESTEP_END TRANSFER'
+  []
+
+  # Boundary conditions received from Pronghorn
+  [Core_outlet_mdot]
+    type = Receiver
+    default = 976
+    execute_on = 'INITIAL TIMESTEP_BEGIN TIMESTEP_END TRANSFER'
+  []
+  [Core_outlet_rho]
+    type = ComponentBoundaryVariableValue
+    input = 'defueling(in)'
+    variable = 'rho'
+    execute_on = 'INITIAL TIMESTEP_BEGIN TIMESTEP_END TRANSFER'
+  []
+  [Core_outlet_v]
+    type = ParsedPostprocessor
+    function = 'Core_outlet_mdot / Core_outlet_rho'
+    pp_names = 'Core_outlet_mdot Core_outlet_rho'
+    execute_on = 'INITIAL TIMESTEP_BEGIN TIMESTEP_END TRANSFER'
+  []
+  [Core_inlet_T_reversal]
+    type = Receiver
+    default = 850
+    execute_on = 'INITIAL TIMESTEP_BEGIN TIMESTEP_END TRANSFER'
+  []
+  [Core_outlet_T]
+    type = Receiver
+    default = 950
+    execute_on = 'INITIAL TIMESTEP_BEGIN TIMESTEP_END TRANSFER'
+  []
+  [Core_inlet_pressure]
+    type = Receiver
+    default = 2e5
+    execute_on = 'INITIAL TIMESTEP_BEGIN TIMESTEP_END TRANSFER'
+  []
+
+  # Bypass flow analysis
   [Bypassv]
     type = ComponentBoundaryVariableValue
     input = 'pipe020(in)'
@@ -872,12 +985,6 @@
     petsc_options_iname = '-pc_type'
     petsc_options_value = 'lu'
   []
-  [FDP]
-    type = FDP
-    full = true
-    solve_type = 'PJFNK'
-  []
-
 []
 
 
@@ -899,7 +1006,7 @@
   nl_abs_tol = 1e-4
   nl_max_its = 30
 
-  start_time = -300.0
+  start_time = -40.0
   num_steps = 15000
   end_time = 100
 
@@ -945,6 +1052,7 @@
 
   [console]
     type = Console
-    interval = 20
+    # interval = 20
+    show = 'Core_outlet_p'
   []
 []
