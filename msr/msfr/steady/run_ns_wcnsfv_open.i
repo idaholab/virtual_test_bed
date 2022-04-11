@@ -81,12 +81,13 @@ beta6 = 0.000184087
     # - v_x, v_y, p, lambda from isothermal simulation
     # file = 'restart/run_ns_initial_restart.e'
     # - v_x, v_y, p, T, lambda, c_ifrom cosine heated simulation
-    file = 'restart/run_ns_restart.e'
+    file = 'restart/run_ns_wcnsfv_restart.e'
     # - v_x, v_y, p, T, lambda, c_i from coupled multiphysics simulation
     # file = 'restart/run_ns_coupled_restart.e'
   []
 
   # Remove the volumetric HX and add the inlet and outlet
+  # Only needs to be done if starting from a closed loop
   [add_region]
     type = SubdomainBoundingBoxGenerator
     input = restart
@@ -103,12 +104,6 @@ beta6 = 0.000184087
     fixed_normal = true
     normal_tol = 1e-8
   []
-  # [add_inlet]
-  #   type = ParsedGenerateSideset
-  #   input = add_region
-  #   combinatorial_geometry = 'x>1.9 & y>-0.895 & y<-0.885'
-  #   new_sideset_name = 'inlet'
-  # []
   [add_outlet]
     type = ParsedGenerateSideset
     input = add_inlet
@@ -817,7 +812,11 @@ beta6 = 0.000184087
   []
   [inlet_mdot]
     type = Receiver
+<<<<<<< HEAD
     default = -1.8e4
+=======
+    default = 1.8e4
+>>>>>>> 040a92cd240cb2f9059afc0b338884cb75894c6c
   []
   [inlet_T]
     type = Receiver
