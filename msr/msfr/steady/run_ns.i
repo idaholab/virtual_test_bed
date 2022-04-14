@@ -67,7 +67,8 @@ beta6 = 0.000184087
     # - vel_x, vel_y, p, lambda from isothermal simulation
     # file = 'restart/run_ns_initial_restart.e'
     # - vel_x, vel_y, p, T_fluid, lambda, c_ifrom cosine heated simulation
-    file = 'restart/run_ns_restart.e'
+    # file = 'restart/run_ns_restart.e'
+    file = 'run_ns_initial_restart.e'
     # - vel_x, vel_y, p, T_fluid, lambda, c_i from coupled multiphysics simulation
     # file = 'restart/run_ns_coupled_restart.e'
   []
@@ -129,9 +130,9 @@ beta6 = 0.000184087
     ref_temperature = ${T_HX}
 
     # Initial conditions
-    initial_velocity = '1e-6 1e-6 0'
-    initial_pressure = 0.0
-    initial_temperature = 0.0
+    # initial_velocity = '1e-6 1e-6 0'
+    # initial_pressure = 0.0
+    # initial_temperature = 600.0
 
     # Boundary conditions
     wall_boundaries = 'shield_wall reflector_wall fluid_symmetry'
@@ -180,36 +181,36 @@ beta6 = 0.000184087
     rhie_chow_user_object = 'ins_rhie_chow_interpolator'
   []
 []
-#
-#
-# [Variables]
-#   [vel_x]
-#     type = INSFVVelocityVariable
-#     block = 'fuel pump hx'
-#     initial_from_file_var = vel_x
-#   []
-#   [vel_y]
-#     type = INSFVVelocityVariable
-#     block = 'fuel pump hx'
-#     initial_from_file_var = vel_y
-#   []
-#   [pressure]
-#     type = INSFVPressureVariable
-#     block = 'fuel pump hx'
-#     initial_from_file_var = pressure
-#   []
-#   [lambda]
-#     family = SCALAR
-#     order = FIRST
-#     block = 'fuel pump hx'
-#     initial_from_file_var = lambda
-#   []
-#   [T]
-#     type = MooseVariableFVReal
-#     block = 'fuel pump hx'
-#     initial_condition = ${T_HX}
-#     # initial_from_file_var = T_fluid
-#   []
+
+[Variables]
+  [vel_x]
+    type = INSFVVelocityVariable
+    block = 'fuel pump hx'
+    # initial_from_file_var = vel_x
+  []
+  [vel_y]
+    type = INSFVVelocityVariable
+    block = 'fuel pump hx'
+    # initial_from_file_var = vel_y
+  []
+  [pressure]
+    type = INSFVPressureVariable
+    block = 'fuel pump hx'
+    # initial_from_file_var = pressure
+  []
+  [lambda]
+    family = SCALAR
+    order = FIRST
+    block = 'fuel pump hx'
+    # initial_from_file_var = lambda
+  []
+  [T_fluid]
+    type = INSFVEnergyVariable
+    block = 'fuel pump hx'
+    # initial_condition = ${T_HX}
+    # initial_from_file_var = T_fluid
+  []
+[]
 #   [c1]
 #     type = MooseVariableFVReal
 #     block = 'fuel pump hx'
