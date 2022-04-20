@@ -55,9 +55,7 @@ pump_force = -20000. # [N / m^3]
 [Modules]
   [NavierStokesFV]
     # General parameters
-    simulation_type = 'transient'
     compressibility = 'incompressible'
-    turbulence_handling = 'mixing-length'
     gravity = '0 -9.81 0'
 
     # Material properties
@@ -79,10 +77,11 @@ pump_force = -20000. # [N / m^3]
     pinned_pressure_value = 1e5
 
     # Turbulence parameters
+    turbulence_handling = 'mixing-length'
     von_karman_const = ${von_karman_const}
     mixing_length_delta = 0.1
     mixing_length_walls = 'shield_wall reflector_wall'
-    mixing_length_aux_execute_on ='initial'
+    mixing_length_aux_execute_on = 'initial'
 
     # Heat exchanger friction
     friction_blocks = 'hx'
@@ -111,15 +110,16 @@ pump_force = -20000. # [N / m^3]
 ################################################################################
 
 [Functions]
-  [rampdown_mu_func]
-    type = ParsedFunction
+  [ad_rampdown_mu_func]
+    type = ADParsedFunction
     value = mu*(100*exp(-3*t)+1)
     vars = 'mu'
     vals = ${mu}
   []
-  # Functor materials expect AD functors, to fix with MOOSE
-  [ad_rampdown_mu_func]
-    type = ADParsedFunction
+  # Duplicate definition to use in postprocessor,
+  # we will convert types more in the future and avoid duplicates
+  [rampdown_mu_func]
+    type = ParsedFunction
     value = mu*(100*exp(-3*t)+1)
     vars = 'mu'
     vals = ${mu}
@@ -149,16 +149,14 @@ pump_force = -20000. # [N / m^3]
 
   # Time-stepping parameters
   start_time = 0.0
-  dt = 0.3
-  num_steps = 5
-  # end_time = 1.5
-  #
-  # [TimeStepper]
-  #   type = IterationAdaptiveDT
-  #   optimal_iterations = 10
-  #   dt = 0.3
-  #   timestep_limiting_postprocessor = 1
-  # []
+  end_time = 15
+
+  [TimeStepper]
+    type = IterationAdaptiveDT
+    optimal_iterations = 10
+    dt = 0.3
+    timestep_limiting_postprocessor = 1
+  []
 
   # Solver parameters
   solve_type = 'NEWTON'
