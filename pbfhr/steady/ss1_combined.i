@@ -154,21 +154,28 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
 # VARIABLES AND KERNELS
 # ==============================================================================
 
+[Debug]
+  show_var_residual_norms = true
+[]
+
+[Problem]
+  kernel_coverage_check = false
+[]
+
 [Modules]
   [NavierStokesFV]
     # General parameters
-    simulation_type = 'transient'
     compressibility = 'incompressible'
     porous_medium_treatment = true
     add_energy_equation = true
-    boussinesq_approximation = true
+    # boussinesq_approximation = true
     block = ${blocks_fluid}
 
     # Material properties
     # TODO remove more rho_fluid
-    density = ${rho_fluid}
+    density = 'rho' #${rho_fluid}
     dynamic_viscosity = 'mu'
-    thermal_conductivity = 'k' #appa'
+    thermal_conductivity = '0' #kappa'
     specific_heat = 'cp'
     thermal_expansion = 'alpha_b'
     porosity = 'porosity'
@@ -184,7 +191,7 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
 
     # Wall boundary conditions
     wall_boundaries = 'bed_left barrel_wall'
-    momentum_wall_types = 'noslip noslip'
+    momentum_wall_types = 'slip slip'
     energy_wall_types = 'heatflux heatflux'
     energy_wall_function = '0 0'
 
@@ -197,12 +204,12 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
     # so the flux BCs have to be used consistently across all equations
 
     # Outlet boundary conditions
-    outlet_boundaries = 'bed_horizontal_top OR_horizontal_top'
-    momentum_outlet_types = 'fixed-pressure fixed-pressure'
-    pressure_function = '2e5 2e5'
+    outlet_boundaries = 'bed_horizontal_top plenum_top OR_horizontal_top'
+    momentum_outlet_types = 'fixed-pressure fixed-pressure fixed-pressure'
+    pressure_function = '2e5 2e5 2e5'
 
     # Porous flow parameters
-    ambient_convection_blocks = '3 4'
+    ambient_convection_blocks = ${blocks_pebbles}
     ambient_convection_alpha = 'alpha alpha'
     ambient_temperature = 'T_solid T_solid'
 
@@ -224,13 +231,13 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
 []
 
 [FVKernels]
-#   [u_friction]
-#     type = PINSFVMomentumFriction
-#     variable = superficial_vel_x
-#     Darcy_name = 'Darcy_coefficient'
-#     Forchheimer_name = 'Forchheimer_coefficient'
-#     momentum_component = 'x'
-#   []
+  # Fluid heat diffusion
+  [temp_fluid_conduction]
+    type = PINSFVEnergyAnisotropicDiffusion
+    variable = T_fluid
+    effective_diffusivity = false
+    kappa = 'kappa'
+  []
 
   # Solid Energy equation.
   [temp_solid_time_core]
@@ -323,6 +330,12 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
     function = ${power_density}
     block = '3'
   []
+  [core]
+    type = FunctionIC
+    variable = T_solid
+    function = 900
+    block = '1 2 3 4 5 6 7 8'
+  []
   [bricks]
     type = FunctionIC
     variable = T_solid
@@ -397,22 +410,10 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
   # FLUID
   [alpha_boussinesq]
     type = ADGenericFunctorMaterial
-    prop_names = 'alpha_b speed'
-    prop_values = '${alpha_b} 1'  ##########
+    prop_names = 'alpha_b rho'
+    prop_values = '${alpha_b} ${rho_fluid}'
     block = ${blocks_fluid}
   []
-  # [ins_fv]
-  #   type = INSFVPrimitiveSuperficialVarMaterial
-  #   T_fluid = 'T_fluid'
-  #   block = ${blocks_fluid}
-  #   p_constant = 1e5
-  #   T_constant = 900
-  # []
-  # [fluidprops]
-  #   type = PronghornFluidFunctorProps
-  #   block = ${blocks_fluid}
-  #   mu_multiplier = mu_func
-  # []
   [fluidprops]
     type = GeneralFunctorFluidProps
     block = ${blocks_fluid}
