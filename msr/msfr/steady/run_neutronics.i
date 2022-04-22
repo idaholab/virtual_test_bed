@@ -166,7 +166,7 @@
 [MultiApps]
   [ns]
     type = FullSolveMultiApp
-    input_files = 'run_ns.i'
+    input_files = 'run_ns_wcnsfv_open.i'
     execute_on = 'timestep_end'
     no_backup_and_restore = true
   []
