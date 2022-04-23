@@ -116,7 +116,7 @@ beta6 = 0.000184087
     block = 'fuel pump hx'
   []
   [T]
-    type = MooseVariableFVReal
+    type = INSFVEnergyVariable
     initial_from_file_var = T
     block = 'fuel pump hx'
   []
@@ -281,7 +281,8 @@ beta6 = 0.000184087
   [heat_time]
     type = INSFVEnergyTimeDerivative
     variable = T
-    cp_name = 'cp'
+    cp = 'cp'
+    dcp_dt = 0
   []
   [heat_advection]
     type = INSFVEnergyAdvection
@@ -533,12 +534,6 @@ beta6 = 0.000184087
 ################################################################################
 
 [Materials]
-  [matprops_former_type]  # Yplus kernel not migrated to functor materials
-    type = ADGenericFunctionMaterial
-    prop_names = 'alpha'
-    prop_values = '${fparse 600 * 20e3}'
-    block = 'fuel pump hx'
-  []
   [ins_fv]
     type = INSFVEnthalpyMaterial
     block = 'fuel pump hx'
@@ -556,8 +551,8 @@ beta6 = 0.000184087
   []
   [functor_mat_properties]
     type = ADGenericFunctorMaterial
-    prop_names = 'cp alpha_b mu'
-    prop_values = '${cp} ${alpha} ${mu}'
+    prop_names = 'cp alpha_b mu alpha'
+    prop_values = '${cp} ${alpha} ${mu} ${fparse 600 * 20e3}'
     block = 'fuel pump hx'
   []
 []

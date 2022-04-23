@@ -25,8 +25,8 @@ k = 1.7 # thermal conductivity [W / m / K]
 # for-the-molten-salt-fast-reactor.pdf
 
 # Turbulent properties
-Pr_t = 0.9 # turbulent Prandtl number
-Sc_t = 1   # turbulent Schmidt number
+Pr_t = 10 # turbulent Prandtl number
+Sc_t = 1  # turbulent Schmidt number
 
 # Derived material properties
 alpha = ${fparse drho_dT / rho}  # thermal expansion coefficient
@@ -66,7 +66,6 @@ beta6 = 0.000184087
   dcp_dt = 'dcp_dt'
   mixing_length = 'mixing_len'
   fp = fp
-  fv = true
 []
 
 ################################################################################
@@ -82,57 +81,9 @@ beta6 = 0.000184087
     # - v_x, v_y, p, lambda from isothermal simulation
     # file = 'restart/run_ns_initial_restart.e'
     # - v_x, v_y, p, T, lambda, c_ifrom cosine heated simulation
-    file = 'restart/run_ns_wcnsfv_restart.e'
+    file = 'restart/run_ns_wcnsfv_open_restart.e'
     # - v_x, v_y, p, T, lambda, c_i from coupled multiphysics simulation
     # file = 'restart/run_ns_coupled_restart.e'
-  []
-
-  # Remove the volumetric HX and add the inlet and outlet
-  # Only needs to be done if starting from a closed loop
-  [add_region]
-    type = SubdomainBoundingBoxGenerator
-    input = restart
-    block_id = 144
-    bottom_left = '1.9 -0.89 0'
-    top_right = '2.35 0.89 0'
-  []
-  [add_inlet]
-    type = SideSetsAroundSubdomainGenerator
-    input = add_region
-    new_boundary = 'inlet'
-    block = 'fuel'
-    normal = '0 1 0'
-    fixed_normal = true
-    normal_tol = 1e-8
-  []
-  [add_outlet]
-    type = ParsedGenerateSideset
-    input = add_inlet
-    combinatorial_geometry = 'x>1.9 & y>0.885 & y<0.895'
-    new_sideset_name = 'outlet'
-  []
-  [delete_region]
-    type = BlockDeletionGenerator
-    input = add_outlet
-    block = '144'
-  []
-  [./mk_subdomain]        # Create subdomain to remove
-    type = ParsedSubdomainMeshGenerator
-    input = delete_region
-    combinatorial_geometry = 'y<0.625*x-0.1975 & y>0.885'
-    block_id = 100
-  []
-  [mk_sideset]          # Create outlet boundary
-    type = SideSetsBetweenSubdomainsGenerator
-    input = mk_subdomain
-    primary_block = fuel
-    paired_block = 100
-    new_boundary = 'outlet'
-  []
-  [rm_subdomain]       # Remove subdomain
-    type = BlockDeletionGenerator
-    input = mk_sideset
-    block = '100'
   []
 []
 
@@ -160,73 +111,42 @@ beta6 = 0.000184087
     type = INSFVPressureVariable
     block = 'fuel'
     initial_condition = 1e5
-    # initial_from_file_var = pressure
+    initial_from_file_var = pressure
   []
   [T]
     type = INSFVEnergyVariable
     block = 'fuel'
-    initial_condition = ${inlet_T}
-    # initial_from_file_var = T
+    initial_from_file_var = T
   []
   [c1]
     type = MooseVariableFVReal
     block = 'fuel'
-    # initial_from_file_var = c1
-    [InitialCondition]
-      type = FunctionIC
-      function = 'cosine_guess'
-      scaling_factor = 0.02
-    []
+    initial_from_file_var = c1
   []
   [c2]
     type = MooseVariableFVReal
     block = 'fuel'
-    # initial_from_file_var = c2
-    [InitialCondition]
-      type = FunctionIC
-      function = 'cosine_guess'
-      scaling_factor = 0.1
-    []
+    initial_from_file_var = c2
   []
   [c3]
     type = MooseVariableFVReal
     block = 'fuel'
-    # initial_from_file_var = c3
-    [InitialCondition]
-      type = FunctionIC
-      function = 'cosine_guess'
-      scaling_factor = 0.03
-    []
+    initial_from_file_var = c3
   []
   [c4]
     type = MooseVariableFVReal
     block = 'fuel'
-    # initial_from_file_var = c4
-    [InitialCondition]
-      type = FunctionIC
-      function = 'cosine_guess'
-      scaling_factor = 0.04
-    []
+    initial_from_file_var = c4
   []
   [c5]
     type = MooseVariableFVReal
     block = 'fuel'
-    # initial_from_file_var = c5
-    [InitialCondition]
-      type = FunctionIC
-      function = 'cosine_guess'
-      scaling_factor = 0.01
-    []
+    initial_from_file_var = c5
   []
   [c6]
     type = MooseVariableFVReal
     block = 'fuel'
-    # initial_from_file_var = c6
-    [InitialCondition]
-      type = FunctionIC
-      function = 'cosine_guess'
-      scaling_factor = 0.001
-    []
+    initial_from_file_var = c6
   []
 []
 
@@ -584,8 +504,8 @@ beta6 = 0.000184087
     type = WCNSFVMassFluxBC
     variable = pressure
     boundary = 'inlet'
-    mdot_pp = 'pp_mfr_in'
-    area_pp = 'pp_SA_in'
+    mdot_pp = 'inlet_mdot'
+    area_pp = 'surface_inlet'
     rho = 'rho'
   []
   [inlet_v_x]
@@ -593,7 +513,7 @@ beta6 = 0.000184087
     variable = v_x
     boundary = 'inlet'
     mdot_pp = 0
-    area_pp = 'pp_SA_in'
+    area_pp = 'surface_inlet'
     rho = 'rho'
     momentum_component = 'x'
   []
@@ -601,8 +521,8 @@ beta6 = 0.000184087
     type = WCNSFVMomentumFluxBC
     variable = v_y
     boundary = 'inlet'
-    mdot_pp = 'pp_mfr_in'
-    area_pp = 'pp_SA_in'
+    mdot_pp = 'inlet_mdot'
+    area_pp = 'surface_inlet'
     rho = 'rho'
     momentum_component = 'y'
   []
@@ -610,9 +530,9 @@ beta6 = 0.000184087
     type = WCNSFVEnergyFluxBC
     variable = T
     boundary = 'inlet'
-    temperature_pp = 'pp_T_in'
-    mdot_pp = 'pp_mfr_in'
-    area_pp = 'pp_SA_in'
+    temperature_pp = 'inlet_T'
+    mdot_pp = 'inlet_mdot'
+    area_pp = 'surface_inlet'
     rho = 'rho'
     cp = 'cp'
   []
@@ -620,54 +540,54 @@ beta6 = 0.000184087
     type = WCNSFVScalarFluxBC
     variable = c1
     boundary = 'inlet'
-    scalar_value_pp = 'pp_c1_in'
-    mdot_pp = 'pp_mfr_in'
-    area_pp = 'pp_SA_in'
+    scalar_value_pp = 'inlet_c1'
+    mdot_pp = 'inlet_mdot'
+    area_pp = 'surface_inlet'
     rho = 'rho'
   []
   [inlet_c2]
     type = WCNSFVScalarFluxBC
     variable = c2
     boundary = 'inlet'
-    scalar_value_pp = 'pp_c2_in'
-    mdot_pp = 'pp_mfr_in'
-    area_pp = 'pp_SA_in'
+    scalar_value_pp = 'inlet_c2'
+    mdot_pp = 'inlet_mdot'
+    area_pp = 'surface_inlet'
     rho = 'rho'
   []
   [inlet_c3]
     type = WCNSFVScalarFluxBC
     variable = c3
     boundary = 'inlet'
-    scalar_value_pp = 'pp_c3_in'
-    mdot_pp = 'pp_mfr_in'
-    area_pp = 'pp_SA_in'
+    scalar_value_pp = 'inlet_c1'
+    mdot_pp = 'inlet_mdot'
+    area_pp = 'surface_inlet'
     rho = 'rho'
   []
   [inlet_c4]
     type = WCNSFVScalarFluxBC
     variable = c4
     boundary = 'inlet'
-    scalar_value_pp = 'pp_c4_in'
-    mdot_pp = 'pp_mfr_in'
-    area_pp = 'pp_SA_in'
+    scalar_value_pp = 'inlet_c2'
+    mdot_pp = 'inlet_mdot'
+    area_pp = 'surface_inlet'
     rho = 'rho'
   []
   [inlet_c5]
     type = WCNSFVScalarFluxBC
     variable = c5
     boundary = 'inlet'
-    scalar_value_pp = 'pp_c5_in'
-    mdot_pp = 'pp_mfr_in'
-    area_pp = 'pp_SA_in'
+    scalar_value_pp = 'inlet_c1'
+    mdot_pp = 'inlet_mdot'
+    area_pp = 'surface_inlet'
     rho = 'rho'
   []
   [inlet_c6]
     type = WCNSFVScalarFluxBC
     variable = c6
     boundary = 'inlet'
-    scalar_value_pp = 'pp_c6_in'
-    mdot_pp = 'pp_mfr_in'
-    area_pp = 'pp_SA_in'
+    scalar_value_pp = 'inlet_c2'
+    mdot_pp = 'inlet_mdot'
+    area_pp = 'surface_inlet'
     rho = 'rho'
   []
 
@@ -761,9 +681,9 @@ beta6 = 0.000184087
 
 [Functions]
   [dts]
-    type = PiecewiseLinear
-    x = '0    1     5    100'
-    y = '0.01 0.10  0.15 5'
+    type = PiecewiseConstant
+    x = '0    100'
+    y = '0.75 2.5'
   []
 []
 
@@ -772,7 +692,7 @@ beta6 = 0.000184087
 
   # Time stepping parameters
   start_time = 0.0
-  end_time = 22
+  end_time = 21
   # [TimeStepper]
   #   # This time stepper makes the time step grow exponentially
   #   # It can only be used with proper initialization
@@ -809,7 +729,6 @@ beta6 = 0.000184087
 ################################################################################
 
 [Outputs]
-  perf_graph = true
   exodus = true
   csv = true
   # hide = 'flow_inlet flow_outlet flow_T_inlet flow_T_outlet'
@@ -824,134 +743,86 @@ beta6 = 0.000184087
 []
 
 [Postprocessors]
-  # If "pp_" is used, then it's a Postprocessor used in FVBCs.
-  [pp_mfr_in]
-    type = Receiver
-    default = 1.8e4
+  [max_v]
+    type = ElementExtremeValue
+    variable = v_x
+    value_type = max
+    block = 'fuel'
   []
-  [pp_T_in]
+  [inlet_mdot]
+    type = Receiver
+<<<<<<< HEAD
+    default = -1.8e4
+=======
+    default = 1.8e4
+>>>>>>> 040a92cd240cb2f9059afc0b338884cb75894c6c
+  []
+  [inlet_T]
     type = Receiver
     default = ${inlet_T}
   []
-  [pp_c1_in]
+  [inlet_c1]
     type = Receiver
     default = 0
   []
-  [pp_c2_in]
+  [inlet_c2]
     type = Receiver
     default = 0
   []
-  [pp_c3_in]
+  [inlet_c3]
     type = Receiver
     default = 0
   []
-  [pp_c4_in]
+  [inlet_c4]
     type = Receiver
     default = 0
   []
-  [pp_c5_in]
+  [inlet_c5]
     type = Receiver
     default = 0
   []
-  [pp_c6_in]
+  [inlet_c6]
     type = Receiver
     default = 0
   []
-  [pp_SA_in]
+  [surface_inlet]
     type = AreaPostprocessor
     boundary = 'inlet'
     execute_on = 'initial'
   []
 
   # TODO: weakly compressible, switch to mass flow rate
-
-  # Volumetric and mass flow rates
-  [vfr_in] # m^3/s
-    type = VolumetricFlowRate
+  [flow_inlet]
+    type = InternalVolumetricFlowRate
     boundary = 'inlet'
     vel_x = v_x
     vel_y = v_y
-    advected_quantity = 1
   []
-  [vfr_out] # m^3/s
-    type = VolumetricFlowRate
+  [flow_outlet]
+    type = InternalVolumetricFlowRate
     boundary = 'outlet'
     vel_x = v_x
     vel_y = v_y
-    advected_quantity = 1
   []
-  [mfr_in] # kg/s
-    type = VolumetricFlowRate
-    boundary = 'inlet'
-    vel_x = v_x
-    vel_y = v_y
-    advected_quantity = 'rho'
-  []
-  [mfr_out] # kg/s
-    type = VolumetricFlowRate
+  [flow_T_inlet]
+    type = InternalVolumetricFlowRate
     boundary = 'outlet'
     vel_x = v_x
     vel_y = v_y
-    advected_quantity = 'rho'
+    advected_variable = 'T'
   []
-
-  # Velocities
-  [v_x_in] # m/s
-    type       = SideAverageValue
-    variable   = v_x
+  [flow_T_outlet]
+    type = InternalVolumetricFlowRate
     boundary = 'inlet'
+    vel_x = v_x
+    vel_y = v_y
+    advected_variable = 'T'
   []
-  [v_x_out] # m/s
-    type       = SideAverageValue
-    variable   = v_x
-    boundary = 'outlet'
-  []
-  [v_y_in] # m/s
-    type       = SideAverageValue
-    variable   = v_y
-    boundary = 'inlet'
-  []
-  [v_y_out] # m/s
-    type       = SideAverageValue
-    variable   = v_y
-    boundary = 'outlet'
-  []
-
-  # Temperatures
-  [T_in] # K
-    type       = SideAverageValue
-    variable   = T
-    boundary = 'inlet'
-  []
-  [T_out] # K
-    type       = SideAverageValue
-    variable   = T
-    boundary = 'outlet'
-  []
-  [T_delta] # K
+  [dT]
     type = ParsedPostprocessor
-    pp_names = 'T_in T_out'
-    function = 'T_out - T_in '
+    function = '-flow_T_outlet / flow_outlet + flow_T_inlet / flow_inlet'
+    pp_names = 'flow_inlet flow_T_inlet flow_outlet flow_T_outlet'
   []
-
-  # Pressures
-  [p_in] # Pa
-    type       = SideAverageValue
-    variable   = pressure
-    boundary = 'inlet'
-  []
-  [p_out] # Pa
-    type       = SideAverageValue
-    variable   = pressure
-    boundary = 'outlet'
-  []
-  [p_delta] # Pa
-    type = ParsedPostprocessor
-    pp_names = 'p_in p_out'
-    function = 'p_out - p_in '
-  []
-
-  # Power
   [total_power]
     type = ElementIntegralVariablePostprocessor
     variable = power_density
