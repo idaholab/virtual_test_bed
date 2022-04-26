@@ -239,78 +239,68 @@
 [Transfers]
   [power_density]
     type = MultiAppProjectionTransfer
-    multi_app = ns
-    direction = to_multiapp
+    to_multi_app = ns
     source_variable = power_density
     variable = power_density
   []
   [fission_source]
     type = MultiAppProjectionTransfer
-    multi_app = ns
-    direction = to_multiapp
+    to_multi_app = ns
     source_variable = fission_source
     variable = fission_source
   []
   [power]
     type = MultiAppPostprocessorTransfer
-    multi_app = ns
-    direction = to_multiapp
+    to_multi_app = ns
     reduction_type = minimum
     from_postprocessor = power
     to_postprocessor = power
   []
   [c1]
     type = MultiAppProjectionTransfer
-    multi_app = ns
-    direction = from_multiapp
+    from_multi_app = ns
     source_variable = 'c1'
     variable = 'c1'
     execute_on = 'initial timestep_end'
   []
   [c2]
     type = MultiAppProjectionTransfer
-    multi_app = ns
-    direction = from_multiapp
+    from_multi_app = ns
     source_variable = 'c2'
     variable = 'c2'
     execute_on = 'initial timestep_end'
   []
   [c3]
     type = MultiAppProjectionTransfer
-    multi_app = ns
-    direction = from_multiapp
+    from_multi_app = ns
     source_variable = 'c3'
     variable = 'c3'
     execute_on = 'initial timestep_end'
   []
   [c4]
     type = MultiAppProjectionTransfer
-    multi_app = ns
-    direction = from_multiapp
+    from_multi_app = ns
     source_variable = 'c4'
     variable = 'c4'
     execute_on = 'initial timestep_end'
   []
   [c5]
     type = MultiAppProjectionTransfer
-    multi_app = ns
-    direction = from_multiapp
+    from_multi_app = ns
     source_variable = 'c5'
     variable = 'c5'
     execute_on = 'initial timestep_end'
   []
   [c6]
     type = MultiAppProjectionTransfer
-    multi_app = ns
-    direction = from_multiapp
+    from_multi_app = ns
     source_variable = 'c6'
     variable = 'c6'
     execute_on = 'initial timestep_end'
   []
   [T]
     type = MultiAppProjectionTransfer
-    multi_app = ns
-    direction = from_multiapp
+    from_multi_app = ns
     source_variable = 'T'
     variable = 'tfuel'
   []

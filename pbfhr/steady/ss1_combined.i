@@ -618,15 +618,13 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
 [Transfers]
   [fuel_matrix_heat_source]
     type = MultiAppProjectionTransfer
-    direction = to_multiapp
-    multi_app = coarse_mesh
+    to_multi_app = coarse_mesh
     source_variable = power_distribution
     variable = power_distribution
   []
   [pebble_surface_temp]
     type = MultiAppProjectionTransfer
-    direction = to_multiapp
-    multi_app = coarse_mesh
+    to_multi_app = coarse_mesh
     source_variable = T_solid
     variable = temp_solid
   []
