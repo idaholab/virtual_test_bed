@@ -26,8 +26,8 @@ k = 1.7 # thermal conductivity [W / m / K]
 von_karman_const = 0.41
 
 # Turbulent properties
-Pr_t = 10 # turbulent Prandtl number
-Sc_t = 1  # turbulent Schmidt number
+Pr_t = 0.9 # turbulent Prandtl number
+Sc_t = 1   # turbulent Schmidt number
 
 # Derived material properties
 alpha = ${fparse drho_dT / rho}  # thermal expansion coefficient
@@ -65,7 +65,7 @@ beta6 = 0.000184087
     # Depending on the file chosen, the initialization of variables should be
     # adjusted. The following variables can be initalized:
     # - vel_x, vel_y, p from isothermal simulation
-    # file = 'restart/run_ns_initial_restart.e'
+    file = 'restart/run_ns_initial_restart.e'
     # - vel_x, vel_y, p, T_fluid, c_i from cosine heated simulation
     # file = 'restart/run_ns_restart.e'
     # - vel_x, vel_y, p, T_fluid, c_i from coupled multiphysics simulation
@@ -145,6 +145,7 @@ beta6 = 0.000184087
 
     # Turbulence parameters
     turbulence_handling = 'mixing-length'
+    turbulent_prandtl = ${Pr_t}
     von_karman_const = ${von_karman_const}
     mixing_length_delta = 0.1
     mixing_length_walls = 'shield_wall reflector_wall'

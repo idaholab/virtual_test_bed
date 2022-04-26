@@ -189,7 +189,7 @@ outlet_pressure_val = 2e5 # Pa, default, for initialization
     initial_condition = 900
   []
   [temp_solid]
-    type = MooseVariableFVReal
+    type = INSFVEnergyVariable
   []
 []
 
@@ -299,6 +299,7 @@ outlet_pressure_val = 2e5 # Pa, default, for initialization
     type = PINSFVEnergyTimeDerivative
     variable = temp_solid
     cp = 'cp_s'
+    dcp_dt = '0'
     rho = ${solid_rho}
     is_solid = true
     block = ${blocks_fluid}
@@ -307,6 +308,7 @@ outlet_pressure_val = 2e5 # Pa, default, for initialization
     type = INSFVEnergyTimeDerivative
     variable = temp_solid
     cp = 'cp_s'
+    dcp_dt = '0'
     block = ${blocks_solid}
   []
   [temp_solid_conduction_core]
