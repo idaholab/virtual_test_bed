@@ -301,7 +301,7 @@
   [T]
     type = MultiAppProjectionTransfer
     from_multi_app = ns
-    source_variable = 'T'
+    source_variable = 'T_fluid'
     variable = 'tfuel'
   []
 []
