@@ -385,17 +385,17 @@ beta6 = 0.000184087
   # Time stepping parameters
   start_time = 0.0
   end_time = 20
-  # [TimeStepper]
-  #   # This time stepper makes the time step grow exponentially
-  #   # It can only be used with proper initialization
-  #   type = IterationAdaptiveDT
-  #   dt = 10  # chosen to obtain convergence with first coupled iteration
-  #   growth_factor = 2
-  # []
   [TimeStepper]
-    type = FunctionDT
-    function = dts
+    # This time stepper makes the time step grow exponentially
+    # It can only be used with proper initialization
+    type = IterationAdaptiveDT
+    dt = 1  # chosen to obtain convergence with first coupled iteration
+    growth_factor = 2
   []
+  # [TimeStepper]
+  #   type = FunctionDT
+  #   function = dts
+  # []
   steady_state_detection  = true
   steady_state_tolerance  = 1e-8
   steady_state_start_time = 10

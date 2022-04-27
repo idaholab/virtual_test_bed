@@ -249,13 +249,6 @@
     source_variable = fission_source
     variable = fission_source
   []
-  [power]
-    type = MultiAppPostprocessorTransfer
-    to_multi_app = ns
-    reduction_type = minimum
-    from_postprocessor = power
-    to_postprocessor = power
-  []
   [c1]
     type = MultiAppProjectionTransfer
     from_multi_app = ns
