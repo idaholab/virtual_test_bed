@@ -401,8 +401,7 @@ fis_fract            = ${fparse 1 - dh_fract} # Fission power fraction at t = 0.
 [Transfers]
   [power_tosub]
     type = MultiAppProjectionTransfer
-    direction = to_multiapp
-    multi_app = thermo
+    to_multi_app = thermo
     source_variable = total_power_density
     variable = power_distribution
     to_postprocessors_to_be_preserved = power
@@ -411,16 +410,14 @@ fis_fract            = ${fparse 1 - dh_fract} # Fission power fraction at t = 0.
   []
   [Tcoolant_fromsub]
     type = MultiAppInterpolationTransfer
-    direction = from_multiapp
-    multi_app = thermo
+    from_multi_app = thermo
     source_variable = temp_fluid
     variable = Tsalt
     execute_on = 'timestep_end'
   []
   [Tfuel_fromsub]
     type = MultiAppInterpolationTransfer
-    direction = from_multiapp
-    multi_app = thermo
+    from_multi_app = thermo
     source_variable = temp_solid
     variable = Tfuel
     execute_on = 'timestep_end'
