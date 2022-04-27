@@ -160,22 +160,19 @@ power_density = ${fparse total_power / model_vol}
 [Transfers]
   [fuel_matrix_heat_source]
     type = MultiAppVariableValueSampleTransfer
-    direction = to_multiapp
-    multi_app = fuel_pebble
+    to_multi_app = fuel_pebble
     source_variable = power_distribution
     variable = fuel_matrix_heat_source
   []
   [pebble_surface_temp_1]
     type = MultiAppVariableValueSamplePostprocessorTransfer
-    direction = to_multiapp
-    multi_app = fuel_pebble
+    to_multi_app = fuel_pebble
     source_variable = temp_solid
     postprocessor = pebble_surface_T
   []
   [pebble_surface_temp_2]
     type = MultiAppVariableValueSamplePostprocessorTransfer
-    direction = to_multiapp
-    multi_app = graphite_pebble
+    to_multi_app = graphite_pebble
     source_variable = temp_solid
     postprocessor = pebble_surface_T
   []
@@ -183,36 +180,31 @@ power_density = ${fparse total_power / model_vol}
   # received for visualization purposes only
   [max_T_UO2]
     type = MultiAppPostprocessorInterpolationTransfer
-    direction = from_multiapp
-    multi_app = fuel_pebble
+    from_multi_app = fuel_pebble
     postprocessor = max_T_UO2
     variable = max_T_UO2
   []
   [average_T_UO2]
     type = MultiAppPostprocessorInterpolationTransfer
-    direction = from_multiapp
-    multi_app = fuel_pebble
+    from_multi_app = fuel_pebble
     postprocessor = average_T_UO2
     variable = average_T_UO2
   []
   [average_T_matrix]
     type = MultiAppPostprocessorInterpolationTransfer
-    direction = from_multiapp
-    multi_app = fuel_pebble
+    from_multi_app = fuel_pebble
     postprocessor = average_T_matrix
     variable = average_T_matrix
   []
   [average_T_graphite]
     type = MultiAppPostprocessorInterpolationTransfer
-    direction = from_multiapp
-    multi_app = graphite_pebble
+    from_multi_app = graphite_pebble
     postprocessor = average_T
     variable = average_T_graphite
   []
   [average_T_shell]
     type = MultiAppPostprocessorInterpolationTransfer
-    direction = from_multiapp
-    multi_app = fuel_pebble
+    from_multi_app = fuel_pebble
     postprocessor = average_T_shell
     variable = average_T_shell
   []

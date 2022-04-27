@@ -137,10 +137,9 @@
   # (1) ProjectionTransfer
   [pdens_to_bison]
     type = MultiAppProjectionTransfer
-    direction = to_multiapp
     variable = power_density
     source_variable = power_density
-    multi_app = bison
+    to_multi_app = bison
   []
 
   # sub-app -> main app
@@ -151,10 +150,9 @@
   #(1) InterpolationTransfer
   [tfuel_from_subapp]
     type = MultiAppInterpolationTransfer
-    direction = from_multiapp
     source_variable = tfuel
     variable = tfuel
-    multi_app = bison
+    from_multi_app = bison
   []
   #------------------
   # tcool from SAM
@@ -162,18 +160,16 @@
   #(1) InterpolationTransfer
   [tcool_from_subapp]
     type = MultiAppInterpolationTransfer
-    direction = from_multiapp
     source_variable = tcool
     variable = tcool
-    multi_app = bison
+    from_multi_app = bison
   []
   #------------------
   # axial expansion = vertical displacements disp_y
   #------------------
   [disp_y_from_bison]
     type = MultiAppInterpolationTransfer
-    direction = from_multiapp
-    multi_app = bison
+    from_multi_app = bison
     source_variable = disp_y
     variable = disp_y
   []
@@ -182,15 +178,13 @@
   #------------------
   [disp_x_from_core_support_plate]
     type = MultiAppInterpolationTransfer
-    direction = from_multiapp
-    multi_app = core_support_plate
+    from_multi_app = core_support_plate
     source_variable = disp_x
     variable = disp_x
   []
   [disp_z_from_core_support_plate]
     type = MultiAppInterpolationTransfer
-    direction = from_multiapp
-    multi_app = core_support_plate
+    from_multi_app = core_support_plate
     source_variable = disp_y
     variable = disp_z
   []

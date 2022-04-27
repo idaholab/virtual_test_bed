@@ -374,49 +374,43 @@ plenum_height        = 1.
 [Transfers]
   [twall_to_sam]
     type = MultiAppCoordSwitchNearestNodeTransfer
-    direction = to_multiapp
     source_variable = twall
     variable = T_wall_external # SAM variable
-    multi_app = sam
+    to_multi_app = sam
     displaced_target_mesh = true
     fixed_meshes = true
   []
   [tcool_from_sam]
     type = MultiAppCoordSwitchNearestNodeTransfer
-    direction = from_multiapp
     source_variable = temperature
     variable = tcool
-    multi_app = sam
+    from_multi_app = sam
     displaced_source_mesh = true
     fixed_meshes = true
   []
   [htc_from_sam]
     type = MultiAppCoordSwitchNearestNodeTransfer
-    direction = from_multiapp
     source_variable = htc_external
     variable = htc
-    multi_app = sam
+    from_multi_app = sam
     displaced_source_mesh = true
     fixed_meshes = true
   []
   [temperature_to_mechanics]
     type = MultiAppCopyTransfer
-    multi_app = bison_mechanics
-    direction = to_multiapp
+    to_multi_app = bison_mechanics
     source_variable = Temperature
     variable = Temperature
   []
   [disp_x_from_mechanics]
     type = MultiAppCopyTransfer
-    multi_app = bison_mechanics
-    direction = from_multiapp
+    from_multi_app = bison_mechanics
     source_variable = disp_x
     variable = disp_x
   []
   [disp_y_from_mechanics]
     type = MultiAppCopyTransfer
-    multi_app = bison_mechanics
-    direction = from_multiapp
+    from_multi_app = bison_mechanics
     source_variable = disp_y
     variable = disp_y
   []

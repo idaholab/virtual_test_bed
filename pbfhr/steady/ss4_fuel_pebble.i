@@ -249,15 +249,13 @@ pebble_diameter            = 0.03
 [Transfers]
   [particle_heat_source]
     type = MultiAppVariableValueSampleTransfer
-    direction = to_multiapp
-    multi_app = particle
+    to_multi_app = particle
     source_variable = fuel_matrix_heat_source
     variable = fuel_matrix_heat_source
   []
   [particle_surface_temp]
     type = MultiAppPostprocessorTransfer
-    direction = from_multiapp
-    multi_app = particle
+    from_multi_app = particle
     from_postprocessor = surface_T
     to_postprocessor = particle_surface_T
     reduction_type = average
@@ -266,24 +264,21 @@ pebble_diameter            = 0.03
   # for visualization
   [max_T_UO2]
     type = MultiAppPostprocessorTransfer
-    direction = from_multiapp
-    multi_app = particle
+    from_multi_app = particle
     from_postprocessor = max_T_UO2
     to_postprocessor = max_T_UO2_microscale
     reduction_type = average
   []
   [average_T_UO2]
     type = MultiAppPostprocessorTransfer
-    direction = from_multiapp
-    multi_app = particle
+    from_multi_app = particle
     from_postprocessor = average_T_UO2
     to_postprocessor = average_T_UO2_microscale
     reduction_type = average
   []
   [average_T_matrix]
     type = MultiAppPostprocessorTransfer
-    direction = from_multiapp
-    multi_app = particle
+    from_multi_app = particle
     from_postprocessor = average_T_matrix
     to_postprocessor = average_T_matrix_microscale
     reduction_type = average

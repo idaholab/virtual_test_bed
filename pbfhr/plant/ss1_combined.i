@@ -189,7 +189,7 @@ outlet_pressure_val = 2e5 # Pa, default, for initialization
     initial_condition = 900
   []
   [temp_solid]
-    type = MooseVariableFVReal
+    type = INSFVEnergyVariable
   []
 []
 
@@ -299,6 +299,7 @@ outlet_pressure_val = 2e5 # Pa, default, for initialization
     type = PINSFVEnergyTimeDerivative
     variable = temp_solid
     cp = 'cp_s'
+    dcp_dt = '0'
     rho = ${solid_rho}
     is_solid = true
     block = ${blocks_fluid}
@@ -307,6 +308,7 @@ outlet_pressure_val = 2e5 # Pa, default, for initialization
     type = INSFVEnergyTimeDerivative
     variable = temp_solid
     cp = 'cp_s'
+    dcp_dt = '0'
     block = ${blocks_solid}
   []
   [temp_solid_conduction_core]
@@ -777,31 +779,27 @@ outlet_pressure_val = 2e5 # Pa, default, for initialization
 [Transfers]
   [fuel_matrix_heat_source]
     type = MultiAppProjectionTransfer
-    direction = to_multiapp
-    multi_app = coarse_mesh
+    to_multi_app = coarse_mesh
     source_variable = power_distribution
     variable = power_distribution
   []
   [pebble_surface_temp]
     type = MultiAppProjectionTransfer
-    direction = to_multiapp
-    multi_app = coarse_mesh
+    to_multi_app = coarse_mesh
     source_variable = temp_solid
     variable = temp_solid
   []
 
   [send_flow_BCs]
     type = MultiAppPostprocessorVectorTransfer
-    direction = to_multiapp
-    multi_app = primary_loop
+    to_multi_app = primary_loop
     from_postprocessors = 'pressure_in mass_flow_out T_flow_out T_flow_in'
     to_postprocessors = 'Core_inlet_pressure Core_outlet_mdot Core_outlet_T Core_inlet_T_reversal'
   []
 
   [receive_flow_BCs]
     type = MultiAppPostprocessorVectorTransfer
-    direction = from_multiapp
-    multi_app = primary_loop
+    from_multi_app = primary_loop
     from_postprocessors = 'Core_outlet_p Core_inlet_mdot Core_inlet_T'
     to_postprocessors   = 'outlet_pressure inlet_mdot inlet_temp_fluid'
   []
