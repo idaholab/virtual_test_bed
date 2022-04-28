@@ -97,7 +97,8 @@
     csvdiff = 'ss2_primary_csv.csv'
     executable_pattern = 'sam*'
     prereq = 'syntax_plant_flow'
-    rel_err = 1e-5
+    rel_err = 1e-4
+    cli_args = "Functions/dts/x='0 400' Functions/dts/y='0.5 1' Executioner/num_steps=20"
   []
   [fuel_pebble]
     type = CSVDiff
