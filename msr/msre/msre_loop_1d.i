@@ -4,7 +4,7 @@
 
 [GlobalParams]
   global_init_P = 1e5                        # Global initial fluid pressure
-  global_init_V = 0.0                        # Global initial fluid velocity
+  global_init_V = 0.001                      # Global initial fluid velocity
   global_init_T = 908.15                     # Global initial temperature for fluid and solid
   Tsolid_sf     = 1e-3
   gravity       = '0 -9.8 0'
