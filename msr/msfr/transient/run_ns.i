@@ -371,7 +371,7 @@ beta6 = 0.000184087
     block = 'fuel pump hx'
   []
   [mdot]
-    type = InternalVolumetricFlowRate
+    type = VolumetricFlowRate
     boundary = 'min_core_radius'
     vel_x = vel_x
     vel_y = vel_y
@@ -379,26 +379,26 @@ beta6 = 0.000184087
   []
   # TODO: weakly compressible, switch to mass flow rate
   [flow_hx_bot]
-    type = InternalVolumetricFlowRate
+    type = VolumetricFlowRate
     boundary = 'hx_bot'
     vel_x = vel_x
     vel_y = vel_y
   []
   [flow_hx_top]
-    type = InternalVolumetricFlowRate
+    type = VolumetricFlowRate
     boundary = 'hx_top'
     vel_x = vel_x
     vel_y = vel_y
   []
   [max_flow_T]
-    type = InternalVolumetricFlowRate
+    type = VolumetricFlowRate
     boundary = 'hx_top'
     vel_x = vel_x
     vel_y = vel_y
     advected_variable = 'T_fluid'
   []
   [min_flow_T]
-    type = InternalVolumetricFlowRate
+    type = VolumetricFlowRate
     boundary = 'hx_bot'
     vel_x = vel_x
     vel_y = vel_y
