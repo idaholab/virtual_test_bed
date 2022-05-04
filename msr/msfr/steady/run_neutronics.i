@@ -47,6 +47,11 @@
   order = CONSTANT
 []
 
+[GlobalParams]
+  # No displacement modeled
+  fixed_meshes = true
+[]
+
 ################################################################################
 # AUXILIARY SYSTEM
 ################################################################################
@@ -56,35 +61,48 @@
     order = CONSTANT
     family = MONOMIAL
     initial_condition = 873.15 # in degree K
+    block = 'fuel pump hx'
+  []
+  # TODO: remove once we have block restricted transfers
+  [tfuel_constant]
+    initial_condition = 873.15 # in degree K
+    block = 'reflector shield'
   []
   [c1]
     order = CONSTANT
     family = MONOMIAL
+    block = 'fuel pump hx'
   []
   [c2]
     order = CONSTANT
     family = MONOMIAL
+    block = 'fuel pump hx'
   []
   [c3]
     order = CONSTANT
     family = MONOMIAL
+    block = 'fuel pump hx'
   []
   [c4]
     order = CONSTANT
     family = MONOMIAL
+    block = 'fuel pump hx'
   []
   [c5]
     order = CONSTANT
     family = MONOMIAL
+    block = 'fuel pump hx'
   []
   [c6]
     order = CONSTANT
     family = MONOMIAL
+    block = 'fuel pump hx'
   []
   [dnp]
     order = CONSTANT
     family = MONOMIAL
     components = 6
+    block = 'fuel pump hx'
   []
 []
 
@@ -120,7 +138,7 @@
     library_name = 'msfr_xs'
     library_file = '../mgxs/msfr_xs.xml'
     grid_names = 'tfuel'
-    grid_variables = 'tfuel'
+    grid_variables = 'tfuel_constant'
     isotopes = 'pseudo'
     densities = '1.0'
     is_meter = true
@@ -132,7 +150,7 @@
     library_name = 'msfr_xs'
     library_file = '../mgxs/msfr_xs.xml'
     grid_names = 'tfuel'
-    grid_variables = 'tfuel'
+    grid_variables = 'tfuel_constant'
     isotopes = 'pseudo'
     densities = '1.0'
     is_meter = true

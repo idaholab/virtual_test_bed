@@ -45,10 +45,12 @@
     order = CONSTANT
     family = MONOMIAL
     # initial_condition = 600
-    # TODO: This remains constant in the reflector because the transfer does not overwrite it
-    # Either: - model heat conduction in the reflector
-    #         - compute the average temperature and set that to be the tfuel in the reflector
     initial_from_file_var = tfuel
+  []
+  # TODO: remove once we have block restricted transfers
+  [tfuel_constant]
+    initial_condition = 873.15 # in degree K
+    block = 'reflector shield'
   []
   [c1]
     order = CONSTANT
@@ -133,7 +135,7 @@
     library_name = 'msfr_xs'
     library_file = '../mgxs/msfr_xs.xml'
     grid_names = 'tfuel'
-    grid_variables = 'tfuel'
+    grid_variables = 'tfuel_constant'
     isotopes = 'pseudo'
     densities = '1.0'
     is_meter = true
@@ -145,7 +147,7 @@
     library_name = 'msfr_xs'
     library_file = '../mgxs/msfr_xs.xml'
     grid_names = 'tfuel'
-    grid_variables = 'tfuel'
+    grid_variables = 'tfuel_constant'
     isotopes = 'pseudo'
     densities = '1.0'
     is_meter = true
@@ -184,9 +186,9 @@
                           1     rcm'
 
   line_search = 'none'
-  nl_abs_tol = 1e-8
+  nl_abs_tol = 1e-7
   nl_forced_its = 1
-  l_abs_tol = 1e-8
+  l_abs_tol = 1e-7
   l_max_its = 200
 
   # Fixed point iteration parameters
@@ -234,6 +236,11 @@
     execute_on = 'timestep_begin'
     catch_up = true
   []
+[]
+
+[GlobalParams]
+  # No displacements modeled
+  fixed_meshes = true
 []
 
 [Transfers]
