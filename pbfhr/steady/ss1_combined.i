@@ -410,7 +410,7 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
   [fluidprops]
     type = GeneralFunctorFluidProps
     block = ${blocks_fluid}
-    mu_multiplier = mu_func
+    mu_rampdown = mu_func
   []
 
   # closures in the pebble bed
