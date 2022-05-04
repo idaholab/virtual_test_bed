@@ -142,21 +142,14 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
 
   vel_x = 'superficial_vel_x'
   vel_y = 'superficial_vel_y'
-  superficial_vel_x = 'superficial_vel_x'
-  superficial_vel_y = 'superficial_vel_y'
 
   fv = true
-
   rhie_chow_user_object = 'pins_rhie_chow_interpolator'
 []
 
 # ==============================================================================
 # VARIABLES AND KERNELS
 # ==============================================================================
-
-[Debug]
-  show_var_residual_norms = true
-[]
 
 [Problem]
   kernel_coverage_check = false

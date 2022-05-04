@@ -903,7 +903,6 @@ outlet_pressure_val = 2e5
     type = VolumetricFlowRate
     boundary = 'bed_horizontal_top plenum_top OR_horizontal_top'
     advected_quantity = 'rho_cp_temp'
-    fv = true
   []
   [core_balance]
     type = ParsedPostprocessor
