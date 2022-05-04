@@ -300,6 +300,7 @@ beta6 = 0.000184087
     momentum_component = 'y'
   []
 
+  # Additional kernels for precursor decay
   [c1_decay]
     type = FVReaction
     variable = c1
