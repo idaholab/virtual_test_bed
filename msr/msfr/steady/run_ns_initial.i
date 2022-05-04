@@ -155,7 +155,7 @@ pump_force = -20000. # [N / m^3]
 
   # Time-stepping parameters
   start_time = 0.0
-  end_time = 15
+  end_time = 17
 
   [TimeStepper]
     type = IterationAdaptiveDT
