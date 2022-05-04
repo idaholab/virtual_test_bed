@@ -88,7 +88,8 @@ total_power = 236.0e6  # W, from [2]
 inlet_T_fluid = 873.15 # K, from [2]
 inlet_vel_y = ${fparse mfr / model_inlet_area / rho_fluid} # superficial
 power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using power pp
-outlet_pressure_val = 2e5 # Pa, default, for initialization
+outlet_pressure_val = 2e5
+
 # ==============================================================================
 # GEOMETRY AND MESH
 # ==============================================================================
@@ -411,13 +412,6 @@ outlet_pressure_val = 2e5 # Pa, default, for initialization
     x = '1 3 5 10'
     y = '1e3 1e2 1e1 1'
   []
-
-  [outlet_pressure]
-    type = ADParsedFunction
-    vars = 'outlet_pressure'
-    value = outlet_pressure
-    vals = 'outlet_pressure'
-  []
 []
 
 # ==============================================================================
@@ -491,9 +485,6 @@ outlet_pressure_val = 2e5 # Pa, default, for initialization
     type = INSFVOutletPressureBC
     variable = pressure
     postprocessor = 'outlet_pressure'
-
-    # This is temporary, a branch of moose can use the postprocessor, will be merged soon
-    function='${outlet_pressure_val}'
     boundary = 'bed_horizontal_top OR_horizontal_top plenum_top'
   []
 []

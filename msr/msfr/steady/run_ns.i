@@ -54,6 +54,10 @@ beta4 = 0.00103883
 beta5 = 0.000549185
 beta6 = 0.000184087
 
+[GlobalParams]
+  rhie_chow_user_object = 'ins_rhie_chow_interpolator'
+[]
+
 ################################################################################
 # GEOMETRY
 ################################################################################
@@ -71,13 +75,6 @@ beta6 = 0.000184087
     # - vel_x, vel_y, p, T_fluid, c_i from coupled multiphysics simulation
     # file = 'restart/run_ns_coupled_restart.e'
   []
-  [min_radius]
-    type = ParsedGenerateSideset
-    combinatorial_geometry = 'abs(y-0.) < 1e-10 & x < 1.8'
-    input = restart
-    new_sideset_name = min_core_radius
-    normal = '0 1 0'
-  []
   [hx_top]
     type = ParsedGenerateSideset
     combinatorial_geometry = 'y > 0'
@@ -86,7 +83,7 @@ beta6 = 0.000184087
     fixed_normal = true
     normal = '0 1 0'
     new_sideset_name = 'hx_top'
-    input = 'min_radius'
+    input = 'restart'
   []
   [hx_bot]
     type = ParsedGenerateSideset
@@ -300,7 +297,6 @@ beta6 = 0.000184087
     functor = ${pump_force}
     block = 'pump'
     momentum_component = 'y'
-    rhie_chow_user_object = 'ins_rhie_chow_interpolator'
   []
 
   [c1_decay]
@@ -439,39 +435,34 @@ beta6 = 0.000184087
     value_type = max
     block = 'fuel pump hx'
   []
-  [mdot]
-    type = VolumetricFlowRate
-    boundary = 'min_core_radius'
-    vel_x = vel_x
-    vel_y = vel_y
-    advected_mat_prop = ${rho}
-  []
   # TODO: weakly compressible, switch to mass flow rate
   [flow_hx_bot]
     type = VolumetricFlowRate
     boundary = 'hx_bot'
     vel_x = vel_x
     vel_y = vel_y
+    advected_quantity = 1
   []
   [flow_hx_top]
     type = VolumetricFlowRate
     boundary = 'hx_top'
     vel_x = vel_x
     vel_y = vel_y
+    advected_quantity = 1
   []
   [max_flow_T]
     type = VolumetricFlowRate
     boundary = 'hx_top'
     vel_x = vel_x
     vel_y = vel_y
-    advected_variable = 'T_fluid'
+    advected_quantity = 'T_fluid'
   []
   [min_flow_T]
     type = VolumetricFlowRate
     boundary = 'hx_bot'
     vel_x = vel_x
     vel_y = vel_y
-    advected_variable = 'T_fluid'
+    advected_quantity = 'T_fluid'
   []
   [dT]
     type = ParsedPostprocessor
