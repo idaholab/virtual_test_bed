@@ -71,6 +71,7 @@ beta6 = 0.000184087
     # - vel_x, vel_y, p from isothermal simulation
     file = 'restart/run_ns_initial_restart.e'
     # - vel_x, vel_y, p, T_fluid, c_i from cosine heated simulation
+    # The variable IC should be modified for temperature and precursors
     # file = 'restart/run_ns_restart.e'
     # - vel_x, vel_y, p, T_fluid, c_i from coupled multiphysics simulation
     # file = 'restart/run_ns_coupled_restart.e'
@@ -380,7 +381,12 @@ beta6 = 0.000184087
 
   # Time stepping parameters
   start_time = 0.0
-  end_time = 20
+  end_time = 200
+  # end_time will depend on the restart file chosen
+  # though steady state detection can also be used
+  # from _initial/no heating : 150 - 200s enough
+  # from _ns/_ns_coupled/heated: 10s enough
+
   [TimeStepper]
     # This time stepper makes the time step grow exponentially
     # It can only be used with proper initialization
