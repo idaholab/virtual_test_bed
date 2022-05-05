@@ -50,6 +50,10 @@ beta4 = 0.00103883
 beta5 = 0.000549185
 beta6 = 0.000184087
 
+[GlobalParams]
+  rhie_chow_user_object = 'ins_rhie_chow_interpolator'
+[]
+
 ################################################################################
 # GEOMETRY
 ################################################################################
@@ -158,10 +162,8 @@ beta6 = 0.000184087
   [T_fluid]
     type = INSFVEnergyVariable
     block = 'fuel pump hx'
-    initial_condition = ${T_HX}
     initial_from_file_var = T_fluid
   []
-
   [c1]
     type = MooseVariableFVReal
     block = 'fuel pump hx'
@@ -198,30 +200,11 @@ beta6 = 0.000184087
   [power_density]
     type = MooseVariableFVReal
     block = 'fuel pump hx'
-    # Power density is re-initalized by a transfer from neutronics
-    [InitialCondition]
-      type = FunctionIC
-      function = 'cosine_guess'
-      scaling_factor = ${fparse 3e9/2.81543}
-    []
+    initial_from_file_var = 'power_density'
   []
   [fission_source]
     type = MooseVariableFVReal
-    # Fission source is re-initalized by a transfer from neutronics
-    [InitialCondition]
-      type = FunctionIC
-      function = 'cosine_guess'
-      scaling_factor = ${fparse 6.303329e+01/2.81543}
-    []
-    block = 'fuel pump hx'
-  []
-[]
-
-[Functions]
-  # Guess to have a 3D power distribution
-  [cosine_guess]
-    type = ParsedFunction
-    value = 'max(0, cos(x*pi/2/1.2))*max(0, cos(y*pi/2/1.1))'
+    initial_from_file_var = 'fission_source'
   []
 []
 
@@ -332,7 +315,7 @@ beta6 = 0.000184087
   # The time step is imposed by the neutronics app
   start_time = 0.0
   end_time = 1e10
-  dt = 1e10
+  dt = 10
 
   # Solver parameters
   solve_type = 'NEWTON'
@@ -371,38 +354,40 @@ beta6 = 0.000184087
     block = 'fuel pump hx'
   []
   [mdot]
-    type = InternalVolumetricFlowRate
-    boundary = 'min_core_radius'
+    type = VolumetricFlowRate
+    boundary = 'hx_top'
     vel_x = vel_x
     vel_y = vel_y
-    advected_mat_prop = ${rho}
+    advected_quantity = ${rho}
   []
   # TODO: weakly compressible, switch to mass flow rate
   [flow_hx_bot]
-    type = InternalVolumetricFlowRate
+    type = VolumetricFlowRate
     boundary = 'hx_bot'
     vel_x = vel_x
     vel_y = vel_y
+    advected_quantity = 1
   []
   [flow_hx_top]
-    type = InternalVolumetricFlowRate
+    type = VolumetricFlowRate
     boundary = 'hx_top'
     vel_x = vel_x
     vel_y = vel_y
+    advected_quantity = 1
   []
   [max_flow_T]
-    type = InternalVolumetricFlowRate
+    type = VolumetricFlowRate
     boundary = 'hx_top'
     vel_x = vel_x
     vel_y = vel_y
-    advected_variable = 'T_fluid'
+    advected_quantity = 'T_fluid'
   []
   [min_flow_T]
-    type = InternalVolumetricFlowRate
+    type = VolumetricFlowRate
     boundary = 'hx_bot'
     vel_x = vel_x
     vel_y = vel_y
-    advected_variable = 'T_fluid'
+    advected_quantity = 'T_fluid'
   []
   [dT]
     type = ParsedPostprocessor

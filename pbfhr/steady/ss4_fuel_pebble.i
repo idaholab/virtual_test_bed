@@ -243,6 +243,7 @@ pebble_diameter            = 0.03
     type = TransientMultiApp
     execute_on = 'TIMESTEP_BEGIN'
     input_files = 'ss5_fuel_matrix.i'
+    cli_args = 'Outputs/console=false'
   []
 []
 

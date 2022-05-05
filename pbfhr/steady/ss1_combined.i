@@ -142,21 +142,14 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
 
   vel_x = 'superficial_vel_x'
   vel_y = 'superficial_vel_y'
-  superficial_vel_x = 'superficial_vel_x'
-  superficial_vel_y = 'superficial_vel_y'
 
   fv = true
-
   rhie_chow_user_object = 'pins_rhie_chow_interpolator'
 []
 
 # ==============================================================================
 # VARIABLES AND KERNELS
 # ==============================================================================
-
-[Debug]
-  show_var_residual_norms = true
-[]
 
 [Problem]
   kernel_coverage_check = false
@@ -345,10 +338,12 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
 []
 
 [Functions]
+  # Only perform a viscosity rampdown for the first coupling iteration
   [mu_func]
-    type = PiecewiseLinear
-    x = '1 3 5 10'
-    y = '1e3 1e2 1e1 1'
+    type = ParsedFunction
+    value = 'if(num_fixed_point>2, 1, 1000*exp(-3*t) + 1)'
+    vals = 'num_fixed_point'
+    vars = 'num_fixed_point'
   []
 []
 
@@ -417,7 +412,7 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
   [fluidprops]
     type = GeneralFunctorFluidProps
     block = ${blocks_fluid}
-    mu_multiplier = mu_func
+    mu_rampdown = mu_func
   []
 
   # closures in the pebble bed
@@ -764,13 +759,18 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
     type = FunctionValuePostprocessor
     function = 'mu_func'
   []
+  [num_fixed_point]
+    type = Receiver
+    default = 0
+  []
 []
 
 [Outputs]
   csv = true
   [console]
     type = Console
-    hide = 'pressure_in pressure_out mass_flow_OR mass_flow_plenum max_vy flow_in_m flow_out h'
+    hide = 'pressure_in pressure_out mass_flow_OR mass_flow_plenum max_vy flow_in_m flow_out h
+            num_fixed_point'
   []
   [exodus]
     type = Exodus

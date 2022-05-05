@@ -17,6 +17,7 @@
     executable_pattern = 'griffin*|blue_crab*|dire_wolf*|fenix*'
     # multiapps and transfers execute_on are different
     allow_warnings = true
+    allow_unused = true
     cli_args = "MultiApps/active='' Transfers/active=''"
   []
   [fluids_syntax]
@@ -37,7 +38,7 @@
     cli_args = "Executioner/num_steps=2 Executioner/fixed_point_max_its=1 Executioner/accept_on_max_fixed_point_iteration=true Outputs/file_base=multiphysics_out"
     # Fuel temperature is out of bounds for MGXS
     allow_warnings = true
-    min_parallel = 4
+    min_parallel = 8
     method = 'opt'  # times out in devel
   []
   [neutronics_only]

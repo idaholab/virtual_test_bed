@@ -91,6 +91,7 @@ temp_print_trace.*
 .clang_complete
 .failed_tests
 compile_commands.json
+tmp_*
 
 # Allow certain files in gold directories
 !**/gold/*.e
