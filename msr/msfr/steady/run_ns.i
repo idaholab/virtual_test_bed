@@ -70,8 +70,9 @@ beta6 = 0.000184087
     # adjusted. The following variables can be initalized:
     # - vel_x, vel_y, p from isothermal simulation
     file = 'restart/run_ns_initial_restart.e'
+    # Below are initialization points created from this input file
+    # The variable IC should be set from_file_var for temperature and precursors
     # - vel_x, vel_y, p, T_fluid, c_i from cosine heated simulation
-    # The variable IC should be modified for temperature and precursors
     # file = 'restart/run_ns_restart.e'
     # - vel_x, vel_y, p, T_fluid, c_i from coupled multiphysics simulation
     # file = 'restart/run_ns_coupled_restart.e'
