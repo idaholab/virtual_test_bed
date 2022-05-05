@@ -8,6 +8,8 @@
 [Mesh]
   [fmg]
     type = FileMeshGenerator
+    # when changing restart file, adapt power_scaling postprocessor
+    # if not exactly 3e9 -> initial was not completely converged
     file = '../steady/restart/run_neutronics_restart.e'
     use_for_exodus_restart = true
   []
@@ -46,6 +48,7 @@
     family = MONOMIAL
     # initial_condition = 600
     initial_from_file_var = tfuel
+    block = 'fuel pump hx'
   []
   # TODO: remove once we have block restricted transfers
   [tfuel_constant]
@@ -56,41 +59,52 @@
     order = CONSTANT
     family = MONOMIAL
     initial_from_file_var = c1
+    block = 'fuel pump hx'
   []
   [c2]
     order = CONSTANT
     family = MONOMIAL
     initial_from_file_var = c2
+    block = 'fuel pump hx'
   []
   [c3]
     order = CONSTANT
     family = MONOMIAL
     initial_from_file_var = c3
+    block = 'fuel pump hx'
   []
   [c4]
     order = CONSTANT
     family = MONOMIAL
     initial_from_file_var = c4
+    block = 'fuel pump hx'
   []
   [c5]
     order = CONSTANT
     family = MONOMIAL
     initial_from_file_var = c5
+    block = 'fuel pump hx'
   []
   [c6]
     order = CONSTANT
     family = MONOMIAL
     initial_from_file_var = c6
+    block = 'fuel pump hx'
   []
   [dnp]
     order = CONSTANT
     family = MONOMIAL
     components = 6
-    initial_from_file_var = dnp
+    # no need to initalize, initialized by auxkernels
+    # initial_from_file_var = dnp
+    block = 'fuel pump hx'
   []
   [power_density]
     order = CONSTANT
     family = MONOMIAL
+    # no need to initalize, initialized by auxkernels
+    # initial_from_file_var = 'power_density'
+    block = 'fuel pump hx'
   []
 []
 
@@ -99,7 +113,7 @@
     type = BuildArrayVariableAux
     variable = dnp
     component_variables = 'c1 c2 c3 c4 c5 c6'
-    execute_on = 'timestep_begin'
+    execute_on = 'initial timestep_begin final'
   []
   [power_density]
     type = VectorReactionRate
@@ -215,13 +229,14 @@
   [power_scaling]
     type = Receiver
     outputs = none
-    default = 4.1708757e+18
+    default = 4.1682608293957647e+18
   []
   [power]
     type = ElementIntegralVariablePostprocessor
     variable = power_density
-    execute_on = 'initial linear'
+    execute_on = 'initial timestep_begin timestep_end'
     outputs = all
+    block = 'fuel pump hx'
   []
 []
 
@@ -245,61 +260,55 @@
 
 [Transfers]
   [power_density]
-    type = MultiAppProjectionTransfer
+    type = MultiAppInterpolationTransfer
     to_multi_app = ns
     source_variable = power_density
     variable = power_density
   []
   [fission_source]
-    type = MultiAppProjectionTransfer
+    type = MultiAppNearestNodeTransfer
     to_multi_app = ns
     source_variable = fission_source
     variable = fission_source
   []
   [c1]
-    type = MultiAppProjectionTransfer
+    type = MultiAppNearestNodeTransfer
     from_multi_app = ns
     source_variable = 'c1'
     variable = 'c1'
-    execute_on = 'initial timestep_end'
   []
   [c2]
-    type = MultiAppProjectionTransfer
+    type = MultiAppNearestNodeTransfer
     from_multi_app = ns
     source_variable = 'c2'
     variable = 'c2'
-    execute_on = 'initial timestep_end'
   []
   [c3]
-    type = MultiAppProjectionTransfer
+    type = MultiAppNearestNodeTransfer
     from_multi_app = ns
     source_variable = 'c3'
     variable = 'c3'
-    execute_on = 'initial timestep_end'
   []
   [c4]
-    type = MultiAppProjectionTransfer
+    type = MultiAppNearestNodeTransfer
     from_multi_app = ns
     source_variable = 'c4'
     variable = 'c4'
-    execute_on = 'initial timestep_end'
   []
   [c5]
-    type = MultiAppProjectionTransfer
+    type = MultiAppNearestNodeTransfer
     from_multi_app = ns
     source_variable = 'c5'
     variable = 'c5'
-    execute_on = 'initial timestep_end'
   []
   [c6]
-    type = MultiAppProjectionTransfer
+    type = MultiAppNearestNodeTransfer
     from_multi_app = ns
     source_variable = 'c6'
     variable = 'c6'
-    execute_on = 'initial timestep_end'
   []
   [T]
-    type = MultiAppProjectionTransfer
+    type = MultiAppNearestNodeTransfer
     from_multi_app = ns
     source_variable = 'T_fluid'
     variable = 'tfuel'
