@@ -54,6 +54,10 @@ beta4 = 0.00103883
 beta5 = 0.000549185
 beta6 = 0.000184087
 
+[GlobalParams]
+  rhie_chow_user_object = 'ins_rhie_chow_interpolator'
+[]
+
 ################################################################################
 # GEOMETRY
 ################################################################################
@@ -66,17 +70,12 @@ beta6 = 0.000184087
     # adjusted. The following variables can be initalized:
     # - vel_x, vel_y, p from isothermal simulation
     file = 'restart/run_ns_initial_restart.e'
+    # Below are initialization points created from this input file
+    # The variable IC should be set from_file_var for temperature and precursors
     # - vel_x, vel_y, p, T_fluid, c_i from cosine heated simulation
     # file = 'restart/run_ns_restart.e'
     # - vel_x, vel_y, p, T_fluid, c_i from coupled multiphysics simulation
     # file = 'restart/run_ns_coupled_restart.e'
-  []
-  [min_radius]
-    type = ParsedGenerateSideset
-    combinatorial_geometry = 'abs(y-0.) < 1e-10 & x < 1.8'
-    input = restart
-    new_sideset_name = min_core_radius
-    normal = '0 1 0'
   []
   [hx_top]
     type = ParsedGenerateSideset
@@ -86,7 +85,7 @@ beta6 = 0.000184087
     fixed_normal = true
     normal = '0 1 0'
     new_sideset_name = 'hx_top'
-    input = 'min_radius'
+    input = 'restart'
   []
   [hx_bot]
     type = ParsedGenerateSideset
@@ -300,9 +299,9 @@ beta6 = 0.000184087
     functor = ${pump_force}
     block = 'pump'
     momentum_component = 'y'
-    rhie_chow_user_object = 'ins_rhie_chow_interpolator'
   []
 
+  # Additional kernels for precursor decay
   [c1_decay]
     type = FVReaction
     variable = c1
@@ -384,7 +383,12 @@ beta6 = 0.000184087
 
   # Time stepping parameters
   start_time = 0.0
-  end_time = 20
+  end_time = 200
+  # end_time will depend on the restart file chosen
+  # though steady state detection can also be used
+  # from _initial/no heating : 150 - 200s enough
+  # from _ns/_ns_coupled/heated: 10s enough
+
   [TimeStepper]
     # This time stepper makes the time step grow exponentially
     # It can only be used with proper initialization
@@ -439,39 +443,34 @@ beta6 = 0.000184087
     value_type = max
     block = 'fuel pump hx'
   []
-  [mdot]
-    type = InternalVolumetricFlowRate
-    boundary = 'min_core_radius'
-    vel_x = vel_x
-    vel_y = vel_y
-    advected_mat_prop = ${rho}
-  []
   # TODO: weakly compressible, switch to mass flow rate
   [flow_hx_bot]
-    type = InternalVolumetricFlowRate
+    type = VolumetricFlowRate
     boundary = 'hx_bot'
     vel_x = vel_x
     vel_y = vel_y
+    advected_quantity = 1
   []
   [flow_hx_top]
-    type = InternalVolumetricFlowRate
+    type = VolumetricFlowRate
     boundary = 'hx_top'
     vel_x = vel_x
     vel_y = vel_y
+    advected_quantity = 1
   []
   [max_flow_T]
-    type = InternalVolumetricFlowRate
+    type = VolumetricFlowRate
     boundary = 'hx_top'
     vel_x = vel_x
     vel_y = vel_y
-    advected_variable = 'T_fluid'
+    advected_quantity = 'T_fluid'
   []
   [min_flow_T]
-    type = InternalVolumetricFlowRate
+    type = VolumetricFlowRate
     boundary = 'hx_bot'
     vel_x = vel_x
     vel_y = vel_y
-    advected_variable = 'T_fluid'
+    advected_quantity = 'T_fluid'
   []
   [dT]
     type = ParsedPostprocessor

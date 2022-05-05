@@ -18,6 +18,10 @@ von_karman_const = 0.41
 friction = 4.0e3  # [kg / m^4]
 pump_force = -20000. # [N / m^3]
 
+[GlobalParams]
+  rhie_chow_user_object = 'ins_rhie_chow_interpolator'
+[]
+
 ################################################################################
 # GEOMETRY
 ################################################################################
@@ -28,16 +32,19 @@ pump_force = -20000. # [N / m^3]
     type = FileMeshGenerator
     file = '../mesh/msfr_rz_mesh.e'
   []
-  [min_radius]
+  [hx_top]
     type = ParsedGenerateSideset
-    combinatorial_geometry = 'abs(y-0.) < 1e-10 & x < 1.8'
-    input = fmg
-    new_sideset_name = min_core_radius
+    combinatorial_geometry = 'y > 0'
+    included_subdomain_ids = '3'
+    included_neighbor_ids = '1'
+    fixed_normal = true
     normal = '0 1 0'
+    new_sideset_name = 'hx_top'
+    input = 'fmg'
   []
   [delete_unused]
     type = BlockDeletionGenerator
-    input = min_radius
+    input = 'hx_top'
     block = 'shield reflector'
   []
 []
@@ -101,7 +108,6 @@ pump_force = -20000. # [N / m^3]
     functor = ${pump_force}
     block = 'pump'
     momentum_component = 'y'
-    rhie_chow_user_object = 'ins_rhie_chow_interpolator'
   []
 []
 
@@ -149,7 +155,7 @@ pump_force = -20000. # [N / m^3]
 
   # Time-stepping parameters
   start_time = 0.0
-  end_time = 15
+  end_time = 17
 
   [TimeStepper]
     type = IterationAdaptiveDT
@@ -198,10 +204,10 @@ pump_force = -20000. # [N / m^3]
     function = rampdown_mu_func
   []
   [mdot]
-    type = InternalVolumetricFlowRate
-    boundary = 'min_core_radius'
+    type = VolumetricFlowRate
+    boundary = 'hx_top'
     vel_x = vel_x
     vel_y = vel_y
-    advected_mat_prop = ${rho}
+    advected_quantity = ${rho}
   []
 []
