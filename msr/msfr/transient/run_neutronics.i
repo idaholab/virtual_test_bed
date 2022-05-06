@@ -253,11 +253,6 @@
   []
 []
 
-[GlobalParams]
-  # No displacements modeled
-  fixed_meshes = true
-[]
-
 [Transfers]
   [power_density]
     type = MultiAppInterpolationTransfer
