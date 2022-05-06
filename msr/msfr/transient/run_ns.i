@@ -205,6 +205,18 @@ beta6 = 0.000184087
     type = MooseVariableFVReal
     initial_from_file_var = 'fission_source'
   []
+  [rho_output]
+    type = MooseVariableFVReal
+  []
+[]
+
+[AuxKernels]
+  [output_rho]
+    type = ADFunctorElementalAux
+    variable = rho_output
+    functor = 'rho'
+    execute_on = 'initial timestep_end'
+  []
 []
 
 [FVKernels]

@@ -381,6 +381,7 @@ beta6 = 0.000184087
     type = ADFunctorElementalAux
     variable = rho_output
     functor = 'rho'
+    execute_on = 'initial timestep_end'
   []
 []
 
