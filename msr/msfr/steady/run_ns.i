@@ -111,9 +111,9 @@ beta6 = 0.000184087
 [Modules]
   [NavierStokesFV]
     # General parameters
-    compressibility = 'incompressible'
+    compressibility = 'weakly-compressible'
     add_energy_equation = true
-    boussinesq_approximation = true
+    # boussinesq_approximation = true
 
     # Variables, defined below for the Exodus restart
     velocity_variable = 'vel_x vel_y'
@@ -121,7 +121,7 @@ beta6 = 0.000184087
     fluid_temperature_variable = 'T_fluid'
 
     # Material properties
-    density = ${rho}
+    density = 'rho'
     dynamic_viscosity = ${mu}
     thermal_conductivity = ${k}
     specific_heat = 'cp'
@@ -282,6 +282,9 @@ beta6 = 0.000184087
     []
     block = 'fuel pump hx'
   []
+  [rho_output]
+    type = MooseVariableFVReal
+  []
 []
 
 [Functions]
@@ -363,6 +366,21 @@ beta6 = 0.000184087
     prop_names = 'cp dcp_dt'
     prop_values = '${cp} 0'
     block = 'fuel pump hx'
+  []
+  [rho]
+    type = SaltAndBubblesDensity
+    temperature = T_fluid
+    pressure = pressure
+    gas_fraction = 0.05
+    bubble_treatment = true
+  []
+[]
+
+[AuxKernels]
+  [output_rho]
+    type = ADFunctorElementalAux
+    variable = rho_output
+    functor = 'rho'
   []
 []
 

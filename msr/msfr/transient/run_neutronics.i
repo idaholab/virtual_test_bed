@@ -8,9 +8,12 @@
 [Mesh]
   [fmg]
     type = FileMeshGenerator
-    # when changing restart file, adapt power_scaling postprocessor
+    # !!!!! when changing restart file, adapt power_scaling postprocessor !!!!!
     # if not exactly 3e9 -> initial was not completely converged
-    file = '../steady/restart/run_neutronics_restart.e'
+    # WC
+    # file = '../steady/restart_wc/run_neutronics_restart.e'
+    # WC + bubbles
+    file = '../steady/restart_bubbles/run_neutronics_restart.e'
     use_for_exodus_restart = true
   []
 []
@@ -229,7 +232,10 @@
   [power_scaling]
     type = Receiver
     outputs = none
-    default = 4.1682608293957647e+18
+    # Weakly compressible
+    # default = 4.1684137978635e+18
+    # WC + bubbles
+    default = 4.1681750524407e+18
   []
   [power]
     type = ElementIntegralVariablePostprocessor
