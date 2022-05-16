@@ -43,9 +43,4 @@
     command = 'mkdir test_dir; cp assembly.py test_dir/assembly.py; cd test_dir; python assembly.py'
     required_python_packages = 'matplotlib uncertainties h5py'
   []
-  [check_openmc_input_generated]
-    type = CheckFiles
-    check_files = 'test_dir/materials.xml test_dir/geometry.xml test_dir/plots.xml test_dir/settings.xml'
-    prereq = 'run_python_generation'
-  []
 []
