@@ -1,13 +1,21 @@
 API: Application Programming Interface
 CFD: Computational Fluid Dynamics
 CFL: Courant-Friedrichs-Lewy
+CHT: Conjugate Heat Transfer
 CPU: Central Processing Unit
+CSG: Constructive Solid Geometry
 ECP: Exascale Computing Project
+EOS: Equation of State
 GLL: Gauss-Lobatto-Legendre
 GPU: Graphics Processing Unit
 HPC: High-Performance Computing
+HTGR: High Temperature Gas Reactor
 MPI: Message Passing Interface
 NEAMS: Nuclear Energy Advanced Modeling and Simulation
 OCCA: Open Concurrent Compute Abstraction
 PB-FHR: Pebble Bed Fluoride-Salt-Cooled High-Temperature Reactor
+PyC: Pyrolitic Carbon
+RSA: Random Sequential Addition
+THM: Thermal-Hydraulics Module
 THTR: Thorium High Temperature Reactor
+TRISO: Tri-Structural Isotropic
