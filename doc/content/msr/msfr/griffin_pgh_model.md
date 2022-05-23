@@ -2,14 +2,14 @@
 
 *Contact: Mauricio Tano, mauricio.tanoretamales.at.inl.gov*
 
-## Conservation of fluid mass and momentum
-
 The MultiApp system is used to separate the neutronics and the fluid dynamics
 problems. The fluid system is solved by the subapp and it uses the `run_ns.i`
 input files. (Here "ns" is an abbreviation for Navier-Stokes.)
 
 The fluid system includes conservation equations for fluid mass, momentum, and
 energy as well as the conservation of delayed neutron precursors.
+
+## Conservation of fluid mass
 
 The conservation of mass is,
 
@@ -27,18 +27,20 @@ approximation.)  The simplified conservation of mass is then given by,
   \nabla \cdot \vec{u} = 0
 \end{equation}
 
-This conservation is expressed by the `FVKernels/mass` kernel:
+This conservation equation is automatically added by the `NavierStokesFV` action
+when selecting the incompressible model.
 
-!listing msr/msfr/steady/run_ns.i block=FVKernels/mass
+```
+[Modules]
+  [NavierStokesFV]
+    # General parameters
+    compressibility = 'incompressible'
+    ...
+```
 
-(Note that this kernel uses `variable = pressure` even though pressure does not
-appear in the mass conservation equation. This is an artifact of the way systems
-of equations are described in MOOSE. Since the number of equations must
-correspond to the number of non-linear variables, we are essentially using the
-variables to "name" each equation. The momentum equations will be named by the
-corresponding velocity variable. That just leaves the pressure variable for
-naming the mass equation, even though pressure does not appear in the mass
-equation.)
+Legacy syntax for the mass equation is included [here](griffin_pgh_model_legacy.md).
+
+## Conservation of fluid momentum
 
 This system also includes the conservation of momentum in the $x$-direction. A
 fairly general form of the steady-state condition is,
@@ -126,28 +128,41 @@ This gives the form that is implemented for the MSFR model,
   \label{eq:x_mom}
 \end{equation}
 
-The first term in [eq:x_mom]---the advection of momentum---is handled with the
-kernel,
+The first few terms in [eq:x_mom], the advection of momentum, the pressure gradient
+and the laminar diffusion are automatically handled by the `NavierStokesFV` action.
 
-!listing msr/msfr/steady/run_ns.i block=FVKernels/u_advection
+The mixing length turbulence model is added by specifying additional parameters to
+the action. This basic model is currently the most limiting issue in terms of
+accuracy.
 
-The second term---the pressure gradient---is handled with,
+```
+[Modules]
+  [NavierStokesFV]
+    ...
+    # Turbulence parameters
+    turbulence_handling = 'mixing-length'
+    turbulent_prandtl = ${Pr_t}
+    von_karman_const = ${von_karman_const}
+    mixing_length_delta = 0.1
+    mixing_length_walls = 'shield_wall reflector_wall'
+    mixing_length_aux_execute_on = 'initial'
+    ...
+```
 
-!listing msr/msfr/steady/run_ns.i block=FVKernels/u_pressure
+The friction in the heat exchanger is specified by passing the following parameters to the
+`NavierStokesFV` action. A quadratic friction model with a coefficient tuned to obtain the desired
+mass flow rate is selected.
 
-The third and fourth term---the Reynolds Stress and the Viscous Tensor---with,
-
-!listing msr/msfr/steady/run_ns.i block=FVKernels/u_turbulent_diffusion_rans FVKernels/u_molecular_diffusion
-
-The definition of the mixing length is handled with,
-
-!listing msr/msfr/steady/run_ns_initial.i block=AuxKernels/mixing_len
-
-Recall that the fifth term, the viscous force, is treated with a unique model
-for the heat exchanger region. Consequently, the `block` parameter is used to
-restrict the relevant kernel to the heat exchanger,
-
-!listing msr/msfr/steady/run_ns.i block=FVKernels/friction_hx_x
+```
+[Modules]
+  [NavierStokesFV]
+    ...
+    # Heat exchanger
+    friction_blocks = 'hx'
+    friction_types = 'FORCHHEIMER'
+    friction_coeffs = ${friction}
+    ...
+```
 
 This model does not include a friction force for the other blocks so no kernel
 needs to be specified for those blocks.
@@ -170,33 +185,43 @@ temperature value. The pump head is tuned such that the imposed mass flow rate
 is ~18500 kg/s.
 
 For each kernel describing the $x$-momentum equation, there is a corresponding
-kernel for the $y$-momentum equation. The additional Boussinesq kernel and the
-pump kernel for this equation are,
-
-!listing msr/msfr/steady/run_ns.i block=FVKernels/v_buoyancy
+kernel for the $y$-momentum equation. They are similarly added by the `NavierStokesFV`.
+An additional kernel is added to add a volumetric pump component to the system:
 
 !listing msr/msfr/steady/run_ns.i block=FVKernels/pump
 
+The Boussinesq buoyancy approximation is added to the model using this parameter:
+
+```
+[Modules]
+  [NavierStokesFV]
+    ...
+    boussinesq_approximation = true
+    ...
+```
 
 Boundary conditions include standard velocity wall functions at the walls to
 account for the non-linearity of the velocity in the boundary layer given the
-coarse mesh and symmetry at the center axis of the MSFR,
+coarse mesh and symmetry at the center axis of the MSFR. They are added by the
+action based on user-input parameters:
 
-!listing msr/msfr/steady/run_ns.i block=FVBCs
+```
+[Modules]
+  [NavierStokesFV]
+    ...
+    # Boundary conditions
+    wall_boundaries = 'shield_wall reflector_wall fluid_symmetry'
+    momentum_wall_types = 'wallfunction wallfunction symmetry'
+    ...
+```
 
 Auxkernels are used to compute the wall shear stress obtained by the standard
 wall function model, the dimensionless wall distance $y^+$ and the value for the
-eddy viscosity.
+eddy viscosity. These are used for analysis purposes.
 
-!listing msr/msfr/steady/run_ns.i block=AuxKernels
+!listing msr/msfr/steady/legacy/run_ns.i block=AuxKernels
 
-The mixing length value is obtained from the restart file, as it is constant
-throughout the simulation.
-
-For relaxation purposes, time derivatives are added to the momentum equations
-until a steady state is attained.
-
-!listing msr/msfr/steady/run_ns.i block=FVKernels/u_time
+Legacy syntax for the momentum equation is included [here](griffin_pgh_model_legacy.md).
 
 ## Conservation of fluid energy
 
@@ -253,24 +278,61 @@ of the divergence operators and divide the entire equation by that factor,
   \label{eq:energy}
 \end{equation}
 
+[eq:energy] is the final equation that is implemented in this model. It is added to
+the equation system using a parameter in the `NavierStokesFV` action:
+
+```
+[Modules]
+  [NavierStokesFV]
+    ...
+    add_energy_equation = true
+    ...
+```
+
 [eq:energy] is the final equation that is implemented in this model. The first
-term---energy advection---is captured by the kernel,
-
-!listing msr/msfr/steady/run_ns.i block=FVKernels/heat_advection
-
-The second term---the turbulent diffusion of heat---corresponds to the kernel,
-
-!listing msr/msfr/steady/run_ns.i block=FVKernels/heat_turb_diffusion
+term---energy advection--- is automatically added by the action syntax. The
+second term---turbulent diffusion of heat--- is added based on the momentum
+turbulent term, with the Prandtl number also to be specified to adjust the
+diffusion coefficient.
 
 The third term---heat source and loss---is covered by two kernels. First, the
 nuclear heating computed by the neutronics solver is included with,
 
-!listing msr/msfr/steady/run_ns.i block=FVKernels/heat_src
+```
+[Modules]
+  [NavierStokesFV]
+    ...
+    # Heat source
+    external_heat_source = power_density
+    ...
+```
 
 And second, the heat loss through the heat exchanger is implemented with the
 kernel,
 
-!listing msr/msfr/steady/run_ns.i block=FVKernels/heat_sink
+```
+[Modules]
+  [NavierStokesFV]
+    ...
+    # Heat exchanger
+    ambient_convection_blocks = 'hx'
+    ambient_convection_alpha = ${fparse 600 * 20e3} # HX specifications
+    ambient_temperature = ${T_HX}
+    ...
+```
+
+The boundary conditions are added similarly, by simply specifying 0 heat flux for
+symmetry and adiabatic boundaries.
+
+```
+[Modules]
+  [NavierStokesFV]
+    ...
+    energy_wall_types = 'heatflux heatflux heatflux'
+    energy_wall_function = '0 0 0'
+```
+
+Legacy syntax for the energy equation is included [here](griffin_pgh_model_legacy.md).
 
 ## Neutronics
 
