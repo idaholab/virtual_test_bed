@@ -30,7 +30,7 @@ The third and fourth term---the Reynolds Stress and the Viscous Tensor---with,
 
 The definition of the mixing length is handled with,
 
-!listing msr/msfr/steady/legacy/run_ns_initial.i block=AuxKernels/mixing_len
+!listing msr/msfr/steady/legacy/run_ns.i block=AuxKernels/mixing_len
 
 Recall that the fifth term, the viscous force, is treated with a unique model
 for the heat exchanger region. Consequently, the `block` parameter is used to
@@ -113,10 +113,10 @@ kernel,
 The following kernels were used to add the time derivatives to their
 respective equations. This is no longer necessary with the `NavierStokesFV` syntax.
 
-!listing msr/msfr/transient/run_ns.i block=FVKernels/u_time
+!listing msr/msfr/transient/legacy/run_ns.i block=FVKernels/u_time
 
-!listing msr/msfr/transient/run_ns.i block=FVKernels/v_time
+!listing msr/msfr/transient/legacy/run_ns.i block=FVKernels/v_time
 
-!listing msr/msfr/transient/run_ns.i block=FVKernels/heat_time
+!listing msr/msfr/transient/legacy/run_ns.i block=FVKernels/heat_time
 
-!listing msr/msfr/transient/run_ns.i block=FVKernels/c1_time
+!listing msr/msfr/transient/legacy/run_ns.i block=FVKernels/c1_time
