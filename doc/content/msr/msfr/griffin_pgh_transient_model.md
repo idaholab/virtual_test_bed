@@ -10,17 +10,8 @@ sudden flow blockage or a group of pump trips), but it will be modeled by reduci
 ## Transient kernels
 
 The setup of MOOSE variables, kernels, boundary conditions, etc. is similar to
-the [steady-state model](msfr/griffin_pgh_model.md). One major difference is
-that extra kernels must be added to account for the time derivative terms such
-as,
-
-!listing msr/msfr/transient/run_ns.i block=FVKernels/u_time
-
-!listing msr/msfr/transient/run_ns.i block=FVKernels/v_time
-
-!listing msr/msfr/transient/run_ns.i block=FVKernels/heat_time
-
-!listing msr/msfr/transient/run_ns.i block=FVKernels/c1_time
+the [steady-state model](msfr/griffin_pgh_model.md). The only difference is that the fluid flow model is using a `Transient` executioner instead of a
+`Steady` one.
 
 The neutronics model can be made transient by simply switching the parameter
 `equation_type = eigenvalue` to `equation_type = transient` in the
@@ -48,7 +39,7 @@ The fluid dynamics app, in particular, will use the Exodus method. Note that the
 (An Exodus file might contain just a mesh, or it might contain a mesh and a set
 of solution fields.) Also note the parameter, `use_for_exodus_restart = true`:
 
-!listing msr/msfr/transient/run_ns.i block=Mesh/fmg
+!listing msr/msfr/transient/run_ns.i block=Mesh/restart
 
 With an Exodus restart, we must also specify which variables will be initialized
 from the input Exodus file. Here, all of the variables are initialized from
@@ -68,23 +59,6 @@ output of the steady-state simulation. This ensures mesh consistency between the
 steady and transient simulations.
 
 !listing msr/msfr/transient/run_neutronics.i block=Mesh/fmg
-
-<!---
-NO LONGER DONE THAT WAY
-Here the steady-state simulation is included as a MultiApp. Note the
-`execute_on = initial` parameter:
-//
-!listing msr/msfr/transient/run_neutronics.i block=MultiApps/init
-//
-Transfers must also be specified so that the steady-state solution is copied
-over to the transient app. Here are a subset of those transfers:
-//
-!listing msr/msfr/transient/run_neutronics.i block=Transfers/init_solution
-//
-!listing msr/msfr/transient/run_neutronics.i block=Transfers/init_power_scaling
-//
-!listing msr/msfr/transient/run_neutronics.i block=Transfers/init_c1
--->
 
 ## Pump control
 
