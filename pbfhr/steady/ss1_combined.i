@@ -161,7 +161,7 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
     compressibility = 'incompressible'
     porous_medium_treatment = true
     add_energy_equation = true
-    # boussinesq_approximation = true
+    boussinesq_approximation = true
     block = ${blocks_fluid}
 
     # Material properties
