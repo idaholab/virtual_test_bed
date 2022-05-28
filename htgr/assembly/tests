@@ -1,15 +1,24 @@
 [Tests]
+  [generate_mesh]
+    type = RunApp
+    executable_pattern = 'cardinal*'
+    input = 'common_input.i solid.i'
+    cli_args = '--mesh-only'
+    working_directory = 'meshes'
+  []
   [syntax_openmc]
     type = RunApp
     input = 'common_input.i openmc.i'
     check_input = true
     executable_pattern = 'cardinal*'
+    prereq = generate_mesh
   []
   [syntax_conduction]
     type = RunApp
     input = 'solid.i'
     check_input = true
     executable_pattern = 'cardinal*'
+    prereq = generate_mesh
   []
   [syntax_thm]
     type = RunApp
@@ -20,7 +29,7 @@
 
   [run_openmc]
     type = RunApp
-    input = 'openmc.i'
+    input = 'common_input.i openmc.i'
     cli_args = "MultiApps/active='' Transfers/active='' Executioner/num_steps=2"
     executable_pattern = 'cardinal*'
     prereq = 'syntax_openmc'
