@@ -165,8 +165,8 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
     block = ${blocks_fluid}
 
     # Material properties
-    # TODO remove more rho_fluid
-    density = 'rho' #${rho_fluid}
+    # density should be explicitly defined as constant
+    density = ${rho_fluid}
     dynamic_viscosity = 'mu'
     thermal_conductivity = '0' #kappa'
     specific_heat = 'cp'

@@ -66,10 +66,6 @@ Dv = 0.02006
 # accurately, so this should be tuned to obtain the desired mass flow rates
 plenum_friction = 0.5
 
-# Computation parameters
-velocity_interp_method = 'rc'
-advected_interp_method = 'upwind'
-
 # Core geometry
 pebble_diameter  = 0.03
 bed_porosity     = 0.4
@@ -86,7 +82,7 @@ model_inlet_area = ${fparse 3.14159265 * (model_inlet_rout * model_inlet_rout -
 mfr = 976.0            # kg/s, from [2]
 total_power = 236.0e6  # W, from [2]
 inlet_T_fluid = 873.15 # K, from [2]
-inlet_vel_y = ${fparse mfr / model_inlet_area / rho_fluid} # superficial
+inlet_vel_y_ini = ${fparse mfr / model_inlet_area / rho_fluid} # superficial
 power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using power pp
 outlet_pressure_val = 2e5
 
@@ -133,206 +129,147 @@ outlet_pressure_val = 2e5
 []
 
 [GlobalParams]
-  rho = ${rho_fluid}
+  rho = 'rho'
   porosity = porosity_viz
+  characteristic_length = 0.01 #${pebble_diameter}
   pebble_diameter = ${pebble_diameter}
-  fp = fp
-  T_solid = temp_solid
-  T_fluid = temp_fluid
-  gravity = '0 -9.81 0'
-
-  pressure = pressure
-  u = vel_x
-  v = vel_y
   mu = 'mu'
-  cp = 'cp'
+  speed = 'speed'
 
-  velocity_interp_method = ${velocity_interp_method}
-  advected_interp_method = ${advected_interp_method}
+  fp = fp
+  T_solid = T_solid
+  T_fluid = T_fluid
+  pressure = pressure
+
+  vel_x = 'superficial_vel_x'
+  vel_y = 'superficial_vel_y'
+
   fv = true
-
-  vel_x = 'vel_x'
-  vel_y = 'vel_y'
-  superficial_vel_x = 'vel_x'
-  superficial_vel_y = 'vel_y'
-
-  rhie_chow_user_object = rc
-[]
-
-[UserObjects]
-  [rc]
-    type = PINSFVRhieChowInterpolator
-    block = ${blocks_fluid}
-  []
+  rhie_chow_user_object = 'pins_rhie_chow_interpolator'
 []
 
 # ==============================================================================
 # VARIABLES AND KERNELS
 # ==============================================================================
+
+[Problem]
+  kernel_coverage_check = false
+[]
+
+[Modules]
+  [NavierStokesFV]
+    # General parameters
+    compressibility = 'incompressible'
+    porous_medium_treatment = true
+    add_energy_equation = true
+    boussinesq_approximation = true
+    block = ${blocks_fluid}
+
+    # Material properties
+    density = ${rho_fluid}
+    dynamic_viscosity = 'mu'
+    thermal_conductivity = '0' #kappa'
+    specific_heat = 'cp'
+    thermal_expansion = 'alpha_b'
+    porosity = 'porosity'
+
+    # Boussinesq parameters
+    gravity = '0 -9.81 0'
+    ref_temperature = ${inlet_T_fluid}
+
+    # Initial conditions
+    initial_velocity = '1e-6 ${inlet_vel_y_ini} 0'
+    initial_pressure = 2e5
+    initial_temperature = 800.0
+
+    # Wall boundary conditions
+    wall_boundaries = 'bed_left barrel_wall'
+    momentum_wall_types = 'slip slip'
+    energy_wall_types = 'heatflux heatflux'
+    energy_wall_function = '0 0'
+
+    # Inlet boundary conditions
+    inlet_boundaries = 'bed_horizontal_bottom OR_horizontal_bottom'
+    momentum_inlet_types = 'fixed-velocity fixed-velocity'
+    momentum_inlet_function = '0 inlet_vel_y 0 0'
+    energy_inlet_types = 'fixed-temperature heatflux'
+    energy_inlet_function = '${inlet_T_fluid} 0'
+    # so the flux BCs have to be used consistently across all equations
+
+    # Outlet boundary conditions
+    outlet_boundaries = 'bed_horizontal_top plenum_top OR_horizontal_top'
+    momentum_outlet_types = 'fixed-pressure fixed-pressure fixed-pressure'
+    pressure_function = '2e5 2e5 2e5'
+
+    # Porous flow parameters
+    ambient_convection_blocks = ${blocks_pebbles}
+    ambient_convection_alpha = 'alpha alpha'
+    ambient_temperature = 'T_solid T_solid'
+
+    # Friction in porous media
+    friction_types = 'darcy forchheimer'
+    friction_coeffs = 'Darcy_coefficient Forchheimer_coefficient'
+
+    # Numerical scheme
+    momentum_advection_interpolation = 'upwind'
+    mass_advection_interpolation = 'upwind'
+    energy_advection_interpolation = 'upwind'
+  []
+[]
+
 [Variables]
-  [vel_x]
-    type = PINSFVSuperficialVelocityVariable
-    block = ${blocks_fluid}
-    initial_condition = 1e-12
-  []
-  [vel_y]
-    type = PINSFVSuperficialVelocityVariable
-    block = ${blocks_fluid}
-  []
-  [pressure]
-    type = INSFVPressureVariable
-    block = ${blocks_fluid}
-    initial_condition = 1e5
-  []
-  [temp_fluid]
-    type = INSFVEnergyVariable
-    block = ${blocks_fluid}
-    initial_condition = 900
-  []
-  [temp_solid]
+  [T_solid]
     type = INSFVEnergyVariable
   []
 []
 
 [FVKernels]
-  # Mass Equation.
-  [mass]
-    type = PINSFVMassAdvection
-    variable = pressure
-  []
-
-  # Momentum x component equation.
-  [vel_x_time]
-    type = PINSFVMomentumTimeDerivative
-    variable = vel_x
-    momentum_component = x
-  []
-  [vel_x_advection]
-    type = PINSFVMomentumAdvection
-    variable = vel_x
-    momentum_component = x
-  []
-  [vel_x_viscosity]
-    type = PINSFVMomentumDiffusion
-    variable = vel_x
-    momentum_component = x
-  []
-  [u_pressure]
-    type = PINSFVMomentumPressure
-    variable = vel_x
-    momentum_component = 'x'
-  []
-  [u_friction]
-    type = PINSFVMomentumFriction
-    variable = vel_x
-    Darcy_name = 'Darcy_coefficient'
-    Forchheimer_name = 'Forchheimer_coefficient'
-    momentum_component = 'x'
-  []
-
-  # Momentum y component equation.
-  [vel_y_time]
-    type = PINSFVMomentumTimeDerivative
-    variable = vel_y
-    momentum_component = y
-  []
-  [vel_y_advection]
-    type = PINSFVMomentumAdvection
-    variable = vel_y
-    momentum_component = y
-  []
-  [vel_y_viscosity]
-    type = PINSFVMomentumDiffusion
-    variable = vel_y
-    momentum_component = y
-  []
-  [v_pressure]
-    type = PINSFVMomentumPressure
-    variable = vel_y
-    momentum_component = 'y'
-  []
-  [v_friction]
-    type = PINSFVMomentumFriction
-    variable = vel_y
-    Darcy_name = 'Darcy_coefficient'
-    Forchheimer_name = 'Forchheimer_coefficient'
-    momentum_component = 'y'
-  []
-  [gravity]
-    type = PINSFVMomentumGravity
-    variable = vel_y
-    momentum_component = 'y'
-  []
-  [buoyancy_boussinesq]
-    type = PINSFVMomentumBoussinesq
-    variable = vel_y
-    ref_temperature = ${inlet_T_fluid}
-    momentum_component = 'y'
-    alpha_name = 'alpha_b'
-  []
-
-  # Fluid Energy equation.
-  [temp_fluid_time]
-    type = PINSFVEnergyTimeDerivative
-    variable = temp_fluid
-    is_solid = false
-  []
-  [temp_fluid_advection]
-    type = PINSFVEnergyAdvection
-    variable = temp_fluid
-    advected_quantity = 'rho_cp_temp'
-  []
+  # Fluid heat diffusion
   [temp_fluid_conduction]
     type = PINSFVEnergyAnisotropicDiffusion
-    variable = temp_fluid
+    variable = T_fluid
     effective_diffusivity = false
     kappa = 'kappa'
-  []
-  [temp_solid_to_fluid]
-    type = PINSFVEnergyAmbientConvection
-    variable = temp_fluid
-    is_solid = false
-    h_solid_fluid = 'alpha'
   []
 
   # Solid Energy equation.
   [temp_solid_time_core]
     type = PINSFVEnergyTimeDerivative
-    variable = temp_solid
+    variable = T_solid
     cp = 'cp_s'
-    dcp_dt = '0'
     rho = ${solid_rho}
     is_solid = true
     block = ${blocks_fluid}
   []
   [temp_solid_time]
     type = INSFVEnergyTimeDerivative
-    variable = temp_solid
+    variable = T_solid
     cp = 'cp_s'
     dcp_dt = '0'
+    rho = 'rho_s'
     block = ${blocks_solid}
   []
   [temp_solid_conduction_core]
     type = FVDiffusion
-    variable = temp_solid
+    variable = T_solid
     coeff = 'kappa_s'
     block = ${blocks_fluid}
   []
   [temp_solid_conduction]
     type = FVDiffusion
-    variable = temp_solid
+    variable = T_solid
     coeff = 'k_s'
     block = ${blocks_solid}
   []
   [temp_solid_source]
     type = FVCoupledForce
-    variable = temp_solid
+    variable = T_solid
     v = power_distribution
     block = '3'
   []
   [temp_fluid_to_solid]
     type = PINSFVEnergyAmbientConvection
-    variable = temp_solid
+    variable = T_solid
     is_solid = true
     h_solid_fluid = 'alpha'
     block = ${blocks_fluid}
@@ -347,8 +284,8 @@ outlet_pressure_val = 2e5
     subdomain2 = '1 2 6'
     coeff1 = 'kappa_s'
     coeff2 = 'k_s'
-    variable1 = 'temp_solid'
-    variable2 = 'temp_solid'
+    variable1 = 'T_solid'
+    variable2 = 'T_solid'
   []
 []
 
@@ -386,31 +323,33 @@ outlet_pressure_val = 2e5
     function = ${power_density}
     block = '3'
   []
-  [core_T]
+  [core]
     type = FunctionIC
-    variable = temp_solid
-    function = 800
+    variable = T_solid
+    function = 900
     block = '1 2 3 4 5 6 7 8'
   []
   [bricks]
     type = FunctionIC
-    variable = temp_solid
+    variable = T_solid
     function = 350
     block = '9 10'
-  []
-  [vel_core]
-    type = FunctionIC
-    variable = vel_y
-    function = ${inlet_vel_y}
-    block = ${blocks_fluid}
   []
 []
 
 [Functions]
+  # Only perform a viscosity rampdown for the first coupling iteration
   [mu_func]
-    type = PiecewiseLinear
-    x = '1 3 5 10'
-    y = '1e3 1e2 1e1 1'
+    type = ParsedFunction
+    value = 'if(num_fixed_point>2, 1, 1000*exp(-3*t) + 1)'
+    vals = 'num_fixed_point'
+    vars = 'num_fixed_point'
+  []
+  [inlet_vel_y]
+    type = ParsedFunction
+    value = 'inlet_vel_y_pp'
+    vals = 'inlet_vel_y_pp'
+    vars = 'inlet_vel_y_pp'
   []
 []
 
@@ -418,74 +357,11 @@ outlet_pressure_val = 2e5
 # BOUNDARY CONDITIONS
 # ==============================================================================
 [FVBCs]
-  [inlet_vel_x]
-    type = INSFVInletVelocityBC
-    variable = vel_x
-    function = 0
-    boundary = 'bed_horizontal_bottom'
-  []
-  [OR_inlet_vel_x]
-    type = INSFVInletVelocityBC
-    variable = vel_x
-    function = 0
-    boundary = 'OR_horizontal_bottom'
-  []
-  [OR_inlet_vel_y]
-    type = INSFVInletVelocityBC
-    variable = vel_y
-    function = 0
-    boundary = 'OR_horizontal_bottom'
-  []
-
-  [inlet_vel_y_mass]
-    type = WCNSFVMassFluxBC
-    variable = pressure
-    mdot_pp = 'inlet_mdot'
-    area_pp = 'inlet_area'
-    boundary = 'bed_horizontal_bottom'
-  []
-  [inlet_vel_y_momentum]
-    type = WCNSFVMomentumFluxBC
-    variable = vel_y
-    mdot_pp = 'inlet_mdot'
-    area_pp = 'inlet_area'
-    momentum_component = 'y'
-    boundary = 'bed_horizontal_bottom'
-  []
-  [inlet_T] ## Energy Inlet needed
-    type = WCNSFVEnergyFluxBC
-    variable = temp_fluid
-    mdot_pp = 'inlet_mdot'
-    area_pp = 'inlet_area'
-    temperature_pp = 'inlet_temp_fluid'
-    boundary = 'bed_horizontal_bottom'
-  []
-
-  [free-slip-wall-x]
-    type = INSFVNaturalFreeSlipBC
-    boundary = 'bed_left barrel_wall'
-    variable = vel_x
-    momentum_component = x
-  []
-  [free-slip-wall-y]
-    type = INSFVNaturalFreeSlipBC
-    boundary = 'bed_left barrel_wall'
-    variable = vel_y
-    momentum_component = y
-  []
-
   [outer]
     type = FVDirichletBC
-    variable = temp_solid
+    variable = T_solid
     boundary = 'brick_surface'
     value = ${fparse 35 + 273.15}
-  []
-
-  [outlet_p]
-    type = INSFVOutletPressureBC
-    variable = pressure
-    postprocessor = 'outlet_pressure'
-    boundary = 'bed_horizontal_top OR_horizontal_top plenum_top'
   []
 []
 
@@ -535,21 +411,14 @@ outlet_pressure_val = 2e5
   # FLUID
   [alpha_boussinesq]
     type = ADGenericFunctorMaterial
-    prop_names = 'alpha_b'
-    prop_values = '${alpha_b}'
+    prop_names = 'alpha_b rho'
+    prop_values = '${alpha_b} ${rho_fluid}'
     block = ${blocks_fluid}
-  []
-  [ins_fv]
-    type = INSFVPrimitiveSuperficialVarMaterial
-    T_fluid = 'temp_fluid'
-    block = ${blocks_fluid}
-    p_constant = 1e5
-    T_constant = 900
   []
   [fluidprops]
-    type = PronghornFluidFunctorProps
+    type = GeneralFunctorFluidProps
     block = ${blocks_fluid}
-    mu_multiplier = mu_func
+    mu_rampdown = mu_func
   []
 
   # closures in the pebble bed
@@ -572,7 +441,7 @@ outlet_pressure_val = 2e5
     Poisson_ratio = 0.136
     wall_distance = wall_dist
     block = ${blocks_pebbles}
-    T_solid = temp_solid
+    T_solid = T_solid
     acceleration = '0 -9.81 0'
   []
 
@@ -614,7 +483,8 @@ outlet_pressure_val = 2e5
     subdomain_to_prop_value = '3 ${bed_porosity}
                                4 ${bed_porosity}
                                5 ${plenum_porosity}
-                               6 ${OR_porosity}'
+                               6 ${OR_porosity}
+                               7 ${OR_porosity}' # !!!
   []
 []
 
@@ -719,26 +589,14 @@ outlet_pressure_val = 2e5
   # Problem time parameters
   dtmin = 0.1
   dtmax = 2e4
-  start_time = -40
-  end_time = 20
-  # end_time = 1e6
+  end_time = 1e6
 
-  # Coupling iterations
-  fixed_point_algorithm = steffensen
-  fixed_point_max_its = 30
-  fixed_point_abs_tol = 1e-5
-  accept_on_max_fixed_point_iteration = true
-  transformed_variables = 'vel_x vel_y pressure temp_fluid temp_solid'
-
-  num_steps = 400
-  dt = 0.2
-  # See MOOSE #20701
-  # [TimeStepper]
-  #   type = IterationAdaptiveDT
-  #   dt                 = 0.15
-  #   cutback_factor     = 0.5
-  #   growth_factor      = 2.0
-  # []
+  [TimeStepper]
+    type = IterationAdaptiveDT
+    dt                 = 0.15
+    cutback_factor     = 0.5
+    growth_factor      = 2.0
+  []
 
   # Steady state detection.
   steady_state_detection = true
@@ -756,6 +614,7 @@ outlet_pressure_val = 2e5
     input_files = 'ss3_coarse_pebble_mesh.i'
     cli_args = 'Outputs/console=false'
   []
+
   [primary_loop]
     type = TransientMultiApp
     app_type = 'SamApp'
@@ -768,6 +627,7 @@ outlet_pressure_val = 2e5
 []
 
 [Transfers]
+  # Pebble simulations
   [fuel_matrix_heat_source]
     type = MultiAppProjectionTransfer
     to_multi_app = coarse_mesh
@@ -777,17 +637,17 @@ outlet_pressure_val = 2e5
   [pebble_surface_temp]
     type = MultiAppProjectionTransfer
     to_multi_app = coarse_mesh
-    source_variable = temp_solid
+    source_variable = T_solid
     variable = temp_solid
   []
 
+  # Primary and secondary loops
   [send_flow_BCs]
     type = MultiAppPostprocessorVectorTransfer
     to_multi_app = primary_loop
     from_postprocessors = 'pressure_in mass_flow_out T_flow_out T_flow_in'
     to_postprocessors = 'Core_inlet_pressure Core_outlet_mdot Core_outlet_T Core_inlet_T_reversal'
   []
-
   [receive_flow_BCs]
     type = MultiAppPostprocessorVectorTransfer
     from_multi_app = primary_loop
@@ -804,6 +664,14 @@ outlet_pressure_val = 2e5
   [inlet_mdot]
     type = Receiver
     default = ${mfr}
+    execute_on = 'INITIAL TIMESTEP_END TRANSFER'
+  []
+  [inlet_vel_y_pp]
+    type = ParsedPostprocessor
+    function = 'inlet_mdot / model_inlet_area / rho_fluid'
+    pp_names = 'inlet_mdot'
+    constant_names = 'model_inlet_area rho_fluid'
+    constant_expressions = '${model_inlet_area} ${rho_fluid}'
     execute_on = 'INITIAL TIMESTEP_END TRANSFER'
   []
   [inlet_temp_fluid]
@@ -833,25 +701,25 @@ outlet_pressure_val = 2e5
   [T_flow_in]
     type = SideAverageValue
     boundary = 'bed_horizontal_bottom'
-    variable = temp_fluid
+    variable = T_fluid
     execute_on = 'INITIAL TIMESTEP_END TRANSFER'
   []
   [T_flow_out]
     type = SideAverageValue
     boundary = 'bed_horizontal_top plenum_top OR_horizontal_top'
-    variable = temp_fluid
+    variable = T_fluid
     execute_on = 'INITIAL TIMESTEP_END TRANSFER'
   []
 
   # Solution Analysis
   [max_Tf]
     type = ElementExtremeValue
-    variable = temp_fluid
+    variable = T_fluid
     block = ${blocks_fluid}
   []
   [max_vy]
     type = ElementExtremeValue
-    variable = vel_y
+    variable = superficial_vel_y
     block = ${blocks_fluid}
   []
   [power]
@@ -864,11 +732,11 @@ outlet_pressure_val = 2e5
     type = SideAverageValue
     boundary = 'bed_horizontal_top plenum_top OR_horizontal_top'
     variable = pressure
-    execute_on = 'INITIAL TIMESTEP_END TRANSFER'
+    execute_on = 'INITIAL TIMESTEP_END'
   []
   [pressure_drop]
     type = DifferencePostprocessor
-    value1 = outlet_pressure
+    value1 = pressure_out
     value2 = pressure_in
   []
 
@@ -877,24 +745,18 @@ outlet_pressure_val = 2e5
   # [outer_heat_loss]
   #   type = ADSideDiffusiveFluxIntegral
   #   boundary = 'brick_surface'
-  #   variable = temp_solid
+  #   variable = T_solid
   #   diffusivity = 'k_s'
   #   execute_on = 'INITIAL TIMESTEP_END'
   # []
-  [ave_cp]
-    type = Receiver
-    default = 2385
-    # TODO: replace by a SideAverageFunctor
-  []
   [flow_in_m]
-    type = ParsedPostprocessor
-    pp_names = 'inlet_mdot inlet_temp_fluid ave_cp'
-    # approximate cp for now
-    function = '- inlet_mdot * inlet_temp_fluid * ave_cp'
+    type = VolumetricFlowRate
+    boundary = 'bed_horizontal_bottom OR_horizontal_bottom'
+    advected_quantity = 'rho_cp_temp'
   []
   # [diffusion_in]
   #   type = ADSideVectorDiffusivityFluxIntegral
-  #   variable = temp_fluid
+  #   variable = T_fluid
   #   boundary = 'bed_horizontal_bottom OR_horizontal_bottom'
   #   diffusivity = 'kappa'
   # []
@@ -914,13 +776,13 @@ outlet_pressure_val = 2e5
   [mass_flow_OR]
     type = VolumetricFlowRate
     boundary = 'OR_horizontal_top'
-    advected_quantity = ${rho_fluid}
+    advected_quantity = 'rho'
     execute_on = 'INITIAL TIMESTEP_END'
   []
   [mass_flow_plenum]
     type = VolumetricFlowRate
     boundary = 'plenum_top'
-    advected_quantity = ${rho_fluid}
+    advected_quantity = 'rho'
     execute_on = 'INITIAL TIMESTEP_END'
   []
   [bypass_fraction]
@@ -938,19 +800,18 @@ outlet_pressure_val = 2e5
   [h]
     type = AverageElementSize
     outputs = 'console csv'
-    execute_on = 'INITIAL'
+    execute_on = 'timestep_end'
   []
   [mu_factor]
     type = FunctionValuePostprocessor
     function = 'mu_func'
   []
-  [inlet_area]
-    type = AreaPostprocessor
-    boundary = 'bed_horizontal_bottom'
-    execute_on = 'INITIAL'
-  []
-  [coupling_its]
+  [coupling_its_primary]
     type = NumFixedPointIterations
+  []
+  [num_fixed_point]
+    type = Receiver
+    default = 0
   []
 []
 
@@ -959,9 +820,9 @@ outlet_pressure_val = 2e5
   [console]
     type = Console
     hide = 'pressure_in pressure_out mass_flow_OR mass_flow_plenum '
-           'max_vy flow_in_m flow_out h inlet_area '
+           'max_vy flow_in_m flow_out h  '
            'mu_factor plenum_fraction inlet_mdot inlet_temp_fluid '
-           'coupling_its core_balance'
+           'coupling_its_primary core_balance'
   []
   [exodus]
     type = Exodus
