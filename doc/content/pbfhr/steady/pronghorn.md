@@ -5,13 +5,7 @@ core. In the same input file, we model the heat transfer in the solid phase in t
 in the solid components around the core, for a total of five equations: conservation of mass, x- and y-momentum (in RZ),
 fluid and solid energy.
 
-We could have used another [MultiApp](https://mooseframework.inl.gov/syntax/MultiApps/index.html) setup to compute the solid temperature, with the
-justification that it evolves on a longer timescale so it takes longer to reach steady state. However, the cost of
-the more expensive full-core solves and of the additional fluid flow solves, while the solid temperature is converging,
-is sufficiently offset by not needing to iterate the coupling between two applications. The workflow is also generally
-simplified.
-
-We are using newly implemented finite volume capabilities in MOOSE to model all these physics. We use an
+We are using the finite volume capabilities in MOOSE to model all these physics. We use an
 incompressible approximation for the fluid flow, with a Boussinesq approximation to model buoyancy. There are
 various closures used in the pebble bed for the heat transfer coefficients, the drag models, which are
 detailed in the [Pronghorn manual](https://inldigitallibrary.inl.gov/sites/sti/sti/Sort_24425.pdf).
@@ -21,7 +15,7 @@ We first define in the input file header physical quantities such as the pebble 
 !listing /pbfhr/steady/ss1_combined.i start=blocks_fluid =  end=power_density =
 
 We also define a few global parameters that will be added to every block that may use them. This is
-done to reduce the length of the input file and improve its readability. Once the [Actions](https://mooseframework.inl.gov/source/actions/Action.html) syntax is implemented, this will be automatically streamlined for the user.
+done to reduce the length of the input file and improve its readability.
 
 !listing /pbfhr/steady/ss1_combined.i block=GlobalParams
 
@@ -42,17 +36,23 @@ is specific to the shape of this core. This is defined in the [UserObjects](http
 
 ## Variables
 
-We define the fluid variables, the two velocity components, pressure and temperature over
-the active region and the pebble reflector, the two fluid flow regions. The model may evolve in the future to model flow in the inner and outer reflectors. We use INSFV-
-and PINSFV-specific (stands Porous flow Incompressible Navier Stokes Finite Volume) variables
-for the fluid, such as [INSFVPressureVariable](https://mooseframework.inl.gov/source/variables/INSFVPressureVariable.html). These variables
-types are `CONSTANT` `MONOMIAL`, which means that they are constant over elements. This is the regular discretization for finite volume variables. The solid temperature
-is defined in the entire domain, as the solid phase temperature in the pebble bed, and as the regular solid temperature in the rest of the core.
+The fluid variables are defined automatically by the `NavierStokesFV` action: the two velocity components, pressure and fluid temperature. They are defined over
+the active region and the pebble reflector, the two fluid flow regions. The model may evolve in the future to model flow in the inner and outer reflectors.
+
+The solid temperature
+is defined in the entire domain, as the solid phase temperature in the pebble bed, and as the regular solid temperature in the rest of the core. It is defined as shown in the block below. The `NavierStokesFV` syntax may in the future
+include the definition of the solid variables as porous flow simulation capabilities increase.
 
 !listing /pbfhr/steady/ss1_combined.i block=Variables
 
 The fluid system includes conservation equations for fluid mass, momentum, and
 energy. The conservation of energy for the solid / solid phase is solved simultaneously.
+
+!alert note
+We could have used another [MultiApp](https://mooseframework.inl.gov/syntax/MultiApps/index.html) setup to compute the solid temperature, with the justification that it evolves on a longer timescale so it takes longer to reach steady state. However, the cost of the more expensive full-core solves and of the additional fluid flow solves, while the solid temperature is converging, is sufficiently offset by not needing to iterate the coupling between two applications. The workflow is also generally simplified.
+
+!alert note
+Legacy kernel syntax for the mass/momentum/energy equation, that does not use the `NavierStokesFV` action is show [here](pronghorn_legacy.md).
 
 ## Conservation of fluid mass
 
@@ -76,18 +76,19 @@ approximation.)  The simplified conservation of mass is then given by,
   \nabla \cdot \vec{u}_D = 0
 \end{equation}
 
-This conservation is expressed by the `FVKernels/mass` kernel:
+This conservation is added by the `NavierStokesFV` action by simply specifying the compressibility
+of the fluid and the porous media treatment:
 
-!listing /pbfhr/steady/ss1_combined.i block=FVKernels/mass
-
-(Note that this kernel uses `variable = pressure` even though pressure does not
-appear in the mass conservation equation. This is an artifact of the way systems
-of equations are described in MOOSE. Since the number of equations must
-correspond to the number of non-linear variables, we are essentially using the
-variables to "name" each equation. The momentum equations will be named by the
-corresponding velocity variable. That just leaves the pressure variable for
-naming the mass equation, even though pressure does not appear in the mass
-equation.)
+```
+[Modules]
+  [NavierStokesFV]
+    # General parameters
+    compressibility = 'incompressible'
+    porous_medium_treatment = true
+    ...
+  []
+[]
+```
 
 ## Conservation of fluid momentum
 
@@ -131,25 +132,30 @@ gives the form that is implemented for the FHR model,
   \label{eq:x_mom}
 \end{equation}
 
-The first term in [eq:x_mom]---the momentum time derivative---is input with the time derivative kernel:
+This equation is added automatically by specifying the compressibility and the porous media option to
+the `NavierStokesFV` action. The flow equations are restricted to the fluid domain using the `block`
+parameter, and the fluid energy equation is added similarly.
 
-!listing /pbfhr/steady/ss1_combined.i block=FVKernels/vel_x_time
+```
+[Modules]
+  [NavierStokesFV]
+    # General parameters
+    compressibility = 'incompressible'
+    porous_medium_treatment = true
+    block = ${blocks_fluid}
+    ...
+```
 
-The second term---the advection of momentum---is handled by a [PINSFVMomentumAdvection](https://mooseframework.inl.gov/source/fvkernels/PINSFVMomentumAdvection.html) kernel
+The friction terms in the porous media treatment are specified in the action as below:
 
-!listing /pbfhr/steady/ss1_combined.i block=FVKernels/vel_x_advection
-
-The third term---the pressure gradient---is handled by a [PINSFVMomentumPressure](https://mooseframework.inl.gov/source/fvkernels/PINSFVMomentumPressure.html) kernel,
-
-!listing /pbfhr/steady/ss1_combined.i block=FVKernels/u_pressure
-
-The third term---the effective diffusion---with a [PINSFVMomentumDiffusion](https://mooseframework.inl.gov/source/fvkernels/PINSFVMomentumDiffusion.html) kernel,
-
-!listing /pbfhr/steady/ss1_combined.i block=FVKernels/vel_x_viscosity
-
-And the fourth term--the friction term---with a [PNSFVMomentumFriction](https://mooseframework.inl.gov/source/fvkernels/PINSFVMomentumFriction.html) kernel,
-
-!listing /pbfhr/steady/ss1_combined.i block=FVKernels/u_friction
+```
+[Modules]
+  [NavierStokesFV]
+    ...
+    # Friction in porous media
+    friction_types = 'darcy forchheimer'
+    friction_coeffs = 'Darcy_coefficient Forchheimer_coefficient'
+```
 
 The conservation of momentum in the $y$-direction is analogous, but it also
 includes the Boussinesq approximation in order to capture the effect of
@@ -162,9 +168,14 @@ the fluid density is uniform and constant,
 
 For each kernel describing the $x$-momentum equation, there is a corresponding
 kernel for the $y$-momentum equation. The additional Boussinesq and gravity kernels for this
-equation are,
+equation are added by specifying:
 
-!listing /pbfhr/steady/ss1_combined.i block=FVKernels/buoyancy_boussinesq FVKernels/gravity
+```
+[Modules]
+  [NavierStokesFV]
+    ...
+    boussinesq_approximation = true
+```
 
 ## Conservation of fluid energy
 
@@ -195,22 +206,21 @@ The interphase heat transfer coefficient represents convective heat transfer bet
 We use the Wakao correlation [!citep](wakao1979), detailed in the [Pronghorn manual](https://inldigitallibrary.inl.gov/sites/sti/sti/Sort_24425.pdf) and commonly used in pebble-bed
 reactor analysis.
 
-The first term of [eq:energy]---the energy time derivative---is captured by the kernel,
+The fluid energy equation is added automatically through the `add_energy_equation` parameter, and
+the volumetric heat convection with the solid phase is specified as below:
 
-!listing /pbfhr/steady/ss1_combined.i block=FVKernels/temp_fluid_time
+```
+[NavierStokesFV]
+  ...
+  add_energy_equation = true
+  ...
 
-The second term of [eq:energy]---energy advection---is expressed by,
+  # Porous flow parameters
+  ambient_convection_blocks = ${blocks_pebbles}
+  ambient_convection_alpha = 'alpha alpha'
+  ambient_temperature = 'T_solid T_solid'
 
-!listing /pbfhr/steady/ss1_combined.i block=FVKernels/temp_fluid_advection
-
-The third term---the effective diffusion of heat---corresponds to the kernel,
-
-!listing /pbfhr/steady/ss1_combined.i block=FVKernels/temp_fluid_conduction
-
-The final term---the fluid-solid heat convection---is added by the kernel,
-
-!listing /pbfhr/steady/ss1_combined.i block=FVKernels/temp_solid_to_fluid
-
+```
 
 ## Conservation of solid energy
 
@@ -263,7 +273,19 @@ in the solid phase.
 There are numerous options to initialize a [Variable](https://mooseframework.inl.gov/syntax/Variables/) or an [AuxVariable](https://mooseframework.inl.gov/syntax/AuxVariables/) in MOOSE. The `initial_condition` can
 be set directly in the relevant [Variables](https://mooseframework.inl.gov/syntax/Variables/) block. It can also be set using an initial condition, [ICs](https://mooseframework.inl.gov/syntax/ICs/index.html), block.
 The velocity variables have to be initialized to a non-zero value, to avoid numerical
-issues with advection at 0 velocity. We initialize in this block the power distribution, which will be overriden
+issues with advection at 0 velocity. Initializations are specified in the `NavierStokesFV` action:
+
+```
+[Modules]
+  [NavierStokesFV]
+    # Initial conditions
+    initial_velocity = '1e-6 ${inlet_vel_y} 0'
+    initial_pressure = 2e5
+    initial_temperature = 800.0
+```
+
+
+We initialize in the `[ICs]` block the power distribution, which will be overriden
 by the power distribution provided by Griffin, and the solid temperature. The solid temperature can take a long
 time to relax to its steady state value, so a closer reasonable flat guess can save computation time.
 
@@ -280,28 +302,53 @@ ramp down is performed using a piecewise linear function and a functionalized ma
 
 ## Boundary conditions
 
-Pronghorn finite-volume currently does not have an [Actions](https://mooseframework.inl.gov/source/actions/Action.html) system so the boundary conditions have to be explicitly
-defined for each equation, rather than simply indicate which boundary is a wall, inflow or outflow boundary.
-
 We first define the inlet of the core. We specify the velocity of the fluid at the inlet and its temperature. In
 this simplified model of the Mk1-FHR, there is no flow coming from the inner reflector. The velocity and
 temperature are currently set to a constant value, but will be coupled in the future to a SAM simulation of the
 primary loop.
 
-!listing /pbfhr/steady/ss1_combined.i block=FVBCs/inlet_vel_y FVBCs/inlet_temp_fluid
+```
+[Modules]
+  [NavierStokesFV]
+    # Inlet boundary conditions
+    inlet_boundaries = 'bed_horizontal_bottom OR_horizontal_bottom'
+    momentum_inlet_types = 'fixed-velocity fixed-velocity'
+    momentum_inlet_function = '0 ${inlet_vel_y} 0 0'
+    energy_inlet_types = 'fixed-temperature heatflux'
+    energy_inlet_function = '${inlet_T_fluid} 0'
+    # so the flux BCs have to be used consistently across all equations
+```
 
 Since the model does not include flow in the inner and outer reflector, we define wall boundary conditions on these
 surfaces. We chose free-slip boundary conditions as the friction on the fluid is heavily dominated by the friction
-with the pebbles, so wall friction may be neglected.
+with the pebbles, so wall friction may be neglected. The heat transfer at the pebble bed wall is assumed to
+take place in the solid phase only, so it is set to 0 heat flux.
 
-!listing /pbfhr/steady/ss1_combined.i block=FVBCs/free-slip-wall-x FVBCs/free-slip-wall-x
+```
+[Modules]
+  [NavierStokesFV]
+    ...
+    # Wall boundary conditions
+    wall_boundaries = 'bed_left barrel_wall'
+    momentum_wall_types = 'slip slip'
+    energy_wall_types = 'heatflux heatflux'
+    energy_wall_function = '0 0'
+```
 
 The outflow boundary condition is a pressure boundary condition. Since this model does not include flow in the
 outer reflector, all the flow goes through the defueling chute. The velocity is very high in this region, causing a
 large pressure drop. This is a known result of the simplified model. This boundary condition is a fully developed
 flow boundary condition. It may only be used sufficiently far from modifications of the flow path.
 
-!listing /pbfhr/steady/ss1_combined.i block=FVBCs/outlet_p
+```
+[Modules]
+  [NavierStokesFV]
+    ...
+    # Outlet boundary conditions
+    outlet_boundaries = 'bed_horizontal_top plenum_top OR_horizontal_top'
+    momentum_outlet_types = 'fixed-pressure fixed-pressure fixed-pressure'
+    pressure_function = '2e5 2e5 2e5'
+```
 
 Finally, we define the boundary conditions for the solid temperature. They are implicitly defined to be zero flux
 boundary conditions on the center, top and bottom surfaces. For the center, this represents the axi-symmetry of
@@ -318,8 +365,6 @@ There are four main types of [materials](https://mooseframework.inl.gov/moose/sy
 - solid material properties
 
 - closure relations ($\kappa_f$, $\kappa_f$, $\alpha$)
-
-- variable materials (`VarMats`)
 
 - fluid properties
 
@@ -353,16 +398,6 @@ Finally, these materials, defined as user objects, are placed in each subdomain 
 The closure relations used for friction and effective thermal diffusivities are documented in the [Pronghorn manual](https://inldigitallibrary.inl.gov/sites/sti/sti/Sort_24425.pdf).
 
 !listing /pbfhr/steady/ss1_combined.i block=Materials/alpha Materials/drag Materials/kappa Materials/kappa_s
-
-### Variable materials
-
-Variable materials or `VarMats` are simply constructs that hold a copy of the variables as
-material properties. This makes it easier to formulate kernels in terms of quantities based on the
-primary variables. For example, the fluid energy equation is specified in terms of $\rho c_{pf} T_f$
-instead of $T_f$. Similarly the momentum advection kernels are specified in terms of $\rho u$,
-the momentum, instead of $u$, the velocity variable.
-
-!listing /pbfhr/steady/ss1_combined.i block=Materials/ins_fv
 
 ### Fluid properties
 
