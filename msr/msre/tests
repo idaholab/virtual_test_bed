@@ -1,18 +1,10 @@
 [Tests]
-  [msre_sam]
+  [msre]
     type = 'CSVDiff'
     input = 'msre_loop_1d.i'
     csvdiff = 'msre_loop_1d_csv.csv'
-    cli_args = 'Executioner/num_steps=10'
+    cli_args = '--app SamApp Executioner/num_steps=10'
     allow_warnings = true
-    executable_pattern = 'sam*'
-  []
-  [msre_bc]
-    type = 'CSVDiff'
-    input = 'msre_loop_1d.i'
-    csvdiff = 'msre_loop_1d_bc_csv.csv'
-    cli_args = '--app SamApp Executioner/num_steps=10 Outputs/file_base=msre_loop_1d_bc_csv'
-    allow_warnings = true
-    executable_pattern = 'blue_crab*'
+    executable_pattern = 'sam* | blue_crab*'
   []
 []

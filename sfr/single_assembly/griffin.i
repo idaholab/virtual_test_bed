@@ -52,7 +52,6 @@
   ReflectingBoundary = '1 2 3'
   [CFEM-Diffusion]
     scheme = CFEM-Diffusion
-    fission_source_as_material = true
     n_delay_groups = 6
     family = LAGRANGE
     order = FIRST
