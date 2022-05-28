@@ -1,7 +1,7 @@
 [Tests]
   [syntax_openmc]
     type = RunApp
-    input = 'openmc.i'
+    input = 'common_input.i openmc.i'
     check_input = true
     executable_pattern = 'cardinal*'
   []
@@ -23,18 +23,21 @@
     input = 'openmc.i'
     cli_args = "MultiApps/active='' Transfers/active='' Executioner/num_steps=2"
     executable_pattern = 'cardinal*'
+    prereq = 'syntax_openmc'
   []
   [run_conduction]
     type = RunApp
     check_input = True
     input = 'solid.i'
     executable_pattern = 'cardinal*'
+    prereq = 'syntax_conduction'
   []
   [run_thm]
     type = RunApp
     input = 'thm.i'
     check_input = true
     executable_pattern = 'cardinal*|thermal_hydraulics*'
+    prereq = 'syntax_thm'
   []
 
   # Check input generation
