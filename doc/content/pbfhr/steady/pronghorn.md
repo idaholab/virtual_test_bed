@@ -52,7 +52,7 @@ energy. The conservation of energy for the solid / solid phase is solved simulta
 We could have used another [MultiApp](https://mooseframework.inl.gov/syntax/MultiApps/index.html) setup to compute the solid temperature, with the justification that it evolves on a longer timescale so it takes longer to reach steady state. However, the cost of the more expensive full-core solves and of the additional fluid flow solves, while the solid temperature is converging, is sufficiently offset by not needing to iterate the coupling between two applications. The workflow is also generally simplified.
 
 !alert note
-Legacy kernel syntax for the mass/momentum/energy equation, that does not use the `NavierStokesFV` action is show [here](pronghorn_legacy.md).
+Legacy kernel syntax for the mass/momentum/energy equations, that does not use the `NavierStokesFV` action, is show [here](pronghorn_legacy.md).
 
 ## Conservation of fluid mass
 
@@ -301,6 +301,9 @@ ramp down is performed using a piecewise linear function and a functionalized ma
 !listing /pbfhr/steady/ss1_combined.i block=Functions/mu_func
 
 ## Boundary conditions
+
+!alert note
+Legacy syntax for the boundary conditions of the mass/momentum/energy equations, that does not use the `NavierStokesFV` action, is shown [here](pronghorn_legacy.md).
 
 We first define the inlet of the core. We specify the velocity of the fluid at the inlet and its temperature. In
 this simplified model of the Mk1-FHR, there is no flow coming from the inner reflector. The velocity and
