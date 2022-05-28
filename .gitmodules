@@ -19,3 +19,6 @@
 [submodule "apps/blue_crab"]
 	path = apps/blue_crab
 	url = git@hpcgitlab.hpc.inl.gov:idaholab/blue_crab
+[submodule "apps/cardinal"]
+	path = apps/cardinal
+	url = https://github.com/neams-th-coe/cardinal
