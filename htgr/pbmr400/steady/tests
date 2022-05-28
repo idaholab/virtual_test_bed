@@ -31,7 +31,6 @@
     csvdiff = 'oecd_pbmr400_ss0_rsnk_eigen_value_ix_dep.csv'
     executable_pattern = 'griffin*|blue_crab*|dire_wolf*|fenix*'
     cli_args = "MultiApps/active='' Transfers/active='' Executioner/nl_abs_tol=1e-4"
-    method = 'opt' # see Griffin #230
     # Temperatures are out of range for cross sections
     allow_warnings = true
   []
