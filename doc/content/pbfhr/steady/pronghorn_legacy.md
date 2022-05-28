@@ -187,4 +187,4 @@ primary variables. For example, the fluid energy equation is specified in terms 
 instead of $T_f$. Similarly the momentum advection kernels are specified in terms of $\rho u$,
 the momentum, instead of $u$, the velocity variable.
 
-!listing /pbfhr/steady/ss1_combined.i block=Materials/ins_fv
+!listing /pbfhr/steady/legacy/ss1_combined.i block=Materials/ins_fv

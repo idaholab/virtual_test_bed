@@ -15,7 +15,7 @@ equation.)
 
 ## Legacy explicit syntax for momentum equation id=legacy_pgh_momentum
 
-The first term in [eq:x_mom]---the advection of momentum---is handled with the
+The first term in the momentum equation---the advection of momentum---is handled with the
 kernel,
 
 !listing msr/msfr/steady/legacy/run_ns.i block=FVKernels/u_advection
@@ -89,7 +89,7 @@ until a steady state is attained.
 
 ## Legacy explicit syntax for the energy equation id=legacy_pgh_energy
 
-[eq:energy] is the final equation that is implemented in this model. The first
+The energy equation is the final equation that is implemented in this model. The first
 term---energy advection---is captured by the kernel,
 
 !listing msr/msfr/steady/legacy/run_ns.i block=FVKernels/heat_advection
