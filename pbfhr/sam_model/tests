@@ -1,36 +1,19 @@
 [Tests]
-  [steady_state_sam]
+  [steady_state]
     type = CSVDiff
     input = pbfhr-ss.i
     csvdiff = 'pbfhr-ss_csv.csv'
-    executable_pattern = 'sam*'
-    cli_args = 'Executioner/num_steps=2'
+    executable_pattern = 'sam*|blue_crab*'
+    cli_args = '--app SamApp Executioner/num_steps=2 Outputs/csv/interval=1'
     allow_warnings = true
   []
-  [transient_sam]
-    type = RunApp
-    input = pbfhr-tr.i
-    check_input = true
-    executable_pattern = 'sam*'
-    prereq = steady_state_sam
-    cli_args = "Problem/active=''"
-    allow_warnings = true
-  []
-  [steady_state_crab]
+  [transient_run]
     type = CSVDiff
-    input = pbfhr-ss.i
-    csvdiff = 'pbfhr-ss_bc.csv'
-    executable_pattern = 'blue_crab*'
-    cli_args = "--app SamApp Outputs/file_base=pbfhr-ss_bc Executioner/num_steps=2 Outputs/hide='pool1:volume_change pool2:volume_change'"
-    allow_warnings = true
-  []
-  [transient_crab]
-    type = RunApp
     input = pbfhr-tr.i
-    check_input = true
-    executable_pattern = 'blue_crab*'
-    prereq = steady_state_crab
-    cli_args = "--app SamApp Problem/active='' Problem/restart_file_base=pbfhr-ss_bc_cp/LATEST"
+    csvdiff = 'pbfhr-tr_csv.csv'
+    executable_pattern = 'sam*|blue_crab*'
+    prereq = steady_state
+    cli_args = "--app SamApp Executioner/num_steps=2 Outputs/csv/interval=1"
     allow_warnings = true
   []
 []
