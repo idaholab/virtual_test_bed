@@ -26,6 +26,8 @@
     cli_args = "MultiApps/active='' Transfers/active='' Executioner/num_steps=2 Executioner/nl_abs_tol=1e-1 Outputs/csv=true --distributed-mesh Outputs/exodus=false"
     min_parallel = 16
     method = 'opt'
+    # Temperatures are out of range
+    allow_warnings = true
   []
   [fluids_sockeye]
     type = CSVDiff
