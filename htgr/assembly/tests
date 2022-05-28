@@ -27,12 +27,13 @@
     executable_pattern = 'cardinal*|thermal_hydraulics*'
   []
 
-  [run_openmc]
+  [run_multiphysics]
     type = RunApp
     input = 'common_input.i openmc.i'
-    cli_args = "MultiApps/active='' Transfers/active='' Executioner/num_steps=2"
+    cli_args = "Executioner/num_steps=2"
     executable_pattern = 'cardinal*'
     prereq = 'syntax_openmc'
+    min_parallel = 8
   []
   [run_conduction]
     type = RunApp

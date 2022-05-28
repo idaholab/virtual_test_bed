@@ -15,5 +15,6 @@
     requirement = "The pbfhr reflector  fluid flow input shall not deprecate syntax from the "
                   "MOOSE main application."
     executable_pattern = 'cardinal*'
+    min_parallel = 16
   []
 []
