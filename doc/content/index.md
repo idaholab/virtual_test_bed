@@ -21,6 +21,7 @@ Users will need to request access to the controlled NEAMS software from the [Nuc
 ## Reactor Models
 
 - [Models sorted by type of simulation](resources/simulation_type.md) \\
+- [Models sorted by input file feature](resources/input_features.md) \\
 - [Molten Salt Reactor (MSR)](msr/index.md) \\
 - [High Temperature Gas-Cooled Reactor (HTGR)](htgr/index.md) \\
 - [Pebble Bed Fluoride-Salt-Cooled High-Temperature Reactor (PB-FHR)](pbfhr/index.md) \\
