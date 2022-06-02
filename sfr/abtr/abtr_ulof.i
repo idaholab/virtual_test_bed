@@ -1201,7 +1201,7 @@
 [] # close Executioner section
 
 [Problem]
-  restart_file_base = Case3-abtr-ss_checkpoint_cp/0339
+  restart_file_base = abtr_ss_checkpoint_cp/0339
 []
 
 [Outputs]
