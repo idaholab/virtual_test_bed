@@ -116,6 +116,17 @@ the following:
            }
 ```
 
+- Advanced Burner Test Reactor SAM model
+
+```
+@techreport{Hu2019,
+            author = {Hu, G., Zhang, G., & Hu, R.},
+            year = 2019,
+            title = {{Reactivity Feedback Modeling in SAM.}},
+            url = {https://doi.org/10.2172/1499041}
+           }
+```
+
 ### High Temperature Gas Cooled Reactor style=font-size:125%
 
 - Modular High Temperature Gas Reactor
@@ -142,6 +153,17 @@ the following:
          journal = {EPJ Web of Conferences},
          pages = {247}
        }
+```
+
+- Assembly Cardinal model
+
+```
+@InProceedings{novak_2021b,
+               title       = {{Coupled Monte Carlo Transport and Thermal-Hydraulics Modeling of a Prismatic Gas Reactor Fuel Assembly Using Cardinal}},
+               author     = {A.J. Novak and D. Andrs and P. Shriwise and D. Shaver and P.K. Romano and E. Merzari and P. Keutelian},
+               booktitle  = {{Proceedings of Physor}},
+               year       = 2022
+              }
 ```
 
 ### Micro Reactor style=font-size:125%
