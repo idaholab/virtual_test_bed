@@ -203,8 +203,8 @@ outlet_pressure_val = 2e5
 
     # Porous flow parameters
     ambient_convection_blocks = ${blocks_pebbles}
-    ambient_convection_alpha = 'alpha alpha'
-    ambient_temperature = 'T_solid T_solid'
+    ambient_convection_alpha = 'alpha'
+    ambient_temperature = 'T_solid'
 
     # Friction in porous media
     friction_types = 'darcy forchheimer'
