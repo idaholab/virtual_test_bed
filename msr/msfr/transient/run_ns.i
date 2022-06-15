@@ -37,12 +37,12 @@ pump_force = -20000. # [N / m^3]
 
 # Delayed neutron precursor parameters. Lambda values are decay constants in
 # [1 / s]. Beta values are production fractions.
-lambda1 = 0.0133104
-lambda2 = 0.0305427
-lambda3 = 0.115179
-lambda4 = 0.301152
-lambda5 = 0.879376
-lambda6 = 2.91303
+lambda1_m = -0.0133104
+lambda2_m = -0.0305427
+lambda3_m = -0.115179
+lambda4_m = -0.301152
+lambda5_m = -0.879376
+lambda6_m = -2.91303
 beta1 = 8.42817e-05
 beta2 = 0.000684616
 beta3 = 0.000479796
@@ -80,6 +80,7 @@ beta6 = 0.000184087
     # General parameters
     compressibility = 'incompressible'
     add_energy_equation = true
+    add_scalar_equation = true
     boussinesq_approximation = true
 
     # Variables, defined below for the Exodus restart
@@ -129,9 +130,11 @@ beta6 = 0.000184087
     # Precursor advection, diffusion and source term
     passive_scalar_names = 'c1 c2 c3 c4 c5 c6'
     passive_scalar_schmidt_number = '${Sc_t} ${Sc_t} ${Sc_t} ${Sc_t} ${Sc_t} ${Sc_t}'
-    passive_scalar_coupled_source = 'fission_source fission_source fission_source
-                                     fission_source fission_source fission_source'
-    passive_scalar_coupled_source_coeff = '${beta1} ${beta2} ${beta3} ${beta4} ${beta5} ${beta6}'
+    passive_scalar_coupled_source = 'fission_source c1; fission_source c2; fission_source c3;
+                                     fission_source c4; fission_source c5; fission_source c6;'
+    passive_scalar_coupled_source_coeff = '${beta1} ${lambda1_m}; ${beta2} ${lambda2_m};
+                                           ${beta3} ${lambda3_m}; ${beta4} ${lambda4_m};
+                                           ${beta5} ${lambda5_m}; ${beta6} ${lambda6_m}'
 
     # Heat exchanger
     friction_blocks = 'hx'
@@ -216,43 +219,6 @@ beta6 = 0.000184087
     block = 'pump'
     momentum_component = 'y'
     rhie_chow_user_object = 'ins_rhie_chow_interpolator'
-  []
-
-  [c1_decay]
-    type = FVReaction
-    variable = c1
-    rate = ${lambda1}
-    block = 'fuel pump hx'
-  []
-  [c2_decay]
-    type = FVReaction
-    variable = c2
-    rate = ${lambda2}
-    block = 'fuel pump hx'
-  []
-  [c3_decay]
-    type = FVReaction
-    variable = c3
-    rate = ${lambda3}
-    block = 'fuel pump hx'
-  []
-  [c4_decay]
-    type = FVReaction
-    variable = c4
-    rate = ${lambda4}
-    block = 'fuel pump hx'
-  []
-  [c5_decay]
-    type = FVReaction
-    variable = c5
-    rate = ${lambda5}
-    block = 'fuel pump hx'
-  []
-  [c6_decay]
-    type = FVReaction
-    variable = c6
-    rate = ${lambda6}
-    block = 'fuel pump hx'
   []
 []
 
