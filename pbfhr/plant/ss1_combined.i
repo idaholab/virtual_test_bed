@@ -598,6 +598,10 @@ outlet_pressure_val = 2e5
     growth_factor      = 2.0
   []
 
+  fixed_point_max_its = 10
+  fixed_point_abs_tol = 1e-5
+  accept_on_max_fixed_point_iteration = true
+
   # Steady state detection.
   steady_state_detection = true
   steady_state_tolerance = 1e-8
@@ -605,7 +609,7 @@ outlet_pressure_val = 2e5
 []
 
 # ==============================================================================
-# MULTIAPPS FOR PEBBLE MODEL
+# MULTIAPPS FOR PEBBLE MODEL AND PRIMARY LOOP
 # ==============================================================================
 [MultiApps]
   [coarse_mesh]
