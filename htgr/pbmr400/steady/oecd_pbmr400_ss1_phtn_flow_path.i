@@ -201,7 +201,7 @@ riser_superficial_rho_v         = ${fparse reactor_total_mfr/riser_free_flow_are
   # Side sets for wall boundaries.
   [core_top]
     type = ParsedGenerateSideset
-    included_subdomain_ids = ' 2 '
+    included_subdomains = ' 2 '
     combinatorial_geometry = '( abs(y - 15.850) < ${geometric_tolerance} &
                               x > ${fparse 1.000 - geometric_tolerance} &
                               x < ${fparse 1.850 + geometric_tolerance} )'
@@ -210,7 +210,7 @@ riser_superficial_rho_v         = ${fparse reactor_total_mfr/riser_free_flow_are
   []
   [core_bottom]
     type = ParsedGenerateSideset
-    included_subdomain_ids = ' 18 '
+    included_subdomains = ' 18 '
     combinatorial_geometry  = '( abs(y - 1.350) < ${geometric_tolerance} &
                               x > ${fparse 1.000 - geometric_tolerance} &
                               x < ${fparse 1.850 + geometric_tolerance} )'
@@ -219,7 +219,7 @@ riser_superficial_rho_v         = ${fparse reactor_total_mfr/riser_free_flow_are
   []
   [core_inner]
     type = ParsedGenerateSideset
-    included_subdomain_ids = ' 1 2 17 18 '
+    included_subdomains = ' 1 2 17 18 '
     combinatorial_geometry = '( abs(x - 1.000) < ${geometric_tolerance} &
                               y > ${fparse 1.350 - geometric_tolerance} &
                               y < ${fparse 15.850 + geometric_tolerance} )'
@@ -228,7 +228,7 @@ riser_superficial_rho_v         = ${fparse reactor_total_mfr/riser_free_flow_are
   []
   [core_outer]
     type = ParsedGenerateSideset
-    included_subdomain_ids = ' 1 2 17 '
+    included_subdomains = ' 1 2 17 '
     combinatorial_geometry = '( abs(x - 1.850) < ${geometric_tolerance} &
                               y > ${fparse 1.850 - geometric_tolerance} &
                               y < ${fparse 14.850 + geometric_tolerance} )|
@@ -240,7 +240,7 @@ riser_superficial_rho_v         = ${fparse reactor_total_mfr/riser_free_flow_are
   []
   # [core_outer]
   #   type = ParsedGenerateSideset
-  #   included_subdomain_ids = ' 1 2 17 '
+  #   included_subdomains = ' 1 2 17 '
   #   combinatorial_geometry = '( abs(x - 1.850) < ${geometric_tolerance} &
   #                             y > ${fparse 1.850 + 0.25} &
   #                             y < ${fparse 14.850 + geometric_tolerance} )|
@@ -252,7 +252,7 @@ riser_superficial_rho_v         = ${fparse reactor_total_mfr/riser_free_flow_are
   # []
   [reactor_inlet_horizontal_walls]
     type = ParsedGenerateSideset
-    included_subdomain_ids = ' 14 16 '
+    included_subdomains = ' 14 16 '
     combinatorial_geometry = '( abs(y - 2.350) < ${geometric_tolerance} &
                               x > ${fparse 2.436 - geometric_tolerance} &
                               x < ${fparse 2.606 + geometric_tolerance} )|
@@ -267,7 +267,7 @@ riser_superficial_rho_v         = ${fparse reactor_total_mfr/riser_free_flow_are
   []
   [reactor_inlet_vertical_walls]
     type = ParsedGenerateSideset
-    included_subdomain_ids = ' 14 15 16 '
+    included_subdomains = ' 14 15 16 '
     combinatorial_geometry = '( abs(x - 2.436) < ${geometric_tolerance} &
                               y > ${fparse 2.350 - geometric_tolerance} &
                               y < ${fparse 14.850 + geometric_tolerance} )|
@@ -279,7 +279,7 @@ riser_superficial_rho_v         = ${fparse reactor_total_mfr/riser_free_flow_are
   []
   # [reactor_inlet_vertical_walls]
   #   type = ParsedGenerateSideset
-  #   included_subdomain_ids = ' 14 15 16 '
+  #   included_subdomains = ' 14 15 16 '
   #   combinatorial_geometry = '( abs(x - 2.436) < ${geometric_tolerance} &
   #                             y > ${fparse 2.350 - geometric_tolerance} &
   #                             y < ${fparse 14.850 + geometric_tolerance} )|

@@ -411,14 +411,14 @@ fis_fract            = ${fparse 1 - dh_fract} # Fission power fraction at t = 0.
   [Tcoolant_fromsub]
     type = MultiAppInterpolationTransfer
     from_multi_app = thermo
-    source_variable = temp_fluid
+    source_variable = T_fluid
     variable = Tsalt
     execute_on = 'timestep_end'
   []
   [Tfuel_fromsub]
     type = MultiAppInterpolationTransfer
     from_multi_app = thermo
-    source_variable = temp_solid
+    source_variable = T_solid
     variable = Tfuel
     execute_on = 'timestep_end'
   []

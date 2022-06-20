@@ -112,14 +112,14 @@ outlet_pressure_val = 2e5
     type = ParsedGenerateSideset
     combinatorial_geometry = 'abs(y) < 1e-10'
     new_sideset_name = 'OR_horizontal_bottom'
-    included_subdomain_ids = '6'
+    included_subdomains = '6'
     input = barrel
   []
   [OR_outlet]
     type = ParsedGenerateSideset
     combinatorial_geometry = 'abs(y - 5.3125) < 1e-10'
     new_sideset_name = 'OR_horizontal_top'
-    included_subdomain_ids = '6'
+    included_subdomains = '6'
     input = OR_inlet
   []
 []
@@ -598,6 +598,10 @@ outlet_pressure_val = 2e5
     growth_factor      = 2.0
   []
 
+  fixed_point_max_its = 10
+  fixed_point_abs_tol = 1e-5
+  accept_on_max_fixed_point_iteration = true
+
   # Steady state detection.
   steady_state_detection = true
   steady_state_tolerance = 1e-8
@@ -605,7 +609,7 @@ outlet_pressure_val = 2e5
 []
 
 # ==============================================================================
-# MULTIAPPS FOR PEBBLE MODEL
+# MULTIAPPS FOR PEBBLE MODEL AND PRIMARY LOOP
 # ==============================================================================
 [MultiApps]
   [coarse_mesh]

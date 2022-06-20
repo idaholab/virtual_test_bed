@@ -6,7 +6,7 @@ The [multiphysics core model](pbfhr/steady/griffin_pgh_model.md), which uses Gri
 coarse mesh porous media CFD, is coupled with the [balance of plant model](pbfhr/pbfhr_sam/pbfhr_sam.md),
 which uses SAM for 1D thermal hydraulics of the primary and secondary loops.
 
-!media media/pbfhr/plant/salt_temp.png
+!media media/pbfhr/plant/coupling_scheme.png
        caption=Coupling scheme for the Mk1-FHR plant model
        style=width:100%
 
@@ -36,7 +36,7 @@ Flux boundary conditions are utilized as they are naturally conservative in a fi
 The fluxes for the mass, momentum and energy equations are all provided, computed by
 the boundary conditions based on the mass flow rates, local density and inlet surface area.
 
-!listing pbfhr/plant/ss1_combined.i block=FVBCs/inlet_vel_y_momentum FVBCs/inlet_T FVBCs/outlet_p
+!listing pbfhr/plant/ss1_combined.i block=Modules/NavierStokesFV start=inlet_boundaries end=pressure_function include-end=True
 
 In the other direction of the coupling, the boundary conditions that will be passed to SAM are collected using
 side integrals and flow rate postprocessors. These are executed at the end of each time step
