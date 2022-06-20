@@ -2,8 +2,8 @@
 # Model description
 # Application : Griffin
 # ------------------------------------------------------------------------------
-# Idaho Falls, INL, June 2nd, 2022
-# Author(s):
+# Idaho Falls, INL, June 20th, 2022
+# Author(s): Nicholas Martin
 # ==============================================================================
 # - VTR GRIFFIN standalone neutronics input
 # - MasterApp
@@ -36,21 +36,6 @@ tpow = 300e6 #(300 MW)
   library_name = 'vtr_xs'
   isotopes = 'pseudo'
   densities = '1.0'
-[]
-
-[TransportSystems]
-  particle = neutron
-  equation_type = eigenvalue
-  G = 6
-  VacuumBoundary = '1 2 3'
-  [./CFEM-Diffusion]
-    scheme = CFEM-Diffusion
-    n_delay_groups = 6
-    family = LAGRANGE
-    order = FIRST
-    assemble_scattering_jacobian = true
-    assemble_fission_jacobian = true
-  [../]
 []
 
 # ==============================================================================
@@ -106,6 +91,9 @@ tpow = 300e6 #(300 MW)
   [../]
 []
 
+[AuxKernels]
+[]
+
 # ==============================================================================
 # INITIAL CONDITIONS AND FUNCTIONS
 # ==============================================================================
@@ -113,6 +101,10 @@ tpow = 300e6 #(300 MW)
 []
 
 [Functions]
+  [./cr_withdrawal]
+    type  = ConstantFunction
+    value = 1.92 # 1.92 = fully out, 0.88 = fully in
+  [../]
 []
 
 # ==============================================================================
@@ -142,13 +134,6 @@ tpow = 300e6 #(300 MW)
   [../]
 []
 
-[Functions]
-  [./cr_withdrawal]
-    type  = ConstantFunction
-    value = 1.92 # 1.92 = fully out, 0.88 = fully in
-  [../]
-[]
-
 [PowerDensity]
   power = ${tpow}
   power_density_variable = power_density
@@ -167,6 +152,21 @@ tpow = 300e6 #(300 MW)
 # ==============================================================================
 # EXECUTION PARAMETERS
 # ==============================================================================
+[TransportSystems]
+  particle = neutron
+  equation_type = eigenvalue
+  G = 6
+  VacuumBoundary = '1 2 3'
+  [./CFEM-Diffusion]
+    scheme = CFEM-Diffusion
+    n_delay_groups = 6
+    family = LAGRANGE
+    order = FIRST
+    assemble_scattering_jacobian = true
+    assemble_fission_jacobian = true
+  [../]
+[]
+
 [Executioner]
   type = Eigenvalue
   solve_type = 'PJFNKMO'
