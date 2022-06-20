@@ -2,7 +2,7 @@
 # Model description
 # Application : Griffin
 # ------------------------------------------------------------------------------
-# Idaho Falls, INL, May 31st, 2022
+# Idaho Falls, INL, June 16th, 2022
 # Author(s):
 # ==============================================================================
 # - VTR GRIFFIN neutronics input
@@ -103,6 +103,10 @@
 []
 
 [Functions]
+  [./cr_withdrawal]
+    type  = ConstantFunction
+    value = 1.9183 # 1.9183 = fully out, 0.876 = fully in
+  [../]
 []
 
 # ==============================================================================
@@ -132,13 +136,6 @@
     densities='1.0 1.0 1.0'
     plus = 0
     displacements = 'disp_x disp_y disp_z'
-  [../]
-[]
-
-[Functions]
-  [./cr_withdrawal]
-    type  = ConstantFunction
-    value = 1.9183 # 1.9183 = fully out, 0.876 = fully in
   [../]
 []
 
@@ -278,6 +275,7 @@
     positions = '0 0 0'
     input_files = core_support_plate_3d.i
     execute_on = 'INITIAL' # no need for other calls - since tinlet is fixed only one update of the XS required
+    max_procs_per_app = 1
     output_in_position = true
     #no_backup_and_restore = true
   [../]
@@ -407,7 +405,8 @@
   # Radial expansion = horizontal displacements disp_x, disp_z from core_support_plate
   #------------------
   [./disp_x_from_core_support_plate]
-    type = MultiAppNearestNodeTransfer
+    #type = MultiAppNearestNodeTransfer
+    type = MultiAppInterpolationTransfer
     from_multi_app = core_support_plate
     source_boundary = 'plateTop'
     source_variable = disp_x
@@ -415,7 +414,8 @@
     fixed_meshes = true
   [../]
   [./disp_z_from_core_support_plate]
-    type = MultiAppNearestNodeTransfer
+    #type = MultiAppNearestNodeTransfer
+    type = MultiAppInterpolationTransfer
     from_multi_app = core_support_plate
     source_boundary = 'plateTop'
     source_variable = disp_z
@@ -526,4 +526,5 @@
   exodus = true
   csv = true
   perf_graph = true
+  verbose = false
 []

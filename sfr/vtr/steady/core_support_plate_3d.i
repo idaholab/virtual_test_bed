@@ -133,6 +133,8 @@ Tref   = 293.15 # reference temperature for the linear thermal expansion for SS3
 
 [Executioner]
   type = Steady
+  automatic_scaling = true
+  nl_forced_its = 3
   #use default convergence criterion
 []
 
