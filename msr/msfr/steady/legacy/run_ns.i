@@ -101,8 +101,8 @@ beta6 = 0.000184087
   [hx_top]
     type = ParsedGenerateSideset
     combinatorial_geometry = 'y > 0'
-    included_subdomain_ids = '3'
-    included_neighbor_ids = '1'
+    included_subdomains = '3'
+    included_neighbors = '1'
     fixed_normal = true
     normal = '0 1 0'
     new_sideset_name = 'hx_top'
@@ -111,8 +111,8 @@ beta6 = 0.000184087
   [hx_bot]
     type = ParsedGenerateSideset
     combinatorial_geometry = 'y <-0.6'
-    included_subdomain_ids = '3'
-    included_neighbor_ids = '1'
+    included_subdomains = '3'
+    included_neighbors = '1'
     fixed_normal = true
     normal = '0 -1 0'
     new_sideset_name = 'hx_bot'

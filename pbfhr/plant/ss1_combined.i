@@ -112,14 +112,14 @@ outlet_pressure_val = 2e5
     type = ParsedGenerateSideset
     combinatorial_geometry = 'abs(y) < 1e-10'
     new_sideset_name = 'OR_horizontal_bottom'
-    included_subdomain_ids = '6'
+    included_subdomains = '6'
     input = barrel
   []
   [OR_outlet]
     type = ParsedGenerateSideset
     combinatorial_geometry = 'abs(y - 5.3125) < 1e-10'
     new_sideset_name = 'OR_horizontal_top'
-    included_subdomain_ids = '6'
+    included_subdomains = '6'
     input = OR_inlet
   []
 []
