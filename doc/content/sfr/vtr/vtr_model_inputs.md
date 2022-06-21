@@ -2,8 +2,8 @@
 
 There are two VTR models stored on the virtual test bed; a standalone
 neutronics model and multi-physics model.
-There are additional sub-app input files that are used by the multi-physics model
-that can be ran standalone with slight modification.
+There are additional sub-app input files that are called by the multi-physics model
+that can also be ran standalone with slight modification.
 In the preceding sections, we will walk through the input files for the
 Griffin standalone model and multi-physics model.
 
@@ -333,3 +333,474 @@ The performance graph in serial is displayed below.
 |     EigenProblem::outputStep                                         |     1 |      0.001 |      0.001 |   0.00 |       0 |      0.001 |      0.001 |   0.00 |       0 |
 |     EigenProblem::solve                                              |     1 |     15.113 |     15.113 |  12.68 |     326 |     59.415 |     59.415 |  49.84 |     515 |
 |       EigenProblem::computeUserObjects                               |     2 |      9.934 |      4.967 |   8.33 |       0 |      9.934 |      4.967 |   8.33 |       0 |
+
+## Multi-physics Model
+
+The complete input file for the multi-physics model is shown below.
+
+!listing sfr/vtr/steady/griffin_multiphysics.i 
+
+The neutronics input is similar to the standalone model that is described
+in the previous section.
+Still, we will highlight input additions that allow for multi-physics
+coupling (multi-apps and transfers).
+We'll also go into detail on the sub-app input files (BISON, SAM, Tensor Mechanics).
+
+### MultiApps id=griffin_multiapps
+
+In addition to the main-app neutronics input deck, there are now
+BISON inputs, SAM inputs, and a MOOSE Tensor Mechanics input.
+These sub-apps are defined in the `[MultiApps]` block.
+Note that only the sub-apps that are directly coupled to Griffin are defined here.
+In other words, the SAM model will be declared as a sub-app in the BISON model.
+
+!listing sfr/vtr/steady/griffin_multiphysics.i 
+         block=MultiApps
+
+First, we start with the BISON sub-apps.
+There are three BISON input files that correspond to the fuel rods in the
+three orifices of the VTR.
+For each of these models, we give the sub-app a name (i.e. bison_1, bison_2, bison_3).
+The [!style color=red](type) and [!style color=red](app_type) is set with
+[!style color=orange](FullSolveMultiApp) and 
+[!style color=orange](BlueCrabApp), respectively.
+The former performs a complete simulation every time the sub-app executes.
+The latter informs the code what type of app to build.
+We want BlueCrab for multi-physics simulations because it is a 
+package of Griffin, BISON, and SAM.
+Next, the [!style color=red](positions_file) points to a file that contains
+spatial coordinates that define a point for the app location.
+The [!style color=red](input_files) simply points to the sub-app input file.
+We'll also set the sub-app to run its simulation at the end of the main-app solve (Griffin)
+with [!style color=red](input_files) = 'TIMESTEP_END'.
+Next, we specify the sub-app to run on one processor with [!style color=red](max_procs_per_app).
+Finally, the [!style color=red](output_in_position) allows the output to be 'moved' by its
+position vector.
+
+The core support plate is modeled with a Tensor Mechanics module native to MOOSE.
+The sub-app is defined in a similar manner as the BISON apps.
+However, we only need to run this sub-app at the beginning of the simulation since
+the inlet temperature is fixed (the resulting radial displacements are also fixed).
+This is done by setting [!style color=red](input_files) = 'INITIAL'.
+
+### Transfers id=griffin_transfers
+
+Variables are transfered internally to each app with MOOSE. 
+We just need to specify which variables are transfered to each app and in which direction.
+
+!listing sfr/vtr/steady/griffin_multiphysics.i 
+         block=Transfers
+
+At a high level, the scheme works as follows. 
+The power density is solved with Griffin and passed to BISON.
+BISON solves for the temperature distribution of the fuel and transfers the
+wall temperature to SAM. 
+SAM calculates the coolant temperature and heat transfer coefficient, 
+which then gets passed back to BISON.
+Following the BISON and SAM iterations, the fuel temperature gets passed back to
+Griffin and the cross sections are updated.
+
+In a seperate iteration between the thermal and mechanical BISON models, the mechanical model 
+solves and returns the thermal expansion of the fuel.
+The thermal expansion of the core support plate is solved in a native MOOSE Tensor Mechanics module
+and the radial displacements are passed back to the Griffin main-app.
+
+The transfers are organized in the following way: transfer type, direction, and
+variable.
+For example, the power density transfer from Griffin to BISON is specified with the
+[!style color=orange](MultiAppProjectionTransfer) type and direction with the 
+[!style color=red](to_multi_app) parameter. The 
+[!style color=red](source_variable) and [!style color=red](variable) is the
+`power_density`.
+
+### How to run the model
+
+The model can be ran by executing the BlueCrab app that consists of 
+Griffin, BISON, and SAM.
+In parallel, with 48 processors, the solve takes approximately 52 seconds.
+
+Run it via:
+
+ `mpirun -n 48 blue_crab-opt -i griffin_multiphysics.i`
+
+The performance graph is displayed below. 
+
+|                                Section                               | Calls |   Self(s)  |   Avg(s)   |    %   | Mem(MB) |  Total(s)  |   Avg(s)   |    %   | Mem(MB) |
+|                                   -                                  |     - |         -  |         -  |      - |       - |         -  |         -  |     -  |      -  |
+| BlueCrabTestApp (main)                                               |     1 |      0.109 |      0.109 |   0.14 |       6 |     77.426 |     77.426 | 100.00 |     674 |
+|   Action::SetupMeshAction::Mesh::SetupMeshAction::act::setup_mesh    |     1 |      0.001 |      0.001 |   0.00 |       0 |      0.001 |      0.001 |   0.00 |       0 |
+|   Action::SetupMeshAction::Mesh::SetupMeshAction::act::set_mesh_base |     2 |      0.071 |      0.035 |   0.09 |       1 |      0.071 |      0.035 |   0.09 |       1 |
+|   MooseApp::executeMeshGenerators                                    |     1 |      0.000 |      0.000 |   0.00 |       0 |      0.000 |      0.000 |   0.00 |       0 |
+|   Eigenvalue::final                                                  |     1 |      0.000 |      0.000 |   0.00 |       0 |      0.001 |      0.001 |   0.00 |       0 |
+|     FEProblem::outputStep                                            |     1 |      0.000 |      0.000 |   0.00 |       0 |      0.000 |      0.000 |   0.00 |       0 |
+|   SAMSimulation::computeUserObjects                                  |     2 |      0.147 |      0.073 |   0.19 |       0 |      0.147 |      0.073 |   0.19 |       0 |
+|   EigenProblem::execMultiApps                                        |     1 |      0.000 |      0.000 |   0.00 |       0 |      6.862 |      6.862 |   8.86 |      10 |
+|   EigenProblem::execMultiAppTransfers                                |     1 |      0.000 |      0.000 |   0.00 |       0 |      0.020 |      0.020 |   0.03 |       0 |
+|   SAMSimulation::computeUserObjects                                  |     2 |      0.142 |      0.071 |   0.18 |       1 |      0.142 |      0.071 |   0.18 |       1 |
+|   FEProblem::outputStep                                              |     2 |      0.001 |      0.000 |   0.00 |       0 |      0.348 |      0.174 |   0.45 |       0 |
+|     Exodus::outputStep                                               |     2 |      0.342 |      0.171 |   0.44 |       0 |      0.342 |      0.171 |   0.44 |       0 |
+|   Steady::PicardSolve                                                |     1 |      0.007 |      0.007 |   0.01 |       0 |     39.046 |     39.046 |  50.43 |       2 |
+|     SAMSimulation::computeUserObjects                                |     3 |      0.268 |      0.089 |   0.35 |       0 |      0.268 |      0.089 |   0.35 |       0 |
+|     EigenProblem::execMultiApps                                      |     3 |      0.001 |      0.000 |   0.00 |       0 |     24.801 |      8.267 |  32.03 |       0 |
+|     FEProblem::outputStep                                            |     3 |      0.001 |      0.000 |   0.00 |       0 |      0.001 |      0.000 |   0.00 |       0 |
+|     EigenProblem::execMultiAppTransfers                              |     6 |      0.004 |      0.001 |   0.01 |       0 |      4.261 |      0.710 |   5.50 |       1 |
+|     SAMSimulation::computeUserObjects                                |    14 |      1.164 |      0.083 |   1.50 |       0 |      1.164 |      0.083 |   1.50 |       0 |
+|     EigenProblem::solve                                              |     3 |      3.206 |      1.069 |   4.14 |       1 |      6.745 |      2.248 |   8.71 |       1 |
+|       SAMSimulation::computeUserObjects                              |     6 |      0.494 |      0.082 |   0.64 |       0 |      0.494 |      0.082 |   0.64 |       0 |
+|       SAMSimulation::computeUserObjects                              |     4 |      0.351 |      0.088 |   0.45 |       0 |      0.351 |      0.088 |   0.45 |       0 |
+
+
+
+## BISON Thermal Model
+
+The input file for the BISON thermal model of a VTR fuel rod is displayed below.
+
+!listing sfr/vtr/steady/bison_thermal_only_1.i 
+
+The top of the input file houses the model parameters.
+For a BISON model, this would include the rod diameter, clad thickness, fuel height, etc.
+
+#### Global Parameters
+
+Global parameters are parameters that are used in more than one block.
+For example, the family of functions and polynomial order are defined for the finite element
+solver.
+
+!listing sfr/vtr/steady/bison_thermal_only_1.i 
+         block=GlobalParams
+
+### Geometry and Mesh
+
+The pellet mesh is setup with the [!style color=orange](SmearedPelletMeshGenerator) type.
+This object generates a smeared pellet mesh for use in simulating fuel rods with pellet fuel.
+In a smeared mesh, the fuel stack is treated as a single rectangle of fuel (i.e., dishes and chamfers are not included).
+There are a number of geometry and meshing options that are shown but will not be discussed.
+The clad is added around the pellet mesh with the [!style color=orange](SubdomainBoundingBoxGenerator) type.
+More information about the mesh generation may be found in the BISON documentation for the
+[SmearedPelletMeshGenerator](https://mooseframework.inl.gov/bison/source/meshgenerators/SmearedPelletMeshGenerator.html#smearedpelletmeshgenerator)
+and the 
+[SubdomainBoundingBoxGenerator](https://mooseframework.inl.gov/bison/source/meshgenerators/SubdomainBoundingBoxGenerator.html#subdomainboundingboxgenerator).
+
+!listing sfr/vtr/steady/bison_thermal_only_1.i 
+         block=Mesh
+
+### Variables and Kernels
+
+A variable is a desired quantity to be solved for in the finite element solution.
+In the BISON thermal model, we want the temperature distribution of the fuel element.
+
+
+!listing sfr/vtr/steady/bison_thermal_only_1.i 
+         block=Variables
+
+Kernels are the inner product terms that make up a weak form of a differential equation.
+The kernels define the differential equation to solve.
+
+!listing sfr/vtr/steady/bison_thermal_only_1.i 
+         block=Kernels
+
+### Modules
+
+Thermal contact is a MOOSE module to control the heat transfer in regions without meshes.
+In this model, we use `[ThermalContact]` to model the gap between the pellet and clad.
+We do this by defining the [!style color=red](GapHeatTransfer) type and coresponding parameters.
+Detailed information about the ThermalContact module may be found in the 
+[documentation](https://mooseframework.inl.gov/source/actions/ThermalContactAction.html).
+
+!listing sfr/vtr/steady/bison_thermal_only_1.i 
+         block=ThermalContact
+
+### AuxVariables and AuxKernels
+
+AuxVariables are variables that are derived from the solution variable (in this case, temperature).
+These can be quantities such as the fuel temperature, wall temperature, coolant temperature, etc.
+We also define the `power_density` which is a variable transfered from the Griffin main-app.
+
+!listing sfr/vtr/steady/bison_thermal_only_1.i 
+         block=AuxVariables
+
+AuxKernels are kernels that act on a variable to derive an AuxVariable.
+Consider the fuel temperature and wall temperature. 
+These AuxKernels are defined with the 
+[!style color=red](CoupledAux) type, meaning that the AuxVariable is coupled
+to the solution variable, Temperature.
+AuxKernels are also defined to obtain (and scale) the power density from Griffin.
+
+!listing sfr/vtr/steady/bison_thermal_only_1.i 
+         block=AuxKernels
+
+### Initial Conditions and Functions
+
+Users may specify custom functions in this block.
+For example, we have defined the linear heat generation rate, heterogenous
+and homogenous power densities.
+These functions would be used in a standlone BISON model if the power density is not
+provided by Griffin.
+
+!listing sfr/vtr/steady/bison_thermal_only_1.i 
+         block=Functions
+
+### Materials and UserObjects
+
+Material characteristics are defined in the `[Materials]` block.
+Characteristics include the thermal properties and density of the fuel and clad.
+
+!listing sfr/vtr/steady/bison_thermal_only_1.i 
+         block=Materials
+
+### Boundary Conditions
+
+The boundary conditions in the model are used to couple with SAM, where
+SAM will provide the coolant temperature and heat transfer coefficient.
+As such, the type is defined as a [!style color=orange](CoupledConvectiveHeatFluxBC) 
+and coupled to the Temperature solution variable.
+
+!listing sfr/vtr/steady/bison_thermal_only_1.i 
+         block=BCs
+
+### Execution Parameters
+
+Preconditioners transform the given problem into a form that is more suitable for the numerical solver,
+thus improving solver performance.
+The single matrix preconditioner (SMP) is defined here that builds a preconditioner using user defined off-diagonal parts of the Jacobian matrix.
+
+!listing sfr/vtr/steady/bison_thermal_only_1.i 
+         block=Preconditioning
+
+The `[Executioner]` block tells the solver what type of problem it is to solve.
+Here, we select [!style color=orange](Steady) as the executioner type to identify that the problem
+is steady state.
+We also specify to solve with a Preconditioned Jacobian Free 
+Newton Krylov method by setting 
+[!style color=red](solve_type) equal to "PJFNK". 
+
+!listing sfr/vtr/steady/bison_thermal_only_1.i 
+         block=Executioner
+
+### MultiApps and Transfers
+
+There are two sub-apps that extend from this BISON sub-app input deck; a SAM thermal fluids model and a BISON mechanics model.
+Both are defined here in the same manner as discussed in [#griffin_multiapps].
+
+!listing sfr/vtr/steady/bison_thermal_only_1.i 
+         block=MultiApps
+
+To accompany the multi-apps, variable transfers must be specified for coupling.
+We want to pass the outer wall temperature calculated in the BISON thermal model to SAM.
+We then want SAM to compute the coolant temperature and heat transfer coefficient to pass back to the BISON thermal model.
+There is also coupling between the thermal BISON model and mechanical model. 
+The temperature distribution from the thermal model is transfered to the mechanical model.
+The mechanical model then solves for the thermal expansion and transfers the x and y displacements back to the thermal model.
+
+!listing sfr/vtr/steady/bison_thermal_only_1.i 
+         block=Transfers
+
+### Post-processors, Debug, and Outputs
+
+Postprocessors are used to derive desired quantities from the solution variable(s).
+Some of the quantities that we may be interested in include the average, maximum, and minimum fuel, clad, and wall temperatures.
+
+!listing sfr/vtr/steady/bison_thermal_only_1.i 
+         block=Postprocessors
+
+The outputs files are surpressed but may be turned on if desired.
+
+!listing sfr/vtr/steady/bison_thermal_only_1.i 
+         block=Outputs
+
+## SAM Model
+
+The input file for the SAM thermal hydraulic model of a VTR assembly is displayed below.
+
+!listing sfr/vtr/steady/sam_channel_1.i 
+
+The top of input file houses the model parameters.
+For a SAM model, this could includ the number of rods, rod diameter, channel dimensions, etc.
+
+#### Global Parameters
+
+Global parameters are parameters that are used in more than one block.
+This model includes the initial pressure, temperature, and velocity variables of the fluid.
+
+!listing sfr/vtr/steady/sam_channel_1.i 
+         block=GlobalParams
+
+### Global Parameters
+
+The equations of state (EOS) block is unique to SAM.
+Because the VTR is sodium cooled, the EOS type is given by
+[!style color=orange](PBSodiumEquationofState).
+
+!listing sfr/vtr/steady/sam_channel_1.i 
+         block=EOS
+
+### Geometry and Mesh
+
+This block defines the computational mesh at which the solution is computed on.
+
+!listing sfr/vtr/steady/sam_channel_1.i 
+         block=Mesh
+
+
+## BISON Mechanical Model
+
+The BISON mechanical model is constructed in the same way as the thermal model, however, the solver focuses on mechanics.
+As such, we'll focus our discussion on input blocks that are different than that of the thermal model and differ the reader
+to the thermal model for more information.
+
+The input file for the BISON mechanical model of a VTR fuel rod is displayed below.
+
+!listing sfr/vtr/steady/bison_mecha_only.i 
+
+### Global Parameters
+
+The displacements `disp_x` and `disp_y` have been added to the global parameters list.
+
+!listing sfr/vtr/steady/bison_mecha_only.i 
+         block=GlobalParams
+
+### Modules
+
+The mechanical model utilizes the solid mechanics that is native to MOOSE.
+The model is setup such that the mechanical behavior is modeled in both the fuel and clad.
+For a detailed explanation of the TensorMechanics model, the authors differ to the 
+[TensorMechanics](https://mooseframework.inl.gov/syntax/Modules/TensorMechanics/Master/)
+section of the MOOSE documentation.
+
+!listing sfr/vtr/steady/bison_mecha_only.i 
+         block=Modules
+
+### Materials and UserObjects
+
+Material characteristics are defined in the `[Materials]` block.
+Characteristics include the elasticity tensor, elastic stress,
+thermal expansion, and density for the fuel and clad.
+
+!listing sfr/vtr/steady/bison_mecha_only.i 
+         block=Materials
+
+### Boundary Conditions
+
+Direchlet boundary conditions are set along the centerline and boundary of the problem
+for each of the solution variables (`disp_x` and `disp_y`).
+
+!listing sfr/vtr/steady/bison_mecha_only.i 
+         block=BCs
+
+### Post-processors, Debug, and Outputs
+
+Postprocessors are used to derive desired quantities from the solution variable(s).
+Some of the quantities that we may be interested in include the maximum displacement in the x and y 
+directions, and the strains.
+
+!listing sfr/vtr/steady/bison_mecha_only.i 
+         block=Postprocessors
+
+## Core Support Plate
+
+The input file for the core support plate tensor mechanics model is displayed below.
+The objective of this simulation is to capture the radial thermal expansion of the support plate
+which then effects the assemblies.
+
+!listing sfr/vtr/steady/core_support_plate_3d.i
+
+The top of input file houses the model parameters.
+Here, we specify the inlet temperature and reference temperature.
+
+#### Global Parameters
+
+The displacements that we wish to solve for (`disp_x`, `disp_y`, and `disp_z`) are specified
+as a global parameter.
+This is a 3D model of the core support plate and all coordinate directions will be solved for, however,
+we are only interested in the radial displacements (x and z).
+
+!listing sfr/vtr/steady/core_support_plate_3d.i
+         block=GlobalParams
+
+### Geometry and Mesh
+
+This block defines the computational mesh at which the solution is to be computed on.
+The mesh is supplied with an Exodus file, titled 'cyl_plate_3d.e' and read in using the
+[!style color=orange](FileMeshGenerator) type. 
+
+Next, the mesh is centered at coordinate position (0,0,0) by defining a nodeset with the
+[!style color=orange](BoundingBoxNodeSetGenerator) type. 
+
+!listing sfr/vtr/steady/core_support_plate_3d.i
+         block=Mesh
+
+### AuxVariables and AuxKernels
+
+There is one AuxVariable that is defind for this model; the core support plate temperature.
+The temperature is set with the inlet temperature.
+
+!listing sfr/vtr/steady/core_support_plate_3d.i
+         block=AuxVariables
+
+There are no AuxKernels.
+
+### Modules
+
+The core support plate model utilizes the solid mechanics module that is native to MOOSE.
+We are interested in the thermal expansion of the core support plate so we set the
+[!style color=red](eigenstrain_names) to `thermal_expansion` and generate a stress and strain
+output in each coordinate direction.
+For a detailed explanation of the TensorMechanics model, the authors differ to the 
+[TensorMechanics](https://mooseframework.inl.gov/syntax/Modules/TensorMechanics/Master/)
+section of the MOOSE documentation.
+
+!listing sfr/vtr/steady/core_support_plate_3d.i
+         block=Modules/TensorMechanics/Master
+
+### Initial Conditions and Functions
+
+User specified functions are defined in this block.
+Here, we constuct a function for the alpha mean of 316 stainless steel.
+The type is set with the 
+[!style color=orange](ParsedFunction) parameter and the value
+equal to a second order polynomial with specified coefficients.
+
+!listing sfr/vtr/steady/core_support_plate_3d.i
+         block=Functions
+
+### Materials and UserObjects
+
+Material characteristics are defined in the `[Materials]` block.
+Characteristics include the mechanical properties of 316 stainless steel such as the
+elasticity tensor, stress, and thermal expansion.
+For a detailed explanation of the material types, the authors differ the reader to 
+the [TensorMechanics](https://mooseframework.inl.gov/syntax/Modules/TensorMechanics/Master/)
+section of the MOOSE documentation.
+
+!listing sfr/vtr/steady/core_support_plate_3d.i
+         block=Materials
+
+### Boundary Conditions
+
+Direchlet boundary conditions are set at the problem boundary
+for each of the solution variables (`disp_x`, `disp_y`, and `disp_z`).
+The radial `x` and `z` directional boundary is at the bottom surface of the
+core support plate center.
+The axial `y` directional boundary is specified at the bottom of the support plate.
+
+!listing sfr/vtr/steady/core_support_plate_3d.i
+         block=BCs
+
+### Execution Parameters
+
+The same preconditioner is used as previous BISON inputs. See X.
+For proper convergence the nonlinear iterations are forced to three in the Executioner.
+Note that without [!style color=red](nl_forced_its) the default criteria would result in two 
+nonlinear iterations and solution convergence would not be satisfied.
+
+!listing sfr/vtr/steady/core_support_plate_3d.i
+         block=Executioner
+
+### Post-processors, Debug, and Outputs
+
+Some of the quantities that we may be interested in include the maximum displacement in the coordinate
+directions as well as the strain.
+
+!listing sfr/vtr/steady/core_support_plate_3d.i
+         block=Postprocessors
+
