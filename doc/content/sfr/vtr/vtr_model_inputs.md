@@ -451,7 +451,7 @@ The performance graph is displayed below.
 
 
 
-## BISON Thermal Model
+## BISON Thermal Model id=bison_thermal
 
 The input file for the BISON thermal model of a VTR fuel rod is displayed below.
 
@@ -495,16 +495,20 @@ In the BISON thermal model, we want the temperature distribution of the fuel ele
 
 Kernels are the inner product terms that make up a weak form of a differential equation.
 The kernels define the differential equation to solve.
+The active kernels that are used in the solve are identified with
+[!style color=red](active).
+For example, a time derivative kernel is defined but not activated as we are interested
+in the steady state solution.
 
 !listing sfr/vtr/steady/bison_thermal_only_1.i 
          block=Kernels
 
 ### Modules
 
-Thermal contact is a MOOSE module to control the heat transfer in regions without meshes.
+`ThermalContact` is a MOOSE module to control the heat transfer in regions without meshes.
 In this model, we use `[ThermalContact]` to model the gap between the pellet and clad.
 We do this by defining the [!style color=red](GapHeatTransfer) type and coresponding parameters.
-Detailed information about the ThermalContact module may be found in the 
+Detailed information about the ThermalContact module may be found in the MOOSE
 [documentation](https://mooseframework.inl.gov/source/actions/ThermalContactAction.html).
 
 !listing sfr/vtr/steady/bison_thermal_only_1.i 
@@ -514,7 +518,7 @@ Detailed information about the ThermalContact module may be found in the
 
 AuxVariables are variables that are derived from the solution variable (in this case, temperature).
 These can be quantities such as the fuel temperature, wall temperature, coolant temperature, etc.
-We also define the `power_density` which is a variable transfered from the Griffin main-app.
+We also define the `power_density`, a variable transfered from the Griffin main-app.
 
 !listing sfr/vtr/steady/bison_thermal_only_1.i 
          block=AuxVariables
@@ -531,7 +535,7 @@ AuxKernels are also defined to obtain (and scale) the power density from Griffin
 
 ### Initial Conditions and Functions
 
-Users may specify custom functions in this block.
+Users may specify custom functions in the `Functions` block.
 For example, we have defined the linear heat generation rate, heterogenous
 and homogenous power densities.
 These functions would be used in a standlone BISON model if the power density is not
@@ -558,7 +562,7 @@ and coupled to the Temperature solution variable.
 !listing sfr/vtr/steady/bison_thermal_only_1.i 
          block=BCs
 
-### Execution Parameters
+### Execution Parameters id=bison_exec
 
 Preconditioners transform the given problem into a form that is more suitable for the numerical solver,
 thus improving solver performance.
@@ -587,9 +591,9 @@ Both are defined here in the same manner as discussed in [#griffin_multiapps].
 
 To accompany the multi-apps, variable transfers must be specified for coupling.
 We want to pass the outer wall temperature calculated in the BISON thermal model to SAM.
-We then want SAM to compute the coolant temperature and heat transfer coefficient to pass back to the BISON thermal model.
+SAM will then compute the coolant temperature and heat transfer coefficient to pass back to the BISON thermal model.
 There is also coupling between the thermal BISON model and mechanical model. 
-The temperature distribution from the thermal model is transfered to the mechanical model.
+A transfer is defined to pass the temperature distribution from the thermal model to the mechanical model.
 The mechanical model then solves for the thermal expansion and transfers the x and y displacements back to the thermal model.
 
 !listing sfr/vtr/steady/bison_thermal_only_1.i 
@@ -644,9 +648,10 @@ This block defines the computational mesh at which the solution is computed on.
 
 ## BISON Mechanical Model
 
-The BISON mechanical model is constructed in the same way as the thermal model, however, the solver focuses on mechanics.
-As such, we'll focus our discussion on input blocks that are different than that of the thermal model and differ the reader
-to the thermal model for more information.
+The BISON mechanical model is constructed in the same way as the thermal model, however, the solver focuses on the
+mechanical behavior.
+As such, we'll focus our discussion on input blocks that are different than that of the thermal model and refer the reader
+to the [#bison_thermal] for more information.
 
 The input file for the BISON mechanical model of a VTR fuel rod is displayed below.
 
@@ -663,7 +668,7 @@ The displacements `disp_x` and `disp_y` have been added to the global parameters
 
 The mechanical model utilizes the solid mechanics that is native to MOOSE.
 The model is setup such that the mechanical behavior is modeled in both the fuel and clad.
-For a detailed explanation of the TensorMechanics model, the authors differ to the 
+For a detailed explanation of the TensorMechanics model, the authors defer to the 
 [TensorMechanics](https://mooseframework.inl.gov/syntax/Modules/TensorMechanics/Master/)
 section of the MOOSE documentation.
 
@@ -674,15 +679,17 @@ section of the MOOSE documentation.
 
 Material characteristics are defined in the `[Materials]` block.
 Characteristics include the elasticity tensor, elastic stress,
-thermal expansion, and density for the fuel and clad.
+thermal expansion, and density of the fuel and clad.
 
 !listing sfr/vtr/steady/bison_mecha_only.i 
          block=Materials
 
 ### Boundary Conditions
 
-Direchlet boundary conditions are set along the centerline and boundary of the problem
+Direchlet boundary conditions are specified at the centerline and boundary of the problem
 for each of the solution variables (`disp_x` and `disp_y`).
+Because the problem is defined in RZ geometry, `disp_x` refers to the radial displacement
+and `disp_y`, the axial displacement.
 
 !listing sfr/vtr/steady/bison_mecha_only.i 
          block=BCs
@@ -690,8 +697,8 @@ for each of the solution variables (`disp_x` and `disp_y`).
 ### Post-processors, Debug, and Outputs
 
 Postprocessors are used to derive desired quantities from the solution variable(s).
-Some of the quantities that we may be interested in include the maximum displacement in the x and y 
-directions, and the strains.
+Some of the quantities that we may be interested in include the maximum displacement in the
+radial and axial directions, and the strains.
 
 !listing sfr/vtr/steady/bison_mecha_only.i 
          block=Postprocessors
@@ -699,8 +706,7 @@ directions, and the strains.
 ## Core Support Plate
 
 The input file for the core support plate tensor mechanics model is displayed below.
-The objective of this simulation is to capture the radial thermal expansion of the support plate
-which then effects the assemblies.
+The objective of this simulation is to capture the radial thermal expansion of the support plate.
 
 !listing sfr/vtr/steady/core_support_plate_3d.i
 
@@ -731,7 +737,7 @@ Next, the mesh is centered at coordinate position (0,0,0) by defining a nodeset 
 
 ### AuxVariables and AuxKernels
 
-There is one AuxVariable that is defind for this model; the core support plate temperature.
+There is one AuxVariable that is defined for this model; the core support plate temperature.
 The temperature is set with the inlet temperature.
 
 !listing sfr/vtr/steady/core_support_plate_3d.i
@@ -745,7 +751,7 @@ The core support plate model utilizes the solid mechanics module that is native 
 We are interested in the thermal expansion of the core support plate so we set the
 [!style color=red](eigenstrain_names) to `thermal_expansion` and generate a stress and strain
 output in each coordinate direction.
-For a detailed explanation of the TensorMechanics model, the authors differ to the 
+For a detailed explanation of the TensorMechanics model, the authors defer to the 
 [TensorMechanics](https://mooseframework.inl.gov/syntax/Modules/TensorMechanics/Master/)
 section of the MOOSE documentation.
 
@@ -768,7 +774,7 @@ equal to a second order polynomial with specified coefficients.
 Material characteristics are defined in the `[Materials]` block.
 Characteristics include the mechanical properties of 316 stainless steel such as the
 elasticity tensor, stress, and thermal expansion.
-For a detailed explanation of the material types, the authors differ the reader to 
+For a detailed explanation of the material types, the authors defer the reader to 
 the [TensorMechanics](https://mooseframework.inl.gov/syntax/Modules/TensorMechanics/Master/)
 section of the MOOSE documentation.
 
@@ -779,7 +785,7 @@ section of the MOOSE documentation.
 
 Direchlet boundary conditions are set at the problem boundary
 for each of the solution variables (`disp_x`, `disp_y`, and `disp_z`).
-The radial `x` and `z` directional boundary is at the bottom surface of the
+The radial `x` and `z` directional boundary is the bottom surface of the
 core support plate center.
 The axial `y` directional boundary is specified at the bottom of the support plate.
 
@@ -788,10 +794,10 @@ The axial `y` directional boundary is specified at the bottom of the support pla
 
 ### Execution Parameters
 
-The same preconditioner is used as previous BISON inputs. See X.
-For proper convergence the nonlinear iterations are forced to three in the Executioner.
+The same preconditioner is used as previous BISON inputs. See [#bison_exec].
+For proper convergence the nonlinear iterations are forced to three in the `Executioner`.
 Note that without [!style color=red](nl_forced_its) the default criteria would result in two 
-nonlinear iterations and solution convergence would not be satisfied.
+nonlinear iterations and the solution convergence would not be satisfied.
 
 !listing sfr/vtr/steady/core_support_plate_3d.i
          block=Executioner
