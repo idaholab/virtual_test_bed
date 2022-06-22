@@ -25,7 +25,6 @@ rod_pitch            =${fparse rod_outside_diameter + wire_wrap_diameter}
    #  they only need to be specified one time.
    order = FIRST
    family = LAGRANGE
-#   displacements = 'disp_x disp_y'
    temperature = Temperature
    #the following are needed in multiple UPuZr Materials
    X_Zr = 0.225 #  U-20Pu-10Zr
@@ -220,37 +219,6 @@ rod_pitch            =${fparse rod_outside_diameter + wire_wrap_diameter}
 #---------------
   active = 'fuel_thermal fuel_density clad_thermal clad_density'
   #fuel
-  #mechanics materials
-  [./fuel_elasticity_tensor]
-    type = UPuZrElasticityTensor
-    block = pellet
-    porosity = porosity
-    output_properties = 'youngs_modulus poissons_ratio'
-    outputs = all
-  [../]
-  [./fuel_elastic_stress]
-    type = ComputeLinearElasticStress
-    block = pellet
-  [../]
-  [./fuel_thermal_expansion]
-    type = ComputeThermalExpansionEigenstrain
-    block = pellet
-    thermal_expansion_coeff = 17.3e-6 # [Greenquist et al., 2020] pg. 8
-    stress_free_temperature = 295 # [Greenquist et al., 2020] pg. 7
-    eigenstrain_name = fuel_thermal_strain
-  [../]
-  [./fuel_gaseous_swelling] # needed to get porosity material property set
-    type = UPuZrGaseousEigenstrain
-    block = pellet
-    eigenstrain_name = fuel_gaseous_strain
-    anisotropic_factor = 0.5 # [Greenquist et al., pg. 8]
-    bubble_number_density = 2.09e18 # [Casagranda, 2020]
-    interconnection_initiating_porosity = 0.125 # [Casagranda, 2020]
-    interconnection_terminating_porosity = 0.2185 # [Casagranda, 2020]
-    fission_rate = fission_rate
-    output_properties = porosity
-    outputs = all
-  [../]
   #thermal materials
   [./fuel_thermal]
     type = UPuZrThermal
@@ -265,24 +233,8 @@ rod_pitch            =${fparse rod_outside_diameter + wire_wrap_diameter}
     type = Density
     block = pellet
   [../]
-   # cladding
-   #mechanics materials
-  [./clad_elasticity_tensor]
-    type = ComputeIsotropicElasticityTensor
-    youngs_modulus = 1.645e11 # [Hofman et al., 1989] pg. E.1.1.6 (733 K)
-    poissons_ratio = 0.35 # [Hofman et al., 1989] pg. E.1.1.6 (733 K)
-    block = 'clad 4'
-  [../]
-  [./clad_elastic_stress]
-    type = ComputeLinearElasticStress
-    block = 'clad 4'
-  [../]
-  [./clad_thermal_expansion]
-    type = HT9ThermalExpansionEigenstrain
-    block = 'clad 4'
-    eigenstrain_name = clad_thermal_strain
-    stress_free_temperature = 295 # [Greenquist et al., 2020] pg. 7
-  [../]
+  #cladding
+  #mechanics materials
   #thermal materials
   [./clad_thermal]
     type = HT9Thermal

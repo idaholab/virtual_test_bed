@@ -167,7 +167,7 @@ active = 'fuel_elasticity_tensor fuel_elastic_stress fuel_thermal_expansion
     block = pellet
   [../]
   #fuel
-  # mechanics materials
+  #mechanics materials
   [./fuel_elasticity_tensor]
     type = UPuZrElasticityTensor
     block = pellet
@@ -197,19 +197,7 @@ active = 'fuel_elasticity_tensor fuel_elastic_stress fuel_thermal_expansion
     output_properties = porosity
     outputs = all
   [../]
-  #thermal materials
-  [./fuel_thermal]
-    type = UPuZrThermal
-    block = pellet
-    spheat_model = savage
-    thcond_model = lanl
-    porosity = porosity
-  [../]
-  [./fuel_density]
-    type = Density
-    block = pellet
-  [../]
-  # cladding
+  #cladding
   #mechanics materials
   # [clad_elasticity_tensor]
   #   type = ComputeIsotropicElasticityTensor
@@ -230,16 +218,6 @@ active = 'fuel_elasticity_tensor fuel_elastic_stress fuel_thermal_expansion
     block = 'clad 4'
     eigenstrain_name = clad_thermal_strain
     stress_free_temperature = 295 # [Greenquist et al., 2020] pg. 7
-  [../]
-  #thermal materials
-  [./clad_thermal]
-    type = ThermalHT9
-    block = 'clad 4'
-  [../]
-  [./clad_density]
-    type = Density
-    block = 'clad 4'
-    density = 7800 
   [../]
 []
 
