@@ -612,7 +612,7 @@ The outputs files are surpressed but may be turned on if desired.
 !listing sfr/vtr/steady/bison_thermal_only_1.i 
          block=Outputs
 
-## SAM Model
+## SAM Thermal-hydraulic Model
 
 The input file for the SAM thermal hydraulic model of a VTR assembly is displayed below.
 
@@ -629,7 +629,7 @@ This model includes the initial pressure, temperature, and velocity variables of
 !listing sfr/vtr/steady/sam_channel_1.i 
          block=GlobalParams
 
-### Global Parameters
+### Equations of State
 
 The equations of state (EOS) block is unique to SAM.
 Because the VTR is sodium cooled, the EOS type is given by
@@ -638,13 +638,49 @@ Because the VTR is sodium cooled, the EOS type is given by
 !listing sfr/vtr/steady/sam_channel_1.i 
          block=EOS
 
-### Geometry and Mesh
+### Components
 
-This block defines the computational mesh at which the solution is computed on.
+This block defines the components of the simulation. 
+In SAM, a component is defined as the physics modeling (fluid flow 
+and heat transfer) and mesh generation of a reactor component.
 
 !listing sfr/vtr/steady/sam_channel_1.i 
-         block=Mesh
+         block=Components
 
+The fuel channel is modelled with a [!style color=orange](PBOneDFluidComponent) type that simulates
+1-D fluid flow using the primitive variable based fluid model.
+The channel geometry is declared with a number of parameters.
+Additional information can be found in the SAM User's Manual.
+
+The channel inlet and outlet are specified with the 
+[!style color=orange](PBTDJ) and [!style color=orange](PBTDV) types, respectively.
+The [!style color=orange](PBTDJ) component is an inlet boundary in which the flow velocity
+and temperature are provided by pre-defined functions.
+The [!style color=orange](PBTDV) component is a boundary in which pressure and temperature
+conditions are proivded by pre-defined functions.
+
+The last block specifies heat transfer from the fuel with the 
+The [!style color=orange](HeatTransferWithExternalHeatStructure) type.
+Further information can be found in the SAM User's Manual.
+
+### Executioner
+
+The same preconditioner is used as previous BISON input. See [#bison_exec].
+
+!listing sfr/vtr/steady/sam_channel_1.i 
+         block=Preconditioning
+
+!listing sfr/vtr/steady/sam_channel_1.i 
+         block=Executioner
+
+### Post-processors, Debug, and Outputs
+
+Postprocessors are used to derive desired quantities from the solution variable(s).
+Some of the quantities that we may be interested in include the inlet and outlet temperatures,
+heat transfer coeficient, and temperature maximums and minimums.
+
+!listing sfr/vtr/steady/sam_channel_1.i 
+         block=Postprocessors
 
 ## BISON Mechanical Model
 

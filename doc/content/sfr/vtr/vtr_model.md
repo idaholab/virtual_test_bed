@@ -36,7 +36,7 @@ the targeted batch-average burnup of 50 GWD/t).
 This means fuel assemblies at the core periphery will remain in the core longer than those at the core center.
 This is all done in an effort to avoid unnecessary fuel handling operations that would complicate the design 
 and increase operational costs.
-The discrete fuel management scheme is shown in [fig:fuel_loading], where the 12 central most fuel
+The discrete fuel management scheme is shown in [fuel_loading], where the 12 central most fuel
 assemblies (in Row 1--3) remain in the core for three cycles, the next 18 fuel assemblies (in Row 4) remain
 in the core for four cycles, the following 12 fuel assemblies (in Row 5) remain in the core for five cycles,
 and the remaining 24 assemblies (in Row 6) remain in the core for six cycles [!citep](heidet2020).
@@ -47,14 +47,11 @@ is replaced every fourth cycle out of six.
 This fuel management scheme will result in the equilibrium core to having a periodicity of 60 cycles,
 meaning that the core configuration and performance will be identical every 60 cycles with small variations in between. 
 
-!media VTR_Core.png
-       style=width:60%;margin-left:auto;margin-right:auto
-
-!media vtr/VTR_Core.png
+!media vtr/vtr_core.png
        id=vtr_radial
        caption=Radial configuration of the VTR core layout, taken from [!citep](heidet2020).
 
-!media VTR_Assemblies.png
+!media vtr/vtr_assemblies.png
        id=fuel_assemblies
        caption=Axial configuration of the VTR fuel assemblies.
 
@@ -92,7 +89,7 @@ meaning that the core configuration and performance will be identical every 60 c
 | B4C absorber radius              |       0.6060   | cm   |
 | Wire wrap                        |       yes      | -    |
 
-!media VTR_fuel_loading.png
+!media vtr/vtr_fuel_loading.png
        id=fuel_loading
        caption=Fuel Management Strategy, taken from [!citep](heidet2020).
 
@@ -122,7 +119,7 @@ The VTR model captures the predominant feedback mechanisms and consists of 4 ind
 
 4. A SAM 1D channel input, whose purpose is to compute the coolant channel temperature / density profile and pressure drop, given the orifice strategy selected which dictates the input mass flow rate and outlet pressure and the wall temperature coming from the BISON thermal model. The coolant density and heat transfer coefficient is passed back to BISON to be used in a convective heat flux boundary condition. The coolant density is also passed back to the neutronics model for updating the cross sections. One SAM input is instantiated per coolant channel. The coupling scheme with the variables exchanged between solvers is given in [sfr_scheme].
 
-!media sfr_scheme.png
+!media sfr/sfr_scheme.png
        style=width:100%;margin-left:auto;margin-right:auto
        id=sfr_scheme
        caption=The coupling scheme used for the SFR model.
@@ -195,7 +192,7 @@ These reference fluxes $\phi_{m,g}^{\rm ref}$ and cross-section sets $\Sigma_{m,
 different combinations of perturbations for the selected cross-section variables (burnup, fuel temperature, etc.), which
 are also referred to as parameters. The combinations of these parameters define statepoints.
 
-## Cross-Section Model
+## Cross-Section Model id=cross-section_model
 
 There exists an intermediate step in the two step method that allows for the cross section evaluation at an arbitrary state point.
 This is typically considered as a cross-section parametrization, which depends on the type of analysis to perform and reactor.
