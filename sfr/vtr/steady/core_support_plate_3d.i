@@ -41,6 +41,11 @@ Tref   = 293.15 # reference temperature for the linear thermal expansion for SS3
 # ==============================================================================
 # VARIABLES AND KERNELS
 # ==============================================================================
+[Variables]
+[]
+
+[Kernels]
+[]
 
 # ==============================================================================
 # AUXVARIABLES AND AUXKERNELS
@@ -49,6 +54,9 @@ Tref   = 293.15 # reference temperature for the linear thermal expansion for SS3
   [./temp]    #core support plate temperature is set to inlet temperature
     initial_condition = ${Tinlet}
   [../]
+[]
+
+[AuxKernels]
 []
 
 # ==============================================================================
@@ -66,6 +74,9 @@ Tref   = 293.15 # reference temperature for the linear thermal expansion for SS3
 # ==============================================================================
 # INITIAL CONDITIONS AND FUNCTIONS
 # ==============================================================================
+[ICs]
+[]
+
 [Functions]
   # from TEV 3749
   [./ss316_alphaMean_vtr]
@@ -91,6 +102,9 @@ Tref   = 293.15 # reference temperature for the linear thermal expansion for SS3
     stress_free_temperature = ${Tref}
     eigenstrain_name = thermal_expansion
   [../]
+[]
+
+[UserObjects]
 []
 
 # ==============================================================================
@@ -169,6 +183,9 @@ Tref   = 293.15 # reference temperature for the linear thermal expansion for SS3
     type = ElementAverageValue
     variable = strain_zz
   [../]
+[]
+
+[Debug]
 []
 
 [Outputs]
