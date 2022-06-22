@@ -4,3 +4,5 @@
 
 [VTR Model Inputs](vtr/vtr_model_inputs.md)
 
+[VTR Results](vtr/vtr_results.md)
+
