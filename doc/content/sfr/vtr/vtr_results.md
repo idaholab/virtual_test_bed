@@ -54,7 +54,7 @@ As a result, the flux drops significantly in the first few rows of the reflector
 For instance, [flux_g0] provides the fast flux at the core mid-plane. 
 
 !media vtr/sflux_g0_cold_hot.png
-       style=width:75%
+       style=width:75%;margin-left:auto;margin-right:auto
        id=flux_g0
        caption=Normalized fast flux at core mid-plane.
 
@@ -62,7 +62,7 @@ Second, a large number of neutrons are reflected back from the reflector region,
 as can be seen in [flux_g5].
 
 !media vtr/sflux_g5_cold_hot.png
-       style=width:75%
+       style=width:75%;margin-left:auto;margin-right:auto
        id=flux_g5
        caption=Normalized thermal flux at core mid-plane.
 
@@ -71,12 +71,12 @@ Without an SPH equivalence, it can be observed that the radial tilt of the flux 
 (i.e., the flux is overestimated at the core center and becomes underestimated at the reflector region). 
 
 !media vtr/diff_flux2d_tot_uncorrected.png
-       style=width:75%
+       style=width:75%;margin-left:auto;margin-right:auto
        id=diff_flux2d_no_sph
        caption=Relative differences in 2D total flux between Griffin and Serpent, no SPH equivalence.
 
 !media vtr/diff_flux2d_tot_corrected.png
-       style=width:75%
+       style=width:75%;margin-left:auto;margin-right:auto
        id=diff_flux2d_sph
        caption=Relative differences in 2D total flux between Griffin and Serpent, with SPH equivalence.
 
@@ -100,12 +100,12 @@ between Griffin and Serpent for the nominal statepoint ($T_{fuel}=900$ K, $T_{co
 As expected, the calculations relying on SPH factors preserve the Serpent assembly powers.
 
 !media vtr/diff_power2d_no_sph.png
-       style=width:75%
+       style=width:75%;margin-left:auto;margin-right:auto
        id=diff_pow2d_no_sph
        caption=Relative differences in 2D fission power between Griffin and Serpent, no SPH equivalence.
 
 !media vtr/diff_power2d_sph.png
-       style=width:75%
+       style=width:75%;margin-left:auto;margin-right:auto
        id=diff_pow2d_sph
        caption=Relative differences in 2D fission power between Griffin and Serpent, with SPH equivalence.
 
@@ -113,6 +113,7 @@ The total rod worth for the six primary rods are computed with Serpent and Griff
 An SPH correction corresponding to the fully inserted and fully withdrawn conditions is required in order to preserve the integral rod worth. 
 
 !media vtr/rod_worth.png
+       style=width:75%;margin-left:auto;margin-right:auto
        id=rod_worth
        caption=Serpent and Griffin (with and without SPH) control rod worth.
 
@@ -138,22 +139,22 @@ The results of the multiphysics simulation provide access to the following quant
 
 
 !media vtr/max_tfuel.png
-       style=width:75%
+       style=width:75%;margin-left:auto;margin-right:auto
        id=max_tfuel
        caption=Peak centerline temperatures at BOEC (degrees K).
 
 !media vtr/max_tclad.png
-       style=width:75%
+       style=width:75%;margin-left:auto;margin-right:auto
        id=max_tclad
        caption=Peak cladding temperatures at BOEC (degrees K).
 
 !media vtr/max_tcool.png
-       style=width:75%
+       style=width:75%;margin-left:auto;margin-right:auto
        id=max_tcool
        caption=Peak bulk coolant temperatures at BOEC (degrees K).
 
 !media vtr/pressure_drop.png
-       style=width:75%
+       style=width:75%;margin-left:auto;margin-right:auto
        id=pressure_drop
        caption=Pressure drop per flow channel.
 
@@ -191,7 +192,7 @@ Note that the core assembly powers are not symmetric due to a non-symmetrical fu
 but not quite 1/6-th symmetrical.
 
 !media vtr/diff_power2d.png
-       style=width:75%
+       style=width:75%;margin-left:auto;margin-right:auto
        id=diff_power_multiphysics
        caption=Relative differences in 2D assembly powers, with and without coupling (%).
 
@@ -200,12 +201,12 @@ one located within the first and the second within the third ring of the core, r
 The maximum relative differences are around -1.4% for the first case, and +1% for the second case. 
 
 !media vtr/axial_power_1_0.png
-       style=width:75%
+       style=width:75%;margin-left:auto;margin-right:auto
        id=diff_axial_power_ring1
        caption=Axial assembly power with and without coupling (first ring).
 
 !media vtr/axial_power_3_0.png
-       style=width:75%
+       style=width:75%;margin-left:auto;margin-right:auto
        id=diff_axial_power_ring3
        caption=Axial assembly power with and without coupling (third ring).
 
@@ -213,14 +214,14 @@ However the core-average power profile is very similar with and without tight co
 The axial power profiles for individual assemblies are slightly more impacted, since the differences are induced by axial variations in the temperature fields. 
 
 !media vtr/axial_power_core.png
-       style=width:75%
+       style=width:75%;margin-left:auto;margin-right:auto
        id=diff_axial_power_core
        caption=Core-Averaged Axial Power Profile.
 
 Another simulation is performed using a one-way coupling only between the neutronics and the thermal-hydraulics model. 
 There are no iterations between the neutronics and thermal-hydraulics model. 
 Once the $k_{\rm eff}$ neutronics calculation is converged, the power density is passed to the thermal-hydraulics model. 
-The results are then compared to those obtained with the tight-coupling scheme/
+The results are then compared to those obtained with the tight-coupling scheme.
 The differences in peak coolant, clad, and fuel temperatures are negligible, as observed for the peak fuel temperature displayed in
 [diff_tfuel_multiphysics]. 
 Differences for the coolant and clad temperatures are similar and thus not repeated. 
@@ -228,6 +229,6 @@ This result showcases that there are no need to perform fixed point iterations b
 as a one-way coupling scheme provides almost identical results as the tight-coupling scheme.
 
 !media vtr/diff_max_tfuel.png
-       style=width:75%
+       style=width:75%;margin-left:auto;margin-right:auto
        id=diff_tfuel_multiphysics
        caption=Relative differences in peak fuel temperatures, one-way vs tight coupling (%).
