@@ -2,8 +2,8 @@
 # Model description
 # Application : Griffin
 # ------------------------------------------------------------------------------
-# Idaho Falls, INL, June 20th, 2022
-# Author(s): Nicholas Martin
+# Idaho Falls, INL, June 23th, 2022
+# Author(s): Nicolas Martin
 # ==============================================================================
 # - VTR GRIFFIN standalone neutronics input
 # - MasterApp
@@ -42,17 +42,17 @@ tpow = 300e6 #(300 MW)
 # GEOMETRY AND MESH
 # ==============================================================================
 [Mesh]
-  [./fmg]
+  [fmg]
     type = FileMeshGenerator
     file = mesh/vtr_core.e
     exodus_extra_element_integers = 'equivalence_id material_id'
-  [../]
-  [./eqvid]
+  []
+  [eqvid]
     type = ExtraElementIDCopyGenerator
     input = fmg
     source_extra_element_id = equivalence_id
     target_extra_element_ids = 'equivalence_id'
-  [../]
+  []
 []
 
 [Equivalence]
@@ -78,17 +78,17 @@ tpow = 300e6 #(300 MW)
 # AUXVARIABLES AND AUXKERNELS
 # ==============================================================================
 [AuxVariables]
-  [./tfuel]
+  [tfuel]
     initial_condition = ${initial_fuel_temperature}
-  [../]
-  [./tcool]
+  []
+  [tcool]
     initial_condition = ${initial_salt_temperature}
-  [../]
-  [./cr]
+  []
+  [cr]
    family = MONOMIAL
    order = CONSTANT
    initial_condition = ${initial_cr_fraction}
-  [../]
+  []
 []
 
 [AuxKernels]
@@ -101,27 +101,27 @@ tpow = 300e6 #(300 MW)
 []
 
 [Functions]
-  [./cr_withdrawal]
+  [cr_withdrawal]
     type  = ConstantFunction
     value = 1.92 # 1.92 = fully out, 0.88 = fully in
-  [../]
+  []
 []
 
 # ==============================================================================
 # MATERIALS AND USER OBJECTS
 # ==============================================================================
 [Materials]
-  [./fuel]
+  [fuel]
     type = CoupledFeedbackMatIDNeutronicsMaterial
     block = 1
     plus = 1
-  [../]
-  [./refl_shield_sr] # reflector, shield, SR assemblies
+  []
+  [refl_shield_sr] # reflector, shield, SR assemblies
     type = CoupledFeedbackMatIDNeutronicsMaterial
     block = 2
     plus = 0
-  [../]
-  [./control_rods] # control rods modeled via RoddedNeutronicsMaterial
+  []
+  [control_rods] # control rods modeled via RoddedNeutronicsMaterial
     type = CoupledFeedbackRoddedNeutronicsMaterial
     block = 3
     segment_material_ids = '115 116 115' # 115 = non-abs, 116=abs
@@ -131,7 +131,7 @@ tpow = 300e6 #(300 MW)
     isotopes = 'pseudo; pseudo; pseudo'
     densities='1.0 1.0 1.0'
     plus = 0
-  [../]
+  []
 []
 
 [PowerDensity]
@@ -157,14 +157,14 @@ tpow = 300e6 #(300 MW)
   equation_type = eigenvalue
   G = 6
   VacuumBoundary = '1 2 3'
-  [./CFEM-Diffusion]
+  [CFEM-Diffusion]
     scheme = CFEM-Diffusion
     n_delay_groups = 6
     family = LAGRANGE
     order = FIRST
     assemble_scattering_jacobian = true
     assemble_fission_jacobian = true
-  [../]
+  []
 []
 
 [Executioner]
@@ -174,9 +174,9 @@ tpow = 300e6 #(300 MW)
   petsc_options_iname = '-pc_type -pc_hypre_type -ksp_gmres_restart'
   petsc_options_value = 'hypre boomeramg 100'
 
-  [./Quadrature]
+  [Quadrature]
     order = FOURTH
-  [../]
+  []
 []
 
 # ==============================================================================
@@ -198,11 +198,11 @@ tpow = 300e6 #(300 MW)
 # POSTPROCESSORS DEBUG AND OUTPUTS
 # ==============================================================================
 [Postprocessors]
-  [./power]
+  [power]
     type = ElementIntegralVariablePostprocessor
     variable = power_density
     execute_on = 'INITIAL TIMESTEP_END'
-  [../]
+  []
 []
 
 [Debug]
@@ -213,7 +213,7 @@ tpow = 300e6 #(300 MW)
  exodus = true
  csv = true
  perf_graph = true
- [./console]
+ [console]
    type = Console
- [../]
+ []
 []

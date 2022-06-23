@@ -42,7 +42,7 @@ rod_pitch            =${fparse rod_outside_diameter + wire_wrap_diameter}
 # ==============================================================================
 [Mesh] # based on x447.i from examples
   # rod specific parameters - dimensions are for fresh fuel at room temperature
-  [./smeared_pellet_mesh]
+  [smeared_pellet_mesh]
     type = SmearedPelletMeshGenerator
     clad_thickness = ${clad_thickness}
     pellet_outer_radius = ${fparse slug_diameter/2}
@@ -63,8 +63,8 @@ rod_pitch            =${fparse rod_outside_diameter + wire_wrap_diameter}
     ny_cl = 1 #?? number of cladding elements in lower plug in axial direction (default=1)
     pellet_quantity = 1
     elem_type = QUAD4
-  [../]
-  [./add_side_clad]
+  []
+  [add_side_clad]
     type = SubdomainBoundingBoxGenerator
     location = INSIDE
     restricted_subdomains = clad
@@ -73,40 +73,40 @@ rod_pitch            =${fparse rod_outside_diameter + wire_wrap_diameter}
     input = smeared_pellet_mesh
     bottom_left = '${fparse rod_outside_diameter/2 - clad_thickness/3}  0. 0.'
     top_right = '${fparse rod_outside_diameter/2} ${fparse fuel_height + plenum_height} 0.'
-  [../]
+  []
 []
 
 # ==============================================================================
 # VARIABLES AND KERNELS
 # ==============================================================================
 [Variables]
-  [./Temperature]
+  [Temperature]
     initial_condition = 900
-  [../]
+  []
 []
 
 [Kernels]
   active = 'heat_conduction heat_source_from_power'
-  [./heat_time]
+  [heat_time]
     type = HeatConductionTimeDerivative
     variable = Temperature
-  [../]
-  [./heat_conduction]
+  []
+  [heat_conduction]
     type = HeatConduction
     variable = Temperature
-  [../]
-  [./heat_source_from_power]
+  []
+  [heat_source_from_power]
     type = CoupledForce
     variable = Temperature
     block = pellet
     v = power_density_scaled
-  [../]
-  [./heat_source_from_fission]
+  []
+  [heat_source_from_fission]
     type = FissionRateHeatSource
     variable = Temperature
     fission_rate = fission_rate
     block = pellet
-  [../]
+  []
 []
 
 # ==============================================================================
@@ -115,7 +115,7 @@ rod_pitch            =${fparse rod_outside_diameter + wire_wrap_diameter}
 [ThermalContact]
    #Action to control heat transfer in regions without meshes. Specifically
    #the gap and the coolant.
-   [./thermal_contact]
+   [thermal_contact]
       type = GapHeatTransfer
       variable = Temperature
       primary = clad_inside_right
@@ -123,67 +123,67 @@ rod_pitch            =${fparse rod_outside_diameter + wire_wrap_diameter}
       quadrature = true
       gap_conductivity = 61.0 # [Fink and Leibowitz, 1995.] pg. 181 (840 K)
       min_gap = 0.38e-03  # [Greenquist et al., 2020] pg. 4
-   [../]
+   []
 []
 
 # ==============================================================================
 # AUXVARIABLES AND AUXKERNELS
 # ==============================================================================
 [AuxVariables]
-  [./power_density]
+  [power_density]
     block = pellet
     initial_condition = 4.2730e+08 #homogeneous power density - from python script get_vol.py
-  [../]
-  [./power_density_scaled]
+  []
+  [power_density_scaled]
     block = pellet
-  [../]
-  [./tfuel]
+  []
+  [tfuel]
     block = pellet
-  [../]
-  [./twall]
+  []
+  [twall]
     block = 4 # side_clad
-  [../]
-  [./tcool]
+  []
+  [tcool]
     initial_condition = 750
-  [../]
-  [./htc]
+  []
+  [htc]
     initial_condition = 1e5
-  [../]
-  [./disp_x]
+  []
+  [disp_x]
     initial_condition = 0
-  [../]
-  [./disp_y]
+  []
+  [disp_y]
     initial_condition = 0
-  [../]
+  []
 []
 
 [AuxKernels]
   active = 'GetPowerDensity_from_griffin SetTwall SetTfuel' # replace _from_griffin by _from_func for standalone runs
-  [./GetPowerDensity_from_griffin]
+  [GetPowerDensity_from_griffin]
     type = NormalizationAux
     variable = power_density_scaled
     source_variable = power_density
     normal_factor   =   2.66105 # Vhom/Vhet, from python script get_vol.py
     block = pellet
-  [../]
-  [./GetPowerDensity_from_func]
+  []
+  [GetPowerDensity_from_func]
     type = FunctionAux
     variable = power_density_scaled
     function = power_density_shaped
     block = pellet
-  [../]
-  [./SetTwall]
+  []
+  [SetTwall]
     type = CoupledAux
     block = 4
     variable = twall
     coupled = Temperature
-  [../]
-  [./SetTfuel]
+  []
+  [SetTfuel]
     type = CoupledAux
     block = pellet
     variable = tfuel
     coupled = Temperature
-  [../]
+  []
 []
 
 # ==============================================================================
@@ -193,19 +193,19 @@ rod_pitch            =${fparse rod_outside_diameter + wire_wrap_diameter}
 []
 
 [Functions]
-  [./lhgr] # W/m
+  [lhgr] # W/m
     type = ConstantFunction
     value = 24.868e3
-  [../]
+  []
   # power density in W/m3 - normally from griffin
-  [./power_density_hom]
+  [power_density_hom]
     type = ConstantFunction
     value = 4.2725e8 # W/m3
-  [../]
-  [./power_density_het]
+  []
+  [power_density_het]
      type = ConstantFunction
      value = 11.369e8 # W/m3
-  [../]
+  []
 []
 
 # ==============================================================================
@@ -218,7 +218,7 @@ rod_pitch            =${fparse rod_outside_diameter + wire_wrap_diameter}
   active = 'fuel_thermal fuel_density clad_thermal clad_density'
   #fuel
   #thermal materials
-  [./fuel_thermal]
+  [fuel_thermal]
     type = UPuZrThermal
     block = pellet
     spheat_model = savage
@@ -226,26 +226,26 @@ rod_pitch            =${fparse rod_outside_diameter + wire_wrap_diameter}
     porosity = 0
     k_scalar = 1.0
     outputs  = all
-  [../]
-  [./fuel_density]
+  []
+  [fuel_density]
     type = Density
     block = pellet
-  [../]
+  []
   #cladding
   #thermal materials
-  [./clad_thermal]
+  [clad_thermal]
     type = HT9Thermal
     block = 'clad 4'
-  [../]
-  [./clad_density]
+  []
+  [clad_density]
     type = Density
     block = 'clad 4'
     density = 7800 
-  [../]
+  []
 []
 
 [UserObjects]
-  [./disp_y_UO]
+  [disp_y_UO]
     type = LayeredAverage
     variable = disp_y
     direction = y
@@ -253,7 +253,7 @@ rod_pitch            =${fparse rod_outside_diameter + wire_wrap_diameter}
     block = pellet
     execute_on = TIMESTEP_END
     use_displaced_mesh = true
-  [../]
+  []
 []
 
 # ==============================================================================
@@ -261,13 +261,13 @@ rod_pitch            =${fparse rod_outside_diameter + wire_wrap_diameter}
 # ==============================================================================
 [BCs]
   #for coupling with SAM (provides both htc and tcool)
-  [./convection_outer_clad]
+  [convection_outer_clad]
     type = CoupledConvectiveHeatFluxBC
     boundary = 'clad_outside_bottom clad_outside_right clad_outside_top'
     variable = Temperature
     T_infinity = tcool
     htc = htc
-  [../]
+  []
 []
 
 # ==============================================================================
@@ -275,10 +275,10 @@ rod_pitch            =${fparse rod_outside_diameter + wire_wrap_diameter}
 # ==============================================================================
 [Preconditioning]
    # Used to improve the solver performance
-  [./SMP]
+  [SMP]
     type = SMP
     full = true
-  [../]
+  []
 []
 
 [Executioner]
@@ -297,7 +297,7 @@ rod_pitch            =${fparse rod_outside_diameter + wire_wrap_diameter}
 # MULTIAPPS AND TRANSFER
 # ==============================================================================
 [MultiApps]
-  [./sam]
+  [sam]
     type = FullSolveMultiApp
     app_type = SamApp
     positions = '0 0 0'
@@ -306,8 +306,8 @@ rod_pitch            =${fparse rod_outside_diameter + wire_wrap_diameter}
     max_procs_per_app = 1
     output_in_position = true
     #no_backup_and_restore = true
-  [../]
-  [./bison_mechanics]
+  []
+  [bison_mechanics]
     type = FullSolveMultiApp
     app_type = BlueCrabApp
     positions = '0 0 0'
@@ -316,181 +316,181 @@ rod_pitch            =${fparse rod_outside_diameter + wire_wrap_diameter}
     max_procs_per_app = 1
     output_in_position = true
     #no_backup_and_restore = true
-  [../]
+  []
 []
 
 [Transfers]
-  [./twall_to_sam]
+  [twall_to_sam]
     type = MultiAppCoordSwitchNearestNodeTransfer
     source_variable = twall
     variable = T_wall_external # SAM variable
     to_multi_app = sam
     displaced_target_mesh = true
     fixed_meshes = true
-  [../]
-  [./tcool_from_sam]
+  []
+  [tcool_from_sam]
     type = MultiAppCoordSwitchNearestNodeTransfer
     source_variable = temperature
     variable = tcool
     from_multi_app = sam
     displaced_source_mesh = true
     fixed_meshes = true
-  [../]
-  [./htc_from_sam]
+  []
+  [htc_from_sam]
     type = MultiAppCoordSwitchNearestNodeTransfer
     source_variable = htc_external
     variable = htc
     from_multi_app = sam
     displaced_source_mesh = true
     fixed_meshes = true
-  [../]
-  [./temperature_to_mechanics]
+  []
+  [temperature_to_mechanics]
     type = MultiAppCopyTransfer
     to_multi_app = bison_mechanics
     source_variable = Temperature
     variable = Temperature
-  [../]
-  [./disp_x_from_mechanics]
+  []
+  [disp_x_from_mechanics]
     type = MultiAppCopyTransfer
     from_multi_app = bison_mechanics
     source_variable = disp_x
     variable = disp_x
-  [../]
-  [./disp_y_from_mechanics]
+  []
+  [disp_y_from_mechanics]
     type = MultiAppCopyTransfer
     from_multi_app = bison_mechanics
     source_variable = disp_y
     variable = disp_y
-  [../]
-  [./sam_reporter]
+  []
+  [sam_reporter]
     type = MultiAppReporterTransfer
     to_reporters =   'max_tcool_r/value'
     from_reporters = 'max_tcool/value'
     from_multi_app = sam
     subapp_index = 0
-  [../]
+  []
 []
 
 # ==============================================================================
 # POSTPROCESSORS DEBUG AND OUTPUTS
 # ==============================================================================
 [Postprocessors]
-  [./ptot_bison]
+  [ptot_bison]
     type = ElementIntegralVariablePostprocessor
     block = pellet
     variable = power_density
     execute_on = 'INITIAL TIMESTEP_END'
-  [../]
-  [./ptot_scaled_bison]
+  []
+  [ptot_scaled_bison]
     type = ElementIntegralVariablePostprocessor
     block = pellet
     variable = power_density_scaled
     execute_on = 'INITIAL TIMESTEP_END'
-  [../]
-  [./avg_tfuel]
+  []
+  [avg_tfuel]
     type = ElementAverageValue
     variable = Temperature
     block = pellet
     execute_on = 'INITIAL TIMESTEP_END'
-  [../]
-  [./max_tfuel]
+  []
+  [max_tfuel]
     type = ElementExtremeValue
     variable = Temperature
     value_type = max
     block = pellet
     execute_on = 'INITIAL TIMESTEP_END'
-  [../]
-  [./min_tfuel]
+  []
+  [min_tfuel]
     type = ElementExtremeValue
     variable = Temperature
     value_type = min
     block = pellet
     execute_on = 'INITIAL TIMESTEP_END'
-  [../]
-  [./avg_twall]
+  []
+  [avg_twall]
     type = ElementAverageValue
     variable = twall
     block = 4
     execute_on = 'INITIAL TIMESTEP_END'
-  [../]
-  [./min_twall]
+  []
+  [min_twall]
     type = ElementExtremeValue
     variable = Temperature
     value_type = min
     block    = 4
     execute_on = 'INITIAL TIMESTEP_END'
-  [../]
-  [./max_twall]
+  []
+  [max_twall]
     type = ElementExtremeValue
     variable = Temperature
     value_type = max
     block    = 4
     execute_on = 'INITIAL TIMESTEP_END'
-  [../]
-  [./max_tclad]
+  []
+  [max_tclad]
     type = ElementExtremeValue
     variable = Temperature
     value_type = max
     block    = 'clad 4'
     execute_on = 'INITIAL TIMESTEP_END'
-  [../]
-  [./min_tclad]
+  []
+  [min_tclad]
     type = ElementExtremeValue
     variable = Temperature
     value_type = min
     block    = 'clad 4'
     execute_on = 'INITIAL TIMESTEP_END'
-  [../]
-  [./avg_tclad]
+  []
+  [avg_tclad]
     type = ElementAverageValue
     variable = Temperature
     block    = 'clad 4'
     execute_on = 'INITIAL TIMESTEP_END'
-  [../]
-  [./avg_htc]
+  []
+  [avg_htc]
     type = ElementAverageValue
     variable = htc
     block = 4
     execute_on = 'INITIAL TIMESTEP_END'
-  [../]
-  [./avg_tcool]
+  []
+  [avg_tcool]
     type = ElementAverageValue
     variable = tcool
     execute_on = 'INITIAL TIMESTEP_END'
-  [../]
-  [./max_tcool]
+  []
+  [max_tcool]
     type = ElementExtremeValue
     value_type = max
     variable = tcool
     execute_on = 'INITIAL TIMESTEP_END'
-  [../]
-  [./min_tcool]
+  []
+  [min_tcool]
     type = ElementExtremeValue
     value_type = min
     variable = tcool
     execute_on = 'INITIAL TIMESTEP_END'
-  [../]
-  [./disp_x_max]
+  []
+  [disp_x_max]
     type = ElementExtremeValue
     variable = disp_x
     value_type = max
     execute_on = ' INITIAL TIMESTEP_END'
     use_displaced_mesh = true
-  [../]
-  [./disp_y_max]
+  []
+  [disp_y_max]
     type = ElementExtremeValue
     variable = disp_y
     value_type = max
     execute_on = ' INITIAL TIMESTEP_END'
     use_displaced_mesh = true
-  [../]
-  [./max_thcond]
+  []
+  [max_thcond]
     type = ElementExtremeValue
     variable = thermal_conductivity
-  [../]
-  [./max_tcool_r]
+  []
+  [max_tcool_r]
     type = Receiver
-  [../]
+  []
 []
 
 [Outputs]

@@ -43,16 +43,16 @@ V_init = ${fparse m_dot_in/rho_in/A_channel}
 # EQUATIONS OF STATE
 # ==============================================================================
 [EOS]
-  [./eos]                                         # EOS name
+  [eos]                                         # EOS name
     type = PBSodiumEquationOfState              # Using the sodium equation-of-state
-  [../]
+  []
 []
 
 # ==============================================================================
 # GEOMETRY AND MESH
 # ==============================================================================
 [Components]
-  [./fuel_channel]
+  [fuel_channel]
     type = PBOneDFluidComponent
     position =    '0 0 0'              # The origin position of this component
     orientation = '0 1 0'              # The orientation of the component
@@ -67,38 +67,38 @@ V_init = ${fparse m_dot_in/rho_in/A_channel}
     WF_geometry_type = WireWrap        # Wall friction geometry type
     WF_user_option = ChengTodreas      # wall friction correlation
     HTC_geometry_type = Bundle         # HTC geometry type (rod bunde or pipe)
-  [../]
-  [./inlet]
+  []
+  [inlet]
     type = PBTDJ
     input = 'fuel_channel(in)'         # Name of the connected components and the end type
     v_bc = ${V_init}                   # Velocity boundary condition
     T_bc = ${T_init}                   # Temperature boundary condition
-  [../]
-  [./outlet]
+  []
+  [outlet]
     type = PBTDV
     input = 'fuel_channel(out) '       # Name of the connected components and the end type
     p_bc = ${P_out}                    # Pressure boundary condition
-  [../]
-  [./heat_transfer_from_fuel]
+  []
+  [heat_transfer_from_fuel]
     type = HeatTransferWithExternalHeatStructure
     flow_component = fuel_channel
     initial_T_wall = 800
     htc_name = htc_external
     T_wall_name = T_wall_external
-  [../]
+  []
 []
 
 # ==============================================================================
 # EXECUTION PARAMETERS
 # ==============================================================================
 [Preconditioning]
-  [./SMP_PJFNK]
+  [SMP_PJFNK]
     type = SMP                         # Single-Matrix Preconditioner
     full = true                        # Using the full set of couplings among all variables
     solve_type = 'PJFNK'               # Using Preconditioned JFNK solution method
     petsc_options_iname = '-pc_type'   # PETSc option, using preconditiong
     petsc_options_value = 'lu'         # PETSc option, using ‘LU’ precondition type in Krylov solve
-  [../]
+  []
 [] # End preconditioning block
 
 [Executioner]
@@ -118,111 +118,111 @@ V_init = ${fparse m_dot_in/rho_in/A_channel}
   # end_time = 1
   # steady_state_detection = true
   # dtmin = 1e-4
-  # [./TimeStepper]
+  # [TimeStepper]
   #   type = IterationAdaptiveDT
   #   dt = 0.01
-  # [../]
+  # []
 
-  [./Quadrature]
+  [Quadrature]
     type = TRAP                       # Using trapezoid integration rule
     order = FIRST                     # Order of the quadrature
-  [../]
+  []
 [] # close Executioner section
 
 # ==============================================================================
 # POSTPROCESSORS DEBUG AND OUTPUTS
 # ==============================================================================
 [Postprocessors]
-  [./Tin]
+  [Tin]
     type = ComponentBoundaryVariableValue
     variable = temperature
     input = fuel_channel(in)
     execute_on = 'TIMESTEP_END'
-  [../]
-  [./Tout]
+  []
+  [Tout]
     type = ComponentBoundaryVariableValue
     variable = temperature
     input = fuel_channel(out)
     execute_on = 'TIMESTEP_END'
-  [../]
-  [./Tavg]
+  []
+  [Tavg]
     type = ElementAverageValue
     variable = temperature
     execute_on = 'TIMESTEP_END'
-  [../]
-  [./max_tcool]
+  []
+  [max_tcool]
     type = ElementExtremeValue
     value_type = max
     variable = temperature
     execute_on = 'TIMESTEP_END'
-  [../]
-  [./Pin]
+  []
+  [Pin]
     type = ComponentBoundaryVariableValue
     variable = pressure
     input = fuel_channel(in)
     execute_on = 'TIMESTEP_END'
-  [../]
-  [./Pout]
+  []
+  [Pout]
     type = ComponentBoundaryVariableValue
     variable = pressure
     input = fuel_channel(out)
     execute_on = 'TIMESTEP_END'
-  [../]
-  [./delta_t_core]
+  []
+  [delta_t_core]
     type = DifferencePostprocessor
     value1 = Tout
     value2 = Tin
     execute_on = 'TIMESTEP_END'
-  [../]
-  [./delta_p_core]
+  []
+  [delta_p_core]
     type = DifferencePostprocessor
     value1 = Pin
     value2 = Pout
     execute_on = 'TIMESTEP_END'
-  [../]
-  [./Twall_avg]
+  []
+  [Twall_avg]
     type = ElementAverageValue
     variable = T_wall_external
     execute_on = 'TIMESTEP_END'
-  [../]
-  [./Twall_max]
+  []
+  [Twall_max]
     type = ElementExtremeValue
     value_type = max
     variable = T_wall_external
     execute_on = 'TIMESTEP_END'
-  [../]
-  [./Twall_min]
+  []
+  [Twall_min]
     type = ElementExtremeValue
     value_type = min
     variable = T_wall_external
     execute_on = 'TIMESTEP_END'
-  [../]
-  [./htc_avg]
+  []
+  [htc_avg]
     type = ElementAverageValue
     variable = htc_external
     execute_on = 'TIMESTEP_END'
-  [../]
-  [./htc_min]
+  []
+  [htc_min]
     type = ElementExtremeValue
     value_type = min
     variable = htc_external
     execute_on = 'TIMESTEP_END'
-  [../]
-  [./htc_max]
+  []
+  [htc_max]
     type = ElementExtremeValue
     value_type = max
     variable = htc_external
     execute_on = 'TIMESTEP_END'
-  [../]
+  []
 []
 
 [Outputs]
   # csv = true
   # print_nonlinear_converged_reason = false
   # print_linear_converged_reason = false
-  #[./out]
+  #[out]
   #  type = Exodus
   #  use_displaced = true
   #  sequence = false
-  #[../]
+  #[]
 []

@@ -1,6 +1,6 @@
 # Versatile Test Reactor (VTR)
 
-*Contact: Nicholas Martin, nicolas.martin.at.inl.gov*
+*Contact: Nicolas Martin, nicolas.martin.at.inl.gov*
 
 ## VTR core description
 
@@ -403,7 +403,7 @@ For this study, the fresh fuel thermal conductivity from [!cite](billone) is use
 with the Savage model for the fuel heat capacity [!cite](savage). 
 The cladding material properties are based on [!cite](hofman).
 
-### BISON Mechanical Model id=sec:bison_meca
+### BISON Mechanical Model id=bison_mecha
 
 The BISON mechanical model solves the steady-state form of the conservation of momentum for solid mechanics
 on the same 2D axisymmetric mesh as the thermal model:
@@ -532,3 +532,5 @@ The multi-physics model relies on the BlueCrab app, which incorporates the diffe
 Run it via:
 
  `mpirun -n 48 blue_crab-opt -i griffin_multiphysics.i`
+
+!bibtex bibliography
