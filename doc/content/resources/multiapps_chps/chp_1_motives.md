@@ -74,11 +74,11 @@ MOOSE was created to solve fully-coupled systems of PDEs with efficient converge
 
 ### Disparate Time Scales
 
-Many coupled physical phenomena involve disparate time scales (one variable changes slowly over time and requires large time steps to capture its transient behavior, while another variable changes rapidly and requires small time steps). Using a fully coupled system to solve coupled phenomena with disparate time scales would waste considerable computational resource because it forces the slowly-evolved variables to use a small time step. Using a tightly or loosely coupled system enabled by the `MultiApp` system allows the two variables to be solved on different time steps.
+Many coupled physical phenomena involve disparate time scales (one variable changes slowly over time and requires large time steps to capture its transient behavior, while another variable changes rapidly and requires small time steps). Using a fully coupled system to solve coupled phenomena with disparate time scales would waste considerable computational resource because it forces the slowly-evolving variable to use a small time step. Using a tightly or loosely coupled system enabled by the `MultiApp` system allows the two variables to be solved on different time steps.
 
 ### Disparate Space Scales
 
-Coupled physical phenomena may involve vastly different space scales (one variable is related to macroscopic phenomenon, while another variables involves localized or microstructure details). Using a fully coupled system on problems with disparate space scales would waste considerable computational resource on solving the macroscopic variables on an unnecessarily fine mesh to accommodate the other variable's meshing needs. The `MultiApp` system permits the different variables to be solved separately, using their own meshes. In same cases, the meshes may even have different dimensions (1D vs 2D vs 3D).
+Coupled physical phenomena may involve vastly different space scales (one variable is related to macroscopic phenomenon, while another variable involves localized or microstructure details). Using a fully coupled system on problems with disparate space scales would waste considerable computational resource on solving the macroscopic variables on an unnecessarily fine mesh to accommodate the other variable's meshing needs. The `MultiApp` system permits the different variables to be solved separately, using their own meshes. In some cases, the meshes may even have different dimensions (1D vs 2D vs 3D).
 
 ### Weak Coupling or Uni-Directional Coupling
 
