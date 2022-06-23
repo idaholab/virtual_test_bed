@@ -81,9 +81,6 @@ The [`Stochastic Tools`](https://mooseframework.inl.gov/modules/stochastic_tools
 
  The [`Stochastic Tools`](https://mooseframework.inl.gov/modules/stochastic_tools/index.html) apps include [`SamplerFullSolveMultiApp`](https://mooseframework.inl.gov/source/multiapps/SamplerFullSolveMultiApp.html) , [`SamplerTransientMultiApp `](https://mooseframework.inl.gov/source/multiapps/SamplerTransientMultiApp.html) , and [`PODFullSolveMultiApp`](https://mooseframework.inl.gov/source/multiapps/PODFullSolveMultiApp.html) . [`SamplerFullSolveMultiApp`](https://mooseframework.inl.gov/source/multiapps/SamplerFullSolveMultiApp.html)  and [`SamplerTransientMultiApp `](https://mooseframework.inl.gov/source/multiapps/SamplerTransientMultiApp.html) create full solve type, and transient type child application, respectively.
 
-#### MultiApp Classes in `Level Set App`
-
-The [`LevelSetReinitializationMultiApp`](https://mooseframework.inl.gov/source/multiapps/LevelSetReinitializationMultiApp.html) method is used for front tracking problems, and its mathematical formulations represents the structural solid-void boundary.
 
 ### Required Parameters
 

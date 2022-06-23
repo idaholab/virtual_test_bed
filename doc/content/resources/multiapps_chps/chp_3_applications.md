@@ -84,7 +84,7 @@ The Molten Salt Fast Reactor ([MSFR](msfr/index.md)) example adopts a two-level 
 
 #### VTB-HTGR
 
-In the High-Temperature Gas-cooled Reactor ([HTGR](htgr/index.md)) category, a Pebble-Bed Microreactor ([PB-MR](pbmr/index.md))) model is available. Griffin is the parent application governing neutronics simulations, and MOOSE Heat Conduction and Thermal Hydraulics modules child applications calculate the heat transfer in solid (matrix + fuel) and fluid (coolant) regions, respectively. A special approach used in this example is the use of a CentroidMultiApp as the grandchild app to calculate the representative temperature profile within single TRISO particles using Heat Conduction Modules. This is an example of using MultiApps to handle similar physical phenomena (thermal here) at different space scales.
+A Pebble-Bed Microreactor model is available on the VTB using a three-level MultiApps structure. Griffin is the parent application governing neutronics simulations, while Pronghorn solves a homogenized porous media flow problem. A CentroidMultiApp is then used to calculate the representative temperature profile within pebbles and TRISOs. This is an example of using MultiApps to handle similar physical phenomena (thermal heat transfer here) at different space scales. 
 
 #### VTB-HP-MR
 
