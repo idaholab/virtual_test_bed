@@ -1,8 +1,8 @@
-# 3. MOOSE-Based Multiphysics Nuclear Reactor Simulations
+# 3. MOOSE-Based/Wrapped Multiphysics Nuclear Reactor Simulations
 
 ## Physics Present in Reactors
 
-The MultiApp system, described in previous chapters of this tutorial, provides powerful functionality to facilitate the tight or loose coupling of multiple physical phenomena, which is important to reactor simulation. Nuclear reactors involve a number of physical phenomena correlated with each other. We briefly describe these physical phenomena and their interconnections, the MOOSE-based codes available to solve these phenomena, and finally illustrate some MultiApp hierarchies for various reactor types.
+The MultiApp system, described in previous chapters of this tutorial, provides powerful functionality to facilitate the tight or loose coupling of multiple physical phenomena, which is important to reactor simulation. Nuclear reactors involve a number of physical phenomena correlated with each other. We briefly describe these physical phenomena and their interconnections, the NEAMS codes available to solve these phenomena, and finally illustrate some MultiApp hierarchies for various reactor types.
 
 ### Some Common MOOSE Applications
 
@@ -15,10 +15,9 @@ First of all, some common MOOSE applications are listed here, which are dedicate
 | Structure Analysis | [+Grizzly+](https://moose.inl.gov/grizzly/SitePages/Home.aspx) | A code for modeling degradation of nuclear power plant systems, structures, and components due to exposure to normal operating conditions. |
 | Thermal Hydraulics | [+nekRS+](https://github.com/neams-th-coe/nekRS) | An open-source Navier Stokes solver based on the spectral element method targeting classical processors and hardware accelerators like GPUs. Use of +nekRS+ in the MOOSE ecosystem is through [+Cardinal+](https://github.com/neams-th-coe/cardinal), a wrapping of the spectral element code CFD NekRS and the Monte Carlo radiation transport code OpenMC as a MOOSE application. |
 | Thermal Hydraulics | [+Pronghorn+](https://www.tandfonline.com/doi/full/10.1080/00295450.2020.1825307) | A multiscale thermal-hydraulic (T/H) application developed by Idaho National Laboratory and the University of California, Berkeley. |
-| Thermal Hydraulics | [+RELAP-7+](https://moose.inl.gov/relap7/SitePages/Home.aspx) | A next generation nuclear systems safety analysis code being developed at the Idaho National Laboratory (INL). |
+| System analysis | [+RELAP-7+](https://moose.inl.gov/relap7/SitePages/Home.aspx) | A next generation nuclear systems safety analysis code being developed at the Idaho National Laboratory (INL). |
 | System Analysis | [+System Analysis Module (SAM)+](https://www.anl.gov/nse/system-analysis-module) | A modern system analysis tool being developed at Argonne National Laboratory for advanced non-LWR safety analysis.  It aims to provide fast-running, whole-plant transient analyses capability with improved-fidelity for SFR, LFR, and MSR/FHR. |
 | Heat Pipe | [+Sockeye+](https://www.tandfonline.com/doi/full/10.1080/00295450.2020.1861879) | A heat pipe analysis application based on the MOOSE framework. |
-| Chemistry | +Yellowjacket+ | A meso-scale MOOSE-based mass transport code. |
 | Chemistry | [+MOSCATO+](https://www.osti.gov/biblio/1841593) | The +MO+lten +S+alt +C+hemistry +A+nd +T+ranspOrt (MOSCATO) code is a code being developed at Argonne that focuses on simulating chemical and electrochemical reactions in molten salts. +(MOOSE wrapping development is on-going?)+ |
 | Chemistry | [+Mole+](https://www.osti.gov/biblio/1649062-engineering-scale-molten-salt-corrosion-chemistry-code-development) | An engineering scale MOOSE-based molten salt species transport code developed at Oak Ridge National Laboratory. |
 
@@ -32,7 +31,7 @@ As a thermal system, a nuclear reactor contains a heat source, heat sink, and th
 
 #### Heat Source (Fuel)
 
-Neutron flux causes fission reactions within the nuclear fuel and contributes to the majority of the heat generation within the reactor. Therefore, fuels are also the main heat source in the thermal physics of a reactor. In addition, a variety of microstructural modifications occur in fuels during operation, which eventually lead to degradation of fuel properties and fuel depletion. These aspects are usually handled by fuel performance code. [BISON](https://mooseframework.inl.gov/bison/index.html) is the advanced fuel performance code in the MOOSE ecosystem.
+Neutron flux causes fission reactions within the nuclear fuel and contributes to the majority of the heat generation within the reactor. Therefore, fuels are also the main heat source in the thermal physics of a reactor. In addition, a variety of microstructural modifications occur in fuels during operation, which eventually lead to degradation of fuel properties and fuel depletion. These aspects are usually handled by a fuel performance code. [BISON](https://mooseframework.inl.gov/bison/index.html) is the advanced fuel performance code in the MOOSE ecosystem.
 
 #### Heat Sink
 
@@ -50,7 +49,7 @@ Mechanical behavior is extremely important for reactor structure components (e.g
 
 ### Chemistry
 
-Chemistry may also have crucial impact on reactor performance. Within the solid components of the reactor, chemistry controls species diffusion as well as secondary phases precipitation and interaction phase formation. At liquid-solid interfaces, chemistry governs erosion and corrosion of the solid components and subsequent performance degradation. Within liquid components, especially molten salts, chemistry determines species concentration and thus plays an important role in neutronics. General chemistry phenomena can be handled by MOOSE modules such as [Chemical Reactions](https://mooseframework.inl.gov/modules/chemical_reactions/index.html) and [Phase Field](https://mooseframework.inl.gov/modules/phase_field/index.html). Users seeking more advanced functionality may choose to leverage the MOOSE-based thermochemistry code Yellowjacket.
+Chemistry may also have crucial impact on reactor performance. Within the solid components of the reactor, chemistry controls species diffusion as well as secondary phases precipitation and interaction phase formation. At liquid-solid interfaces, chemistry governs erosion and corrosion of the solid components and subsequent performance degradation. Within liquid components, especially molten salts, chemistry determines species concentration and thus plays an important role in neutronics. General chemistry phenomena can be handled by MOOSE modules such as [Chemical Reactions](https://mooseframework.inl.gov/modules/chemical_reactions/index.html) and [Phase Field](https://mooseframework.inl.gov/modules/phase_field/index.html). Users seeking more advanced functionality may choose to leverage a specialized thermochemistry application.
 
 ### A Typical Reactor Model Powered by MultiApps
 
@@ -81,7 +80,7 @@ The examples available on the Virtual Test Bed site adopt a number of different 
 
 #### VTB-MSFR
 
-The Molten Salt Fast Reactor ([MSFR](msfr/index.md)) example adopts a two-level MultiApps structure with Griffin as the parent app and Pronghorn as the child app. The parent app governs neutronics simulation, providing power distribution to the child app. The child app handles fluid dynamics simulation of molten salt fuels, providing temperature information as feedback to the parent app. MSFR is a special class of reactors as the molten salt is both fuel and coolant. As the molten salt flows out of the core region to transfer heat, the delayed neutron information is also calculated to transferred back to Griffin.
+The Molten Salt Fast Reactor ([MSFR](msfr/index.md)) example adopts a two-level MultiApps structure with Griffin as the parent app and Pronghorn as the child app. The parent app governs neutronics simulation, providing power distribution to the child app. The child app handles fluid dynamics simulation of molten salt fuels, providing temperature information as feedback to the parent app. Molten Salt Reactors are a special class of reactors as the molten salt is both fuel and coolant. As the molten salt flows out of the core region to transfer heat, the delayed neutron precursors concentrations are also calculated and transferred back to Griffin.
 
 #### VTB-HTGR
 
@@ -97,7 +96,7 @@ The Pebble Bed Fluoride-Salt-Cooled High-Temperature Reactor ([PB-FHR](pbfhr/ind
 
 #### VTB-SFR
 
-The Sodium-cooled Fast Reactor ([SFR](sfr/sfr.md)) example presently has the most complex MultiApp hierarchy. As is expected, neutronics (Griffin) is the parent application. The radial thermal expansion is simulated by a child application using the Tensor Mechanics module on the support plate with inlet coolant temperature. The axial expansion as well as the axial temperature profile is simulated by a BISON child application to capture fuel behavior. The fuel temperature boundary condition is calculated by a grandchild application using SAM's coolant channel models. A special approach used in this example is that the axial expansion of the fuel is simulated by another grandchild BISON (i.e. two BISON applications are involved) application instead of fully coupled with fuel thermal physics.
+The Sodium-cooled Fast Reactor ([SFR](sfr/sfr.md)) example presently has the most complex MultiApp hierarchy. As explained earlier, neutronics (Griffin) is naturally the parent application. The radial thermal expansion is simulated by a child application using the Tensor Mechanics module on the support plate with inlet coolant temperature. The axial expansion as well as the axial temperature profile is simulated by a BISON child application to capture fuel behavior. The fuel temperature boundary condition is calculated by a grandchild application using SAM's coolant channel models. A special approach used in this example is that the axial expansion of the fuel is simulated by another grandchild BISON (i.e. two BISON simulations/MultiApps are involved) application instead of fully coupled with fuel thermal physics.
 
 ## Other Applications
 
