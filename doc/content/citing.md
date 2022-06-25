@@ -103,17 +103,19 @@ the following:
 
 ### Sodium Fast Reactor style=font-size:125%
 
-- Sodium Fast Reactor assembly model. No specific paper, please use:
+- Sodium Fast Reactor assembly model
 
 ```
-@techreport{vtbExtReport2021,
-            title = {Overview of Advanced Reactor Simulation Capabilities to Support Demonstrations},
-            author = {Abdalla Abou-Jaoude and Guillaume Giudicelli and Derek Gaston and Paolo Balestra and Nicolas Martin and Cody Permann and Bo Feng and Jun Fang and April Novak and Nicolas Stauff and Thanh Hua and Dillon Shaver and and Ling Zou},
-            number = {INL/EXT-21-63162-Rev000},
-            doi = {10.2172/1804658},
-            institution = {Idaho National Laboratory and Argonne National Laboratory},
-            year = {2021}
-           }
+@article{MARTIN2022109066,
+         title = {A multiphysics model of the versatile test reactor based on the MOOSE framework},
+         journal = {Annals of Nuclear Energy},
+         volume = {172},
+         pages = {109066},
+         year = {2022},
+         issn = {0306-4549},
+         doi = {https://doi.org/10.1016/j.anucene.2022.109066},
+         url = {https://www.sciencedirect.com/science/article/pii/S0306454922001013},
+         author = {Nicolas Martin and Ryan Stewart and Sam Bays}
 ```
 
 - Advanced Burner Test Reactor SAM model
@@ -179,7 +181,7 @@ the following:
        }
 ```
 
-## Software
+## Software / codes
 
 The references for various features of MOOSE may be found on this
 [page](https://mooseframework.inl.gov/citing.html).
@@ -238,6 +240,19 @@ NekRS
      }
 ```
 
+Cardinal
+
+```
+@article{cardinal2021NT,
+         title = {{Cardinal}: A Lower Length-Scale Multiphysics Simulator for Pebble-Bed Reactors},
+         author = {E. Merzari and H. Yuan and M. Min and D. Shaver and R. Rahaman and P. Shriwise and P. Romano and A. Talamo and Y. Lan and D. Gaston and R. Martineau and P. Fischer and Y. Hassan},
+         year = {2021},
+         journal = {{Nuclear Technology}},
+         DOI = {https://doi.org/10.1080/00295450.2020.1824471},
+         url = {https://www.tandfonline.com/doi/full/10.1080/00295450.2020.1824471}
+}
+```
+
 Pronghorn
 
 ```
@@ -263,3 +278,20 @@ SAM
             year = 2017
            }
 ```
+
+Sockeye
+
+```
+@article{hansel2021sockeye,
+         author = {Joshua E. Hansel and Ray A. Berry and David Andrs and Matthias S. Kunick and Richard C. Martineau},
+         title = {Sockeye: A One-Dimensional, Two-Phase, Compressible Flow Heat Pipe Application},
+         journal = {Nuclear Technology},
+         volume = {207},
+         number = {7},
+         pages = {1096-1117},
+         year  = {2021},
+         publisher = {Taylor & Francis},
+         doi = {10.1080/00295450.2020.1861879},
+         URL = {https://doi.org/10.1080/00295450.2020.1861879},
+         eprint = {https://doi.org/10.1080/00295450.2020.1861879}
+}
