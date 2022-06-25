@@ -11,23 +11,23 @@
 
 [EOS]
   [eos]
-     type = PBSodiumEquationOfState
+    type = PBSodiumEquationOfState
   []
 []
 
 [Functions]
   [time_stepper]
     type = PiecewiseLinear
-    x = '-1000  -499.9   -499.8   -499   -498   -450  -449   -1     0       2     3   10   11  380   381    440   441   1e5'
-    y =' 0.02    0.02      0.2    0.2    0.5    0.5     2    2   0.2     0.2   0.5  0.5    2    2     2      2     5     5'
+    x = '-1000  -499.9   -499.8   -499   -498   -450   -1     0       2     3   10   11  380   381    440   441   1e5'
+    y =' 1.0    1.0      1.0    1.0    1.0    20.     20   0.2     0.2   0.5  0.5    2    2     2      2     5     5'
   []
 
   [ppf_axial]
     type = PiecewiseLinear
     x = '0.0  0.0200  0.0600  0.100  0.140  0.180  0.220  0.260  0.300  0.340    0.380
-         0.420  0.460  0.500  0.540  0.580  0.620  0.660  0.700  0.740    0.780   0.800'
+      0.420  0.460  0.500  0.540  0.580  0.620  0.660  0.700  0.740    0.780   0.800'
     y = '7.818e-1 8.12035e-1 8.72501e-1 9.43054e-1 1.01107 1.04739 1.09779 1.13790 1.16662 1.17569 1.18022
-         1.17255 1.15267 1.13305 1.08829 1.03142 9.62681e-1 9.08601e-1 8.11380e-1 7.04156e-1 5.90929e-1 5.34316e-1'
+       1.17255 1.15267 1.13305 1.08829 1.03142 9.62681e-1 9.08601e-1 8.11380e-1 7.04156e-1 5.90929e-1 5.34316e-1'
     axis = x
   []
 
@@ -46,20 +46,20 @@
   [pump_p_coastdown]
     type = PiecewiseLinear
     x ='-1.000E+03  0.00E+00  4.00E-01  8.00E-01  1.20E+00  1.60E+00  2.00E+00  2.40E+00  2.80E+00  3.20E+00  3.60E+00
-  4.00E+00  4.40E+00  4.80E+00  5.20E+00  5.60E+00  6.00E+00  6.40E+00  6.80E+00  7.20E+00  7.60E+00
-  8.000E+00  1.000E+01  2.000E+01  3.000E+01  4.000E+01  5.000E+01  6.000E+01  7.000E+01  8.000E+01  9.000E+01
-  1.000E+02  1.100E+02  1.200E+02  1.300E+02  1.400E+02  1.500E+02  1.600E+02  1.700E+02  1.800E+02  1.900E+02
-  2.000E+02  2.100E+02  2.200E+02  2.300E+02  2.400E+02  2.500E+02  2.600E+02  2.700E+02  2.800E+02  2.900E+02
-  3.000E+02  3.100E+02  3.200E+02  3.300E+02  3.400E+02  3.500E+02  3.600E+02  3.700E+02  3.800E+02  3.900E+02
-  4.000E+02  4.100E+02  4.200E+02  1.00E+05'
+    4.00E+00  4.40E+00  4.80E+00  5.20E+00  5.60E+00  6.00E+00  6.40E+00  6.80E+00  7.20E+00  7.60E+00
+    8.000E+00  1.000E+01  2.000E+01  3.000E+01  4.000E+01  5.000E+01  6.000E+01  7.000E+01  8.000E+01  9.000E+01
+    1.000E+02  1.100E+02  1.200E+02  1.300E+02  1.400E+02  1.500E+02  1.600E+02  1.700E+02  1.800E+02  1.900E+02
+    2.000E+02  2.100E+02  2.200E+02  2.300E+02  2.400E+02  2.500E+02  2.600E+02  2.700E+02  2.800E+02  2.900E+02
+    3.000E+02  3.100E+02  3.200E+02  3.300E+02  3.400E+02  3.500E+02  3.600E+02  3.700E+02  3.800E+02  3.900E+02
+    4.000E+02  4.100E+02  4.200E+02  1.00E+05'
 
     y ='1.000E+00  1.000E+00  9.671E-01  9.355E-01  9.050E-01  8.757E-01  8.476E-01  8.205E-01  7.945E-01  7.695E-01  7.455E-01
-  7.225E-01  7.004E-01  6.792E-01  6.590E-01  6.395E-01  6.209E-01  6.031E-01  5.860E-01  5.697E-01  5.540E-01
-  5.396E-01  4.749E-01  2.753E-01  1.773E-01  1.219E-01  8.812E-02  6.655E-02  5.206E-02  4.181E-02  3.425E-02
-  2.850E-02  2.401E-02  2.043E-02  1.754E-02  1.516E-02  1.317E-02  1.151E-02  1.009E-02  8.869E-03  7.816E-03
-  6.898E-03  6.094E-03  5.382E-03  4.752E-03  4.192E-03  3.692E-03  3.253E-03  2.814E-03  2.480E-03  2.132E-03
-  1.866E-03  1.621E-03  1.397E-03  1.190E-03  9.999E-04  8.248E-04  6.642E-04  5.175E-04  3.841E-04  2.637E-04
-  1.558E-04  5.989E-05    0      0'
+    7.225E-01  7.004E-01  6.792E-01  6.590E-01  6.395E-01  6.209E-01  6.031E-01  5.860E-01  5.697E-01  5.540E-01
+    5.396E-01  4.749E-01  2.753E-01  1.773E-01  1.219E-01  8.812E-02  6.655E-02  5.206E-02  4.181E-02  3.425E-02
+    2.850E-02  2.401E-02  2.043E-02  1.754E-02  1.516E-02  1.317E-02  1.151E-02  1.009E-02  8.869E-03  7.816E-03
+    6.898E-03  6.094E-03  5.382E-03  4.752E-03  4.192E-03  3.692E-03  3.253E-03  2.814E-03  2.480E-03  2.132E-03
+    1.866E-03  1.621E-03  1.397E-03  1.190E-03  9.999E-04  8.248E-04  6.642E-04  5.175E-04  3.841E-04  2.637E-04
+    1.558E-04  5.989E-05    0      0'
 
     scale_factor = 415100
   []
@@ -67,20 +67,20 @@
   [pump_s_coastdown]
     type = PiecewiseLinear
     x ='-1.000E+03  0.00E+00  4.00E-01  8.00E-01  1.20E+00  1.60E+00  2.00E+00  2.40E+00  2.80E+00  3.20E+00  3.60E+00
-  4.00E+00  4.40E+00  4.80E+00  5.20E+00  5.60E+00  6.00E+00  6.40E+00  6.80E+00  7.20E+00  7.60E+00
-  8.000E+00  1.000E+01  2.000E+01  3.000E+01  4.000E+01  5.000E+01  6.000E+01  7.000E+01  8.000E+01  9.000E+01
-  1.000E+02  1.100E+02  1.200E+02  1.300E+02  1.400E+02  1.500E+02  1.600E+02  1.700E+02  1.800E+02  1.900E+02
-  2.000E+02  2.100E+02  2.200E+02  2.300E+02  2.400E+02  2.500E+02  2.600E+02  2.700E+02  2.800E+02  2.900E+02
-  3.000E+02  3.100E+02  3.200E+02  3.300E+02  3.400E+02  3.500E+02  3.600E+02  3.700E+02  3.800E+02  3.900E+02
-  4.000E+02  4.100E+02  4.200E+02  1.00E+05'
+    4.00E+00  4.40E+00  4.80E+00  5.20E+00  5.60E+00  6.00E+00  6.40E+00  6.80E+00  7.20E+00  7.60E+00
+    8.000E+00  1.000E+01  2.000E+01  3.000E+01  4.000E+01  5.000E+01  6.000E+01  7.000E+01  8.000E+01  9.000E+01
+    1.000E+02  1.100E+02  1.200E+02  1.300E+02  1.400E+02  1.500E+02  1.600E+02  1.700E+02  1.800E+02  1.900E+02
+    2.000E+02  2.100E+02  2.200E+02  2.300E+02  2.400E+02  2.500E+02  2.600E+02  2.700E+02  2.800E+02  2.900E+02
+    3.000E+02  3.100E+02  3.200E+02  3.300E+02  3.400E+02  3.500E+02  3.600E+02  3.700E+02  3.800E+02  3.900E+02
+    4.000E+02  4.100E+02  4.200E+02  1.00E+05'
 
     y ='1.000E+00  1.000E+00  9.671E-01  9.355E-01  9.050E-01  8.757E-01  8.476E-01  8.205E-01  7.945E-01  7.695E-01  7.455E-01
-  7.225E-01  7.004E-01  6.792E-01  6.590E-01  6.395E-01  6.209E-01  6.031E-01  5.860E-01  5.697E-01  5.540E-01
-  5.396E-01  4.749E-01  2.753E-01  1.773E-01  1.219E-01  8.812E-02  6.655E-02  5.206E-02  4.181E-02  3.425E-02
-  2.850E-02  2.401E-02  2.043E-02  1.754E-02  1.516E-02  1.317E-02  1.151E-02  1.009E-02  8.869E-03  7.816E-03
-  6.898E-03  6.094E-03  5.382E-03  4.752E-03  4.192E-03  3.692E-03  3.253E-03  2.814E-03  2.480E-03  2.132E-03
-  1.866E-03  1.621E-03  1.397E-03  1.190E-03  9.999E-04  8.248E-04  6.642E-04  5.175E-04  3.841E-04  2.637E-04
-  1.558E-04  5.989E-05    0      0'
+    7.225E-01  7.004E-01  6.792E-01  6.590E-01  6.395E-01  6.209E-01  6.031E-01  5.860E-01  5.697E-01  5.540E-01
+    5.396E-01  4.749E-01  2.753E-01  1.773E-01  1.219E-01  8.812E-02  6.655E-02  5.206E-02  4.181E-02  3.425E-02
+    2.850E-02  2.401E-02  2.043E-02  1.754E-02  1.516E-02  1.317E-02  1.151E-02  1.009E-02  8.869E-03  7.816E-03
+    6.898E-03  6.094E-03  5.382E-03  4.752E-03  4.192E-03  3.692E-03  3.253E-03  2.814E-03  2.480E-03  2.132E-03
+    1.866E-03  1.621E-03  1.397E-03  1.190E-03  9.999E-04  8.248E-04  6.642E-04  5.175E-04  3.841E-04  2.637E-04
+    1.558E-04  5.989E-05    0      0'
 
     scale_factor = 40300
   []
@@ -102,7 +102,7 @@
 
 [MaterialProperties]
   [fuel-mat]
-    type = HeatConductionMaterialProps
+    type = SolidMaterialProps
     k = 29.3
     Cp = 191.67
     rho = 1.4583e4
@@ -116,7 +116,7 @@
     rho = 865
   []
   [clad-mat]
-    type = HeatConductionMaterialProps
+    type = SolidMaterialProps
     k = 26.3
     Cp = 638
     rho = 7.646e3
@@ -137,7 +137,6 @@
     initial_power = 250e6
     pke = 'point_kinetics_basic'
     decay_heat = power_history
-    point_kinetics_power = 0.0
   []
 
 ######  Test for Point-Kinetics  ######
@@ -147,8 +146,6 @@
     rho_fn_name = rho_func
     LAMBDA = 3.30729E-07
     betai =  '8.1430E-05  5.9311E-04  5.0653E-04  1.1955E-03  7.0362E-04  2.5761E-04'
-    Normalized_fission_power = 'Pf'
-    Delay_neutron_precursor_name = 'C1   C2   C3   C4   C5   C6'
     irk_solver = true
   []
 
@@ -176,7 +173,7 @@
     n_heatstruct = 2
     fuel_type = cylinder
     width_of_hs = '0.00348 0.00052'
-    elem_number_of_hs = '20 5'
+    elem_number_of_hs = '5 2'
     material_hs = 'fuel-mat clad-mat'
 
     power_fraction = '0.02248 0.0'
@@ -267,7 +264,7 @@
     n_heatstruct = 2
     fuel_type = cylinder
     width_of_hs = '0.00348 0.00052'
-    elem_number_of_hs = '20 5'
+    elem_number_of_hs = '5 2'
     material_hs = 'fuel-mat clad-mat'
 
     power_fraction = '0.41924 0.0'
@@ -356,7 +353,7 @@
     n_heatstruct = 2
     fuel_type = cylinder
     width_of_hs = '0.00348 0.00052'
-    elem_number_of_hs = '20 5'
+    elem_number_of_hs = '5 2'
     material_hs = 'fuel-mat clad-mat'
 
     power_fraction = '0.09852 0.0'
@@ -446,7 +443,7 @@
     n_heatstruct = 2
     fuel_type = cylinder
     width_of_hs = '0.00348 0.00052'
-    elem_number_of_hs = '20 5'
+    elem_number_of_hs = '5 2'
     material_hs = 'fuel-mat clad-mat'
 
     power_fraction = '0.43116 0.0'
@@ -534,7 +531,7 @@
     n_heatstruct = 2
     fuel_type = cylinder
     width_of_hs = '6.32340e-3 7.0260e-4'
-    elem_number_of_hs = '6 1'
+    elem_number_of_hs = '3 1'
     material_hs = 'fuel-mat clad-mat'
 
     power_fraction = '0.02860 0.0'
@@ -669,7 +666,6 @@
     initial_P = 3e5
     initial_T = 628.15
     eos = eos
-    display_pps = true
     nodal_Tbc = true
   []
 
@@ -687,7 +683,6 @@
     initial_level = 2.16 #3.59
     initial_T = 783.15
     initial_V = 0.00356
-    display_pps = true
     eos = eos
     covergas_component = 'cover_gas'
   []
@@ -707,7 +702,6 @@
     initial_level = 5
     initial_T = 628.15
     initial_P = 3e5
-    display_pps = true
     eos = eos
     covergas_component = 'cover_gas'
   []
@@ -878,8 +872,6 @@
     HTC_geometry_type_secondary = Pipe
     HT_surface_area_density = 108.1
     HT_surface_area_density_secondary = 108.1
-    tao_supg = 0.1
-    tao_supg_secondary = 0.1
 
     Twall_init = 628.15
     dim_wall = 1
@@ -998,42 +990,42 @@
     variable = temperature
   []
   [max_Tcoolant_core]
-    type = NodalMaxValue
+    type = NodalExtremeValue
     block = 'CH1:pipe CH2:pipe CH3:pipe CH4:pipe'
     variable = temperature
   []
   [max_Tco_core]
-    type = NodalMaxValue
+    type = NodalExtremeValue
     block = 'CH1:pipe CH2:pipe CH3:pipe CH4:pipe'
     variable = Tw
   []
   [max_Tci_core]
-    type = NodalMaxValue
+    type = NodalExtremeValue
     block = 'CH1:solid:clad CH2:solid:clad CH3:solid:clad CH4:solid:clad'
     variable = T_solid
   []
   [max_Tf_core]
-    type = NodalMaxValue
+    type = NodalExtremeValue
     block = 'CH1:solid:fuel CH2:solid:fuel CH3:solid:fuel CH4:solid:fuel'
     variable = T_solid
   []
   [max_Tcoolant_Ref]
-    type = NodalMaxValue
+    type = NodalExtremeValue
     block = 'CH5:pipe'
     variable = temperature
   []
   [max_Tco_Ref]
-    type = NodalMaxValue
+    type = NodalExtremeValue
     block = 'CH5:pipe'
     variable = Tw
   []
   [max_Tci_Ref]
-    type = NodalMaxValue
+    type = NodalExtremeValue
     block = 'CH5:solid:clad'
     variable = T_solid
   []
   [max_Tf_Ref]
-    type = NodalMaxValue
+    type = NodalExtremeValue
     block = 'CH5:solid:fuel'
     variable = T_solid
   []
@@ -1061,14 +1053,14 @@
     type = SMP
     full = true
     solve_type  = 'PJFNK'
-    petsc_options_iname = '-pc_type'
-    petsc_options_value = 'lu'
+    petsc_options_iname = '-pc_type -ksp_gmres_restart'
+    petsc_options_value = 'lu 101'
   []
 [] # End preconditioning block
 
 [Executioner]
   type = Transient
-  dt = 0.1
+  dt = 1.0
   dtmin = 1e-3
 
   # setting time step range
@@ -1083,8 +1075,7 @@
   nl_abs_tol = 1e-6
   nl_max_its = 20
 
-  l_tol = 1e-5 # Relative linear tolerance for each Krylov solve
-  l_max_its = 100 # Number of linear iterations for each Krylov solve
+  l_max_its = 50 # Number of linear iterations for each Krylov solve
 
   start_time = -500
   num_steps =  10000
@@ -1104,15 +1095,22 @@
     use_displaced = true
     execute_on = 'initial timestep_end'
     sequence = false
+    interval = 40
   []
   [checkpoint]
     type = Checkpoint
     num_files = 1
+    execute_on = 'FINAL FAILED'
   []
   [console]
     type = Console
+    output_nonlinear = false
+    output_linear = false
+    execute_scalars_on = 'NONE'
+    interval = 20
   []
   [csv]
     type = CSV
+    interval = 5
   []
 []

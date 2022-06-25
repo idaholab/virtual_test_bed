@@ -128,7 +128,7 @@
 
 [MaterialProperties]
   [fuel-mat]
-    type = HeatConductionMaterialProps
+    type = SolidMaterialProps
     k = 29.3
     Cp = 191.67
     rho = 1.4583e4
@@ -136,13 +136,13 @@
     YoungsM = 2.8E+10
   []
   [gap-mat]
-    type = HeatConductionMaterialProps
+    type = SolidMaterialProps
     k = 64
     Cp = 1272
     rho = 865
   []
   [clad-mat]
-    type = HeatConductionMaterialProps
+    type = SolidMaterialProps
     k = 26.3
     Cp = 638
     rho = 7.646e3
@@ -150,7 +150,7 @@
     YoungsM = 1.5E+11
   []
   [ss-mat]
-    type = HeatConductionMaterialProps
+    type = SolidMaterialProps
     k = 26.3
     Cp = 638
     rho = 7.646e3
@@ -163,7 +163,7 @@
     initial_power = 250e6
     pke = 'point_kinetics_basic'
     decay_heat = power_history
-    point_kinetics_power = 2.36250E+08
+    operating_power = 2.36250E+08
   []
 
 ######  Test for Point-Kinetics  ######
@@ -173,16 +173,14 @@
     rho_fn_name = rho_func
     LAMBDA = 3.30729E-07
     betai =  '8.1430E-05  5.9311E-04  5.0653E-04  1.1955E-03  7.0362E-04  2.5761E-04'
-    Normalized_fission_power = 'Pf'
-    Delay_neutron_precursor_name = 'C1   C2   C3   C4   C5   C6'
 
     # Turn on reactivity feedbacks
     feedback_components = 'CH1 CH2 CH3 CH4'
     feedback_start_time = 0.0
     irk_solver = true
-# Core radial expansion model
+
+    # Core radial expansion model
     core_radial_expansion_reactivity_feedback = true
-    n_radial_constraint_system = 2
     core_radial_expansion_reactivity_coefficients = '-0.86929  -0.86929'
     core_radial_expansion_weights = '0.3  0.7'
     use_external_radial_displacement = false
@@ -214,7 +212,7 @@
     n_heatstruct = 2
     fuel_type = cylinder
     width_of_hs = '0.00348 0.00052'
-    elem_number_of_hs = '20 5'
+    elem_number_of_hs = '5 2'
     material_hs = 'fuel-mat clad-mat'
 
     power_fraction = '0.02248 0.0'
@@ -320,7 +318,7 @@
     n_heatstruct = 2
     fuel_type = cylinder
     width_of_hs = '0.00348 0.00052'
-    elem_number_of_hs = '20 5'
+    elem_number_of_hs = '5 2'
     material_hs = 'fuel-mat clad-mat'
 
     power_fraction = '0.41924 0.0'
@@ -424,7 +422,7 @@
     n_heatstruct = 2
     fuel_type = cylinder
     width_of_hs = '0.00348 0.00052'
-    elem_number_of_hs = '20 5'
+    elem_number_of_hs = '5 2'
     material_hs = 'fuel-mat clad-mat'
 
     power_fraction = '0.09852 0.0'
@@ -529,7 +527,7 @@
     n_heatstruct = 2
     fuel_type = cylinder
     width_of_hs = '0.00348 0.00052'
-    elem_number_of_hs = '20 5'
+    elem_number_of_hs = '5 2'
     material_hs = 'fuel-mat clad-mat'
 
     power_fraction = '0.43116 0.0'
@@ -632,7 +630,7 @@
     n_heatstruct = 2
     fuel_type = cylinder
     width_of_hs = '6.32340e-3 7.0260e-4'
-    elem_number_of_hs = '6 1'
+    elem_number_of_hs = '3 1'
     material_hs = 'fuel-mat clad-mat'
 
     power_fraction = '0.02860 0.0'
@@ -767,7 +765,6 @@
     initial_P = 3e5
     initial_T = 628.15
     eos = eos
-    display_pps = true
     nodal_Tbc = true
   []
 
@@ -785,7 +782,6 @@
     initial_level = 2.16 #3.59
     initial_T = 783.15
     initial_V = 0.00356
-    display_pps = true
     eos = eos
     covergas_component = 'cover_gas'
   []
@@ -805,7 +801,6 @@
     initial_level = 5
     initial_T = 628.15
     initial_P = 3e5
-    display_pps = true
     eos = eos
     covergas_component = 'cover_gas'
   []
@@ -1104,42 +1099,42 @@
     variable = temperature
   []
   [max_Tcoolant_core]
-    type = NodalMaxValue
+    type = NodalExtremeValue
     block = 'CH1:pipe CH2:pipe CH3:pipe CH4:pipe'
     variable = temperature
   []
   [max_Tco_core]
-    type = NodalMaxValue
+    type = NodalExtremeValue
     block = 'CH1:pipe CH2:pipe CH3:pipe CH4:pipe'
     variable = Tw
   []
   [max_Tci_core]
-    type = NodalMaxValue
+    type = NodalExtremeValue
     block = 'CH1:solid:clad CH2:solid:clad CH3:solid:clad CH4:solid:clad'
     variable = T_solid
   []
   [max_Tf_core]
-    type = NodalMaxValue
+    type = NodalExtremeValue
     block = 'CH1:solid:fuel CH2:solid:fuel CH3:solid:fuel CH4:solid:fuel'
     variable = T_solid
   []
   [max_Tcoolant_Ref]
-    type = NodalMaxValue
+    type = NodalExtremeValue
     block = 'CH5:pipe'
     variable = temperature
   []
   [max_Tco_Ref]
-    type = NodalMaxValue
+    type = NodalExtremeValue
     block = 'CH5:pipe'
     variable = Tw
   []
   [max_Tci_Ref]
-    type = NodalMaxValue
+    type = NodalExtremeValue
     block = 'CH5:solid:clad'
     variable = T_solid
   []
   [max_Tf_Ref]
-    type = NodalMaxValue
+    type = NodalExtremeValue
     block = 'CH5:solid:fuel'
     variable = T_solid
   []
@@ -1167,8 +1162,8 @@
     type = SMP
     full = true
     solve_type  = 'PJFNK'
-    petsc_options_iname = '-pc_type'
-    petsc_options_value = 'lu'
+    petsc_options_iname = '-pc_type -ksp_gmres_restart'
+    petsc_options_value = 'lu 101'
   []
 [] # End preconditioning block
 
@@ -1195,13 +1190,13 @@
   end_time = 1000
 
   [Quadrature]
-      type = TRAP
-      order = FIRST
+    type = TRAP
+    order = FIRST
   []
 [] # close Executioner section
 
 [Problem]
-  restart_file_base = abtr_ss_checkpoint_cp/0339
+  restart_file_base = abtr_ss_checkpoint_cp/0038
 []
 
 [Outputs]

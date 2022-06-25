@@ -20,9 +20,10 @@
     type = CSVDiff
     input = 'abtr_ss.i'
     csvdiff = 'abtr_ss_csv.csv'
-    cli_args = '--app SamApp Executioner/num_steps=50'
+    cli_args = '--app SamApp'
     executable_pattern = 'sam*|blue_crab*'
     prereq = steady_syntax
+    rel_err = 1E-4
   []
   [ulof]
     type = CSVDiff
@@ -30,9 +31,10 @@
     csvdiff = 'abtr_ulof_csv.csv'
     # this restarts too late to run the ULOF
     # TODO increate testing timeout and run steady long enough
-    cli_args = '--app SamApp Executioner/num_steps=10 Problem/restart_file_base=abtr_ss_checkpoint_cp/0050'
+    cli_args = '--app SamApp Executioner/num_steps=100'
     executable_pattern = 'sam*|blue_crab*'
     # to generate the restart file
     prereq = 'ulof_syntax steady'
+    rel_err = 1E-4
   []
 []
