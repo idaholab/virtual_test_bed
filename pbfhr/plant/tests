@@ -12,6 +12,21 @@
     cli_args = "MultiApps/active='' Transfers/active=''"
     executable_pattern = 'griffin*|blue_crab*|dire_wolf*|fenix*'
   []
+  [syntax_core_flow_initial]
+    type = RunApp
+    input = 'ss1_combined_initial.i'
+    check_input = True
+    ad_indexing_type = 'global'
+    cli_args = "MultiApps/active='' Transfers/active=''"
+    executable_pattern = 'pronghorn*|blue_crab*|fenix*'
+  []
+  [syntax_plant_flow_initial]
+    type = RunApp
+    input = 'ss2_primary_initial.i'
+    check_input = True
+    cli_args = "MultiApps/active='' Transfers/active=''"
+    executable_pattern = 'sam*'
+  []
   [syntax_core_flow]
     type = RunApp
     input = 'ss1_combined.i'
@@ -61,16 +76,27 @@
     executable_pattern = 'pronghorn*|blue_crab*|fenix*'
   []
 
-  # Regression tests
-  [multiphysics]
+  # Regression tests - coupled cases
+  [multiphysics_with_neutronics]
     type = CSVDiff
     input = 'ss0_neutrons.i'
     csvdiff = 'pbfhr_steady.csv'
     executable_pattern = 'blue_crab*'
-    skip = '#20701'
-    prereq = 'syntax_multiphysics'
-    cli_args = 'Outputs/file_base=pbfhr_steady'
+    min_parallel = 8
+    prereq = 'syntax_multiphysics sam_pronghorn_init'
+    cli_args = "Outputs/file_base=pbfhr_steady Executioner/fixed_point_max_its=1 Executioner/accept_on_max_fixed_point_iteration=true MultiApps/thermo/cli_args='Problem/restart_file_base=pbfhr_sam_pronghorn_cp/LATEST;Executioner/num_steps=30;Executioner/fixed_point_max_its=3'"
   []
+  [sam_pronghorn_init]
+    type = CSVDiff
+    input = 'ss1_combined_initial.i'
+    csvdiff = 'pbfhr_sam_pronghorn.csv'
+    executable_pattern = 'blue_crab*'
+    min_parallel = 8
+    prereq = 'core_flow plant_flow'
+    cli_args = 'Outputs/file_base=pbfhr_sam_pronghorn Executioner/num_steps=50'
+  []
+
+  # Regression tests - single app inputs
   [neutronics]
     type = CSVDiff
     input = 'ss0_neutrons.i'
@@ -79,6 +105,17 @@
     executable_pattern = 'griffin*|blue_crab*|dire_wolf*|fenix*'
     min_parallel = 4
     prereq = 'syntax_neutronics'
+  []
+  [core_flow_initial]
+    type = CSVDiff
+    input = 'ss1_combined_initial.i'
+    csvdiff = 'ss1_combined_initial_out.csv'
+    ad_indexing_type = 'global'
+    # Last two arguments to accomodate for old submodules for now
+    cli_args = "MultiApps/active='' Transfers/active=''"
+    executable_pattern = 'pronghorn*|blue_crab*|fenix*'
+    min_parallel = 8
+    prereq = 'syntax_core_flow_initial syntax_plant_flow_initial'
   []
   [core_flow]
     type = CSVDiff
@@ -89,7 +126,7 @@
     cli_args = "MultiApps/active='' Transfers/active='' Executioner/num_steps=20"
     executable_pattern = 'pronghorn*|blue_crab*|fenix*'
     min_parallel = 8
-    prereq = 'syntax_core_flow'
+    prereq = 'syntax_core_flow core_flow_initial'
   []
   [plant_flow]
     type = CSVDiff

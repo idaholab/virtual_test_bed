@@ -47,7 +47,7 @@ rho_fluid = 1970.0   # kg/m3 at 900K [3]
 alpha_b = 2e-4       # /K from [4]
 
 # Graphite properties
-heat_capacity_multiplier = 1e0  # >1 gets faster to steady state
+heat_capacity_multiplier = 1e2  # >1 gets faster to steady state
 solid_rho = 1780.0
 # solid_k = 26.0
 solid_cp = ${fparse 1697.0*heat_capacity_multiplier}
@@ -96,11 +96,10 @@ outlet_pressure_val = 2e5
   # in pbfhr/meshes using Cubit to generate the mesh
   # Modify the parameters (mesh size, refinement areas) for each application
   # neutronics, thermal hydraulics and fuel performance
-  # uniform_refine = 1
+  uniform_refine = 1
   [fmg]
     type = FileMeshGenerator
-    file = 'ss1_combined_initial_exodus.e'
-    # '../meshes/core_pronghorn.e'
+    file = '../meshes/core_pronghorn.e'
   []
   [barrel]
     type = SideSetsBetweenSubdomainsGenerator
@@ -127,9 +126,6 @@ outlet_pressure_val = 2e5
 
 [Problem]
   coord_type = RZ
-  # We use a restart file to heat up the reflector beforehand, to get SAM and Pgh in agreement
-  restart_file_base = ss1_combined_initial_checkpoint_cp/LATEST
-  force_restart = true
 []
 
 [GlobalParams]
@@ -225,18 +221,22 @@ outlet_pressure_val = 2e5
   [superficial_vel_x]
     type = PINSFVSuperficialVelocityVariable
     block = ${blocks_fluid}
+    initial_condition = 1e-12
   []
   [superficial_vel_y]
     type = PINSFVSuperficialVelocityVariable
     block = ${blocks_fluid}
+    initial_condition = ${inlet_vel_y_ini}
   []
   [pressure]
     type = INSFVPressureVariable
     block = ${blocks_fluid}
+    initial_condition = 2e5
   []
   [T_fluid]
     type = INSFVEnergyVariable
     block = ${blocks_fluid}
+    initial_condition = 873.15
   []
   [T_solid]
     type = INSFVEnergyVariable
@@ -329,7 +329,24 @@ outlet_pressure_val = 2e5
 # INITIAL CONDITIONS AND FUNCTIONS
 # ==============================================================================
 [ICs]
-  # No need for initial conditions for a restart simulation
+  [pow_init1]
+    type = FunctionIC
+    variable = power_distribution
+    function = ${power_density}
+    block = '3'
+  []
+  [core]
+    type = FunctionIC
+    variable = T_solid
+    function = 900
+    block = '1 2 3 4 5 6 7 8'
+  []
+  [bricks]
+    type = FunctionIC
+    variable = T_solid
+    function = 350
+    block = '9 10'
+  []
 []
 
 [Functions]
@@ -591,21 +608,27 @@ outlet_pressure_val = 2e5
   dtmin = 0.1
   dtmax = 2e4
 
-  # To run a 100s transient
-  start_time = 0
-  end_time = 100
+  # To generate a restart file with hot reflector regions
+  start_time = -200000
+  end_time = 0
+
+  # Timeline:
+  # -200000 -> -200 Pronghorn runs alone, reflector heats up
+  # -200 -> -100    SAM runs alone, roughly achieves steady state
+  # -100 -> 0       SAM and Pronghorn run coupled
 
   [TimeStepper]
     type = IterationAdaptiveDT
-    dt                 = 1
+    dt                 = 0.15
     cutback_factor     = 0.5
     growth_factor      = 2.0
   []
 
-  # Fixed point iterations with SAM
-  fixed_point_max_its = 10
-  fixed_point_abs_tol = 1e-5
-  accept_on_max_fixed_point_iteration = true
+  # Fixed point iterations with SAM are naturally achieved
+  # by the relaxation transient
+  # fixed_point_max_its = 10
+  # fixed_point_abs_tol = 1e-5
+  # accept_on_max_fixed_point_iteration = true
 
   # Steady state detection.
   steady_state_detection = true
@@ -617,23 +640,17 @@ outlet_pressure_val = 2e5
 # MULTIAPPS FOR PEBBLE MODEL AND PRIMARY LOOP
 # ==============================================================================
 [MultiApps]
-  # [pebble_mesh]
-  #   type = TransientMultiApp
-  #   execute_on = 'FINAL'
-  #   input_files = 'ss3_coarse_pebble_mesh.i'
-  #   cli_args = 'Outputs/console=false'
-  # []
-
   [primary]
     type = TransientMultiApp
     app_type = 'SamApp'
     input_files = ss2_primary.i
     max_procs_per_app = 1
     execute_on = 'timestep_end'
+    cli_args = 'Executioner/start_time=-400;Executioner/end_time=0'
 
-    # Parameters if Pronghorn takes larger steps than SAM
-    # sub_cycling = true
-    # print_sub_cycles = false
+    # Parameters if Pronghorn and SAM steps dont align
+    sub_cycling = true
+    max_failures = 1e3
 
     # Parameters if Pronghorn and SAM steps match
     # catch_up = true
@@ -642,19 +659,9 @@ outlet_pressure_val = 2e5
 []
 
 [Transfers]
-  # Pebble simulations
-  # [fuel_matrix_heat_source]
-  #   type = MultiAppProjectionTransfer
-  #   to_multi_app = coarse_mesh
-  #   source_variable = power_distribution
-  #   variable = power_distribution
-  # []
-  # [pebble_surface_temp]
-  #   type = MultiAppProjectionTransfer
-  #   to_multi_app = coarse_mesh
-  #   source_variable = T_solid
-  #   variable = temp_solid
-  # []
+  # No transfers to initialize solutions separately
+  # Transfers start to matter when SAM starts
+  # no fixed point iteration, transient takes care of relaxing
 
   # Primary and secondary loops
   [send_flow_BCs]
@@ -668,8 +675,6 @@ outlet_pressure_val = 2e5
     from_multi_app = primary
     from_postprocessors = 'Core_outlet_p Core_inlet_mdot Core_inlet_T'
     to_postprocessors   = 'outlet_pressure inlet_mdot inlet_temp_fluid'
-    # Initial execution is important to avoid using a default BC
-    execute_on = 'INITIAL TIMESTEP_END'
   []
 []
 
@@ -680,7 +685,7 @@ outlet_pressure_val = 2e5
   # Received from SAM for primary loop coupling
   [inlet_mdot]
     type = Receiver
-    default = 9.784508e+02 #${mfr}
+    default = ${mfr}
     execute_on = 'INITIAL TIMESTEP_END TRANSFER'
   []
   [inlet_vel_y_pp]
@@ -693,12 +698,12 @@ outlet_pressure_val = 2e5
   []
   [inlet_temp_fluid]
     type = Receiver
-    default = 8.741515e+02 #${inlet_T_fluid}
+    default = ${inlet_T_fluid}
     execute_on = 'INITIAL TIMESTEP_END TRANSFER'
   []
   [outlet_pressure]
     type = Receiver
-    default = 1.865956e+05 #${outlet_pressure_val}
+    default = ${outlet_pressure_val}
     execute_on = 'INITIAL TIMESTEP_END TRANSFER'
   []
 
@@ -780,6 +785,7 @@ outlet_pressure_val = 2e5
     type = VolumetricFlowRate
     boundary = 'bed_horizontal_top plenum_top OR_horizontal_top'
     advected_quantity = 'rho_cp_temp'
+    execute_on = 'INITIAL TIMESTEP_END TRANSFER'
   []
   [core_balance]
     type = ParsedPostprocessor
@@ -830,15 +836,30 @@ outlet_pressure_val = 2e5
   csv = true
   [console]
     type = Console
-    show = 'T_flow_in inlet_temp_fluid T_flow_out pressure_in outlet_pressure '
+    show = 'T_flow_in T_flow_out pressure_in outlet_pressure '
            'inlet_mdot mass_flow_out'
   []
   [exodus]
     type = Exodus
+    # Force exact synchronization of SAM and Pronghorn for the last 100s
+    sync_times = '-100 -99 -98 -97 -96 -95 -94 -93 -92 -91 -90 -89
+                   -88 -87 -86 -85 -84 -83 -82 -81 -80 -79 -78 -77
+                   -76 -75 -74 -73 -72 -71 -70 -69 -68 -67 -66 -65
+                   -64 -63 -62 -61 -60 -59 -58 -57 -56 -55 -54 -53
+                   -52 -51 -50 -49 -48 -47 -46 -45 -44 -43 -42 -41
+                   -40 -39 -38 -37 -36 -35 -34 -33 -32 -31 -30 -29
+                   -28 -27 -26 -25 -24 -23 -22 -21 -20 -19 -18 -17
+                   -16 -15 -14 -13 -12 -11 -10 -9 -8 -7 -6 -5
+                   -4 -3 -2 -1  0'
   []
   [checkpoint]
     type = Checkpoint
-    num_files = 2
+    sync_only = true
+    # Keep checkpoints to study:
+    # - beginning of SAM iterations
+    # - beginning of SAM-Pronghorn coupling
+    # - tightly coupled SAM-Pronghorn steady state
+    sync_times = '-300 -100 0'
   []
   # Reduce base output
   print_linear_converged_reason = false
