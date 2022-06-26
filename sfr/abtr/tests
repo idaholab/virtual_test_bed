@@ -1,0 +1,40 @@
+[Tests]
+  # Syntax tests
+  [steady_syntax]
+    type = RunApp
+    input = 'abtr_ss.i'
+    check_input = True
+    cli_args = '--app SamApp'
+    executable_pattern = 'sam*|blue_crab*'
+  []
+  [ulof_syntax]
+    type = RunApp
+    input = 'abtr_ulof.i'
+    check_input = True
+    cli_args = '--app SamApp'
+    executable_pattern = 'sam*|blue_crab*'
+  []
+
+  # Regression tests
+  [steady]
+    type = CSVDiff
+    input = 'abtr_ss.i'
+    csvdiff = 'abtr_ss_csv.csv'
+    cli_args = '--app SamApp'
+    executable_pattern = 'sam*|blue_crab*'
+    prereq = steady_syntax
+    rel_err = 1E-4
+  []
+  [ulof]
+    type = CSVDiff
+    input = 'abtr_ulof.i'
+    csvdiff = 'abtr_ulof_csv.csv'
+    # this restarts too late to run the ULOF
+    # TODO increate testing timeout and run steady long enough
+    cli_args = '--app SamApp Executioner/num_steps=100'
+    executable_pattern = 'sam*|blue_crab*'
+    # to generate the restart file
+    prereq = 'ulof_syntax steady'
+    rel_err = 1E-4
+  []
+[]
