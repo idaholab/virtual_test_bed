@@ -20,7 +20,7 @@ for app in os.listdir(apps_folder):
     if (os.path.exists(apps_folder+'/'+app+'/run_tests')):
         print("Running tests for", app)
         os.chdir(apps_folder+'/'+app)
-        os.system('./run_tests --pedantic-checks -j 16 --spec-file ../.. -i tests -t --longest-jobs=1')
+        os.system('./run_tests --pedantic-checks -j 16 --spec-file ../.. -i tests -t --longest-jobs=5')
         print("Tests finished for", app, "\n\n\n")
         os.system('cd ../../')
     else:

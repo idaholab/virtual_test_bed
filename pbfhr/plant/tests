@@ -4,6 +4,8 @@
     input = 'ss0_neutrons.i'
     check_input = True
     executable_pattern = 'blue_crab*'
+    # need a restart file
+    prereq = 'core_flow_initial'
   []
   [syntax_neutronics]
     type = RunApp
@@ -20,13 +22,6 @@
     cli_args = "MultiApps/active='' Transfers/active=''"
     executable_pattern = 'pronghorn*|blue_crab*|fenix*'
   []
-  [syntax_plant_flow_initial]
-    type = RunApp
-    input = 'ss2_primary_initial.i'
-    check_input = True
-    cli_args = "MultiApps/active='' Transfers/active=''"
-    executable_pattern = 'sam*'
-  []
   [syntax_core_flow]
     type = RunApp
     input = 'ss1_combined.i'
@@ -34,6 +29,8 @@
     ad_indexing_type = 'global'
     cli_args = "MultiApps/active='' Transfers/active=''"
     executable_pattern = 'pronghorn*|blue_crab*|fenix*'
+    # need a restart file
+    prereq = 'core_flow_initial'
   []
   [syntax_plant_flow]
     type = RunApp
@@ -92,7 +89,7 @@
     csvdiff = 'pbfhr_sam_pronghorn.csv'
     executable_pattern = 'blue_crab*'
     min_parallel = 8
-    prereq = 'core_flow plant_flow'
+    prereq = 'syntax_plant_flow core_flow plant_flow'
     cli_args = 'Outputs/file_base=pbfhr_sam_pronghorn Executioner/num_steps=50'
   []
 
@@ -115,7 +112,7 @@
     cli_args = "MultiApps/active='' Transfers/active=''"
     executable_pattern = 'pronghorn*|blue_crab*|fenix*'
     min_parallel = 8
-    prereq = 'syntax_core_flow_initial syntax_plant_flow_initial'
+    prereq = 'syntax_core_flow_initial'
   []
   [core_flow]
     type = CSVDiff

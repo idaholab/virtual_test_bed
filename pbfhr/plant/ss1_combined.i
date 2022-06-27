@@ -99,8 +99,7 @@ outlet_pressure_val = 2e5
   # uniform_refine = 1
   [fmg]
     type = FileMeshGenerator
-    file = 'ss1_combined_initial_exodus.e'
-    # '../meshes/core_pronghorn.e'
+    file = '../meshes/core_pronghorn.e'
   []
   [barrel]
     type = SideSetsBetweenSubdomainsGenerator
