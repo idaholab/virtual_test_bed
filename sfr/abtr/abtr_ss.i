@@ -17,9 +17,9 @@
 
 [Functions]
   [time_stepper]
-    type = PiecewiseLinear
-    x = '-1000  -499.9   -499.8   -499   -498   -450   -1     0       2     3   10   11  380   381    440   441   1e5'
-    y =' 1.0    1.0      1.0    1.0    1.0    20.     20   0.2     0.2   0.5  0.5    2    2     2      2     5     5'
+    type = PiecewiseConstant
+    x = '-500 -490    -10     0       2     3   10   11  380   381    440   441   1e5'
+    y =' 1.0    50.       50.0 0.2     0.2   0.5  0.5    2    2     2      2     5     5'
   []
 
   [ppf_axial]
@@ -33,14 +33,8 @@
 
   [rho_func]
     type = PiecewiseLinear
-    x ='-5000.0      0.0  70  500  700  1000  5000.0'
-    y ='0.0          0.0  -4.67292E-04  -3.33780E-04  -6.67560E-04  -6.17493E-04  0.0'
-  []
-
-  [power_history]
-    type = PiecewiseLinear
-    x ='-1.000E+03  0  0.1  20  40  60  80  100  120  140  160  180  200  220  240  260  280  300  320  340  360  380  400  450  500  600  700  800  900  1000 1e5'
-    y ='1.0000E+00  1.0000E+00  5.5000E-02  5.0246E-02  4.5903E-02  4.1936E-02  3.8311E-02  3.4999E-02  3.3473E-02  3.2012E-02  3.0615E-02  2.9279E-02  2.8001E-02  2.7588E-02  2.7182E-02  2.6782E-02  2.6388E-02  2.6000E-02  2.5797E-02  2.5595E-02  2.5396E-02  2.5197E-02  2.5001E-02  2.4515E-02  2.4039E-02  2.3115E-02  2.2227E-02  2.1372E-02  2.0551E-02  1.9761E-02  2.7650E-19'
+    x ='-5000.0      0.0    70              500             700             1000            5000.0'
+    y ='0.0          0.0    -4.67292E-04    -3.33780E-04    -6.67560E-04    -6.17493E-04    0.0'
   []
 
   [pump_p_coastdown]
@@ -84,19 +78,44 @@
 
     scale_factor = 40300
   []
-
   [flow_secondary]
     type = PiecewiseLinear
     x ='-1.000E+03  0          1       1e5'
     y = '-1259     -1259     0       0'
     scale_factor = 0.002216 # 1/rhoA
   []
-
   [flow_dhx]
     type = PiecewiseLinear
     x ='-1.000E+03   0     1      1e5'
     y = '0  0  -6.478    -6.478'
     scale_factor = 0.046 # 1/rhoA
+  []
+  [CH1_fuel_axial_reactivity_fn]
+    type = PiecewiseLinear
+    axis = x
+    x = '-0.2 0.00  0.04  0.08  0.12  0.16  0.20  0.24  0.28  0.32  0.36  0.40  0.44  0.48  0.52  0.56  0.60  0.64  0.68  0.72  0.76  0.80  1.0'
+    y = '8.16610E-06 8.16610E-06  8.16610E-06  9.42750E-06   1.10140E-05   1.26600E-05   1.35860E-05   1.49250E-05   1.60350E-05   1.68550E-05   1.71180E-05   1.72500E-05   1.70260E-05   1.64540E-05   1.58990E-05   1.46680E-05   1.31750E-05   1.14770E-05   1.02240E-05   8.15290E-06   6.14050E-06   4.32450E-06 4.32450E-06'
+  []
+  [CH2_fuel_axial_reactivity_fn]
+    type = PiecewiseLinear
+    axis = x
+    x = '-0.2 0.00  0.04  0.08  0.12  0.16  0.20  0.24  0.28  0.32  0.36  0.40  0.44  0.48  0.52  0.56  0.60  0.64  0.68  0.72  0.76  0.80  1.0'
+    y = '8.16610E-06 8.16610E-06  8.16610E-06  9.42750E-06   1.10140E-05   1.26600E-05   1.35860E-05   1.49250E-05   1.60350E-05   1.68550E-05   1.71180E-05   1.72500E-05   1.70260E-05   1.64540E-05   1.58990E-05   1.46680E-05   1.31750E-05   1.14770E-05   1.02240E-05   8.15290E-06   6.14050E-06   4.32450E-06 4.32450E-06'
+
+  []
+  [CH3_fuel_axial_reactivity_fn]
+    type = PiecewiseLinear
+    axis = x
+    x = '-0.2 0.00  0.04  0.08  0.12  0.16  0.20  0.24  0.28  0.32  0.36  0.40  0.44  0.48  0.52  0.56  0.60  0.64  0.68  0.72  0.76  0.80  1.0'
+    y = '6.641E-06  6.641E-06  6.641E-06  7.667E-06  8.957E-06  1.030E-05  1.105E-05  1.214E-05  1.304E-05  1.371E-05  1.392E-05  1.403E-05  1.385E-05  1.338E-05  1.293E-05  1.193E-05  1.071E-05  9.334E-06  8.315E-06  6.630E-06  4.994E-06  3.517E-06  3.517E-06'
+
+  []
+  [CH4_fuel_axial_reactivity_fn]
+    type = PiecewiseLinear
+    axis = x
+    x = '-0.2 0.00  0.04  0.08  0.12  0.16  0.20  0.24  0.28  0.32  0.36  0.40  0.44  0.48  0.52  0.56  0.60  0.64  0.68  0.72  0.76  0.80  1.0'
+    y = '4.907E-06  4.907E-06  4.907E-06  5.665E-06  6.618E-06  7.608E-06  8.164E-06  8.969E-06  9.636E-06  1.013E-05  1.029E-05  1.037E-05  1.023E-05  9.888E-06  9.554E-06  8.814E-06  7.917E-06  6.897E-06  6.144E-06  4.899E-06  3.690E-06  2.599E-06  2.599E-06'
+
   []
 []
 
@@ -108,12 +127,6 @@
     rho = 1.4583e4
     alpha = 1.76E-5
     YoungsM = 2.8E+10
-  []
-  [gap-mat]
-    type = HeatConductionMaterialProps
-    k = 64
-    Cp = 1272
-    rho = 865
   []
   [clad-mat]
     type = SolidMaterialProps
@@ -135,8 +148,10 @@
   [reactor]
     type = ReactorPower
     initial_power = 250e6
+    operating_power = 250e6
     pke = 'point_kinetics_basic'
-    decay_heat = power_history
+    enable_decay_heat = true
+    isotope_fission_fraction = '1.0 0.0 0.0 0.0'
   []
 
 ######  Test for Point-Kinetics  ######
@@ -146,7 +161,18 @@
     rho_fn_name = rho_func
     LAMBDA = 3.30729E-07
     betai =  '8.1430E-05  5.9311E-04  5.0653E-04  1.1955E-03  7.0362E-04  2.5761E-04'
+
+    # Turn on reactivity feedbacks
+    feedback_components = 'CH1 CH2 CH3 CH4'
+    feedback_start_time = 0.0
     irk_solver = true
+# Core radial expansion model
+    core_radial_expansion_reactivity_feedback = true
+    core_radial_expansion_reactivity_coefficients = '-0.86929  -0.86929'
+    core_radial_expansion_weights = '0.3  0.7'
+    use_external_radial_displacement = false
+    core_radial_thermal_expansion_coefficient = '1.60E-5  1.60E-5'
+    coupled_radial_temperatures_pps = 'CH1_inlet_T CH1_outlet_T'
   []
 
 ######  Primary Loop  ######
@@ -178,6 +204,21 @@
 
     power_fraction = '0.02248 0.0'
     power_shape_function = ppf_axial
+
+    # Coolant density reactivity feedback models
+    coolant_density_reactivity_feedback = true
+    n_layers_coolant = 20
+    coolant_reactivity_coefficients = '2.25950E-05  2.25950E-05   2.25950E-05   2.25950E-05   1.13940E-04   1.13940E-04   1.13940E-04   1.13940E-04   1.42850E-04   1.42850E-04   1.42850E-04   1.42850E-04   9.28900E-05   9.28900E-05   9.28900E-05   9.28900E-05   -1.79300E-05   -1.79300E-05   -1.79300E-05   -1.79300E-05'
+
+    pke_material_type = 'FuelDoppler None '
+    n_layers_doppler = 20
+    fuel_doppler_coef = -1.432E-03
+    fuel_doppler_axial_weight = '6.00E-02  6.00E-02  6.00E-02  6.00E-02  5.50E-02  5.50E-02  5.50E-02  5.50E-02  5.70E-02  5.70E-02  5.70E-02  5.70E-02  4.70E-02  4.70E-02  4.70E-02  4.70E-02  3.10E-02  3.10E-02  3.10E-02  3.10E-02'
+
+    # Fuel axial expansion reactivity feedback model
+    fuel_axial_expansion_reactivity_feedback = true
+    n_layers_axial_expansion = 20
+    fuel_axial_expansion_reactivity_fn = CH1_fuel_axial_reactivity_fn
   []
 
   [CH1_LP]
@@ -269,6 +310,21 @@
 
     power_fraction = '0.41924 0.0'
     power_shape_function = ppf_axial
+
+    # Coolant density reactivity feedback models
+    coolant_density_reactivity_feedback = true
+    n_layers_coolant = 20
+    coolant_reactivity_coefficients = '2.25950E-05  2.25950E-05   2.25950E-05   2.25950E-05   1.13940E-04   1.13940E-04   1.13940E-04   1.13940E-04   1.42850E-04   1.42850E-04   1.42850E-04   1.42850E-04   9.28900E-05   9.28900E-05   9.28900E-05   9.28900E-05   -1.79300E-05   -1.79300E-05   -1.79300E-05   -1.79300E-05'
+
+    # Fuel Doppler reactivity feedback model
+    pke_material_type = 'FuelDoppler None '
+    n_layers_doppler = 20
+    fuel_doppler_coef = -1.432E-03
+    fuel_doppler_axial_weight = '6.00E-02  6.00E-02  6.00E-02  6.00E-02  5.50E-02  5.50E-02  5.50E-02  5.50E-02  5.70E-02  5.70E-02  5.70E-02  5.70E-02  4.70E-02  4.70E-02  4.70E-02  4.70E-02  3.10E-02  3.10E-02  3.10E-02  3.10E-02'
+    # Fuel axial expansion reactivity feedback model
+    fuel_axial_expansion_reactivity_feedback = true
+    n_layers_axial_expansion = 20
+    fuel_axial_expansion_reactivity_fn = CH2_fuel_axial_reactivity_fn
   []
   [CH2_LP]
     type = PBPipe
@@ -358,6 +414,21 @@
 
     power_fraction = '0.09852 0.0'
     power_shape_function = ppf_axial
+
+    # Coolant density reactivity feedback models
+    coolant_density_reactivity_feedback = true
+    n_layers_coolant = 20
+    coolant_reactivity_coefficients = '2.52430E-05  2.52430E-05   2.52430E-05   2.52430E-05   1.28450E-04   1.28450E-04   1.28450E-04   1.28450E-04   1.59820E-04   1.59820E-04   1.59820E-04   1.59820E-04   1.03630E-04   1.03630E-04   1.03630E-04   1.03630E-04   -1.68580E-05   -1.68580E-05   -1.68580E-05   -1.68580E-05'
+
+    # Fuel Doppler reactivity feedback model
+    pke_material_type = 'FuelDoppler None '
+    n_layers_doppler = 20
+    fuel_doppler_coef = -2.624E-04
+    fuel_doppler_axial_weight = '5.80E-02  5.80E-02  5.80E-02  5.80E-02  5.40E-02  5.40E-02  5.40E-02  5.40E-02  5.70E-02  5.70E-02  5.70E-02  5.70E-02  4.70E-02  4.70E-02  4.70E-02  4.70E-02  3.40E-02  3.40E-02  3.40E-02  3.40E-02'
+    # Fuel axial expansion reactivity feedback model
+    fuel_axial_expansion_reactivity_feedback = true
+    n_layers_axial_expansion = 20
+    fuel_axial_expansion_reactivity_fn = CH3_fuel_axial_reactivity_fn
   []
   [CH3_LP]
     type = PBPipe
@@ -448,6 +519,21 @@
 
     power_fraction = '0.43116 0.0'
     power_shape_function = ppf_axial
+
+    # Coolant density reactivity feedback model
+    coolant_density_reactivity_feedback = true
+    n_layers_coolant = 20
+    coolant_reactivity_coefficients = '-1.83920E-05  -1.83920E-05   -1.83920E-05   -1.83920E-05   -8.51710E-07   -8.51710E-07   -8.51710E-07   -8.51710E-07   4.50680E-06   4.50680E-06   4.50680E-06   4.50680E-06   -4.90700E-06   -4.90700E-06   -4.90700E-06   -4.90700E-06   -2.53840E-05   -2.53840E-05   -2.53840E-05   -2.53840E-05'
+
+    # Fuel Doppler reactivity feedback model
+    pke_material_type = 'FuelDoppler None '
+    n_layers_doppler = 20
+    fuel_doppler_coef = -1.050E-03
+    fuel_doppler_axial_weight = '5.20E-02  5.20E-02  5.20E-02  5.20E-02  5.60E-02  5.60E-02  5.60E-02  5.60E-02  5.90E-02  5.90E-02  5.90E-02  5.90E-02  4.90E-02  4.90E-02  4.90E-02  4.90E-02  3.40E-02  3.40E-02  3.40E-02  3.40E-02'
+    # Fuel axial expansion feedback model
+    fuel_axial_expansion_reactivity_feedback = true
+    n_layers_axial_expansion = 20
+    fuel_axial_expansion_reactivity_fn = CH4_fuel_axial_reactivity_fn
   []
   [CH4_LP]
     type = PBPipe
@@ -618,7 +704,7 @@
     Twall_init = 628.15
     wall_thickness = 0.0041 #0.0033
 
-    dim_wall = 1
+    dim_wall = 2
     material_wall = ss-mat
     n_wall_elems = 2
   []
@@ -663,10 +749,11 @@
     width = 2.4
     height = 0.6
 
-    initial_P = 3e5
-    initial_T = 628.15
+    initial_P = 515366.5528
+    initial_T = 636.9052461
+    initial_V = 3.257927206
+    Steady = true
     eos = eos
-    nodal_Tbc = true
   []
 
   [hot_pool]
@@ -676,13 +763,15 @@
     outputs = 'IHX(primary_in)'
     K = '0.5 0.5 0.5 0.5 0.5 5.0'
     Area = 11.16
-    volume = 92.51
+    volume = 97.01464649
     width = 4
     height = 5
 
-    initial_level = 2.16 #3.59
-    initial_T = 783.15
+    initial_level = 2.563642158
+    initial_T = 792.3706448
     initial_V = 0.00356
+    initial_P = 123076.1707
+    Steady = true
     eos = eos
     covergas_component = 'cover_gas'
   []
@@ -695,13 +784,14 @@
 
     K = '0.1 0.1 0.2  0.1 '
     Area =  23.96
-    volume = 152.97
+    volume = 149.3629099
     width = 5
     height = 8
 
-    initial_level = 5
-    initial_T = 628.15
-    initial_P = 3e5
+    initial_level = 4.849453669
+    initial_T = 636.9092646
+    initial_P = 143316.8194
+    initial_V = 1.13E-06
     eos = eos
     covergas_component = 'cover_gas'
   []
@@ -709,7 +799,7 @@
     type = CoverGas
     n_liquidvolume =2
     name_of_liquidvolume = 'hot_pool cold_pool_low'
-    initial_P = 1e5
+    initial_P = 101237.0534
     initial_Vol = 66.77
     initial_T = 783.15
   []
@@ -778,7 +868,6 @@
 
     Twall_init = 628.15
     wall_thickness = 0.002 #0.00174, 0.00087
-
     dim_wall = 1
     material_wall = ss-mat
     n_wall_elems = 2
@@ -844,11 +933,10 @@
     v_fn = flow_secondary
     T_bc = 596.75
     eos = eos
-    weak_bc = true
   []
 
   [NaLoop_out]
-    type = PressureOutlet
+    type = PBTDV
     input = 'NaHX(secondary_out)'
     p_bc = '1e5'
     eos = eos
@@ -887,10 +975,9 @@
     v_fn = flow_dhx
     T_bc = 450.3
     eos = eos
-    weak_bc = true
   []
   [DRACS_outlet]
-    type = PressureOutlet
+    type = PBTDV
     input = 'DHX(secondary_out)'
     p_bc = 1.3e5
     eos = eos
@@ -898,6 +985,17 @@
 []
 
 [Postprocessors]
+  [CH1_inlet_T]
+    type = ComponentBoundaryVariableValue
+    input = CH1(in)
+    variable = temperature
+  []
+  [CH1_outlet_T]
+    type = ComponentBoundaryVariableValue
+    input = CH1(out)
+    variable = temperature
+  []
+
   [pump_flow]
     type = ComponentBoundaryFlow
     input = pump_pipe(in)
@@ -964,7 +1062,7 @@
     type = ComponentBoundaryFlow
     input = CH5_UP(out)
   []
-  [CH1_outlet_T]
+  [CH1UP_outlet_T]
     type = ComponentBoundaryVariableValue
     input = CH1_UP(out)
     variable = temperature
@@ -1069,17 +1167,16 @@
     function = time_stepper
     min_dt = 1e-3
   []
-#   line_search = basic
 
-  nl_rel_tol = 1e-7
-  nl_abs_tol = 1e-6
-  nl_max_its = 20
+  nl_rel_tol = 1e-6
+  nl_abs_tol = 1e-4
+  nl_max_its = 10
 
   l_max_its = 50 # Number of linear iterations for each Krylov solve
 
   start_time = -500
   num_steps =  10000
-  end_time = 0
+  end_time = -0
 
   [Quadrature]
       type = TRAP
@@ -1104,6 +1201,7 @@
   []
   [console]
     type = Console
+    fit_mode = AUTO
     output_nonlinear = false
     output_linear = false
     execute_scalars_on = 'NONE'
@@ -1111,6 +1209,6 @@
   []
   [csv]
     type = CSV
-    interval = 5
+    interval = 10
   []
 []

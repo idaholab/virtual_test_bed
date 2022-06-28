@@ -5,8 +5,7 @@
   Tsolid_sf = 1e-4
 
   [PBModelParams]
-    scaling_velocity = 1e2
-    pbm_scaling_factors = '1e-1 1e-3 1e-6'
+    pbm_scaling_factors = '1 1e-3 1e-6'
   []
 []
 
@@ -19,8 +18,8 @@
 [Functions]
   [time_stepper]
     type = PiecewiseLinear
-    x = '-1000  -499.9   -499.8   -499   -498   -450  -449   -1     0       2     3   10   11  380   381    440   441   1e5'
-    y =' 0.02    0.02      0.2    0.2    0.5    0.5     2    2     0.02     0.02   0.2  0.5   2   2     2      2     5     5'
+    x = '-1000 -950   -510 -500    -1 0       2     3   10   11  380   381    440   441   1e5'
+    y =' 1.0    20.    20   5.0   5.0 0.2     0.2   0.5  0.5    2    2     2      2     5     5'
   []
 
   [ppf_axial]
@@ -38,29 +37,23 @@
     y ='0.0          0.0    -4.67292E-04    -3.33780E-04    -6.67560E-04    -6.17493E-04    0.0'
   []
 
-  [power_history]
-    type = PiecewiseLinear
-    x ='-1.000E+03  0  0.01  20  40  60  80  100  120  140  160  180  200  220  240  260  280  300  320  340  360  380  400  450  500  600  700  800  900  1000 1e5'
-    y ='1.0000E+00  1.0000E+00  5.5000E-02  5.0246E-02  4.5903E-02  4.1936E-02  3.8311E-02  3.4999E-02  3.3473E-02  3.2012E-02  3.0615E-02  2.9279E-02  2.8001E-02  2.7588E-02  2.7182E-02  2.6782E-02  2.6388E-02  2.6000E-02  2.5797E-02  2.5595E-02  2.5396E-02  2.5197E-02  2.5001E-02  2.4515E-02  2.4039E-02  2.3115E-02  2.2227E-02  2.1372E-02  2.0551E-02  1.9761E-02  2.7650E-19'
-  []
-
   [pump_p_coastdown]
     type = PiecewiseLinear
     x ='-1.000E+03  0.00E+00  4.00E-01  8.00E-01  1.20E+00  1.60E+00  2.00E+00  2.40E+00  2.80E+00  3.20E+00  3.60E+00
-  4.00E+00  4.40E+00  4.80E+00  5.20E+00  5.60E+00  6.00E+00  6.40E+00  6.80E+00  7.20E+00  7.60E+00
-  8.000E+00  1.000E+01  2.000E+01  3.000E+01  4.000E+01  5.000E+01  6.000E+01  7.000E+01  8.000E+01  9.000E+01
-  1.000E+02  1.100E+02  1.200E+02  1.300E+02  1.400E+02  1.500E+02  1.600E+02  1.700E+02  1.800E+02  1.900E+02
-  2.000E+02  2.100E+02  2.200E+02  2.300E+02  2.400E+02  2.500E+02  2.600E+02  2.700E+02  2.800E+02  2.900E+02
-  3.000E+02  3.100E+02  3.200E+02  3.300E+02  3.400E+02  3.500E+02  3.600E+02  3.700E+02  3.800E+02  3.900E+02
-  4.000E+02  4.100E+02  4.200E+02  1.00E+05'
+    4.00E+00  4.40E+00  4.80E+00  5.20E+00  5.60E+00  6.00E+00  6.40E+00  6.80E+00  7.20E+00  7.60E+00
+    8.000E+00  1.000E+01  2.000E+01  3.000E+01  4.000E+01  5.000E+01  6.000E+01  7.000E+01  8.000E+01  9.000E+01
+    1.000E+02  1.100E+02  1.200E+02  1.300E+02  1.400E+02  1.500E+02  1.600E+02  1.700E+02  1.800E+02  1.900E+02
+    2.000E+02  2.100E+02  2.200E+02  2.300E+02  2.400E+02  2.500E+02  2.600E+02  2.700E+02  2.800E+02  2.900E+02
+    3.000E+02  3.100E+02  3.200E+02  3.300E+02  3.400E+02  3.500E+02  3.600E+02  3.700E+02  3.800E+02  3.900E+02
+    4.000E+02  4.100E+02  4.200E+02  1.00E+05'
 
     y ='1.000E+00  1.000E+00  9.671E-01  9.355E-01  9.050E-01  8.757E-01  8.476E-01  8.205E-01  7.945E-01  7.695E-01  7.455E-01
-  7.225E-01  7.004E-01  6.792E-01  6.590E-01  6.395E-01  6.209E-01  6.031E-01  5.860E-01  5.697E-01  5.540E-01
-  5.396E-01  4.749E-01  2.753E-01  1.773E-01  1.219E-01  8.812E-02  6.655E-02  5.206E-02  4.181E-02  3.425E-02
-  2.850E-02  2.401E-02  2.043E-02  1.754E-02  1.516E-02  1.317E-02  1.151E-02  1.009E-02  8.869E-03  7.816E-03
-  6.898E-03  6.094E-03  5.382E-03  4.752E-03  4.192E-03  3.692E-03  3.253E-03  2.814E-03  2.480E-03  2.132E-03
-  1.866E-03  1.621E-03  1.397E-03  1.190E-03  9.999E-04  8.248E-04  6.642E-04  5.175E-04  3.841E-04  2.637E-04
-  1.558E-04  5.989E-05    0      0'
+    7.225E-01  7.004E-01  6.792E-01  6.590E-01  6.395E-01  6.209E-01  6.031E-01  5.860E-01  5.697E-01  5.540E-01
+    5.396E-01  4.749E-01  2.753E-01  1.773E-01  1.219E-01  8.812E-02  6.655E-02  5.206E-02  4.181E-02  3.425E-02
+    2.850E-02  2.401E-02  2.043E-02  1.754E-02  1.516E-02  1.317E-02  1.151E-02  1.009E-02  8.869E-03  7.816E-03
+    6.898E-03  6.094E-03  5.382E-03  4.752E-03  4.192E-03  3.692E-03  3.253E-03  2.814E-03  2.480E-03  2.132E-03
+    1.866E-03  1.621E-03  1.397E-03  1.190E-03  9.999E-04  8.248E-04  6.642E-04  5.175E-04  3.841E-04  2.637E-04
+    1.558E-04  5.989E-05    0      0'
 
     scale_factor = 415100
   []
@@ -68,61 +61,62 @@
   [pump_s_coastdown]
     type = PiecewiseLinear
     x ='-1.000E+03  0.00E+00  4.00E-01  8.00E-01  1.20E+00  1.60E+00  2.00E+00  2.40E+00  2.80E+00  3.20E+00  3.60E+00
-  4.00E+00  4.40E+00  4.80E+00  5.20E+00  5.60E+00  6.00E+00  6.40E+00  6.80E+00  7.20E+00  7.60E+00
-  8.000E+00  1.000E+01  2.000E+01  3.000E+01  4.000E+01  5.000E+01  6.000E+01  7.000E+01  8.000E+01  9.000E+01
-  1.000E+02  1.100E+02  1.200E+02  1.300E+02  1.400E+02  1.500E+02  1.600E+02  1.700E+02  1.800E+02  1.900E+02
-  2.000E+02  2.100E+02  2.200E+02  2.300E+02  2.400E+02  2.500E+02  2.600E+02  2.700E+02  2.800E+02  2.900E+02
-  3.000E+02  3.100E+02  3.200E+02  3.300E+02  3.400E+02  3.500E+02  3.600E+02  3.700E+02  3.800E+02  3.900E+02
-  4.000E+02  4.100E+02  4.200E+02  1.00E+05'
+    4.00E+00  4.40E+00  4.80E+00  5.20E+00  5.60E+00  6.00E+00  6.40E+00  6.80E+00  7.20E+00  7.60E+00
+    8.000E+00  1.000E+01  2.000E+01  3.000E+01  4.000E+01  5.000E+01  6.000E+01  7.000E+01  8.000E+01  9.000E+01
+    1.000E+02  1.100E+02  1.200E+02  1.300E+02  1.400E+02  1.500E+02  1.600E+02  1.700E+02  1.800E+02  1.900E+02
+    2.000E+02  2.100E+02  2.200E+02  2.300E+02  2.400E+02  2.500E+02  2.600E+02  2.700E+02  2.800E+02  2.900E+02
+    3.000E+02  3.100E+02  3.200E+02  3.300E+02  3.400E+02  3.500E+02  3.600E+02  3.700E+02  3.800E+02  3.900E+02
+    4.000E+02  4.100E+02  4.200E+02  1.00E+05'
 
     y ='1.000E+00  1.000E+00  9.671E-01  9.355E-01  9.050E-01  8.757E-01  8.476E-01  8.205E-01  7.945E-01  7.695E-01  7.455E-01
-  7.225E-01  7.004E-01  6.792E-01  6.590E-01  6.395E-01  6.209E-01  6.031E-01  5.860E-01  5.697E-01  5.540E-01
-  5.396E-01  4.749E-01  2.753E-01  1.773E-01  1.219E-01  8.812E-02  6.655E-02  5.206E-02  4.181E-02  3.425E-02
-  2.850E-02  2.401E-02  2.043E-02  1.754E-02  1.516E-02  1.317E-02  1.151E-02  1.009E-02  8.869E-03  7.816E-03
-  6.898E-03  6.094E-03  5.382E-03  4.752E-03  4.192E-03  3.692E-03  3.253E-03  2.814E-03  2.480E-03  2.132E-03
-  1.866E-03  1.621E-03  1.397E-03  1.190E-03  9.999E-04  8.248E-04  6.642E-04  5.175E-04  3.841E-04  2.637E-04
-  1.558E-04  5.989E-05    0      0'
+    7.225E-01  7.004E-01  6.792E-01  6.590E-01  6.395E-01  6.209E-01  6.031E-01  5.860E-01  5.697E-01  5.540E-01
+    5.396E-01  4.749E-01  2.753E-01  1.773E-01  1.219E-01  8.812E-02  6.655E-02  5.206E-02  4.181E-02  3.425E-02
+    2.850E-02  2.401E-02  2.043E-02  1.754E-02  1.516E-02  1.317E-02  1.151E-02  1.009E-02  8.869E-03  7.816E-03
+    6.898E-03  6.094E-03  5.382E-03  4.752E-03  4.192E-03  3.692E-03  3.253E-03  2.814E-03  2.480E-03  2.132E-03
+    1.866E-03  1.621E-03  1.397E-03  1.190E-03  9.999E-04  8.248E-04  6.642E-04  5.175E-04  3.841E-04  2.637E-04
+    1.558E-04  5.989E-05    0      0'
 
     scale_factor = 40300
   []
-
   [flow_secondary]
     type = PiecewiseLinear
     x ='-1.000E+03  0          1       1e5'
     y = '-1259     -1259     0       0'
     scale_factor = 0.002216 # 1/rhoA
   []
-
   [flow_dhx]
     type = PiecewiseLinear
     x ='-1.000E+03   0     1      1e5'
     y = '0  0  -6.478    -6.478'
     scale_factor = 0.046 # 1/rhoA
   []
-
   [CH1_fuel_axial_reactivity_fn]
     type = PiecewiseLinear
     axis = x
     x = '-0.2 0.00  0.04  0.08  0.12  0.16  0.20  0.24  0.28  0.32  0.36  0.40  0.44  0.48  0.52  0.56  0.60  0.64  0.68  0.72  0.76  0.80  1.0'
     y = '8.16610E-06 8.16610E-06  8.16610E-06  9.42750E-06   1.10140E-05   1.26600E-05   1.35860E-05   1.49250E-05   1.60350E-05   1.68550E-05   1.71180E-05   1.72500E-05   1.70260E-05   1.64540E-05   1.58990E-05   1.46680E-05   1.31750E-05   1.14770E-05   1.02240E-05   8.15290E-06   6.14050E-06   4.32450E-06 4.32450E-06'
+
   []
   [CH2_fuel_axial_reactivity_fn]
     type = PiecewiseLinear
     axis = x
     x = '-0.2 0.00  0.04  0.08  0.12  0.16  0.20  0.24  0.28  0.32  0.36  0.40  0.44  0.48  0.52  0.56  0.60  0.64  0.68  0.72  0.76  0.80  1.0'
     y = '8.16610E-06 8.16610E-06  8.16610E-06  9.42750E-06   1.10140E-05   1.26600E-05   1.35860E-05   1.49250E-05   1.60350E-05   1.68550E-05   1.71180E-05   1.72500E-05   1.70260E-05   1.64540E-05   1.58990E-05   1.46680E-05   1.31750E-05   1.14770E-05   1.02240E-05   8.15290E-06   6.14050E-06   4.32450E-06 4.32450E-06'
+
   []
   [CH3_fuel_axial_reactivity_fn]
     type = PiecewiseLinear
     axis = x
     x = '-0.2 0.00  0.04  0.08  0.12  0.16  0.20  0.24  0.28  0.32  0.36  0.40  0.44  0.48  0.52  0.56  0.60  0.64  0.68  0.72  0.76  0.80  1.0'
     y = '6.641E-06  6.641E-06  6.641E-06  7.667E-06  8.957E-06  1.030E-05  1.105E-05  1.214E-05  1.304E-05  1.371E-05  1.392E-05  1.403E-05  1.385E-05  1.338E-05  1.293E-05  1.193E-05  1.071E-05  9.334E-06  8.315E-06  6.630E-06  4.994E-06  3.517E-06  3.517E-06'
+
   []
   [CH4_fuel_axial_reactivity_fn]
     type = PiecewiseLinear
     axis = x
     x = '-0.2 0.00  0.04  0.08  0.12  0.16  0.20  0.24  0.28  0.32  0.36  0.40  0.44  0.48  0.52  0.56  0.60  0.64  0.68  0.72  0.76  0.80  1.0'
     y = '4.907E-06  4.907E-06  4.907E-06  5.665E-06  6.618E-06  7.608E-06  8.164E-06  8.969E-06  9.636E-06  1.013E-05  1.029E-05  1.037E-05  1.023E-05  9.888E-06  9.554E-06  8.814E-06  7.917E-06  6.897E-06  6.144E-06  4.899E-06  3.690E-06  2.599E-06  2.599E-06'
+
   []
 []
 
@@ -135,12 +129,6 @@
     alpha = 1.76E-5
     YoungsM = 2.8E+10
   []
-  [gap-mat]
-    type = SolidMaterialProps
-    k = 64
-    Cp = 1272
-    rho = 865
-  []
   [clad-mat]
     type = SolidMaterialProps
     k = 26.3
@@ -150,7 +138,7 @@
     YoungsM = 1.5E+11
   []
   [ss-mat]
-    type = SolidMaterialProps
+    type = HeatConductionMaterialProps
     k = 26.3
     Cp = 638
     rho = 7.646e3
@@ -161,9 +149,10 @@
   [reactor]
     type = ReactorPower
     initial_power = 250e6
+    operating_power = 250e6
     pke = 'point_kinetics_basic'
-    decay_heat = power_history
-    operating_power = 2.36250E+08
+    enable_decay_heat = true
+    isotope_fission_fraction = '1.0 0.0 0.0 0.0'
   []
 
 ######  Test for Point-Kinetics  ######
@@ -223,10 +212,10 @@
     n_layers_coolant = 20
     coolant_reactivity_coefficients = '2.25950E-05  2.25950E-05   2.25950E-05   2.25950E-05   1.13940E-04   1.13940E-04   1.13940E-04   1.13940E-04   1.42850E-04   1.42850E-04   1.42850E-04   1.42850E-04   9.28900E-05   9.28900E-05   9.28900E-05   9.28900E-05   -1.79300E-05   -1.79300E-05   -1.79300E-05   -1.79300E-05'
 
-    # Fuel Doppler reactivity feedback model
-    fuel_doppler_reactivity_feedback = true
+    pke_material_type = 'FuelDoppler None '
     n_layers_doppler = 20
-    fuel_doppler_reactivity_coefficients = '-2.148E-03  -2.148E-03  -2.148E-03  -2.148E-03  -1.969E-03  -1.969E-03  -1.969E-03  -1.969E-03  -2.041E-03  -2.041E-03  -2.041E-03  -2.041E-03  -1.683E-03  -1.683E-03  -1.683E-03  -1.683E-03  -1.110E-03  -1.110E-03  -1.110E-03  -1.110E-03'
+    fuel_doppler_coef = -1.432E-03
+    fuel_doppler_axial_weight = '6.00E-02  6.00E-02  6.00E-02  6.00E-02  5.50E-02  5.50E-02  5.50E-02  5.50E-02  5.70E-02  5.70E-02  5.70E-02  5.70E-02  4.70E-02  4.70E-02  4.70E-02  4.70E-02  3.10E-02  3.10E-02  3.10E-02  3.10E-02'
 
     # Fuel axial expansion reactivity feedback model
     fuel_axial_expansion_reactivity_feedback = true
@@ -330,10 +319,10 @@
     coolant_reactivity_coefficients = '2.25950E-05  2.25950E-05   2.25950E-05   2.25950E-05   1.13940E-04   1.13940E-04   1.13940E-04   1.13940E-04   1.42850E-04   1.42850E-04   1.42850E-04   1.42850E-04   9.28900E-05   9.28900E-05   9.28900E-05   9.28900E-05   -1.79300E-05   -1.79300E-05   -1.79300E-05   -1.79300E-05'
 
     # Fuel Doppler reactivity feedback model
-    fuel_doppler_reactivity_feedback = true
+    pke_material_type = 'FuelDoppler None '
     n_layers_doppler = 20
-    fuel_doppler_reactivity_coefficients = '-2.148E-03  -2.148E-03  -2.148E-03  -2.148E-03  -1.969E-03  -1.969E-03  -1.969E-03  -1.969E-03  -2.041E-03  -2.041E-03  -2.041E-03  -2.041E-03  -1.683E-03  -1.683E-03  -1.683E-03  -1.683E-03  -1.110E-03  -1.110E-03  -1.110E-03  -1.110E-03'
-
+    fuel_doppler_coef = -1.432E-03
+    fuel_doppler_axial_weight = '6.00E-02  6.00E-02  6.00E-02  6.00E-02  5.50E-02  5.50E-02  5.50E-02  5.50E-02  5.70E-02  5.70E-02  5.70E-02  5.70E-02  4.70E-02  4.70E-02  4.70E-02  4.70E-02  3.10E-02  3.10E-02  3.10E-02  3.10E-02'
     # Fuel axial expansion reactivity feedback model
     fuel_axial_expansion_reactivity_feedback = true
     n_layers_axial_expansion = 20
@@ -434,10 +423,10 @@
     coolant_reactivity_coefficients = '2.52430E-05  2.52430E-05   2.52430E-05   2.52430E-05   1.28450E-04   1.28450E-04   1.28450E-04   1.28450E-04   1.59820E-04   1.59820E-04   1.59820E-04   1.59820E-04   1.03630E-04   1.03630E-04   1.03630E-04   1.03630E-04   -1.68580E-05   -1.68580E-05   -1.68580E-05   -1.68580E-05'
 
     # Fuel Doppler reactivity feedback model
-    fuel_doppler_reactivity_feedback = true
+    pke_material_type = 'FuelDoppler None '
     n_layers_doppler = 20
-    fuel_doppler_reactivity_coefficients = '-3.805E-04  -3.805E-04  -3.805E-04  -3.805E-04  -3.542E-04  -3.542E-04  -3.542E-04  -3.542E-04  -3.739E-04  -3.739E-04  -3.739E-04  -3.739E-04  -3.083E-04  -3.083E-04  -3.083E-04  -3.083E-04  -2.230E-04  -2.230E-04  -2.230E-04  -2.230E-04'
-
+    fuel_doppler_coef = -2.624E-04
+    fuel_doppler_axial_weight = '5.80E-02  5.80E-02  5.80E-02  5.80E-02  5.40E-02  5.40E-02  5.40E-02  5.40E-02  5.70E-02  5.70E-02  5.70E-02  5.70E-02  4.70E-02  4.70E-02  4.70E-02  4.70E-02  3.40E-02  3.40E-02  3.40E-02  3.40E-02'
     # Fuel axial expansion reactivity feedback model
     fuel_axial_expansion_reactivity_feedback = true
     n_layers_axial_expansion = 20
@@ -539,10 +528,10 @@
     coolant_reactivity_coefficients = '-1.83920E-05  -1.83920E-05   -1.83920E-05   -1.83920E-05   -8.51710E-07   -8.51710E-07   -8.51710E-07   -8.51710E-07   4.50680E-06   4.50680E-06   4.50680E-06   4.50680E-06   -4.90700E-06   -4.90700E-06   -4.90700E-06   -4.90700E-06   -2.53840E-05   -2.53840E-05   -2.53840E-05   -2.53840E-05'
 
     # Fuel Doppler reactivity feedback model
-    fuel_doppler_reactivity_feedback = true
+    pke_material_type = 'FuelDoppler None '
     n_layers_doppler = 20
-    fuel_doppler_reactivity_coefficients = '-1.365E-03  -1.365E-03  -1.365E-03  -1.365E-03  -1.470E-03  -1.470E-03  -1.470E-03  -1.470E-03  -1.549E-03  -1.549E-03  -1.549E-03  -1.549E-03  -1.286E-03  -1.286E-03  -1.286E-03  -1.286E-03  -8.925E-04  -8.925E-04  -8.925E-04  -8.925E-04'
-
+    fuel_doppler_coef = -1.050E-03
+    fuel_doppler_axial_weight = '5.20E-02  5.20E-02  5.20E-02  5.20E-02  5.60E-02  5.60E-02  5.60E-02  5.60E-02  5.90E-02  5.90E-02  5.90E-02  5.90E-02  4.90E-02  4.90E-02  4.90E-02  4.90E-02  3.40E-02  3.40E-02  3.40E-02  3.40E-02'
     # Fuel axial expansion feedback model
     fuel_axial_expansion_reactivity_feedback = true
     n_layers_axial_expansion = 20
@@ -717,7 +706,7 @@
     Twall_init = 628.15
     wall_thickness = 0.0041 #0.0033
 
-    dim_wall = 1
+    dim_wall = 2
     material_wall = ss-mat
     n_wall_elems = 2
   []
@@ -765,7 +754,6 @@
     initial_P = 3e5
     initial_T = 628.15
     eos = eos
-    nodal_Tbc = true
   []
 
   [hot_pool]
@@ -877,7 +865,6 @@
 
     Twall_init = 628.15
     wall_thickness = 0.002 #0.00174, 0.00087
-
     dim_wall = 1
     material_wall = ss-mat
     n_wall_elems = 2
@@ -943,11 +930,11 @@
     v_fn = flow_secondary
     T_bc = 596.75
     eos = eos
-    wall_bc = true
+    weak_bc = true
   []
 
   [NaLoop_out]
-    type = PressureOutlet
+    type = PBTDV
     input = 'NaHX(secondary_out)'
     p_bc = '1e5'
     eos = eos
@@ -988,7 +975,7 @@
     eos = eos
   []
   [DRACS_outlet]
-    type = PressureOutlet
+    type = PBTDV
     input = 'DHX(secondary_out)'
     p_bc = 1.3e5
     eos = eos
@@ -1157,7 +1144,7 @@
 []
 
 [Preconditioning]
-   active = 'SMP_PJFNK'
+  active = 'SMP_PJFNK'
   [SMP_PJFNK]
     type = SMP
     full = true
@@ -1180,12 +1167,10 @@
   []
 
   nl_rel_tol = 1e-6
-  nl_abs_tol = 1e-6
+  nl_abs_tol = 1e-4
   nl_max_its = 20
 
-  l_tol = 1e-5 # Relative linear tolerance for each Krylov solve
-  l_max_its = 100 # Number of linear iterations for each Krylov solve
-
+  l_max_its = 50 # Number of linear iterations for each Krylov solve
 
   end_time = 1000
 
@@ -1196,7 +1181,7 @@
 [] # close Executioner section
 
 [Problem]
-  restart_file_base = abtr_ss_checkpoint_cp/0038
+  restart_file_base = abtr_ss_checkpoint_cp/LATEST
 []
 
 [Outputs]
@@ -1207,15 +1192,23 @@
     use_displaced = true
     execute_on = 'initial timestep_end'
     sequence = false
+    interval = 40
   []
   [checkpoint]
     type = Checkpoint
     num_files = 1
+    execute_on = 'FINAL FAILED'
   []
   [console]
     type = Console
+    fit_mode = AUTO
+    output_nonlinear = false
+    output_linear = false
+    execute_scalars_on = 'NONE'
+    interval = 20
   []
   [csv]
     type = CSV
+    interval = 5
   []
 []

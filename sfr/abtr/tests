@@ -12,6 +12,7 @@
     input = 'abtr_ulof.i'
     check_input = True
     cli_args = '--app SamApp'
+    prereq = 'steady'
     executable_pattern = 'sam*|blue_crab*'
   []
 
@@ -34,7 +35,7 @@
     cli_args = '--app SamApp Executioner/num_steps=100'
     executable_pattern = 'sam*|blue_crab*'
     # to generate the restart file
-    prereq = 'ulof_syntax steady'
+    prereq = 'ulof_syntax'
     rel_err = 1E-4
   []
 []
