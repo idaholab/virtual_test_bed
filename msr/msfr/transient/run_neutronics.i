@@ -232,6 +232,8 @@
   [power_scaling]
     type = Receiver
     outputs = none
+    # Incompressible
+    # default = 4.1683328640041e+18
     # Weakly compressible
     # default = 4.1684137978635e+18
     # WC + bubbles

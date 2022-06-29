@@ -78,8 +78,9 @@ beta6 = 0.000184087
 [Modules]
   [NavierStokesFV]
     # General parameters
-    compressibility = 'weakly-compressible'
+    compressibility = 'incompressible'
     add_energy_equation = true
+    add_scalar_equation = true
 
     # Variables, defined below for the Exodus restart
     velocity_variable = 'vel_x vel_y'
@@ -87,7 +88,7 @@ beta6 = 0.000184087
     fluid_temperature_variable = 'T_fluid'
 
     # Material properties
-    density = 'rho'
+    density = 4284 #'rho'
     dynamic_viscosity = ${mu}
     thermal_conductivity = ${k}
     specific_heat = 'cp'
@@ -128,9 +129,9 @@ beta6 = 0.000184087
     # Precursor advection, diffusion and source term
     passive_scalar_names = 'c1 c2 c3 c4 c5 c6'
     passive_scalar_schmidt_number = '${Sc_t} ${Sc_t} ${Sc_t} ${Sc_t} ${Sc_t} ${Sc_t}'
-    passive_scalar_coupled_source = 'fission_source fission_source fission_source
-                                     fission_source fission_source fission_source'
-    passive_scalar_coupled_source_coeff = '${beta1} ${beta2} ${beta3} ${beta4} ${beta5} ${beta6}'
+    passive_scalar_coupled_source = 'fission_source; fission_source; fission_source;
+                                     fission_source; fission_source; fission_source'
+    passive_scalar_coupled_source_coeff = '${beta1}; ${beta2}; ${beta3}; ${beta4}; ${beta5}; ${beta6}'
 
     # Heat exchanger
     friction_blocks = 'hx'
@@ -211,12 +212,12 @@ beta6 = 0.000184087
 []
 
 [AuxKernels]
-  [output_rho]
-    type = ADFunctorElementalAux
-    variable = rho_output
-    functor = 'rho'
-    execute_on = 'initial timestep_end'
-  []
+  # [output_rho]
+  #   type = ADFunctorElementalAux
+  #   variable = rho_output
+  #   functor = 'rho'
+  #   execute_on = 'initial timestep_end'
+  # []
 []
 
 [FVKernels]
@@ -291,13 +292,13 @@ beta6 = 0.000184087
     prop_values = '${cp} 0'
     block = 'fuel pump hx'
   []
-  [rho]
-    type = SaltAndBubblesDensity
-    temperature = T_fluid
-    pressure = pressure
-    gas_fraction = 0.05
-    bubble_treatment = true
-  []
+  # [rho]
+  #   type = SaltAndBubblesDensity
+  #   temperature = T_fluid
+  #   pressure = pressure
+  #   gas_fraction = 0.05
+  #   bubble_treatment = true
+  # []
 []
 
 ################################################################################

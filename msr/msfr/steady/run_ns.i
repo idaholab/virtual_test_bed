@@ -69,13 +69,13 @@ beta6 = 0.000184087
     # Depending on the file chosen, the initialization of variables should be
     # adjusted. The following variables can be initalized:
     # - vel_x, vel_y, p from isothermal simulation
-    file = 'restart/run_ns_initial_restart.e'
+    # file = 'restart/run_ns_initial_restart.e'
     # Below are initialization points created from this input file
     # The variable IC should be set from_file_var for temperature and precursors
     # - vel_x, vel_y, p, T_fluid, c_i from cosine heated simulation
     # file = 'restart/run_ns_restart.e'
     # - vel_x, vel_y, p, T_fluid, c_i from coupled multiphysics simulation
-    # file = 'restart/run_ns_coupled_restart.e'
+    file = 'restart/run_ns_coupled_restart.e'
   []
   [hx_top]
     type = ParsedGenerateSideset
@@ -111,9 +111,10 @@ beta6 = 0.000184087
 [Modules]
   [NavierStokesFV]
     # General parameters
-    compressibility = 'weakly-compressible'
+    compressibility = 'incompressible'
     add_energy_equation = true
-    # boussinesq_approximation = true
+    boussinesq_approximation = true
+    add_scalar_equation = true
 
     # Variables, defined below for the Exodus restart
     velocity_variable = 'vel_x vel_y'
@@ -121,7 +122,7 @@ beta6 = 0.000184087
     fluid_temperature_variable = 'T_fluid'
 
     # Material properties
-    density = 'rho'
+    density = 4284
     dynamic_viscosity = ${mu}
     thermal_conductivity = ${k}
     specific_heat = 'cp'
@@ -162,9 +163,9 @@ beta6 = 0.000184087
     # Precursor advection, diffusion and source term
     passive_scalar_names = 'c1 c2 c3 c4 c5 c6'
     passive_scalar_schmidt_number = '${Sc_t} ${Sc_t} ${Sc_t} ${Sc_t} ${Sc_t} ${Sc_t}'
-    passive_scalar_coupled_source = 'fission_source fission_source fission_source
-                                     fission_source fission_source fission_source'
-    passive_scalar_coupled_source_coeff = '${beta1} ${beta2} ${beta3} ${beta4} ${beta5} ${beta6}'
+    passive_scalar_coupled_source = 'fission_source; fission_source; fission_source;
+                                     fission_source; fission_source; fission_source'
+    passive_scalar_coupled_source_coeff = '${beta1}; ${beta2}; ${beta3}; ${beta4}; ${beta5}; ${beta6}'
 
     # Heat exchanger
     friction_blocks = 'hx'
@@ -195,69 +196,69 @@ beta6 = 0.000184087
   [T_fluid]
     type = INSFVEnergyVariable
     block = 'fuel pump hx'
-    initial_condition = ${T_HX}
-    # initial_from_file_var = T_fluid
+    # initial_condition = ${T_HX}
+    initial_from_file_var = T_fluid
   []
 
   [c1]
     type = MooseVariableFVReal
     block = 'fuel pump hx'
-    # initial_from_file_var = c1
-    [InitialCondition]
-      type = FunctionIC
-      function = 'cosine_guess'
-      scaling_factor = 0.02
-    []
+    initial_from_file_var = c1
+    # [InitialCondition]
+    #   type = FunctionIC
+    #   function = 'cosine_guess'
+    #   scaling_factor = 0.02
+    # []
   []
   [c2]
     type = MooseVariableFVReal
     block = 'fuel pump hx'
-    # initial_from_file_var = c2
-    [InitialCondition]
-      type = FunctionIC
-      function = 'cosine_guess'
-      scaling_factor = 0.1
-    []
+    initial_from_file_var = c2
+    # [InitialCondition]
+    #   type = FunctionIC
+    #   function = 'cosine_guess'
+    #   scaling_factor = 0.1
+    # []
   []
   [c3]
     type = MooseVariableFVReal
     block = 'fuel pump hx'
-    # initial_from_file_var = c3
-    [InitialCondition]
-      type = FunctionIC
-      function = 'cosine_guess'
-      scaling_factor = 0.03
-    []
+    initial_from_file_var = c3
+    # [InitialCondition]
+    #   type = FunctionIC
+    #   function = 'cosine_guess'
+    #   scaling_factor = 0.03
+    # []
   []
   [c4]
     type = MooseVariableFVReal
     block = 'fuel pump hx'
-    # initial_from_file_var = c4
-    [InitialCondition]
-      type = FunctionIC
-      function = 'cosine_guess'
-      scaling_factor = 0.04
-    []
+    initial_from_file_var = c4
+    # [InitialCondition]
+    #   type = FunctionIC
+    #   function = 'cosine_guess'
+    #   scaling_factor = 0.04
+    # []
   []
   [c5]
     type = MooseVariableFVReal
     block = 'fuel pump hx'
-    # initial_from_file_var = c5
-    [InitialCondition]
-      type = FunctionIC
-      function = 'cosine_guess'
-      scaling_factor = 0.01
-    []
+    initial_from_file_var = c5
+    # [InitialCondition]
+    #   type = FunctionIC
+    #   function = 'cosine_guess'
+    #   scaling_factor = 0.01
+    # []
   []
   [c6]
     type = MooseVariableFVReal
     block = 'fuel pump hx'
-    # initial_from_file_var = c6
-    [InitialCondition]
-      type = FunctionIC
-      function = 'cosine_guess'
-      scaling_factor = 0.001
-    []
+    initial_from_file_var = c6
+    # [InitialCondition]
+    #   type = FunctionIC
+    #   function = 'cosine_guess'
+    #   scaling_factor = 0.001
+    # []
   []
 []
 
@@ -368,12 +369,18 @@ beta6 = 0.000184087
     block = 'fuel pump hx'
   []
   [rho]
-    type = SaltAndBubblesDensity
-    temperature = T_fluid
-    pressure = pressure
-    gas_fraction = 0.05
-    bubble_treatment = true
+    type = ADGenericFunctorMaterial
+    prop_names = 'rho'
+    prop_values = '4284'
+    block = 'fuel pump hx'
   []
+  # [rho]
+  #   type = SaltAndBubblesDensity
+  #   temperature = T_fluid
+  #   pressure = pressure
+  #   gas_fraction = 0.05
+  #   bubble_treatment = true
+  # []
 []
 
 [AuxKernels]
