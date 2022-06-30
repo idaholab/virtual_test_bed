@@ -1231,6 +1231,6 @@
     type = CSV
     interval = 5
     execute_scalars_on = 'NONE'
-    hide = 'CH1:fuel_Fuel_Doppler_Reactivity CH1:pipe_Coolant_Density_Reactivity CH1_Fuel_Axial_Expansion_Reactivity CH2:fuel_Fuel_Doppler_Reactivity CH2:pipe_Coolant_Density_Reactivity CH2_Fuel_Axial_Expansion_Reactivity CH2_outlet_T CH2_outlet_flow CH2_velocity CH3:fuel_Fuel_Doppler_Reactivity CH3:pipe_Coolant_Density_Reactivity CH3_Fuel_Axial_Expansion_Reactivity CH4:fuel_Fuel_Doppler_Reactivity CH4:pipe_Coolant_Density_Reactivity CH4_Fuel_Axial_Expansion_Reactivity'
+    hide = 'CH1:fuel_Fuel_Doppler_Reactivity CH1:pipe_Coolant_Density_Reactivity CH1_Fuel_Axial_Expansion_Reactivity CH2:fuel_Fuel_Doppler_Reactivity CH2:pipe_Coolant_Density_Reactivity CH2_Fuel_Axial_Expansion_Reactivity CH3:fuel_Fuel_Doppler_Reactivity CH3:pipe_Coolant_Density_Reactivity CH3_Fuel_Axial_Expansion_Reactivity CH4:fuel_Fuel_Doppler_Reactivity CH4:pipe_Coolant_Density_Reactivity CH4_Fuel_Axial_Expansion_Reactivity'
   []
 []
