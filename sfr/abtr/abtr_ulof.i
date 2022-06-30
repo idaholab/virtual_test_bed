@@ -1210,5 +1210,6 @@
   [csv]
     type = CSV
     interval = 5
+    execute_scalars_on = 'NONE'
   []
 []
