@@ -857,7 +857,7 @@
     n_elems = 20
     initial_V_secondary = -2.8
     disp_mode = -1
-
+    SC_HTC_secondary = 0.0
     HTC_geometry_type = Pipe # pipe model
     HTC_geometry_type_secondary = Pipe
     HT_surface_area_density = 729

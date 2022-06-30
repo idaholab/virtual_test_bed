@@ -25,6 +25,7 @@
     executable_pattern = 'sam*|blue_crab*'
     prereq = steady_syntax
     rel_err = 1E-4
+    abs_zero = 1e-8
   []
   [ulof]
     type = CSVDiff

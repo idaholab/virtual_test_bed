@@ -965,7 +965,7 @@
     dim_wall = 1
     wall_thickness = 0.0045
     material_wall = ss-mat
-
+	SC_HTC_secondary = 0.0
     n_wall_elems = 2
   []
 
@@ -1210,5 +1210,6 @@
   [csv]
     type = CSV
     interval = 10
+    execute_scalars_on = 'NONE'
   []
 []
