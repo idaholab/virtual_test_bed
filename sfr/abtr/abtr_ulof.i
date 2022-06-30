@@ -87,7 +87,7 @@
   [flow_dhx]
     type = PiecewiseLinear
     x ='-1.000E+03   0     1      1e5'
-    y = '0  0  -6.478    -6.478'
+    y = '-6.478  -6.478  -6.478    -6.478'
     scale_factor = 0.046 # 1/rhoA
   []
   [CH1_fuel_axial_reactivity_fn]
@@ -864,7 +864,7 @@
     HT_surface_area_density_secondary = 1080.1
 
     Twall_init = 628.15
-    wall_thickness = 0.002 #0.00174, 0.00087
+    wall_thickness = 0.002 #0.00174  0.00087
     dim_wall = 1
     material_wall = ss-mat
     n_wall_elems = 2
@@ -1141,6 +1141,26 @@
     block = 'NaHX:secondary_pipe'
     heated_perimeter = 558.414
   []
+  [./feedback-Axial]
+    type = SumOfPostprocessors
+    pps_names = 'CH1_Fuel_Axial_Expansion_Reactivity CH2_Fuel_Axial_Expansion_Reactivity CH3_Fuel_Axial_Expansion_Reactivity CH4_Fuel_Axial_Expansion_Reactivity'
+  [../]
+  [./feedback-doppler]
+    type = SumOfPostprocessors
+    pps_names = 'CH1:fuel_Fuel_Doppler_Reactivity CH2:fuel_Fuel_Doppler_Reactivity CH3:fuel_Fuel_Doppler_Reactivity CH4:fuel_Fuel_Doppler_Reactivity'
+  [../]
+  [./feedback-coolant]
+    type = SumOfPostprocessors
+    pps_names = 'CH1:pipe_Coolant_Density_Reactivity CH2:pipe_Coolant_Density_Reactivity CH3:pipe_Coolant_Density_Reactivity CH4:pipe_Coolant_Density_Reactivity'
+  [../]
+  [./feedback-ext]
+    type = FunctionValuePostprocessor
+    function = 'rho_func'
+  [../]
+  [./feedback-total]
+    type = SumOfPostprocessors
+    pps_names = 'Total_Reactivity_Feedback feedback-ext'
+  [../]
 []
 
 [Preconditioning]
@@ -1211,5 +1231,6 @@
     type = CSV
     interval = 5
     execute_scalars_on = 'NONE'
+    hide = 'CH1:fuel_Fuel_Doppler_Reactivity CH1:pipe_Coolant_Density_Reactivity CH1_Fuel_Axial_Expansion_Reactivity CH2:fuel_Fuel_Doppler_Reactivity CH2:pipe_Coolant_Density_Reactivity CH2_Fuel_Axial_Expansion_Reactivity CH2_outlet_T CH2_outlet_flow CH2_velocity CH3:fuel_Fuel_Doppler_Reactivity CH3:pipe_Coolant_Density_Reactivity CH3_Fuel_Axial_Expansion_Reactivity CH4:fuel_Fuel_Doppler_Reactivity CH4:pipe_Coolant_Density_Reactivity CH4_Fuel_Axial_Expansion_Reactivity'
   []
 []
