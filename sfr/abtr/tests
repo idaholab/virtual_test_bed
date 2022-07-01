@@ -38,6 +38,8 @@
     # to generate the restart file
     prereq = 'ulof_syntax'
     rel_err = 1E-4
-    abs_err = 1E-7
+	override_columns = 'DHX_heatremoval'
+	override_rel_err = '1E-2'
+	override_abs_zero = '1E-6'
   []
 []
