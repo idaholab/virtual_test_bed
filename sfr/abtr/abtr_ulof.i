@@ -1129,17 +1129,17 @@
   [DHX_heatremoval]
     type = HeatExchangerHeatRemovalRate
     block = 'DHX:primary_pipe'
-    heated_perimeter = 2.5944
+    heated_perimeter = ${fparse 2.5944/250e6}
   []
   [IHX_heatremoval]
     type = HeatExchangerHeatRemovalRate
     block = 'IHX:primary_pipe'
-    heated_perimeter = 558.414
+    heated_perimeter = ${fparse 558.414/250e6}
   []
   [NaHX_heatremoval]
     type = HeatExchangerHeatRemovalRate
     block = 'NaHX:secondary_pipe'
-    heated_perimeter = 558.414
+    heated_perimeter = ${fparse 558.414/250e6}
   []
   [./feedback-Axial]
     type = SumOfPostprocessors

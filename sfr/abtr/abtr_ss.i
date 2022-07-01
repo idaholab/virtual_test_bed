@@ -1131,17 +1131,17 @@
   [DHX_heatremoval]
     type = HeatExchangerHeatRemovalRate
     block = 'DHX:primary_pipe'
-    heated_perimeter = 2.5944
+    heated_perimeter = ${fparse 2.5944/250e6}
   []
   [IHX_heatremoval]
     type = HeatExchangerHeatRemovalRate
     block = 'IHX:primary_pipe'
-    heated_perimeter = 558.414
+    heated_perimeter = ${fparse 558.414/250e6}
   []
   [NaHX_heatremoval]
     type = HeatExchangerHeatRemovalRate
     block = 'NaHX:secondary_pipe'
-    heated_perimeter = 558.414
+    heated_perimeter = ${fparse 558.414/250e6}
   []
   [./feedback-Axial]
     type = SumOfPostprocessors
@@ -1188,8 +1188,8 @@
     min_dt = 1e-3
   []
 
-  nl_rel_tol = 1e-6
-  nl_abs_tol = 1e-4
+  nl_rel_tol = 1e-8
+  nl_abs_tol = 1e-6
   nl_max_its = 10
 
   l_max_its = 50 # Number of linear iterations for each Krylov solve

@@ -38,5 +38,6 @@
     # to generate the restart file
     prereq = 'ulof_syntax'
     rel_err = 1E-4
+    abs_err = 1E-7
   []
 []
