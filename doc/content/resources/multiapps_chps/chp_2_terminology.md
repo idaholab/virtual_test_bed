@@ -55,12 +55,16 @@ In MOOSE, Picard iterations are used to iterate back and forth between applicati
 
 ### Parallel Execution
 
-At any time in the system only one MultiApp application is executed. The number of parallel MPI ranks available are distributed across the number of the child applications of a MultiApp object.  An example is shown in [fig_2_2] where 12 MPI ranks were dedicated to executing the parent application. If the two MultiApps are set to execute on the same time step, then the order of execution between MultiApps (1) and (2) is arbitrary. In this case, if the system selects the MultiApp (1) to execute first, its child application (1-1), (1-2), (1-3), and (1-4) will be executed by 3 MPI ranks each and these child applications will run simultaneously. After the execution MultiApp (1) is completed, the MultiApp (2) will have access to the full set of MPI ranks because only one MultiApp is executed at a time (even in the case where one may only want half of the ranks on two separate MultiApps). This design executes transfers among the various MultiApps in a well-defined order. The child applications of the MultiApp (2) will be executed simultaneously with 4 MPI ranks each. Similarly, the 4 MPI ranks available for the MultiApp (3) will be distributed equally among its child applications.
+Unless the MultiApps are nested below two child application that are executed in parallel, only one MultiApp will be executed at any time in the system. This is designed so that transfers among the various MultiApps is done in a well-defined order. Thus, in [fig_2_2], MultiApps (1) and (4) will not be executed in parallel. If the user set MultiApps (1) and (4) to execute at the same time step, MOOSE will arbitrarily select one of them to be executed first. After the completion of the execution of the selected MultiApp and all its child and grandchild applications, the other MultiApp will be executed. Nevertheless, if the MultiApps are nested below child applications that are executed in parallel, such as MultiApps (2) and (3), these MultiApps will be also executed simultaneously in parallel.
 
 !media media/resources/Fig2-2.png
       style=display: block;margin-left:auto;margin-right:auto;width:80%;
       id= fig_2_2
       caption=Example of parallel execution in the MultiApp hierarchy
+
+When a MultiApp is executed, the number of parallel MPI ranks available for that MultiApp will be distributed across the number of its child applications, and these child applications will be executed simultaneously in parallel. For example, the child Apps (1-1), (1-2), and (1-3) in [fig_2_2] will be executed in parallel and the number of MPI ranks available to MultiApp (1) will be equally distributed among them (4 MPI ranks each).
+
+It should be noted, in [fig_2_2], that the grandchild applications (2-1), (3-1), and (3-2) will also run simultaneously in parallel. Nevertheless, grandchild App (2-1) will run using 4 MPI ranks while the other grandchild Apps: (3-1) and (3-2) will run using 2 MPI ranks each. After the execution MultiApp (1), and all its child and grandchild applications are completed, MultiApp (4) will be executed, and it will have access to the full set of MPI ranks. The only child App for MultiApp (4), which is child App (4-1), will also have full access to the full 12 MPI ranks.
 
 ## The Non-uniqueness Nature of a MultiApp Hierarchy
 
