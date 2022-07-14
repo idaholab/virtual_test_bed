@@ -2,7 +2,7 @@
 ##  3D core support plate thermal expansion input                             ##
 ##  Tensor Mechanics input model                                              ##
 ################################################################################
-#  given an inlet temperature (nominal = 350 degrees C = 623.15 K), 
+#  given an inlet temperature (nominal = 350 degrees C = 623.15 K),
 #  computes the displacements along x and y
 #  transfer them to griffin for cross section adjustment (radial expansion feedback)
 

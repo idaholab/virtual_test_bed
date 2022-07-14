@@ -11,7 +11,7 @@
 # - The Model has been built based on [1-2].
 # ------------------------------------------------------------------------------
 # [1] Heidet, F. and Roglans-Ribas, J. Core design activities of the
-#       versatile test reactor -- conceptual phase. EPJ Web Conf. 247(2021) 
+#       versatile test reactor -- conceptual phase. EPJ Web Conf. 247(2021)
 #       01010. doi:10.1051/epjconf/202124701010.
 #       URL https://doi.org/10.1051/epjconf/202124701010.
 # ==============================================================================

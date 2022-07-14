@@ -4,20 +4,20 @@
 
 ## VTR core description
 
-The VTR conceptual design presented in [!citep](heidet2020) is used for this study. 
-This VTR design is a 300-MW thermal, ternary-metallic fueled (U-20Pu-10Zr), low-pressure, 
+The VTR conceptual design presented in [!citep](heidet2020) is used for this study.
+This VTR design is a 300-MW thermal, ternary-metallic fueled (U-20Pu-10Zr), low-pressure,
 high-temperature, fast-neutron flux $\left(>10^{15} \frac{n}{cm^2 \cdot s} \right)$,
-liquid sodium-cooled test reactor. 
-The VTR is designed with an orificing strategy to yield lower nominal peak cladding 
-temperatures in each orifice group by controlling the flow rate in each assembly. 
+liquid sodium-cooled test reactor.
+The VTR is designed with an orificing strategy to yield lower nominal peak cladding
+temperatures in each orifice group by controlling the flow rate in each assembly.
 The reference VTR core, shown in [vtr_radial], contains 66 fuel assemblies,
-six primary control rods, three secondary control rods, 114 radial reflectors, 114 radial 
+six primary control rods, three secondary control rods, 114 radial reflectors, 114 radial
 shield reflectors, and 10 test locations.
 Of the 10 test locations, five are fixed due to the required penetrations in the cover
 heads (instrumented), and five are free to move anywhere in the core (non-instrumented).
 The number of non-instrumented test locations can be easily increased or decreased depending
 on testing demand, but this may lead to slightly different core performance characteristics
-(e.g., flux) due to the different core layouts. 
+(e.g., flux) due to the different core layouts.
 Although the test assemblies will contain a wide variety of materials, they are modeled as
 assembly ducts that are only filled with sodium and axial reflectors to have a consistent
 core layout for subsequent analyses [!citep](heidet2020).
@@ -32,9 +32,9 @@ During refueling, the VTR will follow a discrete refueling scheme in that there 
 rather the fuel assemblies will be replaced with a fresh fuel assembly depending on its batch number.
 The number of cycles the fuel assembly stays in the core is dictated by the desired average fuel discharge
 burnup of 50 GWD/t (i.e., the fuel assemblies are discharged with an average burnup as close as possible to
-the targeted batch-average burnup of 50 GWD/t). 
+the targeted batch-average burnup of 50 GWD/t).
 This means fuel assemblies at the core periphery will remain in the core longer than those at the core center.
-This is all done in an effort to avoid unnecessary fuel handling operations that would complicate the design 
+This is all done in an effort to avoid unnecessary fuel handling operations that would complicate the design
 and increase operational costs.
 The discrete fuel management scheme is shown in [fuel_loading], where the 12 central most fuel
 assemblies (in Row 1--3) remain in the core for three cycles, the next 18 fuel assemblies (in Row 4) remain
@@ -45,7 +45,7 @@ of cycles that the assembly will remain in the core and the second number corres
 For example, the designation "6-4" indicates that this assembly will remain in the core for six cycles and
 is replaced every fourth cycle out of six.
 This fuel management scheme will result in the equilibrium core to having a periodicity of 60 cycles,
-meaning that the core configuration and performance will be identical every 60 cycles with small variations in between. 
+meaning that the core configuration and performance will be identical every 60 cycles with small variations in between.
 
 !media vtr/vtr_core.png
        style=width:75%;margin-left:auto;margin-right:auto
@@ -137,12 +137,12 @@ The Griffin neutronics computational model relies on the two-step approach:
 
 2. Low-order transport solution, using the multigroup cross sections generated at Step 1, with an optional equivalence step that recaptures the homogenization error as well as the remaining spatial/angular/energy discretization errors. In this model, the Continuous Finite Element Method (CFEM) multigroup diffusion approximation with SPH equivalence is employed [!citep](LaboureSPH2019).
 
-This section details the equations in place in the Griffin neutronics model. 
+This section details the equations in place in the Griffin neutronics model.
 The multi-group diffusion equation.
 
 \begin{equation}\label{eq:diffusion}
 \begin{split}
-  -\nabla \cdot \left(D^{\rm ref}_g(\mathbf{r})\nabla \phi_g(\mathbf{r})\right) + 
+  -\nabla \cdot \left(D^{\rm ref}_g(\mathbf{r})\nabla \phi_g(\mathbf{r})\right) +
     \Sigma^{\rm ref}_{rem,g}(\mathbf{r})\phi_g(\mathbf{r})
   = & \\
   \dfrac{\chi_g^{\rm ref}(\mathbf{r})}{k_{\rm eff}}\sum_{g'=1}^G\nu\Sigma^{ref}_{f,g'}(\mathbf{r})\phi_g'(\mathbf{r}) +
@@ -157,13 +157,13 @@ with the following reflective (Neumann) and vacuum (Robin) boundary conditions, 
 \end{equation}
 
 \begin{equation}
-    \dfrac{\phi_g(\mathbf{r})}{4}+\dfrac{1}{2}D^{\rm ref}_g \nabla \phi_g (\mathbf{r}) \cdot \overrightarrow{n}_b=0, \ \mathbf{r} \in \partial \mathcal{D}_v 
+    \dfrac{\phi_g(\mathbf{r})}{4}+\dfrac{1}{2}D^{\rm ref}_g \nabla \phi_g (\mathbf{r}) \cdot \overrightarrow{n}_b=0, \ \mathbf{r} \in \partial \mathcal{D}_v
 \end{equation}
 
 In the above equations, $G$ is the number of energy groups, $\phi_g$ is the scalar flux, $D^{\rm ref}_g$ is the diffusion coefficient,
 and $\Sigma_{rem,g}^{\rm ref}$, $\Sigma_{f,g'}^{\rm ref}$ and $\Sigma_{s,g'\rightarrow g}^{\rm ref}$ are the macroscopic
 removal, fission, and scattering cross sections, respectively.
-$\overrightarrow{n}_b$ is the outward normal unit vector on the boundary 
+$\overrightarrow{n}_b$ is the outward normal unit vector on the boundary
 $\partial \mathcal{D} = \partial \mathcal{D}_r \cup \partial \mathcal{D}_v$.
 
 In general, [eq:diffusion] does not reproduce the reference reaction rates and multiplication factor $k_{\rm eff}$.
@@ -184,7 +184,7 @@ The SPH-corrected neutron diffusion equation is then written as:
 
 \begin{equation}\label{eq:diffusion_sph}
 \begin{split}
-  -\nabla \cdot \left(\mu_{m,g}D^{\rm ref}_{m,g}(\mathbf{r})\nabla \phi_g(\mathbf{r})\right) + 
+  -\nabla \cdot \left(\mu_{m,g}D^{\rm ref}_{m,g}(\mathbf{r})\nabla \phi_g(\mathbf{r})\right) +
     \mu_{m,g}\Sigma^{\rm ref}_{rem,g}(\mathbf{r})\phi_g(\mathbf{r})
   = & \\
   \dfrac{\chi_g(\mathbf{r})}{k_{\rm eff}}\sum_{g'=1}^G\mu_{m,g'}\nu\Sigma^{ref}_{f,m,g'}(\mathbf{r})\phi_{g'}(\mathbf{r}) +
@@ -203,8 +203,8 @@ This is typically considered as a cross-section parametrization, which depends o
 As a general rule, the state variables need to capture the important feedback mechanisms (i.e., the ones that lead to
 significant changes in cross sections, and thus in reactivity).
 Then, once these state parameters are identified, it is equally important to cover the full range of variation of each parameter,
-to avoid extrapolating the cross sections outside of the points used to build the model. 
-The Griffin cross-section model also requires the grid to be full, meaning that the total number of statepoints increases exponentially with the dimensions (or number of points) used per parameter $p_i$ ($N_{grid} = N_{p_1}\times\dots N_{p_i}\times\dots N_{p_N}$). 
+to avoid extrapolating the cross sections outside of the points used to build the model.
+The Griffin cross-section model also requires the grid to be full, meaning that the total number of statepoints increases exponentially with the dimensions (or number of points) used per parameter $p_i$ ($N_{grid} = N_{p_1}\times\dots N_{p_i}\times\dots N_{p_N}$).
 
 This study's purpose is to perform only steady-state analyses, thus the parameter selection is primarily dictated by
 the verification of the reactivity coefficients.
@@ -222,11 +222,11 @@ where $f$ is approximated by a piece-wise linear function that uses the local pa
 
 The grid selected for each parameter is:
 
-- $T_{fuel}=[600,900,1800]$ $K$. 
+- $T_{fuel}=[600,900,1800]$ $K$.
 
 - $T_{cool}=[595,698,801]$ $K$
 
-- $CR=[0,0.25,0.5,0.75,1.]$ 
+- $CR=[0,0.25,0.5,0.75,1.]$
 
 The maximum fuel temperature was selected to coincide with the value used for generating a Doppler coefficient (1800 K).
 No changes in density were applied when varying the fuel temperature during the cross-section generation process.
@@ -285,14 +285,14 @@ but this research can be easily extended to include end of equilibrium cycle res
        caption=Griffin Mesh (axial).
 
 As mentioned above, the changes in dimensions, due for instance to eigenstrains, are not modeled through
-a cross-section parametrization, such as a variation in lattice pitch or other change requiring additional 
-3D Monte Carlo calculations. 
-Rather, the changes occurring in the finite element mesh lead to a change in the associated volumes 
+a cross-section parametrization, such as a variation in lattice pitch or other change requiring additional
+3D Monte Carlo calculations.
+Rather, the changes occurring in the finite element mesh lead to a change in the associated volumes
 relative to the non-deformed mesh that is automatically detected by Griffin and used to modify the
-corresponding cross sections. 
-Using Lagrangian notations, the displacement vector $\mathbf{u}(\mathbf{r},t)$ and its associated 
-gradient $\nabla\mathbf{u}(\mathbf{r},t)$ are related to the strains via strain-displacement relations 
-(more details will be given on the mechanical equations used in [#bison_mecha]). 
+corresponding cross sections.
+Using Lagrangian notations, the displacement vector $\mathbf{u}(\mathbf{r},t)$ and its associated
+gradient $\nabla\mathbf{u}(\mathbf{r},t)$ are related to the strains via strain-displacement relations
+(more details will be given on the mechanical equations used in [#bison_mecha]).
 Once the displacements are obtained, the changes in material densities can be computed via
 
 \begin{equation}
@@ -316,29 +316,29 @@ mesh-deformed Serpent calculations.
 
 For each fuel assembly, a representative fuel rod is modeled using the BISON code.
 A 2D axisymmetric representation of the rod geometry is used, as depicted in [bison_geometry].
-The purpose of this model is multiple for this analysis. 
+The purpose of this model is multiple for this analysis.
 First, it captures changes in fuel temperature due to changes in power density and thus is tightly coupled to the neutronics model,
-as a change in fuel temperature will change the multigroup cross sections, which will change the power density, and so forth. 
-It also models the axial thermal expansion of the fuel rod resulting from an increase in the fuel temperature. 
-The axial expansion of the fuel is also tightly coupled to the neutronics model, primarily via a geometrical effect 
-(increased fuel rod dimensions, thus increased neutron leakage) and to a lesser extent, 
-with a density effect (less fissile material per volume), which will change the power density, thus the fuel temperature, 
-and therefore the axial expansion itself. 
-These feedback mechanisms are usually ignored in most SFR computational schemes where only a loose coupling strategy is applied. 
-The BISON model also provides the wall (outer clad) temperature profile for use in the coolant channel calculation, 
-which passes back the bulk coolant temperature and heat transfer coefficient that are applied as a Robin boundary condition in BISON. 
-Thus, the thermo-mechanical model is tightly coupled with the thermal-hydraulic model. 
-Second, the BISON model will provide estimates for key safety limits, such as peak centerline temperature and peak cladding temperature. 
-In this study, these quantities are based on average power density levels and do not account for variations in rod-to-rod power level, 
+as a change in fuel temperature will change the multigroup cross sections, which will change the power density, and so forth.
+It also models the axial thermal expansion of the fuel rod resulting from an increase in the fuel temperature.
+The axial expansion of the fuel is also tightly coupled to the neutronics model, primarily via a geometrical effect
+(increased fuel rod dimensions, thus increased neutron leakage) and to a lesser extent,
+with a density effect (less fissile material per volume), which will change the power density, thus the fuel temperature,
+and therefore the axial expansion itself.
+These feedback mechanisms are usually ignored in most SFR computational schemes where only a loose coupling strategy is applied.
+The BISON model also provides the wall (outer clad) temperature profile for use in the coolant channel calculation,
+which passes back the bulk coolant temperature and heat transfer coefficient that are applied as a Robin boundary condition in BISON.
+Thus, the thermo-mechanical model is tightly coupled with the thermal-hydraulic model.
+Second, the BISON model will provide estimates for key safety limits, such as peak centerline temperature and peak cladding temperature.
+In this study, these quantities are based on average power density levels and do not account for variations in rod-to-rod power level,
 which can be easily performed as a next step.
 
-Coupling both the heat conduction and the momentum conservation PDEs into a single solve (fully coupled approach) was 
-found to be difficult from a numerical standpoint and often resulted in solve failures. 
-A more robust approach was to dissociate the thermal feedback from the mechanical one. 
+Coupling both the heat conduction and the momentum conservation PDEs into a single solve (fully coupled approach) was
+found to be difficult from a numerical standpoint and often resulted in solve failures.
+A more robust approach was to dissociate the thermal feedback from the mechanical one.
 For each fuel assembly, two BISON inputs were created, sharing the exact same geometry but upon which different physics are solved:
 
 1. One input solving only the heat conduction problem across the fuel rod
-2. One input modeling the mechanical expansion in the fuel and clad as a function of the temperature. 
+2. One input modeling the mechanical expansion in the fuel and clad as a function of the temperature.
 
 !media vtr/bison_geometry.png
        style=width:50%;margin-left:auto;margin-right:auto
@@ -355,14 +355,14 @@ For each fuel assembly, two BISON inputs were created, sharing the exact same ge
 The steady-state heat conduction equation solved is:
 
 \begin{equation}
-    -\nabla\cdot k(r,z) \nabla T(r,z) = P^{het}(r,z) 
+    -\nabla\cdot k(r,z) \nabla T(r,z) = P^{het}(r,z)
     \label{eq:thcond}
 \end{equation}
 
 with the following Neumann boundary condition for $r=0$:
 
 \begin{equation}
-    \dfrac{\partial T(r,z)}{\partial r}|_{r=0}=0 
+    \dfrac{\partial T(r,z)}{\partial r}|_{r=0}=0
 \end{equation}
 
 and a Robin boundary condition on the outside clad surface of radius $R$:
@@ -371,19 +371,19 @@ and a Robin boundary condition on the outside clad surface of radius $R$:
   -k\nabla T(r,z)|_{r=R}= H_w (T-T_{\infty})
 \end{equation}
 
-with $H_w$ as the convective heat transfer coefficient and $T_{\infty}$ as the bulk coolant temperature, 
-which are computed by SAM (see [#sam] for the correlations used). 
-The power density for the fuel rod $P^{het}$ corresponds to the average power density per rod for each assembly. 
+with $H_w$ as the convective heat transfer coefficient and $T_{\infty}$ as the bulk coolant temperature,
+which are computed by SAM (see [#sam] for the correlations used).
+The power density for the fuel rod $P^{het}$ corresponds to the average power density per rod for each assembly.
 It is obtained by normalizing the power density computed by Griffin on the homogenized fuel assembly so as to preserve
-the power between both volumes: 
+the power between both volumes:
 
 \begin{equation}
-    N_{rods}\int_0^R\int_0^L P^{het}(r,z)2\pi r drdz = \int\int\int_{V_{hom}}P^{hom}(x,y,z)dxdydz 
+    N_{rods}\int_0^R\int_0^L P^{het}(r,z)2\pi r drdz = \int\int\int_{V_{hom}}P^{hom}(x,y,z)dxdydz
 \end{equation}
 
 where:
 
-- $N_{rods}$: number of rods per assembly 
+- $N_{rods}$: number of rods per assembly
 - $P^{hom}$: power density in $W/m^3$ calculated in Griffin for the 3D homogeneous fuel assembly, whose corresponding volume is $S^{hom}_{hex} L$
 - $P^{het}$: power density in $W/m^3$ to be used in BISON for the 2D RZ heterogeneous fuel pin, whose corresponding volume is $S^{het}_{rod}=\pi R^2 L$
 - $R$: slug outer radius ($m$)
@@ -396,11 +396,11 @@ $\dfrac{S^{hom}_{hex}}{S^{het}_{rod}}$:
     P^{het}(r,z) = \dfrac{S^{hom}_{hex}}{S^{het}_{rod}}P^{hom}(x,y,z)
 \end{equation}
 
-Currently, the model assumes that all the fission power is locally deposited in the fuel rod. 
-The material properties utilized by this model are the thermal conductivity and the heat capacity for the metallic fuel and the HT9 cladding. 
-BISON incorporates these properties internally, and for the ternary UPuZr metallic fuel, different correlations are available. 
-For this study, the fresh fuel thermal conductivity from [!cite](billone) is used, 
-with the Savage model for the fuel heat capacity [!cite](savage). 
+Currently, the model assumes that all the fission power is locally deposited in the fuel rod.
+The material properties utilized by this model are the thermal conductivity and the heat capacity for the metallic fuel and the HT9 cladding.
+BISON incorporates these properties internally, and for the ternary UPuZr metallic fuel, different correlations are available.
+For this study, the fresh fuel thermal conductivity from [!cite](billone) is used,
+with the Savage model for the fuel heat capacity [!cite](savage).
 The cladding material properties are based on [!cite](hofman).
 
 ### BISON Mechanical Model id=bison_mecha
@@ -422,11 +422,11 @@ Where $\sigma$ is the nominal stress tensor, $\mathbf{u}(r,z)$ is the displaceme
   \mathbf{u}(r,z)|_{r=0}=0
 \end{equation}
 
-We rely on the *infinitesimal strain theory*, which linearly relates the stress and displacement tensors. 
-The displacement is assumed to be much smaller than any relevant dimensions so that its geometry and 
-the constitutive properties of the material (such as density and stiffness) at each point of space can 
-be assumed to be unchanged by the deformation. 
-The nominal stress tensor $\sigma$ is directly related to the symmetric strain tensor $\epsilon$ and 
+We rely on the *infinitesimal strain theory*, which linearly relates the stress and displacement tensors.
+The displacement is assumed to be much smaller than any relevant dimensions so that its geometry and
+the constitutive properties of the material (such as density and stiffness) at each point of space can
+be assumed to be unchanged by the deformation.
+The nominal stress tensor $\sigma$ is directly related to the symmetric strain tensor $\epsilon$ and
 the thermal expansion for isotropic materials:
 
 \begin{equation}
@@ -443,8 +443,8 @@ where $\lambda$ and $\mu$ are Lame constants, which depend on Young's modulus $E
     \mu = \dfrac{E}{2(1+\eta)}
 \end{equation}
 
-$\alpha$ is the thermal expansion coefficient, $T_0$ the strain-free temperature, 
-$\mathrm{tr}$ represents a trace operation on a tensor, and $\mathbf{I}$ is the identity tensor. 
+$\alpha$ is the thermal expansion coefficient, $T_0$ the strain-free temperature,
+$\mathrm{tr}$ represents a trace operation on a tensor, and $\mathbf{I}$ is the identity tensor.
 The strain tensor is evaluated from the displacement with the strain-displacement equations:
 
 \begin{equation}
@@ -453,22 +453,22 @@ The strain tensor is evaluated from the displacement with the strain-displacemen
 
 The temperature $T$ is an input, transferred from the BISON thermal model.
 
-The mechanical properties used in this model consist of the Young's modulus and Poisson's ratio that are required 
-to build the elasticity tensor, as well as the thermal expansion eigenstrains. 
-As for the thermal material properties, BISON incorporates these models internally. 
-Correlations used for Young's modulus and Poisson's ratio for the ternary metallic fuel are based on [!cite](hofman), 
-while the thermal expansion eigenstrain is taken from [!cite](geelhood). 
-The HT9 cladding Young's modulus and Poisson's ratio are based on correlations from [!cite](lanl_handbook). 
+The mechanical properties used in this model consist of the Young's modulus and Poisson's ratio that are required
+to build the elasticity tensor, as well as the thermal expansion eigenstrains.
+As for the thermal material properties, BISON incorporates these models internally.
+Correlations used for Young's modulus and Poisson's ratio for the ternary metallic fuel are based on [!cite](hofman),
+while the thermal expansion eigenstrain is taken from [!cite](geelhood).
+The HT9 cladding Young's modulus and Poisson's ratio are based on correlations from [!cite](lanl_handbook).
 The HT9 thermal expansion coefficient is provided in [!cite](leibowitz).
 
 ## Description of the SAM Thermal-Hydraulic Model id=sam
 
-A single channel model is used for this analysis, for which the inlet temperature and outlet pressure are imposed as boundary conditions. 
-The mass flow rate and sodium velocity are dependent upon the orifice type. 
+A single channel model is used for this analysis, for which the inlet temperature and outlet pressure are imposed as boundary conditions.
+The mass flow rate and sodium velocity are dependent upon the orifice type.
 Currently, orifices are only defined for the active core region, as shown in [orifice_map].
-SAM relies on a 1D single-phase flow model. 
+SAM relies on a 1D single-phase flow model.
 The governing equations are documented in Section 2.1 of the SAM theory manual [!cite](SAMTheoryManual).
-The wall surface temperature $T_{wall}$, provided by the BISON calculation, is used in the conjugate heat transfer model at the clad surface. 
+The wall surface temperature $T_{wall}$, provided by the BISON calculation, is used in the conjugate heat transfer model at the clad surface.
 The convective heat flux is then:
 
 \begin{equation}
@@ -477,10 +477,10 @@ The convective heat flux is then:
 
 where $h$ and $T_{cool}$ are the heat transfer coefficient and the bulk coolant temperature, respectively.
 
-There are two closure models required, one for the determination of the (forced) convective heat transfer coefficient 
+There are two closure models required, one for the determination of the (forced) convective heat transfer coefficient
 and one for the wall friction.
 By default, SAM uses the Calamai/Kazimi-Carelli correlation for estimating the convective heat transfer coefficient
-for bundle geometries with sodium as a fluid, see Section 5.1.2.2 of [!cite](SAMTheoryManual) for a complete description. 
+for bundle geometries with sodium as a fluid, see Section 5.1.2.2 of [!cite](SAMTheoryManual) for a complete description.
 For the wall friction, the simplified version of Cheng-Todreas correlation is applied for wire-wrapped rod bundles
 (see Section 5.2.2 of [!cite](SAMTheoryManual).
 
@@ -491,12 +491,12 @@ For the wall friction, the simplified version of Cheng-Todreas correlation is ap
 
 ## Description of the Core Support Plate Model id=sec:core_plate
 
-A 3D model of the core support plate is built using the MOOSE tensor mechanics module. 
-The equations given in [#bison_mecha] apply to this model as well. 
-The mesh used for the core support plate is given in [core_plate_radial] and [core_plate_axial]. 
-The core support plate is assumed to be fixed at its center (0,0,0), as well at the bottom plane (y=0), 
-and expand freely in the radial directions, as well as in the upward direction. 
-Only the radial displacements are connected to the neutronics model in the multiphysics scheme, 
+A 3D model of the core support plate is built using the MOOSE tensor mechanics module.
+The equations given in [#bison_mecha] apply to this model as well.
+The mesh used for the core support plate is given in [core_plate_radial] and [core_plate_axial].
+The core support plate is assumed to be fixed at its center (0,0,0), as well at the bottom plane (y=0),
+and expand freely in the radial directions, as well as in the upward direction.
+Only the radial displacements are connected to the neutronics model in the multiphysics scheme,
 so the thermal expansion of the core support plates leads to an increase in fuel assembly pitch, but not a shift in core height.
 
 !media vtr/core_plate_radial.png
@@ -509,8 +509,8 @@ so the thermal expansion of the core support plates leads to an increase in fuel
        id=core_plate_axial
        caption=Core support plate axial mesh.
 
-The BISON internal mechanical properties for stainless steel 316 are used. 
-The Poisson's ratio is held constant ($\nu = 0.31$). 
+The BISON internal mechanical properties for stainless steel 316 are used.
+The Poisson's ratio is held constant ($\nu = 0.31$).
 The Young's modulus in Pa is computed using:
 
 \begin{equation}

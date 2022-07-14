@@ -243,7 +243,7 @@ rod_pitch            =${fparse rod_outside_diameter + wire_wrap_diameter}
   [clad_density]
     type = Density
     block = 'clad 4'
-    density = 7800 
+    density = 7800
   []
 []
 
