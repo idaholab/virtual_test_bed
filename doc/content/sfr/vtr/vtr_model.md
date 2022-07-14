@@ -533,4 +533,8 @@ Run it via:
 
  `mpirun -n 48 blue_crab-opt -i griffin_multiphysics.i`
 
+## Acknowledgments
+
+This model is adapted from [!citep](vtr_martin) and prepared for the VTB by Thomas Folk.
+
 !bibtex bibliography
