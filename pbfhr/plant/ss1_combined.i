@@ -96,7 +96,7 @@ outlet_pressure_val = 2e5
   # in pbfhr/meshes using Cubit to generate the mesh
   # Modify the parameters (mesh size, refinement areas) for each application
   # neutronics, thermal hydraulics and fuel performance
-  # uniform_refine = 1
+  uniform_refine = 1
   [fmg]
     type = FileMeshGenerator
     file = '../meshes/core_pronghorn.e'
@@ -616,12 +616,12 @@ outlet_pressure_val = 2e5
 # MULTIAPPS FOR PEBBLE MODEL AND PRIMARY LOOP
 # ==============================================================================
 [MultiApps]
-  # [pebble_mesh]
-  #   type = TransientMultiApp
-  #   execute_on = 'FINAL'
-  #   input_files = 'ss3_coarse_pebble_mesh.i'
-  #   cli_args = 'Outputs/console=false'
-  # []
+  [pebble_mesh]
+    type = TransientMultiApp
+    execute_on = 'FINAL'
+    input_files = 'ss3_coarse_pebble_mesh.i'
+    cli_args = 'Outputs/console=false'
+  []
 
   [primary]
     type = TransientMultiApp
@@ -642,18 +642,18 @@ outlet_pressure_val = 2e5
 
 [Transfers]
   # Pebble simulations
-  # [fuel_matrix_heat_source]
-  #   type = MultiAppProjectionTransfer
-  #   to_multi_app = coarse_mesh
-  #   source_variable = power_distribution
-  #   variable = power_distribution
-  # []
-  # [pebble_surface_temp]
-  #   type = MultiAppProjectionTransfer
-  #   to_multi_app = coarse_mesh
-  #   source_variable = T_solid
-  #   variable = temp_solid
-  # []
+  [fuel_matrix_heat_source]
+    type = MultiAppProjectionTransfer
+    to_multi_app = pebble_mesh
+    source_variable = power_distribution
+    variable = power_distribution
+  []
+  [pebble_surface_temp]
+    type = MultiAppProjectionTransfer
+    to_multi_app = pebble_mesh
+    source_variable = T_solid
+    variable = temp_solid
+  []
 
   # Primary and secondary loops
   [send_flow_BCs]

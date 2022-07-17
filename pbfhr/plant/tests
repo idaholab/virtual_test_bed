@@ -81,7 +81,7 @@
     executable_pattern = 'blue_crab*'
     min_parallel = 8
     prereq = 'syntax_multiphysics sam_pronghorn_init'
-    cli_args = "Outputs/file_base=pbfhr_steady Executioner/fixed_point_max_its=1 Executioner/accept_on_max_fixed_point_iteration=true MultiApps/thermo/cli_args='Problem/restart_file_base=pbfhr_sam_pronghorn_cp/LATEST;Executioner/num_steps=30;Executioner/fixed_point_max_its=3'"
+    cli_args = "Outputs/file_base=pbfhr_steady Executioner/fixed_point_max_its=1 Executioner/accept_on_max_fixed_point_iteration=true MultiApps/thermo/cli_args='Problem/restart_file_base=pbfhr_sam_pronghorn_cp/LATEST;Mesh/uniform_refine=0;Executioner/num_steps=30;Executioner/fixed_point_max_its=3'"
   []
   [sam_pronghorn_init]
     type = CSVDiff
@@ -90,7 +90,7 @@
     executable_pattern = 'blue_crab*'
     min_parallel = 8
     prereq = 'syntax_plant_flow core_flow plant_flow'
-    cli_args = 'Outputs/file_base=pbfhr_sam_pronghorn Executioner/num_steps=50'
+    cli_args = 'Outputs/file_base=pbfhr_sam_pronghorn Mesh/uniform_refine=0 Executioner/num_steps=50'
   []
 
   # Regression tests - single app inputs
@@ -108,8 +108,7 @@
     input = 'ss1_combined_initial.i'
     csvdiff = 'ss1_combined_initial_out.csv'
     ad_indexing_type = 'global'
-    # Last two arguments to accomodate for old submodules for now
-    cli_args = "MultiApps/active='' Transfers/active=''"
+    cli_args = "MultiApps/active='' Transfers/active='' Mesh/uniform_refine=0"
     executable_pattern = 'pronghorn*|blue_crab*|fenix*'
     min_parallel = 8
     prereq = 'syntax_core_flow_initial'
@@ -119,8 +118,7 @@
     input = 'ss1_combined.i'
     csvdiff = 'ss1_combined_out.csv'
     ad_indexing_type = 'global'
-    # Last two arguments to accomodate for old submodules for now
-    cli_args = "MultiApps/active='' Transfers/active='' Executioner/num_steps=20"
+    cli_args = "MultiApps/active='' Transfers/active='' Mesh/uniform_refine=0 Executioner/num_steps=20"
     executable_pattern = 'pronghorn*|blue_crab*|fenix*'
     min_parallel = 8
     prereq = 'syntax_core_flow core_flow_initial'
