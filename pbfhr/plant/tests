@@ -5,6 +5,7 @@
     check_input = True
     executable_pattern = 'blue_crab*'
     # need a restart file
+    cli_args = "MultiApps/thermo/cli_args='Mesh/uniform_refine=0'"
     prereq = 'core_flow_initial'
   []
   [syntax_neutronics]
@@ -27,7 +28,7 @@
     input = 'ss1_combined.i'
     check_input = True
     ad_indexing_type = 'global'
-    cli_args = "MultiApps/active='' Transfers/active=''"
+    cli_args = "MultiApps/active='' Transfers/active='' Mesh/uniform_refine=0"
     executable_pattern = 'pronghorn*|blue_crab*|fenix*'
     # need a restart file
     prereq = 'core_flow_initial'

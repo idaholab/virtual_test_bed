@@ -194,7 +194,7 @@ outlet_pressure_val = 2e5
     # Inlet boundary conditions
     inlet_boundaries = 'bed_horizontal_bottom OR_horizontal_bottom'
     momentum_inlet_types = 'fixed-velocity fixed-velocity'
-    momentum_inlet_function = '0 inlet_vel_y_fun 0 0'
+    momentum_inlet_function = '0 inlet_vel_y_fun; 0 0'
     energy_inlet_types = 'fixed-temperature heatflux'
     energy_inlet_function = 'T_inlet_fun 0'
     # so the flux BCs have to be used consistently across all equations
