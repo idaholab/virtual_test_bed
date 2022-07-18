@@ -10,6 +10,7 @@ If you make use of the Virtual Test Bed, please reference this paper as well as 
                booktitle = {Transactions of the American Nuclear Society},
                booksubtitle = {Winter Meeting}
               }
+A. Abou-Jaoude, D. Gaston, G. Giudicelli, B. Feng and C. Permann, "The Virtual Test Bed Repository : A Library of Multiphysics Reference Reactor Models using NEAMS Tools", Transactions of the American Nuclear Society (2020)
 ```
 
 ## Reactor models
@@ -32,6 +33,7 @@ the following:
          url = {https://www.sciencedirect.com/science/article/pii/S0306454921004229},
          year = 2021
         }
+A. Abou-Jaoude, S. Harper, G. Giudicelli, P. Balestra, S. Schunert, N.Martin, A. Lindsay and M. Tano, "A Workflow Leveraging MOOSE Transient Multiphysics Simulations to Evaluate the Impact of Thermophysical Property Uncertainties on Molten-Salt Reactors", Annals of Nuclear Energy 163, 108546, (2021)
 ```
 
 - Molten Salt Fast Reactor (Nek5000 model)
@@ -44,6 +46,7 @@ the following:
                booktitle = {Transactions of the American Nuclear Society},
                booksubtitle = {Winter Meeting}
               }
+Jun Fang, Dillon R Shaver and Bo Feng, "CFD Modeling of Molten Salt Fast Reactor Using Nek5000", Transactions of the American Nuclear Society (2021)
 ```
 
 - Molten Salt Reactor Experiment (SAM model)
@@ -56,6 +59,7 @@ the following:
             number = {ANL/NSE-21/74},
             year = 2021
            }
+Hu R., Hu G., Gorman M., Fang J., Mui T., O’Grady D., Fei T. and Salko R., "FY21 SAM Developments for MSR Modeling.", Argonne National Laboratory, ANL/NSE-21/74 (2021)
 ```
 
 ### Pebble bed fluoride-salt cooled high temperature reactor style=font-size:125%
@@ -69,6 +73,7 @@ the following:
          year = {2021},
          journal = {Proceedings of the International Conference of Mathematics and Computation for Nuclear Science and Engineering}
         }
+Guillaume Giudicelli, Alexander Lindsay, Paolo Balestra, Robert Carlsen, Javier Ortensi, Derek Gaston, Mark DeHart, Abdalla Abou-Jaoude and April J Novak, "Coupled Multiphysics Multiscale Transient Simulations of The Mk1-Fhr Reactor Using Finite Volume Capabilities of The Moose Framework", Proceedings of the International Conference of Mathematics and Computation for Nuclear Science and Engineering, 2021
 ```
 
 - Pebble bed fluoride-salt cooled high temperature reactor reflector model
@@ -81,6 +86,7 @@ the following:
                booktitle = {Transactions of the American Nuclear Society},
                booksubtitle = {ANS Winter Meeting}
               }
+April J. Novak, Dillon Shaver and Bo Feng, "Conjugate Heat Transfer Coupling of NekRS and MOOSE for Bypass Flow Modeling", Transactions of the American Nuclear Society (2021)
 ```
 
 - Integrated Plant Analysis
@@ -98,6 +104,7 @@ the following:
                url = {https://www.osti.gov/biblio/1392061},
                year = {2017}
               }
+Ahmed K. K., Scarlat R. O. and Hu R., "Benchmark Simulation of Natural Circulation Cooling System with Salt Working Fluid Using SAM", Transactions of the  American Nuclear Society (2017)
 ```
 
 
@@ -116,6 +123,8 @@ the following:
          doi = {https://doi.org/10.1016/j.anucene.2022.109066},
          url = {https://www.sciencedirect.com/science/article/pii/S0306454922001013},
          author = {Nicolas Martin and Ryan Stewart and Sam Bays}
+        }
+Nicolas Martin, Ryan Stewart and Sam Bays, "A multiphysics model of the versatile test reactor based on the MOOSE framework", Annals of Nuclear Energy, 172, 109066 (2022)
 ```
 
 - Advanced Burner Test Reactor SAM model
@@ -127,6 +136,7 @@ the following:
             title = {{Reactivity Feedback Modeling in SAM.}},
             url = {https://doi.org/10.2172/1499041}
            }
+Hu, G., Zhang, G., & Hu, R., "Reactivity Feedback Modeling in SAM", Argonne National Laboratory, ANL/NSE-19/1150747 (2019)
 ```
 
 ### High Temperature Gas Cooled Reactor style=font-size:125%
@@ -143,6 +153,7 @@ the following:
               Forced Circulation Transient in HTGRs}},
             year = {2019}
            }
+Vegendla Prasad, Hu Rui and Zou Ling, "Multi-Scale Modeling of Thermal-Fluid Phenomena Related to Loss of Forced Circulation Transient in HTGRs", Argonne National Laboratory, ANL-19/35 (2019)
 ```
 
 - PBMR-400 numerical benchmark
@@ -155,6 +166,7 @@ the following:
          journal = {EPJ Web of Conferences},
          pages = {247}
        }
+Paolo Balestra, Sebastian Schunert, Robert W Carlsen, April J Novak, Mark D DeHart and Richard C Martineau, "PBMR-400 benchmark solution of exercise 1 and 2 using the moose based applications: MAMMOTH, Pronghorn", 247 (2021)
 ```
 
 - Assembly Cardinal model
@@ -166,6 +178,7 @@ the following:
                booktitle  = {{Proceedings of Physor}},
                year       = 2022
               }
+A.J. Novak, D. Andrs, P. Shriwise, D. Shaver, P.K. Romano, E. Merzari and P. Keutelian, "Coupled Monte Carlo Transport and Thermal-Hydraulics Modeling of a Prismatic Gas Reactor Fuel Assembly Using Cardinal" (2022)
 ```
 
 ### Micro Reactor style=font-size:125%
@@ -179,6 +192,7 @@ the following:
         year = {2021},
         journal = {Proceedings of the American Nuclear Society Annual 2021 Meeting}
        }
+Nicolas E. Stauff, Kun Mo, Yan Cao, Justin W. Thomas, Yinbin Miao, Changho Lee, Christopher Matthews and Bo Feng, "Preliminary Applications of NEAMS Codes for Multiphysics Modeling of a Heat Pipe Microreactor", Transactions of the American Nuclear Society, (2021)
 ```
 
 ## Software / codes
@@ -194,14 +208,15 @@ Bison
          author = {Richard L. Williamson and Jason D. Hales and Stephen R. Novascone and Giovanni Pastore and Kyle A. Gamble and Benjamin W. Spencer and Wen Jiang and Stephanie A. Pitts and Albert Casagranda and Daniel Schwen and Adam X. Zabriskie and Aysenur Toptan and Russell Gardner and Christoper Matthews and Wenfeng Liu and Hailong Chen},
          title = {BISON: A Flexible Code for Advanced Simulation of the Performance of Multiple Nuclear Fuel Forms},
          journal = {Nuclear Technology},
-         volume = {0},
-         number = {0},
+         volume = {207},
+         number = {7},
          pages = {1-27},
          year  = {2021},
          publisher = {Taylor & Francis},
          doi = {10.1080/00295450.2020.1836940},
          URL = {https://doi.org/10.1080/00295450.2020.1836940},
         }
+Richard L. Williamson, Jason D. Hales, Stephen R. Novascone, Giovanni Pastore, Kyle A. Gamble, Benjamin W. Spencer, Wen Jiang, Stephanie A. Pitts, Albert Casagranda, Daniel Schwen, Adam X. Zabriskie, Aysenur Toptan, Russell Gardner, Christoper Matthews, Wenfeng Liu and Hailong Chen, "BISON: A Flexible Code for Advanced Simulation of the Performance of Multiple Nuclear Fuel Forms", Nuclear Technology (2021)
 ```
 
 Griffin
@@ -214,6 +229,7 @@ Griffin
             number = {INL/EXT-19-54247},
             year = 2020
            }
+Mark DeHart, Fredrick N. Gleicher, Vincent Laboure, Javier Ortensi, Zachary Prince, Sebastian Schunert and Yaqi Wang, "Griffin User Manual", Idaho National Laboratory, INL/EXT-19-54247, 2020
 ```
 
 Nek5000
@@ -225,6 +241,7 @@ Nek5000
       Note   = "http://nek5000.mcs.anl.gov",
       Year   = "2008"
      }
+Paul F. Fischer, James W. Lottes and Stefan G. Kerkemeier, "Nek5000 Open source spectral element CFD solver", http://nek5000.mcs.anl.gov (2008)
 ```
 
 NekRS
@@ -238,6 +255,7 @@ NekRS
       archivePrefix={arXiv},
       primaryClass={cs.PF}
      }
+Paul Fischer, Stefan Kerkemeier, Misun Min, Yu-Hsiang Lan, Malachi Phillips, Thilina Rathnayake, Elia Merzari, Ananias Tomboulides, Ali Karakus, Noel Chalmers and Tim Warburton, "NekRS, a GPU-Accelerated Spectral Element Navier-Stokes Solver" (2021)
 ```
 
 Cardinal
@@ -251,6 +269,7 @@ Cardinal
          DOI = {https://doi.org/10.1080/00295450.2020.1824471},
          url = {https://www.tandfonline.com/doi/full/10.1080/00295450.2020.1824471}
 }
+E. Merzari, H. Yuan, M. Min, D. Shaver, R. Rahaman, P. Shriwise, P. Romano, A. Talamo, Y. Lan, D. Gaston, R. Martineau, P. Fischer and Y. Hassan, "Cardinal : A Lower Length-Scale Multiphysics Simulator for Pebble-Bed Reactors", Nuclear Technology (2021)
 ```
 
 Pronghorn
@@ -265,6 +284,7 @@ Pronghorn
          url = {https://www.tandfonline.com/doi/full/10.1080/00295450.2020.1825307},
          keywords = {Pronghorn, pebble bed reactor, MOOSE}
         }
+A.J. Novak, R.W. Carlsen, S. Schunert, P. Balestra, D. Reger, R.N. Slaybaugh and R.C. Martineau, "Pronghorn: A Multidimensional Coarse-Mesh Application for Advanced Reactor Thermal Hydraulics", Nuclear Technology (2021)
 ```
 
 SAM
@@ -277,6 +297,7 @@ SAM
             number = {ANL/NE-17/4},
             year = 2017
            }
+R. Hu, "SAM Theory Manual", Argonne National Laboratory, ANL/NE-17/4 (2017)
 ```
 
 Sockeye
@@ -295,3 +316,5 @@ Sockeye
          URL = {https://doi.org/10.1080/00295450.2020.1861879},
          eprint = {https://doi.org/10.1080/00295450.2020.1861879}
 }
+Joshua E. Hansel, Ray A. Berry, David Andrs, Matthias S. Kunick and Richard C. Martineau, "Sockeye: A One-Dimensional, Two-Phase, Compressible Flow Heat Pipe Application", Nuclear Technology, 207-7, 1096-1117 (2021)
+```
