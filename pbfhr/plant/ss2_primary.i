@@ -5,22 +5,24 @@
 # Work supported under the DOE NEAMS program
 # Application : SAM
 
+############################
 # Tuned to get 976 kg/s mdot
 # with SAM core
 # pump_head = 4.89e5
 # with SAM uncoupled PP boundaries
 # pump_head = 2e4  #roughly, 1140 kg/s
 # with Pronghorn core
-pump_head = 4.9e5
-# 5.9e5 -> 1200
-# 4.7e5 -> 870
-area_inlet = 1
+pump_head = 4.62e5
+#############################
+
+# Adjust 'fueling' component initial velocity if adjusting inlet area
+area_inlet = 0.33911699112746213
 
 [GlobalParams]                  # global parameters initialization
-    global_init_P = 1.0e5
-    global_init_V = 1.796
-    global_init_T = 874
-    Tsolid_sf = 1e-3
+  global_init_P = 1.0e5
+  global_init_V = 1.796
+  global_init_T = 873.15
+  Tsolid_sf = 1e-3
 
   [PBModelParams]               # new user should not make changes to this block
     pbm_scaling_factors = '1 1e-2 1e-6'
@@ -119,7 +121,7 @@ area_inlet = 1
     Dh = 0.1
     length = 0.3
     n_elems = 2
-    initial_T = 823.15
+    initial_T = 873.15
     initial_P = 593416
     initial_V = 1.43079
     WF_user_option = User
@@ -1002,21 +1004,20 @@ area_inlet = 1
     function = 'dts'
   []
 
-  nl_rel_tol = 1e-5
-  nl_abs_tol = 1e-4
-  nl_max_its = 30
+  nl_rel_tol = 1e-6
+  nl_abs_tol = 1e-5
+  nl_max_its = 15
 
-  start_time = -40.0
-  num_steps = 15000
+  start_time = 0
   end_time = 100
 
   l_tol = 1e-5 # Relative linear tolerance for each Krylov solve
   l_max_its = 200 # Number of linear iterations for each Krylov solve
 
-   [Quadrature]
-      type = GAUSS # SIMPSON
-      order = SECOND
-   []
+  [Quadrature]
+    type = GAUSS # SIMPSON
+    order = SECOND
+  []
 []
 
 [Functions]
@@ -1028,17 +1029,15 @@ area_inlet = 1
   []
 []
 
-#[Problem]
-  #restart_file_base = 'pbfhr-t_out_cp/0658'  #c1 right after transient
-#[]
-
 [Outputs]
-  print_linear_residuals = false
-  [out]
-    type = Checkpoint
+  [console]
+    type = Console
+    # interval = 20
+    show = 'Core_inlet_T Core_outlet_T Core_inlet_pressure '
+           'Core_outlet_p Core_inlet_mdot Core_outlet_mdot'
+    execute_scalars_on = NONE
   []
-
-  [out_displaced]
+  [exodus]
     type = Exodus
     use_displaced = true
     execute_on = 'initial timestep_end'
@@ -1049,10 +1048,13 @@ area_inlet = 1
     type = CSV
     interval = 5
   []
-
-  [console]
-    type = Console
-    # interval = 20
-    show = 'Core_outlet_p'
+  [out]
+    type = Checkpoint
+    num_files = 2
   []
+
+  # Reduce base output
+  print_linear_converged_reason = false
+  print_linear_residuals = false
+  print_nonlinear_converged_reason = false
 []

@@ -392,6 +392,7 @@ fis_fract            = ${fparse 1 - dh_fract} # Fission power fraction at t = 0.
 [MultiApps]
   [thermo]
     type = FullSolveMultiApp
+    app_type = BlueCrabApp
     input_files = 'ss1_combined.i'
     execute_on = 'timestep_end' # once power distribution is computed
     positions = '0.0 0.0 0.0'

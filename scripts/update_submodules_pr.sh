@@ -1,4 +1,5 @@
 # Create a new branch of off the current devel
+git fetch origin
 git checkout origin/devel
 export BRANCH_NAME=submodule_update_`date +%y_%m_%d`
 git checkout -b $BRANCH_NAME
