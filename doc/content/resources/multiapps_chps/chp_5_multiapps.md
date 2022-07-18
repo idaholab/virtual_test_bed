@@ -60,7 +60,7 @@ The following two examples describe the use of the `TransientMultiApp`. The defi
   []
 []
 
-The minimum time step over the main and all child applications will be used, by default, unless `sub_cycling` is enabled. If sub_cycling is enabled this will allow faster calculations, as the child applications will be able to perform multiple time steps per execution.
+The minimum time step over the main and all child applications will be used, by default, unless `sub_cycling` is enabled. If sub_cycling is enabled this will allow faster calculations, as the parent app will not be forced to use the smaller time step from the child app.
 
 #### CentroidMultiApp
 

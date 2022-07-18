@@ -44,7 +44,7 @@ The MultiApp hierarchy has the following structure:
 - A parent application can have any number of MultiApp objects.
 - A MultiApp object can have any number of child applications.
 - A child application can create a multi-level solve by defining any number of MultiApp objects.
-- Creating thousands of MultiApps solves is possible in the MultiApp Hierarchy System.
+- Creating thousands of MultiApps solves is possible in the MultiApp Hierarchy System, and these MultiApps may also have an arbitrary number of child apps
 - The applications in the hierarchy can be MOOSE-based or external (MOOSE-wrapped) applications.  
 - Using multi-level solves can be advantageous for parallel execution and debugging.
 

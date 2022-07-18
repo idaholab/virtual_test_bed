@@ -4,7 +4,7 @@
 
 ### Identification of Physical Phenomena and Their Domains
 
-The first step when designing a MultiApps based simulation is to identify the physical phenomena that needs to be modeled, and their spatial and time domains.
+The first step when designing a MultiApps based simulation is to identify the physical phenomena that need to be modeled, and their spatial and time domains.
 
 For a reactor system, neutronics is expected to be the essential (and usually dominant) physics. Heat conduction and thermal hydraulics are important in solid and fluid reactor components, respectively. The performance of specific reactor components, such as fuel, heat pipes, and coolant channels, may involve unique physical behaviors that need to be simulated separately. Meanwhile, diffusion controlled chemical reactions can exist in different regions of reactors.
 
