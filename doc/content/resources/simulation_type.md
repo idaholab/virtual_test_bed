@@ -17,7 +17,8 @@ help creating it.
 
 - Micro-Reactor [documentation](mrad/index.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/mrad/steady)
 
-- Pebble Bed Modular Reactor [documentation](htgr/pbmr/index.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/pbmr/steady)
+- Pebble Bed Modular Reactor [documentation](htgr/pbmr/index.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/pbmr400/steady)
+
 
 ### Component analysis
 
@@ -34,6 +35,8 @@ help creating it.
 
 - Pebble Bed Fluoride salt cooled High temperature Reactor [documentation](pbfhr/pbfhr_sam/pbfhr_sam.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/pbfhr/sam_model)
 
+- Advanced Burner Test Reactor [documentation](sfr/abtr.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/sfr/abtr)
+
 
 ## Transient
 
@@ -41,9 +44,11 @@ help creating it.
 
 - Upcoming for PB-FHR
 
+
 ### Protected loss of coolant flow
 
-- Pebble Bed Modular Reactor [documentation](htgr/pbmr/index.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/pbmr/transient)
+- Pebble Bed Modular Reactor [documentation](htgr/pbmr/index.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/pbmr400/transient)
+
 
 ### Unprotected loss of coolant flow (ULOF)
 
