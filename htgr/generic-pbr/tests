@@ -1,0 +1,9 @@
+[Tests]
+  [pbr_sam]
+    type = RunApp
+    input = 'pbr.i'
+    check_input = True
+    executable_pattern = 'sam*|blue_crab*'
+    cli_args = '--app SamApp'
+  []
+[]
