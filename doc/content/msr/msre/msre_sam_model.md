@@ -147,3 +147,15 @@ The U-tube primiary heat exchanger cools down the fuel salt, which returns to th
        style=width:60%
        id=msre_sam
        caption=The steady-state temperature distribution in the 1-D MSRE primary loop.
+
+
+## MSRE Reactivity Insertion Test
+
+An additional SAM model was developed for the MSRE reactivity insertion tests. There are three external reactivity insertion experiments conducted in MSRE at power levels of 1 MW, 5 MW, and 8 MW. This SAM model is developed for the 5 MW case. The SAM model consists of two calculation steps. In Step 1, the power level is adjusted to be consistent with that in the experiments. The power is kept constant for a long period of time (1000 - 2000 seconds) until the steady state condition was achieved, i.e., all parameters (density, temperature, etc.) in the system no longer change. Some preliminary scoping studies are performed to ensure the initial conditions (core inlet/outlet temperature, HX secondary side inlet/outlet temperature) are consistent with the experiments before this step. In the second step, an external reactivity is inserted at the beginning of the simulation, and power is allowed to change due to the external reactivity insertion and the reactivity feedback following the power increase. This MSRE SAM model is similar to the existing SAM model, except that the MSR-specific point kinetics is enabled and the MSRE primary heat exchanger is modeled by a `PBHeatExchanger` component in SAM. The Point Kinetic Equation for MSRs is employed to predict the power evolution. The delayed neutron precursor sources are specified in the core, upper and lower plenum. The power fractions in these regions are 87.5%, 3.89%, and 8.59%, respectively. The delayed neutron precursor sources are directly proportional to the power fraction in the current code implementation. Thus, to account for all delayed neutron precursors, no power is specified in the graphite moderators.
+
+There are two reactivity feedback mechanisms considered in the model. The fuel feedback is captured with the fuel density reactivity feedback coefficient (“coolant_reactivity_coefficients”). The graphite feedback is captured with the moderator temperature feedback coefficient (“moderator_reactivity_coefficients”). The “moderator_reactivity_coefficients” is defined as the reactivity change per temperature. Thus, the mass (volume) of the moderator is specified carefully to be consistent with the MSRE graphite mass. The power transition during the insertion of external reactivity is shown in [power_change].
+
+!media msr/msre/power_during_insertion.png
+       style=width:45%
+       id=power_change
+       caption=Power change following the external reactivity insertion.
