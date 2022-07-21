@@ -11,3 +11,5 @@
 [Griffin HTR-10 model](htr10/index.md)
 
 [RELAP-7 High Temperature Test Facility model](httf/index.md)
+
+[SAM Generic Pebble Bed HTGR model](generic-pbr/index.md)
