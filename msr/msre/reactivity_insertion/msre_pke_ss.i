@@ -1,4 +1,5 @@
 # MSRE Model for reactivity insertion test
+# SAM input file for steady state initialization
 #
 [GlobalParams]
   global_init_P = 2.392e5  
@@ -37,14 +38,14 @@
 [Functions]
   [./time_stepper]
     type = PiecewiseLinear
-    x = '0.0 10.0 50.0'
-    y = '0.01 0.1  1.0'
+    x = '-1000.0   0.0'
+    y = '    1.0  10.0'
   [../]
   
   [ext_rho]
     type = PiecewiseConstant
-    x = '0.0      1.0'
-    y = '0.000190 0.000190'
+    x = '-1000.0    0.0'
+    y = '    0.0    0.0'
   [../]
 []
 
@@ -72,10 +73,10 @@
   [./pke1]
     type                         = PointKinetics
     rho_fn_name                  = ext_rho
-    lambda                       = '0.0126 0.0337 0.139 0.325 1.13 2.50'
+    lambda                       = '0.0126 0.0337 0.138 0.325 1.13 2.50'
     LAMBDA                       = 4.0E-4
     betai                        = '2.28E-04 7.88E-04 6.64E-04 7.36E-04 1.36E-04 8.8E-05'
-    constant_power               = False
+    constant_power               = True
     Moving_DNP_bypass_channels   = 'ch2 uplnm iplnm'
     feedback_components          = 'ch2 moderator'
     feedback_start_time          = 0
@@ -137,7 +138,7 @@
     position           = '0.7366 0.0 -1.7272'
     eos                = eos
     power_fraction     = '0.8752'
-    coolant_density_reactivity_feedback = True
+    coolant_density_reactivity_feedback = False
     n_layers_coolant                    = 20
     coolant_reactivity_coefficients     = -3.0014E-04
   [../]
@@ -156,7 +157,7 @@
     Ts_init            = 905.4
     HS_BC_type         = 'Coupled  Adibatic'
     name_comp_left     = ch2
-    moderator_reactivity_feedback     = True
+    moderator_reactivity_feedback     = False
     n_layers_moderator                = 20
     moderator_reactivity_coefficients = -2.9070E-06
   [../]
@@ -372,11 +373,15 @@
   [../]
 []
 
-[Postprocessors]
+[Postprocessors] 
   [./dnp_den]
     type     = ElementAverageValue
     block    = 'ch2'
     variable = fml1
+  [../]
+  [./mdot]
+    type = ComponentBoundaryFlow
+    input = ch2(in)
   [../]
 []
 
@@ -401,8 +406,8 @@
     function = time_stepper
     min_dt = 1e-3
   [../]
-  start_time          = 0
-  end_time            = 400 
+  start_time          = -2000
+  end_time            = 0
   petsc_options_iname = '-ksp_gmres_restart'
   petsc_options_value = '100'
   nl_rel_tol = 1e-7
@@ -413,13 +418,9 @@
   [./Quadrature]
     type  = TRAP     
     order = FIRST    
-    # type  = GAUSS     
-    # order = SECOND    
+    # type  = GAUSS  
+    # order = SECOND 
   [../]
-[]
-
-[Problem]
-  restart_file_base = msre_pke_ss_ckpt_cp/1257
 []
 
 [Outputs]
@@ -429,6 +430,10 @@
     use_displaced = true
     execute_on = 'initial timestep_end'
     sequence = false  
+  [../]
+  [./ckpt]
+    type      = Checkpoint
+    num_files = 1
   [../]
   [./console]
     type = Console
