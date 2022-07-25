@@ -1,0 +1,277 @@
+# ==============================================================================
+# Model description
+# Application : Griffin
+# ------------------------------------------------------------------------------
+# Idaho Falls, INL, June 8th, 2022
+# Author(s): Javier Ortensi
+# ==============================================================================
+# - HTR Full Configuration GRIFFIN neutronics input
+# - MainApp
+# ==============================================================================
+# - The Model has been built based on [1-2].
+# ------------------------------------------------------------------------------
+# [1] Benchmark Analysis of the HTR-10 with the MAMMOTH Reactor Physics
+#     Application, J. Ortensi et al.
+# [2] Evaluation of high temperature gas cooled reactor performance: benchmark
+#     analysis related to initial testing of the httr and htr-10. 
+#     Technical Report IAEA-TECDOC-1382, International Reactor Physics
+#     Experiment Evaluation Project, 2003.
+# ==============================================================================
+# MODEL PARAMETERS
+# ==============================================================================
+
+# State ------------------------------------------------------------------------
+# see state on xs library
+# Power ------------------------------------------------------------------------
+
+# ==============================================================================
+# GLOBAL PARAMETERS
+# ==============================================================================
+[GlobalParams]
+  coupled_flux_groups = 'sflux_g0 sflux_g1 sflux_g2 sflux_g3 sflux_g4 sflux_g5 sflux_g6 sflux_g7 sflux_g8 sflux_g9'
+  scalar_flux = 'sflux_g0 sflux_g1 sflux_g2 sflux_g3 sflux_g4 sflux_g5 sflux_g6 sflux_g7 sflux_g8 sflux_g9'
+  #Library options include xs/htr-10-full-1RI.xml, xs/htr-10-full-393K.xml, xs/htr-10-full-523K.xml,
+  # xs/htr-10-full-ARI.xml, and xs/htr-10-full-ARO.xml
+  library_file = '../data/xs/htr-10-XS.xml'
+  library_name = 'htr-10-full-ARO'
+  grid = '1'
+  grid_names = 'default'
+  isotopes = 'pseudo'
+  densities = '1.0'
+  plus = 1
+[]
+
+# ==============================================================================
+# GEOMETRY AND MESH
+# ==============================================================================
+[Mesh]
+  [./fmg]
+    type = FileMeshGenerator
+    file = '../data/mesh/htr-10-full-a-rev3.e'
+    exodus_extra_element_integers = 'eqv_id material_id'
+  [../]
+  [./eqvid]
+    type = ExtraElementIDCopyGenerator
+    input = fmg
+    source_extra_element_id = eqv_id
+    target_extra_element_ids = 'equivalence_id'
+  [../]
+  uniform_refine = 0
+  # These modifiers are used to remove the boronated bricks that surround the core
+  # from the original mesh
+  [./delete_bricks]
+    type = BlockDeletionGenerator
+    input = eqvid
+    block = '3 4 5'
+  [../]
+  [./sideset_side]
+    type = ParsedGenerateSideset
+    input = delete_bricks
+    combinatorial_geometry = 'sqrt(x*x+y*y) > 165.0'
+    new_sideset_name = 1
+  [../]
+  [./sideset_bot]
+    type = ParsedGenerateSideset
+    input = sideset_side
+    combinatorial_geometry = 'z < 41'
+    included_subdomain_ids = '10 11 12'
+    normal = '0 0 -1'
+    new_sideset_name = 2
+  [../]
+  [./sideset_top]
+    type = ParsedGenerateSideset
+    input = sideset_bot
+    combinatorial_geometry = 'z > 490'
+    included_subdomain_ids = '52 45 46'
+    normal = '0 0 1'
+    new_sideset_name = 3
+  [../]
+[]
+
+[Equivalence]
+  type = SPH
+  transport_system = ts
+  compute_factors = false
+  equivalence_grid_names = 'default'
+  equivalence_grid = '1'
+  equivalence_library = '../data/sph/htr-10-Diff-SPH.xml'
+[]
+
+# ==============================================================================
+# VARIABLES AND KERNELS
+# ==============================================================================
+[Variables]
+[]
+
+[Kernels]
+[]
+
+# ==============================================================================
+# AUXVARIABLES AND AUXKERNELS
+# ==============================================================================
+[AuxVariables]
+  [./AbsorptionRR]
+    order = FIRST
+    family = MONOMIAL
+    block = '10 11 12 13 14 15 16 17 18 20 21 22 30 31 32 40 41 42 43 44 45 46 50 52'
+  [../]
+  [./NuFissionRR]
+    order = FIRST
+    family = MONOMIAL
+    block = '16 17 20 21 30 31'
+  [../]
+[]
+
+[AuxKernels]
+  [./AbsorptionRR]
+    type = VectorReactionRate
+    block = '10 11 12 13 14 15 16 17 18 20 21 22 30 31 32 40 41 42 43 44 45 46 50 52'
+    variable = AbsorptionRR
+    cross_section = sigma_absorption
+    scale_factor = power_scaling
+    dummies = _unscaled_total_power
+    execute_on = timestep_end
+  [../]
+  [./nuFissionRR]
+    type = VectorReactionRate
+    block = '16 17 20 21 30 31'
+    variable = NuFissionRR
+    cross_section = nu_sigma_fission
+    scale_factor = power_scaling
+    dummies = _unscaled_total_power
+    execute_on = timestep_end
+  [../]
+[]
+
+# ==============================================================================
+# INITIAL CONDITIONS AND FUNCTIONS
+# ==============================================================================
+[ICs]
+[]
+
+[Functions]
+[]
+
+# ==============================================================================
+# MATERIALS AND USER OBJECTS
+# ==============================================================================
+[Materials]
+  [./fissile]
+    type = MixedMatIDNeutronicsMaterial
+    block = '16 17 20 21 30 31'
+  [../]
+  [./non_fissile]
+    type = MixedMatIDNeutronicsMaterial
+    block = '10 11 12 13 14 15 18 22 32 40 41 42 43 44 45 46 50 52'
+  [../]
+[]
+
+[PowerDensity]
+  power = 1
+  power_density_variable = power_density
+  integrated_power_postprocessor = integrated_power
+  power_scaling_postprocessor = power_scaling
+  family = MONOMIAL
+  order = CONSTANT
+[]
+
+# ==============================================================================
+# BOUNDARY CONDITIONS
+# ==============================================================================
+[BCs]
+[]
+
+# ==============================================================================
+# TRANSPORT SYSTEMS
+# ==============================================================================
+[TransportSystems]
+  particle = neutron
+  equation_type = eigenvalue
+  G = 10
+  VacuumBoundary = '1 2 3'
+
+  [./ts]
+   scheme = CFEM-Diffusion
+   n_delay_groups = 0
+   family = LAGRANGE
+   order = FIRST
+   assemble_scattering_jacobian = true
+   assemble_fission_jacobian = true
+  [../]
+[]
+
+# ==============================================================================
+# EXECUTION PARAMETERS
+# ==============================================================================
+[Executioner]
+  type = Eigenvalue
+
+  # Preconditioned JFNK (default)
+  solve_type = 'PJFNKMO'
+  constant_matrices = true
+  petsc_options_iname = '-pc_type -pc_hypre_type -ksp_gmres_restart '
+  petsc_options_value = 'hypre boomeramg 100'
+
+  free_power_iterations = 1
+[]
+
+# ==============================================================================
+# MULTIAPPS AND TRANSFER
+# ==============================================================================
+[MultiApps]
+[]
+
+[Transfers]
+[]
+
+# ==============================================================================
+# RESTART
+# ==============================================================================
+[RestartVariables]
+[]
+
+# ==============================================================================
+# POSTPROCESSORS DEBUG AND OUTPUTS
+# ==============================================================================
+[Postprocessors]
+  [./power]
+    type = ElementIntegralVariablePostprocessor
+    variable = power_density
+    block = '16 17 20 21 30 31'
+  [../]
+  [./nufission]
+    type = ElementIntegralVariablePostprocessor
+    variable = NuFissionRR
+    block = '16 17 20 21 30 31'
+  [../]
+  [./absorption]
+    type = ElementIntegralVariablePostprocessor
+    variable = AbsorptionRR
+    block = '10 11 12 13 14 15 16 17 18 20 21 22 30 31 32 40 41 42 43 44 45 46 50 52'
+  [../]
+  [./RR_Generation]
+    type = FluxRxnIntegral
+    cross_section = nu_sigma_fission
+    block = '16 17 20 21 30 31'
+  [../]
+  [./RR_Absorption]
+    type = FluxRxnIntegral
+    cross_section = sigma_absorption
+    block = '10 11 12 13 14 15 16 17 18 20 21 22 30 31 32 40 41 42 43 44 45 46 50 52'
+  [../]
+  [./RR_Leakage]
+    type = PartialSurfaceCurrent
+    boundary = '1 2 3'
+    transport_system = ts
+   [../]
+[]
+
+[Outputs]
+ file_base = out-HTR-10-full-Diff-SPH-ARO
+ interval = 1
+ exodus = true
+ csv = true
+ [./console]
+   type = Console
+ [../]
+[]
