@@ -7,3 +7,5 @@
 [Cardinal multiphysics coupling of MOOSE heat conduction, THM, and OpenMC](assembly/index.md)
 
 [Bison TRISO model](triso/index.md)
+
+[Griffin HTR-10 model](htr-10/index.md)
