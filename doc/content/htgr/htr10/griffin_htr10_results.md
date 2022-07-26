@@ -21,7 +21,7 @@ command from the shell prompt will execute the input file.
 
 Alternatively, if using an HPC and running in parallel a submission script or interactive session can be submitted
 via PBS as seen here [Binary Access with INL-HPC](mooseframework.inl.gov/help/inl/hpc_binary.html).
-In this case, an mpi comand must be included as seen below.
+In this case, an mpirun command must be included as seen below.
 
 ```language=bash
 
