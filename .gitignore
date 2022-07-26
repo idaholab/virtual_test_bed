@@ -189,6 +189,7 @@ site
 docs/.moosedocs
 !docs/templates/*.html
 !docs/media/**/*.png
+!doc/content/media/**/*.png
 !docs/media/**/*.gif
 !docs/tests/**/gold/*.html
 
