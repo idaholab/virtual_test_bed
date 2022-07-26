@@ -4,7 +4,7 @@
 
 ## VTR core description
 
-The VTR conceptual design presented in [!citep](heidet2020) is used for this study.
+The VTR conceptual design presented in the works by [!citep](heidet2020)[!citep](heidet2022)[!citep](nelson_vtr) is used for this study.
 This VTR design is a 300-MW thermal, ternary-metallic fueled (U-20Pu-10Zr), low-pressure,
 high-temperature, fast-neutron flux $\left(>10^{15} \frac{n}{cm^2 \cdot s} \right)$,
 liquid sodium-cooled test reactor.
