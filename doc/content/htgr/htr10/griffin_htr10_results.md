@@ -19,6 +19,17 @@ command from the shell prompt will execute the input file.
 
 ```
 
+Alternatively, if using an HPC and running in parallel a submission script or interactive session can be submitted
+via PBS as seen here [Binary Access with INL-HPC](mooseframework.inl.gov/help/inl/hpc_binary.html).
+In this case, an mpirun command must be included as seen below.
+
+```language=bash
+
+mpirun griffin-opt -i htr-10-critical.i
+
+```
+
+
 ## *Initial Critical* Core Results
 
 The first set of results for this model deal with the *htr-10-critical.i* input file
@@ -37,7 +48,7 @@ As can be seen in the table below, Griffin matches with the accepted Serpent sol
 
 Additionally, the flux distribution in the critical core is plotted in [htr10_flux] below.
 The effect of the upper cavity is clearly visible as the flux is almost flat within this region.
-The thermal flux peaks in the bottom conus are also visible.
+The thermal flux peaks in the bottom of the core are also visible.
 
 !media /htr10/flux_critical_core.png
    style=width:80%

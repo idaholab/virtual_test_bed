@@ -8,4 +8,4 @@
 
 [Bison TRISO model](triso/index.md)
 
-[Griffin HTR-10 model](htr-10/index.md)
+[Griffin HTR-10 model](htr10/index.md)
