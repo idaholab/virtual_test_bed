@@ -20,6 +20,10 @@
 # MODEL PARAMETERS
 # ==============================================================================
 
+absorption_blocks = '10 11 12 13 14 15 16 17 18 20 21 22 30 31 32 40 41 42 43 44 45 46 50 52'
+fuel_blocks = '16 17 20 21 30 31'
+non_fuel_blocks = '10 11 12 13 14 15 18 22 32 40 41 42 43 44 45 46 50 52'
+
 # State ------------------------------------------------------------------------
 # see state on xs library
 # Power ------------------------------------------------------------------------
@@ -30,8 +34,8 @@
 [GlobalParams]
   coupled_flux_groups = 'sflux_g0 sflux_g1 sflux_g2 sflux_g3 sflux_g4 sflux_g5 sflux_g6 sflux_g7 sflux_g8 sflux_g9'
   scalar_flux = 'sflux_g0 sflux_g1 sflux_g2 sflux_g3 sflux_g4 sflux_g5 sflux_g6 sflux_g7 sflux_g8 sflux_g9'
-  #Library options include xs/htr-10-full-1RI.xml, xs/htr-10-full-393K.xml, xs/htr-10-full-523K.xml,
-  # xs/htr-10-full-ARI.xml, and xs/htr-10-full-ARO.xml
+  #Library name options include 'htr-10-full-1RI', 'htr-10-full-393K', 'htr-10-full-523K',
+  # 'htr-10-full-ARI', and 'htr-10-full-ARO'.
   library_file = '../data/xs/htr-10-XS.xml'
   library_name = 'htr-10-full-ARO'
   grid = '1'
@@ -113,19 +117,19 @@
   [./AbsorptionRR]
     order = FIRST
     family = MONOMIAL
-    block = '10 11 12 13 14 15 16 17 18 20 21 22 30 31 32 40 41 42 43 44 45 46 50 52'
+    block = ${absorption_blocks} 
   [../]
   [./NuFissionRR]
     order = FIRST
     family = MONOMIAL
-    block = '16 17 20 21 30 31'
+    block = ${fuel_blocks} 
   [../]
 []
 
 [AuxKernels]
   [./AbsorptionRR]
     type = VectorReactionRate
-    block = '10 11 12 13 14 15 16 17 18 20 21 22 30 31 32 40 41 42 43 44 45 46 50 52'
+    block = ${absorption_blocks} 
     variable = AbsorptionRR
     cross_section = sigma_absorption
     scale_factor = power_scaling
@@ -134,7 +138,7 @@
   [../]
   [./nuFissionRR]
     type = VectorReactionRate
-    block = '16 17 20 21 30 31'
+    block = ${fuel_blocks} 
     variable = NuFissionRR
     cross_section = nu_sigma_fission
     scale_factor = power_scaling
@@ -158,11 +162,11 @@
 [Materials]
   [./fissile]
     type = MixedMatIDNeutronicsMaterial
-    block = '16 17 20 21 30 31'
+    block = ${fuel_blocks} 
   [../]
   [./non_fissile]
     type = MixedMatIDNeutronicsMaterial
-    block = '10 11 12 13 14 15 18 22 32 40 41 42 43 44 45 46 50 52'
+    block = ${non_fuel_blocks} 
   [../]
 []
 
@@ -237,27 +241,27 @@
   [./power]
     type = ElementIntegralVariablePostprocessor
     variable = power_density
-    block = '16 17 20 21 30 31'
+    block = ${fuel_blocks} 
   [../]
   [./nufission]
     type = ElementIntegralVariablePostprocessor
     variable = NuFissionRR
-    block = '16 17 20 21 30 31'
+    block = ${fuel_blocks} 
   [../]
   [./absorption]
     type = ElementIntegralVariablePostprocessor
     variable = AbsorptionRR
-    block = '10 11 12 13 14 15 16 17 18 20 21 22 30 31 32 40 41 42 43 44 45 46 50 52'
+    block = ${absorption_blocks} 
   [../]
   [./RR_Generation]
     type = FluxRxnIntegral
     cross_section = nu_sigma_fission
-    block = '16 17 20 21 30 31'
+    block = ${fuel_blocks} 
   [../]
   [./RR_Absorption]
     type = FluxRxnIntegral
     cross_section = sigma_absorption
-    block = '10 11 12 13 14 15 16 17 18 20 21 22 30 31 32 40 41 42 43 44 45 46 50 52'
+    block = ${absorption_blocks} 
   [../]
   [./RR_Leakage]
     type = PartialSurfaceCurrent
