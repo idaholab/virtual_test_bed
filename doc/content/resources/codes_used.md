@@ -55,7 +55,7 @@ in the input files of the virtual test bed.
 
 - Pebble Bed Fluoride salt cooled High temperature Reactor [documentation](pbfhr/pbfhr_sam/pbfhr_sam.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/pbfhr/sam_model)
 
-- Advanced Burner Test Reactor [documentation](sfr/abtr.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/sfr/abtr)
+- Advanced Burner Test Reactor [documentation](sfr/abtr/abtr.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/sfr/abtr)
 
 
 ### Thermal-hydraulics module

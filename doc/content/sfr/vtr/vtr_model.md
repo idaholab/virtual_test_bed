@@ -120,11 +120,11 @@ The VTR model captures the predominant feedback mechanisms and consists of 4 ind
 
 3. A tensor mechanic input of the core support plate, predicting the stress-strain relationships given the inlet sodium temperature. The displacements are passed to the neutronics model to account for the radial displacements in the core geometry. Since the core support plate expansion is tied to the inlet temperature (fixed in this analysis), this model is only called once at the beginning of the simulation.
 
-4. A SAM 1D channel input, whose purpose is to compute the coolant channel temperature / density profile and pressure drop, given the orifice strategy selected which dictates the input mass flow rate and outlet pressure and the wall temperature coming from the BISON thermal model. The coolant density and heat transfer coefficient is passed back to BISON to be used in a convective heat flux boundary condition. The coolant density is also passed back to the neutronics model for updating the cross sections. One SAM input is instantiated per coolant channel. The coupling scheme with the variables exchanged between solvers is given in [sfr_scheme].
+4. A SAM 1D channel input, whose purpose is to compute the coolant channel temperature / density profile and pressure drop, given the orifice strategy selected which dictates the input mass flow rate and outlet pressure and the wall temperature coming from the BISON thermal model. The coolant density and heat transfer coefficient is passed back to BISON to be used in a convective heat flux boundary condition. The coolant density is also passed back to the neutronics model for updating the cross sections. One SAM input is instantiated per coolant channel. The coupling scheme with the variables exchanged between solvers is given in [vtr_scheme].
 
-!media vtr/sfr_scheme.png
+!media vtr/vtr_scheme.png
        style=width:75%;margin-left:auto;margin-right:auto
-       id=sfr_scheme
+       id=vtr_scheme
        caption=The coupling scheme used for the SFR model.
 
 # Griffin Neutronics Model
@@ -345,9 +345,9 @@ For each fuel assembly, two BISON inputs were created, sharing the exact same ge
        id=bison_geometry
        caption=BISON 2D RZ geometry with aspect ratio modified.
 
-!media vtr/bison_mesh.png
+!media vtr/vtr_bison_mesh.png
        style=width:50%;margin-left:auto;margin-right:auto
-       id=bison_mesh
+       id=vtr_bison_mesh
        caption=BISON spatial mesh.
 
 ### BISON Thermal Model id=bison_thermal
