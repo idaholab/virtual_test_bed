@@ -5,3 +5,5 @@
 [PBMR400 multiphysics numerical benchmark](pbmr/index.md)
 
 [Cardinal multiphysics coupling of MOOSE heat conduction, THM, and OpenMC](assembly/index.md)
+
+[Bison TRISO model](triso/index.md)
