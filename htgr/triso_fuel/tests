@@ -4,7 +4,7 @@
     input = 'triso_1d.i'
     csvdiff = 'triso_1d_out.csv'
     executable_pattern = 'bison*'
-    rel_err = 5E-5
+    rel_err = 1E-4
   []
   [triso_bluecrab]
     type = CSVDiff
