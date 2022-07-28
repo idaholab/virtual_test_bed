@@ -1,0 +1,16 @@
+[Tests]
+  [triso_bison]
+    type = CSVDiff
+    input = 'triso_1d.i'
+    csvdiff = 'triso_1d_out.csv'
+    executable_pattern = 'bison*'
+    rel_err = 5E-5
+  []
+  [triso_bluecrab]
+    type = CSVDiff
+    input = 'triso_1d.i'
+    csvdiff = 'triso_1d_out.csv'
+    cli_args = '--app BisonApp'
+    executable_pattern = 'blue_crab*'
+  []
+[]
