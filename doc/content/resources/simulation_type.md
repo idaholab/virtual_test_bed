@@ -55,6 +55,16 @@ help creating it.
 - Molten Salt Fast Reactor [documentation](msr/msfr/griffin_pgh_transient_model.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/msr/msfr/transient)
 
 
+## Depletion
+
+### Core depletion
+
+- Upcoming for PB-FHR
+
+
+### Fuel depletion
+
+- 1D TRISO fuel depletion [documentation](htgr/triso/triso_model.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/devel/htgr/triso_fuel)
 
 
 !alert note

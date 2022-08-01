@@ -76,11 +76,15 @@ in the input files of the virtual test bed.
 
 - Assembly in a Sodium Fast Reactor [documentation](sfr/sfr.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/sfr/singe_assembly)
 
+- 1D TRISO fuel depletion [documentation](htgr/triso/triso_model.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/devel/htgr/triso_fuel)
+
+
 ### Heat conduction module
 
 - HTGR assembly multiphysics simulation [documentation](htgr/assembly/index.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/htgr/assembly)
 
 - Reflector bypass flow in the PB-FHR [documentation](pbfhr/reflector.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/pbfhr/reflector)
+
 
 ### Pronghorn pebble models
 
@@ -92,4 +96,4 @@ in the input files of the virtual test bed.
 
 !alert note
 The input file links are not automatically checked by the VTB automated testing. If you hit a broken
-link please report it to the [VTB team](abdalla.aboujaoude@inl.gov)
+link please report it to the [VTB team](abdalla.aboujaoude@inl.gov), thank you for your help!
