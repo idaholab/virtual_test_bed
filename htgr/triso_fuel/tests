@@ -4,7 +4,8 @@
     input = 'triso_1d.i'
     csvdiff = 'triso_1d_out.csv'
     executable_pattern = 'bison*'
-    rel_err = 1E-4
+    # see #114 on vtb
+    rel_err = '1e-3'
   []
   [triso_bluecrab]
     type = CSVDiff
@@ -12,5 +13,7 @@
     csvdiff = 'triso_1d_out.csv'
     cli_args = '--app BisonApp'
     executable_pattern = 'blue_crab*'
+    # see #114 on vtb
+    rel_err = 1e-3
   []
 []
