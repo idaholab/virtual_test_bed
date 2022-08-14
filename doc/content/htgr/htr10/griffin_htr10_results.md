@@ -11,21 +11,21 @@ documented in detail in the Griffin Neutronics Model Section.
 ## Running an Input File
 
 If the user has access to Griffin built upon a working Moose Framework the following
-command from the shell prompt will execute the input file.
+command from the shell prompt will execute the input file. The `mpirun` command specified
+will make `Griffin` use four cores/processes to perform the calculation.
 
 ```language=bash
 
-/projects/griffin/griffin-opt -i htr-10-critical.i
+mpirun -n 4 /projects/griffin/griffin-opt -i htr-10-critical.i
 
 ```
 
 Alternatively, if using an HPC and running in parallel a submission script or interactive session can be submitted
 via PBS as seen here [Binary Access with INL-HPC](mooseframework.inl.gov/help/inl/hpc_binary.html).
-In this case, an mpirun command must be included as seen below.
 
 ```language=bash
 
-mpirun griffin-opt -i htr-10-critical.i
+mpirun -n 4 griffin-opt -i htr-10-critical.i
 
 ```
 
