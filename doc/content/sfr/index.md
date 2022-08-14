@@ -1,6 +1,6 @@
 # Sodium Fast Reactor
 
-[Sodium-cooled Fast Reactor](sfr/sfr.md)
+[Sodium-cooled Fast Reactor assembly](sfr/single_assembly/sfr.md)
 
 [Versatile Test Reactor](vtr/index.md)
 

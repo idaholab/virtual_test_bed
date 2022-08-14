@@ -110,7 +110,7 @@ Ahmed K. K., Scarlat R. O. and Hu R., "Benchmark Simulation of Natural Circulati
 
 ### Sodium Fast Reactor style=font-size:125%
 
-- Sodium Fast Reactor assembly model
+- Versatile Test Reactor assembly and core model
 
 ```
 @article{MARTIN2022109066,
@@ -139,18 +139,6 @@ Nicolas Martin, Ryan Stewart and Sam Bays, "A multiphysics model of the versatil
 Hu, G., Zhang, G., & Hu, R., "Reactivity Feedback Modeling in SAM", Argonne National Laboratory, ANL/NSE-19/1150747 (2019)
 ```
 
-- Versatile Test Reactor
-
-```
-@article{vtr_martin,
-  author = {{Martin, Nicholas} and {Stewart, Ryan} and {Bays, Sam}},
-  title = {A Multiphysics Model of the Versatile Test Reactorbased on the MOOSE Framework},
-  url = "https://doi.org/10.1016/j.anucene.2022.109066",
-  journal = {Annals of Nuclear Energy},
-  year = 2022,
-  volume = 172,
-}
-```
 
 ### High Temperature Gas Cooled Reactor style=font-size:125%
 
