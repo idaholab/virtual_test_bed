@@ -17,6 +17,8 @@ in the input files of the virtual test bed.
 
 - Pebble Bed Modular Reactor [documentation](htgr/pbmr/index.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/pbmr400/steady)
 
+- HTR-10 Griffin Benchmark [documentation](htgr/htr10/index.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/htr10)
+
 
 ### Cardinal / OpenMC
 
@@ -76,7 +78,7 @@ in the input files of the virtual test bed.
 
 - Assembly in a Sodium Fast Reactor [documentation](sfr/sfr.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/sfr/singe_assembly)
 
-- 1D TRISO fuel depletion [documentation](htgr/triso/triso_model.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/devel/htgr/triso_fuel)
+- 1D TRISO fuel depletion [documentation](htgr/triso/triso_model.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/triso_fuel)
 
 
 ### Heat conduction module
