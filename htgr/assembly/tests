@@ -12,6 +12,7 @@
     check_input = true
     executable_pattern = 'cardinal*'
     prereq = generate_mesh
+    max_time = 600
   []
   [syntax_conduction]
     type = RunApp
@@ -34,6 +35,7 @@
     executable_pattern = 'cardinal*'
     prereq = 'syntax_openmc'
     min_parallel = 8
+    max_time = 600
   []
   [run_conduction]
     type = RunApp
