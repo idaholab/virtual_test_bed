@@ -2,9 +2,9 @@
 # SAM input file for transient simulation
 #
 [GlobalParams]
-  global_init_P = 2.392e5  
-  global_init_V = 1.0      
-  global_init_T = 905.4    
+  global_init_P = 2.392e5
+  global_init_V = 1.0
+  global_init_T = 905.4
   scaling_factor_var='1 1e-3 1e-6'
   [./PBModelParams]
     p_order = 1
@@ -41,7 +41,7 @@
     x = '0.0 10.0 50.0'
     y = '0.01 0.1  1.0'
   [../]
-  
+
   [ext_rho]
     type = PiecewiseConstant
     x = '0.0      1.0'
@@ -63,7 +63,7 @@
     rho  = 1870.0
   [../]
 []
-  
+
 [Components]
   [./reactor]
     type = ReactorPower
@@ -76,14 +76,13 @@
     lambda                       = '0.0126 0.0337 0.139 0.325 1.13 2.50'
     LAMBDA                       = 4.0E-4
     betai                        = '2.28E-04 7.88E-04 6.64E-04 7.36E-04 1.36E-04 8.8E-05'
-    constant_power               = False
     Moving_DNP_bypass_channels   = 'ch2 uplnm iplnm'
     feedback_components          = 'ch2 moderator'
     feedback_start_time          = 0
   [../]
-  # 
-  # ====== downcomer ====== 
-  # 
+  #
+  # ====== downcomer ======
+  #
   [./downcomer]
     type           = PBOneDFluidComponent
     A              = 0.1589
@@ -91,7 +90,7 @@
     length         = 1.7272
     n_elems        = 40
     orientation    = '0 0 -1'
-    position       = '0 0 0'   
+    position       = '0 0 0'
     eos            = eos
   [../]
   [./j_dn_pl]
@@ -102,9 +101,9 @@
     inputs  = 'downcomer(out)'
     outputs = 'iplnm(in)'
   [../]
-  # 
-  # ====== inlet plenum ====== 
-  # 
+  #
+  # ====== inlet plenum ======
+  #
   [./iplnm]
     type           = PBMoltenSaltChannel
     A              = 0.3932
@@ -124,9 +123,9 @@
     inputs  = 'iplnm(out)'
     outputs = 'ch2(in)'
   [../]
-  # 
+  #
   # ====== core channel ======
-  # 
+  #
   # core channel excluding center
   [./ch2]
     type               = PBMoltenSaltChannel
@@ -155,7 +154,7 @@
     dim_hs             = 2
     material_hs        = 'graphite'
     Ts_init            = 905.4
-    HS_BC_type         = 'Coupled  Adibatic'
+    HS_BC_type         = 'Coupled  Adiabatic'
     name_comp_left     = ch2
     moderator_reactivity_feedback     = True
     n_layers_moderator                = 20
@@ -170,9 +169,9 @@
     inputs  = 'ch2(out)'
     outputs = 'uplnm(in)'
   [../]
-  # 
+  #
   # ====== upper plenum ======
-  # 
+  #
   [./uplnm]
     type           = PBMoltenSaltChannel
     A              = 0.3442
@@ -192,9 +191,9 @@
     inputs  = 'uplnm(out)'
     outputs = 'p100_s1(in)'
   [../]
-  # 
-  # ====== pipe 100 connecting core to pump ====== 
-  # 
+  #
+  # ====== pipe 100 connecting core to pump ======
+  #
   [./p100_s1] # horizontal section
     type = PBOneDFluidComponent
     A           = 0.02309
@@ -223,22 +222,22 @@
     position    = '2.5654 0.0 0.8636'
     eos         = eos
   [../]
-  # 
+  #
   # ====== pump ======
-  # 
+  #
   [./pump]
     type      = PBPump
     Area      = 0.01292
-    K         = '0.0 0.0' 
+    K         = '0.0 0.0'
     K_reverse = '100.0 100.0'
     eos       = eos
     inputs    = 'p100_s2(out)'
     outputs   = 'p101(in)'
     Head      = 285402.5
   []
-  # 
+  #
   # ====== pipe 101 connecting pump to heat exchanger ======
-  # 
+  #
   [./p101]
     type = PBOneDFluidComponent
     A           = 0.02144
@@ -258,9 +257,9 @@
     inputs  = 'p101(out)'
     outputs = 'hx(primary_in)'
   [../]
-  # 
+  #
   # ====== heat exchanger ======
-  # 
+  #
   [./hx]
     type                              = PBHeatExchanger
     HX_type                           = Concurrent
@@ -273,13 +272,13 @@
     length                            = 2.5298
     HT_surface_area_density           = 83.21
     Hw                                = 19874.0
-                                      
+
     A_secondary                       = 0.01394
     Dh_secondary                      = 0.01057
     length_secondary                  = 2.5298
     HT_surface_area_density_secondary = 533.77
     Hw_secondary                      = 28000.0
-    
+
     n_elems                           = 50
     end_elems_refinement              = 10
 	 initial_V_secondary               = 3.5
@@ -298,9 +297,9 @@
     inputs  = 'hx(primary_out)'
     outputs = 'p102_s1(in)'
   [../]
-  # 
+  #
   # ====== pipe 102 connecting heat exchanger to downcomer ======
-  # 
+  #
   [./p102_s1]
     type = PBOneDFluidComponent
     A           = 0.02252
@@ -337,9 +336,9 @@
     inputs  = 'p102_s2(out)'
     outputs = 'downcomer(in))'
   [../]
-  # 
+  #
   # ====== boundary condiction ======
-  # 
+  #
   [./bc_in]
     type        = PBOneDFluidComponent
     A           = 0.01292
@@ -385,11 +384,11 @@
   active = 'SMP_PJFNK'
   [./SMP_PJFNK]
     type = SMP
-    # type = FDP                       
-    full = true                        
-    solve_type = 'PJFNK'               
-    petsc_options_iname = '-pc_type'   
-    petsc_options_value = 'lu'         
+    # type = FDP
+    full = true
+    solve_type = 'PJFNK'
+    petsc_options_iname = '-pc_type'
+    petsc_options_value = 'lu'
   [../]
 []
 
@@ -403,19 +402,19 @@
     min_dt = 1e-3
   [../]
   start_time          = 0
-  end_time            = 400 
+  end_time            = 400
   petsc_options_iname = '-ksp_gmres_restart'
   petsc_options_value = '100'
   nl_rel_tol = 1e-7
   nl_abs_tol = 1e-5
-  nl_max_its = 20    
-  l_tol      = 1e-5  
-  l_max_its  = 50    
+  nl_max_its = 20
+  l_tol      = 1e-5
+  l_max_its  = 50
   [./Quadrature]
-    type  = TRAP     
-    order = FIRST    
-    # type  = GAUSS     
-    # order = SECOND    
+    type  = TRAP
+    order = FIRST
+    # type  = GAUSS
+    # order = SECOND
   [../]
 []
 
@@ -429,13 +428,13 @@
     type = Exodus
     use_displaced = true
     execute_on = 'initial timestep_end'
-    sequence = false  
+    sequence = false
   [../]
   [./console]
     type = Console
-    perf_log = true
   [../]
   [./csv]
     type = CSV
   []
+  perf_graph = true
 []
