@@ -78,7 +78,7 @@ non_fuel_blocks = '10 11 12 13 14 15 18 22 32 40 41 42 43 44 45 46 50 52'
     type = ParsedGenerateSideset
     input = sideset_side
     combinatorial_geometry = 'z < 41'
-    included_subdomain_ids = '10 11 12'
+    included_subdomains = '10 11 12'
     normal = '0 0 -1'
     new_sideset_name = 2
   [../]
@@ -86,7 +86,7 @@ non_fuel_blocks = '10 11 12 13 14 15 18 22 32 40 41 42 43 44 45 46 50 52'
     type = ParsedGenerateSideset
     input = sideset_bot
     combinatorial_geometry = 'z > 490'
-    included_subdomain_ids = '52 45 46'
+    included_subdomains = '52 45 46'
     normal = '0 0 1'
     new_sideset_name = 3
   [../]
