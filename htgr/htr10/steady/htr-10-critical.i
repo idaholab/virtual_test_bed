@@ -13,7 +13,7 @@
 # [1] Benchmark Analysis of the HTR-10 with the MAMMOTH Reactor Physics
 #     Application, J. Ortensi et al.
 # [2] Evaluation of high temperature gas cooled reactor performance: benchmark
-#     analysis related to initial testing of the httr and htr-10. 
+#     analysis related to initial testing of the httr and htr-10.
 #     Technical Report IAEA-TECDOC-1382, International Reactor Physics
 #     Experiment Evaluation Project, 2003.
 # ==============================================================================

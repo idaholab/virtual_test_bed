@@ -13,7 +13,7 @@
 # [1] Benchmark Analysis of the HTR-10 with the MAMMOTH Reactor Physics
 #     Application, J. Ortensi et al.
 # [2] Evaluation of high temperature gas cooled reactor performance: benchmark
-#     analysis related to initial testing of the httr and htr-10. 
+#     analysis related to initial testing of the httr and htr-10.
 #     Technical Report IAEA-TECDOC-1382, International Reactor Physics
 #     Experiment Evaluation Project, 2003.
 # ==============================================================================
@@ -117,19 +117,19 @@ non_fuel_blocks = '10 11 12 13 14 15 18 22 32 40 41 42 43 44 45 46 50 52'
   [./AbsorptionRR]
     order = FIRST
     family = MONOMIAL
-    block = ${absorption_blocks} 
+    block = ${absorption_blocks}
   [../]
   [./NuFissionRR]
     order = FIRST
     family = MONOMIAL
-    block = ${fuel_blocks} 
+    block = ${fuel_blocks}
   [../]
 []
 
 [AuxKernels]
   [./AbsorptionRR]
     type = VectorReactionRate
-    block = ${absorption_blocks} 
+    block = ${absorption_blocks}
     variable = AbsorptionRR
     cross_section = sigma_absorption
     scale_factor = power_scaling
@@ -138,7 +138,7 @@ non_fuel_blocks = '10 11 12 13 14 15 18 22 32 40 41 42 43 44 45 46 50 52'
   [../]
   [./nuFissionRR]
     type = VectorReactionRate
-    block = ${fuel_blocks} 
+    block = ${fuel_blocks}
     variable = NuFissionRR
     cross_section = nu_sigma_fission
     scale_factor = power_scaling
@@ -162,11 +162,11 @@ non_fuel_blocks = '10 11 12 13 14 15 18 22 32 40 41 42 43 44 45 46 50 52'
 [Materials]
   [./fissile]
     type = MixedMatIDNeutronicsMaterial
-    block = ${fuel_blocks} 
+    block = ${fuel_blocks}
   [../]
   [./non_fissile]
     type = MixedMatIDNeutronicsMaterial
-    block = ${non_fuel_blocks} 
+    block = ${non_fuel_blocks}
   [../]
 []
 
@@ -241,27 +241,27 @@ non_fuel_blocks = '10 11 12 13 14 15 18 22 32 40 41 42 43 44 45 46 50 52'
   [./power]
     type = ElementIntegralVariablePostprocessor
     variable = power_density
-    block = ${fuel_blocks} 
+    block = ${fuel_blocks}
   [../]
   [./nufission]
     type = ElementIntegralVariablePostprocessor
     variable = NuFissionRR
-    block = ${fuel_blocks} 
+    block = ${fuel_blocks}
   [../]
   [./absorption]
     type = ElementIntegralVariablePostprocessor
     variable = AbsorptionRR
-    block = ${absorption_blocks} 
+    block = ${absorption_blocks}
   [../]
   [./RR_Generation]
     type = FluxRxnIntegral
     cross_section = nu_sigma_fission
-    block = ${fuel_blocks} 
+    block = ${fuel_blocks}
   [../]
   [./RR_Absorption]
     type = FluxRxnIntegral
     cross_section = sigma_absorption
-    block = ${absorption_blocks} 
+    block = ${absorption_blocks}
   [../]
   [./RR_Leakage]
     type = PartialSurfaceCurrent
