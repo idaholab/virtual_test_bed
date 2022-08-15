@@ -521,7 +521,7 @@ The thermal expansion coefficient is based on data extracted from [!cite](asme20
 
 # How to run the model
 
-The neutronics only model can be ran with Griffin.
+The neutronics-only model can be ran with Griffin.
 
 Run it via:
 

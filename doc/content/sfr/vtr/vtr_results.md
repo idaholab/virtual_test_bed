@@ -225,7 +225,7 @@ The results are then compared to those obtained with the tight-coupling scheme.
 The differences in peak coolant, clad, and fuel temperatures are negligible, as observed for the peak fuel temperature displayed in
 [diff_tfuel_multiphysics].
 Differences for the coolant and clad temperatures are similar and thus not repeated.
-This result showcases that there are no need to perform fixed point iterations between the neutronics and thermal-hydraulics model for thesesafety parameters,
+This result showcases that there are no need to perform fixed point iterations between the neutronics and thermal-hydraulics model for these safety parameters,
 as a one-way coupling scheme provides almost identical results as the tight-coupling scheme.
 
 !media vtr/diff_max_tfuel.png
