@@ -281,7 +281,7 @@
 
     n_elems                           = 50
     end_elems_refinement              = 10
-	 initial_V_secondary               = 3.5
+   initial_V_secondary               = 3.5
 
     Twall_init                        = 904.5
     wall_thickness                    = 1.0668E-03
