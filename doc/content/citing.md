@@ -181,6 +181,19 @@ Paolo Balestra, Sebastian Schunert, Robert W Carlsen, April J Novak, Mark D DeHa
 A.J. Novak, D. Andrs, P. Shriwise, D. Shaver, P.K. Romano, E. Merzari and P. Keutelian, "Coupled Monte Carlo Transport and Thermal-Hydraulics Modeling of a Prismatic Gas Reactor Fuel Assembly Using Cardinal" (2022)
 ```
 
+- HTR-10 Griffin Benchmarks
+
+```
+@techreport{HTR-10Benchmark,
+ author = {J.~Ortensi and S.~Schunert and Y.~Wang and V.~Laboure and F.~Gleicher and R.~Martineau},
+ Title = {{Benchmark Analysis of the HTR-10 with the MAMMOTH Reactor Physics Application.}},
+ Institution = {Idaho National Laboratory},
+ Number = {INL/EXT-18-45453},
+ Year = {2018},
+}
+J. Ortensi and S. Schunert and Y. Wang and V. Laboure and F. Gleicher and R. Martineau, "Benchmark Analysis of the HTR-10 with the MAMMOTH Reactor Physics Application", Idaho National Laboratory, INL/EXT-18-45453, (2018)
+```
+
 ### Micro Reactor style=font-size:125%
 
 - Heat Pipe Micro Reactor

@@ -69,7 +69,9 @@ the input file, but generally reside in the same folder in the repository.
 
 - Pebble Bed Fluoride salt cooled High temperature Reactor [documentation](pbfhr/pbfhr_sam/pbfhr_sam.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/pbfhr/sam_model)
 
-- 1D TRISO fuel depletion [documentation](htgr/triso/triso_model.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/devel/htgr/triso_fuel)
+- 1D TRISO fuel depletion [documentation](htgr/triso/triso_model.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/triso_fuel)
+
+- HTR-10 Griffin Benchmark [documentation](htgr/htr10/index.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/htr10)
 
 
 ### HPC required
