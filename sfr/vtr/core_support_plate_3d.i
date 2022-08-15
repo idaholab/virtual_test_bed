@@ -189,6 +189,8 @@ Tref   = 293.15 # reference temperature for the linear thermal expansion for SS3
 []
 
 [Outputs]
+  print_nonlinear_converged_reason = false
+  print_linear_converged_reason = false
   # exodus = true
   # csv = true
   # perf_graph = true

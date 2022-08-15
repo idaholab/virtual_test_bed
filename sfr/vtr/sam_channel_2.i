@@ -218,8 +218,8 @@ V_init = ${fparse m_dot_in/rho_in/A_channel}
 
 [Outputs]
   # csv = true
-  # print_nonlinear_converged_reason = false
-  # print_linear_converged_reason = false
+  print_nonlinear_converged_reason = false
+  print_linear_converged_reason = false
   #[out]
   #  type = Exodus
   #  use_displaced = true

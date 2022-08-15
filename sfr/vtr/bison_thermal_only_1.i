@@ -488,7 +488,7 @@ rod_pitch            =${fparse rod_outside_diameter + wire_wrap_diameter}
     type = ElementExtremeValue
     variable = thermal_conductivity
   []
-  [./max_tcool_r]
+  [max_tcool_r]
     type = Receiver
   []
 []
@@ -496,6 +496,6 @@ rod_pitch            =${fparse rod_outside_diameter + wire_wrap_diameter}
 [Outputs]
   # csv = true
   # exodus = true
-  # print_nonlinear_converged_reason = false
-  # print_linear_converged_reason = false
+  print_nonlinear_converged_reason = false
+  print_linear_converged_reason = false
 []

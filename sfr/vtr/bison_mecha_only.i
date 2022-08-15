@@ -293,6 +293,6 @@ active = 'fuel_elasticity_tensor fuel_elastic_stress fuel_thermal_expansion
 [Outputs]
   # csv = true
   # exodus = true
-  # print_nonlinear_converged_reason = false
-  # print_linear_converged_reason = false
+  print_nonlinear_converged_reason = false
+  print_linear_converged_reason = false
 []

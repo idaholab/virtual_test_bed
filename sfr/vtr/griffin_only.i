@@ -209,11 +209,11 @@ tpow = 300e6 #(300 MW)
 []
 
 [Outputs]
- file_base = out_griffin_only
- exodus = true
- csv = true
- perf_graph = true
- [console]
-   type = Console
- []
+  file_base = out_griffin_only
+  exodus = true
+  csv = true
+  perf_graph = true
+  [console]
+    type = Console
+  []
 []

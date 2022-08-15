@@ -499,6 +499,6 @@ rod_pitch            =${fparse rod_outside_diameter + wire_wrap_diameter}
 [Outputs]
   # csv = true
   # exodus = true
-  # print_nonlinear_converged_reason = false
-  # print_linear_converged_reason = false
+  print_nonlinear_converged_reason = false
+  print_linear_converged_reason = false
 []
