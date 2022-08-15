@@ -19,6 +19,8 @@ in the input files of the virtual test bed.
 
 - HTR-10 Griffin Benchmark [documentation](htgr/htr10/index.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/htr10)
 
+- Versatile Test Reactor core model [documentation](sfr/vtr/index.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/sfr/vtr)
+
 
 ### Cardinal / OpenMC
 
@@ -47,7 +49,9 @@ in the input files of the virtual test bed.
 
 ### SAM
 
-- Assembly in a Sodium Fast Reactor [documentation](sfr/sfr.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/sfr)
+- Assembly in a Sodium Fast Reactor [documentation](sfr/single_assembly/sfr.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/sfr/single_assembly)
+
+- Versatile Test Reactor core model [documentation](sfr/vtr/index.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/sfr/vtr)
 
 - Modular High Temperature Reactor [documentation](mhtgr/sam_mhtgr_model.md) [inputs](https://github.com/idaholab/virtual_test_bed/blob/main/htgr/mhtgr)
 
@@ -76,9 +80,14 @@ in the input files of the virtual test bed.
 
 - Micro-Reactor [documentation](mrad/index.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/mrad/steady)
 
-- Assembly in a Sodium Fast Reactor [documentation](sfr/sfr.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/sfr/singe_assembly)
+- Assembly in a Sodium Fast Reactor [documentation](sfr/single_assembly/sfr.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/sfr/single_assembly)
 
 - 1D TRISO fuel depletion [documentation](htgr/triso/triso_model.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/triso_fuel)
+
+
+### Thermo-mechanics module
+
+- Versatile Test Reactor core model [documentation](sfr/vtr/index.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/sfr/vtr)
 
 
 ### Heat conduction module
