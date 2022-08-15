@@ -306,27 +306,6 @@
     source_variable = power_density
     variable = power_density
   []
-  # [pdens_to_bison_1]
-  #   type = MultiAppUserObjectTransfer
-  #   direction = to_multiapp
-  #   user_object = power_density1_UO
-  #   variable = power_density
-  #   multi_app = bison_1
-  # []
-  # [pdens_to_bison_2]
-  #   type = MultiAppUserObjectTransfer
-  #   direction = to_multiapp
-  #   user_object = power_density2_UO
-  #   variable = power_density
-  #   multi_app = bison_2
-  # []
-  # [pdens_to_bison_3]
-  #   type = MultiAppUserObjectTransfer
-  #   direction = to_multiapp
-  #   user_object = power_density3_UO
-  #   variable = power_density
-  #   multi_app = bison_3
-  # []
 
   # sub-app -> master
   #------------------
@@ -392,22 +371,11 @@
     source_variable = disp_y
     variable = disp_y
   []
-  # [disp_y_from_bison]
-  #   type = MultiAppUserObjectGatherTransfer
-  #   radius = 0.0026385 #
-  # #  type = MultiAppUserObjectTransfer
-  #   direction = from_multiapp
-  #   multi_app = bison
-  #   user_object = disp_y_UO
-  #   variable = disp_y
-  #   displaced_source_mesh = true
-  # []
 
   #------------------
   # Radial expansion = horizontal displacements disp_x, disp_z from core_support_plate
   #------------------
   [disp_x_from_core_support_plate]
-    #type = MultiAppNearestNodeTransfer
     type = MultiAppInterpolationTransfer
     from_multi_app = core_support_plate
     source_boundary = 'plateTop'
@@ -416,7 +384,6 @@
     fixed_meshes = true
   []
   [disp_z_from_core_support_plate]
-    #type = MultiAppNearestNodeTransfer
     type = MultiAppInterpolationTransfer
     from_multi_app = core_support_plate
     source_boundary = 'plateTop'
