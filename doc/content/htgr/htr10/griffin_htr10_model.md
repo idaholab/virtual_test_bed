@@ -58,7 +58,7 @@ and *full* cores.
 The complete input file for the *initial critical* core is
 shown below.
 
-!listing htgr/htr-10/steady/htr-10-critical.i
+!listing htgr/htr10/steady/htr-10-critical.i
 
 In the following sections, we will discuss each of
 the input blocks.
@@ -93,7 +93,7 @@ clarify their uses and meanings in the subsequent
 blocks.
 
 
-!listing htgr/htr-10/steady/htr-10-critical.i
+!listing htgr/htr10/steady/htr-10-critical.i
          block=GlobalParams
 
 ### Geometry and Mesh
@@ -101,7 +101,7 @@ blocks.
 In this section, we will cover the mesh inputs.
 The full input block can be found below.
 
-!listing htgr/htr-10/steady/htr-10-critical.i
+!listing htgr/htr10/steady/htr-10-critical.i
          block=Mesh
 
 The HTR geometry is input into CUBIT, an external code developed at
@@ -119,10 +119,10 @@ This is performed with the [!style color=orange](ExtraElementIDCopyGenerator)
 type by defining the "eqv_id" as the source and
 "equivalence_id" as the target.
 
-!listing htgr/htr-10/steady/htr-10-critical.i
+!listing htgr/htr10/steady/htr-10-critical.i
          block=fmg
 
-!listing htgr/htr-10/steady/htr-10-critical.i
+!listing htgr/htr10/steady/htr-10-critical.i
          block=eqvid
 
 Next, we need to make some modifications to the mesh.
@@ -153,7 +153,7 @@ the normal vector on sides that are added to the new mesh.
 Also note that the [!style color=red](input) parameter
 is the sequential order of the named sub-blocks `[./*]`.
 
-!listing htgr/htr-10/steady/htr-10-critical.i
+!listing htgr/htr10/steady/htr-10-critical.i
          block=Mesh
          remove=fmg eqvid
 
@@ -174,7 +174,7 @@ state point, defined with the name "default" and grid "1".
 These variable names are on the equivalence library xml file.
 The "diff", short for diffusion, system will be defined later.
 
-!listing htgr/htr-10/steady/htr-10-critical.i
+!listing htgr/htr10/steady/htr-10-critical.i
          block=Equivalence
 
 ### AuxVariables and AuxKernels
@@ -188,7 +188,7 @@ There are two AuxVariables that are defined in this model:
 the absorption reaction rate and the neutron production
 reaction rate.
 
-!listing htgr/htr-10/steady/htr-10-critical.i
+!listing htgr/htr10/steady/htr-10-critical.i
          block=AuxVariables
 
 The AuxKernels are locally defined with the names
@@ -202,7 +202,7 @@ Lastly, we tell it to
 [!style color=red](execute_on) the end of a time step.
 
 
-!listing htgr/htr-10/steady/htr-10-critical.i
+!listing htgr/htr10/steady/htr-10-critical.i
          block=AuxKernels
 
 ### Materials
@@ -234,7 +234,7 @@ as a reflector, structural materials, etc.
 The last sub-block is for materials with a tensor diffusion
 coefficient (TDC).
 
-!listing htgr/htr-10/steady/htr-10-critical.i
+!listing htgr/htr10/steady/htr-10-critical.i
          block=Materials
 
 The power density is not calculated implicitly and must be defined in
@@ -255,7 +255,7 @@ Lastly, the family and order parameters are the polynomial
 representations of the power density corresponding to the
 underlying FEM.
 
-!listing htgr/htr-10/steady/htr-10-critical.i
+!listing htgr/htr10/steady/htr-10-critical.i
          block=PowerDensity
 
 ### Transport System
@@ -284,7 +284,7 @@ required to use the "PJFNKMO" method defined later in the
 This tells the finite element solver to not update the material
 cross sections at each linear iteration.
 
-!listing htgr/htr-10/steady/htr-10-critical.i
+!listing htgr/htr10/steady/htr-10-critical.i
          block=TransportSystems
 
 ### Executioner
@@ -306,7 +306,7 @@ There are several optional arguments that may also be included.
 For example, we define a few PETSc options and non-linear solver
 tolerances.
 
-!listing htgr/htr-10/steady/htr-10-critical.i
+!listing htgr/htr10/steady/htr-10-critical.i
          block=Executioner
 
 ### Post-processors, Debug, and Outputs
@@ -327,15 +327,8 @@ FEM element in the next two sub-blocks.
 The remaining sub-blocks define the total generation with a
 [!style color=orange](FluxRxnIntegral) type.
 
-!listing htgr/htr-10/steady/htr-10-critical.i
+!listing htgr/htr10/steady/htr-10-critical.i
          block=Postprocessors
-
-The debug options can be helpful when debugging a case.
-These are a set of true (1) and false (0) options to print statements.
-Some of the options are displayed here.
-
-!listing htgr/htr-10/steady/htr-10-critical.i
-         block=Debug
 
 Finally, the output block sets the output files from the simulation.
 Two of the most common options include the exodus and csv file.
@@ -347,7 +340,7 @@ the criticality.
 The [!style color=red](perf_graph) parameter is helpful to evaluate
 the computational run time.
 
-!listing htgr/htr-10/steady/htr-10-critical.i
+!listing htgr/htr10/steady/htr-10-critical.i
          block=Outputs
 
 ## *Full Core*
@@ -355,7 +348,7 @@ the computational run time.
 The complete input file for the *full* core is
 shown below.
 
-!listing htgr/htr-10/steady/htr-10-full.i
+!listing htgr/htr10/steady/htr-10-full.i
 
 The input file to the *full* core is similar to that of the
 *initial critical* core. Still, we will examine any
@@ -376,7 +369,7 @@ If equivalence factors are to be used, make sure to select
 a library in the "sph" folder that is consistent with the
 cross-section library.
 
-!listing htgr/htr-10/steady/htr-10-full.i
+!listing htgr/htr10/steady/htr-10-full.i
          block=GlobalParams
 
 ## Acknowledgments
