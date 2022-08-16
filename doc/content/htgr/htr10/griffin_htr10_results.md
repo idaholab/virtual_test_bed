@@ -68,7 +68,7 @@ The first *Full Core* benchmark problem is to compute the eigenvalues for the fu
 three different uniform core temperatures: 27, 120, and 250 degrees C (300, 393, and 523 degrees K respectively).
 The three different equivalence and cross section libraries that these results require
 come from the libraries 'htr-10-full-ARO','htr-10-393K', and 'htr-10-523K'.
-These can be changed in the [Globalparams] block by changing the 'library_name'
+These can be changed in the `[Globalparams]` block by changing the 'library_name'
 to the appropriate library for the different temperatures.
 The results for this study are shown in [full_eigen_values] below.
 
@@ -91,7 +91,7 @@ the results from Griffin against Serpent.
 The all rods out (ARO), all rods in (ARI) and one rod in (1RI) results for Diffusion
 and SPH corrected Diffusion are compared against the Serpent results in [full_control_rods] below.
 In order to obtain these results the user needs to update the 'library_name' in
-the [GLobalParams] block to the appropriate libraries 'htr-10-full-ARO','htr-10-full-ARI',
+the `[GlobalParams]` block to the appropriate libraries 'htr-10-full-ARO','htr-10-full-ARI',
 and 'htr-10-full-1RI' respectively.
 
 !table id=full_control_rods caption=Relative difference of Griffin computed eigenvalues (pcm) and reaction rates (%) with the Serpent solution for the *full core* with different rod configurations (ARO -all rods out, ARI - all rods in, and 1RI - one rod in) [!citep](HTR-10Benchmark)).
