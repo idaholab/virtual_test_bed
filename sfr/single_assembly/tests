@@ -49,6 +49,7 @@
     csvdiff = 'assembly.csv'
     cli_args = 'Outputs/file_base=assembly'
     executable_pattern = 'blue_crab*'
+    prereq = 'full_simulation_syntax'
   []
   [bison_mecha_only]
     type = CSVDiff
@@ -57,6 +58,7 @@
     cli_args = 'Outputs/csv=true'
     executable_pattern = 'bison*|blue_crab*|dire_wolf*'
     allow_warnings = True # material property unsupported outputs
+    prereq = 'bison_mecha_only_syntax'
   []
   [bison_thermal_only]
     type = CSVDiff
@@ -65,6 +67,7 @@
     cli_args = "Outputs/csv=true AuxKernels/active='GetPowerDensity_from_griffin' MultiApps/active='' Transfers/active=''"
     executable_pattern = 'bison*|blue_crab*|dire_wolf*'
     allow_warnings = True # material property unsupported outputs
+    prereq = 'bison_thermal_only_syntax'
   []
   [support_plate]
     type = CSVDiff
@@ -72,6 +75,7 @@
     csvdiff = 'core_support_plate_2d_out.csv'
     cli_args = 'Outputs/csv=true'
     executable_pattern = 'bison*|blue_crab*|dire_wolf*'
+    prereq = 'support_plate_syntax'
   []
   [neutronics_without_multiapp]
     type = CSVDiff
@@ -79,6 +83,7 @@
     csvdiff = 'griffin_out.csv'
     cli_args = "MultiApps/active='' Transfers/active=''"
     executable_pattern = 'griffin*|blue_crab*|dire_wolf*|fenix*'
+    prereq = 'neutronics_without_multiapp_syntax'
   []
   [subchannel]
     type = CSVDiff
@@ -86,5 +91,6 @@
     csvdiff = 'sam_channel_out.csv'
     cli_args = '--app SamApp Outputs/csv=true'
     executable_pattern = 'sam*|blue_crab*'
+    prereq = 'subchannel_syntax'
   []
 []
