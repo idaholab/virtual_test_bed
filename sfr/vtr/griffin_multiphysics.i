@@ -231,45 +231,41 @@
 # ==============================================================================
 # MULTIAPPS AND TRANSFER
 # ==============================================================================
-#  STM global variables passed from stochastic tools to sub-apps (BISON/SAM)
-  k_scalar = 1.0
+
 [MultiApps]
   #one BISON/SAM channel per orifice - currently 3 zones
   [bison_1]
     type = FullSolveMultiApp
     app_type = BlueCrabApp
-    positions_file = coordinates_orifice_1.txt
-    input_files = bison_thermal_only_1.i
+    positions_file = 'coordinates_orifice_1.txt'
+    input_files = bison_thermal_only.i
     execute_on = 'TIMESTEP_END'
     max_procs_per_app = 1
     output_in_position = true
     #no_backup_and_restore = true
-    #STM
-    cli_args = 'Materials/fuel_thermal/k_scalar=${k_scalar}'
+    cli_args = "MultiApps/sam/cli_args='m_dot_in=29.8'"
   []
   [bison_2]
     type = FullSolveMultiApp
     app_type = BlueCrabApp
-    positions_file = coordinates_orifice_2.txt
-    input_files = bison_thermal_only_2.i
+    positions_file = 'coordinates_orifice_2.txt'
+    input_files = bison_thermal_only.i
     execute_on = 'TIMESTEP_END'
     max_procs_per_app = 1
     output_in_position = true
     #no_backup_and_restore = true
-    #STM
-    cli_args = 'Materials/fuel_thermal/k_scalar=${k_scalar}'
+    cli_args = "MultiApps/sam/cli_args='m_dot_in=23.2'"
   []
   [bison_3]
     type = FullSolveMultiApp
     app_type = BlueCrabApp
-    positions_file = coordinates_orifice_3.txt
-    input_files = bison_thermal_only_3.i
+    positions_file = 'coordinates_orifice_3.txt'
+    input_files = bison_thermal_only.i
     execute_on = 'TIMESTEP_END'
     max_procs_per_app = 1
     output_in_position = true
     #no_backup_and_restore = true
-    #STM
-    cli_args = 'Materials/fuel_thermal/k_scalar=${k_scalar}'
+    cli_args = "MultiApps/sam/cli_args='m_dot_in=15.9'"
   []
   [core_support_plate]
     type = FullSolveMultiApp
@@ -473,7 +469,6 @@
     execute_on = ' INITIAL TIMESTEP_END'
     use_displaced_mesh = true
   []
-  #STM
   [max_tfuel_r]
     type = Receiver
   []
