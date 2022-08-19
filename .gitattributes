@@ -11,3 +11,9 @@ htgr/htr10/data/sph/htr-10-Diff-SPH.xml filter=lfs diff=lfs merge=lfs -text
 htgr/htr10/data/xs/htr-10-XS.xml filter=lfs diff=lfs merge=lfs -text
 htgr/htr10/steady/gold/out-HTR-10-full-Diff-SPH-ARO.e filter=lfs diff=lfs merge=lfs -text
 htgr/htr10/steady/gold/out_HTR-10_critical.e filter=lfs diff=lfs merge=lfs -text
+sfr/vtr/mesh/cyl_plate_3d.e filter=lfs diff=lfs merge=lfs -text
+sfr/vtr/mesh/vtr_core.e filter=lfs diff=lfs merge=lfs -text
+sfr/vtr/xs/vtr_xs.xml filter=lfs diff=lfs merge=lfs -text
+sfr/vtr/xs/vtr_xs_verification.xml filter=lfs diff=lfs merge=lfs -text
+sfr/vtr/sph/vtr_sph.xml filter=lfs diff=lfs merge=lfs -text
+sfr/vtr/sph/vtr_sph_verification.xml filter=lfs diff=lfs merge=lfs -text
