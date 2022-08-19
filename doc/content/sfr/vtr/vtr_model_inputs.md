@@ -1,4 +1,4 @@
-# Model Inputs
+sam_channel# Model Inputs
 
 There are two VTR models stored on the virtual test bed; a standalone
 neutronics model and multi-physics model.
@@ -331,12 +331,14 @@ In other words, the SAM model will be declared as a sub-app in the BISON model.
          block=MultiApps
 
 First, we start with the BISON sub-apps.
-There are three BISON input files that correspond to the fuel rods in the
+There are three BISON MultiApps that correspond to the fuel rods in the
 three orifices of the VTR.
 For each of these models, we give the sub-app a name (i.e. bison_1, bison_2, bison_3).
 The [!style color=red](type) and [!style color=red](app_type) is set with
 [!style color=orange](FullSolveMultiApp) and
 [!style color=orange](BlueCrabApp), respectively.
+A different command line argument is passed to override a single parameter (the mass flow rate) in the input files
+to form the three different simulations.
 The former performs a complete simulation every time the sub-app executes.
 The latter informs the code what type of app to build.
 We want BlueCrab for multi-physics simulations because it is a
@@ -400,7 +402,7 @@ Run it via:
 
 The input file for the BISON thermal model of a VTR fuel rod is displayed below.
 
-!listing sfr/vtr/bison_thermal_only_1.i
+!listing sfr/vtr/bison_thermal_only.i
 
 The top of the input file houses the model parameters.
 For a BISON model, this would include the rod diameter, clad thickness, fuel height, etc.
@@ -411,7 +413,7 @@ Global parameters are parameters that are used in more than one block.
 For example, the family of functions and polynomial order are defined for the finite element
 solver.
 
-!listing sfr/vtr/bison_thermal_only_1.i
+!listing sfr/vtr/bison_thermal_only.i
          block=GlobalParams
 
 ### Geometry and Mesh
@@ -426,7 +428,7 @@ More information about the mesh generation may be found in the BISON documentati
 and the
 [SubdomainBoundingBoxGenerator](https://mooseframework.inl.gov/bison/source/meshgenerators/SubdomainBoundingBoxGenerator.html#subdomainboundingboxgenerator).
 
-!listing sfr/vtr/bison_thermal_only_1.i
+!listing sfr/vtr/bison_thermal_only.i
          block=Mesh
 
 ### Variables and Kernels
@@ -435,7 +437,7 @@ A variable is a desired quantity to be solved for in the finite element solution
 In the BISON thermal model, we want the temperature distribution of the fuel element.
 
 
-!listing sfr/vtr/bison_thermal_only_1.i
+!listing sfr/vtr/bison_thermal_only.i
          block=Variables
 
 Kernels are the inner product terms that make up a weak form of a differential equation.
@@ -445,7 +447,7 @@ The active kernels that are used in the solve are identified with
 For example, a time derivative kernel is defined but not activated as we are interested
 in the steady state solution.
 
-!listing sfr/vtr/bison_thermal_only_1.i
+!listing sfr/vtr/bison_thermal_only.i
          block=Kernels
 
 ### Modules
@@ -456,7 +458,7 @@ We do this by defining the [!style color=red](GapHeatTransfer) type and corespon
 Detailed information about the ThermalContact module may be found in the MOOSE
 [documentation](https://mooseframework.inl.gov/source/actions/ThermalContactAction.html).
 
-!listing sfr/vtr/bison_thermal_only_1.i
+!listing sfr/vtr/bison_thermal_only.i
          block=ThermalContact
 
 ### AuxVariables and AuxKernels
@@ -465,7 +467,7 @@ AuxVariables are variables that are derived from the solution variable (in this 
 These can be quantities such as the fuel temperature, wall temperature, coolant temperature, etc.
 We also define the `power_density`, a variable transfered from the Griffin main-app.
 
-!listing sfr/vtr/bison_thermal_only_1.i
+!listing sfr/vtr/bison_thermal_only.i
          block=AuxVariables
 
 AuxKernels are kernels that act on a variable to derive an AuxVariable.
@@ -474,7 +476,7 @@ These AuxKernels are of type [!style color=red](CoupledAux). These copy the valu
 the solution variable, Temperature, into the respective variables twall and tfuel on the desired blocks.
 AuxKernels are also defined to obtain (and scale) the power density from Griffin.
 
-!listing sfr/vtr/bison_thermal_only_1.i
+!listing sfr/vtr/bison_thermal_only.i
          block=AuxKernels
 
 ### Initial Conditions and Functions
@@ -485,7 +487,7 @@ and homogenous power densities.
 These functions would be used in a standalone BISON model if the power density is not
 provided by Griffin.
 
-!listing sfr/vtr/bison_thermal_only_1.i
+!listing sfr/vtr/bison_thermal_only.i
          block=Functions
 
 ### Materials and UserObjects
@@ -493,7 +495,7 @@ provided by Griffin.
 Material characteristics are defined in the `[Materials]` block.
 They include the thermal properties and density of the fuel and clad.
 
-!listing sfr/vtr/bison_thermal_only_1.i
+!listing sfr/vtr/bison_thermal_only.i
          block=Materials
 
 ### Boundary Conditions
@@ -503,7 +505,7 @@ SAM will provide the coolant temperature and heat transfer coefficient.
 As such, the type is defined as a [!style color=orange](CoupledConvectiveHeatFluxBC)
 and coupled to the Temperature solution variable.
 
-!listing sfr/vtr/bison_thermal_only_1.i
+!listing sfr/vtr/bison_thermal_only.i
          block=BCs
 
 ### Execution Parameters id=bison_exec
@@ -512,7 +514,7 @@ Preconditioners transform the given problem into a form that is more suitable fo
 thus improving solver performance.
 The single matrix preconditioner (SMP) is defined here that builds a preconditioner using user defined off-diagonal parts of the Jacobian matrix.
 
-!listing sfr/vtr/bison_thermal_only_1.i
+!listing sfr/vtr/bison_thermal_only.i
          block=Preconditioning
 
 The `[Executioner]` block tells the solver what type of problem it is to solve.
@@ -522,7 +524,7 @@ We also specify to solve with a Preconditioned Jacobian Free
 Newton Krylov method by setting
 [!style color=red](solve_type) equal to "PJFNK".
 
-!listing sfr/vtr/bison_thermal_only_1.i
+!listing sfr/vtr/bison_thermal_only.i
          block=Executioner
 
 ### MultiApps and Transfers
@@ -530,7 +532,7 @@ Newton Krylov method by setting
 There are two sub-apps that extend from this BISON sub-app input deck; a SAM thermal fluids model and a BISON mechanics model.
 Both are defined here in the same manner as discussed in [#griffin_multiapps].
 
-!listing sfr/vtr/bison_thermal_only_1.i
+!listing sfr/vtr/bison_thermal_only.i
          block=MultiApps
 
 To accompany the multi-apps, variable transfers must be specified for coupling.
@@ -540,7 +542,7 @@ There is also coupling between the thermal BISON model and mechanical model.
 A transfer is defined to pass the temperature distribution from the thermal model to the mechanical model.
 The mechanical model then solves for the thermal expansion and transfers the x and y displacements back to the thermal model.
 
-!listing sfr/vtr/bison_thermal_only_1.i
+!listing sfr/vtr/bison_thermal_only.i
          block=Transfers
 
 ### Post-processors, Debug, and Outputs
@@ -548,19 +550,19 @@ The mechanical model then solves for the thermal expansion and transfers the x a
 Postprocessors are used to derive desired quantities from the solution variable(s).
 Some of the quantities that we may be interested in include the average, maximum, and minimum fuel, clad, and wall temperatures.
 
-!listing sfr/vtr/bison_thermal_only_1.i
+!listing sfr/vtr/bison_thermal_only.i
          block=Postprocessors
 
 The outputs files are supressed but may be turned on if desired.
 
-!listing sfr/vtr/bison_thermal_only_1.i
+!listing sfr/vtr/bison_thermal_only.i
          block=Outputs
 
 ## SAM Thermal-hydraulic Model
 
 The input file for the SAM thermal hydraulic model of a VTR assembly is displayed below.
 
-!listing sfr/vtr/sam_channel_1.i
+!listing sfr/vtr/sam_channel.i
 
 The top of input file houses the model parameters.
 For a SAM model, this could include the number of rods, rod diameter, channel dimensions, etc.
@@ -570,7 +572,7 @@ For a SAM model, this could include the number of rods, rod diameter, channel di
 Global parameters are parameters that are used in more than one block.
 This model includes the initial pressure, temperature, and velocity variables of the fluid.
 
-!listing sfr/vtr/sam_channel_1.i
+!listing sfr/vtr/sam_channel.i
          block=GlobalParams
 
 ### Equations of State
@@ -579,7 +581,7 @@ The equations of state (EOS) block is unique to SAM.
 Because the VTR is sodium cooled, the EOS type is given by
 [!style color=orange](PBSodiumEquationofState).
 
-!listing sfr/vtr/sam_channel_1.i
+!listing sfr/vtr/sam_channel.i
          block=EOS
 
 ### Components
@@ -588,7 +590,7 @@ This block defines the components of the simulation.
 In SAM, a component is defined as the physics modeling (fluid flow
 and heat transfer) and mesh generation of a reactor component.
 
-!listing sfr/vtr/sam_channel_1.i
+!listing sfr/vtr/sam_channel.i
          block=Components
 
 The fuel channel is modelled with a [!style color=orange](PBOneDFluidComponent) type that simulates
@@ -611,10 +613,10 @@ Further information can be found in the SAM User's Manual.
 
 The same preconditioner is used as previous BISON input. See [#bison_exec].
 
-!listing sfr/vtr/sam_channel_1.i
+!listing sfr/vtr/sam_channel.i
          block=Preconditioning
 
-!listing sfr/vtr/sam_channel_1.i
+!listing sfr/vtr/sam_channel.i
          block=Executioner
 
 ### Post-processors, Debug, and Outputs
@@ -623,7 +625,7 @@ Postprocessors are used to derive desired quantities from the solution variable(
 Some of the quantities that we may be interested in include the inlet and outlet temperatures,
 heat transfer coeficient, and temperature maximums and minimums.
 
-!listing sfr/vtr/sam_channel_1.i
+!listing sfr/vtr/sam_channel.i
          block=Postprocessors
 
 ## BISON Mechanical Model
