@@ -34,8 +34,8 @@
     cli_args = "Executioner/num_steps=2 Problem/inactive_batches=5 Problem/batches=10"
     executable_pattern = 'cardinal*'
     prereq = 'syntax_openmc'
-    min_parallel = 8
-    max_time = 600
+    min_parallel = 16
+    max_time = 900
   []
   [run_conduction]
     type = RunApp
