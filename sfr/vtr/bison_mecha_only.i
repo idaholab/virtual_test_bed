@@ -14,8 +14,6 @@ clad_thickness       = 0.503e-3  # 0.5e-3
 slug_diameter        = 5.277e-3  # 4.547e-3
 fuel_height          = 842.4e-3  # 800.0e-3
 plenum_height        = 782.2e-3  # 778.0e-3
-wire_wrap_diameter   = 1.100e-3  # 1.094e-3
-rod_pitch            =${fparse rod_outside_diameter + wire_wrap_diameter}
 
 # ==============================================================================
 # GLOBAL PARAMETERS
@@ -30,7 +28,6 @@ rod_pitch            =${fparse rod_outside_diameter + wire_wrap_diameter}
   #the following are needed in multiple UPuZr Materials
   X_Zr = 0.225 #  U-20Pu-10Zr
   X_Pu = 0.171
-  density = 15770.0 # kg/m3 fresh, room temperature (UPuZr fuel)
 []
 
 [Problem]
