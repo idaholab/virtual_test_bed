@@ -117,15 +117,16 @@ Description part A [!citep](Hu2017), description part B [!citep](novak_2021c), d
 
 ### Other key model details to provide in the high-level summary style=font-size:125%
 
-- MOOSE Based Applications Used: Griffin, Heat Conduction, Cardinal, etc. 
+- Reactor Type(s): e.g., Liquid Metal Cooled Fast Reactor
 
 - Type of simulation: e.g., 3D core multiphysics (neutronics-TH) transient, 1D system steady-state
 
-- Non-MOOSE Based NEAMS Code Used: MC2-3, Nek5000/RS, etc. 
+- NEAMS MOOSE Codes Used: Griffin, Heat Conduction, Cardinal, etc. 
 
-- External Code (non-NEAMS based) Used: Cubit, OpenFOAM, etc.
+- NEAMS non-MOOSE Codes Used: MC2-3, Nek5000/RS, etc. 
 
-- Reactor Category(s): e.g., Liquid Metal Cooled Fast Reactor
+- Non-NEAMS Codes Used: Cubit, OpenFOAM, etc.
+
 
 !alert note
 More information is available online about [the list of NEAMS codes](https://neams.inl.gov/code-descriptions/) and the codes that have been used for [the models available in VTB repository](https://mooseframework.inl.gov/virtual_test_bed/resources/codes_used.html). 
