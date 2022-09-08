@@ -105,7 +105,7 @@ If the model has been previously published, one should provide the reference to 
 
 ```
 
-!alert note
+
 The bibtex entries must be added into the VTB bibliography file +vtb.bib+. 
 A reference list will be generated automatically at the end of the VTB documentation page.
 
@@ -117,7 +117,7 @@ Description part A [!citep](Hu2017), description part B [!citep](novak_2021c), d
 
 ### Other key model details to provide in the high-level summary style=font-size:125%
 
-- MOOSE Based Applications Used: Griffin, Heat Conduction, Cardinal, etc. (Please [click here](https://mooseframework.inl.gov/virtual_test_bed/resources/codes_used.html) to see the checklist, this can be used for the VTB team to categorize/sort the model)
+- MOOSE Based Applications Used: Griffin, Heat Conduction, Cardinal, etc. 
 
 - Type of simulation: e.g., 3D core multiphysics (neutronics-TH) transient, 1D system steady-state
 
@@ -127,6 +127,9 @@ Description part A [!citep](Hu2017), description part B [!citep](novak_2021c), d
 
 - Reactor Category(s): e.g., Liquid Metal Cooled Fast Reactor
 
+!alert note
+More information is available online about [the list of NEAMS codes](https://neams.inl.gov/code-descriptions/) and the codes that have been used for [the models available in VTB repository](https://mooseframework.inl.gov/virtual_test_bed/resources/codes_used.html). 
+Providing the related information in documentation can better help the VTB team to categorize/sort the model.
 
 ## Computational Model Description
 
