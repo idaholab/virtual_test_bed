@@ -117,7 +117,7 @@ Description part A [!citep](Hu2017), description part B [!citep](novak_2021c), d
 
 ### Other key model details to provide in the high-level summary style=font-size:125%
 
-- MOOSE Based Applications Used: Griffin, Heat Conduction, Cardinal, etc. (Please click here to see the checklist, this can be used for the VTB team to categorize/sort the model)
+- MOOSE Based Applications Used: Griffin, Heat Conduction, Cardinal, etc. (Please [click here](https://mooseframework.inl.gov/virtual_test_bed/resources/codes_used.html) to see the checklist, this can be used for the VTB team to categorize/sort the model)
 
 - Type of simulation: e.g., 3D core multiphysics (neutronics-TH) transient, 1D system steady-state
 
