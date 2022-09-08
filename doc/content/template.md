@@ -7,7 +7,7 @@ Contact: Model Developer, model_developer.at.institute.com (contact email)
 High level introduction is expected here about the model of interest. Figures and tables can be added 
 in the model description, of which the examples are provided below. 
 
-#### Adding a figure
+### Adding a figure style=font-size:125%
 
 The markdown source is shown below, and one should put a copy of the figure at the specific file path.
 
@@ -19,10 +19,10 @@ The markdown source is shown below, and one should put a copy of the figure at t
 
 ```
 
-[Click here](msr/msre/msre_sam_model.md#msre_sam) to check out the formatted figure appeared on VTB website:
+[Click here](msr/msre/msre_sam_model.md#msre_sam) to check out the formatted figure appeared on VTB website.
 
 
-#### Adding a table
+### Adding a table style=font-size:125%
 
 The markdown source is shown below:
 
@@ -38,13 +38,13 @@ The markdown source is shown below:
 
 ```
 
-[Click here](msr/msre/msre_sam_model.md#fuel_salt_properties) to check out the formatted table appeared on VTB website:
+[Click here](msr/msre/msre_sam_model.md#fuel_salt_properties) to check out an example of a formatted table appearing on the VTB website.
 
-#### Adding references
+### Adding references style=font-size:125%
 
-If the model has been previously published, one should provide the reference to the published works together with the key references used for model development. 
-The Latex style references are supported in MOOSE documentation, and some examples about how to cite technical report, conference proceedings and journal articles are given below. The bibtex entries have to be added into file `vtb.bib`. 
-A bibliography list will be generated automatically at the end of the document. 
+If the model has been previously published, one should provide the reference to the published works together with key references used for model development. 
++MooseDocs+ supports BibTex style references, and some examples about how to cite technical report, conference proceeding and journal article are given below. The bibtex entries must be added into the VTB bibliography file +vtb.bib+. 
+A reference list will be generated automatically at the end of the VTB documentation page. 
 
 ```language=bash
 @techreport{Hu2017,
@@ -92,16 +92,20 @@ description part A [!citep](Hu2017), description part B [!citep](novak_2021c), d
 
 ```
 
+This will appear on the page as:
+
 description part A [!citep](Hu2017), description part B [!citep](novak_2021c), description part C [!citep](Fang2021)
 
 
-#### Other key model details to provide in the high-level summary
+### Other key model details to provide in the high-level summary style=font-size:125%
 
-- MOOSE Based Applications Used: Griffin, Heat Conduction, Cardinal, etc. (Please click here to see the checklist, this can be used for Guillaume to categorize/sort)
+- MOOSE Based Applications Used: Griffin, Heat Conduction, Cardinal, etc. (Please click here to see the checklist, this can be used for the VTB team to categorize/sort the model)
 
-- Type of simulation (e.g., 3D core multiphysics (neutronics-TH) transient, 1D system steady-state)
+- Type of simulation: e.g., 3D core multiphysics (neutronics-TH) transient, 1D system steady-state
 
-- External Code (non-MOOSE based) used: MC2-3, Cubit, etc.
+- Non-MOOSE Based NEAMS Code Used: MC2-3, Nek5000/RS, etc. 
+
+- External Code (non-NEAMS based) Used: Cubit, OpenFOAM, etc.
 
 - Reactor Category(s): e.g., Liquid Metal Cooled Fast Reactor
 
@@ -110,7 +114,7 @@ description part A [!citep](Hu2017), description part B [!citep](novak_2021c), d
 
 Walk through the main kernel/blocks, show snippets of example inputs when needed. 
 
-The markdown source can be as simple as the following:
+The markdown source can be as simple as the following to show the `EOS` block from the `msre_loop.i` input file:
 
 ```language=bash
 !listing msr/msre/msre_loop_1d.i block=EOS language=cpp
@@ -132,7 +136,7 @@ Here one can document the most important results from the related simulations. P
 Please provide the run command for model execution on INL’s HPC Cluster or otherwise. Below is a simple example how to run a SAM system modeling job. 
 
 ```language=bash
-sam-opt -i pbfhr-ss.i
+mpirun -np 48 /path/to/sam-opt -i sam_input.i
 
 ```
 
