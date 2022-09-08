@@ -7,26 +7,22 @@ Contact: Model Developer, model_developer.at.institute.com (contact email)
 High level introduction is expected here about the model of interest. Figures and tables can be added 
 in the model description, of which the examples are provided below. 
 
-### Adding a figure style=font-size:125%
 
-The markdown source is shown below, and one should put a copy of the figure at the specific file path.
-
-```language=bash
+!devel! example id=example-figure caption=Example of adding a figure in VTB documentation.
 !media msr/msre/SAM_MSRE_1D.png
-       style=width:60%
+       style=width:40%
        id=msre_sam
        caption=The steady-state temperature distribution in the 1-D MSRE primary loop.
+!devel-end!
 
-```
+!alert note
+One should put a copy of the figure at the specific file path.
+The VTB media is now arranged by reactor types under the folder +/media+. 
+For more detailed instructions on figure formatting, please refer to
+the [MooseDocs media tutorial](https://mooseframework.inl.gov/python/MooseDocs/extensions/media.html). 
 
-[Click here](msr/msre/msre_sam_model.md#msre_sam) to check out the formatted figure appeared on VTB website.
 
-
-### Adding a table style=font-size:125%
-
-The markdown source is shown below:
-
-```language=bash
+!devel! example id=example-table caption=Example of adding a table in VTB documentation.
 !table id=fuel_salt_properties caption=Thermophysical properties of the fuel salt.
 |   |   | Unit  | LiF-BeF$_4$-ZrF$_4$-UF$_4$  |
 | :- | :- | :- | :- |
@@ -35,16 +31,40 @@ The markdown source is shown below:
 | Dynamic viscosity | $\mu$ | $Pa\bullet s$ | $8.4\times 10^{-5} exp(4340/T)$ |
 | Thermal conductivity | $k$ | $W/(m\bullet K)$ | $1.0$ |
 | Specific heat capacity | $c_p$ | $J/(kg\bullet K)$ | $2009.66$ |
+!devel-end!
 
-```
+!alert note
+For more detailed instructions on table formatting, please refer to
+the [MooseDocs table tutorial](https://mooseframework.inl.gov/python/MooseDocs/extensions/table.html). 
 
-[Click here](msr/msre/msre_sam_model.md#fuel_salt_properties) to check out an example of a formatted table appearing on the VTB website.
+!devel! example id=example-equations caption=Example of adding equations in VTB documentation.
+NekRS solves the incompressible Navier-Stokes equations:
+
+\begin{equation}
+\label{eq:mass}
+\nabla\cdot\mathbf u=0
+\end{equation}
+
+\begin{equation}
+\label{eq:momentum}
+\rho_f\left(\frac{\partial\mathbf u}{\partial t}+\mathbf u\cdot\nabla\mathbf u\right)=-\nabla P+\nabla\cdot\tau+\rho\ \mathbf f
+\end{equation}
+
+\begin{equation}
+\label{eq:energy}
+\rho_f C_{p,f}\left(\frac{\partial T_f}{\partial t}+\mathbf u\cdot\nabla T_f\right)=\nabla\cdot\left(k_f\nabla T_f\right)+\dot{q}_f
+\end{equation}
+!devel-end!
+
+!alert note
+For more detailed instructions on equation formatting, please refer to
+the [MooseDocs equation tutorial](https://mooseframework.inl.gov/python/MooseDocs/extensions/katex.html).
+
 
 ### Adding references style=font-size:125%
 
 If the model has been previously published, one should provide the reference to the published works together with key references used for model development. 
-+MooseDocs+ supports BibTex style references, and some examples about how to cite technical report, conference proceeding and journal article are given below. The bibtex entries must be added into the VTB bibliography file +vtb.bib+. 
-A reference list will be generated automatically at the end of the VTB documentation page. 
++MooseDocs+ supports BibTex style references, and some examples about how to cite technical report, conference proceeding and journal article are given below.  
 
 ```language=bash
 @techreport{Hu2017,
@@ -85,16 +105,14 @@ A reference list will be generated automatically at the end of the VTB documenta
 
 ```
 
-To cite the references, one can do the following in the markdown file.
+!alert note
+The bibtex entries must be added into the VTB bibliography file +vtb.bib+. 
+A reference list will be generated automatically at the end of the VTB documentation page.
 
-```language=bash
-description part A [!citep](Hu2017), description part B [!citep](novak_2021c), description part C [!citep](Fang2021)
 
-```
-
-This will appear on the page as:
-
-description part A [!citep](Hu2017), description part B [!citep](novak_2021c), description part C [!citep](Fang2021)
+!devel! example id=example-refs caption=Example of inserting citations in VTB documentation.
+Description part A [!citep](Hu2017), description part B [!citep](novak_2021c), description part C [!citep](Fang2021)
+!devel-end!
 
 
 ### Other key model details to provide in the high-level summary style=font-size:125%
@@ -113,17 +131,11 @@ description part A [!citep](Hu2017), description part B [!citep](novak_2021c), d
 ## Computational Model Description
 
 Walk through the main kernel/blocks, show snippets of example inputs when needed. 
-
 The markdown source can be as simple as the following to show the `EOS` block from the `msre_loop.i` input file:
 
-```language=bash
+!devel! example id=example-list caption=Example of including input block in VTB documentation.
 !listing msr/msre/msre_loop_1d.i block=EOS language=cpp
-
-```
-
-It would bring up the corresponding block in the specific input file.
-
-!listing msr/msre/msre_loop_1d.i block=EOS language=cpp
+!devel-end!
 
 
 ## Results
