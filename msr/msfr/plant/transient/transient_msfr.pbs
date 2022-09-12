@@ -1,0 +1,12 @@
+#!/bin/bash
+#PBS -N msfr_transient
+#PBS -P moose
+#PBS -l select=1:ncpus=24:mpiprocs=24
+#PBS -l walltime=72:00:00
+#PBS -j oe
+
+cd $PBS_O_WORKDIR
+source /etc/profile.d/modules.sh
+module load use.moose moose-dev PETSc
+
+mpirun ./../../../../blue_crab-opt -i run_neutronics.i
