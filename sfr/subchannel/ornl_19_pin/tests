@@ -1,0 +1,30 @@
+[Tests]
+  # Syntax Checks for 19-pin model
+  [blue_crab_syntax_1]
+    type = RunApp
+    input = ornl_19_pin.i
+    check_input = True
+    executable_pattern = 'blue_crab*'
+  []
+  [blue_crab_syntax_2]
+    type = RunApp
+    input = ornl_19_pin_viz.i
+    check_input = True
+    executable_pattern = 'blue_crab*'
+  []
+  # Regression checks for 19-pin model
+  [blue_crab_regression_1]
+    type = Exodiff
+    input = ornl_19_pin.i
+    exodiff = ornl_19_pin_out.e
+    prereq = 'blue_crab_syntax_1'
+    executable_pattern = 'blue_crab*'
+  []
+  [blue_crab_regression_2]
+    type = Exodiff
+    input = ornl_19_pin_viz.i
+    exodiff = ornl_19_pin_out_viz0.e
+    prereq = 'blue_crab_syntax_2'
+    executable_pattern = 'blue_crab*'
+  []
+

@@ -180,7 +180,7 @@ P_out = 2.0e5 # Pa
 [MultiApps]
   [viz]
     type = FullSolveMultiApp
-    input_files = "toshiba_39_pin_viz.i"
+    input_files = "toshiba_37_pin_viz.i"
     execute_on = "timestep_end"
   []
 []
