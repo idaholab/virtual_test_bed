@@ -1,7 +1,8 @@
 # Contribution guidelines
 
 The Virtual Test Bed welcomes contributions in advanced nuclear reactor modeling from all horizons,
-including, but not limited to, regulatory, industrial and academic institutions.
+including, but not limited to, regulatory, industrial and academic institutions. 
+[A VTB model template](template.md) is provided to facilitate the documentation. 
 
 ## Minimum viable contribution
 
