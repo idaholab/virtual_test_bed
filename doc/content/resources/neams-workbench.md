@@ -80,10 +80,10 @@ All VTB examples are run with the *BlueCrab* application (see Section 5 for furt
 
 Conventionally, a modeling and simulation application is run on an HPC platform in a terminal by following four steps.
 
-Connect to the remote HPC platform using [Secure Shell](https://www.ssh.com/academy/ssh) or one of its derivatives.
-Enter the working directory of choice, then edit the input file and any other relevant files, including the mesh files.
-Submit the job to the scheduler using a submission script from the working directory. The submission script contains logic to load the correct     environment as well as the executable to run and the number of cores to use.
-Once the job is completed, visualize and analyze the numerical solution using a data visualization application, such as VisIt or ParaView. Data visualization may require copying large result files from the cluster to a desktop environment.
+- Step 1: connect to the remote HPC platform using [Secure Shell](https://www.ssh.com/academy/ssh) or one of its derivatives.
+- Step 2: enter the working directory of choice, then edit the input file and any other relevant files, including the mesh files.
+- Step 3: submit the job to the scheduler using a submission script from the working directory. The submission script contains logic to load the correct     environment as well as the executable to run and the number of cores to use.
+- Step 4: once the job is completed, visualize and analyze the numerical solution using a data visualization application, such as VisIt or ParaView. Data visualization may require copying large result files from the cluster to a desktop environment.
 
 This workflow can be cumbersome to users unfamiliar with HPC platforms and an obstacle to potential industrial users in the nuclear engineering field who  want to leverage HPC resources to speed up calculations. NCRC intends to increase the accessibility of modeling and simulation codes and the use of HPC resources by allowing users to access an HPC login node through a virtual desktop from the login page of the HPC OnDemand website (step 1). From there, users  can run an application (*BlueCrab*) or open a terminal to edit files but still need their own submission script to submit jobs to the scheduler.
 
