@@ -76,7 +76,7 @@ This block contains the global parameters that are applied to all SAM components
 
 EOS is short for Equation Of State. This block specifies the material properties, such as the thermophysical properties of the fuel salt and the coolant salt in the heat exchanger listed in the Section above. SAM supports both constants and user-defined functions for the specific parameters. The properties of common materials are implemented SAM repository, and can be readily used by simply refering to the material ids, such as the air, or molten salt FLiBe.
 
-!listing msr/msre/msre_loop_1d.i block=EOS language=cpp
+!listing msr/msre/steady_state/msre_loop_1d.i block=EOS language=cpp
 
 ### Components
 
@@ -100,25 +100,25 @@ A reference pipe is connected to the system to ensure a fixed pressure boundary 
 The component types involved include `PBOneDFluidComponent`, `PBPump`, `PBCoupledHeatStructure`, and `PBBranch`, and the boundary conditions involved include `PBTDV`, `PBTDJ`.
 The detailed instructions of these SAM components can be found in the SAM user manual, which are not repeated here for brevity.
 
-!listing msr/msre/msre_loop_1d.i block=hx_s_in language=cpp
+!listing msr/msre/steady_state/msre_loop_1d.i block=hx_s_in language=cpp
 
 ### Postprocessors
 
 The Postprocessors block is used to monitor the SAM solutions during the simulations, and variables of interest can be printed out in the log file. For example, to check out the core outlet temperature, one can add the following snippet:
 
-!listing msr/msre/msre_loop_1d.i block=Core_T_out language=cpp
+!listing msr/msre/steady_state/msre_loop_1d.i block=Core_T_out language=cpp
 
 ### Preconditioning
 
 This block describes the preconditioner used by the solver.  New user can leave this block unchanged.
 
-!listing msr/msre/msre_loop_1d.i block=Preconditioning
+!listing msr/msre/steady_state/msre_loop_1d.i block=Preconditioning
 
 ### Executioner
 
 This block describes the calculation process flow. The user can specify the start time, end time, time step size for the simulation. Other inputs in this block include PETSc solver options, convergence tolerance, quadrature for elements, etc., which can be left unchanged.
 
-!listing msr/msre/msre_loop_1d.i block=Executioner
+!listing msr/msre/steady_state/msre_loop_1d.i block=Executioner
 
 ## Results
 
