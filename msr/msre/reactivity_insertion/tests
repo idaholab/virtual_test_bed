@@ -18,7 +18,7 @@
     type = 'CSVDiff'
     input = 'msre_pke_ss.i'
     csvdiff = 'msre_pke_ss_csv.csv'
-    cli_args = '--app SamApp Executioner/num_steps=200'
+    cli_args = '--app SamApp Executioner/num_steps=150'
     executable_pattern = 'sam*|blue_crab*'
     prereq = 'steady_state_syntax'
   []
@@ -26,7 +26,7 @@
     type = 'CSVDiff'
     input = 'msre_insertion.i'
     csvdiff = 'msre_insertion_csv.csv'
-    cli_args = '--app SamApp Executioner/num_steps=10 Problem/restart_file_base=msre_pke_ss_ckpt_cp/0200'
+    cli_args = '--app SamApp Executioner/num_steps=10 Problem/restart_file_base=msre_pke_ss_ckpt_cp/0150'
     executable_pattern = 'sam*|blue_crab*'
     prereq = 'insertion_syntax steady_state'
   []
