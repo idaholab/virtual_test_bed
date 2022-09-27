@@ -21,13 +21,13 @@ Note that a user may experience some normal delays between their click and the N
 
 # Cloning the VTB GitHub repository
 
-Before running the NEAMS Workbench GUI on the INL HPC platform, it is recommended to clone the VTB GitHub repository to your home directory on Sawtooth to access the input files used in the subsequent sections. This can be achieved from the [HPC OnDemand website](https://hpcondemand.inl.gov/webauthentication) by starting a Sawtooth terminal as shown in [Figure 1](#fig:hpc_on_demand_sawtooth_terminal).
+Before running the NEAMS Workbench GUI on the INL HPC platform, it is recommended to clone the VTB GitHub repository to your home directory on Sawtooth to access the input files used in the subsequent sections. This can be achieved from the [HPC OnDemand website](https://hpcondemand.inl.gov/webauthentication) by starting a Sawtooth terminal as shown in [#fig:hpc_on_demand_sawtooth_terminal].
 
-!media neams_workbench/hpc_on_demand_sawtooth_terminal.png style=width:80% id=fig:hpc_on_demand_sawtooth_terminal caption=Figure 1: Accessing Sawtooth terminal on the INL HPC OnDemand website.
+!media neams_workbench/hpc_on_demand_sawtooth_terminal.png style=width:80% id=fig:hpc_on_demand_sawtooth_terminal caption=Accessing Sawtooth terminal on the INL HPC OnDemand website.
 
-The Sawtooth terminal should immediately start as seen in [Figure 2](#fig:sawtooth_terminal):
+The Sawtooth terminal should immediately start as seen in [#fig:sawtooth_terminal]:
 
-!media neams_workbench/sawtooth_terminal.png style=width:80% id=fig:sawtooth_terminal caption=Figure 2: Sawtooth terminal on the INL HPC OnDemand website.
+!media neams_workbench/sawtooth_terminal.png style=width:80% id=fig:sawtooth_terminal caption=Sawtooth terminal on the INL HPC OnDemand website.
 
 Once the terminal is opened, the VTB GitHub repository can be cloned. The first step is to load the `gitlfs` module and to install `Git LFS` locally. [Git-LFS](https://git-lfs.github.com/) is needed to clone large size files (mesh, database, ...) present in the VTB GitHub repository:
 
