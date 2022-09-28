@@ -1,5 +1,5 @@
 [Tests]
-  [cht]
+  [cht_syntax]
     type = RunApp
     input = solid.i
     check_input = true
@@ -8,7 +8,7 @@
                   "MOOSE main application."
     executable_pattern = 'cardinal*'
   []
-  [nek]
+  [nek_syntax]
     type = RunApp
     input = nek.i
     check_input = true
@@ -16,5 +16,6 @@
                   "MOOSE main application."
     executable_pattern = 'cardinal*'
     min_parallel = 16
+    group = 'large_memory'
   []
 []
