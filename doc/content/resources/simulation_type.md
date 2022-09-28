@@ -46,6 +46,7 @@ help creating it.
 
 - Upcoming for PB-FHR
 
+- Molten Salt Reactor Experiment Reactivity Insertion Tests [documentation](msr/msre/msre_sam_model.md#MSRE-Reactivity-Insertion-Test) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/msr/msre/reactivity_insertion)
 
 ### Protected loss of coolant flow
 

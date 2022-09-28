@@ -1,0 +1,39 @@
+[Tests]
+  [steady_state_syntax]
+    type = RunApp
+    input = 'msre_pke_ss.i'
+    check_input = true
+    cli_args = '--app SamApp'
+    executable_pattern = 'sam*|blue_crab*'
+  []
+  [insertion_syntax]
+    type = RunApp
+    input = 'msre_insertion.i'
+    check_input = true
+    cli_args = '--app SamApp'
+    executable_pattern = 'sam*|blue_crab*'
+  []
+
+  [steady_state]
+    type = 'CSVDiff'
+    input = 'msre_pke_ss.i'
+    csvdiff = 'msre_pke_ss_csv.csv'
+    cli_args = '--app SamApp Executioner/num_steps=150'
+    executable_pattern = 'sam*|blue_crab*'
+    prereq = 'steady_state_syntax'
+    abs_zero = 1e-4
+    rel_err = 1e-4
+    max_time = 500
+    method = 'opt' # times out in devel
+  []
+  [insertion]
+    type = 'CSVDiff'
+    input = 'msre_insertion.i'
+    csvdiff = 'msre_insertion_csv.csv'
+    cli_args = '--app SamApp Executioner/num_steps=10 Problem/restart_file_base=msre_pke_ss_ckpt_cp/0150'
+    executable_pattern = 'sam*|blue_crab*'
+    prereq = 'insertion_syntax steady_state'
+    abs_zero = 1e-4
+    rel_err = 1e-4
+  []
+[]
