@@ -266,12 +266,16 @@ outlet_pressure_val = 2e5
     variable = T_solid
     coeff = 'kappa_s'
     block = ${blocks_fluid}
+    # For backwards compatibility of testing. Please use harmonic (default)
+    coeff_interp_method = 'average'
   []
   [temp_solid_conduction]
     type = FVDiffusion
     variable = T_solid
     coeff = 'k_s'
     block = ${blocks_solid}
+    # For backwards compatibility of testing. Please use harmonic (default)
+    coeff_interp_method = 'average'
   []
   [temp_solid_source]
     type = FVCoupledForce
@@ -298,6 +302,8 @@ outlet_pressure_val = 2e5
     coeff2 = 'k_s'
     variable1 = 'T_solid'
     variable2 = 'T_solid'
+    # For backwards compatibility of testing. Please use harmonic (default)
+    coeff_interp_method = 'average'
   []
 []
 
