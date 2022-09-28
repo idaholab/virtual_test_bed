@@ -5,10 +5,11 @@
 Computational Fluid Dynamics (CFD) plays an unique role in the research and development (R&D) of 
 Molten Salt Fast Reactor (MSFR). As a great complement to experiments, it offers a cost effective 
 way to study the complex thermal fluid physics expected in the MSFR system. 
+
 For certain advanced nuclear reactor concepts (e.g., MSFR) where the related experimental data is 
-not available or very scarce, CFD also provides much needed reference to develop and calibrate
+very scarce or not available, CFD also provides much needed reference to develop and calibrate
 reactor design tools. 
-In this VTB documentation, you will find examples of a series of CFD simulations developed to model
+In this VTB documentation, you will find examples for a series of CFD simulations developed to model
 the coolant flow in MSFR core cavity. 
 The related models range from relatively low-cost 2-D Reynolds-Averaged Navier Stokes (RANS) 
 simulations to more accurate 3-D Large Eddy Simulations (LES). 
@@ -27,7 +28,7 @@ typical CFD investigation, and provide detailed descriptions about the numerical
 key results and discoveries. 
 
 !alert note
-This documentation assumes that reader has the basic knowledge of Nek5000, and is able to run 
+This documentation assumes that reader has basic knowledge of Nek5000, and is able to run 
 the example cases provided in [Nek5000 tutorial](https://nek5000.github.io/NekDoc/index.html)
 
 
