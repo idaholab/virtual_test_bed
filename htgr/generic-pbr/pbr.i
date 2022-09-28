@@ -1,22 +1,12 @@
+## Author: Zhiee Jhia Ooi, PhD
+## Institution: Argonne National Laboratory, 9700 S. Cass Ave, Lemont, IL 60439
+
 ################################################################################
 ## Generic Pebble-Bed HTGR                                                    ##
 ## SAM Single-Application                                                     ##
 ## 1D thermal hydraulics                                                      ##
 ## Primary loop (Core only)                                                   ##
 ################################################################################
-
-############################################ Main references ############################################
-## 1. Stewart, R., Reger, D., and Balestra, P., 'Demonstrate Capability of NEAMS
-##    Tools to Generate Reactor Kinetics Parameters for Pebble-Bed HTGRs Transient Modeling',
-##    INL/EXT-21-64176, Idaho National Laboratory, 2021.
-##
-## 2. 'PBMR Coupled Neutronics/Thermal-hydraulics Transient Benchmark: The PBMR-400 Core Design',
-##    NEA/NSC/DOC(2013)10, Nuclear Energy Agency - Organisation for Economic Co-operation
-##    and Development, 2013.
-##
-## Note: For the remaining of this document, [1] is known as the 'INL report' while [2] is
-## known as the 'NEA report'.
-########################################################################################################
 
 ############################################ Model information ############################################
 ## 1. This is a SAM model for the generic pebble bed high temperature gas-cooled reactor (HTGR).
@@ -41,6 +31,19 @@
 ##    ensure the correct prescription of reactivity coefficients in the pebbles. On the other hand, for the reflector region
 ##    where there is no Doppler reactivity, no distinctions are made between the moderator and reflector reactivities. They 
 ##    are summed and prescribed to the reflectors to reduce the complexity of the model. 
+
+############################################ Main references ############################################
+## 1. Stewart, R., Reger, D., and Balestra, P., 'Demonstrate Capability of NEAMS
+##    Tools to Generate Reactor Kinetics Parameters for Pebble-Bed HTGRs Transient Modeling',
+##    INL/EXT-21-64176, Idaho National Laboratory, 2021.
+##
+## 2. 'PBMR Coupled Neutronics/Thermal-hydraulics Transient Benchmark: The PBMR-400 Core Design',
+##    NEA/NSC/DOC(2013)10, Nuclear Energy Agency - Organisation for Economic Co-operation
+##    and Development, 2013.
+##
+## Note: For the remaining of this document, [1] is known as the 'INL report' while [2] is
+## known as the 'NEA report'.
+########################################################################################################
 
 ############################################ Miscelleneous properties ############################################
 emissivity = 0.8          # According to NEA report [2] graphite and SS are assumed to have a constant emissivity of 0.8
