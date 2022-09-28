@@ -391,8 +391,8 @@
     # type = FDP
     full = true
     solve_type = 'PJFNK'
-    petsc_options_iname = '-pc_type'
-    petsc_options_value = 'lu'
+    petsc_options_iname = '-pc_type -pc_factor_shift_type'
+    petsc_options_value = 'lu       NONZERO'
   []
 []
 
@@ -409,11 +409,11 @@
   end_time            = 0
   petsc_options_iname = '-ksp_gmres_restart'
   petsc_options_value = '100'
-  nl_rel_tol = 1e-10
-  nl_abs_tol = 1e-9
+  nl_rel_tol = 1e-11
+  nl_abs_tol = 3e-10
   nl_max_its = 30
-  l_tol      = 1e-5
-  l_max_its  = 50
+  l_tol      = 1e-6
+  l_max_its  = 100
   [Quadrature]
     # type  = TRAP
     # order = FIRST
