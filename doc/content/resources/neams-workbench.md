@@ -149,7 +149,7 @@ The ParaView GUI is enabled by clicking on `Visualization` and checking the box 
 
 !media neams_workbench/hpc_on_demand_color_by_power_density.png style=width:80% id=fig:hpc_on_demand_color_by_power_density caption=NEAMS Workbench GUI showing `power density` profile in the *Visualization tab*.
 
-!media neams_workbench/neams_workbench_sfr_vis.png style=width:80% id=fig:neams_workbench_sfr_vis caption=The NEAMS Workbench GUI with *griffin.i* input file (top left), the output from the scheduler (bottom left), and the numerical solution visualized with ParaView (right)..
+!media neams_workbench/neams_workbench_sfr_vis.png style=width:80% id=fig:neams_workbench_sfr_vis caption=The NEAMS Workbench GUI with *griffin.i* input file (top left), the output from the scheduler (bottom left), and the numerical solution visualized with ParaView (right).
 
 ### Exiting and closing the Virtual Desktop
 
