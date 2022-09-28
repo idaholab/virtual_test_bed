@@ -11,6 +11,8 @@ This documentation aims to provide users with guidelines on how to run VTB examp
 
 !media https://www.youtube.com/watch?v=W6Rq_owHmoU&ab_channel=MarcoDelchini
 
+!style halign=center style=font-weight:100; NRIC Tech Talk by the VTB team: State-of-the-Art Modeling and Simulation to Support Advanced Reactor Deployment
+
 Note that a user may experience some normal delays between their click and the NEAMS Workbench GUI responding, which is due to OnDemand mechanics. If a user needs assistance with running a case or has any questions, feel free to reach out to Robert Lefebvre ([lefebvrera@ornl.gov](mailto:lefebvrera@ornl.gov)) or Marco Delchini ([delchinimg@ornl.gov](mailto:delchinimg@ornl.gov)).
 
 # The NEAMS Workbench
