@@ -1,13 +1,39 @@
-# MSFR Nek5000 CFD model
+# MSFR Nek5000 CFD modeling
 
 *Contact: Jun Fang, fangj.at.anl.gov*
 
-[Nek5000](https://github.com/Nek5000/Nek5000)
-is an open source CFD code based on the spectral element method (SEM) with
+Computational Fluid Dynamics (CFD) plays an unique role in the research and development (R&D) of 
+Molten Salt Fast Reactor (MSFR). As a great complement to expriments, it offers a cost effective 
+way to study the complex thermal fluid physics expected in the MSFR system. 
+For certain advanced nuclear reactor concepts (e.g., MSFR) where the related experimental data is 
+not available or very scarce, CFD also provides much needed reference to develop and calibrate
+reactor design tools. 
+In this VTB documentation, you will find examples of a series of CFD simulations developed to model
+the coolant flow in MSFR core cavity. 
+The related models range from relatively low-cost 2-D Reynolds-Averaged Navier Stokes (RANS) 
+simulations to more accurate 3-D Large Eddy Simulations (LES). 
+The NEAMS signature CFD code, [Nek5000](https://github.com/Nek5000/Nek5000) is used here for the 
+corresponding CFD calculations. 
+Nek5000 is an open source CFD code based on the spectral element method (SEM) with
 a long history of application in reactor thermal-hydraulics
 research [!citep](Merzari2017).
-SEM combines the accuracy of spectral methods with the domain flexibility of the
-finite element method.
+Though the various CFD modeling appraoches and case studies, one primary motivation is to seek 
+an in-depth understanding of how the internal velocity distribution can be influenced by 
+the MSFR core cavity shape, the Reynolds number, turbulence modeling options and the inlet 
+boundary conditions.
+In the following sections, we will go through all the components one would expect in a
+typical CFD investigation, and provide detailed descrptions about the numerical methods, case steups,
+key results and discoveries. 
+
+!alert note
+This documentation assumes that reader has the basic knowledge of Nek5000, and is able to run 
+the example cases provided in [Nek5000 tutorial](https://nek5000.github.io/NekDoc/index.html)
+
+
+## CFD solver and turbulence modeling
+
+Nek5000 is based on the Spectrum Element Methold (SEM), which combines the accuracy of 
+spectral methods with the domain flexibility of the finite element method.
 In Nek5000 calculations, the domain is discretized into $E$ curvilinear hexahedral
 elements, in which the solution is represented as a tensor product of $N^{th}$-order
 Lagrange polynomials based on the Gauss-Lobatto-Legendre (GLL) nodal points,
@@ -29,9 +55,6 @@ core flow simulations, the RANS model would be the most practical option .
 A 2-D axisymmetric MSFR core model is documented herein, which will hopefully
 serve as an useful example for anyone who is interested in using Nek5000 for
 MSFR related fluid problems.
-
-
-## Governing equations and the RANS model
 
 The incompressible formulation of Nek5000 is used in the current study
 which assumes a Newtonian fluid with constant properties. The corresponding
@@ -65,14 +88,11 @@ from the $k-\omega$ equations [!citep](Tomboulides2018) by using the definition
 $\tau=1/\omega$. The corresponding transport equations are as follows
 
 \begin{equation}
-    \frac{\partial (\rho k)}{\partial t} + \nabla\cdot(\rho k \bf{v}) =  
-\nabla\cdot\left[(\mu+\frac{\mu_t}{\sigma_k})\nabla k\right] + P-\rho \beta^{*}\frac{k}{\tau}
+    \frac{\partial (\rho k)}{\partial t} + \nabla\cdot(\rho k \bf{v}) =  \nabla\cdot\left[(\mu+\frac{\mu_t}{\sigma_k})\nabla \text{k}\right] + \text{P} - \rho \beta^{*}\frac{\text{k}}{\tau}
 \end{equation}
 
 \begin{equation}
- \frac{\partial (\rho \tau)}{\partial t} + \nabla\cdot(\rho\tau \bf{v}) =  
-\nabla\cdot\left[(\mu+\frac{\mu_t}{\sigma_\tau })\nabla \tau \right] -
-\gamma \frac{\tau}{k} P+\rho \beta-2\frac{\mu}{\tau}\left(\nabla\tau\cdot\nabla\tau\right)
+ \frac{\partial (\rho \tau)}{\partial t} + \nabla\cdot(\rho\tau \bf{v}) =  \nabla\cdot\left[(\mu+\frac{\mu_t}{\sigma_\omega })\nabla \tau \right] - \gamma \frac{\tau}{\text{k}} \text{P} + \rho \beta-\text{2}\frac{\mu}{\tau}\left(\nabla\tau\cdot\nabla\tau\right)
 \end{equation}
 
 In contrast to the original form of the $k-\omega$ model, in which the $\omega$
@@ -261,3 +281,40 @@ residualTol = 1e-8
 residualPROJ = yes
 
 ```
+
+# MSFR Nek5000 CFD Results
+
+The steady-state solutions of velocity and turbulent kinetic energy (TKE) field 
+in the MSFR core from the 2-D axisymmetric RANS case are shown
+below. 
+
+!media msfr_nek_2D_U.jpg
+       style=width:80%
+       id=msfr_vel
+       caption=The steady-state velocity field from the 2-D MSFR RANS simulation.
+
+!media msfr_nek_2D_TKE.jpg
+       style=width:80%
+       id=msfr_tke
+       caption=The steady-state TKE field from the 2-D MSFR RANS simulation.
+
+It is noticed that the velocity magnitude is higher in the peripheral 
+region compared to core center, which is related to the velocity 
+boundary condition given at the inlet. As for the TKE field, 
+the regions of high  TKE value indicate strong local flow mixing. 
+A velocity field with arrows is shown in [msfr_vel_vector] to illustrate 
+the velocity directions and magnitudes of specific locations inside the core. 
+
+
+!media msfr_nek_2D_U_Arrows.jpg
+       style=width:80%
+       id=msfr_vel_vector
+       caption=The steady-state velocity field with arrows indicating local
+       velocity directions. 
+
+!alert note
+It has been noticed that the flow field solutions are sensitive to the
+inlet boundary conditions. The results shown above are the steady-state
+solutions with a constant inlet velocity, which is not necessarily the case
+in the actual MSFR. Additional studies are being conducted to reproduce the 
+realistic inlet BC, which will help further improve the results. 
