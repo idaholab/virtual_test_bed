@@ -3,12 +3,12 @@
 *Contact: Jun Fang, fangj.at.anl.gov*
 
 Computational Fluid Dynamics (CFD) plays an unique role in the research and development (R&D) of 
-Molten Salt Fast Reactor (MSFR). As a great complement to expriments, it offers a cost effective 
-way to study the complex thermal fluid physics expected in MSFR system. 
+Molten Salt Fast Reactor (MSFR). As a great complement to experiments, it offers a cost effective 
+way to study the complex thermal fluid physics expected in the MSFR system. 
 For certain advanced nuclear reactor concepts (e.g., MSFR) where the related experimental data is 
-very scarce or not available, CFD also provides much needed reference to develop and calibrate
+not available or very scarce, CFD also provides much needed reference to develop and calibrate
 reactor design tools. 
-In this VTB documentation, you will find examples for a series of CFD simulations developed to model
+In this VTB documentation, you will find examples of a series of CFD simulations developed to model
 the coolant flow in MSFR core cavity. 
 The related models range from relatively low-cost 2-D Reynolds-Averaged Navier Stokes (RANS) 
 simulations to more accurate 3-D Large Eddy Simulations (LES). 
@@ -17,20 +17,23 @@ corresponding CFD calculations.
 Nek5000 is an open source CFD code based on the spectral element method (SEM) with
 a long history of application in reactor thermal-hydraulics
 research [!citep](Merzari2017).
-Through the various CFD modeling appraoches and case studies, one primary motivation is to seek 
-an in-depth understanding of how the MSFR internal velocity distribution can be influenced by 
-the core cavity shape, Reynolds number, turbulence modeling options and the inlet 
+
+Though the various CFD modeling approaches and case studies, one primary motivation is to seek 
+an in-depth understanding of how the internal velocity distribution can be influenced by 
+the MSFR core cavity shape, the Reynolds number, turbulence modeling options and the inlet 
 boundary conditions.
-In the following sections, we will go through all the components this CFD investigation compaign, and provide detailed descrptions for the numerical methods, case steups, key results and discoveries. 
+In the following sections, we will go through all the components one would expect in a
+typical CFD investigation, and provide detailed descriptions about the numerical methods, case setups,
+key results and discoveries. 
 
 !alert note
-This documentation assumes that reader has basic knowledge of Nek5000, and is able to run 
+This documentation assumes that reader has the basic knowledge of Nek5000, and is able to run 
 the example cases provided in [Nek5000 tutorial](https://nek5000.github.io/NekDoc/index.html)
 
 
 ## CFD solver and turbulence modeling
 
-Nek5000 is based on the Spectrum Element Methold (SEM), which combines the accuracy of 
+Nek5000 is based on the Spectrum Element Method (SEM), which combines the accuracy of 
 spectral methods with the domain flexibility of the finite element method.
 In Nek5000 calculations, the domain is discretized into $E$ curvilinear hexahedral
 elements, in which the solution is represented as a tensor product of $N^{th}$-order
