@@ -9,7 +9,7 @@ Recent work has focused on integrating the NEAMS Workbench with MOOSE-based tool
 
 This documentation aims to provide users with guidelines on how to run VTB examples with the NEAMS Workbench on INL HPC platforms. A *[demonstration video](https://www.youtube.com/watch?v=W6Rq_owHmoU&ab_channel=MarcoDelchini)* is also available (see below) to further illustate all steps of the documentation, and is referenced in the text when needed.
 
-!media https://www.youtube.com/watch?v=W6Rq_owHmoU&ab_channel=MarcoDelchini style=width:80% id=fig:demonstration_video_youtube caption=Demonstration video on how to use the NEAMS Workbench GUI on INL HPC platform.
+!media https://www.youtube.com/watch?v=W6Rq_owHmoU&ab_channel=MarcoDelchini
 
 Note that a user may experience some normal delays between their click and the NEAMS Workbench GUI responding, which is due to OnDemand mechanics. If a user needs assistance with running a case or has any questions, feel free to reach out to Robert Lefebvre ([lefebvrera@ornl.gov](mailto:lefebvrera@ornl.gov)) or Marco Delchini ([delchinimg@ornl.gov](mailto:delchinimg@ornl.gov)).
 
