@@ -1,0 +1,36 @@
+#Nek5000 parameter file
+[GENERAL]
+#startFrom = run13_avg/msfr0.f00001
+stopAt = numSteps
+numSteps = 0
+dt = 1.0e-04
+writeInterval = 20000
+timeStepper = BDF2
+filtering = explicit
+filterWeight = 0.05
+filterModes = 2
+dealiasing = yes
+extrapolation = OIFS
+targetCFL = 4.0
+
+[PROBLEMTYPE]
+equation = incompNS
+
+[MESH]
+writeToFieldFile = yes
+
+[VELOCITY]
+density = 1.0
+#viscosity = -1.0e4
+viscosity = -1.88E+05
+residualTol = 1e-6
+residualPROJ = yes
+
+[PRESSURE]
+preconditioner = SEMG_AMG_HYPRE
+residualTol = 1e-4
+residualPROJ = yes
+
+[TEMPERATURE]
+solver = none
+
