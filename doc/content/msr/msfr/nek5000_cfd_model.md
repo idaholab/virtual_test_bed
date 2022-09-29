@@ -112,27 +112,27 @@ has been also applied to fuel rod bundle geometry. Interested readers
 can refer to the recent publication [!citep](Fang2021) for more details regarding
 the $k-\tau$ application and validation in fuel rod bundles.  
 
-Both LES and RANS approaches play unique roles here. The LES approach is utilized to produce high-fidelity reference data to reveal 3-D system behavior in MSFR core. It uses the stabilizing filter of Fischer and Mullen (cite Fischer2001}. The solution at each time step is explicitly filtered and the filtering operator $F_\alpha$ is defined as
+Both LES and RANS approaches play unique roles here. The LES approach is utilized to produce high-fidelity reference data to reveal 3-D system behavior in MSFR core. It uses the stabilizing filter of Fischer and Mullen [!citep](Fischer2001). The solution at each time step is explicitly filtered and the filtering operator $F_\alpha$ is defined as
 
 \begin{equation}
     F_\alpha  = \alpha I_{N-1} + (1-\alpha)I
 \end{equation}
 
-where $I$ is the identity operator and $I_N$ is the interpolation operator at the $N+1$ GLL nodes. This filter preserves the desirable spectral convergence of SEM as the mesh resolution increases. In addition, a characteristics based time-stepping (cite Maday1990} has been used in the LES
+where $I$ is the identity operator and $I_N$ is the interpolation operator at the $N+1$ GLL nodes. This filter preserves the desirable spectral convergence of SEM as the mesh resolution increases. In addition, a characteristics based time-stepping [!citep](Maday1990) has been used in the LES
 runs to avoid the limitations imposed by the Courant-Friedrichs-Lewy (CFL) number due to the explicit treatment of the non-linear convection term.
 
 ## Model setups
 
-The specific reactor model considered herein is based upon the MSFR design created under the Euratom EVOL project (cite Rouch2014). 
+The specific reactor model considered herein is based upon the MSFR design created under the Euratom EVOL project [!citep](rouch2014). 
 The reference MSFR is a 3000 MW fast-spectrum reactor with three different circuits: the fuel circuit, 
 the intermediate circuit and the power conversion circuit. In the fuel circuit, 
 there are 16 groups of pumps and heat exchangers around the core. 
-The flow conditions and thermophysical properties of the primary/fuel salt are derived from (cite Rouch2014) 
+The flow conditions and thermophysical properties of the primary/fuel salt are derived from [!cite](rouch2014) 
 and listed in [msfr_conditions].
 The core has a height of 1.6 m along the centerline, and a height of 2.65 m in the peripheral region. 
 The reactor radius ranges from 1.05 to 1.53 m. The peripheral wall is a curved surface resulting in the entire core 
 resembling the shape of a stout hourglass. 
-Leveraging the existing MSFR studies published in the literature, the +Geometry II+ investigated by (cite Rouch2014) 
+Leveraging the existing MSFR studies published in the literature, the +Geometry II+ investigated by [!cite](rouch2014) 
 is selected as the reference geometry for our CFD simulations. 
 
 !table id=msfr_conditions caption=Reference flow conditions and thermo-physical properties of fuel salt in the primary circuit.
@@ -237,7 +237,7 @@ c     id_w = 1 ! cheap_dist (path to wall, may work better for periodic boundari
 ```
 
 
-In addition, user also needs to update the conductivity and diffusivity accounting for the contributions from RANS model. 
+In addition, the user also needs to update the conductivity and diffusivity accounting for the contributions from RANS model. 
 The following code snippet should be added in the code block +uservp+
 
 ```language=fortran
@@ -278,7 +278,7 @@ For a mesh produced by GMSH, the Nek5000 relies on the physical group ids
 to specify the boundary conditions. There are 4 groups in the current case,
 which covers the boundary edges of domain inlet(1), outlet(2), wall(3), and the
 axisymmetric axis(4). The following code snippet showcases how the
-boundary condition tags are given to the model entities. 
+boundary condition tags are given to the model entities.
 
 ```language=fortran
 do iel=1,nelt
@@ -416,7 +416,7 @@ targetCFL = 4.0
 
 ```
 
-Users are encouraged to check out the case files (particularly +usr+ and +par+ files) that are provided in VTB repository
+Users are encouraged to check out the case files (particularly +usr+ and +par+ files) that are provided in the VTB repository
 to get a better idea how the RANS and LES cases are established. 
 
 # MSFR CFD Results
@@ -479,7 +479,7 @@ The presented LES simulation is likely a bit under-resolved due to the limited c
        caption=Comparison of the RANS (a) and time-averaged LES (b) results of axial velocity field.
 
 
-In between the fast yet less accurate 2-D simulations and the accurate but computationally demanding 3-D full-core simulations, the CFD simulations of a wedge domain can potentially achieve an good balance of efficiency and accuracy. 
+In between the fast yet less accurate 2-D simulations and the accurate but computationally demanding 3-D full-core simulations, the CFD simulations of a wedge domain can potentially achieve a good balance of efficiency and accuracy. 
 As shown in [wedge_mesh], three wedge domains are considered in this work. The corresponding RANS solutions are presented in [vel_wedge] for cases WA, WB and WC. 
 Note that the inlet channel in both cases WA and WC is a rectangular duct which is the same as in the 3-D full-core model. 
 Meanwhile, the case WB is a 3-D equivalent of the 2-D axisymetric domain through a $22.5^\circ$ circumferential rotation. The inlet channel of case WB is a partial ring (as illustrated in [wedge_mesh]). 
