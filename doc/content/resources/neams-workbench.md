@@ -9,7 +9,7 @@ Recent work has focused on integrating the NEAMS Workbench with MOOSE-based tool
 
 This documentation aims to provide users with guidelines on how to run VTB examples with the NEAMS Workbench on INL HPC platforms. A *[demonstration video](https://www.youtube.com/watch?v=W6Rq_owHmoU&ab_channel=MarcoDelchini)* is also available (see below) to further illustate all steps of the documentation, and is referenced in the text when needed.
 
-!media https://www.youtube.com/watch?v=W6Rq_owHmoU&ab_channel=MarcoDelchini
+!media https://www.youtube.com/embed/W6Rq_owHmoU
 
 !style halign=center style=font-weight:100; NRIC Tech Talk by the VTB team: State-of-the-Art Modeling and Simulation to Support Advanced Reactor Deployment
 
