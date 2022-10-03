@@ -91,6 +91,7 @@ outlet_pressure_val = 2e5
 # ==============================================================================
 
 [Mesh]
+  coord_type = RZ
   # Mesh should be fairly orthogonal for finite volume fluid flow
   # If you are running this input file for the first time, run core_with_reflectors.py
   # in pbfhr/meshes using Cubit to generate the mesh
@@ -125,7 +126,6 @@ outlet_pressure_val = 2e5
 []
 
 [Problem]
-  coord_type = RZ
   # We use a restart file to heat up the reflector beforehand, to get SAM and Pgh in agreement
   restart_file_base = ss1_combined_initial_checkpoint_cp/LATEST
   force_restart = true

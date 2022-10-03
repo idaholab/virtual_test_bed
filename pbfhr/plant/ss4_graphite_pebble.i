@@ -24,11 +24,9 @@ pebble_diameter            = 0.03
 # ==============================================================================
 # GEOMETRY AND MESH
 # ==============================================================================
-[Problem]
-  coord_type = 'RSPHERICAL'
-[]
 
 [Mesh]
+  coord_type = 'RSPHERICAL'
   type = GeneratedMesh
   dim = 1
   xmin = 0.0

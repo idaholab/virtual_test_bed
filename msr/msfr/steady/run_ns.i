@@ -63,6 +63,10 @@ beta6 = 0.000184087
 ################################################################################
 
 [Mesh]
+  coord_type = 'RZ'
+  rz_coord_axis = Y
+  allow_renumbering = false
+
   [restart]
     type = FileMeshGenerator
     use_for_exodus_restart = true
@@ -97,11 +101,6 @@ beta6 = 0.000184087
     new_sideset_name = 'hx_bot'
     input = 'hx_top'
   []
-[]
-
-[Problem]
-  coord_type = 'RZ'
-  rz_coord_axis = Y
 []
 
 ################################################################################

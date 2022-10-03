@@ -30,15 +30,12 @@ plenum_height        = 782.2e-3  # 778.0e-3
   X_Pu = 0.171
 []
 
-[Problem]
-  # Set up the coordinates and problem type
-  coord_type = RZ
-[]
-
 # ==============================================================================
 # GEOMETRY AND MESH
 # ==============================================================================
-[Mesh] # based on x447.i from examples
+[Mesh]
+  coord_type = RZ
+  # based on x447.i from examples
   # rod specific parameters - dimensions are for fresh fuel at room temperature
   [smeared_pellet_mesh]
     type = SmearedPelletMeshGenerator

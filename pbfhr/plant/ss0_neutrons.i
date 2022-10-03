@@ -60,6 +60,7 @@ fis_fract            = ${fparse 1 - dh_fract} # Fission power fraction at t = 0.
 # restart_file = 'mk1_fhr.e'  # uncomment near bottom of input file to use restart
 
 [Mesh]
+  coord_type = RZ
   uniform_refine = 2
   [mesh_reader]
     type = FileMeshGenerator
@@ -92,7 +93,6 @@ fis_fract            = ${fparse 1 - dh_fract} # Fission power fraction at t = 0.
 []
 
 [Problem]
-  coord_type = RZ
   # restart_file_base = 'ss0_neutrons_Checkpoint_cp/LATEST'
 []
 

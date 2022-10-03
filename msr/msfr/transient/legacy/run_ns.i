@@ -79,6 +79,7 @@ beta6 = 0.000184087
 ################################################################################
 
 [Mesh]
+  coord_type = 'RZ'
   [fmg]
     type = FileMeshGenerator
     file = '../steady/restart/run_ns_coupled_restart.e'
@@ -90,10 +91,6 @@ beta6 = 0.000184087
   #   input = fmg
   #   block = 'shield reflector'
   # []
-[]
-
-[Problem]
-  coord_type = 'RZ'
 []
 
 ################################################################################

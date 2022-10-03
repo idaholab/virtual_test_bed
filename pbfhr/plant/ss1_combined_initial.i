@@ -91,6 +91,7 @@ outlet_pressure_val = 2e5
 # ==============================================================================
 
 [Mesh]
+  coord_type = RZ
   # Mesh should be fairly orthogonal for finite volume fluid flow
   # If you are running this input file for the first time, run core_with_reflectors.py
   # in pbfhr/meshes using Cubit to generate the mesh
@@ -122,10 +123,6 @@ outlet_pressure_val = 2e5
     included_subdomains = '6'
     input = OR_inlet
   []
-[]
-
-[Problem]
-  coord_type = RZ
 []
 
 [GlobalParams]

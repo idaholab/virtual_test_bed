@@ -28,6 +28,8 @@ pump_force = -20000. # [N / m^3]
 
 [Mesh]
   uniform_refine = 1
+  coord_type = 'RZ'
+  rz_coord_axis = Y
   [fmg]
     type = FileMeshGenerator
     file = '../mesh/msfr_rz_mesh.e'
@@ -51,8 +53,6 @@ pump_force = -20000. # [N / m^3]
 
 [Problem]
   kernel_coverage_check = false
-  coord_type = 'RZ'
-  rz_coord_axis = Y
 []
 
 ################################################################################
