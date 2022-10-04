@@ -7,14 +7,11 @@
 
 [Mesh]
   uniform_refine = 1
+  coord_type = 'RZ'
   [fmg]
     type = FileMeshGenerator
     file = '../mesh/msfr_rz_mesh.e'
   []
-[]
-
-[Problem]
-  coord_type = 'RZ'
 []
 
 [TransportSystems]

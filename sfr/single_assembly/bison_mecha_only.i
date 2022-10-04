@@ -30,15 +30,10 @@ plenum_height        = 1.
    # density = 15770.0 # kg/m3 fresh, room temperature (UPuZr fuel Table 2 from ECAR-4647)  #unused
 []
 
-[Problem]
-   # Set up the coordinates and problem type
-   coord_type = RZ
-[]
-
-
-
-[Mesh] # based on x447.i from examples
-    # rod specific parameters - dimensions are for fresh fuel at room temperature
+[Mesh]
+  coord_type = RZ
+  # based on x447.i from examples
+  # rod specific parameters - dimensions are for fresh fuel at room temperature
   [smeared_pellet_mesh]
     type = SmearedPelletMeshGenerator
     clad_thickness = ${clad_thickness}

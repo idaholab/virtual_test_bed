@@ -91,6 +91,7 @@ outlet_pressure_val = 2e5
 # ==============================================================================
 
 [Mesh]
+  coord_type = RZ
   # Mesh should be fairly orthogonal for finite volume fluid flow
   # If you are running this input file for the first time, run core_with_reflectors.py
   # in pbfhr/meshes using Cubit to generate the mesh
@@ -122,10 +123,6 @@ outlet_pressure_val = 2e5
     included_subdomains = '6'
     input = OR_inlet
   []
-[]
-
-[Problem]
-  coord_type = RZ
 []
 
 [GlobalParams]
@@ -266,12 +263,16 @@ outlet_pressure_val = 2e5
     variable = T_solid
     coeff = 'kappa_s'
     block = ${blocks_fluid}
+    # For backwards compatibility of testing. Please use harmonic (default)
+    coeff_interp_method = 'average'
   []
   [temp_solid_conduction]
     type = FVDiffusion
     variable = T_solid
     coeff = 'k_s'
     block = ${blocks_solid}
+    # For backwards compatibility of testing. Please use harmonic (default)
+    coeff_interp_method = 'average'
   []
   [temp_solid_source]
     type = FVCoupledForce
@@ -298,6 +299,8 @@ outlet_pressure_val = 2e5
     coeff2 = 'k_s'
     variable1 = 'T_solid'
     variable2 = 'T_solid'
+    # For backwards compatibility of testing. Please use harmonic (default)
+    coeff_interp_method = 'average'
   []
 []
 

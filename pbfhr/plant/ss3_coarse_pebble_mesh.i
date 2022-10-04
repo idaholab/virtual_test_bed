@@ -27,6 +27,7 @@ power_density = ${fparse total_power / model_vol}
 # GEOMETRY AND MESH
 # ==============================================================================
 [Mesh]
+  coord_type = RZ
   [read_mesh]
     type = FileMeshGenerator
     file = '../meshes/core_coarse.e'
@@ -41,7 +42,6 @@ power_density = ${fparse total_power / model_vol}
 [Problem]
   kernel_coverage_check = false
   skip_nl_system_check = true
-  coord_type = RZ
 []
 
 [Debug]
