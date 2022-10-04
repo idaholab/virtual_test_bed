@@ -61,6 +61,8 @@ riser_superficial_rho_v         = ${fparse reactor_total_mfr/riser_free_flow_are
 # ==============================================================================
 
 [Mesh]
+  coord_type = RZ
+
   type = MeshGeneratorMesh
   block_id = ' 1 2 3 4 5 6 7 8 9 10 11 12 14 15 16 17 18 '
   block_name = ' pebble_bed
@@ -299,7 +301,6 @@ riser_superficial_rho_v         = ${fparse reactor_total_mfr/riser_free_flow_are
 []
 
 [Problem]
-  coord_type = RZ
   kernel_coverage_check = false
 []
 

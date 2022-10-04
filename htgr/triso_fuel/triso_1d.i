@@ -25,6 +25,7 @@ coordinates5 = '${fparse coordinates4+OPyC_thickness}'
 []
 
 [Mesh]
+  coord_type = RSPHERICAL
   [gen]
     type = TRISO1DMeshGenerator
     elem_type = EDGE3
@@ -37,7 +38,6 @@ coordinates5 = '${fparse coordinates4+OPyC_thickness}'
 
 [Problem]
   type = ReferenceResidualProblem
-  coord_type = RSPHERICAL
   reference_vector = 'ref'
   extra_tag_vectors = 'ref'
 []

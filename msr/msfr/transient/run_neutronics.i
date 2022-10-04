@@ -6,6 +6,7 @@
 ################################################################################
 
 [Mesh]
+  coord_type = 'RZ'
   [fmg]
     type = FileMeshGenerator
     # when changing restart file, adapt power_scaling postprocessor
@@ -13,10 +14,6 @@
     file = '../steady/restart/run_neutronics_restart.e'
     use_for_exodus_restart = true
   []
-[]
-
-[Problem]
-  coord_type = 'RZ'
 []
 
 ################################################################################

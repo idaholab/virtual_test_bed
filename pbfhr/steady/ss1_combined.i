@@ -90,6 +90,7 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
 # ==============================================================================
 
 [Mesh]
+  coord_type = RZ
   # Mesh should be fairly orthogonal for finite volume fluid flow
   # If you are running this input file for the first time, run core_with_reflectors.py
   # in pbfhr/meshes using Cubit to generate the mesh
@@ -121,10 +122,6 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
     included_subdomains = '6'
     input = OR_inlet
   []
-[]
-
-[Problem]
-  coord_type = RZ
 []
 
 [GlobalParams]

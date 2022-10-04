@@ -90,6 +90,7 @@
     csvdiff = 'out_griffin_only.csv'
     executable_pattern = 'griffin*|blue_crab*|dire_wolf*|fenix*'
     prereq = 'griffin_standalone_syntax'
+    allow_warnings = true  # out of range B2 value
   []
   [subchannel]
     type = CSVDiff

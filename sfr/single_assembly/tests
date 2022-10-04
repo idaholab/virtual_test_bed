@@ -84,6 +84,7 @@
     cli_args = "MultiApps/active='' Transfers/active=''"
     executable_pattern = 'griffin*|blue_crab*|dire_wolf*|fenix*'
     prereq = 'neutronics_without_multiapp_syntax'
+    allow_warnings = true  # fission cross sections not provided, only nu-fission
   []
   [subchannel]
     type = CSVDiff

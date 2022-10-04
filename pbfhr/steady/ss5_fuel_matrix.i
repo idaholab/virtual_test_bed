@@ -38,11 +38,9 @@ stainsby_sphere_radius     = 5.98886039e-04
 # ==============================================================================
 # GEOMETRY AND MESH
 # ==============================================================================
-[Problem]
-  coord_type = 'RSPHERICAL'
-[]
 
 [Mesh]
+  coord_type = 'RSPHERICAL'
   type = MeshGeneratorMesh
   block_id ='1 2 3 4 5 6'
   block_name = 'uo2 buffer ipyc sic opyc graphite_matrix'

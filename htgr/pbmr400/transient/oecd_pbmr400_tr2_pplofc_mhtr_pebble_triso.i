@@ -29,6 +29,7 @@ pebble_bed_porosity        = 0.39 # Pebble bed porosity (//)
 # GEOMETRY AND MESH
 # ==============================================================================
 [Mesh]
+  coord_type = 'RSPHERICAL'
   block_id = ' 1 2 3 4 5 6 7 '
   block_name = ' core
                  shell
@@ -104,10 +105,6 @@ pebble_bed_porosity        = 0.39 # Pebble bed porosity (//)
     input = triso_surface
     new_boundary = pebble_center
   []
-[]
-
-[Problem]
-  coord_type = 'RSPHERICAL'
 []
 
 # ==============================================================================

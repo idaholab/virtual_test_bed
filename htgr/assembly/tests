@@ -33,7 +33,9 @@
     cli_args = "Executioner/num_steps=2"
     executable_pattern = 'cardinal*'
     prereq = 'syntax_openmc'
-    min_parallel = 8
+    min_parallel = 16
+    max_time = 2000
+    mesh_mode = DISTRIBUTED
   []
   [run_conduction]
     type = RunApp

@@ -100,6 +100,8 @@ fis_fract            = ${fparse 1 - dh_fract} # Fission power fraction at t = 0.
 # GEOMETRY AND MESH
 # ==============================================================================
 [Mesh]
+  coord_type = RZ
+  rz_coord_axis = Y
   [cartesian_mesh]
     type = CartesianMeshGenerator
     dim = 2
@@ -148,11 +150,6 @@ fis_fract            = ${fparse 1 - dh_fract} # Fission power fraction at t = 0.
     extra_element_ids = '${material_ids}; ${all_bloks}'
   []
   uniform_refine = 0
-[]
-
-[Problem]
-  coord_type = RZ
-  rz_coord_axis = Y
 []
 
 # ==============================================================================
