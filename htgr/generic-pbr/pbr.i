@@ -26,11 +26,11 @@
 ##    with information from the NEA report [2].
 ## 7. The PKE parameters such as the reactivity coefficients, the delay neutron precursor fractions, the neutron generation
 ## 	  time, etc., are obtained from the Griffin/Pronghorn simulation from the INL report [1].
-## 8. The pebbles in this model is modeled as a three-layer heat structure comprised of the fuel, moderator, and reflector 
-##    layers. Given that SAM treats Doppler (fuel) and moderator reactivity differently, the distinction is necessary to 
+## 8. The pebbles in this model is modeled as a three-layer heat structure comprised of the fuel, moderator, and reflector
+##    layers. Given that SAM treats Doppler (fuel) and moderator reactivity differently, the distinction is necessary to
 ##    ensure the correct prescription of reactivity coefficients in the pebbles. On the other hand, for the reflector region
-##    where there is no Doppler reactivity, no distinctions are made between the moderator and reflector reactivities. They 
-##    are summed and prescribed to the reflectors to reduce the complexity of the model. 
+##    where there is no Doppler reactivity, no distinctions are made between the moderator and reflector reactivities. They
+##    are summed and prescribed to the reflectors to reduce the complexity of the model.
 
 ############################################ Main references ############################################
 ## 1. Stewart, R., Reger, D., and Balestra, P., 'Demonstrate Capability of NEAMS
@@ -45,7 +45,7 @@
 ## known as the 'NEA report'.
 ########################################################################################################
 
-############################################ Miscelleneous properties ############################################
+############################################ Miscellaneous properties ############################################
 emissivity = 0.8          # According to NEA report [2] graphite and SS are assumed to have a constant emissivity of 0.8
 T_RCCS = 293.15           # RCCS outer wall temperature kept at 20 degree C
 h_gap = 1e8               # Arbitrarily large value for the gap heat transfer coefficient to mimic solid-solid conduction
@@ -79,7 +79,7 @@ fuel_coef_F13	= -1.20E-05
 fuel_coef_F14	= -1.12E-05
 fuel_coef_F15	= -1.19E-05
 
-# Moderator reactivity coefficients (NOT multipled by temperature)
+# Moderator reactivity coefficients (NOT multiplied by temperature)
 moderator_coef_F6	=	-8.12E-09
 moderator_coef_F7	=	-9.04E-09
 moderator_coef_F8	=	-1.33E-08
@@ -91,7 +91,7 @@ moderator_coef_F13	=	-2.56E-09
 moderator_coef_F14	=	-4.20E-09
 moderator_coef_F15	=	-2.75E-09
 
-# Reflector reactivity coefficients (NOT multipled by temperature)
+# Reflector reactivity coefficients (NOT multiplied by temperature)
 reflector_coef_F6	=	0.00E+00
 reflector_coef_F7	=	5.09E-10
 reflector_coef_F8	=	0.00E+00
@@ -103,7 +103,7 @@ reflector_coef_F13	=	0.00E+00
 reflector_coef_F14	=	-6.03E-10
 reflector_coef_F15	=	0.00E+00
 
-# Moderator reactivity coefficients (NOT multipled by temperature)
+# Moderator reactivity coefficients (NOT multiplied by temperature)
 moderator_coef_BR1	=	-1.35E-08
 moderator_coef_BR2	=	-2.40E-08
 moderator_coef_BR3	=	-1.60E-08
@@ -125,7 +125,7 @@ moderator_coef_BR18	=	4.66491E-09
 moderator_coef_BR19	=	7.58068E-09
 moderator_coef_BR20	=	1.042765E-08
 
-# Reflector reactivity coefficients (NOT multipled by temperature)
+# Reflector reactivity coefficients (NOT multiplied by temperature)
 reflector_coef_R6 = 4.35E-08
 reflector_coef_R7 = 3.27E-09
 reflector_coef_R8 = 0.0
@@ -355,31 +355,11 @@ R4_radius = 1.2
 
 # Bottom reflector radius
 BR1_radius = 1.15109730257698
-BR3_radius = 1.15109730257698
-BR6_radius = 1.15109730257698
-BR10_radius = 1.15109730257698
-BR15_radius = 1.15109730257698
-BR20_radius = 1.15109730257698
-
 BR2_radius = 0.941899676186376
-BR5_radius = 0.941899676186376
-BR9_radius = 0.941899676186376
-BR14_radius = 0.941899676186376
-BR19_radius = 0.941899676186376
-
 BR4_radius = 0.733160964590996
-BR8_radius = 0.733160964590996
-BR13_radius = 0.733160964590996
-BR18_radius = 0.733160964590996
-
 BR7_radius = 0.52542839664411
-BR12_radius = 0.52542839664411
-BR17_radius = 0.52542839664411
 
-BR11_radius = 0.311769145362398
-BR16_radius = 0.311769145362398
-
-# Surface area ration between the surfaces of two core channels that are thermally coupled together
+# Surface area ratio between the surfaces of two core channels that are thermally coupled together
 # Defined as the total surface area of pebbles in the inner core channel to that of the outer core channel
 F1_F2_ratio = ${fparse (n_pebbles_1 / n_pebbles_2) }
 F2_F3_ratio = ${fparse (n_pebbles_2 / n_pebbles_3) }
@@ -407,7 +387,6 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
     global_init_V = ${V_in}
     global_init_T = 533
     Tsolid_sf = 1e-3
-    display_pps = false
 
     [./PBModelParams]
         p_order = 2
@@ -619,7 +598,6 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		HT_surface_area_density = ${aw_F1}
 		fuel_type = sphere
 		power_shape_function = power_fn
-		n_pebbles = ${n_pebbles_1}
 		dim_hs = 1
 		porosity = 0.39
 		HTC_user_option = 'KTA'
@@ -663,7 +641,6 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		HT_surface_area_density = ${aw_F6}
 		fuel_type = sphere
 		power_shape_function = power_fn_uniform
-		n_pebbles = ${n_pebbles_6}
 		dim_hs = 1
 		porosity = 0.39
 		HTC_user_option = 'KTA'
@@ -706,7 +683,6 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		HT_surface_area_density = ${aw_F10}
 		fuel_type = sphere
 		power_shape_function = power_fn_uniform
-		n_pebbles = ${n_pebbles_10}
 		dim_hs = 1
 		porosity = 0.39
 		HTC_user_option = 'KTA'
@@ -749,7 +725,6 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		HT_surface_area_density = ${aw_F13}
 		fuel_type = sphere
 		power_shape_function = power_fn_uniform
-		n_pebbles = ${n_pebbles_13}
 		dim_hs = 1
 		porosity = 0.39
 		HTC_user_option = 'KTA'
@@ -792,7 +767,6 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		HT_surface_area_density = ${aw_F15}
 		fuel_type = sphere
 		power_shape_function = power_fn_uniform
-		n_pebbles = ${n_pebbles_15}
 		dim_hs = 1
 		porosity = 0.39
 		HTC_user_option = 'KTA'
@@ -826,10 +800,8 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		length = 0.39
 		elem_number_axial = 3
 		HT_surface_area_density_right = ${aw_BR11_right}
-		eos_right = eos
 		name_comp_right = CH-11
 		width_of_hs = '0.311769'
-		n_heatstruct = 1
 		elem_number_radial = 5
 		moderator_reactivity_feedback = true
 		n_layers_moderator = 1
@@ -845,10 +817,8 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		length = 0.95
 		elem_number_axial = 5
 		HT_surface_area_density_right = ${aw_BR16_right}
-		eos_right = eos
 		name_comp_right = CH-16
 		width_of_hs = '0.311769'
-		n_heatstruct = 1
 		elem_number_radial = 5
 		moderator_reactivity_feedback = true
 		n_layers_moderator = 1
@@ -919,7 +889,6 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		HT_surface_area_density = ${aw_F2}
 		fuel_type = sphere
 		power_shape_function = power_fn
-		n_pebbles = ${n_pebbles_2}
 		dim_hs = 1
 		porosity = 0.39
 		HTC_user_option = 'KTA'
@@ -963,7 +932,6 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		HT_surface_area_density = ${aw_F7}
 		fuel_type = sphere
 		power_shape_function = power_fn_uniform
-		n_pebbles = ${n_pebbles_7}
 		dim_hs = 1
 		porosity = 0.39
 		HTC_user_option = 'KTA'
@@ -1006,7 +974,6 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		HT_surface_area_density = ${aw_F11}
 		fuel_type = sphere
 		power_shape_function = power_fn_uniform
-		n_pebbles = ${n_pebbles_11}
 		dim_hs = 1
 		porosity = 0.39
 		HTC_user_option = 'KTA'
@@ -1049,7 +1016,6 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		HT_surface_area_density = ${aw_F14}
 		fuel_type = sphere
 		power_shape_function = power_fn_uniform
-		n_pebbles = ${n_pebbles_14}
 		dim_hs = 1
 		porosity = 0.39
 		HTC_user_option = 'KTA'
@@ -1083,10 +1049,8 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		length = 0.135
 		elem_number_axial = 3
 		HT_surface_area_density_right = ${aw_BR7_right}
-		eos_right = eos
 		name_comp_right = CH-7
 		width_of_hs = '0.165428'
-		n_heatstruct = 1
 		elem_number_radial = 5
 		moderator_reactivity_feedback = true
 		n_layers_moderator = 1
@@ -1102,13 +1066,10 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		length = 0.39
 		elem_number_axial = 3
 		HT_surface_area_density_left = ${aw_BR12_left}
-		eos_left = eos
 		name_comp_left = CH-11
 		HT_surface_area_density_right = ${aw_BR12_right}
-		eos_right = eos
 		name_comp_right = CH-12
 		width_of_hs = '0.165428'
-		n_heatstruct = 1
 		elem_number_radial = 5
 		moderator_reactivity_feedback = true
 		n_layers_moderator = 1
@@ -1124,13 +1085,10 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		length = 0.95
 		elem_number_axial = 5
 		HT_surface_area_density_left = ${aw_BR17_left}
-		eos_left = eos
 		name_comp_left = CH-16
 		HT_surface_area_density_right = ${aw_BR17_right}
-		eos_right = eos
 		name_comp_right = CH-17
 		width_of_hs = '0.165428'
-		n_heatstruct = 1
 		elem_number_radial = 5
 		moderator_reactivity_feedback = true
 		n_layers_moderator = 1
@@ -1212,7 +1170,6 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		HT_surface_area_density = ${aw_F3}
 		fuel_type = sphere
 		power_shape_function = power_fn
-		n_pebbles = ${n_pebbles_3}
 		dim_hs = 1
 		porosity = 0.39
 		HTC_user_option = 'KTA'
@@ -1256,7 +1213,6 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		HT_surface_area_density = ${aw_F8}
 		fuel_type = sphere
 		power_shape_function = power_fn_uniform
-		n_pebbles = ${n_pebbles_8}
 		dim_hs = 1
 		porosity = 0.39
 		HTC_user_option = 'KTA'
@@ -1299,7 +1255,6 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		HT_surface_area_density = ${aw_F12}
 		fuel_type = sphere
 		power_shape_function = power_fn_uniform
-		n_pebbles = ${n_pebbles_12}
 		dim_hs = 1
 		porosity = 0.39
 		HTC_user_option = 'KTA'
@@ -1333,10 +1288,8 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		length = 0.135
 		elem_number_axial = 3
 		HT_surface_area_density_right = ${aw_BR4_right}
-		eos_right = eos
 		name_comp_right = CH-4
 		width_of_hs = '0.16316'
-		n_heatstruct = 1
 		elem_number_radial = 5
 		moderator_reactivity_feedback = true
 		n_layers_moderator = 1
@@ -1352,13 +1305,10 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		length = 0.135
 		elem_number_axial = 3
 		HT_surface_area_density_left = ${aw_BR8_left}
-		eos_left = eos
 		name_comp_left = CH-7
 		HT_surface_area_density_right = ${aw_BR8_right}
-		eos_right = eos
 		name_comp_right = CH-8
 		width_of_hs = '0.16316'
-		n_heatstruct = 1
 		elem_number_radial = 5
 		moderator_reactivity_feedback = true
 		n_layers_moderator = 1
@@ -1374,13 +1324,10 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		length = 0.39
 		elem_number_axial = 3
 		HT_surface_area_density_left = ${aw_BR13_left}
-		eos_left = eos
 		name_comp_left = CH-12
 		HT_surface_area_density_right = ${aw_BR13_right}
-		eos_right = eos
 		name_comp_right = CH-13
 		width_of_hs = '0.16316'
-		n_heatstruct = 1
 		elem_number_radial = 5
 		moderator_reactivity_feedback = true
 		n_layers_moderator = 1
@@ -1396,13 +1343,10 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		length = 0.95
 		elem_number_axial = 5
 		HT_surface_area_density_left = ${aw_BR18_left}
-		eos_left = eos
 		name_comp_left = CH-17
 		HT_surface_area_density_right = ${aw_BR18_right}
-		eos_right = eos
 		name_comp_right = CH-18
 		width_of_hs = '0.16316'
-		n_heatstruct = 1
 		elem_number_radial = 5
 		moderator_reactivity_feedback = true
 		n_layers_moderator = 1
@@ -1495,7 +1439,6 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		HT_surface_area_density = ${aw_F4}
 		fuel_type = sphere
 		power_shape_function = power_fn
-		n_pebbles = ${n_pebbles_4}
 		dim_hs = 1
 		porosity = 0.39
 		HTC_user_option = 'KTA'
@@ -1539,7 +1482,6 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		HT_surface_area_density = ${aw_F9}
 		fuel_type = sphere
 		power_shape_function = power_fn_uniform
-		n_pebbles = ${n_pebbles_9}
 		dim_hs = 1
 		porosity = 0.39
 		HTC_user_option = 'KTA'
@@ -1573,10 +1515,8 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		length = 0.135
 		elem_number_axial = 3
 		HT_surface_area_density_right = ${aw_BR2_right}
-		eos_right = eos
 		name_comp_right = CH-2
 		width_of_hs = '0.1618996'
-		n_heatstruct = 1
 		elem_number_radial = 5
 		moderator_reactivity_feedback = true
 		n_layers_moderator = 1
@@ -1592,13 +1532,10 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		length = 0.135
 		elem_number_axial = 3
 		HT_surface_area_density_left = ${aw_BR5_left}
-		eos_left = eos
 		name_comp_left = CH-4
 		HT_surface_area_density_right = ${aw_BR5_right}
-		eos_right = eos
 		name_comp_right = CH-5
 		width_of_hs = '0.1618996'
-		n_heatstruct = 1
 		elem_number_radial = 5
 		moderator_reactivity_feedback = true
 		n_layers_moderator = 1
@@ -1614,13 +1551,10 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		length = 0.135
 		elem_number_axial = 3
 		HT_surface_area_density_left = ${aw_BR9_left}
-		eos_left = eos
 		name_comp_left = CH-8
 		HT_surface_area_density_right = ${aw_BR9_right}
-		eos_right = eos
 		name_comp_right = CH-9
 		width_of_hs = '0.1618996'
-		n_heatstruct = 1
 		elem_number_radial = 5
 		moderator_reactivity_feedback = true
 		n_layers_moderator = 1
@@ -1636,13 +1570,10 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		length = 0.39
 		elem_number_axial = 3
 		HT_surface_area_density_left = ${aw_BR14_left}
-		eos_left = eos
 		name_comp_left = CH-13
 		HT_surface_area_density_right = ${aw_BR14_right}
-		eos_right = eos
 		name_comp_right = CH-14
 		width_of_hs = '0.1618996'
-		n_heatstruct = 1
 		elem_number_radial = 5
 		moderator_reactivity_feedback = true
 		n_layers_moderator = 1
@@ -1658,13 +1589,10 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		length = 0.95
 		elem_number_axial = 5
 		HT_surface_area_density_left = ${aw_BR19_left}
-		eos_left = eos
 		name_comp_left = CH-18
 		HT_surface_area_density_right = ${aw_BR19_right}
-		eos_right = eos
 		name_comp_right = CH-19
 		width_of_hs = '0.1618996'
-		n_heatstruct = 1
 		elem_number_radial = 5
 		moderator_reactivity_feedback = true
 		n_layers_moderator = 1
@@ -1768,7 +1696,6 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		HT_surface_area_density = ${aw_F5}
 		fuel_type = sphere
 		power_shape_function = power_fn
-		n_pebbles = ${n_pebbles_5}
 		dim_hs = 1
 		porosity = 0.39
 		HTC_user_option = 'KTA'
@@ -1803,10 +1730,8 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		length = 0.135
 		elem_number_axial = 3
 		HT_surface_area_density_right = ${aw_BR1_right}
-		eos_right = eos
 		name_comp_right = CH-1
 		width_of_hs = '0.1610973'
-		n_heatstruct = 1
 		elem_number_radial = 5
 		moderator_reactivity_feedback = true
 		n_layers_moderator = 1
@@ -1822,13 +1747,10 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		length = 0.135
 		elem_number_axial = 3
 		HT_surface_area_density_left = ${aw_BR3_left}
-		eos_left = eos
 		name_comp_left = CH-2
 		HT_surface_area_density_right = ${aw_BR3_right}
-		eos_right = eos
 		name_comp_right = CH-3
 		width_of_hs = '0.1610973'
-		n_heatstruct = 1
 		elem_number_radial = 5
 		moderator_reactivity_feedback = true
 		n_layers_moderator = 1
@@ -1844,13 +1766,10 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		length = 0.135
 		elem_number_axial = 3
 		HT_surface_area_density_left = ${aw_BR6_left}
-		eos_left = eos
 		name_comp_left = CH-5
 		HT_surface_area_density_right = ${aw_BR6_right}
-		eos_right = eos
 		name_comp_right = CH-6
 		width_of_hs = '0.1610973'
-		n_heatstruct = 1
 		elem_number_radial = 5
 		moderator_reactivity_feedback = true
 		n_layers_moderator = 1
@@ -1866,13 +1785,10 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		length = 0.135
 		elem_number_axial = 3
 		HT_surface_area_density_left = ${aw_BR10_left}
-		eos_left = eos
 		name_comp_left = CH-9
 		HT_surface_area_density_right = ${aw_BR10_right}
-		eos_right = eos
 		name_comp_right = CH-10
 		width_of_hs = '0.1610973'
-		n_heatstruct = 1
 		elem_number_radial = 5
 		moderator_reactivity_feedback = true
 		n_layers_moderator = 1
@@ -1888,13 +1804,10 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		length = 0.39
 		elem_number_axial = 3
 		HT_surface_area_density_left = ${aw_BR15_left}
-		eos_left = eos
 		name_comp_left = CH-14
 		HT_surface_area_density_right = ${aw_BR15_right}
-		eos_right = eos
 		name_comp_right = CH-15
 		width_of_hs = '0.1610973'
-		n_heatstruct = 1
 		elem_number_radial = 5
 		moderator_reactivity_feedback = true
 		n_layers_moderator = 1
@@ -1910,13 +1823,10 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		length = 0.95
 		elem_number_axial = 5
 		HT_surface_area_density_left = ${aw_BR20_left}
-		eos_left = eos
 		name_comp_left = CH-19
 		HT_surface_area_density_right = ${aw_BR20_right}
-		eos_right = eos
 		name_comp_right = CH-20
 		width_of_hs = '0.1610973'
-		n_heatstruct = 1
 		elem_number_radial = 5
 		moderator_reactivity_feedback = true
 		n_layers_moderator = 1
@@ -2024,14 +1934,12 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		elem_number_radial = 5
 		elem_number_axial = 30
 		HT_surface_area_density_left = ${aw_R4_left}
-		eos_left = eos
 		name_comp_left = F-5
 		HT_surface_area_density_right = ${aw_R4_right}
-		eos_right = eos
 		name_comp_right = UP-1
 		moderator_reactivity_feedback = true
 		n_layers_moderator = 24
-		moderator_reactivity_coefficients = '1.510198E-07	2.351771E-07	3.3468599E-07	4.5263012E-07	5.91495E-07	    7.41718E-07	    8.96893E-07	 1.071479E-06	1.20447901E-06	1.4356126E-06	1.5167201E-06	1.68314219E-06	
+		moderator_reactivity_coefficients = '1.510198E-07	2.351771E-07	3.3468599E-07	4.5263012E-07	5.91495E-07	    7.41718E-07	    8.96893E-07	 1.071479E-06	1.20447901E-06	1.4356126E-06	1.5167201E-06	1.68314219E-06
 											 1.81722225E-06	1.86475982E-06	1.77378685E-06	1.61356169E-06	1.352843E-06	1.009933E-06	6.33447E-07	 2.756934E-07	6.68299E-08	    1.397587E-08	2.71111E-09	    8.3455E-10'
 	[../]
 	[./R-6]
@@ -2046,7 +1954,6 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		elem_number_radial = 5
 		elem_number_axial = 3
 		HT_surface_area_density_left = ${aw_R6_left}
-		eos_left = eos
 		name_comp_left = CH-1
 		moderator_reactivity_feedback = true
 		n_layers_moderator = 1
@@ -2064,7 +1971,6 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		elem_number_radial = 5
 		elem_number_axial = 3
 		HT_surface_area_density_left = ${aw_R9_left}
-		eos_left = eos
 		name_comp_left = CH-3
 		moderator_reactivity_feedback = true
 		n_layers_moderator = 1
@@ -2082,7 +1988,6 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		elem_number_radial = 5
 		elem_number_axial = 3
 		HT_surface_area_density_left = ${aw_R12_left}
-		eos_left = eos
 		name_comp_left = CH-6
 		moderator_reactivity_feedback = true
 		n_layers_moderator = 1
@@ -2100,7 +2005,6 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		elem_number_radial = 5
 		elem_number_axial = 3
 		HT_surface_area_density_left = ${aw_R15_left}
-		eos_left = eos
 		name_comp_left = CH-10
 		moderator_reactivity_feedback = true
 		n_layers_moderator = 1
@@ -2118,7 +2022,6 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		elem_number_radial = 5
 		elem_number_axial = 3
 		HT_surface_area_density_left = ${aw_R18_left}
-		eos_left = eos
 		name_comp_left = CH-15
 		moderator_reactivity_feedback = true
 		n_layers_moderator = 1
@@ -2136,7 +2039,6 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		elem_number_radial = 5
 		elem_number_axial = 5
 		HT_surface_area_density_left = ${aw_R21_left}
-		eos_left = eos
 		name_comp_left = CH-20
 		moderator_reactivity_feedback = true
 		n_layers_moderator = 1
@@ -2303,11 +2205,10 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		elem_number_radial = 5
 		elem_number_axial = 30
 		HT_surface_area_density_left = ${aw_R5_left}
-		eos_left = eos
 		name_comp_left = UP-1
 		moderator_reactivity_feedback = true
 		n_layers_moderator = 24
-		moderator_reactivity_coefficients = '0	        0	        0	        0	        0	        5.5064E-10	6.8695E-10	8.9123E-10	1.1926E-09	1.4572E-09	1.5849E-09	1.8187E-09	
+		moderator_reactivity_coefficients = '0	        0	        0	        0	        0	        5.5064E-10	6.8695E-10	8.9123E-10	1.1926E-09	1.4572E-09	1.5849E-09	1.8187E-09
 											 1.8842E-09	1.8054E-09	1.7642E-09	1.5331E-09	1.3424E-09	9.9099E-10	7.4293E-10	0	        0	        0	        0	        0'
 	[../]
 	[./R-8]
@@ -2783,7 +2684,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		elem_number_axial = 3
 	[../]
 
-	# Auxilliary fluid components #####################################################################################
+	# Auxiliary fluid components #####################################################################################
 
 	[./plenum-in]
 		type = PBVolumeBranch
@@ -2797,7 +2698,6 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		height = 0.55
 		initial_P =	6e6
 		eos	= eos
-		display_pps	= TRUE
   	[../]
 	[./plenum-out]
 		type = PBVolumeBranch
@@ -2811,7 +2711,6 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		height = 0.589
 		initial_P =	6e6
 		eos	= eos
-		display_pps	= TRUE
   	[../]
 	[./out-channel] # horizontal pipe connecting from outlet plenum
 	    type        = PBOneDFluidComponent
@@ -3021,7 +2920,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		input	=	'out-channel(out)'
 	[../]
 
-	# Surface coupling for solif-solid conduction and gap radiation #################################################
+	# Surface coupling for solid-solid conduction and gap radiation #################################################
 
 	# Surface coupling between outermost heater and the outer reflector
 	[./coupling_radial_F5_R4]
@@ -4406,6 +4305,9 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 	[../]
 []
 
+# Note that the postprocessors are not essential to the running
+# of the simulation. They are added here for completeness. Users
+# can remove them as they see fit.
 [Postprocessors]
 	# Total heat removed from the core by the flow channels
 	[./TotalHeatRemovalRate_1]
@@ -4438,54 +4340,44 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 	[./TotalMassFlowRateInlet_1]
 	  	type = ComponentBoundaryFlow
 	  	input = F-1(in)
-	  	eos = eos
 	[../]
 	[./TotalMassFlowRateInlet_2]
 	  	type = ComponentBoundaryFlow
 	  	input = F-2(in)
-	  	eos = eos
 	[../]
 	[./TotalMassFlowRateInlet_3]
 	  	type = ComponentBoundaryFlow
 	  	input = F-3(in)
-	  	eos = eos
 	[../]
 	[./TotalMassFlowRateInlet_4]
 	  	type = ComponentBoundaryFlow
 	  	input = F-4(in)
-	  	eos = eos
 	[../]
 	[./TotalMassFlowRateInlet_5]
 	  	type = ComponentBoundaryFlow
 	  	input = F-5(in)
-	  	eos = eos
 	[../]
 
 	# Mass flow rate out of the core
 	[./TotalMassFlowRateOutlet_16]
 	  	type = ComponentBoundaryFlow
 	  	input = CH-16(out)
-	  	eos = eos
 	[../]
 	[./TotalMassFlowRateOutlet_17]
 	  	type = ComponentBoundaryFlow
 	  	input = CH-17(out)
-	  	eos = eos
 	[../]
 	[./TotalMassFlowRateOutlet_18]
 	  	type = ComponentBoundaryFlow
 	  	input = CH-18(out)
-	  	eos = eos
 	[../]
 	[./TotalMassFlowRateOutlet_19]
 	  	type = ComponentBoundaryFlow
 	  	input = CH-19(out)
-	  	eos = eos
 	[../]
 	[./TotalMassFlowRateOutlet_20]
 	  	type = ComponentBoundaryFlow
 	  	input = CH-20(out)
-	  	eos = eos
 	[../]
 
 	# Heater max temperature ###################
@@ -5887,7 +5779,4 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
         execute_scalars_on = 'NONE'
         perf_log = true
     [../]
-[]
-[Debug]
-    #show_var_residual_norms = true
 []

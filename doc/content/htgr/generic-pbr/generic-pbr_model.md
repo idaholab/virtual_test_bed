@@ -51,7 +51,7 @@ adjacent `PbOneDFluidComponents` when necessary. To ensure proper heat transfer
 between adjacent solid components, they are thermally coupled in both the radial
 and axial directions using the `SurfaceCoupling` component with an arbitrarily
 large heat transfer coefficient. Furthermore, similar approach is applied to
-hermally couple adjacent `PbCoreChannels` to model the core wide radial heat
+thermally couple adjacent `PbCoreChannels` to model the core wide radial heat
 conduction in the pebble bed where the outermost `PbCoreChannel` is further
 coupled to the inner surface of the reflector. It is important that the core
 wide radial heat conduction is modeled correctly as it is one of the primary
@@ -89,11 +89,11 @@ to the heat structures.
         caption=Distribution of local reactivity coefficients from Griffin/Pronghorn by Stewart et al. [!citep](Stewart2021).
 
 During steady-state, the one-dimensional fluid components of the model has an
-inlet velocity 7.17 m/s whose value is from determined from the work by Stewart
+inlet velocity 7.17 m/s whose value is determined from the work by Stewart
 et al. [!citep](Stewart2021) and a pressure outlet boundary condition of 6 MPa.
 For the solid structures, the top and bottom surfaces are adiabatic while the
 outer surface of the RCCS panel is given a constant temperature boundary
-condition of 293.15 K. The total power of the reactor is set at 200 MW. During
+condition of 293.15 K. The total power of the reactor is set at 200 MW. During the
 transient, the coolant flow rate is reduced to 25% of its nominal value in a
 span of 900 s, then kept constant at that level for 1800 s, and lastly raised
 back to the nominal value over 900 s and is held constant to the end of the
@@ -101,9 +101,9 @@ simulation. Note that other than the coolant flow rate, the other boundary
 conditions are kept unchanged.
 
 The output files consist of: (1) a `csv` file that writes all user-specified
-variables at each time step; (2) a checkpoint folder that saves the snapshots
+variables and postprocessors at each time step; (2) a checkpoint folder that saves the snapshots
 of the simulation data including all meshes, solutions, and stateful object data.
-They are saved for restarting the run if needed; and (3) a `ExodusII` file that
+They are saved for restarting the run if needed; and (3) an `ExodusII` file that
 also has all mesh and solution data. Users can use Paraview to visualize the
 solution and analyze the data. This tutorial describes the content of the input
 file, the output files and how the model can be run using the SAM code.
@@ -153,8 +153,12 @@ of temperature. For example, the built-in eos for helium can be input as
 Users can define functions for parameters used in the model. These include
 temporal, spatial, and temperature dependent functions. For example, users
 can input enthalpy as a function of temperature, power history as a function
-of time, or power profile as a function of position. The input below specifies
-the thermal conductivity of fuel pebbles as a function of temperature (in K)
+of time, or power profile as a function of position. Users should be cautious 
+when time-dependent and temperature-dependent functions are in use to avoid
+confusion between time (*t*) and temperature (*T*). Currently, only certain 
+parameters can be made temperature-dependent. These include material properties
+and the `h_gap` for the `SurfaceCoupling` component. The input below specifies
+the thermal conductivity of fuel pebbles as a function of temperature (in K).
 
 !listing htgr/generic-pbr/pbr.i block=k_TRISO language=cpp
 
@@ -242,23 +246,9 @@ As mentioned previously, the pebbles in the core channels are divided into three
 layers of fuel, moderator, and reflector. Using the `F-6` core channel block as
 an example,
 
-```language=bash
+!listing htgr/generic-pbr/pbr.i block=F-6 language=cpp start=n_heatstruct end=fuel_kernel_temperature
 
-        n_heatstruct = 3
-        name_of_hs = 'fuel moderator reflector'
-        material_hs = 'fuel-mat fuel-mat fuel-mat
-        width_of_hs = '0.025 0.0025 0.0025'
-        elem_number_of_hs = '5 5 5'
-        power_fraction = '${power_fraction_6} 0 0'
-        pke_material_type = 'FuelDoppler Moderator Moderator'
-        fuel_doppler_coef = ${fuel_coef_F6}
-        n_layers_doppler = 1
-        n_layers_moderator = 1
-        moderator_reactivity_coefficients = '${moderator_coef_F6}; ${reflector_coef_F6}'
-
-```
-
-this is done by specifying the `n_heatstruct` option. The names, materials,
+the number of layers can be set using the `n_heatstruct` option. The names, materials,
 widths, numbers of elements in the radial direction, and power fractions can
 be provided as a string using the `name_of_hs`, `material_hs`, `width_of_hs`,
 `elem_number_of_hs`, and `power_fraction` options, respectively. Note that
@@ -279,34 +269,20 @@ is calculated using the layered-average solid temperature. However, users can
 choose to calculate the reactivity feedback in the fuel region with the fuel
 kernel temperature instead. This can be done by setting
 
-```language=bash
-
-        fuel_kernel_temperature = true
-        use_kernel_temperature_doppler = true
-
-```
+!listing htgr/generic-pbr/pbr.i block=F-6 language=cpp start=fuel_kernel_temperature end=molar_mass_uranium
 
 Currently, the fuel kernel temperature is calculated using the analytical model
 implemented in the TINTE code [!citep](TINTE2010). Additional information is
 needed as,
 
-```language=bash
-
-        molar_mass_uranium = 0.238
-        molar_mass_kernel_material = 0.27
-        heavy_metal_loading = 0.009
-        local_power_fraction = 1.0
-        heat_capacity_kernel_material = 300.0
-        modified_heat_flux_resistance = 2.6e-6
-
-```
+!listing htgr/generic-pbr/pbr.i block=F-6 language=cpp start=molar_mass_uranium end=[../]
 
 Detailed descriptions of these parameters are available in the SAM Theory Manual
 [!citep](Hu2021) and the TINTE report [!citep](TINTE2010).
 
 ## Postprocessors
 
-This block is used to specify the output variables written to a `csv` file that
+This block is used to specify the output quantities written to a `csv` file that
 can be further processed in Excel or other processing tools such as Python and
 Matlab. For example, to output the maximum fuel temperature in `F-1`:
 
@@ -318,7 +294,11 @@ and the mass flow rate in `F-1`
 
 ## Preconditioning
 
-This block describes the preconditioner used by the solver. New users can leave this block unchanged.
+This block describes the preconditioner to be used by the preconditioned JFNK 
+solver (available through PETSc). Two options are currently available, 
+the single matrix preconditioner (SMP) and the finite difference preconditioner (FDP).
+The theory behind the preconditioner can be found in the SAM Theory Manual [!citep](Hu2021).
+New users can leave this block unchanged.
 
 !listing htgr/generic-pbr/pbr.i block=Preconditioning
 
@@ -326,11 +306,23 @@ This block describes the preconditioner used by the solver. New users can leave 
 
 This block describes the calculation process flow. The user can specify the
 start time, end time, time step size for the simulation. The user can also choose
-to use an adaptive time step size with the `type = IterationAdaptiveDT` option.
+to use an adaptive time step size with the [IterationAdaptiveDT time stepper](https://mooseframework.inl.gov/source/timesteppers/IterationAdaptiveDT.html).
 Other inputs in this block include PETSc solver options, convergence tolerance,
 quadrature for elements, etc. which can be left unchanged.
 
 !listing htgr/generic-pbr/pbr.i block=Executioner
+
+# Running the Simulation
+
+SAM can be run on Linux, Unix, and MacOS.  Due to its dependence on MOOSE, SAM
+is not compatible with Windows. SAM can be run from the shell prompt as shown
+below
+
+```language=bash
+
+sam-opt -i pbr.i
+
+```
 
 # Acknowledgements
 

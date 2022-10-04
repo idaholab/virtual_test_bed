@@ -1,12 +1,12 @@
 # Running the Input File
 
-SAM can be run in Linux, Unix, and MacOS.  Due to its dependence on MOOSE, SAM
+SAM can be run on Linux, Unix, and MacOS.  Due to its dependence on MOOSE, SAM
 is not compatible with Windows. SAM can be run from the shell prompt as shown
 below
 
 ```language=bash
 
-/projects/SAM/sam-opt -i pbr.i
+sam-opt -i pbr.i
 
 ```
 
@@ -16,15 +16,15 @@ There are three types of output files:
 
 1. +pbr_csv.csv+: this is a `csv` file that writes the user-specified scalar and vector variables to a comma-separated-values file. The data can be imported to Excel for further processing or in Python using the `csv` module, Pandas, or other methods.
 
-2. +pbr_out_cp+: this is a sub-folder that save snapshots of the simulation data including all meshes, solutions. Users can restart the run from where it ended using the file in the checkpoint folder.
+2. +pbr_out_cp+: this is a sub-folder where snapshots of the simulation data including all meshes, solutions are saved. Users can restart the run from where it ended using the file in the checkpoint folder.
 
-3. +pbr_out.displaced.e+: this is a `ExodusII` file that has all mesh and solution data. Users can use Paraview to open this .e file to visualize, plot, and analyze the data.
+3. +pbr_out.displaced.e+: this is an `ExodusII` file that has all mesh and solution data. Users can use Paraview to open this .e file to visualize, plot, and analyze the data.
 
 # Steady-state
 
 The steady-state simulation results are presented in this section. A qualitative
 comparison of the reflector temperature distribution between the SAM and
-Griffin/Pronghorn simulations is presented in [Treflector]. Note that the
+Griffin/Pronghorn simulations [!citep](Stewart2021) is presented in [Treflector]. Note that the
 temperature distribution in the pebble bed core is not shown here and will be
 discussed later because the heat structures in each of SAM’s `PBCoreChannel`
 appear as a one-dimensional line. Overall, a good agreement is observed between
@@ -50,8 +50,8 @@ temperature decreases from the innermost to the outermost core channels,
 following the radial distribution of the power prescribed to the core channels.
 Additionally, the close proximity of the outer channels to the reflectors allows
 heat from these channels to escape to the reflectors, further lowering their
-temperatures. As expected, the kernel temperature is consistently higher than t
-he fuel/matrix temperature.
+temperatures. As expected, the kernel temperature is consistently higher than
+the fuel/matrix temperature.
 
 !media generic-pbr/T_solid_radial.svg
         style=width:50%
@@ -72,7 +72,9 @@ pebbles to the surrounding reflectors. The fluid temperature profiles from SAM
 and Griffin/Pronghorn show good agreement where they have similar trend as the
 solid temperatures. Lastly, SAM predicts an average coolant outlet temperature
 of 1020 K, which is 4 K lower than Griffin/Pronghorn’s prediction of 1024 K
-[!citep](Stewart2021).
+[!citep](Stewart2021). The discrepancy is likely because the SAM model predicts a higher
+heat transfer from the core to the side reflectors and subsequently a higher heat 
+loss via the RCCS panels.
 
 !media generic-pbr/T_solid_mean_axial_combined.svg
         style=width:50%
@@ -87,7 +89,7 @@ of 1020 K, which is 4 K lower than Griffin/Pronghorn’s prediction of 1024 K
 # Transient
 
 For the transient analysis, a load-following case with a varying inlet mass flow
-rate is selected, similar to the 100-40- 100 load following exercise of PBMR-400
+rate is selected, similar to the 100-40-100 load following exercise of PBMR-400
 [!citep](PBMR2013). This case is chosen for this work because it tests not only
 the thermal hydraulics modeling of SAM but also its neutronics modeling with the
 point kinetics equations. The six-group formulation of the PKE is used here with
@@ -204,11 +206,13 @@ moderator, and reflector temperatures are relatively unchanged with each
 experiencing minor changes. As a result, the respective reactivities remain
 largely constant and produce a total reactivity of approximately zero.
 
-Lastly, during the ramp up stage, the fuel and kernel temperatures increase and
+Finally, during the ramp up stage, the fuel and kernel temperatures increase and
 cause the reactivity of the fuel to decrease. Conversely, the increased coolant
 flow reduces the moderator temperature and leads to an increase of moderator
-reactivity. The reflector temperature also decreases in this stage, resulting
-in a decrease of reflector reactivity. The resultant total reactivity shows a
+reactivity. Similarly, the reflector temperature decreases in this stage due to 
+the improved cooling. However, given that the reactivity coefficients of the reflectors 
+are positive, a decrease in reflector temperature results in a decrease in 
+reflector reactivity. Lastly, the resultant total reactivity shows a
 sharp initial increase before dropping gradually as the flow rate is increased
 back to the nominal level.
 
