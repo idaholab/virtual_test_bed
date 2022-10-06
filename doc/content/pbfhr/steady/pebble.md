@@ -46,7 +46,7 @@ generation.
 Reflector pebbles are modeled as homogeneous graphite spherical pebbles. We represent them with
 a 1D mesh in spherical coordinates.
 
-!listing /pbfhr/steady/ss4_graphite_pebble.i block=Mesh Problem
+!listing /pbfhr/steady/ss4_graphite_pebble.i block=Mesh
 
 The heat conduction equation with no source is described with a time derivative kernel
 and a diffusion kernel, specialized as [HeatConduction](https://mooseframework.inl.gov/modules/heat_conduction/index.html) kernels in the heat conduction module.
@@ -70,7 +70,7 @@ The fueled pebble is modeled using a similar approach, except the sphere is not 
 Its center is a graphite core, surrounded by a fuel matrix then a graphite shell. We still represent
 the pebble as a 1D spherical system, with each zone defined as a different subdomain.
 
-!listing /pbfhr/steady/ss4_fuel_pebble.i block=Mesh/mesh Problem
+!listing /pbfhr/steady/ss4_fuel_pebble.i block=Mesh
 
 We use a Heat Source Decomposition approach [!citep](novak2021) to solve the multiscale heat conduction
 problem with sources. The heat source is decomposed in its mean and fluctuation (of zero average) terms, corresponding to

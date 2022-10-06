@@ -13,7 +13,7 @@ The [CartesianMeshGenerator](https://mooseframework.inl.gov/source/meshgenerator
 boundaries of each material in the TRISO. The graphite matrix around the TRISO particles is
 represented by an additional layer of graphite, sized to preserve the total packing fraction of graphite.
 
-!listing /pbfhr/steady/ss5_fuel_matrix.i block=Problem Mesh
+!listing /pbfhr/steady/ss5_fuel_matrix.i block=Mesh
 
 ## Defining the equation: variables and kernels
 

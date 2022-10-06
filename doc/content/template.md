@@ -138,7 +138,7 @@ Walk through the main kernel/blocks, show snippets of example inputs when needed
 The markdown source can be as simple as the following to show the `EOS` block from the `msre_loop.i` input file:
 
 !devel! example id=example-list caption=Example of including input block in VTB documentation.
-!listing msr/msre/msre_loop_1d.i block=EOS language=cpp
+!listing msr/msre/steady_state/msre_loop_1d.i block=EOS language=cpp
 !devel-end!
 
 

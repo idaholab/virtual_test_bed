@@ -20,12 +20,7 @@ Extensions:
             Contributing: contributing.md
             Citing: citing.md
     MooseDocs.extensions.appsyntax:
-        executable: ${ROOT_DIR}
-        #hide:
-        #    framework: !include ${MOOSE_DIR}/framework/doc/hidden.yml
-        remove: !include ${MOOSE_DIR}/framework/doc/remove.yml
-        includes:
-            - include
+        active: false
     MooseDocs.extensions.acronym:
         acronyms:
             moose: !include ${MOOSE_DIR}/framework/doc/acronyms.yml
