@@ -153,7 +153,7 @@ The ParaView GUI is enabled by clicking on `Visualization` and checking the box 
 
 ### Exiting and closing the Virtual Desktop
 
-The Virtual Desktop can be exited by closing the browser tab that was opened when creating a `NEAMS Workbench session` in Step 1 (section 4.2.1). Users have the option of logging back in by clicking `Launch the NEAMS Workbench` shown in [fig:hpc_on_demand_open_session]. The NEAMS Workbench session can be closed by clicking on `Delete`, which will terminate the session.
+The Virtual Desktop can be exited by closing the browser tab that was opened when creating a `NEAMS Workbench session` in Step 1. Users have the option of logging back in by clicking `Launch the NEAMS Workbench` shown in [fig:hpc_on_demand_open_session]. The NEAMS Workbench session can be closed by clicking on `Delete`, which will terminate the session.
 
 # Considerations
 
