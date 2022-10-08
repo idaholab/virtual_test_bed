@@ -21,12 +21,20 @@
     ad_indexing_type = 'global'
     executable_pattern = 'moose*|blue_crab*|dire_wolf*|pronghorn*|fenix*'
   []
-  [fluids_syntax]
+  [core_fluids_syntax]
     type = RunApp
     input = 'run_ns.i'
     check_input = True
+    cli_args = "MultiApps/active='' Transfers/active=''"
     ad_indexing_type = 'global'
     executable_pattern = 'moose*|blue_crab*|dire_wolf*|pronghorn*|fenix*'
+  []
+  [plant_syntax]
+    type = RunApp
+    input = 'msfr_system_1d.i'
+    check_input = True
+    ad_indexing_type = 'global'
+    executable_pattern = 'sam*|blue_crab*'
   []
 
   # Regression tests with CSV output over a minimum amount of time steps/computation
@@ -62,14 +70,22 @@
     cli_args = 'Executioner/num_steps=2'
     min_parallel = 4
   []
-  [fluids]
+  [core_fluids_only]
     prereq = fluids_syntax
     type = CSVDiff
     csvdiff = 'run_ns_out.csv'
     input = 'run_ns.i'
     ad_indexing_type = 'global'
     executable_pattern = 'moose*|blue_crab*|dire_wolf*|pronghorn*|fenix*'
-    cli_args = "Executioner/num_steps=2"
+    cli_args = "Executioner/num_steps=2 MultiApps/active='' Transfers/active=''"
     min_parallel = 4
+  []
+  [plant_fluids_only]
+    prereq = fluids_syntax
+    type = CSVDiff
+    csvdiff = 'msfr_system_1d_csv.csv'
+    input = 'msfr_system_1d.i'
+    cli_args = 'Executioner/num_steps=100'
+    executable_pattern = 'sam*|blue_crab*'
   []
 []

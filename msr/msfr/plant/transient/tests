@@ -20,19 +20,27 @@
     allow_unused = true
     cli_args = "MultiApps/active='' Transfers/active=''"
   []
-  [fluids_syntax]
+  [core_fluids_syntax]
     type = RunApp
     input = 'run_ns.i'
     check_input = True
     ad_indexing_type = 'global'
-    executable_pattern = 'moose*|pronghorn*|blue_crab*|dire_wolf*|fenix*'
+    executable_pattern = 'combined*|pronghorn*|blue_crab*|dire_wolf*|fenix*'
   []
+  [plant_syntax]
+    type = RunApp
+    input = 'msfr_system_1d.i'
+    check_input = True
+    ad_indexing_type = 'global'
+    executable_pattern = 'sam*|blue_crab*'
+  []
+
   # Regression tests with CSV output over a minimum amount of time steps/computation
   [coupled_multiphysics]
     prereq = multiphysics_syntax
     type = CSVDiff
     input = 'run_neutronics.i'
-    csvdiff = 'multiphysics_out.csv multiphysics_out_ns0.csv'
+    csvdiff = 'multiphysics_out.csv multiphysics_out_ns0.csv multiphysics_out_ns0_sam_balance_of_plant0.csv'
     ad_indexing_type = 'global'
     executable_pattern = 'blue_crab*|dire_wolf*|fenix*'
     cli_args = "Executioner/num_steps=2 Executioner/fixed_point_max_its=1 Executioner/accept_on_max_fixed_point_iteration=true Outputs/file_base=multiphysics_out"
@@ -52,7 +60,7 @@
     allow_warnings = true
     method = 'opt'
   []
-  [fluids]
+  [core_fluids_only]
     prereq = fluids_syntax
     type = CSVDiff
     csvdiff = 'run_ns_out.csv'
@@ -61,5 +69,13 @@
     executable_pattern = 'moose*|blue_crab*|dire_wolf*|pronghorn*|fenix*'
     cli_args = 'Executioner/num_steps=2 Executioner/dt=0.25'
     min_parallel = 4
+  []
+  [plant_fluids_only]
+    prereq = fluids_syntax
+    type = CSVDiff
+    csvdiff = 'msfr_system_1d_csv.csv'
+    input = 'msfr_system_1d.i'
+    cli_args = 'Executioner/num_steps=100'
+    executable_pattern = 'sam*|blue_crab*'
   []
 []
