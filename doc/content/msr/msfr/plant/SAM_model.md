@@ -1,4 +1,4 @@
-# Molten Salt Fast Reactor (MSRE) SAM Model
+# Molten Salt Fast Reactor (MSFR) SAM Model
 
 *Contact: Mauricio Tano, mauricio.tanoretamales.at.inl.gov*
 
@@ -61,7 +61,7 @@ The helium enters the secondary side of intermediate heat exchanger at a tempera
 
 ## SAM 1D Model
 
-The power at the core of the SAM 1D-model is provided from the coupled [Griffin-Pronghorn model](msfr/griffin_pgh_model.md).
+The power of the core in the SAM 1D-model is provided from the coupled [Griffin-Pronghorn model](msfr/griffin_pgh_model.md).
 
 The 1-D MSFR system model is simulated until reaching a steady state, and the steady-state temperature distribution is illustrated in [msfr_sam].
 As expected, the fuel salt is heated inside the core, and transfers heat to the coolant in intermediate circuit through the primary heat exchanger. 
@@ -71,7 +71,7 @@ The core inlet temperature is $951.68 \, K$ and the outlet temperature is $1050.
 A fuel temperature rise of 99.23 K is obtained along the core, which matches well with the design specification of $100 \, K$.
 The temperature rise of the secondary-side coolant salt is about $74.25 \, K$ after flowing through the primary heat exchanger, while the temperature rise of helium flow is about $224.52 \, K$ after flowing out of the intermediate heat exchanger.
 
-!media msr/msfr_coupled/MSFR_SAM_1D.png
+!media msr/msfr/plant/MSFR_SAM_1D.png
        style=width:60%
        id=msfr_sam
        caption=The steady-state temperature distribution in the 1-D MSRE primary loop.
@@ -100,10 +100,12 @@ A snippet is illustrated below:
 
 This block specifies the material properties, such as the thermophysical properties.
 These ones include the fuel salt, intermediate loop salt, and pressurized helium in the secondary loop.
-SAM supports both constants and user-defined functions for the thermophysical parameters in the EOSs.
-The properties of common materials are implemented in the SAM repository, and can be readily used by simply refering to the material ids, such as the air, or molten salt FLiBe.
 
-!listing msr/msfr_coupled/transient/msfr_system_1d.i  block=EOS language=cpp
+SAM supports both constants and user-defined functions for the thermophysical parameters in the EOS.
+The properties of common materials are implemented in the SAM repository, and can be readily used by
+simply referring to the material IDs, such as the air, or molten salt FLiBe.
+
+!listing msr/msfr/plant/transient/msfr_system_1d.i  block=EOS language=cpp
 
 ### Components
 
@@ -136,42 +138,42 @@ As for the counterflow, primary-to-intermediate tube-tube heat exchanger, both s
 The heat is exchanged through the 1-D wall coupling the shell and tube sides. 
 A similar model is used for the secondary heat exchanger, except that pressurized Helium is used in the secondary side instead of salt.
 
-!listing msr/msfr_coupled/steady/msfr_system_1d.i  block=IHX1 language=cpp
+!listing msr/msfr/plant/steady/msfr_system_1d.i  block=IHX1 language=cpp
 
-!listing msr/msfr_coupled/steady/msfr_system_1d.i  block=IHX2 language=cpp
+!listing msr/msfr/plant/steady/msfr_system_1d.i  block=IHX2 language=cpp
 
-The primary pump is placed between between the outlet to the core and the primary heat excahnger.
+The primary pump is placed between between the outlet to the core and the primary heat exchanger.
 The input parameters for the primary and intermediate circuits pumps are specified here below:
 
-!listing msr/msfr_coupled/steady/msfr_system_1d.i  block=pump language=cpp
+!listing msr/msfr/plant/steady/msfr_system_1d.i  block=pump language=cpp
 
-!listing msr/msfr_coupled/steady/msfr_system_1d.i  block=pump2 language=cpp
+!listing msr/msfr/plant/steady/msfr_system_1d.i  block=pump2 language=cpp
 
 
 The detailed instructions of these SAM components can be found in the SAM user manual, which are not repeated here for brevity.
 
 ### Postprocessors
 
-The Postprocessors block is used to monitor the SAM solutions during the simulations, and variables of interest can be printed out in the log file. For example, to check out the core outlet temperature, one can add the following snippet:
+The Postprocessors block is used to monitor the SAM solutions during the simulations, and quantities of interest can
+be printed out in the log file. For example, to check out the core outlet temperature, one can add the following snippet: 
 
-!listing msr/msfr_coupled/steady/msfr_system_1d.i block=Core_T_out language=cpp
+!listing msr/msfr/plant/steady/msfr_system_1d.i block=Core_T_out language=cpp
 
+The coupling in SAM is performed via receiving postprocessor objects.
+In this one, the power from the Griffin-Pronghorn model is received by SAM.
+The post-processor in the SAM model handling this coupling is the following:
 
-The coupling in SAM is performed via reciving postprocessor objects.
-In this one, the power from the Griffin-Pronghorn model is received by sam.
-The post-procesor in the SAM model handling this coupling is the following:
-
-!listing msr/msfr_coupled/steady/msfr_system_1d.i block=core_power language=cpp
+!listing msr/msfr/plant/steady/msfr_system_1d.i block=core_power language=cpp
 
 ### Preconditioning
 
 This block describes the preconditioner used by the solver.  
 New user can leave this block unchanged.
 
-!listing msr/msfr_coupled/steady/msfr_system_1d.i block=Preconditioning
+!listing msr/msfr/plant/steady/msfr_system_1d.i block=Preconditioning
 
 ### Executioner
 
 This block describes the calculation process flow. The user can specify the start time, end time, time step size for the simulation. Other inputs in this block include PETSc solver options, convergence tolerance, quadrature for elements, etc., which can be left unchanged.
 
-!listing msr/msfr_coupled/steady/msfr_system_1d.i block=Executioner
+!listing msr/msfr/plant/steady/msfr_system_1d.i block=Executioner
