@@ -6,15 +6,12 @@
 ################################################################################
 
 [Mesh]
+  coord_type = 'RZ'
   uniform_refine = 1
   [fmg]
     type = FileMeshGenerator
-    file = '../mesh/msfr_rz_mesh.e'
+    file = '../../mesh/msfr_rz_mesh.e'
   []
-[]
-
-[Problem]
-  coord_type = 'RZ'
 []
 
 [TransportSystems]
@@ -123,7 +120,7 @@
   [fuel]
     type = CoupledFeedbackNeutronicsMaterial
     library_name = 'msfr_xs'
-    library_file = '../mgxs/msfr_xs_extended.xml'
+    library_file = '../../mgxs/msfr_xs_extended.xml'
     grid_names = 'tfuel'
     grid_variables = 'tfuel'
     plus = true
@@ -136,7 +133,7 @@
   [shield]
     type = CoupledFeedbackNeutronicsMaterial
     library_name = 'msfr_xs'
-    library_file = '../mgxs/msfr_xs_extended.xml'
+    library_file = '../../mgxs/msfr_xs_extended.xml'
     grid_names = 'tfuel'
     grid_variables = 'tfuel_constant'
     isotopes = 'pseudo'
@@ -148,7 +145,7 @@
   [reflector]
     type = CoupledFeedbackNeutronicsMaterial
     library_name = 'msfr_xs'
-    library_file = '../mgxs/msfr_xs_extended.xml'
+    library_file = '../../mgxs/msfr_xs_extended.xml'
     grid_names = 'tfuel'
     grid_variables = 'tfuel_constant'
     isotopes = 'pseudo'

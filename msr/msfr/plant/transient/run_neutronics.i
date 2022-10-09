@@ -6,6 +6,7 @@
 ################################################################################
 
 [Mesh]
+  coord_type = 'RZ'
   [fmg]
     type = FileMeshGenerator
     # when changing restart file, adapt power_scaling postprocessor
@@ -13,10 +14,6 @@
     file = '../steady/restart/run_neutronics_restart.e'
     use_for_exodus_restart = true
   []
-[]
-
-[Problem]
-  coord_type = 'RZ'
 []
 
 ################################################################################
@@ -134,7 +131,7 @@
   [fuel]
     type = CoupledFeedbackNeutronicsMaterial
     library_name = 'msfr_xs'
-    library_file = '../mgxs/msfr_xs_extended.xml'
+    library_file = '../../mgxs/msfr_xs_extended.xml'
     grid_names = 'tfuel'
     grid_variables = 'tfuel'
     plus = true
@@ -147,7 +144,7 @@
   [shield]
     type = CoupledFeedbackNeutronicsMaterial
     library_name = 'msfr_xs'
-    library_file = '../mgxs/msfr_xs_extended.xml'
+    library_file = '../../mgxs/msfr_xs_extended.xml'
     grid_names = 'tfuel'
     grid_variables = 'tfuel_constant'
     isotopes = 'pseudo'
@@ -159,7 +156,7 @@
   [reflector]
     type = CoupledFeedbackNeutronicsMaterial
     library_name = 'msfr_xs'
-    library_file = '../mgxs/msfr_xs_extended.xml'
+    library_file = '../../mgxs/msfr_xs_extended.xml'
     grid_names = 'tfuel'
     grid_variables = 'tfuel_constant'
     isotopes = 'pseudo'

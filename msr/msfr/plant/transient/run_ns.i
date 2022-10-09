@@ -59,17 +59,14 @@ beta6 = 0.000184087
 ################################################################################
 
 [Mesh]
+  coord_type = 'RZ'
+  rz_coord_axis = Y
   [restart]
     type = FileMeshGenerator
     use_for_exodus_restart = true
     file = '../steady/restart/run_neutronics_out_ns0_restart.e'
     force_restart = true
   []
-[]
-
-[Problem]
-  coord_type = 'RZ'
-  rz_coord_axis = Y
 []
 
 ################################################################################

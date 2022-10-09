@@ -63,6 +63,8 @@ beta6 = 0.000184087
 ################################################################################
 
 [Mesh]
+  coord_type = 'RZ'
+  rz_coord_axis = Y
   [restart]
     type = FileMeshGenerator
     use_for_exodus_restart = true
@@ -74,7 +76,7 @@ beta6 = 0.000184087
     # The variable IC should be set from_file_var for temperature and precursors
     # - vel_x, vel_y, p, T_fluid, c_i from cosine heated simulation
     file = 'restart/run_ns_restart.e'
-    force_restart = true
+    file = '../../steady/restart/run_ns_restart.e'
     # - vel_x, vel_y, p, T_fluid, c_i from coupled multiphysics simulation
     # file = 'restart/run_ns_coupled_restart.e'
   []
@@ -98,11 +100,6 @@ beta6 = 0.000184087
     new_sideset_name = 'hx_bot'
     input = 'hx_top'
   []
-[]
-
-[Problem]
-  coord_type = 'RZ'
-  rz_coord_axis = Y
 []
 
 ################################################################################
@@ -390,6 +387,9 @@ beta6 = 0.000184087
   automatic_scaling = true
   # resid_vs_jac_scaling_param = 1
 []
+[Problem]
+   verbose_multiapps = true
+[]
 
 ################################################################################
 # MULTIAPPS FOR POWER TRANSFER
@@ -400,9 +400,8 @@ beta6 = 0.000184087
     app_type = 'SamApp'
     input_files = msfr_system_1d.i
     max_procs_per_app = 1
-    catch_up = True
-    keep_solution_during_restore = False
     execute_on = 'timestep_end'
+    keep_solution_during_restore = False
   []
 []
 

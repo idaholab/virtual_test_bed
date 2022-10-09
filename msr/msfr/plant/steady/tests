@@ -85,7 +85,7 @@
     type = CSVDiff
     csvdiff = 'msfr_system_1d_csv.csv'
     input = 'msfr_system_1d.i'
-    cli_args = 'Executioner/num_steps=100'
+    cli_args = 'Executioner/num_steps=100 Executioner/start_time=-200'
     executable_pattern = 'sam*|blue_crab*'
   []
 []
