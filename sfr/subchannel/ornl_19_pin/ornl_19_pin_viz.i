@@ -1,3 +1,8 @@
+################################################################################
+## SFR ORNL 19 pin assembly benchmark                                         ##
+## MultiApp for visualization of output                                       ##
+################################################################################
+
 [Mesh]
   [subchannel]
     type = DetailedTriSubChannelMeshGenerator
