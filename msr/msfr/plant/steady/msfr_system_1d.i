@@ -1,3 +1,9 @@
+################################################################################
+## Molten Salt Fast Reactor - Euratom EVOL + Rosatom MARS Design              ##
+## SAM Sub-Sub-Application input file                                         ##
+## Relaxation towards steady state balance of plant model                     ##
+################################################################################
+
 core_power_val = 3e9
 
 [GlobalParams]
