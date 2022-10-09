@@ -1,30 +1,23 @@
 [Tests]
   # Syntax Checks for 19-pin model
-  [blue_crab_syntax_1]
+  [channel_syntax]
     type = RunApp
     input = ornl_19_pin.i
     check_input = True
-    executable_pattern = 'blue_crab*'
+    executable_pattern = 'subchannel*|pronghorn*|blue_crab*'
   []
-  [blue_crab_syntax_2]
+  [viz_syntax]
     type = RunApp
     input = ornl_19_pin_viz.i
     check_input = True
-    executable_pattern = 'blue_crab*'
+    executable_pattern = 'subchannel*|pronghorn*|blue_crab*'
   []
   # Regression checks for 19-pin model
-  [blue_crab_regression_1]
+  [channel]
     type = Exodiff
     input = ornl_19_pin.i
-    exodiff = ornl_19_pin_out.e
-    prereq = 'blue_crab_syntax_1'
-    executable_pattern = 'blue_crab*'
+    exodiff = 'ornl_19_pin_out.e ornl_19_pin_out_viz0.e'
+    prereq = 'channel_syntax'
+    executable_pattern = 'subchannel*|pronghorn*|blue_crab*'
   []
-  [blue_crab_regression_2]
-    type = Exodiff
-    input = ornl_19_pin_viz.i
-    exodiff = ornl_19_pin_out_viz0.e
-    prereq = 'blue_crab_syntax_2'
-    executable_pattern = 'blue_crab*'
-  []
-
+[]
