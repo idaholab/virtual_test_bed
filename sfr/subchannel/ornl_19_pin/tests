@@ -16,7 +16,7 @@
   [channel]
     type = Exodiff
     input = ornl_19_pin.i
-    exodiff = 'ornl_19_pin_out.e ornl_19_pin_out_viz0.e'
+    exodiff = 'ornl_19_pin_out.e'
     prereq = 'channel_syntax'
     executable_pattern = 'subchannel*|blue_crab*'
   []

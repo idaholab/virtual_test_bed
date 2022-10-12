@@ -16,7 +16,7 @@
   [subchannel]
     type = Exodiff
     input = toshiba_37_pin.i
-    exodiff = 'toshiba_37_pin_out.e toshiba_37_pin_out_viz0.e'
+    exodiff = 'toshiba_37_pin_out.e'
     prereq = 'subchannel_syntax'
     executable_pattern = 'subchannel*|blue_crab*'
   []
