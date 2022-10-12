@@ -1,4 +1,4 @@
-# TREAT-like LEU Pulse Results; DRAFT
+# TREAT-like LEU Results; DRAFT
 
 *Contact: Adam Zabriskie, Adam.Zabriskie@inl.gov*
 

@@ -85,12 +85,6 @@
   [../]
 []
 [AuxKernels]
-  #[./pulse_boron]
-  #  type = FunctionAux
-  #  function = boron_state
-  #  variable = Boron_Conc
-  #  execute_on = timestep_end
-  #[../]
   [./PowerDensityCalc]
     block = '10'
     cross_section = kappa_sigma_fission
@@ -261,8 +255,6 @@
   nl_abs_tol = 1e-8
   nl_max_its = 200
   nl_rel_tol = 1e-7
-  # Below input line unused
-  # source_abs_tol = 1e-8
   type = NonlinearEigen
 []
 [Outputs]
