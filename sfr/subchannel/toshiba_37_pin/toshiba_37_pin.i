@@ -50,11 +50,9 @@ P_out = 2.0e5 # Pa
   []
 []
 
-[Modules]
-  [FluidProperties]
-    [sodium]
-       type = PBSodiumFluidProperties
-    []
+[FluidProperties]
+  [sodium]
+    type = PBSodiumFluidProperties
   []
 []
 
