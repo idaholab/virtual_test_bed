@@ -4,13 +4,13 @@
     type = RunApp
     input = ornl_19_pin.i
     check_input = True
-    executable_pattern = 'subchannel*|blue_crab*'
+    executable_pattern = 'subchannel*|pronghorn*'
   []
   [viz_syntax]
     type = RunApp
     input = ornl_19_pin_viz.i
     check_input = True
-    executable_pattern = 'subchannel*|blue_crab*'
+    executable_pattern = 'subchannel*|pronghorn*'
   []
   # Regression checks for 19-pin model
   [channel]
@@ -18,6 +18,6 @@
     input = ornl_19_pin.i
     exodiff = 'ornl_19_pin_out.e'
     prereq = 'channel_syntax'
-    executable_pattern = 'subchannel*|blue_crab*'
+    executable_pattern = 'subchannel*|pronghorn*'
   []
 []

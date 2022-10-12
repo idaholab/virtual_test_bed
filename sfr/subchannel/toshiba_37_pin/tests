@@ -4,13 +4,13 @@
     type = RunApp
     input = toshiba_37_pin.i
     check_input = True
-    executable_pattern = 'subchannel*|blue_crab*'
+    executable_pattern = 'subchannel*|pronghorn*'
   []
   [viz_syntax]
     type = RunApp
     input = toshiba_37_pin_viz.i
     check_input = True
-    executable_pattern = 'subchannel*|blue_crab*'
+    executable_pattern = 'subchannel*|pronghorn*'
   []
   # Regression checks for 37-pin model
   [subchannel]
@@ -18,6 +18,6 @@
     input = toshiba_37_pin.i
     exodiff = 'toshiba_37_pin_out.e'
     prereq = 'subchannel_syntax'
-    executable_pattern = 'subchannel*|blue_crab*'
+    executable_pattern = 'subchannel*|pronghorn*'
   []
 []
