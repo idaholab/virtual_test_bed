@@ -387,9 +387,6 @@ beta6 = 0.000184087
   automatic_scaling = true
   # resid_vs_jac_scaling_param = 1
 []
-[Problem]
-   verbose_multiapps = true
-[]
 
 ################################################################################
 # MULTIAPPS FOR POWER TRANSFER
@@ -402,6 +399,9 @@ beta6 = 0.000184087
     max_procs_per_app = 1
     execute_on = 'timestep_end'
     keep_solution_during_restore = False
+
+    # the balance of plant needs to be run separately first for 100 steps
+    cli_args = 'Problem/restart_file_base=msfr_system_1d_checkpoint_cp/0100;Problem/force_restart=true'
   []
 []
 

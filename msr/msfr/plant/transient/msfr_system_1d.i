@@ -72,7 +72,7 @@ core_power_val = 3e9
   [./fuel_salt_eos]
     type = PTFunctionsEOS
     rho  = fuel_salt_rho_func
-    beta = 2.1051E-04 # approximated by -(drho/dT)/rho
+    # beta = 2.1051E-04 # approximated by -(drho/dT)/rho  #unused
     cp   = fuel_salt_cp_func
     mu   = fuel_salt_mu_func
     k    = fuel_salt_k_func
