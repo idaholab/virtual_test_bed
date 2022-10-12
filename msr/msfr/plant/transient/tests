@@ -61,7 +61,7 @@
     method = 'opt'
   []
   [core_fluids_only]
-    prereq = fluids_syntax
+    prereq = core_fluids_syntax
     type = CSVDiff
     csvdiff = 'run_ns_out.csv'
     input = 'run_ns.i'
@@ -71,7 +71,7 @@
     min_parallel = 4
   []
   [plant_fluids_only]
-    prereq = fluids_syntax
+    prereq = plant_syntax
     type = CSVDiff
     csvdiff = 'msfr_system_1d_csv.csv'
     input = 'msfr_system_1d.i'
