@@ -409,14 +409,14 @@ fis_fract            = ${fparse 1 - dh_fract} # Fission power fraction at t = 0.
     execute_on = 'timestep_end' # overwrite initial condition
   []
   [Tcoolant_fromsub]
-    type = MultiAppInterpolationTransfer
+    type = MultiAppGeometricInterpolationTransfer
     from_multi_app = thermo
     source_variable = T_fluid
     variable = Tsalt
     execute_on = 'timestep_end'
   []
   [Tfuel_fromsub]
-    type = MultiAppInterpolationTransfer
+    type = MultiAppGeometricInterpolationTransfer
     from_multi_app = thermo
     source_variable = T_solid
     variable = Tfuel

@@ -20,7 +20,7 @@ inner_radius                 = 1.000    # X-coordinate of inner wall of the pebb
 outer_radius                 = 1.850    # X-coordinate of outer wall of the pebble bed (m).
 global_emissivity            = 0.80     # All the materials has the same emissivity (//).
 pebble_bed_porosity          = 0.39     # Pebble bed porosity (//).
-fluid_channels_porosity      = 0.20     # 20% is assumed in regions where the He flows in graphite areas (//).
+# fluid_channels_porosity      = 0.20     # 20% is assumed in regions where the He flows in graphite areas (//).
 reactor_inlet_free_flow_area = 8.1870   # Reactor inlet free (no graphite) flow area (m2)
 pebbles_diameter             = 0.06     # Diameter of the pebbles (m).
 
@@ -732,10 +732,9 @@ reactor_inlet_free_rho_u = ${fparse -reactor_total_mfr/reactor_inlet_free_flow_a
   line_search = 'l2'
 
   # Problem time parameters.
-  dt = 1e+15 # Let the main app control time steps.
-  reset_dt = true
+  # dt = 1e+15 # Let the main app control time steps.
+  # reset_dt = true
   start_time = 0.0
-  timestep_tolerance = 1e-6
 
   # Iterations parameters.
   l_max_its = 50
@@ -783,38 +782,33 @@ reactor_inlet_free_rho_u = ${fparse -reactor_total_mfr/reactor_inlet_free_flow_a
 [Transfers]
   [pebble_surface_temp]
     type = MultiAppVariableValueSamplePostprocessorTransfer
-    direction = to_multiapp
-    multi_app = pebble_triso
+    to_multi_app = pebble_triso
     source_variable = T_solid
     postprocessor = pebble_surface_temp
   []
   [pebble_heat_source]
     type = MultiAppVariableValueSampleTransfer
-    direction = to_multiapp
-    multi_app = pebble_triso
+    to_multi_app = pebble_triso
     source_variable = power_density
     variable = porous_media_power_density
   []
   [T_mod]
     type = MultiAppPostprocessorInterpolationTransfer
-    direction = from_multiapp
-    multi_app = pebble_triso
+    from_multi_app = pebble_triso
     variable = T_mod
     num_points = 4
     postprocessor = moderator_average_temp
   []
   [T_fuel]
     type = MultiAppPostprocessorInterpolationTransfer
-    direction = from_multiapp
-    multi_app = pebble_triso
+    from_multi_app = pebble_triso
     variable = T_fuel
     num_points = 4
     postprocessor = fuel_average_temp
   []
   [T_kernel]
     type = MultiAppPostprocessorInterpolationTransfer
-    direction = from_multiapp
-    multi_app = pebble_triso
+    from_multi_app = pebble_triso
     variable = T_kernel
     num_points = 4
     postprocessor = pebble_core_center_temp

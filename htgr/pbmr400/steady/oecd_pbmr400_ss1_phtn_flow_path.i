@@ -1026,30 +1026,26 @@ riser_superficial_rho_v         = ${fparse reactor_total_mfr/riser_free_flow_are
 [Transfers]
   [pebble_surface_temp]
     type = MultiAppVariableValueSamplePostprocessorTransfer
-    direction = to_multiapp
-    multi_app = pebble_triso
+    to_multi_app = pebble_triso
     source_variable = T_solid
     postprocessor = pebble_surface_temp
   []
   [pebble_heat_source]
     type = MultiAppVariableValueSampleTransfer
-    direction = to_multiapp
-    multi_app = pebble_triso
+    to_multi_app = pebble_triso
     source_variable = power_density
     variable = porous_media_power_density
   []
   [T_mod]
     type = MultiAppPostprocessorInterpolationTransfer
-    direction = from_multiapp
-    multi_app = pebble_triso
+    from_multi_app = pebble_triso
     variable = T_mod
     num_points = 4
     postprocessor = moderator_average_temp
   []
   [T_fuel]
     type = MultiAppPostprocessorInterpolationTransfer
-    direction = from_multiapp
-    multi_app = pebble_triso
+    from_multi_app = pebble_triso
     variable = T_fuel
     num_points = 4
     postprocessor = fuel_average_temp
