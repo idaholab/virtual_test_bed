@@ -4,6 +4,9 @@ In this short tutorial, we will feature how the Virtual Test Bed should be used 
 multiphysics core simulation using Griffin and Pronghorn, starting from the very beginning: a fresh install.
 Instructions for updating the Virtual Test Bed on your local machine are situated at the bottom of this page.
 
+!alert note
+A similar [tutorial is available](neams-workbench.md) for using the NEAMS workbench with the VTB on INL HPC.
+
 ## Step 1: Clone the repository
 
 ### Using git to download the repository style=font-size:125%

@@ -1,4 +1,4 @@
-# Introduction
+## Introduction
 
 The mission of the US Department of Energy's Nuclear Energy Advanced Modeling and Simulation ([NEAMS](https://neams.inl.gov/)) Program is to develop, apply, and deploy state-of-the-art predictive modeling and simulation tools for the design and analysis of current and future nuclear energy systems. NEAMS develops state-of-the-art [scalable tools](https://neams.inl.gov/code-descriptions/), such as the Bison fuel performance code, Griffin reactor physics code, System Analysis Module (SAM) code, and Nek5000 computational fluid dynamics code.
 [NEAMS tools](https://neams.inl.gov/code-descriptions/) are also designed to be interoperable, allowing users to construct customized multiphysics workflows. This flexibility is achieved by using the Multiphysics Object-Oriented Simulation Environment ([MOOSE](https://mooseframework.inl.gov/index.html)) framework, which is the foundation of several solvers and also provides the functionality to couple individual applications in loose or tight coupling schemes through the [MOOSE MultiApp System](https://mooseframework.inl.gov/syntax/MultiApps/index.html).
@@ -7,7 +7,7 @@ The mission of the US Department of Energy's Nuclear Energy Advanced Modeling an
 
 Recent work has focused on integrating the NEAMS Workbench with MOOSE-based tools as well as enabling job launch on Idaho National Laboratory (INL) HPC platforms ([Sawtooth](https://hpc.inl.gov/SitePages/Home.aspx)). This integration now permits users to easily run [VTB](https://mooseframework.inl.gov/virtual_test_bed/) examples (or their own models) using the [*BlueCRAB*](https://www.osti.gov/pages/servlets/purl/1766199)  binary. Access to INL HPC, BlueCRAB and all underlying softwares is granted upon request and appropriate justification through the Nuclear Computational Resource Center ([NCRC](https://inl.gov/ncrc/)). The NEAMS Workbench is available to all INL HPC users automatically. Examples of multiphysics problems specific to nuclear reactor applications are available in the Virtual Test Bed ([VTB](https://mooseframework.inl.gov/virtual_test_bed/)) repository.
 
-This documentation aims to provide users with guidelines on how to run VTB examples with the NEAMS Workbench on INL HPC platforms. A *[demonstration video](https://www.youtube.com/watch?v=W6Rq_owHmoU&ab_channel=MarcoDelchini)* is also available (see below) to further illustate all steps of the documentation, and is referenced in the text when needed.
+This documentation aims to provide users with guidelines on how to run VTB examples with the NEAMS Workbench on INL HPC platforms. A *[demonstration video](https://www.youtube.com/watch?v=W6Rq_owHmoU&ab_channel=MarcoDelchini)* is also available (see below) to further illustrate all steps of the documentation, and is referenced in the text when needed.
 
 !media https://www.youtube.com/embed/W6Rq_owHmoU
 
@@ -15,11 +15,11 @@ This documentation aims to provide users with guidelines on how to run VTB examp
 
 Note that a user may experience some normal delays between their click and the NEAMS Workbench GUI responding, which is due to OnDemand mechanics. If a user needs assistance with running a case or has any questions, feel free to reach out to Robert Lefebvre ([lefebvrera@ornl.gov](mailto:lefebvrera@ornl.gov)) or Marco Delchini ([delchinimg@ornl.gov](mailto:delchinimg@ornl.gov)).
 
-# The NEAMS Workbench
+## The NEAMS Workbench
 
 [The NEAMS Workbench](https://www.ornl.gov/onramp/neams-workbench) is an open-source licensed graphical user interface ([GUI](https://code.ornl.gov/neams-workbench/downloads)) developed at [Oak Ridge National Laboratory](https://www.ornl.gov/) that integrates [ParaView](https://www.paraview.org/) for visualizing the numerical solution. In recent years, Workbench has integrated MOOSE-based applications, among others. The NEAMS Workbench provides a user-friendly interface for creating, editing, and validating input files to be run on desktop computers or HPC platforms and for visualizing the numerical solution with the built-in ParaView visualization and analysis software. Its Python-based application runtime environment, template engine, and domain-specific language processing tool enables the integration of a wide range of applications and advanced workflows.
 
-# Cloning the VTB GitHub repository
+### Cloning the VTB GitHub repository
 
 Before running the NEAMS Workbench GUI on the INL HPC platform, it is recommended to clone the VTB GitHub repository to your home directory on Sawtooth to access the input files used in the subsequent sections. This can be achieved from the [HPC OnDemand website](https://hpcondemand.inl.gov/webauthentication) by starting a Sawtooth terminal as shown in [fig:hpc_on_demand_sawtooth_terminal].
 
@@ -74,9 +74,9 @@ apps  COPYRIGHT  doc  htgr  LICENSE  mrad  msr  pbfhr  README.md  scripts  sfr
 
 All VTB examples are run with the *BlueCrab* application.
 
-# Using the NEAMS Workbench to run a BlueCrab multiphysics model on Sawtooth
+## Using the NEAMS Workbench to run a BlueCrab multiphysics model on Sawtooth
 
-## Conventional Workflow on an HPC Platform
+### Conventional Workflow on an HPC Platform
 
 Conventionally, a modeling and simulation application is run on an HPC platform in a terminal by following four steps.
 
@@ -87,7 +87,7 @@ Conventionally, a modeling and simulation application is run on an HPC platform 
 
 This workflow can be cumbersome to users unfamiliar with HPC platforms and an obstacle to potential industrial users in the nuclear engineering field who  want to leverage HPC resources to speed up calculations. NCRC intends to increase the accessibility of modeling and simulation codes and the use of HPC resources by allowing users to access an HPC login node through a virtual desktop from the login page of the HPC OnDemand website (step 1). From there, users  can run an application (*BlueCrab*) or open a terminal to edit files but still need their own submission script to submit jobs to the scheduler.
 
-## Bridging the Gap with the NEAMS Workbench
+### Bridging the Gap with the NEAMS Workbench
 
   The NEAMS Workbench is now available on the HPC OnDemand website as a GUI under the `NCRC` tab and provides the means for performing steps 1--4. The following sections provide details on how to perform the above successive steps. All steps are also illustrated in a *[demonstration video](https://youtu.be/W6Rq_owHmoU)*.
 
@@ -131,7 +131,7 @@ Validation of the input file is automatically handled by the NEAMS Workbench GUI
 
 ### Step 3: running a job from the NEAMS Workbench GUI
 
-After editing the input file and making sure that the physics enabled are consistent with the geometry visualized with ParaView, the input file is submitted to the scheduler. The NEAMS Workbench has already been set to run this input file with the _BlueCRAB_ executable (configured in Step 1). To submit the job to `Sawtooth`, simply type `Run`, which will create the required job scheduler script behind the scenes and put your job in the queue. To customize your job run options first, click the downward arrow next to `Run` and select `Customize Run Options...`. A widget opens that allows users to modify the number of cores and CPU time by scrolling down to `Remote: Scheduler Header` and modifying the number of nodes (select), numbers of CPUs per node (ncpus) and walltime (walltime), as illustrated in [fig:hpc_on_demand_pbs_options]. The suggested number of nodes/CPUs and walltime should be given in the VTB documentation for each test case. Progress of the job is displayed in the `Message`: the NEAMS Workbench checks on the status of the job and tail the output once it starts to run on Sawtooth. Once the job completes, it will display `Process Finished`.
+After editing the input file and making sure that the physics enabled are consistent with the geometry visualized with ParaView, the input file is submitted to the scheduler. The NEAMS Workbench has already been set to run this input file with the _BlueCRAB_ executable (configured in Step 1). To submit the job to `Sawtooth`, simply type `Run`, which will create the required job scheduler script behind the scenes and put your job in the queue. To customize your job run options first, click the downward arrow next to `Run` and select `Customize Run Options...`. A widget opens that allows users to modify the number of cores and CPU time by scrolling down to `Remote: Scheduler Header` and modifying the number of nodes (select), numbers of CPUs per node (ncpus) and wall time (wall time), as illustrated in [fig:hpc_on_demand_pbs_options]. The suggested number of nodes/CPUs and wall time should be given in the VTB documentation for each test case. Progress of the job is displayed in the `Message`: the NEAMS Workbench checks on the status of the job and tail the output once it starts to run on Sawtooth. Once the job completes, it will display `Process Finished`.
 
 !media neams_workbench/hpc_on_demand_pbs_options.png style=width:80% id=fig:hpc_on_demand_pbs_options caption=Editing PBS options with the NEAMS Workbench GUI.
 
@@ -155,7 +155,7 @@ The ParaView GUI is enabled by clicking on `Visualization` and checking the box 
 
 The Virtual Desktop can be exited by closing the browser tab that was opened when creating a `NEAMS Workbench session` in Step 1. Users have the option of logging back in by clicking `Launch the NEAMS Workbench` shown in [fig:hpc_on_demand_open_session]. The NEAMS Workbench session can be closed by clicking on `Delete`, which will terminate the session.
 
-# Considerations
+## Considerations
 
 Potential users should remember that this workflow is still under active development and that some VTB examples are not fully supported. For instance, one of the molten salt fast reactor VTB examples relies on Nek5000-v19 to inform the Pronghorn model. Version 19 of Nek5000 execution is not currently integrated with the NEAMS Workbench; only version 17 execution is supported.
 
