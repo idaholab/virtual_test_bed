@@ -190,56 +190,56 @@
 
 [Transfers]
   [power_density]
-    type = MultiAppNearestNodeTransfer
+    type = MultiAppShapeEvaluationTransfer
     to_multi_app = ns
     source_variable = power_density
     variable = power_density
   []
   [fission_source]
-    type = MultiAppNearestNodeTransfer
+    type = MultiAppShapeEvaluationTransfer
     to_multi_app = ns
     source_variable = fission_source
     variable = fission_source
   []
 
   [c1]
-    type = MultiAppNearestNodeTransfer
+    type = MultiAppShapeEvaluationTransfer
     from_multi_app = ns
     source_variable = 'c1'
     variable = 'c1'
   []
   [c2]
-    type = MultiAppNearestNodeTransfer
+    type = MultiAppShapeEvaluationTransfer
     from_multi_app = ns
     source_variable = 'c2'
     variable = 'c2'
   []
   [c3]
-    type = MultiAppNearestNodeTransfer
+    type = MultiAppShapeEvaluationTransfer
     from_multi_app = ns
     source_variable = 'c3'
     variable = 'c3'
   []
   [c4]
-    type = MultiAppNearestNodeTransfer
+    type = MultiAppShapeEvaluationTransfer
     from_multi_app = ns
     source_variable = 'c4'
     variable = 'c4'
   []
   [c5]
-    type = MultiAppNearestNodeTransfer
+    type = MultiAppShapeEvaluationTransfer
     from_multi_app = ns
     source_variable = 'c5'
     variable = 'c5'
   []
   [c6]
-    type = MultiAppNearestNodeTransfer
+    type = MultiAppShapeEvaluationTransfer
     from_multi_app = ns
     source_variable = 'c6'
     variable = 'c6'
   []
   [T]
-    type = MultiAppNearestNodeTransfer
+    type = MultiAppShapeEvaluationTransfer
     from_multi_app = ns
     source_variable = 'T_fluid'
     variable = 'tfuel'
