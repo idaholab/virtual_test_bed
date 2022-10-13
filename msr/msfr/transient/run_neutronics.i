@@ -252,7 +252,7 @@
 
 [Transfers]
   [power_density]
-    type = MultiAppInterpolationTransfer
+    type = MultiAppGeometricInterpolationTransfer
     to_multi_app = ns
     source_variable = power_density
     variable = power_density
