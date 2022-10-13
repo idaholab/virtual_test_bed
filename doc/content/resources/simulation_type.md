@@ -21,6 +21,8 @@ help creating it.
 
 - Versatile Test Reactor core model [documentation](sfr/vtr/index.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/sfr/vtr)
 
+- High Temperature Test Facility transient simulations [documentation](htgr/httf/index.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/httf)
+
 
 ### Component analysis
 
@@ -47,6 +49,9 @@ help creating it.
 - Upcoming for PB-FHR
 
 - Molten Salt Reactor Experiment Reactivity Insertion Tests [documentation](msr/msre/msre_sam_model.md#MSRE-Reactivity-Insertion-Test) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/msr/msre/reactivity_insertion)
+
+- High Temperature Test Facility simulated power increase simulations [documentation](htgr/httf/index.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/httf)
+
 
 ### Protected loss of coolant flow
 
