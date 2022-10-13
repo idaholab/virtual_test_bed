@@ -70,13 +70,16 @@ beta6 = 0.000184087
     use_for_exodus_restart = true
     # Depending on the file chosen, the initialization of variables should be
     # adjusted. The following variables can be initalized:
+
     # - vel_x, vel_y, p from isothermal simulation
-    # file = 'restart/run_ns_initial_restart.e'
+    # file = '../../steady/restart/run_ns_initial_restart.e'
     # Below are initialization points created from this input file
     # The variable IC should be set from_file_var for temperature and precursors
     # - vel_x, vel_y, p, T_fluid, c_i from cosine heated simulation
-    file = 'restart/run_ns_restart.e'
     file = '../../steady/restart/run_ns_restart.e'
+    # file = '../../steady/restart/run_ns_restart.e'
+    # - adding SAM-coupling
+    file = 'restart/run_ns_restart.e'
     # - vel_x, vel_y, p, T_fluid, c_i from coupled multiphysics simulation
     # file = 'restart/run_ns_coupled_restart.e'
   []
@@ -352,7 +355,7 @@ beta6 = 0.000184087
 
   # Time stepping parameters
   start_time = 0.0
-  end_time = 200
+  end_time = 20
   # end_time will depend on the restart file chosen
   # though steady state detection can also be used
   # from _initial/no heating : 150 - 200s enough
@@ -385,7 +388,12 @@ beta6 = 0.000184087
   l_max_its = 50
 
   automatic_scaling = true
-  # resid_vs_jac_scaling_param = 1
+
+  # Fixed point iterations are not necessary if the only goal is to obtain
+  # a steady state solution, no matter the numerical path
+  # fixed_point_max_its = 10
+  # fixed_point_abs_tol = 1e-5
+  # accept_on_max_fixed_point_iteration = true
 []
 
 ################################################################################

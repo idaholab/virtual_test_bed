@@ -65,7 +65,6 @@ beta6 = 0.000184087
     type = FileMeshGenerator
     use_for_exodus_restart = true
     file = '../steady/restart/run_neutronics_out_ns0_restart.e'
-    force_restart = true
   []
 []
 
