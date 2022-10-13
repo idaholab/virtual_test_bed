@@ -1,5 +1,5 @@
 # Main App solve of the PG-26 transient
-# This imput file handles 3-D condution and communicates back and forth with RELAP-7 sub apps
+# This imput file handles 3-D conduction and communicates back and forth with RELAP-7 sub apps
 T_in = 400 # K
 R_l = 0.009 # m
 core_block_height = 0.198 # m
@@ -294,7 +294,7 @@ heater_SA = ${fparse heater_P * 10 * core_block_height} # m^2
     reduction_type = sum # sums the received relap-7 PostProcessors to obtain total core inlet mass flow rate
     execute_on = 'TIMESTEP_END'
   []
-  # Sinlge coolant and bypass channel outlet mass flow rate from relap-7
+  # Single coolant and bypass channel outlet mass flow rate from relap-7
   [mdot_out_transfer]
     type = MultiAppPostprocessorTransfer
     from_multi_app = relap
@@ -330,7 +330,7 @@ heater_SA = ${fparse heater_P * 10 * core_block_height} # m^2
     execute_on = 'TIMESTEP_END'
   []
 []
-# Performs heat transfer between sold structures which do not exactly touch
+# Performs heat transfer between structures which do not exactly touch
 [ThermalContact]
   # Solves conductive and radiative heat transfer between reflector outer surface and core barrel inner surface
   [reflector_to_barrel]
@@ -368,7 +368,7 @@ heater_SA = ${fparse heater_P * 10 * core_block_height} # m^2
 []
 # UserObjects used in Transfers
 [UserObjects]
-  # Determins wall temperature for the side set 'all_channels' and applies them to the positions listed in 'all_coolant_positions.txt'
+  # Determines wall temperature for the side set 'all_channels' and applies them to the positions listed in 'all_coolant_positions.txt'
   [Twall_for_relap_uo]
     type = NearestPointLayeredSideAverage
     boundary = 'all_channels'
@@ -378,7 +378,7 @@ heater_SA = ${fparse heater_P * 10 * core_block_height} # m^2
     points_file = '../positions/all_coolant_positions.txt'
     execute_on = 'TIMESTEP_END'
   []
-  # Determins wall temperature for the side set 'core_barrel_outside' and applies it to the positions listed in 'upcomer.txt'
+  # Determines wall temperature for the side set 'core_barrel_outside' and applies it to the positions listed in 'upcomer.txt'
   [Twall_barrel_relap_uo]
     type = NearestPointLayeredSideAverage
     boundary = 'core_barrel_outside'
@@ -388,7 +388,7 @@ heater_SA = ${fparse heater_P * 10 * core_block_height} # m^2
     points_file = '../positions/upcomer_positions.txt'
     execute_on = 'TIMESTEP_END'
   []
-  # Determins wall temperature for the side set 'RPV_inside' and applies it to the positions listed in 'upcomer.txt'
+  # Determines wall temperature for the side set 'RPV_inside' and applies it to the positions listed in 'upcomer.txt'
   [Twall_RPV_relap_uo]
     type = NearestPointLayeredSideAverage
     boundary = 'RPV_inside'
@@ -398,7 +398,7 @@ heater_SA = ${fparse heater_P * 10 * core_block_height} # m^2
     points_file = '../positions/upcomer_positions.txt'
     execute_on = 'TIMESTEP_END'
   []
-  # Determins wall temperature for the side set 'inner_panel_WaterSide' and applies it to the positions listed in 'RCCS.txt'
+  # Determines wall temperature for the side set 'inner_panel_WaterSide' and applies it to the positions listed in 'RCCS.txt'
   [Twall_RCCS_inner_uo]
     type = NearestPointLayeredSideAverage
     boundary = 'inner_panel_WaterSide'
@@ -408,7 +408,7 @@ heater_SA = ${fparse heater_P * 10 * core_block_height} # m^2
     points_file = '../positions/RCCS_positions.txt'
     execute_on = 'TIMESTEP_END'
   []
-  # Determins wall temperature for the side set 'outer_panel_WaterSide' and applies it to the positions listed in 'RCCS.txt'
+  # Determines wall temperature for the side set 'outer_panel_WaterSide' and applies it to the positions listed in 'RCCS.txt'
   [Twall_RCCS_outer_uo]
     type = NearestPointLayeredSideAverage
     boundary = 'outer_panel_WaterSide'
