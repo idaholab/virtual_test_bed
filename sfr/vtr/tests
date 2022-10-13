@@ -57,6 +57,7 @@
     executable_pattern = 'blue_crab*'
     prereq = 'full_simulation_syntax'
     min_parallel = 8
+    method = 'opt'
   []
   [bison_mecha_only]
     type = CSVDiff
