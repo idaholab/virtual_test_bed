@@ -697,30 +697,26 @@ fis_fract            = ${fparse 1 - dh_fract} # Fission power fraction at t = 0.
 
 [Transfers]
   [power_density_to_th_sub]
-    type = MultiAppInterpolationTransfer
-    direction = to_multiapp
-    multi_app = th_sub
+    type = MultiAppGeometricInterpolationTransfer
+    to_multi_app = th_sub
     source_variable = normalized_power_density
     variable = normalized_power_density
   []
   [fuel_temperature_from_th_sub]
-    type =  MultiAppInterpolationTransfer
-    direction = from_multiapp
-    multi_app = th_sub
+    type =  MultiAppGeometricInterpolationTransfer
+    from_multi_app = th_sub
     source_variable = T_fuel
     variable = T_fuel
   []
   [moderator_temperature_from_th_sub]
-    type =  MultiAppInterpolationTransfer
-    direction = from_multiapp
-    multi_app = th_sub
+    type =  MultiAppGeometricInterpolationTransfer
+    from_multi_app = th_sub
     source_variable = T_mod
     variable = T_mod
   []
   [T_solid_to_reflector_temperature]
-    type = MultiAppInterpolationTransfer
-    direction = from_multiapp
-    multi_app = th_sub
+    type = MultiAppGeometricInterpolationTransfer
+    from_multi_app = th_sub
     source_variable = T_solid
     variable = T_refl
   []

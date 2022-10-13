@@ -692,7 +692,10 @@ fis_fract            = ${fparse 1 - dh_fract} # Fission power fraction at t = 0.
 
   # end_time = 6000.0
   end_time = 180000.0
-  dt = 1e+15 # Let the fluid control time steps.
+
+  # Let the fluid control time steps.
+  # NOTE: this cannot work with subcycling of the fluid app
+  dt = 1e+15
 
   l_tol = 1e-6
   nl_rel_tol = 1e-7
@@ -712,7 +715,6 @@ fis_fract            = ${fparse 1 - dh_fract} # Fission power fraction at t = 0.
   [Quadrature]
     order = FOURTH
   []
-
 []
 
 # ==============================================================================
@@ -723,43 +725,37 @@ fis_fract            = ${fparse 1 - dh_fract} # Fission power fraction at t = 0.
     type = TransientMultiApp
     input_files = 'oecd_pbmr400_tr1_pplofc_phtn_flow_path.i'
     positions = '0.0 -2.8500 0.0' # Vertical offset between the two meshes.
-    sub_cycling = true
   []
 []
 
 [Transfers]
   [power_density_to_th_sub]
-    type = MultiAppInterpolationTransfer
-    direction = to_multiapp
-    multi_app = th_sub
+    type = MultiAppGeometricInterpolationTransfer
+    to_multi_app = th_sub
     source_variable = total_power_density
     variable = power_density
   []
   [fuel_temperature_from_th_sub]
-    type =  MultiAppInterpolationTransfer
-    direction = from_multiapp
-    multi_app = th_sub
+    type =  MultiAppGeometricInterpolationTransfer
+    from_multi_app = th_sub
     source_variable = T_fuel
     variable = T_fuel
   []
   [kernel_temperature_from_th_sub]
-    type =  MultiAppInterpolationTransfer
-    direction = from_multiapp
-    multi_app = th_sub
+    type =  MultiAppGeometricInterpolationTransfer
+    from_multi_app = th_sub
     source_variable = T_kernel
     variable = T_kernel
   []
   [moderator_temperature_from_th_sub]
-    type =  MultiAppInterpolationTransfer
-    direction = from_multiapp
-    multi_app = th_sub
+    type =  MultiAppGeometricInterpolationTransfer
+    from_multi_app = th_sub
     source_variable = T_mod
     variable = T_mod
   []
   [T_solid_to_reflector_temperature]
-    type = MultiAppInterpolationTransfer
-    direction = from_multiapp
-    multi_app = th_sub
+    type = MultiAppGeometricInterpolationTransfer
+    from_multi_app = th_sub
     source_variable = T_solid
     variable = T_refl
   []

@@ -308,19 +308,19 @@
   # tfuel from BISON
   #------------------
   [tfuel_from_bison_1]
-    type = MultiAppInterpolationTransfer
+    type = MultiAppGeometricInterpolationTransfer
     from_multi_app = bison_1
     source_variable = tfuel
     variable = tfuel
   []
   [tfuel_from_bison_2]
-    type = MultiAppInterpolationTransfer
+    type = MultiAppGeometricInterpolationTransfer
     from_multi_app = bison_2
     source_variable = tfuel
     variable = tfuel
   []
   [tfuel_from_bison_3]
-    type = MultiAppInterpolationTransfer
+    type = MultiAppGeometricInterpolationTransfer
     from_multi_app = bison_3
     source_variable = tfuel
     variable = tfuel
@@ -329,19 +329,19 @@
   # tcool from BISON/SAM
   #------------------
   [tcool_from_bison_1]
-    type = MultiAppInterpolationTransfer
+    type = MultiAppGeometricInterpolationTransfer
     from_multi_app = bison_1
     source_variable = tcool
     variable = tcool
   []
   [tcool_from_bison_2]
-    type = MultiAppInterpolationTransfer
+    type = MultiAppGeometricInterpolationTransfer
     from_multi_app = bison_2
     source_variable = tcool
     variable = tcool
   []
   [tcool_from_bison_3]
-    type = MultiAppInterpolationTransfer
+    type = MultiAppGeometricInterpolationTransfer
     from_multi_app = bison_3
     source_variable = tcool
     variable = tcool
@@ -350,19 +350,19 @@
   # axial expansion = vertical displacements disp_y
   #------------------
   [disp_y_from_bison_1]
-    type = MultiAppInterpolationTransfer
+    type = MultiAppGeometricInterpolationTransfer
     from_multi_app = bison_1
     source_variable = disp_y
     variable = disp_y
   []
   [disp_y_from_bison_2]
-    type = MultiAppInterpolationTransfer
+    type = MultiAppGeometricInterpolationTransfer
     from_multi_app = bison_2
     source_variable = disp_y
     variable = disp_y
   []
   [disp_y_from_bison_3]
-    type = MultiAppInterpolationTransfer
+    type = MultiAppGeometricInterpolationTransfer
     from_multi_app = bison_3
     source_variable = disp_y
     variable = disp_y
@@ -372,7 +372,7 @@
   # Radial expansion = horizontal displacements disp_x, disp_z from core_support_plate
   #------------------
   [disp_x_from_core_support_plate]
-    type = MultiAppInterpolationTransfer
+    type = MultiAppGeometricInterpolationTransfer
     from_multi_app = core_support_plate
     source_boundary = 'plateTop'
     source_variable = disp_x
@@ -380,7 +380,7 @@
     fixed_meshes = true
   []
   [disp_z_from_core_support_plate]
-    type = MultiAppInterpolationTransfer
+    type = MultiAppGeometricInterpolationTransfer
     from_multi_app = core_support_plate
     source_boundary = 'plateTop'
     source_variable = disp_z
