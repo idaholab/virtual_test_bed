@@ -1,14 +1,33 @@
-# /*
-# This version of ht_20r_leu_fl.i has had all of its editing
-# comments and originally commented lines removed. They are
-# preserved in the treat_leu_edited folder
-# */
+# ==================================================================================
+# Model Description
+# Application: Griffin
+# Idaho National Lab (INL), Idaho Falls, [date]
+# Author: Adam Zabriskie, INL
+# ==================================================================================
+# TREAT Griffin Microscale Particles
+# SubApp
+# ==================================================================================
+# This model has been built based on [1]
+# ----------------------------------------------------------------------------------
+# [1] Zabriskie, A. X. (2019). Multi-Scale, Multi-Physics Reactor Pulse Simulation 
+#       Method with Macroscopic and Microscopic Feedback Effects (Unpublished 
+#       doctoral dissertation). Oregon State University, Corvallis, Oregon.
+# ==================================================================================
+
 # 20r HEU with fragment damage layer
+
+# ==================================================================================
+# Problem block
+# ==================================================================================
 
 [Problem]
   coord_type = RSPHERICAL
   #kernel_coverage_check = false
 []
+
+# ==================================================================================
+# Geometry and Mesh
+# ==================================================================================
 
 [Mesh]
   [leu_mesh]
@@ -34,6 +53,10 @@
     top_right = '0.0020 0.0001 0.0001' # x should be a_r
   []
 []
+
+# ==================================================================================
+# Variables and Kernels
+# ==================================================================================
 
 [Variables]
   [./temperature]
@@ -70,6 +93,10 @@
 
 # Boundary conditions are all adiabatic or symmetric which are the same.
 
+# ==================================================================================
+# Auxilliary Variables and Auxilliary Kernels
+# ==================================================================================
+
 [AuxVariables]
   [./PowerDensity]
     order = CONSTANT
@@ -100,6 +127,10 @@
     variable = PowerDensity
   [../]
 []
+
+# ==================================================================================
+# Postprocessor Values
+# ==================================================================================
 
 [Postprocessors]
   [./local_power_density]
@@ -154,6 +185,10 @@
   [../]
 []
 
+# ==================================================================================
+# Materials
+# ==================================================================================
+
 [Materials]
   # Pure Graphite
   [./graph_kth]
@@ -201,6 +236,10 @@
   [../]
 []
 
+# ==================================================================================
+# Preconditioners
+# ==================================================================================
+
 [Preconditioning]
   [./SMP_full]
     type = SMP
@@ -212,6 +251,10 @@
     #petsc_options = '-snes_ksp_ew -snes_converged_reason -ksp_monitor_true_residual'
   [../]
 []
+
+# ==================================================================================
+# Executioners and Outputs
+# ==================================================================================
 
 [Executioner]
   type = Transient

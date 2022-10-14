@@ -1,8 +1,23 @@
-# /*
-# This version of init_refcube.i has had all of its editing
-# comments and originally commented lines removed. They are
-# preserved in the treat_leu_edited folder
-# */
+# ==================================================================================
+# Model Description
+# Application: Griffin
+# Idaho National Lab (INL), Idaho Falls, [date]
+# Author: Adam Zabriskie, INL
+# ==================================================================================
+# TREAT Griffin Transient Pulse Initial Conditions
+# SubApp
+# ==================================================================================
+# This model has been built based on [1]
+# ----------------------------------------------------------------------------------
+# [1] Zabriskie, A. X. (2019). Multi-Scale, Multi-Physics Reactor Pulse Simulation 
+#       Method with Macroscopic and Microscopic Feedback Effects (Unpublished 
+#       doctoral dissertation). Oregon State University, Corvallis, Oregon.
+# ==================================================================================
+
+# ==================================================================================
+# Optional Debugging block
+# ==================================================================================
+
 [Debug]
   #  show_actions = true          #True prints out actions
   #  show_material_props = true   #True prints material properties
@@ -14,6 +29,11 @@
   #  show_petsc_options = true
   show_var_residual_norms = true
 []
+
+# ==================================================================================
+# Geometry and Mesh
+# ==================================================================================
+
 [Mesh]
   # Simple Reflected Cube Reactor
   # Start at zero, half core length reflector thickness; 1/8th symmetric
@@ -37,6 +57,11 @@
     type = SubdomainBoundingBoxGenerator
   []
 []
+
+# ==================================================================================
+# Transport Systems
+# ==================================================================================
+
 [TransportSystems]
   # In 3D, back = 0, bottom = 1, right = 2, top = 3, left = 4, front = 5
   # back is -z, bottom is -y, right is +x
@@ -55,6 +80,11 @@
     scheme = CFEM-Diffusion
   [../]
 []
+
+# ==================================================================================
+# Auxilliary Variables and Auxilliary Kernels
+# ==================================================================================
+
 [AuxVariables]
   [./temperature]
     family = LAGRANGE
@@ -110,6 +140,11 @@
     variable = avg_coretemp
   [../]
 []
+
+# ==================================================================================
+# Postprocessor Values
+# ==================================================================================
+
 [Postprocessors]
   [./UnscaledTotalPower]
     block = 10
@@ -173,6 +208,11 @@
     value = avg_powerden
   [../]
 []
+
+# ==================================================================================
+# Materials
+# ==================================================================================
+
 [Materials]
   # Mixture Properties
   # Reflector
@@ -237,6 +277,11 @@
     type = ParsedMaterial
   [../]
 []
+
+# ==================================================================================
+# Preconditioners
+# ==================================================================================
+
 [Preconditioning]
   [./SMP_full]
     #petsc_options = '-snes_ksp_ew -snes_converged_reason -ksp_monitor_true_residual'
@@ -248,6 +293,11 @@
     type = SMP
   [../]
 []
+
+# ==================================================================================
+# Executioner and Outputs
+# ==================================================================================
+
 [Executioner]
   free_power_iterations = 8
   l_max_its = 100

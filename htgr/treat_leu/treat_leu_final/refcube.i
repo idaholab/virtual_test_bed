@@ -1,8 +1,23 @@
-# /*
-# This version of refcube.i has had all of its editing
-# comments and originally commented lines removed. They are
-# preserved in the treat_leu_edited folder
-# */
+# ==================================================================================
+# Model Description
+# Application: Griffin
+# Idaho National Lab (INL), Idaho Falls, [date]
+# Author: Adam Zabriskie, INL
+# ==================================================================================
+# TREAT Griffin Main Input File
+# MasterApp
+# ==================================================================================
+# This model has been built based on [1]
+# ----------------------------------------------------------------------------------
+# [1] Zabriskie, A. X. (2019). Multi-Scale, Multi-Physics Reactor Pulse Simulation 
+#       Method with Macroscopic and Microscopic Feedback Effects (Unpublished 
+#       doctoral dissertation). Oregon State University, Corvallis, Oregon.
+# ==================================================================================
+
+# ==================================================================================
+# Optional Debugging block
+# ==================================================================================
+
 [Debug]
   #  show_actions = true          #True prints out actions
   #  show_material_props = true   #True prints material properties
@@ -14,6 +29,11 @@
   #  show_petsc_options = true
   show_var_residual_norms = true
 []
+
+# ==================================================================================
+# Geometry and Mesh
+# ==================================================================================
+
 [Mesh]
   [ref_mesh]
     # Simple Reflected Cube Reactor
@@ -37,6 +57,10 @@
     type = SubdomainBoundingBoxGenerator
   []
 []
+
+# ==================================================================================
+# MultiApps and Transfers
+# ==================================================================================
 
 [MultiApps]
   [./initial_solve]
@@ -123,6 +147,11 @@
     variable = temp_fg
   [../]
 []
+
+# ==================================================================================
+# Transport Systems
+# ==================================================================================
+
 [TransportSystems]
   # In 3D, back = 0, bottom = 1, right = 2, top = 3, left = 4, front = 5
   # back is -z, bottom is -y, right is +x
@@ -141,6 +170,11 @@
     scheme = CFEM-Diffusion
   [../]
 []
+
+# ==================================================================================
+# Variables and Kernels
+# ==================================================================================
+
 [Variables]
   [./temperature]
     family = LAGRANGE
@@ -165,6 +199,11 @@
     variable = temperature
   [../]
 []
+
+# ==================================================================================
+# Functions
+# ==================================================================================
+
 [Functions]
   [./boron_state]
     type = PiecewiseLinear
@@ -172,6 +211,11 @@
     y = '1.89489259748 2.0 2.0'
   [../]
 []
+
+# ==================================================================================
+# Auxilliary Variables and Auxilliary Kernels
+# ==================================================================================
+
 [AuxVariables]
   [./Boron_Conc]
     family = MONOMIAL
@@ -242,6 +286,11 @@
     variable = avg_coretemp
   [../]
 []
+
+# ==================================================================================
+# Postprocessor Values
+# ==================================================================================
+
 [Postprocessors]
   [./UnscaledTotalPower]
     outputs = none
@@ -355,6 +404,11 @@
     value = avg_powerden
   [../]
 []
+
+# ==================================================================================
+# User Object
+# ==================================================================================
+
 [UserObjects]
   [./der_pulse_end]
     execute_on = timestep_end
@@ -362,6 +416,11 @@
     type = Terminator
   [../]
 []
+
+# ==================================================================================
+# Materials
+# ==================================================================================
+
 [Materials]
   # Mixture Properties
   # Reflector
@@ -426,6 +485,11 @@
     type = ParsedMaterial
   [../]
 []
+
+# ==================================================================================
+# Preconditioners
+# ==================================================================================
+
 [Preconditioning]
   [./SMP_full]
     #petsc_options = '-snes_ksp_ew -snes_converged_reason -ksp_monitor_true_residual'
@@ -437,6 +501,11 @@
     type = SMP
   [../]
 []
+
+# ==================================================================================
+# Executioner and Outputs
+# ==================================================================================
+
 [Executioner]
   do_iqs_transient = false
   dtmin = 1e-7

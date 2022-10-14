@@ -1,8 +1,23 @@
-# /*
-# This version of adj_refcube.i has had all of its editing
-# comments and originally commented lines removed. They are
-# preserved in the treat_leu_edited folder
-# */
+# ==================================================================================
+# Model Description
+# Application: Griffin
+# Idaho National Lab (INL), Idaho Falls, [date]
+# Author: Adam Zabriskie, INL
+# ==================================================================================
+# TREAT Griffin Adjoint Initial Conditions
+# SubApp
+# ==================================================================================
+# This model has been built based on [1]
+# ----------------------------------------------------------------------------------
+# [1] Zabriskie, A. X. (2019). Multi-Scale, Multi-Physics Reactor Pulse Simulation 
+#       Method with Macroscopic and Microscopic Feedback Effects (Unpublished 
+#       doctoral dissertation). Oregon State University, Corvallis, Oregon.
+# ==================================================================================
+
+# ==================================================================================
+# Optional Debugging block
+# ==================================================================================
+
 # Simple Reflected Cube Reactor
 # Units are W, kg, J, cm
 [Debug]
@@ -16,6 +31,10 @@
 #  show_neutronics_material_coverage = true
 #  show_petsc_options = true
 []
+
+# ==================================================================================
+# Geometry and Mesh
+# ==================================================================================
 
 [Mesh]
   # Simple Reflected Cube Reactor
@@ -41,6 +60,10 @@
   []
 []
 
+# ==================================================================================
+# Transport Systems
+# ==================================================================================
+
 [TransportSystems]
   particle = neutron
   equation_type = eigenvalue
@@ -63,6 +86,10 @@
 []
 
 # Boundary conditions are all adiabatic for heat equation.
+
+# ==================================================================================
+# Auxilliary Variables and Auxilliary Kernels
+# ==================================================================================
 
 [AuxVariables]
   [./temperature]
@@ -120,6 +147,10 @@
     execute_on = 'linear timestep_end'
   [../]
 []
+
+# ==================================================================================
+# Postprocessor Values
+# ==================================================================================
 
 [Postprocessors]
   [./UnscaledTotalPower]
@@ -185,6 +216,10 @@
   [../]
 []
 
+# ==================================================================================
+# Materials
+# ==================================================================================
+
 [Materials]
   # Mixture Properties
   [./neut_mix]
@@ -248,6 +283,10 @@
   [../]
 []
 
+# ==================================================================================
+# Preconditioners
+# ==================================================================================
+
 [Preconditioning]
   [./SMP_full]
     type = SMP
@@ -259,6 +298,10 @@
     #petsc_options = '-snes_ksp_ew -snes_converged_reason -ksp_monitor_true_residual'
   [../]
 []
+
+# ==================================================================================
+# Executioner and Outputs
+# ==================================================================================
 
 [Executioner]
   type = NonlinearEigen
