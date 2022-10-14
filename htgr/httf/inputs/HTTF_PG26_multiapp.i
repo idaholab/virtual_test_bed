@@ -1,4 +1,14 @@
+# ==============================================================================
+# High Temperature Transient Facility
 # Main App solve of the PG-26 transient
+# RELAP-7 input file
+# ------------------------------------------------------------------------------
+# Idaho Falls, INL, 08/2022
+# Author(s): Thomas Freyman, Dr. Lise Charlot
+# ==============================================================================
+# - The mesh file is stored using git lfs
+# ==============================================================================
+
 # This imput file handles 3-D conduction and communicates back and forth with RELAP-7 sub apps
 T_in = 400 # K
 R_l = 0.009 # m
