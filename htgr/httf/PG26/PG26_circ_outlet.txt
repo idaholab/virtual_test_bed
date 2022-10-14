@@ -1,5 +1,4 @@
-* Circulator outlet temperature TF-6202
-Time (s) Temp (K)
+Time(s) Temp(K)
 0.0 298.9450555555565
 900.0 298.94652222222317
 900.5 298.9450555555565

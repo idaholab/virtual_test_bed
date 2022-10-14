@@ -1,6 +1,4 @@
-* power in heater 103 and 104
-*
-Time (s) Power (W)
+Time(s) Power(W)
  0.0 0.0
  1799.5 63.753234026380255
  1800.0 65.61717606615413

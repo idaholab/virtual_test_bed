@@ -1,6 +1,4 @@
-* RCCS pump
-*
-* Time (s)  Flow (kg/s)  
+Time(s)  Flow(kg/s)  
  0.0 0.0 
  5710.5 0.0 
  11421.5 0.0 

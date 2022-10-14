@@ -1,6 +1,4 @@
-* pressure in primary loop PT-6001
-*
-Time (s) Pressure (Pa)
+Time(s) Pressure(Pa)
      0.0 212800.0
   5710.5 208100.0
  11421.5 208400.0
