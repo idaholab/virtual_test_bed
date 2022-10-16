@@ -1,0 +1,110 @@
+[Tests]
+  # Syntax Check
+  [core_syntax]
+    type = RunApp
+    input = HTTF_PG26_multiapp.i
+    check_input = True
+    executable_pattern = 'combined*|relap-7*'
+  []
+  [small_bypass_syntax]
+    type = RunApp
+    input = small_bypass.i
+    check_input = True
+    executable_pattern = 'relap-7*'
+  []
+  [small_coolant_syntax]
+    type = RunApp
+    input = small_coolant.i
+    check_input = True
+    executable_pattern = 'relap-7*'
+  []
+  [medium_coolant_syntax]
+    type = RunApp
+    input = medium_coolant.i
+    check_input = True
+    executable_pattern = 'relap-7*'
+  []
+  [large_bypass_syntax]
+    type = RunApp
+    input = large_bypass.i
+    check_input = True
+    executable_pattern = 'relap-7*'
+  []
+  [large_coolant_syntax]
+    type = RunApp
+    input = large_coolant.i
+    check_input = True
+    executable_pattern = 'relap-7*'
+  []
+  [rccs_syntax]
+    type = RunApp
+    input = RCCS.i
+    check_input = True
+    executable_pattern = 'relap-7*'
+  []
+  [upcomer_syntax]
+    type = RunApp
+    input = upcomer.i
+    check_input = True
+    executable_pattern = 'relap-7*'
+  []
+
+  # Regression tests
+  [core]
+    type = CSVDiff
+    input = HTTF_PG26_multiapp.i
+    csvdiff = HTTF_PG26_transient.csv
+    prereq = core_syntax
+    executable_pattern = 'combined*|relap-7*'
+    cli_args = 'MultiApps/active='' Transfers/active='' Executioner/num_steps=1'
+  []
+  [small_bypass]
+    type = CSVDiff
+    input = small_bypass.i
+    csvdiff = small_bypass_out.csv
+    prereq = small_bypass_syntax
+    executable_pattern = 'relap-7*'
+  []
+  [small_coolant]
+    type = CSVDiff
+    input = small_coolant.i
+    csvdiff = small_coolant_out.csv
+    prereq = small_coolant_syntax
+    executable_pattern = 'relap-7*'
+  []
+  [medium_coolant]
+    type = CSVDiff
+    input = medium_coolant.i
+    csvdiff = medium_coolant_out.csv
+    prereq = medium_coolant_syntax
+    executable_pattern = 'relap-7*'
+  []
+  [large_bypass]
+    type = CSVDiff
+    input = large_bypass.i
+    csvdiff = large_bypass_out.csv
+    prereq = large_bypass_syntax
+    executable_pattern = 'relap-7*'
+  []
+  [large_coolant]
+    type = CSVDiff
+    input = large_coolant.i
+    csvdiff = large_coolant_out.csv
+    prereq = large_coolant_syntax
+    executable_pattern = 'relap-7*'
+  []
+  [rccs]
+    type = CSVDiff
+    input = RCCS.i
+    csvdiff = RCCS_out.csv
+    prereq = rccs_syntax
+    executable_pattern = 'relap-7*'
+  []
+  [upcomer]
+    type = CSVDiff
+    input = upcomer.i
+    csvdiff = upcomer_out.csv
+    prereq = upcomer_syntax
+    executable_pattern = 'relap-7*'
+  []
+[]
