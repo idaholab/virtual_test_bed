@@ -227,6 +227,7 @@ roughness = 0.00004 # m
   [upcomer_outlet]
     type = Receiver
     execute_on = 'INITIAL TIMESTEP_BEGIN'
+    default = 348
   []
    # Creates a weighted outlet temperature based on mass flow rate
   [T_out_weighted]
