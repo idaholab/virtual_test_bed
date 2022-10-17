@@ -22,3 +22,6 @@
 [submodule "apps/cardinal"]
 	path = apps/cardinal
 	url = https://github.com/neams-th-coe/cardinal
+[submodule "apps/relap-7"]
+	path = apps/relap-7
+	url = git@hpcgitlab.hpc.inl.gov:idaholab/relap-7.git
