@@ -1,23 +1,3 @@
-# ==================================================================================
-# Model Description
-# Application: Griffin
-# Idaho National Lab (INL), Idaho Falls, [date]
-# Author: Adam Zabriskie, INL
-# ==================================================================================
-# TREAT Griffin Main Input File
-# MasterApp
-# ==================================================================================
-# This model has been built based on [1]
-# ----------------------------------------------------------------------------------
-# [1] Zabriskie, A. X. (2019). Multi-Scale, Multi-Physics Reactor Pulse Simulation 
-#       Method with Macroscopic and Microscopic Feedback Effects (Unpublished 
-#       doctoral dissertation). Oregon State University, Corvallis, Oregon.
-# ==================================================================================
-
-# ==================================================================================
-# Optional Debugging block
-# ==================================================================================
-
 [Debug]
   #  show_actions = true          #True prints out actions
   #  show_material_props = true   #True prints material properties
@@ -29,12 +9,15 @@
   #  show_petsc_options = true
   show_var_residual_norms = true
 []
-
-# ==================================================================================
-# Geometry and Mesh
-# ==================================================================================
-
 [Mesh]
+# /*
+#  Error: CartesianMesh and SubdomainBoundingBox were old
+#  mesh generators
+#  Replaced mesh generators with updated ones, and moved the
+#  mesh modifiers into the [Mesh] block as new sub-blocks
+#  (had to give an arbitrary name to the initialized mesh
+#  (ref_mesh) to match the sub-block syntax)
+# */
   [ref_mesh]
     # Simple Reflected Cube Reactor
     # Start at zero, half core length reflector thickness; 1/8th symmetric
@@ -48,6 +31,8 @@
     iy = '14 12'
     iz = '14 12'
     type = CartesianMeshGenerator
+    # Below input line unused
+    # uniform_refine = 0
   []
   [set_core_id]
     block_id =  10
@@ -58,26 +43,35 @@
   []
 []
 
-# ==================================================================================
-# MultiApps and Transfers
-# ==================================================================================
-
 [MultiApps]
+ # /*
+ # Error: MAMMOTH was merged with Griffin, so references to
+ # MammothApp are outdated
+ # Removed instances of app_type from all sub-blocks (advised
+ # they were unnecessary)
+
+ # Error: original input file names changed slightly for fixing
+ # purposes; need to uncomment the old input file names once
+ # everything works properly
+ # */
   [initial_solve]
     execute_on = initial
-    input_files = 'init_refcube.i'
+    input_files = 'init_refcube_l.i'
+    # input_files = 'init_refcube.i'
     positions = '0 0 0'
     type = FullSolveMultiApp
   []
   [init_adj]
     execute_on = initial
-    input_files = 'adj_refcube.i'
+    input_files = 'adj_refcube_l.i'
+    # input_files = 'adj_refcube.i'
     positions = '0 0 0'
     type = FullSolveMultiApp
   []
   [micro]
     execute_on = timestep_end
-    input_files = 'ht_20r_leu_fl.i'
+    input_files = 'ht_20r_leu_fl_l.i'
+    # input_files = 'ht_20r_leu_fl.i'
     max_procs_per_app = 1
     positions_file = 'refcube_sub_micro.txt'
     type = TransientMultiApp
@@ -91,6 +85,8 @@
     execute_on = initial
     from_transport_system = diffing
     multi_app = initial_solve
+    # Below input line unused
+    # scale_with_keff = false
     to_transport_system = diffing
     type = TransportSystemVariableTransfer
   []
@@ -115,6 +111,15 @@
     type = MultiAppPostprocessorTransfer
   []
   [copy_adjoint_vars]
+  # /*
+  #  Error: MultiAppVariableTransfer is unsupported
+  #  Replaced old transfer with MultiAppCopyTransfer and
+  #  changed input names as required
+
+  # multi_app -> from_multi_app
+  # from_variables -> source_variables
+  # to_variables -> variable
+  # */
     type = MultiAppCopyTransfer 
     execute_on = initial
     from_multi_app = init_adj
@@ -147,11 +152,6 @@
     variable = temp_fg
   []
 []
-
-# ==================================================================================
-# Transport Systems
-# ==================================================================================
-
 [TransportSystems]
   # In 3D, back = 0, bottom = 1, right = 2, top = 3, left = 4, front = 5
   # back is -z, bottom is -y, right is +x
@@ -170,11 +170,6 @@
     scheme = CFEM-Diffusion
   []
 []
-
-# ==================================================================================
-# Variables and Kernels
-# ==================================================================================
-
 [Variables]
   [temperature]
     family = LAGRANGE
@@ -199,11 +194,6 @@
     variable = temperature
   []
 []
-
-# ==================================================================================
-# Functions
-# ==================================================================================
-
 [Functions]
   [boron_state]
     type = PiecewiseLinear
@@ -211,11 +201,6 @@
     y = '1.89489259748 2.0 2.0'
   []
 []
-
-# ==================================================================================
-# Auxilliary Variables and Auxilliary Kernels
-# ==================================================================================
-
 [AuxVariables]
   [Boron_Conc]
     family = MONOMIAL
@@ -286,11 +271,6 @@
     variable = avg_coretemp
   []
 []
-
-# ==================================================================================
-# Postprocessor Values
-# ==================================================================================
-
 [Postprocessors]
   [UnscaledTotalPower]
     outputs = none
@@ -404,11 +384,6 @@
     value = avg_powerden
   []
 []
-
-# ==================================================================================
-# User Object
-# ==================================================================================
-
 [UserObjects]
   [der_pulse_end]
     execute_on = timestep_end
@@ -416,11 +391,6 @@
     type = Terminator
   []
 []
-
-# ==================================================================================
-# Materials
-# ==================================================================================
-
 [Materials]
   # Mixture Properties
   # Reflector
@@ -485,11 +455,6 @@
     type = ParsedMaterial
   []
 []
-
-# ==================================================================================
-# Preconditioners
-# ==================================================================================
-
 [Preconditioning]
   [SMP_full]
     #petsc_options = '-snes_ksp_ew -snes_converged_reason -ksp_monitor_true_residual'
@@ -501,12 +466,14 @@
     type = SMP
   []
 []
-
-# ==================================================================================
-# Executioner and Outputs
-# ==================================================================================
-
 [Executioner]
+# /*
+#  Error: pke_param_csv expected boolean input instead of
+#  a file name
+#  Set pke_param_csv to true and removed reference to
+#  20r_pke.csv
+# */
+  #Kind of ominous, eh?
   # Captain Picard
   do_iqs_transient = false
   dtmin = 1e-7
@@ -533,11 +500,18 @@
   file_base = out~refcube
   interval = 1
   [console]
+  # /*
+    #This block outputs the different variables
+    #(linear, nonlinear) onto the screen. If disabled, these
+    #will no longer print to the screen but the simulation
+    #is unaffected - I think
+  # */
     output_linear = true
     output_nonlinear = true
     type = Console
   []
-  [exodus]
-    type = Exodus
-  []
+  # This block disabled for testing
+  #/* [exodus]
+   # type = Exodus
+  #[] */
 []
