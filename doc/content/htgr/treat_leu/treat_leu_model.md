@@ -1,4 +1,4 @@
-# TREAT-like LEU Model: DRAFT
+# LEU Fuel Pulse
 
 *Contact: Adam Zabriskie, Adam.Zabriskie@inl.gov*
 
@@ -23,41 +23,41 @@ The dimensions of the macro-scale simulation model are given in [cubedim], and t
 !table id=cubedim caption=Reflected cube reactor dimensions.
 |  Characteristic | Value (cm) |
 | :- | :- |
-| Reactor side length | 135.17 |
-| Reflector thickness | 60.97 |
-| Total side length | 257.09 |
-| Core mesh element cube length | 5.006 |
-| Reflector mesh element cube length | 5.08 |
+| Reactor side length | $135.17$ |
+| Reflector thickness | $60.97$ |
+| Total side length | $257.09$ |
+| Core mesh element cube length | $5.006$ |
+| Reflector mesh element cube length | $5.08$ |
 
 !table id=fgdim caption=20 $\mu$m radius LEU fuel grain characteristics.
 |  Characteristic | Value ($\mu$m) |
 | :- | :- |
-| Fuel grain radius | 20 |
-| Outer boundary radius | 172.76 |
-| Moderator transition thickness | 20 |
-| Moderator shell total thickness | 253 |
-| Moderator shell boundary thickness | 273 |
-| Fuel grain mesh element | 2 |
-| Moderator transition mesh element | 2 |
-| Moderator regular mesh element | 3 |
+| Fuel grain radius | $20$ |
+| Outer boundary radius | $172.76$ |
+| Moderator transition thickness | $20$ |
+| Moderator shell total thickness | $253$ |
+| Moderator shell boundary thickness | $273$ |
+| Fuel grain mesh element | $2$ |
+| Moderator transition mesh element | $2$ |
+| Moderator regular mesh element | $3$ |
 
 The neutronics analysis is performed on a mesh characterized by centimeter-sized elements, while grain treatment is on the micrometer element scale where heat conduction problems are solved on microscopic domains encompassing a single fuel grain and a proportional amount of graphite.
-This model makes use of the Griffin code for neutron transport and MOOSE heat conduction modules for heat transportand radiation. Serpent 2 was used to prepare cross section libraries.
+This model makes use of the Griffin code for neutron transport and MOOSE heat conduction modules for heat transport and radiation. Serpent 2 was used to prepare cross section libraries
 [!citep](zabriskie2019), [!citep](doi:10.1080/00295639.2018.1528802).
 
-The particles are spaced 13.52 cm apart in a regular grid lattice, and are spaced half that distance when next to a boundary.
-There are 125 particles in each octant of the full reactor.
+The particles are spaced $13.52$ cm apart in a regular grid lattice, and are spaced half that distance when next to a boundary.
+There are $125$ particles in each octant of the full reactor.
 
 The power density, calculated from the sampled flux at each location, is transferred to a single microscale simulation.
 
-The MOOSE MultiApp system handles the multiscale and information transfer needs of the proposed method.
-The macroscale simulation provides the average temperature at each microscale simulation location as an outer boundary condition. With the sampled flux at each location and this outer boundary condition, the thermal solution of each microscale grain provides an average moderator shell temperature and fuel grain temperature to the locations in the macroscale simulation. These average temperatures then adjust the cross section providing temperature feedback.
+The MOOSE MultiApp system handles the multiscale and information transfer needs of the simulation.
+The macroscale simulation provides the average temperature at each microscale simulation location as an outer boundary condition. With the sampled flux at each location and this outer boundary condition, the thermal solution of each microscale grain provides an average moderator shell temperature and fuel grain temperature to the locations in the macroscale simulation. These average temperatures then adjust the cross section, providing temperature feedback.
 
 ## Input Files
 
 There are four input files for this model.
 
-## Transient Pulse Initial Conditions (init_refcube.i)
+## Transient Pulse Initial Conditions
 
 This input file sets the initial conditions from which the transient pulse starts.
 
@@ -113,7 +113,7 @@ This block describes the simulation solution approach.
 
 !listing htgr/treat_leu/treat_leu_final/init_refcube.i block=Executioner language=cpp
 
-## Adjoint initial conditions (adj_refcube.i)
+## Adjoint initial conditions
 
 This input file provides the values needed to calculate the point kinetics equation parameters.
 
@@ -121,9 +121,9 @@ This input file is also almost identical to the previous input file, with a few 
 
 - In the `Mesh` block, a different name is used for the mesh.
 - In the `TransportSystems` block, the input `for_adjoint` is set to `true`.
-- In the `AuxVariables` block, `[./Boron_Conc]` sub-block, `initial_condition` is set to 2.0.
+- In the `AuxVariables` block, `[Boron_Conc]` sub-block, `initial_condition` is set to 2.0.
 
-## Microscale Particles (ht_20r_leu_fl.i)
+## Microscale Particles
 
 This input file describes a microscale particle heat solution. This input is replicated at many locations in the macroscale simulation.
 
@@ -185,14 +185,14 @@ This block describes the simulation solution approach.
 
 !listing htgr/treat_leu/treat_leu_final/ht_20r_leu_fl.i block=Executioner language=cpp
 
-## Main Input File (refcube.i)
+## Main Input File
 
 This is the controlling input file that must be run.
 All other input files are controlled by the MultiApp system in the main input file.
 
 ### Mesh
 
-This block is almost identical to the `Mesh` block in the Transient Pulse Initial conditions file, with a different name used for the mesh.
+This block is almost identical to the `Mesh` block in the Transient Pulse Initial Conditions file, with a different name used for the mesh.
 
 ### MultiApps
 
@@ -209,7 +209,7 @@ This block defines the passing of solution data between MultiApp simulations.
 
 ### TransportSystems
 
-This block is almost identical to the `TransportSystems` block in the Transient Pulse Initial conditions file, with the exception being that `equation_type` is set to transient.
+This block is almost identical to the `TransportSystems` block in the Transient Pulse Initial conditions file, with the exception being that `equation_type` is set to `transient`.
 
 ### Variables
 
@@ -271,7 +271,7 @@ This block describes the simulation solution approach.
 
 ## Run Command
 
-Use this command to run the main input file
+Use this command to run the main input file.
 
 ```
 mpirun -np 48 /path/to/griffin-opt -i refcube.i

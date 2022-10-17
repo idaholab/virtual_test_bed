@@ -72,13 +72,13 @@
   equation_type = eigenvalue
   for_adjoint = false
   particle = neutron
-  [./diffing]
+  [diffing]
     family = LAGRANGE
     fission_source_as_material = true
     n_delay_groups =  6  
     order = FIRST
     scheme = CFEM-Diffusion
-  [../]
+  []
 []
 
 # ==================================================================================
@@ -86,36 +86,36 @@
 # ==================================================================================
 
 [AuxVariables]
-  [./temperature]
+  [temperature]
     family = LAGRANGE
     initial_condition =  300.0 
     order = FIRST
-  [../]
-  [./Boron_Conc]
+  []
+  [Boron_Conc]
     family = MONOMIAL
     initial_condition = 1.89489259748
     order = CONSTANT
-  [../]
-  [./PowerDensity]
+  []
+  [PowerDensity]
     block = '10'
     family = MONOMIAL
     order = CONSTANT
-  [../]
-  [./IntegralPower]
+  []
+  [IntegralPower]
     block = 10
     family = MONOMIAL
     initial_condition = 0.0
     order = CONSTANT
-  [../]
-  [./avg_coretemp]
+  []
+  [avg_coretemp]
     block = 0
     family = LAGRANGE
     initial_condition =  300.0 
     order = FIRST
-  [../]
+  []
 []
 [AuxKernels]
-  [./PowerDensityCalc]
+  [PowerDensityCalc]
     block = '10'
     cross_section = kappa_sigma_fission
     dummies = UnscaledTotalPower
@@ -124,21 +124,21 @@
     scale_factor = PowerScaling
     type = VectorReactionRate
     variable = PowerDensity
-  [../]
-  [./Powerintegrator]
+  []
+  [Powerintegrator]
     block = 10
     execute_on = timestep_end
     type = VariableTimeIntegrationAux
     variable =  IntegralPower 
     variable_to_integrate = PowerDensity
-  [../]
-  [./Set_coreT]
+  []
+  [Set_coreT]
     block = 0
     execute_on = 'linear timestep_end'
     postproc_value = avg_coretemp
     type = SetAuxByPostprocessor
     variable = avg_coretemp
-  [../]
+  []
 []
 
 # ==================================================================================
@@ -146,67 +146,67 @@
 # ==================================================================================
 
 [Postprocessors]
-  [./UnscaledTotalPower]
+  [UnscaledTotalPower]
     block = 10
     coupled_flux_groups = 'sflux_g0 sflux_g1 sflux_g2 sflux_g3 sflux_g4 sflux_g5'
     cross_section = kappa_sigma_fission
     execute_on = linear
     type = FluxRxnIntegral
-  [../]
-  [./PowerScaling]
+  []
+  [PowerScaling]
     # 100 kW for entire TREAT
     execute_on = linear
     power_pp = UnscaledTotalPower
     rated_power =  12500.0 
     type = PowerModulateFactor
-  [../]
-  [./avg_coretemp]
+  []
+  [avg_coretemp]
     block = 10
     execute_on = linear
     outputs = all
     type = ElementAverageValue
     variable = temperature
-  [../]
-  [./avg_refltemp]
+  []
+  [avg_refltemp]
     block = 0
     execute_on = linear
     outputs = all
     type = ElementAverageValue
     variable = temperature
-  [../]
-  [./avg_powerden]
+  []
+  [avg_powerden]
     block = 10
     execute_on = timestep_end
     outputs = all
     type = ElementAverageValue
     variable = PowerDensity
-  [../]
-  [./ScaledTotalPower]
+  []
+  [ScaledTotalPower]
     block = 10
     execute_on = linear
     type = ElementIntegralVariablePostprocessor
     variable = PowerDensity
-  [../]
-  [./IntegratedPower]
+  []
+  [IntegratedPower]
     block = 10
     execute_on = timestep_end
     type = ElementIntegralVariablePostprocessor
     variable = IntegralPower
-  [../]
-  [./delta_time]
+  []
+  [delta_time]
     type = TimestepSize
-  [../]
-  [./nl_steps]
+  []
+  [nl_steps]
     type = NumNonlinearIterations
-  [../]
-  [./lin_steps]
+  []
+  [lin_steps]
     type = NumLinearIterations
-  [../]
-  [./Eq_TREAT_Power]
+  []
+  [Eq_TREAT_Power]
     scaling_factor =  2469860.77609 
     type = ScalePostprocessor
     value = avg_powerden
-  [../]
+  []
 []
 
 # ==================================================================================
@@ -216,7 +216,7 @@
 [Materials]
   # Mixture Properties
   # Reflector
-  [./neut_mix]
+  [neut_mix]
     block = 10
     densities =  '0.998448391539 0.00155160846058' 
     grid_names = 'Tfuel Tmod Rod'
@@ -227,8 +227,8 @@
     material_id = 1
     plus = true
     type = CoupledFeedbackNeutronicsMaterial
-  [../]
-  [./kth]
+  []
+  [kth]
     # Volume weighted harmonic mean
     # Divided fg_kth by 100 to get it into cm
     args =  'temperature' 
@@ -238,8 +238,8 @@
     f_name =  'thermal_conductivity' 
     function =  'lt := temperature / 1000.0; fresh := (100.0 / (6.548 + 23.533 * lt) + 6400.0 * exp(-16.35 / lt) / pow(lt, 5.0/2.0)) / 100.0; kap1d := (1.09 / pow(beta, 3.265) + 0.0643 * sqrt(temperature) / sqrt(beta)) * atan(1.0 / (1.09 / pow(beta, 3.265) + sqrt(temperature) * 0.0643 / sqrt(beta))); kap1p := 1.0 + 0.019 * beta / ((3.0 - 0.019 * beta) * (1.0 + exp(-(temperature - 1200.0) / 100.0))); kap2p := (1.0 - p_vol) / (1.0 + (sigma - 1.0) * p_vol); kap4r := 1.0 - 0.2 / (1.0 + exp((temperature - 900.0) / 80.0)); fg_kth := fresh * kap1d * kap1p * kap2p * kap3x * kap4r; (vol_fg + vol_fl + vol_gr) / (vol_fg / fg_kth + vol_fl / fl_kth + vol_gr / gr_kth)' 
     type = ParsedMaterial
-  [../]
-  [./rho_cp]
+  []
+  [rho_cp]
     # Volume weighted arithmetic mean (Irradiation has no effect)
     args =  'temperature' 
     block = 10
@@ -248,8 +248,8 @@
     f_name =  'heat_capacity' 
     function = 'lt := temperature / 1000.0; gr_rhocp := rho_gr / (11.07 * pow(temperature, -1.644) + 0.0003688 * pow(temperature, 0.02191)); fink_cp := 52.1743 + 87.951 * lt - 84.2411 * pow(lt, 2) + 31.542 * pow(lt, 3) - 2.6334 * pow(lt, 4) - 0.71391 * pow(lt, -2); fg_rhocp := rho_fg * fink_cp / 267.2 * 1000.0; (vol_fg * fg_rhocp + vol_gr * gr_rhocp) / (vol_fg + vol_gr)'
     type = ParsedMaterial
-  [../]
-  [./neut_refl]
+  []
+  [neut_refl]
     block = 0
     densities = '1'
     grid_names = 'Trefl Tcore Rod'
@@ -260,14 +260,14 @@
     material_id = 2
     plus = true
     type = CoupledFeedbackNeutronicsMaterial
-  [../]
-  [./ref_kth]
+  []
+  [ref_kth]
     block = 0
     prop_names = 'thermal_conductivity'
     prop_values =  '0.3014' 
     type = GenericConstantMaterial
-  [../]
-  [./ref_rho_cp]
+  []
+  [ref_rho_cp]
     args =  'temperature' 
     block = '0'
     constant_expressions =  '0.0018' 
@@ -275,7 +275,7 @@
     f_name =  'heat_capacity' 
     function =  'rho_gr / (11.07 * pow(temperature, -1.644) + 0.0003688 * pow(temperature, 0.02191))' 
     type = ParsedMaterial
-  [../]
+  []
 []
 
 # ==================================================================================
@@ -283,7 +283,7 @@
 # ==================================================================================
 
 [Preconditioning]
-  [./SMP_full]
+  [SMP_full]
     #petsc_options = '-snes_ksp_ew -snes_converged_reason -ksp_monitor_true_residual'
     full = true
     petsc_options = '-snes_ksp_ew -snes_converged_reason'
@@ -291,7 +291,7 @@
     petsc_options_value = 'hypre boomeramg 101 20 1.0e-6'
     solve_type = 'PJFNK'
     type = SMP
-  [../]
+  []
 []
 
 # ==================================================================================
@@ -311,12 +311,12 @@
   csv = true
   file_base = out~init_refcube
   interval = 1
-  [./console]
+  [console]
     output_linear = true
     output_nonlinear = true
     type = Console
-  [../]
-  [./exodus]
+  []
+  [exodus]
     type = Exodus
-  [../]
+  []
 []

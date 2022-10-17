@@ -16,4 +16,4 @@ cd $PBS_O_WORKDIR
 
 export TMPDIR=/tmp
 
-mpirun griffin-opt -i refcube_l.i -omp 48 -nofatal
+time mpirun griffin-opt -i refcube_l.i -omp 48 -nofatal

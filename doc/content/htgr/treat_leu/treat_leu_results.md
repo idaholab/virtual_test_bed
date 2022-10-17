@@ -1,4 +1,4 @@
-# TREAT-like LEU Results; DRAFT
+# LEU Fuel Pulse Results
 
 *Contact: Adam Zabriskie, Adam.Zabriskie@inl.gov*
 
@@ -33,4 +33,4 @@ The fuel grain and moderator shell average temperatures are shown in [fg] and [m
        id=modshell
        caption=Moderator Shell Temperature Time Evolution
 
-For a more detailed discussion of the results, see [!citep](zabriskie2019)
+For a more detailed discussion of the results, see [!citep](zabriskie2019).
