@@ -1,7 +1,7 @@
 # ==================================================================================
 # Model Description
 # Application: Griffin
-# Idaho National Lab (INL), Idaho Falls, [date]
+# Idaho National Lab (INL), Idaho Falls, October 17, 2022
 # Author: Adam Zabriskie, INL
 # ==================================================================================
 # TREAT Griffin Adjoint Initial Conditions

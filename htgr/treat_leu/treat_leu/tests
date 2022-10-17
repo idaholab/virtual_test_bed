@@ -1,0 +1,50 @@
+[Tests]
+    # Syntax tests for each of the input files
+    [init_refcube_griffin_syntax]
+        type = RunApp
+        input = 'init_refcube.i'
+        check_input = True
+        executable_pattern = 'griffin*'
+    []
+    [adj_refcube_griffin_syntax]
+        type = RunApp
+        input = 'adj_refcube.i'
+        check_input = True
+        executable_pattern = 'griffin*'
+    []
+    [ht_20r_leu_fl_griffin_syntax]
+        type = RunApp
+        input = 'ht_20r_leu_fl.i'
+        check_input = True
+        executable_pattern = 'griffin*'
+    []
+    [refcube_griffin_syntax]
+        type = RunApp
+        input = 'refcube.i'
+        check_input = True
+        executable_pattern = 'griffin*'
+    []
+
+    # Regression tests for each of the input files
+    [init_refcube_regression]
+        type = CSVDiff
+        input = 'init_refcube.i'
+        csvdiff = 'out~init_refcube.csv'
+        executable_pattern = 'griffin*'
+        prereq = 'init_refcube_griffin_syntax'
+    []
+    [adj_refcube_regression]
+        type = CSVDiff
+        input = 'adj_refcube.i'
+        csvdiff = 'adj_refcube_out.csv'
+        executable_pattern = 'griffin*'
+        prereq = 'adj_refcube_griffin_syntax'
+    []
+    [ht_20r_leu_fl_regression]
+        type = CSVDiff
+        input = 'ht_20r_leu_fl.i'
+        csvdiff = 'ht_20r_leu_fl_out.csv'
+        executable_pattern = 'griffin*'
+        prereq = 'ht_20r_leu_fl_griffin_syntax'
+    []
+[]
