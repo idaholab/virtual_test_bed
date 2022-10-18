@@ -5,6 +5,7 @@
     input = HTTF_PG26_multiapp.i
     check_input = True
     executable_pattern = 'combined*|relap-7*'
+    allow_warnings = true
   []
   [small_bypass_syntax]
     type = RunApp
@@ -57,12 +58,17 @@
     prereq = core_syntax
     executable_pattern = 'combined*|relap-7*'
     cli_args = 'MultiApps/active='' Transfers/active='' Executioner/num_steps=1'
+    allow_warnings = true
+    min_parallel = 16
+    max_time = 800
+    method = 'opt'
   []
   [small_bypass]
     type = CSVDiff
     input = small_bypass.i
     csvdiff = small_bypass_out.csv
     prereq = small_bypass_syntax
+    cli_args = 'Executioner/num_steps=50'
     executable_pattern = 'relap-7*'
   []
   [small_coolant]
@@ -70,6 +76,7 @@
     input = small_coolant.i
     csvdiff = small_coolant_out.csv
     prereq = small_coolant_syntax
+    cli_args = 'Executioner/num_steps=50'
     executable_pattern = 'relap-7*'
   []
   [medium_coolant]
@@ -77,6 +84,7 @@
     input = medium_coolant.i
     csvdiff = medium_coolant_out.csv
     prereq = medium_coolant_syntax
+    cli_args = 'Executioner/num_steps=50'
     executable_pattern = 'relap-7*'
   []
   [large_bypass]
@@ -84,6 +92,7 @@
     input = large_bypass.i
     csvdiff = large_bypass_out.csv
     prereq = large_bypass_syntax
+    cli_args = 'Executioner/num_steps=50'
     executable_pattern = 'relap-7*'
   []
   [large_coolant]
@@ -91,6 +100,7 @@
     input = large_coolant.i
     csvdiff = large_coolant_out.csv
     prereq = large_coolant_syntax
+    cli_args = 'Executioner/num_steps=50'
     executable_pattern = 'relap-7*'
   []
   [rccs]
