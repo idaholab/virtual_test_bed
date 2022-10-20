@@ -74,6 +74,9 @@ in the input files of the virtual test bed.
 
 ### RELAP-7
 
+- High Temperature Test Facility transient simulations [documentation](htgr/httf/index.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/httf)
+
+
 ## Thermo-mechanics
 
 ### Bison
