@@ -4,8 +4,8 @@
 
 ## Model Description
 
-This model represents a greatly simplified version of the Transient Reactor Test Facility (TREAT). 
-The model explores the effect on pulse feedback mechanisms from microscale heterogeneity represented by hypothetical 20 $\mu$m LEU fuel grains. 
+This model represents a greatly simplified version of the Transient Reactor Test Facility (TREAT).
+The model explores the effect on pulse feedback mechanisms from microscale heterogeneity represented by hypothetical 20 $\mu$m LEU fuel grains.
 This model couples the heat equation with the neutron governing equation for temperature feedback during a short pulse.
 The pulse is produced by inserting a reactivity of 4.56 % $\Delta$ k/k.
 The model's simplified geometry consists of a homogeneous cube of TREAT-like fuel surrounded by a cube shell reflector.
@@ -68,50 +68,50 @@ Some code blocks appearing in this file also appear in other files. For brevity,
 
 This block creates the mesh used for the simplified reactor.
 
-!listing htgr/treat_leu/treat_leu_final/init_refcube.i block=Mesh language=cpp
+!listing htgr/treat_leu/treat_leu/init_refcube.i block=Mesh language=cpp
 
 ### TransportSystems
 
 This block sets up the neutron transport governing equation in the diffusion approximation form to be used in the simulation.
 
-!listing htgr/treat_leu/treat_leu_final/init_refcube.i block=TransportSystems language=cpp
+!listing htgr/treat_leu/treat_leu/init_refcube.i block=TransportSystems language=cpp
 
 ### AuxVariables
 
 This block sets up the auxilliary variables that will be calculated and tracked throughout the runtime of the simulation.
 
-!listing htgr/treat_leu/treat_leu_final/init_refcube.i block=AuxVariables language=cpp
+!listing htgr/treat_leu/treat_leu/init_refcube.i block=AuxVariables language=cpp
 
 ### AuxKernels
 
 This block defines the equations used to calculate auxilliary values for use in the simulation.
 
-!listing htgr/treat_leu/treat_leu_final/init_refcube.i block=AuxKernels language=cpp
+!listing htgr/treat_leu/treat_leu/init_refcube.i block=AuxKernels language=cpp
 
 ### Postprocessors
 
 This block processes simulation solution data for output.
 
-!listing htgr/treat_leu/treat_leu_final/init_refcube.i block=Postprocessors language=cpp
+!listing htgr/treat_leu/treat_leu/init_refcube.i block=Postprocessors language=cpp
 
 ### Materials
 
 This block sets up the material properties for use in the governing equations.
 The files [!style color=blue](`leu_20r_is_6g_d.xml`) and [!style color=blue](`leu_macro_6g.xml`) contain the cross sections.
 
-!listing htgr/treat_leu/treat_leu_final/init_refcube.i block=Materials language=cpp
+!listing htgr/treat_leu/treat_leu/init_refcube.i block=Materials language=cpp
 
 ### Preconditioner
 
 This block describes the preconditioner used by the solver.
 
-!listing htgr/treat_leu/treat_leu_final/init_refcube.i block=Preconditioning language=cpp
+!listing htgr/treat_leu/treat_leu/init_refcube.i block=Preconditioning language=cpp
 
 ### Executioner
 
 This block describes the simulation solution approach.
 
-!listing htgr/treat_leu/treat_leu_final/init_refcube.i block=Executioner language=cpp
+!listing htgr/treat_leu/treat_leu/init_refcube.i block=Executioner language=cpp
 
 ## Adjoint initial conditions
 
@@ -131,49 +131,49 @@ This input file describes a microscale particle heat solution. This input is rep
 
 This block defines the symmetry system in which the heat transport will be solved.
 
-!listing htgr/treat_leu/treat_leu_final/ht_20r_leu_fl.i block=Problem language=cpp
+!listing htgr/treat_leu/treat_leu/ht_20r_leu_fl.i block=Problem language=cpp
 
 ### Mesh
 
 This block sets the meshes for the fission damage layer and fuel grain.
 
-!listing htgr/treat_leu/treat_leu_final/ht_20r_leu_fl.i block=Mesh language=cpp
+!listing htgr/treat_leu/treat_leu/ht_20r_leu_fl.i block=Mesh language=cpp
 
 ### Variables
 
 This block sets the temperature variable of the governing equation.
 
-!listing htgr/treat_leu/treat_leu_final/ht_20r_leu_fl.i block=Variables language=cpp
+!listing htgr/treat_leu/treat_leu/ht_20r_leu_fl.i block=Variables language=cpp
 
 ### Kernels
 
 This block defines the heat conduction governing equation.
 
-!listing htgr/treat_leu/treat_leu_final/ht_20r_leu_fl.i block=Kernels language=cpp
+!listing htgr/treat_leu/treat_leu/ht_20r_leu_fl.i block=Kernels language=cpp
 
 ### AuxVariables
 
 This block sets up the power density and integrated power auxilliary variables.
 
-!listing htgr/treat_leu/treat_leu_final/ht_20r_leu_fl.i block=AuxVariables language=cpp
+!listing htgr/treat_leu/treat_leu/ht_20r_leu_fl.i block=AuxVariables language=cpp
 
 ### AuxKernels
 
 This block calculates needed auxilliary values during the simulation.
 
-!listing htgr/treat_leu/treat_leu_final/ht_20r_leu_fl.i block=AuxKernels language=cpp
+!listing htgr/treat_leu/treat_leu/ht_20r_leu_fl.i block=AuxKernels language=cpp
 
 ### Postprocessors
 
 This block calculates outputs from solution data.
 
-!listing htgr/treat_leu/treat_leu_final/ht_20r_leu_fl.i block=Postprocessors language=cpp
+!listing htgr/treat_leu/treat_leu/ht_20r_leu_fl.i block=Postprocessors language=cpp
 
 ### Materials
 
 This block contains material properties used in the governing equation.
 
-!listing htgr/treat_leu/treat_leu_final/ht_20r_leu_fl.i block=Materials language=cpp
+!listing htgr/treat_leu/treat_leu/ht_20r_leu_fl.i block=Materials language=cpp
 
 ### Preconditioning
 
@@ -183,7 +183,7 @@ This block is identical to the `[Preconditioning]` block in the Transient Pulse 
 
 This block describes the simulation solution approach.
 
-!listing htgr/treat_leu/treat_leu_final/ht_20r_leu_fl.i block=Executioner language=cpp
+!listing htgr/treat_leu/treat_leu/ht_20r_leu_fl.i block=Executioner language=cpp
 
 ## Main Input File
 
@@ -199,13 +199,13 @@ This block is almost identical to the `Mesh` block in the Transient Pulse Initia
 This block defines the MOOSE MultiApp system.
 The file [!style color=blue](`refcube_sub_micro.txt`) is a list of coordinates for the positions of each of the 125 fuel grains.
 
-!listing htgr/treat_leu/treat_leu_final/refcube.i block=MultiApps language=cpp
+!listing htgr/treat_leu/treat_leu/refcube.i block=MultiApps language=cpp
 
 ### Transfers
 
 This block defines the passing of solution data between MultiApp simulations.
 
-!listing htgr/treat_leu/treat_leu_final/refcube.i block=Transfers language=cpp
+!listing htgr/treat_leu/treat_leu/refcube.i block=Transfers language=cpp
 
 ### TransportSystems
 
@@ -215,49 +215,49 @@ This block is almost identical to the `TransportSystems` block in the Transient 
 
 This block sets the temperature variable of the governing equation.
 
-!listing htgr/treat_leu/treat_leu_final/refcube.i block=Variables language=cpp
+!listing htgr/treat_leu/treat_leu/refcube.i block=Variables language=cpp
 
 ### Kernels
 
 This block defines the heat conduction governing equation.
 
-!listing htgr/treat_leu/treat_leu_final/refcube.i block=Kernels language=cpp
+!listing htgr/treat_leu/treat_leu/refcube.i block=Kernels language=cpp
 
 ### Functions
 
 This block is used to insert reactivity to start the pulse from the initial conditions.
 
-!listing htgr/treat_leu/treat_leu_final/refcube.i block=Functions language=cpp
+!listing htgr/treat_leu/treat_leu/refcube.i block=Functions language=cpp
 
 ### AuxVariables
 
 This block sets up the power density, integrated power, and other auxilliary variables
 
-!listing htgr/treat_leu/treat_leu_final/refcube.i block=AuxVariables language=cpp
+!listing htgr/treat_leu/treat_leu/refcube.i block=AuxVariables language=cpp
 
 ### AuxKernels
 
 This block defines the equations used to calculate auxilliary values for use in the simulation.
 
-!listing htgr/treat_leu/treat_leu_final/refcube.i block=AuxKernels language=cpp
+!listing htgr/treat_leu/treat_leu/refcube.i block=AuxKernels language=cpp
 
 ### Postprocessors
 
 This block calculates outputs from solution data.
 
-!listing htgr/treat_leu/treat_leu_final/refcube.i block=Postprocessors language=cpp
+!listing htgr/treat_leu/treat_leu/refcube.i block=Postprocessors language=cpp
 
 ### UserObjects
 
 This block calculates when the simuation concludes.
 
-!listing htgr/treat_leu/treat_leu_final/refcube.i block=UserObjects language=cpp
+!listing htgr/treat_leu/treat_leu/refcube.i block=UserObjects language=cpp
 
 ### Materials
 
 This block contains material properties used in the governing equation.
 
-!listing htgr/treat_leu/treat_leu_final/refcube.i block=Materials language=cpp
+!listing htgr/treat_leu/treat_leu/refcube.i block=Materials language=cpp
 
 ### Preconditioning
 
@@ -267,7 +267,7 @@ This block is identical to the `[Preconditioning]` block in the Transient Pulse 
 
 This block describes the simulation solution approach.
 
-!listing htgr/treat_leu/treat_leu_final/refcube.i block=Executioner language=cpp
+!listing htgr/treat_leu/treat_leu/refcube.i block=Executioner language=cpp
 
 ## Run Command
 
