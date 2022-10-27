@@ -4,15 +4,15 @@
 
 ## Benchmark Description
 
-The Toshiba 37-pin benchmark is based on liquid sodium experiments conducted by the Toshiba Corporation Nuclear Engineering Laboratory in Japan [!citep](namekawa1984buoyancy). 
+The Toshiba 37-pin benchmark is based on liquid sodium experiments conducted by the Toshiba Corporation Nuclear Engineering Laboratory in Japan [!citep](namekawa1984buoyancy).
 Its assembly consists of four outer rings of electrically heated rods.
 However, the resistances in the electrically heated rods are adapted to reproduce a chopped cosine power distribution in the axial direction.
-All heating rods are assumed to have the same power distribution. 
-The cross section of the fuel assembly is presented in [configuration]. 
-In this figure the numbering of the rods and the subchannels are described. 
-The analyzed quantity of interest is the temperature distribution at the outlet of the assembly. 
-Due to symmetry, it is enough to analyze the temperature distributions over a symmetry line. 
-In this case, following experiment reported results, we take a south-to-north line in the fuel assembly. 
+All heating rods are assumed to have the same power distribution.
+The cross section of the fuel assembly is presented in [configuration].
+In this figure the numbering of the rods and the subchannels are described.
+The analyzed quantity of interest is the temperature distribution at the outlet of the assembly.
+Due to symmetry, it is enough to analyze the temperature distributions over a symmetry line.
+In this case, following experiment reported results, we take a south-to-north line in the fuel assembly.
 This one involves, in south to north ordering, subchannels 72, 49, 32, 20, 10, 4, 3, 2, 1, 7, 14, 26, 39, and 58.
 
 !media subchannel/toshiba_37_config.png
@@ -20,7 +20,7 @@ This one involves, in south to north ordering, subchannels 72, 49, 32, 20, 10, 4
        id=configuration
        caption= Rod and subchannel positions and numbering adopted for the Toshiba 37-pin benchmark. (a) Position and numbering of the heated rods with the subchannel center indicated with red dots. (b) Center position and numbering of the suchannels.
 
-The characteristics of Toshiba's benchmark are provided in [parameters]. 
+The characteristics of Toshiba's benchmark are provided in [parameters].
 
 !table id=parameters caption=Design and operational parameters for Toshiba's 37-pin benchmark.
 | Experiment Parameter (unit) | Value  |
@@ -65,7 +65,7 @@ P_out = 2.0e5 # Pa
 
 ```
 
-### Mesh 
+### Mesh
 
 The meshing in subchannel uses a custom *TriSubChannelMeshGenerator*.
 This generates a mesh of 1D channel segments connected in 3D.
@@ -82,12 +82,12 @@ All variables must be present at every input for the subchannel solver to run.
 
 !listing sfr/subchannel/toshiba_37_pin/toshiba_37_pin.i block=AuxVariables language=cpp
 
-### Modules
+### Fluid Properties
 
-The module block specifies the thermophysical properties used in the subchannel solve.
+The fluid properties block specifies the thermophysical properties used in the subchannel solve.
 Sodium properties are used in this case.
 
-!listing sfr/subchannel/toshiba_37_pin/toshiba_37_pin.i block=Modules language=cpp
+!listing sfr/subchannel/toshiba_37_pin/toshiba_37_pin.i block=FluidProperties language=cpp
 
 ### Problem
 
@@ -139,13 +139,13 @@ The detailed mesh uses a *DetailedTriSubChannelMeshGenerator* and the solution v
 
 An example flow distribution for the high flow-rate case is depicted in [3Dres].
 The figures have been scaled by 0.25 in the axial direction.
-As graphically observed, a flat temperature profile is obtained in the bulk of the fuel assembly. 
-In this experiment, the ratio of gap-distance to pitch produces a significantly larger mass flow in the outer subchannels as observed in Figure 2a. 
-This causes the outer subchannnels to be significantly colder than the center ones. 
-Thus, the expected temperature distribution is flat in the central region of the assembly with sharp drops next to the wrapper. 
-Finally, it can be observed in Figures 2a and 2b that due to the significant difference between flow rates at the outer and center subchannel, there is a considerable flow development length in the entry to the fuel assembly. 
-Inlet velocity conditions were unclear in the experiment report [!citep](namekawa1984buoyancy) and, hence, uniform mass flow at the inlet was assumed. 
-If the assumption of uniform inlet flow rates turns out to be incorrect, a small deterioration of accuracy of the predicted outlet temperature can be expected. 
+As graphically observed, a flat temperature profile is obtained in the bulk of the fuel assembly.
+In this experiment, the ratio of gap-distance to pitch produces a significantly larger mass flow in the outer subchannels as observed in Figure 2a.
+This causes the outer subchannnels to be significantly colder than the center ones.
+Thus, the expected temperature distribution is flat in the central region of the assembly with sharp drops next to the wrapper.
+Finally, it can be observed in Figures 2a and 2b that due to the significant difference between flow rates at the outer and center subchannel, there is a considerable flow development length in the entry to the fuel assembly.
+Inlet velocity conditions were unclear in the experiment report [!citep](namekawa1984buoyancy) and, hence, uniform mass flow at the inlet was assumed.
+If the assumption of uniform inlet flow rates turns out to be incorrect, a small deterioration of accuracy of the predicted outlet temperature can be expected.
 However, we observe that the flow rates fully develop before the outlet of the assembly, which suggests that this initial condition will have little effect over the analyzed temperature distribution at the outlet of the fuel assembly.
 
 !media subchannel/toshiba_37_results_3D.png
@@ -153,9 +153,9 @@ However, we observe that the flow rates fully develop before the outlet of the a
        id=3Dres
        caption=  Example of simulation results for the high-flow test case in the Toshiba 37-pin benchmark. (a) Distribution of axial mass flow. (b) Distribution of lateral mass flow. (c) Distribution of temperature. (d) Distribution of dynamic viscosity due to heating.
 
-The results obtained for the high-, medium-, and low- flow-rate validation cases are presented in [plots]. 
-We compare the results obtained with the present code with the ones obtained in the experiments and the SUBAC code [!citep](sun2018development). 
-We have selected SUBAC for the code-to-code comparison since it is to our knowledge the subchannel code for wire-wrapped SFRs, with openly available results, that presented the best agreements between the code predictions and the experiment measurements for the current benchmark. 
+The results obtained for the high-, medium-, and low- flow-rate validation cases are presented in [plots].
+We compare the results obtained with the present code with the ones obtained in the experiments and the SUBAC code [!citep](sun2018development).
+We have selected SUBAC for the code-to-code comparison since it is to our knowledge the subchannel code for wire-wrapped SFRs, with openly available results, that presented the best agreements between the code predictions and the experiment measurements for the current benchmark.
 
 
 !media subchannel/toshiba_37_results_plots.png
@@ -163,7 +163,7 @@ We have selected SUBAC for the code-to-code comparison since it is to our knowle
        id=plots
        caption=  Comparison of results obtained for Toshiba 37-pin case between experimental measurements, the SUBAC code, and the current code. (a) High mass flow case. (b) Medium mass flow case. (c) Low mass flow case.
 
-As observed in [plots], for the high mass flow rate case, the present model predicts results closer to the experimental results than SUBAC. This is expected, since the turbulent cross-flow calibration should still improve the prediction for the present case. 
-However, when comparing the results predicted for the medium- and low-flow-rate cases in Figures 3b and 3c, respectively, we observe that our models over-predict the temperature distributions when compared to SUBAC. 
+As observed in [plots], for the high mass flow rate case, the present model predicts results closer to the experimental results than SUBAC. This is expected, since the turbulent cross-flow calibration should still improve the prediction for the present case.
+However, when comparing the results predicted for the medium- and low-flow-rate cases in Figures 3b and 3c, respectively, we observe that our models over-predict the temperature distributions when compared to SUBAC.
 Further analysis determined that the more peaked distribution of temperatures predicted by PrSub towards the center of the assembly may be
 produced by an over-prediction of the mixing rates, which yields larger than expected flows in the outer channels.

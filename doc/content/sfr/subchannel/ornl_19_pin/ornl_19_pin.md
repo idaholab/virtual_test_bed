@@ -10,7 +10,7 @@ The validation exercise was done for test series 2 of this experiment.
 In this series, the fuel rods of the experiment were heated by 19 identical electric cartridges.
 The configuration and external heat fluxes of these cartidges match typical values expected for SFRs.
 The measurements in test series 2 focused on the distribution of temperatures at the exit of the fuel assembly, the duct walls, and the rod bundle.
-The nature of the heat source and the lack of neighboring assemblies make the distribution of temperatures at the rod bundle and duct atypical for LMRs. 
+The nature of the heat source and the lack of neighboring assemblies make the distribution of temperatures at the rod bundle and duct atypical for LMRs.
 Therefore, this data was deemed of secondary importance for validating the subchannel code.
 In contrast, the distribution of temperatures at the exit of the fuel assembly is indicative of the heating of the coolant and flow mixing in the fuel bundle, which is expected to be representative of the one in an actual SFR.
 Therefore, we have focused our validation work in predicting the distribution of temperatures at the exit of the fuel assembly.
@@ -89,12 +89,12 @@ All variables must be present at every input for the subchannel solver to run.
 
 !listing sfr/subchannel/ornl_19_pin/ornl_19_pin.i block=AuxVariables language=cpp
 
-### Modules
+### Fluid Properties
 
-The module block specifies the thermophysical properties used in the subchannel solve.
+The fluid properties block specifies the thermophysical properties used in the subchannel solve.
 Sodium properties are used in this case.
 
-!listing sfr/subchannel/ornl_19_pin/ornl_19_pin.i block=Modules language=cpp
+!listing sfr/subchannel/ornl_19_pin/ornl_19_pin.i block=FluidProperties language=cpp
 
 ### Problem
 
@@ -162,7 +162,7 @@ In summary, the temperature distribution measured at the outlet of the assembly 
        caption=Example of simulation results for the high-flow test case in the ORNL-19 benchmark. (a) Distribution of axial mass flow. (b) Distribution of lateral mass flow. (c) Distribution of temperature. (d) Distribution of dynamic viscosity due to heating.
 
 
-The results obtained are compared against the experimental values and the SUBAC and MATRA-LMR codes in [plots]. 
+The results obtained are compared against the experimental values and the SUBAC and MATRA-LMR codes in [plots].
 It is observed that for every single case our code predicts temperature distribution values that match more closely the experimental results.
 
 
