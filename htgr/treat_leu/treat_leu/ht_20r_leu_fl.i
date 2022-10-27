@@ -9,12 +9,12 @@
 # ==================================================================================
 # This model has been built based on [1]
 # ----------------------------------------------------------------------------------
-# [1] Zabriskie, A. X. (2019). Multi-Scale, Multi-Physics Reactor Pulse Simulation 
-#       Method with Macroscopic and Microscopic Feedback Effects (Unpublished 
+# [1] Zabriskie, A. X. (2019). Multi-Scale, Multi-Physics Reactor Pulse Simulation
+#       Method with Macroscopic and Microscopic Feedback Effects (Unpublished
 #       doctoral dissertation). Oregon State University, Corvallis, Oregon.
 # ==================================================================================
 
-# 20r HEU with fragment damage layer
+# 20r LEU with fragment damage layer
 
 # ==================================================================================
 # Problem block
@@ -22,7 +22,6 @@
 
 [Problem]
   coord_type = RSPHERICAL
-  #kernel_coverage_check = false
 []
 
 # ==================================================================================
@@ -36,7 +35,6 @@
     dx = '0.0020 0.0014 0.0020 0.011875711758' # cm
     # radius particle, damage layer, transition graphite, b_r - dam_lay - 2a_r
     ix = '10 7 10 40' # number of elements
-    #uniform_refine = 0 # no refine
   []
   [set_damlay_id]
     type = SubdomainBoundingBoxGenerator
@@ -215,7 +213,7 @@
   []
 
   # Fuel Grain UO2
-  [grain_kth] # Do DerivativeParsedMaterial for temp dependent or a function
+  [grain_kth]
     type = ParsedMaterial
     block = 10
     constant_names = 'beta p_vol sigma kap3x'
@@ -248,7 +246,6 @@
     petsc_options_iname = '-pc_type -pc_hypre_type -ksp_gmres_restart -pc_hypre_boomeramg_max_iter -pc_hypre_boomeramg_tol'
     petsc_options_value = 'hypre boomeramg 101 20 1.0e-6'
     petsc_options = '-snes_ksp_ew -snes_converged_reason'
-    #petsc_options = '-snes_ksp_ew -snes_converged_reason -ksp_monitor_true_residual'
   []
 []
 
@@ -260,13 +257,11 @@
   type = Transient
   start_time = 0.0
   end_time = 10.0
-
   l_tol = 1e-3
   l_max_its = 100
   nl_max_its = 200
   nl_abs_tol = 1e-8
   nl_rel_tol = 1e-8
-
   [TimeStepper]
     type = ConstantDT
     dt = 0.005

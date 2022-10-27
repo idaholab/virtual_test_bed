@@ -9,8 +9,8 @@
 # ==================================================================================
 # This model has been built based on [1]
 # ----------------------------------------------------------------------------------
-# [1] Zabriskie, A. X. (2019). Multi-Scale, Multi-Physics Reactor Pulse Simulation 
-#       Method with Macroscopic and Microscopic Feedback Effects (Unpublished 
+# [1] Zabriskie, A. X. (2019). Multi-Scale, Multi-Physics Reactor Pulse Simulation
+#       Method with Macroscopic and Microscopic Feedback Effects (Unpublished
 #       doctoral dissertation). Oregon State University, Corvallis, Oregon.
 # ==================================================================================
 
@@ -183,7 +183,7 @@
   []
   [avg_powerden]
     type = ElementAverageValue
-    variable = PowerDensity 
+    variable = PowerDensity
     block = 10
     execute_on = timestep_end
     outputs = all
@@ -295,7 +295,6 @@
     petsc_options_iname = '-pc_type -pc_hypre_type -ksp_gmres_restart -pc_hypre_boomeramg_max_iter -pc_hypre_boomeramg_tol'
     petsc_options_value = 'hypre boomeramg 101 20 1.0e-6'
     petsc_options = '-snes_ksp_ew -snes_converged_reason'
-    #petsc_options = '-snes_ksp_ew -snes_converged_reason -ksp_monitor_true_residual'
   []
 []
 
@@ -306,7 +305,6 @@
 [Executioner]
   type = NonlinearEigen
   free_power_iterations = 8
-
   l_tol = 1e-4
   l_max_its = 100
   nl_max_its = 200
