@@ -7,3 +7,5 @@
 [Advanced Burner Test Reactor](abtr/abtr.md)
 
 [Subchannel Demonstrations](subchannel/index.md)
+
+[Hexagonal Assembly Thermal Bowing](hex_duct_bowing/index.md)
