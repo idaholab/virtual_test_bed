@@ -5,6 +5,13 @@ control mechanisms, most NEAMS tools are at their core rather reactor-agnostic a
 are many similarities in the input files. The reader may find below an index of the codes used
 in the input files of the virtual test bed.
 
+!alert note Fully Open-Source
+The codes to run these inputs are all open-source. Please refer to the inputs are the index below for the codes used.
+- Reflector bypass flow in the PB-FHR [documentation](pbfhr/reflector.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/pbfhr/reflector)
+- Molten Salt Fast Reactor core CFD [documentation](msr/msfr/nek5000_cfd_model.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/msr/msfr/core_cfd)
+- HTGR assembly multiphysics simulation [documentation](htgr/assembly/index.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/htgr/assembly)
+
+
 ## Neutronics
 
 ### Griffin
