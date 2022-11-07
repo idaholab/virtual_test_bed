@@ -6,6 +6,7 @@
     check_input = True
     executable_pattern = 'combined*|relap-7*'
     allow_warnings = true
+    max_time = 500
   []
   [small_bypass_syntax]
     type = RunApp

@@ -1,4 +1,4 @@
-# Modular High Temperature Gas-Cooled Reactor (MHTGR)
+# High Temperature Gas-Cooled Reactor
 
 [SAM MHTGR model](mhtgr/index.md)
 
