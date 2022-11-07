@@ -194,85 +194,21 @@ Lastly, geometry WC includes two half sets of inlet and outlet channels where th
 ## Nek5000 Case setups
 
 In this section, we are going through the Nek5000 case setups. A more detailed [Nek5000 tutorial](https://nek5000.github.io/NekDoc/index.html) is available online. Readers are encouraged to read through the online tutorial first if new to Nek.
-For a typical Nek5000 case, the user file +*.usr+ is where users can customize the case settings, such as model selection, boundary and initial conditions, and post-processing. And the user file is arranged into invidual code blocks. 
+For a typical Nek5000 case, the user file +*.usr+ is where users can customize the case settings, such as model selection, boundary and initial conditions, and post-processing. And the user file is arranged into individual code blocks. 
 The 2-D axisymmetric and 3-D wedge cases are solved with the $k-\tau$ RANS model. 
 To turn on the $k-\tau$ model, one can switch the model flag to 4 in the code block +usrdat3+ in the +*.usr+ file. 
 An example is given below.
 
-```language=fortran
-      subroutine usrdat3()
-
-c      implicit none
-
-      include 'SIZE'
-      include 'TOTAL'
-
-      real wd(lx1,ly1,lz1,lelv)
-      common /walldist/ wd
-
-      logical ifcoefs
-
-C     initialize the RANS model
-      ifld_k = 3 !address of tke
-      ifld_t = 4 !address of tau
-      ifcoefs = .false.
-
-C     Supported models:
-c     id_m = 0 !regularized high-Re k-omega (no wall functions)
-c     id_m = 1 !regularized low-Re k-omega
-c     id_m = 2 !regularized high-Re k-omega SST (no wall functions)
-c     id_m = 3 !regularized low-Re k-omega SST
-      id_m = 4 !standard k-tau
-
-C     Wall distance function:
-c     id_w = 0 ! user specified
-c     id_w = 1 ! cheap_dist (path to wall, may work better for periodic boundaries)
-      id_w = 2 ! distf (coordinate difference, provides smoother function)
-
-      call rans_init(ifld_k,ifld_t,ifcoefs,coefs,id_w,wd,id_m)
-
-      return
-      end
-
-```
-
+!listing msr/msfr/core_cfd/2d_rans_Re1M/msfr.usr start=subroutine usrdat3() end=end include-end=True
 
 In addition, the user also needs to update the conductivity and diffusivity accounting for the contributions from RANS model. 
 The following code snippet should be added in the code block +uservp+
 
-```language=fortran
-
-      Pr_t=coeffs(1)
-      mu_t=rans_mut(ix,iy,iz,e)
-
-      utrans = cpfld(ifield,2)
-      if(ifield.eq.1) then
-        udiff = cpfld(ifield,1)+mu_t
-      elseif(ifield.eq.2) then !temperature
-        udiff = cpfld(ifield,1)+mu_t*cpfld(ifield,2)/(Pr_t*cpfld(1,2))
-      elseif(ifield.eq.3) then !tke
-        udiff = cpfld(1,1)+rans_mutsk(ix,iy,iz,e)
-      elseif(ifield.eq.4) then !tau
-        udiff = cpfld(1,1)+rans_mutso(ix,iy,iz,e)
-      endif
-
-```
-
+!listing msr/msfr/core_cfd/2d_rans_Re1M/msfr.usr start=Pr_t=coeffs(1) end=endif include-end=True
 
 And the snippet below should be added to the block +userq+
 
-```language=fortran
-
-      if(ifield.eq.3) then
-        qvol = rans_kSrc(ix,iy,iz,e)
-        avol = rans_kDiag(ix,iy,iz,e)
-      elseif(ifield.eq.4) then
-        qvol = rans_omgSrc(ix,iy,iz,e)
-        avol = rans_omgDiag(ix,iy,iz,e)
-      endif
-
-```
-
+!listing msr/msfr/core_cfd/2d_rans_Re1M/msfr.usr start= if(ifield.eq.3) then end=endif include-end=True
 
 For a mesh produced by GMSH, the Nek5000 relies on the physical group ids
 to specify the boundary conditions. There are 4 groups in the current case,
@@ -280,36 +216,9 @@ which covers the boundary edges of domain inlet(1), outlet(2), wall(3), and the
 axisymmetric axis(4). The following code snippet showcases how the
 boundary condition tags are given to the model entities.
 
-```language=fortran
-do iel=1,nelt
-do ifc=1,2*ndim
-   id_face = boundaryID(ifc,iel)
-   if (id_face.eq.1) then         ! inlet
-       cbc(ifc,iel,1) = 'v  '
-   elseif (id_face.eq.2) then     ! outlet
-       cbc(ifc,iel,1) = 'O  '
-   elseif (id_face.eq.3) then     ! wall
-       cbc(ifc,iel,1) = 'W  '
-   elseif (id_face.eq.4) then     ! centerline (axisymmetric)
-       cbc(ifc,iel,1) = 'A  '
-   endif
-enddo
-enddo
+!listing msr/msfr/core_cfd/2d_rans_Re1M/msfr.usr start=nx1*ny1*nz1*nelt end=return
 
-do i=2,ldimt1
-do e=1,nelt
-do f=1,ldim*2
-  cbc(f,e,i)=cbc(f,e,1)
-  if(cbc(f,e,1).eq.'W  ') cbc(f,e,i)='t  '
-  if(cbc(f,e,1).eq.'v  ') cbc(f,e,i)='t  '
-enddo
-enddo
-enddo
-
-```
-
-
-Due to the large size of mesh files used by 3-D cases, original GMSH scripts are provided for 3-D Nek cases intead of the related mesh files.
+Due to the large size of mesh files used by 3-D cases, original GMSH scripts are provided for 3-D Nek cases instead of the related mesh files.
 The user can generate the mesh file using GMSH, and then convert it into Nek supported format (+*.re2+) using the Nek utility +gmsh2nek+. 
 
 !alert note
@@ -321,27 +230,7 @@ for velocity and scalars, or load the existing solutions by providing the path
 to the restart file in the +par+ file. In the case of user-specified initial
 conditions, one can update the +useric+ block in the user file.
 
-```language=fortran
-      subroutine useric(ix,iy,iz,eg) ! set up initial conditions
-      implicit none
-      include 'SIZE'
-      include 'TOTAL'
-      include 'NEKUSE'
-
-      integer ix,iy,iz,e,eg
-
-      e = gllel(eg)
-
-      ux   = 0.0
-      uy   = 0.0
-      uz   = 0.0
-      temp = 0.0
-
-      return
-      end
-
-```
-
+!listing msr/msfr/core_cfd/2d_rans_Re1M/msfr.usr start=subroutine useric(ix,iy,iz,eg) end=end include-end=True
 
 The specific boundary condition can be provided in the +userbc+ block. 
 Since the settings of domain outlet, no-slip wall, and the
@@ -352,33 +241,7 @@ velocity is parallel to the inlet channel.
 Note that a `turb_in` function is used to compute the proper bc values
 for $k$ and $\tau$ variables on the inlet boundary.
 
-```language=fortran
-subroutine userbc(ix,iy,iz,iside,eg) ! set up boundary conditions
-implicit none
-include 'SIZE'
-include 'TOTAL'
-include 'NEKUSE'
-c
-real wd
-common /walldist/ wd(lx1,ly1,lz1,lelv)
-
-integer ix,iy,iz,iside,e,eg
-real tke_tmp,tau_tmp
-e = gllel(eg)
-
-ux   = 0.38981288981
-uy   =-1.32536382536
-uz   = 0.0
-temp = 0.0
-
-call turb_in(wd(ix,iy,iz,e),tke_tmp,tau_tmp)
-if(ifield.eq.3) temp = tke_tmp
-if(ifield.eq.4) temp = tau_tmp
-
-return
-end
-
-```
+!listing msr/msfr/core_cfd/2d_rans_Re1M/msfr.usr start=subroutine userbc(ix,iy,iz,iside,eg) end=end include-end=True
 
 It is recommended to use non-dimensional parameters for Nek5000 simulations.
 As a result, a set of dimensionless input parameters are provided in the
@@ -387,34 +250,12 @@ which indicates the level of turbulence intensity in the system. All the key
 input parameters are given in the +par+ file, and a code snippet of the velocity
 solving is as follows
 
-```language=bash
-[VELOCITY]
-density = 1.0
-viscosity = -5.0E+04
-residualTol = 1e-8
-residualPROJ = yes
-
-```
+!listing msr/msfr/core_cfd/2d_rans_Re1M/msfr.par start=[VELOCITY] end=residualPROJ include-end=True
 
 The LES case setups are relatively simpler, and one only need to provide the filter settings in +par+ file. 
 An example can be found below
 
-```language=bash
-[GENERAL]
-#startFrom = run13_avg/msfr0.f00001
-stopAt = numSteps
-numSteps = 0
-dt = 1.0e-04
-writeInterval = 20000
-timeStepper = BDF2
-filtering = explicit
-filterWeight = 0.05
-filterModes = 2
-dealiasing = yes
-extrapolation = OIFS
-targetCFL = 4.0
-
-```
+!listing msr/msfr/core_cfd/2d_rans_Re1M/msfr.par start=[GENERAL] end=targetCFL include-end=True
 
 Users are encouraged to check out the case files (particularly +usr+ and +par+ files) that are provided in the VTB repository
 to get a better idea how the RANS and LES cases are established. 
