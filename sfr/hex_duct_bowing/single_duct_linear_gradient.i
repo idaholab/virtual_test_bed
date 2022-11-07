@@ -51,7 +51,7 @@
     top_sideset = '1202'
     input = rename_cladding_1
   []
-  
+
   ##################
   [load_pad_hex]
     type = PolygonConcentricCircleMeshGenerator
@@ -135,8 +135,8 @@
 []
 
 [Functions]
-# The duct temperatures are defined at the corners and linearly vary in the axial direction 
-# and along the face of the duct. 
+# The duct temperatures are defined at the corners and linearly vary in the axial direction
+# and along the face of the duct.
   [temp_func]
     type = ParsedFunction
     #At center of wall, y=+-0.075m
@@ -188,7 +188,7 @@
     [Master]
       [all]
         strain = FINITE
-		    volumetric_locking_correction = true
+        volumetric_locking_correction = true
         add_variables = true
         eigenstrain_names = thermal_expansion
         decomposition_method = EigenSolution
@@ -206,11 +206,11 @@
     type = ComputeIsotropicElasticityTensor
     youngs_modulus = 1.7e11
     poissons_ratio = 0.3
-	  block = 1
+    block = 1
   []
   [small_stress]
     type = ComputeFiniteStrainElasticStress
-	  block = 1
+    block = 1
   []
   [thermal_expansion_strain]
     type = ComputeThermalExpansionEigenstrain
@@ -218,7 +218,7 @@
     thermal_expansion_coeff = 18.0e-6
     temperature = temp
     eigenstrain_name = thermal_expansion
-	  block = '1'
+    block = '1'
   []
 []
 
@@ -226,7 +226,7 @@
   active = 'smp1'
   [smp1]
     type = SMP
-	  full = true
+    full = true
   []
 []
 
@@ -234,12 +234,12 @@
   automatic_scaling = true
   type = Transient
   solve_type = 'PJFNK'
-  
+
   petsc_options = '-ksp_snes_ew'
   petsc_options_iname = '-pc_type -pc_factor_mat_solver_package'
   petsc_options_value = 'lu       superlu_dist'
   line_search = none
-  
+
   l_max_its = 100
   nl_max_its = 50
   nl_rel_tol = 1e-4

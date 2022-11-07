@@ -1,6 +1,6 @@
 # ==============================================================================
 # Hexagonal Duct Bowing - Constant Thermal Gradient
-# Tensor Mechanics solve of duct thermal bowing 
+# Tensor Mechanics solve of duct thermal bowing
 # 3D Hexagonal assembly single duct, thermal mechanical simultation
 # ------------------------------------------------------------------------------
 # Argonne National Laboratory, 10/2022
@@ -51,7 +51,7 @@
     top_sideset = '1202'
     input = rename_cladding_1
   []
-  
+
   ##################
    [load_pad_hex]
      type = PolygonConcentricCircleMeshGenerator
@@ -91,7 +91,7 @@
      transform = translate
      vector_value = '0 0 2.95'
    []
- 
+
    [Cladding_load_pad_stitching]
      type = StitchedMeshGenerator
      inputs = 'cladding_extrude  load_pad_translate'
@@ -135,31 +135,31 @@
 []
 
 [Functions]
-# The duct temperatures are defined at the corners and linearly vary in the axial direction 
-# and along the face of the duct. 
+# The duct temperatures are defined at the corners and linearly vary in the axial direction
+# and along the face of the duct.
 
   [temp_func]
     type = ParsedFunction
-	#At center of wall, y=+-0.075m
-	#T varies across the cross-section from 500C to 550C, ramps up to that from 400C at z=1.5m to 2.5m
-	value = '400+t*(125-25/.075*y*t)'
+  #At center of wall, y=+-0.075m
+  #T varies across the cross-section from 500C to 550C, ramps up to that from 400C at z=1.5m to 2.5m
+  value = '400+t*(125-25/.075*y*t)'
   []
 []
 
 [AuxVariables]
   [./temp]
     initial_condition = 400
-	order = FIRST
-	family = LAGRANGE
+  order = FIRST
+  family = LAGRANGE
   [../]
 []
 
 [AuxKernels]
   [./tfunc]
     type = FunctionAux
-	variable = temp
-	function = temp_func
-	block = '1'
+  variable = temp
+  function = temp_func
+  block = '1'
   []
 []
 
@@ -189,14 +189,14 @@
     [Master]
       [all]
         strain = FINITE
-		volumetric_locking_correction = true
+    volumetric_locking_correction = true
         add_variables = true
         eigenstrain_names = thermal_expansion
-		decomposition_method = EigenSolution
-		generate_output = 'vonmises_stress'
-		temperature = temp
-		use_finite_deform_jacobian = true
-		extra_vector_tags = 'ref'
+    decomposition_method = EigenSolution
+    generate_output = 'vonmises_stress'
+    temperature = temp
+    use_finite_deform_jacobian = true
+    extra_vector_tags = 'ref'
       []
     []
   []
@@ -207,11 +207,11 @@
     type = ComputeIsotropicElasticityTensor
     youngs_modulus = 1.7e11
     poissons_ratio = 0.3
-	block = 1
+  block = 1
   []
   [small_stress]
     type = ComputeFiniteStrainElasticStress
-	block = 1
+  block = 1
   []
   [thermal_expansion_strain]
     type = ComputeThermalExpansionEigenstrain
@@ -219,7 +219,7 @@
     thermal_expansion_coeff = 18.0e-6
     temperature = temp
     eigenstrain_name = thermal_expansion
-	block = '1'
+  block = '1'
   []
 []
 
@@ -227,7 +227,7 @@
   active = 'smp1'
   [smp1]
     type = SMP
-	full = true
+  full = true
   []
 []
 
@@ -235,12 +235,12 @@
   automatic_scaling = true
   type = Transient
   solve_type = 'PJFNK'
-  
+
   petsc_options = '-ksp_snes_ew'
   petsc_options_iname = '-pc_type -pc_factor_mat_solver_package'
   petsc_options_value = 'lu       superlu_dist'
   line_search = none
-  
+
   l_max_its = 100
   nl_max_its = 50
   nl_rel_tol = 1e-4
@@ -289,17 +289,17 @@
 [VectorPostprocessors]
   [face4]
      type = NodalValueSampler
-	 sort_by = z
-	 variable = 'disp_x disp_y'
-	 boundary = face4
+   sort_by = z
+   variable = 'disp_x disp_y'
+   boundary = face4
   []
   [corner1]
     type = LineValueSampler
-	sort_by = z
-	variable = 'temp'
-	start_point = '0.0664 0.0 0.0'
-	end_point = '0.0664 0.0 4.0'
-	num_points = 100
+  sort_by = z
+  variable = 'temp'
+  start_point = '0.0664 0.0 0.0'
+  end_point = '0.0664 0.0 4.0'
+  num_points = 100
   []
 []
 
@@ -308,14 +308,14 @@
   perf_graph = true
   [duct_displace]
     type = CSV
-	file_base = face_disp
-	execute_on = final
-	show = 'face4'
+  file_base = face_disp
+  execute_on = final
+  show = 'face4'
   []
   [load_pad]
     type = CSV
-	file_base = load_pad_displace
-	execute_on = timestep_end
-	show = 'dispx_core_top dispy_core_top dispx_aclp dispy_aclp dispx_tlp dispy_tlp'
+  file_base = load_pad_displace
+  execute_on = timestep_end
+  show = 'dispx_core_top dispy_core_top dispx_aclp dispy_aclp dispx_tlp dispy_tlp'
   []
 []

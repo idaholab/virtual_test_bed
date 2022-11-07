@@ -66,13 +66,13 @@
 [BCs]
   [no_x_bot]
     type = DirichletBC
-	variable = disp_x
+  variable = disp_x
     boundary = 1001
     value = 0.0
   []
   [no_y_bot]
     type = DirichletBC
-	variable = disp_y
+  variable = disp_y
     boundary = 1001
     value = 0.0
   []
