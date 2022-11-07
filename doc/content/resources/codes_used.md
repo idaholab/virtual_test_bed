@@ -5,11 +5,20 @@ control mechanisms, most NEAMS tools are at their core rather reactor-agnostic a
 are many similarities in the input files. The reader may find below an index of the codes used
 in the input files of the virtual test bed.
 
-!alert note Fully Open-Source
-The codes to run these inputs are all open-source. Please refer to the inputs are the index below for the codes used.
-- Reflector bypass flow in the PB-FHR [documentation](pbfhr/reflector.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/pbfhr/reflector)
-- Molten Salt Fast Reactor core CFD [documentation](msr/msfr/nek5000_cfd_model.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/msr/msfr/core_cfd)
+!alert note title=Fully Open-Source
+The codes required to run these inputs are all open-source. Please refer to the inputs or the index below for the codes used.\\
+- Reflector bypass flow in the PB-FHR [documentation](pbfhr/reflector.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/pbfhr/reflector)\\
+- Molten Salt Fast Reactor core CFD [documentation](msr/msfr/nek5000_cfd_model.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/msr/msfr/core_cfd)\\
 - HTGR assembly multiphysics simulation [documentation](htgr/assembly/index.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/htgr/assembly)
+
+
+!alert note title=Partially Open-Source
+Some of the codes required to run these inputs are open-source. You will not be able to run the full multiphysics simulation, but
+often by removing the `[MultiApps]` and `[Transfers]` blocks, you should be able to run part of the problem standalone. 
+Please refer to the inputs or the index below for the codes used.\\
+- Molten Salt Fast Reactor (using MOOSE Navier-Stokes) [documentation](msr/msfr/griffin_pgh_model.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/msr/msfr/steady)\\
+- Versatile Test Reactor core model [documentation](sfr/vtr/index.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/sfr/vtr) \\
+- High Temperature Test Facility transient simulations (core conduction) [documentation](htgr/httf/index.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/httf)
 
 
 ## Neutronics
