@@ -112,6 +112,10 @@ use of non-orthogonal correctors for meshes with a degree of skewness.
 
 # MSFR Griffin-Pronghorn Results
 
+!alert note
+Sample outputs for this model are hosted on LFS. Please refer to [LFS instructions](resources/how_to_use_vtb.md#lfs)
+to download them.
+
 ## Initialization
 
 The Reynolds number in the operational regime of the MSFR is around $1x10^6$,

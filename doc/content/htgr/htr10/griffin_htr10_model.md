@@ -159,6 +159,10 @@ is the sequential order of the named sub-blocks `[./*]`.
 
 ### Equivalence
 
+!alert note
+Equivalence factors for this model are hosted on LFS. Please refer to [LFS instructions](resources/how_to_use_vtb.md#lfs)
+to download them.
+
 The Equivalence theory block/action is used to compute or apply
 equivalence factors. In this case, Super homogenization factors are applied.
 Griffin also supports the use of discontinuity factors.
@@ -206,6 +210,10 @@ Lastly, we tell it to
          block=AuxKernels
 
 ### Materials
+
+!alert note
+The cross sections for this model are hosted on LFS. Please refer to [LFS instructions](resources/how_to_use_vtb.md#lfs)
+to download them.
 
 Material cross sections are specified with the multi-group
 cross section library defined by [!style color=red](library_file)

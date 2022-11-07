@@ -4,6 +4,10 @@
 
 ## Mesh File
 
+!alert note
+The mesh for this model is hosted on LFS. Please refer to [LFS instructions](resources/how_to_use_vtb.md#lfs)
+to download it.
+
 Mesh generation was performed with [Cubit](https://cubit.sandia.gov/) toolkit and the mesh file is used in BISON, and in the MultiApp (coupling BISON and Sockeye). A simplified 1/6 core was generated for preliminary assessment (Figure below). This mesh does not contain the helium gaps and stainless steel envelops for moderators and heat pipes, both of which will be included in the later version of full core model. The mesh density in radial direction is high as multiple small features (fuel rods, moderators, heat pipes and control drums) are involved.
 
 !media media/mrad/mrad_geometry/mrad_mesh.png
