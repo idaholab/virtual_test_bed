@@ -2,6 +2,10 @@
 
 *Contact: April Novak, anovak.at.anl.gov*
 
+!alert note
+The meshes for this model are hosted on LFS. Please refer to [LFS instructions](resources/how_to_use_vtb.md#lfs)
+to download them.
+
 The pebble region in the [!ac](PB-FHR) is enclosed by an outer graphite reflector
 that constrains the pebble geometry while also
 serving as a reflector for neutrons and a shield for

@@ -176,3 +176,7 @@ It is observed that for every single case our code predicts temperature distribu
        style=width:55%
        id=plots
        caption=Comparison of results obtained for ORNL-19 pin case between experimental measurements, the SUBAC code, the MATRA-LMR code, and the current code. (a) High mass flow case. (b) Medium mass flow case. (c) Low mass flow case
+
+!alert note
+Sample output for this model, in the gold folder, is hosted on LFS.
+Please refer to [LFS instructions](resources/how_to_use_vtb.md#lfs) to download it.
