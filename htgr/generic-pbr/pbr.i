@@ -31,6 +31,8 @@
 ##    ensure the correct prescription of reactivity coefficients in the pebbles. On the other hand, for the reflector region
 ##    where there is no Doppler reactivity, no distinctions are made between the moderator and reflector reactivities. They
 ##    are summed and prescribed to the reflectors to reduce the complexity of the model. 
+## Note: The warnings about the dimension of the heat transfer component are expected and do not affect simulation
+## results. They will be addressed in upcoming SAM development.
 
 ############################################ Main references ############################################
 ## 1. Stewart, R., Reger, D., and Balestra, P., 'Demonstrate Capability of NEAMS
@@ -4436,7 +4438,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 	[../]
 	# Heater max temperature ###################
 	[./max_Tsolid_F1]
-		type = NodalMaxValue
+		type = NodalExtremeValue
 		block = 'F-1:solid:fuel'
 		variable = T_solid
 	[../]
@@ -4448,7 +4450,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 	[../]
     #  Max fuel kernel temperature
 	[./max_Tkernel_F1]
-		type = NodalMaxValue
+		type = NodalExtremeValue
 		block = 'F-1:solid:fuel'
 		variable = T_kernel
 	[../]
@@ -4492,7 +4494,8 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 []
 [Outputs]
     print_linear_residuals = false
-    [./out]
+    perf_graph = true
+	[./out]
         type = Checkpoint
     [../]
     [./out_displaced]
@@ -4510,6 +4513,5 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
         type = Console
         fit_mode = AUTO
         execute_scalars_on = 'NONE'
-        perf_log = true
     [../]
 []

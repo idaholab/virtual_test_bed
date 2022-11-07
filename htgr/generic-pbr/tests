@@ -1,9 +1,16 @@
 [Tests]
-  [pbr_sam]
+  [pbr_sam_syntax]
     type = RunApp
     input = 'pbr.i'
     check_input = True
     executable_pattern = 'sam*|blue_crab*'
-    cli_args = '--app SamApp'
+    cli_args = '--app SamApp --allow-unused'
+  []
+  [pbr_sam]
+    type = CSVDiff
+    input = 'pbr.i'
+    csvdiff = 'pbr_csv.csv'
+    executable_pattern = 'sam*|blue_crab*'
+    cli_args = '--app SamApp --allow-unused Executioner/num_steps=6'
   []
 []
