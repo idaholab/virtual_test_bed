@@ -1,0 +1,226 @@
+#include "experimental/rans_komg.f"
+c-----------------------------------------------------------------------
+c  nek5000 user-file template
+c
+c  user specified routines:
+c     - uservp  : variable properties
+c     - userf   : local acceleration term for fluid
+c     - userq   : local source term for scalars
+c     - userbc  : boundary conditions
+c     - useric  : initial conditions
+c     - userchk : general purpose routine for checking errors etc.
+c     - userqtl : thermal divergence for lowMach number flows 
+c     - usrdat  : modify element vertices 
+c     - usrdat2 : modify mesh coordinates
+c     - usrdat3 : general purpose routine for initialization
+c     
+c-----------------------------------------------------------------------
+      include "limits.f"
+      include "utilities.f"
+      include "recycle.f"
+c-----------------------------------------------------------------------
+      subroutine uservp(ix,iy,iz,eg) ! set variable properties
+      implicit none
+      include 'SIZE'
+      include 'TOTAL'
+      include 'NEKUSE'
+
+      integer ix,iy,iz,e,eg
+
+      udiff =0.0
+      utrans=0.0
+
+      return
+      end
+c-----------------------------------------------------------------------
+      subroutine userf(ix,iy,iz,eg) ! set acceleration term
+      implicit none
+      include 'SIZE'
+      include 'TOTAL'
+      include 'NEKUSE'
+c
+c     Note: this is an acceleration term, NOT a force!
+c     Thus, ffx will subsequently be multiplied by rho(x,t).
+c
+      integer ix,iy,iz,e,eg
+
+      ffx = 0.0
+      ffy = 0.0
+      ffz = 0.0
+
+      return
+      end
+c-----------------------------------------------------------------------
+      subroutine userq(ix,iy,iz,eg) ! set source term
+      implicit none
+      include 'SIZE'
+      include 'TOTAL'
+      include 'NEKUSE'
+
+      integer ix,iy,iz,e,eg
+
+      qvol = 0.0
+
+      return
+      end
+c-----------------------------------------------------------------------
+      subroutine userbc(ix,iy,iz,iside,eg) ! set up boundary conditions
+      implicit none
+      include 'SIZE'
+      include 'TOTAL'
+      include 'NEKUSE'
+
+      integer ix,iy,iz,iside,eg,ie
+      real uin,vin,win,tin
+      common /cvelbc/ uin(lx1,ly1,lz1,lelv)
+     &              , vin(lx1,ly1,lz1,lelv)
+     &              , win(lx1,ly1,lz1,lelv)
+     &              , tin(lx1,ly1,lz1,lelt,ldimt)
+      ie = gllel(eg)
+
+c recycling boundary condition for the inlet velocity
+      ux   = uin(ix,iy,iz,ie)
+      uy   = vin(ix,iy,iz,ie)
+      uz   = win(ix,iy,iz,ie)
+
+      temp = 0.0
+
+      return
+      end
+c-----------------------------------------------------------------------
+      subroutine useric(ix,iy,iz,eg) ! set up initial conditions
+      implicit none
+      include 'SIZE'
+      include 'TOTAL'
+      include 'NEKUSE'
+
+      integer ix,iy,iz,e,eg
+
+      e = gllel(eg)
+
+      ux   = 0.0
+      uy   = 0.0
+      uz   = 0.0
+      temp = 0.0
+
+      return
+      end
+c-----------------------------------------------------------------------
+      subroutine userchk()
+C      implicit none
+      include 'SIZE'
+      include 'TOTAL'
+
+      common /myoutflow/ d(lx1,ly1,lz1,lelt),m1(lx1*ly1*lz1,lelt)
+      real m1
+
+      integer lt,i,ntot
+      parameter(lt=lx1*ly1*lz1*lelv)
+      real norm(3),pt(3),planar_ave_m1,umean
+
+c recycling BC
+      data ubar / 1.0 /
+      data tbar / ldimt*0.0 /
+      save ubar,tbar
+
+c recycling boundary condition
+      call set_inflow_fpt(0.0,-1.2,0.0,ubar,tbar)
+
+CC monitor the average axial velocity in the core
+C      norm(1)=0.0
+C      norm(2)=1.0
+C      norm(3)=0.0
+C      pt(1)=0.0
+C      pt(2)=0.0
+C      pt(3)=0.0
+
+      if(mod(istep,10).eq.0) then
+        call print_limits 
+C        call y_p_limits(wd,.true.)
+C        umean=planar_ave_m1(vy,norm,pt,0.05)
+C        if(nio.eq.0) write(6,'(a15,es13.4)') "umean:",umean
+      endif
+
+c turbulent outflow bc
+      rq  = 8.
+      uin = 0.
+      call turb_outflow(d,m1,rq,uin)
+
+      call avg_all
+
+      return
+      end
+c-----------------------------------------------------------------------
+      subroutine userqtl ! Set thermal divergence
+
+      call userqtl_scig 
+
+      return
+      end
+c-----------------------------------------------------------------------
+      subroutine usrdat()   ! This routine to modify element vertices
+      implicit none
+      include 'SIZE'
+      include 'TOTAL'
+
+      return
+      end
+c-----------------------------------------------------------------------
+      subroutine usrdat2()  ! This routine to modify mesh coordinates
+      implicit none
+      include 'SIZE'
+      include 'TOTAL'
+
+      integer iel, ifc, id_face
+      integer i, e, f, n
+      real Dhi
+      real xx,yy,zz,dr
+
+      do iel=1,nelv
+      do ifc=1,2*ndim
+        id_face = bc(5,ifc,iel,1)
+        if (id_face.eq.1) then        ! surface 1 for inlet
+           cbc(ifc,iel,1) = 'v  '
+        elseif (id_face.eq.2) then    ! surface 2 for outlet
+           cbc(ifc,iel,1) = 'O  '
+        elseif (id_face.eq.3) then    ! surface 3 for wall
+           cbc(ifc,iel,1) = 'W  '
+        endif
+      enddo
+      enddo
+
+      do i=2,ldimt1
+      do e=1,nelt
+      do f=1,ldim*2
+        cbc(f,e,i)=cbc(f,e,1)
+        if(cbc(f,e,1).eq.'W  ') cbc(f,e,i)='t  '
+        if(cbc(f,e,1).eq.'v  ') cbc(f,e,i)='t  '
+      enddo
+      enddo
+      enddo
+
+      n=nx1*ny1*nz1*nelv
+      Dhi = 1.0 !the geometric scaling factor
+      do i=1,n
+        xx = xm1(i,1,1,1)
+        yy = ym1(i,1,1,1)
+        zz = zm1(i,1,1,1)
+        dr = sqrt(xx*xx+zz*zz)
+        if(dr.gt.1.785 .and. yy.gt.(-0.94) .and. yy.lt.0.261) then
+          ym1(i,1,1,1) = 2.0*(yy+0.94)-0.94
+        endif      
+      enddo
+
+      return
+      end
+c-----------------------------------------------------------------------
+      subroutine usrdat3()
+      implicit none
+      include 'SIZE'
+      include 'TOTAL'
+
+      call count_boundaries
+
+      return
+      end
+C-----------------------------------------------------------------------
