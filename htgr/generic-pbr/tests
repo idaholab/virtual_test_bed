@@ -11,6 +11,10 @@
     input = 'pbr.i'
     csvdiff = 'pbr_csv.csv'
     executable_pattern = 'sam*|blue_crab*'
-    cli_args = '--app SamApp --allow-unused Executioner/num_steps=6'
+    cli_args = '--app SamApp --allow-unused Executioner/num_steps=6 Executioner/nl_rel_tol=1e-8 Executioner/nl_abs_tol=1e-7'
+    abs_zero = 1e-5
+    rel_err = 1e-5
+    max_time = 500
+    method = 'opt'
   []
 []
