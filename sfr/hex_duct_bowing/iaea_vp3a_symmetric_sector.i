@@ -93,7 +93,7 @@
 [Modules]
   [TensorMechanics]
     [Master]
-	  [all]
+      [all]
         strain = FINITE
         volumetric_locking_correction = true
         eigenstrain_names = thermal_expansion
@@ -103,8 +103,8 @@
         temperature = temp
         use_finite_deform_jacobian = true
         extra_vector_tags = 'ref'
-	  []
-	[]
+      []
+    []
   []
 []
 
@@ -268,24 +268,24 @@
 [VectorPostprocessors]
   [duct_1]
     type = LineValueSampler
-	sort_by = z
-	variable = 'disp_y'
-	start_point = '0.0669059 0.0 0.0'
-	end_point = '0.0669059 0.0 4.0'
-	num_points = 101
-	execute_on = FINAL
+    sort_by = z
+    variable = 'disp_y'
+    start_point = '0.0669059 0.0 0.0'
+    end_point = '0.0669059 0.0 4.0'
+    num_points = 101
+    execute_on = FINAL
   []
   [duct_3]
     type = NodalValueSampler
-	sort_by = z
-	variable = 'disp_x disp_y'
-	boundary = CornersDuct3
+    sort_by = z
+    variable = 'disp_x disp_y'
+    boundary = CornersDuct3
   []
   [duct_10]
     type = NodalValueSampler
-	sort_by = z
-	variable = 'disp_x disp_y'
-	boundary = CornersDuct10
+    sort_by = z
+    variable = 'disp_x disp_y'
+    boundary = CornersDuct10
   []
 []
 
@@ -294,26 +294,26 @@
   perf_graph = true
   [tlp_displace]
     type = CSV
-	file_base = tlp_disp_dt_steps
-	execute_on = timestep_end
-	show = 'disp_x_1 disp_y_1 disp_x_3 disp_y_3 disp_x_10 disp_y_10 disp_x_11 disp_y_11'
+    file_base = tlp_disp_dt_steps
+    execute_on = timestep_end
+    show = 'disp_x_1 disp_y_1 disp_x_3 disp_y_3 disp_x_10 disp_y_10 disp_x_11 disp_y_11'
   []
   [duct1_displace]
     type = CSV
-	file_base = duct_1_centerline
-	execute_on = final
-	show = duct_1
+    file_base = duct_1_centerline
+    execute_on = final
+    show = duct_1
   []
   [duct3_displace]
     type = CSV
-	file_base = duct_3_corners
-	execute_on = final
-	show = duct_3
+    file_base = duct_3_corners
+    execute_on = final
+    show = duct_3
   []
   [duct10_displace]
     type = CSV
-	file_base = duct_10_corners
-	execute_on = final
-	show = duct_10
+    file_base = duct_10_corners
+    execute_on = final
+    show = duct_10
   []
 []

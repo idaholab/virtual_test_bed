@@ -53,64 +53,64 @@
   []
   
   ##################
-   [load_pad_hex]
-     type = PolygonConcentricCircleMeshGenerator
-     num_sides = 6 # must be six to use hex pattern
-     num_sectors_per_side = '8 8 8 8 8 8'
-     background_intervals = 2
-     background_block_ids = '10 10'
-     polygon_size = 0.069201905
-     polygon_size_style = 'apothem'
-     duct_sizes_style = 'apothem'
-     duct_sizes = '0.066451905'
-     duct_intervals = '1'
-     duct_block_ids = '1600'
-     preserve_volumes = on
-     quad_center_elements = true
-     surface_boundary_id = 200
-     interface_boundary_id_shift = 200
-   []
+  [load_pad_hex]
+    type = PolygonConcentricCircleMeshGenerator
+    num_sides = 6 # must be six to use hex pattern
+    num_sectors_per_side = '8 8 8 8 8 8'
+    background_intervals = 2
+    background_block_ids = '10 10'
+    polygon_size = 0.069201905
+    polygon_size_style = 'apothem'
+    duct_sizes_style = 'apothem'
+    duct_sizes = '0.066451905'
+    duct_intervals = '1'
+    duct_block_ids = '1600'
+    preserve_volumes = on
+    quad_center_elements = true
+    surface_boundary_id = 200
+    interface_boundary_id_shift = 200
+  []
 
-   [load_pad_center_removal]
-     type = BlockDeletionGenerator
-     block = '10'
-     input = load_pad_hex
-     new_boundary = '2200' # load pad inner surface to stitch
-   []
+  [load_pad_center_removal]
+    type = BlockDeletionGenerator
+    block = '10'
+    input = load_pad_hex
+    new_boundary = '2200' # load pad inner surface to stitch
+  []
 
-   [load_pad_extrude]
-     type = MeshExtruderGenerator
-     extrusion_vector = '0 0 0.1'
-     num_layers = 10
-     input = load_pad_center_removal
-   []
+  [load_pad_extrude]
+    type = MeshExtruderGenerator
+    extrusion_vector = '0 0 0.1'
+    num_layers = 10
+    input = load_pad_center_removal
+  []
 
-   [load_pad_translate]
-     type = TransformGenerator
-     input = load_pad_extrude
-     transform = translate
-     vector_value = '0 0 2.95'
-   []
- 
-   [Cladding_load_pad_stitching]
-     type = StitchedMeshGenerator
-     inputs = 'cladding_extrude  load_pad_translate'
-     clear_stitched_boundary_ids = true
-     stitch_boundaries_pairs = '1000 2200'
-   []
+  [load_pad_translate]
+    type = TransformGenerator
+    input = load_pad_extrude
+    transform = translate
+    vector_value = '0 0 2.95'
+  []
 
-   [sidesets_rename_all]
-     type = RenameBoundaryGenerator
-     input = Cladding_load_pad_stitching
-     old_boundary = '1201 1001 1002 1003 1004 1005 1006 10001 15001 10002 15002 10003 15003 10004 15004 10005 15005 10006 15006'
-     new_boundary = 'fixed face3 face2 face1 face6 face5 face4 face3_aclp face3_aclp face2_aclp face2_aclp face1_aclp face1_aclp face6_aclp face6_aclp face5_aclp face5_aclp face4_aclp face4_aclp'
-   []
-   [block_rename]
-     type = RenameBlockGenerator
-     input = sidesets_rename_all
-     old_block_id = '1500 1600'
-     new_block_id ='1 1'
-   []
+  [Cladding_load_pad_stitching]
+    type = StitchedMeshGenerator
+    inputs = 'cladding_extrude  load_pad_translate'
+    clear_stitched_boundary_ids = true
+    stitch_boundaries_pairs = '1000 2200'
+  []
+
+  [sidesets_rename_all]
+    type = RenameBoundaryGenerator
+    input = Cladding_load_pad_stitching
+    old_boundary = '1201 1001 1002 1003 1004 1005 1006 10001 15001 10002 15002 10003 15003 10004 15004 10005 15005 10006 15006'
+    new_boundary = 'fixed face3 face2 face1 face6 face5 face4 face3_aclp face3_aclp face2_aclp face2_aclp face1_aclp face1_aclp face6_aclp face6_aclp face5_aclp face5_aclp face4_aclp face4_aclp'
+  []
+  [block_rename]
+    type = RenameBlockGenerator
+    input = sidesets_rename_all
+    old_block_id = '1500 1600'
+    new_block_id ='1 1'
+  []
   patch_update_strategy = auto
   patch_size = 20
   partitioner = centroid
@@ -118,11 +118,11 @@
 []
 
 [Problem]
-   type = ReferenceResidualProblem
-   extra_tag_vectors = 'ref'
-   reference_vector = 'ref'
-   group_variables = 'disp_x disp_y disp_z'
-   acceptable_multiplier = 10
+  type = ReferenceResidualProblem
+  extra_tag_vectors = 'ref'
+  reference_vector = 'ref'
+  group_variables = 'disp_x disp_y disp_z'
+  acceptable_multiplier = 10
 []
 
 [Variables]
@@ -137,29 +137,28 @@
 [Functions]
 # The duct temperatures are defined at the corners and linearly vary in the axial direction 
 # and along the face of the duct. 
-
   [temp_func]
     type = ParsedFunction
-	#At center of wall, y=+-0.075m
-	#T varies across the cross-section from 500C to 550C, ramps up to that from 400C at z=1.5m to 2.5m
-	value = '400+if(z>2.5,t*(125-25/.075*y*t),if(z>1.5,t*(z-1.5)/1.0*(125-25/.075*y*t),0))'
+    #At center of wall, y=+-0.075m
+    #T varies across the cross-section from 500C to 550C, ramps up to that from 400C at z=1.5m to 2.5m
+    value = '400+if(z>2.5,t*(125-25/.075*y*t),if(z>1.5,t*(z-1.5)/1.0*(125-25/.075*y*t),0))'
   []
 []
 
 [AuxVariables]
   [temp]
     initial_condition = 400
-	order = FIRST
-	family = LAGRANGE
+    order = FIRST
+    family = LAGRANGE
   []
 []
 
 [AuxKernels]
   [tfunc]
     type = FunctionAux
-	variable = temp
-	function = temp_func
-	block = '1'
+    variable = temp
+    function = temp_func
+    block = '1'
   []
 []
 
@@ -189,14 +188,14 @@
     [Master]
       [all]
         strain = FINITE
-		volumetric_locking_correction = true
+		    volumetric_locking_correction = true
         add_variables = true
         eigenstrain_names = thermal_expansion
-		decomposition_method = EigenSolution
-		generate_output = 'vonmises_stress'
-		temperature = temp
-		use_finite_deform_jacobian = true
-		extra_vector_tags = 'ref'
+        decomposition_method = EigenSolution
+        generate_output = 'vonmises_stress'
+        temperature = temp
+        use_finite_deform_jacobian = true
+        extra_vector_tags = 'ref'
       []
     []
   []
@@ -207,11 +206,11 @@
     type = ComputeIsotropicElasticityTensor
     youngs_modulus = 1.7e11
     poissons_ratio = 0.3
-	block = 1
+	  block = 1
   []
   [small_stress]
     type = ComputeFiniteStrainElasticStress
-	block = 1
+	  block = 1
   []
   [thermal_expansion_strain]
     type = ComputeThermalExpansionEigenstrain
@@ -219,7 +218,7 @@
     thermal_expansion_coeff = 18.0e-6
     temperature = temp
     eigenstrain_name = thermal_expansion
-	block = '1'
+	  block = '1'
   []
 []
 
@@ -227,7 +226,7 @@
   active = 'smp1'
   [smp1]
     type = SMP
-	full = true
+	  full = true
   []
 []
 
@@ -289,9 +288,9 @@
 [VectorPostprocessors]
   [face4]
      type = NodalValueSampler
-	 sort_by = z
-	 variable = 'disp_x disp_y'
-	 boundary = face4
+    sort_by = z
+    variable = 'disp_x disp_y'
+    boundary = face4
   []
 []
 
@@ -300,14 +299,14 @@
   perf_graph = true
   [duct_displace]
     type = CSV
-	file_base = face_disp
-	execute_on = final
-	show = 'face4'
+    file_base = face_disp
+    execute_on = final
+    show = 'face4'
   []
   [load_pad]
     type = CSV
-	file_base = load_pad_displace
-	execute_on = timestep_end
-	show = 'dispx_core_top dispy_core_top dispx_aclp dispy_aclp dispx_tlp dispy_tlp'
+    file_base = load_pad_displace
+    execute_on = timestep_end
+    show = 'dispx_core_top dispy_core_top dispx_aclp dispy_aclp dispx_tlp dispy_tlp'
   []
 []
