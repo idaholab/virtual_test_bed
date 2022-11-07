@@ -5,7 +5,6 @@
 Computational Fluid Dynamics (CFD) plays an unique role in the research and development (R&D) of 
 Molten Salt Fast Reactor (MSFR). As a great complement to experiments, it offers a cost effective 
 way to study the complex thermal fluid physics expected in the MSFR system. 
-
 For certain advanced nuclear reactor concepts (e.g., MSFR) where the related experimental data is 
 very scarce or not available, CFD also provides much needed reference to develop and calibrate
 reactor design tools. 
@@ -29,7 +28,12 @@ key results and discoveries.
 
 !alert note
 This documentation assumes that reader has basic knowledge of Nek5000, and is able to run 
-the example cases provided in [Nek5000 tutorial](https://nek5000.github.io/NekDoc/index.html)
+the example cases provided in [Nek5000 tutorial](https://nek5000.github.io/NekDoc/index.html).
+The specific Nek5000 version used here is v19.0. Although Nek5000 input files are not tested regularly 
+in the Moose CI test suite, Nek5000 does offer reliable backward compability.
+No foreseeable compability issues are expected. In rare situations where there is indeed a compability 
+issue, please reach out to the Nek5000 developer team 
+via [Nek5000 Google Group](https://groups.google.com/g/nek5000).   
 
 
 ## CFD solver and turbulence modeling
@@ -161,7 +165,8 @@ A parabolic velocity profile is specified at the inlet face and the natural pres
 A pure hexahedral mesh is generated with 3,700 elements (as shown in [2d_mesh]). 
 In addition, to facilitate the axisymmetric solver in Nek5000, the core centerline is rotated and aligned along the x-axis as shown in the [2d_mesh]. 
 The molten salt flow enters the core from the bottom channel (left) and exits from the top (right). 
-A series of 2-D axisymmetric RANS cases are simulated at multiple Reynolds numbers of $2\times10^4$, $4\times10^4$, $1\times10^5$, $4\times10^5$, and $1\times10^6$.
+A series of 2-D axisymmetric RANS cases are simulated at multiple Reynolds numbers of $2\times10^4$, $4\times10^4$, $1\times10^5$, $4\times10^5$, and $1\times10^6$, where the Reynolds number is defined by the mean flow velocity and
+the minimum core diameter. 
 
 !media msr/msfr/nek/2d_mesh.png
     style=width:80%
