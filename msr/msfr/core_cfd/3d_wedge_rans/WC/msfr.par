@@ -1,0 +1,45 @@
+#Nek5000 parameter file
+[GENERAL]
+#startFrom = run08/msfr0.f00005 UPTS1S2
+stopAt = numSteps
+numSteps = 20000
+dt = 1.5e-5
+writeInterval = 4000
+timeStepper = BDF2
+
+[PROBLEMTYPE]
+equation = incompNS
+stressFormulation = yes
+variableProperties = yes
+
+[MESH]
+writeToFieldFile = yes
+
+[VELOCITY]
+density = 1.0
+viscosity = -1.0e4 #-476189.9
+residualTol = 1e-8
+residualPROJ = yes
+
+[PRESSURE]
+residualTol = 1e-6
+residualPROJ = yes
+
+[TEMPERATURE]
+#solver = none
+rhoCp = 1.0
+conductivity = -1.7e5
+residualTol = 1e-08
+
+[SCALAR01] 
+density = 1.0
+diffusivity = -1.0e4 
+residualTol = 1e-8
+
+[SCALAR02] 
+density = 1.0
+diffusivity = -1.0e4
+residualTol = 1e-8
+
+[SCALAR03]
+solver = none

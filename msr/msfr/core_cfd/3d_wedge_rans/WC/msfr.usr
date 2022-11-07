@@ -1,0 +1,452 @@
+#include "experimental/rans_komg.f"
+
+c-----------------------------------------------------------------------
+c  nek5000 user-file template
+c
+c  user specified routines:
+c     - uservp  : variable properties
+c     - userf   : local acceleration term for fluid
+c     - userq   : local source term for scalars
+c     - userbc  : boundary conditions
+c     - useric  : initial conditions
+c     - userchk : general purpose routine for checking errors etc.
+c     - userqtl : thermal divergence for lowMach number flows 
+c     - usrdat  : modify element vertices 
+c     - usrdat2 : modify mesh coordinates
+c     - usrdat3 : general purpose routine for initialization
+c     
+c-----------------------------------------------------------------------
+      include "utilities.f"
+      include "limits.f"
+c-----------------------------------------------------------------------
+      subroutine uservp(ix,iy,iz,eg) ! set variable properties
+c     implicit none
+      include 'SIZE'
+      include 'TOTAL'
+      include 'NEKUSE'
+      include 'RANS_KOMG'
+
+      integer ix,iy,iz,e,eg
+      e = gllel(eg)
+
+      Pr_t=coeffs(1)
+      mu_t=rans_mut(ix,iy,iz,e)
+
+      utrans = cpfld(ifield,2)
+      if(ifield.eq.1) then
+        udiff = cpfld(ifield,1)+mu_t
+      elseif(ifield.eq.2) then !temperature
+        udiff = cpfld(ifield,1)+mu_t*cpfld(ifield,2)/(Pr_t*cpfld(1,2))
+      elseif(ifield.eq.3) then !tke
+        udiff = cpfld(1,1)+rans_mutsk(ix,iy,iz,e)
+      elseif(ifield.eq.4) then !tau
+        udiff = cpfld(1,1)+rans_mutso(ix,iy,iz,e)
+      endif
+
+      return
+      end
+c-----------------------------------------------------------------------
+      subroutine userf(ix,iy,iz,eg) ! set acceleration term
+c
+c     Note: this is an acceleration term, NOT a force!
+c     Thus, ffx will subsequently be multiplied by rho(x,t).
+c
+c     implicit none
+      include 'SIZE'
+      include 'TOTAL'
+      include 'NEKUSE'
+
+      integer ix,iy,iz,e,eg
+c     e = gllel(eg)
+
+      ffx = 0.0
+      ffy = 0.0
+      ffz = 0.0
+
+      return
+      end
+c-----------------------------------------------------------------------
+      subroutine userq(ix,iy,iz,eg) ! set source term
+c     implicit none
+      include 'SIZE'
+      include 'TOTAL'
+      include 'NEKUSE'
+
+      real qt
+      common /mauricio/ qt(lx1,ly1,lz1,lelv)
+
+      integer ix,iy,iz,e,eg
+      e = gllel(eg)
+
+      qvol   = 0.0
+      avol   = 0.0
+      if(ifield.eq.2) then
+        qvol = qt(ix,iy,iz,e)
+      elseif(ifield.eq.3) then
+        qvol = rans_kSrc(ix,iy,iz,e)
+        avol = rans_kDiag(ix,iy,iz,e)
+      elseif(ifield.eq.4) then
+        qvol = rans_omgSrc(ix,iy,iz,e)
+        avol = rans_omgDiag(ix,iy,iz,e)
+      endif
+
+      return
+      end
+c-----------------------------------------------------------------------
+      subroutine userbc(ix,iy,iz,iside,eg) ! set up boundary conditions
+      implicit none
+      include 'SIZE'
+      include 'TOTAL'
+      include 'NEKUSE'
+c
+      real wd
+      common /walldist/ wd(lx1,ly1,lz1,lelv)
+
+      integer ix,iy,iz,iside,e,eg
+      real tke_tmp,tau_tmp
+
+      e = gllel(eg)
+
+      ux   = 0.0
+      uy   = -1.51648113209
+      uz   = 0.0
+      temp = 0.0
+
+      call turb_in(wd(ix,iy,iz,e),tke_tmp,tau_tmp)
+      if(ifield.eq.3) temp = tke_tmp
+      if(ifield.eq.4) temp = tau_tmp
+
+      return
+      end
+c-----------------------------------------------------------------------
+      subroutine useric(ix,iy,iz,eg) ! set up initial conditions
+      implicit none
+      include 'SIZE'
+      include 'TOTAL'
+      include 'NEKUSE'
+
+      real wd
+      common /walldist/ wd(lx1,ly1,lz1,lelv)
+
+      integer ix,iy,iz,e,eg
+      real tke_tmp,tau_tmp
+
+      e = gllel(eg)
+
+      ux   = 0.0
+      uy   = 0.0
+      uz   = 0.0
+      temp = 0.0
+
+      call turb_in(wd(ix,iy,iz,e),tke_tmp,tau_tmp)
+      if(ifield.eq.3) temp = tke_tmp
+      if(ifield.eq.4) temp = tau_tmp
+
+      return
+      end
+c-----------------------------------------------------------------------
+      subroutine userchk()
+C     implicit none
+      include 'SIZE'
+      include 'TOTAL'
+
+      real qt
+      common /mauricio/ qt(lx1,ly1,lz1,lelv)
+      real fc0, fc1, fc2, fc3, fc4, fc5, fc6, fc7
+      real fc8, fc9, fc10, fc11, fc12, fc13, fc14
+      integer i, ntot
+      real rr, zz
+      real Dh
+
+      common /myoutflow/ d(lx1,ly1,lz1,lelt),m1(lx1*ly1*lz1,lelt)
+      real m1
+
+      real wd
+      common /walldist/ wd(lx1,ly1,lz1,lelv)
+      real norm(3),pt(3),eps,planar_ave_m1,umean
+      real dA1,To1,To2,vi1,vo1,dv,ds
+      real t_bulk(lx1,ly1,lz1,lelv)
+      integer e,f
+
+      ntot=lx1*ly1*lz1*lelv
+      norm(1) = 0.0
+      norm(2) = 1.0
+      norm(3) = 0.0
+      pt(1) = 0.0
+      pt(2) = 0.0
+      pt(3) = 0.0
+      eps = 0.02
+
+Cc turbulent outflow bc
+C      rq  = 4.
+C      uin = 0.
+C      call turb_outflow(d,m1,rq,uin)
+
+      if(mod(istep,10).eq.0) then
+        call print_limits
+        call y_p_limits(wd,.true.)
+        umean=planar_ave_m1(vy,norm,pt,eps)
+
+        dA1 = 0.0
+        vo1 = 0.0
+        do e=1,ntot
+        dv = 0.0
+        ds = 0.0
+          do f=1,2*ndim
+            if (cbc(f,e,1).eq.'O  ') then
+              call surface_int(dv,ds,vy,e,f)
+              vo1 = vo1 + dv
+              dA1 = dA1 + ds
+            endif
+          enddo
+        enddo
+        vo1 = glsum(vo1,1)
+        dA1 = glsum(dA1,1)
+        vo1 = vo1/dA1
+
+        dA1 = 0.0
+        vi1 = 0.0
+        do e=1,ntot
+        dv = 0.0
+        ds = 0.0
+          do f=1,2*ndim
+            if (cbc(f,e,1).eq.'v  ') then
+              call surface_int(dv,ds,vy,e,f)
+              vi1 = vi1 + dv
+              dA1 = dA1 + ds
+            endif
+          enddo
+        enddo
+        vi1 = glsum(vi1,1)
+        dA1 = glsum(dA1,1)
+        vi1 = vi1/dA1
+
+        dA1 = 0.0
+        To1 = 0.0
+        do e=1,ntot
+        dv = 0.0
+        ds = 0.0
+          do f=1,2*ndim
+            if (cbc(f,e,1).eq.'O  ') then
+              call surface_int(dv,ds,t,e,f)
+              To1 = To1 + dv
+              dA1 = dA1 + ds
+            endif
+          enddo
+        enddo
+        To1 = glsum(To1,1)
+        dA1 = glsum(dA1,1)
+        To1 = To1/dA1
+
+        do i=1,ntot
+          t_bulk(i,1,1,1)=t(i,1,1,1,1)*vx(i,1,1,1)
+        enddo
+        dA1 = 0.0
+        To2 = 0.0
+        do e=1,ntot
+        dv = 0.0
+        ds = 0.0
+          do f=1,2*ndim
+            if (cbc(f,e,1).eq.'O  ') then
+              call surface_int(dv,ds,t_bulk,e,f)
+              To2 = To2 + dv
+              dA1 = dA1 + ds
+            endif
+          enddo
+        enddo
+        To2 = glsum(To2,1)
+        dA1 = glsum(dA1,1)
+        To2 = To2/(dA1*vo1)
+
+        if(nio.eq.0) then
+          write(6,*)" > Mean core velocity: ",umean
+          write(6,*)" > Inlet mean velocity: ",vi1
+          write(6,*)" > Outlet mean velocity: ",vo1
+          write(6,*)" > Outlet mean temperature: ",To1
+          write(6,*)" > Outlet mean bulk temperature: ",To2
+          write(6,*)
+        endif
+      endif
+
+C  compute the heat source term at the beginning
+C  store it for all the subsequent time steps
+      if(istep.eq.0) then
+        call rzero(qt,ntot)
+        fc0  =  9.0598E+08
+        fc1  = -2.8371E-02
+        fc2  = -5.0560E-02
+        fc3  = -1.3396E+00
+        fc4  = -6.3452E-03
+        fc5  = -1.1533E+00
+        fc6  =  7.6823E-01
+        fc7  =  4.4223E-02
+        fc8  =  1.2867E+00
+        fc9  =  6.5014E-02
+        fc10 = -1.4560E-01
+        fc11 = -9.5125E-03
+        fc12 = -2.2533E-01
+        fc13 = -4.6725E-02
+        fc14 = -1.0218E-01
+        do i=1,ntot
+           rr=sqrt(xm1(i,1,1,1)**2.0+zm1(i,1,1,1)**2.0)
+           zz=ym1(i,1,1,1)
+           qt(i,1,1,1) = fc0 * (
+     &                   1.0377388808236376 +
+     &                   fc1 * rr +
+     &                   fc2 * zz +
+     &                   fc3 * rr**2.0 +
+     &                   fc4 * rr * zz +
+     &                   fc5 * zz**2.0 +
+     &                   fc6 * rr**3.0 +
+     &                   fc7 * rr**2.0 * zz +
+     &                   fc8 * rr * zz**2.0 +
+     &                   fc9 * zz**3.0 +
+     &                   fc10* rr**4.0 +
+     &                   fc11* rr**3.0 * zz +
+     &                   fc12* rr**2.0 * zz**2.0 +
+     &                   fc13* rr * zz**3.0 +
+     &                   fc14* zz**4.0 )
+          qt(i,1,1,1) = max(0.0, qt(i,1,1,1)) !ensure qt .ge. 0
+          qt(i,1,1,1) = 1.18697E-09*qt(i,1,1,1)
+        enddo
+        if(nio.eq.0) write(6,*) "Heat source computed."
+        call copy(t(1,1,1,1,4),qt(1,1,1,1),ntot)
+      endif
+
+C      call copy(t(1,1,1,1,1),wd(1,1,1,1),ntot)
+C      call get_mut(t(1,1,1,1,1))
+      return
+      end
+c-----------------------------------------------------------------------
+      subroutine userqtl ! Set thermal divergence
+
+      call userqtl_scig 
+
+      return
+      end
+c-----------------------------------------------------------------------
+      subroutine usrdat()   ! This routine to modify element vertices
+c     implicit none
+      include 'SIZE'
+      include 'TOTAL'
+
+      return
+      end
+c-----------------------------------------------------------------------
+      subroutine usrdat2()  ! This routine to modify mesh coordinates
+c     implicit none
+      include 'SIZE'
+      include 'TOTAL'
+
+      integer iel, ifc, id_face
+      integer i, e, f, n
+      real dhi
+
+      ntot = nx1*ny1*nz1*nelt
+
+      do iel=1,nelt
+      do ifc=1,2*ndim
+         id_face = bc(5,ifc,iel,1)
+         if (id_face.eq.1) then         ! inlet 
+             cbc(ifc,iel,1) = 'v  '
+         elseif (id_face.eq.2) then     ! outlet 
+             cbc(ifc,iel,1) = 'O  '
+         elseif (id_face.eq.3) then     ! wall 
+             cbc(ifc,iel,1) = 'W  '
+         elseif (id_face.eq.4) then     ! symmetry for bulk side
+             cbc(ifc,iel,1) = 'SYM'
+         endif
+      enddo
+      enddo
+
+      do i=2,ldimt1
+      do e=1,nelt
+      do f=1,ldim*2
+        cbc(f,e,i)=cbc(f,e,1)
+        if(cbc(f,e,1).eq.'W  ') cbc(f,e,i)='t  '
+        if(cbc(f,e,1).eq.'v  ') cbc(f,e,i)='t  '
+      enddo
+      enddo
+      enddo
+      
+      return
+      end
+c-----------------------------------------------------------------------
+      subroutine usrdat3()
+c     implicit none
+      include 'SIZE'
+      include 'TOTAL'
+
+      real wd(lx1,ly1,lz1,lelv)
+      common /walldist/ wd
+
+      logical ifcoefs
+
+C     initialize the RANS model
+      ifld_k = 3 !address of tke
+      ifld_t = 4 !address of tau
+      ifcoefs = .false.
+
+C     Supported models:
+c     id_m = 0 !regularized high-Re k-omega (no wall functions)
+c     id_m = 1 !regularized low-Re k-omega
+c     id_m = 2 !regularized high-Re k-omega SST (no wall functions)
+c     id_m = 3 !regularized low-Re k-omega SST
+      id_m = 4 !standard k-tau
+
+C     Wall distance function:
+c     id_w = 0 ! user specified
+c     id_w = 1 ! cheap_dist (path to wall, may work better for periodic boundaries)
+      id_w = 2 ! distf (coordinate difference, provides smoother function)
+
+      call rans_init(ifld_k,ifld_t,ifcoefs,coefs,id_w,wd,id_m)
+
+c      ifflow = .false.
+c      ifheat = .false.
+      return
+      end
+C-----------------------------------------------------------------------
+      subroutine turb_in(wd,tke,tau)
+      implicit none
+      include 'SIZE'
+      include 'TOTAL'
+
+      integer ix,iy,iz,e
+      real wd,tke,tau
+
+      real Re,darcy,utau,sigk,kmax,yplus,yk
+
+      Re = 1.0/param(2)
+      darcy = 0.316/(Re**0.25)
+      utau = sqrt(darcy/8.0)
+      sigk = 0.6
+      kmax = 2.5*utau*utau
+      yplus = max(wd*utau*Re,1.0e-6)
+      yk=30.0
+
+      tke=kmax*exp(-(log10(yplus/yk))**2.0/(2.0*sigk**2))
+      tau=0.012*wd**2.0/cpfld(ifield,1)
+
+C      tau=max(tau,5.0)
+      return
+      end
+c-----------------------------------------------------------------------
+      subroutine get_mut(phi)
+      include 'SIZE'
+      include 'TOTAL'
+
+      real phi(lx1,ly1,lz1,1)
+
+      do ie=1,nelv
+      do k=1,nz1
+      do j=1,ny1
+      do i=1,nx1
+        phi(i,j,k,ie)=max(rans_mut(i,j,k,ie),0.0)
+      enddo
+      enddo
+      enddo
+      enddo
+
+      return
+      end
+c-----------------------------------------------------------------------
