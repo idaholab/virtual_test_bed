@@ -30,7 +30,7 @@
 ##    layers. Given that SAM treats Doppler (fuel) and moderator reactivity differently, the distinction is necessary to
 ##    ensure the correct prescription of reactivity coefficients in the pebbles. On the other hand, for the reflector region
 ##    where there is no Doppler reactivity, no distinctions are made between the moderator and reflector reactivities. They
-##    are summed and prescribed to the reflectors to reduce the complexity of the model.
+##    are summed and prescribed to the reflectors to reduce the complexity of the model. 
 
 ############################################ Main references ############################################
 ## 1. Stewart, R., Reger, D., and Balestra, P., 'Demonstrate Capability of NEAMS
@@ -399,19 +399,13 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		y =	'5  		300  		300  	1'
 	[../]
 
-  	[./power_history]
-    	type = PiecewiseLinear
-    	x = '-1.00E+06	0	1E-06	365000'
-    	y = '1	  		1	1       1'
-  	[../]
-
 	[./power_axial_fn]
 		type = PiecewiseLinear
 		x	= '0	        0.5	        1	        1.5	        2	        2.5	        3	        3.5	        4	        4.5
 			   5	        5.5	        6	        6.5	        7	        7.5	        8	        8.5	        8.90       8.93'
 	    y   = '0.39299934	0.56820578	0.7237816	0.8597268	0.97604136	1.0727253	1.14977861	1.20720129	1.24499334	1.26315477
 	    	   1.26168557	1.24058574	1.19985528	1.1394942	1.05950249	0.95988015	0.84062718	0.70174359	0.56660312 0.56660312'
-	    axis = x
+        axis = x
     [../]
 
 	[./power_axial_fn_uniform]
@@ -420,16 +414,6 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		y = '1.0  1.0    1.0'
 	    axis = x
     [../]
-
-  	[./power_fn]
-    	type = CompositeFunction
-    	functions = 'power_history power_axial_fn'
-  	[../]
-
-  	[./power_fn_uniform]
-    	type = CompositeFunction
-    	functions = 'power_history power_axial_fn_uniform'
-  	[../]
 
     [./outlet_pressure_fn]
     	type = PiecewiseLinear
@@ -589,6 +573,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		roughness = 0.000015
 		A = ${A_F1}
 		Dh = ${Dh_F1}
+        D_heated = ${Dh_F1}
 		length = 8.93
 		n_elems = 30
 		initial_V = ${V_in}
@@ -597,8 +582,8 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		initial_P = 6e6
 		HT_surface_area_density = ${aw_F1}
 		fuel_type = sphere
-		power_shape_function = power_fn
-		dim_hs = 1
+		power_shape_function = power_axial_fn
+		dim_hs = 2
 		porosity = 0.39
 		HTC_user_option = 'KTA'
 		material_hs = 'fuel-mat fuel-mat fuel-mat'
@@ -632,6 +617,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		roughness = 0.000015
 		A = ${A_F6}
 		Dh = ${Dh_F6}
+        D_heated = ${Dh_F6}
 		length = 0.135
 		n_elems = 3
 		initial_V = ${V_in}
@@ -640,8 +626,8 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		initial_P = 6e6
 		HT_surface_area_density = ${aw_F6}
 		fuel_type = sphere
-		power_shape_function = power_fn_uniform
-		dim_hs = 1
+		power_shape_function = power_axial_fn_uniform
+		dim_hs = 2
 		porosity = 0.39
 		HTC_user_option = 'KTA'
 		material_hs = 'fuel-mat fuel-mat fuel-mat'
@@ -674,6 +660,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		roughness = 0.000015
 		A = ${A_F10}
 		Dh = ${Dh_F10}
+        D_heated = ${Dh_F10}
 		length = 0.135
 		n_elems = 3
 		initial_V = ${V_in}
@@ -682,8 +669,8 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		initial_P = 6e6
 		HT_surface_area_density = ${aw_F10}
 		fuel_type = sphere
-		power_shape_function = power_fn_uniform
-		dim_hs = 1
+		power_shape_function = power_axial_fn_uniform
+		dim_hs = 2
 		porosity = 0.39
 		HTC_user_option = 'KTA'
 		material_hs = 'fuel-mat fuel-mat fuel-mat'
@@ -716,6 +703,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		roughness = 0.000015
 		A = ${A_F13}
 		Dh = ${Dh_F13}
+        D_heated = ${Dh_F13}
 		length = 0.135
 		n_elems = 3
 		initial_V = ${V_in}
@@ -724,8 +712,8 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		initial_P = 6e6
 		HT_surface_area_density = ${aw_F13}
 		fuel_type = sphere
-		power_shape_function = power_fn_uniform
-		dim_hs = 1
+		power_shape_function = power_axial_fn_uniform
+		dim_hs = 2
 		porosity = 0.39
 		HTC_user_option = 'KTA'
 		material_hs = 'fuel-mat fuel-mat fuel-mat'
@@ -758,6 +746,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		roughness = 0.000015
 		A = ${A_F15}
 		Dh = ${Dh_F15}
+        D_heated = ${Dh_F15}
 		length = 0.135
 		n_elems = 3
 		initial_V = ${V_in}
@@ -766,8 +755,8 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		initial_P = 6e6
 		HT_surface_area_density = ${aw_F15}
 		fuel_type = sphere
-		power_shape_function = power_fn_uniform
-		dim_hs = 1
+		power_shape_function = power_axial_fn_uniform
+		dim_hs = 2
 		porosity = 0.39
 		HTC_user_option = 'KTA'
 		material_hs = 'fuel-mat fuel-mat fuel-mat'
@@ -880,6 +869,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		roughness = 0.000015
 		A = ${A_F2}
 		Dh = ${Dh_F2}
+        D_heated = ${Dh_F2}
 		length = 8.93
 		n_elems = 30
 		initial_V = ${V_in}
@@ -888,8 +878,8 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		initial_P = 6e6
 		HT_surface_area_density = ${aw_F2}
 		fuel_type = sphere
-		power_shape_function = power_fn
-		dim_hs = 1
+		power_shape_function = power_axial_fn
+		dim_hs = 2
 		porosity = 0.39
 		HTC_user_option = 'KTA'
 		material_hs = 'fuel-mat fuel-mat fuel-mat'
@@ -923,6 +913,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		roughness = 0.000015
 		A = ${A_F7}
 		Dh = ${Dh_F7}
+        D_heated = ${Dh_F7}
 		length = 0.135
 		n_elems = 3
 		initial_V = ${V_in}
@@ -931,8 +922,8 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		initial_P = 6e6
 		HT_surface_area_density = ${aw_F7}
 		fuel_type = sphere
-		power_shape_function = power_fn_uniform
-		dim_hs = 1
+		power_shape_function = power_axial_fn_uniform
+		dim_hs = 2
 		porosity = 0.39
 		HTC_user_option = 'KTA'
 		material_hs = 'fuel-mat fuel-mat fuel-mat'
@@ -965,6 +956,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		roughness = 0.000015
 		A = ${A_F11}
 		Dh = ${Dh_F11}
+        D_heated = ${Dh_F11}
 		length = 0.135
 		n_elems = 3
 		initial_V = ${V_in}
@@ -973,8 +965,8 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		initial_P = 6e6
 		HT_surface_area_density = ${aw_F11}
 		fuel_type = sphere
-		power_shape_function = power_fn_uniform
-		dim_hs = 1
+		power_shape_function = power_axial_fn_uniform
+		dim_hs = 2
 		porosity = 0.39
 		HTC_user_option = 'KTA'
 		material_hs = 'fuel-mat fuel-mat fuel-mat'
@@ -1007,6 +999,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		roughness = 0.000015
 		A = ${A_F14}
 		Dh = ${Dh_F14}
+        D_heated = ${Dh_F14}
 		length = 0.135
 		n_elems = 3
 		initial_V = ${V_in}
@@ -1015,8 +1008,8 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		initial_P = 6e6
 		HT_surface_area_density = ${aw_F14}
 		fuel_type = sphere
-		power_shape_function = power_fn_uniform
-		dim_hs = 1
+		power_shape_function = power_axial_fn_uniform
+		dim_hs = 2
 		porosity = 0.39
 		HTC_user_option = 'KTA'
 		material_hs = 'fuel-mat fuel-mat fuel-mat'
@@ -1161,6 +1154,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		roughness = 0.000015
 		A = ${A_F3}
 		Dh = ${Dh_F3}
+        D_heated = ${Dh_F3}
 		length = 8.93
 		n_elems = 30
 		initial_V = ${V_in}
@@ -1169,8 +1163,8 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		initial_P = 6e6
 		HT_surface_area_density = ${aw_F3}
 		fuel_type = sphere
-		power_shape_function = power_fn
-		dim_hs = 1
+		power_shape_function = power_axial_fn
+		dim_hs = 2
 		porosity = 0.39
 		HTC_user_option = 'KTA'
 		material_hs = 'fuel-mat fuel-mat fuel-mat'
@@ -1204,6 +1198,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		roughness = 0.000015
 		A = ${A_F8}
 		Dh = ${Dh_F8}
+        D_heated = ${Dh_F8}
 		length = 0.135
 		n_elems = 3
 		initial_V = ${V_in}
@@ -1212,8 +1207,8 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		initial_P = 6e6
 		HT_surface_area_density = ${aw_F8}
 		fuel_type = sphere
-		power_shape_function = power_fn_uniform
-		dim_hs = 1
+		power_shape_function = power_axial_fn_uniform
+		dim_hs = 2
 		porosity = 0.39
 		HTC_user_option = 'KTA'
 		material_hs = 'fuel-mat fuel-mat fuel-mat'
@@ -1246,6 +1241,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		roughness = 0.000015
 		A = ${A_F12}
 		Dh = ${Dh_F12}
+        D_heated = ${Dh_F12}
 		length = 0.135
 		n_elems = 3
 		initial_V = ${V_in}
@@ -1254,8 +1250,8 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		initial_P = 6e6
 		HT_surface_area_density = ${aw_F12}
 		fuel_type = sphere
-		power_shape_function = power_fn_uniform
-		dim_hs = 1
+		power_shape_function = power_axial_fn_uniform
+		dim_hs = 2
 		porosity = 0.39
 		HTC_user_option = 'KTA'
 		material_hs = 'fuel-mat fuel-mat fuel-mat'
@@ -1430,6 +1426,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		roughness = 0.000015
 		A = ${A_F4}
 		Dh = ${Dh_F4}
+        D_heated = ${Dh_F4}
 		length = 8.93
 		n_elems = 30
 		initial_V = ${V_in}
@@ -1438,8 +1435,8 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		initial_P = 6e6
 		HT_surface_area_density = ${aw_F4}
 		fuel_type = sphere
-		power_shape_function = power_fn
-		dim_hs = 1
+		power_shape_function = power_axial_fn
+		dim_hs = 2
 		porosity = 0.39
 		HTC_user_option = 'KTA'
 		material_hs = 'fuel-mat fuel-mat fuel-mat'
@@ -1473,6 +1470,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		roughness = 0.000015
 		A = ${A_F9}
 		Dh = ${Dh_F9}
+        D_heated = ${Dh_F9}
 		length = 0.135
 		n_elems = 3
 		initial_V = ${V_in}
@@ -1481,8 +1479,8 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		initial_P = 6e6
 		HT_surface_area_density = ${aw_F9}
 		fuel_type = sphere
-		power_shape_function = power_fn_uniform
-		dim_hs = 1
+		power_shape_function = power_axial_fn_uniform
+		dim_hs = 2
 		porosity = 0.39
 		HTC_user_option = 'KTA'
 		material_hs = 'fuel-mat fuel-mat fuel-mat'
@@ -1687,6 +1685,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		roughness = 0.000015
 		A = ${A_F5}
 		Dh = ${Dh_F5}
+        D_heated = ${Dh_F5}
 		length = 8.93
 		n_elems = 30
 		initial_V = ${V_in}
@@ -1695,8 +1694,8 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		initial_P = 6e6
 		HT_surface_area_density = ${aw_F5}
 		fuel_type = sphere
-		power_shape_function = power_fn
-		dim_hs = 1
+		power_shape_function = power_axial_fn
+		dim_hs = 2
 		porosity = 0.39
 		HTC_user_option = 'KTA'
 		material_hs = 'fuel-mat fuel-mat fuel-mat'
@@ -2938,6 +2937,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		coupling_type = GapHeatTransfer
 		surface1_name = BR-1:outer_wall
 		surface2_name = R-6:inner_wall
+        radius_1 = 1.2
 		h_gap = ${h_Achenbach}
 	[../]
 	[./coupling_radial_BR3_R9]
@@ -2946,6 +2946,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		surface1_name = BR-3:outer_wall
 		surface2_name = R-9:inner_wall
 		h_gap = ${h_Achenbach}
+        radius_1 = 1.2
 	[../]
 	[./coupling_radial_BR6_R12]
 		type = SurfaceCoupling
@@ -2953,6 +2954,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		surface1_name = BR-6:outer_wall
 		surface2_name = R-12:inner_wall
 		h_gap = ${h_Achenbach}
+        radius_1 = 1.2
 	[../]
 	[./coupling_radial_BR10_R15]
 		type = SurfaceCoupling
@@ -2960,6 +2962,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		surface1_name = BR-10:outer_wall
 		surface2_name = R-15:inner_wall
 		h_gap = ${h_Achenbach}
+        radius_1 = 1.2
 	[../]
 	[./coupling_radial_BR15_R18]
 		type = SurfaceCoupling
@@ -2967,6 +2970,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		surface1_name = BR-15:outer_wall
 		surface2_name = R-18:inner_wall
 		h_gap = ${h_Achenbach}
+        radius_1 = 1.2
 	[../]
 	[./coupling_radial_BR20_R21]
 		type = SurfaceCoupling
@@ -2974,6 +2978,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		surface1_name = BR-20:outer_wall
 		surface2_name = R-21:inner_wall
 		h_gap = ${h_Achenbach}
+        radius_1 = 1.2
 	[../]
 
 	# Surface coupling between the outer reflectors on both sides of the upriser
@@ -2983,6 +2988,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		surface1_name = R-4:outer_wall
 		surface2_name = R-5:inner_wall
 		h_gap = ${h_gap}
+        radius_1 = 1.72
 	[../]
 
 	##################################################################################3
@@ -3042,6 +3048,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		coupling_type = GapHeatTransfer
 		surface1_name = BR-11:outer_wall
 		surface2_name = BR-12:inner_wall
+        radius_1 = 0.31
 		h_gap = ${h_ZBS_1}
 	[../]
 	[./coupling_axial_BR11_BR16]
@@ -3050,6 +3057,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		h_gap = ${h_gap}
 		surface1_name = BR-16:top_wall
 		surface2_name = BR-11:bottom_wall
+        radius_1 = 0.31
 	[../]
 	[./coupling_radial_BR16_BR17]
 		type = SurfaceCoupling
@@ -3057,6 +3065,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		surface1_name = BR-16:outer_wall
 		surface2_name = BR-17:inner_wall
 		h_gap = ${h_ZBS_1}
+        radius_1 = 0.31
 	[../]
 	[./coupling_axial_BR16_R24]
 		type = SurfaceCoupling
@@ -3064,6 +3073,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		h_gap = ${h_gap}
 		surface1_name = R-24:top_wall
 		surface2_name = BR-16:bottom_wall
+        radius_1 = 0.31
 	[../]
 	[./coupling_radial_R24_R25]
 		type = SurfaceCoupling
@@ -3071,6 +3081,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		h_gap = ${h_gap}
 		surface1_name = R-24:outer_wall
 		surface2_name = R-25:inner_wall
+        radius_1 = 0.31
 	[../]
 	[./coupling_radial_F2_F3]
 		type = SurfaceCoupling
@@ -3118,6 +3129,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		surface1_name = BR-7:outer_wall
 		surface2_name = BR-8:inner_wall
 		h_gap = ${h_ZBS_2}
+        radius_1 = 0.53
 	[../]
 	[./coupling_axial_BR7_BR12]
 		type = SurfaceCoupling
@@ -3125,6 +3137,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		h_gap = ${h_gap}
 		surface1_name = BR-12:top_wall
 		surface2_name = BR-7:bottom_wall
+        radius_1 = 0.53
 	[../]
 	[./coupling_radial_BR12_BR13]
 		type = SurfaceCoupling
@@ -3132,6 +3145,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		surface1_name = BR-12:outer_wall
 		surface2_name = BR-13:inner_wall
 		h_gap = ${h_ZBS_2}
+        radius_1 = 0.53
 	[../]
 	[./coupling_axial_BR12_BR17]
 		type = SurfaceCoupling
@@ -3139,6 +3153,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		h_gap = ${h_gap}
 		surface1_name = BR-17:top_wall
 		surface2_name = BR-12:bottom_wall
+        radius_1 = 0.53
 	[../]
 	[./coupling_radial_BR17_BR18]
 		type = SurfaceCoupling
@@ -3146,6 +3161,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		surface1_name = BR-17:outer_wall
 		surface2_name = BR-18:inner_wall
 		h_gap = ${h_ZBS_2}
+        radius_1 = 0.53
 	[../]
 	[./coupling_radial_R25_R26]
 		type = SurfaceCoupling
@@ -3153,6 +3169,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		h_gap = ${h_gap}
 		surface1_name = R-25:outer_wall
 		surface2_name = R-26:inner_wall
+        radius_1 = 0.36
 	[../]
 	[./coupling_axial_BR17_R26]
 		type = SurfaceCoupling
@@ -3160,6 +3177,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		h_gap = ${h_gap}
 		surface1_name = R-26:top_wall
 		surface2_name = BR-17:bottom_wall
+        radius_1 = 0.53
 	[../]
 	[./coupling_radial_R26_R27]
 		type = SurfaceCoupling
@@ -3167,6 +3185,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		h_gap = ${h_gap}
 		surface1_name = R-26:outer_wall
 		surface2_name = R-27:inner_wall
+        radius_1 = 0.53
 	[../]
 	[./coupling_radial_F3_F4]
 		type = SurfaceCoupling
@@ -3204,6 +3223,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		surface1_name = BR-4:outer_wall
 		surface2_name = BR-5:inner_wall
 		h_gap = ${h_ZBS_3}
+        radius_1 = 0.73
 	[../]
 	[./coupling_axial_BR4_BR8]
 		type = SurfaceCoupling
@@ -3211,6 +3231,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		h_gap = ${h_gap}
 		surface1_name = BR-8:top_wall
 		surface2_name = BR-4:bottom_wall
+        radius_1 = 0.73
 	[../]
 	[./coupling_radial_BR8_BR9]
 		type = SurfaceCoupling
@@ -3218,6 +3239,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		surface1_name = BR-8:outer_wall
 		surface2_name = BR-9:inner_wall
 		h_gap = ${h_ZBS_3}
+        radius_1 = 0.73
 	[../]
 	[./coupling_axial_BR8_BR13]
 		type = SurfaceCoupling
@@ -3225,6 +3247,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		h_gap = ${h_gap}
 		surface1_name = BR-13:top_wall
 		surface2_name = BR-8:bottom_wall
+        radius_1 = 0.73
 	[../]
 	[./coupling_radial_BR13_BR14]
 		type = SurfaceCoupling
@@ -3232,6 +3255,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		surface1_name = BR-13:outer_wall
 		surface2_name = BR-14:inner_wall
 		h_gap = ${h_ZBS_3}
+        radius_1 = 0.73
 	[../]
 	[./coupling_axial_BR13_BR18]
 		type = SurfaceCoupling
@@ -3239,6 +3263,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		h_gap = ${h_gap}
 		surface1_name = BR-18:top_wall
 		surface2_name = BR-13:bottom_wall
+        radius_1 = 0.73
 	[../]
 	[./coupling_radial_BR18_BR19]
 		type = SurfaceCoupling
@@ -3246,6 +3271,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		surface1_name = BR-18:outer_wall
 		surface2_name = BR-19:inner_wall
 		h_gap = ${h_ZBS_3}
+        radius_1 = 0.73
 	[../]
 	[./coupling_radial_R27_R28]
 		type = SurfaceCoupling
@@ -3253,6 +3279,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		h_gap = ${h_gap}
 		surface1_name = R-27:outer_wall
 		surface2_name = R-28:inner_wall
+        radius_1 = 0.57
 	[../]
 	[./coupling_axial_BR18_R28]
 		type = SurfaceCoupling
@@ -3260,6 +3287,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		h_gap = ${h_gap}
 		surface1_name = R-28:top_wall
 		surface2_name = BR-18:bottom_wall
+        radius_1 = 0.73
 	[../]
 	[./coupling_radial_R28_R29]
 		type = SurfaceCoupling
@@ -3267,6 +3295,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		h_gap = ${h_gap}
 		surface1_name = R-28:outer_wall
 		surface2_name = R-29:inner_wall
+        radius_1 = 0.73
 	[../]
 	[./coupling_radial_F4_F5]
 		type = SurfaceCoupling
@@ -3294,6 +3323,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		surface1_name = BR-2:outer_wall
 		surface2_name = BR-3:inner_wall
 		h_gap = ${h_ZBS_4}
+        radius_1 = 0.94
 	[../]
 	[./coupling_axial_BR2_BR5]
 		type = SurfaceCoupling
@@ -3301,6 +3331,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		h_gap = ${h_gap}
 		surface1_name = BR-5:top_wall
 		surface2_name = BR-2:bottom_wall
+        radius_1 = 0.94
 	[../]
 	[./coupling_radial_BR5_BR6]
 		type = SurfaceCoupling
@@ -3308,6 +3339,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		surface1_name = BR-5:outer_wall
 		surface2_name = BR-6:inner_wall
 		h_gap = ${h_ZBS_4}
+        radius_1 = 0.94
 	[../]
 	[./coupling_axial_BR5_BR9]
 		type = SurfaceCoupling
@@ -3315,6 +3347,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		h_gap = ${h_gap}
 		surface1_name = BR-9:top_wall
 		surface2_name = BR-5:bottom_wall
+        radius_1 = 0.94
 	[../]
 	[./coupling_radial_BR9_BR10]
 		type = SurfaceCoupling
@@ -3322,6 +3355,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		surface1_name = BR-9:outer_wall
 		surface2_name = BR-10:inner_wall
 		h_gap = ${h_ZBS_4}
+        radius_1 = 0.94
 	[../]
 	[./coupling_axial_BR9_BR14]
 		type = SurfaceCoupling
@@ -3329,6 +3363,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		h_gap = ${h_gap}
 		surface1_name = BR-14:top_wall
 		surface2_name = BR-9:bottom_wall
+        radius_1 = 0.94
 	[../]
 	[./coupling_radial_BR14_BR15]
 		type = SurfaceCoupling
@@ -3336,6 +3371,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		surface1_name = BR-14:outer_wall
 		surface2_name = BR-15:inner_wall
 		h_gap = ${h_ZBS_4}
+        radius_1 = 0.94
 	[../]
 	[./coupling_axial_BR14_BR19]
 		type = SurfaceCoupling
@@ -3343,6 +3379,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		h_gap = ${h_gap}
 		surface1_name = BR-19:top_wall
 		surface2_name = BR-14:bottom_wall
+        radius_1 = 0.94
 	[../]
 	[./coupling_radial_BR19_BR20]
 		type = SurfaceCoupling
@@ -3350,6 +3387,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		surface1_name = BR-19:outer_wall
 		surface2_name = BR-20:inner_wall
 		h_gap = ${h_ZBS_4}
+        radius_1 = 0.94
 	[../]
 	[./coupling_radial_R29_R30]
 		type = SurfaceCoupling
@@ -3357,6 +3395,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		h_gap = ${h_gap}
 		surface1_name = R-29:outer_wall
 		surface2_name = R-30:inner_wall
+        radius_1 = 0.78
 	[../]
 	[./coupling_axial_BR19_R30]
 		type = SurfaceCoupling
@@ -3364,6 +3403,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		h_gap = ${h_gap}
 		surface1_name = R-30:top_wall
 		surface2_name = BR-19:bottom_wall
+        radius_1 = 0.94
 	[../]
 	[./coupling_radial_R30_R31]
 		type = SurfaceCoupling
@@ -3371,6 +3411,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		h_gap = ${h_gap}
 		surface1_name = R-30:outer_wall
 		surface2_name = R-31:inner_wall
+        radius_1 = 0.94
 	[../]
 	[./coupling_axial_BR1_BR3]
 		type = SurfaceCoupling
@@ -3378,6 +3419,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		h_gap = ${h_gap}
 		surface1_name = BR-3:top_wall
 		surface2_name = BR-1:bottom_wall
+        radius_1 = 1.15
 	[../]
 	[./coupling_axial_BR3_BR6]
 		type = SurfaceCoupling
@@ -3385,6 +3427,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		h_gap = ${h_gap}
 		surface1_name = BR-6:top_wall
 		surface2_name = BR-3:bottom_wall
+        radius_1 = 1.15
 	[../]
 	[./coupling_axial_BR6_BR10]
 		type = SurfaceCoupling
@@ -3392,6 +3435,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		h_gap = ${h_gap}
 		surface1_name = BR-10:top_wall
 		surface2_name = BR-6:bottom_wall
+        radius_1 = 1.15
 	[../]
 	[./coupling_axial_BR10_BR15]
 		type = SurfaceCoupling
@@ -3399,6 +3443,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		h_gap = ${h_gap}
 		surface1_name = BR-15:top_wall
 		surface2_name = BR-10:bottom_wall
+        radius_1 = 1.15
 	[../]
 	[./coupling_axial_BR15_BR20]
 		type = SurfaceCoupling
@@ -3406,6 +3451,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		h_gap = ${h_gap}
 		surface1_name = BR-20:top_wall
 		surface2_name = BR-15:bottom_wall
+        radius_1 = 1.15
 	[../]
 	[./coupling_radial_R31_R32]
 		type = SurfaceCoupling
@@ -3413,6 +3459,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		h_gap = ${h_gap}
 		surface1_name = R-31:outer_wall
 		surface2_name = R-32:inner_wall
+        radius_1 = 0.99
 	[../]
 	[./coupling_axial_BR20_R32]
 		type = SurfaceCoupling
@@ -3420,6 +3467,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		h_gap = ${h_gap}
 		surface1_name = R-32:top_wall
 		surface2_name = BR-20:bottom_wall
+        radius_1 = 1.15
 	[../]
 	[./coupling_radial_R32_R33]
 		type = SurfaceCoupling
@@ -3427,6 +3475,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		h_gap = ${h_gap}
 		surface1_name = R-32:outer_wall
 		surface2_name = R-33:inner_wall
+        radius_1 = 1.15
 	[../]
 	[./coupling_axial_R4_R6]
 		type = SurfaceCoupling
@@ -3434,6 +3483,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		h_gap = ${h_gap}
 		surface1_name = R-6:top_wall
 		surface2_name = R-4:bottom_wall
+        radius_1 = 1.72
 	[../]
 	[./coupling_axial_R6_R9]
 		type = SurfaceCoupling
@@ -3441,6 +3491,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		h_gap = ${h_gap}
 		surface1_name = R-9:top_wall
 		surface2_name = R-6:bottom_wall
+        radius_1 = 1.72
 	[../]
 	[./coupling_axial_R9_R12]
 		type = SurfaceCoupling
@@ -3448,6 +3499,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		h_gap = ${h_gap}
 		surface1_name = R-12:top_wall
 		surface2_name = R-9:bottom_wall
+        radius_1 = 1.72
 	[../]
 	[./coupling_axial_R12_R15]
 		type = SurfaceCoupling
@@ -3455,6 +3507,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		h_gap = ${h_gap}
 		surface1_name = R-15:top_wall
 		surface2_name = R-12:bottom_wall
+        radius_1 = 1.72
 	[../]
 	[./coupling_axial_R15_R18]
 		type = SurfaceCoupling
@@ -3462,6 +3515,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		h_gap = ${h_gap}
 		surface1_name = R-18:top_wall
 		surface2_name = R-15:bottom_wall
+        radius_1 = 1.72
 	[../]
 	[./coupling_axial_R18_R21]
 		type = SurfaceCoupling
@@ -3469,6 +3523,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		h_gap = ${h_gap}
 		surface1_name = R-21:top_wall
 		surface2_name = R-18:bottom_wall
+        radius_1 = 1.72
 	[../]
 	[./coupling_radial_R33_R34]
 		type = SurfaceCoupling
@@ -3476,6 +3531,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		h_gap = ${h_gap}
 		surface1_name = R-33:outer_wall
 		surface2_name = R-34:inner_wall
+        radius_1 = 1.72
 	[../]
 	[./coupling_axial_R21_R34]
 		type = SurfaceCoupling
@@ -3483,6 +3539,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		h_gap = ${h_gap}
 		surface1_name = R-34:top_wall
 		surface2_name = R-21:bottom_wall
+        radius_1 = 1.72
 	[../]
 	[./coupling_radial_R6_R7]
 		type = SurfaceCoupling
@@ -3490,6 +3547,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		h_gap = ${h_gap}
 		surface1_name = R-6:outer_wall
 		surface2_name = R-7:inner_wall
+        radius_1 = 1.72
 	[../]
 	[./coupling_radial_R9_R10]
 		type = SurfaceCoupling
@@ -3497,6 +3555,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		h_gap = ${h_gap}
 		surface1_name = R-9:outer_wall
 		surface2_name = R-10:inner_wall
+        radius_1 = 1.72
 	[../]
 	[./coupling_axial_R7_R10]
 		type = SurfaceCoupling
@@ -3504,6 +3563,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		h_gap = ${h_gap}
 		surface1_name = R-10:top_wall
 		surface2_name = R-7:bottom_wall
+        radius_1 = 1.9
 	[../]
 	[./coupling_radial_R12_R13]
 		type = SurfaceCoupling
@@ -3511,6 +3571,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		h_gap = ${h_gap}
 		surface1_name = R-12:outer_wall
 		surface2_name = R-13:inner_wall
+        radius_1 = 1.72
 	[../]
 	[./coupling_axial_R10_R13]
 		type = SurfaceCoupling
@@ -3518,6 +3579,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		h_gap = ${h_gap}
 		surface1_name = R-13:top_wall
 		surface2_name = R-10:bottom_wall
+        radius_1 = 1.9
 	[../]
 	[./coupling_radial_R15_R16]
 		type = SurfaceCoupling
@@ -3525,6 +3587,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		h_gap = ${h_gap}
 		surface1_name = R-15:outer_wall
 		surface2_name = R-16:inner_wall
+        radius_1 = 1.72
 	[../]
 	[./coupling_axial_R13_R16]
 		type = SurfaceCoupling
@@ -3532,6 +3595,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		h_gap = ${h_gap}
 		surface1_name = R-16:top_wall
 		surface2_name = R-13:bottom_wall
+        radius_1 = 1.9
 	[../]
 	[./coupling_radial_R18_R19]
 		type = SurfaceCoupling
@@ -3539,6 +3603,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		h_gap = ${h_gap}
 		surface1_name = R-18:outer_wall
 		surface2_name = R-19:inner_wall
+        radius_1 = 1.72
 	[../]
 	[./coupling_axial_R16_R19]
 		type = SurfaceCoupling
@@ -3546,6 +3611,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		h_gap = ${h_gap}
 		surface1_name = R-19:top_wall
 		surface2_name = R-16:bottom_wall
+        radius_1 = 1.9
 	[../]
 	[./coupling_radial_R21_R22]
 		type = SurfaceCoupling
@@ -3553,6 +3619,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		h_gap = ${h_gap}
 		surface1_name = R-21:outer_wall
 		surface2_name = R-22:inner_wall
+        radius_1 = 1.72
 	[../]
 	[./coupling_axial_R19_R22]
 		type = SurfaceCoupling
@@ -3560,6 +3627,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		h_gap = ${h_gap}
 		surface1_name = R-22:top_wall
 		surface2_name = R-19:bottom_wall
+        radius_1 = 1.9
 	[../]
 	[./coupling_radial_R34_R35]
 		type = SurfaceCoupling
@@ -3567,6 +3635,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		h_gap = ${h_gap}
 		surface1_name = R-34:outer_wall
 		surface2_name = R-35:inner_wall
+        radius_1 = 1.72
 	[../]
 	[./coupling_axial_R22_R35]
 		type = SurfaceCoupling
@@ -3574,6 +3643,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		h_gap = ${h_gap}
 		surface1_name = R-35:top_wall
 		surface2_name = R-22:bottom_wall
+        radius_1 = 1.9
 	[../]
 	[./coupling_radial_R1_R2]
 		type = SurfaceCoupling
@@ -3581,6 +3651,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		h_gap = ${h_gap}
 		surface1_name = R-1:outer_wall
 		surface2_name = R-2:inner_wall
+        radius_1 = 1.9
 	[../]
 	[./coupling_axial_R2_R3]
 		type = SurfaceCoupling
@@ -3588,6 +3659,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		h_gap = ${h_gap}
 		surface1_name = R-3:top_wall
 		surface2_name = R-2:bottom_wall
+        radius_1 = 1.9
 	[../]
 	[./coupling_axial_R3_R5]
 		type = SurfaceCoupling
@@ -3595,6 +3667,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		h_gap = ${h_gap}
 		surface1_name = R-5:top_wall
 		surface2_name = R-3:bottom_wall
+        radius_1 = 1.9
 	[../]
 	[./coupling_radial_R7_R8]
 		type = SurfaceCoupling
@@ -3602,6 +3675,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		h_gap = ${h_gap}
 		surface1_name = R-7:outer_wall
 		surface2_name = R-8:inner_wall
+        radius_1 = 1.9
 	[../]
 	[./coupling_axial_R5_R8]
 		type = SurfaceCoupling
@@ -3609,6 +3683,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		h_gap = ${h_gap}
 		surface1_name = R-8:top_wall
 		surface2_name = R-5:bottom_wall
+        radius_1 = 1.9
 	[../]
 	[./coupling_radial_R10_R11]
 		type = SurfaceCoupling
@@ -3616,6 +3691,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		h_gap = ${h_gap}
 		surface1_name = R-10:outer_wall
 		surface2_name = R-11:inner_wall
+        radius_1 = 1.9
 	[../]
 	[./coupling_axial_R8_R11]
 		type = SurfaceCoupling
@@ -3623,6 +3699,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		h_gap = ${h_gap}
 		surface1_name = R-11:top_wall
 		surface2_name = R-8:bottom_wall
+        radius_1 = 1.9
 	[../]
 	[./coupling_radial_R13_R14]
 		type = SurfaceCoupling
@@ -3630,6 +3707,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		h_gap = ${h_gap}
 		surface1_name = R-13:outer_wall
 		surface2_name = R-14:inner_wall
+        radius_1 = 1.9
 	[../]
 	[./coupling_axial_R11_R14]
 		type = SurfaceCoupling
@@ -3637,6 +3715,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		h_gap = ${h_gap}
 		surface1_name = R-14:top_wall
 		surface2_name = R-11:bottom_wall
+        radius_1 = 1.9
 	[../]
 	[./coupling_radial_R16_R17]
 		type = SurfaceCoupling
@@ -3644,6 +3723,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		h_gap = ${h_gap}
 		surface1_name = R-16:outer_wall
 		surface2_name = R-17:inner_wall
+        radius_1 = 1.9
 	[../]
 	[./coupling_axial_R14_R17]
 		type = SurfaceCoupling
@@ -3651,6 +3731,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		h_gap = ${h_gap}
 		surface1_name = R-17:top_wall
 		surface2_name = R-14:bottom_wall
+        radius_1 = 1.9
 	[../]
 	[./coupling_radial_R19_R20]
 		type = SurfaceCoupling
@@ -3658,6 +3739,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		h_gap = ${h_gap}
 		surface1_name = R-19:outer_wall
 		surface2_name = R-20:inner_wall
+        radius_1 = 1.9
 	[../]
 	[./coupling_axial_R17_R20]
 		type = SurfaceCoupling
@@ -3665,6 +3747,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		h_gap = ${h_gap}
 		surface1_name = R-20:top_wall
 		surface2_name = R-17:bottom_wall
+        radius_1 = 1.9
 	[../]
 	[./coupling_radial_R22_R23]
 		type = SurfaceCoupling
@@ -3672,6 +3755,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		h_gap = ${h_gap}
 		surface1_name = R-22:outer_wall
 		surface2_name = R-23:inner_wall
+        radius_1 = 1.9
 	[../]
 	[./coupling_axial_R20_R23]
 		type = SurfaceCoupling
@@ -3679,6 +3763,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		h_gap = ${h_gap}
 		surface1_name = R-23:top_wall
 		surface2_name = R-20:bottom_wall
+        radius_1 = 1.9
 	[../]
 	[./coupling_radial_R35_R36]
 		type = SurfaceCoupling
@@ -3686,6 +3771,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		h_gap = ${h_gap}
 		surface1_name = R-35:outer_wall
 		surface2_name = R-36:inner_wall
+        radius_1 = 1.9
 	[../]
 	[./coupling_axial_R23_R36]
 		type = SurfaceCoupling
@@ -3693,6 +3779,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		h_gap = ${h_gap}
 		surface1_name = R-36:top_wall
 		surface2_name = R-23:bottom_wall
+        radius_1 = 1.9
 	[../]
 	[./rad_GI-1]
 		type = SurfaceCoupling
@@ -3840,6 +3927,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		h_gap = ${h_gap}
 		surface1_name = BRL-2:top_wall
 		surface2_name = BRL-1:bottom_wall
+        radius_1 = 2.19
 	[../]
 	[./coupling_axial_BRL2_BRL3]
 		type = SurfaceCoupling
@@ -3847,6 +3935,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		h_gap = ${h_gap}
 		surface1_name = BRL-3:top_wall
 		surface2_name = BRL-2:bottom_wall
+        radius_1 = 2.19
 	[../]
 	[./coupling_axial_BRL3_BRL4]
 		type = SurfaceCoupling
@@ -3854,6 +3943,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		h_gap = ${h_gap}
 		surface1_name = BRL-4:top_wall
 		surface2_name = BRL-3:bottom_wall
+        radius_1 = 2.19
 	[../]
 	[./coupling_axial_BRL4_BRL5]
 		type = SurfaceCoupling
@@ -3861,6 +3951,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		h_gap = ${h_gap}
 		surface1_name = BRL-5:top_wall
 		surface2_name = BRL-4:bottom_wall
+        radius_1 = 2.19
 	[../]
 	[./coupling_axial_BRL5_BRL6]
 		type = SurfaceCoupling
@@ -3868,6 +3959,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		h_gap = ${h_gap}
 		surface1_name = BRL-6:top_wall
 		surface2_name = BRL-5:bottom_wall
+        radius_1 = 2.19
 	[../]
 	[./coupling_axial_BRL6_BRL7]
 		type = SurfaceCoupling
@@ -3875,6 +3967,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		h_gap = ${h_gap}
 		surface1_name = BRL-7:top_wall
 		surface2_name = BRL-6:bottom_wall
+        radius_1 = 2.19
 	[../]
 	[./coupling_axial_BRL7_BRL8]
 		type = SurfaceCoupling
@@ -3882,6 +3975,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		h_gap = ${h_gap}
 		surface1_name = BRL-8:top_wall
 		surface2_name = BRL-7:bottom_wall
+        radius_1 = 2.19
 	[../]
 	[./coupling_axial_BRL8_BRL9]
 		type = SurfaceCoupling
@@ -3889,6 +3983,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		h_gap = ${h_gap}
 		surface1_name = BRL-9:top_wall
 		surface2_name = BRL-8:bottom_wall
+        radius_1 = 2.19
 	[../]
 	[./coupling_axial_BRL9_BRL10]
 		type = SurfaceCoupling
@@ -3896,6 +3991,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		h_gap = ${h_gap}
 		surface1_name = BRL-10:top_wall
 		surface2_name = BRL-9:bottom_wall
+        radius_1 = 2.19
 	[../]
 	[./rad_GM-1]
 		type = SurfaceCoupling
@@ -4043,6 +4139,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		h_gap = ${h_gap}
 		surface1_name = RPV-2:top_wall
 		surface2_name = RPV-1:bottom_wall
+        radius_1 = 2.36
 	[../]
 	[./coupling_axial_RPV2_RPV3]
 		type = SurfaceCoupling
@@ -4050,6 +4147,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		h_gap = ${h_gap}
 		surface1_name = RPV-3:top_wall
 		surface2_name = RPV-2:bottom_wall
+        radius_1 = 2.36
 	[../]
 	[./coupling_axial_RPV3_RPV4]
 		type = SurfaceCoupling
@@ -4057,6 +4155,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		h_gap = ${h_gap}
 		surface1_name = RPV-4:top_wall
 		surface2_name = RPV-3:bottom_wall
+        radius_1 = 2.36
 	[../]
 	[./coupling_axial_RPV4_RPV5]
 		type = SurfaceCoupling
@@ -4064,6 +4163,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		h_gap = ${h_gap}
 		surface1_name = RPV-5:top_wall
 		surface2_name = RPV-4:bottom_wall
+        radius_1 = 2.36
 	[../]
 	[./coupling_axial_RPV5_RPV6]
 		type = SurfaceCoupling
@@ -4071,6 +4171,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		h_gap = ${h_gap}
 		surface1_name = RPV-6:top_wall
 		surface2_name = RPV-5:bottom_wall
+        radius_1 = 2.36
 	[../]
 	[./coupling_axial_RPV6_RPV7]
 		type = SurfaceCoupling
@@ -4078,6 +4179,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		h_gap = ${h_gap}
 		surface1_name = RPV-7:top_wall
 		surface2_name = RPV-6:bottom_wall
+        radius_1 = 2.36
 	[../]
 	[./coupling_axial_RPV7_RPV8]
 		type = SurfaceCoupling
@@ -4085,6 +4187,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		h_gap = ${h_gap}
 		surface1_name = RPV-8:top_wall
 		surface2_name = RPV-7:bottom_wall
+        radius_1 = 2.36
 	[../]
 	[./coupling_axial_RPV8_RPV9]
 		type = SurfaceCoupling
@@ -4092,6 +4195,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		h_gap = ${h_gap}
 		surface1_name = RPV-9:top_wall
 		surface2_name = RPV-8:bottom_wall
+        radius_1 = 2.36
 	[../]
 	[./coupling_axial_RPV9_RPV10]
 		type = SurfaceCoupling
@@ -4099,6 +4203,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		h_gap = ${h_gap}
 		surface1_name = RPV-10:top_wall
 		surface2_name = RPV-9:bottom_wall
+        radius_1 = 2.36
 	[../]
 	[./rad_GO-1]
 		type = SurfaceCoupling
@@ -4246,6 +4351,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		h_gap = ${h_gap}
 		surface1_name = RCCS-2:top_wall
 		surface2_name = RCCS-1:bottom_wall
+        radius_1 = 2.7
 	[../]
 	[./coupling_axial_RCCS2_RCCS3]
 		type = SurfaceCoupling
@@ -4253,6 +4359,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		h_gap = ${h_gap}
 		surface1_name = RCCS-3:top_wall
 		surface2_name = RCCS-2:bottom_wall
+        radius_1 = 2.7
 	[../]
 	[./coupling_axial_RCCS3_RCCS4]
 		type = SurfaceCoupling
@@ -4260,6 +4367,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		h_gap = ${h_gap}
 		surface1_name = RCCS-4:top_wall
 		surface2_name = RCCS-3:bottom_wall
+        radius_1 = 2.7
 	[../]
 	[./coupling_axial_RCCS4_RCCS5]
 		type = SurfaceCoupling
@@ -4267,6 +4375,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		h_gap = ${h_gap}
 		surface1_name = RCCS-5:top_wall
 		surface2_name = RCCS-4:bottom_wall
+        radius_1 = 2.7
 	[../]
 	[./coupling_axial_RCCS5_RCCS6]
 		type = SurfaceCoupling
@@ -4274,6 +4383,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		h_gap = ${h_gap}
 		surface1_name = RCCS-6:top_wall
 		surface2_name = RCCS-5:bottom_wall
+        radius_1 = 2.7
 	[../]
 	[./coupling_axial_RCCS6_RCCS7]
 		type = SurfaceCoupling
@@ -4281,6 +4391,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		h_gap = ${h_gap}
 		surface1_name = RCCS-7:top_wall
 		surface2_name = RCCS-6:bottom_wall
+        radius_1 = 2.7
 	[../]
 	[./coupling_axial_RCCS7_RCCS8]
 		type = SurfaceCoupling
@@ -4288,6 +4399,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		h_gap = ${h_gap}
 		surface1_name = RCCS-8:top_wall
 		surface2_name = RCCS-7:bottom_wall
+        radius_1 = 2.7
 	[../]
 	[./coupling_axial_RCCS8_RCCS9]
 		type = SurfaceCoupling
@@ -4295,6 +4407,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		h_gap = ${h_gap}
 		surface1_name = RCCS-9:top_wall
 		surface2_name = RCCS-8:bottom_wall
+        radius_1 = 2.7
 	[../]
 	[./coupling_axial_RCCS9_RCCS10]
 		type = SurfaceCoupling
@@ -4302,12 +4415,13 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 		h_gap = ${h_gap}
 		surface1_name = RCCS-10:top_wall
 		surface2_name = RCCS-9:bottom_wall
+        radius_1 = 2.7
 	[../]
 []
 
 # Note that the postprocessors are not essential to the running
 # of the simulation. They are added here for completeness. Users
-# can remove them as they see fit.
+# can add/remove them as they see fit.
 [Postprocessors]
 	# Total heat removed from the core by the flow channels
 	[./TotalHeatRemovalRate_1]
@@ -4315,1408 +4429,27 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
 	  	input = 'F-1(in) CH-16(out)'
 	  	eos = eos
 	[../]
-	[./TotalHeatRemovalRate_2]
-	  	type = ComponentBoundaryEnergyBalance
-	  	input = 'F-2(in) CH-17(out)'
-	  	eos = eos
-	[../]
-	[./TotalHeatRemovalRate_3]
-	  	type = ComponentBoundaryEnergyBalance
-	  	input = 'F-3(in) CH-18(out)'
-	  	eos = eos
-	[../]
-	[./TotalHeatRemovalRate_4]
-	  	type = ComponentBoundaryEnergyBalance
-	  	input = 'F-4(in) CH-19(out)'
-	  	eos = eos
-	[../]
-	[./TotalHeatRemovalRate_5]
-	  	type = ComponentBoundaryEnergyBalance
-	  	input = 'F-5(in) CH-20(out)'
-	  	eos = eos
-	[../]
-
 	# Mass flow rate into the core
 	[./TotalMassFlowRateInlet_1]
 	  	type = ComponentBoundaryFlow
 	  	input = F-1(in)
 	[../]
-	[./TotalMassFlowRateInlet_2]
-	  	type = ComponentBoundaryFlow
-	  	input = F-2(in)
-	[../]
-	[./TotalMassFlowRateInlet_3]
-	  	type = ComponentBoundaryFlow
-	  	input = F-3(in)
-	[../]
-	[./TotalMassFlowRateInlet_4]
-	  	type = ComponentBoundaryFlow
-	  	input = F-4(in)
-	[../]
-	[./TotalMassFlowRateInlet_5]
-	  	type = ComponentBoundaryFlow
-	  	input = F-5(in)
-	[../]
-
-	# Mass flow rate out of the core
-	[./TotalMassFlowRateOutlet_16]
-	  	type = ComponentBoundaryFlow
-	  	input = CH-16(out)
-	[../]
-	[./TotalMassFlowRateOutlet_17]
-	  	type = ComponentBoundaryFlow
-	  	input = CH-17(out)
-	[../]
-	[./TotalMassFlowRateOutlet_18]
-	  	type = ComponentBoundaryFlow
-	  	input = CH-18(out)
-	[../]
-	[./TotalMassFlowRateOutlet_19]
-	  	type = ComponentBoundaryFlow
-	  	input = CH-19(out)
-	[../]
-	[./TotalMassFlowRateOutlet_20]
-	  	type = ComponentBoundaryFlow
-	  	input = CH-20(out)
-	[../]
-
 	# Heater max temperature ###################
 	[./max_Tsolid_F1]
 		type = NodalMaxValue
 		block = 'F-1:solid:fuel'
 		variable = T_solid
 	[../]
-	[./max_Tsolid_F2]
-		type = NodalMaxValue
-		block = 'F-2:solid:fuel'
-		variable = T_solid
-	[../]
-	[./max_Tsolid_F3]
-		type = NodalMaxValue
-		block = 'F-3:solid:fuel'
-		variable = T_solid
-	[../]
-	[./max_Tsolid_F4]
-		type = NodalMaxValue
-		block = 'F-4:solid:fuel'
-		variable = T_solid
-	[../]
-	[./max_Tsolid_F5]
-		type = NodalMaxValue
-		block = 'F-5:solid:fuel'
-		variable = T_solid
-	[../]
-	[./max_Tsolid_F6]
-		type = NodalMaxValue
-		block = 'F-6:solid:fuel'
-		variable = T_solid
-	[../]
-	[./max_Tsolid_F7]
-		type = NodalMaxValue
-		block = 'F-7:solid:fuel'
-		variable = T_solid
-	[../]
-	[./max_Tsolid_F8]
-		type = NodalMaxValue
-		block = 'F-8:solid:fuel'
-		variable = T_solid
-	[../]
-	[./max_Tsolid_F9]
-		type = NodalMaxValue
-		block = 'F-9:solid:fuel'
-		variable = T_solid
-	[../]
-	[./max_Tsolid_F10]
-		type = NodalMaxValue
-		block = 'F-10:solid:fuel'
-		variable = T_solid
-	[../]
-	[./max_Tsolid_F11]
-		type = NodalMaxValue
-		block = 'F-11:solid:fuel'
-		variable = T_solid
-	[../]
-	[./max_Tsolid_F12]
-		type = NodalMaxValue
-		block = 'F-12:solid:fuel'
-		variable = T_solid
-	[../]
-	[./max_Tsolid_F13]
-		type = NodalMaxValue
-		block = 'F-13:solid:fuel'
-		variable = T_solid
-	[../]
-	[./max_Tsolid_F14]
-		type = NodalMaxValue
-		block = 'F-14:solid:fuel'
-		variable = T_solid
-	[../]
-	[./max_Tsolid_F15]
-		type = NodalMaxValue
-		block = 'F-15:solid:fuel'
-		variable = T_solid
-	[../]
-
 	# Heater mean temperature ###################
 	[./mean_Tsolid_F1]
 		type = AverageNodalVariableValue
 		block = 'F-1:solid:fuel'
 		variable = T_solid
 	[../]
-	[./mean_Tsolid_F2]
-		type = AverageNodalVariableValue
-		block = 'F-2:solid:fuel'
-		variable = T_solid
-	[../]
-	[./mean_Tsolid_F3]
-		type = AverageNodalVariableValue
-		block = 'F-3:solid:fuel'
-		variable = T_solid
-	[../]
-	[./mean_Tsolid_F4]
-		type = AverageNodalVariableValue
-		block = 'F-4:solid:fuel'
-		variable = T_solid
-	[../]
-	[./mean_Tsolid_F5]
-		type = AverageNodalVariableValue
-		block = 'F-5:solid:fuel'
-		variable = T_solid
-	[../]
-	[./mean_Tsolid_F6]
-		type = AverageNodalVariableValue
-		block = 'F-6:solid:fuel'
-		variable = T_solid
-	[../]
-	[./mean_Tsolid_F7]
-		type = AverageNodalVariableValue
-		block = 'F-7:solid:fuel'
-		variable = T_solid
-	[../]
-	[./mean_Tsolid_F8]
-		type = AverageNodalVariableValue
-		block = 'F-8:solid:fuel'
-		variable = T_solid
-	[../]
-	[./mean_Tsolid_F9]
-		type = AverageNodalVariableValue
-		block = 'F-9:solid:fuel'
-		variable = T_solid
-	[../]
-	[./mean_Tsolid_F10]
-		type = AverageNodalVariableValue
-		block = 'F-10:solid:fuel'
-		variable = T_solid
-	[../]
-	[./mean_Tsolid_F11]
-		type = AverageNodalVariableValue
-		block = 'F-11:solid:fuel'
-		variable = T_solid
-	[../]
-	[./mean_Tsolid_F12]
-		type = AverageNodalVariableValue
-		block = 'F-12:solid:fuel'
-		variable = T_solid
-	[../]
-	[./mean_Tsolid_F13]
-		type = AverageNodalVariableValue
-		block = 'F-13:solid:fuel'
-		variable = T_solid
-	[../]
-	[./mean_Tsolid_F14]
-		type = AverageNodalVariableValue
-		block = 'F-14:solid:fuel'
-		variable = T_solid
-	[../]
-	[./mean_Tsolid_F15]
-		type = AverageNodalVariableValue
-		block = 'F-15:solid:fuel'
-		variable = T_solid
-	[../]
-
-	# Fuel-reflector max temperature ###################
-	[./max_Treflector_F1]
-		type = NodalMaxValue
-		block = 'F-1:solid:reflector'
-		variable = T_solid
-	[../]
-	[./max_Treflector_F2]
-		type = NodalMaxValue
-		block = 'F-2:solid:reflector'
-		variable = T_solid
-	[../]
-	[./max_Treflector_F3]
-		type = NodalMaxValue
-		block = 'F-3:solid:reflector'
-		variable = T_solid
-	[../]
-	[./max_Treflector_F4]
-		type = NodalMaxValue
-		block = 'F-4:solid:reflector'
-		variable = T_solid
-	[../]
-	[./max_Treflector_F5]
-		type = NodalMaxValue
-		block = 'F-5:solid:reflector'
-		variable = T_solid
-	[../]
-	[./max_Treflector_F6]
-		type = NodalMaxValue
-		block = 'F-6:solid:reflector'
-		variable = T_solid
-	[../]
-	[./max_Treflector_F7]
-		type = NodalMaxValue
-		block = 'F-7:solid:reflector'
-		variable = T_solid
-	[../]
-	[./max_Treflector_F8]
-		type = NodalMaxValue
-		block = 'F-8:solid:reflector'
-		variable = T_solid
-	[../]
-	[./max_Treflector_F9]
-		type = NodalMaxValue
-		block = 'F-9:solid:reflector'
-		variable = T_solid
-	[../]
-	[./max_Treflector_F10]
-		type = NodalMaxValue
-		block = 'F-10:solid:reflector'
-		variable = T_solid
-	[../]
-	[./max_Treflector_F11]
-		type = NodalMaxValue
-		block = 'F-11:solid:reflector'
-		variable = T_solid
-	[../]
-	[./max_Treflector_F12]
-		type = NodalMaxValue
-		block = 'F-12:solid:reflector'
-		variable = T_solid
-	[../]
-	[./max_Treflector_F13]
-		type = NodalMaxValue
-		block = 'F-13:solid:reflector'
-		variable = T_solid
-	[../]
-	[./max_Treflector_F14]
-		type = NodalMaxValue
-		block = 'F-14:solid:reflector'
-		variable = T_solid
-	[../]
-	[./max_Treflector_F15]
-		type = NodalMaxValue
-		block = 'F-15:solid:reflector'
-		variable = T_solid
-	[../]
-
-	# Fuel-reflector mean temperature ###################
-	[./mean_Treflector_F1]
-		type = AverageNodalVariableValue
-		block = 'F-1:solid:reflector'
-		variable = T_solid
-	[../]
-	[./mean_Treflector_F2]
-		type = AverageNodalVariableValue
-		block = 'F-2:solid:reflector'
-		variable = T_solid
-	[../]
-	[./mean_Treflector_F3]
-		type = AverageNodalVariableValue
-		block = 'F-3:solid:reflector'
-		variable = T_solid
-	[../]
-	[./mean_Treflector_F4]
-		type = AverageNodalVariableValue
-		block = 'F-4:solid:reflector'
-		variable = T_solid
-	[../]
-	[./mean_Treflector_F5]
-		type = AverageNodalVariableValue
-		block = 'F-5:solid:reflector'
-		variable = T_solid
-	[../]
-	[./mean_Treflector_F6]
-		type = AverageNodalVariableValue
-		block = 'F-6:solid:reflector'
-		variable = T_solid
-	[../]
-	[./mean_Treflector_F7]
-		type = AverageNodalVariableValue
-		block = 'F-7:solid:reflector'
-		variable = T_solid
-	[../]
-	[./mean_Treflector_F8]
-		type = AverageNodalVariableValue
-		block = 'F-8:solid:reflector'
-		variable = T_solid
-	[../]
-	[./mean_Treflector_F9]
-		type = AverageNodalVariableValue
-		block = 'F-9:solid:reflector'
-		variable = T_solid
-	[../]
-	[./mean_Treflector_F10]
-		type = AverageNodalVariableValue
-		block = 'F-10:solid:reflector'
-		variable = T_solid
-	[../]
-	[./mean_Treflector_F11]
-		type = AverageNodalVariableValue
-		block = 'F-11:solid:reflector'
-		variable = T_solid
-	[../]
-	[./mean_Treflector_F12]
-		type = AverageNodalVariableValue
-		block = 'F-12:solid:reflector'
-		variable = T_solid
-	[../]
-	[./mean_Treflector_F13]
-		type = AverageNodalVariableValue
-		block = 'F-13:solid:reflector'
-		variable = T_solid
-	[../]
-	[./mean_Treflector_F14]
-		type = AverageNodalVariableValue
-		block = 'F-14:solid:reflector'
-		variable = T_solid
-	[../]
-	[./mean_Treflector_F15]
-		type = AverageNodalVariableValue
-		block = 'F-15:solid:reflector'
-		variable = T_solid
-	[../]
-
-	# Fuel-moderator max temperature ###################
-	[./max_Tmoderator_F1]
-		type = NodalMaxValue
-		block = 'F-1:solid:moderator'
-		variable = T_solid
-	[../]
-	[./max_Tmoderator_F2]
-		type = NodalMaxValue
-		block = 'F-2:solid:moderator'
-		variable = T_solid
-	[../]
-	[./max_Tmoderator_F3]
-		type = NodalMaxValue
-		block = 'F-3:solid:moderator'
-		variable = T_solid
-	[../]
-	[./max_Tmoderator_F4]
-		type = NodalMaxValue
-		block = 'F-4:solid:moderator'
-		variable = T_solid
-	[../]
-	[./max_Tmoderator_F5]
-		type = NodalMaxValue
-		block = 'F-5:solid:moderator'
-		variable = T_solid
-	[../]
-
-	[./max_Tmoderator_F6]
-		type = NodalMaxValue
-		block = 'F-6:solid:moderator'
-		variable = T_solid
-	[../]
-	[./max_Tmoderator_F7]
-		type = NodalMaxValue
-		block = 'F-7:solid:moderator'
-		variable = T_solid
-	[../]
-	[./max_Tmoderator_F8]
-		type = NodalMaxValue
-		block = 'F-8:solid:moderator'
-		variable = T_solid
-	[../]
-	[./max_Tmoderator_F9]
-		type = NodalMaxValue
-		block = 'F-9:solid:moderator'
-		variable = T_solid
-	[../]
-	[./max_Tmoderator_F10]
-		type = NodalMaxValue
-		block = 'F-10:solid:moderator'
-		variable = T_solid
-	[../]
-	[./max_Tmoderator_F11]
-		type = NodalMaxValue
-		block = 'F-11:solid:moderator'
-		variable = T_solid
-	[../]
-	[./max_Tmoderator_F12]
-		type = NodalMaxValue
-		block = 'F-12:solid:moderator'
-		variable = T_solid
-	[../]
-	[./max_Tmoderator_F13]
-		type = NodalMaxValue
-		block = 'F-13:solid:moderator'
-		variable = T_solid
-	[../]
-	[./max_Tmoderator_F14]
-		type = NodalMaxValue
-		block = 'F-14:solid:moderator'
-		variable = T_solid
-	[../]
-	[./max_Tmoderator_F15]
-		type = NodalMaxValue
-		block = 'F-15:solid:moderator'
-		variable = T_solid
-	[../]
-
-	# Fuel-moderator mean temperature ###################
-	[./mean_Tmoderator_F1]
-		type = AverageNodalVariableValue
-		block = 'F-1:solid:moderator'
-		variable = T_solid
-	[../]
-	[./mean_Tmoderator_F2]
-		type = AverageNodalVariableValue
-		block = 'F-2:solid:moderator'
-		variable = T_solid
-	[../]
-	[./mean_Tmoderator_F3]
-		type = AverageNodalVariableValue
-		block = 'F-3:solid:moderator'
-		variable = T_solid
-	[../]
-	[./mean_Tmoderator_F4]
-		type = AverageNodalVariableValue
-		block = 'F-4:solid:moderator'
-		variable = T_solid
-	[../]
-	[./mean_Tmoderator_F5]
-		type = AverageNodalVariableValue
-		block = 'F-5:solid:moderator'
-		variable = T_solid
-	[../]
-	[./mean_Tmoderator_F6]
-		type = AverageNodalVariableValue
-		block = 'F-6:solid:moderator'
-		variable = T_solid
-	[../]
-	[./mean_Tmoderator_F7]
-		type = AverageNodalVariableValue
-		block = 'F-7:solid:moderator'
-		variable = T_solid
-	[../]
-	[./mean_Tmoderator_F8]
-		type = AverageNodalVariableValue
-		block = 'F-8:solid:moderator'
-		variable = T_solid
-	[../]
-	[./mean_Tmoderator_F9]
-		type = AverageNodalVariableValue
-		block = 'F-9:solid:moderator'
-		variable = T_solid
-	[../]
-	[./mean_Tmoderator_F10]
-		type = AverageNodalVariableValue
-		block = 'F-10:solid:moderator'
-		variable = T_solid
-	[../]
-	[./mean_Tmoderator_F11]
-		type = AverageNodalVariableValue
-		block = 'F-11:solid:moderator'
-		variable = T_solid
-	[../]
-	[./mean_Tmoderator_F12]
-		type = AverageNodalVariableValue
-		block = 'F-12:solid:moderator'
-		variable = T_solid
-	[../]
-	[./mean_Tmoderator_F13]
-		type = AverageNodalVariableValue
-		block = 'F-13:solid:moderator'
-		variable = T_solid
-	[../]
-	[./mean_Tmoderator_F14]
-		type = AverageNodalVariableValue
-		block = 'F-14:solid:moderator'
-		variable = T_solid
-	[../]
-	[./mean_Tmoderator_F15]
-		type = AverageNodalVariableValue
-		block = 'F-15:solid:moderator'
-		variable = T_solid
-	[../]
-
-	# Reflector max temperature
-	[./max_Tsolid_R1]
-		type = NodalMaxValue
-		block = 'R-1:hs0'
-		variable = T_solid
-	[../]
-	[./max_Tsolid_R2]
-		type = NodalMaxValue
-		block = 'R-2:hs0'
-		variable = T_solid
-	[../]
-	[./max_Tsolid_R3]
-		type = NodalMaxValue
-		block = 'R-3:hs0'
-		variable = T_solid
-	[../]
-	[./max_Tsolid_R4]
-		type = NodalMaxValue
-		block = 'R-4:hs0'
-		variable = T_solid
-	[../]
-	[./max_Tsolid_R5]
-		type = NodalMaxValue
-		block = 'R-5:hs0'
-		variable = T_solid
-	[../]
-	[./max_Tsolid_R6]
-		type = NodalMaxValue
-		block = 'R-6:hs0'
-		variable = T_solid
-	[../]
-	[./max_Tsolid_R7]
-		type = NodalMaxValue
-		block = 'R-7:hs0'
-		variable = T_solid
-	[../]
-	[./max_Tsolid_R8]
-		type = NodalMaxValue
-		block = 'R-8:hs0'
-		variable = T_solid
-	[../]
-	[./max_Tsolid_R9]
-		type = NodalMaxValue
-		block = 'R-9:hs0'
-		variable = T_solid
-	[../]
-	[./max_Tsolid_R10]
-		type = NodalMaxValue
-		block = 'R-10:hs0'
-		variable = T_solid
-	[../]
-	[./max_Tsolid_R11]
-		type = NodalMaxValue
-		block = 'R-11:hs0'
-		variable = T_solid
-	[../]
-	[./max_Tsolid_R12]
-		type = NodalMaxValue
-		block = 'R-12:hs0'
-		variable = T_solid
-	[../]
-	[./max_Tsolid_R13]
-		type = NodalMaxValue
-		block = 'R-13:hs0'
-		variable = T_solid
-	[../]
-	[./max_Tsolid_R14]
-		type = NodalMaxValue
-		block = 'R-14:hs0'
-		variable = T_solid
-	[../]
-	[./max_Tsolid_R15]
-		type = NodalMaxValue
-		block = 'R-15:hs0'
-		variable = T_solid
-	[../]
-	[./max_Tsolid_R16]
-		type = NodalMaxValue
-		block = 'R-16:hs0'
-		variable = T_solid
-	[../]
-	[./max_Tsolid_R17]
-		type = NodalMaxValue
-		block = 'R-17:hs0'
-		variable = T_solid
-	[../]
-	[./max_Tsolid_R18]
-		type = NodalMaxValue
-		block = 'R-18:hs0'
-		variable = T_solid
-	[../]
-	[./max_Tsolid_R19]
-		type = NodalMaxValue
-		block = 'R-19:hs0'
-		variable = T_solid
-	[../]
-	[./max_Tsolid_R20]
-		type = NodalMaxValue
-		block = 'R-20:hs0'
-		variable = T_solid
-	[../]
-	[./max_Tsolid_R21]
-		type = NodalMaxValue
-		block = 'R-21:hs0'
-		variable = T_solid
-	[../]
-	[./max_Tsolid_R22]
-		type = NodalMaxValue
-		block = 'R-22:hs0'
-		variable = T_solid
-	[../]
-	[./max_Tsolid_R23]
-		type = NodalMaxValue
-		block = 'R-23:hs0'
-		variable = T_solid
-	[../]
-	[./max_Tsolid_R24]
-		type = NodalMaxValue
-		block = 'R-24:hs0'
-		variable = T_solid
-	[../]
-	[./max_Tsolid_R25]
-		type = NodalMaxValue
-		block = 'R-25:hs0'
-		variable = T_solid
-	[../]
-	[./max_Tsolid_R26]
-		type = NodalMaxValue
-		block = 'R-26:hs0'
-		variable = T_solid
-	[../]
-	[./max_Tsolid_R27]
-		type = NodalMaxValue
-		block = 'R-27:hs0'
-		variable = T_solid
-	[../]
-	[./max_Tsolid_R28]
-		type = NodalMaxValue
-		block = 'R-28:hs0'
-		variable = T_solid
-	[../]
-	[./max_Tsolid_R29]
-		type = NodalMaxValue
-		block = 'R-29:hs0'
-		variable = T_solid
-	[../]
-	[./max_Tsolid_R30]
-		type = NodalMaxValue
-		block = 'R-30:hs0'
-		variable = T_solid
-	[../]
-	[./max_Tsolid_R31]
-		type = NodalMaxValue
-		block = 'R-31:hs0'
-		variable = T_solid
-	[../]
-	[./max_Tsolid_R32]
-		type = NodalMaxValue
-		block = 'R-32:hs0'
-		variable = T_solid
-	[../]
-	[./max_Tsolid_R33]
-		type = NodalMaxValue
-		block = 'R-33:hs0'
-		variable = T_solid
-	[../]
-	[./max_Tsolid_R34]
-		type = NodalMaxValue
-		block = 'R-34:hs0'
-		variable = T_solid
-	[../]
-	[./max_Tsolid_R35]
-		type = NodalMaxValue
-		block = 'R-35:hs0'
-		variable = T_solid
-	[../]
-	[./max_Tsolid_R36]
-		type = NodalMaxValue
-		block = 'R-36:hs0'
-		variable = T_solid
-	[../]
-
-	# Reflector mean temperature
-	[./mean_Tsolid_R1]
-		type = AverageNodalVariableValue
-		block = 'R-1:hs0'
-		variable = T_solid
-	[../]
-	[./mean_Tsolid_R2]
-		type = AverageNodalVariableValue
-		block = 'R-2:hs0'
-		variable = T_solid
-	[../]
-	[./mean_Tsolid_R3]
-		type = AverageNodalVariableValue
-		block = 'R-3:hs0'
-		variable = T_solid
-	[../]
-	[./mean_Tsolid_R4]
-		type = AverageNodalVariableValue
-		block = 'R-4:hs0'
-		variable = T_solid
-	[../]
-	[./mean_Tsolid_R5]
-		type = AverageNodalVariableValue
-		block = 'R-5:hs0'
-		variable = T_solid
-	[../]
-	[./mean_Tsolid_R6]
-		type = AverageNodalVariableValue
-		block = 'R-6:hs0'
-		variable = T_solid
-	[../]
-	[./mean_Tsolid_R7]
-		type = AverageNodalVariableValue
-		block = 'R-7:hs0'
-		variable = T_solid
-	[../]
-	[./mean_Tsolid_R8]
-		type = AverageNodalVariableValue
-		block = 'R-8:hs0'
-		variable = T_solid
-	[../]
-	[./mean_Tsolid_R9]
-		type = AverageNodalVariableValue
-		block = 'R-9:hs0'
-		variable = T_solid
-	[../]
-	[./mean_Tsolid_R10]
-		type = AverageNodalVariableValue
-		block = 'R-10:hs0'
-		variable = T_solid
-	[../]
-	[./mean_Tsolid_R11]
-		type = AverageNodalVariableValue
-		block = 'R-11:hs0'
-		variable = T_solid
-	[../]
-	[./mean_Tsolid_R12]
-		type = AverageNodalVariableValue
-		block = 'R-12:hs0'
-		variable = T_solid
-	[../]
-	[./mean_Tsolid_R13]
-		type = AverageNodalVariableValue
-		block = 'R-13:hs0'
-		variable = T_solid
-	[../]
-	[./mean_Tsolid_R14]
-		type = AverageNodalVariableValue
-		block = 'R-14:hs0'
-		variable = T_solid
-	[../]
-	[./mean_Tsolid_R15]
-		type = AverageNodalVariableValue
-		block = 'R-15:hs0'
-		variable = T_solid
-	[../]
-	[./mean_Tsolid_R16]
-		type = AverageNodalVariableValue
-		block = 'R-16:hs0'
-		variable = T_solid
-	[../]
-	[./mean_Tsolid_R17]
-		type = AverageNodalVariableValue
-		block = 'R-17:hs0'
-		variable = T_solid
-	[../]
-	[./mean_Tsolid_R18]
-		type = AverageNodalVariableValue
-		block = 'R-18:hs0'
-		variable = T_solid
-	[../]
-	[./mean_Tsolid_R19]
-		type = AverageNodalVariableValue
-		block = 'R-19:hs0'
-		variable = T_solid
-	[../]
-	[./mean_Tsolid_R20]
-		type = AverageNodalVariableValue
-		block = 'R-20:hs0'
-		variable = T_solid
-	[../]
-	[./mean_Tsolid_R21]
-		type = AverageNodalVariableValue
-		block = 'R-21:hs0'
-		variable = T_solid
-	[../]
-	[./mean_Tsolid_R22]
-		type = AverageNodalVariableValue
-		block = 'R-22:hs0'
-		variable = T_solid
-	[../]
-	[./mean_Tsolid_R23]
-		type = AverageNodalVariableValue
-		block = 'R-23:hs0'
-		variable = T_solid
-	[../]
-	[./mean_Tsolid_R24]
-		type = AverageNodalVariableValue
-		block = 'R-24:hs0'
-		variable = T_solid
-	[../]
-	[./mean_Tsolid_R25]
-		type = AverageNodalVariableValue
-		block = 'R-25:hs0'
-		variable = T_solid
-	[../]
-	[./mean_Tsolid_R26]
-		type = AverageNodalVariableValue
-		block = 'R-26:hs0'
-		variable = T_solid
-	[../]
-	[./mean_Tsolid_R27]
-		type = AverageNodalVariableValue
-		block = 'R-27:hs0'
-		variable = T_solid
-	[../]
-	[./mean_Tsolid_R28]
-		type = AverageNodalVariableValue
-		block = 'R-28:hs0'
-		variable = T_solid
-	[../]
-	[./mean_Tsolid_R29]
-		type = AverageNodalVariableValue
-		block = 'R-29:hs0'
-		variable = T_solid
-	[../]
-	[./mean_Tsolid_R30]
-		type = AverageNodalVariableValue
-		block = 'R-30:hs0'
-		variable = T_solid
-	[../]
-	[./mean_Tsolid_R31]
-		type = AverageNodalVariableValue
-		block = 'R-31:hs0'
-		variable = T_solid
-	[../]
-	[./mean_Tsolid_R32]
-		type = AverageNodalVariableValue
-		block = 'R-32:hs0'
-		variable = T_solid
-	[../]
-	[./mean_Tsolid_R33]
-		type = AverageNodalVariableValue
-		block = 'R-33:hs0'
-		variable = T_solid
-	[../]
-	[./mean_Tsolid_R34]
-		type = AverageNodalVariableValue
-		block = 'R-34:hs0'
-		variable = T_solid
-	[../]
-	[./mean_Tsolid_R35]
-		type = AverageNodalVariableValue
-		block = 'R-35:hs0'
-		variable = T_solid
-	[../]
-	[./mean_Tsolid_R36]
-		type = AverageNodalVariableValue
-		block = 'R-36:hs0'
-		variable = T_solid
-	[../]
-
-	# Bottom reflector max temperature
-	[./max_Tsolid_BR1]
-		type = NodalMaxValue
-		block = 'BR-1:hs0'
-		variable = T_solid
-	[../]
-	[./max_Tsolid_BR2]
-		type = NodalMaxValue
-		block = 'BR-2:hs0'
-		variable = T_solid
-	[../]
-	[./max_Tsolid_BR3]
-		type = NodalMaxValue
-		block = 'BR-3:hs0'
-		variable = T_solid
-	[../]
-	[./max_Tsolid_BR4]
-		type = NodalMaxValue
-		block = 'BR-4:hs0'
-		variable = T_solid
-	[../]
-	[./max_Tsolid_BR5]
-		type = NodalMaxValue
-		block = 'BR-5:hs0'
-		variable = T_solid
-	[../]
-	[./max_Tsolid_BR6]
-		type = NodalMaxValue
-		block = 'BR-6:hs0'
-		variable = T_solid
-	[../]
-	[./max_Tsolid_BR7]
-		type = NodalMaxValue
-		block = 'BR-7:hs0'
-		variable = T_solid
-	[../]
-	[./max_Tsolid_BR8]
-		type = NodalMaxValue
-		block = 'BR-8:hs0'
-		variable = T_solid
-	[../]
-	[./max_Tsolid_BR9]
-		type = NodalMaxValue
-		block = 'BR-9:hs0'
-		variable = T_solid
-	[../]
-	[./max_Tsolid_BR10]
-		type = NodalMaxValue
-		block = 'BR-10:hs0'
-		variable = T_solid
-	[../]
-	[./max_Tsolid_BR11]
-		type = NodalMaxValue
-		block = 'BR-11:hs0'
-		variable = T_solid
-	[../]
-	[./max_Tsolid_BR12]
-		type = NodalMaxValue
-		block = 'BR-12:hs0'
-		variable = T_solid
-	[../]
-	[./max_Tsolid_BR13]
-		type = NodalMaxValue
-		block = 'BR-13:hs0'
-		variable = T_solid
-	[../]
-	[./max_Tsolid_BR14]
-		type = NodalMaxValue
-		block = 'BR-14:hs0'
-		variable = T_solid
-	[../]
-	[./max_Tsolid_BR15]
-		type = NodalMaxValue
-		block = 'BR-15:hs0'
-		variable = T_solid
-	[../]
-	[./max_Tsolid_BR16]
-		type = NodalMaxValue
-		block = 'BR-16:hs0'
-		variable = T_solid
-	[../]
-	[./max_Tsolid_BR17]
-		type = NodalMaxValue
-		block = 'BR-17:hs0'
-		variable = T_solid
-	[../]
-	[./max_Tsolid_BR18]
-		type = NodalMaxValue
-		block = 'BR-18:hs0'
-		variable = T_solid
-	[../]
-	[./max_Tsolid_BR19]
-		type = NodalMaxValue
-		block = 'BR-19:hs0'
-		variable = T_solid
-	[../]
-	[./max_Tsolid_BR20]
-		type = NodalMaxValue
-		block = 'BR-20:hs0'
-		variable = T_solid
-	[../]
-
-	# Bottom reflector mean temperature
-	[./mean_Tsolid_BR1]
-		type = AverageNodalVariableValue
-		block = 'BR-1:hs0'
-		variable = T_solid
-	[../]
-	[./mean_Tsolid_BR2]
-		type = AverageNodalVariableValue
-		block = 'BR-2:hs0'
-		variable = T_solid
-	[../]
-	[./mean_Tsolid_BR3]
-		type = AverageNodalVariableValue
-		block = 'BR-3:hs0'
-		variable = T_solid
-	[../]
-	[./mean_Tsolid_BR4]
-		type = AverageNodalVariableValue
-		block = 'BR-4:hs0'
-		variable = T_solid
-	[../]
-	[./mean_Tsolid_BR5]
-		type = AverageNodalVariableValue
-		block = 'BR-5:hs0'
-		variable = T_solid
-	[../]
-	[./mean_Tsolid_BR6]
-		type = AverageNodalVariableValue
-		block = 'BR-6:hs0'
-		variable = T_solid
-	[../]
-	[./mean_Tsolid_BR7]
-		type = AverageNodalVariableValue
-		block = 'BR-7:hs0'
-		variable = T_solid
-	[../]
-	[./mean_Tsolid_BR8]
-		type = AverageNodalVariableValue
-		block = 'BR-8:hs0'
-		variable = T_solid
-	[../]
-	[./mean_Tsolid_BR9]
-		type = AverageNodalVariableValue
-		block = 'BR-9:hs0'
-		variable = T_solid
-	[../]
-	[./mean_Tsolid_BR10]
-		type = AverageNodalVariableValue
-		block = 'BR-10:hs0'
-		variable = T_solid
-	[../]
-	[./mean_Tsolid_BR11]
-		type = AverageNodalVariableValue
-		block = 'BR-11:hs0'
-		variable = T_solid
-	[../]
-	[./mean_Tsolid_BR12]
-		type = AverageNodalVariableValue
-		block = 'BR-12:hs0'
-		variable = T_solid
-	[../]
-	[./mean_Tsolid_BR13]
-		type = AverageNodalVariableValue
-		block = 'BR-13:hs0'
-		variable = T_solid
-	[../]
-	[./mean_Tsolid_BR14]
-		type = AverageNodalVariableValue
-		block = 'BR-14:hs0'
-		variable = T_solid
-	[../]
-	[./mean_Tsolid_BR15]
-		type = AverageNodalVariableValue
-		block = 'BR-15:hs0'
-		variable = T_solid
-	[../]
-	[./mean_Tsolid_BR16]
-		type = AverageNodalVariableValue
-		block = 'BR-16:hs0'
-		variable = T_solid
-	[../]
-	[./mean_Tsolid_BR17]
-		type = AverageNodalVariableValue
-		block = 'BR-17:hs0'
-		variable = T_solid
-	[../]
-	[./mean_Tsolid_BR18]
-		type = AverageNodalVariableValue
-		block = 'BR-18:hs0'
-		variable = T_solid
-	[../]
-	[./mean_Tsolid_BR19]
-		type = AverageNodalVariableValue
-		block = 'BR-19:hs0'
-		variable = T_solid
-	[../]
-	[./mean_Tsolid_BR20]
-		type = AverageNodalVariableValue
-		block = 'BR-20:hs0'
-		variable = T_solid
-	[../]
-
-	# Channel mean temperature ###################
-	[./mean_Tfluid_F1]
-		type = AverageNodalVariableValue
-		block = 'F-1:pipe'
-		variable = temperature
-	[../]
-	[./mean_Tfluid_F2]
-		type = AverageNodalVariableValue
-		block = 'F-2:pipe'
-		variable = temperature
-	[../]
-	[./mean_Tfluid_F3]
-		type = AverageNodalVariableValue
-		block = 'F-3:pipe'
-		variable = temperature
-	[../]
-	[./mean_Tfluid_F4]
-		type = AverageNodalVariableValue
-		block = 'F-4:pipe'
-		variable = temperature
-	[../]
-	[./mean_Tfluid_F5]
-		type = AverageNodalVariableValue
-		block = 'F-5:pipe'
-		variable = temperature
-	[../]
-	[./mean_Tfluid_F6]
-		type = AverageNodalVariableValue
-		block = 'F-6:pipe'
-		variable = temperature
-	[../]
-	[./mean_Tfluid_F7]
-		type = AverageNodalVariableValue
-		block = 'F-7:pipe'
-		variable = temperature
-	[../]
-	[./mean_Tfluid_F8]
-		type = AverageNodalVariableValue
-		block = 'F-8:pipe'
-		variable = temperature
-	[../]
-	[./mean_Tfluid_F9]
-		type = AverageNodalVariableValue
-		block = 'F-9:pipe'
-		variable = temperature
-	[../]
-	[./mean_Tfluid_F10]
-		type = AverageNodalVariableValue
-		block = 'F-10:pipe'
-		variable = temperature
-	[../]
-	[./mean_Tfluid_F11]
-		type = AverageNodalVariableValue
-		block = 'F-11:pipe'
-		variable = temperature
-	[../]
-	[./mean_Tfluid_F12]
-		type = AverageNodalVariableValue
-		block = 'F-12:pipe'
-		variable = temperature
-	[../]
-	[./mean_Tfluid_F13]
-		type = AverageNodalVariableValue
-		block = 'F-13:pipe'
-		variable = temperature
-	[../]
-	[./mean_Tfluid_F14]
-		type = AverageNodalVariableValue
-		block = 'F-14:pipe'
-		variable = temperature
-	[../]
-	[./mean_Tfluid_F15]
-		type = AverageNodalVariableValue
-		block = 'F-15:pipe'
-		variable = temperature
-	[../]
-
-	# Channel max temperature ###################
-	[./max_Tfluid_F1]
-		type = NodalMaxValue
-		block = 'F-1:pipe'
-		variable = temperature
-	[../]
-	[./max_Tfluid_F2]
-		type = NodalMaxValue
-		block = 'F-2:pipe'
-		variable = temperature
-	[../]
-	[./max_Tfluid_F3]
-		type = NodalMaxValue
-		block = 'F-3:pipe'
-		variable = temperature
-	[../]
-	[./max_Tfluid_F4]
-		type = NodalMaxValue
-		block = 'F-4:pipe'
-		variable = temperature
-	[../]
-	[./max_Tfluid_F5]
-		type = NodalMaxValue
-		block = 'F-5:pipe'
-		variable = temperature
-	[../]
-
-	[./max_Tfluid_F6]
-		type = NodalMaxValue
-		block = 'F-6:pipe'
-		variable = temperature
-	[../]
-	[./max_Tfluid_F7]
-		type = NodalMaxValue
-		block = 'F-7:pipe'
-		variable = temperature
-	[../]
-	[./max_Tfluid_F8]
-		type = NodalMaxValue
-		block = 'F-8:pipe'
-		variable = temperature
-	[../]
-	[./max_Tfluid_F9]
-		type = NodalMaxValue
-		block = 'F-9:pipe'
-		variable = temperature
-	[../]
-	[./max_Tfluid_F10]
-		type = NodalMaxValue
-		block = 'F-10:pipe'
-		variable = temperature
-	[../]
-	[./max_Tfluid_F11]
-		type = NodalMaxValue
-		block = 'F-11:pipe'
-		variable = temperature
-	[../]
-	[./max_Tfluid_F12]
-		type = NodalMaxValue
-		block = 'F-12:pipe'
-		variable = temperature
-	[../]
-	[./max_Tfluid_F13]
-		type = NodalMaxValue
-		block = 'F-13:pipe'
-		variable = temperature
-	[../]
-	[./max_Tfluid_F14]
-		type = NodalMaxValue
-		block = 'F-14:pipe'
-		variable = temperature
-	[../]
-	[./max_Tfluid_F15]
-		type = NodalMaxValue
-		block = 'F-15:pipe'
-		variable = temperature
-	[../]
-
     #  Max fuel kernel temperature
 	[./max_Tkernel_F1]
 		type = NodalMaxValue
 		block = 'F-1:solid:fuel'
-		variable = T_kernel
-	[../]
-	[./max_Tkernel_F2]
-		type = NodalMaxValue
-		block = 'F-2:solid:fuel'
-		variable = T_kernel
-	[../]
-	[./max_Tkernel_F3]
-		type = NodalMaxValue
-		block = 'F-3:solid:fuel'
-		variable = T_kernel
-	[../]
-	[./max_Tkernel_F4]
-		type = NodalMaxValue
-		block = 'F-4:solid:fuel'
-		variable = T_kernel
-	[../]
-	[./max_Tkernel_F5]
-		type = NodalMaxValue
-		block = 'F-5:solid:fuel'
-		variable = T_kernel
-	[../]
-	[./max_Tkernel_F6]
-		type = NodalMaxValue
-		block = 'F-6:solid:fuel'
-		variable = T_kernel
-	[../]
-	[./max_Tkernel_F7]
-		type = NodalMaxValue
-		block = 'F-7:solid:fuel'
-		variable = T_kernel
-	[../]
-	[./max_Tkernel_F8]
-		type = NodalMaxValue
-		block = 'F-8:solid:fuel'
-		variable = T_kernel
-	[../]
-	[./max_Tkernel_F9]
-		type = NodalMaxValue
-		block = 'F-9:solid:fuel'
-		variable = T_kernel
-	[../]
-	[./max_Tkernel_F10]
-		type = NodalMaxValue
-		block = 'F-10:solid:fuel'
-		variable = T_kernel
-	[../]
-	[./max_Tkernel_F11]
-		type = NodalMaxValue
-		block = 'F-11:solid:fuel'
-		variable = T_kernel
-	[../]
-	[./max_Tkernel_F12]
-		type = NodalMaxValue
-		block = 'F-12:solid:fuel'
-		variable = T_kernel
-	[../]
-	[./max_Tkernel_F13]
-		type = NodalMaxValue
-		block = 'F-13:solid:fuel'
-		variable = T_kernel
-	[../]
-	[./max_Tkernel_F14]
-		type = NodalMaxValue
-		block = 'F-14:solid:fuel'
-		variable = T_kernel
-	[../]
-	[./max_Tkernel_F15]
-		type = NodalMaxValue
-		block = 'F-15:solid:fuel'
-		variable = T_kernel
-	[../]
-
-    # Mean fuel kernel temperature
-	[./mean_Tkernel_F1]
-		type = AverageNodalVariableValue
-		block = 'F-1:solid:fuel'
-		variable = T_kernel
-	[../]
-	[./mean_Tkernel_F2]
-		type = AverageNodalVariableValue
-		block = 'F-2:solid:fuel'
-		variable = T_kernel
-	[../]
-	[./mean_Tkernel_F3]
-		type = AverageNodalVariableValue
-		block = 'F-3:solid:fuel'
-		variable = T_kernel
-	[../]
-	[./mean_Tkernel_F4]
-		type = AverageNodalVariableValue
-		block = 'F-4:solid:fuel'
-		variable = T_kernel
-	[../]
-	[./mean_Tkernel_F5]
-		type = AverageNodalVariableValue
-		block = 'F-5:solid:fuel'
-		variable = T_kernel
-	[../]
-	[./mean_Tkernel_F6]
-		type = AverageNodalVariableValue
-		block = 'F-6:solid:fuel'
-		variable = T_kernel
-	[../]
-	[./mean_Tkernel_F7]
-		type = AverageNodalVariableValue
-		block = 'F-7:solid:fuel'
-		variable = T_kernel
-	[../]
-	[./mean_Tkernel_F8]
-		type = AverageNodalVariableValue
-		block = 'F-8:solid:fuel'
-		variable = T_kernel
-	[../]
-	[./mean_Tkernel_F9]
-		type = AverageNodalVariableValue
-		block = 'F-9:solid:fuel'
-		variable = T_kernel
-	[../]
-	[./mean_Tkernel_F10]
-		type = AverageNodalVariableValue
-		block = 'F-10:solid:fuel'
-		variable = T_kernel
-	[../]
-	[./mean_Tkernel_F11]
-		type = AverageNodalVariableValue
-		block = 'F-11:solid:fuel'
-		variable = T_kernel
-	[../]
-	[./mean_Tkernel_F12]
-		type = AverageNodalVariableValue
-		block = 'F-12:solid:fuel'
-		variable = T_kernel
-	[../]
-	[./mean_Tkernel_F13]
-		type = AverageNodalVariableValue
-		block = 'F-13:solid:fuel'
-		variable = T_kernel
-	[../]
-	[./mean_Tkernel_F14]
-		type = AverageNodalVariableValue
-		block = 'F-14:solid:fuel'
-		variable = T_kernel
-	[../]
-	[./mean_Tkernel_F15]
-		type = AverageNodalVariableValue
-		block = 'F-15:solid:fuel'
 		variable = T_kernel
 	[../]
 []
