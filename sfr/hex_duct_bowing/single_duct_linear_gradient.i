@@ -26,7 +26,7 @@
     duct_block_ids = '1500'
     preserve_volumes = on
     quad_center_elements = true
-    surface_boundary_id = 100
+    external_boundary_id = 100
     interface_boundary_id_shift = 100
   []
 
@@ -67,7 +67,7 @@
     duct_block_ids = '1600'
     preserve_volumes = on
     quad_center_elements = true
-    surface_boundary_id = 200
+    external_boundary_id = 200
     interface_boundary_id_shift = 200
   []
 
@@ -108,8 +108,8 @@
   [block_rename]
     type = RenameBlockGenerator
     input = sidesets_rename_all
-    old_block_id = '1500 1600'
-    new_block_id ='1 1'
+    old_block = '1500 1600'
+    new_block ='1 1'
   []
   patch_update_strategy = auto
   patch_size = 20

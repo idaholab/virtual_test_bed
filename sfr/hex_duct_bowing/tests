@@ -2,11 +2,32 @@
   [single_duct_linear_syntax]
     type = RunApp
     input = single_duct_linear_gradient.i
+    executable_pattern = 'combined*|blue_crab*'
     check_input = true
   []
   [iaea_vp3a_symmetric_syntax]
     type = RunApp
     input = iaea_vp3a_symmetric_sector.i
+    executable_pattern = 'combined*|blue_crab*'
     check_input = true
+  []
+
+  [single_duct_linear]
+    type = CSVDiff
+    input = single_duct_linear_gradient.i
+    csvdiff = 'load_pad_displace.csv face_disp_face4_0003.csv'
+    executable_pattern = 'combined*|blue_crab*'
+    prereq = 'single_duct_linear_syntax'
+    min_parallel = 4
+  []
+  [iaea_vp3a_symmetric]
+    type = CSVDiff
+    input = iaea_vp3a_symmetric_sector.i
+    csvdiff = 'tlp_disp_dt_steps.csv duct_10_corners_duct_10_0006.csv duct_1_centerline_duct_1_0006.csv duct_3_corners_duct_3_0006.csv'
+    executable_pattern = 'combined*|blue_crab*'
+    cli_args = 'Executioner/num_steps=5'
+    prereq = 'iaea_vp3a_symmetric_syntax'
+    min_parallel = 8
+    method = 'opt'
   []
 []
