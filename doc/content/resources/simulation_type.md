@@ -30,6 +30,8 @@ help creating it.
 
 - Assembly in a Sodium Fast Reactor [documentation](sfr/single_assembly/sfr.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/sfr/single_assembly)
 
+- Sodium Fast Reactor duct bowing [documentation](sfr/hex_duct_bowing/index.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/sfr/hex_duct_bowing)
+
 
 ### Integrated plant analysis
 

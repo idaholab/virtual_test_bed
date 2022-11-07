@@ -108,6 +108,8 @@ Please refer to the inputs or the index below for the codes used.\\
 
 - Versatile Test Reactor core model [documentation](sfr/vtr/index.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/sfr/vtr)
 
+- Sodium Fast Reactor duct bowing [documentation](sfr/hex_duct_bowing/index.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/sfr/hex_duct_bowing)
+
 
 ### Heat conduction module
 
