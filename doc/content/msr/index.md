@@ -1,4 +1,4 @@
-# Molten Salt Reactor
+# Molten Salt Reactors
 
 [Molten Salt Fast Reactor](msfr/index.md)
 

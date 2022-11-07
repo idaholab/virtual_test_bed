@@ -5,3 +5,5 @@
 [Versatile Test Reactor](vtr/index.md)
 
 [Advanced Burner Test Reactor](abtr/abtr.md)
+
+[Subchannel Demonstrations](subchannel/index.md)
