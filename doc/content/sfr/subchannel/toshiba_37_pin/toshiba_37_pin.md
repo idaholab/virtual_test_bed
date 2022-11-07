@@ -166,3 +166,7 @@ As observed in [plots], for the high mass flow rate case, the present model pred
 However, when comparing the results predicted for the medium- and low-flow-rate cases in Figures 3b and 3c, respectively, we observe that our models over-predict the temperature distributions when compared to SUBAC.
 Further analysis determined that the more peaked distribution of temperatures predicted by `Pronghorn-subchannel` towards the center of the assembly may be
 produced by an over-prediction of the mixing rates, which yields larger than expected flows in the outer channels.
+
+!alert note
+Sample output for this model, in the gold folder, is hosted on LFS.
+Please refer to [LFS instructions](resources/how_to_use_vtb.md#lfs) to download it.

@@ -20,7 +20,7 @@ then a `git clone` will download both the regular and large files.
 !alert note
 To install `git`, see instructions [here](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) for example
 
-### git Large File System : meshes and sample outputs style=font-size:125%
+### git Large File System : meshes and sample outputs style=font-size:125% id=lfs
 
 
 For several models, the mesh files are too large to be hosted on github directly. We leverage `git-lfs` to
