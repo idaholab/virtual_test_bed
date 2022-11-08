@@ -272,6 +272,11 @@ A detailed description about LES filters used in Nek can be found in [Nek5000 tu
 Users are encouraged to check out the case files (particularly +usr+ and +par+ files) that are provided in the VTB repository
 to get a better idea how the RANS and LES cases are established. 
 
+Besides the key case setup files mentioned above, users can also find other files in the case folders,
+such as SIZE, limits.f and utilities.f. 
+SIZE is used to specify Nek5000 discretization parameters, while limits.f and utilities.f contain some of the most useful user functions developed for Nek5000 in-situ analysis or post-processing. 
+In general, no or minimum editing is required for these files. 
+
 # MSFR CFD Results
 
 The 2-D axisymmetric RANS cases were simulated at multiple Reynolds numbers up to the reference operation condition ($Re = 10^6$) defined based on the length and flow velocity at minimum core diameter. 
