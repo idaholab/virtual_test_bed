@@ -266,8 +266,9 @@ solving is as follows
 The LES case setups are relatively simpler, and one only need to provide the filter settings in +par+ file. 
 An example can be found below
 
-!listing msr/msfr/core_cfd/2d_rans_Re1M/msfr.par start=[GENERAL] end=targetCFL include-end=True
+!listing msr/msfr/core_cfd/3d_fullcore_les/msfr.par start=[GENERAL] end=targetCFL include-end=True
 
+A detailed description about LES filters used in Nek can be found in [Nek5000 tutorial](https://nek5000.github.io/NekDoc/problem_setup/filter.html?highlight=filter). 
 Users are encouraged to check out the case files (particularly +usr+ and +par+ files) that are provided in the VTB repository
 to get a better idea how the RANS and LES cases are established. 
 
