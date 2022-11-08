@@ -264,7 +264,7 @@ solving is as follows
 ### LES Simultion style=font-size:125%
 
 The LES case setups are relatively simpler, and one only need to provide the filter settings in +par+ file. 
-An example can be found below
+An example can be found below:
 
 !listing msr/msfr/core_cfd/3d_fullcore_les/msfr.par start=[GENERAL] end=targetCFL include-end=True
 
