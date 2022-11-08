@@ -4465,6 +4465,10 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
         petsc_options_value = 'lu 101'
     [../]
 []
+
+# The tolerances have been decreased for testing purpose.
+# Users are free to adjust them as they see fit.
+
 [Executioner]
     type                           = Transient
     dt                             = 1
@@ -4472,21 +4476,23 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
     start_time                     = -172800
     end_time                       = -210
     dtmax                          = 10000
-    nl_rel_tol                     = 1e-7
-    l_tol                                                  = 1e-5
-    nl_abs_tol                     = 1e-5
+    nl_rel_tol                     = 1e-8
+    l_tol                          = 1e-8
+    nl_abs_tol                     = 1e-8
     nl_max_its                     = 30
     l_max_its                      = 200
 
-    [./TimeStepper]
-        type = IterationAdaptiveDT
-        growth_factor = 1.25
-        optimal_iterations = 8
-        linear_iteration_ratio = 150
-        dt = 1
-        cutback_factor = 0.8
-        cutback_factor_at_failure = 0.8
-    [../]
+# The TimeStepper block can be activated if users
+# wish to enable adaptive time-stepper.
+    # [./TimeStepper]
+    #     type = IterationAdaptiveDT
+    #     growth_factor = 1.25
+    #     optimal_iterations = 8
+    #     linear_iteration_ratio = 150
+    #     dt = 1
+    #     cutback_factor = 0.8
+    #     cutback_factor_at_failure = 0.8
+    # [../]
     [./Quadrature]
         type = SIMPSON
         order = SECOND
