@@ -19,6 +19,8 @@
   patch_size = 20
   partitioner = centroid
   centroid_partitioner_direction = z
+
+  allow_renumbering = false
 []
 
 [Problem]

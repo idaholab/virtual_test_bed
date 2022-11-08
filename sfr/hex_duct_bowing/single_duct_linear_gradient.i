@@ -111,6 +111,8 @@
     old_block = '1500 1600'
     new_block ='1 1'
   []
+
+  # Mesh parallel partitioning parameters
   patch_update_strategy = auto
   patch_size = 20
   partitioner = centroid
@@ -287,7 +289,7 @@
 
 [VectorPostprocessors]
   [face4]
-     type = NodalValueSampler
+    type = NodalValueSampler
     sort_by = z
     variable = 'disp_x disp_y'
     boundary = face4
