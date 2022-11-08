@@ -151,9 +151,9 @@ is selected as the reference geometry for our CFD simulations.
 | Salt thermal conductivity (T=675$^\circ C$)  | 1.007645 | $[W/(K \bullet	 m)]$  |
 | Minimum core radius  | 1.054 | $[m]$  |
 | Mean flow velocity at minimum core radius   | 1.308 | $[m/s]$  |
-| Estimated Reynolds number   | $1.02\times10^6$ | $[-]$  |
-| Estimated Prandtl number   | 17.05 | $[-]$  |
-| Estimated Peclet number   | $1.73\times10^7$ | $[-]$  |
+| Estimated Reynolds number ($Re=\rho U D / \mu$)   | $1.02\times10^6$ | $[-]$  |
+| Estimated Prandtl number ($Pr$)  | 17.05 | $[-]$  |
+| Estimated Peclet number ($Pe=Re\bullet Pr$)  | $1.73\times10^7$ | $[-]$  |
 
 
 A 2-D axisymmetric core model is first created for Nek5000 RANS simulations. 
@@ -165,8 +165,7 @@ A parabolic velocity profile is specified at the inlet face and the natural pres
 A pure hexahedral mesh is generated with 3,700 elements (as shown in [2d_mesh]). 
 In addition, to facilitate the axisymmetric solver in Nek5000, the core centerline is rotated and aligned along the x-axis as shown in the [2d_mesh]. 
 The molten salt flow enters the core from the bottom channel (left) and exits from the top (right). 
-A series of 2-D axisymmetric RANS cases are simulated at multiple Reynolds numbers of $2\times10^4$, $4\times10^4$, $1\times10^5$, $4\times10^5$, and $1\times10^6$, where the Reynolds number is defined by the mean flow velocity and
-the minimum core diameter. 
+A series of 2-D axisymmetric RANS cases are simulated at multiple Reynolds numbers of $2\times10^4$, $4\times10^4$, $1\times10^5$, $4\times10^5$, and $1\times10^6$. 
 
 !media msr/msfr/nek/2d_mesh.png
     style=width:80%
