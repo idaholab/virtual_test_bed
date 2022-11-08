@@ -16,6 +16,8 @@ help creating it.
 
 - Pebble Bed Modular Reactor [documentation](htgr/pbmr/index.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/pbmr400/steady)
 
+- Sodium Fast Reactor duct bowing [documentation](sfr/hex_duct_bowing/index.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/sfr/hex_duct_bowing)
+
 
 ### Cubit mesh generation
 
@@ -78,6 +80,8 @@ the input file, but generally reside in the same folder in the repository.
 - 1D TRISO fuel depletion [documentation](htgr/triso/triso_model.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/triso_fuel)
 
 - HTR-10 Griffin Benchmark [documentation](htgr/htr10/index.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/htr10)
+
+- Sodium Fast Reactor duct bowing [documentation](sfr/hex_duct_bowing/index.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/sfr/hex_duct_bowing)
 
 
 ### HPC required
