@@ -4,11 +4,6 @@
     input = single_duct_linear_gradient.i
     check_input = true
   []
-  [single_duct_constant_syntax]
-    type = RunApp
-    input = single_duct_constant_gradient.i
-    check_input = true
-  []
   [iaea_vp3a_symmetric_syntax]
     type = RunApp
     input = iaea_vp3a_symmetric_sector.i
