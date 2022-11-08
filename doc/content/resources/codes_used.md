@@ -6,20 +6,24 @@ are many similarities in the input files. The reader may find below an index of 
 in the input files of the virtual test bed.
 
 !alert note title=Fully Open-Source
-The codes required to run these inputs are all open-source. Please refer to the inputs or the index below for the codes used.\\
+The codes required to run these inputs are all open-source. Please refer to the documentation or the indexing below for the codes used.\\
 - Reflector bypass flow in the PB-FHR [documentation](pbfhr/reflector.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/pbfhr/reflector)\\
 - Molten Salt Fast Reactor core CFD [documentation](msr/msfr/nek5000_cfd_model.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/msr/msfr/core_cfd)\\
-- HTGR assembly multiphysics simulation [documentation](htgr/assembly/index.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/htgr/assembly)
+- HTGR assembly multiphysics simulation [documentation](htgr/assembly/index.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/htgr/assembly)\\
+- Sodium Fast Reactor duct bowing [documentation](sfr/hex_duct_bowing/index.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/sfr/hex_duct_bowing)
 
 
 !alert note title=Partially Open-Source
 Some of the codes required to run these inputs are open-source. You will not be able to run the full multiphysics simulation, but
 often by removing the `[MultiApps]` and `[Transfers]` blocks, you should be able to run part of the problem standalone. 
-Please refer to the inputs or the index below for the codes used.\\
+Please refer to the documentation or the indexing below for the codes used.\\
 - Molten Salt Fast Reactor (using MOOSE Navier-Stokes) [documentation](msr/msfr/griffin_pgh_model.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/msr/msfr/steady)\\
 - Versatile Test Reactor core model [documentation](sfr/vtr/index.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/sfr/vtr) \\
 - High Temperature Test Facility transient simulations (core conduction) [documentation](htgr/httf/index.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/httf)
 
+Multiphysics models will often require access to multiple applications linked or built together, that can run inputs for each code involved.
+Licensing for coupled applications (BlueCRAB and Direwolf) and their export-controlled (Griffin, SAM, Bison, etc) components can be
+obtained through INL's [NCRC](https://inl.gov/ncrc/).
 
 ## Neutronics
 
@@ -38,14 +42,14 @@ Please refer to the inputs or the index below for the codes used.\\
 - Versatile Test Reactor core model [documentation](sfr/vtr/index.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/sfr/vtr)
 
 
-### Cardinal / OpenMC
+### Cardinal / OpenMC (open-source)
 
 - HTGR assembly multiphysics simulation [documentation](htgr/assembly/index.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/htgr/assembly)
 
 
 ## Multi-dimensional Thermal-hydraulics
 
-### NekRS / Nek5000
+### NekRS / Nek5000 (open-source)
 
 - Reflector bypass flow in the PB-FHR [documentation](pbfhr/reflector.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/pbfhr/reflector)
 
@@ -78,7 +82,7 @@ Please refer to the inputs or the index below for the codes used.\\
 - Advanced Burner Test Reactor [documentation](sfr/abtr/abtr.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/sfr/abtr)
 
 
-### Thermal-hydraulics module
+### Thermal-hydraulics module (open-source)
 
 - HTGR assembly multiphysics simulation [documentation](htgr/assembly/index.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/htgr/assembly)
 
@@ -104,14 +108,14 @@ Please refer to the inputs or the index below for the codes used.\\
 - 1D TRISO fuel depletion [documentation](htgr/triso/triso_model.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/triso_fuel)
 
 
-### Thermo-mechanics module
+### Thermo-mechanics module (open-source)
 
 - Versatile Test Reactor core model [documentation](sfr/vtr/index.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/sfr/vtr)
 
 - Sodium Fast Reactor duct bowing [documentation](sfr/hex_duct_bowing/index.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/sfr/hex_duct_bowing)
 
 
-### Heat conduction module
+### Heat conduction module (open-source)
 
 - HTGR assembly multiphysics simulation [documentation](htgr/assembly/index.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/htgr/assembly)
 
