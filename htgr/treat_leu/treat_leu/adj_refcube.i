@@ -25,7 +25,7 @@
 #  show_material_props = true   #True prints material properties
 #  show_parser = true
 #  show_top_residuals = 3        #Number to print
-  show_var_residual_norms = true
+#  show_var_residual_norms = true
 #  check_boundary_coverage = true
 #  print_block_volume = true
 #  show_neutronics_material_coverage = true
@@ -223,11 +223,11 @@
 [Materials]
   # Mixture Properties
   [neut_mix]
+    type = CoupledFeedbackNeutronicsMaterial
     grid_variables = 'temperature temperature Boron_Conc'
     grid_names = 'Tfuel Tmod Rod'
     densities = '0.998448391539 0.00155160846058' # Must add to 1 (for this library)
     isotopes = 'pseudo1 pseudo2' # 1 is graphite, 2 is UO2
-    type = CoupledFeedbackNeutronicsMaterial
     block = 10
     material_id = 1
     plus = true
@@ -255,11 +255,11 @@
   []
   # Reflector
   [neut_refl]
+    type = CoupledFeedbackNeutronicsMaterial
     grid_variables = 'temperature avg_coretemp Boron_Conc'
     grid_names = 'Trefl Tcore Rod'
     densities = '1'
     isotopes = 'pseudo'
-    type = CoupledFeedbackNeutronicsMaterial
     block = 0
     material_id = 2
     plus = true

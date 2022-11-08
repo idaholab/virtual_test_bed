@@ -191,7 +191,7 @@
   # Pure Graphite
   [graph_kth]
     type = GenericConstantMaterial
-    block = 0 # I think zero is the graphite
+    block = 0
     prop_names = 'thermal_conductivity'
     prop_values = '0.3014' # W/cm K
   []

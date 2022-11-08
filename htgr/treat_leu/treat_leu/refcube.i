@@ -5,7 +5,7 @@
 # Author: Adam Zabriskie, INL
 # ==================================================================================
 # TREAT Griffin Main Input File
-# MasterApp
+# Main App
 # ==================================================================================
 # This model has been built based on [1]
 # ----------------------------------------------------------------------------------
@@ -27,7 +27,7 @@
   #  print_block_volume = true
   #  show_neutronics_material_coverage = true
   #  show_petsc_options = true
-  show_var_residual_norms = true
+  # show_var_residual_norms = true
 []
 
 # ==================================================================================
@@ -40,6 +40,7 @@
     # Start at zero, half core length reflector thickness; 1/8th symmetric
     # Element size: reflector 5.08 cm and core 4.827616834 cm
     # 14 in half-core, 12 in reflector
+    type = CartesianMeshGenerator
     dim = 3
     dx = '67.58663568 60.96'
     dy = '67.58663568 60.96'
@@ -47,14 +48,13 @@
     ix = '14 12'
     iy = '14 12'
     iz = '14 12'
-    type = CartesianMeshGenerator
   []
   [set_core_id]
+    type = SubdomainBoundingBoxGenerator
     block_id =  10
     input = ref_mesh
     bottom_left = '0.0 0.0 0.0'
     top_right = '67.58663568 67.58663568 67.58663568'
-    type = SubdomainBoundingBoxGenerator
   []
 []
 
@@ -64,55 +64,55 @@
 
 [MultiApps]
   [initial_solve]
+    type = FullSolveMultiApp
     execute_on = initial
     input_files = 'init_refcube.i'
     positions = '0 0 0'
-    type = FullSolveMultiApp
   []
   [init_adj]
+    type = FullSolveMultiApp
     execute_on = initial
     input_files = 'adj_refcube.i'
     positions = '0 0 0'
-    type = FullSolveMultiApp
   []
   [micro]
+    type = TransientMultiApp
     execute_on = timestep_end
     input_files = 'ht_20r_leu_fl.i'
     max_procs_per_app = 1
     positions_file = 'refcube_sub_micro.txt'
-    type = TransientMultiApp
   []
 []
 [Transfers]
   #Below are communication for adjoint IQS for PKE
   #Below are communication for Multiscale with micro-subs
   [copy_flux]
+    type = TransportSystemVariableTransfer
     direction = from_multiapp
     execute_on = initial
     from_transport_system = diffing
     multi_app = initial_solve
     to_transport_system = diffing
-    type = TransportSystemVariableTransfer
   []
   [copy_pp]
     # Scales everything to the initial power.
+    type = MultiAppPostprocessorTransfer
     direction = from_multiapp
     execute_on = initial
     from_postprocessor = UnscaledTotalPower
     multi_app = initial_solve
     reduction_type = maximum
     to_postprocessor = UnscaledTotalPower
-    type = MultiAppPostprocessorTransfer
   []
   [copy_sf]
     # Scales factor
+    type = MultiAppPostprocessorTransfer
     direction = from_multiapp
     execute_on = initial
     from_postprocessor = PowerScaling
     multi_app = initial_solve
     reduction_type = maximum
     to_postprocessor = PowerScaling
-    type = MultiAppPostprocessorTransfer
   []
   [copy_adjoint_vars]
     type = MultiAppCopyTransfer
@@ -122,28 +122,28 @@
     variable = 'adjoint_flux_g0 adjoint_flux_g1 adjoint_flux_g2 adjoint_flux_g3 adjoint_flux_g4 adjoint_flux_g5'
   []
   [powden_down]
+    type = MultiAppVariableValueSamplePostprocessorTransfer
     direction = to_multiapp
     multi_app = micro
     postprocessor = local_power_density
     source_variable = PowerDensity
-    type = MultiAppVariableValueSamplePostprocessorTransfer
   []
   [modtemp_up]
+    type = MultiAppPostprocessorInterpolationTransfer
     direction = from_multiapp
     multi_app = micro
     num_points = 6
     postprocessor = avg_graphtemp
     power = 2
-    type = MultiAppPostprocessorInterpolationTransfer
     variable = temp_ms
   []
   [graintemp_up]
+    type = MultiAppPostprocessorInterpolationTransfer
     direction = from_multiapp
     multi_app = micro
     num_points = 6
     postprocessor = avg_graintemp
     power = 2
-    type = MultiAppPostprocessorInterpolationTransfer
     variable = temp_fg
   []
 []
@@ -256,33 +256,33 @@
 []
 [AuxKernels]
   [pulse_boron]
+    type = FunctionAux
     execute_on = timestep_end
     function = boron_state
-    type = FunctionAux
     variable = Boron_Conc
   []
   [PowerDensityCalc]
+    type = VectorReactionRate
     block = '10'
     cross_section = kappa_sigma_fission
     dummies = UnscaledTotalPower
     execute_on = 'initial linear'
     scalar_flux =  'sflux_g0 sflux_g1 sflux_g2 sflux_g3 sflux_g4 sflux_g5'
     scale_factor = PowerScaling
-    type = VectorReactionRate
     variable = PowerDensity
   []
   [Powerintegrator]
+    type = VariableTimeIntegrationAux
     block = 10
     execute_on = timestep_end
-    type = VariableTimeIntegrationAux
     variable =  IntegralPower
     variable_to_integrate = PowerDensity
   []
   [Set_coreT]
+    type = SetAuxByPostprocessor
     block = 0
     execute_on = 'linear timestep_end'
     postproc_value = avg_coretemp
-    type = SetAuxByPostprocessor
     variable = avg_coretemp
   []
 []
@@ -293,100 +293,100 @@
 
 [Postprocessors]
   [UnscaledTotalPower]
-    outputs = none
     type = Receiver
+    outputs = none
   []
   [PowerScaling]
-    outputs = none
     type = Receiver
+    outputs = none
   []
   [avg_coretemp]
+    type = ElementAverageValue
     block = 10
     execute_on = linear
     outputs = all
-    type = ElementAverageValue
     variable = temp_ms
   []
   [avg_refltemp]
+    type = ElementAverageValue
     block = 0
     execute_on = linear
     outputs = all
-    type = ElementAverageValue
     variable = temperature
   []
   [max_tempms]
+    type = ElementExtremeValue
     block = '10'
     outputs = all
-    type = ElementExtremeValue
     value_type = max
     variable = temp_ms
   []
   [max_tempfg]
+    type = ElementExtremeValue
     block = '10'
     outputs = all
-    type = ElementExtremeValue
     value_type = max
     variable = temp_fg
   []
   [avg_ms_temp]
+    type = ElementAverageValue
     block = 10
     outputs = all
-    type = ElementAverageValue
     variable = temp_ms
   []
   [avg_fg_temp]
+    type = ElementAverageValue
     block = 10
     outputs = all
-    type = ElementAverageValue
     variable = temp_fg
   []
   [avg_powerden]
+    type = ElementAverageValue
     block = 10
     execute_on = timestep_end
     outputs = all
-    type = ElementAverageValue
     variable = PowerDensity
   []
   [peak_avgPD]
+    type = TimeExtremeValue
     execute_on = timestep_end
     postprocessor = avg_powerden
-    type = TimeExtremeValue
     value_type = max
   []
   [powden_ratio]
+    type = PostprocessorRatio
     denominator = peak_avgPD
     execute_on = timestep_end
     numerator = avg_powerden
-    type = PostprocessorRatio
   []
   [der1_avgPD]
+    type = ElementAverageTimeDerivative
     block = 10
     execute_on = timestep_end
-    type = ElementAverageTimeDerivative
     variable = PowerDensity
   []
   [peak_der1avgPD]
+    type = TimeExtremeValue
     execute_on = timestep_end
     postprocessor = der1_avgPD
-    type = TimeExtremeValue
     value_type = max
   []
   [der1PD_ratio]
+    type = PostprocessorRatio
     denominator = peak_der1avgPD
     execute_on = timestep_end
     numerator = der1_avgPD
-    type = PostprocessorRatio
   []
   [ScaledTotalPower]
+    type = ElementIntegralVariablePostprocessor
     block = 10
     execute_on = linear
-    type = ElementIntegralVariablePostprocessor
     variable = PowerDensity
   []
   [IntegratedPower]
+    type = ElementIntegralVariablePostprocessor
     block = 10
     execute_on = timestep_end
-    type = ElementIntegralVariablePostprocessor
     variable = IntegralPower
   []
   [delta_time]
@@ -399,8 +399,8 @@
     type = NumLinearIterations
   []
   [Eq_TREAT_Power]
-    scaling_factor =  2469860.77609
     type = ScalePostprocessor
+    scaling_factor =  2469860.77609
     value = avg_powerden
   []
 []
@@ -411,9 +411,9 @@
 
 [UserObjects]
   [der_pulse_end]
+    type = Terminator
     execute_on = timestep_end
     expression = '(powden_ratio < 0.25) & (abs(der1PD_ratio) < 0.04)'
-    type = Terminator
   []
 []
 
@@ -423,6 +423,7 @@
 
 [Materials]
   [neut_mix]
+    type = CoupledFeedbackNeutronicsMaterial
     block = 10
     densities =  '0.998448391539 0.00155160846058'
     grid_names = 'Tfuel Tmod Rod'
@@ -432,30 +433,30 @@
     library_name = leu_20r_is_6g_d
     material_id = 1
     plus = true
-    type = CoupledFeedbackNeutronicsMaterial
   []
   [kth]
     # Volume weighted harmonic mean
     # Divided fg_kth by 100 to get it into cm
+    type = ParsedMaterial
     args =  'temp_fg'
     block = 10
     constant_expressions =  '3.35103216383e-08 1.31125888571e-07 2.14325144175e-05 0.3014 0.01046 1.0 0.05 1.5 1.0'
     constant_names = 'vol_fg vol_fl vol_gr gr_kth fl_kth beta p_vol sigma kap3x'
     f_name =  'thermal_conductivity'
     function =  'lt := temp_fg / 1000.0; fresh := (100.0 / (6.548 + 23.533 * lt) + 6400.0 * exp(-16.35 / lt) / pow(lt, 5.0/2.0)) / 100.0; kap1d := (1.09 / pow(beta, 3.265) + 0.0643 * sqrt(temp_fg) / sqrt(beta)) * atan(1.0 / (1.09 / pow(beta, 3.265) + sqrt(temp_fg) * 0.0643 / sqrt(beta))); kap1p := 1.0 + 0.019 * beta / ((3.0 - 0.019 * beta) * (1.0 + exp(-(temp_fg - 1200.0) / 100.0))); kap2p := (1.0 - p_vol) / (1.0 + (sigma - 1.0) * p_vol); kap4r := 1.0 - 0.2 / (1.0 + exp((temp_fg - 900.0) / 80.0)); fg_kth := fresh * kap1d * kap1p * kap2p * kap3x * kap4r; (vol_fg + vol_fl + vol_gr) / (vol_fg / fg_kth + vol_fl / fl_kth + vol_gr / gr_kth)'
-    type = ParsedMaterial
   []
   [rho_cp]
     # Volume weighted arithmetic mean (Irradiation has no effect)
+    type = ParsedMaterial
     args =  'temp_fg temp_ms'
     block = 10
     constant_expressions =  '3.35103216383e-08 2.1563640306e-05 0.0018 0.010963'
     constant_names =  'vol_fg vol_gr rho_gr rho_fg'
     f_name =  'heat_capacity'
     function = 'lt := temp_fg / 1000.0; gr_rhocp := rho_gr / (11.07 * pow(temp_ms, -1.644) + 0.0003688 * pow(temp_ms, 0.02191)); fink_cp := 52.1743 + 87.951 * lt - 84.2411 * pow(lt, 2) + 31.542 * pow(lt, 3) - 2.6334 * pow(lt, 4) - 0.71391 * pow(lt, -2); fg_rhocp := rho_fg * fink_cp / 267.2 * 1000.0; (vol_fg * fg_rhocp + vol_gr * gr_rhocp) / (vol_fg + vol_gr)'
-    type = ParsedMaterial
   []
   [neut_refl]
+    type = CoupledFeedbackNeutronicsMaterial
     block = 0
     densities = '1'
     grid_names = 'Trefl Tcore Rod'
@@ -465,22 +466,21 @@
     library_name = leu_macro_6g
     material_id = 2
     plus = true
-    type = CoupledFeedbackNeutronicsMaterial
   []
   [ref_kth]
+    type = GenericConstantMaterial
     block = 0
     prop_names = 'thermal_conductivity'
     prop_values =  '0.3014'
-    type = GenericConstantMaterial
   []
   [ref_rho_cp]
+    type = ParsedMaterial
     args =  'temperature'
     block = '0'
     constant_expressions =  '0.0018'
     constant_names = 'rho_gr'
     f_name =  'heat_capacity'
     function =  'rho_gr / (11.07 * pow(temperature, -1.644) + 0.0003688 * pow(temperature, 0.02191))'
-    type = ParsedMaterial
   []
 []
 
@@ -491,12 +491,12 @@
 [Preconditioning]
   [SMP_full]
     #petsc_options = '-snes_ksp_ew -snes_converged_reason -ksp_monitor_true_residual'
+    type = SMP
     full = true
     petsc_options = '-snes_ksp_ew -snes_converged_reason'
     petsc_options_iname = '-pc_type -pc_hypre_type -ksp_gmres_restart -pc_hypre_boomeramg_max_iter -pc_hypre_boomeramg_tol'
     petsc_options_value = 'hypre boomeramg 101 20 1.0e-6'
     solve_type = 'PJFNK'
-    type = SMP
   []
 []
 
@@ -505,9 +505,10 @@
 # ==================================================================================
 
 [Executioner]
-  # Captain Picard
+  type = IQS
   do_iqs_transient = false
   dtmin = 1e-7
+  start_time = 0.0
   end_time =  10.0
   l_max_its = 100
   l_tol = 1e-3
@@ -518,12 +519,10 @@
   picard_max_its = 10
   picard_rel_tol = 1e-7
   pke_param_csv = true
-  start_time = 0.0
-  type = IQS
   [TimeStepper]
+    type = ConstantDT
     dt = 0.005
     growth_factor = 1.5
-    type = ConstantDT
   []
 []
 [Outputs]
@@ -531,9 +530,9 @@
   file_base = out~refcube
   interval = 1
   [console]
+    type = Console
     output_linear = true
     output_nonlinear = true
-    type = Console
   []
   [exodus]
     type = Exodus

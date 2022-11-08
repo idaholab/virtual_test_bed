@@ -129,7 +129,7 @@ This input file describes a microscale particle heat solution. This input is rep
 
 ### Problem
 
-This block defines the symmetry system in which the heat transport will be solved.
+This block defines the coordinate system in which the heat transport will be solved.
 
 !listing htgr/treat_leu/treat_leu/ht_20r_leu_fl.i block=Problem language=cpp
 
@@ -249,7 +249,7 @@ This block calculates outputs from solution data.
 
 ### UserObjects
 
-This block calculates when the simuation concludes.
+The `Terminator` user object calculates when the simulation concludes.
 
 !listing htgr/treat_leu/treat_leu/refcube.i block=UserObjects language=cpp
 
