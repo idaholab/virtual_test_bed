@@ -50,7 +50,7 @@ A radial ring spatial resolution was used for generation of the few group parame
 | 9      |   300        | Coolant Channel |
 | 10     |   1200       | Internal Reflector + Core Barrel |
 
-A 16 energy few group structure documented in [!citep](S8NuclearAnalysis) was used for the generation of few group parameters.
+A 16 energy few group structure documented in [!citep](SNAP8Fuel) was used for the generation of few group parameters.
 
 !table id=Few Group Energy Structure caption= Few Group Energy Structure
 | Group     | Lower Limit (eV)  |
@@ -186,7 +186,7 @@ The AuxKernels used are a variety of function executors and variable normalizers
 
 !listing microreactors/s8er/core_2D_bison_coupled.i block=AuxKernels
 
-The Functions used include the thermal conductivity, and specific heat of the fuel as a function of temperature from [!citep](SNAPFuel). 
+The Functions used include the thermal conductivity, and specific heat of the fuel as a function of temperature from [!citep](SNAP8Fuel). 
 
 !listing microreactors/s8er/core_2D_bison_coupled.i block=Functions
 
@@ -196,7 +196,7 @@ The thermal properties of each material are modeled through using [GenericConsta
 
 !listing microreactors/s8er/core_2D_bison_coupled.i block=Materials
 
-!table id=S8ER Thermal Parameters caption= S8ER Thermal Parameters, from [!citep](SNAPFuel), [!citep](SNAP8Summary)
+!table id=S8ER Thermal Parameters caption= S8ER Thermal Parameters, from [!citep](SNAP8Fuel), [!citep](SNAP8Summary)
 | Material/Region | Density (kg/m^3) | Specfic Heat (J/kg-K) | Thermal Conductivity (W/m-K) |
 | --------------- | ---------------- | --------------------- | --------------------- |
 | UZrH            |   5963.13    |   472.27 + T(0.72)     |  27.73 + T(0.027)    |
