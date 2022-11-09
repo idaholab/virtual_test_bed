@@ -1,0 +1,44 @@
+[Tests]
+  # Syntax checks
+  [mechanics_bison_syntax]
+    type = RunApp
+    input = 'core_2D_bison_coupled.i'
+    check_input = True
+    ad_indexing_type = 'global'
+    executable_pattern = 'bison*|blue_crab*|dire_wolf*'
+  []
+  [neutronics_griffin_syntax]
+    type = RunApp
+    input = 'core_2D_griffin_coupled.i'
+    check_input = True
+    ad_indexing_type = 'global'
+    executable_pattern = 'griffin*|blue_crab*|dire_wolf*'
+    cli_args = "MultiApps/active='' Transfers/active=''"
+  []
+
+  # Regression tests
+  [mechanics_bison]
+    type = CSVDiff
+    input = 'core_2D_bison_coupled.i'
+    csvdiff = 'core_2D_bison_coupled_csv.csv'
+    executable_pattern = 'bison*|blue_crab*|dire_wolf*'
+    cli_args = "MultiApps/active='' Transfers/active='' Executioner/num_steps=2 Executioner/nl_abs_tol=1e-1 Outputs/csv=true --distributed-mesh Outputs/exodus=false"
+  []
+  [neutronics_griffin_syntax]
+    type = CSVDiff
+    input = 'core_2D_griffin_coupled.i'
+    csvdiff = 'core_2D_griffin_coupled_out.csv'
+    ad_indexing_type = 'global'
+    executable_pattern = 'griffin*|blue_crab*|dire_wolf*'
+    cli_args = "MultiApps/active='' Transfers/active=''"
+  []
+  [neutronics_griffin_syntax]
+    type = CSVDiff
+    input = 'core_2D_griffin_coupled.i'gi
+    csvdiff = 'core_2D_out.csv core_2D_out_bison_coupled0_csv.csv'
+    ad_indexing_type = 'global'
+    executable_pattern = 'griffin*|blue_crab*|dire_wolf*'
+
+    cli_args = "Outputs/file_base=core_2D_out"
+  []
+[]
