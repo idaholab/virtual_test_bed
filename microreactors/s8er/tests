@@ -22,7 +22,7 @@
     input = 'core_2D_bison_coupled.i'
     csvdiff = 'core_2D_bison_coupled_csv.csv'
     executable_pattern = 'blue_crab*|dire_wolf*'
-    pre_req = 'mechanics_bison_syntax'
+    prereq = 'mechanics_bison_syntax'
     cli_args = "MultiApps/active='' Transfers/active='' Executioner/num_steps=2 Executioner/nl_abs_tol=1e-1 Outputs/csv=true --distributed-mesh Outputs/exodus=false"
 
     min_parallel = 8
@@ -34,7 +34,8 @@
     ad_indexing_type = 'global'
     executable_pattern = 'griffin*|blue_crab*|dire_wolf*'
     cli_args = "MultiApps/active='' Transfers/active=''"
-    pre_req = 'neutronics_griffin_syntax'
+    prereq = 'neutronics_griffin_syntax'
+    method = 'opt'
 
     min_parallel = 8
   []
@@ -45,7 +46,7 @@
     ad_indexing_type = 'global'
     executable_pattern = 'blue_crab*|dire_wolf*'
     method = 'opt'
-    pre_req = 'neutronics_griffin_syntax mechanics_bison_syntax'
+    prereq = 'neutronics_griffin_syntax mechanics_bison_syntax'
     cli_args = "Outputs/file_base=core_2D_out"
 
     min_parallel = 8
