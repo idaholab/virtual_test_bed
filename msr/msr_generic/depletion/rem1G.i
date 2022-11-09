@@ -85,7 +85,7 @@
 [VectorPostprocessors]
   [bateman]
     type = BatemanVPP
-    
+
     # multiphysics variables
     grid_names = 'Burnup'
     grid_variables = 'Burnup'

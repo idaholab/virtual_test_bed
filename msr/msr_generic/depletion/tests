@@ -13,16 +13,16 @@
     executable_pattern = 'griffin*|blue_crab*'
   []
   [griffin_regression_1]
-    type = Csvdiff
+    type = CSVDiff
     input = norem1G.i
     csvdiff = norem1G_out_in-core_number_densities.csv
     prereq = 'griffin_syntax_1'
     executable_pattern = 'griffin*|blue_crab*'
   []
   [griffin_regression_2]
-    type = Csvdiff
+    type = CSVDiff
     input = rem1G.i
-    exodiff = rem1G_out_off-gas_number_densities.csv
+    csvdiff = rem1G_out_off-gas_number_densities.csv
     prereq = 'griffin_syntax_2'
     executable_pattern = 'griffin*|blue_crab*'
   []

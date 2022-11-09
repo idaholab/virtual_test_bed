@@ -43,6 +43,7 @@ obtained through INL's [NCRC](https://inl.gov/ncrc/).
 
 - Generic Molten Salt Fast Reactor Depletion [documentation](msr/msr_generic/depletion/model.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/msr/msr_generic/depletion)
 
+
 ### Cardinal / OpenMC (open-source)
 
 - HTGR assembly multiphysics simulation [documentation](htgr/assembly/index.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/htgr/assembly)
