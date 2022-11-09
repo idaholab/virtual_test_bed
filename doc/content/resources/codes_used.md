@@ -41,6 +41,7 @@ obtained through INL's [NCRC](https://inl.gov/ncrc/).
 
 - Versatile Test Reactor core model [documentation](sfr/vtr/index.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/sfr/vtr)
 
+- Generic Molten Salt Fast Reactor Depletion [documentation](msr/msr_generic/depletion/model.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/msr/msr_generic/depletion)
 
 ### Cardinal / OpenMC (open-source)
 

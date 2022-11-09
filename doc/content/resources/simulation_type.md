@@ -76,6 +76,7 @@ help creating it.
 
 - 1D TRISO fuel depletion [documentation](htgr/triso/triso_model.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/devel/htgr/triso_fuel)
 
+- Generic Molten Salt Fast Reactor Depletion [documentation](msr/msr_generic/depletion/model.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/msr/msr_generic/depletion)
 
 !alert note
 The input file links are not automatically checked by the VTB automated testing. If you hit a broken
