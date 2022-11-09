@@ -1,26 +1,6 @@
-# MSR Depletion Model
+# MSR Depletion Method and Results
 
 *Contact: Samuel Walker, Samuel.Walker@inl.gov*
-
-The MSR depletion model is an implementation and verification of Griffin's isotope removal capability for two multi-region MSR depletion cases.
-This model consists of two regions. The first is the primary loop, which includes the reactor core, primary heat exchanger, and pump, and the second is the off-gas system.
-The model approximates an MSR core as a fast spectrum, cube-geometry, infinite, homogenous medium, molten chloride salt reactor using High-Assay Low-Enriched Uranium (HALEU) UCl$_3$ fuel.
-The important parameters for this model are given in [parameters].
-This model is used for isotope depletion cases with and without removal to the off-gas system, and is also the starting point for analyzing what type of insoluble material may be removed into the off gas during burnup [!citep](walker2022).
-
-!table id=parameters caption=Simple MSR Test Case Design Specifications
-| Parameter | Value  |
-| :- | :- |
-| Salt Composition | $0.33$ UCl$_3$-$0.67$ NaCl |
-| Salt Density | $3.13$ g/cm$^3$ |
-| Enrichment | $19.75$% |
-| Volume | $1.00 \times 10^6$ cm$^3$ |
-| Temperature | $700$ $\degree$C |
-| Power Density - Power | $200$ W/g - $321$ MW |
-| 1G Flux | $6.72 \times 10^{15}$ neutrons/(cm$^2$ $\cdot$ s) |
-| Fission Rate | $9.89 \times 10^{12}$ fissions/(cm$^3$ $\cdot$ s) |
-| K$_{eff}$ | $1.21 - 1.23$ |
-| Spectrum | Fast |
 
 ## Governing Equations
 
@@ -123,11 +103,11 @@ The results of the second case are shown in [case2].
 !table id=case2 caption=Isotope depletion with removal
 |  | SERPENT  | Griffin | Absolute difference |
 | :- | :- | :- | :- |
-| I$^{127}$ in primary loop (atom/(b $\cdot$ cm)) | $1.06 \times 10^{-7}$ | $1.07 \times 10^{-7}$ | $0.5$% |
-| I$^{129}$ in primary loop (atom/(b $\cdot$ cm)) | $4.10 \times 10^{-7}$ | $4.11 \times 10^{-7}$ | $0.3$% |
+| I$^{127}$ in primary loop (atom/(b $\cdot$ cm)) | $1.06 \times 10^{-7}$ | $1.06 \times 10^{-7}$ | $0.5$% |
+| I$^{129}$ in primary loop (atom/(b $\cdot$ cm)) | $4.10 \times 10^{-7}$ | $4.09 \times 10^{-7}$ | $0.3$% |
 
 [case2] shows good agreement between the atomic densities of the same two iodine isotopes that were removed to the off-gas system over a 70-day burnup period.
-The removal rate for iodine in the system is set at r = 3.85E-3 $\frac{1}{s}$, which is very fast when compared with the generation from fission, transmutation, and decay terms. 
+The removal rate for iodine in the system is set at r = 3.85E-5 $\frac{1}{s}$, which is very fast when compared with the generation from fission, transmutation, and decay terms. 
 The fast removal rate means nearly all the iodine generated in the primary loop is quickly extracted to the off-gas system, and a slightly greater amount of iodine is allowed to build up in the off-gas system compared with [case1] since the iodine in the off-gas system does not experience any transmutation loss from the flux in the core.
 
 ### Iodine solubility effect on iodine removal
