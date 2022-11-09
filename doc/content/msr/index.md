@@ -4,4 +4,4 @@
 
 [Molten Salt Reactor Experiment](msre/msre_sam_model.md)
 
-[Generic Molten Salt Reactor](msr_generic/index.md)
+[Generic Molten Salt Fast Reactor](msr_generic/index.md)

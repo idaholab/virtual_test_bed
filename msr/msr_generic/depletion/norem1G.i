@@ -85,20 +85,25 @@
 [VectorPostprocessors]
   [bateman]
     type = BatemanVPP
+
+    # multiphysics variables
+    grid_names = 'Burnup'
+    grid_variables = 'Burnup'
     scalar_fluxes = 'flux'
     use_power = false
 
-    # multiphysics variables
-
-    grid_names = 'Burnup'
-    grid_variables = 'Burnup'
+    # loading databases
     isoxml_mglib_file = '../data/MSR_XS.xml'
     isoxml_mglib_name = 'MSR_XS'
     library_id = 1
     isoxml_dtlib_file = '../data/MSR_DT.xml'
     isoxml_dtlib_name = 'MSR_DT'
+
+    # setting initial conditions
     isotope_atomic_densities = 'CL35 1.55753e-02 CL37 4.98332e-03 NA23 8.23094e-3 U232 7.49749e-10 U234 4.05961e-05 U235 8.12118e-04 U236 1.11782e-05 U238 3.20723e-03'
     isotope_fixed_removal_rates = 'I127 0.0 I129 0.0'
+
+    # Bateman solver settings
     bateman_solver = 'CRAMIPF'
     bateman_solver_tolerance = 1e-100
     cram_ipf_order = 48

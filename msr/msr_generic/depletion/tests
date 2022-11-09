@@ -22,7 +22,7 @@
   [griffin_regression_2]
     type = Csvdiff
     input = rem1G.i
-    exodiff = rem1G_out_in-core_number_densities.csv
+    exodiff = rem1G_out_off-gas_number_densities.csv
     prereq = 'griffin_syntax_2'
     executable_pattern = 'griffin*|blue_crab*'
   []

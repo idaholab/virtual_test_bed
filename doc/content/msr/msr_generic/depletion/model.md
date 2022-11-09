@@ -136,7 +136,7 @@ stores a summary of the solution.
 ### Vector Post-processors
 
 The last blocks are for post-processors, debug options, and outputs.
-A post-processor can be thought of as a function to derive a variable
+A post-processor can be thought of as a function to compute a quantity
 of interest from the solution. In this case, the constant flux at each
 burnup step defined earlier are used in the [!style color=orange](BatemanVPP)
 listed in this block which accomplishes the primary task of this model.
