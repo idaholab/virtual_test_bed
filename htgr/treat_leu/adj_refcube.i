@@ -81,7 +81,6 @@
     family = LAGRANGE
     order = FIRST
     n_delay_groups = 6  #Number of delay neutron groups
-    fission_source_as_material = true
   []
 []
 
@@ -107,12 +106,6 @@
     family = MONOMIAL
     block = '10'
   []
-  [IntegralPower]
-    order = CONSTANT
-    family = MONOMIAL
-    block = 10
-    initial_condition = 0.0
-  []
   [avg_coretemp]
     order = FIRST
     family = LAGRANGE
@@ -131,13 +124,6 @@
     execute_on = 'initial linear'
     scale_factor = PowerScaling
     dummies = UnscaledTotalPower
-  []
-  [Powerintegrator]
-    type = VariableTimeIntegrationAux
-    variable = IntegralPower #J/cm^3
-    variable_to_integrate = PowerDensity
-    block = 10
-    execute_on = timestep_end
   []
   [Set_coreT]
     type = SetAuxByPostprocessor
@@ -193,12 +179,6 @@
     block = 10
     variable = PowerDensity
     execute_on = linear
-  []
-  [IntegratedPower]
-    type = ElementIntegralVariablePostprocessor
-    block = 10
-    variable = IntegralPower
-    execute_on = timestep_end
   []
   [delta_time]
     type = TimestepSize
@@ -303,8 +283,8 @@
 # ==================================================================================
 
 [Executioner]
-  type = NonlinearEigen
-  free_power_iterations = 8
+  type = Eigenvalue
+  free_power_iterations = 4
   l_tol = 1e-4
   l_max_its = 100
   nl_max_its = 200

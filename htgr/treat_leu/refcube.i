@@ -158,7 +158,6 @@
   particle = neutron
   [diffing]
     family = LAGRANGE
-    fission_source_as_material = true
     n_delay_groups =  6
     order = FIRST
     scheme = CFEM-Diffusion

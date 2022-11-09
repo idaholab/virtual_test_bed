@@ -74,7 +74,6 @@
   particle = neutron
   [diffing]
     family = LAGRANGE
-    fission_source_as_material = true
     n_delay_groups =  6
     order = FIRST
     scheme = CFEM-Diffusion
@@ -101,12 +100,6 @@
     family = MONOMIAL
     order = CONSTANT
   []
-  [IntegralPower]
-    block = 10
-    family = MONOMIAL
-    initial_condition = 0.0
-    order = CONSTANT
-  []
   [avg_coretemp]
     block = 0
     family = LAGRANGE
@@ -124,13 +117,6 @@
     scalar_flux =  'sflux_g0 sflux_g1 sflux_g2 sflux_g3 sflux_g4 sflux_g5'
     scale_factor = PowerScaling
     variable = PowerDensity
-  []
-  [Powerintegrator]
-    type = VariableTimeIntegrationAux
-    block = 10
-    execute_on = timestep_end
-    variable =  IntegralPower
-    variable_to_integrate = PowerDensity
   []
   [Set_coreT]
     type = SetAuxByPostprocessor
@@ -185,12 +171,6 @@
     block = 10
     execute_on = linear
     variable = PowerDensity
-  []
-  [IntegratedPower]
-    type = ElementIntegralVariablePostprocessor
-    block = 10
-    execute_on = timestep_end
-    variable = IntegralPower
   []
   [delta_time]
     type = TimestepSize
@@ -295,8 +275,8 @@
 # ==================================================================================
 
 [Executioner]
-  type = NonlinearEigen
-  free_power_iterations = 8
+  type = Eigenvalue
+  free_power_iterations = 4
   l_max_its = 100
   l_tol = 1e-4
   nl_abs_tol = 1e-8
