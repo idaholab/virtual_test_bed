@@ -39,7 +39,9 @@
 # }
 hex_apothem               = 0.007239
 #fuel_volume               = ${fparse pi*fuel_len*fuel_radius*fuel_radius} # (m3)
-
+# fuel_len                  = 0.3556 # (m).
+# fuel_len_half             = ${fparse fuel_len*0.5}
+# fuel_radius               = 0.0067564 # (m)
 
 active_apothem            = .110414
 nonactive_corner       = .2550
@@ -442,19 +444,19 @@ inlet_T_fluid             = 949.81667 # (K)
         variable = bison_power_density
     []
     [from_bison_Tfuel]
-        type = MultiAppInterpolationTransfer
+        type = MultiAppGeometricInterpolationTransfer
         from_multi_app = bison_coupled
         source_variable = bison_Tfuel
         variable = griffin_Tfuel
     []
     [from_bison_Tcool]
-        type = MultiAppInterpolationTransfer
+        type = MultiAppGeometricInterpolationTransfer
         from_multi_app = bison_coupled
         source_variable = bison_Tcool
         variable = griffin_Tcool
     []
     [from_bison_Tintref]
-        type = MultiAppInterpolationTransfer
+        type = MultiAppGeometricInterpolationTransfer
         from_multi_app = bison_coupled
         source_variable = bison_Tintref
         variable = griffin_Tintref
@@ -549,71 +551,6 @@ inlet_T_fluid             = 949.81667 # (K)
     [norm_volume]
         type = VolumePostprocessor
         block = '1 2 3 4 5 6 7 8'
-    []
-[]
-
-[VectorPostprocessors]
-    inactive = 'peak_fuel_radial_pd peak_fuel_radial_temp peak_nonfuel_radial_pd '
-               'peak_nonfuel_radial_temp fuel_axial_temp fuel_axial_pd'
-    # Radial Fuel Power Dist
-    [peak_fuel_radial_pd]
-        type = LineValueSampler
-        start_point = '0.00 0.00 ${fuel_len_half}'
-        end_point = '${fuel_radius} 0.00 ${fuel_len_half}'
-        variable = griff_power_density
-        num_points = 15
-        sort_by = 'id'
-       #execute_on = 'timestep_begin timestep_end'
-    []
-    # Radial Fuel Temp Dist
-    [peak_fuel_radial_temp]
-        type = LineValueSampler
-        start_point = '0.00 0.00 ${fuel_len_half}'
-        end_point = '${fuel_radius} 0.00 ${fuel_len_half}'
-        variable = griff_temp
-        num_points = 15
-        sort_by = 'id'
-        #execute_on = 'timestep_begin timestep_end'
-    []
-    # Radial Fuel Power Dist
-    [peak_nonfuel_radial_pd]
-        type = LineValueSampler
-        start_point = '${fuel_radius} 0.00 ${fuel_len_half}'
-        end_point = '${hex_apothem} 0.00 ${fuel_len_half}'
-        variable = griff_power_density
-        num_points = 15
-        sort_by = 'id'
-       #execute_on = 'timestep_begin timestep_end'
-    []
-    # Radial Fuel Temp Dist
-    [peak_nonfuel_radial_temp]
-        type = LineValueSampler
-        start_point = '${fuel_radius} 0.00 ${fuel_len_half}'
-        end_point = '${hex_apothem} 0.00 ${fuel_len_half}'
-        variable = griff_temp
-        num_points = 15
-        sort_by = 'id'
-        #execute_on = 'timestep_begin timestep_end'
-    []
-    # Axial Fuel Temp Dist
-    [fuel_axial_temp]
-        type = LineValueSampler
-        start_point = '0.00 0.00 0.00'
-        end_point = '0.00 0.00 ${fuel_len}'
-        variable = griff_temp
-        num_points = 100
-        sort_by = 'id'
-        #execute_on = 'timestep_begin timestep_end'
-    []
-    # Axial Fuel Temp Dist
-    [fuel_axial_pd]
-        type = LineValueSampler
-        start_point = '0.00 0.00 0.00'
-        end_point = '0.00 0.00 ${fuel_len}'
-        variable = griff_power_density
-        num_points = 100
-        sort_by = 'id'
-        #execute_on = 'timestep_begin timestep_end'
     []
 []
 
