@@ -8,7 +8,7 @@ For citing purposes, please cite [!citep](s8er_garcia2022) and [!citep](s8er_nau
 
 ## Introduction
 
-The S8ER was part of a fleet of reactors built during the Systems for Nuclear Auxilliary Power (SNAP) program. These reactors were spaced based aiming to be used as auxilliary power for components such as satellites. 
+The S8ER was part of a fleet of reactors built during the Systems for Nuclear Auxilliary Power (SNAP) program. These reactors were space-based aiming to be used as auxiliary power for components such as satellites. 
 
 These systems were the first to explore novel microreactor technology and share many similar characteristics to modern designs that include comparable power output, compact core design, representative reactor-physics phenomena, alkali metal working fluids and high temperature solid moderators prone to hydrogen migration.
 
@@ -55,13 +55,13 @@ As described earlier, the S8ER is a compact nuclear reactor using homogenous com
 
 ## Fuel Element
 
-The core contains 211 elements arranged in a hexongal lattice. Each rod contains the homogenous UZrH mix as the fuel base, a hydrogen diffusion barrier consisting of the ceramic AI-8763D infused with burnable poison Sm2O3, an internal atmosphere conisting of Helium as a gap, and a layer of Hastelloy N cladding. The fuel pins contain upper and lower endcaps for contaiment aswell as indexing.   
+The core contains 211 elements arranged in a hexagonal lattice. Each rod contains the homogenous UZrH mix as the fuel base, a hydrogen diffusion barrier consisting of the ceramic AI-8763D infused with burnable poison Sm2O3, an internal atmosphere consisting of Helium as a gap, and a layer of Hastelloy N cladding. The fuel pins contain upper and lower end caps for containment as well as indexing.   
 
 !media s8er/fuelpin_view.png
   caption= S8ER Fuelpin Diagram, from [!citep](SNAP8Summary)
   style=width:60%;margin-left:auto;margin-right:auto
 
-!table id=table-floating3 caption=S8ER Fuelpin Characteristics
+!table id=table-floating3 caption=S8ER Fuel pin Characteristics
 | Parameter      | Value  |
 | ----------- | ----------- |
 | Fuel  | Zr-10 Wt% U-Hydrided to 6E+22 #/cm^3 of H |

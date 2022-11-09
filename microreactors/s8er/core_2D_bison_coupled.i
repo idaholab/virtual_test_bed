@@ -306,9 +306,6 @@ coolant_tc                    = 28
 # VARIABLES AND KERNELS
 # ==============================================================================
 
-# ==============================================================================
-# AUXVARIABLES AND AUXKERNELS
-# ==============================================================================
 [Variables]
     [bison_temp]
         #initial_condition = '${inlet_T_fluid}'
@@ -643,77 +640,79 @@ coolant_tc                    = 28
     []
 []
 
-# [VectorPostprocessors]
-#    # Radial Fuel Power Dist
-#     [peak_fuel_radial_pd]
-#         type = LineValueSampler
-#         start_point = '0.00 0.00 ${fuel_len_half}'
-#         end_point = '${fuel_radius} 0.00 ${fuel_len_half}'
-#         variable = bison_power_density
-#         num_points = 15
-#         sort_by = 'id'
-#         #execute_on = 'initial timestep_end'
-#     []
-#     # Radial Fuel Temp Dist
-#     [peak_fuel_radial_temp]
-#         type = LineValueSampler
-#         start_point = '0.00 0.00 ${fuel_len_half}'
-#         end_point = '${fuel_radius} 0.00 ${fuel_len_half}'
-#         variable = bison_temp
-#         num_points = 15
-#         sort_by = 'id'
-#         #execute_on = 'initial timestep_end'
-#     []
-#     # Radial Fuel Power Dist
-#     [peak_nonfuel_radial_pd]
-#         type = LineValueSampler
-#         start_point = '${fuel_radius} 0.00 ${fuel_len_half}'
-#         end_point = '${clad_radius_outer} 0.00 ${fuel_len_half}'
-#         variable = bison_power_density
-#         num_points = 15
-#         sort_by = 'id'
-#         #execute_on = 'initial timestep_end'
-#     []
-#     # Radial Fuel Temp Dist
-#     [peak_nonfuel_radial_temp]
-#         type = LineValueSampler
-#         start_point = '${fuel_radius} 0.00 ${fuel_len_half}'
-#         end_point = '${clad_radius_outer} 0.00 ${fuel_len_half}'
-#         variable = bison_temp
-#         num_points = 15
-#         sort_by = 'id'
-#         #execute_on = 'initial timestep_end'
-#     []
-#     # Axial Fuel Temp Dist
-#     [fuel_axial_temp]
-#         type = LineValueSampler
-#         start_point = '0.00 0.00 0.00'
-#         end_point = '0.00 0.00 ${fuel_len}'
-#         variable = bison_temp
-#         num_points = 100
-#         sort_by = 'id'
-#         #execute_on = 'initial timestep_end'
-#     []
-#     # Axial Fuel Temp Dist
-#     [fuel_axial_pd]
-#         type = LineValueSampler
-#         start_point = '0.00 0.00 0.00'
-#         end_point = '0.00 0.00 ${fuel_len}'
-#         variable = bison_power_density
-#         num_points = 100
-#         sort_by = 'id'
-#         #execute_on = 'initial timestep_end'
-#     []
-#     [T_inf_dist]
-#         type = LineValueSampler
-#         start_point = '${clad_radius_outer} 0.00 0.00'
-#         end_point = '${clad_radius_outer} 0.00 ${fuel_len}'
-#         variable = aux_T_inf
-#         num_points = 22
-#         sort_by = 'id'
-#         #execute_on = 'initial timestep_end'
-#     []
-# []
+[VectorPostprocessors]
+    inactive = 'peak_fuel_radial_pd peak_fuel_radial_temp peak_nonfuel_radial_pd '
+    'peak_nonfuel_radial_temp fuel_axial_temp fuel_axial_pd'
+    # Radial Fuel Power Dist
+    [peak_fuel_radial_pd]
+        type = LineValueSampler
+        start_point = '0.00 0.00 ${fuel_len_half}'
+        end_point = '${fuel_radius} 0.00 ${fuel_len_half}'
+        variable = bison_power_density
+        num_points = 15
+        sort_by = 'id'
+        #execute_on = 'initial timestep_end'
+    []
+    # Radial Fuel Temp Dist
+    [peak_fuel_radial_temp]
+        type = LineValueSampler
+        start_point = '0.00 0.00 ${fuel_len_half}'
+        end_point = '${fuel_radius} 0.00 ${fuel_len_half}'
+        variable = bison_temp
+        num_points = 15
+        sort_by = 'id'
+        #execute_on = 'initial timestep_end'
+    []
+    # Radial Fuel Power Dist
+    [peak_nonfuel_radial_pd]
+        type = LineValueSampler
+        start_point = '${fuel_radius} 0.00 ${fuel_len_half}'
+        end_point = '${clad_radius_outer} 0.00 ${fuel_len_half}'
+        variable = bison_power_density
+        num_points = 15
+        sort_by = 'id'
+        #execute_on = 'initial timestep_end'
+    []
+    # Radial Fuel Temp Dist
+    [peak_nonfuel_radial_temp]
+        type = LineValueSampler
+        start_point = '${fuel_radius} 0.00 ${fuel_len_half}'
+        end_point = '${clad_radius_outer} 0.00 ${fuel_len_half}'
+        variable = bison_temp
+        num_points = 15
+        sort_by = 'id'
+        #execute_on = 'initial timestep_end'
+    []
+    # Axial Fuel Temp Dist
+    [fuel_axial_temp]
+        type = LineValueSampler
+        start_point = '0.00 0.00 0.00'
+        end_point = '0.00 0.00 ${fuel_len}'
+        variable = bison_temp
+        num_points = 100
+        sort_by = 'id'
+        #execute_on = 'initial timestep_end'
+    []
+    # Axial Fuel Temp Dist
+    [fuel_axial_pd]
+        type = LineValueSampler
+        start_point = '0.00 0.00 0.00'
+        end_point = '0.00 0.00 ${fuel_len}'
+        variable = bison_power_density
+        num_points = 100
+        sort_by = 'id'
+        #execute_on = 'initial timestep_end'
+    []
+    [T_inf_dist]
+        type = LineValueSampler
+        start_point = '${clad_radius_outer} 0.00 0.00'
+        end_point = '${clad_radius_outer} 0.00 ${fuel_len}'
+        variable = aux_T_inf
+        num_points = 22
+        sort_by = 'id'
+        #execute_on = 'initial timestep_end'
+    []
+[]
 
 [Outputs]
     exodus = true

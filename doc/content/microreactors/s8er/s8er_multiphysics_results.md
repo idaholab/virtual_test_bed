@@ -8,7 +8,7 @@ For citing purposes, please cite [!citep](s8er_garcia2022) and [!citep](s8er_nau
 
 ## Results
 
-Plots of the power density and temperature spatial profile are reported in (Griffin Power Density) (Bison Power Density), respectively. It is noticeable that both power and temperature peak in the center. This is expected based on the uniform enrichment in the core. The Griffin results were also compared in standalone fashion (i.e., no thermal feedback) with the Serpent results that are validated against experimental results showing agreement within ~300 pcm. 
+Plots of the power density and temperature spatial profile are reported in [Griffin Power Density] [Bison Power Density], respectively. It is noticeable that both power and temperature peak in the center. This is expected based on the uniform enrichment in the core. The Griffin results were also compared in standalone fashion (i.e., no thermal feedback) with the Serpent results that are validated against experimental results showing agreement within ~300 pcm. 
 
 !media s8er/results_power_density.png
   caption= Griffin Power Density, from [!citep](s8er_naupa2022)
