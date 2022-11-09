@@ -47,7 +47,7 @@ hex_apothem               = 0.007239
 #clad_thickness            = 0.00026416 # (m)
 
 active_apothem            = .110414
-nonactive_corner 		  = .2550
+nonactive_corner       = .2550
 nonactive_corner_half     = ${fparse nonactive_corner*0.5}
 cut_apothem               = 0.115924
 cut_y                     = 0.057962
@@ -67,7 +67,7 @@ scube_y                   = 0.102320901
 #      doi = "10.2172/4393793",
 #      url = "https://www.osti.gov/biblio/4393793"
 #  }
-inlet_T_fluid             = 949.81667 # (K) 
+inlet_T_fluid             = 949.81667 # (K)
 ht_coeff                  = 4539.6
 
 
@@ -92,7 +92,7 @@ gap_tc                    = .346146933
 #gap_cp          = 5193.163779
 
 
-# fuel_dens                    = -0.222222222*T + 6003 
+# fuel_dens                    = -0.222222222*T + 6003
 # fuel_cp                      = -0.222222222*T + 27.73992
 # fuel_tc                      = -0.222222222*T + 472.27104
 ceramic_emiss             = .80
@@ -101,12 +101,12 @@ clad_emiss                = .80
 ceramic_dens              = 2242.584872
 ceramic_cp                = 837.36
 ceramic_tc                = 1.730734666
-        
+
 intref_dens               = 1810.086361
 intref_cp                 = 2721.42
 intref_tc                 = 131.5358346
-        
-coolant_dens                  = 800 
+
+coolant_dens                  = 800
 coolant_cp                    = 880
 coolant_tc                    = 28
 
@@ -115,60 +115,60 @@ coolant_tc                    = 28
 # GEOMETRY AND MESH
 # ==============================================================================
 [Mesh]
-	[fuel_elem1]
-	     type = PolygonConcentricCircleMeshGenerator
-	     num_sides = '6'
-	     num_sectors_per_side = '4 4 4 4 4 4' 
-	     polygon_size = '${hex_apothem}' 
-	     preserve_volumes = true 
-         ring_radii = '${fuel_radius} ${ceramic_radius_outer} ${gap_radius_outer} ${clad_radius_outer} ' 
+    [fuel_elem1]
+         type = PolygonConcentricCircleMeshGenerator
+         num_sides = '6'
+         num_sectors_per_side = '4 4 4 4 4 4'
+         polygon_size = '${hex_apothem}'
+         preserve_volumes = true
+         ring_radii = '${fuel_radius} ${ceramic_radius_outer} ${gap_radius_outer} ${clad_radius_outer} '
          ring_intervals = '1 1 1 1'
          ring_block_ids = '1 2 3 4'
-	     background_intervals = '1' 
-	     background_block_ids = '5' 
-	     quad_center_elements = true 
-	     smoothing_max_it = 3
-	[]
-	[coolant_elem1]
-	     type = PolygonConcentricCircleMeshGenerator
-	     num_sides = '6'
-	     num_sectors_per_side = '4 4 4 4 4 4'
-	     polygon_size = '${hex_apothem}' 
-	     preserve_volumes = true 
-	     background_intervals = '1' 
-	     background_block_ids = '6' 
-	     quad_center_elements = true 
-	     smoothing_max_it = 3
+         background_intervals = '1'
+         background_block_ids = '5'
+         quad_center_elements = true
+         smoothing_max_it = 3
+    []
+    [coolant_elem1]
+         type = PolygonConcentricCircleMeshGenerator
+         num_sides = '6'
+         num_sectors_per_side = '4 4 4 4 4 4'
+         polygon_size = '${hex_apothem}'
+         preserve_volumes = true
+         background_intervals = '1'
+         background_block_ids = '6'
+         quad_center_elements = true
+         smoothing_max_it = 3
          external_boundary_id = '6'
-	[]
+    []
     [fuel_assem]
         type = PatternedHexMeshGenerator
         inputs = 'fuel_elem1 coolant_elem1'
-        # Pattern ID  0 1 
+        # Pattern ID  0 1
         background_intervals = 1
         background_block_id = '7'
         background_block_name = 'coolant'
         hexagon_size = '${active_apothem}'
         hexagon_size_style = 'apothem'
         pattern_boundary = 'hexagon'
-        pattern =       
-		   '1 0 0 0 0 0 0 0 1;
-			0 0 0 0 0 0 0 0 0 0 ;
-			0 0 0 0 0 0 0 0 0 0 0 ;
-			0 0 0 0 0 0 0 0 0 0 0 0 ;
-			0 0 0 0 0 0 0 0 0 0 0 0 0 ;
-			0 0 0 0 0 0 0 0 0 0 0 0 0 0 ;
-			0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 ;
-			0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 ;
-			1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 ;
-			0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 ;
-			0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 ;
-			0 0 0 0 0 0 0 0 0 0 0 0 0 0 ;
-			0 0 0 0 0 0 0 0 0 0 0 0 0 ;
-			0 0 0 0 0 0 0 0 0 0 0 0 ;
-			0 0 0 0 0 0 0 0 0 0 0 ;
-			0 0 0 0 0 0 0 0 0 0 ;
-			1 0 0 0 0 0 0 0 1'
+        pattern =
+           '1 0 0 0 0 0 0 0 1;
+            0 0 0 0 0 0 0 0 0 0 ;
+            0 0 0 0 0 0 0 0 0 0 0 ;
+            0 0 0 0 0 0 0 0 0 0 0 0 ;
+            0 0 0 0 0 0 0 0 0 0 0 0 0 ;
+            0 0 0 0 0 0 0 0 0 0 0 0 0 0 ;
+            0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 ;
+            0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 ;
+            1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 ;
+            0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 ;
+            0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 ;
+            0 0 0 0 0 0 0 0 0 0 0 0 0 0 ;
+            0 0 0 0 0 0 0 0 0 0 0 0 0 ;
+            0 0 0 0 0 0 0 0 0 0 0 0 ;
+            0 0 0 0 0 0 0 0 0 0 0 ;
+            0 0 0 0 0 0 0 0 0 0 ;
+            1 0 0 0 0 0 0 0 1'
     []
     [block_rename1]
         type = RenameBlockGenerator
@@ -341,8 +341,8 @@ coolant_tc                    = 28
         block = fuel
     []
     [bison_power_density]
-        family = L2_LAGRANGE 
-        order = FIRST 
+        family = L2_LAGRANGE
+        order = FIRST
         block = fuel
     []
     [aux_T_inf]
@@ -408,7 +408,7 @@ coolant_tc                    = 28
         type = NormalizationAux
         variable = bison_norm_power_density
         source_variable = bison_power_density
-        normal_factor = 1.26359177225#1.265805981 
+        normal_factor = 1.26359177225#1.265805981
         execute_on = 'timestep_begin' #check
     []
 []
@@ -531,7 +531,7 @@ coolant_tc                    = 28
 []
 
 [ThermalContact]
-    # Gap Heat Transfer 
+    # Gap Heat Transfer
     [gap_ht]
         type = GapHeatTransfer
         variable = bison_temp

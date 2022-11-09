@@ -5,7 +5,7 @@
 # Author(s): Isaac Naupa Aguirre
 # Supervisor: Stefano Terlizzi
 # ==============================================================================
-# SNAP8ER 2D Core  Wet Operational Conditions, Coupled with Bison. 
+# SNAP8ER 2D Core  Wet Operational Conditions, Coupled with Bison.
 # For use of this model please cite:
 # @InProceedings{s8er_naupa2022,
 #     author = "Naupa, Isaac and Garcia, Samuel and Terlizzi, Stefano and Kotlyar, Dan and Lindley, Ben",
@@ -27,7 +27,7 @@
 # can be found under Models/SNAP8ER_dimensions_params_etc.xlsx
 
 # Geometry ---------------------------------------------------------------------
-# Reference: 
+# Reference:
 # Reference:
 # @techreport{SNAP8Summary,
 #     author = "Division, Atomics Internation",
@@ -42,7 +42,7 @@ hex_apothem               = 0.007239
 
 
 active_apothem            = .110414
-nonactive_corner 		  = .2550 
+nonactive_corner       = .2550
 nonactive_corner_half     = ${fparse nonactive_corner*0.5}
 
 # Geometry Cuts
@@ -56,7 +56,7 @@ scube_x                   = 0.05905
 scube_y                   = 0.1022776
 
 # System Properties ------------------------------------------------------------
-# Reference: 
+# Reference:
 # @techreport{SNAP8Summary,
 #     author = "Division, Atomics Internation",
 #     title = "{SNAP 8 summary report}",
@@ -66,111 +66,111 @@ scube_y                   = 0.1022776
 #      url = "https://www.osti.gov/biblio/4393793"
 #  }
 total_power               = 600000.00 # (W). #total power
-inlet_T_fluid             = 949.81667 # (K) 
+inlet_T_fluid             = 949.81667 # (K)
 
 # ==============================================================================
 # GEOMETRY AND MESH
 # ==============================================================================
 [Mesh]
-	[fuel_elem1]
-	     type = PolygonConcentricCircleMeshGenerator
-	     num_sides = '6'
-	     num_sectors_per_side = '2 2 2 2 2 2' 
-	     polygon_size = '${hex_apothem}' 
-	     preserve_volumes = true 
-	     background_intervals = '2' 
-	     background_block_ids = '1 1' 
-	     quad_center_elements = true 
-	     smoothing_max_it = 3 
-	[]
-	[fuel_elem2]
-	     type = PolygonConcentricCircleMeshGenerator
-	     num_sides = '6'
-	     num_sectors_per_side = '2 2 2 2 2 2' 
-	     polygon_size = '${hex_apothem}' 
-	     preserve_volumes = true 
-	     background_intervals = '2' 
-	     background_block_ids = '2 2' 
-	     quad_center_elements = true 
-	     smoothing_max_it = 3 
-	[]
-	[fuel_elem3]
-	     type = PolygonConcentricCircleMeshGenerator
-	     num_sides = '6'
-	     num_sectors_per_side = '2 2 2 2 2 2' 
-	     polygon_size = '${hex_apothem}' 
-	     preserve_volumes = true 
-	     background_intervals = '2' 
-	     background_block_ids = '3 3' 
-	     quad_center_elements = true 
-	     smoothing_max_it = 3 
-	[]
-	[fuel_elem4]
-	     type = PolygonConcentricCircleMeshGenerator
-	     num_sides = '6'
-	     num_sectors_per_side = '2 2 2 2 2 2' 
-	     polygon_size = '${hex_apothem}' 
-	     preserve_volumes = true 
-	     background_intervals = '2' 
-	     background_block_ids = '4 4' 
-	     quad_center_elements = true 
-	     smoothing_max_it = 3 
-	[]
-	[fuel_elem5]
-	     type = PolygonConcentricCircleMeshGenerator
-	     num_sides = '6'
-	     num_sectors_per_side = '2 2 2 2 2 2' 
-	     polygon_size = '${hex_apothem}' 
-	     preserve_volumes = true 
-	     background_intervals = '2' 
-	     background_block_ids = '5 5' 
-	     quad_center_elements = true 
-	     smoothing_max_it = 3 
-	[]
-	[fuel_elem6]
-	     type = PolygonConcentricCircleMeshGenerator
-	     num_sides = '6'
-	     num_sectors_per_side = '2 2 2 2 2 2' 
-	     polygon_size = '${hex_apothem}' 
-	     preserve_volumes = true 
-	     background_intervals = '2' 
-	     background_block_ids = '6 6' 
-	     quad_center_elements = true 
-	     smoothing_max_it = 3 
-	[]
-	[fuel_elem7]
-	     type = PolygonConcentricCircleMeshGenerator
-	     num_sides = '6'
-	     num_sectors_per_side = '2 2 2 2 2 2' 
-	     polygon_size = '${hex_apothem}' 
-	     preserve_volumes = true 
-	     background_intervals = '2' 
-	     background_block_ids = '7 7' 
-	     quad_center_elements = true 
-	     smoothing_max_it = 3 
-	[]
-	[fuel_elem8]
-	     type = PolygonConcentricCircleMeshGenerator
-	     num_sides = '6'
-	     num_sectors_per_side = '2 2 2 2 2 2' 
-	     polygon_size = '${hex_apothem}' 
-	     preserve_volumes = true 
-	     background_intervals = '2' 
-	     background_block_ids = '8 8' 
-	     quad_center_elements = true 
-	     smoothing_max_it = 3 
-	[]
-	[air_elem1]
-	     type = PolygonConcentricCircleMeshGenerator
-	     num_sides = '6'
-	     num_sectors_per_side = '2 2 2 2 2 2' 
-	     polygon_size = '${hex_apothem}' 
-	     preserve_volumes = true 
-	     background_intervals = '2' 
-	     background_block_ids = '9 9' 
-	     quad_center_elements = true
-	     smoothing_max_it = 3 
-	[]
+    [fuel_elem1]
+         type = PolygonConcentricCircleMeshGenerator
+         num_sides = '6'
+         num_sectors_per_side = '2 2 2 2 2 2'
+         polygon_size = '${hex_apothem}'
+         preserve_volumes = true
+         background_intervals = '2'
+         background_block_ids = '1 1'
+         quad_center_elements = true
+         smoothing_max_it = 3
+    []
+    [fuel_elem2]
+         type = PolygonConcentricCircleMeshGenerator
+         num_sides = '6'
+         num_sectors_per_side = '2 2 2 2 2 2'
+         polygon_size = '${hex_apothem}'
+         preserve_volumes = true
+         background_intervals = '2'
+         background_block_ids = '2 2'
+         quad_center_elements = true
+         smoothing_max_it = 3
+    []
+    [fuel_elem3]
+         type = PolygonConcentricCircleMeshGenerator
+         num_sides = '6'
+         num_sectors_per_side = '2 2 2 2 2 2'
+         polygon_size = '${hex_apothem}'
+         preserve_volumes = true
+         background_intervals = '2'
+         background_block_ids = '3 3'
+         quad_center_elements = true
+         smoothing_max_it = 3
+    []
+    [fuel_elem4]
+         type = PolygonConcentricCircleMeshGenerator
+         num_sides = '6'
+         num_sectors_per_side = '2 2 2 2 2 2'
+         polygon_size = '${hex_apothem}'
+         preserve_volumes = true
+         background_intervals = '2'
+         background_block_ids = '4 4'
+         quad_center_elements = true
+         smoothing_max_it = 3
+    []
+    [fuel_elem5]
+         type = PolygonConcentricCircleMeshGenerator
+         num_sides = '6'
+         num_sectors_per_side = '2 2 2 2 2 2'
+         polygon_size = '${hex_apothem}'
+         preserve_volumes = true
+         background_intervals = '2'
+         background_block_ids = '5 5'
+         quad_center_elements = true
+         smoothing_max_it = 3
+    []
+    [fuel_elem6]
+         type = PolygonConcentricCircleMeshGenerator
+         num_sides = '6'
+         num_sectors_per_side = '2 2 2 2 2 2'
+         polygon_size = '${hex_apothem}'
+         preserve_volumes = true
+         background_intervals = '2'
+         background_block_ids = '6 6'
+         quad_center_elements = true
+         smoothing_max_it = 3
+    []
+    [fuel_elem7]
+         type = PolygonConcentricCircleMeshGenerator
+         num_sides = '6'
+         num_sectors_per_side = '2 2 2 2 2 2'
+         polygon_size = '${hex_apothem}'
+         preserve_volumes = true
+         background_intervals = '2'
+         background_block_ids = '7 7'
+         quad_center_elements = true
+         smoothing_max_it = 3
+    []
+    [fuel_elem8]
+         type = PolygonConcentricCircleMeshGenerator
+         num_sides = '6'
+         num_sectors_per_side = '2 2 2 2 2 2'
+         polygon_size = '${hex_apothem}'
+         preserve_volumes = true
+         background_intervals = '2'
+         background_block_ids = '8 8'
+         quad_center_elements = true
+         smoothing_max_it = 3
+    []
+    [air_elem1]
+         type = PolygonConcentricCircleMeshGenerator
+         num_sides = '6'
+         num_sectors_per_side = '2 2 2 2 2 2'
+         polygon_size = '${hex_apothem}'
+         preserve_volumes = true
+         background_intervals = '2'
+         background_block_ids = '9 9'
+         quad_center_elements = true
+         smoothing_max_it = 3
+    []
     [fuel_assem]
         type = PatternedHexMeshGenerator
         inputs = 'fuel_elem1 fuel_elem2 fuel_elem3 fuel_elem4 fuel_elem5 fuel_elem6 fuel_elem7 fuel_elem8 air_elem1'
@@ -181,24 +181,24 @@ inlet_T_fluid             = 949.81667 # (K)
         hexagon_size = '${active_apothem}'
         hexagon_size_style = 'apothem'
         pattern_boundary = 'hexagon'
-        pattern =       
-		   '8 7 7 7 7 7 7 7 8;
-			7 6 6 6 6 6 6 6 6 7 ;
-			7 6 5 5 5 5 5 5 5 6 7 ;
-			7 6 5 4 4 4 4 4 4 5 6 7 ;
-			7 6 5 4 3 3 3 3 3 4 5 6 7 ;
-			7 6 5 4 3 2 2 2 2 3 4 5 6 7 ;
-			7 6 5 4 3 2 1 1 1 2 3 4 5 6 7 ;
-			7 6 5 4 3 2 1 0 0 1 2 3 4 5 6 7 ;
-			8 6 5 4 3 2 1 0 0 0 1 2 3 4 5 6 8 ;
-			7 6 5 4 3 2 1 0 0 1 2 3 4 5 6 7 ;
-			7 6 5 4 3 2 1 1 1 2 3 4 5 6 7 ;
-			7 6 5 4 3 2 2 2 2 3 4 5 6 7 ;
-			7 6 5 4 3 3 3 3 3 4 5 6 7 ;
-			7 6 5 4 4 4 4 4 4 5 6 7 ;
-			7 6 5 5 5 5 5 5 5 6 7 ;
-			7 6 6 6 6 6 6 6 6 7 ;
-			8 7 7 7 7 7 7 7 8'
+        pattern =
+           '8 7 7 7 7 7 7 7 8;
+            7 6 6 6 6 6 6 6 6 7 ;
+            7 6 5 5 5 5 5 5 5 6 7 ;
+            7 6 5 4 4 4 4 4 4 5 6 7 ;
+            7 6 5 4 3 3 3 3 3 4 5 6 7 ;
+            7 6 5 4 3 2 2 2 2 3 4 5 6 7 ;
+            7 6 5 4 3 2 1 1 1 2 3 4 5 6 7 ;
+            7 6 5 4 3 2 1 0 0 1 2 3 4 5 6 7 ;
+            8 6 5 4 3 2 1 0 0 0 1 2 3 4 5 6 8 ;
+            7 6 5 4 3 2 1 0 0 1 2 3 4 5 6 7 ;
+            7 6 5 4 3 2 1 1 1 2 3 4 5 6 7 ;
+            7 6 5 4 3 2 2 2 2 3 4 5 6 7 ;
+            7 6 5 4 3 3 3 3 3 4 5 6 7 ;
+            7 6 5 4 4 4 4 4 4 5 6 7 ;
+            7 6 5 5 5 5 5 5 5 6 7 ;
+            7 6 6 6 6 6 6 6 6 7 ;
+            8 7 7 7 7 7 7 7 8'
         external_boundary_id = '10'
         external_boundary_name = 'active_outer'
     []
@@ -391,7 +391,7 @@ inlet_T_fluid             = 949.81667 # (K)
 [PowerDensity]
     power = '${total_power}'
     power_density_variable = griffin_power_density
-    integrated_power_postprocessor = integrated_power 
+    integrated_power_postprocessor = integrated_power
     family = L2_LAGRANGE
     order = FIRST
 []
