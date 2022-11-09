@@ -1,0 +1,19 @@
+<ISOXML Format="SERPENT2" Name="core_2D_nodrums_16G_WET_XS" NGroup="16" NDLGroup="6" Description="core_2D_nodrums_16G_WET">
+<Controls>
+   <ScatMatrixTol>1E-32</ScatMatrixTol>
+   <ForceConsistency>false</ForceConsistency>
+   <Debug>false</Debug>
+   <EnergyUnit>MeV</EnergyUnit>
+</Controls>
+
+<Librarywise DataType="macro" L="1" LType="1">
+  <Tabulation>Tfuel Tcool</Tabulation>
+  <Tfuel>300 600 900 1200</Tfuel>
+  <Tcool>300 600 900 1200</Tcool>
+  <AddData>Total Fission Absorption NGamma</AddData>
+  <Directory>./</Directory>
+  <BaseFile>SNAP8ER_C3_2D_NODRUMS_WET</BaseFile>
+  <BaseExtension>i</BaseExtension>
+</Librarywise>
+
+</ISOXML>
