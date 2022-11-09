@@ -255,13 +255,17 @@
 
 [Executioner]
   type = Transient
-  start_time = 0.0
-  end_time = 10.0
+
+  # Solver parameters
   l_tol = 1e-3
   l_max_its = 100
   nl_max_its = 200
   nl_abs_tol = 1e-8
   nl_rel_tol = 1e-8
+
+  # Transient parameters
+  start_time = 0.0
+  end_time = 10.0
   [TimeStepper]
     type = ConstantDT
     dt = 0.005

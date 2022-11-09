@@ -27,7 +27,7 @@
   #  print_block_volume = true
   #  show_neutronics_material_coverage = true
   #  show_petsc_options = true
-  # show_var_residual_norms = true
+  #  show_var_residual_norms = true
 []
 
 # ==================================================================================
@@ -88,29 +88,26 @@
   #Below are communication for Multiscale with micro-subs
   [copy_flux]
     type = TransportSystemVariableTransfer
-    direction = from_multiapp
     execute_on = initial
     from_transport_system = diffing
-    multi_app = initial_solve
+    from_multi_app = initial_solve
     to_transport_system = diffing
   []
   [copy_pp]
     # Scales everything to the initial power.
     type = MultiAppPostprocessorTransfer
-    direction = from_multiapp
     execute_on = initial
     from_postprocessor = UnscaledTotalPower
-    multi_app = initial_solve
+    from_multi_app = initial_solve
     reduction_type = maximum
     to_postprocessor = UnscaledTotalPower
   []
   [copy_sf]
     # Scales factor
     type = MultiAppPostprocessorTransfer
-    direction = from_multiapp
     execute_on = initial
     from_postprocessor = PowerScaling
-    multi_app = initial_solve
+    from_multi_app = initial_solve
     reduction_type = maximum
     to_postprocessor = PowerScaling
   []
@@ -123,15 +120,13 @@
   []
   [powden_down]
     type = MultiAppVariableValueSamplePostprocessorTransfer
-    direction = to_multiapp
-    multi_app = micro
+    to_multi_app = micro
     postprocessor = local_power_density
     source_variable = PowerDensity
   []
   [modtemp_up]
     type = MultiAppPostprocessorInterpolationTransfer
-    direction = from_multiapp
-    multi_app = micro
+    from_multi_app = micro
     num_points = 6
     postprocessor = avg_graphtemp
     power = 2
@@ -139,8 +134,7 @@
   []
   [graintemp_up]
     type = MultiAppPostprocessorInterpolationTransfer
-    direction = from_multiapp
-    multi_app = micro
+    from_multi_app = micro
     num_points = 6
     postprocessor = avg_graintemp
     power = 2
@@ -429,7 +423,7 @@
     grid_names = 'Tfuel Tmod Rod'
     grid_variables = 'temp_fg temp_ms Boron_Conc'
     isotopes =  'pseudo1 pseudo2'
-    library_file = 'leu_20r_is_6g_d.xml'
+    library_file = 'cross_sections/leu_20r_is_6g_d.xml'
     library_name = leu_20r_is_6g_d
     material_id = 1
     plus = true
@@ -462,7 +456,7 @@
     grid_names = 'Trefl Tcore Rod'
     grid_variables = 'temperature avg_coretemp Boron_Conc'
     isotopes = 'pseudo'
-    library_file = 'leu_macro_6g.xml'
+    library_file = 'cross_sections/leu_macro_6g.xml'
     library_name = leu_macro_6g
     material_id = 2
     plus = true
@@ -507,23 +501,29 @@
 [Executioner]
   type = IQS
   do_iqs_transient = false
+  pke_param_csv = true
+
+  # Time evolution parameters
   dtmin = 1e-7
   start_time = 0.0
   end_time =  10.0
-  l_max_its = 100
-  l_tol = 1e-3
-  nl_abs_tol = 1e-7
-  nl_max_its = 200
-  nl_rel_tol = 1e-7
-  picard_abs_tol = 1e-7
-  picard_max_its = 10
-  picard_rel_tol = 1e-7
-  pke_param_csv = true
   [TimeStepper]
     type = ConstantDT
     dt = 0.005
     growth_factor = 1.5
   []
+
+  # Solver parameters
+  l_max_its = 100
+  l_tol = 1e-3
+  nl_abs_tol = 1e-7
+  nl_max_its = 200
+  nl_rel_tol = 1e-7
+
+  # Multiphysics iteration parameters
+  fixed_point_abs_tol = 1e-7
+  fixed_point_max_its = 10
+  fixed_point_rel_tol = 1e-7
 []
 [Outputs]
   csv = true

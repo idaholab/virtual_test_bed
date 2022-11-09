@@ -1,6 +1,6 @@
 <YakXs>
 	<Multigroup_Cross_Section_Libraries Description="Two Temp LEU 20r 6group Heterogeneous" NGroup="6" Name="leu_20r_is_6g_d">
-		<Multigroup_Cross_Section_Library Description="two temp homo" Generator="INL" ID="1" InMeter="false" TimeCreated="Thu Aug 30 14:43:46 2018" Ver="1.0">
+		<Multigroup_Cross_Section_Library Description="two temp homo" Generator="INL" ID="1" TimeCreated="Thu Aug 30 14:43:46 2018" Ver="1.0">
 			<Tabulation>Tfuel Tmod Rod</Tabulation>
 			<Tfuel>300 350 400 450 500 550 600 650 700 750 800 900 1000 1100 1200 1300 1400 1500 1600</Tfuel>
 			<Tmod>300 350 400 450 500 550 600 650 700 750 800 900 1000</Tmod>
