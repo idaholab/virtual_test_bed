@@ -17,13 +17,13 @@ Mesh generation was performed with [Cubit](https://cubit.sandia.gov/) toolkit an
 
 The present BISON simulation utilized the heat conduction module in MOOSE, supported with materials models in BISON including the thermal properties of TRISO fuel, thermal and mechanical properties of SS316 (cladding material for YH2). Convective boundary conditions were defined at the top and bottom of the model with an external temperature of 800K and h=100 W/m^2^-K.
 
-!listing /mrad/steady/MP_FC_ss_bison.i max-height = 10000
+!listing /microreactors/mrad/steady/MP_FC_ss_bison.i max-height = 10000
 
 ## Sockeye Model
 
 Sockeye is used for steady-state heat pipe thermal performance using the effective thermal conductivity model, i.e., a 2D axisymmetric conduction model with a very high thermal conductivity of 2×10^5^ W/m-K is applied to the vapor core. A heat flux boundary condition is applied to the exterior of the casing in the evaporator section, which is provided by the bulk conduction model. A convective boundary condition is applied to the exterior of the envelope in the condenser section, with an external temperature of 800 K and h=10^6^ W/m^2^-K.
 
-!listing /mrad/steady/MP_FC_ss_sockeye.i max-height = 10000
+!listing /microreactors/mrad/steady/MP_FC_ss_sockeye.i max-height = 10000
 
 ## MultiApp
 
@@ -34,4 +34,4 @@ Multiphysics simulations performed leverage the MOOSE MultiApps system to couple
 
 The list and location of each heat-pipe in the 1/6 code is provided in:
 
-!listing /mrad/steady/hp_centers.txt max-height = 10000
+!listing /microreactors/mrad/steady/hp_centers.txt max-height = 10000
