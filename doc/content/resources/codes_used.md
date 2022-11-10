@@ -43,6 +43,8 @@ obtained through INL's [NCRC](https://inl.gov/ncrc/).
 
 - Generic Molten Salt Fast Reactor Depletion [documentation](msr/msr_generic/depletion/model.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/msr/msr_generic/depletion)
 
+- SNAP-8 NTP reactor core model [documentation](microreactors/s8er/index.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/microreactors/s8er)
+
 
 ### Cardinal / OpenMC (open-source)
 
@@ -108,6 +110,8 @@ obtained through INL's [NCRC](https://inl.gov/ncrc/).
 - Assembly in a Sodium Fast Reactor [documentation](sfr/single_assembly/sfr.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/sfr/single_assembly)
 
 - 1D TRISO fuel depletion [documentation](htgr/triso/triso_model.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/triso_fuel)
+
+- SNAP-8 NTP reactor core model [documentation](microreactors/s8er/index.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/microreactors/s8er)
 
 
 ### Thermo-mechanics module (open-source)
