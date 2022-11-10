@@ -2,7 +2,7 @@
 
 The Griffin neutronics input deck for Excercise 1 is described below.
 
-!listing htgr/mhtgr_griffin/griffin.i
+!listing htgr/mhtgr_griffin/benchmark/griffin.i
 
 ## Model Parameters
 
@@ -24,20 +24,10 @@ However, be careful to not override a default parameter
 option in a later block without meaning to.
 It is common to provide cross section data for materials in
 this block.
-For example, the [!style color=red](library_file), [!style color=red](fromFile),
-[!style color=red](is_meter), and [!style color=red](plus) parameters
-are all defined for the [!style color=orange](ConstantNeutronicsMaterial) type,
-introduced later in the `[Materials]` block.
-The [!style color=red](library_file) simply links the cross-section library xml file,
-[!style color=red](is_meter) specifies that the cross sections are in units of meters,
-and [!style color=red](fromFile) indicates that the cross sections are provided via an
-external file.
-The [!style color=red](plus) card indicates that absorption, fission, and
-kappa fission cross sections are to be used (for fissile materials).
-We also include the number of energy groups for the diffusion solver with
+Here we include the number of energy groups for the diffusion solver with
 [!style color=red](G) = 26.
 
-!listing htgr/mhtgr_griffin/griffin.i
+!listing htgr/mhtgr_griffin/benchmark/griffin.i
          block=GlobalParams
 
 ## Geometry and Mesh
@@ -54,7 +44,7 @@ Exodus files can be viewed with an Exodus supported visualization tool (i.e. Par
 This allows the visualization of the computational mesh.
 It also allows for easy identification of material and equivalent ids (if provided).
 
-!listing htgr/mhtgr_griffin/griffin.i
+!listing htgr/mhtgr_griffin/benchmark/griffin.i
          block=Mesh
 
 ## Functions
@@ -67,7 +57,7 @@ acting on the Cartesian coordinates specified with [!style color=orange](value).
 The periodic boundary condition is imposed onto the left and right core
 segments with a sin/cosine function.
 
-!listing htgr/mhtgr_griffin/griffin.i
+!listing htgr/mhtgr_griffin/benchmark/griffin.i
          block=Functions
 
 ## Materials and User Objects
@@ -83,7 +73,7 @@ to the corresponding [!style color=red](block) on the computational mesh.
 Notice that the material blocks are grouped by the axial level in the core
 (provided by the benchmark): level 1 to level 10.
 
-!listing htgr/mhtgr_griffin/griffin.i
+!listing htgr/mhtgr_griffin/benchmark/griffin.i
          block=Materials
 
 The user objects block allows the user to develop custom objects.
@@ -95,7 +85,7 @@ power density, neutron absorption rate,
 total neutron flux, and the group-wise neutron fluxes
 for each block.
 
-!listing htgr/mhtgr_griffin/griffin.i
+!listing htgr/mhtgr_griffin/benchmark/griffin.i
          block=UserObjects
 
 The power density is not calculated implicitly and must be defined in
@@ -116,7 +106,7 @@ Lastly, the family and order parameters are the polynomial
 representations  of the power density corresponding to the
 underlying FEM.
 
-!listing htgr/mhtgr_griffin/griffin.i
+!listing htgr/mhtgr_griffin/benchmark/griffin.i
          block=PowerDensity
 
 ### Transport System
@@ -150,7 +140,7 @@ required to use the "PJFNKMO" method defined in the
 This tells the finite element solver to not update the material
 cross sections at each linear iteration.
 
-!listing htgr/mhtgr_griffin/griffin.i
+!listing htgr/mhtgr_griffin/benchmark/griffin.i
          block=TransportSystems
 
 ## Executioner
@@ -177,7 +167,7 @@ The free power iteration scheme provides an educated initial guess of
 the solution.
 We set the number of [!style color=red](free_power_iterations) to 2.
 
-!listing htgr/mhtgr_griffin/griffin.i
+!listing htgr/mhtgr_griffin/benchmark/griffin.i
          block=Executioner
 
 ### Post-processors, Debug, and Outputs
@@ -195,13 +185,13 @@ Finally, the [!style color=red](execute_on) parameter
 sets the time of execution.
 In this case, the initial time step and at the end of each subsequent time step.
 
-!listing htgr/mhtgr_griffin/griffin.i
+!listing htgr/mhtgr_griffin/benchmark/griffin.i
          block=Postprocessors
 
 The debug options can be helpful when debugging a case.
 These are a set of true (1) and false (0) options to print statements.
 
-!listing htgr/mhtgr_griffin/griffin.i
+!listing htgr/mhtgr_griffin/benchmark/griffin.i
          block=Debug
 
 The last block executes the output files from the simulation.
@@ -214,7 +204,7 @@ the criticality.
 The [!style color=red](perf_graph) parameter is helpful to evaluate
 the computational run time.
 
-!listing htgr/mhtgr_griffin/griffin.i
+!listing htgr/mhtgr_griffin/benchmark/griffin.i
          block=Outputs
 
 # How to run the model
