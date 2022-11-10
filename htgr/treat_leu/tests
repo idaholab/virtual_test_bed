@@ -60,5 +60,6 @@
         cli_args = "Executioner/end_time=0.010"
         min_parallel = 16
         max_time = 1000
+        method = 'opt'
     []
 []

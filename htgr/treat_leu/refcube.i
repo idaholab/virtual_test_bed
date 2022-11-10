@@ -525,7 +525,6 @@
   fixed_point_rel_tol = 1e-7
 []
 [Outputs]
-  csv = true
   file_base = out~refcube
   interval = 1
   [console]
@@ -535,5 +534,9 @@
   []
   [exodus]
     type = Exodus
+  []
+  [csv]
+    type = CSV
+    hide = 'lin_steps nl_steps'
   []
 []
