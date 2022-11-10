@@ -30,6 +30,8 @@ help creating it.
 
 - Assembly in a Sodium Fast Reactor [documentation](sfr/single_assembly/sfr.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/sfr/single_assembly)
 
+- Sodium Fast Reactor duct bowing [documentation](sfr/hex_duct_bowing/index.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/sfr/hex_duct_bowing)
+
 
 ### Integrated plant analysis
 
@@ -73,6 +75,8 @@ help creating it.
 ### Fuel depletion
 
 - 1D TRISO fuel depletion [documentation](htgr/triso/triso_model.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/devel/htgr/triso_fuel)
+
+- Generic Molten Salt Fast Reactor Depletion [documentation](msr/msr_generic/depletion/model.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/msr/msr_generic/depletion)
 
 
 !alert note

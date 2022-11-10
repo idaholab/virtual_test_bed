@@ -1,0 +1,41 @@
+<YakXs>
+  <Multigroup_Cross_Section_Libraries Name="Macro_XS_Artifact" NGroup="1" Description="Default Description">
+    <Multigroup_Cross_Section_Library ID="1" Ver="1.0" Generator="INL" InMeter="false">
+      <Tabulation>Burnup</Tabulation>
+      <Burnup>0.0000000E+00</Burnup>
+      <AllReactions>Total Scattering FissionSpectrum nuFission Fission kappaFission Absorption Removal Transport NGamma NAlpha N2Alpha N2N N3N N4N NNProton NProton NDeuteron NTriton</AllReactions>
+      <Table gridIndex="1">
+        <Isotope Name="pseudo" L="1" I="0" NS="1">
+          <Total index="g">  3.7508656E+01</Total>
+          <Removal index="g">  2.8206598E+01</Removal>
+          <Transport index="g">  2.6177692E+01</Transport>
+          <Absorption index="g"> 0.0</Absorption>
+          <NGamma index="g">  6.0032997E+00</NGamma>
+          <NAlpha index="g">  0.0000000E+00</NAlpha>
+          <N2Alpha index="g">  0.0000000E+00</N2Alpha>
+          <N2N index="g">  4.1603078E-03</N2N>
+          <N3N index="g">  2.9472148E-06</N3N>
+          <N4N index="g">  2.8774214E-10</N4N>
+          <NNProton index="g">  0.0000000E+00</NNProton>
+          <NProton index="g">  0.0000000E+00</NProton>
+          <NDeuteron index="g">  0.0000000E+00</NDeuteron>
+          <NTriton index="g">  0.0000000E+00</NTriton>
+          <nuFission index="p">  5.4202625E+01</nuFission>
+          <Fission index="g">  2.2207468E+01</Fission>
+          <kappaFission index="g">  6.9019307E-10</kappaFission>
+          <FissionSpectrum index="g">  1.0000000E+00</FissionSpectrum>
+          <Scattering index="pgl" profile="1" has2l="false">
+            <Profile>
+              1   1
+              1   1
+            </Profile>
+            <Value>
+              9.3020573E+00
+              1.2557451E+00
+            </Value>
+          </Scattering>
+        </Isotope>
+      </Table>
+    </Multigroup_Cross_Section_Library>
+  </Multigroup_Cross_Section_Libraries>
+</YakXs>
