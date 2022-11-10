@@ -1,0 +1,4 @@
+time,IntegratedPower,TotalPower,avg_fg_kth,avg_fg_rhocp,avg_gr_kth,avg_gr_rhocp,avg_graintemp,avg_graphtemp,delta_time,lin_steps,local_power_density,nl_steps
+0,0,0,0,0,0,0,0,0,0,0,0,0
+0.005,0,0,0.051158282387613,2.6207753561439,0.29963082904929,1.3284748605564,300,300,0.005,0,0,0
+0.01,0,0,0.051158282387613,2.6207753561439,0.29963082904929,1.3284748605564,300,300,0.005,0,0,0
