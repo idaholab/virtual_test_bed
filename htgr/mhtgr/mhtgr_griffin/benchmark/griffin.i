@@ -34,7 +34,7 @@ tpow = 350e6 #(350 MW)
 [Mesh]
   [fmg]
     type = FileMeshGenerator
-    file = MHTGR_Tri_r2.e
+    file = ../data/MHTGR_Tri_r2.e
   []
   [reassign_block_id]
     type = RenameBlockGenerator
@@ -202,14 +202,14 @@ tpow = 350e6 #(350 MW)
                   202 203 204 205 206 207 208 209 210 211 212 213 214 215 216 217 218 219 220 221 222 223 224 225 226
                   227 228 229 230 231 233 234'
   []
-  second_order = True
+  #second_order = True
   uniform_refine = 1
 []
 
 [Materials]
   [const_nm]
      type = ConstantMatIDNeutronicsMaterial
-     library_file =  'materials_p0_trc.xml'
+     library_file =  '../data/materials_p0_trc.xml'
      is_meter = true
      plus = true
      #material_id =  1
@@ -314,8 +314,8 @@ tpow = 350e6 #(350 MW)
    scheme = CFEM-Diffusion
    n_delay_groups = 0
    family = LAGRANGE
-   #order = FIRST
-   order = SECOND 
+   order = FIRST
+   #order = SECOND 
    fission_source_aux = true
    assemble_scattering_jacobian = true
    assemble_fission_jacobian = true
