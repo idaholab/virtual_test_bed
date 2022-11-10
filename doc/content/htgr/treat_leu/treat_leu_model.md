@@ -127,12 +127,6 @@ This input file is also almost identical to the previous input file, with a few 
 
 This input file describes a microscale particle heat solution. This input is replicated at many locations in the macroscale simulation.
 
-### Problem
-
-This block defines the coordinate system in which the heat transport will be solved.
-
-!listing htgr/treat_leu/ht_20r_leu_fl.i block=Problem language=cpp
-
 ### Mesh
 
 This block sets the meshes for the fission damage layer and fuel grain.
