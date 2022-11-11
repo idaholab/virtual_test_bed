@@ -27,6 +27,8 @@ help creating it.
 - SNAP-8 NTP reactor core model [documentation](microreactors/s8er/index.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/microreactors/s8er)
 >>>>>>> 55b382f (Add SNAP 8 to model indexes)
 
+- MHTGR Benchmark model [documentation](htgr/mhtgr_griffin/index.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/mhtgr_griffin/)
+
 
 ### Component analysis
 
@@ -39,7 +41,7 @@ help creating it.
 
 ### Integrated plant analysis
 
-- Modular High Temperature Reactor [documentation](mhtgr/sam_mhtgr_model.md) [inputs](https://github.com/idaholab/virtual_test_bed/blob/main/htgr/mhtgr)
+- Modular High Temperature Reactor [documentation](mhtgr_sam/sam_mhtgr_model.md) [inputs](https://github.com/idaholab/virtual_test_bed/blob/main/htgr/mhtgr_sam)
 
 - Molten Salt Reactor Experiment [documentation](msr/msre/msre_sam_model.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/msr/msre)
 

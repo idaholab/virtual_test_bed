@@ -210,8 +210,6 @@ the computational run time.
 # How to run the model
 
 The model can be run with Griffin in serial or parallel.
-In parallel, with 16 Xeon Platinum 8268 processors,
-the solve takes approximately 2 minutes and 4 seconds.
 
 Run it via:
 
@@ -219,22 +217,3 @@ Run it via:
 
  `mpirun -n 16 griffin-opt -i griffin.i`
 
-The performance is shown below.
-
-|                                Section                               | Calls |   Self(s)  |   Avg(s)   |    %   | Mem(MB) |  Total(s)  |   Avg(s)   |    %   | Mem(MB) |
-| - | - | - | - | - | - | - | - | - | - |
-| GriffinApp (main)                                                    |     1 |      0.025 |      0.025 |   0.02 |       4 |    123.616 |    123.616 | 100.00 |    1535 |
-|   Action::SetupMeshAction::Mesh::SetupMeshAction::act::setup_mesh    |     1 |      0.001 |      0.001 |   0.00 |       0 |      0.001 |      0.001 |   0.00 |       0 |
-|   Action::SetupMeshAction::Mesh::SetupMeshAction::act::set_mesh_base |     2 |      0.000 |      0.000 |   0.00 |       0 |      0.000 |      0.000 |   0.00 |       0 |
-|   MooseApp::executeMeshGenerators                                    |     1 |      0.000 |      0.000 |   0.00 |       0 |      0.000 |      0.000 |   0.00 |       0 |
-|   Eigenvalue::final                                                  |     1 |      0.000 |      0.000 |   0.00 |       0 |      0.001 |      0.001 |   0.00 |       0 |
-|     EigenProblem::outputStep                                         |     1 |      0.001 |      0.001 |   0.00 |       0 |      0.001 |      0.001 |   0.00 |       0 |
-|   EigenProblem::computeUserObjects                                   |     2 |      0.341 |      0.170 |   0.28 |       0 |      0.341 |      0.170 |   0.28 |       0 |
-|   EigenProblem::computeUserObjects                                   |     2 |      0.384 |      0.192 |   0.31 |       0 |      0.384 |      0.192 |   0.31 |       0 |
-|   EigenProblem::outputStep                                           |     2 |      0.002 |      0.001 |   0.00 |       0 |      0.698 |      0.349 |   0.56 |       5 |
-|     Exodus::outputStep                                               |     2 |      0.693 |      0.347 |   0.56 |       5 |      0.693 |      0.347 |   0.56 |       5 |
-|   Eigenvalue::PicardSolve                                            |     1 |      0.001 |      0.001 |   0.00 |       0 |    102.708 |    102.708 |  83.09 |     577 |
-|     EigenProblem::computeUserObjects                                 |     1 |      0.667 |      0.667 |   0.54 |       0 |      0.667 |      0.667 |   0.54 |       0 |
-|     EigenProblem::outputStep                                         |     1 |      0.001 |      0.001 |   0.00 |       0 |      0.001 |      0.001 |   0.00 |       0 |
-|     EigenProblem::solve                                              |     1 |     67.458 |     67.458 |  54.57 |     339 |    101.805 |    101.805 |  82.36 |     576 |
-|       EigenProblem::computeUserObjects                               |     2 |      0.379 |      0.190 |   0.31 |       0 |      0.379 |      0.190 |   0.31 |       0 |
