@@ -1,6 +1,6 @@
 # Model Inputs
 
-The Griffin neutronics input deck for Excercise 1 is described below.
+The Griffin neutronics input file for Exercise 1 is described below.
 
 !listing htgr/mhtgr_griffin/benchmark/griffin.i
 
@@ -40,7 +40,7 @@ However, in this case, the mesh does not hold the material ids and these will be
 specified in the `[Materials]` block.
 
 !alert note
-Exodus files can be viewed with an Exodus supported visualization tool (i.e. ParaView).
+Exodus files can be viewed with an Exodus supported visualization tool (i.e. ParaView, standalone or through workbench, or peacock).
 This allows the visualization of the computational mesh.
 It also allows for easy identification of material and equivalent ids (if provided).
 
@@ -163,8 +163,8 @@ For example, we first define a few PETSc options.
 The maximum number of inner iterations is set with
 [!style color=red](l_max_its) which is advised for a large number
 of energy groups (26 in this case).
-The free power iteration scheme provides an educated initial guess of
-the solution.
+The initial free power iteration facilitate the elimination of higher order modes before
+using a Newton-like method.
 We set the number of [!style color=red](free_power_iterations) to 2.
 
 !listing htgr/mhtgr_griffin/benchmark/griffin.i
@@ -175,7 +175,7 @@ We set the number of [!style color=red](free_power_iterations) to 2.
 The last blocks are for post-processors, debug options, and outputs.
 A post-processor can be thought of as a function to derive a variable
 of interest from the solution.
-For example, the power density.
+For example, the total power is the integral of the power density over the entire spatial domain.
 This is defined with the
 [!style color=orange](ElementIntegralVariablePostprocessor)
 type and the power density variable we created earlier ([!style color=red](power_density)).
@@ -209,9 +209,8 @@ the computational run time.
 
 # How to run the model
 
-The model can be run with Griffin in serial or parallel.
+The model can be run with Griffin in serial or parallel respectively with:
 
-Run it via:
 
  `griffin-opt -i griffin.i`
 

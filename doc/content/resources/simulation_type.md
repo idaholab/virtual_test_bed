@@ -25,7 +25,6 @@ help creating it.
 - High Temperature Test Facility transient simulations [documentation](htgr/httf/index.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/httf)
 =======
 - SNAP-8 NTP reactor core model [documentation](microreactors/s8er/index.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/microreactors/s8er)
->>>>>>> 55b382f (Add SNAP 8 to model indexes)
 
 - MHTGR Benchmark model [documentation](htgr/mhtgr_griffin/index.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/mhtgr_griffin/)
 
