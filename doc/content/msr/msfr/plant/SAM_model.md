@@ -105,7 +105,7 @@ SAM supports both constants and user-defined functions for the thermophysical pa
 The properties of common materials are implemented in the SAM repository, and can be readily used by
 simply referring to the material IDs, such as the air, or molten salt FLiBe.
 
-!listing msr/msfr/plant/transient/msfr_system_1d.i  block=EOS language=cpp
+!listing msr/msfr/plant/steady/msfr_system_1d.i  block=EOS language=cpp
 
 ### Components
 

@@ -8,9 +8,7 @@
 
 [Steady State Coupling](msfr/plant/steady_state_coupling.md)
 
-[Griffin-Pronghorn-SAM transient model](msfr/plant/griffin_pgh_SAM_transient_model.md)
-
-[Griffin-Pronghorn-SAM results](msfr/plant/griffin_pgh_SAM_results.md)
+[Griffin-Pronghorn-SAM steady-state results](msfr/plant/griffin_pgh_SAM_steady_results.md)
 
 
 
