@@ -572,7 +572,7 @@ core_power_val = 3e9
   l_max_its  = 200
   # the start_time can be set earlier to initialize SAM on its own
   # sub_cycling must be set to true in the parent application to do that
-  start_time = 0
+  start_time = -200.0
   end_time   = 200.0
   num_steps  = 20000
   [Quadrature]

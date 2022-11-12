@@ -68,20 +68,17 @@ beta6 = 0.000184087
   [restart]
     type = FileMeshGenerator
     use_for_exodus_restart = true
+
     # Depending on the file chosen, the initialization of variables should be
     # adjusted. The following variables can be initalized:
-
     # - vel_x, vel_y, p from isothermal simulation
     # file = '../../steady/restart/run_ns_initial_restart.e'
     # Below are initialization points created from this input file
     # The variable IC should be set from_file_var for temperature and precursors
     # - vel_x, vel_y, p, T_fluid, c_i from cosine heated simulation
-    file = '../../steady/restart/run_ns_restart.e'
     # file = '../../steady/restart/run_ns_restart.e'
     # - adding SAM-coupling
     file = 'restart/run_ns_restart.e'
-    # - vel_x, vel_y, p, T_fluid, c_i from coupled multiphysics simulation
-    # file = 'restart/run_ns_coupled_restart.e'
   []
   [hx_top]
     type = ParsedGenerateSideset
@@ -409,7 +406,7 @@ beta6 = 0.000184087
     keep_solution_during_restore = False
 
     # the balance of plant needs to be run separately first for 100 steps
-    cli_args = 'Problem/restart_file_base=msfr_system_1d_checkpoint_cp/0100;Problem/force_restart=true'
+    cli_args = 'Problem/restart_file_base=restart/msfr_system_1d_checkpoint_cp/0060;Problem/force_restart=true'
   []
 []
 

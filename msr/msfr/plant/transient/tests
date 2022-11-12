@@ -1,12 +1,11 @@
 [Tests]
   # Syntax checks
-  [multiphysics_syntax]
+  [coupled_multiphysics_syntax]
     type = RunApp
     input = 'run_neutronics.i'
     check_input = True
     ad_indexing_type = 'global'
     executable_pattern = 'blue_crab*|dire_wolf*|fenix*'
-    # multiapps and transfers execute_on are different
     allow_warnings = true
   []
   [neutronics_syntax]
@@ -26,21 +25,24 @@
     check_input = True
     ad_indexing_type = 'global'
     executable_pattern = 'combined*|pronghorn*|blue_crab*|dire_wolf*|fenix*'
+    allow_warnings = true
+    allow_unused = true
   []
   [plant_syntax]
     type = RunApp
     input = 'msfr_system_1d.i'
     check_input = True
     ad_indexing_type = 'global'
+    cli_args = "MultiApps/active='' Transfers/active='' --app SamApp"
     executable_pattern = 'sam*|blue_crab*'
   []
 
   # Regression tests with CSV output over a minimum amount of time steps/computation
   [coupled_multiphysics]
-    prereq = multiphysics_syntax
+    prereq = coupled_multiphysics_syntax
     type = CSVDiff
     input = 'run_neutronics.i'
-    csvdiff = 'multiphysics_out.csv multiphysics_out_ns0.csv multiphysics_out_ns0_sam_balance_of_plant0.csv'
+    csvdiff = 'multiphysics_out.csv multiphysics_out_ns0.csv multiphysics_out_ns0_sam_balance_of_plant0_csv.csv'
     ad_indexing_type = 'global'
     executable_pattern = 'blue_crab*|dire_wolf*|fenix*'
     cli_args = "Executioner/num_steps=2 Executioner/fixed_point_max_its=1 Executioner/accept_on_max_fixed_point_iteration=true Outputs/file_base=multiphysics_out"
@@ -75,7 +77,7 @@
     type = CSVDiff
     csvdiff = 'msfr_system_1d_csv.csv'
     input = 'msfr_system_1d.i'
-    cli_args = 'Executioner/num_steps=100'
+    cli_args = 'Executioner/num_steps=100 --app SamApp'
     executable_pattern = 'sam*|blue_crab*'
   []
 []
