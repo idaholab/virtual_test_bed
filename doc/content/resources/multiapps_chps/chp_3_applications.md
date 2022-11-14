@@ -18,7 +18,7 @@ First of all, some common MOOSE applications are listed here, which are dedicate
 | System analysis | [+RELAP-7+](https://moose.inl.gov/relap7/SitePages/Home.aspx) | A next generation nuclear systems safety analysis code being developed at the Idaho National Laboratory (INL). |
 | System Analysis | [+System Analysis Module (SAM)+](https://www.anl.gov/nse/system-analysis-module) | A modern system analysis tool being developed at Argonne National Laboratory for advanced non-LWR safety analysis.  It aims to provide fast-running, whole-plant transient analyses capability with improved-fidelity for SFR, LFR, and MSR/FHR. |
 | Heat Pipe | [+Sockeye+](https://www.tandfonline.com/doi/full/10.1080/00295450.2020.1861879) | A heat pipe analysis application based on the MOOSE framework. |
-| Chemistry | [+MOSCATO+](https://www.osti.gov/biblio/1841593) | The +MO+lten +S+alt +C+hemistry +A+nd +T+ranspOrt (MOSCATO) code is a code being developed at Argonne that focuses on simulating chemical and electrochemical reactions in molten salts. +(MOOSE wrapping development is on-going?)+ |
+| Chemistry | [+MOSCATO+](https://www.osti.gov/biblio/1841593) | The +MO+lten +S+alt +C+hemistry +A+nd +T+ranspOrt (MOSCATO) code is a code being developed at Argonne that focuses on simulating chemical and electrochemical reactions in molten salts. |
 | Chemistry | [+Mole+](https://www.osti.gov/biblio/1649062-engineering-scale-molten-salt-corrosion-chemistry-code-development) | An engineering scale MOOSE-based molten salt species transport code developed at Oak Ridge National Laboratory. |
 
 ### Neutronics
