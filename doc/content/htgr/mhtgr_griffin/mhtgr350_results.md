@@ -110,12 +110,12 @@ The axial offset has a mean of 0.148 and an RSD of 1.85%.
 !media cr_worth_tri.png
        style=width:75%;margin-left:auto;margin-right:auto
        id=cr_worth_tri
-       caption=CR worth comparison [pcm] -- 1/6 block ([!cite](mhtgr_inl)).
+       caption=CR worth comparison (pcm) -- 1/6 block ([!cite](mhtgr_inl)).
 
 !media ao_tri.png
        style=width:75%;margin-left:auto;margin-right:auto
        id=ao_tri
-       caption=Axial offset comparison [%] -- 1/6 block ([!cite](mhtgr_inl)).
+       caption=Axial offset comparison (%) -- 1/6 block ([!cite](mhtgr_inl)).
 
 !table id=table_results caption=Mean and SD for global parameters -- 1/6 block ([!cite](mhtgr_inl)).
 | Parameter | $k_{eff}$ | CR worth (pcm) | Axial offset |
