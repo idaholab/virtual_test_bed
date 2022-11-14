@@ -202,8 +202,8 @@ tpow = 350e6 #(350 MW)
                   202 203 204 205 206 207 208 209 210 211 212 213 214 215 216 217 218 219 220 221 222 223 224 225 226
                   227 228 229 230 231 233 234'
   []
-  #second_order = True
-  uniform_refine = 1
+  second_order = True
+  # uniform_refine = 1  # alternative to using higher order variables
 []
 
 [Materials]
@@ -314,8 +314,8 @@ tpow = 350e6 #(350 MW)
    scheme = CFEM-Diffusion
    n_delay_groups = 0
    family = LAGRANGE
-   order = FIRST
-   #order = SECOND
+  #  order = FIRST
+   order = SECOND
    fission_source_aux = true
    assemble_scattering_jacobian = true
    assemble_fission_jacobian = true

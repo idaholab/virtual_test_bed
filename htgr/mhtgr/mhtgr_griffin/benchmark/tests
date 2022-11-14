@@ -5,12 +5,16 @@
     input = griffin.i
     check_input = True
     executable_pattern = 'griffin*|blue_crab*'
+    cli_args = ' TransportSystems/diff/order=FIRST Mesh/second_order=false'
+    min_parallel = 8
   []
   [griffin_regression_1]
-    type = Exodiff
+    type = CSVDiff
     input = griffin.i
-    exodiff = out_griffin.e
+    csvdiff = out_griffin.csv
     prereq = 'griffin_syntax_1'
     executable_pattern = 'griffin*|blue_crab*'
+    cli_args = ' TransportSystems/diff/order=FIRST Mesh/second_order=false'
+    min_parallel = 16
   []
 []
