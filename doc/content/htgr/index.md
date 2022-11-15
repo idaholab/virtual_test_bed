@@ -1,6 +1,8 @@
 # High Temperature Gas-Cooled Reactor
 
-[SAM MHTGR model](mhtgr/index.md)
+[SAM MHTGR model](mhtgr_sam/index.md)
+
+[Griffin MHTGR benchmark](mhtgr_griffin/index.md)
 
 [PBMR400 multiphysics numerical benchmark](pbmr/index.md)
 

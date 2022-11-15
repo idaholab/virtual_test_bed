@@ -29,7 +29,7 @@ Users will need to request access to the controlled NEAMS software from the [Nuc
 - [High Temperature Gas-Cooled Reactor (HTGR)](htgr/index.md) \\
 - [Pebble Bed Fluoride-Salt-Cooled High-Temperature Reactor (PB-FHR)](pbfhr/index.md) \\
 - [Sodium Fast Reactor (SFR)](sfr/index.md) \\
-- [Micro Reactors (MR)](microreactors/mrad/index.md)
+- [Micro Reactors (MR)](microreactors/index.md)
 
 !alert note
 [Link to the GitHub repository](https://github.com/idaholab/virtual_test_bed)

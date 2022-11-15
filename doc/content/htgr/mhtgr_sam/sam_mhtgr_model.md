@@ -75,12 +75,12 @@ helium, sodium, molten salts, etc. The user can also input the
 properties of the fluid as constants or function of temperature.
 For example,  the built-in eos for air can be input as
 
-!listing htgr/mhtgr/MHTGR.i block=eos_air language=cpp
+!listing htgr/mhtgr/mhtgr_sam/MHTGR.i block=eos_air language=cpp
 
 Water is used as coolant at the RCCS, and its properties
 in SI units are input as follows.
 
-!listing htgr/mhtgr/MHTGR.i block=eos_water language=cpp
+!listing htgr/mhtgr/mhtgr_sam/MHTGR.i block=eos_water language=cpp
 
 ## Functions
 
@@ -91,7 +91,7 @@ power history as a function of time, or power profile as a
 function of position. The input below specifies graphite thermal
 conductivity as a function of temperature (in K)
 
-!listing htgr/mhtgr/MHTGR.i block=kgraphite language=cpp
+!listing htgr/mhtgr/mhtgr_sam/MHTGR.i block=kgraphite language=cpp
 
 ## MaterialProperties
 
@@ -100,7 +100,7 @@ can be constants or temperature dependent as defined in
 the Functions block. For example, the properties of graphite
 are input as
 
-!listing htgr/mhtgr/MHTGR.i block=graphite-mat language=cpp
+!listing htgr/mhtgr/mhtgr_sam/MHTGR.i block=graphite-mat language=cpp
 
 The thermal conductivity is defined by the function `kgraphite`
 which appears under the `Functions` block.
@@ -115,7 +115,7 @@ all have the same diameter, then the diameter can be specified
 in `ComponentsInputParameters` and it applies to all pipes used
 in the model.
 
-!listing htgr/mhtgr/MHTGR.i block=ComponentInputParameters
+!listing htgr/mhtgr/mhtgr_sam/MHTGR.i block=ComponentInputParameters
 
 ## Components
 
@@ -127,7 +127,7 @@ blower and junctions for connecting components. In the reactor
 component, the reactor power is an input and this includes
 normal operating power and decay heat.  
 
-!listing htgr/mhtgr/MHTGR.i block=reactor language=cpp
+!listing htgr/mhtgr/mhtgr_sam/MHTGR.i block=reactor language=cpp
 
 The coolant channels are modeled as 1-D fluid flow components,
 and heat structures are modeled as 2-D components. Table 1
@@ -158,21 +158,21 @@ its two adjacent heat structures through the variable
 `HT_surface_area_density_right` and  
 `HT_surface_area_density_left` such as shown below
 
-!listing htgr/mhtgr/MHTGR.i language=cpp
+!listing htgr/mhtgr/mhtgr_sam/MHTGR.i language=cpp
         start=R4_9-L
         end=R4_10-L
 
 Adjacent heat structures are connected using `SurfaceCoupling`
 to assure temperature continuity
 
-!listing htgr/mhtgr/MHTGR.i block=Gap_R4_9 language=cpp
+!listing htgr/mhtgr/mhtgr_sam/MHTGR.i block=Gap_R4_9 language=cpp
 
 In SAM, 1-D components are connected using
 `PBSingleJunction`.  The following input is
 used to connect  the outlet of component `R4C-1` to
 the inlet of component `R4CUP-1`.
 
-!listing htgr/mhtgr/MHTGR.i block=Branch_R4CUP-1 language=cpp
+!listing htgr/mhtgr/mhtgr_sam/MHTGR.i block=Branch_R4CUP-1 language=cpp
 
 Heat exchangers are modeled using `PBHeatExchanger` including the
 fluid flow in the primary and secondary sides, convective heat transfer,
@@ -184,20 +184,20 @@ This block is used to specify the output variables written
 to a `csv` file that can be further processed in Excel or Python.
 For example, to output the temperature and velocity in `R3C-11`:
 
-!listing htgr/mhtgr/MHTGR.i language=cpp
+!listing htgr/mhtgr/mhtgr_sam/MHTGR.i language=cpp
         start=R3C11_T_in
         end=R4C11_T_in
 
 To output the maximum temperature in `R6`:
 
-!listing htgr/mhtgr/MHTGR.i block=R6_max language=cpp
+!listing htgr/mhtgr/mhtgr_sam/MHTGR.i block=R6_max language=cpp
 
 ## Preconditioning
 
 This block describes the preconditioner used by the solver.  
 New users can leave this block unchanged.
 
-!listing htgr/mhtgr/MHTGR.i block=Preconditioning
+!listing htgr/mhtgr/mhtgr_sam/MHTGR.i block=Preconditioning
 
 ## Executioner
 
@@ -206,4 +206,4 @@ the start time, end time, time step size for the simulation. Other inputs
 in this block include PETSc solver options, convergence tolerance,
 quadrature for elements, etc. which can be left unchanged.
 
-!listing htgr/mhtgr/MHTGR.i block=Executioner
+!listing htgr/mhtgr/mhtgr_sam/MHTGR.i block=Executioner
