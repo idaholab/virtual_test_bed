@@ -45,6 +45,8 @@ obtained through INL's [NCRC](https://inl.gov/ncrc/).
 
 - SNAP-8 NTP reactor core model [documentation](microreactors/s8er/index.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/microreactors/s8er)
 
+- MHTGR Griffin Benchmark [documentation](htgr/mhtgr_griffin/index.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/mhtgr_griffin/benchmark)
+
 
 ### Cardinal / OpenMC (open-source)
 
@@ -77,7 +79,7 @@ obtained through INL's [NCRC](https://inl.gov/ncrc/).
 
 - Versatile Test Reactor core model [documentation](sfr/vtr/index.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/sfr/vtr)
 
-- Modular High Temperature Reactor [documentation](mhtgr/sam_mhtgr_model.md) [inputs](https://github.com/idaholab/virtual_test_bed/blob/main/htgr/mhtgr)
+- Modular High Temperature Reactor [documentation](mhtgr_sam/sam_mhtgr_model.md) [inputs](https://github.com/idaholab/virtual_test_bed/blob/main/htgr/mhtgr_sam)
 
 - Molten Salt Reactor Experiment [documentation](msr/msre/msre_sam_model.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/msr/msre)
 
