@@ -410,7 +410,7 @@ using a [FluidDensityAux](https://mooseframework.inl.gov/source/auxkernels/Fluid
 with the same [!ac](EOS) as used in the [!ac](THM) input files.
 
 !listing /htgr/assembly/openmc.i
-  block=Modules
+  block=FluidProperties
 
 Next, we set initial conditions for the fluid wall temperature, the fluid bulk
 temperature, and the heat source. We set these initial conditions in the OpenMC
@@ -418,8 +418,7 @@ wrapper because the very first time that the transfers to the MOOSE heat
 conduction module and to [!ac](THM) occur, these initial conditions will be passed.
 
 !listing /htgr/assembly/openmc.i
-  start=ICs
-  end=Modules
+  block=ICs Functions
 
 The `[Problem]` block is then used to specify settings for the OpenMC wrapping. We
 define the total power for normalization, indicate that blocks 1, 2, and 4 are solid
