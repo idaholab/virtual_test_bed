@@ -39,6 +39,9 @@
     csvdiff = 'multiphysics_out.csv multiphysics_out_ns0.csv multiphysics_out_ns0_sam_balance_of_plant0_csv.csv'
     ad_indexing_type = 'global'
     executable_pattern = 'blue_crab*|dire_wolf*|fenix*'
+    # Make mesh smaller
+    # Loosen tolerances, limit the number of iterations
+    # Limit the number of timesteps in fluid solve
     cli_args = "Mesh/uniform_refine=0 Executioner/nl_abs_tol=5e-3 Executioner/fixed_point_max_its=2 Executioner/accept_on_max_fixed_point_iteration=true Outputs/file_base=multiphysics_out MultiApps/ns/cli_args='Executioner/num_steps=2'"
     # Fuel temperature is out of bounds for MGXS
     allow_warnings = true
