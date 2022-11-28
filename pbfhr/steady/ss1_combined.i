@@ -242,7 +242,6 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
     type = INSFVEnergyTimeDerivative
     variable = T_solid
     cp = 'cp_s'
-    dcp_dt = '0'
     rho = 'rho_s'
     block = ${blocks_solid}
   []

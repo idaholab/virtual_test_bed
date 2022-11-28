@@ -254,7 +254,6 @@ outlet_pressure_val = 2e5
     type = INSFVEnergyTimeDerivative
     variable = T_solid
     cp = 'cp_s'
-    dcp_dt = '0'
     rho = 'rho_s'
     block = ${blocks_solid}
   []
