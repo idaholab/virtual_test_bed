@@ -23,7 +23,7 @@
     csvdiff = 'core_2D_bison_coupled_csv.csv'
     executable_pattern = 'blue_crab*|dire_wolf*'
     prereq = 'mechanics_bison_syntax'
-    cli_args = "MultiApps/active='' Transfers/active='' Executioner/num_steps=2 Executioner/nl_abs_tol=1e-1 Outputs/csv=true --distributed-mesh Outputs/exodus=false"
+    cli_args = "--distributed-mesh MultiApps/active='' Transfers/active='' Outputs/exodus=false"
 
     min_parallel = 8
   []
