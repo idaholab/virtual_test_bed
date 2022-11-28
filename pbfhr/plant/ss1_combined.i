@@ -74,17 +74,17 @@ OR_porosity      = 0.1123
 plenum_porosity  = 0.5
 model_inlet_rin  = 0.45
 model_inlet_rout = 0.8574
-model_vol        = 10.4
+# model_vol        = 10.4
 model_inlet_area = ${fparse 3.14159265 * (model_inlet_rout * model_inlet_rout -
                                           model_inlet_rin * model_inlet_rin)}
 
 # Operating parameters
-mfr = 976.0            # kg/s, from [2]
-total_power = 236.0e6  # W, from [2]
+# mfr = 976.0            # kg/s, from [2]
+# total_power = 236.0e6  # W, from [2]
 inlet_T_fluid = 873.15 # K, from [2]
-inlet_vel_y_ini = ${fparse mfr / model_inlet_area / rho_fluid} # superficial
-power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using power pp
-outlet_pressure_val = 2e5
+# inlet_vel_y_ini = ${fparse mfr / model_inlet_area / rho_fluid} # superficial
+# power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using power pp
+# outlet_pressure_val = 2e5
 
 # ==============================================================================
 # GEOMETRY AND MESH

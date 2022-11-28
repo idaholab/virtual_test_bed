@@ -648,7 +648,9 @@ outlet_pressure_val = 2e5
     input_files = ss2_primary.i
     max_procs_per_app = 1
     execute_on = 'timestep_end'
-    cli_args = 'Executioner/start_time=-400;Executioner/end_time=0'
+    # Depending on whether a restart file has been generated for SAM (second line) or not (first line)
+    # cli_args = 'Executioner/start_time=-400;Executioner/end_time=0'
+    cli_args = 'Executioner/start_time=-400;Executioner/end_time=0;Problem/restart_file_base=ss2_primary_out_cp/0020;Problem/force_restart=true'
 
     # Parameters if Pronghorn and SAM steps dont align
     sub_cycling = true
