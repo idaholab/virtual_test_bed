@@ -329,8 +329,8 @@ beta6 = 0.000184087
   # []
   [cp]
     type = ADGenericFunctorMaterial
-    prop_names = 'cp dcp_dt'
-    prop_values = '${cp} 0'
+    prop_names = 'cp'
+    prop_values = '${cp}'
     block = 'fuel pump hx'
   []
 []
