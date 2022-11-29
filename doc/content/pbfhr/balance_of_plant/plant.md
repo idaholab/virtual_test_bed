@@ -75,6 +75,26 @@ These components are connected to the reset of the primary using pipes, which we
 
 The core bypass flow is modeled by SAM, with both its inlet and outlet in the primary outside of the core model.
 
+## How to run the inputs
+
+The simulation could be run directly in one step as a coupled eigenvalue (neutronics) - relaxation to steady-state
+transient (fluids) calculation. However this is not efficient as it would require the coupled multiphysics problem
+to both perform a long transient to heat up the components of the core and to converge the SAM-Pronghorn coupling
+on every neutronics - thermal fluids coupling iteration.
+
+Instead we suggest to first converge the SAM-Pronghorn primary loop model separately, then converge the full
+Griffin-Pronghorn-SAM restarting the thermal fluids calculation. We may also initialize the SAM primary loop simulation before
+coupling it to Pronghorn. To do this, we run:
+
+```
+mpirun -n 8 ~/projects/blue_crab/blue_crab-opt -i ss2_primary.i
+mpirun -n 8 ~/projects/blue_crab/blue_crab-opt -i ss1_combined_initial.i
+mpirun -n 8 ~/projects/blue_crab/blue_crab-opt -i ss0_neutrons.i
+```
+
+To remove either of the two first steps from the workflow, the `restart_file_base` `[Problem]` parameter in the SAM input and the
+`restart_from_file_var` `[Variables]` parameters in the Pronghorn should be commented out.
+
 ## Relaxation to steady state transient
 
 We present in this section sample results for the coupling of the coupled SAM-Pronghorn plant simulation
