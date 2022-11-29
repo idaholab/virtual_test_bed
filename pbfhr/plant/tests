@@ -86,6 +86,8 @@
     prereq = 'syntax_plant_flow core_flow plant_flow'
     cli_args = 'Outputs/file_base=pbfhr_sam_pronghorn Mesh/uniform_refine=0 Executioner/num_steps=50'
     rel_err = 5e-4
+    # To avoid timeout in slower devel method
+    max_time = 500
   []
 
   # Regression tests - single app inputs
