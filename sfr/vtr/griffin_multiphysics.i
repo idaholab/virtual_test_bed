@@ -372,7 +372,7 @@
   # Radial expansion = horizontal displacements disp_x, disp_z from core_support_plate
   #------------------
   [disp_x_from_core_support_plate]
-    type = MultiAppGeometricInterpolationTransfer
+    type = MultiAppNearestNodeTransfer
     from_multi_app = core_support_plate
     source_boundary = 'plateTop'
     source_variable = disp_x
@@ -380,7 +380,7 @@
     fixed_meshes = true
   []
   [disp_z_from_core_support_plate]
-    type = MultiAppGeometricInterpolationTransfer
+    type = MultiAppNearestNodeTransfer
     from_multi_app = core_support_plate
     source_boundary = 'plateTop'
     source_variable = disp_z

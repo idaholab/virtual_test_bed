@@ -22,6 +22,8 @@
     # To make results reproducible
     cli_args = 'VectorPostprocessors/face4/sort_by=id'
     abs_zero = 1e-5
+    # To avoid timeout in slower devel method
+    max_time = 500
   []
   [iaea_vp3a_symmetric]
     type = CSVDiff
