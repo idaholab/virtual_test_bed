@@ -19,5 +19,10 @@
     exodiff = 'toshiba_37_pin_out.e'
     prereq = 'subchannel_syntax'
     executable_pattern = 'subchannel*|pronghorn*'
+
+    # To get consistent results for testing
+    cli_args = "Problem/P_tol=1e-7 Problem/T_tol=1e-6 Problem/atol=1e-9 Problem/rtol=1e-9"
+    rel_err = 1e-5
+    abs_zero = 1e-9
   []
 []
