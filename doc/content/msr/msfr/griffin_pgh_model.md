@@ -14,7 +14,7 @@ energy as well as the conservation of delayed neutron precursors.
 The conservation of mass is,
 
 \begin{equation}
-  \nabla \cdot \rho \vec{u} = 0
+  \nabla \cdot \rho \vec{u} = 0,
 \end{equation}
 
 where $\rho$ is the fluid density and $\vec{u}$ is the velocity vector.
@@ -24,7 +24,7 @@ effect of Buoyancy will be re-introduced later with the Boussinesq
 approximation.)  The simplified conservation of mass is then given by,
 
 \begin{equation}
-  \nabla \cdot \vec{u} = 0
+  \nabla \cdot \vec{u} = 0.
 \end{equation}
 
 This conservation equation is automatically added by the `NavierStokesFV` action
@@ -48,7 +48,7 @@ fairly general form of the steady-state condition is,
 \begin{equation}
   \nabla \cdot \rho \vec{u} u = -\frac{\partial}{\partial x} P
   + \mu \nabla^2 u + f_{\text{fric},x} +
-  \rho \vec{g} \cdot \hat{x}
+  \rho \vec{g} \cdot \hat{x},
 \end{equation}
 
 where $u$ is the $x$ component of the velocity, $P$ is the pressure,
@@ -60,7 +60,7 @@ $\vec{g} \cdot \hat{x}$ is zero,
 
 \begin{equation}
   \nabla \cdot \rho \vec{u} u = -\frac{\partial}{\partial x} P
-  + \mu \nabla^2 u + f_{\text{fric},x}
+  + \mu \nabla^2 u + f_{\text{fric},x}.
 \end{equation}
 
 Practical simulations require modifications to the momentum equations in order
@@ -71,7 +71,7 @@ modeled with a term analogous to viscous shear,
 
 \begin{equation}
   \nabla \cdot \rho \vec{u} u = -\frac{\partial}{\partial x} P
-  + \left( \mu + \mu_t \right) \nabla^2 u + f_{\text{fric},x}
+  + \left( \mu + \mu_t \right) \nabla^2 u + f_{\text{fric},x},
 \end{equation}
 
 where $\mu_t$ is the turbulent viscosity.
@@ -83,7 +83,7 @@ model the turbulent viscosity is defined as:
 \end{equation}
 and
 \begin{equation}
-  \overline{\overline S} = 0.5 \cdot \left( \nabla u + \nabla u^t \right)
+  \overline{\overline S} = 0.5 \cdot \left( \nabla u + \nabla u^t \right).
 \end{equation}
 
 The standard Prandtl's mixing length model dictates that $l_m$ has a linear
@@ -92,8 +92,8 @@ implement a capped mixing length model [!citep](escudier1966) that defines the m
 length as
 
 \begin{equation}
-  l_m = \kappa y_d \quad if \: \kappa y_d < \kappa_0 \delta \\
-  l_m = \kappa_0 \delta \quad if \: \kappa y_d \geq \kappa_0 \delta
+  l_m = \kappa y_d, \quad \text{if} \: \kappa y_d < \kappa_0 \delta, \\
+  l_m = \kappa_0 \delta, \quad \text{if} \: \kappa y_d \geq \kappa_0 \delta,
 \end{equation}
 
 where $\kappa =0.41$ is the Von Karman constant, $\kappa_0 = 0.09$ as in
@@ -106,7 +106,7 @@ exchanger region where there is a large surface area in contact with the salt to
 facilitate heat transfer. Rather than explicitly modeling the heat exchanger
 geometry, a simple, tunable model will be used,
 \begin{equation}
-  f_{\text{fric},x} = -C_q u | u |
+  f_{\text{fric},x} = -C_q u | u |,
 \end{equation}
 where $C_q$ is a tunable volumetric friction coefficient, which is selected to match the
 desired pressure drop, in conjunction with the pump head value.
@@ -116,7 +116,7 @@ heat exchanger. However, the viscous effects will be negligible due to the
 large, uniform eddy viscosity model used here. Consequently, the viscous force
 will be neglected outside of the heat exchanger,
 \begin{equation}
-  f_{\text{fric},x} = 0
+  f_{\text{fric},x} = 0.
 \end{equation}
 
 By convention, we must collect all of the terms on one side of the equation.
@@ -124,11 +124,11 @@ This gives the form that is implemented for the MSFR model,
 
 \begin{equation}
   \nabla \cdot \rho \vec{u} u + \frac{\partial}{\partial x} P
-  - \left( \mu + \mu_t \right) \nabla^2 u - f_{\text{fric},x} = 0
+  - \left( \mu + \mu_t \right) \nabla^2 u - f_{\text{fric},x} = 0.
   \label{eq:x_mom}
 \end{equation}
 
-The first few terms in [eq:x_mom], the advection of momentum, the pressure gradient
+The first few terms in [eq:x_mom], including the advection of momentum, the pressure gradient
 and the laminar diffusion are automatically handled by the `NavierStokesFV` action.
 
 The mixing length turbulence model is added by specifying additional parameters to
@@ -176,7 +176,7 @@ constant,
 \begin{equation}
   \nabla \cdot \rho \vec{u} v + \frac{\partial}{\partial y} P
   - \left( \mu + \mu_t \right) \nabla^2 v - f_{\text{fric}, y}
-  - f_{\text{pump}} - \rho \alpha \vec{g} \left( T - T_0 \right) = 0
+  - f_{\text{pump}} - \rho \alpha \vec{g} \left( T - T_0 \right) = 0,
 \end{equation}
 
 where $f_{\text{pump}}$ is the pump head driving the flow, $\alpha$ is the
@@ -227,7 +227,7 @@ Legacy syntax for the momentum equation is included [here](griffin_pgh_model_leg
 
 The steady-state conservation of energy can be expressed as,
 \begin{equation}
-  \nabla \cdot \rho h \vec{u} - \nabla \cdot \lambda \nabla T = Q_q
+  \nabla \cdot \rho h \vec{u} - \nabla \cdot \lambda \nabla T = Q_q,
 \end{equation}
 where $h$ is the fluid specific enthalpy, $\lambda$ is the thermal conductivity,
 and $Q_q$ is the volumetric heat generation rate.
@@ -235,7 +235,7 @@ and $Q_q$ is the volumetric heat generation rate.
 Here it is expected that the energy released from nuclear reactions will be very
 large compared to pressure work terms. Consequently, we will use the simplified form,
 \begin{equation}
-  \nabla \cdot \rho c_p T \vec{u} - \nabla \cdot \lambda \nabla T = Q_q
+  \nabla \cdot \rho c_p T \vec{u} - \nabla \cdot \lambda \nabla T = Q_q.
 \end{equation}
 
 As with the momentum equations, a practical solver requires a model for the
@@ -255,7 +255,7 @@ that term and moving the heat generation to the left-hand-side of the equation
 gives,
 \begin{equation}
   \nabla \cdot \rho c_p T \vec{u} - \nabla \cdot \rho c_p \epsilon_q \nabla T
-  - Q_q = 0
+  - Q_q = 0.
 \end{equation}
 
 The heat generation due to nuclear reactions is computed by the neutronics
@@ -263,7 +263,7 @@ solver, and this distribution will be used directly in the $Q_q$ term. The
 effect of the heat exchanger will also be included in the $Q_q$ term as a
 volumetric heat loss per the model,
 \begin{equation}
-  Q_q = -\alpha (T - T_\text{ambient})
+  Q_q = -\alpha (T - T_\text{ambient}),
 \end{equation}
 where $\alpha$ is a coefficient (equal to the surface area density times the
 heat transfer coefficient) and $T_\text{ambient}$ is the
@@ -274,7 +274,7 @@ constant. It will therefore be convenient to move the $\rho c_p$ factors outside
 of the divergence operators and divide the entire equation by that factor,
 \begin{equation}
   \nabla \cdot T \vec{u} - \nabla \cdot \epsilon_q \nabla T
-  - \frac{1}{\rho c_p} Q_q = 0
+  - \frac{1}{\rho c_p} Q_q = 0.
   \label{eq:energy}
 \end{equation}
 
@@ -289,8 +289,7 @@ the equation system using a parameter in the `NavierStokesFV` action:
     ...
 ```
 
-[eq:energy] is the final equation that is implemented in this model. The first
-term---energy advection--- is automatically added by the action syntax. The
+The first term---energy advection--- is automatically added by the action syntax. The
 second term---turbulent diffusion of heat--- is added based on the momentum
 turbulent term, with the Prandtl number also to be specified to adjust the
 diffusion coefficient.
@@ -334,6 +333,51 @@ symmetry and adiabatic boundaries.
 
 Legacy syntax for the energy equation is included [here](griffin_pgh_model_legacy.md).
 
+## Conservation of delayed neutron precursors
+
+The steady-state conservation of delayed neutron precursors (DNP) can be expressed as,
+\begin{equation}
+  \nabla \cdot (\vec{u}c_i) -  \nabla \cdot \epsilon_c \nabla c_i - \lambda_i c_i = \beta_i f,\quad i=1,\cdots,I,
+  \label{eq:dnp}
+\end{equation}
+where $c_i$, $\lambda_i$ and $\beta_i$ are the concentration, the decay constant and
+the production fraction per neutron generated from fission of the $i$-th group of
+DNP respectively. $I$ is the total number of groups of DNP.
+$f$ is the fission neutron production rate.
+$\epsilon_c$ is the eddy diffusivity for DNP.
+It is noted the DNP term in the neutron transport equation is scaled with $k$-effective
+as the prompt fission term for steady-state eigenvalue calculations, where $k$-effective
+(the eigenvalue) is part of the solution.
+
+It is added to
+the equation system using a parameter in the `NavierStokesFV` action:
+
+```
+[Modules]
+  [NavierStokesFV]
+    ...
+    add_scalar_equation = true
+    ...
+```
+
+The terms of [eq:energy] are added with
+
+```
+[Modules]
+  [NavierStokesFV]
+    ...
+    # Precursor advection, diffusion and source term
+    passive_scalar_names = 'c1 c2 c3 c4 c5 c6'
+    passive_scalar_schmidt_number = '${Sc_t} ${Sc_t} ${Sc_t} ${Sc_t} ${Sc_t} ${Sc_t}'
+    passive_scalar_coupled_source = 'fission_source c1; fission_source c2; fission_source c3;
+                                     fission_source c4; fission_source c5; fission_source c6;'
+    passive_scalar_coupled_source_coeff = '${beta1} ${lambda1_m}; ${beta2} ${lambda2_m};
+                                           ${beta3} ${lambda3_m}; ${beta4} ${lambda4_m};
+                                           ${beta5} ${lambda5_m}; ${beta6} ${lambda6_m}'
+```
+
+What is the boundary condition for DNP?
+
 ## Neutronics
 
 With Griffin, the process of converting the basic conservation equations into
@@ -341,26 +385,28 @@ MOOSE variables and kernels is automated with the `TransportSystems` block:
 
 !listing msr/msfr/steady/run_neutronics.i block=TransportSystems
 
+Details about neutron transport equations can be found in Griffin theory manual.
+
 Here we are specifying an eigenvalue neutronics problem using 6 energy groups
 (`G = 6`) solved via the diffusion approximation with a continuous finite
 element discretization scheme (`scheme = CFEM-Diffusion`).
 
 Note the `external_dnp_variable = 'dnp'` parameter. This is a special option
 needed for liquid-fueled MSRs which signals that the conservation equations for
-the delayed neutron precursors will be handled "externally" from the default
-Griffin implementation which assumes that the precursors do not move. This
-parameter is referencing the `dnp` `AuxVariable` which is defined as,
+DNP will be handled "externally" from the default
+Griffin implementation which assumes that the precursors do not have the turbulent treatment.
+This parameter is referencing the `dnp` auxiliary variable which is defined as,
 
 !listing msr/msfr/steady/run_neutronics.i block=AuxVariables/dnp
 
 Note that this is an array auxiliary variable with 6 components, corresponding
-to the 6 delayed neutron precursor groups used here.
+to the 6 DNP groups used here.
 
 Support within the Framework for array variables is somewhat limited. For
 example, not all of the multiapp transfers work with array variables, and the
 Navier-Stokes module does not include the kernels that are needed to advect an
-array variable. For this reason, there is also a separate AuxVariable for each
-of the delayed neutron precursors. For example,
+array variable. For this reason, there is also a separate auxiliary variables for each
+of DNP. For example,
 
 !listing msr/msfr/steady/run_neutronics.i block=AuxVariables/c1
 
@@ -378,7 +424,40 @@ variable by this aux kernel:
 Also note that solving the neutronics problem requires a set of multigroup
 cross sections. Generating cross sections is a topic that is left outside the
 scope of this example. A set has been generated for the MSFR problem and stored
-in the repository using Griffin's XML format. These cross sections are included
+in the repository using Griffin's ISOXML format. These cross sections are included
 by the blocks,
 
 !listing msr/msfr/steady/run_neutronics.i block=Materials
+
+`CoupledFeedbackNeutronicsMaterial` is able to use the temperature transferred
+from the fluid system for evaluating multigroup cross sections based on a table lookup
+on element quadrature points to bring in the feedback effect.
+It also has the capability of adjusting cross sections based on fluid density.
+In this model, the fluid density change is negligible.
+
+Neutronics solution is normalized to the rated power $3000$MW with the `PowerDensity`
+input block
+
+!listing msr/msfr/steady/run_neutronics.i block=PowerDensity
+
+The power density is evaluated with the normalized neutronics solution.
+It provides the source of the fluid energy equation.
+Because the fluid energy equation is discretized with FV, we evaluate the power
+density variable with constant monomial.
+
+Griffin input is the main-application and includes a sub-application with the
+fluid system input `run_ns.i`.
+
+!listing msr/msfr/steady/run_neutronics.i block=MultiApps
+
+Neutronics needs to to transfer fission source, power density to fluid system
+and needs to transfer back from fluid system temperature and DNP concentrations.
+
+!listing msr/msfr/steady/run_neutronics.i block=Transfers
+
+The caculation is driven by `Eigenvalue`, an executioner available in the MOOSE framework.
+The PJFNKMO option for the `solve_type` parameter is able to
+drive the eigenvalue calculation with the contribution of DNP
+to the neutron transport equation as an external source scaled with $k$-effective.
+
+!listing msr/msfr/steady/run_neutronics.i block=Executioner
