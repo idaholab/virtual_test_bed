@@ -126,7 +126,7 @@ As shown in [reactor_power], the reactor power drops about $3.3 \%$ when the pri
 The SAM input file adopts a block structured syntax, and each block contains the detailed settings of specific SAM components.
 In this section, we will go through all the important blocks in the input file and explain the key model specifications.
 
-### GlobalParams
+### GlobalParams style=font-size:125%
 
 This block contains the global parameters that are applied to all SAM components, such as the initial pressure, velocity, and temperature and the scaling for the solid temperature variables. 
 A snippet is illustrated below:
@@ -140,7 +140,7 @@ A snippet is illustrated below:
 
 ```
 
-### EOS (Equations of State)
+### EOS (Equations of State) style=font-size:125%
 
 This block specifies the material properties, such as the thermophysical properties.
 These ones include the fuel salt, intermediate loop salt, and pressurized helium in the secondary loop.
@@ -151,7 +151,7 @@ simply referring to the material IDs, such as the air, or molten salt FLiBe.
 
 !listing msr/msfr/plant/steady/standalone_sam_model/msfr_1d_ss.i  block=EOS language=cpp
 
-### Components
+### Components style=font-size:125%
 
 This is the most important block that defines all the reactor components represented in the MSRE primary loop, such as the core, the heat exchanger, the pump, and all the connecting pipes.
 The Table below lists all the reactor components considered
@@ -196,22 +196,31 @@ The input parameters for the primary and intermediate circuits pumps are specifi
 
 The detailed instructions of these SAM components can be found in the SAM user manual, which are not repeated here for brevity.
 
-### Postprocessors
+### Postprocessors style=font-size:125%
 
 The Postprocessors block is used to monitor the SAM solutions during the simulations, and quantities of interest can
 be printed out in the log file. For example, to check out the core outlet temperature, one can add the following snippet: 
 
 !listing msr/msfr/plant/steady/standalone_sam_model/msfr_1d_ss.i block=Core_T_out language=cpp
 
-### Preconditioning
+### Preconditioning style=font-size:125%
 
 This block describes the preconditioner used by the solver.  
 New user can leave this block unchanged.
 
 !listing msr/msfr/plant/steady/standalone_sam_model/msfr_1d_ss.i block=Preconditioning
 
-### Executioner
+### Executioner style=font-size:125%
 
 This block describes the calculation process flow. The user can specify the start time, end time, time step size for the simulation. Other inputs in this block include PETSc solver options, convergence tolerance, quadrature for elements, etc., which can be left unchanged.
 
 !listing msr/msfr/plant/steady/standalone_sam_model/msfr_1d_ss.i block=Executioner
+
+### Modeling the transient conditions style=font-size:125%
+
+Based upon the steady-state solutions, the transient simulations can be initiated by adjusting the primary pump head. A user defined function as shown below is used to linearly reduce the pump head from $100 \%$ to $50 \%$ in $40 \, s$. Similar implementation is also applied in the pump trip modeling. 
+Once the primary pump head changes, the MSFR SAM system model would start responding accordingly, and eventually new steady states are established with $50 \%$ or $0 \%$ original pump head. 
+
+!listing msr/msfr/plant/steady/standalone_sam_model/msfr_1d_transient_01.i block=head_func
+
+!listing msr/msfr/plant/steady/standalone_sam_model/msfr_1d_transient_01.i block=pump
