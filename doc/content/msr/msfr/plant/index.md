@@ -4,7 +4,7 @@
 
 [Griffin-Pronghorn model](msfr/griffin_pgh_model.md)
 
-[SAM model](msfr/plant/SAM_model.md)
+[Standalone SAM 1-D model](msfr/plant/SAM_model.md)
 
 [Steady State Coupling](msfr/plant/steady_state_coupling.md)
 
