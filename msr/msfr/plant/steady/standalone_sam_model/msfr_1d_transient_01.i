@@ -1,3 +1,9 @@
+################################################################################
+## Molten Salt Fast Reactor - Euratom EVOL + Rosatom MARS Design              ##
+## SAM system modeling of 50% primary pump head loss                          ##
+## Relaxation towards steady state balance of plant model                     ##
+################################################################################
+
 [GlobalParams]
   global_init_P = 1e5
   global_init_V = 0.01
