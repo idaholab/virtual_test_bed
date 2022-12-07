@@ -177,7 +177,7 @@
     n_elems     = 3
   []
 
-  [J_P2_IHX1]
+  [J_P2_HX1]
     type    = PBBranch
     inputs  = 'pipe2(out)'
     outputs = 'IHX1(primary_in) '
@@ -318,7 +318,7 @@
     n_elems     = 2
   []
 
-  [J_P5_IHX2]
+  [J_P5_HX2]
     type    = PBBranch
     inputs  = 'pipe5(out)'
     outputs = 'IHX2(primary_in)'
