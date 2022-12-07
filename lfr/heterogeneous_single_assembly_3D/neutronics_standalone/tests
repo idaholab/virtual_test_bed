@@ -1,0 +1,19 @@
+[Tests]
+  [lfr_neutronics_syntax]
+    type = RunApp
+    check_input = true
+    input = 'neutronics.i'
+    cli_args = "Executioner/richardson_max_its=1"
+    executable_pattern = 'griffin*|blue_crab*'
+  []
+  [lfr_neutronics_alone]
+    type = 'CSVDiff'
+    input = 'neutronics.i'
+    csvdiff = 'neutronics_out_vpp_power_0001.csv'
+    rel_err = 1e-4
+    min_parallel = 16
+    cli_args = "Executioner/richardson_max_its=1"
+    executable_pattern = 'griffin*|blue_crab*'
+    prereq = 'lfr_neutronics_syntax'
+  []
+[]
