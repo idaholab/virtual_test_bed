@@ -14,6 +14,8 @@
     check_input = True
     ad_indexing_type = 'global'
     executable_pattern = 'sockeye*|dire_wolf*'
+    # Capillary limit for vertical heat pipes is not accurate; see https://hpcgitlab.hpc.inl.gov/idaholab/sockeye/-/issues/65
+    allow_warnings = true
   []
 
   # Regression tests
@@ -36,6 +38,8 @@
     csvdiff = 'MP_FC_ss_sockeye_csv.csv'
     ad_indexing_type = 'global'
     executable_pattern = 'sockeye*|dire_wolf*'
+    # Capillary limit for vertical heat pipes is not accurate; see https://hpcgitlab.hpc.inl.gov/idaholab/sockeye/-/issues/65
+    allow_warnings = true
   []
   [coupled_simulation]
     type = CSVDiff
@@ -44,7 +48,9 @@
     ad_indexing_type = 'global'
     executable_pattern = 'dire_wolf*'
     cli_args = "Executioner/num_steps=2 Executioner/nl_abs_tol=1e-1 Outputs/csv=true Outputs/file_base=mrad_bison_out --distributed-mesh Outputs/exodus=false"
-    min_parallel = 48
     # takes about 9 minutes on 48 cores
+    min_parallel = 48
+    # Capillary limit for vertical heat pipes is not accurate; see https://hpcgitlab.hpc.inl.gov/idaholab/sockeye/-/issues/65
+    allow_warnings = true
   []
 []
