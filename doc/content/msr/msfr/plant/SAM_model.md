@@ -224,3 +224,16 @@ Once the primary pump head changes, the MSFR SAM system model would start respon
 !listing msr/msfr/plant/steady/standalone_sam_model/msfr_1d_transient_01.i block=head_func
 
 !listing msr/msfr/plant/steady/standalone_sam_model/msfr_1d_transient_01.i block=pump
+
+## Run Command
+
+To run the related SAM system models, one can use the command below. 
+
+```language=bash
+
+sam-opt -i msfr_1d_ss.i
+
+```
+
+!alert note
+The steady-state model has to be simulated before the transient modeling because the input files of transient models will use the checkpoint file from steady-state calculation as the initial condition. 
