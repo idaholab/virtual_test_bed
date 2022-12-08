@@ -13,48 +13,10 @@ D_h_pore = ${fparse 2.0 * R_pore}
 permeability = 2e-9
 porosity =  0.70
 
-# Envelope ("env")
-# SS316. Incropera & DeWitt, 3rd ed, Table A.1 @ 900K (627C)
-# Density (kg/m3)
-rho_env = 8238.
-# Thermal conductivity (W/m-K)
-k_env = 23.05
-# Specific heat capacity (J/kg-K)
-cp_env = 589.
-
-# Potassium vapor
-# From Appendix C of text book "Heat Pipe Design and Technology"
-# Sat. Vapor Potassium at T = 650C (923 K)
-# Density (kg/m3)
-rho_vapor = 0.193
 # Effective "super" conductivity (W/m-K)
-#k_vapor = 1.0e5 # Reaches 600 seconds
 k_vapor = 1.0e6
-# Specific heat capacity (J/kg-K)
-cp_vapor = 5320.
 
-# Potassium liquid
-# From Appendix C of text book "Heat Pipe Design and Technology"
-# Sat. Liquid Potassium at T = 650C (923 K)
-# Density (kg/m3)
-rho_liquid = 695.4
-# Thermal conductivity (W/m-K)
-k_liquid = 40.08
-# Specific heat capacity (J/kg-K)
-# From Table 1.1, no temperature data given
-cp_liquid = 810.
-
-# Wick, homogenize envelope and fluid
-# Density (kg/m3)
-rho_wick = ${fparse porosity * rho_liquid + (1.0 - porosity) * rho_env}
-# Thermal conductivity (W/m-K)
-k_wick = ${fparse porosity * k_liquid + (1.0 - porosity) * k_env}
-# Specific heat capacity (J/kg-K)
-# From Table 1.1, no temperature data given
-cp_wick = ${fparse porosity * cp_liquid + (1.0 - porosity) * cp_env}
-
-# Elevations and lengths (m)
-# Note: For blackbox model -- manually update "length" input
+# Lengths (m)
 length_evap = 180.0e-2
 length_adia =  30.0e-2
 length_cond =  90.0e-2
@@ -79,7 +41,6 @@ t_wick = 0.1e-2
 # Radial geometry
 # Envelope outer (m)
 R_hp_o = 1.05e-2
-#R_clad_o = ${R_hp_o}
 D_hp_o = ${fparse 2.0 * R_hp_o}
 # Inner Envelope/outer annulus (m)
 R_hp_i = ${fparse R_hp_o - t_env}
@@ -93,12 +54,10 @@ D_wick_i = ${fparse 2.0 * R_wick_i}
 
 # BCs for condenser
 T_ext_cond = 800. # K
-# JWT: coupled problem uses 1.0e6
-#htc_ext_cond = 326. # (W/m2/K)
 htc_ext_cond = 1.0e6 # (W/m2/K)
 
 # Evaporator parameters
-htc_wall_initial = 750 #air gap k=0.15 W/mK, th=0.0002 m
+htc_wall_initial = 750 # air gap k=0.15 W/mK, thickness=0.0002 m
 S_evap = ${fparse pi * D_hp_o * length_evap}
 q_evap = ${fparse Q_hp / S_evap}
 
@@ -107,7 +66,6 @@ R_clad_o = 0.0105 # heat pipe outer radius (m)
 R_hp_hole = 0.0107 # heat pipe + gap (m)
 num_sides = 28 # full_core level 9
 alpha = ${fparse 2 * pi / num_sides}
-# perimeter_correction = ${fparse 0.5 * alpha / sin(0.5 * alpha)} # polygonization correction factor for perimeter (unused)
 area_correction = ${fparse sqrt(alpha / sin(alpha))} # polygonization correction factor for area
 corr_factor = ${fparse 2 * R_clad_o / R_hp_hole / R_hp_hole / area_correction / area_correction} #full-core
 
@@ -118,11 +76,16 @@ corr_factor = ${fparse 2 * R_clad_o / R_hp_hole / R_hp_hole / area_correction / 
   []
 []
 
+[SolidProperties]
+  [sp_ss316]
+    type = ThermalSS316Properties
+  []
+[]
+
 [Components]
   [hp]
     type = HeatPipeConduction
 
-    # Common to both HeatPipe2Phase and HeatPipeBlackbox
     position = '0 0 0'
     orientation = '0 0 1'
     length = '${length_evap} ${length_adia} ${length_cond}'
@@ -134,7 +97,6 @@ corr_factor = ${fparse 2 * R_clad_o / R_hp_hole / R_hp_hole / area_correction / 
     porosity = ${porosity}
     permeability = ${permeability}
 
-    # HeatPipeConduction only
     # Axial dimensions (for heat transfer & analytic limits)
     axial_region_names = 'evap adia cond'
     L_evap = ${length_evap}
@@ -148,26 +110,26 @@ corr_factor = ${fparse 2 * R_clad_o / R_hp_hole / R_hp_hole / area_correction / 
     n_elems_clad = 4
     n_elems_wick = 8
     n_elems_core = 10
-    # Thermal conductivity
-    k_clad = ${k_env}
-    k_wick = ${k_wick}
+
+    # Solid properties for the cladding and wick structure
+    sp_clad = sp_ss316
+    sp_wick = sp_ss316
+    # Temperature at which to evaluate constant density
+    T_ref_density = 900
+
+    # Core thermal conductivity, which is controlled
     k_core = ${k_vapor}
-    k_eff = ${k_wick}
-    # Density
-    rho_clad = ${rho_env}
-    rho_wick = ${rho_wick}
-    rho_core = ${rho_vapor}
-    # Specific heat
-    cp_clad = ${cp_env}
-    cp_wick = ${cp_wick}
-    cp_core = ${cp_vapor}
-    #
+
     fp_2phase = fp_2phase
     evaporator_at_start_end = true
+
     # Initial temperature of block
     initial_T = ${T_ext_cond}
+
     # Temperature to evaluate heat pipe limit approximations
     T_ref = T_evap_inner
+
+    make_pressure_corrections = true
   []
 
   [condenser_boundary]
@@ -447,12 +409,12 @@ corr_factor = ${fparse 2 * R_clad_o / R_hp_hole / R_hp_hole / area_correction / 
 [Outputs]
   [console]
     type = Console
-    max_rows = 5
-    execute_postprocessors_on = 'INITIAL TIMESTEP_END FINAL FAILED'
+    execute_postprocessors_on = 'NONE'
   []
   [csv]
     type = CSV
+    show = 'T_evap_inner T_evap_outer T_cond_inner T_cond_outer'
     execute_on = 'INITIAL TIMESTEP_END FINAL FAILED'
-    execute_vector_postprocessors_on = 'INITIAL FINAL FAILED'
+    execute_vector_postprocessors_on = 'NONE'
   []
 []
