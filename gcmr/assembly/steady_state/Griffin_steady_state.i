@@ -13,16 +13,16 @@
   []
   [coarse_mesh]
     type = GeneratedMeshGenerator
-    dim= 3
+    dim = 3
     nx = 10
     ny = 10
     nz = 20
     xmin = -0.1
-    xmax =  0.1
+    xmax = 0.1
     ymin = -0.1
-    ymax =  0.1
-    zmin =  0.
-    zmax =  2.
+    ymax = 0.1
+    zmin = 0.
+    zmax = 2.
   []
   [assign_coarse_id]
     type = CoarseMeshExtraElementIDGenerator
@@ -48,7 +48,7 @@
   custom_rel_tol = 1e-6
   force_fixed_point_solve = true
 
-  cmfd_acceleration = true  #false
+  cmfd_acceleration = true #false
   coarse_element_id = coarse_element_id
   cmfd_eigen_solver_type = newton
   prolongation_type = multiplicative
@@ -88,10 +88,10 @@
     NA = 2
     n_delay_groups = 6
 
-     sweep_type = asynchronous_parallel_sweeper
-     using_array_variable = true
-     collapse_scattering  = true
-     hide_angular_flux = true
+    sweep_type = asynchronous_parallel_sweeper
+    using_array_variable = true
+    collapse_scattering = true
+    hide_angular_flux = true
   []
 []
 
@@ -101,7 +101,7 @@
   isotopes = 'pseudo'
   densities = 1.0
   is_meter = true
-# power normalization
+  # power normalization
   plus = true
   dbgmat = false
   grid_names = 'Tmod'
@@ -126,13 +126,13 @@
   [bison]
     type = FullSolveMultiApp
     positions = '0 0 0'
-    input_files  = BISON.i
+    input_files = BISON.i
     execute_on = 'timestep_end'
     # no_backup_and_restore = true # to restart from the latest solve of the multiapp (for pseudo-transient)
     keep_solution_during_restore = true
     #app_type = SamApp
     #library_name = libsam-opt.la
-  #library_path = '/beegfs1/software/NEAMS_microreactor/projects_super_mar22/SAM/lib'
+    #library_path = '/beegfs1/software/NEAMS_microreactor/projects_super_mar22/SAM/lib'
   []
 []
 

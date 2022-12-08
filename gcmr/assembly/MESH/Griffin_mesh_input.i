@@ -6,7 +6,7 @@
     background_intervals = 2
     background_block_ids = '10'
     polygon_size = 1
-    polygon_size_style ='apothem'
+    polygon_size_style = 'apothem'
     ring_radii = '0.843 0.85 0.900'
     ring_intervals = '3 2 2'
     ring_block_ids = '100 100 102 103'
@@ -23,7 +23,7 @@
     background_intervals = 2
     background_block_ids = '10'
     polygon_size = 1
-    polygon_size_style ='apothem'
+    polygon_size_style = 'apothem'
     ring_radii = '0.6'
     ring_intervals = '3'
     ring_block_ids = '200 200'
@@ -40,7 +40,7 @@
     background_intervals = 1
     background_block_ids = '10'
     polygon_size = 1
-    polygon_size_style ='apothem'
+    polygon_size_style = 'apothem'
     ring_radii = '0.99'
     ring_intervals = '3'
     ring_block_ids = '300 300'
@@ -50,7 +50,6 @@
     interface_boundary_id_shift = 100
   []
 
-
   [TRISO_fuel]
     type = PolygonConcentricCircleMeshGenerator
     num_sides = 6 # must be six to use hex pattern
@@ -58,7 +57,7 @@
     background_intervals = 2
     background_block_ids = '10'
     polygon_size = 1
-    polygon_size_style ='apothem'
+    polygon_size_style = 'apothem'
     ring_radii = '0.9'
     ring_intervals = '4'
     ring_block_ids = '400 400'
@@ -75,7 +74,7 @@
     background_intervals = 2
     background_block_ids = '10'
     polygon_size = 1
-    polygon_size_style ='apothem'
+    polygon_size_style = 'apothem'
     ring_radii = '0.25'
     ring_intervals = '3'
     ring_block_ids = '500 500'
@@ -85,7 +84,6 @@
     interface_boundary_id_shift = 100
   []
 
-
   [Coolant_hole_boundary]
     type = PolygonConcentricCircleMeshGenerator
     num_sides = 6 # must be six to use hex pattern
@@ -93,7 +91,7 @@
     background_intervals = 1
     background_block_ids = '10'
     polygon_size = 1
-    polygon_size_style ='apothem'
+    polygon_size_style = 'apothem'
     ring_radii = '0.6'
     ring_intervals = '3'
     ring_block_ids = '201 200'
@@ -103,14 +101,14 @@
     interface_boundary_id_shift = 100
   []
 
-    [TRISO_fuel_boundary]
+  [TRISO_fuel_boundary]
     type = PolygonConcentricCircleMeshGenerator
     num_sides = 6 # must be six to use hex pattern
     num_sectors_per_side = '4 4 4 4 4 4'
     background_intervals = 1
     background_block_ids = '10'
     polygon_size = 1
-    polygon_size_style ='apothem'
+    polygon_size_style = 'apothem'
     ring_radii = '0.9'
     ring_intervals = '3'
     ring_block_ids = '401 400'
@@ -127,8 +125,7 @@
     #           0          1            2           3       4             5                     6
     external_boundary_id = 9000
     external_boundary_name = side
-    pattern = 
-              '6 5 6 6 5 6 ;
+    pattern = '6 5 6 6 5 6 ;
               5 3 3 1 3 3 5 ;
              6 3 1 3 4 1 3 6 ;
             6 1 0 3 1 3 3 1 6 ;
@@ -141,17 +138,17 @@
                6 5 6 6 5 6'
     id_name = 'material_id'
     assign_type = 'cell'
-   []
+  []
 
-    [extrude]
-     type = FancyExtruderGenerator
-     #input = rename_4
-     input = Patterned
-     heights = '20 160 20'
-     num_layers = '3 5 3'
-     direction = '0 0 1'
-     top_boundary = 2000
-     bottom_boundary = 2001
+  [extrude]
+    type = FancyExtruderGenerator
+    #input = rename_4
+    input = Patterned
+    heights = '20 160 20'
+    num_layers = '3 5 3'
+    direction = '0 0 1'
+    top_boundary = 2000
+    bottom_boundary = 2001
 
     #  elem_integer_names_to_swap = 'material_id'
     #  elem_integers_swaps = '1 1;
@@ -164,7 +161,7 @@
     input = extrude
     combinatorial_geometry = 'z<=20'
     block_id = 8000
-    excluded_subdomain_ids= '200 201 401'
+    excluded_subdomain_ids = '200 201 401'
   []
 
   [reflector_bottom_tri]
@@ -172,28 +169,28 @@
     input = reflector_bottom_quad
     combinatorial_geometry = 'z<=20'
     block_id = 8001
-    excluded_subdomain_ids= '8000 200 201'
+    excluded_subdomain_ids = '8000 200 201'
   []
   [reflector_top_quad]
     type = ParsedSubdomainMeshGenerator
     input = reflector_bottom_tri
     combinatorial_geometry = 'z>=180'
     block_id = 8000
-    excluded_subdomain_ids= '200 201 401 300'
+    excluded_subdomain_ids = '200 201 401 300'
   []
   [reflector_top_tri]
     type = ParsedSubdomainMeshGenerator
     input = reflector_top_quad
     combinatorial_geometry = 'z>=180'
     block_id = 8001
-    excluded_subdomain_ids= '8000 200 201 300'
+    excluded_subdomain_ids = '8000 200 201 300'
   []
   [control_top]
     type = ParsedSubdomainMeshGenerator
     input = reflector_top_tri
     combinatorial_geometry = 'z>=180'
     block_id = 600
-    excluded_subdomain_ids= '8000 8001 200 201 '
+    excluded_subdomain_ids = '8000 8001 200 201 '
   []
 
   [rename_blocks]
@@ -202,7 +199,6 @@
     new_block_name = 'monolith moderator  Cr  FECRAL coolant coolant_tri   Fuel Fuel_tri   Air  B4C control  reflector   reflector_tri'
     input = control_top
   []
-  
   [rename_sidesets]
     type = RenameBoundaryGenerator
     input = rename_blocks
@@ -216,7 +212,7 @@
     transform = SCALE
     vector_value = '1e-2 1e-2 1e-2'
   []
-# uniform_refine=1
+  # uniform_refine=1
 []
 
 [Executioner]
@@ -247,4 +243,3 @@
   exodus = true
   execute_on = final
 []
-

@@ -13,16 +13,16 @@
   []
   [coarse_mesh]
     type = GeneratedMeshGenerator
-    dim= 3
+    dim = 3
     nx = 10
     ny = 10
     nz = 20
     xmin = -0.1
-    xmax =  0.1
+    xmax = 0.1
     ymin = -0.1
-    ymax =  0.1
-    zmin =  0.
-    zmax =  2.
+    ymax = 0.1
+    zmin = 0.
+    zmax = 2.
   []
   [assign_coarse_id]
     type = CoarseMeshExtraElementIDGenerator
@@ -46,7 +46,7 @@
   fixed_point_max_its = 1
   force_fixed_point_solve = true
 
-  cmfd_acceleration = true  #false
+  cmfd_acceleration = true #false
   coarse_element_id = coarse_element_id
   prolongation_type = multiplicative
   max_diffusion_coefficient = 1
@@ -90,7 +90,7 @@
 
     sweep_type = asynchronous_parallel_sweeper
     using_array_variable = true
-    collapse_scattering  = true
+    collapse_scattering = true
     hide_angular_flux = true
   []
 []
@@ -101,7 +101,7 @@
   isotopes = 'pseudo'
   densities = 1.0
   is_meter = true
-# power normalization
+  # power normalization
   plus = true
   dbgmat = false
   grid_names = 'Tmod'
@@ -126,7 +126,7 @@
   [bison]
     type = TransientMultiApp
     positions = '0 0 0'
-    input_files  = BISON_tr.i
+    input_files = BISON_tr.i
     execute_on = 'initial timestep_end'
     # no_backup_and_restore = true # to restart from the latest solve of the multiapp (for pseudo-transient)
     # keep_solution_during_restore = true
@@ -201,19 +201,18 @@
   []
 []
 
-
 [Outputs]
   interval = 1
-#  [exodus]
-#    type = Exodus
-#  []
+  #  [exodus]
+  #    type = Exodus
+  #  []
   [csv]
     type = CSV
   []
-#  [cp]
-#    type = Checkpoint
-#    interval = 25
-#  []
+  #  [cp]
+  #    type = Checkpoint
+  #    interval = 25
+  #  []
   checkpoint = true
   color = true
   perf_graph = true
