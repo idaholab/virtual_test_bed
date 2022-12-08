@@ -190,7 +190,7 @@
     outputs = 'IHX1(primary_in) '
     eos     = fuel_salt_eos
     K       = '1. 1.'
-    Area    = 2.24 
+    Area    = 2.24
   []
 
   #
