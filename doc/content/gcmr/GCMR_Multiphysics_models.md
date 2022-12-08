@@ -48,7 +48,32 @@ For analysis of the multi-physics, BISON and SAM were coupled with Griffin. A di
 ## Griffin Model 
 
 
-For modeling the GC-MR Assembly in 3-D, the neutron transport equation was solved by Griffin using the discrete ordinates SN method for the angular discretization while the discontinuous finite method (DFEM) method was used for the spatial discretization [!citep](Ahmed_ANS_2022) [!citep](Nicolas_ANS_2022). The coarse mesh finite element method (CMFD) acceleration was used to speed up the DFEM solver. On-the-fly coarse mesh generation is done with Griffin. The 3-D GC-MR assembly was solved with reflective boundary condition radially and vacuum boundary conditions axially on the top and bottom reflector boundaries. The homogenized multi-group cross-sections were generated using Serpent-2 with ENDF/B-VII.1 data library and then converted to XML-format cross section file and they functionalized with the fuel temperature for eleven energy groups structure. These multi-group structures were generated at the beginning of the cycle. Griffin reads the XML-format cross-section file, `XS_Griffin`, and a mesh file `Griffin_mesh.e` that specifies the 3-D mesh which has the same geometry as the one used in the cross-section generation code. In both the steady-state and the transient Griffin calculations DFEM-SN with CMFD was used. Because good accuracy was obtained with the eleven energy groups structure, only small numbers of polar and azimuthal angles were used with the SN solver: 
+For modeling the GC-MR Assembly in 3-D, the neutron transport equation was solved by Griffin using the discrete ordinates SN method for the angular discretization while the discontinuous finite method (DFEM) method was used for the spatial discretization [!citep](Ahmed_ANS_2022) [!citep](Nicolas_ANS_2022). The coarse mesh finite element method (CMFD) acceleration was used to speed up the DFEM solver. On-the-fly coarse mesh generation is done with Griffin. This means that the user doesn’t need to provide a separate coarse mesh file for the calculations.  In Griffin, the coarse element IDs of elements on the fine mesh are assigned through overlaying a regular grid, i.e., the elements whose centroids falls into the same regular grid are assigned with the same coarse element ID. 
+
+The homogenized multigroup cross-sections were generated using Serpent-2 with ENDF/B-VII.1 data library and then converted to XML-format cross section file and they functionalized with the fuel temperature for eleven energy groups structure. These multigroup structures were generated for the beginning of the cycle condition.  The process of generating the multi-group cross-sections using Serpent-2 is outside the scope of this example. The multi-group cross-sections for the various materials are assigned to fill the various blocks of the mesh file.  In this problem the materials_id of each material is given one of the numbers from 801 to 810. While the numbers of the mesh blocks are: 10, 100, 102, 103, 200, 201, 300, 400, 401, 500, 600, 8000, and 8001.  They are specified in in [Mesh]` block as follows:
+
+
+!listing  
+subdomains = '10 100 102 103 200 201 300 400 401 500 600 8000 8001'
+extra_element_id_names = 'material_id equivalence_id'
+extra_element_ids = '803 802 810 806 807 807 804 801 801 808 809 805 805;
+                     803 802 810 806 807 807 804 801 801 808 809 805 805'
+
+While `CoupledFeedbackMatIDNeutronicsMaterial` material `type` was used in the `[Materials]`
+block:
+ 
+
+!listing  
+[Materials]
+  [mod]
+    type = CoupledFeedbackMatIDNeutronicsMaterial
+    block = '10 100 102 103 200 201 300 400 401 500 600 8000 8001'
+  []
+[]
+
+Griffin reads the XML-format cross-section file, `XS_Griffin`, and a mesh file `Griffin_mesh.e` that specifies the 3-D mesh which has the same geometry as the one used in the cross-section generation code. The consistency between the volumes of the different materials in the Serpent-2 model and in the 3-D mesh were directly compared to verify the geometrical consistency. 
+
+The 3-D GC-MR assembly was solved with reflective boundary condition radially and vacuum boundary conditions axially on the top and bottom reflector boundaries. In both the steady-state and the transient Griffin calculations, the DFEM-SN with CMFD was used. Because good accuracy was obtained with the eleven energy groups structure, only small numbers of polar and azimuthal angles were used with the SN solver: 
 
 !listing  
 [SN]
@@ -116,7 +141,9 @@ Multiphysics simulations performed on microreactor models leverage the MOOSE Mul
 
 
 The 3-D power density distribution is calculated by Griffin and transferred to BISON for performing heat conduction calculations to estimate the fuel temperature. The coolant channels are modelled with SAM to estimate the coolant temperature distributions in all coolant channels. The MOOSE Picard fixed point iteration was used to attain a tightly coupled simulation, where the information is transferred back and forth between the three MOOSE-based applications until convergence of the power source distribution. The `MultiApps` blocks in `Griffin_steady_state.i` and `BISON.i` specify the MuliApp coupling for steady-state calculations, and the `MultiApps` blocks in `Griffin_transient.i ` and 
-`BISON_tr.i` specifies the MultiApp coupling for the transient problem. The Transfer system defined in the `Transfers` blocks, takes care of data interchange between the different applications, and controls what type of information is transferred and how the transfer will occur. In this example, the power density and fuel temperatures transferred are defined through the Transfers block in the parent App (Griffin) as follows: 
+`BISON_tr.i` specifies the MultiApp coupling for the transient problem. The Transfer system defined in the `Transfers` blocks, takes care of data interchange between the different applications, and controls what type of information is transferred and how the transfer will occur. 
+
+The power density and fuel temperatures transferred are defined through the [`Transfer system`](https://mooseframework.inl.gov/virtual_test_bed/docs/PRs/170/site/resources/multiapps_chps/chp_6_transfers.html) Transfers block in the parent App (Griffin), where [`MultiAppProjectionTransfer`](https://mooseframework.inl.gov/source/transfers/MultiAppProjectionTransfer.html) was used which performs a projection between the parent App and the child App mesh files while conserving the integral of the transferred data. 
 
 !listing
 [Transfers]
@@ -145,4 +172,3 @@ The 3-D power density distribution is calculated by Griffin and transferred to B
     power = 0 
   []
 []
-
