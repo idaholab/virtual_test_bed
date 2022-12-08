@@ -90,22 +90,22 @@ layers = 40           # Make sure the number of axial divisions in the fluid dom
 []
 
 [AuxVariables]
-	[./h_scaled]
-		order = CONSTANT
-		family = MONOMIAL
-		initial_condition = 2500.00
-		block = 'pipe1'
-	[../]
+  [./h_scaled]
+    order = CONSTANT
+    family = MONOMIAL
+    initial_condition = 2500.00
+    block = 'pipe1'
+  [../]
 []
 
 [AuxKernels]
-	# HTC scaled by (real geometry surface area)/(model geometry surface area)
-	[./scale_htc]
-		type = ParsedAux
-		variable = h_scaled
-		function = '1*htc' # 1 is replaced with the cli_args parameter in the multiapp block in ../solid_gcmr.i
-		args = htc
-	[../]
+  # HTC scaled by (real geometry surface area)/(model geometry surface area)
+  [./scale_htc]
+    type = ParsedAux
+    variable = h_scaled
+    function = '1*htc' # 1 is replaced with the cli_args parameter in the multiapp block in ../solid_gcmr.i
+    args = htc
+  [../]
 []
 
 [Preconditioning]

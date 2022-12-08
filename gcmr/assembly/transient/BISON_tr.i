@@ -1,5 +1,5 @@
-TsInit = 1150.0			# Solid initial temperature
-Tcin = 1150.0				# Coolant initial temperature
+TsInit = 1150.0      # Solid initial temperature
+Tcin = 1150.0        # Coolant initial temperature
 radiusTransfer = 0.015 # r + 0.009. Extends past the first mesh cell surrounding the coolant channel.
 coolant_full_points_filename = ../channel_positions/coolant_full_points.txt # File containing the inlet position of your coolant channels
 coolant_half_points_filename = ../channel_positions/coolant_half_points.txt # File containing the inlet position of your coolant channels
@@ -80,12 +80,12 @@ coolant_half_points_filename = ../channel_positions/coolant_half_points.txt # Fi
 
 [BCs]
   [./coolant_bc]
-		type = CoupledConvectionBC
-		T_external = Tfluid
-		h_external = hfluid
-		boundary = 'full_coolant_surf half_coolant_surf'
-		variable = temp
-	[../]
+    type = CoupledConvectionBC
+    T_external = Tfluid
+    h_external = hfluid
+    boundary = 'full_coolant_surf half_coolant_surf'
+    variable = temp
+  [../]
 
   [./outside_bc]
     type = ConvectiveFluxFunction # (Robin BC)
@@ -219,26 +219,26 @@ coolant_half_points_filename = ../channel_positions/coolant_half_points.txt # Fi
 []
 
 [UserObjects]
-	# UserObject to convert the temperature distribution on the inner coolant
-	# surface to a 1D profile.
-	[./Tw_UO]
-		type = NearestPointLayeredSideAverage
-		variable = temp
-		direction = z
-		num_layers = 40
-		boundary = 'full_coolant_surf '
-		execute_on = 'TIMESTEP_END'
-		points_file = ${coolant_full_points_filename}
-	[../]
-	[./Tw_UO_half]
-		type = NearestPointLayeredSideAverage
-		variable = temp
-		direction = z
-		num_layers = 40
-		boundary = 'half_coolant_surf '
-		execute_on = 'TIMESTEP_END'
-		points_file = ${coolant_half_points_filename}
-	[../]
+  # UserObject to convert the temperature distribution on the inner coolant
+  # surface to a 1D profile.
+  [./Tw_UO]
+    type = NearestPointLayeredSideAverage
+    variable = temp
+    direction = z
+    num_layers = 40
+    boundary = 'full_coolant_surf '
+    execute_on = 'TIMESTEP_END'
+    points_file = ${coolant_full_points_filename}
+  [../]
+  [./Tw_UO_half]
+    type = NearestPointLayeredSideAverage
+    variable = temp
+    direction = z
+    num_layers = 40
+    boundary = 'half_coolant_surf '
+    execute_on = 'TIMESTEP_END'
+    points_file = ${coolant_half_points_filename}
+  [../]
 []
 
 [MultiApps]
@@ -288,73 +288,73 @@ coolant_half_points_filename = ../channel_positions/coolant_half_points.txt # Fi
 []
 
 [Transfers]
-	# coolant_full
-	[./Tw_to_coolant]
-		# Wall temperature from user object is transferred to fluid domain.
-		type = MultiAppUserObjectTransfer
-		direction = to_multiapp			# From solid to coolant. Variable to move UO into.
-		multi_app = coolant_full_MA
-		user_object = Tw_UO					# Exists in solid.
-		variable = Tw								# Exists in coolant.
-		execute_on = 'initial TIMESTEP_END'
-		displaced_target_mesh = true
-	[../]
-	[./Tfluid_from_coolant]
-		# Fluid temperature from fluid domain is transferred to solid domain.
-		type = MultiAppUserObjectGatherTransfer
-		radius = ${radiusTransfer}
-		direction = from_multiapp			# From coolant to solid.
-		multi_app = coolant_full_MA
-		user_object = Tfluid_UO				# Exists in coolant.
-		variable = Tfluid							# Exists in solid.
-		execute_on = 'initial TIMESTEP_END'
-		displaced_source_mesh = true
-	[../]
-	[./hfluid_from_coolant]
-		# Convective HTC from fluid domain is transferred to solid domain.
-		type = MultiAppUserObjectGatherTransfer
-		radius = ${radiusTransfer}
-		direction = from_multiapp				# From coolant to solid.
-		multi_app = coolant_full_MA
-		user_object = hfluid_UO					# Exists in coolant.
-		variable = hfluid								# Exists in solid.
-		execute_on = 'initial TIMESTEP_END'
-		displaced_source_mesh = true
-	[../]
+  # coolant_full
+  [./Tw_to_coolant]
+    # Wall temperature from user object is transferred to fluid domain.
+    type = MultiAppUserObjectTransfer
+    direction = to_multiapp      # From solid to coolant. Variable to move UO into.
+    multi_app = coolant_full_MA
+    user_object = Tw_UO          # Exists in solid.
+    variable = Tw                # Exists in coolant.
+    execute_on = 'initial TIMESTEP_END'
+    displaced_target_mesh = true
+  [../]
+  [./Tfluid_from_coolant]
+    # Fluid temperature from fluid domain is transferred to solid domain.
+    type = MultiAppUserObjectGatherTransfer
+    radius = ${radiusTransfer}
+    direction = from_multiapp      # From coolant to solid.
+    multi_app = coolant_full_MA
+    user_object = Tfluid_UO        # Exists in coolant.
+    variable = Tfluid              # Exists in solid.
+    execute_on = 'initial TIMESTEP_END'
+    displaced_source_mesh = true
+  [../]
+  [./hfluid_from_coolant]
+    # Convective HTC from fluid domain is transferred to solid domain.
+    type = MultiAppUserObjectGatherTransfer
+    radius = ${radiusTransfer}
+    direction = from_multiapp        # From coolant to solid.
+    multi_app = coolant_full_MA
+    user_object = hfluid_UO          # Exists in coolant.
+    variable = hfluid                # Exists in solid.
+    execute_on = 'initial TIMESTEP_END'
+    displaced_source_mesh = true
+  [../]
 
-	# coolant_half
-	[./Tw_to_coolant_half]
-		# Wall temperature from user object is transferred to fluid domain.
-		type = MultiAppUserObjectTransfer
-		direction = to_multiapp			# From solid to coolant. Variable to move UO into.
-		multi_app = coolant_half_MA
-		user_object = Tw_UO_half		# Exists in solid.
-		variable = Tw								# Exists in coolant.
-		execute_on = 'initial TIMESTEP_END'
-		displaced_target_mesh = true
-	[../]
-	[./Tfluid_from_coolant_half]
-		# Fluid temperature from fluid domain is transferred to solid domain.
-		type = MultiAppUserObjectGatherTransfer
-		radius = ${radiusTransfer}
-		direction = from_multiapp			# From coolant to solid.
-		multi_app = coolant_half_MA
-		user_object = Tfluid_UO				# Exists in coolant.
-		variable = Tfluid							# Exists in solid.
-		execute_on = 'initial TIMESTEP_END'
-		displaced_source_mesh = true
-	[../]
-	[./hfluid_from_coolant_half]
-		# Convective HTC from fluid domain is transferred to solid domain.
-		type = MultiAppUserObjectGatherTransfer
-		radius = ${radiusTransfer}
-		direction = from_multiapp				# From coolant to solid.
-		multi_app = coolant_half_MA
-		user_object = hfluid_UO					# Exists in coolant.
-		variable = hfluid								# Exists in solid.
-		execute_on = 'initial TIMESTEP_END'
-		displaced_source_mesh = true
-	[../]
+  # coolant_half
+  [./Tw_to_coolant_half]
+    # Wall temperature from user object is transferred to fluid domain.
+    type = MultiAppUserObjectTransfer
+    direction = to_multiapp      # From solid to coolant. Variable to move UO into.
+    multi_app = coolant_half_MA
+    user_object = Tw_UO_half    # Exists in solid.
+    variable = Tw                # Exists in coolant.
+    execute_on = 'initial TIMESTEP_END'
+    displaced_target_mesh = true
+  [../]
+  [./Tfluid_from_coolant_half]
+    # Fluid temperature from fluid domain is transferred to solid domain.
+    type = MultiAppUserObjectGatherTransfer
+    radius = ${radiusTransfer}
+    direction = from_multiapp      # From coolant to solid.
+    multi_app = coolant_half_MA
+    user_object = Tfluid_UO        # Exists in coolant.
+    variable = Tfluid              # Exists in solid.
+    execute_on = 'initial TIMESTEP_END'
+    displaced_source_mesh = true
+  [../]
+  [./hfluid_from_coolant_half]
+    # Convective HTC from fluid domain is transferred to solid domain.
+    type = MultiAppUserObjectGatherTransfer
+    radius = ${radiusTransfer}
+    direction = from_multiapp        # From coolant to solid.
+    multi_app = coolant_half_MA
+    user_object = hfluid_UO          # Exists in coolant.
+    variable = hfluid                # Exists in solid.
+    execute_on = 'initial TIMESTEP_END'
+    displaced_source_mesh = true
+  [../]
 []
 
 [Preconditioning]
