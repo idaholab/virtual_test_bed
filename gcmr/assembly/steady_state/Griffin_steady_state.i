@@ -88,24 +88,10 @@
     NA = 2
     n_delay_groups = 6
 
-    sweep_type = asynchronous_parallel_sweeper
     using_array_variable = true
     collapse_scattering = true
     hide_angular_flux = true
   []
-[]
-
-[GlobalParams]
-  library_file = '../ISOXML/XS_Griffin.xml'
-  library_name = XS_Griffin
-  isotopes = 'pseudo'
-  densities = 1.0
-  is_meter = true
-  # power normalization
-  plus = true
-  dbgmat = false
-  grid_names = 'Tmod'
-  grid_variables = 'Tf'
 []
 
 [PowerDensity]
@@ -118,17 +104,24 @@
   [mod]
     type = CoupledFeedbackMatIDNeutronicsMaterial
     block = '10 100 102 103 200 201 300 400 401 500 600 8000 8001'
-    # TODO: Add changes in densities
+    library_file = '../ISOXML/XS_Griffin.xml'
+    library_name = XS_Griffin
+    isotopes = 'pseudo'
+    densities = 1.0
+    is_meter = true
+    # power normalization
+    plus = true
+    dbgmat = false
+    grid_names = 'Tmod'
+    grid_variables = 'Tf'
   []
 []
 
 [MultiApps]
   [bison]
     type = FullSolveMultiApp
-    positions = '0 0 0'
     input_files = BISON.i
     execute_on = 'timestep_end'
-    # no_backup_and_restore = true # to restart from the latest solve of the multiapp (for pseudo-transient)
     keep_solution_during_restore = true
     #app_type = SamApp
     #library_name = libsam-opt.la
