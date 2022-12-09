@@ -344,7 +344,7 @@ where $c_i$, $\lambda_i$ and $\beta_i$ are the concentration, the decay constant
 the production fraction per neutron generated from fission of the $i$-th group of
 DNP respectively. $I$ is the total number of groups of DNP.
 $f$ is the fission neutron production rate.
-$\epsilon_c$ is the eddy diffusivity for DNP.
+$\epsilon_c = \frac{\nu_t}{Sc_t}$ is the eddy diffusivity for DNP, where $\nu_t$ is the turbulnt viscosity and $Sc_t$ is the turbulent Schmidt number.
 It is noted the DNP term in the neutron transport equation is scaled with $k$-effective
 as the prompt fission term for steady-state eigenvalue calculations, where $k$-effective
 (the eigenvalue) is part of the solution.
