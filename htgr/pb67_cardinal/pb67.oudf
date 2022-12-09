@@ -1,0 +1,92 @@
+// Boundary conditions
+void velocityDirichletConditions(bcData *bc)
+{                                                                        
+  bc->u = 0.0;
+  bc->v = 0.0;
+  bc->w = 1.0;
+}
+
+// Stabilized outflow (Dong et al)
+void pressureDirichletConditions(bcData *bc)
+{
+  const dfloat iU0delta = 20.0;
+  const dfloat un = bc->u*bc->nx + bc->v*bc->ny + bc->w*bc->nz;
+  const dfloat s0 = 0.5 * (1.0 - tanh(un*iU0delta)); 
+  bc->p = -0.5 * (bc->u*bc->u + bc->v*bc->v + bc->w*bc->w) * s0;
+}
+
+void scalarDirichletConditions(bcData *bc)
+{                                                                        
+  bc->s = 0.0;
+}
+
+void scalarNeumannConditions(bcData *bc)
+{                                                                        
+  bc->flux = bc->wrk[bc->idM]; //get flux BC from MOOSE
+}
+
+@kernel void cliptOKL(const dlong Nelements,
+                 @restrict dfloat * TEMP)
+{
+ for(dlong e=0;e<Nelements;++e;@outer(0)){
+   for(int n=0;n<p_Np;++n;@inner(0)){
+     const int id = e*p_Np + n;
+     if(TEMP[id]>100.0)
+          {
+          TEMP[id] = 100.0;
+          }
+     if(TEMP[id]<0.0)
+          {
+          TEMP[id] = 0.0;
+          }
+  }
+ }
+}
+
+@kernel void userVp(const dlong Nelements,
+                    const dlong uOffset,
+                    const dlong sOffset,
+                    @restrict const dfloat * TEMP,
+                    @restrict dfloat * UPROP,
+                    @restrict dfloat * SPROP,
+          @restrict const dfloat * Z)
+{
+  for(dlong e=0;e<Nelements;++e;@outer(0)){
+    for(int n=0;n<p_Np;++n;@inner(0)){
+      const int id = e*p_Np + n;
+
+       // change outlet viscosity/conductivity
+      dfloat local_z;
+      dfloat z1;
+      dfloat z2;
+      dfloat factor;
+
+      dfloat rho;
+      dfloat visc;
+      dfloat cond;
+      dfloat Cp;
+
+      rho = 1.0;
+      visc = 1.0/10000.0;
+      Cp = 1.0;
+      cond = 1.0/7100.0;
+
+      // increase viscosity and conductivity near outlet
+      z1 = 4.6;
+      z2 = 5;
+      local_z = Z[id];
+      if (local_z <= z1) {factor = 1.0;}
+      else if (local_z >= z2) {factor = 101.0;}
+      else {factor = 1.0 + 100.0*(local_z-z1)/(z2-z1);}
+
+      visc = factor*visc;
+      cond = factor*cond;
+    // convert to non-dimension
+      UPROP[id + 0*uOffset] = visc;
+      SPROP[id + 0*sOffset] = cond;
+      UPROP[id + 1*uOffset] = rho;
+      SPROP[id + 1*sOffset] = rho*Cp;
+
+    }
+  }
+}

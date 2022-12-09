@@ -1,0 +1,46 @@
+//
+// nekRS User Defined File
+//
+
+#include <math.h>
+#include "udf.hpp"
+
+static occa::kernel cliptKernel; // clipping
+static occa::kernel userVpKernel; // Variable conductivity at the outlet
+
+void clipt(nrs_t *nrs)
+{
+  mesh_t *mesh = nrs->meshV;
+  cds_t* cds = nrs->cds;
+  cliptKernel(mesh->Nelements, cds->o_S);
+}
+
+void uservp(nrs_t *nrs, dfloat time, occa::memory o_U, occa::memory o_S,
+            occa::memory o_UProp, occa::memory o_SProp)
+{
+  mesh_t *mesh = nrs->meshV;
+  userVpKernel(mesh->Nelements, nrs->fieldOffset, nrs->cds->fieldOffset[0],
+               o_S, o_UProp, o_SProp, mesh->o_z);
+}
+
+/* UDF Functions */                                                      
+
+void UDF_LoadKernels(nrs_t *nrs)
+{
+ // avg::buildKernel(nrs);
+  cliptKernel = udfBuildKernel(nrs, "cliptOKL");
+  userVpKernel = udfBuildKernel(nrs, "userVp");
+}
+
+void UDF_Setup(nrs_t *nrs)
+{
+}
+
+void UDF_ExecuteStep(nrs_t *nrs, dfloat time, int tstep)
+{
+  clipt(nrs);
+  if (nrs->isOutputStep) {
+    nek::ocopyToNek(time, tstep);
+    nek::userchk();
+  }
+}
