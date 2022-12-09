@@ -376,7 +376,6 @@ The terms of [eq:energy] are added with
                                            ${beta5} ${lambda5_m}; ${beta6} ${lambda6_m}'
 ```
 
-What is the boundary condition for DNP?
 
 ## Neutronics
 
