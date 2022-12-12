@@ -5,7 +5,7 @@ For LES, the viscous stress tensor is given by
 \tau_{ij} = \mu_f\left(\frac{\partial u_i}{\partial x_j}+\frac{\partial u_j}{\partial x_i}\right)
 \end{equation}
 
-and a filtering operation is implemented as a source term to the momentum equation
+and a filtering operation is implemented as a source term to the momentum equation. More details about Nek filters can be found in [Nek5000 Online Tutorial](https://nek5000.github.io/NekDoc/problem_setup/filter.html?highlight=filter).
 
 \begin{equation}
 f_i = - \chi \left(u_i - H * u_i\right) + \hat f_i

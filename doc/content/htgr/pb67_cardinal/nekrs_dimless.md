@@ -14,7 +14,7 @@ This model uses the incompressible form,
 \end{equation}
 
 where $u_i$ is the fluid velocity, $\rho_f$ is the fluid density, $P$ is the pressure, $\tau_{ij}$
-is the viscous stress tensor, $f_i$ is a source vector, $\dot{q}_f$
+is the viscous stress tensor, $f_i$ is a body force vector, $\dot{q}_f$
 is a volumetric heat source in the fluid domain, $C_{p,f}$ is the fluid heat capacity,
 $T_f$ is the fluid temperature, and $k_f$ is the fluid thermal conductivity. 
 
