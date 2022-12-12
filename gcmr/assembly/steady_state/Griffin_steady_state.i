@@ -148,8 +148,6 @@
     variable = Tf
     source_variable = Tfuel
     execute_on = 'timestep_end'
-    displaced_source_mesh = false
-    displaced_target_mesh = false
     use_displaced_mesh = false
     num_points = 1 # interpolate with one point (~closest point)
     power = 0 # interpolate with constant function
