@@ -136,7 +136,7 @@
     multi_app = bison
     variable = power_density
     source_variable = power_density
-    execute_on = 'initial timestep_end'
+    execute_on = 'timestep_end'
     displaced_source_mesh = false
     displaced_target_mesh = false
     use_displaced_mesh = false
@@ -147,7 +147,7 @@
     multi_app = bison
     variable = Tf
     source_variable = Tfuel
-    execute_on = 'initial timestep_end'
+    execute_on = 'timestep_end'
     displaced_source_mesh = false
     displaced_target_mesh = false
     use_displaced_mesh = false

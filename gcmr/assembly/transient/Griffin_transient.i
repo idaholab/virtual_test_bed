@@ -46,7 +46,7 @@
   fixed_point_max_its = 1
   force_fixed_point_solve = true
 
-  cmfd_acceleration = true #false
+  cmfd_acceleration = true
   coarse_element_id = coarse_element_id
   prolongation_type = multiplicative
   max_diffusion_coefficient = 1
@@ -137,7 +137,7 @@
     multi_app = bison
     variable = power_density
     source_variable = power_density
-    execute_on = 'initial timestep_end'
+    execute_on = 'timestep_end'
     displaced_source_mesh = false
     displaced_target_mesh = false
     use_displaced_mesh = false
@@ -148,7 +148,7 @@
     multi_app = bison
     variable = Tf
     source_variable = Tfuel
-    execute_on = 'initial timestep_end'
+    execute_on = 'timestep_end'
     displaced_source_mesh = false
     displaced_target_mesh = false
     use_displaced_mesh = false
