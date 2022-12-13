@@ -13,7 +13,7 @@ The major technical parameters for the GC-MR assembly model are:
 
 | Parameter (unit)| Value |
 | - | - |
-| Reactor Power(kWt) | 225 |
+| Reactor Power (kWt) | 225 |
 | Fuel | TRISO, 40% packing fraction |
 | Coolant | He |
 | Moderator | YH2 |
