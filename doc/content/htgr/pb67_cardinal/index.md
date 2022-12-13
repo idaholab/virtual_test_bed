@@ -6,7 +6,7 @@ In this tutorial we are going to set up and simulate a simple [!ac](CHT) case us
 This tutorial was developed from an example case provided with NekRS and couples to MOOSE's [!ac](CHT) module using CARDINAL as a wrapper. 
 More information about the NEAMS tool CARDINAL can be found on [github](https://github.com/neams-th-coe/cardinal), or on the [Cardinal website](https://cardinal.cels.anl.gov/).
 In each time step MOOSE will solve the energy equation in the the solid subdomain and pass the solution to NekRS, which will in-turn solve both the Navier-Stokes and energy equations in the fluid subdomain.
-NekRS will then pass its temperature solutions back to MOOSE in the next time step. 
+NekRS will then pass its temperature solution back to MOOSE in the next time step. 
 This transfer of information occurs at the boundary between solid and fluid subdomains, which are the pebble surfaces in this case.
 
 !include CardinalandMOOSE.md
