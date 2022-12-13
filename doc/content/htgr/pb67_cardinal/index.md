@@ -100,7 +100,7 @@ In the ```[Output]``` block we tell MOOSE to output an exodus file of the shallo
 Finally, in the ```[Postprocessor]``` block we define what values we want MOOSE to calculate for us. Here we want the integral flux, min, max, and average temperature at the pebble surface.
 
 To setup the MOOSE mesh, a text file containing the center points of each pebble is necessary. 
-For the bed used in this case, the file can be obtained [here](/htgr/pb67_cardinal/pb67_positions.txt).
+For the bed used in this case, the file can be obtained [here](/htgr/pb67_cardinal/positions.txt).
 
 !listing /htgr/pb67_cardinal/moose.i
 
