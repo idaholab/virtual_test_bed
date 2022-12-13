@@ -23,7 +23,7 @@ void uservp(nrs_t *nrs, dfloat time, occa::memory o_U, occa::memory o_S,
                o_S, o_UProp, o_SProp, mesh->o_z);
 }
 
-/* UDF Functions */                                                      
+/* UDF Functions */
 
 void UDF_LoadKernels(nrs_t *nrs)
 {
