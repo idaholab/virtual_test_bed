@@ -18,3 +18,4 @@ sfr/vtr/xs/vtr_xs_verification.xml filter=lfs diff=lfs merge=lfs -text
 sfr/vtr/sph/vtr_sph.xml filter=lfs diff=lfs merge=lfs -text
 sfr/vtr/sph/vtr_sph_verification.xml filter=lfs diff=lfs merge=lfs -text
 htgr/httf/inputs/3D_HTTF_full_core.e filter=lfs diff=lfs merge=lfs -text
+*.e filter=lfs diff=lfs merge=lfs -text
