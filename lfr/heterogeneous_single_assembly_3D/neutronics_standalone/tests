@@ -15,5 +15,6 @@
     cli_args = "Executioner/richardson_max_its=1"
     executable_pattern = 'griffin*|blue_crab*'
     prereq = 'lfr_neutronics_syntax'
+    skip = '#176'
   []
 []
