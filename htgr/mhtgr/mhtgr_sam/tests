@@ -5,5 +5,7 @@
     check_input = True
     executable_pattern = 'sam*|blue_crab*'
     cli_args = '--app SamApp'
+
+    allow_unused = true
   []
 []
