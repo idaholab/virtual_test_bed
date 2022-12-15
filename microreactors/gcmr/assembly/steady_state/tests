@@ -12,7 +12,7 @@
     check_input = true
     input = 'Griffin_steady_state.i'
     executable_pattern = 'griffin*|blue_crab*'
-    cli_args = "'MultiApps/active='' Transfers/active=''"
+    cli_args = "MultiApps/active='' Transfers/active=''"
     #prereq = 'generate_mesh'
   []
   [griffin_alone]
@@ -29,7 +29,7 @@
   []
 
   # BISON tests
-  [generate_mesh]
+  [generate_mesh_bison]
     type = RunApp
     input = 'BISON_mesh_input.i'
     working_directory = '../MESH'
@@ -41,7 +41,7 @@
     check_input = true
     input = 'BISON.i'
     executable_pattern = 'bison*|blue_crab*'
-    cli_args = "'MultiApps/active='' Transfers/active=''"
+    cli_args = "MultiApps/active='' Transfers/active=''"
     #prereq = 'generate_mesh'
   []
   [bison_alone]
@@ -49,7 +49,7 @@
     input = 'BISON.i'
     csvdiff = 'BISON_csv.csv'
     executable_pattern = 'bison*|blue_crab*'
-    cli_args = "'MultiApps/active='' Transfers/active=''"
+    cli_args = "MultiApps/active='' Transfers/active=''"
     prereq = 'bison_alone_syntax'
     min_parallel = 4
   []

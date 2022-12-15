@@ -16,7 +16,7 @@ layers = 40 # Make sure the number of axial divisions in the fluid domain and so
   global_init_P = ${Pout}
   global_init_V = ${Vin}
   global_init_T = ${Tin}
-  gravity = '0 0 0' # horizontal channel
+  gravity = '0 1e-8 0' # horizontal channel
   [PBModelParams]
     pbm_scaling_factors = '1 1e-3 1e-6'
     p_order = 2
