@@ -1,0 +1,26 @@
+[Tests]
+  [syntax_check_heat_conduction]
+    type = RunApp
+    input = moose.i
+    check_input = True
+    executable_pattern = 'cardinal*|combined*'
+    cli_args = "MultiApps/active='' Transfers/active=''"
+  []
+  [syntax_check_nek]
+    type = RunApp
+    input = nek.i
+    check_input = True
+    executable_pattern = 'cardinal*'
+    min_parallel = 16
+  []
+
+  [heat_conduction]
+    type = CSVDiff
+    input = moose.i
+    csvdiff = 'moose_csv.csv'
+    executable_pattern = 'cardinal*|combined*'
+    cli_args = "MultiApps/active='' Transfers/active=''"
+    prereq = 'syntax_check_heat_conduction'
+  []
+[]
+
