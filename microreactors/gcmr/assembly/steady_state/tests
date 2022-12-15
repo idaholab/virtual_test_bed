@@ -1,0 +1,98 @@
+[Tests]
+  # Griffin tests
+  [generate_mesh]
+    type = RunApp
+    input = 'Griffin_mesh_input.i'
+    working_directory = '../MESH'
+    executable_pattern = 'griffin*|blue_crab*'
+    skip = 'MG not merged yet'
+  []
+  [griffin_alone_syntax]
+    type = RunApp
+    check_input = true
+    input = 'Griffin_steady_state.i'
+    executable_pattern = 'griffin*|blue_crab*'
+    cli_args = "'MultiApps/active='' Transfers/active=''"
+    #prereq = 'generate_mesh'
+  []
+  [griffin_alone]
+    type = 'CSVDiff'
+    input = 'Griffin_steady_state.i'
+    csvdiff = 'Griffin_steady_state_csv.csv'
+    executable_pattern = 'griffin*|blue_crab*'
+    cli_args = "MultiApps/active='' Transfers/active=''
+                Executioner/richardson_max_its=1
+                TransportSystems/SN/NAzmthl=3 TransportSystems/SN/NPolar=1"
+    prereq = 'griffin_alone_syntax'
+    min_parallel = 16
+    rel_err = 1e-3
+  []
+
+  # BISON tests
+  [generate_mesh]
+    type = RunApp
+    input = 'BISON_mesh_input.i'
+    working_directory = '../MESH'
+    executable_pattern = 'bison*|blue_crab*'
+    skip = 'MG not merged yet'
+  []
+  [bison_alone_syntax]
+    type = RunApp
+    check_input = true
+    input = 'BISON.i'
+    executable_pattern = 'bison*|blue_crab*'
+    cli_args = "'MultiApps/active='' Transfers/active=''"
+    #prereq = 'generate_mesh'
+  []
+  [bison_alone]
+    type = 'CSVDiff'
+    input = 'BISON.i'
+    csvdiff = 'BISON_csv.csv'
+    executable_pattern = 'bison*|blue_crab*'
+    cli_args = "'MultiApps/active='' Transfers/active=''"
+    prereq = 'bison_alone_syntax'
+    min_parallel = 4
+  []
+
+  # SAM tests
+  [sam_alone_syntax]
+    type = RunApp
+    check_input = true
+    input = 'SAM_half.i'
+    executable_pattern = 'sam*|blue_crab*'
+  []
+  [sam_alone]
+    type = 'CSVDiff'
+    input = 'SAM_half.i'
+    csvdiff = 'SAM_half_csv.csv'
+    executable_pattern = 'sam*|blue_crab*'
+    cli_args = '--app SamApp'
+    prereq = 'sam_alone_syntax'
+  []
+  [sam_full_alone_syntax]
+    type = RunApp
+    check_input = true
+    input = 'SAM_full.i'
+    executable_pattern = 'sam*|blue_crab*'
+  []
+  [sam_full_alone]
+    type = 'CSVDiff'
+    input = 'SAM_full.i'
+    csvdiff = 'SAM_full_csv.csv'
+    executable_pattern = 'sam*|blue_crab*'
+    cli_args = '--app SamApp'
+    prereq = 'sam_full_alone_syntax'
+  []
+
+  # Multiphysics
+  [steady_multiphysics]
+    type = 'CSVDiff'
+    input = 'Griffin_steady_state.i'
+    csvdiff = 'gcmr_steady_out.csv'
+    executable_pattern = 'griffin*|blue_crab*'
+    cli_args = "filebase=gcmr_steady"
+    prereq = 'griffin_alone bison_alone sam_full_alone sam_alone'
+    skip = 'Needs HPC #176'
+  []
+[]
+
