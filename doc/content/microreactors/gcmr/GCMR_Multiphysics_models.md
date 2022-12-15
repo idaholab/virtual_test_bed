@@ -18,14 +18,10 @@ For analysis of the multi-physics, BISON and SAM were coupled with Griffin. A di
 
 For modeling the GC-MR Assembly in 3-D, the neutron transport equation was solved by Griffin using the discrete ordinates SN method for the angular discretization while the discontinuous finite method (DFEM) method was used for the spatial discretization [!citep](Ahmed_ANS_2022) [!citep](Nicolas_ANS_2022). The coarse mesh finite element method (CMFD) acceleration was used to speed up the DFEM solver. On-the-fly coarse mesh generation is done with Griffin. This means that the user doesn’t need to provide a separate coarse mesh file for the calculations.  In Griffin, the coarse element IDs of elements on the fine mesh are assigned through overlaying a regular grid, i.e., the elements whose centroids falls into the same regular grid are assigned with the same coarse element ID. 
 
-The homogenized multigroup cross-sections were generated using Serpent-2 with ENDF/B-VII.1 data library and then converted to XML-format cross section file and they functionalized with the fuel temperature for eleven energy groups structure. These multigroup structures were generated for the beginning of the cycle condition.  The process of generating the multi-group cross-sections using Serpent-2 is outside the scope of this example. The multi-group cross-sections for the various materials are assigned to fill the various blocks of the mesh file.  In this problem the materials_id of each material is given one of the numbers from 801 to 810. While the numbers of the mesh blocks are: 10, 100, 102, 103, 200, 201, 300, 400, 401, 500, 600, 8000, and 8001.  They are specified in in `[Mesh]` block as follows:
+The homogenized multigroup cross-sections were generated using Serpent-2 with ENDF/B-VII.1 data library and then converted to XML-format cross section file and they functionalized with the fuel temperature for eleven energy groups structure. These multigroup structures were generated for the beginning of the cycle condition.  The process of generating the multi-group cross-sections using Serpent-2 is outside the scope of this example. The multi-group cross-sections for the various materials are assigned to fill the various blocks of the mesh file.  In this problem the materials_id of each material is given one of the numbers from 801 to 810. While the numbers of the mesh blocks are: 10, 100, 102, 103, 200, 201, 300, 400, 401, 500, 600, 8000, and 8001.  They are specified in the `[Mesh]` block as follows:
 
 
-!listing  
-subdomains = '10 100 102 103 200 201 300 400 401 500 600 8000 8001'
-extra_element_id_names = 'material_id equivalence_id'
-extra_element_ids = '803 802 810 806 807 807 804 801 801 808 809 805 805;
-                     803 802 810 806 807 807 804 801 801 808 809 805 805'
+!listing   gcmr/assembly/steady_state/Griffin_steady_state.i start=subdomains end=[]
 
 While `CoupledFeedbackMatIDNeutronicsMaterial` material `type` was used in the `[Materials]`
 block:
@@ -47,9 +43,7 @@ The 3-D GC-MR assembly was solved with reflective boundary condition radially an
 BISON enables thermal-mechanical computation of a reactor core that consists of multiple components/materials, and it was employed to model the heat conduction of the GC-MR assembly. BISON contains a solid list of material properties that are applied in this model, including a recent update of graphite properties. These models include: `GraphiteGradeCreepUpdate`, `GraphiteGradeElasticityTensor`, `GraphiteGradeIrradiationEigenstrain`, `GraphiteGradeThermalExpansionEigenstrain`, `GraphiteMatrixThermal`, and `GraphiteMatrixThermalExpansionEigenstrain`. The updated `GraphiteMatrixThermal` that computes thermal conductivity (W/m/K) and specific heat capacity (J/kg/K). The BISON input files for steady-state and transient cases are `BISON.i` and `BISON_tr`, respectively. The positions of the coolant channels was specified in `BISON.i` and `BISON_tr` files as such:    
 
 
-!listing
-coolant_full_points_filename = ../channel_positions/coolant_full_points.txt
-coolant_half_points_filename = ../channel_positions/coolant_half_points.txt 
+!listing  gcmr/assembly/steady_state/BISON.i start=coolant_full_points_filename end=coolant_half_points_filename include-end=true
 
 The modelled assembly contains locations at which the full coolant channel is represented and in other locations, at the radial boundary, where only half coolant channel is considered. The files `coolant_full_points.txt` and `coolant_half_points.txt` include the positions of the full and half coolant channels, respectively. The full coolant channels positions are given as follows: 
 
@@ -77,7 +71,7 @@ Multiphysics simulations performed on microreactor models leverage the MOOSE Mul
 The 3-D power density distribution is calculated by Griffin and transferred to BISON for performing heat conduction calculations to estimate the fuel temperature. The coolant channels are modelled with SAM to estimate the coolant temperature distributions in all coolant channels. The MOOSE Picard fixed point iteration was used to attain a tightly coupled simulation, where the information is transferred back and forth between the three MOOSE-based applications until convergence of the power source distribution. The `MultiApps` blocks in `Griffin_steady_state.i` and `BISON.i` specify the MuliApp coupling for steady-state calculations, and the `MultiApps` blocks in `Griffin_transient.i ` and 
 `BISON_tr.i` specifies the MultiApp coupling for the transient problem. The Transfer system defined in the `Transfers` blocks, takes care of data interchange between the different applications, and controls what type of information is transferred and how the transfer will occur. 
 
-The power density and fuel temperatures transferred are defined through the [`Transfer system`](https://mooseframework.inl.gov/virtual_test_bed/docs/PRs/170/site/resources/multiapps_chps/chp_6_transfers.html) Transfers block in the parent App (Griffin), where [`MultiAppProjectionTransfer`](https://mooseframework.inl.gov/source/transfers/MultiAppProjectionTransfer.html) was used which performs a projection between the parent App and the child App mesh files while conserving the integral of the transferred data. 
+The power density and fuel temperatures transferred are defined through the [`Transfer system`](https://mooseframework.inl.gov/virtual_test_bed/docs/site/resources/multiapps_chps/chp_6_transfers.html) Transfers block in the parent App (Griffin), where [`MultiAppProjectionTransfer`](https://mooseframework.inl.gov/source/transfers/MultiAppProjectionTransfer.html) was used which performs a projection between the parent App and the child App mesh files while conserving the integral of the transferred data. 
 
 
 !listing gcmr/assembly/steady_state/Griffin_steady_state.i block=Transfers

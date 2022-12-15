@@ -123,9 +123,6 @@
     input_files = BISON.i
     execute_on = 'timestep_end'
     keep_solution_during_restore = true
-    #app_type = SamApp
-    #library_name = libsam-opt.la
-    #library_path = '/beegfs1/software/NEAMS_microreactor/projects_super_mar22/SAM/lib'
   []
 []
 
