@@ -26,6 +26,8 @@
     prereq = 'griffin_alone_syntax'
     min_parallel = 16
     rel_err = 1e-3
+    method = 'opt'
+    max_time = 400
   []
 
   # BISON tests
@@ -40,7 +42,7 @@
     type = RunApp
     check_input = true
     input = 'BISON.i'
-    executable_pattern = 'bison*|blue_crab*'
+    executable_pattern = 'blue_crab*'
     cli_args = "MultiApps/active='' Transfers/active=''"
     #prereq = 'generate_mesh'
   []
@@ -48,7 +50,7 @@
     type = 'CSVDiff'
     input = 'BISON.i'
     csvdiff = 'BISON_csv.csv'
-    executable_pattern = 'bison*|blue_crab*'
+    executable_pattern = 'blue_crab*'
     cli_args = "MultiApps/active='' Transfers/active=''"
     prereq = 'bison_alone_syntax'
     min_parallel = 4
@@ -60,6 +62,7 @@
     check_input = true
     input = 'SAM_half.i'
     executable_pattern = 'sam*|blue_crab*'
+    cli_args = '--app SamApp'
   []
   [sam_alone]
     type = 'CSVDiff'
@@ -74,6 +77,7 @@
     check_input = true
     input = 'SAM_full.i'
     executable_pattern = 'sam*|blue_crab*'
+    cli_args = '--app SamApp'
   []
   [sam_full_alone]
     type = 'CSVDiff'
