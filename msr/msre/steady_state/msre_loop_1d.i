@@ -48,7 +48,6 @@
     rho      = fuel_salt_rho_func
     mu       = fuel_salt_mu_func
     enthalpy = fuel_salt_enthalpy_func
-    beta     = 3.1247E-04
     cp       = 2009.66
     k        = 1.0
   [../]
@@ -313,10 +312,8 @@
     Ts_init            = 824.8167
 
     HS_BC_type                    = 'Coupled Coupled'
-    eos_left                      = hx_salt_eos
     name_comp_left                = hx_tube1
     HT_surface_area_density_left  = 8.6290E+02
-    eos_right                     = fuel_salt_eos
     name_comp_right               = hx_shell
     HT_surface_area_density_right = 2.3629E+02
   [../]
@@ -336,10 +333,8 @@
     Ts_init            = 824.8167
 
     HS_BC_type                    = 'Coupled Coupled'
-    eos_left                      = hx_salt_eos
     name_comp_left                = hx_tube3
     HT_surface_area_density_left  = 8.6290E+02
-    eos_right                     = fuel_salt_eos
     name_comp_right               = hx_shell
     HT_surface_area_density_right = 2.3629E+02
   [../]

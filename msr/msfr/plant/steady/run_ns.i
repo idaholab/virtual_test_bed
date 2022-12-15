@@ -113,6 +113,7 @@ beta6 = 0.000184087
     add_energy_equation = true
     add_scalar_equation = true
     boussinesq_approximation = true
+    block = 'fuel pump hx'
 
     # Variables, defined below for the Exodus restart
     velocity_variable = 'vel_x vel_y'
