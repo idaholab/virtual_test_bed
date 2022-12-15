@@ -47,6 +47,8 @@ obtained through INL's [NCRC](https://inl.gov/ncrc/).
 
 - MHTGR Griffin Benchmark [documentation](htgr/mhtgr_griffin/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/mhtgr_griffin/benchmark)
 
+- LFR Griffin Benchmark [documentation](lfr/index.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/lfr/heterogeneous_single_assembly_3D/neutronics_standalone)
+
 
 ### Cardinal / OpenMC (open-source)
 

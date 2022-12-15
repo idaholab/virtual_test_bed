@@ -29,6 +29,7 @@ Users will need to request access to the controlled NEAMS software from the [Nuc
 - [High Temperature Gas-Cooled Reactor (HTGR)](htgr/index.md) \\
 - [Pebble Bed Fluoride-Salt-Cooled High-Temperature Reactor (PB-FHR)](pbfhr/index.md) \\
 - [Sodium Fast Reactor (SFR)](sfr/index.md) \\
+- [Lead-cooled Fast Reactor (LFR)](lfr/index.md) \\
 - [Micro Reactors (MR)](microreactors/index.md)
 
 !alert note
