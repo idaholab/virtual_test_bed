@@ -25,7 +25,7 @@ This transfer of information occurs at the boundary between solid and fluid subd
 
 The geometry for this case consists of 67 pebbles in a randomly packed cylindrical bed.
 The pebbles have a diameter of 1 (dimensionless) and the cylinder has a diameter of 4.4 (dimensionless).
-The pebble bed begins around 2.5 pebble diameters upstream from the cylinder inlet and has a total heigh of about 5 pebble diameters.
+The pebble bed begins around 2.5 pebble diameters upstream from the cylinder inlet and has a total height of about 5 pebble diameters.
 A cross section of the fluid domain is shown in [pb67geom] where the fluid is the gray region and the pebbles are the white regions.
 
 !media pb67_cardinal/fluid_slice.png
@@ -54,13 +54,13 @@ This file contains the setup for the required boundary conditions.
 
 Note that we have ```bc->flux = bc->wrk[bc->idM]``` in +scalarNeumannConditions+ block. 
 This line allows NekRS to use the heat flux provided by the MOOSE CHT module at the surface of the pebbles instead of using a constant heat flux as previously defined.
-There are also two kernal functions defined in the +.oudf+ file, ```cliptOKL``` and ```userVp```.
+There are also two kernel functions defined in the +.oudf+ file, ```cliptOKL``` and ```userVp```.
 The ```cliptOKL``` kernel is used to limit extreme temperatures in the simulation which can occur in underresolved parts of the mesh. If the temperature is greater than 100 or less than 0, this kernel will set the temperature to 100 or 0 respectively. 
 The ```userVp``` kernel simply increases the viscosity and conductivity near the underresolved outlet in order to maintain a stable solution.
 
 ### udf file style=font-size:125%
 
-The +.udf+ file utilizes the kernal functions we defined in +.oudf+, and provides the detailed configurations of the ralated nekRS simulations. 
+The +.udf+ file utilizes the kernal functions we defined in +.oudf+, and provides the detailed configurations of the related nekRS simulations. 
 
 !listing /htgr/pb67_cardinal/pb67.udf language=cpp
 
@@ -85,7 +85,7 @@ This results in flow moving around the chamfered area without an additional heat
 
 ## MOOSE setup
 
-As previously stated, we strongly reccommended completing the CHT tutorials on CARDINAL, which fully describe every aspect of the MOOSE setup. Here, we will only cover case specific necessities.
+As previously stated, we strongly recommend completing the CHT tutorials on CARDINAL, which fully describe every aspect of the MOOSE setup. Here, we will only cover case specific necessities.
 
 In this case we need to create two files: +nek.i+ and +moose.i+ pertaining to the NekRS and MOOSE parameters respectively.
 
@@ -96,7 +96,7 @@ Starting with the simpler +nek.i+ which contains the following
 In the ```[MESH]``` block, MOOSE will create a copy of the Nek mesh at the given boundaries. In this case it is at the pebble surfaces. 
 In the ```[Problem]``` block we define the name of corresponding NekRS files. 
 Next, we want MOOSE to use the same time steps as Nek so we prescribe that in the ```[Executioner]``` block. 
-In the ```[Output]``` block we tell MOOSE to output an exodus file of the shallow Nek copy every 1000 time steps. This can be a helpful check at the beginnng of the simulation to make sure you are using the correct boundaries. 
+In the ```[Output]``` block we tell MOOSE to output an exodus file of the shallow Nek copy every 1,000 time steps. This can be a helpful check at the beginning of the simulation to make sure you are using the correct boundaries. 
 Finally, in the ```[Postprocessor]``` block we define what values we want MOOSE to calculate for us. Here we want the integral flux, min, max, and average temperature at the pebble surface.
 
 To setup the MOOSE mesh, a text file containing the center points of each pebble is necessary. 
@@ -104,7 +104,7 @@ For the bed used in this case, the file can be obtained [here](/htgr/pb67_cardin
 
 !listing /htgr/pb67_cardinal/moose.i
 
-Notice in the ```[MESH]``` block we are using a file to generate the solid mesh. Make sure to include the sphere.e file in your working directory. We use this single sphere of radius 1 and duplicate it using CombinerGenerator and all of the coordinates of the 67 pebbles given in +positions.txt+. 
+Notice in the ```[MESH]``` block we are using a file to generate the solid mesh. Make sure to include the sphere.e file in your working directory. We use this single sphere of radius 1 and duplicate it using `CombinerGenerator` and all of the coordinates of the 67 pebbles given in +positions.txt+. 
 From here we scale down the pebbles to ensure that they are not touching in the solid mesh. We then call the heat conduction module in the ```[KERNEL]``` block ensuring MOOSE will solve the temperature in the solid mesh. 
 Then we tell MOOSE to match the boundary conidtions use in Nek in the ```[BCs]``` block. In the ```[TRANSFER]``` block we define what and how variables get transfered. We define a multi app and transfer the temperature from Nek to MOOSE and return the average flux and flux integral back to Nek. Built in post-processors are used to obtain these values. Finally, we define an aux kernel to model the avg flux. Notice in +nek.i+ the boundary from nek is 4 and in +moose.i+ the boundary of interest is 1. Be sure not to mix up the boundaries in the fluid and solid mesh.
 
