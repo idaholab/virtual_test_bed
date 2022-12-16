@@ -4,6 +4,8 @@
 # ------------------------------------------------------------------------------
 # Idaho Falls, INL, May 31st, 2022
 # Author(s): Javier Ortensi
+# If using or referring to this model, please cite as explained in
+# https://mooseframework.inl.gov/virtual_test_bed/citing.html
 # ==============================================================================
 # - HTR Critical Configuration GRIFFIN neutronics input
 # - MainApp

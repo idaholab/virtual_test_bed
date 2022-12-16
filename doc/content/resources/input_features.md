@@ -8,17 +8,26 @@ help creating it.
 
 ## Mesh treatment
 
-### In-MOOSE mesh generation
+### In-MOOSE basic mesh generation
 
-- HTGR assembly multiphysics simulation [documentation](htgr/assembly/index.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/htgr/assembly)
+- Dispersed UO2 LEU pulse model [documentation](htgr/leu_pulse) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/devel/htgr/leu_pulse)
 
-- Assembly in a Sodium Fast Reactor [documentation](sfr/single_assembly/sfr.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/sfr/single_assembly)
 
-- Pebble Bed Modular Reactor [documentation](htgr/pbmr/index.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/pbmr400/steady)
+### In-MOOSE reactor mesh generation
 
-- Sodium Fast Reactor duct bowing [documentation](sfr/hex_duct_bowing/index.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/sfr/hex_duct_bowing)
+- HTGR assembly multiphysics simulation [documentation](htgr/assembly/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/htgr/assembly)
 
-- SNAP-8 NTP reactor core model [documentation](microreactors/s8er/index.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/microreactors/s8er)
+- Assembly in a Sodium Fast Reactor [documentation](sfr/single_assembly/sfr.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/sfr/single_assembly)
+
+- Pebble Bed Modular Reactor [documentation](htgr/pbmr/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/pbmr400/steady)
+
+- Sodium Fast Reactor duct bowing [documentation](sfr/hex_duct_bowing/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/sfr/hex_duct_bowing)
+
+- SNAP-8 NTP reactor core model [documentation](microreactors/s8er/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/microreactors/s8er)
+
+- LFR Griffin Benchmark [documentation](lfr/index.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/lfr/heterogeneous_single_assembly_3D/neutronics_standalone)
+
+- Gas Cooled Micro Reactor assembly multiphysics [documentation](gcmr/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/devel/microreactors/gcmr/assembly)
 
 
 ### Cubit mesh generation
@@ -26,84 +35,116 @@ help creating it.
 The mesh generation scripts using external software are not included in
 the input file, but generally reside in the same folder in the repository.
 
-- Molten Salt Fast Reactor [documentation](msr/msfr/griffin_pgh_model.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/msr/msfr/steady)
+- Molten Salt Fast Reactor core multiphysics [documentation](msr/msfr/griffin_pgh_model.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/msr/msfr/steady)
 
-- Pebble Bed Fluoride salt cooled High temperature Reactor [documentation](pbfhr/steady/griffin_pgh_model.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/pbfhr/steady)
+- Pebble Bed Fluoride salt cooled High temperature Reactor [documentation](pbfhr/steady/griffin_pgh_model.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/pbfhr/steady)
 
 
 ## Coupling through MultiApps
 
 ### Multiphysics but same spatial scale simulations
 
-- Molten Salt Fast Reactor [documentation](msr/msfr/griffin_pgh_model.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/msr/msfr/steady)
+- Molten Salt Fast Reactor [documentation](msr/msfr/griffin_pgh_model.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/msr/msfr/steady)
 
-- Pebble Bed Fluoride salt cooled High temperature Reactor [documentation](pbfhr/balance_of_plant/plant.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/pbfhr/plant)
+- Pebble Bed Fluoride salt cooled High temperature Reactor [documentation](pbfhr/balance_of_plant/plant.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/pbfhr/plant)
 
-- Micro-Reactor [documentation](mrad/index.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/mrad/steady)
+- Pebble Bed Modular Reactor (PBMR400) [documentation](htgr/pbmr/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/pbmr400/steady)
 
-- Pebble Bed Modular Reactor [documentation](htgr/pbmr/index.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/pbmr400/steady)
+- Assembly in a Sodium Fast Reactor [documentation](sfr/single_assembly/sfr.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/sfr/single_assembly)
 
-- Assembly in a Sodium Fast Reactor [documentation](sfr/single_assembly/sfr.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/sfr/single_assembly)
+- Versatile Test Reactor core model [documentation](sfr/vtr/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/sfr/vtr)
 
-- Versatile Test Reactor core model [documentation](sfr/vtr/index.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/sfr/vtr)
+- Micro reactor with heat pipes [documentation](mrad/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/mrad)
 
-- Micro reactor with heat pipes [documentation](mrad/index.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/mrad)
+- HTGR assembly multiphysics simulation [documentation](htgr/assembly/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/htgr/assembly)
 
-- HTGR assembly multiphysics simulation [documentation](htgr/assembly/index.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/htgr/assembly)
+- Reflector bypass flow in the PB-FHR [documentation](pbfhr/reflector.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/pbfhr/reflector)
 
-- Reflector bypass flow in the PB-FHR [documentation](pbfhr/reflector.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/pbfhr/reflector)
+- SNAP-8 NTP reactor core model [documentation](microreactors/s8er/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/microreactors/s8er)
 
-- SNAP-8 NTP reactor core model [documentation](microreactors/s8er/index.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/microreactors/s8er)
+- Gas Cooled Micro Reactor assembly multiphysics [documentation](gcmr/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/devel/microreactors/gcmr/assembly)
+
+- Dispersed UO2 LEU pulse model [documentation](htgr/leu_pulse) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/devel/htgr/leu_pulse)
+
+- 67 pebbles conjugate heat transfer [documentation](pb67_cardinal/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/devel/htgr/pb67_cardinal)
 
 
 ### Multiphysics and multiscale simulations
 
-- Pebble Bed Fluoride salt cooled High temperature Reactor [documentation](pbfhr/steady/griffin_pgh_model.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/pbfhr/steady)
+- Pebble Bed Fluoride salt cooled High temperature Reactor [documentation](pbfhr/steady/griffin_pgh_model.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/pbfhr/steady)
 
-- High Temperature Test Facility coupling between core and hundreds of channel calculations [documentation](htgr/httf/index.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/httf)
+- High Temperature Test Facility coupling between core and hundreds of channel calculations [documentation](htgr/httf/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/httf)
 
 
 ## Computing requirements
 
 ### Runs on a laptop or workstation
 
-- Assembly in a Sodium Fast Reactor [documentation](sfr/single_assembly/sfr.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/sfr/single_assembly)
+- Assembly in a Sodium Fast Reactor [documentation](sfr/single_assembly/sfr.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/sfr/single_assembly)
 
-- Versatile Test Reactor core model [documentation](sfr/vtr/index.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/sfr/vtr)
+- Versatile Test Reactor core model [documentation](sfr/vtr/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/sfr/vtr)
 
-- Modular High Temperature Reactor [documentation](htgr/mhtgr_sam/sam_mhtgr_model.md) [inputs](https://github.com/idaholab/virtual_test_bed/blob/main/htgr/mhtgr)
+- Advanced Burner Test Reactor [documentation](sfr/abtr/abtr.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/sfr/abtr)
 
-- Pebble Bed Modular Reactor [documentation](htgr/pbmr/index.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/pbmr400/transient)
+- Modular High Temperature Gas Reactor [documentation](htgr/mhtgr_sam/sam_mhtgr_model.md) and [inputs](https://github.com/idaholab/virtual_test_bed/blob/main/htgr/mhtgr)
 
-- Molten Salt Fast Reactor [documentation](msr/msfr/griffin_pgh_transient_model.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/msr/msfr/transient)
+- Pebble Bed Modular Reactor (PBMR400) [documentation](htgr/pbmr/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/pbmr400/transient)
 
-- Molten Salt Reactor Experiment [documentation](msr/msre/msre_sam_model.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/msr/msre)
+- Molten Salt Fast Reactor [documentation](msr/msfr/griffin_pgh_transient_model.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/msr/msfr/transient)
 
-- Pebble Bed Fluoride salt cooled High temperature Reactor [documentation](pbfhr/pbfhr_sam/pbfhr_sam.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/pbfhr/sam_model)
+- Molten Salt Reactor Experiment [documentation](msr/msre/msre_sam_model.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/msr/msre)
 
-- 1D TRISO fuel depletion [documentation](htgr/triso/triso_model.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/triso_fuel)
+- Pebble Bed Fluoride salt cooled High temperature Reactor [documentation](pbfhr/pbfhr_sam/pbfhr_sam.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/pbfhr/sam_model)
 
-- HTR-10 Griffin Benchmark [documentation](htgr/htr10/index.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/htr10)
+- 1D TRISO fuel depletion [documentation](htgr/triso/triso_model.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/triso_fuel)
 
-- Sodium Fast Reactor duct bowing [documentation](sfr/hex_duct_bowing/index.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/sfr/hex_duct_bowing)
+- HTR-10 Griffin Benchmark [documentation](htgr/htr10/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/htr10)
 
-- SNAP-8 NTP reactor core model [documentation](microreactors/s8er/index.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/microreactors/s8er)
+- Sodium Fast Reactor duct bowing [documentation](sfr/hex_duct_bowing/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/sfr/hex_duct_bowing)
+
+- SNAP-8 NTP reactor core model [documentation](microreactors/s8er/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/microreactors/s8er)
+
+- 1D TRISO fuel depletion [documentation](htgr/triso/triso_model.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/devel/htgr/triso_fuel)
+
+- Subchannel ORNL 19 pins and Toshiba 37 pins benchmarks [documentation](sfr/subchannel/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/devel/sfr/subchannel)
+
+- Dispersed UO2 LEU pulse model [documentation](htgr/leu_pulse) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/devel/htgr/leu_pulse)
+
+- Mk1 FHR Primary loop simulation [documentation](pbfhr/pbfhr_sam/pbfhr_sam.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/devel/pbfhr/sam_model)
+
+- Generic Pebble Bed Reactor core model [documentation](htgr/generic-pbr/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/devel/htgr/generic-pbr)
 
 
 ### HPC required
 
-- HTGR assembly multiphysics simulation [documentation](htgr/assembly/index.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/htgr/assembly)
+- HTGR assembly multiphysics simulation [documentation](htgr/assembly/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/htgr/assembly)
 
-- Micro reactor with heat pipes [documentation](mrad/index.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/mrad)
+- MHTGR Griffin Benchmark [documentation](htgr/mhtgr_griffin/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/mhtgr_griffin/benchmark)
 
-- Reflector bypass flow in the PB-FHR [documentation](pbfhr/reflector.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/pbfhr/reflector)
+- Micro reactor with heat pipes [documentation](mrad/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/mrad)
 
-- High Temperature Test Facility transient simulations [documentation](htgr/httf/index.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/httf)
+- Reflector bypass flow in the PB-FHR [documentation](pbfhr/reflector.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/pbfhr/reflector)
+
+- High Temperature Test Facility transient simulations [documentation](htgr/httf/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/httf)
+
+- Molten Salt Fast Reactor plant multiphysics [documentation](msr/msfr/plant/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/msr/msfr/plant)
+
+- Pebble Bed Fluoride salt cooled High temperature Reactor Plant multiphysics [documentation](pbfhr/balance_of_plant/plant.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/pbfhr/plant)
+
+- Molten Salt Fast Reactor core CFD [documentation](msr/msfr/nek5000_cfd_model.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/msr/msfr/core_cfd)
+
+- LFR Griffin Benchmark [documentation](lfr/index.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/lfr/heterogeneous_single_assembly_3D/neutronics_standalone)
+
+- Gas Cooled Micro Reactor assembly multiphysics [documentation](gcmr/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/devel/microreactors/gcmr/assembly)
+
+- 67 pebbles conjugate heat transfer [documentation](pb67_cardinal/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/devel/htgr/pb67_cardinal)
 
 
 ### GPU-enabled
 
-- Reflector bypass flow in the PB-FHR [documentation](pbfhr/reflector.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/pbfhr/reflector)
+- Reflector bypass flow in the PB-FHR [documentation](pbfhr/reflector.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/pbfhr/reflector)
+
+- 67 pebbles conjugate heat transfer [documentation](pb67_cardinal/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/devel/htgr/pb67_cardinal)
 
 
 !alert note

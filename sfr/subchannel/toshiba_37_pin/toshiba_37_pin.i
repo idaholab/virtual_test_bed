@@ -1,7 +1,10 @@
 ################################################################################
 ## SFR 37 pin assembly benchmark                                              ##
-## Subchannel simulation                                                      ##
+## Pronghorn Subchannel simulation                                            ##
+## POC : Mauricio Tano, mauricio.tanoretamales at inl.gov                     ##
 ################################################################################
+## If using or referring to this model, please cite as explained in
+## https://mooseframework.inl.gov/virtual_test_bed/citing.html
 
 T_in = 660
 # [1e+6 kg/m^2-hour] turns into kg/m^2-sec
@@ -195,4 +198,3 @@ P_out = 2.0e5 # Pa
     variable = 'mdot SumWij P DP h T rho mu q_prime S'
   []
 []
-

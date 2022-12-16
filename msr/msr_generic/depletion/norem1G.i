@@ -1,3 +1,10 @@
+# Generic Molten Salt Reactor Depletion
+# Griffin input : only with experimental branch (12/16/22)
+# Depletion with isotopic removal
+# POC: Samuel Walker (samuel.walker at inl.gov)
+# If using or referring to this model, please cite as explained in
+# https://mooseframework.inl.gov/virtual_test_bed/citing.html
+
 [Mesh]
   [gmg]
     type = GeneratedIDMeshGenerator

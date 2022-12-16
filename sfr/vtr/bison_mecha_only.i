@@ -3,6 +3,9 @@
 ## Bison lower level Sub-Application                                          ##
 ## Fuel and clad mechanical deformation                                       ##
 ################################################################################
+# If using or referring to this model, please cite as explained on
+# https://mooseframework.inl.gov/virtual_test_bed/citing.html
+
 #  Notes
 #  Units are in standard SI: J, K, kg, m, Pa, s.
 #  This input file does not include friction.

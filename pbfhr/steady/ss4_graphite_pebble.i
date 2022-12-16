@@ -4,6 +4,8 @@
 # ------------------------------------------------------------------------------
 # Idaho Falls, INL, November 2, 2020
 # Author(s): Dr. April Novak, Dr. Guillaume Giudicelli, Dr. Paolo Balestra
+# If using or referring to this model, please cite as explained on
+# https://mooseframework.inl.gov/virtual_test_bed/citing.html
 # ==============================================================================
 # - Graphite pebble heat conduction model
 # ==============================================================================

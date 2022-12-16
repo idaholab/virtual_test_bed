@@ -4,6 +4,8 @@
 ## Steady state neutronics model                                              ##
 ## 6-group continuous neutron diffusion without equivalence                   ##
 ################################################################################
+# If using or referring to this model, please cite as explained on
+# https://mooseframework.inl.gov/virtual_test_bed/citing.html
 
 [Mesh]
   [fmg]

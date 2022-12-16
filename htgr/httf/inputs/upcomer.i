@@ -1,4 +1,9 @@
 # Models the upcomer for the HTTF PG-26 Transient
+# Application: RELAP-7
+# POC: Thomas Freyman, thomas.freyman at inl.gov
+# If using or referring to this model, please cite as explained in
+# https://mooseframework.inl.gov/virtual_test_bed/citing.html
+
 T_in = 373.15 # K
 p_out = 225000 # Pa
 m_dot_in = 0.005

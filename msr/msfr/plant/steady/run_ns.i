@@ -3,6 +3,8 @@
 ## Pronghorn Sub-Application input file                                       ##
 ## Relaxation towards Steady state 3D thermal hydraulics model                ##
 ################################################################################
+# If using or referring to this model, please cite as explained in
+# https://mooseframework.inl.gov/virtual_test_bed/citing.html
 
 # The flow in this simulation should be initialized with a previous flow
 # solution (isothermal, heated or multiphysics) OR using a viscosity rampdown

@@ -1,3 +1,9 @@
+## HTGR assembly thermal hydraulics simulation
+## Application: MOOSE thermal hydraulics module
+## POC: April Novak anovak at anl.gov
+## If using or referring to this model, please cite as explained in
+## https://mooseframework.inl.gov/virtual_test_bed/citing.html
+
 # copy-pasta from common.i
 inlet_T = 598.0                          # inlet fluid temperature (K)
 mdot = ${fparse 117.3 / 12 / 108}        # fluid mass flowrate (kg/s)

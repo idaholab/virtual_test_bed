@@ -1,7 +1,10 @@
 ################################################################################
 ## SFR 19 pin assembly benchmark                                              ##
-## Subchannel simulation                                                      ##
+## Pronghorn Subchannel simulation                                            ##
+## POC : Mauricio Tano, mauricio.tanoretamales at inl.gov                     ##
 ################################################################################
+## If using or referring to this model, please cite as explained in
+## https://mooseframework.inl.gov/virtual_test_bed/citing.html
 
 T_in = 588.5
 flow_area = 0.0004980799633447909 #m2
@@ -198,4 +201,3 @@ P_out = 2.0e5 # Pa
     variable = 'mdot SumWij P DP h T rho mu q_prime S'
   []
 []
-

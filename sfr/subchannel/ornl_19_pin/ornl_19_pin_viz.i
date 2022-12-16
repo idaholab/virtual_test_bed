@@ -1,7 +1,10 @@
 ################################################################################
 ## SFR ORNL 19 pin assembly benchmark                                         ##
 ## MultiApp for visualization of output                                       ##
+## POC : Mauricio Tano, mauricio.tanoretamales at inl.gov                     ##
 ################################################################################
+## If using or referring to this model, please cite as explained in
+## https://mooseframework.inl.gov/virtual_test_bed/citing.html
 
 [Mesh]
   [subchannel]
@@ -55,4 +58,3 @@
   nl_rel_tol = 0.9
   l_tol = 0.9
 []
-

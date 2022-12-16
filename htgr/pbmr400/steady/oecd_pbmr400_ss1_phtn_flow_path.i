@@ -5,6 +5,8 @@
 # ------------------------------------------------------------------------------
 # Idaho Falls, Idaho National Laboratory, 02/03/2020
 # Author(s): Dr. Paolo Balestra, Dr. Sebastian Schunert
+# If using or referring to this model, please cite as explained in
+# https://mooseframework.inl.gov/virtual_test_bed/citing.html
 # ==============================================================================
 # - ss1: Steady state simulation main app level 1
 # - phth: ProngHorn for thermal hydraulics

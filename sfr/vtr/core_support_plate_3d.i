@@ -2,6 +2,9 @@
 ##  3D core support plate thermal expansion input                             ##
 ##  Tensor Mechanics input model                                              ##
 ################################################################################
+# If using or referring to this model, please cite as explained on
+# https://mooseframework.inl.gov/virtual_test_bed/citing.html
+
 #  given an inlet temperature (nominal = 350 degrees C = 623.15 K),
 #  computes the displacements along x and y
 #  transfer them to griffin for cross section adjustment (radial expansion feedback)

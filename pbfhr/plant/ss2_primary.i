@@ -4,6 +4,8 @@
 # Steady state and transient simulation (loss of forced flow with SCRAM)
 # Work supported under the DOE NEAMS program
 # Application : SAM
+# If using or referring to this model, please cite as explained in
+# https://mooseframework.inl.gov/virtual_test_bed/citing.html
 
 ############################
 # Tuned to get 976 kg/s mdot

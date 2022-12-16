@@ -4,6 +4,8 @@
 # ------------------------------------------------------------------------------
 # Idaho Falls, INL, September 7th, 2020
 # Author(s): Dr. Guillaume Giudicelli, Dr. Paolo Balestra
+# If using or referring to this model, please cite as explained on
+# https://mooseframework.inl.gov/virtual_test_bed/citing.html
 # ==============================================================================
 # - MK1-FHR GRIFFIN neutronics input
 # - MasterApp

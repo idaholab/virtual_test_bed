@@ -6,6 +6,7 @@
 # Supervisor: Stefano Terlizzi
 # ==============================================================================
 # SNAP8ER 2D Core  Wet Operational Conditions, Coupled with Bison.
+# Application : BISON (standalone), BlueCRAB (coupled)
 # For use of this model please cite:
 # @InProceedings{s8er_naupa2022,
 #     author = "Naupa, Isaac and Garcia, Samuel and Terlizzi, Stefano and Kotlyar, Dan and Lindley, Ben",

@@ -1,6 +1,8 @@
 # Modeling the MSRE
 # Steady state simulation
 # Application : SAM
+# If using or referring to this model, please cite as explained in
+# https://mooseframework.inl.gov/virtual_test_bed/citing.html
 
 [GlobalParams]
   global_init_P = 1e5                        # Global initial fluid pressure

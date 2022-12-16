@@ -2,7 +2,10 @@
 ## NEAMS Micro-Reactor Application Driver                                     ##
 ## Sockeye Sub Application input file                                         ##
 ## Heat Pipe Effective Heat Conduction Model                                  ##
+## POC: Nicholas Stauff, nstauff at anl.gov                                   ##
 ################################################################################
+# If using or referring to this model, please cite as explained in
+# https://mooseframework.inl.gov/virtual_test_bed/citing.html
 
 # Average heat removed/added to heat pipe (W)
 Q_hp = 1800.

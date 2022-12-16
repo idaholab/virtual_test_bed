@@ -4,6 +4,8 @@
 # ------------------------------------------------------------------------------
 # Idaho Falls, INL, June 23th, 2022
 # Author(s): Nicolas Martin
+# If using or referring to this model, please cite as explained on
+# https://mooseframework.inl.gov/virtual_test_bed/citing.html
 # ==============================================================================
 # - VTR GRIFFIN standalone neutronics input
 # - MasterApp

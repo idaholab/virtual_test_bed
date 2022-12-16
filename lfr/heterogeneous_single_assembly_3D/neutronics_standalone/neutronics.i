@@ -4,6 +4,8 @@
 # ------------------------------------------------------------------------------
 # Lemont, ANL, November 14th, 2022
 # Author(s): Hansol Park, Emily Shemon
+# If using or referring to this model, please cite as explained in
+# https://mooseframework.inl.gov/virtual_test_bed/citing.html
 # ==============================================================================
 # - LFR 3D Single Assembly Hot Full Power Configuration GRIFFIN neutronics input
 # - Single App

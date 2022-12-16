@@ -4,6 +4,8 @@
 ## Transient 3D thermal hydraulics model                                      ##
 ## Laminar flow, addition of turbulence is WIP                                ##
 ################################################################################
+# If using or referring to this model, please cite as explained in
+# https://mooseframework.inl.gov/virtual_test_bed/citing.html
 
 ## WARNING
 

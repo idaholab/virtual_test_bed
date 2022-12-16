@@ -3,7 +3,10 @@
 ## BISON Main Application input file                                          ##
 ## Thermal (Heat Conduction) model only                                       ##
 ## Constant and uniform power profile in fuel region                          ##
+## POC: Nicholas Stauff, nstauff at anl.gov                                   ##
 ################################################################################
+# If using or referring to this model, please cite as explained in
+# https://mooseframework.inl.gov/virtual_test_bed/citing.html
 
 [GlobalParams]
   flux_conversion_factor = 1

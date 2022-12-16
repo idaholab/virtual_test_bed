@@ -5,6 +5,8 @@
 # ------------------------------------------------------------------------------
 # Idaho Falls, INL, 10/12/2019
 # Author(s): Dr. Paolo Balestra, Dr. Sebastian Schunert
+# If using or referring to this model, please cite as explained in
+# https://mooseframework.inl.gov/virtual_test_bed/citing.html
 # ==============================================================================
 # - This input may only be run after a checkpoint has been generated with the
 # steady state input

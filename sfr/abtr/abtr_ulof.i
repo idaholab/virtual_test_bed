@@ -1,3 +1,9 @@
+## ABTR loss of flow transient simulation
+## Application: SAM
+## POC: Jun Fang (fangj at anl.gov)
+## If using or referring to this model, please cite as explained in
+## https://mooseframework.inl.gov/virtual_test_bed/citing.html
+
 [GlobalParams]
   global_init_P = 1e5
   global_init_V = 3
