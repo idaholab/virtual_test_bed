@@ -149,7 +149,7 @@ SAM supports both constants and user-defined functions for the thermophysical pa
 The properties of common materials are implemented in the SAM repository, and can be readily used by
 simply referring to the material IDs, such as the air, or molten salt FLiBe.
 
-!listing msr/msfr/plant/steady/standalone_sam_model/msfr_1d_ss.i  block=EOS language=cpp
+!listing msr/msfr/plant/standalone_sam_model/msfr_1d_ss.i  block=EOS language=cpp
 
 ### Components style=font-size:125%
 
@@ -182,16 +182,16 @@ As for the counterflow, primary-to-intermediate shell-and-tube heat exchanger, b
 The heat is exchanged through the 1-D wall coupling the shell and tube sides. 
 A similar model is used for the secondary heat exchanger, except that pressurized Helium is used in the secondary side instead of salt.
 
-!listing msr/msfr/plant/steady/standalone_sam_model/msfr_1d_ss.i  block=IHX1 language=cpp
+!listing msr/msfr/plant/standalone_sam_model/msfr_1d_ss.i  block=IHX1 language=cpp
 
-!listing msr/msfr/plant/steady/standalone_sam_model/msfr_1d_ss.i  block=IHX2 language=cpp
+!listing msr/msfr/plant/standalone_sam_model/msfr_1d_ss.i  block=IHX2 language=cpp
 
 The primary pump is placed between between the outlet to the core and the primary heat exchanger.
 The input parameters for the primary and intermediate circuits pumps are specified here below:
 
-!listing msr/msfr/plant/steady/standalone_sam_model/msfr_1d_ss.i  block=pump language=cpp
+!listing msr/msfr/plant/standalone_sam_model/msfr_1d_ss.i  block=pump language=cpp
 
-!listing msr/msfr/plant/steady/standalone_sam_model/msfr_1d_ss.i  block=pump2 language=cpp
+!listing msr/msfr/plant/standalone_sam_model/msfr_1d_ss.i  block=pump2 language=cpp
 
 
 The detailed instructions of these SAM components can be found in the SAM user manual, which are not repeated here for brevity.
@@ -201,29 +201,29 @@ The detailed instructions of these SAM components can be found in the SAM user m
 The Postprocessors block is used to monitor the SAM solutions during the simulations, and quantities of interest can
 be printed out in the log file. For example, to check out the core outlet temperature, one can add the following snippet: 
 
-!listing msr/msfr/plant/steady/standalone_sam_model/msfr_1d_ss.i block=Core_T_out language=cpp
+!listing msr/msfr/plant/standalone_sam_model/msfr_1d_ss.i block=Core_T_out language=cpp
 
 ### Preconditioning style=font-size:125%
 
 This block describes the preconditioner used by the solver.  
 New user can leave this block unchanged.
 
-!listing msr/msfr/plant/steady/standalone_sam_model/msfr_1d_ss.i block=Preconditioning
+!listing msr/msfr/plant/standalone_sam_model/msfr_1d_ss.i block=Preconditioning
 
 ### Executioner style=font-size:125%
 
 This block describes the calculation process flow. The user can specify the start time, end time, time step size for the simulation. Other inputs in this block include PETSc solver options, convergence tolerance, quadrature for elements, etc., which can be left unchanged.
 
-!listing msr/msfr/plant/steady/standalone_sam_model/msfr_1d_ss.i block=Executioner
+!listing msr/msfr/plant/standalone_sam_model/msfr_1d_ss.i block=Executioner
 
 ### Modeling the transient conditions style=font-size:125%
 
 Based upon the steady-state solutions, the transient simulations can be initiated by adjusting the primary pump head. A user defined function as shown below is used to linearly reduce the pump head from $100 \%$ to $50 \%$ in $40 \, s$. Similar implementation is also applied in the pump trip modeling. 
 Once the primary pump head changes, the MSFR SAM system model would start responding accordingly, and eventually new steady states are established with $50 \%$ or $0 \%$ original pump head. 
 
-!listing msr/msfr/plant/steady/standalone_sam_model/msfr_1d_transient_01.i block=head_func
+!listing msr/msfr/plant/standalone_sam_model/msfr_1d_transient_01.i block=head_func
 
-!listing msr/msfr/plant/steady/standalone_sam_model/msfr_1d_transient_01.i block=pump
+!listing msr/msfr/plant/standalone_sam_model/msfr_1d_transient_01.i block=pump
 
 ## Run Command
 
