@@ -4,6 +4,8 @@
 # ------------------------------------------------------------------------------
 # Idaho Falls, INL, August 10, 2020
 # Author(s): Dr. Guillaume Giudicelli, Dr. Paolo Balestra, Dr. April Novak
+# If using or referring to this model, please cite as explained in
+# https://mooseframework.inl.gov/virtual_test_bed/citing.html
 # ==============================================================================
 # - Coupled fluid-solid thermal hydraulics model of the Mk1-FHR
 # ==============================================================================

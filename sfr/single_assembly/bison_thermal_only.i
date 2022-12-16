@@ -4,6 +4,8 @@
 ## Thermal conduction in fuel, closed gap and clad                            ##
 ## Convection on clad outer surface with SAM coupling                         ##
 ################################################################################
+# If using or referring to this model, please cite as explained on
+# https://mooseframework.inl.gov/virtual_test_bed/citing.html
 
 #  Units are in standard SI: J, K, kg, m, Pa, s.
 # dimensions are representative of a SFR fuel assembly

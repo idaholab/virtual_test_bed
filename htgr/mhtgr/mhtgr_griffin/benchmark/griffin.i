@@ -4,6 +4,8 @@
 # ------------------------------------------------------------------------------
 # Idaho Falls, INL, June 28th, 2022
 # Author(s): Javi Ortensi
+# If using or referring to this model, please cite as explained in
+# https://mooseframework.inl.gov/virtual_test_bed/citing.html
 # ==============================================================================
 # - MHTGR350 GRIFFIN standalone neutronics input
 # - Main App

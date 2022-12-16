@@ -1,3 +1,8 @@
+# HTGR assembly meshing file
+# Application: MOOSE reactor module, Griffin, BlueCRAB
+# If using or referring to this model, please cite as explained in
+# https://mooseframework.inl.gov/virtual_test_bed/citing.html
+
 # This input file is used to create the mesh for the solid phase.
 # This should be run with:
 #

@@ -1,3 +1,9 @@
+# Models the RCCS flow channels for the HTTF PG-26 Transient
+# Application: RELAP-7
+# POC: Thomas Freyman, thomas.freyman at inl.gov
+# If using or referring to this model, please cite as explained in
+# https://mooseframework.inl.gov/virtual_test_bed/citing.html
+
 # Models the RCCS flow channel for the PG-26 transient
 T_in = 300 # K
 p_out = 101000 # Pa

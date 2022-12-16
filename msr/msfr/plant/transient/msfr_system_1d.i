@@ -3,6 +3,8 @@
 ## SAM Sub-Sub-Application input file                                         ##
 ## Partial pump trip transient                                                ##
 ################################################################################
+# If using or referring to this model, please cite as explained in
+# https://mooseframework.inl.gov/virtual_test_bed/citing.html
 
 core_power_val = 3e9
 

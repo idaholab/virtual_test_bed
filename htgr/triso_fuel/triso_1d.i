@@ -1,3 +1,9 @@
+# TRISO 1D depletion input
+# Application: BISON
+# POC: Wen Jiang, wen.jiang.at.inl.gov
+# If using or referring to this model, please cite as explained in
+# https://mooseframework.inl.gov/virtual_test_bed/citing.html
+
 temperature = 973.15 # K
 
 kernel_radius = 213.35e-6 # micron

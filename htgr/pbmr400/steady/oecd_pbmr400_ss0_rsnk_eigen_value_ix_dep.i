@@ -5,6 +5,8 @@
 # ------------------------------------------------------------------------------
 # Idaho Falls, INL, 02/22/2020
 # Author(s): Dr. Javier Ortensi, Dr. Paolo Balestra, Dr Sebastian Schunert
+# If using or referring to this model, please cite as explained in
+# https://mooseframework.inl.gov/virtual_test_bed/citing.html
 # ==============================================================================
 # - The Model has been built based on [1], and some of the initial results
 #   has been published in [2].

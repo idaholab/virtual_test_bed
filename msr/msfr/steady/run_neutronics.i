@@ -4,6 +4,8 @@
 ## Steady state neutronics model                                              ##
 ## Neutron diffusion with delayed precursor source, no equivalence            ##
 ################################################################################
+# If using or referring to this model, please cite as explained in
+# https://mooseframework.inl.gov/virtual_test_bed/citing.html
 
 [Mesh]
   uniform_refine = 1

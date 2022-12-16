@@ -5,6 +5,8 @@
 # ------------------------------------------------------------------------------
 # Idaho Falls, INL, 08/2022
 # Author(s): Thomas Freyman, Dr. Lise Charlot
+# If using or referring to this model, please cite as explained in
+# https://mooseframework.inl.gov/virtual_test_bed/citing.html
 # ==============================================================================
 # - The mesh file is stored using git lfs
 # ==============================================================================

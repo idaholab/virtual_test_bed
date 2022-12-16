@@ -2,7 +2,10 @@
 ## FHR bypass flow in outer reflector                                         ##
 ## Cardinal Sub Application to run NekRS                                      ##
 ## 3D RANS model                                                              ##
+## POC : anovak at anl.gov                                                    ##
 ################################################################################
+# If using or referring to this model, please cite as explained in
+# https://mooseframework.inl.gov/virtual_test_bed/citing.html
 
 fluid_solid_interface = '1 2 7'
 

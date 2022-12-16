@@ -4,6 +4,8 @@
 ## This runs a slow relaxation to steady state while ramping down the fluid   ##
 ## viscosity.                                                                 ##
 ################################################################################
+# If using or referring to this model, please cite as explained in
+# https://mooseframework.inl.gov/virtual_test_bed/citing.html
 
 # Material properties
 rho = 4284  # density [kg / m^3]  (@1000K)
