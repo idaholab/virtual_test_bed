@@ -104,6 +104,8 @@ obtained through INL's [NCRC](https://inl.gov/ncrc/).
 
 - Mk1 FHR Primary loop simulation [documentation](pbfhr/pbfhr_sam/pbfhr_sam.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/devel/pbfhr/sam_model)
 
+- Generic Pebble Bed Reactor core model [documentation](htgr/generic-pbr/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/devel/htgr/generic-pbr)
+
 
 ### Thermal-hydraulics module (open-source)
 

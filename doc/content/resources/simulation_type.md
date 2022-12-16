@@ -45,6 +45,8 @@ help creating it.
 
 - MHTGR Benchmark Griffin model [documentation](htgr/mhtgr_griffin/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/mhtgr_griffin/)
 
+- Generic Pebble Bed Reactor core model [documentation](htgr/generic-pbr/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/devel/htgr/generic-pbr)
+
 
 ### Primary loop analysis
 
