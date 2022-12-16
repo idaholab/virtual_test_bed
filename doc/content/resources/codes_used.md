@@ -65,6 +65,8 @@ obtained through INL's [NCRC](https://inl.gov/ncrc/).
 
 - Molten Salt Fast Reactor core CFD [documentation](msr/msfr/nek5000_cfd_model.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/msr/msfr/core_cfd)
 
+- 67 pebbles conjugate heat transfer [documentation](pb67_cardinal/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/devel/htgr/pb67_cardinal)
+
 
 ### Pronghorn
 
@@ -145,6 +147,8 @@ obtained through INL's [NCRC](https://inl.gov/ncrc/).
 - Reflector bypass flow in the PB-FHR [documentation](pbfhr/reflector.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/pbfhr/reflector)
 
 - Dispersed UO2 LEU fuel model [documentation](htgr/leu_pulse) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/devel/htgr/leu_pulse/ht_20r_leu_fl.i)
+
+- 67 pebbles conjugate heat transfer [documentation](pb67_cardinal/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/devel/htgr/pb67_cardinal)
 
 
 ### Pronghorn pebble models
