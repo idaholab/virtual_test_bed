@@ -73,6 +73,11 @@ obtained through INL's [NCRC](https://inl.gov/ncrc/).
 - Pebble Bed Modular Reactor [documentation](htgr/pbmr/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/pbmr400/transient)
 
 
+### Pronghorn subchannel
+
+- Subchannel ORNL 19 pins and Toshiba 37 pins benchmarks [documentation](sfr/subchannel/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/devel/sfr/subchannel)
+
+
 ## Systems analysis and 1D Thermal-hydraulics
 
 ### SAM
