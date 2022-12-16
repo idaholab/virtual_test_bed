@@ -1,3 +1,9 @@
+## HTGR assembly neutronics simulation
+## Application: Cardinal
+## POC: April Novak anovak at anl.gov
+## If using or referring to this model, please cite as explained in
+## https://mooseframework.inl.gov/virtual_test_bed/citing.html
+
 num_layers_for_THM = 50      # number of elements in the THM model; for the converged
                              # case, we set this to 150
 

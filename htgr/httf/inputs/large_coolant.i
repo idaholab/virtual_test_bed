@@ -1,3 +1,9 @@
+# Models the large coolant channels for the HTTF PG-26 Transient
+# Application: RELAP-7
+# POC: Thomas Freyman, thomas.freyman at inl.gov
+# If using or referring to this model, please cite as explained in
+# https://mooseframework.inl.gov/virtual_test_bed/citing.html
+
 # Model of the 1.6 cm diameter (large) flow channels
 T_in = 373.15 # K
 p_out = 225000 # Pa

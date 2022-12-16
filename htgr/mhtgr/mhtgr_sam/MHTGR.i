@@ -4,6 +4,8 @@
 ## 1D thermal hydraulics                                                      ##
 ## Primary + secondary loop                                                   ##
 ################################################################################
+# If using or referring to this model, please cite as explained in
+# https://mooseframework.inl.gov/virtual_test_bed/citing.html
 
 ### For reactor trasients the following variables needs to change####
 ##1.  EHX coefficient

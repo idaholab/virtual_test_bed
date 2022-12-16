@@ -1,3 +1,9 @@
+## HTGR assembly heat conduction input
+## Application: MOOSE heat conduction module
+## POC: April Novak anovak at anl.gov
+## If using or referring to this model, please cite as explained in
+## https://mooseframework.inl.gov/virtual_test_bed/citing.html
+
 # copy-pasta from common_input.i
 inlet_T = 598.0                          # inlet fluid temperature (K)
 buffer_k = 0.5                           # buffer thermal conductivity (W/m/K)

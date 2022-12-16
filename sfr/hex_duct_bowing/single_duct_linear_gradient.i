@@ -5,6 +5,8 @@
 # ------------------------------------------------------------------------------
 # Argonne National Laboratory, 10/2022
 # Author(s): Nicholas Wozniak
+# If using or referring to this model, please cite as explained on
+# https://mooseframework.inl.gov/virtual_test_bed/citing.html
 # ==============================================================================
 
 [GlobalParams]

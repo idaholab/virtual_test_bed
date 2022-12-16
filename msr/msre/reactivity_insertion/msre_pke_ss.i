@@ -1,6 +1,10 @@
 # MSRE Model for reactivity insertion test
 # SAM input file for steady state initialization
-#
+# Application: SAM
+# POC: Jun Fang (fangj at anl.gov)
+# If using or referring to this model, please cite as explained in
+# https://mooseframework.inl.gov/virtual_test_bed/citing.html
+
 [GlobalParams]
   global_init_P = 2.392e5
   global_init_V = 1.0

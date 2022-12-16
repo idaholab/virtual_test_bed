@@ -6,7 +6,8 @@
 #   given an inlet temperature (nominal = 350 degrees C = 623.15 K), computes the displacements along x and y
 #   transfer them to griffin for cross section adjustment (radial expansion feedback)
 #---------------------------------------------------------------------------
-
+# If using or referring to this model, please cite as explained on
+# https://mooseframework.inl.gov/virtual_test_bed/citing.html
 
 Tinlet = 1083.8 # inlet temperature matching 1% dl/l expansion
 

@@ -6,6 +6,8 @@
 # ------------------------------------------------------------------------------
 # Idaho Falls, INL, 01/20/2020
 # Author(s): Dr. Paolo Balestra, Dr. Sebastian Schunert
+# If using or referring to this model, please cite as explained in
+# https://mooseframework.inl.gov/virtual_test_bed/citing.html
 # ==============================================================================
 # - ss2: Steady state simulation sub app level 2
 # - mhtr: Moose for heat transfer calculation

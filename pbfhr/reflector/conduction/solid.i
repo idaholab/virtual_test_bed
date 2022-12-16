@@ -2,7 +2,10 @@
 ## FHR bypass flow in outer reflector                                         ##
 ## Cardinal Main Application                                                  ##
 ## Heat conduction in solid phase                                             ##
+## POC : anovak at anl.gov                                                    ##
 ################################################################################
+# If using or referring to this model, please cite as explained in
+# https://mooseframework.inl.gov/virtual_test_bed/citing.html
 
 # core average heat flux from the pebbles to the blocks
 core_heat_flux = 5e3

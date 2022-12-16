@@ -3,6 +3,8 @@
 ## SAM Sub-Application                                                        ##
 ## Steady state 1D thermal hydraulics                                         ##
 ################################################################################
+# If using or referring to this model, please cite as explained on
+# https://mooseframework.inl.gov/virtual_test_bed/citing.html
 
 m_dot_in = 29.8 #kg/s
 

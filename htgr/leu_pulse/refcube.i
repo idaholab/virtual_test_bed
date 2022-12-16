@@ -8,6 +8,8 @@
 # Main App
 # ==================================================================================
 # This model has been built based on [1]
+# If using or referring to this model, please cite as explained in
+# https://mooseframework.inl.gov/virtual_test_bed/citing.html
 # ----------------------------------------------------------------------------------
 # [1] Zabriskie, A. X. (2019). Multi-Scale, Multi-Physics Reactor Pulse Simulation
 #       Method with Macroscopic and Microscopic Feedback Effects (Unpublished

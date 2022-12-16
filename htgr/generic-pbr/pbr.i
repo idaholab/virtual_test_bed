@@ -7,6 +7,8 @@
 ## 1D thermal hydraulics                                                      ##
 ## Primary loop (Core only)                                                   ##
 ################################################################################
+# If using or referring to this model, please cite as explained in
+# https://mooseframework.inl.gov/virtual_test_bed/citing.html
 
 ############################################ Model information ############################################
 ## 1. This is a SAM model for the generic pebble bed high temperature gas-cooled reactor (HTGR).
@@ -46,6 +48,8 @@
 ## Note: For the remaining of this document, [1] is known as the 'INL report' while [2] is
 ## known as the 'NEA report'.
 ########################################################################################################
+## If using or referring to this model, please cite as explained in
+## https://mooseframework.inl.gov/virtual_test_bed/citing.html
 
 ############################################ Miscellaneous properties ############################################
 emissivity = 0.8          # According to NEA report [2] graphite and SS are assumed to have a constant emissivity of 0.8
