@@ -6,7 +6,7 @@ are many similarities in the input files. The reader may find below an index of 
 in the input files of the virtual test bed.
 
 !alert note title=Fully Open-Source
-The codes required to run these inputs are all open-source. Please refer to the documentation or the indexing below for the codes used.\\
+The codes required to run these inputs are all open-source. Please refer to the documentation or the indexing below for the codes used. Part of the inputs not listed here may be run with open-source codes as well.\\
 - Reflector bypass flow in the PB-FHR [documentation](pbfhr/reflector.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/pbfhr/reflector)\\
 - Molten Salt Fast Reactor core CFD [documentation](msr/msfr/nek5000_cfd_model.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/msr/msfr/core_cfd)\\
 - HTGR assembly multiphysics simulation [documentation](htgr/assembly/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/htgr/assembly)\\
@@ -45,7 +45,9 @@ obtained through INL's [NCRC](https://inl.gov/ncrc/).
 
 - MHTGR Griffin Benchmark [documentation](htgr/mhtgr_griffin/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/mhtgr_griffin/benchmark)
 
-- LFR Griffin Benchmark [documentation](lfr/index.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/lfr/heterogeneous_single_assembly_3D/neutronics_standalone)
+- LFR Griffin Benchmark [documentation](lfr/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/lfr/heterogeneous_single_assembly_3D/neutronics_standalone)
+
+- Gas Cooled Micro Reactor assembly multiphysics [documentation](gcmr/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/devel/microreactors/gcmr/assembly)
 
 
 ### Cardinal / OpenMC (open-source)
@@ -89,6 +91,8 @@ obtained through INL's [NCRC](https://inl.gov/ncrc/).
 
 - Molten Salt Fast Reactor plant multiphysics [documentation](msr/msfr/griffin_pgh_transient_model.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/msr/msfr/transient)
 
+- Gas Cooled Micro Reactor assembly multiphysics [documentation](gcmr/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/devel/microreactors/gcmr/assembly)
+
 
 ### Thermal-hydraulics module (open-source)
 
@@ -116,6 +120,8 @@ obtained through INL's [NCRC](https://inl.gov/ncrc/).
 - 1D TRISO fuel depletion [documentation](htgr/triso/triso_model.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/triso_fuel)
 
 - SNAP-8 NTP reactor core model [documentation](microreactors/s8er/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/microreactors/s8er)
+
+- Gas Cooled Micro Reactor assembly multiphysics [documentation](gcmr/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/devel/microreactors/gcmr/assembly)
 
 
 ### Thermo-mechanics module (open-source)

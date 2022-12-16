@@ -22,6 +22,8 @@ help creating it.
 
 - Assembly in a Sodium Fast Reactor [documentation](sfr/single_assembly/sfr.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/sfr/single_assembly)
 
+- Gas Cooled Micro Reactor assembly multiphysics [documentation](gcmr/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/devel/microreactors/gcmr/assembly)
+
 
 ### Multiphysics core simulations
 
@@ -77,6 +79,8 @@ help creating it.
 ### Unprotected loss of coolant flow (ULOF)
 
 - Molten Salt Fast Reactor core multiphysics [documentation](msr/msfr/griffin_pgh_transient_model.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/msr/msfr/transient)
+
+- Gas Cooled Micro Reactor assembly multiphysics [documentation](gcmr/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/devel/microreactors/gcmr/assembly)
 
 
 ## Depletion

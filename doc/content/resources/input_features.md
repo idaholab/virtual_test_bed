@@ -22,6 +22,8 @@ help creating it.
 
 - LFR Griffin Benchmark [documentation](lfr/index.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/lfr/heterogeneous_single_assembly_3D/neutronics_standalone)
 
+- Gas Cooled Micro Reactor assembly multiphysics [documentation](gcmr/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/devel/microreactors/gcmr/assembly)
+
 
 ### Cubit mesh generation
 
@@ -54,6 +56,8 @@ the input file, but generally reside in the same folder in the repository.
 - Reflector bypass flow in the PB-FHR [documentation](pbfhr/reflector.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/pbfhr/reflector)
 
 - SNAP-8 NTP reactor core model [documentation](microreactors/s8er/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/microreactors/s8er)
+
+- Gas Cooled Micro Reactor assembly multiphysics [documentation](gcmr/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/devel/microreactors/gcmr/assembly)
 
 
 ### Multiphysics and multiscale simulations
@@ -113,6 +117,8 @@ the input file, but generally reside in the same folder in the repository.
 - Molten Salt Fast Reactor core CFD [documentation](msr/msfr/nek5000_cfd_model.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/msr/msfr/core_cfd)
 
 - LFR Griffin Benchmark [documentation](lfr/index.md) [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/lfr/heterogeneous_single_assembly_3D/neutronics_standalone)
+
+- Gas Cooled Micro Reactor assembly multiphysics [documentation](gcmr/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/devel/microreactors/gcmr/assembly)
 
 
 ### GPU-enabled
