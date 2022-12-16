@@ -12,6 +12,7 @@
     check_input = True
     executable_pattern = 'cardinal*'
     min_parallel = 16
+    skip = 'Not enough memory #176'
   []
 
   [heat_conduction]
@@ -19,7 +20,7 @@
     input = moose.i
     csvdiff = 'moose_csv.csv'
     executable_pattern = 'cardinal*|combined*'
-    cli_args = "MultiApps/active='' Transfers/active=''"
+    cli_args = "MultiApps/active='' Transfers/active='' Executioner/num_steps=10"
     prereq = 'syntax_check_heat_conduction'
   []
 []

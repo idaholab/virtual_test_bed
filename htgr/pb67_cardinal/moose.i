@@ -64,6 +64,10 @@
 [Outputs]
   exodus = true
   interval = 500
+  [csv]
+    type = CSV
+    interval = 1
+  []
 []
 
 [MultiApps]
