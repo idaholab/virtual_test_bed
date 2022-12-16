@@ -8,7 +8,12 @@ help creating it.
 
 ## Mesh treatment
 
-### In-MOOSE mesh generation
+### In-MOOSE basic mesh generation
+
+- Dispersed UO2 LEU pulse model [documentation](htgr/leu_pulse) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/devel/htgr/leu_pulse)
+
+
+### In-MOOSE reactor mesh generation
 
 - HTGR assembly multiphysics simulation [documentation](htgr/assembly/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/htgr/assembly)
 
@@ -59,6 +64,8 @@ the input file, but generally reside in the same folder in the repository.
 
 - Gas Cooled Micro Reactor assembly multiphysics [documentation](gcmr/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/devel/microreactors/gcmr/assembly)
 
+- Dispersed UO2 LEU pulse model [documentation](htgr/leu_pulse) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/devel/htgr/leu_pulse)
+
 
 ### Multiphysics and multiscale simulations
 
@@ -98,6 +105,8 @@ the input file, but generally reside in the same folder in the repository.
 - 1D TRISO fuel depletion [documentation](htgr/triso/triso_model.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/devel/htgr/triso_fuel)
 
 - Subchannel ORNL 19 pins and Toshiba 37 pins benchmarks [documentation](sfr/subchannel/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/devel/sfr/subchannel)
+
+- Dispersed UO2 LEU pulse model [documentation](htgr/leu_pulse) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/devel/htgr/leu_pulse)
 
 
 ### HPC required

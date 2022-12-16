@@ -70,6 +70,8 @@ help creating it.
 
 - High Temperature Test Facility simulated power increase simulations [documentation](htgr/httf/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/httf)
 
+- Dispersed UO2 LEU pulse model [documentation](htgr/leu_pulse) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/devel/htgr/leu_pulse)
+
 
 ### Protected loss of coolant flow
 

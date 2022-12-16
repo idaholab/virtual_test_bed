@@ -49,6 +49,8 @@ obtained through INL's [NCRC](https://inl.gov/ncrc/).
 
 - Gas Cooled Micro Reactor assembly multiphysics [documentation](gcmr/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/devel/microreactors/gcmr/assembly)
 
+- Dispersed UO2 LEU pulse model [documentation](htgr/leu_pulse) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/devel/htgr/leu_pulse)
+
 
 ### Cardinal / OpenMC (open-source)
 
@@ -141,6 +143,8 @@ obtained through INL's [NCRC](https://inl.gov/ncrc/).
 - HTGR assembly multiphysics simulation [documentation](htgr/assembly/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/htgr/assembly)
 
 - Reflector bypass flow in the PB-FHR [documentation](pbfhr/reflector.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/pbfhr/reflector)
+
+- Dispersed UO2 LEU fuel model [documentation](htgr/leu_pulse) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/devel/htgr/leu_pulse/ht_20r_leu_fl.i)
 
 
 ### Pronghorn pebble models
