@@ -3,7 +3,7 @@
 	url = git@hpcgitlab.hpc.inl.gov:idaholab/bison
 [submodule "apps/griffin"]
 	path = apps/griffin
-	url = git@gitlab.software.inl.gov:idaholab/griffin
+	url = git@github.inl.gov:ncrc/griffin
 [submodule "apps/pronghorn"]
 	path = apps/pronghorn
 	url = git@hpcgitlab.hpc.inl.gov:idaholab/pronghorn
