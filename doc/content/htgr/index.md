@@ -23,3 +23,5 @@
 [LEU Pulse](leu_pulse/index.md)
 
 [HTTR multiphysics core model](httr/index.md)
+
+[Pronghorn Generic Pebble Bed HTGR Tutorial](generic-pbr-tutorial/index.md)

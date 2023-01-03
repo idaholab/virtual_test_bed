@@ -1,0 +1,73 @@
+[Tests]
+  [step1_syntax]
+    type = RunApp
+    input = step1.i
+    check_input = True
+    executable_pattern = 'pronghorn*|blue_crab*'
+    allow_warnings = true
+    max_time = 500
+  []
+
+  [step2_syntax]
+    type = RunApp
+    input = step2.i
+    check_input = True
+    executable_pattern = 'pronghorn*|blue_crab*'
+    allow_warnings = true
+    max_time = 500
+  []
+
+  [step3_syntax]
+    type = RunApp
+    input = step3.i
+    check_input = True
+    executable_pattern = 'pronghorn*|blue_crab*'
+    allow_warnings = true
+    max_time = 500
+  []
+
+  [step4_syntax]
+    type = RunApp
+    input = step4.i
+    check_input = True
+    executable_pattern = 'pronghorn*|blue_crab*'
+    allow_warnings = true
+    max_time = 500
+  []
+
+  [step5_syntax]
+    type = RunApp
+    input = step5.i
+    check_input = True
+    executable_pattern = 'pronghorn*|blue_crab*'
+    allow_warnings = true
+    max_time = 500
+  []
+
+  [step6_syntax]
+    type = RunApp
+    input = step6.i
+    check_input = True
+    executable_pattern = 'pronghorn*|blue_crab*'
+    allow_warnings = true
+    max_time = 500
+  []
+
+  [step7_syntax]
+    type = RunApp
+    input = step7.i
+    check_input = True
+    executable_pattern = 'pronghorn*|blue_crab*'
+    allow_warnings = true
+    max_time = 500
+  []
+
+  [step8_syntax]
+    type = RunApp
+    input = step.i
+    check_input = True
+    executable_pattern = 'pronghorn*|blue_crab*'
+    allow_warnings = true
+    max_time = 500
+  []
+[]
