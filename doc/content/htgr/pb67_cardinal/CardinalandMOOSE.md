@@ -36,6 +36,8 @@ stores its solution fields and mesh. But once the wrapping is constructed, nekRS
 then communicate with any other MOOSE application via the [MultiApp]((https://mooseframework.inl.gov/syntax/MultiApps/index.html)
 and [Transfer](https://mooseframework.inl.gov/syntax/Transfers/index.html) systems
 in MOOSE, enabling complex multiscale thermal-hydraulic analysis and multiphysics feedback.
+Note that the user does not need to construct this mapping themselves - it all happens
+automatically.
 The same wrapping can be used for conjugate heat transfer analysis with *any* MOOSE
 application that can compute a heat flux; that is, because a MOOSE-wrapped version of nekRS
 interacts with the MOOSE framework in a similar manner as natively-developed
