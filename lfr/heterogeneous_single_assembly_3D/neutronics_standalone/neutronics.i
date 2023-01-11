@@ -341,10 +341,20 @@ totalpower = 3700000.0 # W
                        ${bid_F_fuel_R1} ${bid_J}           ${bid_F_fuel_R2} ${bid_J}           ${bid_F_fuel_R3} ${bid_J}           ${bid_F_fuel_R4} ${bid_J}           ${bid_F_fuel_R5} ${bid_J}           ${bid_F_fuel_R6} ${bid_J}           ${bid_F_fuel_R7} ${bid_J}           ${bid_F_heliumc}  ${bid_Jc}           ${bid_F_helium}  ${bid_J}            ${bid_F_lead} ${bid_J}       ${fparse bid_F_lead + 1} ${bid_J}       ${bid_F_leadgap} ${bid_J}         ${bid_F_clad} ${bid_J}       ${bid_F_duct} ${bid_J}'
   []
 
+  # This assigns plane_id for the purpose of axial pin power tally
+  [assign_planeid]
+    type = PlaneIDMeshGenerator
+    input = extrude
+    plane_coordinates = '0.0 ${hE} ${hF} ${hJ}'
+    num_ids_per_plane = '1 ${num_axmeshF} 1'
+    plane_axis = 'z'
+    id_name = 'plane_id'
+  []
+
   # This renames sidesets to common sensical names
   [rename_sidesets]
     type = RenameBoundaryGenerator
-    input = extrude
+    input = assign_planeid
     old_boundary = '3        DuctLeadInterface 998          999             997'
     new_boundary = 'ROD_SIDE DUCT_INNERSIDE    ASSEMBLY_TOP ASSEMBLY_BOTTOM ASSEMBLY_SIDE'
   []
@@ -503,17 +513,10 @@ totalpower = 3700000.0 # W
 []
 
 [VectorPostprocessors]
-  [vpp_power]
-    type = HexagonalGridVariableIntegral
+  [pin_powers]
+    type = ExtraIDIntegralVectorPostprocessor
     variable = 'volume x_coord y_coord power_density'
-    print_on_screen = false
-    center_point = '0.0 0.0'
-    pitch = ${fparse 2.0 * half_pinpitch}
-    rotation = 30
-    execute_on = 'timestep_end'
-    block = '${bid_F_fuel_R1} ${bid_F_fuel_R2} ${bid_F_fuel_R3} ${bid_F_fuel_R4} ${bid_F_fuel_R5} ${bid_F_fuel_R6} ${bid_F_fuel_R7}'
-    num_rings = 7
-    z_layers = "${hE} 1.400935 1.45397 1.507005 1.56004 1.613075 1.66611 1.719145 1.77218 1.825215 1.87825 1.931285 1.98432 2.037355 2.09039 2.143425 2.19646 2.249495 2.30253 2.355565 ${hF}"
+    id_name = 'pin_id plane_id'
   []
 []
 
