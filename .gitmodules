@@ -1,27 +1,27 @@
 [submodule "apps/bison"]
 	path = apps/bison
-	url = git@hpcgitlab.hpc.inl.gov:idaholab/bison
+	url = git@github.inl.gov:ncrc/bison
 [submodule "apps/griffin"]
 	path = apps/griffin
 	url = git@github.inl.gov:ncrc/griffin
 [submodule "apps/pronghorn"]
 	path = apps/pronghorn
-	url = git@hpcgitlab.hpc.inl.gov:idaholab/pronghorn
+	url = git@github.inl.gov:ncrc/pronghorn
 [submodule "apps/SAM"]
 	path = apps/SAM
-	url = git@hpcgitlab.hpc.inl.gov:idaholab/SAM
+	url = git@github.inl.gov:ncrc/SAM
 [submodule "apps/sockeye"]
 	path = apps/sockeye
-	url = git@hpcgitlab.hpc.inl.gov:idaholab/sockeye
+	url = git@github.inl.gov:ncrc/sockeye
 [submodule "apps/dire_wolf"]
 	path = apps/dire_wolf
-	url = git@hpcgitlab.hpc.inl.gov:idaholab/dire_wolf
+	url = git@github.inl.gov:ncrc/dire_wolf
 [submodule "apps/blue_crab"]
 	path = apps/blue_crab
-	url = git@hpcgitlab.hpc.inl.gov:idaholab/blue_crab
+	url = git@github.inl.gov:ncrc/blue_crab
 [submodule "apps/cardinal"]
 	path = apps/cardinal
 	url = https://github.com/neams-th-coe/cardinal
 [submodule "apps/relap-7"]
 	path = apps/relap-7
-	url = git@hpcgitlab.hpc.inl.gov:idaholab/relap-7.git
+	url = git@github.inl.gov:ncrc/relap-7.git
