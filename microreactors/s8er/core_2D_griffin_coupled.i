@@ -473,14 +473,14 @@ inlet_T_fluid             = 949.81667 # (K)
     verbose = true
 
     richardson_max_its = 50
-    richardson_value = fission_source_integral
+    richardson_value = eigenvalue
     richardson_rel_tol = 1e-4
 
     inner_solve_type = GMRes
     max_inner_its = 2
 
     fixed_point_max_its = 2
-    custom_pp = fission_source_integral
+    custom_pp = eigenvalue
     custom_rel_tol = 1e-4
     force_fixed_point_solve = true
 []
