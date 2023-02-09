@@ -51,12 +51,12 @@ coordinates5 = '${fparse coordinates4+OPyC_thickness}'
 [UserObjects]
   [particle_geometry]
     type = TRISOGeometry
-    outer_OPyC = OPyC_right_boundary
-    outer_SiC = SiC_right_boundary
-    outer_IPyC = IPyC_right_boundary
-    inner_IPyC = IPyC_left_boundary
-    outer_buffer = buffer_right_boundary
-    outer_kernel = fuel_right_boundary
+    outer_OPyC = OPyC_outer_boundary
+    outer_SiC = SiC_outer_boundary
+    outer_IPyC = IPyC_outer_boundary
+    inner_IPyC = IPyC_inner_boundary
+    outer_buffer = buffer_outer_boundary
+    outer_kernel = fuel_outer_boundary
     include_particle = true
     include_pebble = false
     IPyC_thickness_mean = 40.4e-6
@@ -183,8 +183,8 @@ coordinates5 = '${fparse coordinates4+OPyC_thickness}'
   [thermal_contact]
     type = GapHeatTransferLWR
     variable = temperature
-    primary = IPyC_left_boundary
-    secondary = buffer_right_boundary
+    primary = IPyC_inner_boundary
+    secondary = buffer_outer_boundary
     initial_moles = initial_moles
     gas_released = 'fis_gas_released'
     released_gas_types = 'Kr Xe'
