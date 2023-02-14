@@ -19,7 +19,7 @@ filterModes = 2
 [PRESSURE]
 residualTol = 1e-04
 residualProj = yes
-#preconditioner = semg
+coarseGridDiscretization = SEMFEM
 smootherType = chebyshev+asm
 residualProjectionVectors = 30
 
