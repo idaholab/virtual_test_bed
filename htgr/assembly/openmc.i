@@ -126,7 +126,7 @@ num_layers_for_THM = 50      # number of elements in the THM model; for the conv
     type = ParsedAux
     variable = z
     use_xyzt = true
-    function = 'z'
+    expression = 'z'
   []
 []
 
@@ -152,7 +152,7 @@ num_layers_for_THM = 50      # number of elements in the THM model; for the conv
 [Functions]
   [temp_ic]
     type = ParsedFunction
-    value = '${inlet_T} + (${height} - z) / ${height} * ${power} / ${mdot} / ${fluid_Cp}'
+    expression = '${inlet_T} + (${height} - z) / ${height} * ${power} / ${mdot} / ${fluid_Cp}'
   []
 []
 
@@ -198,6 +198,9 @@ num_layers_for_THM = 50      # number of elements in the THM model; for the conv
   # create those variabes for us
   temperature_variables = 'solid_temp solid_temp solid_temp thm_temp'
   temperature_blocks = 'graphite compacts poison 101'
+
+  tally_score = heating
+  tally_name = heat_source
 []
 
 [Postprocessors]
@@ -213,8 +216,9 @@ num_layers_for_THM = 50      # number of elements in the THM model; for the conv
     execute_on = 'transfer initial timestep_end'
   []
   [max_tally_rel_err]
-    type = FissionTallyRelativeError
+    type = TallyRelativeError
     value_type = max
+    tally_score = 'heating'
   []
   [k]
     type = KEigenvalue
