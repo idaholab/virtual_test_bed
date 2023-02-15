@@ -357,21 +357,21 @@ outlet_pressure_val = 2e5
   # Convert postprocessor inputs to functions
   [inlet_vel_y_fun]
     type = ParsedFunction
-    value = 'inlet_vel_y_pp'
-    vals = 'inlet_vel_y_pp'
-    vars = 'inlet_vel_y_pp'
+    expression = 'inlet_vel_y_pp'
+    symbol_names = 'inlet_vel_y_pp'
+    symbol_values = 'inlet_vel_y_pp'
   []
   [pressure_out_fun]
     type = ParsedFunction
-    value = 'outlet_pressure'
-    vals = 'outlet_pressure'
-    vars = 'outlet_pressure'
+    expression = 'outlet_pressure'
+    symbol_names = 'outlet_pressure'
+    symbol_values = 'outlet_pressure'
   []
   [T_inlet_fun]
     type = ParsedFunction
-    value = 'inlet_temp_fluid'
-    vals = 'inlet_temp_fluid'
-    vars = 'inlet_temp_fluid'
+    expression = 'inlet_temp_fluid'
+    symbol_names = 'inlet_temp_fluid'
+    symbol_values = 'inlet_temp_fluid'
   []
 []
 
