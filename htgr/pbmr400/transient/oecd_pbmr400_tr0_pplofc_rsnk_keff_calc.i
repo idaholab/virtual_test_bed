@@ -380,8 +380,8 @@ fis_fract            = ${fparse 1 - dh_fract} # Fission power fraction at t = 0.
   []
   [total_power_density]
     type = ParsedAux
-    function = 'fission_power_density + transient_decay_heat_power_density'
-    args = 'fission_power_density transient_decay_heat_power_density'
+    expression = 'fission_power_density + transient_decay_heat_power_density'
+    coupled_variables = 'fission_power_density transient_decay_heat_power_density'
     variable = total_power_density
     block = ${fuel_block}
     execute_on = 'INITIAL LINEAR TIMESTEP_END'
@@ -429,10 +429,10 @@ fis_fract            = ${fparse 1 - dh_fract} # Fission power fraction at t = 0.
   [XeDestruction]  # (lambda_Xe + total_micro_Xeabs_RR )
     type = ParsedMaterial
     block = ${fuel_block}
-    args = 'micro_xe_absorption_rate'
+    coupled_variables = 'micro_xe_absorption_rate'
     material_property_names = 'xenon_lambda'
-    f_name = XeDestruction
-    function = 'xenon_lambda + micro_xe_absorption_rate'
+    property_name = XeDestruction
+    expression = 'xenon_lambda + micro_xe_absorption_rate'
   []
   [constant_props]
     type = GenericConstantMaterial

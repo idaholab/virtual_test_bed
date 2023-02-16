@@ -189,8 +189,8 @@ fis_fract            = ${fparse 1 - dh_fract} # Fission power fraction at t = 0.
   []
   [total_power_density]
     type = ParsedAux
-    function = 'fission_power_density + decay_heat_power_density'
-    args = 'fission_power_density decay_heat_power_density'
+    expression = 'fission_power_density + decay_heat_power_density'
+    coupled_variables = 'fission_power_density decay_heat_power_density'
     variable = total_power_density
     execute_on = 'INITIAL timestep_end'
   []

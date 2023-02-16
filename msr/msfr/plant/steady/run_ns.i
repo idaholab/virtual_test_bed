@@ -292,13 +292,13 @@ beta6 = 0.000184087
   # Guess to have a 3D power distribution
   [cosine_guess]
     type = ParsedFunction
-    value = 'max(0, cos(x*pi/2/1.2))*max(0, cos(y*pi/2/1.1))'
+    expression = 'max(0, cos(x*pi/2/1.2))*max(0, cos(y*pi/2/1.1))'
   []
   [hx_cold_temp]
     type = ADParsedFunction
-    value = 'Tcold'
-    vars  = 'Tcold'
-    vals = '${T_HX}'
+    expression = 'Tcold'
+    symbol_names = 'Tcold'
+    symbol_values = '${T_HX}'
   []
 []
 

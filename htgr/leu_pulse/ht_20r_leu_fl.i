@@ -195,9 +195,9 @@
     block = '0 11' # Irradiation does not affect rho * cp
     constant_names = 'rho_gr'
     constant_expressions = '0.0018' # kg/cm3
-    args = 'temperature' # Variable
-    f_name = 'heat_capacity' # Property name
-    function = 'rho_gr / (11.07 * pow(temperature, -1.644) + 0.0003688 * pow(temperature, 0.02191))' # J/cm3 K
+    coupled_variables = 'temperature' # Variable
+    property_name = 'heat_capacity' # Property name
+    expression = 'rho_gr / (11.07 * pow(temperature, -1.644) + 0.0003688 * pow(temperature, 0.02191))' # J/cm3 K
   []
   # Fission Damaged Graphite
   [damlay_kth]
@@ -213,9 +213,9 @@
     block = 10
     constant_names = 'beta p_vol sigma kap3x'
     constant_expressions = '1.0 0.05 1.5 1.0'
-    args = 'temperature' # Variable
-    f_name = 'thermal_conductivity' # Property name
-    function = 'lt := temperature / 1000.0; fresh := (100.0 / (6.548 + 23.533 * lt) + 6400.0 * exp(-16.35 / lt) / pow(lt, 5.0/2.0)) / 100.0; kap1d := (1.09 / pow(beta, 3.265) + 0.0643 * sqrt(temperature) / sqrt(beta)) * atan(1.0 / (1.09 / pow(beta, 3.265) + sqrt(temperature) * 0.0643 / sqrt(beta))); kap1p := 1.0 + 0.019 * beta / ((3.0 - 0.019 * beta) * (1.0 + exp(-(temperature - 1200.0) / 100.0))); kap2p := (1.0 - p_vol) / (1.0 + (sigma - 1.0) * p_vol); kap4r := 1.0 - 0.2 / (1.0 + exp((temperature - 900.0) / 80.0)); fresh * kap1d * kap1p * kap2p * kap3x * kap4r'
+    coupled_variables = 'temperature' # Variable
+    property_name = 'thermal_conductivity' # Property name
+    expression = 'lt := temperature / 1000.0; fresh := (100.0 / (6.548 + 23.533 * lt) + 6400.0 * exp(-16.35 / lt) / pow(lt, 5.0/2.0)) / 100.0; kap1d := (1.09 / pow(beta, 3.265) + 0.0643 * sqrt(temperature) / sqrt(beta)) * atan(1.0 / (1.09 / pow(beta, 3.265) + sqrt(temperature) * 0.0643 / sqrt(beta))); kap1p := 1.0 + 0.019 * beta / ((3.0 - 0.019 * beta) * (1.0 + exp(-(temperature - 1200.0) / 100.0))); kap2p := (1.0 - p_vol) / (1.0 + (sigma - 1.0) * p_vol); kap4r := 1.0 - 0.2 / (1.0 + exp((temperature - 900.0) / 80.0)); fresh * kap1d * kap1p * kap2p * kap3x * kap4r'
       # Divided fresh by 100 to get it into cm
   []
   [grain_rho_cp]
@@ -223,9 +223,9 @@
     block = 10
     constant_names = 'rho_fg'
     constant_expressions = '0.010963' # kg/cm3
-    args = 'temperature' # Variable
-    f_name = 'heat_capacity' # Property name
-    function = 'lt := temperature / 1000.0; fink_cp := 52.1743 + 87.951 * lt - 84.2411 * pow(lt, 2) + 31.542 * pow(lt, 3) - 2.6334 * pow(lt, 4) - 0.71391 * pow(lt, -2); rho_fg * fink_cp / 267.2 * 1000.0' # J/cm3 K
+    coupled_variables = 'temperature' # Variable
+    property_name = 'heat_capacity' # Property name
+    expression = 'lt := temperature / 1000.0; fink_cp := 52.1743 + 87.951 * lt - 84.2411 * pow(lt, 2) + 31.542 * pow(lt, 3) - 2.6334 * pow(lt, 4) - 0.71391 * pow(lt, -2); rho_fg * fink_cp / 267.2 * 1000.0' # J/cm3 K
   []
 []
 

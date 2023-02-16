@@ -145,7 +145,7 @@
     type = ParsedFunction
     #At center of wall, y=+-0.075m
     #T varies across the cross-section from 500C to 550C, ramps up to that from 400C at z=1.5m to 2.5m
-    value = '400+if(z>2.5,t*(125-25/.075*y*t),if(z>1.5,t*(z-1.5)/1.0*(125-25/.075*y*t),0))'
+    expression = '400+if(z>2.5,t*(125-25/.075*y*t),if(z>1.5,t*(z-1.5)/1.0*(125-25/.075*y*t),0))'
   []
 []
 

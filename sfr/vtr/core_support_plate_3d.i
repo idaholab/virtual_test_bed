@@ -84,9 +84,9 @@ Tref   = 293.15 # reference temperature for the linear thermal expansion for SS3
   # from TEV 3749
   [ss316_alphaMean_vtr]
     type = ParsedFunction
-    value = 'a+b*t+c*t*t'
-    vars  =  'a       b          c'
-    vals  =  '1.789e-5 2.398e-9 3.269e-13'
+    expression = 'a+b*t+c*t*t'
+    symbol_names   =  'a       b          c'
+    symbol_values  =  '1.789e-5 2.398e-9 3.269e-13'
   []
 []
 

@@ -76,21 +76,21 @@ layers = 40 # Make sure the number of axial divisions in the fluid domain and so
 [Functions]
   [Pout_func]
     type = ParsedFunction
-    value = 'if(t<t0,P0+(Pt-P0)/t0*t,Pt)'
-    vars = 'P0 Pt t0'
-    vals = '${Pout} ${Poutt} ${t0}'
+    expression = 'if(t<t0,P0+(Pt-P0)/t0*t,Pt)'
+    symbol_names = 'P0 Pt t0'
+    symbol_values = '${Pout} ${Poutt} ${t0}'
   []
   [Vin_func]
     type = ParsedFunction
-    value = 'if(t<t0,V0+(Vt-V0)/t0*t,Vt)'
-    vars = 'V0 Vt t0'
-    vals = '${Vin} ${Vint} ${t0}'
+    expression = 'if(t<t0,V0+(Vt-V0)/t0*t,Vt)'
+    symbol_names = 'V0 Vt t0'
+    symbol_values = '${Vin} ${Vint} ${t0}'
   []
   [Tin_func]
     type = ParsedFunction
-    value = 'if(t<t0,T0+(Tt-T0)/t0*t,Tt)'
-    vars = 'T0 Tt t0'
-    vals = '${Tin} ${Tint} ${t0}'
+    expression = 'if(t<t0,T0+(Tt-T0)/t0*t,Tt)'
+    symbol_names = 'T0 Tt t0'
+    symbol_values = '${Tin} ${Tint} ${t0}'
   []
 []
 
@@ -131,8 +131,8 @@ layers = 40 # Make sure the number of axial divisions in the fluid domain and so
   [scale_htc]
     type = ParsedAux
     variable = h_scaled
-    function = '1*htc' # 1 is replaced with the cli_args parameter in the multiapp block in ../solid_gcmr.i
-    args = htc
+    expression = '1*htc' # 1 is replaced with the cli_args parameter in the multiapp block in ../solid_gcmr.i
+    coupled_variables = htc
   []
 []
 

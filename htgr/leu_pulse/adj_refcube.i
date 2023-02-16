@@ -221,19 +221,19 @@
     block = 10
     constant_names = 'vol_fg vol_fl vol_gr gr_kth fl_kth beta p_vol sigma kap3x'
     constant_expressions = '3.35103216383e-08 1.31125888571e-07 2.14325144175e-05 0.3014 0.01046 1.0 0.05 1.5 1.0' # cm3 x3, W/cm K x2
-    args = 'temperature' # Variable
-    f_name = 'thermal_conductivity' # Property name
-    function = 'lt := temperature / 1000.0; fresh := (100.0 / (6.548 + 23.533 * lt) + 6400.0 * exp(-16.35 / lt) / pow(lt, 5.0/2.0)) / 100.0; kap1d := (1.09 / pow(beta, 3.265) + 0.0643 * sqrt(temperature) / sqrt(beta)) * atan(1.0 / (1.09 / pow(beta, 3.265) + sqrt(temperature) * 0.0643 / sqrt(beta))); kap1p := 1.0 + 0.019 * beta / ((3.0 - 0.019 * beta) * (1.0 + exp(-(temperature - 1200.0) / 100.0))); kap2p := (1.0 - p_vol) / (1.0 + (sigma - 1.0) * p_vol); kap4r := 1.0 - 0.2 / (1.0 + exp((temperature - 900.0) / 80.0)); fg_kth := fresh * kap1d * kap1p * kap2p * kap3x * kap4r; (vol_fg + vol_fl + vol_gr) / (vol_fg / fg_kth + vol_fl / fl_kth + vol_gr / gr_kth)' # W/cm K
-      # Divided fg_kth by 100 to get it into cm
+    coupled_variables = 'temperature' # Variable
+    property_name = 'thermal_conductivity' # Property name
+    expression = 'lt := temperature / 1000.0; fresh := (100.0 / (6.548 + 23.533 * lt) + 6400.0 * exp(-16.35 / lt) / pow(lt, 5.0/2.0)) / 100.0; kap1d := (1.09 / pow(beta, 3.265) + 0.0643 * sqrt(temperature) / sqrt(beta)) * atan(1.0 / (1.09 / pow(beta, 3.265) + sqrt(temperature) * 0.0643 / sqrt(beta))); kap1p := 1.0 + 0.019 * beta / ((3.0 - 0.019 * beta) * (1.0 + exp(-(temperature - 1200.0) / 100.0))); kap2p := (1.0 - p_vol) / (1.0 + (sigma - 1.0) * p_vol); kap4r := 1.0 - 0.2 / (1.0 + exp((temperature - 900.0) / 80.0)); fg_kth := fresh * kap1d * kap1p * kap2p * kap3x * kap4r; (vol_fg + vol_fl + vol_gr) / (vol_fg / fg_kth + vol_fl / fl_kth + vol_gr / gr_kth)' # W/cm K
+    # Divided fg_kth by 100 to get it into cm
   []
   [rho_cp] # Volume weighted arithmetic mean (Irradiation has no effect)
     type = ParsedMaterial
     block = 10
     constant_names = 'vol_fg vol_gr rho_gr rho_fg' # vol_gr here includes damaged layer volume
     constant_expressions = '3.35103216383e-08 2.1563640306e-05 0.0018 0.010963' # cm3 x2, kg/cm3 x2
-    args = 'temperature' # Variable
-    f_name = 'heat_capacity' # Property name
-    function = 'lt := temperature / 1000.0; gr_rhocp := rho_gr / (11.07 * pow(temperature, -1.644) + 0.0003688 * pow(temperature, 0.02191)); fink_cp := 52.1743 + 87.951 * lt - 84.2411 * pow(lt, 2) + 31.542 * pow(lt, 3) - 2.6334 * pow(lt, 4) - 0.71391 * pow(lt, -2); fg_rhocp := rho_fg * fink_cp / 267.2 * 1000.0; (vol_fg * fg_rhocp + vol_gr * gr_rhocp) / (vol_fg + vol_gr)'
+    coupled_variables = 'temperature' # Variable
+    property_name = 'heat_capacity' # Property name
+    expression = 'lt := temperature / 1000.0; gr_rhocp := rho_gr / (11.07 * pow(temperature, -1.644) + 0.0003688 * pow(temperature, 0.02191)); fink_cp := 52.1743 + 87.951 * lt - 84.2411 * pow(lt, 2) + 31.542 * pow(lt, 3) - 2.6334 * pow(lt, 4) - 0.71391 * pow(lt, -2); fg_rhocp := rho_fg * fink_cp / 267.2 * 1000.0; (vol_fg * fg_rhocp + vol_gr * gr_rhocp) / (vol_fg + vol_gr)'
   []
   # Reflector
   [neut_refl]
@@ -259,9 +259,9 @@
     block = '0'
     constant_names = 'rho_gr'
     constant_expressions = '0.0018' # kg/cm3
-    args = 'temperature' # Variable
-    f_name = 'heat_capacity' # Property name
-    function = 'rho_gr / (11.07 * pow(temperature, -1.644) + 0.0003688 * pow(temperature, 0.02191))' # J/cm3 K
+    coupled_variables = 'temperature' # Variable
+    property_name = 'heat_capacity' # Property name
+    expression = 'rho_gr / (11.07 * pow(temperature, -1.644) + 0.0003688 * pow(temperature, 0.02191))' # J/cm3 K
   []
 []
 

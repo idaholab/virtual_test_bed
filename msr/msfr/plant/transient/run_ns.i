@@ -261,9 +261,9 @@ beta6 = 0.000184087
   []
   [hx_cold_temp]
     type = ADParsedFunction
-    value = 'Tcold'
-    vars  = 'Tcold'
-    vals = '${T_HX}'
+    expression = 'Tcold'
+    symbol_names  = 'Tcold'
+    symbol_values = '${T_HX}'
   []
 []
 

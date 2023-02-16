@@ -536,8 +536,8 @@ riser_superficial_rho_v         = ${fparse reactor_total_mfr/riser_free_flow_are
   [power_density]
     type = ParsedAux
     variable = power_density
-    args = normalized_power_density
-    function = '${reactor_total_power} * normalized_power_density'
+    coupled_variables = normalized_power_density
+    expression = '${reactor_total_power} * normalized_power_density'
     block = ' 1 '
     execute_on = 'INITIAL LINEAR TIMESTEP_END'
   []
@@ -551,15 +551,15 @@ riser_superficial_rho_v         = ${fparse reactor_total_mfr/riser_free_flow_are
   [vel_x]
     type = ParsedAux
     variable = vel_x
-    function = 'superficial_rho_u / porosity / rho'
-    args = 'superficial_rho_u porosity rho'
+    expression = 'superficial_rho_u / porosity / rho'
+    coupled_variables = 'superficial_rho_u porosity rho'
     block = ' 1 2 14 15 16 17 18 '
   []
   [vel_y]
     type = ParsedAux
     variable = vel_y
-    function = 'superficial_rho_v / porosity / rho'
-    args = 'superficial_rho_v porosity rho'
+    expression = 'superficial_rho_v / porosity / rho'
+    coupled_variables = 'superficial_rho_v porosity rho'
     block = ' 1 2 14 15 16 17 18 '
   []
   [alpha]

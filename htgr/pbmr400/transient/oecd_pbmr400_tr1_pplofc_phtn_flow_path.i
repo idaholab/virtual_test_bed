@@ -180,15 +180,15 @@ reactor_inlet_free_rho_u = ${fparse -reactor_total_mfr/reactor_inlet_free_flow_a
   []
   [conditional_function]
      type = ParsedFunction
-     value = 't >= 13.0 & switch>0'
-     vals = switch
-     vars = switch
+     expression = 't >= 13.0 & switch>0'
+     symbol_names = switch
+     symbol_values = switch
   []
   [courant_condition_fun]
     type = ParsedFunction
-    value = 'a/b'
-    vars = 'a b'
-    vals = 'time_step_pp min_courant_num'
+    expression = 'a/b'
+    symbol_names = 'a b'
+    symbol_values = 'time_step_pp min_courant_num'
   []
   [dts]
      type = PiecewiseLinear
@@ -335,8 +335,8 @@ reactor_inlet_free_rho_u = ${fparse -reactor_total_mfr/reactor_inlet_free_flow_a
   [T_solid_element_average]
     type = ParsedAux
     variable = T_solid_element_average
-    function = T_solid
-    args = T_solid
+    expression = T_solid
+    coupled_variables = T_solid
     block = ' 1 '
   []
 
@@ -358,15 +358,15 @@ reactor_inlet_free_rho_u = ${fparse -reactor_total_mfr/reactor_inlet_free_flow_a
   [vel_x]
     type = ParsedAux
     variable = vel_x
-    function = 'superficial_rho_u / porosity / rho'
-    args = 'superficial_rho_u porosity rho'
+    expression = 'superficial_rho_u / porosity / rho'
+    coupled_variables = 'superficial_rho_u porosity rho'
     block = ' 1 2 14 15 16 17 18 '
   []
   [vel_y]
     type = ParsedAux
     variable = vel_y
-    function = 'superficial_rho_v / porosity / rho'
-    args = 'superficial_rho_v porosity rho'
+    expression = 'superficial_rho_v / porosity / rho'
+    coupled_variables = 'superficial_rho_v porosity rho'
     block = ' 1 2 14 15 16 17 18 '
   []
   [alpha]
