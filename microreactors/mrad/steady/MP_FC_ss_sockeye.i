@@ -190,9 +190,9 @@ corr_factor = ${fparse 2 * R_clad_o / R_hp_hole / R_hp_hole / area_correction / 
   []
   [scale_fcn]
     type = ParsedFunction
-    vars = 'catastrophic_pp recoverable_pp operational_pp'
-    vals = 'catastrophic_pp recoverable_pp operational_pp'
-    value = 'catastrophic_pp*recoverable_pp*operational_pp'
+    symbol_names = 'catastrophic_pp recoverable_pp operational_pp'
+    symbol_values = 'catastrophic_pp recoverable_pp operational_pp'
+    expression = 'catastrophic_pp*recoverable_pp*operational_pp'
   []
 []
 

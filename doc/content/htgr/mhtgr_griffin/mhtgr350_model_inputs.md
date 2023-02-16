@@ -30,7 +30,7 @@ Here we include the number of energy groups for the diffusion solver with
 !listing htgr/mhtgr_griffin/benchmark/griffin.i
          block=GlobalParams
 
-## Geometry and Mesh
+## Geometry and Mesh id=comp_mesh
 
 The mesh block reads in the provided Exodus mesh file.
 Using the [!style color=orange](FileMeshGenerator) type, the mesh file

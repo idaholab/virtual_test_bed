@@ -293,7 +293,7 @@ beta6 = 0.000184087
   # Guess to have a 3D power distribution
   [cosine_guess]
     type = ParsedFunction
-    value = 'max(0, cos(x*pi/2/1.2))*max(0, cos(y*pi/2/1.1))'
+    expression = 'max(0, cos(x*pi/2/1.2))*max(0, cos(y*pi/2/1.1))'
   []
 []
 
