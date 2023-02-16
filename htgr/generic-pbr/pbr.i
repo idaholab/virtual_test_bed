@@ -393,10 +393,7 @@ F5_R4_ratio = ${fparse (4.0 * pi * 0.03^2) * n_pebbles_5 / (2 * pi * 1.2 * 8.93)
     global_init_V = ${V_in}
     global_init_T = 533
     Tsolid_sf = 1e-3
-
-    [./PBModelParams]
-        p_order = 2
-    [../]
+    p_order = 2
 []
 [Functions]
     [./time_step]

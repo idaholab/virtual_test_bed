@@ -26,11 +26,12 @@ area_inlet = 0.33911699112746213
   global_init_T = 873.15
   Tsolid_sf = 1e-3
 
+  p_order = 2
+
   [PBModelParams]               # new user should not make changes to this block
     pbm_scaling_factors = '1 1e-2 1e-6'
     pspg = true
     supg_max = false
-    p_order = 2
   []
 []
 
