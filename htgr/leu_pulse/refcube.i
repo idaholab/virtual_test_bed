@@ -433,22 +433,22 @@
     # Volume weighted harmonic mean
     # Divided fg_kth by 100 to get it into cm
     type = ParsedMaterial
-    args =  'temp_fg'
+    coupled_variables =  'temp_fg'
     block = 10
     constant_expressions =  '3.35103216383e-08 1.31125888571e-07 2.14325144175e-05 0.3014 0.01046 1.0 0.05 1.5 1.0'
     constant_names = 'vol_fg vol_fl vol_gr gr_kth fl_kth beta p_vol sigma kap3x'
-    f_name =  'thermal_conductivity'
-    function =  'lt := temp_fg / 1000.0; fresh := (100.0 / (6.548 + 23.533 * lt) + 6400.0 * exp(-16.35 / lt) / pow(lt, 5.0/2.0)) / 100.0; kap1d := (1.09 / pow(beta, 3.265) + 0.0643 * sqrt(temp_fg) / sqrt(beta)) * atan(1.0 / (1.09 / pow(beta, 3.265) + sqrt(temp_fg) * 0.0643 / sqrt(beta))); kap1p := 1.0 + 0.019 * beta / ((3.0 - 0.019 * beta) * (1.0 + exp(-(temp_fg - 1200.0) / 100.0))); kap2p := (1.0 - p_vol) / (1.0 + (sigma - 1.0) * p_vol); kap4r := 1.0 - 0.2 / (1.0 + exp((temp_fg - 900.0) / 80.0)); fg_kth := fresh * kap1d * kap1p * kap2p * kap3x * kap4r; (vol_fg + vol_fl + vol_gr) / (vol_fg / fg_kth + vol_fl / fl_kth + vol_gr / gr_kth)'
+    property_name =  'thermal_conductivity'
+    expression =  'lt := temp_fg / 1000.0; fresh := (100.0 / (6.548 + 23.533 * lt) + 6400.0 * exp(-16.35 / lt) / pow(lt, 5.0/2.0)) / 100.0; kap1d := (1.09 / pow(beta, 3.265) + 0.0643 * sqrt(temp_fg) / sqrt(beta)) * atan(1.0 / (1.09 / pow(beta, 3.265) + sqrt(temp_fg) * 0.0643 / sqrt(beta))); kap1p := 1.0 + 0.019 * beta / ((3.0 - 0.019 * beta) * (1.0 + exp(-(temp_fg - 1200.0) / 100.0))); kap2p := (1.0 - p_vol) / (1.0 + (sigma - 1.0) * p_vol); kap4r := 1.0 - 0.2 / (1.0 + exp((temp_fg - 900.0) / 80.0)); fg_kth := fresh * kap1d * kap1p * kap2p * kap3x * kap4r; (vol_fg + vol_fl + vol_gr) / (vol_fg / fg_kth + vol_fl / fl_kth + vol_gr / gr_kth)'
   []
   [rho_cp]
     # Volume weighted arithmetic mean (Irradiation has no effect)
     type = ParsedMaterial
-    args =  'temp_fg temp_ms'
+    coupled_variables =  'temp_fg temp_ms'
     block = 10
     constant_expressions =  '3.35103216383e-08 2.1563640306e-05 0.0018 0.010963'
     constant_names =  'vol_fg vol_gr rho_gr rho_fg'
-    f_name =  'heat_capacity'
-    function = 'lt := temp_fg / 1000.0; gr_rhocp := rho_gr / (11.07 * pow(temp_ms, -1.644) + 0.0003688 * pow(temp_ms, 0.02191)); fink_cp := 52.1743 + 87.951 * lt - 84.2411 * pow(lt, 2) + 31.542 * pow(lt, 3) - 2.6334 * pow(lt, 4) - 0.71391 * pow(lt, -2); fg_rhocp := rho_fg * fink_cp / 267.2 * 1000.0; (vol_fg * fg_rhocp + vol_gr * gr_rhocp) / (vol_fg + vol_gr)'
+    property_name =  'heat_capacity'
+    expression = 'lt := temp_fg / 1000.0; gr_rhocp := rho_gr / (11.07 * pow(temp_ms, -1.644) + 0.0003688 * pow(temp_ms, 0.02191)); fink_cp := 52.1743 + 87.951 * lt - 84.2411 * pow(lt, 2) + 31.542 * pow(lt, 3) - 2.6334 * pow(lt, 4) - 0.71391 * pow(lt, -2); fg_rhocp := rho_fg * fink_cp / 267.2 * 1000.0; (vol_fg * fg_rhocp + vol_gr * gr_rhocp) / (vol_fg + vol_gr)'
   []
   [neut_refl]
     type = CoupledFeedbackNeutronicsMaterial
@@ -470,12 +470,12 @@
   []
   [ref_rho_cp]
     type = ParsedMaterial
-    args =  'temperature'
+    coupled_variables =  'temperature'
     block = '0'
     constant_expressions =  '0.0018'
     constant_names = 'rho_gr'
-    f_name =  'heat_capacity'
-    function =  'rho_gr / (11.07 * pow(temperature, -1.644) + 0.0003688 * pow(temperature, 0.02191))'
+    property_name =  'heat_capacity'
+    expression =  'rho_gr / (11.07 * pow(temperature, -1.644) + 0.0003688 * pow(temperature, 0.02191))'
   []
 []
 

@@ -70,9 +70,9 @@ Tsf    = 623.15 # stress-free temperature for the ComputeMeanThermalExpansionFun
 [Functions]
   [ss316_alphaMean]
     type = ParsedFunction
-    value = 'a+b*t+c*t*t'
-    vars  =  'a       b          c'
-    vals  =  '1.789e-5 2.398e-9 3.269e-13'
+    expression = 'a+b*t+c*t*t'
+    symbol_names  =  'a       b          c'
+    symbol_values  =  '1.789e-5 2.398e-9 3.269e-13'
   []
 
 []

@@ -116,7 +116,7 @@
     executable_pattern = 'griffin*|blue_crab*|dire_wolf*|fenix*'
     cli_args = "MultiApps/active='' Transfers/active='' Executioner/num_steps=2 Executioner/nl_rel_tol=1e-9 Executioner/nl_abs_tol=1e-10"
     method = 'opt' # see Griffin #230
-    prereq = 'neutronics_only'
+    prereq = 'neutronics_only transient_neutronics_syntax_only'
 
     # B2 out of range for XS interpolation
     allow_warnings = true
@@ -128,7 +128,7 @@
     csvdiff = 'oecd_pbmr400_tr1_pplofc_phtn_flow_path.csv'
     executable_pattern = 'pronghorn*|blue_crab*|fenix*'
     cli_args = "MultiApps/active='' Transfers/active='' Executioner/num_steps=5"
-    prereq = 'fluid_flow_only'
+    prereq = 'fluid_flow_only transient_fluid_flow_syntax_only'
   []
   [transient_fuel_performance_only]
     type = CSVDiff
@@ -137,5 +137,6 @@
     csvdiff = 'oecd_pbmr400_tr2_lf40_mhtr_pebble_triso.csv'
     executable_pattern = 'pronghorn*|blue_crab*|fenix*'
     cli_args = 'Executioner/num_steps=2 Outputs/csv=true'
+    prereq = 'transient_fuel_performance_syntax_only'
   []
 []

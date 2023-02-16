@@ -421,19 +421,19 @@ coolant_tc                    = 28
 
     [tk_f]
         type = ParsedFunction
-        vars = 'bison_temp'
-        vals = 'temp_av'
-        value = '27.73992+bison_temp*0.027428444'#Models/SNAP10A_dimensions
+        symbol_names = 'bison_temp'
+        symbol_values = 'temp_av'
+        expression = '27.73992+bison_temp*0.027428444'#Models/SNAP10A_dimensions
     []
     [cp_f]
         type = ParsedFunction
-        vars = 'bison_temp'
-        vals = 'temp_av'
-        value = '472.27104+bison_temp*0.7275728'#Models/SNAP10A_dimensions
+        symbol_names = 'bison_temp'
+        symbol_values = 'temp_av'
+        expression = '472.27104+bison_temp*0.7275728'#Models/SNAP10A_dimensions
     []
     [T_inf_f]
         type = ParsedFunction
-        value = '${inlet_T_fluid}'
+        expression = '${inlet_T_fluid}'
     []
 []
 

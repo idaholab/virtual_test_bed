@@ -120,17 +120,17 @@ pump_force = -20000. # [N / m^3]
 [Functions]
   [ad_rampdown_mu_func]
     type = ADParsedFunction
-    value = mu*(100*exp(-3*t)+1)
-    vars = 'mu'
-    vals = ${mu}
+    expression = mu*(100*exp(-3*t)+1)
+    symbol_names = 'mu'
+    symbol_values = ${mu}
   []
   # Duplicate definition to use in postprocessor,
   # we will convert types more in the future and avoid duplicates
   [rampdown_mu_func]
     type = ParsedFunction
-    value = mu*(100*exp(-3*t)+1)
-    vars = 'mu'
-    vals = ${mu}
+    expression = mu*(100*exp(-3*t)+1)
+    symbol_names = 'mu'
+    symbol_values = ${mu}
   []
 []
 

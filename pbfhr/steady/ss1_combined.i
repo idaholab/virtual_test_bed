@@ -339,9 +339,9 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
   # Only perform a viscosity rampdown for the first coupling iteration
   [mu_func]
     type = ParsedFunction
-    value = 'if(num_fixed_point>2, 1, 1000*exp(-3*t) + 1)'
-    vals = 'num_fixed_point'
-    vars = 'num_fixed_point'
+    expression = 'if(num_fixed_point>2, 1, 1000*exp(-3*t) + 1)'
+    symbol_names = 'num_fixed_point'
+    symbol_values = 'num_fixed_point'
   []
 []
 
