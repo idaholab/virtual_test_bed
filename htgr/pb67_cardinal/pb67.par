@@ -1,11 +1,10 @@
 [GENERAL]
-#verbose = true
 polynomialOrder = 7
 #startFrom = "restart.fld"
 stopAt = endTime
-endTime = 20
+endTime = 500
 
-dt = 2.0e-3
+dt = 1.0e-05
 timeStepper = tombo2
 subCyclingSteps = 2
 
@@ -19,18 +18,18 @@ filterModes = 2
 [PRESSURE]
 residualTol = 1e-04
 residualProj = yes
-coarseGridDiscretization = SEMFEM
-smootherType = chebyshev+asm
-residualProjectionVectors = 30
+preconditioner = multigrid
+smootherType = chebyshev+jac
+initialGuess = projectionAconj + nVector = 30
 
 [VELOCITY]
 boundaryTypeMap = inlet, outlet, wall, wall
 density = 1.0
-viscosity = -5000.0
+viscosity = -1460.0
 residualTol = 1e-06
 
 [TEMPERATURE]
 boundaryTypeMap = t,I,I,f
 residualTol = 1e-06
 rhoCp = 1.0
-conductivity = -3550.0
+conductivity = -1036.0
