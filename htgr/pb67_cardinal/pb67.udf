@@ -25,11 +25,11 @@ void uservp(nrs_t *nrs, dfloat time, occa::memory o_U, occa::memory o_S,
 
 /* UDF Functions */
 
-void UDF_LoadKernels(nrs_t *nrs)
+void UDF_LoadKernels(occa::properties & kernelInfo)
 {
  // avg::buildKernel(nrs);
-  cliptKernel = udfBuildKernel(nrs, "cliptOKL");
-  userVpKernel = udfBuildKernel(nrs, "userVp");
+  cliptKernel = oudfBuildKernel(kernelInfo, "cliptOKL");
+  userVpKernel = oudfBuildKernel(kernelInfo, "userVp");
 }
 
 void UDF_Setup(nrs_t *nrs)
