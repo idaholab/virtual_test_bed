@@ -82,26 +82,22 @@
   [nek_temp]
     type = MultiAppNearestNodeTransfer
     source_variable = temp
-    direction = from_multiapp
-    multi_app = nek
+    from_multi_app = nek
     variable = nek_temp
     fixed_meshes = true
   []
   [avg_flux]
     type = MultiAppNearestNodeTransfer
     source_variable = avg_flux
-    direction = to_multiapp
-    multi_app = nek
+    to_multi_app = nek
     variable = avg_flux
     fixed_meshes = true
   []
   [flux_integral_to_nek]
     type = MultiAppPostprocessorTransfer
     to_postprocessor = flux_integral
-    direction = to_multiapp
     from_postprocessor = flux_integral
-    multi_app = nek
-    fixed_meshes = true
+    to_multi_app = nek
   []
 []
 

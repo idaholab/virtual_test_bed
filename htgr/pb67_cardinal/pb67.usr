@@ -70,7 +70,7 @@ c-----------------------------------------------------------------------
         if(cbc(ifc,iel,1) .eq. 'W ') boundaryID(ifc,iel)=3
         if(cbc(ifc,iel,1) .eq. 'WH ') boundaryID(ifc,iel)=4
       enddo
-      end`do
+      enddo
 
       do iel=1,nelt
       do ifc=1,2*ndim
