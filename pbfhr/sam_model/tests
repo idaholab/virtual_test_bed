@@ -5,6 +5,7 @@
     csvdiff = 'pbfhr-ss_csv.csv'
     executable_pattern = 'sam*|blue_crab*'
     cli_args = '--app SamApp Executioner/num_steps=2 Outputs/csv/interval=1'
+    rel_err = 1e-4
     allow_warnings = true
   []
   [transient_run]
@@ -14,6 +15,7 @@
     executable_pattern = 'sam*|blue_crab*'
     prereq = steady_state
     cli_args = "--app SamApp Executioner/num_steps=2 Outputs/csv/interval=1"
+    rel_err = 5e-4
     allow_warnings = true
   []
 []

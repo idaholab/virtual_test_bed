@@ -26,11 +26,12 @@ area_inlet = 0.33911699112746213
   global_init_T = 873.15
   Tsolid_sf = 1e-3
 
+  p_order = 2
+
   [PBModelParams]               # new user should not make changes to this block
     pbm_scaling_factors = '1 1e-2 1e-6'
     pspg = true
     supg_max = false
-    p_order = 2
   []
 []
 
@@ -123,9 +124,9 @@ area_inlet = 0.33911699112746213
     Dh = 0.1
     length = 0.3
     n_elems = 2
-    initial_T = 873.15
-    initial_P = 593416
-    initial_V = 1.43079
+    initial_T = 885.838
+    initial_P = 2.02912
+    initial_V = 2.92686
     WF_user_option = User
     User_defined_WF_parameters = '0.0 0.0 0.1'
   []
@@ -158,9 +159,9 @@ area_inlet = 0.33911699112746213
     A = 1
     Dh = 0.1
     n_elems = 11
-    initial_V = 1.43079
-    initial_T = 923.15
-    initial_P = 145485.2923
+    initial_V = 0.500611
+    initial_T = 950
+    initial_P = 188485
   []
 
   # [pipe010]                           #Active core region (1)
