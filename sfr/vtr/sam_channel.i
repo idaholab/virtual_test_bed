@@ -21,6 +21,7 @@ A_channel  = ${fparse duct_f2f*duct_f2f*sqrt(3.)/2-Nrods*pi*rod_od*rod_od/4-Nrod
 Ph_channel = ${fparse Nrods*pi*rod_od} # heated perimeter, m
 Pw_channel = ${fparse Nrods*pi*rod_od+2*pi*sqrt(3)*duct_f2f} # wetted perimeter, m
 D_channel  = ${fparse 4* A_channel / Pw_channel} # hydraulic diameter, m
+Dheat_channel = ${fparse 4*A_channel/Ph_channel} # heated diameter, m
 #fuel height
 fuel_h         = 0.84235 # m
 plenum_full_h  = 0.23952 # m
@@ -64,6 +65,7 @@ V_init = ${fparse m_dot_in/rho_in/A_channel}
     n_elems = 40                       # Number of elements used in discretization
     A =${A_channel}                    # Area of the One-D fluid component
     Ph = ${Ph_channel}                 # heated channel perimeter
+    D_heated = ${Dheat_channel}        # Equivalent heated diameter
     PoD = 1.183                        # rod pitch/diameter ratio
     HoD = ${fparse ww_pitch/rod_od}    # wire wrap pitch / rod outside diameter
     WF_geometry_type = WireWrap        # Wall friction geometry type
