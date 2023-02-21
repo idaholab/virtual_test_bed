@@ -10,6 +10,8 @@
 
 [Griffin-Pronghorn-SAM model](msfr/plant/index.md)
 
+[Standalone SAM 1-D model](msfr/plant/SAM_model.md)
+
 [Nek5000 CFD models](msfr/nek5000_cfd_model.md)
 
 <!---[Nek5000 CFD results](msfr/nek5000_cfd_results.md)--->
