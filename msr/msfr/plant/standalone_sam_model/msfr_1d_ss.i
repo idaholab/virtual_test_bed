@@ -177,7 +177,7 @@
     n_elems     = 3
   []
 
-  [J_P2_HX1]
+  [J_P2_IHX1]
     type    = PBBranch
     inputs  = 'pipe2(out)'
     outputs = 'IHX1(primary_in) '
@@ -318,7 +318,7 @@
     n_elems     = 2
   []
 
-  [J_P5_HX2]
+  [J_P5_IHX2]
     type    = PBBranch
     inputs  = 'pipe5(out)'
     outputs = 'IHX2(primary_in)'
@@ -537,10 +537,6 @@
   []
 []
 
-#[Problem]
-#  restart_file_base = loop_1d_checkpoint_cp/0254
-#[]
-
 [Executioner]
   type       = Transient
   [TimeStepper]
@@ -550,7 +546,7 @@
   []
   nl_rel_tol = 1e-8
   nl_abs_tol = 1e-6
-  nl_max_its = 10
+  nl_max_its = 25
   l_tol      = 1e-6
   l_max_its  = 200
   start_time = -1000
