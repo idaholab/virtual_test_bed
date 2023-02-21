@@ -200,10 +200,10 @@ heater_SA = ${fparse heater_P * 10 * core_block_height} # m^2
 [Transfers]
   # Wall temperature of coolant and bypass channels
   [Twall_to_relap]
-    type = MultiAppUserObjectTransfer
+    type = MultiAppGeneralFieldUserObjectTransfer
     to_multi_app = relap
     variable = T_wall_channel # AuxVariable name in relap-7 input files
-    user_object = Twall_for_relap_uo # Corresponding main app UserObject
+    source_user_object = Twall_for_relap_uo # Corresponding main app UserObject
   []
   # Fluid temperature received from relap-7
   [tfluid_from_relap]
@@ -223,17 +223,17 @@ heater_SA = ${fparse heater_P * 10 * core_block_height} # m^2
   []
   # Wall temperature of core barrel outer surface
   [Twall_barrel_relap]
-    type = MultiAppUserObjectTransfer
+    type = MultiAppGeneralFieldUserObjectTransfer
     to_multi_app = upcomer
     variable = T_wall_barrel # AuxVariable name in relap-7
-    user_object = Twall_barrel_relap_uo # Corresponding main app UserObject
+    source_user_object = Twall_barrel_relap_uo # Corresponding main app UserObject
   []
   # Wall temperature of RPV inner surface
   [Twall_RPV_relap]
-    type = MultiAppUserObjectTransfer
+    type = MultiAppGeneralFieldUserObjectTransfer
     to_multi_app = upcomer
     variable = T_wall_RPV # AuxVariable name in relap-7
-    user_object = Twall_RPV_relap_uo # Corresponding main app UserObject
+    source_user_object = Twall_RPV_relap_uo # Corresponding main app UserObject
   []
   # Fluid temperature received from relap-7
   [tfluid_upcomer_from_relap]
@@ -261,17 +261,17 @@ heater_SA = ${fparse heater_P * 10 * core_block_height} # m^2
   []
   # Wall temperature of RCCS inner panel surface
   [Twall_RCCS_inner]
-    type = MultiAppUserObjectTransfer
+    type = MultiAppGeneralFieldUserObjectTransfer
     to_multi_app = RCCS
     variable = T_wall_inner # AuxVariable name in relap-7
-    user_object = Twall_RCCS_inner_uo # Corresponding main app UserObject
+    source_user_object = Twall_RCCS_inner_uo # Corresponding main app UserObject
   []
   # Wall temperature of RCCS inner panel surface
   [Twall_RCCS_outer]
-    type = MultiAppUserObjectTransfer
+    type = MultiAppGeneralFieldUserObjectTransfer
     to_multi_app = RCCS
     variable = T_wall_outer # AuxVariable name in relap-7
-    user_object = Twall_RCCS_outer_uo # Corresponding main app UserObject
+    source_user_object = Twall_RCCS_outer_uo # Corresponding main app UserObject
   []
   # Convective heat transfer coefficient for RCCS inner panel received from relap-7
   [Hw_RCCS_inner]
