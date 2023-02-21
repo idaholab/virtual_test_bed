@@ -207,19 +207,17 @@ heater_SA = ${fparse heater_P * 10 * core_block_height} # m^2
   []
   # Fluid temperature received from relap-7
   [tfluid_from_relap]
-    type = MultiAppNearestNodeTransfer
+    type = MultiAppGeneralFieldNearestNodeTransfer
     from_multi_app = relap
     source_variable = T # variable name in relap-7
     variable = tfluid # AuxVariable name in main app
-    fixed_meshes = true
   []
   # Convective heat transfer coefficient received from relap-7
   [Hw_channel_from_relap]
-    type = MultiAppNearestNodeTransfer
+    type = MultiAppGeneralFieldNearestNodeTransfer
     from_multi_app = relap
     source_variable = Hw_chan # AuxVariable name in relap-7
     variable = Hw_channel # AuxVariable name in main app
-    fixed_meshes = true
   []
   # Wall temperature of core barrel outer surface
   [Twall_barrel_relap]
@@ -237,27 +235,24 @@ heater_SA = ${fparse heater_P * 10 * core_block_height} # m^2
   []
   # Fluid temperature received from relap-7
   [tfluid_upcomer_from_relap]
-    type = MultiAppNearestNodeTransfer
+    type = MultiAppGeneralFieldNearestNodeTransfer
     from_multi_app = upcomer
     source_variable = T # variable name in relap-7
     variable = tfluid_upcomer # AuxVariable name in main app
-    fixed_meshes = true
   []
   # Convective heat transfer coefficient for core barrel received from relap-7
   [Hw_barrel_from_relap]
-    type = MultiAppNearestNodeTransfer
+    type = MultiAppGeneralFieldNearestNodeTransfer
     from_multi_app = upcomer
     source_variable = Hw_barrel # AuxVariable name in relap-7
     variable = Hw_cb # AuxVariable name in main app
-    fixed_meshes = true
   []
   # Convective heat transfer coefficient for core barrel received from relap-7
   [Hw_RPV_from_relap]
-    type = MultiAppNearestNodeTransfer
+    type = MultiAppGeneralFieldNearestNodeTransfer
     from_multi_app = upcomer
     source_variable = Hw_RPV # AuxVariable name in relap-7
     variable = Hw_vessel # AuxVariable name in main app
-    fixed_meshes = true
   []
   # Wall temperature of RCCS inner panel surface
   [Twall_RCCS_inner]
@@ -275,27 +270,24 @@ heater_SA = ${fparse heater_P * 10 * core_block_height} # m^2
   []
   # Convective heat transfer coefficient for RCCS inner panel received from relap-7
   [Hw_RCCS_inner]
-    type = MultiAppNearestNodeTransfer
+    type = MultiAppGeneralFieldNearestNodeTransfer
     from_multi_app = RCCS
     source_variable = Hw_inner # AuxVariable name in relap-7
     variable = Hw_in # AuxVariable name in main app
-    fixed_meshes = true
   []
    # Convective heat transfer coefficient for RCCS outer panel received from relap-7
   [Hw_RCCS_outer]
-    type = MultiAppNearestNodeTransfer
+    type = MultiAppGeneralFieldNearestNodeTransfer
     from_multi_app = RCCS
     source_variable = Hw_outer # AuxVariable name in relap-7
     variable = Hw_out # AuxVariable name in main app
-    fixed_meshes = true
   []
   # Fluid temperature received from relap-7
   [tfluid_RCCS_from_relap]
-    type = MultiAppNearestNodeTransfer
+    type = MultiAppGeneralFieldNearestNodeTransfer
     from_multi_app = RCCS
     source_variable = T # variable name in relap-7
     variable = tfluid_RCCS # AuxVariable name in main app
-    fixed_meshes = true
   []
   # Mass flow rate entering core from relap-7
   [mdot_in_transfer]

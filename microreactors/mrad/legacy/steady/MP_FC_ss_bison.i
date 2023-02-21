@@ -239,20 +239,18 @@
 
 [Transfers]
   [from_sockeye_flux] # Transfer heat pipe heat flux from Sockeye subapps
-    type = MultiAppNearestNodeTransfer
+    type = MultiAppGeneralFieldNearestNodeTransfer
     from_multi_app = sockeye
     source_variable = flux_uo
     variable = hp_flux_aux
     execute_on = 'timestep_begin'
-    fixed_meshes = true
   []
   [to_sockeye_temp] # Transfer heat pipe surface temperature to Sockeye subapps
-    type = MultiAppNearestNodeTransfer
+    type = MultiAppGeneralFieldNearestNodeTransfer
     to_multi_app = sockeye
     source_variable = temp_uo
     variable = T_wall_var
     execute_on = 'timestep_begin'
-    fixed_meshes = true
   []
 []
 
