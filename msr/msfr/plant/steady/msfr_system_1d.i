@@ -569,7 +569,7 @@ core_power_val = 3e9
   #[]
   nl_rel_tol = 1e-8
   nl_abs_tol = 1e-6
-  nl_max_its = 10
+  nl_max_its = 20
   l_tol      = 1e-6
   l_max_its  = 200
   # the start_time can be set earlier to initialize SAM on its own

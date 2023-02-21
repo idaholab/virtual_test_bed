@@ -10,8 +10,9 @@
   global_init_V = 1.0
   global_init_T = 905.4
   scaling_factor_var='1 1e-3 1e-6'
+  p_order = 1
+
   [./PBModelParams]
-    p_order = 1
     Courant_control = true
   [../]
 []
