@@ -355,8 +355,8 @@ totalpower = 3700000.0 # W
   [rename_sidesets]
     type = RenameBoundaryGenerator
     input = assign_planeid
-    old_boundary = '3        DuctLeadInterface 998          999             997'
-    new_boundary = 'ROD_SIDE DUCT_INNERSIDE    ASSEMBLY_TOP ASSEMBLY_BOTTOM ASSEMBLY_SIDE'
+    old_boundary = '        DuctLeadInterface 998          999             997'
+    new_boundary = 'DUCT_INNERSIDE    ASSEMBLY_TOP ASSEMBLY_BOTTOM ASSEMBLY_SIDE'
   []
 
   [assign]
