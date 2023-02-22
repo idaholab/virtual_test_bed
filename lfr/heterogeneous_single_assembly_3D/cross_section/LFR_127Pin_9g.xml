@@ -4,7 +4,7 @@
       <Tabulation>Tfuel</Tabulation>
       <Tfuel>300</Tfuel>
       <ReferenceGridIndex>1</ReferenceGridIndex>
-      <AllReactions>Total Transport Removal Absorption NGamma N2N NAlpha NProton NDeuteron NTriton Fission nuFission kappaFission EnergyDeposition FissionSpectrum NeutronVelocity Scattering</AllReactions>
+      <AllReactions>Total Transport Removal Absorption NGamma N2N NAlpha NProton NDeuteron NTriton EnergyDeposition NeutronVelocity Scattering</AllReactions>
       <TablewiseReactions/>
       <LibrarywiseReactions/>
       <Table gridIndex="1">
@@ -5994,7 +5994,7 @@
       <Tabulation>Tfuel</Tabulation>
       <Tfuel>300</Tfuel>
       <ReferenceGridIndex>1</ReferenceGridIndex>
-      <AllReactions>Total Transport Removal Absorption NGamma N2N NAlpha NProton NDeuteron NTriton Fission nuFission kappaFission EnergyDeposition FissionSpectrum NeutronVelocity Scattering</AllReactions>
+      <AllReactions>Total Transport Removal Absorption NGamma N2N NAlpha NProton NDeuteron NTriton EnergyDeposition NeutronVelocity Scattering</AllReactions>
       <TablewiseReactions/>
       <LibrarywiseReactions/>
       <Table gridIndex="1">
@@ -11984,7 +11984,7 @@
       <Tabulation>Tfuel</Tabulation>
       <Tfuel>300</Tfuel>
       <ReferenceGridIndex>1</ReferenceGridIndex>
-      <AllReactions>Total Transport Removal Absorption NGamma N2N NAlpha NProton NDeuteron NTriton Fission nuFission kappaFission EnergyDeposition FissionSpectrum NeutronVelocity Scattering</AllReactions>
+      <AllReactions>Total Transport Removal Absorption NGamma N2N NAlpha NProton NDeuteron NTriton EnergyDeposition NeutronVelocity Scattering</AllReactions>
       <TablewiseReactions/>
       <LibrarywiseReactions/>
       <Table gridIndex="1">
@@ -17974,7 +17974,7 @@
       <Tabulation>Tfuel</Tabulation>
       <Tfuel>300</Tfuel>
       <ReferenceGridIndex>1</ReferenceGridIndex>
-      <AllReactions>Total Transport Removal Absorption NGamma N2N NAlpha NProton NDeuteron NTriton Fission nuFission kappaFission EnergyDeposition FissionSpectrum NeutronVelocity Scattering</AllReactions>
+      <AllReactions>Total Transport Removal Absorption NGamma N2N NAlpha NProton NDeuteron NTriton EnergyDeposition NeutronVelocity Scattering</AllReactions>
       <TablewiseReactions/>
       <LibrarywiseReactions/>
       <Table gridIndex="1">
@@ -24056,7 +24056,7 @@
       <Tabulation>Tfuel</Tabulation>
       <Tfuel>300</Tfuel>
       <ReferenceGridIndex>1</ReferenceGridIndex>
-      <AllReactions>Total Transport Removal Absorption NGamma N2N NAlpha NProton NDeuteron NTriton Fission nuFission kappaFission EnergyDeposition FissionSpectrum NeutronVelocity Scattering</AllReactions>
+      <AllReactions>Total Transport Removal Absorption NGamma N2N NAlpha NProton NDeuteron NTriton EnergyDeposition NeutronVelocity Scattering</AllReactions>
       <TablewiseReactions/>
       <LibrarywiseReactions/>
       <Table gridIndex="1">
@@ -30322,7 +30322,7 @@
       <Tabulation>Tfuel</Tabulation>
       <Tfuel>300</Tfuel>
       <ReferenceGridIndex>1</ReferenceGridIndex>
-      <AllReactions>Total Transport Removal Absorption NGamma N2N NAlpha NProton NDeuteron NTriton Fission nuFission kappaFission EnergyDeposition FissionSpectrum NeutronVelocity Scattering</AllReactions>
+      <AllReactions>Total Transport Removal Absorption NGamma N2N NAlpha NProton NDeuteron NTriton EnergyDeposition NeutronVelocity Scattering</AllReactions>
       <TablewiseReactions/>
       <LibrarywiseReactions/>
       <Table gridIndex="1">
@@ -36588,7 +36588,7 @@
       <Tabulation>Tfuel</Tabulation>
       <Tfuel>300</Tfuel>
       <ReferenceGridIndex>1</ReferenceGridIndex>
-      <AllReactions>Total Transport Removal Absorption NGamma N2N NAlpha NProton NDeuteron NTriton Fission nuFission kappaFission EnergyDeposition FissionSpectrum NeutronVelocity Scattering</AllReactions>
+      <AllReactions>Total Transport Removal Absorption NGamma N2N NAlpha NProton NDeuteron NTriton EnergyDeposition NeutronVelocity Scattering</AllReactions>
       <TablewiseReactions/>
       <LibrarywiseReactions/>
       <Table gridIndex="1">
@@ -42670,7 +42670,7 @@
       <Tabulation>Tfuel</Tabulation>
       <Tfuel>300</Tfuel>
       <ReferenceGridIndex>1</ReferenceGridIndex>
-      <AllReactions>Total Transport Removal Absorption NGamma N2N NAlpha NProton NDeuteron NTriton Fission nuFission kappaFission EnergyDeposition FissionSpectrum NeutronVelocity Scattering</AllReactions>
+      <AllReactions>Total Transport Removal Absorption NGamma N2N NAlpha NProton NDeuteron NTriton EnergyDeposition NeutronVelocity Scattering</AllReactions>
       <TablewiseReactions/>
       <LibrarywiseReactions/>
       <Table gridIndex="1">
@@ -48660,7 +48660,7 @@
       <Tabulation>Tfuel</Tabulation>
       <Tfuel>300</Tfuel>
       <ReferenceGridIndex>1</ReferenceGridIndex>
-      <AllReactions>Total Transport Removal Absorption NGamma N2N NAlpha NProton NDeuteron NTriton Fission nuFission kappaFission EnergyDeposition FissionSpectrum NeutronVelocity Scattering</AllReactions>
+      <AllReactions>Total Transport Removal Absorption NGamma N2N NAlpha NProton NDeuteron NTriton EnergyDeposition NeutronVelocity Scattering</AllReactions>
       <TablewiseReactions/>
       <LibrarywiseReactions/>
       <Table gridIndex="1">
@@ -54650,7 +54650,7 @@
       <Tabulation>Tfuel</Tabulation>
       <Tfuel>300</Tfuel>
       <ReferenceGridIndex>1</ReferenceGridIndex>
-      <AllReactions>Total Transport Removal Absorption NGamma N2N NAlpha NProton NDeuteron NTriton Fission nuFission kappaFission EnergyDeposition FissionSpectrum NeutronVelocity Scattering</AllReactions>
+      <AllReactions>Total Transport Removal Absorption NGamma N2N NAlpha NProton NDeuteron NTriton EnergyDeposition NeutronVelocity Scattering</AllReactions>
       <TablewiseReactions/>
       <LibrarywiseReactions/>
       <Table gridIndex="1">
@@ -62434,7 +62434,7 @@
       <Tabulation>Tfuel</Tabulation>
       <Tfuel>300</Tfuel>
       <ReferenceGridIndex>1</ReferenceGridIndex>
-      <AllReactions>Total Transport Removal Absorption NGamma N2N NAlpha NProton NDeuteron NTriton Fission nuFission kappaFission EnergyDeposition FissionSpectrum NeutronVelocity Scattering</AllReactions>
+      <AllReactions>Total Transport Removal Absorption NGamma N2N NAlpha NProton NDeuteron NTriton EnergyDeposition NeutronVelocity Scattering</AllReactions>
       <TablewiseReactions/>
       <LibrarywiseReactions/>
       <Table gridIndex="1">
@@ -68056,7 +68056,7 @@
       <Tabulation>Tfuel</Tabulation>
       <Tfuel>300</Tfuel>
       <ReferenceGridIndex>1</ReferenceGridIndex>
-      <AllReactions>Total Transport Removal Absorption NGamma N2N NAlpha NProton NDeuteron NTriton Fission nuFission kappaFission EnergyDeposition FissionSpectrum NeutronVelocity Scattering</AllReactions>
+      <AllReactions>Total Transport Removal Absorption NGamma N2N NAlpha NProton NDeuteron NTriton EnergyDeposition NeutronVelocity Scattering</AllReactions>
       <TablewiseReactions/>
       <LibrarywiseReactions/>
       <Table gridIndex="1">
@@ -73678,7 +73678,7 @@
       <Tabulation>Tfuel</Tabulation>
       <Tfuel>300</Tfuel>
       <ReferenceGridIndex>1</ReferenceGridIndex>
-      <AllReactions>Total Transport Removal Absorption NGamma N2N NAlpha NProton NDeuteron NTriton Fission nuFission kappaFission EnergyDeposition FissionSpectrum NeutronVelocity Scattering</AllReactions>
+      <AllReactions>Total Transport Removal Absorption NGamma N2N NAlpha NProton NDeuteron NTriton EnergyDeposition NeutronVelocity Scattering</AllReactions>
       <TablewiseReactions/>
       <LibrarywiseReactions/>
       <Table gridIndex="1">
