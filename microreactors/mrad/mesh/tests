@@ -1,0 +1,30 @@
+[Tests]
+    # Compare mesh file
+    [mesh_generation]
+        type = 'Exodiff'
+        input = 'HPMR_OneSixth_Core_meshgenerator_tri.i'
+        exodiff = 'HPMR_OneSixth_Core_meshgenerator_tri_rotate_bdry.e'
+        exodiff_opts = '-pedantic'
+        executable_pattern = 'griffin*|blue_crab*|dire_wolf*'
+        cli_args = "--mesh-only 'HPMR_OneSixth_Core_meshgenerator_tri_rotate_bdry.e'"
+        recover = false
+    []
+    [mesh_generation_bison]
+        type = 'Exodiff'
+        input = 'HPMR_OneSixth_Core_meshgenerator_tri.i'
+        exodiff = 'HPMR_OneSixth_Core_meshgenerator_tri_rotate_bdry_fine.e'
+        exodiff_opts = '-pedantic'
+        executable_pattern = 'griffin*|blue_crab*|dire_wolf*'
+        cli_args = "Mesh/HP_hex/background_inner_boundary_layer_bias=1.5
+                    Mesh/HP_hex/background_inner_boundary_layer_intervals=3
+                    Mesh/HP_hex/background_inner_boundary_layer_width=0.03
+                    Mesh/add_outer_shield/peripheral_layer_num=2
+                    Mesh/add_outer_shield/peripheral_outer_boundary_layer_bias=0.625
+                    Mesh/add_outer_shield/peripheral_outer_boundary_layer_intervals=3
+                    Mesh/add_outer_shield/peripheral_outer_boundary_layer_width=2
+                    Mesh/extrude/num_layers='6 16 6'
+                    Mesh/extrude/biases='1.6 1.0 0.625'
+                    --mesh-only 'HPMR_OneSixth_Core_meshgenerator_tri_rotate_bdry_fine.e'"
+        recover = false
+    []
+[]    

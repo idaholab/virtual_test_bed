@@ -148,12 +148,12 @@ Child applications can be launched at various spatial positions of the parent ap
 
 The user may also provide positions in a "position file" rather than in the the MultiApp block. This is useful when the number of positions is exceedingly large. For example, the heat-pipe cooled microreactor example demonstrates the use of the positions file to invoke Sockeye heat pipe temperatures calculations on each heat pipe in the domain.
 
-!listing mrad/steady/MP_FC_ss_bison.i
+!listing mrad/legacy/steady/MP_FC_ss_bison.i
          block=MultiApps
 
 The list and location of each heat-pipe are provided in +hp_centers.txt+ as follows:
 
-!listing mrad/steady/hp_centers.txt        
+!listing mrad/legacy/steady/hp_centers.txt        
 
 #### Parallel Options
 
