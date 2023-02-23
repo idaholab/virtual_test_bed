@@ -8,10 +8,10 @@
 R_clad_o = 0.0105 # heat pipe outer radius
 R_hp_hole = 0.0107 # heat pipe + gap
 num_sides = 12 # number of sides of heat pipe as a result of mesh polygonization
-alpha = ${fparse 2 * pi / num_sides}
-perimeter_correction = ${fparse 0.5 * alpha / sin(0.5 * alpha)} # polygonization correction factor for perimeter
-area_correction = ${fparse sqrt(alpha / sin(alpha))} # polygonization correction factor for area
-corr_factor = ${fparse R_hp_hole / R_clad_o * area_correction / perimeter_correction}
+alpha = '${fparse 2 * pi / num_sides}'
+perimeter_correction = '${fparse 0.5 * alpha / sin(0.5 * alpha)}' # polygonization correction factor for perimeter
+area_correction = '${fparse sqrt(alpha / sin(alpha))}' # polygonization correction factor for area
+corr_factor = '${fparse R_hp_hole / R_clad_o * area_correction / perimeter_correction}'
 
 [GlobalParams]
   flux_conversion_factor = 1
@@ -144,7 +144,7 @@ corr_factor = ${fparse R_hp_hole / R_clad_o * area_correction / perimeter_correc
     type = NormalizationAux
     variable = flux_uo_corr
     source_variable = flux_uo
-    normal_factor = ${fparse corr_factor}
+    normal_factor = '${fparse corr_factor}'
   []
 []
 
@@ -195,7 +195,7 @@ corr_factor = ${fparse R_hp_hole / R_clad_o * area_correction / perimeter_correc
   []
   [airgap_thermal]
     type = HeatConductionMaterial
-    block = 'air_gap_tri air_gap_quad outer_shield'# Helium gap
+    block = 'air_gap_tri air_gap_quad outer_shield' # Helium gap
     temp = temp
     thermal_conductivity = 0.15 # W/m/K
     specific_heat = 5197 # random value
@@ -247,7 +247,7 @@ corr_factor = ${fparse R_hp_hole / R_clad_o * area_correction / perimeter_correc
   [B4C_density]
     type = Density
     block = B4C
-    density =2510
+    density = 2510
   []
   [SS_density]
     type = Density
@@ -310,7 +310,7 @@ corr_factor = ${fparse R_hp_hole / R_clad_o * area_correction / perimeter_correc
   nl_rel_tol = 1e-6
   nl_abs_tol = 1e-8
 
-  start_time =-5e4 # negative start time so we can start running from t = 0
+  start_time = -5e4 # negative start time so we can start running from t = 0
   end_time = 0
   dtmin = 1
   dt = 1000
@@ -349,7 +349,7 @@ corr_factor = ${fparse R_hp_hole / R_clad_o * area_correction / perimeter_correc
     type = SumPostprocessor
     values = 'hp_heat_integral ext_side_integral mirror_side_integral tb_integral'
     execute_on = 'initial timestep_end'
-  []  
+  []
   [fuel_temp_avg]
     type = ElementAverageValue
     variable = temp

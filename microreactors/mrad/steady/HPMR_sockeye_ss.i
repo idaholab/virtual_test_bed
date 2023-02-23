@@ -10,9 +10,9 @@ Q_hp = 1800.
 
 # Wick characteristics
 R_pore = 15.0e-6
-D_h_pore = ${fparse 2.0 * R_pore}
+D_h_pore = '${fparse 2.0 * R_pore}'
 permeability = 2e-9
-porosity =  0.70
+porosity = 0.70
 
 # Envelope ("env")
 # SS316. Incropera & DeWitt, 3rd ed, Table A.1 @ 900K (627C)
@@ -49,18 +49,18 @@ T_melting = 340.
 
 # Wick, homogenize envelope and fluid
 # Density (kg/m3)
-rho_wick = ${fparse porosity * rho_liquid + (1.0 - porosity) * rho_env}
+rho_wick = '${fparse porosity * rho_liquid + (1.0 - porosity) * rho_env}'
 # Thermal conductivity (W/m-K)
-k_wick = ${fparse porosity * k_liquid + (1.0 - porosity) * k_env}
+k_wick = '${fparse porosity * k_liquid + (1.0 - porosity) * k_env}'
 # Specific heat capacity (J/kg-K)
 # From Table 1.1, no temperature data given
-cp_wick = ${fparse porosity * cp_liquid + (1.0 - porosity) * cp_env}
+cp_wick = '${fparse porosity * cp_liquid + (1.0 - porosity) * cp_env}'
 
 # Elevations and lengths
 # Note: For blackbox model -- manually update "length" input
 length_evap = 180.0e-2
-length_adia =  30.0e-2
-length_cond =  90.0e-2
+length_adia = 30.0e-2
+length_cond = 90.0e-2
 
 # Mesh density
 # The dimensions are nicely divisible by 3 cm mesh.
@@ -68,9 +68,9 @@ nelem_base_evap = 50
 nelem_base_adia = 10
 nelem_base_cond = 30
 mesh_density = 3
-nelem_evap = ${fparse mesh_density*nelem_base_evap}
-nelem_adia = ${fparse mesh_density*nelem_base_adia}
-nelem_cond = ${fparse mesh_density*nelem_base_cond}
+nelem_evap = '${fparse mesh_density*nelem_base_evap}'
+nelem_adia = '${fparse mesh_density*nelem_base_adia}'
+nelem_cond = '${fparse mesh_density*nelem_base_cond}'
 
 # Envelope thickness
 t_env = 0.08e-2
@@ -82,24 +82,24 @@ t_wick = 0.1e-2
 # Radial geometry
 # Envelope outer
 R_hp_o = 1.05e-2
-D_hp_o = ${fparse 2.0 * R_hp_o}
+D_hp_o = '${fparse 2.0 * R_hp_o}'
 # Inner Envelope/outer annulus
-R_hp_i = ${fparse R_hp_o - t_env}
-D_hp_i = ${fparse 2.0 * R_hp_i}
+R_hp_i = '${fparse R_hp_o - t_env}'
+D_hp_i = '${fparse 2.0 * R_hp_i}'
 # Inner annulus/wick outer
-R_wick_o = ${fparse R_hp_i - t_ann}
-D_wick_o = ${fparse 2.0 * R_wick_o}
+R_wick_o = '${fparse R_hp_i - t_ann}'
+D_wick_o = '${fparse 2.0 * R_wick_o}'
 # Inner wick/vapor core outer
-R_wick_i = ${fparse R_wick_o - t_wick}
-D_wick_i = ${fparse 2.0 * R_wick_i}
+R_wick_i = '${fparse R_wick_o - t_wick}'
+D_wick_i = '${fparse 2.0 * R_wick_i}'
 
 # BCs for condenser
 T_ext_cond = 800.
 htc_ext_cond = 1.0e6
 
 # Evaporator parameters
-S_evap = ${fparse pi * D_hp_o * length_evap}
-q_evap = ${fparse Q_hp / S_evap}
+S_evap = '${fparse pi * D_hp_o * length_evap}'
+q_evap = '${fparse Q_hp / S_evap}'
 
 [GlobalParams]
   scaling_factor_temperature = 1e-2
@@ -270,15 +270,13 @@ q_evap = ${fparse Q_hp / S_evap}
     variable = operational_aux
     execute_on = 'initial timestep_begin TIMESTEP_END'
   []
-  
   # set `catastrophic_pp` as if it is recoverable for a solving to steady-state simulation
   # this MUST be changed back to catestrophic in transient simulations
   [catastrophic_pp]
     type = HeatRemovalRateLimitScale
     heat_addition_pps = 'evaporator_boundary_integral'
     limit_condenser_side = false
-    recoverable_heat_removal_limit_pps = 'hp_boiling_limit hp_capillary_limit '
-                                         'hp_entrainment_limit'
+    recoverable_heat_removal_limit_pps = 'hp_boiling_limit hp_capillary_limit hp_entrainment_limit'
     catastrophic_heat_removal_limit_pps = ''
     T_operating = ${T_melting}
     T = T_inner_avg
@@ -361,19 +359,19 @@ q_evap = ${fparse Q_hp / S_evap}
   [A_int_master_flux]
     type = SideIntegralVariablePostprocessor
     variable = master_flux
-    boundary  = 'hp:evap:inner'
+    boundary = 'hp:evap:inner'
     execute_on = 'INITIAL TIMESTEP_END'
   []
   [A_int_T_ext]
     type = SideIntegralVariablePostprocessor
     variable = virtual_Text
-    boundary  = 'hp:evap:inner'
+    boundary = 'hp:evap:inner'
     execute_on = 'INITIAL LINEAR'
   []
   [A_avg_T_aux]
     type = AverageNodalVariableValue
     variable = hp_temp_aux
-    boundary  = 'hp:evap:inner'
+    boundary = 'hp:evap:inner'
     execute_on = 'INITIAL TIMESTEP_END'
   []
 []
@@ -412,7 +410,7 @@ q_evap = ${fparse Q_hp / S_evap}
   l_tol = 1e-3
   l_max_its = 100
 
-  start_time =-5e4 # negative start time so we can start running from t = 0
+  start_time = -5e4 # negative start time so we can start running from t = 0
   end_time = 0
   dtmin = 1
   dt = 1000

@@ -20,16 +20,16 @@
   []
   [coarse_mesh]
     type = GeneratedMeshGenerator
-    dim= 3
+    dim = 3
     nx = 10
     ny = 10
     nz = 10
     xmin = -0.1
-    xmax =  1.1
+    xmax = 1.1
     ymin = -0.1
-    ymax =  1.2
+    ymax = 1.2
     zmin = -0.0
-    zmax =  2.1
+    zmax = 2.1
   []
   [assign_coarse_id]
     type = CoarseMeshExtraElementIDGenerator
@@ -80,7 +80,7 @@
     NA = 2
     sweep_type = asynchronous_parallel_sweeper
     using_array_variable = true
-    collapse_scattering  = true
+    collapse_scattering = true
     n_delay_groups = 6
   []
 []
@@ -231,5 +231,5 @@
 [Outputs]
   csv = true
   exodus = true
-  perf_graph=true
+  perf_graph = true
 []
