@@ -472,7 +472,8 @@ inlet_T_fluid             = 949.81667 # (K)
 
     richardson_max_its = 50
     richardson_value = eigenvalue
-    richardson_rel_tol = 1e-4
+    richardson_rel_tol = 1e-8
+    richardson_abs_tol = 1e-8
 
     inner_solve_type = GMRes
     max_inner_its = 2
