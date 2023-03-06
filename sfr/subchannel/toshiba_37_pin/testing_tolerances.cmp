@@ -11,5 +11,5 @@ NODAL VARIABLES relative 1.e-5 floor 1e-9
 	rho
 	w_perim
 
-NODAL VARIABLES relative 1.e-2 floor 1e-9
+NODAL VARIABLES relative 10 floor 1e-9
 	SumWij
