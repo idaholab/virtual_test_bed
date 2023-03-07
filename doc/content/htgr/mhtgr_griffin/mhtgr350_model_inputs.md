@@ -131,14 +131,12 @@ Finite element parameters are set with the
 [!style color=red](family) and
 [!style color=red](order), which define the family of
 functions used to approximate the solution and
-polynomial order.
+polynomial order. In this case the second order lagrange polynomials are used.
 The last two options,
 [!style color=red](assemble_scattering_jacobian) and
 [!style color=red](assemble_fission_jacobian) are
-required to use the "PJFNKMO" method defined in the
+required to use the "PJFNK" method defined in the
 `[Executioner]`.
-This tells the finite element solver to not update the material
-cross sections at each linear iteration.
 
 !listing htgr/mhtgr_griffin/benchmark/griffin.i
          block=TransportSystems
@@ -150,13 +148,8 @@ Here, we select an [!style color=orange](Eigenvalue) problem
 which will solve for the criticality and multi-group scalar flux
 (eigenvalue and eigenvectors).
 We also specify to solve with a Preconditioned Jacobian Free
-Newton Krylov Matrix Only method by setting
-[!style color=red](solve_type) equal to "PJFNKMO".
-The Matrix Only method forces the solver to not update
-material properties (i.e., cross sections) in the linear iterations
-of the solve.
-To use this solver, the [!style color=red](constant_matrices)
-parameter must be set to "true".
+Newton Krylov method by setting
+[!style color=red](solve_type) equal to "PJFNK".
 
 There are optional arguments that may also be included.
 For example, we first define a few PETSc options.
@@ -214,5 +207,9 @@ The model can be run with Griffin in serial or parallel respectively with:
 
  `griffin-opt -i griffin.i`
 
- `mpirun -n 16 griffin-opt -i griffin.i`
+ `mpirun griffin-opt -i griffin.i`
+
+Running this model on a cluster using an interactive computational node - the following computational resources are recommended.
+
+ `qsub -I -l select=4:ncpus=40:mpiprocs=40 -l walltime=02:00:00 -P neams`
 
