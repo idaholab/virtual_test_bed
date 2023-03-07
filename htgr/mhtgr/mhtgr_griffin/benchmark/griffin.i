@@ -204,7 +204,7 @@ tpow = 350e6 #(350 MW)
                   202 203 204 205 206 207 208 209 210 211 212 213 214 215 216 217 218 219 220 221 222 223 224 225 226
                   227 228 229 230 231 233 234'
   []
-  second_order = True
+  second_order = true
   # uniform_refine = 1  # alternative to using higher order variables
 []
 
@@ -316,7 +316,6 @@ tpow = 350e6 #(350 MW)
    scheme = CFEM-Diffusion
    n_delay_groups = 0
    family = LAGRANGE
-  #  order = FIRST
    order = SECOND
    fission_source_aux = true
    assemble_scattering_jacobian = true
@@ -326,11 +325,12 @@ tpow = 350e6 #(350 MW)
 
 [Executioner]
   type = Eigenvalue
-  solve_type = 'PJFNKMO'
-  constant_matrices = true
-  petsc_options_iname = '-pc_type -pc_hypre_type -pc_hypre_boomeramg_strong_threshold -ksp_gmres_restart '
-  petsc_options_value = 'hypre boomeramg 0.7 100'
-  l_max_its = 100
+  solve_type = 'PJFNK'
+  petsc_options_iname = '-pc_type -pc_hypre_type -pc_hypre_boomeramg_strong_threshold -ksp_gmres_restart'
+  petsc_options_value = 'hypre boomeramg 0.7 200'
+  l_max_its = 400
+  nl_rel_tol = 1e-5
+  nl_abs_tol = 1e-6
   free_power_iterations = 2
 []
 
@@ -351,10 +351,10 @@ tpow = 350e6 #(350 MW)
                 202 203 204 205 206 207 208 209 210 211 212 213 214 215 216 217 218 219 220'
     execute_on = 'INITIAL TIMESTEP_END'
   []
-[]
+  []
 
 [Debug]
-  # show_actions = 1
+   show_actions = false
   # show_material_props = 1
   # check_boundary_coverage = 1
   # print_block_volume = 1
