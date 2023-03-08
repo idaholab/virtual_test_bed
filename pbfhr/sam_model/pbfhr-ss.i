@@ -898,7 +898,7 @@
   []
 
   # Time integration scheme
-  scheme = 'implicit-euler'
+  scheme = 'bdf2'
 
   nl_rel_tol = 1e-5
   nl_abs_tol = 1e-4

@@ -12,7 +12,7 @@
     check_input = true
     input = 'Griffin_steady_state.i'
     executable_pattern = 'griffin*|blue_crab*'
-    cli_args = "MultiApps/active='' Transfers/active=''"
+    cli_args = "MultiApps/active='' Transfers/active='' Executioner/set_sam_default_petsc_options=false"
     #prereq = 'generate_mesh'
   []
   [griffin_alone]
@@ -22,7 +22,8 @@
     executable_pattern = 'griffin*|blue_crab*'
     cli_args = "MultiApps/active='' Transfers/active=''
                 Executioner/richardson_max_its=1
-                TransportSystems/SN/NAzmthl=3 TransportSystems/SN/NPolar=1"
+                TransportSystems/SN/NAzmthl=3 TransportSystems/SN/NPolar=1
+                Executioner/set_sam_default_petsc_options=false"
     prereq = 'griffin_alone_syntax'
     min_parallel = 16
     rel_err = 1e-3

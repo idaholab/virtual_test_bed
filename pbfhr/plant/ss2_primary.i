@@ -1017,6 +1017,9 @@ area_inlet = 0.33911699112746213
   l_tol = 1e-5 # Relative linear tolerance for each Krylov solve
   l_max_its = 200 # Number of linear iterations for each Krylov solve
 
+  # Time integration scheme
+  scheme = 'bdf2'
+
   [Quadrature]
     type = GAUSS # SIMPSON
     order = SECOND

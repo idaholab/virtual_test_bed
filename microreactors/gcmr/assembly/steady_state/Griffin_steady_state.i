@@ -139,7 +139,7 @@
     use_displaced_mesh = false
   []
   [from_sub_temp]
-    type = MultiAppInterpolationTransfer
+    type = MultiAppGeometricInterpolationTransfer
     direction = from_multiapp
     multi_app = bison
     variable = Tf
