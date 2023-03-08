@@ -33,8 +33,10 @@
     csvdiff = 'core_2D_griffin_coupled_out.csv'
     ad_indexing_type = 'global'
     executable_pattern = 'griffin*|blue_crab*|dire_wolf*'
-    cli_args = "MultiApps/active='' Transfers/active=''"
+    cli_args = "MultiApps/active='' Transfers/active=''
+                Executioner/set_sam_default_petsc_options=false"
     prereq = 'neutronics_griffin_syntax'
+    allow_unused = true
     method = 'opt'
 
     min_parallel = 8
@@ -47,8 +49,9 @@
     executable_pattern = 'blue_crab*|dire_wolf*'
     method = 'opt'
     prereq = 'neutronics_griffin_syntax mechanics_bison_syntax'
-    cli_args = "Outputs/file_base=core_2D_out"
-
+    cli_args = "Outputs/file_base=core_2D_out
+                Executioner/set_sam_default_petsc_options=false"
+    allow_unused = true
     min_parallel = 8
   []
 []
