@@ -699,6 +699,9 @@ fis_fract            = ${fparse 1 - dh_fract} # Fission power fraction at t = 0.
   # NOTE: this cannot work with subcycling of the fluid app
   dt = 1e+15
 
+  # Time integration scheme
+  scheme = 'implicit-euler'
+
   l_tol = 1e-6
   nl_rel_tol = 1e-7
   nl_abs_tol = 1e-8

@@ -204,6 +204,9 @@
   l_abs_tol = 1e-7
   l_max_its = 200
 
+  # Time integration scheme
+  scheme = 'implicit-euler'
+
   # Fixed point iteration parameters
   fixed_point_max_its = 3
   accept_on_max_fixed_point_iteration = true

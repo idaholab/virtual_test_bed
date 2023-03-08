@@ -590,6 +590,9 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
     growth_factor      = 2.0
   []
 
+  # Time integration scheme
+  scheme = 'implicit-euler'
+
   # Steady state detection.
   steady_state_detection = true
   steady_state_tolerance = 1e-8

@@ -608,6 +608,9 @@ inlet_T_fluid = 873.15 # K, from [2]
     growth_factor      = 2.0
   []
 
+  # Time integration scheme
+  scheme = 'implicit-euler'
+
   # Fixed point iterations with SAM
   fixed_point_max_its = 10
   fixed_point_abs_tol = 1e-5
