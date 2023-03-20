@@ -19,7 +19,6 @@
     type = RunApp
     input = 'ss1_combined_initial.i'
     check_input = True
-    ad_indexing_type = 'global'
     cli_args = "MultiApps/active='' Transfers/active=''"
     executable_pattern = 'pronghorn*|blue_crab*|fenix*'
   []
@@ -27,7 +26,6 @@
     type = RunApp
     input = 'ss1_combined.i'
     check_input = True
-    ad_indexing_type = 'global'
     cli_args = "MultiApps/active='' Transfers/active='' Mesh/uniform_refine=0"
     executable_pattern = 'pronghorn*|blue_crab*|fenix*'
     # need a restart file
@@ -104,7 +102,6 @@
     type = CSVDiff
     input = 'ss1_combined_initial.i'
     csvdiff = 'ss1_combined_initial_out.csv'
-    ad_indexing_type = 'global'
     cli_args = "MultiApps/active='' Transfers/active='' Mesh/uniform_refine=0"
     executable_pattern = 'pronghorn*|blue_crab*|fenix*'
     min_parallel = 8
@@ -114,7 +111,6 @@
     type = CSVDiff
     input = 'ss1_combined.i'
     csvdiff = 'ss1_combined_out.csv'
-    ad_indexing_type = 'global'
     cli_args = "MultiApps/active='' Transfers/active='' Mesh/uniform_refine=0 Executioner/num_steps=20"
     executable_pattern = 'pronghorn*|blue_crab*|fenix*'
     min_parallel = 8
