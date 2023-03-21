@@ -4,7 +4,6 @@
     type = RunApp
     input = 'run_neutronics.i'
     check_input = True
-    ad_indexing_type = 'global'
     executable_pattern = 'blue_crab*|fenix*'
   []
   [neutronics_only_syntax]
@@ -21,14 +20,12 @@
     input = 'run_ns.i'
     check_input = True
     cli_args = "MultiApps/active='' Transfers/active=''"
-    ad_indexing_type = 'global'
     executable_pattern = 'moose*|blue_crab*|dire_wolf*|pronghorn*|fenix*'
   []
   [plant_syntax]
     type = RunApp
     input = 'msfr_system_1d.i'
     check_input = True
-    ad_indexing_type = 'global'
     cli_args = "MultiApps/active='' Transfers/active='' --app SamApp"
     executable_pattern = 'sam*|blue_crab*'
   []
@@ -39,7 +36,6 @@
     type = CSVDiff
     input = 'run_neutronics.i'
     csvdiff = 'multiphysics_out.csv multiphysics_out_ns0.csv multiphysics_out_ns0_sam_balance_of_plant0_csv.csv'
-    ad_indexing_type = 'global'
     executable_pattern = 'blue_crab*|fenix*'
     # Make mesh smaller
     # Loosen tolerances, limit the number of iterations
@@ -64,7 +60,6 @@
     type = CSVDiff
     csvdiff = 'run_ns_out.csv'
     input = 'run_ns.i'
-    ad_indexing_type = 'global'
     executable_pattern = 'moose*|blue_crab*|dire_wolf*|pronghorn*|fenix*'
     cli_args = "Executioner/num_steps=2 MultiApps/active='' Transfers/active=''"
     min_parallel = 4

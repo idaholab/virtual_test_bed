@@ -4,7 +4,6 @@
     type = RunApp
     input = 'run_neutronics.i'
     check_input = True
-    ad_indexing_type = 'global'
     executable_pattern = 'blue_crab*|dire_wolf*|fenix*'
   []
   [neutronics_only_syntax]
@@ -18,14 +17,12 @@
     type = RunApp
     input = 'run_ns_initial.i'
     check_input = True
-    ad_indexing_type = 'global'
     executable_pattern = 'moose*|blue_crab*|dire_wolf*|pronghorn*|fenix*'
   []
   [fluids_syntax]
     type = RunApp
     input = 'run_ns.i'
     check_input = True
-    ad_indexing_type = 'global'
     executable_pattern = 'moose*|blue_crab*|dire_wolf*|pronghorn*|fenix*'
   []
 
@@ -35,7 +32,6 @@
     type = CSVDiff
     input = 'run_neutronics.i'
     csvdiff = 'multiphysics_out.csv multiphysics_out_ns0.csv'
-    ad_indexing_type = 'global'
     executable_pattern = 'blue_crab*|dire_wolf*|fenix*'
     cli_args = "Mesh/uniform_refine=0 Executioner/nl_abs_tol=1e-6 Executioner/fixed_point_max_its=2 Executioner/accept_on_max_fixed_point_iteration=true Outputs/file_base=multiphysics_out MultiApps/ns/cli_args='Executioner/num_steps=2'"
     # Fuel temperature is out of bounds for MGXS
@@ -59,7 +55,6 @@
     type = CSVDiff
     input = 'run_ns_initial.i'
     csvdiff = 'run_ns_initial_out.csv'
-    ad_indexing_type = 'global'
     executable_pattern = 'moose*|blue_crab*|dire_wolf*|pronghorn*|fenix*'
     cli_args = 'Executioner/num_steps=2'
     min_parallel = 4
@@ -69,7 +64,6 @@
     type = CSVDiff
     csvdiff = 'run_ns_out.csv'
     input = 'run_ns.i'
-    ad_indexing_type = 'global'
     executable_pattern = 'moose*|blue_crab*|dire_wolf*|pronghorn*|fenix*'
     cli_args = "Executioner/num_steps=2"
     min_parallel = 4

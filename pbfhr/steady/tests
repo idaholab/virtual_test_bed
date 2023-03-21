@@ -16,7 +16,6 @@
     type = RunApp
     input = 'ss1_combined.i'
     check_input = True
-    ad_indexing_type = 'global'
     executable_pattern = 'pronghorn*|blue_crab*|fenix*'
   []
   [coarse_pebble_mesh_syntax]
