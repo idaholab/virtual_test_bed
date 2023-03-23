@@ -37,7 +37,7 @@ plenum_height        = 1.
   # based on x447.i from examples
   # rod specific parameters - dimensions are for fresh fuel at room temperature
   [smeared_pellet_mesh]
-    type = SmearedPelletMeshGenerator
+    type = FuelPinMeshGenerator
     clad_thickness = ${clad_thickness}
     pellet_outer_radius = ${fparse slug_diameter/2}
     pellet_height = ${fuel_height}
@@ -218,7 +218,7 @@ active = 'fuel_elasticity_tensor fuel_elastic_stress fuel_thermal_expansion
   []
   #thermal materials
   [clad_thermal]
-    type = ThermalHT9
+    type = HT9Thermal
     block = 'clad 4'
   []
   [clad_density]
