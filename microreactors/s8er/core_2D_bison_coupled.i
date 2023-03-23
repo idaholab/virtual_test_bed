@@ -180,7 +180,7 @@ coolant_tc                    = 28
     [bound_rename1]
         type = RenameBoundaryGenerator
         input = block_rename1
-        old_boundary = '4 6 8'
+        old_boundary = '3 5 7'
         new_boundary = 'gap_inner gap_outer clad_outer'
     []
     [inner_gap1]
