@@ -628,6 +628,9 @@ outlet_pressure_val = 2e5
     growth_factor      = 2.0
   []
 
+  # Time integration scheme
+  scheme = 'implicit-euler'
+
   # Fixed point iterations with SAM are naturally achieved
   # by the relaxation transient
   # fixed_point_max_its = 10

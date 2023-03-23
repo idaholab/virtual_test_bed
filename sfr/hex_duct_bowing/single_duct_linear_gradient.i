@@ -30,6 +30,8 @@
     quad_center_elements = true
     external_boundary_id = 100
     interface_boundary_id_shift = 100
+    # To get each side of the pin
+    generate_side_specific_boundaries = true
   []
 
   [cladding_center_removal]
@@ -71,6 +73,7 @@
     quad_center_elements = true
     external_boundary_id = 200
     interface_boundary_id_shift = 200
+    generate_side_specific_boundaries = true
   []
 
   [load_pad_center_removal]

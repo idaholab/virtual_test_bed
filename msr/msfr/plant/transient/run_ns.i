@@ -289,6 +289,9 @@ beta6 = 0.000184087
   end_time = 1e10
   dt = 10
 
+  # Time integration scheme
+  scheme = 'implicit-euler'
+
   # Solver parameters
   solve_type = 'NEWTON'
   petsc_options_iname = '-pc_type -pc_factor_shift_type -ksp_gmres_restart'

@@ -1010,6 +1010,9 @@ riser_superficial_rho_v         = ${fparse reactor_total_mfr/riser_free_flow_are
     growth_factor      = 4.00
     optimal_iterations = 25
   []
+
+  # Time integration scheme
+  scheme = implicit-euler
 []
 
 # ==============================================================================

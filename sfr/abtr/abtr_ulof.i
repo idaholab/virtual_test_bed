@@ -1200,6 +1200,9 @@
 
   end_time = 1000
 
+  # Time integration scheme
+  scheme = 'bdf2'
+
   [Quadrature]
     type = TRAP
     order = FIRST

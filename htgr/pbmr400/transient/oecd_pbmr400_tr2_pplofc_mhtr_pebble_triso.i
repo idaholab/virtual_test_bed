@@ -296,6 +296,9 @@ pebble_bed_porosity        = 0.39 # Pebble bed porosity (//)
   reset_dt = true
   start_time = 0.0
 
+  # Time integration scheme
+  scheme = 'implicit-euler'
+
   # Linear/nonlinear iterations.
   nl_abs_tol = 1e-8
 

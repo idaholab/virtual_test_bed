@@ -376,6 +376,9 @@ beta6 = 0.000184087
   steady_state_tolerance  = 1e-8
   steady_state_start_time = 10
 
+  # Time integration scheme
+  scheme = 'implicit-euler'
+
   # Solver parameters
   solve_type = 'NEWTON'
   petsc_options_iname = '-pc_type -pc_factor_shift_type -ksp_gmres_restart'
