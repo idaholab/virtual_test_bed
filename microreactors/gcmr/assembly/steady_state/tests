@@ -12,8 +12,10 @@
     check_input = true
     input = 'Griffin_steady_state.i'
     executable_pattern = 'griffin*|blue_crab*'
-    cli_args = "MultiApps/active='' Transfers/active=''"
+    cli_args = "MultiApps/active='' Transfers/active=''
+                Executioner/set_sam_default_petsc_options=false"
     #prereq = 'generate_mesh'
+    allow_unused = true
   []
   [griffin_alone]
     type = 'CSVDiff'
@@ -22,12 +24,14 @@
     executable_pattern = 'griffin*|blue_crab*'
     cli_args = "MultiApps/active='' Transfers/active=''
                 Executioner/richardson_max_its=1
-                TransportSystems/SN/NAzmthl=3 TransportSystems/SN/NPolar=1"
+                TransportSystems/SN/NAzmthl=3 TransportSystems/SN/NPolar=1
+                Executioner/set_sam_default_petsc_options=false"
     prereq = 'griffin_alone_syntax'
     min_parallel = 16
     rel_err = 1e-3
     method = 'opt'
     max_time = 400
+    allow_unused = true
   []
 
   # BISON tests
@@ -94,9 +98,11 @@
     input = 'Griffin_steady_state.i'
     csvdiff = 'gcmr_steady_out.csv'
     executable_pattern = 'griffin*|blue_crab*'
-    cli_args = "filebase=gcmr_steady"
+    cli_args = "filebase=gcmr_steady
+                Executioner/set_sam_default_petsc_options=false"
     prereq = 'griffin_alone bison_alone sam_full_alone sam_alone'
     skip = 'Needs HPC #176'
+    allow_unused = true
   []
 []
 

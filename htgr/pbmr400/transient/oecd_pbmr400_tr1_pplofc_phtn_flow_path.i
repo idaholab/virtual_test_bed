@@ -766,6 +766,9 @@ reactor_inlet_free_rho_u = ${fparse -reactor_total_mfr/reactor_inlet_free_flow_a
     # force_step_every_function_point = true
     optimal_iterations = 4
   []
+
+  # Time integration scheme
+  scheme = 'implicit-euler'
 []
 
 # ==============================================================================

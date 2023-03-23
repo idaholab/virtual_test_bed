@@ -282,6 +282,9 @@
   end_time = 0
   dtmin = 1
   dt = 50
+
+  # Time integration scheme
+  scheme = 'implicit-euler'
 []
 
 [Postprocessors]

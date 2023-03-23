@@ -289,6 +289,9 @@ beta6 = 0.000184087
   petsc_options_value = 'lu NONZERO 50'
   line_search = 'none'
 
+  # Time integration scheme
+  scheme = 'implicit-euler'
+
   nl_rel_tol = 1e-9
   nl_abs_tol = 2e-8
   nl_max_its = 15

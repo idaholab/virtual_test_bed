@@ -1194,6 +1194,9 @@
     min_dt = 1e-3
   []
 
+  # Time integration scheme
+  scheme = 'bdf2'
+
   nl_rel_tol = 1e-8
   nl_abs_tol = 1e-6
   nl_max_its = 10

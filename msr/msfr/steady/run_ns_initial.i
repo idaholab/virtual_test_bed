@@ -166,6 +166,9 @@ pump_force = -20000. # [N / m^3]
     timestep_limiting_postprocessor = 'dt_limit'
   []
 
+  # Time integration scheme
+  scheme = 'implicit-euler'
+
   # Solver parameters
   solve_type = 'NEWTON'
   petsc_options_iname = '-pc_type -pc_factor_shift_type -ksp_gmres_restart'
