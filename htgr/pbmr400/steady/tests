@@ -87,7 +87,7 @@
     method = 'opt' # too slow for devel
     min_parallel = 8
     # require the others so the restart files dont get overwritten
-    prereq = 'transient_neutronics_only transient_fluid_flow_only'
+    prereq = 'transient_neutronics_only transient_fluid_flow_only transient_fuel_performance_only'
   []
 
   [transient_multiphysics]
