@@ -44,7 +44,7 @@
   max_inner_its = 20
 
   fixed_point_max_its = 1
-  custom_pp = fission_source_integral
+  custom_pp = eigenvalue
   custom_rel_tol = 1e-6
   force_fixed_point_solve = true
 
