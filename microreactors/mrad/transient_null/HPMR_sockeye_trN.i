@@ -136,19 +136,13 @@ htc_ext_cond = 1.0e6
     n_elems_clad = 4
     n_elems_wick = 8
     n_elems_core = 10
-    # Thermal conductivity
-    k_clad = ${k_env}
-    k_wick = ${k_wick}
+    # Thermal properties
+    sp_vapor = sp_vapor
+    sp_liquid = sp_wick_ann
+    sp_wick = sp_wick_ann
+    sp_clad = sp_clad
     k_core = ${k_vapor}
     k_eff = ${k_wick}
-    # Density
-    rho_clad = ${rho_env}
-    rho_wick = ${rho_wick}
-    rho_core = ${rho_vapor}
-    # Specific heat
-    cp_clad = ${cp_env}
-    cp_wick = ${cp_wick}
-    cp_core = ${cp_vapor}
     #
     fp_2phase = fp_2phase
     evaporator_at_start_end = true
@@ -157,7 +151,8 @@ htc_ext_cond = 1.0e6
     # Melting temperature (hard limit on minimum coolant temperature)
     T_operating = ${T_melting}
     T_ref = T_inner_avg
-
+    # To evaluate the constant properties
+    T_ref_density = 1000
     make_pressure_corrections = true
   []
 
@@ -175,6 +170,27 @@ htc_ext_cond = 1.0e6
     hs = hp
     T_ext = virtual_Text
     htc_ext = virtual_htc
+  []
+[]
+
+[SolidProperties]
+  [sp_vapor]
+    type = ThermalFunctionSolidProperties
+    rho = ${rho_vapor}
+    cp = ${cp_vapor}
+    k = ${k_vapor}
+  []
+  [sp_wick_ann]
+    type = ThermalFunctionSolidProperties
+    rho = ${rho_wick}
+    cp = ${cp_wick}
+    k = ${k_wick}
+  []
+  [sp_clad]
+    type = ThermalFunctionSolidProperties
+    rho = ${rho_env}
+    cp = ${cp_env}
+    k = ${k_env}
   []
 []
 
