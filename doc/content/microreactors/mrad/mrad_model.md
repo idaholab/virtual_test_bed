@@ -73,7 +73,7 @@ The effective thermal conductivity model, i.e., a 2D axisymmetric conduction mod
 
 ### MultiApps Hierarchy
 
-The three MOOSE applications that governs different physics respectively are coupled together leveraging the MOOSE MultiApps system. Each code has its own mesh and corresponding space and time scales. The MOOSE MultiApp system is used to tightly couple the different codes via fixed point iterations as illustrated below in [hpmr_multiapps].
+The three MOOSE applications that govern different physics respectively are coupled together leveraging the MOOSE MultiApps system. Each code has its own mesh and corresponding space and time scales. The MOOSE MultiApp system is used to tightly couple the different codes via fixed point iterations as illustrated below in [hpmr_multiapps].
 
 At the top level, Griffin calculates the power density based on its neutronics results given the fuel and moderator temperatures taken from the BISON child application. The calculated power density is also provided to BISON to update the temperature calculation. On the other hand, for the surface of each heat pipe, BISON calculates the layered average heat flux along the normal direction of the surface and transfers the 1D field values to the respective Sockeye sub-application so that Sockeye can use them as its boundary condition. Meanwhile, BISON takes the heat pipe surface temperature calculated by Sockeye back for its own boundary condition on the heat pipe surface.
 
@@ -98,7 +98,7 @@ The load following transient is initiated by introducing a drop in the heat remo
 
 ### Transient Initiated by a Single Heat Pipe Failure
 
-Another type of transient to be simulated in this model is more localized. Instead of reducing the condensor region HTC of all heat pipes, the condensor region HTC of a single heat pipe is nearly eliminated (i.e. reduced from 10^6^ W/m^2^•K to 10^-2^ W/m^2^•K) to mimic a single heat pipe failure event, while the other heat pipes are kept unchanges (note that actually there are six heat pipes that are compromised due to the 1/6 symmetric mesh used here in this model). The failed heat pipe is intentially selected to be in the hottest region of the HP-MR (i.e., in the center region of the center assembly).
+Another type of transient to be simulated in this model is more localized. Instead of reducing the condensor region HTC of all heat pipes, the condensor region HTC of a single heat pipe is nearly eliminated (i.e. reduced from 10^6^ W/m^2^•K to 10^-2^ W/m^2^•K) to mimic a single heat pipe failure event, while the other heat pipes are kept unchanged (note that actually there are six heat pipes that are compromised due to the 1/6 symmetric mesh used here in this model). The failed heat pipe is intentionally selected to be in the hottest region of the HP-MR (i.e., in the center region of the center assembly).
 
 #### Localized Single Heat Pipe Failure
 
@@ -155,7 +155,7 @@ mpirun -n 40 dire_wolf-opt -i HPMR_dfem_griffin_tr.i
 
 ### Overpower Simulation
 
-The default power values in the input files in this repository are all set at the nominal power (i.e., 345.6 kW for the 1/6 HP-MR core). To run the overpower case to simulate the heat pipe cascade failure, the following values need to be changed to the 720 kW overpower level.
+The default power values in the input files in this repository are all set at the nominal power (i.e., 345.6 kW for the 1/6 HP-MR core). To run the overpower case to simulate the heat pipe cascade failure, the following values need to be changed to the 720 kW overpower level. The steady state configuration must be re-generated before the overpower transient may be run.
 
 !listing /mrad/steady/HPMR_dfem_griffin_ss.i block=PowerDensity
 
