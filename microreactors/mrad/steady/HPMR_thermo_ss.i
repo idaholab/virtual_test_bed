@@ -22,7 +22,6 @@ corr_factor = '${fparse R_hp_hole / R_clad_o * area_correction / perimeter_corre
     type = FileMeshGenerator
     file = '../mesh/gold/HPMR_OneSixth_Core_meshgenerator_tri_rotate_bdry_fine.e'
   []
-  # Delete the heat pipe blocks as they are taken care of by Sockeye
   [add_exterior_ht]
     type = SideSetsBetweenSubdomainsGenerator
     input = fmg
@@ -30,17 +29,43 @@ corr_factor = '${fparse R_hp_hole / R_clad_o * area_correction / perimeter_corre
     primary_block = 'monolith reflector_quad reflector_tri'
     new_boundary = 'heat_pipe_ht_surf'
   []
-  [add_exterior_ht_bottom]
-    type = SideSetsBetweenSubdomainsGenerator
+  # This logic could be simplified with a different set of MGs
+  # the capability will be added to MOOSE
+  [create_bottom_hp_side]
+    type = SideSetsAroundSubdomainGenerator
     input = add_exterior_ht
-    paired_block = 'hp_ss heat_pipes_quad heat_pipes_tri'
-    primary_block = 'reflector_quad reflector_tri'
-    new_boundary = 'heat_pipe_ht_surf_bot'
+    new_boundary = 'temporary_hp_bot'
+    block = 'heat_pipes_quad heat_pipes_tri hp_ss'
+    normal = '0 0 -1'
   []
+  # save as a nodeset because otherwise sideset is lost at deletion
+  [add_nodesets]
+    type = NodeSetsFromSideSetsGenerator
+    input = create_bottom_hp_side
+  []
+  # Delete the heat pipe blocks as they are taken care of by Sockeye
   [bdg]
     type = BlockDeletionGenerator
-    input = add_exterior_ht_bottom
+    input = add_nodesets
     block = 'heat_pipes_quad heat_pipes_tri hp_ss'
+  []
+  [rename]
+    type = RenameBoundaryGenerator
+    input = bdg
+    old_boundary = '30503'
+    new_boundary = 'heat_pipe_ht_surf_bot'
+  []
+  # get the sideset back from the nodeset
+  construct_side_list_from_node_list = true
+
+  # remove extra nodesets to limit the size of the mesh
+  [clean_up]
+    type = BoundaryDeletionGenerator
+    input = 'rename'
+    boundary_names = '1 2 3
+                      10001 10002 10003 10004 10005 10006
+                      15001 15002 15003 15004 15005 15006
+                      30500 30501'
   []
 []
 
