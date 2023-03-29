@@ -138,7 +138,7 @@
     source_variable = power_density
     variable = power_density
     from_postprocessors_to_be_preserved = integrated_power
-    to_postprocessors_to_be_preserved = power_density
+    to_postprocessors_to_be_preserved = power
   []
   [from_sub_temp_fuel]
     type = MultiAppGeometricInterpolationTransfer

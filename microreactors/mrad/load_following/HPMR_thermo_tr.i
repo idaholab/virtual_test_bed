@@ -369,7 +369,7 @@ corr_factor = ${fparse R_hp_hole / R_clad_o * area_correction / perimeter_correc
     variable = temp
     boundary = heat_pipe_ht_surf
   []
-  [power_density]
+  [power]
     type = ElementIntegralVariablePostprocessor
     block = 'fuel_quad fuel_tri'
     variable = power_density

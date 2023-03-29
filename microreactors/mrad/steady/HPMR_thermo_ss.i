@@ -27,12 +27,19 @@ corr_factor = '${fparse R_hp_hole / R_clad_o * area_correction / perimeter_corre
     type = SideSetsBetweenSubdomainsGenerator
     input = fmg
     paired_block = 'hp_ss'
-    primary_block = 'monolith reflector_quad'
+    primary_block = 'monolith reflector_quad reflector_tri'
     new_boundary = 'heat_pipe_ht_surf'
+  []
+  [add_exterior_ht_bottom]
+    type = SideSetsBetweenSubdomainsGenerator
+    input = add_exterior_ht
+    paired_block = 'hp_ss heat_pipes_quad heat_pipes_tri'
+    primary_block = 'reflector_quad reflector_tri'
+    new_boundary = 'heat_pipe_ht_surf_bot'
   []
   [bdg]
     type = BlockDeletionGenerator
-    input = add_exterior_ht
+    input = add_exterior_ht_bottom
     block = 'heat_pipes_quad heat_pipes_tri hp_ss'
   []
 []
@@ -330,6 +337,13 @@ corr_factor = '${fparse R_hp_hole / R_clad_o * area_correction / perimeter_corre
     diffusivity = thermal_conductivity
     execute_on = 'initial timestep_end'
   []
+  [hp_end_heat_integral]
+    type = SideDiffusiveFluxIntegral
+    variable = temp
+    boundary = 'heat_pipe_ht_surf_bot'
+    diffusivity = thermal_conductivity
+    execute_on = 'initial timestep_end'
+  []
   [ext_side_integral]
     type = SideDiffusiveFluxIntegral
     variable = temp
@@ -353,7 +367,7 @@ corr_factor = '${fparse R_hp_hole / R_clad_o * area_correction / perimeter_corre
   []
   [total_sink]
     type = SumPostprocessor
-    values = 'hp_heat_integral ext_side_integral mirror_side_integral tb_integral'
+    values = 'hp_heat_integral hp_end_heat_integral ext_side_integral mirror_side_integral tb_integral'
     execute_on = 'initial timestep_end'
   []
   [fuel_temp_avg]
@@ -409,7 +423,7 @@ corr_factor = '${fparse R_hp_hole / R_clad_o * area_correction / perimeter_corre
     variable = temp
     boundary = heat_pipe_ht_surf
   []
-  [power_density]
+  [power]
     type = ElementIntegralVariablePostprocessor
     block = 'fuel_quad fuel_tri'
     variable = power_density
