@@ -23,11 +23,17 @@ corr_factor = '${fparse R_hp_hole / R_clad_o * area_correction / perimeter_corre
     file = '../mesh/gold/HPMR_OneSixth_Core_meshgenerator_tri_rotate_bdry_fine.e'
   []
   # Delete the heat pipe blocks as they are taken care of by Sockeye
+  [add_exterior_ht]
+    type = SideSetsBetweenSubdomainsGenerator
+    input = fmg
+    paired_block = 'hp_ss'
+    primary_block = 'monolith reflector_quad'
+    new_boundary = 'heat_pipe_ht_surf'
+  []
   [bdg]
     type = BlockDeletionGenerator
-    input = fmg
+    input = add_exterior_ht
     block = 'heat_pipes_quad heat_pipes_tri hp_ss'
-    new_boundary = 'heat_pipe_ht_surf'
   []
 []
 
