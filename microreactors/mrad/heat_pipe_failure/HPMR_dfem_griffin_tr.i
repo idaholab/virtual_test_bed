@@ -141,7 +141,7 @@
     to_postprocessors_to_be_preserved = power_density
   []
   [from_sub_temp_fuel]
-    type = MultiAppInterpolationTransfer
+    type = MultiAppGeometricInterpolationTransfer
     direction = from_multiapp
     multi_app = bison
     variable = Tf
@@ -154,7 +154,7 @@
     power = 0 # interpolate with constant function
   []
   [from_sub_temp_mod]
-    type = MultiAppInterpolationTransfer
+    type = MultiAppGeometricInterpolationTransfer
     direction = from_multiapp
     multi_app = bison
     variable = Tm

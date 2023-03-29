@@ -290,7 +290,7 @@ corr_factor = '${fparse R_hp_hole / R_clad_o * area_correction / perimeter_corre
 
 [UserObjects]
   [flux_uo]
-    type = NearestPointLayeredSideFluxAverage
+    type = NearestPointLayeredSideDiffusiveFluxAverage
     direction = z
     num_layers = 100
     points_file = 'hp_centers.txt'
@@ -318,28 +318,28 @@ corr_factor = '${fparse R_hp_hole / R_clad_o * area_correction / perimeter_corre
 
 [Postprocessors]
   [hp_heat_integral]
-    type = SideFluxIntegral
+    type = SideDiffusiveFluxIntegral
     variable = temp
     boundary = 'heat_pipe_ht_surf'
     diffusivity = thermal_conductivity
     execute_on = 'initial timestep_end'
   []
   [ext_side_integral]
-    type = SideFluxIntegral
+    type = SideDiffusiveFluxIntegral
     variable = temp
     boundary = 'side'
     diffusivity = thermal_conductivity
     execute_on = 'initial timestep_end'
   []
   [mirror_side_integral]
-    type = SideFluxIntegral
+    type = SideDiffusiveFluxIntegral
     variable = temp
     boundary = 'side_mirror'
     diffusivity = thermal_conductivity
     execute_on = 'initial timestep_end'
   []
   [tb_integral]
-    type = SideFluxIntegral
+    type = SideDiffusiveFluxIntegral
     variable = temp
     boundary = 'top bottom'
     diffusivity = thermal_conductivity
