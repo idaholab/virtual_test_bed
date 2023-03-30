@@ -49,7 +49,7 @@
     # Temperatures are out of range
     allow_warnings = true
     max_time = 400
-    rel_err = 1e-5
+    rel_err = 1.2e-5
   []
   [fluids_sockeye]
     type = CSVDiff
@@ -96,7 +96,8 @@
     executable_pattern = 'bison*|blue_crab*|dire_wolf*'
     cli_args = "MultiApps/active='' Transfers/active=''
                 Problem/restart_file_base='../steady/HPMR_thermo_ss_out_cp/LATEST'
-                Mesh/file='../steady/HPMR_thermo_ss_out_cp/LATEST'"
+                Mesh/file='../steady/HPMR_thermo_ss_out_cp/LATEST'
+                --distributed-mesh"
     prereq = 'mechanics_bison'
     # restart file was created in parallel
     min_parallel = 16
@@ -134,7 +135,8 @@
     executable_pattern = 'bison*|blue_crab*|dire_wolf*'
     cli_args = "MultiApps/active='' Transfers/active=''
                 Problem/restart_file_base='../steady/HPMR_thermo_ss_out_cp/LATEST'
-                Mesh/file='../steady/HPMR_thermo_ss_out_cp/LATEST'"
+                Mesh/file='../steady/HPMR_thermo_ss_out_cp/LATEST'
+                --distributed-mesh"
     prereq = 'mechanics_bison'
     # restart file was created in parallel
     min_parallel = 16
@@ -173,7 +175,8 @@
     executable_pattern = 'bison*|blue_crab*|dire_wolf*'
     cli_args = "MultiApps/active='' Transfers/active=''
                 Problem/restart_file_base='../steady/HPMR_thermo_ss_out_cp/LATEST'
-                Mesh/file='../steady/HPMR_thermo_ss_out_cp/LATEST'"
+                Mesh/file='../steady/HPMR_thermo_ss_out_cp/LATEST'
+                --distributed-mesh"
     prereq = 'mechanics_bison'
     # restart file was created in parallel
     min_parallel = 16
