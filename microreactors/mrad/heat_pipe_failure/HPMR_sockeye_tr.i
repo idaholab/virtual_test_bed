@@ -5,6 +5,10 @@
 ## Effective Heat Conduction Model with Operation Limits                      ##
 ################################################################################
 
+# NOTE:
+# This input is initialized using the MultiApps restart from its parent app
+# If this is not done, a separate initialization must be provided
+
 # Wick characteristics
 R_pore = 15.0e-6
 D_h_pore = ${fparse 2.0 * R_pore}
@@ -146,12 +150,10 @@ T_ext_cond = 800.
     fp_2phase = fp_2phase
     evaporator_at_start_end = true
     # Initial temperature of block
-    # initial_T = ${T_ext_cond}
-    # Melting temperature (hard limit on minimum coolant temperature)
-    T_operating = ${T_melting}
+    # initial_T = ${T_melting}
     T_ref = T_inner_avg
     # To evaluate the constant properties
-    T_ref_density = 1000
+    T_ref_density = ${T_melting}
     make_pressure_corrections = true
   []
 
@@ -246,7 +248,7 @@ T_ext_cond = 800.
     #initial_condition = ${T_ext_cond}
   []
   [virtual_Text]
-    #initial_condition = ${T_ext_cond}
+    # initial_condition = ${T_ext_cond}
   []
   [virtual_htc]
     #initial_condition = 1.0
@@ -296,7 +298,6 @@ T_ext_cond = 800.
     catastrophic_heat_removal_limit_pps = 'hp_boiling_limit hp_capillary_limit '
                                           'hp_entrainment_limit'
     recoverable_heat_removal_limit_pps = ''
-    T_operating = ${T_melting}
     T = T_inner_avg
     execute_on = 'INITIAL TIMESTEP_END'
   []
@@ -306,7 +307,6 @@ T_ext_cond = 800.
     limit_condenser_side = false
     catastrophic_heat_removal_limit_pps = ''
     recoverable_heat_removal_limit_pps = 'hp_sonic_limit hp_viscous_limit'
-    T_operating = ${T_melting}
     T = T_inner_avg
     execute_on = 'INITIAL linear nonlinear TIMESTEP_END'
   []

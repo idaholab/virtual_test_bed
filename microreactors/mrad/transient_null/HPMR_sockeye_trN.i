@@ -5,6 +5,10 @@
 ## Effective Heat Conduction Model with Operation Limits                      ##
 ################################################################################
 
+# NOTE:
+# This input is initialized using the MultiApps restart from its parent app
+# If this is not done, a separate initialization must be provided
+
 # Wick characteristics
 R_pore = 15.0e-6
 D_h_pore = ${fparse 2.0 * R_pore}
@@ -42,7 +46,7 @@ k_liquid = 40.08
 # From Table 1.1, no temperature data given
 cp_liquid = 810.
 # Melting point, Table 3.1, lists 62C, rounding up
-T_melting = 340.
+# T_melting = 340.
 
 # Wick, homogenize envelope and fluid
 # Density (kg/m3)
@@ -148,8 +152,6 @@ htc_ext_cond = 1.0e6
     evaporator_at_start_end = true
     # Initial temperature of block
     # initial_T = ${T_ext_cond}
-    # Melting temperature (hard limit on minimum coolant temperature)
-    T_operating = ${T_melting}
     T_ref = T_inner_avg
     # To evaluate the constant properties
     T_ref_density = 1000
@@ -287,7 +289,6 @@ htc_ext_cond = 1.0e6
     catastrophic_heat_removal_limit_pps = 'hp_boiling_limit hp_capillary_limit '
                                           'hp_entrainment_limit'
     recoverable_heat_removal_limit_pps = ''
-    T_operating = ${T_melting}
     T = T_inner_avg
     execute_on = 'INITIAL TIMESTEP_END'
   []
@@ -297,7 +298,6 @@ htc_ext_cond = 1.0e6
     limit_condenser_side = false
     catastrophic_heat_removal_limit_pps = ''
     recoverable_heat_removal_limit_pps = 'hp_sonic_limit hp_viscous_limit'
-    T_operating = ${T_melting}
     T = T_inner_avg
     execute_on = 'INITIAL linear nonlinear TIMESTEP_END'
   []
