@@ -142,8 +142,7 @@
   []
   [from_sub_temp_fuel]
     type = MultiAppGeometricInterpolationTransfer
-    direction = from_multiapp
-    multi_app = bison
+    from_multi_app = bison
     variable = Tf
     source_variable = Tfuel
     execute_on = 'initial timestep_end'
@@ -155,8 +154,7 @@
   []
   [from_sub_temp_mod]
     type = MultiAppGeometricInterpolationTransfer
-    direction = from_multiapp
-    multi_app = bison
+    from_multi_app = bison
     variable = Tm
     source_variable = Tmod
     execute_on = 'initial timestep_end'

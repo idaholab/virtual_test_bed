@@ -308,8 +308,7 @@ corr_factor = '${fparse R_hp_hole / R_clad_o * area_correction / perimeter_corre
 [Transfers]
   [from_sockeye_temp]
     type = MultiAppNearestNodeTransfer
-    direction = from_multiapp
-    multi_app = sockeye
+    from_multi_app = sockeye
     source_variable = hp_temp_aux
     variable = hp_temp_aux
     execute_on = 'timestep_begin'
@@ -317,8 +316,7 @@ corr_factor = '${fparse R_hp_hole / R_clad_o * area_correction / perimeter_corre
   []
   [to_sockeye_flux]
     type = MultiAppNearestNodeTransfer
-    direction = to_multiapp
-    multi_app = sockeye
+    to_multi_app = sockeye
     source_variable = flux_uo_corr
     variable = master_flux
     execute_on = 'timestep_begin'
