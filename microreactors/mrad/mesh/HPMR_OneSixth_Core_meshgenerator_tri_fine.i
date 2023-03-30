@@ -17,7 +17,7 @@
     background_intervals = 1
     background_block_ids = '10'
     polygon_size = 1.15
-    polygon_size_style ='apothem'
+    polygon_size_style = 'apothem'
     ring_radii = '0.825 0.92'
     ring_intervals = '2 1'
     ring_block_ids = '103 100 101' # 103 is tri mesh
@@ -36,7 +36,7 @@
     background_inner_boundary_layer_intervals = 3
     background_inner_boundary_layer_width = 0.03
     polygon_size = 1.15
-    polygon_size_style ='apothem'
+    polygon_size_style = 'apothem'
     ring_radii = '0.97 1.07'
     ring_intervals = '2 1'
     ring_block_ids = '203 200 201' # 203 is tri mesh
@@ -51,10 +51,10 @@
     background_intervals = 1
     background_block_ids = '10'
     polygon_size = 1.15
-    polygon_size_style ='apothem'
+    polygon_size_style = 'apothem'
     ring_radii = '1'
     ring_intervals = '2'
-    ring_block_ids = '303 301'  # 303 is tri mesh
+    ring_block_ids = '303 301' # 303 is tri mesh
     preserve_volumes = on
     quad_center_elements = false
   []
@@ -84,7 +84,7 @@
     type = HexagonConcentricCircleAdaptiveBoundaryMeshGenerator
     inputs = 'Patterned Patterned'
     sides_to_adapt = '3 4'
-    num_sectors_per_side= '4 4 4 4 4 4'
+    num_sectors_per_side = '4 4 4 4 4 4'
     hexagon_size = 13.376
     background_intervals = 2
     background_block_ids = 504
@@ -108,7 +108,7 @@
     type = HexagonConcentricCircleAdaptiveBoundaryMeshGenerator
     inputs = 'Patterned Patterned'
     sides_to_adapt = '0 1'
-    num_sectors_per_side= '4 4 4 4 4 4'
+    num_sectors_per_side = '4 4 4 4 4 4'
     hexagon_size = 13.376
     background_intervals = 2
     background_block_ids = 504
@@ -132,7 +132,7 @@
     type = HexagonConcentricCircleAdaptiveBoundaryMeshGenerator
     inputs = 'Patterned Patterned Patterned'
     sides_to_adapt = '0 4 5'
-    num_sectors_per_side= '4 4 4 4 4 4'
+    num_sectors_per_side = '4 4 4 4 4 4'
     hexagon_size = 13.376
     background_intervals = 2
     background_block_ids = 504
@@ -156,7 +156,7 @@
     type = HexagonConcentricCircleAdaptiveBoundaryMeshGenerator
     inputs = 'Patterned Patterned Patterned'
     sides_to_adapt = '1 2 3'
-    num_sectors_per_side= '4 4 4 4 4 4'
+    num_sectors_per_side = '4 4 4 4 4 4'
     hexagon_size = 13.376
     background_intervals = 2
     background_block_ids = 504
@@ -180,7 +180,7 @@
     type = HexagonConcentricCircleAdaptiveBoundaryMeshGenerator
     inputs = 'Patterned Patterned Patterned'
     sides_to_adapt = '2 3 4'
-    num_sectors_per_side= '4 4 4 4 4 4'
+    num_sectors_per_side = '4 4 4 4 4 4'
     hexagon_size = 13.376
     background_intervals = 2
     background_block_ids = 504
@@ -204,7 +204,7 @@
     type = HexagonConcentricCircleAdaptiveBoundaryMeshGenerator
     inputs = 'Patterned Patterned'
     sides_to_adapt = '2 3'
-    num_sectors_per_side= '4 4 4 4 4 4'
+    num_sectors_per_side = '4 4 4 4 4 4'
     hexagon_size = 13.376
     background_intervals = 2
     background_block_ids = 504
@@ -228,7 +228,7 @@
     type = HexagonConcentricCircleAdaptiveBoundaryMeshGenerator
     inputs = 'Patterned Patterned'
     sides_to_adapt = '1 2'
-    num_sectors_per_side= '4 4 4 4 4 4'
+    num_sectors_per_side = '4 4 4 4 4 4'
     hexagon_size = 13.376
     background_intervals = 2
     background_block_ids = 504
@@ -252,7 +252,7 @@
     type = HexagonConcentricCircleAdaptiveBoundaryMeshGenerator
     inputs = ' Patterned Patterned Patterned'
     sides_to_adapt = '0 1 2'
-    num_sectors_per_side= '4 4 4 4 4 4'
+    num_sectors_per_side = '4 4 4 4 4 4'
     hexagon_size = 13.376
     background_intervals = 2
     background_block_ids = 504
@@ -276,7 +276,7 @@
     type = HexagonConcentricCircleAdaptiveBoundaryMeshGenerator
     inputs = ' Patterned Patterned Patterned'
     sides_to_adapt = '0 1 5'
-    num_sectors_per_side= '4 4 4 4 4 4'
+    num_sectors_per_side = '4 4 4 4 4 4'
     hexagon_size = 13.376
     background_intervals = 2
     background_block_ids = 504
@@ -300,7 +300,7 @@
     type = HexagonConcentricCircleAdaptiveBoundaryMeshGenerator
     inputs = 'Patterned Patterned'
     sides_to_adapt = '0 5'
-    num_sectors_per_side= '4 4 4 4 4 4'
+    num_sectors_per_side = '4 4 4 4 4 4'
     hexagon_size = 13.376
     background_intervals = 2
     background_block_ids = 504
@@ -321,10 +321,10 @@
   []
   # Control drum at 10 o'clock
   [cd0_10]
-    type =HexagonConcentricCircleAdaptiveBoundaryMeshGenerator
+    type = HexagonConcentricCircleAdaptiveBoundaryMeshGenerator
     inputs = 'Patterned Patterned'
     sides_to_adapt = '4 5'
-    num_sectors_per_side= '4 4 4 4 4 4'
+    num_sectors_per_side = '4 4 4 4 4 4'
     hexagon_size = 13.376
     background_intervals = 2
     background_block_ids = 504
@@ -348,7 +348,7 @@
     type = HexagonConcentricCircleAdaptiveBoundaryMeshGenerator
     inputs = 'Patterned Patterned Patterned'
     sides_to_adapt = '3 4 5'
-    num_sectors_per_side= '4 4 4 4 4 4'
+    num_sectors_per_side = '4 4 4 4 4 4'
     hexagon_size = 13.376
     background_intervals = 2
     background_block_ids = 504
@@ -372,7 +372,7 @@
     type = HexagonConcentricCircleAdaptiveBoundaryMeshGenerator
     inputs = 'Patterned'
     sides_to_adapt = '0'
-    num_sectors_per_side= '4 4 4 4 4 4'
+    num_sectors_per_side = '4 4 4 4 4 4'
     hexagon_size = 13.376
     background_intervals = 2
     background_block_ids = '400 401'
@@ -381,7 +381,7 @@
     type = HexagonConcentricCircleAdaptiveBoundaryMeshGenerator
     inputs = 'Patterned'
     sides_to_adapt = '1'
-    num_sectors_per_side= '4 4 4 4 4 4'
+    num_sectors_per_side = '4 4 4 4 4 4'
     hexagon_size = 13.376
     background_intervals = 2
     background_block_ids = '400 401'
@@ -390,7 +390,7 @@
     type = HexagonConcentricCircleAdaptiveBoundaryMeshGenerator
     inputs = 'Patterned'
     sides_to_adapt = '2'
-    num_sectors_per_side= '4 4 4 4 4 4'
+    num_sectors_per_side = '4 4 4 4 4 4'
     hexagon_size = 13.376
     background_intervals = 2
     background_block_ids = '400 401'
@@ -399,7 +399,7 @@
     type = HexagonConcentricCircleAdaptiveBoundaryMeshGenerator
     inputs = 'Patterned'
     sides_to_adapt = '3'
-    num_sectors_per_side= '4 4 4 4 4 4'
+    num_sectors_per_side = '4 4 4 4 4 4'
     hexagon_size = 13.376
     background_intervals = 2
     background_block_ids = '400 401'
@@ -408,7 +408,7 @@
     type = HexagonConcentricCircleAdaptiveBoundaryMeshGenerator
     inputs = 'Patterned'
     sides_to_adapt = '4'
-    num_sectors_per_side= '4 4 4 4 4 4'
+    num_sectors_per_side = '4 4 4 4 4 4'
     hexagon_size = 13.376
     background_intervals = 2
     background_block_ids = '400 401'
@@ -417,7 +417,7 @@
     type = HexagonConcentricCircleAdaptiveBoundaryMeshGenerator
     inputs = 'Patterned'
     sides_to_adapt = '5'
-    num_sectors_per_side= '4 4 4 4 4 4'
+    num_sectors_per_side = '4 4 4 4 4 4'
     hexagon_size = 13.376
     background_intervals = 2
     background_block_ids = '400 401'
@@ -425,7 +425,7 @@
   # Central void region
   [air_center]
     type = HexagonConcentricCircleAdaptiveBoundaryMeshGenerator
-    num_sectors_per_side= '4 4 4 4 4 4'
+    num_sectors_per_side = '4 4 4 4 4 4'
     inputs = 'Patterned Patterned Patterned Patterned Patterned Patterned'
     sides_to_adapt = '0 1 2 3 4 5'
     hexagon_size = 13.376
@@ -436,11 +436,11 @@
   # This will be deleted later
   [dummy]
     type = HexagonConcentricCircleAdaptiveBoundaryMeshGenerator
-    num_sectors_per_side= '4 4 4 4 4 4'
+    num_sectors_per_side = '4 4 4 4 4 4'
     hexagon_size = 13.376
     background_intervals = 2
     background_block_ids = '700 701'
-       # external_boundary_id = 9998
+    # external_boundary_id = 9998
   []
   # Stitching assemblies together to form the core mesh
   [core]
@@ -481,9 +481,9 @@
     peripheral_outer_boundary_layer_bias = 0.625
     peripheral_outer_boundary_layer_intervals = 3
     peripheral_outer_boundary_layer_width = 2
- []
- # trim the full core to 1/6 core
- [del_1]
+  []
+  # trim the full core to 1/6 core
+  [del_1]
     type = PlaneDeletionGenerator
     point = '0 0 0'
     normal = '10 17.32 0'
@@ -499,16 +499,16 @@
   []
   # extrusion
   [extrude]
-     type = AdvancedExtruderGenerator
-     input = del_2
-     heights = '20 160 20'
-     # Use `num_layers = '6 16 6'` for BISON mesh
-     num_layers = '6 16 6'
-     # biased upper and lower reflector mesh, only for BISON mesh
-     biases = '1.6 1.0 0.625'
-     direction = '0 0 1'
-     top_boundary = 2000
-     bottom_boundary = 3000
+    type = AdvancedExtruderGenerator
+    input = del_2
+    heights = '20 160 20'
+    # Use `num_layers = '6 16 6'` for BISON mesh
+    num_layers = '6 16 6'
+    # biased upper and lower reflector mesh, only for BISON mesh
+    biases = '1.6 1.0 0.625'
+    direction = '0 0 1'
+    top_boundary = 2000
+    bottom_boundary = 3000
   []
   # Define some special reflector blocks
   [reflector_bottom_quad]
@@ -516,28 +516,28 @@
     input = extrude
     combinatorial_geometry = 'z<=20'
     block_id = 1000
-    excluded_subdomain_ids= '103 203 303 250 400 401 500 501 502 503 504 600 601'
+    excluded_subdomain_ids = '103 203 303 250 400 401 500 501 502 503 504 600 601'
   []
   [reflector_bottom_tri]
     type = ParsedSubdomainMeshGenerator
     input = reflector_bottom_quad
     combinatorial_geometry = 'z<=20'
     block_id = 1003
-    excluded_subdomain_ids= '1000 250 400 401 500 501 502 503 504 600 601'
+    excluded_subdomain_ids = '1000 250 400 401 500 501 502 503 504 600 601'
   []
   [reflector_top_quad]
     type = ParsedSubdomainMeshGenerator
     input = reflector_bottom_tri
     combinatorial_geometry = 'z>=180'
     block_id = 1000
-    excluded_subdomain_ids= '103 203 303 200 201 250 400 401 500 501 502 503 504 600 601'
+    excluded_subdomain_ids = '103 203 303 200 201 250 400 401 500 501 502 503 504 600 601'
   []
   [reflector_top_tri]
     type = ParsedSubdomainMeshGenerator
     input = reflector_top_quad
     combinatorial_geometry = 'z>=180'
     block_id = 1003
-    excluded_subdomain_ids= '1000 200 201 203 250 400 401 500 501 502 503 504 600 601'
+    excluded_subdomain_ids = '1000 200 201 203 250 400 401 500 501 502 503 504 600 601'
   []
   # Assgin block names
   [rename_blocks]
@@ -577,7 +577,7 @@
     restricted_subdomains = 'hp_ss'
     bottom_left = '-100 -100 1.8'
     top_right = '100 100 3.0'
-  []  
+  []
   [add_exterior_ht_low]
     type = SideSetsBetweenSubdomainsGenerator
     input = split_hp_ss
@@ -609,7 +609,7 @@
     type = BlockDeletionGenerator
     input = merge_hp_surf
     block = 'hp_ss hp_ss_up heat_pipes_quad heat_pipes_tri'
-  []  
+  []
 
   # remove extra nodesets to limit the size of the mesh
   [clean_up]
