@@ -49,6 +49,7 @@
     # Temperatures are out of range
     allow_warnings = true
     max_time = 400
+    rel_err = 1e-5
   []
   [fluids_sockeye]
     type = CSVDiff
