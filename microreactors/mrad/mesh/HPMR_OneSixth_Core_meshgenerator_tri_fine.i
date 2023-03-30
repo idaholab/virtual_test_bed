@@ -1,17 +1,13 @@
-################################################################
+#####################################################################
 # This is the MOOSE input file to generate the mesh that can be
 # used for the 1/6 core Heat-Pipe Microreactor Multiphysics
-# simulations (Griffin neutronics simulation).
+# simulations (BISON thermal simulation).
 # Running this input requires MOOSE Reactor Module Objects
 # Users should use
-# --mesh-only HPMR_OneSixth_Core_meshgenerator_tri_rotate_bdry.e
+# --mesh-only HPMR_OneSixth_Core_meshgenerator_tri_rotate_bdry_fine.e
 # command line argument to generate
 # exodus file for further Multiphysics simulations.
-################################################################
-[GlobalParams]
-  create_outward_interface_boundaries = false
-[]
-
+#####################################################################
 [Mesh]
   # Moderator pins
   [Mod_hex]
@@ -35,6 +31,10 @@
     num_sectors_per_side = '2 2 2 2 2 2 '
     background_intervals = 1
     background_block_ids = '10'
+    # inner background boundary layer, only for BISON mesh
+    background_inner_boundary_layer_bias = 1.5
+    background_inner_boundary_layer_intervals = 3
+    background_inner_boundary_layer_width = 0.03
     polygon_size = 1.15
     polygon_size_style ='apothem'
     ring_radii = '0.97 1.07'
@@ -471,11 +471,16 @@
   [add_outer_shield]
     type = PeripheralRingMeshGenerator
     input = del_dummy
-    peripheral_layer_num = 1
+    # Use `peripheral_layer_num = 2` for BISON mesh
+    peripheral_layer_num = 2
     peripheral_ring_radius = 115.0
     input_mesh_external_boundary = 10000
     peripheral_ring_block_id = 250
     peripheral_ring_block_name = outer_shield
+    # Peripheral boundary layer, only for BISON mesh
+    peripheral_outer_boundary_layer_bias = 0.625
+    peripheral_outer_boundary_layer_intervals = 3
+    peripheral_outer_boundary_layer_width = 2
  []
  # trim the full core to 1/6 core
  [del_1]
@@ -498,9 +503,9 @@
      input = del_2
      heights = '20 160 20'
      # Use `num_layers = '6 16 6'` for BISON mesh
-     num_layers = '1 8 1'
-     # biased upper and lower reflector mesh, uncomment for BISON mesh
-     # biases = '1.6 1.0 0.625'
+     num_layers = '6 16 6'
+     # biased upper and lower reflector mesh, only for BISON mesh
+     biases = '1.6 1.0 0.625'
      direction = '0 0 1'
      top_boundary = 2000
      bottom_boundary = 3000
@@ -562,5 +567,54 @@
     input = scale
     transform = ROTATE
     vector_value = '0 0 -120'
+  []
+  # A series of process to prepare the mesh for BISON simulation
+  [split_hp_ss]
+    type = SubdomainBoundingBoxGenerator
+    input = rotate_end
+    block_id = 1201
+    block_name = 'hp_ss_up'
+    restricted_subdomains = 'hp_ss'
+    bottom_left = '-100 -100 1.8'
+    top_right = '100 100 3.0'
+  []  
+  [add_exterior_ht_low]
+    type = SideSetsBetweenSubdomainsGenerator
+    input = split_hp_ss
+    paired_block = 'hp_ss'
+    primary_block = 'monolith'
+    new_boundary = 'heat_pipe_ht_surf_low'
+  []
+  [add_exterior_ht_up]
+    type = SideSetsBetweenSubdomainsGenerator
+    input = add_exterior_ht_low
+    paired_block = 'hp_ss_up'
+    primary_block = 'reflector_quad'
+    new_boundary = 'heat_pipe_ht_surf_up'
+  []
+  [add_exterior_bot]
+    type = SideSetsBetweenSubdomainsGenerator
+    input = add_exterior_ht_up
+    paired_block = 'heat_pipes_quad heat_pipes_tri hp_ss'
+    primary_block = 'reflector_quad reflector_tri'
+    new_boundary = 'heat_pipe_ht_surf_bot'
+  []
+  [merge_hp_surf]
+    type = RenameBoundaryGenerator
+    input = add_exterior_bot
+    old_boundary = 'heat_pipe_ht_surf_low heat_pipe_ht_surf_up'
+    new_boundary = 'heat_pipe_ht_surf heat_pipe_ht_surf'
+  []
+  [remove_hp]
+    type = BlockDeletionGenerator
+    input = merge_hp_surf
+    block = 'hp_ss hp_ss_up heat_pipes_quad heat_pipes_tri'
+  []  
+
+  # remove extra nodesets to limit the size of the mesh
+  [clean_up]
+    type = BoundaryDeletionGenerator
+    input = remove_hp
+    boundary_names = '1 3'
   []
 []
