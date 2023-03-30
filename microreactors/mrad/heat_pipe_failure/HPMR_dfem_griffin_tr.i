@@ -46,7 +46,7 @@
   richardson_abs_tol = 1e-6
   richardson_rel_tol = 1e-8
   richardson_max_its = 1000
-  richardson_value = fission_source_integral
+  richardson_value = eigenvalue
 
   inner_solve_type = GMRes
   max_inner_its = 20
