@@ -212,23 +212,23 @@ T_ext_cond = 800.
   [virtual_Text]
     type = ParsedAux
     variable = virtual_Text
-    args = 'T_solid master_flux virtual_htc'
-    function = 'master_flux/virtual_htc + T_solid'
+    coupled_variables = 'T_solid master_flux virtual_htc'
+    expression = 'master_flux/virtual_htc + T_solid'
   []
 []
 
 [Functions]
   [hp_htc_func]
     type = ParsedFunction
-    value = htc
-    vars = 'htc'
-    vals = 'htc_receive'
+    expression = htc
+    symbol_names = 'htc'
+    symbol_values = 'htc_receive'
   []
   [scale_fcn]
     type = ParsedFunction
-    vars = 'catastrophic_pp recoverable_pp operational_pp'
-    vals = 'catastrophic_pp recoverable_pp operational_pp'
-    value = 'catastrophic_pp*recoverable_pp*operational_pp'
+    symbol_names = 'catastrophic_pp recoverable_pp operational_pp'
+    symbol_values = 'catastrophic_pp recoverable_pp operational_pp'
+    expression = 'catastrophic_pp*recoverable_pp*operational_pp'
   []
 []
 
