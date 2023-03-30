@@ -54,7 +54,7 @@ the input file, but generally reside in the same folder in the repository.
 
 - Versatile Test Reactor core model [documentation](sfr/vtr/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/sfr/vtr)
 
-- Micro reactor with heat pipes [documentation](mrad/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/mrad)
+- Micro reactor with heat pipes [documentation](mrad/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/microreactors/mrad)
 
 - HTGR assembly multiphysics simulation [documentation](htgr/assembly/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/assembly)
 
@@ -74,6 +74,42 @@ the input file, but generally reside in the same folder in the repository.
 - Pebble Bed Fluoride salt cooled High temperature Reactor [documentation](pbfhr/steady/griffin_pgh_model.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/pbfhr/steady)
 
 - High Temperature Test Facility coupling between core and hundreds of channel calculations [documentation](htgr/httf/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/httf)
+
+
+## Restarting from a previous simulation
+
+Transient simulations are often started from stable steady state initializations rather than uniform power, temperature, flux, etc
+distributions. This can be done in numerous ways:
+
+### Checkpoint
+
+Documentation for the [Checkpoint system](https://mooseframework.inl.gov/application_usage/restart_recover.html)
+
+- Molten Salt Fast Reactor loss of flow transient [documentation](msr/msfr/griffin_pgh_transient_model.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/msr/msfr/transient)
+
+- Molten Salt Reactor Experiment reactivity insertion transients [documentation](msr/msre/msre_sam_model.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/msr/msre/reactivity_insertion)
+
+- Pebble Bed Fluoride salt cooled High temperature Reactor Plant multiphysics [documentation](pbfhr/balance_of_plant/plant.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/pbfhr/plant)
+
+- Advanced Burner Test Reactor loss of flow transient [documentation](sfr/abtr/abtr.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/sfr/abtr)
+
+
+### Binary restart
+
+Binary restart is only used by Griffin. It is only used to restart the neutronics simulation. Any MultiApps has to be
+initialized using another restart solution. For `Checkpoint`, the additional `Problem/force_restart=true` must be
+specified. The MRAD and PBMR-400 models listed below are an example of this.
+
+- Gas Cooled Micro Reactor assembly multiphysics [documentation](gcmr/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/devel/microreactors/gcmr/assembly)
+
+- Micro reactor with heat pipes [documentation](mrad/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/microreactors/mrad)
+
+- Pebble Bed Modular Reactor [documentation](htgr/pbmr/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/pbmr400/transient)
+
+
+### Restarting from Exodus simulation files
+
+- Molten Salt Fast Reactor core multiphysics [documentation](msr/msfr/griffin_pgh_model.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/msr/msfr/steady)
 
 
 ## Computing requirements
@@ -121,7 +157,7 @@ the input file, but generally reside in the same folder in the repository.
 
 - MHTGR Griffin Benchmark [documentation](htgr/mhtgr_griffin/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/mhtgr/mhtgr_griffin/benchmark)
 
-- Micro reactor with heat pipes [documentation](mrad/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/mrad)
+- Micro reactor with heat pipes [documentation](mrad/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/microreactors/mrad)
 
 - Reflector bypass flow in the PB-FHR [documentation](pbfhr/reflector.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/pbfhr/reflector)
 
