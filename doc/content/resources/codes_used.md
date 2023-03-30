@@ -52,6 +52,8 @@ obtained through INL's [NCRC](https://inl.gov/ncrc/).
 
 - Dispersed UO2 LEU pulse model [documentation](htgr/leu_pulse) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/devel/htgr/leu_pulse)
 
+- Heat Pipe Micro-Reactor [documentation](mrad/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/microreactors/mrad)
+
 
 ### Cardinal / OpenMC (open-source)
 
@@ -115,7 +117,7 @@ obtained through INL's [NCRC](https://inl.gov/ncrc/).
 
 ### Sockeye
 
-- Heat Pipe Micro-Reactor [documentation](mrad/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/mrad)
+- Heat Pipe Micro-Reactor [documentation](mrad/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/microreactors/mrad)
 
 
 ### RELAP-7
@@ -127,7 +129,7 @@ obtained through INL's [NCRC](https://inl.gov/ncrc/).
 
 ### Bison
 
-- Heat Pipe Micro-Reactor [documentation](mrad/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/mrad/steady)
+- Heat Pipe Micro-Reactor [documentation](mrad/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/microreactors/mrad/steady)
 
 - Assembly in a Sodium Fast Reactor [documentation](sfr/single_assembly/sfr.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/sfr/single_assembly)
 
