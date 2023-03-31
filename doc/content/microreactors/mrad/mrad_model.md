@@ -43,6 +43,10 @@ A more detailed comparison can be found in [hpmr_mesh_effect], which showing tha
 | Fine Mesh for BISON, standalone BISON with flat power profile | 98.66% | 96.05% | 2.19% | 0.40% | 0.03% |
 | Fine Mesh for BISON, steady-state multiphysics simulation | 99.30% | 97.50% | 1.37% | 0.41% | 0.03% |
 
+The input file used to generate the fine BISON mesh is listed as follows. Note the boundary layers and biasing setup in the input file. Additionally, the heat pipe related blocks are deleted from the BISON mesh and the heat pipe surfaces are defined as boundaries.
+
+!listing /mrad/mesh/HPMR_OneSixth_Core_meshgenerator_tri_fine.i max-height = 10000
+
 ## Multiphysics Model Setup
 
 ### Griffin Model
@@ -116,20 +120,11 @@ Fist of all, the user need to run the mesh generation input [file](/mrad/mesh/HP
 cd /mrad/mesh
 griffin-opt -i HPMR_OneSixth_Core_meshgenerator_tri.i --mesh-only HPMR_OneSixth_Core_meshgenerator_tri_rotate_bdry.e
 
-The mesh used by BISON is finer than the Griffin mesh. Thus, some modifications need to be made on [file](/mrad/mesh/HPMR_OneSixth_Core_meshgenerator_tri.i) following the comments in the input file. Users can also use command line arguments to implement these modifications:
+The mesh used by BISON is finer than the Griffin mesh. Thus, some modifications need to be made on [file](/mrad/mesh/HPMR_OneSixth_Core_meshgenerator_tri.i). Meanwhile, the heat pipe surface boundaries need to be defined and the heat pipe blocks themselves need to be removed. Thus, a separate [input file](/mrad/mesh/HPMR_OneSixth_Core_meshgenerator_tri_fine.i) is provided for the BISON mesh generation. Users can run the following command to generate the BISON mesh as an EXODUS file:
 
 !listing language=bash
 cd /mrad/mesh
-griffin-opt -i HPMR_OneSixth_Core_meshgenerator_tri.i Mesh/HP_hex/background_inner_boundary_layer_bias=1.5 \
-                                                      Mesh/HP_hex/background_inner_boundary_layer_intervals=3 \
-                                                      Mesh/HP_hex/background_inner_boundary_layer_width=0.03 \
-                                                      Mesh/add_outer_shield/peripheral_layer_num=2 \
-                                                      Mesh/add_outer_shield/peripheral_outer_boundary_layer_bias=0.625 \
-                                                      Mesh/add_outer_shield/peripheral_outer_boundary_layer_intervals=3 \
-                                                      Mesh/add_outer_shield/peripheral_outer_boundary_layer_width=2 \
-                                                      Mesh/extrude/num_layers='6 16 6' \
-                                                      Mesh/extrude/biases='1.6 1.0 0.625' \
-                                                      --mesh-only HPMR_OneSixth_Core_meshgenerator_tri_rotate_bdry_fine.e
+griffin-opt -i HPMR_OneSixth_Core_meshgenerator_tri_fine.i --mesh-only HPMR_OneSixth_Core_meshgenerator_tri_rotate_bdry_fine.e
 
 Then, the steady state simulation can be run. As the output files of the steady state simulation are already required as the initial status of the transient simulations, it is also required to be run before any transient simulations. The multiphysics steady state simulation uses Griffin, BISON and Sockeye objects. Therefore, users should use a super application that covers these three applications, such as DireWolf or BlueCRAB (compiled with Sockeye included). The example command to run the steady state simulation is shown as folllows:
 
