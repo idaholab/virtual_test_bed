@@ -14,7 +14,9 @@
 
 [Griffin HTR-10 model](htr10/index.md)
 
-[RELAP-7 High Temperature Test Facility model](httf/index.md)
+[RELAP-7 High Temperature Test Facility (HTTF) model](httf/index.md)
+
+[Nek5000 HTTF lower plenum flow mixing model](httf/lower_plenum_cfd.md)
 
 [SAM Generic Pebble Bed HTGR model](generic-pbr/index.md)
 

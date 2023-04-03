@@ -1,0 +1,47 @@
+#Nek5000 parameter file
+[GENERAL]
+#startFrom = run25_avg/httf0.f00003 UPTS1S2
+stopAt = numSteps
+numSteps = 0
+dt = 2.5e-05
+writeInterval = 2000
+timeStepper = BDF2
+dealiasing = yes
+extrapolation = OIFS
+targetCFL = 3.0
+
+[PROBLEMTYPE]
+equation = incompNS
+variableProperties = yes
+stressFormulation = yes
+
+[MESH]
+writeToFieldFile = yes
+
+[VELOCITY]
+density = 1.0
+viscosity = -1.18e4
+residualTol = 1e-6
+residualPROJ = yes
+
+[PRESSURE]
+preconditioner = semg_amg_hypre
+residualTol = 1e-04
+residualProj = yes
+
+[TEMPERATURE]
+#solver = none
+rhoCp = 1.0
+conductivity = -1.63e2
+residualTol = 1e-06
+
+[SCALAR01] # tke
+density = 1.0
+diffusivity = -1.18e4
+residualTol = 1e-6
+
+[SCALAR02] # tau
+density = 1.0
+diffusivity = -1.18e4
+residualTol = 1e-6
+

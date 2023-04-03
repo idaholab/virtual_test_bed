@@ -1,0 +1,343 @@
+#include "experimental/rans_komg.f"
+c-----------------------------------------------------------------------
+c  nek5000 user-file template
+c
+c  user specified routines:
+c     - uservp  : variable properties
+c     - userf   : local acceleration term for fluid
+c     - userq   : local source term for scalars
+c     - userbc  : boundary conditions
+c     - useric  : initial conditions
+c     - userchk : general purpose routine for checking errors etc.
+c     - userqtl : thermal divergence for lowMach number flows 
+c     - usrdat  : modify element vertices 
+c     - usrdat2 : modify mesh coordinates
+c     - usrdat3 : general purpose routine for initialization
+c     
+c-----------------------------------------------------------------------
+      include "limits.f"
+      include "utilities.f"
+c-----------------------------------------------------------------------
+      subroutine uservp(ix,iy,iz,eg) ! set variable properties
+      implicit none
+      include 'SIZE'
+      include 'TOTAL'
+      include 'NEKUSE'
+
+      integer ix,iy,iz,e,eg
+      real rans_mut,rans_mutsk,rans_mutso
+      real mu_t,Pr_t
+
+      e = gllel(eg)
+
+      Pr_t=0.91
+      mu_t=rans_mut(ix,iy,iz,e)
+
+      utrans = cpfld(ifield,2)
+      if(ifield.eq.1) then
+        udiff = cpfld(ifield,1)+mu_t
+      elseif(ifield.eq.2) then
+        udiff = cpfld(ifield,1)+mu_t*cpfld(ifield,2)/(Pr_t*cpfld(1,2))
+      elseif(ifield.eq.3) then
+        udiff = cpfld(ifield,1)+rans_mutsk(ix,iy,iz,e)
+      elseif(ifield.eq.4) then
+        udiff = cpfld(ifield,1)+rans_mutso(ix,iy,iz,e)
+      endif
+
+      return
+      end
+c-----------------------------------------------------------------------
+      subroutine userf(ix,iy,iz,eg) ! set acceleration term
+      implicit none
+      include 'SIZE'
+      include 'TOTAL'
+      include 'NEKUSE'
+c
+c     Note: this is an acceleration term, NOT a force!
+c     Thus, ffx will subsequently be multiplied by rho(x,t).
+c
+      integer ix,iy,iz,e,eg
+
+      ffx = 0.0
+      ffy = 0.0
+      ffz = 0.0
+
+      return
+      end
+c-----------------------------------------------------------------------
+      subroutine userq(ix,iy,iz,eg) ! set source term
+      implicit none
+      include 'SIZE'
+      include 'TOTAL'
+      include 'NEKUSE'
+
+      integer ix,iy,iz,e,eg
+      real rans_kSrc,rans_omgSrc
+      real rans_kDiag,rans_omgDiag
+
+      e = gllel(eg)
+
+      if(ifield.eq.3) then
+        qvol = rans_kSrc(ix,iy,iz,e)
+        avol = rans_kDiag(ix,iy,iz,e)
+      elseif(ifield.eq.4) then
+        qvol = rans_omgSrc(ix,iy,iz,e)
+        avol = rans_omgDiag(ix,iy,iz,e)
+      else
+        qvol = 0.0
+      endif
+
+      return
+      end
+c-----------------------------------------------------------------------
+      subroutine userbc(ix,iy,iz,iside,eg) ! set up boundary conditions
+      implicit none
+      include 'SIZE'
+      include 'TOTAL'
+      include 'NEKUSE'
+
+      real wd
+      common /walldist/ wd(lx1,ly1,lz1,lelv)
+
+      integer ix,iy,iz,iside,e,eg,id_face
+      real tke_tmp,tau_tmp
+
+      e = gllel(eg)
+
+      id_face = bc(5,iside,e,1)
+
+      ux   = 0.0
+      uy   = 0.0
+      uz   = 0.0
+      temp = 0.0
+
+      if(id_face.eq.3) then !Ring 1
+        uy = -0.613902735
+        if(ifield.eq.2) temp = 1.0
+      elseif(id_face.eq.4) then !Ring 2
+        uy = -0.927738111
+        if(ifield.eq.2) temp = 0.996358008
+      elseif(id_face.eq.5) then !Ring 3
+        uy = -1.0
+        if(ifield.eq.2) temp = 0.809705909
+      elseif(id_face.eq.6) then !Ring 4
+        uy = -0.36324936
+        if(ifield.eq.2) temp = 0.542929983
+      elseif(id_face.eq.7) then !Ring 5
+        uy = -0.367304324
+        if(ifield.eq.2) temp = 0.175088774
+
+      elseif(id_face.eq.8) then !LP Roof
+        if(ifield.eq.2) temp = 0.829554766
+      elseif(id_face.eq.9) then !LP Floor
+        if(ifield.eq.2) temp = 0.384958572
+      elseif(id_face.eq.11) then !LP Posts
+        if(ifield.eq.2) temp = 0.673950651
+      elseif(id_face.eq.13) then !Hot Duct
+        if(ifield.eq.2) temp = 0.403077483
+      endif
+
+      call turb_in(wd(ix,iy,iz,e),tke_tmp,tau_tmp)
+      if(ifield.eq.3) temp = tke_tmp
+      if(ifield.eq.4) temp = tau_tmp
+
+      return
+      end
+c-----------------------------------------------------------------------
+      subroutine useric(ix,iy,iz,eg) ! set up initial conditions
+      implicit none
+      include 'SIZE'
+      include 'TOTAL'
+      include 'NEKUSE'
+
+      real wd
+      common /walldist/ wd(lx1,ly1,lz1,lelv)
+
+      integer ix,iy,iz,e,eg
+      real tke_tmp,tau_tmp 
+
+      e = gllel(eg)
+
+      ux   = 0.0
+      uy   = 0.0
+      uz   = 0.0
+      temp = 0.0
+
+      call turb_in(wd(ix,iy,iz,e),tke_tmp,tau_tmp)
+      if(ifield.eq.3) temp = tke_tmp
+      if(ifield.eq.4) temp = tau_tmp
+
+      return
+      end
+c-----------------------------------------------------------------------
+      subroutine userchk()
+      implicit none
+      include 'SIZE'
+      include 'TOTAL'
+
+      integer lt,i,ntot
+      parameter(lt=lx1*ly1*lz1*lelv)
+
+      real wd
+      common /walldist/ wd(lx1,ly1,lz1,lelv)
+      real norm(3),pt(3),eps,planar_ave_m1,umean,pmean
+
+      norm(1) = 1.0
+      norm(2) = 0.0
+      norm(3) = 0.0
+      pt(1) =-1.2
+      pt(2) = 0.0
+      pt(3) = 0.0
+      eps = 0.02
+
+      if(mod(istep,100).eq.0) then
+        call print_limits 
+        call y_p_limits(wd,.true.)
+      endif
+      umean=planar_ave_m1(vx,norm,pt,eps)
+      pmean=planar_ave_m1(pr,norm,pt,eps)
+      if(nio.eq.0) then
+        write(6,'(a15,es13.4)') "umean:",umean
+        write(6,'(a15,es13.4)') "pmean:",pmean
+        write(6,*)
+      endif
+
+      call avg_all
+
+      return
+      end
+c-----------------------------------------------------------------------
+      subroutine userqtl ! Set thermal divergence
+
+      call userqtl_scig 
+
+      return
+      end
+c-----------------------------------------------------------------------
+      subroutine usrdat()   ! This routine to modify element vertices
+      implicit none
+      include 'SIZE'
+      include 'TOTAL'
+
+      return
+      end
+c-----------------------------------------------------------------------
+      subroutine usrdat2()  ! This routine to modify mesh coordinates
+      implicit none
+      include 'SIZE'
+      include 'TOTAL'
+
+      real wd
+      common /walldist/ wd(lx1,ly1,lz1,lelv)
+
+      integer iel, ifc, id_face
+      integer i, e, f, n
+      real Dhi
+
+      do iel=1,nelv
+      do ifc=1,2*ndim
+        id_face = bc(5,ifc,iel,1)
+        if (id_face.eq.3) then        ! surface 1-5 for inlet
+           cbc(ifc,iel,1) = 'v  '
+        elseif (id_face.eq.4) then
+           cbc(ifc,iel,1) = 'v  '
+        elseif (id_face.eq.5) then
+           cbc(ifc,iel,1) = 'v  '
+        elseif (id_face.eq.6) then
+           cbc(ifc,iel,1) = 'v  '
+        elseif (id_face.eq.7) then
+           cbc(ifc,iel,1) = 'v  '
+        elseif (id_face.eq.8) then    ! surface 6-11 for walls
+           cbc(ifc,iel,1) = 'W  '
+        elseif (id_face.eq.9) then
+           cbc(ifc,iel,1) = 'W  '
+        elseif (id_face.eq.10) then
+           cbc(ifc,iel,1) = 'W  '
+        elseif (id_face.eq.11) then
+           cbc(ifc,iel,1) = 'W  '
+        elseif (id_face.eq.12) then
+           cbc(ifc,iel,1) = 'W  '
+        elseif (id_face.eq.13) then
+           cbc(ifc,iel,1) = 'W  '
+        elseif (id_face.eq.14) then    ! surface 12 for outlet
+           cbc(ifc,iel,1) = 'O  '
+        endif
+      enddo
+      enddo
+
+      do i=2,ldimt1
+      do e=1,nelt
+      do f=1,ldim*2
+        cbc(f,e,i)=cbc(f,e,1)
+        id_face = bc(5,f,e,1)
+        if(cbc(f,e,1).eq.'W  ') cbc(f,e,i)='t  '
+        if(cbc(f,e,1).eq.'v  ') cbc(f,e,i)='t  '
+        if(i.eq.2 .and. id_face.eq.12) cbc(f,e,i)='I  ' !Temp BC of adiabatic walls
+      enddo
+      enddo
+      enddo
+
+      return
+      end
+c-----------------------------------------------------------------------
+      subroutine usrdat3()
+      implicit none
+      include 'SIZE'
+      include 'TOTAL'
+
+      real wd
+      common /walldist/ wd(lx1,ly1,lz1,lelv)
+
+      integer ifld_k,ifld_omg,m_id,w_id
+      real coeffs(21) !array for passing your own coeffs
+      logical ifcoeffs
+
+      ifld_k = 3 !address of tke equation in t array
+      ifld_omg = 4 !address of omega equation in t array
+      ifcoeffs=.false. !set to true to pass your own coeffs
+
+C     Supported models:
+c     m_id = 0 !regularized high-Re k-omega (no wall functions)
+c     m_id = 1 !regularized low-Re k-omega
+c     m_id = 2 !regularized high-Re k-omega SST (no wall functions)
+c     m_id = 3 !regularized low-Re k-omega SST
+      m_id = 4 !standard k-tau model
+c     m_id = 5 !low-Re   k-tau
+
+C     Wall distance function:
+c     w_id = 0 ! user specified
+c     w_id = 1 ! cheap_dist (path to wall, may work better for periodic boundaries)
+      w_id = 2 ! distf (coordinate difference, provides smoother function)
+
+      call rans_init(ifld_k,ifld_omg,
+     &               ifcoeffs,coeffs,w_id,wd,m_id)
+
+      call count_boundaries
+
+      return
+      end
+C-----------------------------------------------------------------------
+      subroutine turb_in(wd,tke,tau)
+      include 'SIZE'
+      include 'TOTAL'
+
+      integer ix,iy,iz,e
+      real wd,tke,tau
+
+      real Re,darcy,utau,sigk,kmax,yplus,yk
+
+      Re = 1.0/param(2)
+      darcy = 0.316/(Re**0.25)
+      utau = sqrt(darcy/8.0)
+      sigk = 0.6
+      kmax = 2.5*utau*utau
+      yplus = max(wd*utau*Re,1.0e-6)
+      yk=30.0
+
+      tke=kmax*exp(-(log10(yplus/yk))**2.0/(2.0*sigk**2))
+      tau=0.012*wd**2.0/cpfld(ifield,1)
+
+      return
+      end
+c-----------------------------------------------------------------------
+
