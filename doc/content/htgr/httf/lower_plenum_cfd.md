@@ -4,13 +4,13 @@ Contact: Jun Fang, fangj.at.anl.gov
 
 ## Overview
 
-Accurate modeling and simulation capabilities are becoming increasingly important to speed up the development and deployment of advanced nuclear reactor technologies, such as high temperature gas-cooled reactors. Among the identified safety-relevant phenomena for the gas-cooled reactors (GCR), the outlet plenum flow distribution was ranked to be of high importance with a low knowledge level in the phenomenon identification and ranking table (PIRT).
+Accurate modeling and simulation capabilities are becoming increasingly important to speed up the development and deployment of advanced nuclear reactor technologies, such as high temperature gas-cooled reactors. Among the identified safety-relevant phenomena for the gas-cooled reactors (GCR), the outlet plenum flow distribution was ranked to be of high importance with a low knowledge level in the phenomenon identification and ranking table (PIRT) [!citep](Ball2008).
 The heated coolant (e.g., helium) flows downward through the GCR core region and enters the outlet/lower plenum through narrow channels, which causes the jetting of the gas flow. The jets have a non-uniform temperature and risk yielding high cycling thermal stresses in the lower plenum, negative pressure gradients opposing the flow ingress, and hot streaking. 
 These phenomena cannot be accurately captured by 1-D system codes; instead, the modeling requires using higher fidelity CFD codes that can predict the temperature fluctuations in the HTTF lower plenum. In this study, a detailed CFD model is established for the lower plenum of scaled, electrically-heated GCR test facility (i.e., High Temperature Test Facility, or HTTF) at Oregon State University. Specifically, the flow mixing phenomenon in HTTF lower plenum is simulated with spectral element CFD software, Nek5000, with the turbulence modeled by the two-equation $k-\tau$ URANS model. The velocity and temperature fields are examined to understand the thermal-fluid physics happening during the lower plenum mixing. As part of the HTTF international benchmark campaign, the simulation results generated from this study will be used for code-to-code and code-to-data comparisons in the near future, which would lay a solid foundation for the use of CFD in GCR research and development.
 
 !alert note
-This documentation assumes that reader has basic knowledge of Nek5000, and is able to run
-the example cases provided in [Nek5000 tutorial](https://nek5000.github.io/NekDoc/index.html).
+This documentation assumes that the reader has basic knowledge of Nek5000, and is able to run
+the example cases provided in the [Nek5000 tutorial](https://nek5000.github.io/NekDoc/index.html).
 The specific Nek5000 version used here is v19.0. Although Nek5000 input files are not tested regularly
 in the Moose CI test suite, Nek5000 does offer reliable backward compability.
 No foreseeable compability issues are expected. In rare situations where there is indeed a compability
@@ -93,13 +93,13 @@ The specific inlet temperature and mass flow rates are implemented in +userbc+ w
 
 ## Simulation Results 
 
-The aforementioned CFD cases were carried out on Sawtooth supercomputer located at Idaho National Laboratory. A typical simulation job would use 64 compute nodes with 48 parallel threads per node. 
+The aforementioned CFD cases were carried out on the Sawtooth supercomputer located at Idaho National Laboratory. A typical simulation job would use 64 compute nodes with 48 parallel processes per node. 
 A characteristics based time-stepping has been used in the simulations to avoid the limitations imposed by the Courant-Friedrichs-Lewy
 (CFL) number due to the explicit treatment of the non-linear convection
 term. This treatment is necessary due to the existence of small local mesh cells created during the unstructured meshing and tet-to-hex conversion. 
 A maximum CFL number of 1.75 has been reached which corresponds to an average time step size of $2.5\times 10^{-5}$.
-A total simulation time of 5.6 is achieved. 
-Due to the nature of unsteady RANS turbulence model, only a quasi-steady state can be reached. Velocity fluctuations are observed when helium flow enters the lower plenum and passes through the LP posts.
+A total non-dimensional simulation time of 5.6 is achieved. 
+Due to the nature of the unsteady RANS turbulence model, only a quasi-steady state can be reached. Velocity fluctuations are observed when helium flow enters the lower plenum and passes through the LP posts.
 
 Snapshots of velocity and temperature fields from quasi-steady state are shown in [lp_vel] and [lp_temp]
 at the lower plenum plane ($y=-0.1 m$). Significant fluctuations are observed for both velocity and temperature. 
@@ -117,6 +117,7 @@ at the lower plenum plane ($y=-0.1 m$). Significant fluctuations are observed fo
 In addition to the instantaneous solutions, a time averaging analysis is also conducted for simulation results from 3.8 to 5.6 time units.
 [Uavg] and [Tavg] illustrate the smooth profiles of time averaged velocity and temperature field respectively. 
 Large velocity difference is noticed due to the geometric constraints in lower plenum. On the contrary, the temperature has a more uniform distribution for the most part of lower plenum. 
+To better understand the modeling uncertainties of numerical simulations in the related applications, the Nek5000 calculations will be compared with other CFD software's predictions. This comparative analysis will provide insights into the accuracy and reliability of the simulation results and help identify potential sources of error in the modeling process. By examining the differences and similarities between the results obtained from different software, researchers and engineers can improve the modeling techniques and optimize the simulation settings to achieve better agreement with experimental data. Such a comprehensive analysis will help to enhance the credibility and usefulness of numerical simulations for various engineering applications. 
 
 !media httf/lower_plenum_cfd/Uavg.png
        style=width:60%
@@ -127,3 +128,26 @@ Large velocity difference is noticed due to the geometric constraints in lower p
        style=width:60%
        id=Tavg
        caption=Time-averaged temperature field (non-dimensional) in the lower plenum.
+
+## Run Script
+
+To submit a Nek5000 simulation job on Sawtooth, the following batch script is used. The user can adjust the number of nodes, and number of processes per node, as well as the simulation time for any specific cases.
+
+```language=bash
+#!/bin/bash
+#PBS -N httf
+#PBS -l select=64:ncpus=48:mpiprocs=48
+#PBS -l walltime=01:00:00
+#PBS -j oe
+#PBS -P neams
+#PBS -o httf.out
+cd $PBS_O_WORKDIR
+export OMP_NUM_THREADS=1
+echo  httf > SESSION.NAME
+echo `pwd`'/' >> SESSION.NAME
+rm -rf *.sch
+rm -rf ioinfo
+module purge
+module load intel-mpi/2018.5.288-intel-19.0.5-alnu
+mpirun ./nek5000 > logfile
+```
