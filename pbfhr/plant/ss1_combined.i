@@ -629,6 +629,8 @@ inlet_T_fluid = 873.15 # K, from [2]
   [pebble_mesh]
     type = TransientMultiApp
     execute_on = 'FINAL'
+    # This must be set so that the default SAM executioner parameters are used
+    app_type = 'SamApp'
     input_files = 'ss3_coarse_pebble_mesh.i'
     cli_args = 'Outputs/console=false'
   []
