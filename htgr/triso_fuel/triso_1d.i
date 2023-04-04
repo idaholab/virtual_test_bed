@@ -181,7 +181,7 @@ coordinates5 = '${fparse coordinates4+OPyC_thickness}'
 
 [ThermalContact]
   [thermal_contact]
-    type = GapHeatTransferLWR
+    type = GasGapHeatTransfer
     variable = temperature
     primary = IPyC_inner_boundary
     secondary = buffer_outer_boundary
