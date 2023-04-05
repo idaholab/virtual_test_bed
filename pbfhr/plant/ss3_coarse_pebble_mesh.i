@@ -153,7 +153,7 @@ power_density = ${fparse total_power / model_vol}
     output_in_position = true
     block = '4'
     # Use a lighter application for performance
-    app_type = HeatConductionApp
+    app_type = PronghornApp
     # library_path = "/Users/giudgl-mac/projects/moose/modules/heat_conduction/lib"
     max_procs_per_app = 1
   []
