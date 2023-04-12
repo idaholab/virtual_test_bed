@@ -6,6 +6,6 @@
 
 [Multiphysics Models](gcmr/GCMR_Multiphysics_models.md)
 
-[Dynamic Multiphysics simulation of flow blockage](gcmr/GCMR_results1.md)
+[Dynamic Multiphysics simulation of flow blockage](gcmr/GCMR_results.md)
 
 [Dynamic Multiphysics simulation of RIA](gcmr/GCMR_results2.md)
