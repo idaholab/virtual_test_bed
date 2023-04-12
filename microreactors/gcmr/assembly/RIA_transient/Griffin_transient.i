@@ -128,7 +128,6 @@
    front_position_function = control_rod_position
    diffusion_coefficient_scheme = user_supplied
    is_meter = true
-   # power normalization
    plus = true
    dbgmat = false
    grid_names = 'Tmod'
