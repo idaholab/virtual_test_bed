@@ -48,7 +48,7 @@
   custom_rel_tol = 1e-6
   force_fixed_point_solve = true
 
-  cmfd_acceleration = true  
+  cmfd_acceleration = true
   coarse_element_id = coarse_element_id
   cmfd_eigen_solver_type = newton
   prolongation_type = multiplicative

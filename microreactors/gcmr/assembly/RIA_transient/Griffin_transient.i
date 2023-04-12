@@ -50,7 +50,7 @@
   prolongation_type = multiplicative
   max_diffusion_coefficient = 1
 
-  end_time = 18.5  
+  end_time = 18.5
   dt = 0.05
 []
 
@@ -148,9 +148,6 @@
     type = TransientMultiApp
     input_files = BISON_tr.i
     execute_on = 'initial timestep_end'
-    #app_type = SamApp
-    #library_name = libsam-opt.la
-    #library_path = '/beegfs1/software/NEAMS_microreactor/projects_super_mar22/SAM/lib'
   []
 []
 
