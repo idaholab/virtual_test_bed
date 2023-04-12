@@ -21,16 +21,21 @@ This simulation studies a postulated reactivity insertion accident (RIA) in the 
 
 The simulation was done with a constant inlet coolant temperature strategy and the results demonstrate limited variations of outlet temperature and coolant velocity at the outlet in each of the coolant channels. For example, in the coolant channel located at x= -0.034641, y= 0.06 the inlet and outlet coolant temperatures and velocities are plotted in [Fig_10] and [Fig_11], respectively. 
 
+
+
 !media media/gcmr/Fig_10.png
       style=display: block;margin-left:auto;margin-right:auto;width:60%;
       id=Fig_10
-      caption= Inlet and outlet coolant temperatures at coolant channel (x= -0.034641, y= 0.06) during RIA
+      caption= Inlet and outlet coolant temperatures 
+
+
+
 
 
 !media media/gcmr/Fig_11.png
       style=display: block;margin-left:auto;margin-right:auto;width:60%;
       id=Fig_11
-      caption= Inlet and outlet velocities at coolant channel (x= -0.034641, y= 0.06) during RIA
+      caption= Inlet and outlet velocities  
 
 
 
