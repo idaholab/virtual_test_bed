@@ -44,11 +44,11 @@
   max_inner_its = 20
 
   fixed_point_max_its = 1
-  #custom_pp = fission_source_integral
+  custom_pp = eigenvalue
   custom_rel_tol = 1e-6
   force_fixed_point_solve = true
 
-  cmfd_acceleration = true #false
+  cmfd_acceleration = true  
   coarse_element_id = coarse_element_id
   cmfd_eigen_solver_type = newton
   prolongation_type = multiplicative
@@ -149,9 +149,6 @@
     input_files = BISON.i
     execute_on = 'timestep_end'
     keep_solution_during_restore = true
-    #app_type = SamApp
-    #library_name = libsam-opt.la
-    #library_path = '/beegfs1/software/NEAMS_microreactor/projects_super_mar22/SAM/lib'
   []
 []
 

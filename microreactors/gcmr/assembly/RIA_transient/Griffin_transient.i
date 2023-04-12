@@ -38,13 +38,12 @@
   richardson_abs_tol = 5e-6
   richardson_rel_tol = 1e-8
   richardson_max_its = 1000
-  richardson_value = fission_source_integral
 
   inner_solve_type = GMRes
   max_inner_its = 20
 
   fixed_point_max_its = 1
-  #force_fixed_point_solve = true
+  force_fixed_point_solve = true
 
   cmfd_acceleration = true
   coarse_element_id = coarse_element_id
