@@ -12,7 +12,6 @@ coolant_half_points_filename = ../channel_positions/coolant_half_points.txt # Fi
   restart_file_base = '../steady_state/Griffin_steady_state_out_bison0_cp/LATEST'
   force_restart = true
   register_objects_from = 'BisonApp'
-  #library_path = '/beegfs1/software/NEAMS_microreactor/projects_super_mar22/bison/lib'
 []
 
 [Mesh]
@@ -23,8 +22,6 @@ coolant_half_points_filename = ../channel_positions/coolant_half_points.txt # Fi
   [temp]
     order = FIRST
     family = LAGRANGE
-    # initial_condition = ${TsInit}
-    #scaling = 1.0e-2
   []
 []
 

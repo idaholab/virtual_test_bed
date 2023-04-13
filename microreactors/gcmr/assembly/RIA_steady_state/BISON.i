@@ -10,7 +10,6 @@ coolant_half_points_filename = ../channel_positions/coolant_half_points.txt # Fi
 
 [Problem]
   register_objects_from = 'BisonApp'
-  #library_path = '/beegfs1/software/NEAMS_microreactor/projects_super_mar22/bison/lib'
 []
 
 [Mesh]
@@ -371,8 +370,6 @@ coolant_half_points_filename = ../channel_positions/coolant_half_points.txt # Fi
 [Executioner]
   type = Transient
 
-  # petsc_options_iname = '-pc_type -pc_hypre_type -ksp_gmres_restart '
-  # petsc_options_value = 'hypre boomeramg 100'
 
   petsc_options_iname = '-pc_type -pc_factor_mat_solver_package -ksp_gmres_restart'
   petsc_options_value = 'lu       superlu_dist                  51'

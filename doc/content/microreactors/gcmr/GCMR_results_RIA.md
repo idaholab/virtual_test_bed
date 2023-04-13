@@ -44,10 +44,10 @@ The simulation was done with a constant inlet coolant temperature strategy and t
 In this simulation the parent app is Griffin, but the child apps are BISON and SAM, so we run the blue_crab code package:
 
 !listing  
-mpirun -np number_of_cores /path/to/blue_crab-opt -i Griffin_steady_state.i
+mpirun -np <number_of_cores> /path/to/blue_crab-opt -i Griffin_steady_state.i
 
 Then, the user needs to run the Parent App for transient calculations as follows: 
 
 !listing  
-mpirun -np number_of_cores /path/to/blue_crab-opt -i Griffin_transient.i
+mpirun -np <number_of_cores> </path/to/>blue_crab-opt -i Griffin_transient.i
 
