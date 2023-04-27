@@ -1,5 +1,5 @@
-TsInit = 1150.0 # Solid initial temperature
-Tcin = 1150.0 # Coolant initial temperature
+# TsInit = 1150.0 # Solid initial temperature
+# Tcin = 1150.0 # Coolant initial temperature
 radiusTransfer = 0.015 # r + 0.009. Extends past the first mesh cell surrounding the coolant channel.
 coolant_full_points_filename = ../channel_positions/coolant_full_points.txt # File containing the inlet position of your coolant channels
 coolant_half_points_filename = ../channel_positions/coolant_half_points.txt # File containing the inlet position of your coolant channels

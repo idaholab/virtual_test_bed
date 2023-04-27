@@ -43,7 +43,7 @@
   max_inner_its = 20
 
   fixed_point_max_its = 1
-  force_fixed_point_solve = true
+  fixed_point_min_its = 1
 
   cmfd_acceleration = true
   coarse_element_id = coarse_element_id
@@ -182,6 +182,7 @@
     transport_system = SN
     writing = false
     execute_on = initial
+    folder = '../steady_state/'
   []
 []
 
