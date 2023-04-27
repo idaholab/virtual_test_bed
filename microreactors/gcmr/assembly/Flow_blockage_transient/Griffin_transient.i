@@ -93,8 +93,6 @@
   []
 []
 
-
-
 [PowerDensity]
   power = 225e3 # Assembly Power from NS
   power_density_variable = power_density
@@ -114,7 +112,7 @@
     plus = true
     dbgmat = false
     grid_names = 'Tmod'
-    grid_variables = 'Tf
+    grid_variables = 'Tf'
   []
 []
 
@@ -123,17 +121,13 @@
     type = TransientMultiApp
     input_files = BISON_tr.i
     execute_on = 'initial timestep_end'
-    #app_type = SamApp
-    #library_name = libsam-opt.la
-    #library_path = '/beegfs1/software/NEAMS_microreactor/projects_super_mar22/SAM/lib'
   []
 []
 
 [Transfers]
   [to_sub_power_density]
     type = MultiAppProjectionTransfer
-    direction = to_multiapp
-    multi_app = bison
+    to_multi_app = bison
     variable = power_density
     source_variable = power_density
     execute_on = 'timestep_end'
@@ -142,9 +136,8 @@
     use_displaced_mesh = false
   []
   [from_sub_temp]
-    type = MultiAppInterpolationTransfer
-    direction = from_multiapp
-    multi_app = bison
+    type = MultiAppGeometricInterpolationTransfer
+    from_multi_app = bison
     variable = Tf
     source_variable = Tfuel
     execute_on = 'timestep_end'

@@ -271,8 +271,7 @@ coolant_half_points_filename = ../channel_positions/coolant_half_points.txt # Fi
   [Tw_to_coolant]
     # Wall temperature from user object is transferred to fluid domain.
     type = MultiAppUserObjectTransfer
-    direction = to_multiapp # From solid to coolant. Variable to move UO into.
-    multi_app = coolant_full_MA
+    to_multi_app = coolant_full_MA
     user_object = Tw_UO # Exists in solid.
     variable = Tw # Exists in coolant.
     execute_on = 'initial TIMESTEP_END'
@@ -282,8 +281,7 @@ coolant_half_points_filename = ../channel_positions/coolant_half_points.txt # Fi
     # Fluid temperature from fluid domain is transferred to solid domain.
     type = MultiAppUserObjectGatherTransfer
     radius = ${radiusTransfer}
-    direction = from_multiapp # From coolant to solid.
-    multi_app = coolant_full_MA
+    from_multi_app = coolant_full_MA
     user_object = Tfluid_UO # Exists in coolant.
     variable = Tfluid # Exists in solid.
     execute_on = 'initial TIMESTEP_END'
@@ -293,8 +291,7 @@ coolant_half_points_filename = ../channel_positions/coolant_half_points.txt # Fi
     # Convective HTC from fluid domain is transferred to solid domain.
     type = MultiAppUserObjectGatherTransfer
     radius = ${radiusTransfer}
-    direction = from_multiapp # From coolant to solid.
-    multi_app = coolant_full_MA
+    from_multi_app = coolant_full_MA
     user_object = hfluid_UO # Exists in coolant.
     variable = hfluid # Exists in solid.
     execute_on = 'initial TIMESTEP_END'
@@ -305,8 +302,7 @@ coolant_half_points_filename = ../channel_positions/coolant_half_points.txt # Fi
   [Tw_to_coolant_half]
     # Wall temperature from user object is transferred to fluid domain.
     type = MultiAppUserObjectTransfer
-    direction = to_multiapp # From solid to coolant. Variable to move UO into.
-    multi_app = coolant_half_MA
+    to_multi_app = coolant_half_MA
     user_object = Tw_UO_half # Exists in solid.
     variable = Tw # Exists in coolant.
     execute_on = 'initial TIMESTEP_END'
@@ -316,8 +312,7 @@ coolant_half_points_filename = ../channel_positions/coolant_half_points.txt # Fi
     # Fluid temperature from fluid domain is transferred to solid domain.
     type = MultiAppUserObjectGatherTransfer
     radius = ${radiusTransfer}
-    direction = from_multiapp # From coolant to solid.
-    multi_app = coolant_half_MA
+    from_multi_app = coolant_half_MA
     user_object = Tfluid_UO # Exists in coolant.
     variable = Tfluid # Exists in solid.
     execute_on = 'initial TIMESTEP_END'
@@ -327,8 +322,7 @@ coolant_half_points_filename = ../channel_positions/coolant_half_points.txt # Fi
     # Convective HTC from fluid domain is transferred to solid domain.
     type = MultiAppUserObjectGatherTransfer
     radius = ${radiusTransfer}
-    direction = from_multiapp # From coolant to solid.
-    multi_app = coolant_half_MA
+    from_multi_app = coolant_half_MA
     user_object = hfluid_UO # Exists in coolant.
     variable = hfluid # Exists in solid.
     execute_on = 'initial TIMESTEP_END'

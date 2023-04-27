@@ -116,22 +116,22 @@
     grid_variables = 'Tf'
   []
   [Air]
-   type = CoupledFeedbackRoddedNeutronicsMaterial
-   block = '300'
-   library_file = '../ISOXML/XS_Griffin.xml'
-   library_name = XS_Griffin
-   rod_segment_length = '1.2 0.4'
-   rod_withdrawn_direction = z
-   isotopes = 'pseudo; pseudo; pseudo; pseudo'
-   densities = '1.0 1.0 1.0 1.0'
-   segment_material_ids = '804 809 809 805'
-   front_position_function = control_rod_position
-   diffusion_coefficient_scheme = user_supplied
-   is_meter = true
-   plus = true
-   dbgmat = false
-   grid_names = 'Tmod'
-   grid_variables = 'Tf'
+    type = CoupledFeedbackRoddedNeutronicsMaterial
+    block = '300'
+    library_file = '../ISOXML/XS_Griffin.xml'
+    library_name = XS_Griffin
+    rod_segment_length = '1.2 0.4'
+    rod_withdrawn_direction = z
+    isotopes = 'pseudo; pseudo; pseudo; pseudo'
+    densities = '1.0 1.0 1.0 1.0'
+    segment_material_ids = '804 809 809 805'
+    front_position_function = control_rod_position
+    diffusion_coefficient_scheme = user_supplied
+    is_meter = true
+    plus = true
+    dbgmat = false
+    grid_names = 'Tmod'
+    grid_variables = 'Tf'
   []
 []
 
@@ -154,8 +154,7 @@
 [Transfers]
   [to_sub_power_density]
     type = MultiAppProjectionTransfer
-    direction = to_multiapp
-    multi_app = bison
+    to_multi_app = bison
     variable = power_density
     source_variable = power_density
     execute_on = 'timestep_end'
@@ -164,9 +163,8 @@
     use_displaced_mesh = false
   []
   [from_sub_temp]
-    type = MultiAppInterpolationTransfer
-    direction = from_multiapp
-    multi_app = bison
+    type = MultiAppGeometricInterpolationTransfer
+    from_multi_app = bison
     variable = Tf
     source_variable = Tfuel
     execute_on = 'timestep_end'
