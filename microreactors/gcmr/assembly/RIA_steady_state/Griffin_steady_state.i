@@ -138,7 +138,7 @@
 [Functions]
   [control_rod_position]
     type = ParsedFunction
-    value = '1.4'
+    expression = '1.4'
   []
 []
 

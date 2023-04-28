@@ -1,0 +1,206 @@
+[Tests]
+  parallel_scheduling = True
+  # Steady state
+  # Griffin tests
+  [griffin_alone_syntax]
+    type = RunApp
+    check_input = true
+    input = 'Griffin_steady_state.i'
+    executable_pattern = 'griffin*|blue_crab*'
+    cli_args = "MultiApps/active='' Transfers/active=''
+                Executioner/set_sam_default_petsc_options=false"
+    allow_unused = true
+  []
+  [griffin_alone]
+    type = 'CSVDiff'
+    input = 'Griffin_steady_state.i'
+    csvdiff = 'Griffin_steady_state_csv.csv'
+    executable_pattern = 'griffin*|blue_crab*'
+    cli_args = "MultiApps/active='' Transfers/active=''
+                Executioner/richardson_max_its=1
+                TransportSystems/SN/NAzmthl=3 TransportSystems/SN/NPolar=1
+                Executioner/set_sam_default_petsc_options=false"
+    prereq = 'griffin_alone_syntax'
+    min_parallel = 16
+    rel_err = 1e-3
+    method = 'opt'
+    max_time = 400
+    allow_unused = true
+  []
+
+  # BISON tests
+  [bison_alone_syntax]
+    type = RunApp
+    check_input = true
+    input = 'BISON.i'
+    executable_pattern = 'blue_crab*'
+    cli_args = "MultiApps/active='' Transfers/active=''"
+    #prereq = 'generate_mesh'
+  []
+  [bison_alone]
+    type = 'CSVDiff'
+    input = 'BISON.i'
+    csvdiff = 'BISON_csv.csv'
+    executable_pattern = 'blue_crab*'
+    cli_args = "MultiApps/active='' Transfers/active=''"
+    prereq = 'bison_alone_syntax'
+    min_parallel = 4
+  []
+
+  # SAM tests
+  [sam_alone_syntax]
+    type = RunApp
+    check_input = true
+    input = 'SAM_half.i'
+    executable_pattern = 'sam*|blue_crab*'
+    cli_args = '--app SamApp'
+  []
+  [sam_alone]
+    type = 'CSVDiff'
+    input = 'SAM_half.i'
+    csvdiff = 'SAM_half_csv.csv'
+    executable_pattern = 'sam*|blue_crab*'
+    cli_args = '--app SamApp'
+    prereq = 'sam_alone_syntax'
+  []
+  [sam_full_alone_syntax]
+    type = RunApp
+    check_input = true
+    input = 'SAM_full.i'
+    executable_pattern = 'sam*|blue_crab*'
+    cli_args = '--app SamApp'
+  []
+  [sam_full_alone]
+    type = 'CSVDiff'
+    input = 'SAM_full.i'
+    csvdiff = 'SAM_full_csv.csv'
+    executable_pattern = 'sam*|blue_crab*'
+    cli_args = '--app SamApp'
+    prereq = 'sam_full_alone_syntax'
+  []
+
+  # Multiphysics
+  [steady_multiphysics]
+    type = 'CSVDiff'
+    input = 'Griffin_steady_state.i'
+    csvdiff = 'gcmr_steady_out.csv'
+    executable_pattern = 'griffin*|blue_crab*'
+    cli_args = "filebase=gcmr_steady
+                Executioner/set_sam_default_petsc_options=false"
+    prereq = 'griffin_alone bison_alone sam_full_alone sam_alone'
+    skip = 'Needs HPC #176'
+    allow_unused = true
+  []
+
+  # Flow blockage transient
+  # Griffin
+  [griffin_alone_transient_syntax]
+    type = RunApp
+    check_input = true
+    working_directory = '../RIA_transient'
+    input = 'Griffin_transient.i'
+    executable_pattern = 'griffin*|blue_crab*'
+    cli_args = "MultiApps/active='' Transfers/active=''"
+    prereq = 'griffin_alone'
+    allow_unused = true
+  []
+  [griffin_alone_transient]
+    type = 'CSVDiff'
+    working_directory = '../RIA_transient'
+    input = 'Griffin_transient.i'
+    csvdiff = 'Griffin_transient_csv.csv'
+    executable_pattern = 'griffin*|blue_crab*'
+    cli_args = "MultiApps/active='' Transfers/active=''
+                Executioner/richardson_max_its=1
+                TransportSystems/SN/NAzmthl=3 TransportSystems/SN/NPolar=1
+                Executioner/num_steps=1
+                Outputs/checkpoint=false"
+    prereq = 'griffin_alone_transient_syntax'
+    min_parallel = 16
+    rel_err = 1e-3
+    method = 'opt'
+    max_time = 800
+    allow_unused = true
+  []
+
+  # Bison
+  [bison_alone_transient_syntax]
+    type = RunApp
+    check_input = true
+    working_directory = '../RIA_transient'
+    input = 'BISON_tr.i'
+    executable_pattern = 'blue_crab*'
+    cli_args = "MultiApps/active='' Transfers/active=''
+                Problem/restart_file_base='../steady_state/BISON_out_cp/LATEST'
+                Mesh/file='../RIA_steady_state/BISON_out_cp/LATEST'
+                Executioner/num_steps=4"
+    prereq = 'bison_alone'
+    min_parallel = 4
+  []
+  [bison_alone_transient]
+    type = 'CSVDiff'
+    working_directory = '../RIA_transient'
+    input = 'BISON_tr.i'
+    csvdiff = 'BISON_tr_csv.csv'
+    executable_pattern = 'blue_crab*'
+    cli_args = "MultiApps/active='' Transfers/active=''
+                Problem/restart_file_base='../steady_state/BISON_out_cp/LATEST'
+                Mesh/file='../RIA_steady_state/BISON_out_cp/LATEST'
+                Executioner/num_steps=4"
+    prereq = 'bison_alone_transient_syntax'
+    min_parallel = 4
+  []
+
+  # SAM
+  [sam_alone_transient_syntax]
+    type = RunApp
+    check_input = true
+    working_directory = '../RIA_transient'
+    input = 'SAM_half_tr.i'
+    executable_pattern = 'sam*|blue_crab*'
+    cli_args = '--app SamApp'
+    prereq = 'sam_alone'
+  []
+  [sam_alone_transient]
+    type = 'CSVDiff'
+    working_directory = '../RIA_transient'
+    input = 'SAM_half_tr.i'
+    csvdiff = 'SAM_half_tr_csv.csv'
+    executable_pattern = 'sam*|blue_crab*'
+    cli_args = '--app SamApp Executioner/num_steps=10'
+    prereq = 'sam_alone_transient_syntax'
+  []
+  [sam_full_alone_transient_syntax]
+    type = RunApp
+    check_input = true
+    working_directory = '../RIA_transient'
+    input = 'SAM_full_tr.i'
+    executable_pattern = 'sam*|blue_crab*'
+    cli_args = '--app SamApp'
+    prereq = 'sam_full_alone'
+  []
+  [sam_full_alone_transient]
+    type = 'CSVDiff'
+    working_directory = '../RIA_transient'
+    input = 'SAM_full_tr.i'
+    csvdiff = 'SAM_full_tr_csv.csv'
+    executable_pattern = 'sam*|blue_crab*'
+    cli_args = '--app SamApp Executioner/num_steps=10'
+    prereq = 'sam_full_alone_transient_syntax'
+  []
+
+  # Multiphysics
+  [transient_multiphysics]
+    type = 'CSVDiff'
+    working_directory = '../RIA_transient'
+    input = 'Griffin_transient.i'
+    csvdiff = 'gcmr_transient_out.csv'
+    executable_pattern = 'griffin*|blue_crab*'
+    cli_args = "filebase=gcmr_transient"
+    prereq = 'griffin_alone_transient bison_alone_transient
+              sam_full_alone_transient sam_alone_transient'
+    skip = 'Needs HPC #176'
+    allow_unused = true
+  []
+[]
+

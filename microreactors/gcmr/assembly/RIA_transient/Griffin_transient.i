@@ -43,7 +43,7 @@
   max_inner_its = 20
 
   fixed_point_max_its = 1
-  force_fixed_point_solve = true
+  fixed_point_min_its = 1
 
   cmfd_acceleration = true
   coarse_element_id = coarse_element_id
@@ -137,7 +137,7 @@
 [Functions]
   [control_rod_position]
     type = ParsedFunction
-    value = 'if(t < 0.51, 0.2*t +1.4, 1.5)'
+    expression = 'if(t < 0.51, 0.2*t +1.4, 1.5)'
   []
 []
 
@@ -207,6 +207,7 @@
     transport_system = SN
     writing = false
     execute_on = initial
+    folder = '../RIA_steady_state/'
   []
 []
 
