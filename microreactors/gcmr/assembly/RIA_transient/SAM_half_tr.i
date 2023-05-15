@@ -1,16 +1,20 @@
 ######################################################################################################
-## Dynamic Multiphysics Modeling of a Flow Blockage accident in Gas-cooled Microreactor Assembly
-## SAM half coolant channel steady state Model
+## Dynamic Multiphysics Modeling of Reactivity insertion accident in Gas-cooled Microreactor Assembly
+## Dynamic SAM half channel Model
 # If using or referring to this model, please cite as explained in
 # https://mooseframework.inl.gov/virtual_test_bed/citing.html
-#####################################################################################################
+######################################################################################################
 Area = 0.00005654866 # r = 0.6cm; A = pi*(0.6/100)^2/2
 Height = 2.0 # bottom = 0.000000; top = 2.000000
 Ph = 0.018849556 # Heated perimeter; Ph = C = 2*pi*r/2 (circumference for round pipe)
 Dh = 0.012 # For circular pipe = D
 Vin = 15 # Average flow velocity
+Vint = 15 # Ultimate flow velovity
 Tin = 873.15 # 600 C
+Tint = 873.15 # Ultimate inlet temp
 Pout = 7e+6 # 7 MPa
+Poutt = 7e+6 # Ultimate outlet pressure
+t0 = 10 # transition time (s)
 orientation = 1 # Orientation of coolant channels
 layers = 40 # Make sure the number of axial divisions in the fluid domain and solid domain are the same
 
@@ -18,7 +22,7 @@ layers = 40 # Make sure the number of axial divisions in the fluid domain and so
   global_init_P = ${Pout}
   global_init_V = ${Vin}
   global_init_T = ${Tin}
-  gravity = '0 1e-8 0' # horizontal channel
+  gravity = '0 0 0' # horizontal channel
   [PBModelParams]
     pbm_scaling_factors = '1 1e-3 1e-6'
     p_order = 2
@@ -59,16 +63,40 @@ layers = 40 # Make sure the number of axial divisions in the fluid domain and so
   [inlet] #Boundary components
     type = PBTDJ
     input = 'pipe1(in)'
-    v_bc = ${Vin}
-    T_bc = ${Tin}
+    # v_bc = ${Vin}
+    v_fn = Vin_func
+    # T_bc = ${Tin}
+    T_fn = Tin_func
     eos = eos
   []
   [outlet]
     type = PBTDV
     input = 'pipe1(out)'
-    p_bc = ${Pout}
+    # p_bc = ${Pout}
+    p_fn = Pout_func
     T_bc = 1123.1500 # 850 C
     eos = eos
+  []
+[]
+
+[Functions]
+  [Pout_func]
+    type = ParsedFunction
+    value = 'if(t<t0,P0+(Pt-P0)/t0*t,Pt)'
+    vars = 'P0 Pt t0'
+    vals = '${Pout} ${Poutt} ${t0}'
+  []
+  [Vin_func]
+    type = ParsedFunction
+    value = 'if(t<t0,V0+(Vt-V0)/t0*t,Vt)'
+    vars = 'V0 Vt t0'
+    vals = '${Vin} ${Vint} ${t0}'
+  []
+  [Tin_func]
+    type = ParsedFunction
+    value = 'if(t<t0,T0+(Tt-T0)/t0*t,Tt)'
+    vars = 'T0 Tt t0'
+    vals = '${Tin} ${Tint} ${t0}'
   []
 []
 
@@ -132,9 +160,9 @@ layers = 40 # Make sure the number of axial divisions in the fluid domain and so
   nl_abs_tol = 1e-9
   nl_max_its = 40
 
-  start_time = -2.5e5 # negative start time so we can start running from t = 0
-  end_time = 0
-  dt = 1e4
+  start_time = 0.0 # negative start time so we can start running from t = 0
+  end_time = 1e4
+  dt = 1
 
   [Quadrature]
     type = SIMPSON

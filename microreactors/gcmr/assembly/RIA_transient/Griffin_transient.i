@@ -1,9 +1,9 @@
 ######################################################################################################
-## Dynamic Multiphysics Modeling of a Flow Blockage accident in Gas-cooled Microreactor Assembly
-## Griffin steady state Model
+## Dynamic Multiphysics Modeling of Reactivity insertion accident in Gas-cooled Microreactor Assembly
+## Griffin transient Model
 # If using or referring to this model, please cite as explained in
 # https://mooseframework.inl.gov/virtual_test_bed/citing.html
-#####################################################################################################
+######################################################################################################
 [Mesh]
   [fmg]
     type = FileMeshGenerator
@@ -39,26 +39,25 @@
 []
 
 [Executioner]
-  type = SweepUpdate
+  type = TransientSweepUpdate
 
-  richardson_abs_tol = 1e-8
+  richardson_abs_tol = 5e-6
   richardson_rel_tol = 1e-8
-  richardson_value = eigenvalue
-
   richardson_max_its = 1000
+
   inner_solve_type = GMRes
   max_inner_its = 20
 
   fixed_point_max_its = 1
-  custom_pp = eigenvalue
-  custom_rel_tol = 1e-6
-  force_fixed_point_solve = true
+  fixed_point_min_its = 1
 
-  cmfd_acceleration = true #false
+  cmfd_acceleration = true
   coarse_element_id = coarse_element_id
-  cmfd_eigen_solver_type = newton
   prolongation_type = multiplicative
   max_diffusion_coefficient = 1
+
+  end_time = 18.5
+  dt = 0.05
 []
 
 [Debug]
@@ -69,7 +68,7 @@
 
 [AuxVariables]
   [Tf]
-    initial_condition = 873.15
+    initial_condition = 1186.87
     order = CONSTANT
     family = MONOMIAL
   []
@@ -77,7 +76,7 @@
 
 [TransportSystems]
   particle = neutron
-  equation_type = eigenvalue
+  equation_type = transient
 
   G = 11
   VacuumBoundary = '2000 2001'
@@ -109,7 +108,7 @@
 [Materials]
   [mod]
     type = CoupledFeedbackMatIDNeutronicsMaterial
-    block = '10 100 102 103 200 201 300 400 401 500 600 8000 8001'
+    block = '10 100 102 103 200 201 400 401 500 600 8000 8001'
     library_file = '../ISOXML/XS_Griffin.xml'
     library_name = XS_Griffin
     isotopes = 'pseudo'
@@ -121,22 +120,45 @@
     grid_names = 'Tmod'
     grid_variables = 'Tf'
   []
+  [Air]
+    type = CoupledFeedbackRoddedNeutronicsMaterial
+    block = '300'
+    library_file = '../ISOXML/XS_Griffin.xml'
+    library_name = XS_Griffin
+    rod_segment_length = '1.2 0.4'
+    rod_withdrawn_direction = z
+    isotopes = 'pseudo; pseudo; pseudo; pseudo'
+    densities = '1.0 1.0 1.0 1.0'
+    segment_material_ids = '804 809 809 805'
+    front_position_function = control_rod_position
+    diffusion_coefficient_scheme = user_supplied
+    is_meter = true
+    plus = true
+    dbgmat = false
+    grid_names = 'Tmod'
+    grid_variables = 'Tf'
+  []
+[]
+
+[Functions]
+  [control_rod_position]
+    type = ParsedFunction
+    expression = 'if(t < 0.51, 0.2*t +1.4, 1.5)'
+  []
 []
 
 [MultiApps]
   [bison]
-    type = FullSolveMultiApp
-    input_files = BISON.i
-    execute_on = 'timestep_end'
-    keep_solution_during_restore = true
+    type = TransientMultiApp
+    input_files = BISON_tr.i
+    execute_on = 'initial timestep_end'
   []
 []
 
 [Transfers]
   [to_sub_power_density]
     type = MultiAppProjectionTransfer
-    direction = to_multiapp
-    multi_app = bison
+    to_multi_app = bison
     variable = power_density
     source_variable = power_density
     execute_on = 'timestep_end'
@@ -145,24 +167,14 @@
     use_displaced_mesh = false
   []
   [from_sub_temp]
-    type = MultiAppGeometricInterpolationTransfer
-    direction = from_multiapp
-    multi_app = bison
+    type = MultiAppInterpolationTransfer
+    from_multi_app = bison
     variable = Tf
     source_variable = Tfuel
     execute_on = 'timestep_end'
     use_displaced_mesh = false
     num_points = 1 # interpolate with one point (~closest point)
     power = 0 # interpolate with constant function
-  []
-[]
-
-[UserObjects]
-  [ss]
-    type = TransportSolutionVectorFile
-    transport_system = SN
-    writing = true
-    execute_on = final
   []
 []
 
@@ -195,14 +207,29 @@
   []
 []
 
+[UserObjects]
+  [ss]
+    type = TransportSolutionVectorFile
+    transport_system = SN
+    writing = false
+    execute_on = initial
+    folder = '../RIA_steady_state/'
+  []
+[]
+
 [Outputs]
   interval = 1
-  [exodus]
-    type = Exodus
-  []
+  #  [exodus]
+  #    type = Exodus
+  #  []
   [csv]
     type = CSV
   []
+  #  [cp]
+  #    type = Checkpoint
+  #    interval = 25
+  #  []
+  checkpoint = true
   color = true
   perf_graph = true
 []

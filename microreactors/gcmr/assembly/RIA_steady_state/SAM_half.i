@@ -1,9 +1,9 @@
 ######################################################################################################
-## Dynamic Multiphysics Modeling of a Flow Blockage accident in Gas-cooled Microreactor Assembly
-## SAM half coolant channel steady state Model
+## Dynamic Multiphysics Modeling of Reactivity insertion accident in Gas-cooled Microreactor Assembly
+## SAM steady-state half coolant channel Model
 # If using or referring to this model, please cite as explained in
 # https://mooseframework.inl.gov/virtual_test_bed/citing.html
-#####################################################################################################
+######################################################################################################
 Area = 0.00005654866 # r = 0.6cm; A = pi*(0.6/100)^2/2
 Height = 2.0 # bottom = 0.000000; top = 2.000000
 Ph = 0.018849556 # Heated perimeter; Ph = C = 2*pi*r/2 (circumference for round pipe)
@@ -18,7 +18,7 @@ layers = 40 # Make sure the number of axial divisions in the fluid domain and so
   global_init_P = ${Pout}
   global_init_V = ${Vin}
   global_init_T = ${Tin}
-  gravity = '0 1e-8 0' # horizontal channel
+  gravity = '0 0 0' # horizontal channel
   [PBModelParams]
     pbm_scaling_factors = '1 1e-3 1e-6'
     p_order = 2
