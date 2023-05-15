@@ -27,7 +27,6 @@ residualPROJ = yes
 [PRESSURE]
 preconditioner = semg_amg_hypre
 residualTol = 1e-04
-residualProj = yes
 
 [TEMPERATURE]
 #solver = none
