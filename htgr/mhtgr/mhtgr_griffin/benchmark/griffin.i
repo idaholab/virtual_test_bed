@@ -11,6 +11,10 @@
 # - Main App
 # ==============================================================================
 # - The Model has been built based on [1].
+# NOTE: - In the benchmark configuration, this input is run with second order
+#         variables OR first order with mesh refinement
+# TODO: - Once flux_map can be printed by material, homogenize all blocks to a
+#         few for 10% performance boost
 # ------------------------------------------------------------------------------
 # [1] Ortensi, J. and Strydom, G. OECD/NEA Coupled Neutronic/Thermal-Fluids
 #     Benchmark of the MHTGR-350 MW Core Design: Results for
@@ -320,6 +324,22 @@ tpow = 350e6 #(350 MW)
     fission_source_aux = true
     assemble_scattering_jacobian = true
     assemble_fission_jacobian = true
+
+    fixed_jacobian = true
+  []
+[]
+
+[MultigroupPreconditioning]
+  active = 'pbp'
+  [pbp]
+    type = PBP
+    preconditioner = 'AMG'
+  []
+  [bip]
+    type = BIP
+    bi_max_iter = 10
+    bi_rel_tol = 1e-8
+    l_tol = 1e-12
   []
 []
 
