@@ -1,3 +1,9 @@
+######################################################################################################
+## Dynamic Multiphysics Modeling of Reactivity insertion accident in Gas-cooled Microreactor Assembly
+## BISON steady-state Model
+# If using or referring to this model, please cite as explained in
+# https://mooseframework.inl.gov/virtual_test_bed/citing.html
+######################################################################################################
 TsInit = 1150.0 # Solid initial temperature
 Tcin = 1150.0 # Coolant initial temperature
 radiusTransfer = 0.015 # r + 0.009. Extends past the first mesh cell surrounding the coolant channel.

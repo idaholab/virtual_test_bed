@@ -1,3 +1,9 @@
+######################################################################################################
+## Dynamic Multiphysics Modeling of a Flow Blockage accident in Gas-cooled Microreactor Assembly
+## Griffin Dynamic Model
+# If using or referring to this model, please cite as explained in
+# https://mooseframework.inl.gov/virtual_test_bed/citing.html
+#####################################################################################################
 [Mesh]
   [fmg]
     type = FileMeshGenerator
