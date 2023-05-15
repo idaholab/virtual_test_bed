@@ -4,8 +4,8 @@
 ## If using or referring to this model, please cite as explained in
 ## https://mooseframework.inl.gov/virtual_test_bed/citing.html
 
-num_layers_for_THM = 50      # number of elements in the THM model; for the converged
-                             # case, we set this to 150
+num_layers_for_THM = 50 # number of elements in the THM model; for the converged
+# case, we set this to 150
 
 [Mesh]
   # mesh mirror for the solid regions
@@ -22,7 +22,7 @@ num_layers_for_THM = 50      # number of elements in the THM model; for the conv
     nr = 1
     nt = 8
     rmin = 0.0
-    rmax = ${fparse channel_diameter / 2.0}
+    rmax = '${fparse channel_diameter / 2.0}'
   []
   [extrude]
     type = AdvancedExtruderGenerator
@@ -145,7 +145,7 @@ num_layers_for_THM = 50      # number of elements in the THM model; for the conv
     type = ConstantIC
     variable = heat_source
     block = 'compacts'
-    value = ${fparse power / (n_bundles * n_fuel_compacts_per_block) / (pi * compact_diameter * compact_diameter / 4.0 * height)}
+    value = '${fparse power / (n_bundles * n_fuel_compacts_per_block) / (pi * compact_diameter * compact_diameter / 4.0 * height)}'
   []
 []
 
@@ -166,7 +166,6 @@ num_layers_for_THM = 50      # number of elements in the THM model; for the conv
   []
 []
 
-
 [Problem]
   type = OpenMCCellAverageProblem
   output = 'unrelaxed_tally_std_dev'
@@ -178,9 +177,9 @@ num_layers_for_THM = 50      # number of elements in the THM model; for the conv
   normalize_by_global_tally = false
   assume_separate_tallies = true
 
-  power = ${fparse power / n_bundles}
+  power = '${fparse power / n_bundles}'
   scaling = 100.0
-  solid_blocks = '1 2 4'
+  solid_blocks = 'graphite compacts poison'
   fluid_blocks = '101'
   tally_blocks = '2'
   tally_type = cell
