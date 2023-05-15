@@ -103,6 +103,7 @@
     cli_args = "MultiApps/active='' Transfers/active=''"
     prereq = 'griffin_alone'
     allow_unused = true
+    min_parallel = 16 # for checkpoint restart
   []
   [griffin_alone_transient]
     type = 'CSVDiff'
