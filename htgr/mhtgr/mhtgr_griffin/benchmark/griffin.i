@@ -210,12 +210,12 @@ tpow = 350e6 #(350 MW)
 
 [Materials]
   [const_nm]
-     type = ConstantMatIDNeutronicsMaterial
-     library_file =  '../data/materials_p0_trc.xml'
-     is_meter = true
-     plus = true
-     #material_id =  1
-     block = '1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36
+    type = ConstantMatIDNeutronicsMaterial
+    library_file = '../data/materials_p0_trc.xml'
+    is_meter = true
+    plus = true
+    #material_id =  1
+    block = '1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36
                   37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69
                   70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 101
                   102 103 104 105 106 107 108 109 110 111 112 113 114 115 116 117 118 119 120 121 122 123 124 125 126
@@ -262,27 +262,27 @@ tpow = 350e6 #(350 MW)
   active = 'tr_x tr_y tr_z itr_x itr_y itr_z '
   [tr_x]
     type = ParsedFunction
-    value = x*cos(4*pi/3)-y*sin(4*pi/3)
+    expression = x*cos(4*pi/3)-y*sin(4*pi/3)
   []
   [tr_y]
     type = ParsedFunction
-    value = x*sin(4*pi/3)+y*cos(4*pi/3)
+    expression = x*sin(4*pi/3)+y*cos(4*pi/3)
   []
   [tr_z]
     type = ParsedFunction
-    value = z
+    expression = z
   []
   [itr_x]
     type = ParsedFunction
-    value = (x*cos(4*pi/3)+y*sin(4*pi/3))
+    expression = (x*cos(4*pi/3)+y*sin(4*pi/3))
   []
   [itr_y]
     type = ParsedFunction
-    value = (-x*sin(4*pi/3)+y*cos(4*pi/3))
+    expression = (-x*sin(4*pi/3)+y*cos(4*pi/3))
   []
   [itr_z]
     type = ParsedFunction
-    value = z
+    expression = z
   []
 []
 
@@ -313,13 +313,13 @@ tpow = 350e6 #(350 MW)
   VacuumBoundary = '3 4 5'
 
   [diff]
-   scheme = CFEM-Diffusion
-   n_delay_groups = 0
-   family = LAGRANGE
-   order = SECOND
-   fission_source_aux = true
-   assemble_scattering_jacobian = true
-   assemble_fission_jacobian = true
+    scheme = CFEM-Diffusion
+    n_delay_groups = 0
+    family = LAGRANGE
+    order = SECOND
+    fission_source_aux = true
+    assemble_scattering_jacobian = true
+    assemble_fission_jacobian = true
   []
 []
 
@@ -328,9 +328,9 @@ tpow = 350e6 #(350 MW)
   solve_type = 'PJFNK'
   petsc_options_iname = '-pc_type -pc_hypre_type -pc_hypre_boomeramg_strong_threshold -ksp_gmres_restart'
   petsc_options_value = 'hypre boomeramg 0.7 200'
-  l_max_its = 400
   nl_rel_tol = 1e-5
-  nl_abs_tol = 1e-6
+  nl_abs_tol = 5e-6
+  l_max_its = 600
   free_power_iterations = 2
 []
 
@@ -351,10 +351,10 @@ tpow = 350e6 #(350 MW)
                 202 203 204 205 206 207 208 209 210 211 212 213 214 215 216 217 218 219 220'
     execute_on = 'INITIAL TIMESTEP_END'
   []
-  []
+[]
 
 [Debug]
-   show_actions = false
+  show_actions = false
   # show_material_props = 1
   # check_boundary_coverage = 1
   # print_block_volume = 1
