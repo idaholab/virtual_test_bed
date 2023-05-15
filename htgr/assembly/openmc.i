@@ -118,7 +118,7 @@ num_layers_for_THM = 50 # number of elements in the THM model; for the converged
     type = FluidDensityAux
     variable = density
     p = ${outlet_P}
-    T = temp
+    T = thm_temp
     fp = helium
     execute_on = 'timestep_begin linear'
   []
@@ -195,8 +195,8 @@ num_layers_for_THM = 50 # number of elements in the THM model; for the converged
   # we will collate temperature from THM (for the fluid) and MOOSE (for the solid)
   # into variables we name as 'solid_temp' and 'thm_temp'. This syntax will automatically
   # create those variabes for us
-  temperature_variables = 'solid_temp solid_temp solid_temp thm_temp'
-  temperature_blocks = 'graphite compacts poison 101'
+  temperature_variables = 'solid_temp; solid_temp; solid_temp; thm_temp'
+  temperature_blocks = 'graphite; compacts; poison; 101'
 
   tally_score = heating
   tally_name = heat_source
@@ -282,7 +282,7 @@ num_layers_for_THM = 50 # number of elements in the THM model; for the converged
 
 [Transfers]
   [solid_temp_to_openmc]
-    type = MultiAppInterpolationTransfer
+    type = MultiAppGeometricInterpolationTransfer
     source_variable = T
     variable = solid_temp
     from_multi_app = bison
@@ -299,7 +299,7 @@ num_layers_for_THM = 50 # number of elements in the THM model; for the converged
     to_postprocessors_to_be_preserved = flux_integral
   []
   [source_to_bison]
-    type = MultiAppMeshFunctionTransfer
+    type = MultiAppShapeEvaluationTransfer
     source_variable = heat_source
     variable = power
     direction = to_multiapp
@@ -308,7 +308,7 @@ num_layers_for_THM = 50 # number of elements in the THM model; for the converged
     to_postprocessors_to_be_preserved = power
   []
   [thm_temp_to_bison]
-    type = MultiAppInterpolationTransfer
+    type = MultiAppGeometricInterpolationTransfer
     source_variable = thm_temp_wall
     variable = thm_temp
     direction = to_multiapp
