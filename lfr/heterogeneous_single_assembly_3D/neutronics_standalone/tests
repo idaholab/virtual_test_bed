@@ -3,6 +3,8 @@
     type = RunApp
     check_input = true
     input = 'neutronics.i'
+    # To avoid running out of memory
+    min_parallel = 2
     cli_args = "Executioner/richardson_max_its=1
                 Executioner/set_sam_default_petsc_options=false"
     executable_pattern = 'griffin*|blue_crab*'
