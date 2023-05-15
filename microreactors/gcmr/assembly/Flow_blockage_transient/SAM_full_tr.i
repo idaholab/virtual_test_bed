@@ -1,3 +1,9 @@
+######################################################################################################
+## Dynamic Multiphysics Modeling of a Flow Blockage accident in Gas-cooled Microreactor Assembly
+## SAM full coolant channel Dynamic Model
+# If using or referring to this model, please cite as explained in
+# https://mooseframework.inl.gov/virtual_test_bed/citing.html
+#####################################################################################################
 Area = 0.00011309733 # r = 0.6cm; A = pi*(0.6/100)^2
 Height = 2.0 # bottom = 0.000000; top = 2.000000
 Ph = 0.037699112 # Heated perimeter; Ph = C = 2*pi*r (circumference for round pipe)

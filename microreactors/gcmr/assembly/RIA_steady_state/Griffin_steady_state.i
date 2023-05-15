@@ -1,9 +1,9 @@
 ######################################################################################################
-## Dynamic Multiphysics Modeling of a Flow Blockage accident in Gas-cooled Microreactor Assembly
-## Griffin steady state Model
+## Dynamic Multiphysics Modeling of Reactivity insertion accident in Gas-cooled Microreactor Assembly
+## Griffin steady-state Model
 # If using or referring to this model, please cite as explained in
 # https://mooseframework.inl.gov/virtual_test_bed/citing.html
-#####################################################################################################
+######################################################################################################
 [Mesh]
   [fmg]
     type = FileMeshGenerator
@@ -54,7 +54,7 @@
   custom_rel_tol = 1e-6
   force_fixed_point_solve = true
 
-  cmfd_acceleration = true #false
+  cmfd_acceleration = true
   coarse_element_id = coarse_element_id
   cmfd_eigen_solver_type = newton
   prolongation_type = multiplicative
@@ -109,7 +109,7 @@
 [Materials]
   [mod]
     type = CoupledFeedbackMatIDNeutronicsMaterial
-    block = '10 100 102 103 200 201 300 400 401 500 600 8000 8001'
+    block = '10 100 102 103 200 201 400 401 500 600 8000 8001'
     library_file = '../ISOXML/XS_Griffin.xml'
     library_name = XS_Griffin
     isotopes = 'pseudo'
@@ -120,6 +120,31 @@
     dbgmat = false
     grid_names = 'Tmod'
     grid_variables = 'Tf'
+  []
+  [Air]
+    type = CoupledFeedbackRoddedNeutronicsMaterial
+    block = '300'
+    library_file = '../ISOXML/XS_Griffin.xml'
+    library_name = XS_Griffin
+    rod_segment_length = '1.2 0.4'
+    rod_withdrawn_direction = z
+    isotopes = 'pseudo; pseudo; pseudo; pseudo'
+    densities = '1.0 1.0 1.0 1.0'
+    segment_material_ids = '804 809 809 805'
+    front_position_function = control_rod_position
+    diffusion_coefficient_scheme = user_supplied
+    is_meter = true
+    plus = true
+    dbgmat = false
+    grid_names = 'Tmod'
+    grid_variables = 'Tf'
+  []
+[]
+
+[Functions]
+  [control_rod_position]
+    type = ParsedFunction
+    expression = '1.4'
   []
 []
 
@@ -135,8 +160,7 @@
 [Transfers]
   [to_sub_power_density]
     type = MultiAppProjectionTransfer
-    direction = to_multiapp
-    multi_app = bison
+    to_multi_app = bison
     variable = power_density
     source_variable = power_density
     execute_on = 'timestep_end'
@@ -146,8 +170,7 @@
   []
   [from_sub_temp]
     type = MultiAppGeometricInterpolationTransfer
-    direction = from_multiapp
-    multi_app = bison
+    from_multi_app = bison
     variable = Tf
     source_variable = Tfuel
     execute_on = 'timestep_end'

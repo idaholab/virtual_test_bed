@@ -1,12 +1,12 @@
 ######################################################################################################
-## Dynamic Multiphysics Modeling of a Flow Blockage accident in Gas-cooled Microreactor Assembly
-## SAM half coolant channel steady state Model
+## Dynamic Multiphysics Modeling of Reactivity insertion accident in Gas-cooled Microreactor Assembly
+## SAM steady-state full coolant channel Model
 # If using or referring to this model, please cite as explained in
 # https://mooseframework.inl.gov/virtual_test_bed/citing.html
-#####################################################################################################
-Area = 0.00005654866 # r = 0.6cm; A = pi*(0.6/100)^2/2
+######################################################################################################
+Area = 0.00011309733 # r = 0.6cm; A = pi*(0.6/100)^2
 Height = 2.0 # bottom = 0.000000; top = 2.000000
-Ph = 0.018849556 # Heated perimeter; Ph = C = 2*pi*r/2 (circumference for round pipe)
+Ph = 0.037699112 # Heated perimeter; Ph = C = 2*pi*r (circumference for round pipe)
 Dh = 0.012 # For circular pipe = D
 Vin = 15 # Average flow velocity
 Tin = 873.15 # 600 C
@@ -18,7 +18,7 @@ layers = 40 # Make sure the number of axial divisions in the fluid domain and so
   global_init_P = ${Pout}
   global_init_V = ${Vin}
   global_init_T = ${Tin}
-  gravity = '0 1e-8 0' # horizontal channel
+  gravity = '0 0 0' # horizontal channel
   [PBModelParams]
     pbm_scaling_factors = '1 1e-3 1e-6'
     p_order = 2
@@ -35,7 +35,7 @@ layers = 40 # Make sure the number of axial divisions in the fluid domain and so
 [Components]
   [pipe1]
     type = PBOneDFluidComponent
-    position = '0 0.0 0.0' # Position will be determined by ../../mesh/coolant_half_points.txt
+    position = '0 0.0 0.0' # Position will be determined by ../../mesh/coolant_full_points.txt
     orientation = '0 0 ${orientation}'
     eos = eos
 

@@ -1,11 +1,11 @@
 ######################################################################################################
-## Dynamic Multiphysics Modeling of a Flow Blockage accident in Gas-cooled Microreactor Assembly
-## BISON steady-state Model
+## Dynamic Multiphysics Modeling of Reactivity insertion accident in Gas-cooled Microreactor Assembly
+## BISON transient Model
 # If using or referring to this model, please cite as explained in
 # https://mooseframework.inl.gov/virtual_test_bed/citing.html
 ######################################################################################################
-TsInit = 1150.0 # Solid initial temperature
-Tcin = 1150.0 # Coolant initial temperature
+#TsInit = 1150.0 # Solid initial temperature
+#Tcin = 1150.0 # Coolant initial temperature
 radiusTransfer = 0.015 # r + 0.009. Extends past the first mesh cell surrounding the coolant channel.
 coolant_full_points_filename = ../channel_positions/coolant_full_points.txt # File containing the inlet position of your coolant channels
 coolant_half_points_filename = ../channel_positions/coolant_half_points.txt # File containing the inlet position of your coolant channels
@@ -15,44 +15,19 @@ coolant_half_points_filename = ../channel_positions/coolant_half_points.txt # Fi
 []
 
 [Problem]
+  restart_file_base = '../steady_state/Griffin_steady_state_out_bison0_cp/LATEST'
+  force_restart = true
   register_objects_from = 'BisonApp'
-  #library_path = '/beegfs1/software/NEAMS_microreactor/projects_super_mar22/bison/lib'
 []
 
 [Mesh]
-  # so that the others are disregarded
-  final_generator = fmg
-  [fmg] # load mesh
-    type = FileMeshGenerator
-    file = '../MESH/BISON_mesh.e'
-  []
-  [full_coolant_surf_mesh] # create sideset around coolant_full channel
-    type = SideSetsBetweenSubdomainsGenerator
-    input = fmg
-    paired_block = coolant_full
-    primary_block = 'monolith reflector'
-    new_boundary = full_coolant_surf
-  []
-  [half_coolant_surf_mesh] # create sideset around coolant_half channel
-    type = SideSetsBetweenSubdomainsGenerator
-    input = full_coolant_surf_mesh
-    paired_block = coolant_half
-    primary_block = 'monolith reflector'
-    new_boundary = half_coolant_surf
-  []
-  [ed0]
-    type = BlockDeletionGenerator
-    input = half_coolant_surf_mesh
-    block = 'coolant_half coolant_full'
-  []
+  file = '../steady_state/Griffin_steady_state_out_bison0_cp/LATEST'
 []
 
 [Variables]
   [temp]
     order = FIRST
     family = LAGRANGE
-    initial_condition = ${TsInit}
-    #scaling = 1.0e-2
   []
 []
 
@@ -86,13 +61,13 @@ coolant_half_points_filename = ../channel_positions/coolant_half_points.txt # Fi
     # Calculated by SAM and then transfered with the scaling factor.
     order = CONSTANT
     family = MONOMIAL
-    initial_condition = 2000.00
+    # initial_condition = 2000.00
     block = 'monolith reflector reflector_tri' # Can set it on the monolith or coolant.
   []
   [Tfluid] # Coolant temperature.
     order = CONSTANT
     family = MONOMIAL
-    initial_condition = ${Tcin}
+    # initial_condition = ${Tcin}
     block = 'monolith reflector reflector_tri' # Can set it on the monolith or coolant.
   []
 []
@@ -102,7 +77,7 @@ coolant_half_points_filename = ../channel_positions/coolant_half_points.txt # Fi
     type = NormalizationAux
     variable = Tfuel
     source_variable = temp
-    execute_on = 'timestep_end'
+    execute_on = 'initial timestep_end'
   []
 []
 
@@ -274,8 +249,8 @@ coolant_half_points_filename = ../channel_positions/coolant_half_points.txt # Fi
     app_type = SamApp
     positions_file = ${coolant_full_points_filename}
     bounding_box_padding = '0.1 0.1 0.1'
-    input_files = 'SAM_full.i'
-    execute_on = 'TIMESTEP_END'
+    input_files = 'SAM_full_tr.i'
+    execute_on = 'initial TIMESTEP_END'
     max_procs_per_app = 1
     # keep_solution_during_restore = true
     output_in_position = true
@@ -287,8 +262,8 @@ coolant_half_points_filename = ../channel_positions/coolant_half_points.txt # Fi
     app_type = SamApp
     positions_file = ${coolant_half_points_filename}
     bounding_box_padding = '0.1 0.1 0.1'
-    input_files = 'SAM_half.i'
-    execute_on = 'TIMESTEP_END'
+    input_files = 'SAM_half_tr.i'
+    execute_on = 'initial TIMESTEP_END'
     max_procs_per_app = 1
     # keep_solution_during_restore = true
     output_in_position = true
@@ -305,7 +280,7 @@ coolant_half_points_filename = ../channel_positions/coolant_half_points.txt # Fi
     to_multi_app = coolant_full_MA
     user_object = Tw_UO # Exists in solid.
     variable = Tw # Exists in coolant.
-    execute_on = 'TIMESTEP_END'
+    execute_on = 'initial TIMESTEP_END'
     displaced_target_mesh = true
   []
   [Tfluid_from_coolant]
@@ -315,7 +290,7 @@ coolant_half_points_filename = ../channel_positions/coolant_half_points.txt # Fi
     from_multi_app = coolant_full_MA
     user_object = Tfluid_UO # Exists in coolant.
     variable = Tfluid # Exists in solid.
-    execute_on = 'TIMESTEP_END'
+    execute_on = 'initial TIMESTEP_END'
     displaced_source_mesh = true
   []
   [hfluid_from_coolant]
@@ -325,7 +300,7 @@ coolant_half_points_filename = ../channel_positions/coolant_half_points.txt # Fi
     from_multi_app = coolant_full_MA
     user_object = hfluid_UO # Exists in coolant.
     variable = hfluid # Exists in solid.
-    execute_on = 'TIMESTEP_END'
+    execute_on = 'initial TIMESTEP_END'
     displaced_source_mesh = true
   []
 
@@ -336,7 +311,7 @@ coolant_half_points_filename = ../channel_positions/coolant_half_points.txt # Fi
     to_multi_app = coolant_half_MA
     user_object = Tw_UO_half # Exists in solid.
     variable = Tw # Exists in coolant.
-    execute_on = 'TIMESTEP_END'
+    execute_on = 'initial TIMESTEP_END'
     displaced_target_mesh = true
   []
   [Tfluid_from_coolant_half]
@@ -346,7 +321,7 @@ coolant_half_points_filename = ../channel_positions/coolant_half_points.txt # Fi
     from_multi_app = coolant_half_MA
     user_object = Tfluid_UO # Exists in coolant.
     variable = Tfluid # Exists in solid.
-    execute_on = 'TIMESTEP_END'
+    execute_on = 'initial TIMESTEP_END'
     displaced_source_mesh = true
   []
   [hfluid_from_coolant_half]
@@ -356,7 +331,7 @@ coolant_half_points_filename = ../channel_positions/coolant_half_points.txt # Fi
     from_multi_app = coolant_half_MA
     user_object = hfluid_UO # Exists in coolant.
     variable = hfluid # Exists in solid.
-    execute_on = 'TIMESTEP_END'
+    execute_on = 'initial TIMESTEP_END'
     displaced_source_mesh = true
   []
 []
@@ -381,9 +356,13 @@ coolant_half_points_filename = ../channel_positions/coolant_half_points.txt # Fi
   nl_abs_tol = 5e-9
   nl_rel_tol = 1e-8
 
-  start_time = -2.5e5 # negative start time so we can start running from t = 0
-  end_time = 0
-  dt = 1e4
+  # picard_rel_tol = 1.0e-8
+  # picard_abs_tol = 5.0e-9
+  # picard_max_its = 20
+
+  start_time = 0.0 # negative start time so we can start running from t = 0
+  end_time = 1e4
+  dt = 1
 
   automatic_scaling = true
 []
@@ -460,5 +439,5 @@ coolant_half_points_filename = ../channel_positions/coolant_half_points.txt # Fi
   []
   perf_graph = true
   color = true
-  checkpoint = true
+  checkpoint = false
 []
