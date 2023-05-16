@@ -4,8 +4,8 @@
 ## If using or referring to this model, please cite as explained in
 ## https://mooseframework.inl.gov/virtual_test_bed/citing.html
 
-num_layers_for_THM = 50      # number of elements in the THM model; for the converged
-                             # case, we set this to 150
+num_layers_for_THM = 50 # number of elements in the THM model; for the converged
+# case, we set this to 150
 
 [Mesh]
   # mesh mirror for the solid regions
@@ -22,7 +22,7 @@ num_layers_for_THM = 50      # number of elements in the THM model; for the conv
     nr = 1
     nt = 8
     rmin = 0.0
-    rmax = ${fparse channel_diameter / 2.0}
+    rmax = '${fparse channel_diameter / 2.0}'
   []
   [extrude]
     type = AdvancedExtruderGenerator
@@ -118,7 +118,7 @@ num_layers_for_THM = 50      # number of elements in the THM model; for the conv
     type = FluidDensityAux
     variable = density
     p = ${outlet_P}
-    T = temp
+    T = thm_temp
     fp = helium
     execute_on = 'timestep_begin linear'
   []
@@ -145,7 +145,7 @@ num_layers_for_THM = 50      # number of elements in the THM model; for the conv
     type = ConstantIC
     variable = heat_source
     block = 'compacts'
-    value = ${fparse power / (n_bundles * n_fuel_compacts_per_block) / (pi * compact_diameter * compact_diameter / 4.0 * height)}
+    value = '${fparse power / (n_bundles * n_fuel_compacts_per_block) / (pi * compact_diameter * compact_diameter / 4.0 * height)}'
   []
 []
 
@@ -166,7 +166,6 @@ num_layers_for_THM = 50      # number of elements in the THM model; for the conv
   []
 []
 
-
 [Problem]
   type = OpenMCCellAverageProblem
   output = 'unrelaxed_tally_std_dev'
@@ -178,9 +177,9 @@ num_layers_for_THM = 50      # number of elements in the THM model; for the conv
   normalize_by_global_tally = false
   assume_separate_tallies = true
 
-  power = ${fparse power / n_bundles}
+  power = '${fparse power / n_bundles}'
   scaling = 100.0
-  solid_blocks = '1 2 4'
+  solid_blocks = 'graphite compacts poison'
   fluid_blocks = '101'
   tally_blocks = '2'
   tally_type = cell
@@ -196,8 +195,8 @@ num_layers_for_THM = 50      # number of elements in the THM model; for the conv
   # we will collate temperature from THM (for the fluid) and MOOSE (for the solid)
   # into variables we name as 'solid_temp' and 'thm_temp'. This syntax will automatically
   # create those variabes for us
-  temperature_variables = 'solid_temp solid_temp solid_temp thm_temp'
-  temperature_blocks = 'graphite compacts poison 101'
+  temperature_variables = 'solid_temp; solid_temp; solid_temp; thm_temp'
+  temperature_blocks = 'graphite; compacts; poison; 101'
 
   tally_score = heating
   tally_name = heat_source
@@ -283,7 +282,7 @@ num_layers_for_THM = 50      # number of elements in the THM model; for the conv
 
 [Transfers]
   [solid_temp_to_openmc]
-    type = MultiAppInterpolationTransfer
+    type = MultiAppGeometricInterpolationTransfer
     source_variable = T
     variable = solid_temp
     from_multi_app = bison
@@ -300,7 +299,7 @@ num_layers_for_THM = 50      # number of elements in the THM model; for the conv
     to_postprocessors_to_be_preserved = flux_integral
   []
   [source_to_bison]
-    type = MultiAppMeshFunctionTransfer
+    type = MultiAppShapeEvaluationTransfer
     source_variable = heat_source
     variable = power
     direction = to_multiapp
@@ -309,7 +308,7 @@ num_layers_for_THM = 50      # number of elements in the THM model; for the conv
     to_postprocessors_to_be_preserved = power
   []
   [thm_temp_to_bison]
-    type = MultiAppInterpolationTransfer
+    type = MultiAppGeometricInterpolationTransfer
     source_variable = thm_temp_wall
     variable = thm_temp
     direction = to_multiapp

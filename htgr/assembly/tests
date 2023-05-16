@@ -12,6 +12,7 @@
     check_input = true
     executable_pattern = 'cardinal*'
     prereq = generate_mesh
+    max_time = 400
   []
   [syntax_conduction]
     type = RunApp

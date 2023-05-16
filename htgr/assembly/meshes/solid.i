@@ -18,7 +18,7 @@ n_layers = 100
   [fuel_pin]
     type = PolygonConcentricCircleMeshGenerator
     num_sides = 6
-    polygon_size = ${fparse fuel_to_coolant_distance / 2.0}
+    polygon_size = '${fparse fuel_to_coolant_distance / 2.0}'
     ring_radii = '${fparse 0.8 * compact_diameter / 2.0} ${fparse compact_diameter / 2.0}'
     ring_intervals = '1 1'
     num_sectors_per_side = '4 4 4 4 4 4'
@@ -31,7 +31,7 @@ n_layers = 100
   [coolant_pin]
     type = PolygonConcentricCircleMeshGenerator
     num_sides = 6
-    polygon_size = ${fparse fuel_to_coolant_distance / 2.0}
+    polygon_size = '${fparse fuel_to_coolant_distance / 2.0}'
     ring_radii = '${fparse channel_diameter / 2.0}'
     ring_intervals = '2'
     num_sectors_per_side = '4 4 4 4 4 4'
@@ -41,11 +41,12 @@ n_layers = 100
     background_block_names = 'graphite'
     interface_boundary_id_shift = 100
     background_intervals = 2
+    create_inward_interface_boundaries = true
   []
   [poison_pin]
     type = PolygonConcentricCircleMeshGenerator
     num_sides = 6
-    polygon_size = ${fparse fuel_to_coolant_distance / 2.0}
+    polygon_size = '${fparse fuel_to_coolant_distance / 2.0}'
     ring_radii = '${fparse compact_diameter / 2.0}'
     ring_intervals = '2'
     num_sectors_per_side = '4 4 4 4 4 4'
@@ -58,7 +59,7 @@ n_layers = 100
   [graphite_pin]
     type = PolygonConcentricCircleMeshGenerator
     num_sides = 6
-    polygon_size = ${fparse fuel_to_coolant_distance / 2.0}
+    polygon_size = '${fparse fuel_to_coolant_distance / 2.0}'
     ring_radii = '${fparse compact_diameter / 2.0}'
     ring_intervals = '2'
     num_sectors_per_side = '4 4 4 4 4 4'
@@ -70,7 +71,7 @@ n_layers = 100
   [bundle]
     type = PatternedHexMeshGenerator
     inputs = 'fuel_pin coolant_pin poison_pin graphite_pin'
-    hexagon_size = ${fparse bundle_flat_to_flat / 2.0 + bundle_gap_width / 2.0}
+    hexagon_size = '${fparse bundle_flat_to_flat / 2.0 + bundle_gap_width / 2.0}'
     pattern = '2 0 1 0 0 1 0 0 1 0 2;
               0 1 0 0 1 0 0 1 0 0 1 0;
              1 0 0 1 0 0 1 0 0 1 0 0 1;
@@ -98,7 +99,7 @@ n_layers = 100
     background_block_names = 'graphite'
   []
   [extrude]
-    type = FancyExtruderGenerator
+    type = AdvancedExtruderGenerator
     input = bundle
     heights = ${height}
     num_layers = ${n_layers}
