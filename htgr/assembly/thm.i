@@ -5,18 +5,18 @@
 ## https://mooseframework.inl.gov/virtual_test_bed/citing.html
 
 # copy-pasta from common.i
-inlet_T = 598.0                          # inlet fluid temperature (K)
-mdot = ${fparse 117.3 / 12 / 108}        # fluid mass flowrate (kg/s)
-outlet_P = 7.1e6                         # fluid outlet pressure (Pa)
-channel_diameter = 0.016                 # diameter of the coolant channels (m)
-height = 6.343                           # height of the assembly (m)
+inlet_T = 598.0 # inlet fluid temperature (K)
+mdot = '${fparse 117.3 / 12 / 108}' # fluid mass flowrate (kg/s)
+outlet_P = 7.1e6 # fluid outlet pressure (Pa)
+channel_diameter = 0.016 # diameter of the coolant channels (m)
+height = 6.343 # height of the assembly (m)
 
-num_layers_for_THM = 50                  # number of elements in the THM model
+num_layers_for_THM = 50 # number of elements in the THM model
 
 [GlobalParams]
   initial_p = ${outlet_P}
   initial_T = ${inlet_T}
-  initial_vel = ${fparse mdot / outlet_P / 8.3144598 * 4.0e-3 / inlet_T / (pi * channel_diameter * channel_diameter / 4.0)}
+  initial_vel = '${fparse mdot / outlet_P / 8.3144598 * 4.0e-3 / inlet_T / (pi * channel_diameter * channel_diameter / 4.0)}'
 
   rdg_slope_reconstruction = full
   closures = none
@@ -29,7 +29,7 @@ num_layers_for_THM = 50                  # number of elements in the THM model
   []
 []
 
-[Modules/FluidProperties]
+[FluidProperties]
   [helium]
     type = IdealGasFluidProperties
     molar_mass = 4e-3
@@ -113,7 +113,7 @@ num_layers_for_THM = 50                  # number of elements in the THM model
     position = '0 0 ${height}'
     orientation = '0 0 -1'
 
-    A = ${fparse pi * channel_diameter * channel_diameter / 4}
+    A = '${fparse pi * channel_diameter * channel_diameter / 4}'
     D_h = ${channel_diameter}
     length = ${height}
     n_elems = ${num_layers_for_THM}
@@ -135,7 +135,7 @@ num_layers_for_THM = 50                  # number of elements in the THM model
   [ht_ext]
     type = HeatTransferFromExternalAppHeatFlux1Phase
     flow_channel = channel
-    P_hf = ${fparse channel_diameter * pi}
+    P_hf = '${fparse channel_diameter * pi}'
   []
 []
 
