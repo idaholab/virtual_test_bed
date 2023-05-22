@@ -685,7 +685,7 @@
   []
 
   [Branch604] # In to pipe to drain tank
-    type = PBPump
+    type = PBBranch
     inputs = 'pipe100(out)'       # A = 0.1924226
     outputs = 'pipe110(in)'       # A = 0.3019068
     eos = eos
@@ -720,7 +720,7 @@
   []
 
   [Diode608]                          # Fluidic diode
-    type = PBPump
+    type = PBBranch
     inputs = 'pipe160(out)'       # A = 0.03534292
     outputs = 'DHX(primary_in)'      # A = 0.2224163
     eos = eos
@@ -803,7 +803,7 @@
     K = '0 0'
     K_reverse = '2000000 2000000'
     Area = 0.3041
-    #Head_fn = Phead
+    Head = 0.0
     Desired_mass_flow_rate = 0.0
     Mass_flow_rate_tolerance = 0.000001
     initial_V = 1.783
