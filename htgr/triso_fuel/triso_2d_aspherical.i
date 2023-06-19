@@ -1,4 +1,4 @@
-# TRISO 1D (spherical) thermal-mechanics input
+# TRISO 2D thermal-mechanics (aspherical particle with aspect_ratio = 1.04) input
 # Application: BISON
 # POC: Wen Jiang, wjiang8.at.ncsu.edu
 # If using or referring to this model, please cite as explained in
@@ -11,6 +11,7 @@ buffer_thickness = 98.9e-6 # micron
 IPyC_thickness = 40.4e-6 # micron
 SiC_thickness = 35.2e-6 # micron
 OPyC_thickness = 43.4e-6 # micron
+aspect_ratio = 1.04
 
 coordinates1 = '${fparse kernel_radius}'
 coordinates2 = '${fparse coordinates1+buffer_thickness}'
@@ -21,7 +22,7 @@ coordinates5 = '${fparse coordinates4+OPyC_thickness}'
 [GlobalParams]
   order = FIRST
   family = LAGRANGE
-  displacements = 'disp_x'
+  displacements = 'disp_x disp_y'
   initial_enrichment = 0.155 # [wt-]
   flux_conversion_factor = 1.0 # convert E>0.10 to E>0.18 MeV
   stress_free_temperature = ${temperature} # used for thermal expansion
@@ -31,13 +32,17 @@ coordinates5 = '${fparse coordinates4+OPyC_thickness}'
 []
 
 [Mesh]
-  coord_type = RSPHERICAL
+  coord_type = RZ
   [gen]
-    type = TRISO1DMeshGenerator
-    elem_type = EDGE2
+    type = TRISO2DMeshGenerator
+    elem_type = quad4
     coordinates = '0 ${coordinates1} ${coordinates2} ${coordinates2} ${coordinates3} ${coordinates4} ${coordinates5}'
-    mesh_density = '5 3 0 5 3 4'
+    mesh_density = '20 8 0 4 4 4'
     block_names = 'fuel buffer IPyC SiC OPyC'
+    num_sectors = 60
+    aspect_ratio = ${aspect_ratio}
+    all_bottom_left = True
+    aspherical_type = vary_outer
   []
 []
 
@@ -58,9 +63,7 @@ coordinates5 = '${fparse coordinates4+OPyC_thickness}'
     outer_kernel = fuel_outer_boundary
     include_particle = true
     include_pebble = false
-    IPyC_thickness_mean = 40.4e-6
-    SiC_thickness_mean = 35.2e-6
-    OPyC_thickness_mean = 43.4e-6
+    mesh_generator = gen
   []
 []
 
@@ -177,16 +180,6 @@ coordinates5 = '${fparse coordinates4+OPyC_thickness}'
   []
 []
 
-[Contact]
-  [mechanical]
-    primary = IPyC_inner_boundary
-    secondary = buffer_outer_boundary
-    penalty = 1e16
-    model = frictionless
-    formulation = kinematic
-  []
-[]
-
 [ThermalContact]
   [thermal_contact]
     type = GasGapHeatTransfer
@@ -202,6 +195,7 @@ coordinates5 = '${fparse coordinates4+OPyC_thickness}'
     min_gap = 1e-7
     max_gap = 50e-6
     gap_geometry_type = sphere
+    sphere_origin = '0 0 0'
   []
 []
 
@@ -210,6 +204,12 @@ coordinates5 = '${fparse coordinates4+OPyC_thickness}'
     type = DirichletBC
     variable = disp_x
     boundary = xzero
+    value = 0.0
+  []
+  [no_disp_y]
+    type = DirichletBC
+    variable = disp_y
+    boundary = bottom
     value = 0.0
   []
   [freesurf_temp]

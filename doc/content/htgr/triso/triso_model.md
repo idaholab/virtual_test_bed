@@ -1,6 +1,6 @@
 # TRISO Bison Model
 
-*Contact: Wen Jiang, wen.jiang.at.inl.gov*
+*Contact: Wen Jiang, wjiang8.at.ncsu.edu*
 
 *Model link: [TRISO Bison Model](https://github.com/idaholab/virtual_test_bed/tree/devel/htgr/triso_fuel)*
 
@@ -12,8 +12,7 @@
                        computing_needs:Workstation
                        fiscal_year:2022
 
-The input file (triso_1d.i) is a 1D TRISO model. Interested readers are referred
-to [!citep](bison_triso_model) for more details about TRISO modeling capability in Bison.
+There are three input files. The first input file (triso_1d.i) is a 1D TRISO model with perfectly spherical geometry. The other two input files (triso_2d_aspherical.i and triso_2d_ipyc_cracking.i) are 2D RZ-symmetric TRISO models with spherical geometry and IPyC cracking, respectively. Interested readers are referred to [!citep](bison_triso_model) for more details about TRISO modeling capability in Bison.
 
 The fuel parameters are given in [table:fuel_parameters]. The irradiation condition is summarized in [table:condition]
 
@@ -84,11 +83,23 @@ opens between the buffer and IPyC layers.
 
 !listing htgr/triso_fuel/triso_1d.i block=gen language=cpp
 
+`TRISO2DMeshGenerator` creates a 2D mesh appropriate for use in TRISO analysis.  The user supplies radial coordinates that mark the boundaries of mesh blocks.  A list of numbers of elements per block is also supplied. A `0` for the elements in the block represents a gap and is typically used for the gap that opens between the buffer and IPyC layers. Aspherical meshes are supported, allowing the mesh to have a flat facet at the bottom of the particle.  This is accomplished through the `aspect_ratio` parameter. Two varieties of aspherical meshes are available.  These are selected through the `aspherical_type` parameter.  The first of these, `vary_buffer`, creates meshes with thinned buffers.  The resulting mesh includes a small fillet at the junction of the flat facet and the original, circular geometry.  The second type, `vary_outer`, thins the outer layers slightly near the centerline and thickens them toward the edge of the facet.
+
+!listing htgr/triso_fuel/triso_2d_aspherical.i block=gen language=cpp
+
 ## UserObjects
 
 `TRISOGeometry` outputs the TRISO particle and pebble geometry determined from the mesh at the beginning of the simulation. This capability is available in 2D and 3D.
 
 !listing htgr/triso_fuel/triso_1d.i block=particle_geometry language=cpp
+
+For IPyC cracking case, the crack is modeled using the X-FEM module. The crack geometry is specified by `LineSegmentCutUserObject`.
+
+!listing htgr/triso_fuel/triso_2d_ipyc_cracking.i block=ipyc_crack language=cpp
+
+## XFEM Action
+
+The X-FEM `XFEM` action is needed to model a crack in the IPyC layer. The X-FEM quadrature rule is selected through the `qrule` parameter and the output the XFEM cut plane and volume fraction can be specicifed by `output_cut_plane` parameter.
 
 ## Tensor Mechanics Action
 
@@ -117,6 +128,10 @@ The `ThermalContactAction` action sets up the set of models used to enforce ther
 The boundary conditions of displacements and temperature are set in this block. The inner pressure caused by fission gas buildup is set by `PlenumPressure` Action.
 
 !listing htgr/triso_fuel/triso_1d.i block=plenumPressure language=cpp
+
+If IPyC cracking is modeled, the symmetric boundary conditions need to exclude the boundary of crack surface.
+
+!listing htgr/triso_fuel/triso_2d_ipyc_cracking.i block=no_disp_y language=cpp
 
 ## Material
 
