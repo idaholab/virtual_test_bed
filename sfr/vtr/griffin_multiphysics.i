@@ -63,6 +63,7 @@
   library_name = 'vtr_xs'
   compute_factors = false
   equivalence_grid_names  = 'tfuel tcool cr'
+  equivalence_grid_variables = 'tfuel tcool cr'
 []
 
 # ==============================================================================
