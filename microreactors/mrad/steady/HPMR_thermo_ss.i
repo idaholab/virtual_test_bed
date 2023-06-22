@@ -35,10 +35,6 @@ corr_factor = '${fparse R_hp_hole / R_clad_o * area_correction / perimeter_corre
     type = HeatConduction
     variable = temp
   []
-  [heat_ie]
-    type = HeatConductionTimeDerivative
-    variable = temp
-  []
   [heat_source_fuel]
     type = CoupledForce
     variable = temp
@@ -252,11 +248,13 @@ corr_factor = '${fparse R_hp_hole / R_clad_o * area_correction / perimeter_corre
 [MultiApps]
   [sockeye]
     type = TransientMultiApp
+    app_type = SockeyeApp
     positions_file = 'hp_centers.txt'
     input_files = 'HPMR_sockeye_ss.i'
     execute_on = 'timestep_begin' # execute on timestep begin because hard to have a good initial guess on heat flux
     max_procs_per_app = 1
     output_in_position = true
+    sub_cycling = true
   []
 []
 
@@ -269,11 +267,11 @@ corr_factor = '${fparse R_hp_hole / R_clad_o * area_correction / perimeter_corre
     execute_on = 'timestep_begin'
   []
   [to_sockeye_flux]
-    type = MultiAppGeneralFieldNearestLocationTransfer
-    to_multi_app = sockeye
-    source_variable = flux_uo_corr
+    type = MultiAppGeneralFieldUserObjectTransfer
     variable = master_flux
+    to_multi_app = sockeye
     execute_on = 'timestep_begin'
+    source_user_object = flux_uo
   []
 []
 
@@ -302,7 +300,7 @@ corr_factor = '${fparse R_hp_hole / R_clad_o * area_correction / perimeter_corre
   start_time = -5e4 # negative start time so we can start running from t = 0
   end_time = 0
   dtmin = 1
-  dt = 1000
+  num_steps = 1
 []
 
 [Postprocessors]
