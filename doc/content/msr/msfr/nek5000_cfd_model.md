@@ -1,6 +1,8 @@
-# MSFR Nek5000 CFD modeling
+# MSFR Nek5000 CFD Modeling
 
 *Contact: Jun Fang, fangj.at.anl.gov*
+
+*Model link: [MSFR CFD Models](https://github.com/idaholab/virtual_test_bed/tree/devel/msr/msfr/core_cfd)*
 
 Computational Fluid Dynamics (CFD) plays an unique role in the research and development (R&D) of
 Molten Salt Fast Reactor (MSFR). As a great complement to experiments, it offers a cost effective

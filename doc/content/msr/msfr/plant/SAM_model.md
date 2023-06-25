@@ -2,6 +2,8 @@
 
 *Contact: Jun Fang, fangj.at.anl.gov; Mauricio Tano, mauricio.tanoretamales.at.inl.gov*
 
+*Model link: [Standalone SAM Model](https://github.com/idaholab/virtual_test_bed/tree/devel/msr/msfr/plant/standalone_sam_model)*
+
 ## MSFR Overview
 
 The specific reactor model considered here is based upon the MSFR design developed under the Euratom EVOL project [!citep](rouch2014). 

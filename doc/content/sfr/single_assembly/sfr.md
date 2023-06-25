@@ -2,6 +2,8 @@
 
 *Contact: Nicholas Martin, nicolas.martin.at.inl.gov*
 
+*Model link: [SFR Single Assembly Model](https://github.com/idaholab/virtual_test_bed/tree/devel/sfr/single_assembly)*
+
 ## SFR model description
 
 This VTB model provides an example representative of a Sodium cooled Fast Reactor (SFR) using metallic fuel.

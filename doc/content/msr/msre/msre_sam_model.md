@@ -2,6 +2,8 @@
 
 *Contact: Jun Fang, fangj.at.anl.gov*
 
+*Model link: [Steady-State SAM Model](https://github.com/idaholab/virtual_test_bed/tree/devel/msr/msre/steady_state)*
+
 ## MSRE Description
 
 The MSRE was a graphite moderated flowing salt type reactor with a design maximum operating power of 10 MW(th) developed by Oak Ridge National Laboratory [!citep](Robertson1965).

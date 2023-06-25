@@ -2,6 +2,8 @@
 
 *Contact: Jun Fang, fangj.at.anl.gov*
 
+*Model link: [FHR SAM Model](https://github.com/idaholab/virtual_test_bed/tree/devel/pbfhr/sam_model)*
+
 The SAM [!citep](Hu2017) input files (`PBFHR-SS.i` for steady state and
 `PBFHR-TR.i` for loss of flow transient) were built to model the +Mark 1+
 pebble-bed fluoride-salt-cooled high temperature reactor (FHR)

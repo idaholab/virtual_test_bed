@@ -2,6 +2,8 @@
 
 *Contact: Rui Hu, rhu.at.anl.gov*
 
+*Model link: [ABTR Model](https://github.com/idaholab/virtual_test_bed/tree/devel/sfr/abtr)*
+
 ## ABTR description
 
 A demonstrative system model based on the Advanced Burner Test Reactor (ABTR) conceptual design has been developed with the recent SAM capabitility enhancement in structure thermal expansion and reactivity feedback modeling. More details can be found in [!citep](Hu2019) regarding the implementation of Point Kinetics model and verifications of thermal expansion models.
