@@ -25,7 +25,7 @@
   [time_stepper]
     type = PiecewiseConstant
     x = '-500 -490    -10     0       2     3   10   11  380   381    440   441   1e5'
-    y =' 1.0    50.       50.0 0.2     0.2   0.5  0.5    2    2     2      2     5     5'
+    y = ' 1.0    50.       50.0 0.2     0.2   0.5  0.5    2    2     2      2     5     5'
   []
 
   [ppf_axial]
@@ -39,13 +39,13 @@
 
   [rho_func]
     type = PiecewiseLinear
-    x ='-5000.0      0.0    70              500             700             1000            5000.0'
-    y ='0.0          0.0    -4.67292E-04    -3.33780E-04    -6.67560E-04    -6.17493E-04    0.0'
+    x = '-5000.0      0.0    70              500             700             1000            5000.0'
+    y = '0.0          0.0    -4.67292E-04    -3.33780E-04    -6.67560E-04    -6.17493E-04    0.0'
   []
 
   [pump_p_coastdown]
     type = PiecewiseLinear
-    x ='-1.000E+03  0.00E+00  4.00E-01  8.00E-01  1.20E+00  1.60E+00  2.00E+00  2.40E+00  2.80E+00  3.20E+00  3.60E+00
+    x = '-1.000E+03  0.00E+00  4.00E-01  8.00E-01  1.20E+00  1.60E+00  2.00E+00  2.40E+00  2.80E+00  3.20E+00  3.60E+00
     4.00E+00  4.40E+00  4.80E+00  5.20E+00  5.60E+00  6.00E+00  6.40E+00  6.80E+00  7.20E+00  7.60E+00
     8.000E+00  1.000E+01  2.000E+01  3.000E+01  4.000E+01  5.000E+01  6.000E+01  7.000E+01  8.000E+01  9.000E+01
     1.000E+02  1.100E+02  1.200E+02  1.300E+02  1.400E+02  1.500E+02  1.600E+02  1.700E+02  1.800E+02  1.900E+02
@@ -53,7 +53,7 @@
     3.000E+02  3.100E+02  3.200E+02  3.300E+02  3.400E+02  3.500E+02  3.600E+02  3.700E+02  3.800E+02  3.900E+02
     4.000E+02  4.100E+02  4.200E+02  1.00E+05'
 
-    y ='1.000E+00  1.000E+00  9.671E-01  9.355E-01  9.050E-01  8.757E-01  8.476E-01  8.205E-01  7.945E-01  7.695E-01  7.455E-01
+    y = '1.000E+00  1.000E+00  9.671E-01  9.355E-01  9.050E-01  8.757E-01  8.476E-01  8.205E-01  7.945E-01  7.695E-01  7.455E-01
     7.225E-01  7.004E-01  6.792E-01  6.590E-01  6.395E-01  6.209E-01  6.031E-01  5.860E-01  5.697E-01  5.540E-01
     5.396E-01  4.749E-01  2.753E-01  1.773E-01  1.219E-01  8.812E-02  6.655E-02  5.206E-02  4.181E-02  3.425E-02
     2.850E-02  2.401E-02  2.043E-02  1.754E-02  1.516E-02  1.317E-02  1.151E-02  1.009E-02  8.869E-03  7.816E-03
@@ -66,7 +66,7 @@
 
   [pump_s_coastdown]
     type = PiecewiseLinear
-    x ='-1.000E+03  0.00E+00  4.00E-01  8.00E-01  1.20E+00  1.60E+00  2.00E+00  2.40E+00  2.80E+00  3.20E+00  3.60E+00
+    x = '-1.000E+03  0.00E+00  4.00E-01  8.00E-01  1.20E+00  1.60E+00  2.00E+00  2.40E+00  2.80E+00  3.20E+00  3.60E+00
     4.00E+00  4.40E+00  4.80E+00  5.20E+00  5.60E+00  6.00E+00  6.40E+00  6.80E+00  7.20E+00  7.60E+00
     8.000E+00  1.000E+01  2.000E+01  3.000E+01  4.000E+01  5.000E+01  6.000E+01  7.000E+01  8.000E+01  9.000E+01
     1.000E+02  1.100E+02  1.200E+02  1.300E+02  1.400E+02  1.500E+02  1.600E+02  1.700E+02  1.800E+02  1.900E+02
@@ -74,7 +74,7 @@
     3.000E+02  3.100E+02  3.200E+02  3.300E+02  3.400E+02  3.500E+02  3.600E+02  3.700E+02  3.800E+02  3.900E+02
     4.000E+02  4.100E+02  4.200E+02  1.00E+05'
 
-    y ='1.000E+00  1.000E+00  9.671E-01  9.355E-01  9.050E-01  8.757E-01  8.476E-01  8.205E-01  7.945E-01  7.695E-01  7.455E-01
+    y = '1.000E+00  1.000E+00  9.671E-01  9.355E-01  9.050E-01  8.757E-01  8.476E-01  8.205E-01  7.945E-01  7.695E-01  7.455E-01
     7.225E-01  7.004E-01  6.792E-01  6.590E-01  6.395E-01  6.209E-01  6.031E-01  5.860E-01  5.697E-01  5.540E-01
     5.396E-01  4.749E-01  2.753E-01  1.773E-01  1.219E-01  8.812E-02  6.655E-02  5.206E-02  4.181E-02  3.425E-02
     2.850E-02  2.401E-02  2.043E-02  1.754E-02  1.516E-02  1.317E-02  1.151E-02  1.009E-02  8.869E-03  7.816E-03
@@ -86,13 +86,13 @@
   []
   [flow_secondary]
     type = PiecewiseLinear
-    x ='-1.000E+03  0          1       1e5'
+    x = '-1.000E+03  0          1       1e5'
     y = '-1259     -1259     0       0'
     scale_factor = 0.002216 # 1/rhoA
   []
   [flow_dhx]
     type = PiecewiseLinear
-    x ='-1.000E+03   0     1      1e5'
+    x = '-1.000E+03   0     1      1e5'
     y = '-6.478  -6.478  -6.478    -6.478'
     scale_factor = 0.046 # 1/rhoA
   []
@@ -160,19 +160,19 @@
     isotope_fission_fraction = '1.0 0.0 0.0 0.0'
   []
 
-######  Test for Point-Kinetics  ######
+  ######  Test for Point-Kinetics  ######
   [point_kinetics_basic]
     type = PointKinetics
     lambda = '1.3376E-02  3.0994E-02  1.1750E-01  3.0873E-01  8.8507E-01  2.9393E+00'
     rho_fn_name = rho_func
     LAMBDA = 3.30729E-07
-    betai =  '8.1430E-05  5.9311E-04  5.0653E-04  1.1955E-03  7.0362E-04  2.5761E-04'
+    betai = '8.1430E-05  5.9311E-04  5.0653E-04  1.1955E-03  7.0362E-04  2.5761E-04'
 
     # Turn on reactivity feedbacks
     feedback_components = 'CH1 CH2 CH3 CH4'
     feedback_start_time = 0.0
     irk_solver = true
-# Core radial expansion model
+    # Core radial expansion model
     core_radial_expansion_reactivity_feedback = true
     core_radial_expansion_reactivity_coefficients = '-0.86929  -0.86929'
     core_radial_expansion_weights = '0.3  0.7'
@@ -181,7 +181,7 @@
     coupled_radial_temperatures_pps = 'CH1_inlet_T CH1_outlet_T'
   []
 
-######  Primary Loop  ######
+  ######  Primary Loop  ######
 
   [CH1]
     type = PBCoreChannel
@@ -497,7 +497,6 @@
     eos = eos
   []
 
-
   [CH4]
     type = PBCoreChannel
     eos = eos
@@ -601,7 +600,6 @@
     outputs = 'CH4_UP(in)'
     eos = eos
   []
-
 
   [CH5]
     type = PBCoreChannel
@@ -743,7 +741,6 @@
     Hw = 0
   []
 
-
   [inlet_plenum]
     type = PBVolumeBranch
     center = '0 0 -0.77'
@@ -789,7 +786,7 @@
     outputs = 'pump_pipe(in) DHX(primary_in)'
 
     K = '0.1 0.1 0.2  0.1 '
-    Area =  23.96
+    Area = 23.96
     volume = 149.3629099
     width = 5
     height = 8
@@ -803,7 +800,7 @@
   []
   [cover_gas]
     type = CoverGas
-    n_liquidvolume =2
+    n_liquidvolume = 2
     name_of_liquidvolume = 'hot_pool cold_pool_low'
     initial_P = 101237.0534
     initial_Vol = 66.77
@@ -823,7 +820,7 @@
     Head_fn = pump_p_coastdown
   []
 
-######  Secondary Loop  ######
+  ######  Secondary Loop  ######
   [pipe8]
     type = PBOneDFluidComponent
     eos = eos
@@ -931,7 +928,7 @@
     value = 1e5
   []
 
-######  Power conversion loop  ######
+  ######  Power conversion loop  ######
 
   [NaLoop_in]
     type = PBTDJ
@@ -948,7 +945,7 @@
     eos = eos
   []
 
-######   DRACS loop    ######
+  ######   DRACS loop    ######
   [DHX]
     type = PBHeatExchanger
     eos = eos
@@ -1137,50 +1134,54 @@
   [DHX_heatremoval]
     type = HeatExchangerHeatRemovalRate
     block = 'DHX:primary_pipe'
-    heated_perimeter = ${fparse 2.5944/250e6}
+    heated_perimeter = '${fparse 2.5944/250e6}'
   []
   [IHX_heatremoval]
     type = HeatExchangerHeatRemovalRate
     block = 'IHX:primary_pipe'
-    heated_perimeter = ${fparse 558.414/250e6}
+    heated_perimeter = '${fparse 558.414/250e6}'
   []
   [NaHX_heatremoval]
     type = HeatExchangerHeatRemovalRate
     block = 'NaHX:secondary_pipe'
-    heated_perimeter = ${fparse 558.414/250e6}
+    heated_perimeter = '${fparse 558.414/250e6}'
   []
-  [./feedback-Axial]
-    type = SumOfPostprocessors
-    pps_names = 'CH1_Fuel_Axial_Expansion_Reactivity CH2_Fuel_Axial_Expansion_Reactivity CH3_Fuel_Axial_Expansion_Reactivity CH4_Fuel_Axial_Expansion_Reactivity'
-  [../]
-  [./feedback-doppler]
-    type = SumOfPostprocessors
-    pps_names = 'CH1:fuel_Fuel_Doppler_Reactivity CH2:fuel_Fuel_Doppler_Reactivity CH3:fuel_Fuel_Doppler_Reactivity CH4:fuel_Fuel_Doppler_Reactivity'
-  [../]
-  [./feedback-coolant]
-    type = SumOfPostprocessors
-    pps_names = 'CH1:pipe_Coolant_Density_Reactivity CH2:pipe_Coolant_Density_Reactivity CH3:pipe_Coolant_Density_Reactivity CH4:pipe_Coolant_Density_Reactivity'
-  [../]
-  [./feedback-ext]
+  [feedback-Axial]
+    type = ParsedPostprocessor
+    function = 'CH1_Fuel_Axial_Expansion_Reactivity+CH2_Fuel_Axial_Expansion_Reactivity+CH3_Fuel_Axial_Expansion_Reactivity+CH4_Fuel_Axial_Expansion_Reactivity'
+    pp_names = 'CH1_Fuel_Axial_Expansion_Reactivity CH2_Fuel_Axial_Expansion_Reactivity CH3_Fuel_Axial_Expansion_Reactivity CH4_Fuel_Axial_Expansion_Reactivity'
+  []
+  [feedback-doppler]
+    type = LinearCombinationPostprocessor
+    pp_coefs = '1 1 1 1'
+    pp_names = 'CH1:fuel_Fuel_Doppler_Reactivity CH2:fuel_Fuel_Doppler_Reactivity CH3:fuel_Fuel_Doppler_Reactivity CH4:fuel_Fuel_Doppler_Reactivity'
+  []
+  [feedback-coolant]
+    type = LinearCombinationPostprocessor
+    pp_coefs = '1 1 1 1'
+    pp_names = 'CH1:pipe_Coolant_Density_Reactivity CH2:pipe_Coolant_Density_Reactivity CH3:pipe_Coolant_Density_Reactivity CH4:pipe_Coolant_Density_Reactivity'
+  []
+  [feedback-ext]
     type = FunctionValuePostprocessor
     function = 'rho_func'
-  [../]
-  [./feedback-total]
-    type = SumOfPostprocessors
-    pps_names = 'Total_Reactivity_Feedback feedback-ext'
-  [../]
+  []
+  [feedback-total]
+    type = LinearCombinationPostprocessor
+    pp_coefs = '1 1'
+    pp_names = 'Total_Reactivity_Feedback feedback-ext'
+  []
 []
 
 [Preconditioning]
-   active = 'SMP_PJFNK'
+  active = 'SMP_PJFNK'
   [SMP_PJFNK]
     type = SMP
     full = true
-    solve_type  = 'PJFNK'
+    solve_type = 'PJFNK'
     petsc_options_iname = '-pc_type -ksp_gmres_restart'
-    petsc_options_value = 'lu 101'
+    petsc_options_value = 'lu 101' # End preconditioning block
   []
-[] # End preconditioning block
+[]
 
 [Executioner]
   type = Transient
@@ -1204,14 +1205,14 @@
   l_max_its = 50 # Number of linear iterations for each Krylov solve
 
   start_time = -500
-  num_steps =  10000
+  num_steps = 10000
   end_time = -0
 
   [Quadrature]
-      type = TRAP
-      order = FIRST
+    type = TRAP
+    order = FIRST # close Executioner section
   []
-[] # close Executioner section
+[]
 
 [Outputs]
   perf_graph = true
