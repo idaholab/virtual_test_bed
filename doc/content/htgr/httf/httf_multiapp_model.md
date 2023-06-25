@@ -2,6 +2,8 @@
 
 *Contact: Thomas Freyman (Thomas.Freyman.at.inl.gov)  Lise Charlot (Lise.Charlot.at.inl.gov)*
 
+*Model link: [HTTF MultiApp Model](https://github.com/idaholab/virtual_test_bed/tree/devel/htgr/httf)*
+
 The MOOSE MultiApp system was used to model the PG-26 transient utilizing 3-D heat conduction within the core and 1-D
 fluid flow for each coolant and bypass channel. Due to radial variations in the HTTF core, the 3-D model allowed for high fidelity
 analysis of ceramic core block and coolant temperatures during the transient which a 2-D radially averaged model might not capture.

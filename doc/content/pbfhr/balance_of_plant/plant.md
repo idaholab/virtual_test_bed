@@ -1,6 +1,8 @@
-# MK1-FHR plant model
+# MK1-FHR Plant Model
 
 *Contact: Guillaume Giudicelli, guillaume.giudicelli.at.inl.gov*
+
+*Model link: [FHR Plant Model](https://github.com/idaholab/virtual_test_bed/tree/devel/pbfhr/plant)*
 
 The [multiphysics core model](pbfhr/steady/griffin_pgh_model.md), which uses Griffin for neutronics and Pronghorn for
 coarse mesh porous media CFD, is coupled with the [balance of plant model](pbfhr/pbfhr_sam/pbfhr_sam.md),

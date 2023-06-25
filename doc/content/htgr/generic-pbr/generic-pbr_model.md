@@ -1,6 +1,8 @@
-# SAM generic PBR model
+# SAM Generic PBR Model
 
 *Contact: Zhiee Jhia Ooi, zooi@anl.gov*
+
+*Model link: [Generic PBR SAM Model](https://github.com/idaholab/virtual_test_bed/tree/devel/htgr/generic-pbr)*
 
 The input file (pbr.i) is a model for the generic 200 MW pebble bed reactor
 developed using SAM [!citep](Hu2021). The model focuses only on the core of the

@@ -2,6 +2,8 @@
 
 *Contact: Adam Zabriskie, Adam.Zabriskie@inl.gov*
 
+*Model link: [LEU Fuel Pulse Model](https://github.com/idaholab/virtual_test_bed/tree/devel/htgr/leu_pulse)*
+
 ## Model Description
 
 This model represents a greatly simplified version of the Transient Reactor Test Facility (TREAT).

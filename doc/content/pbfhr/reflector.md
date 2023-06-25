@@ -2,6 +2,8 @@
 
 *Contact: April Novak, anovak.at.anl.gov*
 
+*Model link: [FHR Bypass Flow Reflector Model](https://github.com/idaholab/virtual_test_bed/tree/devel/pbfhr/reflector)*
+
 !alert note
 The meshes for this model are hosted on LFS. Please refer to [LFS instructions](resources/how_to_use_vtb.md#lfs)
 to download them.

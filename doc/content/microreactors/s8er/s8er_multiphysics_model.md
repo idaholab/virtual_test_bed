@@ -3,6 +3,8 @@
 *Contact: Isaac Naupa, iaguirre6@gatech.edu*
 *Contact: Stefano Terlizzi, Stefano.Terlizzi@inl.gov*
 
+*Model link: [S8ER Model](https://github.com/idaholab/virtual_test_bed/tree/devel/microreactors/s8er)*
+
 !alert note
 For citing purposes, please cite [!citep](s8er_garcia2022) and [!citep](s8er_naupa2022).
 

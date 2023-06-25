@@ -1,6 +1,8 @@
-# MSFR Griffin-Pronghorn transient model
+# MSFR Griffin-Pronghorn Transient Model
 
 *Contact: Mauricio Tano, mauricio.tanoretamales.at.inl.gov*
+
+*Model link: [Griffin-Pronghorn Transient Model](https://github.com/idaholab/virtual_test_bed/tree/devel/msr/msfr/transient)*
 
 In addition to the steady-state MSFR model, the Virtual Test Bed also contains
 an example transient model. This model is intended to represent a partial

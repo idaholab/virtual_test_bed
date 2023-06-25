@@ -1,4 +1,6 @@
-# Steady state Griffin-Pronghorn-SAM coupling
+# Steady-State Griffin-Pronghorn-SAM Coupling
+
+*Model link: [Steady-State Coupling Model](https://github.com/idaholab/virtual_test_bed/tree/devel/msr/msfr/plant/steady)*
 
 Griffin, Pronghorn, and SAM are coupled with a domain overlapping approach. 
 The steady-state Griffin-Pronghorn coupled model is described at [Griffin-Pronghorn model](msfr/griffin_pgh_model.md).

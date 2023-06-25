@@ -2,6 +2,8 @@
 
 *Contact: Javier Ortensi, Javier.Ortensi@inl.gov*
 
+*Model link: [HTR-10 Griffin Model](https://github.com/idaholab/virtual_test_bed/tree/devel/htgr/htr10)*
+
 The HTR-10 is a small pebble-bed test reactor rated at a thermal power
 of $10$ MWt intended as a steppingstone for the development of PBR
 technology in China.

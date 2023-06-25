@@ -1,6 +1,8 @@
-# Multiphysics model
+# Multiphysics Legacy Model
 
 *Contact: Nicholas Stauff, nstauff.at.anl.gov*
+
+*Model link: [HPMR Legacy Model](https://github.com/idaholab/virtual_test_bed/tree/devel/microreactors/mrad/legacy)*
 
 ## Mesh File
 
