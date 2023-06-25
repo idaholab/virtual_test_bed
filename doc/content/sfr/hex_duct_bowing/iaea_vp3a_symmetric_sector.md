@@ -2,6 +2,8 @@
 
 *Contact: Nick Wozniak, nwozniak.at.anl.gov*
 
+*Model link: [Hexagonal Duct Bowing Model](https://github.com/idaholab/virtual_test_bed/tree/devel/sfr/hex_duct_bowing)*
+
 ## High Level Summary of Model
 
 This model examines the restrained thermal bowed deformation of a 3D hexagonal assembly (duct) which is subject to thermal gradients along the axial and radial directions bowing into a sector of a reactor core. The ducts are mechanically fixed at the bottom. The model specification is based on Verification Problem 3A (VP3A) in the series of benchmark problems published in [!cite](IWGFR_75) to support the verification and validation of Liquid Metal Fast Breeder Reactor (LMFBR) analysis codes organized by The International Atomic Energy Agency (IAEA)’s International Working Group on Fast Reactors (IWGFR). This model employs the MOOSE Tensor Mechanics Module to model the thermo-mechanical deformation response due to the thermal gradients in the duct, and the Contact Module to model the inter-assembly contact at specific locations along the ducts. This type of deformation is present in liquid-metal cooled fast reactors and serves as an important reactivity feedback effect. The results obtained from this MOOSE-based model demonstrate proper set up of a single assembly thermal duct bowing problem which can be used to build larger and more complex models.

@@ -1,3 +1,7 @@
+# GCMR Assembly Multiphysics Model
+
+*Model link: [GCMR Assembly Model](https://github.com/idaholab/virtual_test_bed/tree/devel/microreactors/gcmr/assembly)*
+
 ## Mesh files
 
 !alert note

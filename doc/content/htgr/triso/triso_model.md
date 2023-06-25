@@ -1,6 +1,8 @@
-# TRISO Bison model
+# TRISO Bison Model
 
 *Contact: Wen Jiang, wen.jiang.at.inl.gov*
+
+*Model link: [TRISO Bison Model](https://github.com/idaholab/virtual_test_bed/tree/devel/htgr/triso_fuel)*
 
 The input file (triso_1d.i) is a 1D TRISO model. Interested readers are referred
 to [!citep](bison_triso_model) for more details about TRISO modeling capability in Bison.

@@ -1,5 +1,7 @@
 # Model Inputs
 
+*Model link: [MHTGR Griffin Model](https://github.com/idaholab/virtual_test_bed/tree/devel/htgr/mhtgr/mhtgr_griffin)*
+
 The Griffin neutronics input file for Exercise 1 is described below.
 
 !listing htgr/mhtgr_griffin/benchmark/griffin.i

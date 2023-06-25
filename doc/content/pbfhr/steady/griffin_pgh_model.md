@@ -1,6 +1,8 @@
-# FHR steady state model
+# FHR Steady-State Model
 
 *Contact: Guillaume Giudicelli, guillaume.giudicelli.at.inl.gov*
+
+*Model link: [FHR Steady-State Multiphysics Model](https://github.com/idaholab/virtual_test_bed/tree/devel/pbfhr/steady)*
 
 These input files may be used to perform a coupled multiphysics steady state simulation of the
 Mk1-FHR. Each physics is solved by the relevant MOOSE application: the [neutronics](steady/griffin.md) by Griffin, the

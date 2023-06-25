@@ -2,6 +2,8 @@
 
 *Contact: Nicolas Martin, nicolas.martin.at.inl.gov*
 
+*Model link: [VTR Model](https://github.com/idaholab/virtual_test_bed/tree/devel/sfr/vtr)*
+
 ## VTR core description
 
 The VTR conceptual design presented in the works by [!citep](heidet2020)[!citep](heidet2022)[!citep](nelson_vtr) is used for this study.

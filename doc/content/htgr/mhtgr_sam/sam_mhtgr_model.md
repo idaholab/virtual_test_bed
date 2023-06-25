@@ -1,6 +1,8 @@
-# MHTGR SAM model
+# MHTGR SAM Model
 
 *Contact: Thanh Hua, hua.at.anl.gov*
+
+*Model link: [MHTGR SAM Model](https://github.com/idaholab/virtual_test_bed/tree/devel/htgr/mhtgr/mhtgr_sam)*
 
 The input file (MHTGR.i) is a model for the General Atomic’s 600-MWt Modular
 High Temperature Gas-Cooled Reactor. Interested readers are referred

@@ -1,7 +1,8 @@
-# Multiphysics model
+# Multiphysics Model
 
-*Contact: Nicolas Stauff, nstauff.at.anl.gov*
-*         Yinbin Miao, ymiao.at.anl.gov*
+*Contact: Nicolas Stauff (nstauff.at.anl.gov), Yinbin Miao (ymiao.at.anl.gov)*
+
+*Model link: [HPMR Model](https://github.com/idaholab/virtual_test_bed/tree/devel/microreactors/mrad)*
 
 !alert note title=Acknowledgement
 This HP-MR model was built upon earlier work performed under ARPA-E MEITNER project and reported in the journal paper [!citep](matthews2021coupled), and some parts of the inputs are coming from these original models.

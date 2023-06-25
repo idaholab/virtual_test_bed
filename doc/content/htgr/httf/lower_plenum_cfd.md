@@ -1,6 +1,8 @@
 # Nek5000 CFD Modeling of HTTF Lower Plenum Flow Mixing Phenomenon
 
-Contact: Jun Fang, fangj.at.anl.gov 
+*Contact: Jun Fang, fangj.at.anl.gov*
+
+*Model link: [HTTF Lower Plenum CFD Model](https://github.com/idaholab/virtual_test_bed/tree/devel/htgr/httf/lower_plenum_mixing)*
 
 ## Overview
 

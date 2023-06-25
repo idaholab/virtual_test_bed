@@ -1,6 +1,8 @@
-# Conjugate heat transfer simulation of a 67-pebble core
+# Conjugate Heat Transfer Simulation of a 67-Pebble Core
 
-*Contact: John Acierno (Penn State), Dillon Shaver (dshaver.at.anl.gov), and April Novak (anovak.at.anl.gov)* 
+*Contact: John Acierno (Penn State), Dillon Shaver (dshaver.at.anl.gov), and April Novak (anovak.at.anl.gov)*
+
+*Model link: [67-Pebble Core Model](https://github.com/idaholab/virtual_test_bed/tree/devel/htgr/pb67_cardinal)*
 
 In this tutorial we are going to set up and simulate a simple [!ac](CHT) case using a helium (Pr=0.71) cooled 67-pebble bed.
 This tutorial was developed from an example case provided with NekRS and couples to MOOSE's [!ac](CHT) module using Cardinal as a wrapper. 

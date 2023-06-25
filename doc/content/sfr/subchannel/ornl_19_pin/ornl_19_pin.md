@@ -1,6 +1,8 @@
-# Subchannel model for the Oak Ridge National Laboratory (ORNL) 19-pin benchmark
+# Subchannel Model for the Oak Ridge National Laboratory (ORNL) 19-Pin Benchmark
 
 *Contact: Mauricio Tano, mauricio.tanoretamales.at.inl.gov*
+
+*Model link: [ORNL 19-Pin Subchannel Model](https://github.com/idaholab/virtual_test_bed/tree/devel/sfr/subchannel/ornl_19_pin)*
 
 ## Benchmark description
 

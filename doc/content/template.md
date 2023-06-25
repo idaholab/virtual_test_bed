@@ -1,6 +1,8 @@
 # Model Name
 
-Contact: Model Developer, model_developer.at.institute.com (contact email) 
+*Contact: Model Developer, model_developer.at.institute.com (contact email)*
+
+*Model link: [Model Name](hyperlink)*
 
 ## High Level Summary of Model
 

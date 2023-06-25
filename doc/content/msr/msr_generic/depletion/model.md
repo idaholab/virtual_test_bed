@@ -2,6 +2,8 @@
 
 *Contact: Samuel Walker, Samuel.Walker@inl.gov*
 
+*Model link: [MSR Depletion Model](https://github.com/idaholab/virtual_test_bed/tree/devel/msr/msr_generic/depletion)*
+
 The MSR depletion model is an implementation and verification of Griffin's isotope removal capability for two multi-region MSR depletion cases.
 This model consists of two regions. The first is the primary loop, which includes the reactor core, primary heat exchanger, and pump all homogenized into a single region, and the second is the off-gas system.
 The model approximates an MSR core as a fast spectrum, cube-geometry, infinite, homogenous medium, molten chloride salt reactor using High-Assay Low-Enriched Uranium (HALEU) UCl$_3$ fuel.
