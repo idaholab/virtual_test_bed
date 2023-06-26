@@ -273,7 +273,6 @@ plenum_height        = 1.
    spheat_model = savage
    thcond_model = lanl
    porosity = 0
-   k_scalar = 1.0
    outputs  = all
  []
   [fuel_density]
