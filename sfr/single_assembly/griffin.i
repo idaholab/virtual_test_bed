@@ -115,7 +115,7 @@
     max_procs_per_app = 1
     output_in_position = true
     #STM
-    cli_args = 'Materials/fuel_thermal/k_scalar=${k_scalar}'
+    cli_args = 'Materials/fuel_thermal/thermal_conductivity_scale_factor=${k_scalar}'
   []
 
   [core_support_plate]
