@@ -9,8 +9,8 @@ This core has a rated power of 2 MW thermal and its layout is shown in the Figur
 !media media/mrad/legacy/mrad_geometry/mrad_diagram.png
        style=width:50%
 
-To achieve an optimum level of moderation, yttrium-hydride (YH2) pins are employed in addition to graphite structure component as YH2 provides more efficient neutron slowing-down capability enabling the design of more compact core. The yttrium-hydride is surrounded in two layers of helium gaps separating the moderator, the stainless steel envelope and the graphite monolith.
+To achieve an optimum level of moderation, yttrium-hydride (YH2) pins are employed in addition to the graphite structure component, as YH2 provides more efficient neutron slowing-down capability, enabling the design of a more compact core. The yttrium-hydride is clad in a stainless steel envelope, with a helium gap between the YH2 and envelope and then another helium gap between the envelope and the graphite monolith.
 
-This concept employs heat pipes with a stainless-steel envelope and potassium heat-transfer fluid. The heat pipe is separated from the graphite monolith by another layer of helium gap. The heat pipe region has been divided into three zones representing the fluid at the phase of vapor, liquid and wick respectively.
+This concept employs heat pipes with a stainless-steel envelope and potassium working fluid. The heat pipe is separated from the graphite monolith by a helium gap. The heat pipe is divided into three radial regions: the working fluid vapor, the working fluid liquid plus wick, and the envelope.
 
 The control system of the core includes 12 control drums located in the radial reflector that are capable of bringing the core to cold shutdown throughout the operation of the reactor. For redundancy purposes, a shutdown rod is located in the central core location.
