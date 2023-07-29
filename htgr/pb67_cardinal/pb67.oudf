@@ -22,7 +22,7 @@ void scalarDirichletConditions(bcData *bc)
 
 void scalarNeumannConditions(bcData *bc)
 {
-  bc->flux = bc->wrk[bc->idM]; //get flux BC from MOOSE
+  bc->flux = bc->usrwrk[bc->idM]; //get flux BC from MOOSE
 }
 
 @kernel void cliptOKL(const dlong Nelements,

@@ -683,7 +683,7 @@ run nekRS as a standalone application.
 First, a local variable, `fluid_solid_interface`, is used to define all the boundary IDs through which nekRS is coupled
 via conjugate heat transfer to MOOSE for convenience. Next, a `NekRSMesh`, a class specific to Cardinal, is
 used to construct a "mirror" of the surfaces in the nekRS mesh through which boundary condition
-coupling is performed. In order for MOOSE's [MultiAppNearestNodeTransfer](https://mooseframework.inl.gov/source/transfers/MultiAppNearestNodeTransfer.html)
+coupling is performed. In order for MOOSE's [MultiAppGeneralFieldNearestNodeTransfer](https://mooseframework.inl.gov/source/transfers/MultiAppGeneralFieldNearestNodeTransfer.html)
 to correctly match nodes in the solid mesh to nodes in this fluid mesh mirror, the entire mesh must be
 scaled by a factor of $L_{ref}$ to return to dimensional units.
 
@@ -823,7 +823,7 @@ input in the `.oudf` file. For each function, the `bcData` object contains all i
 about the current boundary that is "calling" the function; `bc->id` is the boundary ID,
 `bc->s` is the scalar (temperature) solution at the present [!ac](GLL) point, and
 `bc->flux` is the flux (of temperature) at the present [!ac](GLL) point. The
-`bc->wrk` array is a scratch space to which the heat flux values coming from MOOSE are
+`bc->usrwrk` array is a scratch space to which the heat flux values coming from MOOSE are
 written. These OCCA functions then get called directly within nekRS.
 
 Finally, the `fluid.udf` file contains C++ functions that are user-defined functions through
