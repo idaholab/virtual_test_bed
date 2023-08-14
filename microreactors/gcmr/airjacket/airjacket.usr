@@ -525,8 +525,6 @@ c           cbc(f,e,2) = 't  '
 c        elseif (id_face.eq.4) then    ! Insulated wall
 c           cbc(f,e,1) = 'W  '
 c           cbc(f,e,2) = 'I  '
-c           cbc(f,e,3) = 't  '
-c           cbc(f,e,4) = 't  '
 c        endif
 c      enddo
 c      enddo

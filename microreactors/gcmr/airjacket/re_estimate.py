@@ -51,14 +51,6 @@ def htcoeff(ub):
 def htlam():
     return (k_fluid/Dh)*(3.66) #Incropera, laminar
 
-def pqbalance(ubto):
-    ub, to = ubto
-    #turbulent:
-    expr1 = (rho_amb*beta*(T_mean(to)-T_in)*g*H) - (fdturb(ub)*rho_amb*ub*ub*H/2.0/Dh)
-    expr2 = (Ahot*htcoeff(ub)*(T_hot-T_mean(to))) - (rho_amb*ub*Aw*Cp*(to-T_in))
-
-    return (expr1,expr2)
-
 def pqbalance_lam(ubto):
     ub, to = ubto
     expr1 = (rho_amb*beta*(T_mean(to)-T_in)*g*H) - (fdlam(ub)*rho_amb*ub*ub*H/2.0/Dh)  # P balance
@@ -68,6 +60,13 @@ def pqbalance_lam(ubto):
 def richardson(ub):
     return g*beta*(T_hot-T_in)*Dh/ub/ub
 
+def pqbalance(ubto):
+    ub, to = ubto
+    #turbulent:
+    expr1 = (rho_amb*beta*(T_mean(to)-T_in)*g*H) - (fdturb(ub)*rho_amb*ub*ub*H/2.0/Dh)
+    expr2 = (Ahot*htcoeff(ub)*(T_hot-T_mean(to))) - (rho_amb*ub*Aw*Cp*(to-T_in))
+
+    return (expr1,expr2)
 
 if (turbulent):
     #turbulent solve
