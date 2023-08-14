@@ -56,9 +56,8 @@ This file contains the setup for the required boundary conditions.
 
 Note that we have ```bc->flux = bc->usrwrk[bc->idM]``` in +scalarNeumannConditions+ block. 
 This line allows NekRS to use the heat flux provided by the MOOSE CHT module at the surface of the pebbles instead of using a constant heat flux as previously defined.
-There are also two kernel functions defined in the +.oudf+ file, ```cliptOKL``` and ```userVp```.
+There is also a kernel function defined in the +.oudf+ file, ```cliptOKL```.
 The ```cliptOKL``` kernel is used to limit extreme temperatures in the simulation which can occur in underresolved parts of the mesh. If the temperature is greater than 100 or less than 0, this kernel will set the temperature to 100 or 0 respectively. 
-The ```userVp``` kernel simply increases the viscosity and conductivity near the underresolved outlet in order to maintain a stable solution.
 
 ### udf file style=font-size:125%
 
