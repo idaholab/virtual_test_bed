@@ -1,0 +1,604 @@
+c #include "experimental/rans_komg.f"
+
+      include "rans_komg.f"
+      include "extract_yp.f"
+      include "aravg.f"
+      include "limits.f"
+      include "recycle.f"
+      include "utilities.f"
+c-----------------------------------------------------------------------
+c  nek5000 user-file template
+c
+c  user specified routines:
+c     - uservp  : variable properties
+c     - userf   : local acceleration term for fluid
+c     - userq   : local source term for scalars
+c     - userbc  : boundary conditions
+c     - useric  : initial conditions
+c     - userchk : general purpose routine for checking errors etc.
+c     - usrdat  : modify element vertices 
+c     - usrdat2 : modify mesh coordinates
+c     - usrdat3 : general purpose routine for initialization
+c     
+c-----------------------------------------------------------------------
+      subroutine uservp(ix,iy,iz,eg) ! set variable properties
+      implicit none
+      include 'SIZE'
+      include 'TOTAL'
+      include 'NEKUSE'
+
+      integer ix,iy,iz,e,eg
+      real rans_mut,rans_mutsk,rans_mutso,rans_turbPrandtl
+      real mu_t,Pr_t
+
+      e = gllel(eg)
+
+      Pr_t=rans_turbPrandtl()
+      mu_t=rans_mut(ix,iy,iz,e)
+
+      if(ifield.eq.1) then
+        t(ix,iy,iz,e,4)=mu_t/cpfld(ifield,1) !store eddy viscosity for post processing
+        udiff = cpfld(ifield,1)+mu_t
+        utrans = cpfld(ifield,2)
+      elseif(ifield.eq.2) then
+        udiff = cpfld(ifield,1)+mu_t*cpfld(ifield,2)/(Pr_t*cpfld(1,2))
+        utrans = cpfld(ifield,2)
+      elseif(ifield.eq.3) then !use rho and mu from field 1
+        udiff = cpfld(1,1)+rans_mutsk(ix,iy,iz,e)
+        utrans = cpfld(1,2)
+      elseif(ifield.eq.4) then !use rho and mu from field 1
+        udiff = cpfld(1,1)+rans_mutso(ix,iy,iz,e)
+        utrans = cpfld(1,2)
+      endif
+
+      return
+      end
+c-----------------------------------------------------------------------
+      subroutine userf(ix,iy,iz,eg) ! set acceleration term
+      implicit none
+      include 'SIZE'
+      include 'TOTAL'
+      include 'NEKUSE'
+c
+c     Note: this is an acceleration term, NOT a force!
+c     Thus, ffx will subsequently be multiplied by rho(x,t).
+c     userf is only called for velocity
+c     temp is preloaded with t(ix,iy,iz,ie,1): see bdry.f:1181
+
+      real Ri
+      common /boussinesq/ Ri
+
+      integer ix,iy,iz,eg,e
+      real ybnd1,ybnd2, xx, yy, mb, cb,temp_mosdef
+
+      real xmin,xmax,ymin,ymax,zmin,zmax
+      common /dmn_size/ xmin,xmax,ymin,ymax,zmin,zmax
+
+      ybnd1 = 0.6*ymax
+      ybnd2 = 0.8*ymax
+      mb = -1.0/(ybnd2-ybnd1)
+      cb = -ybnd2*mb
+
+      e = gllel(eg)
+      xx = xm1(ix,iy,iz,e)
+      yy = ym1(ix,iy,iz,e)
+
+      ffz = 0.0
+      ffy = 0.0
+      ffx = Ri*temp
+      if(yy.gt.ybnd1.and.yy.le.ybnd2.and.xx.gt.0.0) then ! ramping down gradually
+        ffx = (mb*yy+cb)*Ri*temp
+      endif
+      if(yy.gt.ybnd2.and.xx.gt.0.0) then
+        ffx = 0.0
+      endif
+
+      return
+      end
+c-----------------------------------------------------------------------
+      subroutine userq(ix,iy,iz,eg) ! set source term
+      implicit none
+      include 'SIZE'
+      include 'TOTAL'
+      include 'NEKUSE'
+
+      integer ix,iy,iz,e,eg
+      real rans_kSrc,rans_omgSrc
+      real rans_kDiag,rans_omgDiag
+
+      e = gllel(eg)
+
+      if(ifield.eq.3) then
+        qvol = rans_kSrc(ix,iy,iz,e)
+        avol = rans_kDiag(ix,iy,iz,e)
+      elseif(ifield.eq.4) then
+        qvol = rans_omgSrc(ix,iy,iz,e)
+        avol = rans_omgDiag(ix,iy,iz,e)
+      else
+        qvol = 0.0
+      endif
+
+      return
+      end
+c-----------------------------------------------------------------------
+      subroutine userbc(ix,iy,iz,iside,eg) ! set up boundary conditions
+      implicit none
+      include 'SIZE'
+      include 'TOTAL'
+      include 'NEKUSE'
+c
+c     NOTE ::: This subroutine MAY NOT be called by every process
+c
+      integer ix,iy,iz,iside,e,eg
+    
+C     U, TKE, and Omg are all zero on the wall 
+
+      real xbnd1,xbnd2,xx,xhat,mx,cx
+
+      real Re,mu0,rho0,Uc,T0,cp0,k0,Lc,L0,Thw
+      common /props/ Re,mu0,rho0,Uc,T0,cp0,k0,Lc,L0,Thw
+
+      e = gllel(eg)
+
+      ux = 0.0 
+      uy = -3.5630245817969738E-002 
+      temp = 0.0
+
+      if(cbc(iside,e,1).eq.'W  ') then           ! walls
+        if(ifield.eq.3) temp = 0.0
+        if(ifield.eq.4) temp = 0.0
+      endif
+
+      if(boundaryID(iside,e).eq.1) then           ! inlet
+        if(ifield.eq.3) temp = 0.01! kibc(ix,iy,iz,e)
+        if(ifield.eq.4) temp = 0.2 ! tauibc(ix,iy,iz,e)
+      endif
+
+      xbnd1 = -675.0/Lc
+      xbnd2 = 824.9764/Lc
+      xbnd2 = 0.1*(xbnd2-xbnd1) + xbnd1
+      mx = 1.0/(xbnd2-xbnd1)
+      cx = 1.0 - mx*xbnd2
+
+      if(boundaryID(iside,e).eq.3.and.ifield.eq.2) then           ! hot wall
+       xx = xm1(ix,iy,iz,e)
+       if(xx.le.xbnd2) then       
+        temp = mx*xx + cx
+       else
+        temp = 1.0
+       endif
+      endif
+
+      return
+      end
+c-----------------------------------------------------------------------
+      subroutine useric(ix,iy,iz,eg) ! set up initial conditions
+      implicit none
+      include 'SIZE'
+      include 'TOTAL'
+      include 'NEKUSE'
+
+      integer ix,iy,iz,e,eg
+      real xx,xtop
+
+      real Re,mu0,rho0,Uc,T0,cp0,k0,Lc,L0,Thw
+      common /props/ Re,mu0,rho0,Uc,T0,cp0,k0,Lc,L0,Thw
+
+      e = gllel(eg)
+      xx = xm1(ix,iy,iz,e)
+      xtop = 30.0
+
+      ux   = 0.0001
+      uy   = -0.0001
+      if (xx.gt.xtop) uy = 0.0001
+      uz   = 0.0
+      temp = 0.0
+
+      if(ifield.eq.3) temp = 0.01 !97662386491144943E-005
+      if(ifield.eq.4) temp = 0.2  !6.8956997219801952
+
+      return
+      end
+c-----------------------------------------------------------------------
+      subroutine userchk()
+      implicit none
+      include 'SIZE'
+      include 'TOTAL'
+      include 'NEKUSE'
+
+      integer ntot,e,f,i
+      real ypout(lx1,ly1,lz1,lelt),wd(lx1,ly1,lz1,lelt)
+
+      real uinav,vinav,tinav,kinav,tauinav,
+     $  uhwav,vhwav,thwav,khwav,tauhwav,
+     $  ucwav,vcwav,tcwav,kcwav,taucwav,
+     $  uloav,vloav,tloav,kloav,tauloav,
+     $  umiav,vmiav,tmiav,kmiav,taumiav,
+     $  uhiav,vhiav,thiav,khiav,tauhiav
+
+      real Ri
+      common /boussinesq/ Ri
+
+      real dp1, dp2, tm1, tm2, qav1, qav2
+      common /residuals/ dp1, dp2, tm1, tm2, qav1, qav2
+
+      real g,Tm
+      real ones(lx1,ly1,lz1,lelv)
+      real pin,pout,dp
+      real nu,gradt_av,areahw,thw_ndim,Tb,qav,qin,qout
+      real xx,yy,zz,xhw_lo,xhw_hi
+      real dtx(lx1,ly1,lz1,lelv),dty(lx1,ly1,lz1,lelv),
+     $ dtz(lx1,ly1,lz1,lelv)
+      real tdim(lx1,ly1,lz1,lelt)
+
+      real bulkavg, emap_avg, facint, glsum,
+     $             emap_area,planar_ave_m1,emap_scalar_avg
+
+      real fluxw(lx1,ly1,lz1,lelt)
+      real fluxv(lx1,ly1,lz1,lelt)
+      real fluxo(lx1,ly1,lz1,lelt)
+
+      integer ierr
+      real fmin,fmax,fmean
+      real glmin,glmax,surf_integral
+
+      real Re,mu0,rho0,Uc,T0,cp0,k0,Lc,L0,Thw
+      common /props/ Re,mu0,rho0,Uc,T0,cp0,k0,Lc,L0,Thw
+
+      integer  emap_lo(lelv),emap_cw(lelv),emap_in(lelv),
+     $      emap_hi(lelv), emap_mi(lelv),emap_hw(lelv)
+      real exyzlo(3), exyzhi(3), exyzmi(3)
+
+      common /roi/ emap_lo,emap_cw,emap_in,emap_hi,
+     $         emap_mi,emap_hw, exyzlo, exyzhi, exyzmi
+
+      real msk_inout(lx1,ly1,lz1,lelv),msk_hw(lx1,ly1,lz1,lelv)
+      common /masks/ msk_inout,msk_hw
+
+      real xmin,xmax,ymin,ymax,zmin,zmax
+      common /dmn_size/ xmin,xmax,ymin,ymax,zmin,zmax
+
+      integer iglsum
+
+c     if your new mesh differs significantly from the previous one
+c     you can use gfldr to provide an initial condition using an 
+c     output file based off of the old mesh
+
+c      if (istep.eq.0) call gfldr('restart2.fld')
+
+      ntot = lx1*ly1*lz1*nelt
+
+c     calculating mean temperature, Richardson number - affects flow!
+      call rone(ones,ntot)
+      Tm = bulkavg(t(1,1,1,1,1),ones,msk_inout)
+      Tm = (Tm*(Thw-T0)) + T0
+      g = 9.8
+      Ri = g * (1.0/T0)*(Thw-T0)*(Lc/1000.0)/Uc/Uc
+
+c     The code below is entirely for post-processing
+
+c     calculating averages of vx,vy,temp,k,tau
+
+      uinav = emap_avg(vx,emap_in)
+      vinav = emap_avg(vy,emap_in)
+      tinav   = emap_avg(t(1,1,1,1,1),emap_in)
+      kinav   = emap_avg(t(1,1,1,1,2),emap_in)
+      tauinav = emap_avg(t(1,1,1,1,3),emap_in)
+
+      uhwav = emap_avg(vx,emap_hw)
+      vhwav = emap_avg(vy,emap_hw)
+      thwav   = emap_avg(t(1,1,1,1,1),emap_hw)
+      khwav   = emap_avg(t(1,1,1,1,2),emap_hw)
+      tauhwav = emap_avg(t(1,1,1,1,3),emap_hw)
+
+      ucwav = emap_avg(vx,emap_cw)
+      vcwav = emap_avg(vy,emap_cw)
+      tcwav   = emap_avg(t(1,1,1,1,1),emap_cw)
+      kcwav   = emap_avg(t(1,1,1,1,2),emap_cw)
+      taucwav = emap_avg(t(1,1,1,1,3),emap_cw)
+
+      uloav = emap_avg(vx,emap_lo)
+      vloav = emap_avg(vy,emap_lo)
+      tloav   = emap_avg(t(1,1,1,1,1),emap_lo)
+      kloav   = emap_avg(t(1,1,1,1,2),emap_lo)
+      tauloav = emap_avg(t(1,1,1,1,3),emap_lo)
+
+      umiav = emap_avg(vx,emap_mi)
+      vmiav = emap_avg(vy,emap_mi)
+      tmiav   = emap_avg(t(1,1,1,1,1),emap_mi)
+      kmiav   = emap_avg(t(1,1,1,1,2),emap_mi)
+      taumiav = emap_avg(t(1,1,1,1,3),emap_mi)
+
+      uhiav = emap_avg(vx,emap_hi)
+      vhiav = emap_avg(vy,emap_hi)
+      thiav   = emap_avg(t(1,1,1,1,1),emap_hi)
+      khiav   = emap_avg(t(1,1,1,1,2),emap_hi)
+      tauhiav = emap_avg(t(1,1,1,1,3),emap_hi)
+
+c     pressure drop calculation
+      pin = emap_avg(pr,emap_lo)
+      pout = emap_avg(pr,emap_hi)
+      dp = pin - pout
+
+c     heat flux calculation
+      call gradm1(dtx,dty,dtz,t)
+
+      gradt_av = 0.0
+
+      do e=1,nelt
+       do f=1,ndim*2
+        if (boundaryID(f,e).eq.3) then
+          gradt_av = gradt_av + facint(dtx,unx,area,f,e) +
+     $              facint(dty,uny,area,f,e)
+        endif
+       enddo
+      enddo
+
+      gradt_av = glsum(gradt_av,1)
+      areahw = emap_area(emap_hw)
+      gradt_av = gradt_av/areahw
+
+      thw_ndim = emap_avg(t,emap_hw)
+      Tb = bulkavg(t,vx,msk_inout)
+      nu = gradt_av/(thw_ndim-Tb)
+      qav = gradt_av
+
+      qin = emap_scalar_avg(t,vx,emap_lo,0)
+      qin = qin + (gradt_av*areahw*cpfld(2,1))
+
+      qout = emap_scalar_avg(t,vx,emap_hi,0)
+
+      if (istep.eq.0) then
+        dp2 = 0.
+        tm2 = 0.
+        qav2 = 0.
+      endif
+
+      dp1 = dp2
+      dp2 = dp
+      tm1 = tm2
+      tm2 = Tm
+      qav1 = qav2
+      qav2 = qav
+
+      if (nio.eq.0) then
+       write(6,81) uinav,vinav,tinav,kinav,tauinav
+       write(6,82) uhwav,vhwav,thwav,khwav,tauhwav
+       write(6,83) ucwav,vcwav,tcwav,kcwav,taucwav
+       write(6,84) uloav,vloav,tloav,kloav,tauloav
+       write(6,85) umiav,vmiav,tmiav,kmiav,taumiav
+       write(6,86) uhiav,vhiav,thiav,khiav,tauhiav
+
+       write(6,87) dp,Tm,(dp2-dp1),(tm2-tm1)
+       write(6,88) nu,qav,qin,qout,(qav2-qav1)
+       write(6,89) Ri,Tm,areahw
+      endif
+
+c     prints y+ related info
+      call print_yplimits(ypout,wd,1)
+
+c     dumps y+ in the `x-velocity` field of yplairjacket.nek5000
+c      call outpost(ypout,vy,vz,pr,t,'ypl')
+
+81    format(1p5e16.8,': Inlet avg vx/vy/t/k/tau')
+82    format(1p5e16.8,': HW avg vx/vy/t/k/tau')
+83    format(1p5e16.8,': CW avg vx/vy/t/k/tau')
+84    format(1p5e16.8,': Low avg vx/vy/t/k/tau')
+85    format(1p5e16.8,': Mid avg vx/vy/t/k/tau')
+86    format(1p5e16.8,': High avg vx/vy/t/k/tau')
+87    format(1p4e16.8,': dP,Tm, res_dp,res_Tm')
+88    format(1p5e16.8,': Nusselt no./avg heat flux[W/sq m]/'
+     $                   'q in[-]/q out[-]/dq_av diff')
+89    format(1p3e16.8,': Richardson number, mean temp[K],areahw')
+
+      return
+      end
+c-----------------------------------------------------------------------
+      subroutine usrdat()   ! This routine to modify element vertices
+      implicit none
+      include 'SIZE'
+      include 'TOTAL'
+
+
+      return
+      end
+c-----------------------------------------------------------------------
+      subroutine usrdat2()  ! This routine to modify mesh coordinates
+      implicit none
+      include 'SIZE'
+      include 'TOTAL'
+
+      real wd
+      common /walldist/ wd(lx1,ly1,lz1,lelv)
+
+      integer n,iel,ifc,id_face
+
+      integer ifld_k,ifld_t,m_id,w_id
+      real coeffs(30) !array for passing custom coeffs to RANS model
+      logical ifcoeffs !flag to use custom or default coeffs
+
+      real Re,mu0,rho0,Uc,T0,cp0,k0,Lc,L0,Thw
+      common /props/ Re,mu0,rho0,Uc,T0,cp0,k0,Lc,L0,Thw
+
+      integer  emap_lo(lelv),emap_cw(lelv),emap_in(lelv),
+     $      emap_hi(lelv), emap_mi(lelv),emap_hw(lelv)
+      real exyzlo(3), exyzhi(3), exyzmi(3)
+
+      common /roi/ emap_lo,emap_cw,emap_in,emap_hi,
+     $         emap_mi,emap_hw, exyzlo, exyzhi, exyzmi
+
+      real msk_inout(lx1,ly1,lz1,lelv),msk_hw(lx1,ly1,lz1,lelv)
+      common /masks/ msk_inout,msk_hw
+      real xmin,xmax,ymin,ymax,zmin,zmax
+
+      integer e,f,i
+      real ptmin1(3),ptmin2(3),ptmin3(3),ptmin4(3),ptmin5(3)
+      real ptmax1(3),ptmax2(3),ptmax3(3),ptmax4(3),ptmax5(3)
+      real norm1(3),norm2(3),norm3(3)
+
+      real calc_dh,emap_area
+      real area_hw, area_hi, area_in
+      real xx, yy, theta
+
+      n=nx1*ny1*nz1*nelv
+
+c     build element/face maps for postproc
+
+      call emap_sideset(emap_in,1,1)
+      call test_emap(emap_in,'ein')
+
+      call emap_sideset(emap_hw,3,3)
+      call test_emap(emap_hw,'ehw')
+
+      call emap_sideset(emap_cw,4,4)
+      call test_emap(emap_cw,'ecw')
+
+c    element map of lower plane, close to inlet
+      norm1  = (/0.0,1.0,0.0/)
+      ptmin1 = (/-764.0,-1163.0,0.0/)
+      ptmax1 = (/-723.0,-1157.0,0.0/)
+
+      call emap_nsurf(emap_lo,exyzlo,norm1,ptmin1,ptmax1)
+      call test_emap(emap_lo,'elo')
+
+c    element map of upper plane, close to inlet
+      norm2  = (/0.0,1.0,0.0/)
+      ptmin2 = (/-788.2,1205.0,0.0/)
+      ptmax2 = (/-748.2,1210.8,0.0/)
+
+      call emap_nsurf(emap_hi,exyzhi,norm2,ptmin2,ptmax2)
+      call test_emap(emap_hi,'ehi')
+
+c    element map of upper plane, close to inlet
+      norm3  = (/0.0,1.0,0.0/)
+      ptmin3 = (/-789.0,813.0,0.0/)
+      ptmax3 = (/-747.0,819.0,0.0/)
+
+      call emap_nsurf(emap_mi,exyzmi,norm3,ptmin3,ptmax3)
+      call test_emap(emap_mi,'emi')
+
+      call set_initial_properties()
+
+c     create masks for volumetric averages
+      ptmin1 = (/-788.0,-1153.7,0.0/)
+      ptmax1 = (/-720.0,1210.79,0.0/)
+      call create_mask(msk_inout,ptmin1,ptmax1)
+
+      call domain_size(xmin,xmax,ymin,ymax,zmin,zmax)
+      ptmin2(1) = xmin
+      ptmax2(1) = xmax
+      ptmin2(2) = ptmin1(2)
+      ptmax2(2) = ptmax1(2)
+      call create_mask(msk_hw,ptmin2,ptmax2)
+
+      call outpost(msk_inout,vy,vz,pr,t,'mio')
+      call outpost(msk_hw,vy,vz,pr,t,'mhw')
+
+C     rescale the domain BEFORE calling rans_init
+
+      theta = pi/2.0
+      do i=1,n
+        xx = xm1(i,1,1,1)
+        yy = ym1(i,1,1,1)
+        xm1(i,1,1,1) =  xx*cos(theta) + yy*sin(theta)
+        ym1(i,1,1,1) = -xx*sin(theta) + yy*cos(theta)
+      enddo
+
+      call outpost(vx,vy,vz,pr,t,'rot')
+      call cmult(xm1,1.0/Lc,n)
+      call cmult(ym1,1.0/Lc,n)
+
+
+c     assign BCs to sidesets using cbc array
+c      do e=1,nelv
+c      do f=1,2*ndim
+c        id_face = boundaryID(f,e)
+c        if (id_face.eq.1) then        ! dirichlet (inlet)  BCs
+c           cbc(f,e,1) = 'v  '
+c           cbc(f,e,2) = 't  '
+c        elseif (id_face.eq.2) then    ! Outlet
+c           cbc(f,e,1) = 'O  '
+c           cbc(f,e,2) = 'O  '
+c        elseif (id_face.eq.3) then    ! Hot wall
+c           cbc(f,e,1) = 'W  '
+c           cbc(f,e,2) = 't  '
+c        elseif (id_face.eq.4) then    ! Insulated wall
+c           cbc(f,e,1) = 'W  '
+c           cbc(f,e,2) = 'I  '
+c        endif
+c      enddo
+c      enddo
+
+C     Setup RANS model, this MUST be done in usrdat2
+
+      ifld_k = 3         !field number for tke, t(1,1,1,1,ifld_k-1)
+      ifld_t = 4         !field number for omega/tau, t(1,1,1,1,ifld_t-1)
+      ifcoeffs = .false. !set to true to pass custom coefficients
+      m_id = 4 !standard k-tau
+      w_id = 2 ! distf (coordinate difference, provides smoother function)
+      call rans_init(ifld_k,ifld_t,ifcoeffs,coeffs,w_id,wd,m_id)
+
+      return
+      end
+c-----------------------------------------------------------------------
+      subroutine usrdat3()
+      implicit none
+      include 'SIZE'
+      include 'TOTAL'
+
+      real xmin,xmax,ymin,ymax,zmin,zmax
+      common /dmn_size/ xmin,xmax,ymin,ymax,zmin,zmax
+
+      call domain_size(xmin,xmax,ymin,ymax,zmin,zmax)
+
+      return
+      end
+C-----------------------------------------------------------------------
+      subroutine set_initial_properties()
+
+      include 'SIZE'
+      include 'TOTAL'
+
+      real Re,mu0,rho0,Uc,T0,cp0,k0,Lc,L0,Thw
+      common /props/ Re,mu0,rho0,Uc,T0,cp0,k0,Lc,L0,Thw
+
+      Lc = 40.0 ! channel length
+      L0 = 559.131 ! inlet length
+
+      Re = cpfld(1,1)
+      Re = 1.0/Re
+      mu0 = 0.00001951
+      rho0 = 1.103236458
+      Uc = Re*mu0/rho0/(Lc/1000.0)
+      T0 = 50.0 + 273.15
+      Thw = (420.0 + 273.15)*0.950523599
+      cp0 = 1007.433186
+      k0 = 0.02766
+
+      if(nio.eq.0) then
+       write(*,*) "Setting the following initial properties:"
+       write(6,21) Re
+       write(6,22) mu0
+       write(6,23) rho0
+       write(6,24) Uc
+       write(6,25) T0
+       write(6,26) cp0
+       write(6,27) k0
+       write(6,28) Lc
+       write(6,29) L0
+      endif
+
+21    format(1p1e16.8,': Reynolds number')
+22    format(1p1e16.8,': mu0')
+23    format(1p1e16.8,': rho0')
+24    format(1p1e16.8,': Uc')
+25    format(1p1e16.8,': T0')
+26    format(1p1e16.8,': cp0')
+27    format(1p1e16.8,': k0')
+28    format(1p1e16.8,': Lc')
+29    format(1p1e16.8,': L0')
+
+      return
+      end
+
+c-----------------------------------------------------------------------

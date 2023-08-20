@@ -22,3 +22,5 @@ microreactors/gcmr/assembly/MESH/*.e filter=lfs diff=lfs merge=lfs -text
 microreactors/mrad/legacy/mesh/mrad_mesh.e filter=lfs diff=lfs merge=lfs -text
 microreactors/mrad/mesh/gold/HPMR_OneSixth_Core_meshgenerator_tri_rotate_bdry.e filter=lfs diff=lfs merge=lfs -text
 microreactors/mrad/mesh/gold/HPMR_OneSixth_Core_meshgenerator_tri_rotate_bdry_fine.e filter=lfs diff=lfs merge=lfs -text
+microreactors/gcmr/airjacket/mesh/airjacket.re2 filter=lfs diff=lfs merge=lfs -text
+microreactors/gcmr/airjacket/restart_airjacket.fld filter=lfs diff=lfs merge=lfs -text
