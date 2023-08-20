@@ -1,0 +1,52 @@
+[GENERAL]
+#startFrom = "restart_airjacket.fld" UPT
+numSteps = 6800000
+dt = 1.0e-3
+writeInterval = 1e3
+#variableDT=yes
+#targetCFL = 0.5
+#extrapolation = OIFS
+
+[PROBLEMTYPE]
+equation = incompNS
+axiSymmetry = yes
+variableProperties = yes
+stressFormulation = yes
+
+[MESH]
+numberOfBCFields = 1
+
+[PRESSURE]
+residualTol = 1e-4
+residualProj = yes
+
+[VELOCITY]
+density = 1.0
+viscosity = -3580.0
+residualTol = 1e-6
+boundaryTypeMap = v  ,O  ,W  ,W  
+
+[TEMPERATURE]
+#solver = none
+rhoCp = 1.0
+conductivity = -2543.925409
+residualTol = 1e-6
+boundaryTypeMap = t  ,O  ,t  ,I  
+
+[SCALAR01] # tke
+density = 1.0
+diffusivity = -3580.0
+residualTol = 1e-8
+residualProj = yes
+#boundaryTypeMap = t  ,O  ,t  ,t  
+
+[SCALAR02] # omega 
+density = 1.0
+diffusivity = -3580.0
+residualTol = 1e-6
+residualProj = yes
+#boundaryTypeMap = t  ,O  ,t  ,t  
+
+[SCALAR03] # eddy viscosity
+solver = none
+writeToFieldFile = yes

@@ -5,3 +5,5 @@
 [SNAP 8 Experimental Reactor (S8ER)](s8er/index.md)
 
 [Gas-cooled Microreactor (GCMR)](gcmr/index.md)
+
+[Air Jacket Passive Heat Removal](airjacket/index.md)
