@@ -1,4 +1,12 @@
-# Authored: Joseph R. Brennan, Mentor: Mustafa K. Jaradat, Sebastian Schunert, and Paolo Balestra
+# ==============================================================================
+# Model description:
+# Step4 - Step3 plus solid conduction equation and a heat source in the
+# pebble-bed.
+# ------------------------------------------------------------------------------
+# Idaho Falls, INL, August 15, 2023 04:03 PM
+# Author(s): Joseph R. Brennan, Dr. Sebastian Schunert, Dr. Mustafa K. Jaradat
+#            and Dr. Paolo Balestra.
+# ==============================================================================
 bed_height = 10.0
 bed_radius = 1.2
 cavity_height = 0.5

@@ -1,3 +1,11 @@
+# ==============================================================================
+# Model description:
+# Step2 - Step1 plus pressure drop.
+# ------------------------------------------------------------------------------
+# Idaho Falls, INL, August 15, 2023 04:03 PM
+# Author(s): Joseph R. Brennan, Dr. Sebastian Schunert, Dr. Mustafa K. Jaradat
+#            and Dr. Paolo Balestra.
+# ==============================================================================
 bed_height = 10.0
 bed_radius = 1.2
 bed_porosity = 0.39

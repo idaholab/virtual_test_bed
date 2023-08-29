@@ -1,3 +1,11 @@
+# ==============================================================================
+# Model description:
+# Step1 - An axisymmetric flow channel with porosity.
+# ------------------------------------------------------------------------------
+# Idaho Falls, INL, August 15, 2023 04:03 PM
+# Author(s): Joseph R. Brennan, Dr. Sebastian Schunert, Dr. Mustafa K. Jaradat
+#            and Dr. Paolo Balestra.
+# ==============================================================================
 bed_height = 10.0
 bed_radius = 1.2
 bed_porosity = 0.39

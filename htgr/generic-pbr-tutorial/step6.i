@@ -1,4 +1,11 @@
-# Authored: Joseph R. Brennan, Mentor: Mustafa K. Jaradat, Sebastian Schunert, and Paolo Balestra
+# ==============================================================================
+# Model description:
+# Step6 - Step5 plus plenums and riser.
+# ------------------------------------------------------------------------------
+# Idaho Falls, INL, August 15, 2023 04:03 PM
+# Author(s): Joseph R. Brennan, Dr. Sebastian Schunert, Dr. Mustafa K. Jaradat
+#            and Dr. Paolo Balestra.
+# ==============================================================================
 outlet_pressure = 5.84e+6
 T_inlet = 533.25
 inlet_density = 5.291
