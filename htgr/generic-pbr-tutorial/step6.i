@@ -316,6 +316,7 @@ riser_Dh = 0.17
     # material property parameters
     density = rho
     dynamic_viscosity = mu
+    thermal_conductivity = kappa
 
     # porous medium treatment parameters
     porosity = porosity
@@ -373,7 +374,7 @@ riser_Dh = 0.17
     T_fluid = ${T_inlet}
     speed = speed
     characteristic_length = characteristic_length
-    block = 'pebble_bed cavity bottom_reflector upper_plenum bottom_plenum riser'    
+    block = 'pebble_bed cavity bottom_reflector upper_plenum bottom_plenum riser'
   []
 
   [graphite_rho_and_cp_bed]
@@ -487,6 +488,19 @@ riser_Dh = 0.17
              riser
              upper_plenum
              bottom_plenum'
+  []
+
+  [kappa_f_pebble_bed]
+    type = FunctorLinearPecletKappaFluid
+    porosity = porosity
+    block = 'pebble_bed'
+  []
+
+  [kappa_f_mat_no_pebble_bed]
+    type = ADGenericVectorFunctorMaterial
+    prop_names = 'kappa'
+    prop_values = 'k k k'
+    block = 'cavity bottom_reflector upper_plenum bottom_plenum riser'
   []
 
   [pebble_bed_alpha]

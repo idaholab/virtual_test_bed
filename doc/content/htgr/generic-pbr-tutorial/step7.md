@@ -36,21 +36,21 @@ and the hydraulic diameter is added here:
 
 !listing htgr/generic-pbr-tutorial/step7.i block=characteristic_length
 
-The solid properties (`rho_s`, `cp_s`, `kappa_s`) are set just like for the 
+The solid properties (`rho_s`, `cp_s`, `kappa_s`) are set just like for the
 other non-pebble-bed regions using a `ADGenericFunctorMaterial`:
 
 !listing htgr/generic-pbr-tutorial/step7.i block=graphite_rho_and_cp_riser_control_rods
 
-The drag coefficient in the `control_rods` is used to adjust the bypass flow to 
+The drag coefficient in the `control_rods` is used to adjust the bypass flow to
 between $2$ and $3$% of the nominal mass flow rate. The Darcy coefficient is set to
 $0$ and the Forchheimer coefficient is set by a `LinearFrictionFactorFunctorMaterial` object.
 
 !listing htgr/generic-pbr-tutorial/step7.i start=Darcy_control_rods end=porosity_material
 
-In `Forchheimer_control_rods`, `g=1000` is the Forchheimer coefficient and `B` can be used 
+In `Forchheimer_control_rods`, `g=1000` is the Forchheimer coefficient and `B` can be used
 to make the Forchheimer coefficient anisotropic. In this case, we just make it isotropic.
 `f` must be provided but it corresponds to a linear contribution of the pressure drop
-which we choose to not use in this example. 
+which we choose to not use in this example.
 
 ## Postprocessors
 
@@ -72,7 +72,7 @@ This is accomplished by adding:
 !listing htgr/generic-pbr-tutorial/step7.i start=steady_state_detection end=[]
 
 to the `Executioner` block. This switches on steady-state detection starting
-at `t=1000s` and stops the simulation once the steady-state relative differential norm 
+at `t=1000s` and stops the simulation once the steady-state relative differential norm
 has dropped below $10^{-10}$.
 
 ## Executable

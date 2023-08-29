@@ -2,7 +2,7 @@
 bed_radius = 1.2
 outlet_pressure = 5.84e+6
 T_inlet = 533.25
-inlet_density = 5.2532
+inlet_density = 5.2955
 pebble_diameter = 0.06
 thermal_mass_scaling = 1
 
@@ -139,7 +139,7 @@ bottom_reflector_Dh = 0.1
 [Functions]
   [heat_source_fn]
     type = ParsedFunction
-    expression = '${power_fn_scaling} * (-1.0612e4 * pow(y+${offset}, 4) + 1.5963e5 * pow(y+${offset}, 3) 
+    expression = '${power_fn_scaling} * (-1.0612e4 * pow(y+${offset}, 4) + 1.5963e5 * pow(y+${offset}, 3)
                    -6.2993e5 * pow(y+${offset}, 2) + 1.4199e6 * (y+${offset}) + 5.5402e4)'
   []
 []
@@ -195,11 +195,12 @@ bottom_reflector_Dh = 0.1
     add_energy_equation = true
     block = 'pebble_bed cavity bottom_reflector'
 
-    # material property parameters  
+    # material property parameters
     density = rho
     dynamic_viscosity = mu
+    thermal_conductivity = kappa
 
-    # porous medium treatment parameters  
+    # porous medium treatment parameters
     porosity = porosity
     porosity_interface_pressure_treatment = 'bernoulli'
 
@@ -252,7 +253,7 @@ bottom_reflector_Dh = 0.1
     fp = fluid_properties_obj
     porosity = porosity
     pressure = pressure
-    T_fluid = ${T_inlet}
+    T_fluid = T_fluid
     speed = speed
     characteristic_length = characteristic_length
     block = 'pebble_bed cavity bottom_reflector'
@@ -284,8 +285,8 @@ bottom_reflector_Dh = 0.1
     fp = fluid_properties_obj
     pebble_diameter =  ${pebble_diameter}
     porosity = porosity
-    T_fluid = ${T_inlet}
-    T_solid = ${T_inlet}
+    T_fluid = T_fluid
+    T_solid = T_solid
     block = pebble_bed
   []
 
@@ -335,6 +336,19 @@ bottom_reflector_Dh = 0.1
     block = 'pebble_bed
              bottom_reflector
              side_reflector'
+  []
+
+  [kappa_f_pebble_bed]
+    type = FunctorLinearPecletKappaFluid
+    porosity = porosity
+    block = 'pebble_bed'
+  []
+
+  [kappa_f_mat_no_pebble_bed]
+    type = ADGenericVectorFunctorMaterial
+    prop_names = 'kappa'
+    prop_values = 'k k k'
+    block = 'cavity bottom_reflector'
   []
 
   [pebble_bed_alpha]

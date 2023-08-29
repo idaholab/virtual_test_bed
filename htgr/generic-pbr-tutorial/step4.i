@@ -39,6 +39,10 @@ offset = 0.56331
   coord_type = RZ
 []
 
+[Debug]
+  show_functors = true
+[]
+
 [FluidProperties]
   [fluid_properties_obj]
     type = HeliumFluidProperties
@@ -48,7 +52,7 @@ offset = 0.56331
 [Functions]
   [heat_source_fn]
     type = ParsedFunction
-    expression = '${power_fn_scaling} * (-1.0612e4 * pow(y+${offset}, 4) + 1.5963e5 * pow(y+${offset}, 3) 
+    expression = '${power_fn_scaling} * (-1.0612e4 * pow(y+${offset}, 4) + 1.5963e5 * pow(y+${offset}, 3)
                    -6.2993e5 * pow(y+${offset}, 2) + 1.4199e6 * (y+${offset}) + 5.5402e4)'
   []
 []
@@ -106,7 +110,7 @@ offset = 0.56331
     density = rho
     dynamic_viscosity = mu
     specific_heat = cp
-    thermal_conductivity = k
+    thermal_conductivity = kappa
 
     # porous medium treatment parameters
     porosity = porosity
@@ -215,6 +219,19 @@ offset = 0.56331
     type = ADGenericFunctorMaterial
     prop_names = 'rho_s  cp_s'
     prop_values = '2000  300'
+  []
+
+  [kappa_f_pebble_bed]
+    type = FunctorLinearPecletKappaFluid
+    porosity = porosity
+    block = 'pebble_bed'
+  []
+
+  [kappa_f_mat_no_pebble_bed]
+    type = ADGenericVectorFunctorMaterial
+    prop_names = 'kappa'
+    prop_values = 'k k k'
+    block = 'cavity'
   []
 []
 

@@ -21,7 +21,7 @@ convective cooling by the helium. These terms are added using the `FVKernels` bl
 `energy_storage` is the time derivative term that uses two material properties, namely the solid
 density `rho` and the solid specific heat `cp`. `solid_energy_diffusion` represents heat conduction
 and uses the thermal conductivity property provided to the `coeff` parameter. `source` provides the heat source
-and is discussed later. `convection_pebble_bed_fluid` models convective heat transfer between 
+and is discussed later. `convection_pebble_bed_fluid` models convective heat transfer between
 the solid pebbles and the helium coolant. It uses the volumetric heat transfer coefficient `h_solid_fluid`
 as property.
 
@@ -35,10 +35,10 @@ The shape of the heat source is represented as a `ParsedFunction` in the input f
 
 !listing htgr/generic-pbr-tutorial/step4.i block=heat_source_fn
 
-The `expression` declares the heat source as a function of the y-coordinate that is aligned with the up/down direction in this model. Note, that we omitted the dependence of the heat source on the radial dimension. The prefactor of `power_fn_scaling`=$0.8869$ rescales the function to yield a power of 200 MW. 
+The `expression` declares the heat source as a function of the y-coordinate that is aligned with the up/down direction in this model. Note, that we omitted the dependence of the heat source on the radial dimension. The prefactor of `power_fn_scaling`=$0.8869$ rescales the function to yield a power of 200 MW.
 
-`heat_source_fn` is used in two places in the Step 4 input file. First, it is used as a source term in the solid conduction equation which has 
-been shown above and second a postprocessor is used to integrate the heat source over the pebble-bed block. 
+`heat_source_fn` is used in two places in the Step 4 input file. First, it is used as a source term in the solid conduction equation which has
+been shown above and second a postprocessor is used to integrate the heat source over the pebble-bed block.
 
 !listing htgr/generic-pbr-tutorial/step4.i block=heat_source_integral
 
@@ -64,7 +64,7 @@ in other objects.
 ## Results
 
 From the screen output we find that at steady-state, the `enthalpy_balance` matches the `heat_source_integral` indicating that Pronghorn conserves
-energy. 
+energy.
 
 The geometry/mesh, fluid temperature, solid temperature, and superficial velocity mangitude are shown in [step4mesh] to [step4Velocity].
 A few remarks are in order:
@@ -95,4 +95,3 @@ A few remarks are in order:
         style=width:20%
         id=step4Velocity
         caption= Velocity of the system for Step 4.
-

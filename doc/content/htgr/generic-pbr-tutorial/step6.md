@@ -8,7 +8,7 @@ The porosities of the upper plenum, bottom plenum and riser are $0.2$, $0.2$ and
 
 ## Updating and Adding Parameters
 
-We adjust `top_core` to account for the addition of the bottom plenum, add the hydraulic diameter of the riser, `riser_Dh`, add a Darcy coefficient for the 
+We adjust `top_core` to account for the addition of the bottom plenum, add the hydraulic diameter of the riser, `riser_Dh`, add a Darcy coefficient for the
 plenums, `c_drag`, and reduce the `thermal_mass_scaling` to $0.1$ to accelerate convergence to steady-state. The new set of parameters
 is given by:
 
@@ -67,7 +67,7 @@ The characteristic length in the riser is set here:
 
 ## Results
 
-In [step6T_fluid], the fluid temperature and flow field are shown. The main difference of Step 6 to the previous steps is that 
+In [step6T_fluid], the fluid temperature and flow field are shown. The main difference of Step 6 to the previous steps is that
 the flow turns multiple times before reaching the outlet.
 In [step6T_solid], the solid temperature along with the outline of the fluid domain are shown.
 
@@ -80,4 +80,3 @@ In [step6T_solid], the solid temperature along with the outline of the fluid dom
         style=width:100%
         id=step6T_solid
         caption= Solid temperature for Step 6.
-

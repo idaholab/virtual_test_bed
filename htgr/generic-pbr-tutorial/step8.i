@@ -1,7 +1,7 @@
 # Authored: Joseph R. Brennan, Mentor: Mustafa K. Jaradat, Sebastian Schunert, and Paolo Balestra
 outlet_pressure = 5.84e+6
 T_inlet = 533.25
-inlet_density = 5.32625
+inlet_density = 5.3304
 pebble_diameter = 0.06
 thermal_mass_scaling = 0.01
 
@@ -390,6 +390,7 @@ control_rod_Dh = 0.1
     # material property parameters
     density = rho
     dynamic_viscosity = mu
+    thermal_conductivity = kappa
 
     # porous medium treatment parameters
     porosity = porosity
@@ -518,8 +519,8 @@ control_rod_Dh = 0.1
     fp = fluid_properties_obj
     pebble_diameter = ${pebble_diameter}
     porosity = porosity
-    T_fluid = ${T_inlet}
-    T_solid = ${T_inlet}
+    T_fluid = T_fluid
+    T_solid = T_solid
     block = pebble_bed
   []
 
@@ -644,6 +645,19 @@ control_rod_Dh = 0.1
     radius_secondary = 2.591
     prop_name = effective_thermal_conductivity
     block = 'barrel_rpv_gap'
+  []
+
+  [kappa_f_pebble_bed]
+    type = FunctorLinearPecletKappaFluid
+    porosity = porosity
+    block = 'pebble_bed'
+  []
+
+  [kappa_f_mat_no_pebble_bed]
+    type = ADGenericVectorFunctorMaterial
+    prop_names = 'kappa'
+    prop_values = 'k k k'
+    block = 'cavity bottom_reflector upper_plenum bottom_plenum riser control_rods'
   []
 
   [pebble_bed_alpha]
