@@ -9,9 +9,30 @@
 
 [Mesh]
   [fmg]
-   type = FileMeshGenerator
-   file = vtb_single_asm.e
-   exodus_extra_element_integers = 'material_id equivalence_id'
+    type = FileMeshGenerator
+    file = vtb_single_asm.e
+    exodus_extra_element_integers = 'material_id equivalence_id'
+  []
+  # This is here to remove some meshing issue
+  [remove_internal_sides]
+    type = ParsedGenerateSideset
+    input = fmg
+    new_sideset_name = '4'
+    combinatorial_geometry = 'y>3.0009999'
+    include_only_external_sides = true
+    fixed_normal = true
+    included_boundaries = '2'
+  []
+  [delete_old]
+    type = BoundaryDeletionGenerator
+    input = remove_internal_sides
+    boundary_names = '2'
+  []
+  [rename_boundary]
+    type = RenameBoundaryGenerator
+    input = delete_old
+    old_boundary = 4
+    new_boundary = 2
   []
   parallel_type = replicated
   displacements = 'disp_x disp_y disp_z'
@@ -27,25 +48,23 @@
   densities = '1.0'
 []
 
-
 [AuxVariables]
   [tfuel]
     initial_condition = 900.
   []
- [tcool]
-   initial_condition = 700.
- []
- [disp_x] # from grid plate expansion
-   initial_condition = 0
- []
- [disp_y]  # from axial fuel expansion
-   initial_condition = 0
- []
- [disp_z] # from grid plate expansion
-   initial_condition = 0
- []
+  [tcool]
+    initial_condition = 700.
+  []
+  [disp_x] # from grid plate expansion
+    initial_condition = 0
+  []
+  [disp_y] # from axial fuel expansion
+    initial_condition = 0
+  []
+  [disp_z] # from grid plate expansion
+    initial_condition = 0
+  []
 []
-
 
 [TransportSystems]
   particle = neutron
@@ -60,7 +79,6 @@
     use_displaced_mesh = true
   []
 []
-
 
 [Materials]
   [nonfuel]
@@ -82,7 +100,6 @@
   power_density_variable = power_density # name of AuxVariable to be created
 []
 
-
 [Executioner]
   automatic_scaling = True
   type = Eigenvalue
@@ -92,7 +109,6 @@
   free_power_iterations = 2
   nl_abs_tol = 1e-8
 
-
   # Multiphysics coupling iteration parameters
   fixed_point_rel_tol = 1e-08
   fixed_point_abs_tol = 1e-10
@@ -101,8 +117,7 @@
 []
 
 #  STM global variables passed from stochastic tools to sub-apps (BISON/SAM)
-  k_scalar = 1.0
-
+k_scalar = 1.0
 
 [MultiApps]
 
@@ -191,8 +206,6 @@
   []
 []
 
-
-
 [Postprocessors]
   [avg_tfuel]
     type = ElementAverageValue
@@ -256,8 +269,7 @@
   []
 []
 
-
 [Outputs]
-   exodus = true
-   csv = true
+  exodus = true
+  csv = true
 []
