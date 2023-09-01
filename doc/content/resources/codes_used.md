@@ -129,6 +129,8 @@ obtained through INL's [NCRC](https://inl.gov/ncrc/).
 
 - Heat Pipe Micro-Reactor [documentation](mrad/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/microreactors/mrad)
 
+- Heat Pipe Micro-Reactor Assembly [documentation](hpmr_assembly/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/microreactors/hpmr_assembly)
+
 
 ### RELAP-7
 
