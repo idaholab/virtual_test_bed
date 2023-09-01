@@ -1,6 +1,6 @@
 # HTTF 3-D MultiApp Model Description
 
-*Contact: Thomas Freyman (Thomas.Freyman.at.inl.gov)  Lise Charlot (Lise.Charlot.at.inl.gov)*
+*Contact: Thomas Freyman, Lise Charlot (Lise.Charlot.at.inl.gov)*
 
 *Model link: [HTTF MultiApp Model](https://github.com/idaholab/virtual_test_bed/tree/devel/htgr/httf)*
 
@@ -119,4 +119,4 @@ are sub apps, the outlet temperature of the upcomer had to be recorded as a `Pos
 was then passed "upwards" to the main app with the block titled `upcomer_outlet_temp`. The block then stores the value in a separate
 `Postprocessor` in the main app. Finally, the transfer block `upcomer_to_relap` sends the newly formed main app `Postprocessor` to the
 `relap` sub app. To ensure this method works, `RCCS` is specified before `relap` in the `MultiApps`so it is solved first, and the
-variable can be passed properly.  
+variable can be passed properly.

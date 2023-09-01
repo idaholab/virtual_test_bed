@@ -2,7 +2,7 @@
 
 *Contact: April Novak, anovak.at.anl.gov*
 
-*Model link: [Coupled HTGR Model](https://github.com/idaholab/virtual_test_bed/tree/devel/htgr/assembly)*
+*Model link: [Coupled HTGR Model](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/assembly)*
 
 In this tutorial, we couple OpenMC Monte Carlo transport to the MOOSE heat conduction module
 and the MOOSE [!ac](THM), a set of 1-D systems-level thermal-hydraulics kernels in MOOSE
