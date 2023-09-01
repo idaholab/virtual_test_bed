@@ -25,7 +25,7 @@ the following:
 
 ### Molten Salt Reactor style=font-size:125%
 
-- Molten Salt Fast Reactor core multiphysics
+- Molten Salt Fast Reactor (MSFR) core multiphysics
 
 ```
 @article{aboujaoude2021,
@@ -41,7 +41,7 @@ the following:
 A. Abou-Jaoude, S. Harper, G. Giudicelli, P. Balestra, S. Schunert, N.Martin, A. Lindsay and M. Tano, "A Workflow Leveraging MOOSE Transient Multiphysics Simulations to Evaluate the Impact of Thermophysical Property Uncertainties on Molten-Salt Reactors", Annals of Nuclear Energy 163, 108546, (2021)
 ```
 
-- MSFR Plant multiphysics analysis (Pronghorn-Griffin-SAM model)
+- MSFR Plant multiphysics analysis (MSFR Pronghorn-Griffin-SAM model)
 
 ```
 @InProceedings{Tano_MSR_2022,
@@ -51,10 +51,11 @@ A. Abou-Jaoude, S. Harper, G. Giudicelli, P. Balestra, S. Schunert, N.Martin, A.
                booktitle = {Transactions of the American Nuclear Society},
                booksubtitle = {ANS Winter Meeting},
                doi = {doi.org/10.13182/T127-39636��}
-}
+               }
+Mauricio E. Tano, Jun Fang, Guillaume Giudicelli and Abdalla Abou-Jaoude, "Coupled Griffin-Pronghorn-SAM Model of a Molten Salt Fast Reactor System Transient in the Virtual Test Bed", Transactions of the American Nuclear Society, Nov. 2022
 ```
 
-- Molten Salt Fast Reactor (Nek5000 model)
+- Molten Salt Fast Reactor (MSFR Nek5000 model)
 
 ```
 @inproceedings{fang2021,
@@ -67,7 +68,7 @@ A. Abou-Jaoude, S. Harper, G. Giudicelli, P. Balestra, S. Schunert, N.Martin, A.
 Jun Fang, Dillon R Shaver and Bo Feng, "CFD Modeling of Molten Salt Fast Reactor Using Nek5000", Transactions of the American Nuclear Society (2021)
 ```
 
-- Molten Salt Reactor Experiment (SAM model)
+- Molten Salt Reactor Experiment (MSRE SAM model)
 
 ```
 @techreport{Hu2021,
@@ -91,11 +92,13 @@ Hu R., Hu G., Gorman M., Fang J., Mui T., O’Grady D., Fei T. and Salko R., "FY
                booksubtitle = {ANS Winter Meeting},
                doi = {doi.org/10.13182/T127-39645��}
 }
+Samuel Walker, Olin Calvin, Mauricio E. Tano and Abdalla Abou Jaoude, Implementation of Isotopic Removal Capability in Griffin for Multi-Region MSR Depletion Analysis,
+Transition of the American Nuclear Society, 2022
 ```
 
 ### Pebble bed fluoride-salt cooled high temperature reactor style=font-size:125%
 
-- Core multiphysics analysis (Pronghorn-Griffin core model)
+- Core multiphysics analysis (PB-FHR Pronghorn-Griffin core model)
 
 ```
 @article{giudicelli2021,
@@ -111,13 +114,14 @@ Guillaume Giudicelli, Alexander Lindsay, Paolo Balestra, Robert Carlsen, Javier 
 
 ```
 @InProceedings{Giudicelli_ANS_2022,
-               title={COUPLED MULTIPHYSICS PRIMARY LOOP SIMULATIONS OF THE Mk1-FHR IN THE VIRTUAL TEST BED},
+               title={Coupled Multiphysics Primary Loop Simulations of the Mk1-FHR in the Virtual Test Bed},
                author={Guillaume Giudicelli and Cole Mueller and Daniel Nunez and Thanh Hua and Jun Fang and Abdalla Abou-Jaoude},
                year = {2022},
                booktitle = {Transactions of the American Nuclear Society},
                booksubtitle = {ANS Winter Meeting},
                doi = {doi.org/10.13182/T127-39765}
 }
+Guillaume Giudicelli, Cole Mueller, Daniel Nunez, Thanh Hua, Jun Fang and Abdalla Abou-Jaoude, "Coupled Multiphysics Primary Loop Simulations of the Mk1-FHR in the Virtual Test Bed", Transactions of the American Nuclear Society, 2022
 ```
 
 - Pebble bed fluoride-salt cooled high temperature reactor reflector model
@@ -153,7 +157,7 @@ Ahmed K. K., Scarlat R. O. and Hu R., "Benchmark Simulation of Natural Circulati
 
 ### Sodium Fast Reactor style=font-size:125%
 
-- Versatile Test Reactor assembly and core model
+- Versatile Test Reactor (VTR) assembly and core model
 
 ```
 @article{MARTIN2022109066,
@@ -170,7 +174,7 @@ Ahmed K. K., Scarlat R. O. and Hu R., "Benchmark Simulation of Natural Circulati
 Nicolas Martin, Ryan Stewart and Sam Bays, "A multiphysics model of the versatile test reactor based on the MOOSE framework", Annals of Nuclear Energy, 172, 109066 (2022)
 ```
 
-- Advanced Burner Test Reactor SAM model
+- Advanced Burner Test Reactor (ABTR) SAM model
 
 ```
 @techreport{Hu2019,
@@ -182,7 +186,7 @@ Nicolas Martin, Ryan Stewart and Sam Bays, "A multiphysics model of the versatil
 Hu, G., Zhang, G., & Hu, R., "Reactivity Feedback Modeling in SAM", Argonne National Laboratory, ANL/NSE-19/1150747 (2019)
 ```
 
-- Sodium Fast Reactor duct bowing
+- Sodium Fast Reactor (SFR) duct bowing IAEA benchmarks VP1 and VP3A
 
 ```
 @techreport{moose_tm_assess_2021,
@@ -198,17 +202,26 @@ Hu, G., Zhang, G., & Hu, R., "Reactivity Feedback Modeling in SAM", Argonne Nati
     pages = "ANL/NSE--21/30, 1808314, 169472",
     institution = "Argonne National Laboratory"
 }
+Wozniak, Nicholas and Shemon, Emily and Grudzinski, James and Spencer, Benjamin, "Assessment of MOOSE-based tools for Calculating Radial Core Expansion",
+Technical Report ANL/NSE--21/30, 1808314, 169472, 2021
 ```
 
 - Subchannel ORNL-19 and Toshiba-37 demonstrations
 
 ```
-To be uploaded. OSTI report on subchannel development
+@techreport{
+    title = {{Development of a Subchannel Capability for Liquid-Metal Fast Reactors in Pronghorn}},
+    author = {Mauricio Tano and Sebastian Schunert and Vasileios Kyriakopoulos and Aydin Karahan and April Novak},
+    number = {pending},
+    institution = {Idaho National Laboratory},
+    year = {2022}
+    }
+Mauricio Tano and Sebastian Schunert and Vasileios Kyriakopoulos and Aydin Karahan and April Novak, "Development of a Subchannel Capability for Liquid-Metal Fast Reactors in Pronghorn", Technical Report, 2022
 ```
 
 ### High Temperature Gas Cooled Reactor style=font-size:125%
 
-- Modular High Temperature Gas Reactor SAM model
+- Modular High Temperature Gas Reactor (MHTGR) SAM model
 
 ```
 @techreport{Vegendla2019,
@@ -223,7 +236,7 @@ To be uploaded. OSTI report on subchannel development
 Vegendla Prasad, Hu Rui and Zou Ling, "Multi-Scale Modeling of Thermal-Fluid Phenomena Related to Loss of Forced Circulation Transient in HTGRs", Argonne National Laboratory, ANL-19/35 (2019)
 ```
 
-- Modular High Temperature Gas Reactor Griffin model
+- Modular High Temperature Gas Reactor (MHTGR) Griffin model
 
 ```
 @techreport{mhtgr_inl,
@@ -233,6 +246,8 @@ Vegendla Prasad, Hu Rui and Zou Ling, "Multi-Scale Modeling of Thermal-Fluid Phe
   title = {OECD/NEA Coupled Neutronic/Thermal-Fluids Benchmark of the MHTGR-350 MW Core Design: Results for Phase-I Excercise I},
   year = {2020},
 }
+Ortensi J. and Strydom G, "OECD/NEA Coupled Neutronic/Thermal-Fluids Benchmark of the MHTGR-350 MW Core Design: Results for Phase-I Excercise I",
+Technical Report INL/LTD-17-43099-Revision-0, 2020
 ```
 
 - PBMR-400 numerical benchmark
@@ -257,7 +272,7 @@ Paolo Balestra, Sebastian Schunert, Robert W Carlsen, April J Novak, Mark D DeHa
                booktitle  = {{Proceedings of Physor}},
                year       = 2022
               }
-A.J. Novak, D. Andrs, P. Shriwise, D. Shaver, P.K. Romano, E. Merzari and P. Keutelian, "Coupled Monte Carlo Transport and Thermal-Hydraulics Modeling of a Prismatic Gas Reactor Fuel Assembly Using Cardinal" (2022)
+A.J. Novak, D. Andrs, P. Shriwise, D. Shaver, P.K. Romano, E. Merzari and P. Keutelian, "Coupled Monte Carlo Transport and Thermal-Hydraulics Modeling of a Prismatic Gas Reactor Fuel Assembly Using Cardinal", Proceedings of Physics of Nuclear Reactors, (2022)
 ```
 
 - HTR-10 Griffin Benchmarks
@@ -270,7 +285,7 @@ A.J. Novak, D. Andrs, P. Shriwise, D. Shaver, P.K. Romano, E. Merzari and P. Keu
  Number = {INL/EXT-18-45453},
  Year = {2018},
 }
-J. Ortensi and S. Schunert and Y. Wang and V. Laboure and F. Gleicher and R. Martineau, "Benchmark Analysis of the HTR-10 with the MAMMOTH Reactor Physics Application", Idaho National Laboratory, INL/EXT-18-45453, (2018)
+J. Ortensi and S. Schunert and Y. Wang and V. Laboure and F. Gleicher and R. Martineau, "Benchmark Analysis of the HTR-10 with the MAMMOTH Reactor Physics Application", Idaho National Laboratory, Technical Report INL/EXT-18-45453, (2018)
 ```
 
 - TRISO fuel depletion model
@@ -284,6 +299,7 @@ J. Ortensi and S. Schunert and Y. Wang and V. Laboure and F. Gleicher and R. Mar
     pages = "152795",
     year = "2021"
 }
+Jiang, Wen and Hales, Jason D. and Spencer, Benjamin W. and Collin, Blaise P. and Slaughter, Andrew E. and Novascone, Stephen R. and Toptan, Aysenur and Gamble, Kyle A. and Gardner, Russell, "TRISO particle fuel performance and failure analysis with BISON", Journal of Nuclear Materials, 548-152795, 2021
 ```
 
 - Dispersed UO2 LEU pulse model
@@ -302,22 +318,24 @@ J. Ortensi and S. Schunert and Y. Wang and V. Laboure and F. Gleicher and R. Mar
     URL = "https://doi.org/10.1080/00295639.2018.1528802",
     eprint = "https://doi.org/10.1080/00295639.2018.1528802"
 }
+Zabriskie, Adam and Schunert, Sebastian and Schwen, Daniel and Ortensi, Javier and Baker, Benjamin and Wang, Yaqi and Laboure, Vincent and DeHart, Mark and Marcum, Wade, "Coupled Multiscale Approach to TREAT LEU Feedback Modeling Using a Binary-Collision Monte-Carlo–Informed Heat Source", Journal of Nuclear Science and Engineering, vol 193-4, pp. 368-387, 2019
 ```
 
 - SAM Generic Pebble Bed HTGR model
 
 ```
-@article{osti_1884970,
+@techreport{osti_1884970,
 title = {Modeling of a Generic Pebble Bed High-temperature Gas-cooled Reactor (PB-HTGR) with SAM},
 author = {Ooi, Zhiee Jhia and Zou, Ling and Hua, Thanh and Fang, Jun and Hu, Rui},
 doi = {10.2172/1884970},
 url = {https://www.osti.gov/biblio/1884970}, journal = {},
-number = ,
-volume = ,
 place = {United States},
 year = {2022},
+number = {ANL/NSE-22/59177957},
 month = {9}
 }
+Ooi, Zhiee Jhia and Zou, Ling and Hua, Thanh and Fang, Jun and Hu, Rui, "Modeling of a Generic Pebble Bed High-temperature Gas-cooled Reactor (PB-HTGR) with SAM",
+Technical Report ANL/NSE-22/59177957, 2022
 ```
 
 - HTTF transient core model
@@ -329,6 +347,36 @@ Please contact the [model POC](httf/index.md) to obtain the item to cite.
 
 !alert note title=No official citation
 Please contact the [model POC](pb67_cardinal/index.md) to obtain the item to cite.
+
+- HTTF Lower Plenum Nek5000 CFD
+
+```
+@inproceedings{Fang2023nureth2,
+address = {Washington D.C.},
+author = {Fang, Jun and Hua, Thanh and Ooi, Zhiee Jhia and Zou, Ling},
+booktitle = {Proceedings of 20th International Topical Meeting on Nuclear Reactor Thermal Hydraulics (NURETH-20)},
+publisher = {American Nuclear Society},
+title = {{CFD Simulations of Flow Mixing Phenomenon in a Gas-Cooled Reactor Outlet Plenum}},
+year = {2023}
+}
+Fang, Jun and Hua, Thanh and Ooi, Zhiee Jhia and Zou, Ling, "CFD Simulations of Flow Mixing Phenomenon in a Gas-Cooled Reactor Outlet Plenum",
+NURETH-2023
+```
+
+- Natural Convection CFD Modeling of a Microreactor Air Jacket
+
+```
+@inproceedings{jacket_chaube,
+    author = {Anshuman Chaube and April J. Novak and Dillon R. Shaver and Caleb S. Brooks},
+    title = {{Natural Convection CFD Modeling of a Microreactor Air Jacket}},
+    booktitle = {Transactions of the American Nuclear Society},
+    publisher = {American Nuclear Society},
+    address = {Washington D.C.},
+    year = {2023}
+}
+Anshuman Chaube and April J. Novak and Dillon R. Shaver and Caleb S. Brooks, "Natural Convection CFD Modeling of a Microreactor Air Jacket",
+Transactions of the American Nuclear Society, 2023
+```
 
 
 ### Lead-cooled Fast Reactors style=font-size:125%
@@ -344,6 +392,8 @@ Please contact the [model POC](pb67_cardinal/index.md) to obtain the item to cit
     title = "{Assessment of Fast Reactor Hot Channel Factor Calculation Capability in Griffin and NekRS}",
     year = "2021"
 }
+Shemon, Emily and Yu, Yiqi and Park, Hansol and Brennan, Colin, "Assessment of Fast Reactor Hot Channel Factor Calculation Capability in Griffin and NekRS",
+Technical Report ANL/NSE-21/42, 2021
 ```
 
 ### Micro Reactor style=font-size:125%
@@ -363,25 +413,17 @@ Nicolas E. Stauff, Kun Mo, Yan Cao, Justin W. Thomas, Yinbin Miao, Changho Lee, 
 - SNAP 8 NTP Reactor core model
 
 ```
-@article{SNAP8Summary,
-    author = "AID",
-    title = "SNAP 8 summary report",
-    institution = "Atomic Internation Division",
-    doi = "10.2172/4393793",
-    url = "https://www.osti.gov/biblio/4393793",
-    journal = "",
-    place = "United States",
-    year = "1973",
-    month = "9"
-}
 @inproceedings{s8er_naupa2022,
     author = "Naupa, Isaac and Garcia, Samuel and Terlizzi, Stefano and Kotlyar, Dan and Lindley., Ben",
     title = "Validation of SNAP8 Criticality Configuration Experiments using NEAMS Tools.",
-    booktitle = "Submitted to Proceedings of M\&C",
+    booktitle = "Proceedings of Mathematics and Computation for Nuclear Science and Engineering",
     place = "United States",
     year = "2022",
     month = "1"
 }
+Naupa, Isaac and Garcia, Samuel and Terlizzi, Stefano and Kotlyar, Dan and Lindley., Ben,
+"Validation of SNAP8 Criticality Configuration Experiments using NEAMS Tools.", Proceedings of Mathematics and Computation for Nuclear Science and Engineering,
+2022
 ```
 
 - Gas Cooled Micro Reactor
@@ -390,9 +432,10 @@ Nicolas E. Stauff, Kun Mo, Yan Cao, Justin W. Thomas, Yinbin Miao, Changho Lee, 
 @InProceedings{Ahmed_ANS_2022,
     author = "Abdelhameed, Ahmed Amin and Cao, Yan and Nunez, Daniel and Miao, Yinbin and Mo, Kun and Lee, Changho and Shemon, Emily and Stauff, Nicolas E.",
     title = "High-Fidelity Multiphysics Modeling of Load Following for 3-D Gas-Cooled Microreactor Assembly using NEAMS Codes",
-    booktitle = "{Proceedings of the ANS Winter}",
+    booktitle = "{Proceedings of the American Nuclear Society}",
     year = "2022"
 }
+Abdelhameed, Ahmed Amin and Cao, Yan and Nunez, Daniel and Miao, Yinbin and Mo, Kun and Lee, Changho and Shemon, Emily and Stauff, Nicolas E., "High-Fidelity Multiphysics Modeling of Load Following for 3-D Gas-Cooled Microreactor Assembly using NEAMS Codes", Proceedings of the American Nuclear Society, November 2022
 ```
 
 ## Software / codes
@@ -513,6 +556,8 @@ RELAP-7
             number = {INL/EXT-14-31366},
             year = 2014
            }
+R.A. Berry and L. Zou and H. Zhao and H. Zhang and J.W. Peterson and R.C. Martineau and S.Y. Kadioglu and D. Andrs, "RELAP-7 Theory Manual", Technical Report
+INL/EXT-14-31366, 2014
 ```
 
 Sockeye
