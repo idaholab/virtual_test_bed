@@ -228,7 +228,7 @@ The friction factor can be obtained using
 
 ### Initial guess for velocity and mean temperature
 
-Given the geometry, the inlet temperature, and the hot wall temperature, there are two main unknowns that we need to estimate: $\bar{U}$: the mean 
+Given the geometry, the inlet temperature, and the hot wall temperature, there are two main unknowns that we need to estimate: $\bar{U}$: the mean
 inlet velocity, which shall help us determine the Reynolds number of the simulation, and
 $T_m$: the bulk temperature, that will help us understand the energy balance and define the Boussinesq acceleration term.
 
@@ -425,7 +425,7 @@ their values at successive time-steps printed to monitor convergence. Gradients 
 `gradm1` subroutine, and the gradients are averaged over the hot-wall to obtain a heat flux using Nek5000's `facint` function.
 
 Using these postprocessing functions, we can monitor the pressure drop across the channel at runtime by calculating the average pressure at the top and
-bottom of the channel, and iterating on the Reynolds number until the difference between the calculated pressure drop and the target pressure drop 
+bottom of the channel, and iterating on the Reynolds number until the difference between the calculated pressure drop and the target pressure drop
 is below the solver tolerance.
 
 !listing microreactors/gcmr/airjacket/airjacket.usr start=pressure drop calculation end=dp include-end=True

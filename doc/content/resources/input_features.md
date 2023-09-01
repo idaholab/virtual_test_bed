@@ -175,6 +175,8 @@ specified. The MRAD and PBMR-400 models listed below are an example of this.
 
 - 67 pebbles conjugate heat transfer [documentation](pb67_cardinal/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/devel/htgr/pb67_cardinal)
 
+- HTTF Lower Plenum CFD Model [documentation](httf/lower_plenum_cfd.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/devel/htgr/httf/lower_plenum_mixing)
+
 
 ### GPU-enabled
 
