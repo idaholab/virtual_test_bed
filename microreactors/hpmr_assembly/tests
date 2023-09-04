@@ -12,14 +12,16 @@
     input = 'main.i'
     check_input = True
     executable_pattern = 'dire_wolf*'
+    allow_warnings = true
   []
   [test_one_step]
     type = CSVDiff
     prereq = 'generate_mesh'
     input = 'main.i'
-    cli_args = 'Execution/num_steps=1'
+    cli_args = 'Executioner/num_steps=1'
     csvdiff = 'main.csv'
     method = 'opt'
     executable_pattern = 'dire_wolf*'
+    allow_warnings = true
   []
 []
