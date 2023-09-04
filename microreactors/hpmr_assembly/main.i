@@ -1,10 +1,10 @@
 # Main input file for heat-pipe cooled microreactor assembly
 
 graph_blocks = 'monolith monolith_tri brefl brefl_tri trefl trefl_tri'
-fuel_blocks  = 'fuel'
+fuel_blocks = 'fuel'
 
 initial_T_asm = 1200.0
-initial_T_hp = ${units 800 degC -> K}
+initial_T_hp = '${units 800 degC -> K}'
 
 alpha_fuel = 0.359
 alpha_graphite = 0.539
@@ -14,7 +14,7 @@ rho_fuel = 10970.0
 rho_graphite = 1806.0
 rho_helium = 0.0476
 
-rho_fuel_compact = ${fparse alpha_fuel * rho_fuel + alpha_graphite * rho_graphite + alpha_helium * rho_helium}
+rho_fuel_compact = '${fparse alpha_fuel * rho_fuel + alpha_graphite * rho_graphite + alpha_helium * rho_helium}'
 
 # This factor is used to accelerate the steady-state convergence. A real
 # transient should use a factor of 1.
@@ -30,7 +30,7 @@ emissivity_graphite = 0.4
 k_gap = 0.38 # helium at high temperature
 r_hp = 0.0105 # heat pipe radius
 gap_thickness = 0.01e-2
-r_hole = ${fparse r_hp + gap_thickness}
+r_hole = '${fparse r_hp + gap_thickness}'
 
 # This power density corresponds to 140 kW, or 20 kW per heat pipe
 power_density_fuel = 1.285e7
@@ -39,20 +39,20 @@ power_density_fuel = 1.285e7
 #   0 1
 #  2 3 4
 #   5 6
-apoth = ${fparse 0.02782 / 2}
-x1 = ${fparse 2 * apoth * cos(30*pi/180)}
-y1 = ${fparse 2 * apoth * sin(30*pi/180) + 2 * apoth}
-x4 = ${fparse 2 * x1}
+apoth = '${fparse 0.02782 / 2}'
+x1 = '${fparse 2 * apoth * cos(30*pi/180)}'
+y1 = '${fparse 2 * apoth * sin(30*pi/180) + 2 * apoth}'
+x4 = '${fparse 2 * x1}'
 y4 = 0
 x0 = -${x1}
-y0 =  ${y1}
+y0 = ${y1}
 x2 = -${x4}
 y2 = 0
 x3 = 0
 y3 = 0
 x5 = -${x1}
 y5 = -${y1}
-x6 =  ${x1}
+x6 = ${x1}
 y6 = -${y1}
 
 hp_positions = '
@@ -196,9 +196,9 @@ hp_positions = '
 [Transfers]
   # Send heat pipe heat flux to sub-app
   [heat_flux_hp_to_hp_app]
-    type = MultiAppUserObjectTransfer
+    type = MultiAppGeneralFieldUserObjectTransfer
     to_multi_app = hp_app
-    user_object = heat_flux_hp_uo
+    source_user_object = heat_flux_hp_uo
     variable = q_ext
   []
 
