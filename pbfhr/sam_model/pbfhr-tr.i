@@ -13,12 +13,8 @@
   global_init_T = 874
   Tsolid_sf = 1e-3
 
-  [PBModelParams]               # new user should not make changes to this block
-    pbm_scaling_factors = '1 1e-2 1e-6'
-    pspg = true
-    supg_max = false
-    p_order = 2
-  []
+  scaling_factor_var = '1 1e-2 1e-6'  # fluid model solver parameters
+  p_order = 2
 []
 
 
@@ -104,7 +100,7 @@
   [reactor]
     type = ReactorPower
     initial_power = 2.36e8    # Initial total reactor power
-    decay_heat = shutdownPower         # decay heat profile
+    power_history = shutdownPower          # decay heat profile
   []
 
   [pipe010]                           #Active core region (1)

@@ -25,14 +25,8 @@ area_inlet = 0.33911699112746213
   global_init_V = 1.796
   global_init_T = 873.15
   Tsolid_sf = 1e-3
-
+  scaling_factor_var = '1 1e-2 1e-6'  # fluid model solver parameters
   p_order = 2
-
-  [PBModelParams]               # new user should not make changes to this block
-    pbm_scaling_factors = '1 1e-2 1e-6'
-    pspg = true
-    supg_max = false
-  []
 []
 
 

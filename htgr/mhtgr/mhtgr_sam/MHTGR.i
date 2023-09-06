@@ -401,27 +401,24 @@ p_out = 70e5
 T_out = 623.15  #1000
 ##
 [GlobalParams]
-    global_init_P = ${p_out}
-    global_init_V = ${v_1}
-    global_init_T = ${Ts_1}
-    Tsolid_sf = 1e-3
-#    gravity = '0 0 -9.8'
-
-  [./PBModelParams]
-    pbm_scaling_factors = '1 1e-3 1e-6'
-    pspg = false
-    p_order = 1
-    supg_max = true
-  [../]
+  global_init_P = ${p_out}
+  global_init_V = ${v_1}
+  global_init_T = ${Ts_1}
+  Tsolid_sf = 1e-3
+  scaling_factor_var = '1 1e-3 1e-6'
 []
 
 [EOS]
 
   [./eos]
-    type = PTFluidPropertiesEOS
-#    type = HeEquationOfState
+    type = PTFunctionsEOS
     p_0 = 70e5    # Pa
-    fp = fluid_props1
+    rho = rhoHe
+    beta = beta_fn
+    cp =  cpHe
+    mu = muHe
+    k =  kHe
+    enthalpy = HHe
   [../]
 
   [./eos_water]
@@ -651,18 +648,7 @@ T_out = 623.15  #1000
   [../]
 []
 
-  [MaterialProperties]
-
-  [./fluid_props1]
-    type = FunctionFluidProperties
-    rho = rhoHe
-    beta = beta_fn
-    cp =  cpHe
-    mu = muHe
-    k =  kHe
-    enthalpy = HHe
-  [../]
-
+[MaterialProperties]
   [./fuel-mat]                               # Material name
      type = SolidMaterialProps
     k = 74.77 #153 #74.77 #kf                                  # Thermal conductivity
@@ -716,7 +702,6 @@ T_out = 623.15  #1000
     material_hs = 'fuel-mat'
     Ts_init = ${Ts_1}
     HS_BC_type = 'Adiabatic Coupled'
-    eos_right = eos
     hs_power= ${power_total}
     power_fraction = '${power_fr_ring_one}'              # Power fraction of different blocks. If not provided, calculated based on the volume of differnt blocks
    hs_power_shape_fn = power_decay_fn   #ppf_axial       # Axial power profile. If not provided, assuming uniform
@@ -734,7 +719,6 @@ T_out = 623.15  #1000
     material_hs = 'fuel-mat'
     Ts_init = ${Ts_1}
     HS_BC_type = 'Coupled Adiabatic'
-    eos_left = eos
     hs_power= ${power_total}
     power_fraction = '${power_fr_ring_one}'              # Power fraction of different blocks. If not provided, calculated based on the volume of differnt blocks
    hs_power_shape_fn = power_decay_fn  #ppf_axial       # Axial power profile. If not provided, assuming uniform
@@ -753,7 +737,6 @@ T_out = 623.15  #1000
     material_hs = 'fuel-mat'
     Ts_init = ${Ts_1}
     HS_BC_type = 'Adiabatic Coupled'
-    eos_right = eos
     hs_power= ${power_total}
     power_fraction = '${power_fr_ring_two}'              # Power fraction of different blocks. If not provided, calculated based on the volume of differnt blocks
    hs_power_shape_fn = power_decay_fn   #ppf_axial       # Axial power profile. If not provided, assuming uniform
@@ -771,7 +754,6 @@ T_out = 623.15  #1000
     material_hs = 'fuel-mat'
     Ts_init = ${Ts_1}
     HS_BC_type = 'Coupled Adiabatic'
-    eos_left = eos
     hs_power= ${power_total}
     power_fraction = '${power_fr_ring_two}'              # Power fraction of different blocks. If not provided, calculated based on the volume of differnt blocks
    hs_power_shape_fn = power_decay_fn  #ppf_axial       # Axial power profile. If not provided, assuming uniform
@@ -790,7 +772,6 @@ T_out = 623.15  #1000
     material_hs = 'fuel-mat'
     Ts_init = ${Ts_1}
     HS_BC_type = 'Adiabatic Coupled'
-    eos_right = eos
     hs_power= ${power_total}
     power_fraction = '${power_fr_ring_three}'              # Power fraction of different blocks. If not provided, calculated based on the volume of differnt blocks
    hs_power_shape_fn = power_decay_fn   #ppf_axial       # Axial power profile. If not provided, assuming uniform
@@ -808,7 +789,6 @@ T_out = 623.15  #1000
     material_hs = 'fuel-mat'
     Ts_init = ${Ts_1}
     HS_BC_type = 'Coupled Adiabatic'
-    eos_left = eos
     hs_power= ${power_total}
     power_fraction = '${power_fr_ring_three}'              # Power fraction of different blocks. If not provided, calculated based on the volume of differnt blocks
    hs_power_shape_fn = power_decay_fn  #ppf_axial       # Axial power profile. If not provided, assuming uniform
@@ -867,7 +847,6 @@ T_out = 623.15  #1000
     material_hs = 'graphite-mat'
     Ts_init = ${Ts_1}
     HS_BC_type = 'Adiabatic Coupled'
-    eos_right = eos
     hs_power= 0
   [../]
 
@@ -884,7 +863,6 @@ T_out = 623.15  #1000
     Ts_init = ${Ts_1}
     HS_BC_type = 'Coupled Adiabatic'
 #    Hw_left = ${wallHeatTrans_coef}
-    eos_left = eos
     hs_power= 0
   [../]
 
@@ -901,7 +879,6 @@ T_out = 623.15  #1000
     material_hs = 'graphite-mat'
     Ts_init = ${Ts_1}
     HS_BC_type = 'Adiabatic Coupled'
-    eos_right = eos
     hs_power= 0
   [../]
 
@@ -918,7 +895,6 @@ T_out = 623.15  #1000
     Ts_init = ${Ts_1}
     HS_BC_type = 'Coupled Adiabatic'
 #    Hw_left = ${wallHeatTrans_coef}
-    eos_left = eos
     hs_power= 0
   [../]
 
@@ -935,7 +911,6 @@ T_out = 623.15  #1000
     material_hs = 'graphite-mat'
     Ts_init = ${Ts_1}
     HS_BC_type = 'Adiabatic Coupled'
-    eos_right = eos
     hs_power= 0
   [../]
 
@@ -952,7 +927,6 @@ T_out = 623.15  #1000
     Ts_init = ${Ts_1}
     HS_BC_type = 'Coupled Adiabatic'
 #    Hw_left = ${wallHeatTrans_coef}
-    eos_left = eos
     hs_power= 0
   [../]
 
@@ -1009,7 +983,6 @@ T_out = 623.15  #1000
     material_hs = 'graphite-mat'
     Ts_init = ${Ts_1}
     HS_BC_type = 'Adiabatic Coupled'
-    eos_right = eos
     hs_power= 0
   [../]
 
@@ -1026,7 +999,6 @@ T_out = 623.15  #1000
     Ts_init = ${Ts_1}
     HS_BC_type = 'Coupled Adiabatic'
 #    Hw_left = ${wallHeatTrans_coef}
-    eos_left = eos
     hs_power= 0
   [../]
 
@@ -1043,7 +1015,6 @@ T_out = 623.15  #1000
     material_hs = 'graphite-mat'
     Ts_init = ${Ts_1}
     HS_BC_type = 'Adiabatic Coupled'
-    eos_right = eos
     hs_power= 0
   [../]
 
@@ -1060,7 +1031,6 @@ T_out = 623.15  #1000
     Ts_init = ${Ts_1}
     HS_BC_type = 'Coupled Adiabatic'
 #    Hw_left = ${wallHeatTrans_coef}
-    eos_left = eos
     hs_power= 0
   [../]
 
@@ -1077,7 +1047,6 @@ T_out = 623.15  #1000
     material_hs = 'graphite-mat'
     Ts_init = ${Ts_1}
     HS_BC_type = 'Adiabatic Coupled'
-    eos_right = eos
     hs_power= 0
   [../]
 
@@ -1093,7 +1062,6 @@ T_out = 623.15  #1000
     material_hs = 'graphite-mat'
     Ts_init = ${Ts_1}
     HS_BC_type = 'Coupled Adiabatic'
-    eos_left = eos
     hs_power= 0
   [../]
 
@@ -2461,7 +2429,6 @@ T_out = 623.15  #1000
     HS_BC_type = 'Adiabatic Coupled'
     name_comp_right= R6_C
     HT_surface_area_density_right = ${aw_R6}
-    eos_right = eos
     radius_i = ${rad_R6}
   [../]
 
@@ -2497,7 +2464,6 @@ T_out = 623.15  #1000
 #    T_bc_right = 303
     name_comp_left= R6_C
     HT_surface_area_density_left = ${aw_R6}
-    eos_left = eos
     radius_i = ${rad_R7}
   [../]
 
@@ -3854,7 +3820,6 @@ T_out = 623.15  #1000
     HS_BC_type = 'Adiabatic Coupled'
     name_comp_right= R6UP_C
     HT_surface_area_density_right = ${aw_R6}
-    eos_right = eos
     radius_i = ${rad_R6}
   [../]
 
@@ -3890,7 +3855,6 @@ T_out = 623.15  #1000
 #    T_bc_right = 303
     name_comp_left= R6UP_C
     HT_surface_area_density_left = ${aw_R6}
-    eos_left = eos
     radius_i = ${rad_R7}
   [../]
 
@@ -6098,7 +6062,6 @@ T_out = 623.15  #1000
     HS_BC_type = 'Adiabatic Coupled'
     name_comp_right= R6LP_C
     HT_surface_area_density_right = ${aw_R6}
-    eos_right = eos
     radius_i = ${rad_R6}
   [../]
 
@@ -6134,7 +6097,6 @@ T_out = 623.15  #1000
 #    T_bc_right = 303
     name_comp_left= R6LP_C
     HT_surface_area_density_left = ${aw_R6}
-    eos_left = eos
     radius_i = ${rad_R7}
   [../]
 
@@ -8357,7 +8319,6 @@ T_out = 623.15  #1000
     initial_T = ${T_out}
 #    initial_V = 1.30
     eos = eos
-    display_pps = true
     nodal_Tbc = true
   [../]
 
@@ -8380,7 +8341,6 @@ T_out = 623.15  #1000
     initial_T = ${T_out}
 #    initial_V = 1.30
     eos = eos
-    display_pps = true
     nodal_Tbc = true
   [../]
 
@@ -8875,104 +8835,104 @@ T_out = 623.15  #1000
 
 
   [./R1_max]                               # Output maximum solid temperature of block CH1: solid:fuel
-    type = NodalMaxValue
+    type = NodalExtremeValue
     block = 'R1:hs0'
     variable = T_solid
   [../]
 
   [./R2_1L_max]                               # Output maximum solid temperature of block CH1: solid:fuel
-    type = NodalMaxValue
+    type = NodalExtremeValue
     block = 'R2_1-L:hs0'
     variable = T_solid
   [../]
   [./R2_1R_max]                               # Output maximum solid temperature of block CH1: solid:fuel
-    type = NodalMaxValue
+    type = NodalExtremeValue
     block = 'R2_1-R:hs0'
     variable = T_solid
   [../]
 
 
   [./R2_11L_max]                               # Output maximum solid temperature of block CH1: solid:fuel
-    type = NodalMaxValue
+    type = NodalExtremeValue
     block = 'R2_11-L:hs0'
     variable = T_solid
   [../]
   [./R2_11R_max]                               # Output maximum solid temperature of block CH1: solid:fuel
-    type = NodalMaxValue
+    type = NodalExtremeValue
     block = 'R2_11-R:hs0'
     variable = T_solid
   [../]
 
 
   [./R3_1L_max]                               # Output maximum solid temperature of block CH1: solid:fuel
-    type = NodalMaxValue
+    type = NodalExtremeValue
     block = 'R3_1-L:hs0'
     variable = T_solid
   [../]
   [./R3_1R_max]                               # Output maximum solid temperature of block CH1: solid:fuel
-    type = NodalMaxValue
+    type = NodalExtremeValue
     block = 'R3_1-R:hs0'
     variable = T_solid
   [../]
 
 
   [./R3_11L_max]                               # Output maximum solid temperature of block CH1: solid:fuel
-    type = NodalMaxValue
+    type = NodalExtremeValue
     block = 'R3_11-L:hs0'
     variable = T_solid
   [../]
   [./R3_11R_max]                               # Output maximum solid temperature of block CH1: solid:fuel
-    type = NodalMaxValue
+    type = NodalExtremeValue
     block = 'R3_11-R:hs0'
     variable = T_solid
   [../]
 
 ##
   [./R4_1L_max]                               # Output maximum solid temperature of block CH1: solid:fuel
-    type = NodalMaxValue
+    type = NodalExtremeValue
     block = 'R4_1-L:hs0'
     variable = T_solid
   [../]
   [./R4_1R_max]                               # Output maximum solid temperature of block CH1: solid:fuel
-    type = NodalMaxValue
+    type = NodalExtremeValue
     block = 'R4_1-R:hs0'
     variable = T_solid
   [../]
 
 
   [./R4_11L_max]                               # Output maximum solid temperature of block CH1: solid:fuel
-    type = NodalMaxValue
+    type = NodalExtremeValue
     block = 'R4_11-L:hs0'
     variable = T_solid
   [../]
   [./R4_11R_max]                               # Output maximum solid temperature of block CH1: solid:fuel
-    type = NodalMaxValue
+    type = NodalExtremeValue
     block = 'R4_11-R:hs0'
     variable = T_solid
   [../]
 
 ##
   [./R5_max]                               # Output maximum solid temperature of block CH1: solid:fuel
-    type = NodalMaxValue
+    type = NodalExtremeValue
     block = 'R5:hs0'
     variable = T_solid
   [../]
 
   [./R6_max]                               # Output maximum solid temperature of block CH1: solid:fuel
-    type = NodalMaxValue
+    type = NodalExtremeValue
     block = 'R6:hs0'
     variable = T_solid
   [../]
 
 
   [./R7_max]                               # Output maximum solid temperature of block CH1: solid:fuel
-    type = NodalMaxValue
+    type = NodalExtremeValue
     block = 'R7:hs0'
     variable = T_solid
   [../]
 
   [./RCCS_max]                               # Output maximum solid temperature of block CH1: solid:fuel
-    type = NodalMaxValue
+    type = NodalExtremeValue
     block = 'RCCS_AC:hs0'
     variable = T_solid
   [../]

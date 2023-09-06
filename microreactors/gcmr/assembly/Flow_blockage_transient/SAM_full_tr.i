@@ -23,10 +23,8 @@ layers = 40 # Make sure the number of axial divisions in the fluid domain and so
   global_init_V = ${Vin}
   global_init_T = ${Tin}
   gravity = '0 1e-8 0' # horizontal channel
-  [PBModelParams]
-    pbm_scaling_factors = '1 1e-3 1e-6'
-    p_order = 2
-  []
+  scaling_factor_var = '1 1e-3 1e-6'  # fluid model solver parameters
+  p_order = 2
   Tsolid_sf = 1e-3 # Scaling factors for solid temperature
 []
 

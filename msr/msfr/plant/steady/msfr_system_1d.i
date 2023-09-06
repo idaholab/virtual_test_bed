@@ -13,9 +13,7 @@ core_power_val = 3e9
   global_init_V = 0.01
   global_init_T = 898.15
   Tsolid_sf     = 1e-3
-  [PBModelParams]
-    pbm_scaling_factors = '1 1e-3 1e-6'
-  []
+  scaling_factor_var = '1 1e-3 1e-6'
 []
 
 [Functions]
@@ -65,7 +63,7 @@ core_power_val = 3e9
   []
   [core_specific_power]
     type = ParsedFunction
-    value = '${fparse core_power_val / 9.27}'
+    expression = '${fparse core_power_val / 9.27}'
   []
   [pump_head_fun]
     type = PiecewiseConstant
