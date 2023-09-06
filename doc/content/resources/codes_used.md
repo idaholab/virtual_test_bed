@@ -54,6 +54,8 @@ obtained through INL's [NCRC](https://inl.gov/ncrc/).
 
 - Heat Pipe Micro-Reactor [documentation](mrad/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/microreactors/mrad)
 
+- HTTR Core multiphysics [documentation](httf/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/httr/steady_state_and_null_transient)
+
 
 ### Cardinal / OpenMC (open-source)
 
@@ -126,6 +128,8 @@ obtained through INL's [NCRC](https://inl.gov/ncrc/).
 
 - High Temperature Test Facility transient simulations [documentation](htgr/httf/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/httf)
 
+- HTTR Core multiphysics [documentation](httf/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/httr/steady_state_and_null_transient)
+
 
 ## Thermo-mechanics
 
@@ -140,6 +144,8 @@ obtained through INL's [NCRC](https://inl.gov/ncrc/).
 - SNAP-8 NTP reactor core model [documentation](microreactors/s8er/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/microreactors/s8er)
 
 - Gas Cooled Micro Reactor assembly multiphysics [documentation](gcmr/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/devel/microreactors/gcmr/assembly)
+
+- HTTR Core multiphysics [documentation](httf/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/httr/steady_state_and_null_transient)
 
 
 ### Thermo-mechanics module (open-source)
@@ -170,4 +176,4 @@ obtained through INL's [NCRC](https://inl.gov/ncrc/).
 
 !alert note
 The input file links are not automatically checked by the VTB automated testing. If you hit a broken
-link please report it to the [VTB team](abdalla.aboujaoude@inl.gov), thank you for your help!
+link please report it to the [VTB team](guillaume.giudicelli@inl.gov), thank you for your help!

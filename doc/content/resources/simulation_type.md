@@ -58,6 +58,8 @@ help creating it.
 
 - Heat Pipe Micro-Reactor [documentation](mrad/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/microreactors/mrad)
 
+- HTTR Core multiphysics [documentation](httf/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/httr/steady_state_and_null_transient)
+
 
 ### Primary loop analysis
 
@@ -80,6 +82,11 @@ help creating it.
 
 
 ## Transient
+
+### Null transient
+
+- HTTR Core multiphysics [documentation](httf/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/httr/steady_state_and_null_transient)
+
 
 ### Reactivity insertion accident (RIA)
 
@@ -125,4 +132,4 @@ help creating it.
 
 !alert note
 The input file links are not automatically checked by the VTB automated testing. If you hit a broken
-link please report it to the [VTB team](abdalla.aboujaoude.at.inl.gov)
+link please report it to the [VTB team](guillaume.giudicelli.at.inl.gov)

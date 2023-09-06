@@ -7,7 +7,6 @@
 # If using or referring to this model, please cite as explained in
 # https://mooseframework.inl.gov/virtual_test_bed/citing.html
 # ==============================================================================
-
 # Defining i as the axial layer index (1 being the top and 18 the bottom), we have the following block IDs:
 # 1050 + i: fuel columns of type 1
 # 1150 + i: fuel columns of type 2
@@ -21,7 +20,6 @@
 # 2250 + i: CR columns, type R2
 # 2350 + i: I columns,
 # 2450 + i: CR columns, type R3
-
 # Block IDs of fuel regions
 fuel_blocks = '
 1055 1056 1057 1058 1059 1060 1061 1062 1063 1064
@@ -29,7 +27,6 @@ fuel_blocks = '
 1255 1256 1257 1258 1259 1260 1261 1262 1263 1264
 1355 1356 1357 1358 1359 1360 1361 1362 1363 1364
 '
-
 # fuel columns including the axial reflectors (since cooling will occur there)
 full_fuel_blocks = '
 1051 1052 1053 1054 1055 1056 1057 1058 1059 1060 1061 1062 1063 1064 1065 1066 1067 1068
@@ -37,27 +34,22 @@ full_fuel_blocks = '
 1251 1252 1253 1254 1255 1256 1257 1258 1259 1260 1261 1262 1263 1264 1265 1266 1267 1268
 1351 1352 1353 1354 1355 1356 1357 1358 1359 1360 1361 1362 1363 1364 1365 1366 1367 1368
 '
-
 fuel_blocks_33pin = '
 1055 1056 1057 1058 1059 1060 1061 1062 1063 1064
 1155 1156 1157 1158 1159 1160 1161 1162 1163 1164
 '
-
 fuel_blocks_31pin = '
 1255 1256 1257 1258 1259 1260 1261 1262 1263 1264
 1355 1356 1357 1358 1359 1360 1361 1362 1363 1364
 '
-
 rr_fuel_blocks_33pin = '
 1051 1052 1053 1054 1065 1066 1067 1068
 1151 1152 1153 1154 1165 1166 1167 1168
 '
-
 rr_fuel_blocks_31pin = '
 1251 1252 1253 1254 1265 1266 1267 1268
 1351 1352 1353 1354 1365 1366 1367 1368
 '
-
 # CR columns including the axial reflectors (since cooling will occur there)
 full_cr_blocks = '
 2051 2052 2053 2054 2055 2056 2057 2058 2059 2060 2061 2062 2063 2064 2065 2066 2067 2068
@@ -66,61 +58,48 @@ full_cr_blocks = '
 2251 2252 2253 2254 2255 2256 2257 2258 2259 2260 2261 2262 2263 2264 2265 2266 2267 2268
 2451 2452 2453 2454 2455 2456 2457 2458 2459 2460 2461 2462 2463 2464 2465 2466 2467 2468
 '
-
 # Remaining blocks containing the removable, permanent reflectors, and instrumentation
 full_pr_blocks = '
 1451 1452 1453 1454 1455 1456 1457 1458 1459 1460 1461 1462 1463 1464 1465 1466 1467 1468
 1551 1552 1553 1554 1555 1556 1557 1558 1559 1560 1561 1562 1563 1564 1565 1566 1567 1568
 2351 2352 2353 2354 2355 2356 2357 2358 2359 2360 2361 2362 2363 2364 2365 2366 2367 2368
 '
-
 rpv_blocks = '2'
-
 # x1 = 4.06 # m - bottom of active fuel region
 # x2 = 1.16 # m - top of active fuel region
 Tinlet = 453.15 # fluid inlet temperature
 Toutlet = 593.15 # (expected) fluid outlet temperature
-
 # core_outer_radius = 2.3 # m
 # rpv_inner_radius = 2.75 # m
 rpv_outer_radius = 2.872 # m
 vcs_radius = 4.00 # m
-
 stefan_boltzmann_constant = 5.670367e-8
 vcs_emissivity = 0.95
 rpv_emissivity = 0.95
-
 D_ext_fuel = 4.1e-2 # external diameter in m
 npins_fuel33 = 33
 npins_fuel31 = 31
-
 D_ext_cr = 1.23e-1 # external diameter in m
-
 p = 0.36 # hexagonal pitch in m
 Sblock = '${fparse 0.5 * sqrt(3) * p * p}' # Cross-section area of the hexagonal block in m^2
-
 # volume fractions of graphite for the 31 fuel, 33 fuel and CR blocks
 vol_frac_fuel33 = '${fparse 1 - 0.25 * npins_fuel33 * pi * D_ext_fuel * D_ext_fuel / Sblock}'
 vol_frac_fuel31 = '${fparse 1 - 0.25 * npins_fuel31 * pi * D_ext_fuel * D_ext_fuel / Sblock}'
 vol_frac_cr = '${fparse 1 - 0.25 * 3            * pi * D_ext_cr * D_ext_cr / Sblock}' # use 3 instead of 2 because 3 holes (but only 2 CRs)
-
 # weighting factor of sleeve temperature [see HTTR_XS.xlsx for computation]
 # Tmod is defined, in the fuel blocks, as: xi * Tsleeve + (1 - xi) * Tsolid
 xi31 = 0.142146 # 31-pin fuel blocks
 xi33 = 0.154815 # 33-pin fuel blocks
-
 [Mesh]
   [fmg]
     type = FileMeshGenerator
     file = '../mesh/full_core/thermal_mesh_in.e'
   []
 []
-
 [Variables]
   [Tsolid] # also wall temperature (moderator side) from Griffin to RELAP-7
   []
 []
-
 [ICs]
   [Tsolid_ic]
     type = FunctionIC
@@ -141,7 +120,6 @@ xi33 = 0.154815 # 33-pin fuel blocks
     value = 400
   []
 []
-
 [Functions]
   [Tsolid_init_func] # initial guess for moderator/fluid temperature
     type = ParsedFunction
@@ -163,8 +141,8 @@ xi33 = 0.154815 # 33-pin fuel blocks
     # x in s
     # y in W/m^3
     type = PiecewiseLinear
-    x = '0' #	8.64	86.4	259.2	432	864	1296	1728	2160	2592	3024	3456	3888	4320	8640	12960	17280	21600	25920	30240	34560	38880	43200	47520	51840	56160	60480	64800	69120	73440	77760	82080	86400'
-    y = '5.7472e+5' #	4.2455e+5	2.8708e+5	2.3162e+5	2.0972e+5	1.8030e+5	1.6245e+5	1.4962e+5	1.3976e+5	1.3190e+5	1.2547e+5	1.2011e+5	1.1555e+5	1.1163e+5	8.9431e+4	7.9024e+4	7.2585e+4	6.8042e+4	6.4565e+4	6.1753e+4	5.9397e+4	5.7373e+4	5.5606e+4	5.4042e+4	5.2646e+4	5.1388e+4	5.0247e+4	4.9205e+4	4.8248e+4	4.7366e+4	4.6547e+4	4.5785e+4	4.5073e+4'
+    x = '0' # 8.64 86.4 259.2 432 864 1296 1728 2160 2592 3024 3456 3888 4320 8640 12960 17280 21600 25920 30240 34560 38880 43200 47520 51840 56160 60480 64800 69120 73440 77760 82080 86400'
+    y = '5.7472e+5' # 4.2455e+5 2.8708e+5 2.3162e+5 2.0972e+5 1.8030e+5 1.6245e+5 1.4962e+5 1.3976e+5 1.3190e+5 1.2547e+5 1.2011e+5 1.1555e+5 1.1163e+5 8.9431e+4 7.9024e+4 7.2585e+4 6.8042e+4 6.4565e+4 6.1753e+4 5.9397e+4 5.7373e+4 5.5606e+4 5.4042e+4 5.2646e+4 5.1388e+4 5.0247e+4 4.9205e+4 4.8248e+4 4.7366e+4 4.6547e+4 4.5785e+4 4.5073e+4'
   []
   [ssteel_304_k]
     type = PiecewiseLinear # [W/mK]
@@ -184,7 +162,6 @@ xi33 = 0.154815 # 33-pin fuel blocks
     value = 'if(t < 300, 712.76, (a0 + a1 * t + a2 / t + a3 / t / t + a4 / t / t / t + a5 / t / t / t / t) * b)'
   []
 []
-
 [Kernels]
   [heat_conduction]
     type = HeatConduction
@@ -208,7 +185,6 @@ xi33 = 0.154815 # 33-pin fuel blocks
     block = '${full_fuel_blocks} ${full_cr_blocks} ${full_pr_blocks}' # all blocks but RPV
     specific_heat = aniso_specific_heat
   []
-
   # conductance kernels (homogenized conduction + radiation through block-sleeve gap)
   [heat_loss_conductance_active_fuel]
     type = Removal
@@ -223,7 +199,6 @@ xi33 = 0.154815 # 33-pin fuel blocks
     block = '${fuel_blocks_31pin} ${fuel_blocks_33pin}'
     material_properties = gap_conductance_mat
   []
-
   # convection kernels (homogenized convection extracted by fuel and CR cooling channels)
   [heat_loss_convection_outer]
     type = Removal
@@ -239,10 +214,8 @@ xi33 = 0.154815 # 33-pin fuel blocks
     material_properties = Hw_outer_homo_mat
   []
 []
-
 [BCs]
   # for now, do not use BC out of the core to not lose heat (most of it should go back in the core since it pre-cools the helium)
-
   [RPV_in_BC] # FIXME: this BC adds energy to the RPV that is not removed from the fluid! (but only ~40kW for 9MW so about 0.6K error on the inlet fluid temperature)
     type = ConvectiveFluxFunction # (Robin BC)
     variable = Tsolid
@@ -268,7 +241,6 @@ xi33 = 0.154815 # 33-pin fuel blocks
     Tinfinity = T_outside # matches Figure 13 value concrete shield
   []
 []
-
 [ThermalContact]
   [RPV_gap]
     type = GapHeatTransfer
@@ -285,7 +257,6 @@ xi33 = 0.154815 # 33-pin fuel blocks
     cylinder_axis_point_2 = '5.22 0 0'
   []
 []
-
 [AuxVariables]
   [power_density]
     block = '${fuel_blocks}'
@@ -383,7 +354,6 @@ xi33 = 0.154815 # 33-pin fuel blocks
     initial_condition = '${fparse 500 * pi * D_ext_fuel * npins_fuel33 / Sblock}' # npins_fuel33 used everywhere because only initial guess
   []
 []
-
 [AuxKernels]
   [assign_initial_power_density]
     type = NormalizationAux
@@ -430,7 +400,6 @@ xi33 = 0.154815 # 33-pin fuel blocks
     block = '${fuel_blocks}'
     execute_on = 'timestep_end'
   []
-
   [heat_balance_active_fuel]
     type = ParsedAux
     variable = heat_balance
@@ -445,7 +414,6 @@ xi33 = 0.154815 # 33-pin fuel blocks
     function = 'Hw_outer_homo * (Tfluid - Tsolid)'
     args = 'Hw_outer_homo Tfluid Tsolid'
   []
-
   [RPV_convection_removal_aux]
     type = ParsedAux
     variable = RPV_convection_removal
@@ -453,7 +421,6 @@ xi33 = 0.154815 # 33-pin fuel blocks
     function = '${stefan_boltzmann_constant} * ${rpv_emissivity} * ${vcs_emissivity} * ${vcs_radius} / (${vcs_emissivity} * ${vcs_radius} + ${rpv_emissivity} * ${rpv_outer_radius} * (1 - ${vcs_emissivity})) * (pow(Tsolid, 4) - pow(T_inf_outside,4))'
     args = 'T_inf_outside Tsolid'
   []
-
   [assign_Tmod_fuelblocks31]
     type = ParsedAux
     variable = Tmod
@@ -479,7 +446,6 @@ xi33 = 0.154815 # 33-pin fuel blocks
     execute_on = 'timestep_end'
   []
 []
-
 [UserObjects]
   [average_power_UO]
     type = NearestPointLayeredAverage
@@ -545,7 +511,6 @@ xi33 = 0.154815 # 33-pin fuel blocks
     execute_on = 'initial timestep_begin timestep_end'
   []
 []
-
 [Materials]
   [graphite_moderator]
     type = AnisoHeatConductionMaterial
@@ -615,7 +580,6 @@ xi33 = 0.154815 # 33-pin fuel blocks
     prop_names = Hw_outer_homo_mat
   []
 []
-
 [Postprocessors]
   [Tsolid_avg]
     type = ElementAverageValue
@@ -870,37 +834,30 @@ xi33 = 0.154815 # 33-pin fuel blocks
     outputs = none
   []
 []
-
 [Executioner]
   type = Transient
   automatic_scaling = true
   compute_scaling_once = false
   petsc_options_iname = '-pc_type -pc_hypre_type -ksp_gmres_restart '
   petsc_options_value = 'hypre boomeramg 100'
-
   start_time = 0
   end_time = 5e6
   dtmin = 0.01
   timestep_tolerance = 1e-4
-
   nl_rel_tol = 1e-8
   nl_abs_tol = 1e-9
   fixed_point_rel_tol = 1e-3
   fixed_point_abs_tol = 1e-7
-
   nl_max_its = 5
   l_max_its = 100
-
   [TimeStepper]
     type = IterationAdaptiveDT
     dt = 0.1
     growth_factor = 1.5
     timestep_limiting_postprocessor = dt_max # no real limit but extremely large time steps (with fixed end_time) may not quite reach steady-state
   []
-
   line_search = none # default seems bad for convergence
 []
-
 [MultiApps]
   [bison]
     type = TransientMultiApp
@@ -917,22 +874,18 @@ xi33 = 0.154815 # 33-pin fuel blocks
     positions_file = '../mesh/centers_relap_33pins.txt
                       ../mesh/centers_relap_31pins.txt
                       ../mesh/centers_relap_CR.txt'
-
     # the first 12 positions are fuel with 33 pins, the next 18 are fuel with 31 pins, the last 16 are CR
     input_files = 'thermal_hydraulics_fuel_pins_steady.i
                    thermal_hydraulics_fuel_pins_steady.i
                    thermal_hydraulics_CR_steady.i'
-
     cli_args = 'npins=33 npins=33 npins=33 npins=33 npins=33 npins=33 npins=33 npins=33 npins=33 npins=33 npins=33 npins=33
                 npins=31 npins=31 npins=31 npins=31 npins=31 npins=31 npins=31 npins=31 npins=31 npins=31 npins=31 npins=31 npins=31 npins=31 npins=31 npins=31 npins=31 npins=31
                 npins=2  npins=2  npins=2  npins=2  npins=2  npins=2  npins=2  npins=2  npins=2  npins=2  npins=2  npins=2  npins=2  npins=2  npins=2  npins=2'
-
     execute_on = 'timestep_end'
     max_procs_per_app = 1
     sub_cycling = true
   []
 []
-
 [Transfers]
   [pdens_to_bison]
     type = MultiAppUserObjectTransfer
@@ -1003,7 +956,6 @@ xi33 = 0.154815 # 33-pin fuel blocks
     variable = inner_Twall
     nearest_sub_app = true
   []
-
   [heat_source_from_bison]
     type = MultiAppUserObjectTransfer
     from_multi_app = bison
@@ -1068,14 +1020,12 @@ xi33 = 0.154815 # 33-pin fuel blocks
     reduction_type = sum
   []
 []
-
 [Outputs]
   [exodus]
     type = Exodus
     overwrite = true
   []
   csv = true
-
   [checkpoint]
     type = Checkpoint
     num_files = 1
