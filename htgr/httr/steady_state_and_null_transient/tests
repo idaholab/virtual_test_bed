@@ -33,6 +33,43 @@
     check_input = true
   []
 
+  [steady_core_homogeneous_hc]
+    type = CSVDiff
+    input = full_core_ht_steady.i
+    executable_pattern = 'sabertooth*|bison*'
+    cli_args = "MultiApps/active='' Transfers/active='' Executioner/num_steps=1"
+    csvdiff = 'full_core_ht_steady_out.csv'
+    min_parallel = 8
+  []
+  [steady_elem_hc]
+    type = CSVDiff
+    input = fuel_elem_steady.i
+    executable_pattern = 'sabertooth*|bison*'
+    cli_args = 'Executioner/end_time=10'
+    csvdiff = 'fuel_elem_steady_out.csv'
+  []
+  [steady_neutronics]
+    type = CSVDiff
+    input = neutronics_eigenvalue.i
+    executable_pattern = 'sabertooth*|griffin*'
+    cli_args = "MultiApps/active='' Transfers/active='' Executioner/nl_abs_tol=1e-8 "
+               "Executioner/nl_rel_tol=1e-8"
+    csvdiff = 'neutronics_eigenvalue_9MW.csv'
+    min_parallel = 8
+  []
+  [steady_cr_channel_th]
+    type = CSVDiff
+    input = thermal_hydraulics_CR_steady.i
+    executable_pattern = 'sabertooth*|relap7*'
+    csvdiff = 'thermal_hydraulics_CR_steady_out.csv'
+  []
+  [steady_fuel_channel_th]
+    type = CSVDiff
+    input = thermal_hydraulics_fuel_pins_steady.i
+    executable_pattern = 'sabertooth*|relap7*'
+    csvdiff = 'thermal_hydraulics_fuel_pins_steady_out.csv'
+  []
+
   # Null transient
   [syntax_null_core_homogeneous_hc]
     type = RunApp
