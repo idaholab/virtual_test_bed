@@ -1,0 +1,69 @@
+[Tests]
+  # Steady state
+  [syntax_steady_core_homogeneous_hc]
+    type = RunApp
+    input = full_core_ht_steady.i
+    executable_pattern = 'sabertooth*|bison*'
+    cli_args = "MultiApps/active='' Transfers/active=''"
+    check_input = true
+  []
+  [syntax_steady_elem_hc]
+    type = RunApp
+    input = fuel_elem_steady.i
+    executable_pattern = 'sabertooth*|bison*'
+    check_input = true
+  []
+  [syntax_steady_neutronics]
+    type = RunApp
+    input = neutronics_eigenvalue.i
+    executable_pattern = 'sabertooth*|griffin*'
+    cli_args = "MultiApps/active='' Transfers/active=''"
+    check_input = true
+  []
+  [syntax_steady_cr_channel_th]
+    type = RunApp
+    input = thermal_hydraulics_CR_steady.i
+    executable_pattern = 'sabertooth*|relap7*'
+    check_input = true
+  []
+  [syntax_steady_fuel_channel_th]
+    type = RunApp
+    input = thermal_hydraulics_fuel_pins_steady.i
+    executable_pattern = 'sabertooth*|relap7*'
+    check_input = true
+  []
+
+  # Null transient
+  [syntax_null_core_homogeneous_hc]
+    type = RunApp
+    input = full_core_ht_null.i
+    executable_pattern = 'sabertooth*|bison*'
+    cli_args = "MultiApps/active='' Transfers/active=''"
+    check_input = true
+  []
+  [syntax_null_elem_hc]
+    type = RunApp
+    input = fuel_elem_null.i
+    executable_pattern = 'sabertooth*|bison*'
+    check_input = true
+  []
+  [syntax_null_neutronics]
+    type = RunApp
+    input = neutronics_null.i
+    executable_pattern = 'sabertooth*|griffin*'
+    cli_args = "MultiApps/active='' Transfers/active=''"
+    check_input = true
+  []
+  [syntax_null_cr_channel_th]
+    type = RunApp
+    input = thermal_hydraulics_CR_null.i
+    executable_pattern = 'sabertooth*|relap7*'
+    check_input = true
+  []
+  [syntax_null_fuel_channel_th]
+    type = RunApp
+    input = thermal_hydraulics_fuel_pins_null.i
+    executable_pattern = 'sabertooth*|relap7*'
+    check_input = true
+  []
+[]
