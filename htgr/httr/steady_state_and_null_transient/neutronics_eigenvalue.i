@@ -174,7 +174,7 @@ extension = '_9MW'
   [Tsolid_init_func] # initial guess for moderator temperature
     type = ParsedFunction
     # value = '${Tinlet} + (5.22 - x) * (${Toutlet} - ${Tinlet}) / 5.22'
-    value = 'if(x < ${x2}, ${Toutlet},
+    expression = 'if(x < ${x2}, ${Toutlet},
              if(x > ${x1}, ${Tinlet},
                           (${Tinlet} - ${Toutlet}) * (x - ${x2}) / (${x1} - ${x2}) + ${Toutlet}))'
   []

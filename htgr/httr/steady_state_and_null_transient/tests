@@ -88,6 +88,8 @@
     check_input = true
     prereq = 'steady_core_homogeneous_hc'
     min_parallel = 8
+    # An unused parameter for setting up input file logic
+    allow_unused = true
   []
   [syntax_null_elem_hc]
     type = RunApp

@@ -62,7 +62,7 @@ Toutlet = 593.15 # (expected) fluid outlet temperature
 [Functions]
   [Tfluid_init_func] # initial guess for moderator/fluid temperature
     type = ParsedFunction
-    value = '${Tinlet} + (5.22 - x) * (${Toutlet} - ${Tinlet}) / 5.22'
+    expression = '${Tinlet} + (5.22 - x) * (${Toutlet} - ${Tinlet}) / 5.22'
   []
 []
 
@@ -98,8 +98,8 @@ Toutlet = 593.15 # (expected) fluid outlet temperature
   [Hw_outer_homo_aux]
     type = ParsedAux
     variable = Hw_outer_homo
-    function = 'Hw_outer * ${htc_homo_scaling}'
-    args = 'Hw_outer'
+    expression = 'Hw_outer * ${htc_homo_scaling}'
+    coupled_variables = 'Hw_outer'
   []
 []
 

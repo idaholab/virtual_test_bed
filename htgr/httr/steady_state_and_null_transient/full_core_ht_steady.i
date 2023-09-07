@@ -123,19 +123,19 @@ xi33 = 0.154815 # 33-pin fuel blocks
 [Functions]
   [Tsolid_init_func] # initial guess for moderator/fluid temperature
     type = ParsedFunction
-    value = '${Tinlet} + (5.22 - x) * (${Toutlet} - ${Tinlet}) / 5.22'
+    expression = '${Tinlet} + (5.22 - x) * (${Toutlet} - ${Tinlet}) / 5.22'
     # value = 'if(x < ${x2}, ${Toutlet},
     #          if(x > ${x1}, ${Tinlet},
     #                       (${Tinlet} - ${Toutlet}) * (x - ${x2}) / (${x1} - ${x2}) + ${Toutlet}))'
   []
   [T_init]
     type = ParsedFunction
-    value = '${Tinlet}'
+    expression = '${Tinlet}'
   []
   [T_outside]
     type = ParsedFunction
     # set to 300 K to match temp with VCS operation (concrete bio shield temp)
-    value = 300 # change to piecewise function for transient without VCS
+    expression = 300 # change to piecewise function for transient without VCS
   []
   [decay_heat_power_density_func]
     # x in s
@@ -151,15 +151,15 @@ xi33 = 0.154815 # 33-pin fuel blocks
   []
   [IG110_k] # thermal conductivity divided by the temperature (dirty trick to make AnisoHeatConductionMaterial define a temperature-independent anistropic thermal conductivity)
     type = ParsedFunction
-    vals = '6.632e+01 -4.994e-02 1.712e-05' # [W/m/K]
-    vars = 'a0        a1         a2       '
-    value = '((a0 + a1 * t + a2 * t * t) - 1) / t'
+    symbol_values = '6.632e+01 -4.994e-02 1.712e-05' # [W/m/K]
+    symbol_names = 'a0        a1         a2       '
+    expression = '((a0 + a1 * t + a2 * t * t) - 1) / t'
   []
   [IG110_cp] # assumed to be the same as for H-451 graphite, taken from MHTGR-350-Appendices.r0.pdf
     type = ParsedFunction
-    vals = '0.54212 -2.42667e-6 -90.2725 -43449.3 1.59309e7 -1.43688e9 4184' # [J/kg/K]
-    vars = 'a0     a1          a2       a3       a4        a5         b'
-    value = 'if(t < 300, 712.76, (a0 + a1 * t + a2 / t + a3 / t / t + a4 / t / t / t + a5 / t / t / t / t) * b)'
+    symbol_values = '0.54212 -2.42667e-6 -90.2725 -43449.3 1.59309e7 -1.43688e9 4184' # [J/kg/K]
+    symbol_names = 'a0     a1          a2       a3       a4        a5         b'
+    expression = 'if(t < 300, 712.76, (a0 + a1 * t + a2 / t + a3 / t / t + a4 / t / t / t + a5 / t / t / t / t) * b)'
   []
 []
 [Kernels]
@@ -375,8 +375,8 @@ xi33 = 0.154815 # 33-pin fuel blocks
     type = ParsedAux
     block = '${fuel_blocks}'
     variable = heat_source_tot
-    function = 'power_density + decay_heat_power_density'
-    args = 'power_density decay_heat_power_density'
+    expression = 'power_density + decay_heat_power_density'
+    coupled_variables = 'power_density decay_heat_power_density'
     execute_on = 'initial timestep_begin timestep_end'
   []
   [assign_T_inf_outside] # needs to be time dependent for the case without VCS
@@ -404,45 +404,45 @@ xi33 = 0.154815 # 33-pin fuel blocks
     type = ParsedAux
     variable = heat_balance
     block = '${fuel_blocks}'
-    function = 'gap_conductance * (inner_Twall - Tsolid) + Hw_outer_homo * (Tfluid - Tsolid)'
-    args = 'gap_conductance inner_Twall Tsolid Hw_outer_homo Tfluid'
+    expression = 'gap_conductance * (inner_Twall - Tsolid) + Hw_outer_homo * (Tfluid - Tsolid)'
+    coupled_variables = 'gap_conductance inner_Twall Tsolid Hw_outer_homo Tfluid'
   []
   [heat_balance_convection_rr_cr]
     type = ParsedAux
     variable = heat_balance
     block = '${rr_fuel_blocks_31pin} ${rr_fuel_blocks_33pin} ${full_cr_blocks}'
-    function = 'Hw_outer_homo * (Tfluid - Tsolid)'
-    args = 'Hw_outer_homo Tfluid Tsolid'
+    expression = 'Hw_outer_homo * (Tfluid - Tsolid)'
+    coupled_variables = 'Hw_outer_homo Tfluid Tsolid'
   []
   [RPV_convection_removal_aux]
     type = ParsedAux
     variable = RPV_convection_removal
     block = '${rpv_blocks}'
-    function = '${stefan_boltzmann_constant} * ${rpv_emissivity} * ${vcs_emissivity} * ${vcs_radius} / (${vcs_emissivity} * ${vcs_radius} + ${rpv_emissivity} * ${rpv_outer_radius} * (1 - ${vcs_emissivity})) * (pow(Tsolid, 4) - pow(T_inf_outside,4))'
-    args = 'T_inf_outside Tsolid'
+    expression = '${stefan_boltzmann_constant} * ${rpv_emissivity} * ${vcs_emissivity} * ${vcs_radius} / (${vcs_emissivity} * ${vcs_radius} + ${rpv_emissivity} * ${rpv_outer_radius} * (1 - ${vcs_emissivity})) * (pow(Tsolid, 4) - pow(T_inf_outside,4))'
+    coupled_variables = 'T_inf_outside Tsolid'
   []
   [assign_Tmod_fuelblocks31]
     type = ParsedAux
     variable = Tmod
     block = '${fuel_blocks_31pin}'
-    function = '${xi31} * Tsleeve + (1 - ${xi31}) * Tsolid'
-    args = 'Tsleeve Tsolid'
+    expression = '${xi31} * Tsleeve + (1 - ${xi31}) * Tsolid'
+    coupled_variables = 'Tsleeve Tsolid'
     execute_on = 'timestep_end'
   []
   [assign_Tmod_fuelblocks33]
     type = ParsedAux
     variable = Tmod
     block = '${fuel_blocks_33pin}'
-    function = '${xi33} * Tsleeve + (1 - ${xi33}) * Tsolid'
-    args = 'Tsleeve Tsolid'
+    expression = '${xi33} * Tsleeve + (1 - ${xi33}) * Tsolid'
+    coupled_variables = 'Tsleeve Tsolid'
     execute_on = 'timestep_end'
   []
   [assign_Tmod_elsewhere]
     type = ParsedAux
     variable = Tmod
     block = ' ${rr_fuel_blocks_33pin} ${rr_fuel_blocks_31pin} ${full_cr_blocks} ${full_pr_blocks}'
-    function = 'Tsolid'
-    args = 'Tsolid'
+    expression = 'Tsolid'
+    coupled_variables = 'Tsolid'
     execute_on = 'timestep_end'
   []
 []

@@ -91,8 +91,8 @@ Tinlet = 453.15 # fluid inlet temperature
   [Hw_outer_homo_aux]
     type = ParsedAux
     variable = Hw_outer_homo
-    function = 'Hw_outer * ${htc_homo_scaling}'
-    args = 'Hw_outer'
+    expression = 'Hw_outer * ${htc_homo_scaling}'
+    coupled_variables = 'Hw_outer'
   []
 []
 

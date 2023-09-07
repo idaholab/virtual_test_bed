@@ -184,8 +184,8 @@ cond = 0.2309 # He at 523K, 2.8MPa
     type = ParsedAux
     variable = bdy_heat_flux_aux
     block = '${mod_blocks}'
-    function = '1e5 * (temp - Tmod)'
-    args = 'temp Tmod'
+    expression = '1e5 * (temp - Tmod)'
+    coupled_variables = 'temp Tmod'
     execute_on = 'nonlinear timestep_end'
   []
   [set_bdy_heat_flux_layered_integral]
@@ -199,8 +199,8 @@ cond = 0.2309 # He at 523K, 2.8MPa
     type = ParsedAux
     variable = gap_conductance
     block = '${fuel_blocks} ${sleeve_blocks}' # because we only want it defined over the active fuel region for proper averaging (won't change radially)
-    function = '(${cond} / ${inner_outer_radius} / log(${inner_outer_radius} / ${sleeve_outer_radius}) + ${stefan_boltzmann_constant} * (inner_Twall * inner_Twall + Tmod * Tmod) * (inner_Twall + Tmod) / (1 / ${eps1} + 1 / ${eps2} - 1) * 0.5 * (${inner_outer_radius} + ${sleeve_outer_radius}) / ${inner_outer_radius}) * ${htc_homo_scaling}'
-    args = 'Tmod inner_Twall'
+    expression = '(${cond} / ${inner_outer_radius} / log(${inner_outer_radius} / ${sleeve_outer_radius}) + ${stefan_boltzmann_constant} * (inner_Twall * inner_Twall + Tmod * Tmod) * (inner_Twall + Tmod) / (1 / ${eps1} + 1 / ${eps2} - 1) * 0.5 * (${inner_outer_radius} + ${sleeve_outer_radius}) / ${inner_outer_radius}) * ${htc_homo_scaling}'
+    coupled_variables = 'Tmod inner_Twall'
     execute_on = 'nonlinear timestep_end'
   []
 []
@@ -282,7 +282,7 @@ cond = 0.2309 # He at 523K, 2.8MPa
 [Functions]
   [Tsolid_init_func] # initial guess for moderator/fluid temperature
     type = ParsedFunction
-    value = '${Tinlet} + (5.22 - x) * (${Toutlet} - ${Tinlet}) / 5.22'
+    expression = '${Tinlet} + (5.22 - x) * (${Toutlet} - ${Tinlet}) / 5.22'
     # value = 'if(x < ${x2}, ${Toutlet},
     #          if(x > ${x1}, ${Tinlet},
     #                       (${Tinlet} - ${Toutlet}) * (x - ${x2}) / (${x1} - ${x2}) + ${Toutlet}))'
@@ -291,27 +291,27 @@ cond = 0.2309 # He at 523K, 2.8MPa
   # FIXME: recompute with real burnup and fluence
   [compact_k]
     type = ParsedFunction
-    vals = '-4.438e-09 2.569e-05 -5.186e-02 5.111e+01' # [W/m/K]
-    vars = 'a3         a2         a1        a0'
-    value = 'a0 + a1 * t + a2 * t * t + a3 * t * t * t'
+    symbol_values = '-4.438e-09 2.569e-05 -5.186e-02 5.111e+01' # [W/m/K]
+    symbol_names = 'a3         a2         a1        a0'
+    expression = 'a0 + a1 * t + a2 * t * t + a3 * t * t * t'
   []
   [compact_cp] # assumed to be the same as for H-451 graphite, taken from MHTGR-350-Appendices.r0.pdf
     type = ParsedFunction
-    vals = '-2.408e-10 1.468e-06 -3.379e-03 3.654e+00 -2.875e+02' # [J/kg/K]
-    vars = 'a4         a3        a2         a1        a0'
-    value = 'a0 + a1 * t + a2 * t * t + a3 * t * t * t + a4 * t * t * t * t'
+    symbol_values = '-2.408e-10 1.468e-06 -3.379e-03 3.654e+00 -2.875e+02' # [J/kg/K]
+    symbol_names = 'a4         a3        a2         a1        a0'
+    expression = 'a0 + a1 * t + a2 * t * t + a3 * t * t * t + a4 * t * t * t * t'
   []
   [IG110_k]
     type = ParsedFunction
-    vals = '6.632e+01 -4.994e-02 1.712e-05' # [W/m/K]
-    vars = 'a0        a1         a2'
-    value = 'a0 + a1 * t + a2 * t * t'
+    symbol_values = '6.632e+01 -4.994e-02 1.712e-05' # [W/m/K]
+    symbol_names = 'a0        a1         a2'
+    expression = 'a0 + a1 * t + a2 * t * t'
   []
   [IG110_cp] # assumed to be the same as for H-451 graphite, taken from MHTGR-350-Appendices.r0.pdf
     type = ParsedFunction
-    vals = '0.54212 -2.42667e-6 -90.2725 -43449.3 1.59309e7 -1.43688e9 4184' # [J/kg/K]
-    vars = 'a0     a1          a2       a3       a4        a5         b'
-    value = 'if(t < 300, 712.76, (a0 + a1 * t + a2 / t + a3 / t / t + a4 / t / t / t + a5 / t / t / t / t) * b)'
+    symbol_values = '0.54212 -2.42667e-6 -90.2725 -43449.3 1.59309e7 -1.43688e9 4184' # [J/kg/K]
+    symbol_names = 'a0     a1          a2       a3       a4        a5         b'
+    expression = 'if(t < 300, 712.76, (a0 + a1 * t + a2 / t + a3 / t / t + a4 / t / t / t + a5 / t / t / t / t) * b)'
   []
 []
 
