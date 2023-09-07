@@ -75,6 +75,8 @@ the input file, but generally reside in the same folder in the repository.
 
 - High Temperature Test Facility coupling between core and hundreds of channel calculations [documentation](htgr/httf/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/httf)
 
+- HTTR Core multiphysics [documentation](httr/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/httr/steady_state_and_null_transient)
+
 
 ## Restarting from a previous simulation
 
@@ -93,6 +95,8 @@ Documentation for the [Checkpoint system](https://mooseframework.inl.gov/applica
 
 - Advanced Burner Test Reactor loss of flow transient [documentation](sfr/abtr/abtr.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/sfr/abtr)
 
+- HTTR Core multiphysics [documentation](httr/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/httr/steady_state_and_null_transient)
+
 
 ### Binary restart
 
@@ -110,6 +114,11 @@ specified. The MRAD and PBMR-400 models listed below are an example of this.
 ### Restarting from Exodus simulation files
 
 - Molten Salt Fast Reactor core multiphysics [documentation](msr/msfr/griffin_pgh_model.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/msr/msfr/steady)
+
+
+### Mixed Exodus/Checkpoint Multiapp restart
+
+- HTTR Core multiphysics [documentation](httr/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/httr/steady_state_and_null_transient)
 
 
 ## Computing requirements
@@ -177,6 +186,8 @@ specified. The MRAD and PBMR-400 models listed below are an example of this.
 
 - HTTF Lower Plenum CFD Model [documentation](httf/lower_plenum_cfd.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/devel/htgr/httf/lower_plenum_mixing)
 
+- HTTR Core multiphysics [documentation](httr/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/httr/steady_state_and_null_transient)
+
 
 ### GPU-enabled
 
@@ -190,4 +201,4 @@ If there is a feature which you would find useful to be highlighted, please reac
 
 !alert note
 The input file links are not automatically checked by the VTB automated testing. If you hit a broken
-link please report it to the [VTB team](abdalla.aboujaoude@inl.gov)
+link please report it to the [VTB team](guillaume.giudicelli.at.inl.gov)
