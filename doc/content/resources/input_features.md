@@ -75,7 +75,7 @@ the input file, but generally reside in the same folder in the repository.
 
 - High Temperature Test Facility coupling between core and hundreds of channel calculations [documentation](htgr/httf/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/httf)
 
-- HTTR Core multiphysics [documentation](httf/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/httr/steady_state_and_null_transient)
+- HTTR Core multiphysics [documentation](httr/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/httr/steady_state_and_null_transient)
 
 
 ## Restarting from a previous simulation
@@ -95,7 +95,7 @@ Documentation for the [Checkpoint system](https://mooseframework.inl.gov/applica
 
 - Advanced Burner Test Reactor loss of flow transient [documentation](sfr/abtr/abtr.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/sfr/abtr)
 
-- HTTR Core multiphysics [documentation](httf/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/httr/steady_state_and_null_transient)
+- HTTR Core multiphysics [documentation](httr/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/httr/steady_state_and_null_transient)
 
 
 ### Binary restart
@@ -118,7 +118,7 @@ specified. The MRAD and PBMR-400 models listed below are an example of this.
 
 ### Mixed Exodus/Checkpoint Multiapp restart
 
-- HTTR Core multiphysics [documentation](httf/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/httr/steady_state_and_null_transient)
+- HTTR Core multiphysics [documentation](httr/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/httr/steady_state_and_null_transient)
 
 
 ## Computing requirements
@@ -186,7 +186,7 @@ specified. The MRAD and PBMR-400 models listed below are an example of this.
 
 - HTTF Lower Plenum CFD Model [documentation](httf/lower_plenum_cfd.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/devel/htgr/httf/lower_plenum_mixing)
 
-- HTTR Core multiphysics [documentation](httf/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/httr/steady_state_and_null_transient)
+- HTTR Core multiphysics [documentation](httr/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/httr/steady_state_and_null_transient)
 
 
 ### GPU-enabled
