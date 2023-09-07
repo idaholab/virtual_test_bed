@@ -24,7 +24,6 @@
 #-R: Right side, -L: Left Side, C: coolant channel, Gap: Gap betwen heat structures
 
 #radius inner side surface of cylinder
-rad_R-1  = 0
 rad_Gap-1 = 1.48
 rad_R2-1-L = 1.482
 rad_R2C-1 = 1.498229683
@@ -139,227 +138,146 @@ rad_RCCS = 3.587771894
 w_R-1  = 1.48
 w_Gap-1  = 0.002
 w_R2-1-L = 0.016229683
-w_R2C-1  = 2.1026E-05
 w_R2-1-R = 0.016055525
 w_R2-2-L = 0.015887072
-w_R2C-2  = 2.05868E-05
 w_R2-2-R = 0.015723603
 w_R2-3-L = 0.015565282
-w_R2C-3  = 2.0174E-05
 w_R2-3-R = 0.015411451
 w_R2-4-L = 0.015262285
-w_R2C-4  = 1.97851E-05
 w_R2-4-R = 0.015117182
 w_R2-5-L = 0.014976322
-w_R2C-5  = 1.94178E-05
 w_R2-5-R = 0.014839151
 w_R2-6-L = 0.014705853
-w_R2C-6  = 1.90703E-05
 w_R2-6-R = 0.014575917
 w_R2-7-L = 0.014449529
-w_R2C-7  = 1.87408E-05
 w_R2-7-R = 0.014326213
 w_R2-8-L = 0.014206157
-w_R2C-8  = 1.84278E-05
 w_R2-8-R = 0.014088918
 w_R2-9-L = 0.013974682
-w_R2C-9  = 1.813E-05
 w_R2-9-R = 0.013863037
 w_R2-10-L = 0.013754166
-w_R2C-10  = 1.78461E-05
 w_R2-10-R = 0.013647683
 w_R2-11-L = 0.01354377
-w_R2C-11 = 1.75752E-05
 w_R2-11-R = 0.013442064
 w_Gap-2  = 0.002
 w_R3-1-L = 0.015982021
-w_R3C-1  = 1.72723E-05
 w_R3-1-R = 0.015843035
 w_R3-2-L = 0.015707759
-w_R3C-2  = 1.69784E-05
 w_R3-2-R = 0.015575748
 w_R3-3-L = 0.015447149
-w_R3C-3  = 1.6699E-05
 w_R3-3-R = 0.015321549
 w_R3-4-L = 0.015199095
-w_R3C-4  = 1.6433E-05
 w_R3-4-R = 0.015079403
 w_R3-5-L = 0.014962619
-w_R3C-5  = 1.61793E-05
 w_R3-5-R = 0.014848386
 w_R3-6-L = 0.014736849
-w_R3C-6  = 1.5937E-05
 w_R3-6-R = 0.014627672
 w_R3-7-L = 0.014521
-w_R3C-7  = 1.57053E-05
 w_R3-7-R = 0.014416516
 w_R3-8-L = 0.014314366
-w_R3C-8  = 1.54834E-05
 w_R3-8-R = 0.014214249
 w_R3-9-L = 0.014116309
-w_R3C-9  = 1.52707E-05
 w_R3-9-R = 0.014020263
 w_R3-10-L = 0.013926253
-w_R3C-10 = 1.50664E-05
 w_R3-10-R = 0.013834009
 w_R3-11-L = 0.013743672
-w_R3C-11 = 1.48702E-05
 w_R3-11-R = 0.013654986
 w_Gap-3  = 0.002
 w_R4-1-L = 0.013555454
-w_R4C-1  = 1.46678E-05
 w_R4-1-R = 0.01347034
 w_R4-2-L = 0.013386899
-w_R4C-2  = 1.44866E-05
 w_R4-2-R = 0.013304902
 w_R4-3-L = 0.013224479
-w_R4C-3  = 1.43119E-05
 w_R4-3-R = 0.013145413
 w_R4-4-L = 0.013067832
-w_R4C-4  = 1.41434E-05
 w_R4-4-R = 0.012991526
 w_R4-5-L = 0.012916622
-w_R4C-5  = 1.39807E-05
 w_R4-5-R = 0.01284292
 w_R4-6-L = 0.012770543
-w_R4C-6  = 1.38234E-05
 w_R4-6-R = 0.012699299
 w_R4-7-L = 0.01262931
-w_R4C-7  = 1.36714E-05
 w_R4-7-R = 0.012560392
 w_R4-8-L = 0.012492662
-w_R4C-8  = 1.35243E-05
 w_R4-8-R = 0.012425945
 w_R4-9-L = 0.012360356
-w_R4C-9  = 1.33818E-05
 w_R4-9-R = 0.012295725
 w_R4-10-L = 0.012232166
-w_R4C-10  = 1.32437E-05
 w_R4-10-R = 0.012169515
 w_R4-11-L = 0.012107884
-w_R4C-11 = 1.31099E-05
 w_R4-11-R = 0.012047114
 w_Gap-4  = 0.001608246
 w_R5  = 0.922832872
 w_Gap-5  = 0.002
 w_R6   = 0.051084685
-w_R6C  = 0.09527132
 w_R7   = 0.1
 w_RCCS   = 0.02
 
 ##Surface area density [1/m]
 aw_R2-1-L = 170.9669542
-aw_R2C-1 = 170.9693536
-aw_R2-1-R = 172.801492
 aw_R2-2-L = 174.6144078
-aw_R2C-2  = 174.616757
-aw_R2-2-R = 176.411019
 aw_R2-3-L = 178.1872145
-aw_R2C-3  = 178.1895166
-aw_R2-3-R = 179.9481581
 aw_R2-4-L = 181.6897778
-aw_R2C-4  = 181.6920356
-aw_R2-4-R = 183.4170973
 aw_R2-5-L = 185.126085
-aw_R2C-5 = 185.1283008
-aw_R2-5-R = 186.8216356
 aw_R2-6-L = 188.4997595
-aw_R2C-6 = 188.5019356
-aw_R2-6-R = 190.1652322
 aw_R2-7-L = 191.8141061
-aw_R2C-7 = 191.8162447
-aw_R2-7-R = 193.4510468
 aw_R2-8-L = 195.0721489
-aw_R2C-8 = 195.0742518
-aw_R2-8-R = 196.6819755
 aw_R2-9-L = 198.2766634
-aw_R2C-9 = 198.2787323
-aw_R2-9-R = 199.8606801
 aw_R2-10-L = 201.4302044
-aw_R2C-10  = 201.4322408
-aw_R2-10-R = 202.9896141
 aw_R2-11-L = 204.5351295
-aw_R2C-11 = 204.5371351
-aw_R2-11-R = 206.0710446
 
 aw_R3-1-L = 173.4358505
-aw_R3C-1  = 173.4374929
 aw_R3-1-R = 174.9440685
 aw_R3-2-L = 176.4377801
-aw_R3C-2 = 176.4393947
 aw_R3-2-R = 177.9205529
 aw_R3-3-L = 179.3894821
-aw_R3C-3 = 179.3910701
 aw_R3-3-R = 180.8480555
 aw_R3-4-L = 182.2933963
-aw_R3C-4 = 182.294959
 aw_R3-4-R = 183.7289177
 aw_R3-5-L = 185.1517712
-aw_R3C-5 = 185.1533097
 aw_R3-5-R = 186.5653002
 aw_R3-6-L = 187.9666843
-aw_R3C-6 = 187.9681998
 aw_R3-6-R = 189.3592017
 aw_R3-7-L = 190.7400598
-aw_R3C-7 = 190.7415533
 aw_R3-7-R = 192.1124757
 aw_R3-8-L = 193.4736842
-aw_R3C-8 = 193.4751565
 aw_R3-8-R = 194.8268445
 aw_R3-9-L = 196.169219
-aw_R3C-9  = 196.1706712
 aw_R3-9-R = 197.5039123
 aw_R3-10-L = 198.8282136
-aw_R3C-10  = 198.8296463
 aw_R3-10-R = 200.1451759
 aw_R3-11-L = 201.4521148
-aw_R3C-11 = 201.4535289
 aw_R3-11-R = 202.7520344
 
 aw_R4-1-L = 204.2312627
-aw_R4C-1  = 204.2326576
 aw_R4-1-R = 205.5136043
 aw_R4-2-L = 206.7866164
-aw_R4C-2 = 206.787994
 aw_R4-2-R = 208.0532086
 aw_R4-3-L = 209.3107755
-aw_R4C-3 = 209.3121365
 aw_R4-3-R = 210.5621847
 aw_R4-4-L = 211.8048554
-aw_R4C-4 = 211.8062004
 aw_R4-4-R = 213.0416149
 aw_R4-5-L = 214.2699065
-aw_R4C-5 = 214.2712359
 aw_R4-5-R = 215.4925189
 aw_R4-6-L = 216.7069192
-aw_R4C-6 = 216.7082338
 aw_R4-6-R = 217.9158593
 aw_R4-7-L = 219.1168293
-aw_R4C-7 = 219.1181294
 aw_R4-7-R = 220.3125456
 aw_R4-8-L = 221.5005213
-aw_R4C-8 = 221.5018073
 aw_R4-8-R = 222.6834385
 aw_R4-9-L = 223.8588326
-aw_R4C-9  = 223.8601052
 aw_R4-9-R = 225.0293533
 aw_R4-10-L = 226.1925573
-aw_R4C-10  = 226.1938167
 aw_R4-10-R = 227.351063
 aw_R4-11-L = 228.5024486
-aw_R4C-11 = 228.5036953
 aw_R4-11-R = 229.649302
 
 aw_R6  = 10.35099515
-aw_R6C = 10.64168132
-aw_R7  = 10.94679535
 
 ## Power (W)
 power_total =600e6
 power_fr_ring_one =0.013368984
 power_fr_ring_two =0.016042781
 power_fr_ring_three =0.016042781
-power_density = 6656820.087
 ## Active core
     radial_nElem_1 = 2
     axial_nElem_1  = 10
@@ -379,8 +297,6 @@ power_density = 6656820.087
     Lplenum_z = -4.439257
 ####
    hGap_cond = 1e7 #gap heat conduction
-   fric_coef = 0.016399
-   wallHeatTrans_coef   =  4153.72
 ### RCCS
  h_air_natural_conv =  19.45   # for 1 m/s air flow (10.45-vel+10*sqrt(vel))
 #### Heat Exchanger
@@ -401,27 +317,27 @@ p_out = 70e5
 T_out = 623.15  #1000
 ##
 [GlobalParams]
-    global_init_P = ${p_out}
-    global_init_V = ${v_1}
-    global_init_T = ${Ts_1}
-    Tsolid_sf = 1e-3
-#    gravity = '0 0 -9.8'
-
-  [./PBModelParams]
-    pbm_scaling_factors = '1 1e-3 1e-6'
-    pspg = false
-    p_order = 1
-    supg_max = true
-  [../]
+  global_init_P = ${p_out}
+  global_init_V = ${v_1}
+  global_init_T = ${Ts_1}
+  Tsolid_sf = 1e-4
+  scaling_factor_var = '1 1e-3 1e-6'
+  pspg = false
+  p_order = 1
+  supg_max = true
 []
 
 [EOS]
 
   [./eos]
-    type = PTFluidPropertiesEOS
-#    type = HeEquationOfState
+    type = PTFunctionsEOS
     p_0 = 70e5    # Pa
-    fp = fluid_props1
+    rho = rhoHe
+    # beta = beta_fn
+    cp =  cpHe
+    mu = muHe
+    k =  kHe
+    enthalpy = HHe
   [../]
 
   [./eos_water]
@@ -651,18 +567,7 @@ T_out = 623.15  #1000
   [../]
 []
 
-  [MaterialProperties]
-
-  [./fluid_props1]
-    type = FunctionFluidProperties
-    rho = rhoHe
-    beta = beta_fn
-    cp =  cpHe
-    mu = muHe
-    k =  kHe
-    enthalpy = HHe
-  [../]
-
+[MaterialProperties]
   [./fuel-mat]                               # Material name
      type = SolidMaterialProps
     k = 74.77 #153 #74.77 #kf                                  # Thermal conductivity
@@ -716,7 +621,6 @@ T_out = 623.15  #1000
     material_hs = 'fuel-mat'
     Ts_init = ${Ts_1}
     HS_BC_type = 'Adiabatic Coupled'
-    eos_right = eos
     hs_power= ${power_total}
     power_fraction = '${power_fr_ring_one}'              # Power fraction of different blocks. If not provided, calculated based on the volume of differnt blocks
    hs_power_shape_fn = power_decay_fn   #ppf_axial       # Axial power profile. If not provided, assuming uniform
@@ -734,7 +638,6 @@ T_out = 623.15  #1000
     material_hs = 'fuel-mat'
     Ts_init = ${Ts_1}
     HS_BC_type = 'Coupled Adiabatic'
-    eos_left = eos
     hs_power= ${power_total}
     power_fraction = '${power_fr_ring_one}'              # Power fraction of different blocks. If not provided, calculated based on the volume of differnt blocks
    hs_power_shape_fn = power_decay_fn  #ppf_axial       # Axial power profile. If not provided, assuming uniform
@@ -753,7 +656,6 @@ T_out = 623.15  #1000
     material_hs = 'fuel-mat'
     Ts_init = ${Ts_1}
     HS_BC_type = 'Adiabatic Coupled'
-    eos_right = eos
     hs_power= ${power_total}
     power_fraction = '${power_fr_ring_two}'              # Power fraction of different blocks. If not provided, calculated based on the volume of differnt blocks
    hs_power_shape_fn = power_decay_fn   #ppf_axial       # Axial power profile. If not provided, assuming uniform
@@ -771,7 +673,6 @@ T_out = 623.15  #1000
     material_hs = 'fuel-mat'
     Ts_init = ${Ts_1}
     HS_BC_type = 'Coupled Adiabatic'
-    eos_left = eos
     hs_power= ${power_total}
     power_fraction = '${power_fr_ring_two}'              # Power fraction of different blocks. If not provided, calculated based on the volume of differnt blocks
    hs_power_shape_fn = power_decay_fn  #ppf_axial       # Axial power profile. If not provided, assuming uniform
@@ -790,7 +691,6 @@ T_out = 623.15  #1000
     material_hs = 'fuel-mat'
     Ts_init = ${Ts_1}
     HS_BC_type = 'Adiabatic Coupled'
-    eos_right = eos
     hs_power= ${power_total}
     power_fraction = '${power_fr_ring_three}'              # Power fraction of different blocks. If not provided, calculated based on the volume of differnt blocks
    hs_power_shape_fn = power_decay_fn   #ppf_axial       # Axial power profile. If not provided, assuming uniform
@@ -808,7 +708,6 @@ T_out = 623.15  #1000
     material_hs = 'fuel-mat'
     Ts_init = ${Ts_1}
     HS_BC_type = 'Coupled Adiabatic'
-    eos_left = eos
     hs_power= ${power_total}
     power_fraction = '${power_fr_ring_three}'              # Power fraction of different blocks. If not provided, calculated based on the volume of differnt blocks
    hs_power_shape_fn = power_decay_fn  #ppf_axial       # Axial power profile. If not provided, assuming uniform
@@ -867,7 +766,6 @@ T_out = 623.15  #1000
     material_hs = 'graphite-mat'
     Ts_init = ${Ts_1}
     HS_BC_type = 'Adiabatic Coupled'
-    eos_right = eos
     hs_power= 0
   [../]
 
@@ -884,7 +782,6 @@ T_out = 623.15  #1000
     Ts_init = ${Ts_1}
     HS_BC_type = 'Coupled Adiabatic'
 #    Hw_left = ${wallHeatTrans_coef}
-    eos_left = eos
     hs_power= 0
   [../]
 
@@ -901,7 +798,6 @@ T_out = 623.15  #1000
     material_hs = 'graphite-mat'
     Ts_init = ${Ts_1}
     HS_BC_type = 'Adiabatic Coupled'
-    eos_right = eos
     hs_power= 0
   [../]
 
@@ -918,7 +814,6 @@ T_out = 623.15  #1000
     Ts_init = ${Ts_1}
     HS_BC_type = 'Coupled Adiabatic'
 #    Hw_left = ${wallHeatTrans_coef}
-    eos_left = eos
     hs_power= 0
   [../]
 
@@ -935,7 +830,6 @@ T_out = 623.15  #1000
     material_hs = 'graphite-mat'
     Ts_init = ${Ts_1}
     HS_BC_type = 'Adiabatic Coupled'
-    eos_right = eos
     hs_power= 0
   [../]
 
@@ -952,7 +846,6 @@ T_out = 623.15  #1000
     Ts_init = ${Ts_1}
     HS_BC_type = 'Coupled Adiabatic'
 #    Hw_left = ${wallHeatTrans_coef}
-    eos_left = eos
     hs_power= 0
   [../]
 
@@ -1009,7 +902,6 @@ T_out = 623.15  #1000
     material_hs = 'graphite-mat'
     Ts_init = ${Ts_1}
     HS_BC_type = 'Adiabatic Coupled'
-    eos_right = eos
     hs_power= 0
   [../]
 
@@ -1026,7 +918,6 @@ T_out = 623.15  #1000
     Ts_init = ${Ts_1}
     HS_BC_type = 'Coupled Adiabatic'
 #    Hw_left = ${wallHeatTrans_coef}
-    eos_left = eos
     hs_power= 0
   [../]
 
@@ -1043,7 +934,6 @@ T_out = 623.15  #1000
     material_hs = 'graphite-mat'
     Ts_init = ${Ts_1}
     HS_BC_type = 'Adiabatic Coupled'
-    eos_right = eos
     hs_power= 0
   [../]
 
@@ -1060,7 +950,6 @@ T_out = 623.15  #1000
     Ts_init = ${Ts_1}
     HS_BC_type = 'Coupled Adiabatic'
 #    Hw_left = ${wallHeatTrans_coef}
-    eos_left = eos
     hs_power= 0
   [../]
 
@@ -1077,7 +966,6 @@ T_out = 623.15  #1000
     material_hs = 'graphite-mat'
     Ts_init = ${Ts_1}
     HS_BC_type = 'Adiabatic Coupled'
-    eos_right = eos
     hs_power= 0
   [../]
 
@@ -1093,7 +981,6 @@ T_out = 623.15  #1000
     material_hs = 'graphite-mat'
     Ts_init = ${Ts_1}
     HS_BC_type = 'Coupled Adiabatic'
-    eos_left = eos
     hs_power= 0
   [../]
 
@@ -2461,7 +2348,6 @@ T_out = 623.15  #1000
     HS_BC_type = 'Adiabatic Coupled'
     name_comp_right= R6_C
     HT_surface_area_density_right = ${aw_R6}
-    eos_right = eos
     radius_i = ${rad_R6}
   [../]
 
@@ -2497,7 +2383,6 @@ T_out = 623.15  #1000
 #    T_bc_right = 303
     name_comp_left= R6_C
     HT_surface_area_density_left = ${aw_R6}
-    eos_left = eos
     radius_i = ${rad_R7}
   [../]
 
@@ -2529,7 +2414,6 @@ T_out = 623.15  #1000
      HS_BC_type = 'Adiabatic Convective'
     Hw_right = ${h_air_natural_conv}
     T_amb_right = 300
-    eos_right = eos_air
     radius_i = ${rad_RCCS}
   [../]
 
@@ -3854,7 +3738,6 @@ T_out = 623.15  #1000
     HS_BC_type = 'Adiabatic Coupled'
     name_comp_right= R6UP_C
     HT_surface_area_density_right = ${aw_R6}
-    eos_right = eos
     radius_i = ${rad_R6}
   [../]
 
@@ -3890,7 +3773,6 @@ T_out = 623.15  #1000
 #    T_bc_right = 303
     name_comp_left= R6UP_C
     HT_surface_area_density_left = ${aw_R6}
-    eos_left = eos
     radius_i = ${rad_R7}
   [../]
 
@@ -3922,7 +3804,6 @@ T_out = 623.15  #1000
      HS_BC_type = 'Adiabatic Convective'
     Hw_right = ${h_air_natural_conv}
     T_amb_right = 300
-    eos_right =eos_air
     radius_i = ${rad_RCCS}
   [../]
 
@@ -6098,7 +5979,6 @@ T_out = 623.15  #1000
     HS_BC_type = 'Adiabatic Coupled'
     name_comp_right= R6LP_C
     HT_surface_area_density_right = ${aw_R6}
-    eos_right = eos
     radius_i = ${rad_R6}
   [../]
 
@@ -6134,7 +6014,6 @@ T_out = 623.15  #1000
 #    T_bc_right = 303
     name_comp_left= R6LP_C
     HT_surface_area_density_left = ${aw_R6}
-    eos_left = eos
     radius_i = ${rad_R7}
   [../]
 
@@ -6167,7 +6046,6 @@ T_out = 623.15  #1000
      HS_BC_type = 'Adiabatic Convective'
     Hw_right = ${h_air_natural_conv}
     T_amb_right = 300
-    eos_right =eos_air
     radius_i = ${rad_RCCS}
   [../]
 
@@ -8357,7 +8235,6 @@ T_out = 623.15  #1000
     initial_T = ${T_out}
 #    initial_V = 1.30
     eos = eos
-    display_pps = true
     nodal_Tbc = true
   [../]
 
@@ -8380,7 +8257,6 @@ T_out = 623.15  #1000
     initial_T = ${T_out}
 #    initial_V = 1.30
     eos = eos
-    display_pps = true
     nodal_Tbc = true
   [../]
 
@@ -8875,104 +8751,104 @@ T_out = 623.15  #1000
 
 
   [./R1_max]                               # Output maximum solid temperature of block CH1: solid:fuel
-    type = NodalMaxValue
+    type = NodalExtremeValue
     block = 'R1:hs0'
     variable = T_solid
   [../]
 
   [./R2_1L_max]                               # Output maximum solid temperature of block CH1: solid:fuel
-    type = NodalMaxValue
+    type = NodalExtremeValue
     block = 'R2_1-L:hs0'
     variable = T_solid
   [../]
   [./R2_1R_max]                               # Output maximum solid temperature of block CH1: solid:fuel
-    type = NodalMaxValue
+    type = NodalExtremeValue
     block = 'R2_1-R:hs0'
     variable = T_solid
   [../]
 
 
   [./R2_11L_max]                               # Output maximum solid temperature of block CH1: solid:fuel
-    type = NodalMaxValue
+    type = NodalExtremeValue
     block = 'R2_11-L:hs0'
     variable = T_solid
   [../]
   [./R2_11R_max]                               # Output maximum solid temperature of block CH1: solid:fuel
-    type = NodalMaxValue
+    type = NodalExtremeValue
     block = 'R2_11-R:hs0'
     variable = T_solid
   [../]
 
 
   [./R3_1L_max]                               # Output maximum solid temperature of block CH1: solid:fuel
-    type = NodalMaxValue
+    type = NodalExtremeValue
     block = 'R3_1-L:hs0'
     variable = T_solid
   [../]
   [./R3_1R_max]                               # Output maximum solid temperature of block CH1: solid:fuel
-    type = NodalMaxValue
+    type = NodalExtremeValue
     block = 'R3_1-R:hs0'
     variable = T_solid
   [../]
 
 
   [./R3_11L_max]                               # Output maximum solid temperature of block CH1: solid:fuel
-    type = NodalMaxValue
+    type = NodalExtremeValue
     block = 'R3_11-L:hs0'
     variable = T_solid
   [../]
   [./R3_11R_max]                               # Output maximum solid temperature of block CH1: solid:fuel
-    type = NodalMaxValue
+    type = NodalExtremeValue
     block = 'R3_11-R:hs0'
     variable = T_solid
   [../]
 
 ##
   [./R4_1L_max]                               # Output maximum solid temperature of block CH1: solid:fuel
-    type = NodalMaxValue
+    type = NodalExtremeValue
     block = 'R4_1-L:hs0'
     variable = T_solid
   [../]
   [./R4_1R_max]                               # Output maximum solid temperature of block CH1: solid:fuel
-    type = NodalMaxValue
+    type = NodalExtremeValue
     block = 'R4_1-R:hs0'
     variable = T_solid
   [../]
 
 
   [./R4_11L_max]                               # Output maximum solid temperature of block CH1: solid:fuel
-    type = NodalMaxValue
+    type = NodalExtremeValue
     block = 'R4_11-L:hs0'
     variable = T_solid
   [../]
   [./R4_11R_max]                               # Output maximum solid temperature of block CH1: solid:fuel
-    type = NodalMaxValue
+    type = NodalExtremeValue
     block = 'R4_11-R:hs0'
     variable = T_solid
   [../]
 
 ##
   [./R5_max]                               # Output maximum solid temperature of block CH1: solid:fuel
-    type = NodalMaxValue
+    type = NodalExtremeValue
     block = 'R5:hs0'
     variable = T_solid
   [../]
 
   [./R6_max]                               # Output maximum solid temperature of block CH1: solid:fuel
-    type = NodalMaxValue
+    type = NodalExtremeValue
     block = 'R6:hs0'
     variable = T_solid
   [../]
 
 
   [./R7_max]                               # Output maximum solid temperature of block CH1: solid:fuel
-    type = NodalMaxValue
+    type = NodalExtremeValue
     block = 'R7:hs0'
     variable = T_solid
   [../]
 
   [./RCCS_max]                               # Output maximum solid temperature of block CH1: solid:fuel
-    type = NodalMaxValue
+    type = NodalExtremeValue
     block = 'RCCS_AC:hs0'
     variable = T_solid
   [../]

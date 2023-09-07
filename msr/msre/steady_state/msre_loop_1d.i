@@ -10,11 +10,8 @@
   global_init_T = 908.15                     # Global initial temperature for fluid and solid
   Tsolid_sf     = 1e-3
   gravity       = '0 -9.8 0'
+  scaling_factor_var = '1 1e-3 1e-6'  # fluid model solver parameters
   p_order             = 2
-
-  [./PBModelParams]
-    pbm_scaling_factors = '1 1e-3 1e-6'
-  [../]
 []
 
 [Functions]

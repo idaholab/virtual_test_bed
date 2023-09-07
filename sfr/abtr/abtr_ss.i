@@ -9,10 +9,7 @@
   global_init_V = 1
   global_init_T = 628.15
   Tsolid_sf = 1e-3
-
-  [PBModelParams]
-    pbm_scaling_factors = '1 1e-3 1e-6'
-  []
+  scaling_factor_var = '1 1e-3 1e-6'  # fluid model solver parameters
 []
 
 [EOS]
@@ -815,9 +812,7 @@
     K = '1. 1.'
     Area = 0.055
     initial_P = 3e5
-
-    Head = 415100
-    Head_fn = pump_p_coastdown
+    Head = pump_p_coastdown
   []
 
   ######  Secondary Loop  ######
@@ -916,9 +911,7 @@
     Area = 0.766
 
     initial_P = 2e5
-
-    Head = 40300
-    Head_fn = pump_s_coastdown
+    Head = pump_s_coastdown
   []
 
   [secondary_p]
