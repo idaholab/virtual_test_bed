@@ -8,17 +8,13 @@
 # https://mooseframework.inl.gov/virtual_test_bed/citing.html
 
 [GlobalParams]                  # global parameters initialization
-    global_init_P = 1.0e5
-    global_init_V = 1.796
-    global_init_T = 874
-    Tsolid_sf = 1e-3
+  global_init_P = 1.0e5
+  global_init_V = 1.796
+  global_init_T = 874
+  Tsolid_sf = 1e-3
 
-  [PBModelParams]               # new user should not make changes to this block
-    pbm_scaling_factors = '1 1e-2 1e-6'
-    pspg = true
-    supg_max = false
-    p_order = 2
-  []
+  scaling_factor_var = '1 1e-2 1e-6'  # fluid model solver parameters
+  p_order = 2
 []
 
 
@@ -104,7 +100,6 @@
   [reactor]
     type = ReactorPower
     initial_power = 2.36e8    # Initial total reactor power
-    decay_heat = shutdownPower          # decay heat profile
   []
 
   [pipe010]                           #Active core region (1)

@@ -9,9 +9,7 @@
   global_init_V = 0.01
   global_init_T = 898.15
   Tsolid_sf     = 1e-3
-  [PBModelParams]
-    pbm_scaling_factors = '1 1e-3 1e-6'
-  []
+  scaling_factor_var = '1 1e-3 1e-6'
 []
 
 [Functions]

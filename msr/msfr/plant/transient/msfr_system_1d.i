@@ -13,10 +13,7 @@ core_power_val = 3e9
   global_init_V = 0.01
   global_init_T = 950.0
   Tsolid_sf     = 1e-3
-  [./PBModelParams]
-    pbm_scaling_factors = '1 1e-3 1e-6'
-#    p_order             = 2
-  [../]
+  scaling_factor_var = '1 1e-3 1e-6'
 []
 
 [Functions]

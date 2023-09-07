@@ -19,10 +19,8 @@ layers = 40 # Make sure the number of axial divisions in the fluid domain and so
   global_init_V = ${Vin}
   global_init_T = ${Tin}
   gravity = '0 1e-8 0' # horizontal channel
-  [PBModelParams]
-    pbm_scaling_factors = '1 1e-3 1e-6'
-    p_order = 2
-  []
+  scaling_factor_var = '1 1e-3 1e-6'  # fluid model solver parameters
+  p_order = 2
   Tsolid_sf = 1e-3 # Scaling factors for solid temperature
 []
 
@@ -109,8 +107,8 @@ layers = 40 # Make sure the number of axial divisions in the fluid domain and so
   [scale_htc]
     type = ParsedAux
     variable = h_scaled
-    function = '1*htc' # 1 is replaced with the cli_args parameter in the multiapp block in ../solid_gcmr.i
-    args = htc
+    expression = '1*htc' # 1 is replaced with the cli_args parameter in the multiapp block in ../solid_gcmr.i
+    coupled_variables = htc
   []
 []
 

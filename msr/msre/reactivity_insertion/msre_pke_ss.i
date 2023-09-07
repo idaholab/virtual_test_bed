@@ -73,6 +73,7 @@
   [reactor]
     type = ReactorPower
     initial_power = 5.0E6
+    initial_fission_power = 5.0E6
     pke           = 'pke1'
   []
   [pke1]
