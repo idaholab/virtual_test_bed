@@ -21,3 +21,5 @@
 [SAM Generic Pebble Bed HTGR model](generic-pbr/index.md)
 
 [LEU Pulse](leu_pulse/index.md)
+
+[HTTR multiphysics core model](httr/index.md)

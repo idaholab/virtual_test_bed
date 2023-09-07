@@ -1,0 +1,180 @@
+[Tests]
+  # Steady state
+  [syntax_steady_core_homogeneous_hc]
+    type = RunApp
+    input = full_core_ht_steady.i
+    # conceptually a BISON input, but uses a Griffin kernel
+    executable_pattern = 'sabertooth*|griffin*'
+    cli_args = "MultiApps/active='' Transfers/active=''"
+    check_input = true
+  []
+  [syntax_steady_elem_hc]
+    type = RunApp
+    input = fuel_elem_steady.i
+    # conceptually a BISON input, but uses a Griffin auxkernel
+    executable_pattern = 'sabertooth*|griffin*'
+    check_input = true
+  []
+  [syntax_steady_neutronics]
+    type = RunApp
+    input = neutronics_eigenvalue.i
+    executable_pattern = 'sabertooth*|griffin*'
+    cli_args = "MultiApps/active='' Transfers/active=''"
+    check_input = true
+  []
+  [syntax_steady_cr_channel_th]
+    type = RunApp
+    input = thermal_hydraulics_CR_steady.i
+    executable_pattern = 'sabertooth*|relap7*'
+    check_input = true
+  []
+  [syntax_steady_fuel_channel_th]
+    type = RunApp
+    input = thermal_hydraulics_fuel_pins_steady.i
+    executable_pattern = 'sabertooth*|relap7*'
+    check_input = true
+  []
+
+  [steady_core_homogeneous_hc]
+    type = CSVDiff
+    input = full_core_ht_steady.i
+    executable_pattern = 'sabertooth*|griffin*'
+    cli_args = "MultiApps/active='' Transfers/active='' Executioner/num_steps=1"
+    csvdiff = 'full_core_ht_steady_out.csv'
+    min_parallel = 8
+    prereq = 'syntax_steady_core_homogeneous_hc'
+  []
+  [steady_elem_hc]
+    type = CSVDiff
+    input = fuel_elem_steady.i
+    executable_pattern = 'sabertooth*|griffin*'
+    cli_args = 'Executioner/end_time=10'
+    csvdiff = 'fuel_elem_steady_out.csv'
+    prereq = 'syntax_steady_elem_hc'
+  []
+  [steady_neutronics]
+    type = CSVDiff
+    input = neutronics_eigenvalue.i
+    executable_pattern = 'sabertooth*|griffin*'
+    cli_args = "MultiApps/active='' Transfers/active='' Executioner/nl_abs_tol=1e-8 "
+               "Executioner/nl_rel_tol=1e-8"
+    csvdiff = 'neutronics_eigenvalue_9MW.csv'
+    min_parallel = 8
+    prereq = 'syntax_steady_neutronics'
+  []
+  [steady_cr_channel_th]
+    type = CSVDiff
+    input = thermal_hydraulics_CR_steady.i
+    executable_pattern = 'sabertooth*|relap7*'
+    csvdiff = 'thermal_hydraulics_CR_steady_out.csv'
+    prereq = 'syntax_steady_cr_channel_th'
+  []
+  [steady_fuel_channel_th]
+    type = CSVDiff
+    input = thermal_hydraulics_fuel_pins_steady.i
+    executable_pattern = 'sabertooth*|relap7*'
+    csvdiff = 'thermal_hydraulics_fuel_pins_steady_out.csv'
+    prereq = 'syntax_steady_fuel_channel_th'
+  []
+
+  # Null transient
+  [syntax_null_core_homogeneous_hc]
+    type = RunApp
+    input = full_core_ht_null.i
+    executable_pattern = 'sabertooth*|griffin*'
+    cli_args = "MultiApps/active='' Transfers/active=''
+                Mesh/file=full_core_ht_steady_checkpoint_cp/LATEST
+                Problem/restart_file_base=full_core_ht_steady_checkpoint_cp/LATEST"
+    check_input = true
+    prereq = 'steady_core_homogeneous_hc'
+    min_parallel = 8
+    # An unused parameter for setting up input file logic
+    allow_unused = true
+  []
+  [syntax_null_elem_hc]
+    type = RunApp
+    input = fuel_elem_null.i
+    executable_pattern = 'sabertooth*|griffin*'
+    check_input = true
+    prereq = 'steady_elem_hc'
+  []
+  [syntax_null_neutronics]
+    type = RunApp
+    input = neutronics_null.i
+    executable_pattern = 'sabertooth*|griffin*'
+    cli_args = "MultiApps/active='' Transfers/active=''"
+    check_input = true
+    prereq = 'steady_neutronics'
+    min_parallel = 8
+  []
+  [syntax_null_cr_channel_th]
+    type = RunApp
+    input = thermal_hydraulics_CR_null.i
+    executable_pattern = 'sabertooth*|relap7*'
+    check_input = true
+    prereq = 'steady_cr_channel_th'
+    cli_args = 'GlobalParams/initial_p=3e6 GlobalParams/initial_T=500
+                GlobalParams/initial_vel=0.01 GlobalParams/initial_T_wall=510'
+  []
+  [syntax_null_fuel_channel_th]
+    type = RunApp
+    input = thermal_hydraulics_fuel_pins_null.i
+    executable_pattern = 'sabertooth*|relap7*'
+    check_input = true
+    prereq = 'steady_fuel_channel_th'
+    cli_args = 'GlobalParams/initial_p=3e6 GlobalParams/initial_T=500
+                GlobalParams/initial_vel=0.01 GlobalParams/initial_T_wall=510'
+  []
+
+  [null_core_homogeneous_hc]
+    type = CSVDiff
+    input = full_core_ht_null.i
+    executable_pattern = 'sabertooth*|griffin*'
+    cli_args = "MultiApps/active='' Transfers/active='' Executioner/num_steps=1 "
+               "Mesh/file=full_core_ht_steady_checkpoint_cp/LATEST "
+               "Problem/restart_file_base=full_core_ht_steady_checkpoint_cp/LATEST"
+    csvdiff = 'full_core_ht_null_out.csv'
+    min_parallel = 8
+    prereq = 'syntax_null_core_homogeneous_hc'
+    # An unused parameter for setting up input file logic
+    allow_unused = true
+  []
+  [null_elem_hc]
+    type = CSVDiff
+    input = fuel_elem_null.i
+    executable_pattern = 'sabertooth*|griffin*'
+    cli_args = 'Executioner/end_time=10'
+    csvdiff = 'fuel_elem_null_out.csv'
+    prereq = 'syntax_null_elem_hc'
+  []
+  [null_neutronics]
+    type = CSVDiff
+    input = neutronics_null.i
+    executable_pattern = 'sabertooth*|griffin*'
+    cli_args = "MultiApps/active='' Transfers/active='' Executioner/nl_abs_tol=1e-8 "
+               "Executioner/nl_rel_tol=1e-8 Executioner/num_steps=2"
+    csvdiff = 'neutronics_null_out.csv'
+    min_parallel = 8
+    prereq = 'syntax_null_neutronics'
+  []
+  [null_cr_channel_th]
+    type = CSVDiff
+    input = thermal_hydraulics_CR_null.i
+    executable_pattern = 'sabertooth*|relap7*'
+    csvdiff = 'thermal_hydraulics_CR_null_out.csv'
+    cli_args = 'GlobalParams/initial_p=3e6 GlobalParams/initial_T=500
+                GlobalParams/initial_vel=0.01 GlobalParams/initial_T_wall=510
+                Outputs/csv=true'
+    prereq = 'syntax_null_cr_channel_th'
+  []
+  [null_fuel_channel_th]
+    type = CSVDiff
+    input = thermal_hydraulics_fuel_pins_null.i
+    executable_pattern = 'sabertooth*|relap7*'
+    csvdiff = 'thermal_hydraulics_fuel_pins_null_out.csv'
+    cli_args = 'GlobalParams/initial_p=3e6 GlobalParams/initial_T=500
+                GlobalParams/initial_vel=0.01 GlobalParams/initial_T_wall=510
+                Outputs/csv=true'
+    prereq = 'syntax_null_fuel_channel_th'
+  []
+[]

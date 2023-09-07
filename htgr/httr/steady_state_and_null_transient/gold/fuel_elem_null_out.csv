@@ -1,0 +1,3 @@
+time,TotalPower,avg_Tfluid,avg_Tfuel,avg_Tmod,avg_Tsleeve,avg_Twall,avg_gap_conductance,avg_homo_gap_conductance,avg_htc_inner,avg_htc_outer,avg_pdensity,avg_scaled_pdensity,bdy_heat_flux,bdy_heat_flux_tot,convection_mod_fluid,convection_sleeve_fluid,fuel_block_total_power,fuel_k_average,graphite_k_average,max_Tfuel,max_Tsleeve
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+10,0,0,0,0,0,0,60.164103711314,2140.4113302611,0,0,0,0,0,0,0,0,0,51.11,66.32,0,0
