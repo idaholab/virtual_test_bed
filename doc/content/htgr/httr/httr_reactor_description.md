@@ -25,7 +25,7 @@ The model described here assumes the reactor to be operating at 9MW. HTTR typica
 The general HTTR design specifications are summarized below in Table I, from [!cite](osti_1484524).
 
 | Design Specifications                             | Value               | Unit        |
-|:-------------------------------------------------:|:-------------------:|:-----------:|
+|:--------------------------------------------------|:--------------------|:------------|
 | Thermal Power                                     | 9                   | MW          |
 | Outlet Coolant Temperature                        | 320                 | $^{\circ}$C |
 | Inlet Coolant Temperature                         | 180                 | $^{\circ}$C |

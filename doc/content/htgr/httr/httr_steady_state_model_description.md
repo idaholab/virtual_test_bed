@@ -1,6 +1,6 @@
 # High Temperature Engineering Test Reactor (HTTR) Steady State Multiphysics Model Description
 
-Introduced below is the steady-state multiphysics HTTR model, which includes neutronics, homogenized full core heat transfer, heterogeneous single pin heat transfer, and thermal-hydraulics applications.
+Introduced below is the steady-state multiphysics HTTR model, which includes neutronics, homogenized full core heat transfer, heterogeneous single pin heat transfer, and thermal-hydraulics channel simulations.
 
 ## Neutronics id=neutronics
 
@@ -8,40 +8,46 @@ The neutronics calculation utilizes the NEAMS code Griffin, [!cite](Griffin2020)
 
 #### Mesh
 
-The 'Mesh' block loads a coarse mesh using diffusion. The mesh loads 'material_id' and 'equivalence-id' in 'exodus_extra_element_integers' to match group cross sections and equivalence factors to mesh regions.
+The 'Mesh' block loads a coarse mesh. The mesh loads 'material_id' and 'equivalence-id' with the 'exodus_extra_element_integers' parameter to match group cross sections and equivalence factors to mesh regions.
 
 !listing httr/steady_state_and_null_transient/neutronics_eigenvalue.i block=Mesh
 
 !media media/htgr/httr/neutronics_mesh.png
     style=width:60%
     caption=Figure 1: Radial cut of the 3D homogenized coarse mesh loaded in [neutronics_eigenvalue.i](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/httr/steady_state_and_null_transient/neutronics_eigenvalue.i).
+
 #### Transport System
 
 The 'TransportSystem' block defines the neutronics eigenvalue problem to be solved using 10 energy groups and a continuous finite element diffusion scheme.
 
 !listing httr/steady_state_and_null_transient/neutronics_eigenvalue.i block=TransportSystems
 
-#### Equivalence
-
-The 'Equivalence' block specifies the equivalence library, tabulated w.r.t fuel and moderator temperature, which is used to correct the macroscopic cross-sections.
-
-!listing httr/steady_state_and_null_transient/neutronics_eigenvalue.i block=Equivalence
-
 #### Cross sections
 
-We define group cross sections in the 'Materials' block, with the contribution from Xe-135 removed. The macroscopic group cross section library file was specified in the GlobalParams block. It is tabulated with respect to fuel & moderator temperatures.
+We define group cross sections in the 'Materials' block. The macroscopic group cross section library file was specified in the GlobalParams block. It is tabulated with respect to fuel & moderator temperatures.
 
 !listing httr/steady_state_and_null_transient/neutronics_eigenvalue.i block=Materials
 
+#### Equivalence
+
+The 'Equivalence' block specifies the equivalence-corrected (SPH) group cross section library, tabulated w.r.t fuel and moderator temperature, which is used to correct the macroscopic cross-sections.
+The equivalence factors were computed on the full core geometry to ensure perfect preservation of reaction rates at tabulated conditions.
+
+!listing httr/steady_state_and_null_transient/neutronics_eigenvalue.i block=Equivalence
+
 #### Poison Tracking
 
-The 'PoisonTracking' block specifies the microscopic cross sections library to use with respect to fuel and moderator temperatures. It is used to track the concentration of I-135 and Xe-135 in the fuel regions.
+The 'PoisonTracking' block specifies the microscopic cross sections library to use with respect to fuel and moderator temperatures. It is used to track the concentration of Xe-135 in the fuel regions.
 
 !listing httr/steady_state_and_null_transient/neutronics_eigenvalue.i block=PoisonTracking
 
 ## Heat Transfer
 
 Heat transfer simulations utilize the NEAMS code BISON, [!cite](BISON), as well as the heat conduction module in MOOSE. The model includes a macroscale 3-D full core homogenized heat transfer and 2-D axisymmetric pin-scale fuel rod heat transfer. The macroscale 3-D full core homogenized heat transfer model simulates the thermal behavior of the homogenized blocks.
+
+!alert note
+Some kernels in this input are actually extracted from Griffin. Therefore either Griffin or a combined application such as Sabertooth must be used.
+Slight modifications can also be made to use BISON-only kernels.
 
 The local heat flux in the homogenized calculation is not directly relied upon to couple to the distributed thermal-hydraulics channel simulations and 2-D axisymmetric pin-scale fuel rod heat transfer. Instead, two volumetric heat transfer terms are applied at the homogenized full-core level:
 
@@ -61,6 +67,17 @@ The homogenized full core heat transfer and heterogeneous single pin heat transf
 
 The homogenized full core model simulates the homogenized heat conduction of the core, solved by the heat conduction module.
 
+#### Mesh
+
+The 'Mesh' block loads a homogenized mesh from an Exodus file.
+
+!listing httr/steady_state_and_null_transient/full_core_ht_steady.i block=Mesh
+
+!media media/htgr/httr/fullcoremesh.png
+    style=width:60%
+    caption=Figure 2: Radial cut of the 3D homogenized coarse mesh loaded in [full_core_ht_steady.i](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/httr/steady_state_and_null_transient/full_core_ht_steady.i). The reactor pressure vessel exchanges heat with the core via radiation and conduction.
+
+
 #### Boundary Conditions (BCs)
 
 The 'BCs' block imposes a boundary conditions that are all applied to the temperature variable.
@@ -76,18 +93,6 @@ The 'BCs' block imposes a boundary conditions that are all applied to the temper
 'radiative_BC' imposes a radiative boundary condition on the outer side of the RPV.
 
 !listing httr/steady_state_and_null_transient/full_core_ht_steady.i block=BCs/radiative_BC
-
-#### Mesh
-
-The 'Mesh' block loads a homogenized mesh from an Exodus file.
-
-!listing httr/steady_state_and_null_transient/full_core_ht_steady.i block=Mesh
-
-!media media/htgr/httr/fullcoremesh.png
-    style=width:60%
-    caption=Figure 2: Radial cut of the 3D homogenized coarse mesh loaded in [full_core_ht_steady.i](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/httr/steady_state_and_null_transient/full_core_ht_steady.i). The reactor pressure vessel exchanges heat with the core via radiation and conduction.
-
-
 
 #### Kernels
 
@@ -111,7 +116,7 @@ A term that accounts for radiative and conductive heat transfers through the gap
 
 !listing httr/steady_state_and_null_transient/full_core_ht_steady.i block=Kernels/heat_gain_conductance_active_fuel
 
-A term that accounts for the heat extracted convectively by the fuel and CR cooling channels is utilized.
+A term that accounts for the heat extracted by fluid convection in the fuel and CR cooling channels is represented with those two kernels:
 
 !listing httr/steady_state_and_null_transient/full_core_ht_steady.i block=Kernels/heat_loss_convection_outer
 
@@ -243,7 +248,7 @@ The 'inlet' block defines the cooling channel inlet and imposes the temperature 
 
 !listing httr/steady_state_and_null_transient/thermal_hydraulics_CR_steady.i block=Components/inlet
 
-The 'outlet' block defines the cooling channel outlet and imposes the value of the pressure as a constant.
+The 'outlet' block defines the cooling channel outlet and imposes the value of the pressure as a constant, as an outlet boundary condition.
 
 !listing httr/steady_state_and_null_transient/thermal_hydraulics_CR_steady.i block=Components/outlet
 
@@ -255,6 +260,10 @@ The 'ht_ext' block defines a convective boundary condition using the 'HeatTransf
 #### Fluid Properties
 
 In the 'FluidProperties' block, we use the Spline Based Table Lookup fluid properties for Helium.
+
+!alert note
+Helium SBTL properties are available as a submodule of RELAP-7. If your access level does not provide them,
+please contact the MOOSE team for access. They should be open-sourced shortly.
 
 !listing httr/steady_state_and_null_transient/thermal_hydraulics_CR_steady.i block=FluidProperties
 
@@ -311,7 +320,8 @@ The HTTR model released is a multiphysics model that combines 3-D full core supe
 
 #### Coupling Neutronics and Heat Conduction
 
-The homogeneous full core heat conduction solve is a child application of the neutronics application.
+The homogeneous full core heat conduction solve is a child application of the neutronics application. This is selected because the neutronics
+solve is solved for steady state directly as an eigenvalue problem, while some of the downstream simulations are relaxation to steady-state transients.
 
 !listing httr/steady_state_and_null_transient/neutronics_eigenvalue.i block=MultiApps
 
@@ -366,7 +376,8 @@ Inner wall temperatures and outer wall temperatures of the fuel cooling channels
 
 !listing httr/steady_state_and_null_transient/full_core_ht_steady.i block=Transfers/tmod_to_relap_topbottom
 
-Fluid temperature, homogenized outer wall heat transfer coefficient, outlet temperature, and enthalpy difference are then sent back from the RELAP7 Thermal-Hydraulics application.
+Fluid temperature, homogenized outer wall heat transfer coefficient, outlet temperature, and enthalpy difference are then sent back from the RELAP7 Thermal-Hydraulics application. The heat transfer coefficients and fluid temperatures can be used to compute the heat flux to verify conservation. The temperatures fields are
+also gathered to the parent application for output of the fluid temperature on the core scale.
 
 
 !listing httr/steady_state_and_null_transient/full_core_ht_steady.i block=Transfers/tfluid_from_relap
@@ -441,7 +452,7 @@ mpirun -n 6 sabertooth-opt -i neutronics_eigenvalue.i
 In all cases (steady-state and null-transient - which should be executed in this order), run the Griffin input with Sabertooth.
 
 For instance, if you have *level 2* access to the binaries, you can download sabertooth through `miniconda` and use
-them as follows:
+them (once downloaded) as follows:
 
 ```language=CPP
 conda activate sabertooth

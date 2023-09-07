@@ -82,7 +82,9 @@
     type = RunApp
     input = full_core_ht_null.i
     executable_pattern = 'sabertooth*|griffin*'
-    cli_args = "MultiApps/active='' Transfers/active=''"
+    cli_args = "MultiApps/active='' Transfers/active=''
+                Mesh/file=full_core_ht_steady_checkpoint_cp/LATEST
+                Problem/restart_file_base=full_core_ht_steady_checkpoint_cp/LATEST"
     check_input = true
     prereq = 'steady_core_homogeneous_hc'
     min_parallel = 8
@@ -101,6 +103,7 @@
     cli_args = "MultiApps/active='' Transfers/active=''"
     check_input = true
     prereq = 'steady_neutronics'
+    min_parallel = 8
   []
   [syntax_null_cr_channel_th]
     type = RunApp
