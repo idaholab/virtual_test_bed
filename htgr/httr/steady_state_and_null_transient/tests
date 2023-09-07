@@ -3,14 +3,16 @@
   [syntax_steady_core_homogeneous_hc]
     type = RunApp
     input = full_core_ht_steady.i
-    executable_pattern = 'sabertooth*|bison*'
+    # conceptually a BISON input, but uses a Griffin kernel
+    executable_pattern = 'sabertooth*|griffin*'
     cli_args = "MultiApps/active='' Transfers/active=''"
     check_input = true
   []
   [syntax_steady_elem_hc]
     type = RunApp
     input = fuel_elem_steady.i
-    executable_pattern = 'sabertooth*|bison*'
+    # conceptually a BISON input, but uses a Griffin auxkernel
+    executable_pattern = 'sabertooth*|griffin*'
     check_input = true
   []
   [syntax_steady_neutronics]
@@ -36,7 +38,7 @@
   [steady_core_homogeneous_hc]
     type = CSVDiff
     input = full_core_ht_steady.i
-    executable_pattern = 'sabertooth*|bison*'
+    executable_pattern = 'sabertooth*|griffin*'
     cli_args = "MultiApps/active='' Transfers/active='' Executioner/num_steps=1"
     csvdiff = 'full_core_ht_steady_out.csv'
     min_parallel = 8
@@ -45,7 +47,7 @@
   [steady_elem_hc]
     type = CSVDiff
     input = fuel_elem_steady.i
-    executable_pattern = 'sabertooth*|bison*'
+    executable_pattern = 'sabertooth*|griffin*'
     cli_args = 'Executioner/end_time=10'
     csvdiff = 'fuel_elem_steady_out.csv'
     prereq = 'syntax_steady_elem_hc'
@@ -65,29 +67,30 @@
     input = thermal_hydraulics_CR_steady.i
     executable_pattern = 'sabertooth*|relap7*'
     csvdiff = 'thermal_hydraulics_CR_steady_out.csv'
-    prereq = 'syntax_cr_channel_th'
+    prereq = 'syntax_steady_cr_channel_th'
   []
   [steady_fuel_channel_th]
     type = CSVDiff
     input = thermal_hydraulics_fuel_pins_steady.i
     executable_pattern = 'sabertooth*|relap7*'
     csvdiff = 'thermal_hydraulics_fuel_pins_steady_out.csv'
-    prereq = 'syntax_fuel_channel_th'
+    prereq = 'syntax_steady_fuel_channel_th'
   []
 
   # Null transient
   [syntax_null_core_homogeneous_hc]
     type = RunApp
     input = full_core_ht_null.i
-    executable_pattern = 'sabertooth*|bison*'
+    executable_pattern = 'sabertooth*|griffin*'
     cli_args = "MultiApps/active='' Transfers/active=''"
     check_input = true
     prereq = 'steady_core_homogeneous_hc'
+    min_parallel = 8
   []
   [syntax_null_elem_hc]
     type = RunApp
     input = fuel_elem_null.i
-    executable_pattern = 'sabertooth*|bison*'
+    executable_pattern = 'sabertooth*|griffin*'
     check_input = true
     prereq = 'steady_elem_hc'
   []
@@ -105,6 +108,8 @@
     executable_pattern = 'sabertooth*|relap7*'
     check_input = true
     prereq = 'steady_cr_channel_th'
+    cli_args = 'GlobalParams/initial_p=3e6 GlobalParams/initial_T=500
+                GlobalParams/initial_vel=0.01 GlobalParams/initial_T_wall=510'
   []
   [syntax_null_fuel_channel_th]
     type = RunApp
@@ -112,12 +117,14 @@
     executable_pattern = 'sabertooth*|relap7*'
     check_input = true
     prereq = 'steady_fuel_channel_th'
+    cli_args = 'GlobalParams/initial_p=3e6 GlobalParams/initial_T=500
+                GlobalParams/initial_vel=0.01 GlobalParams/initial_T_wall=510'
   []
 
   [null_core_homogeneous_hc]
     type = CSVDiff
     input = full_core_ht_null.i
-    executable_pattern = 'sabertooth*|bison*'
+    executable_pattern = 'sabertooth*|griffin*'
     cli_args = "MultiApps/active='' Transfers/active='' Executioner/num_steps=1 "
                "Mesh/file=full_core_ht_steady_checkpoint_cp/LATEST "
                "Problem/restart_file_base=full_core_ht_steady_checkpoint_cp/LATEST"
@@ -130,7 +137,7 @@
   [null_elem_hc]
     type = CSVDiff
     input = fuel_elem_null.i
-    executable_pattern = 'sabertooth*|bison*'
+    executable_pattern = 'sabertooth*|griffin*'
     cli_args = 'Executioner/end_time=10'
     csvdiff = 'fuel_elem_null_out.csv'
     prereq = 'syntax_null_elem_hc'
