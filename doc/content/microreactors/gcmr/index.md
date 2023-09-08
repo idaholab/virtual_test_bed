@@ -22,3 +22,13 @@
 [Model Description](gcmr/BOP_model_description.md)
 
 [Results](gcmr/BOP_results.md)
+
+# Gas-Cooled Microreactor core with Inter-Assembly Bypass Flow
+
+*Contacts: Lise Charlot (lise.charlot@inl.gov)*
+
+[Description](gcmr/bypass_flow/Core_with_bypass_description.md)
+
+[Multiphysics Models](gcmr/bypass_flow/Core_with_bypass_model.md)
+
+[Steady-State Results](gcmr/bypass_flow/Core_with_bypass_results.md)

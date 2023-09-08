@@ -1,0 +1,21 @@
+[Tests]
+  [subchannel]
+    type = Exodiff
+    input = 'bypass.i'
+    exodiff = bypass_out.e
+    executable_pattern = 'pronghorn*|subchannel*'
+  []
+  [core]
+    type = 'RunApp'
+    input = 'core.i'
+    check_input = true
+    executable_pattern = 'pronghorn*'
+  []
+  [startup]
+    type = 'CSVDiff'
+    input = 'cooling_channel.i'
+    csvdiff = 'cooling_channel_out.csv'
+    cli_args = "Executioner/num_steps=10 Outputs/csv=true"
+    executable_pattern = 'pronghorn**'
+  []
+[]
