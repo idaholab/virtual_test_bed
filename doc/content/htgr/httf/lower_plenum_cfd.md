@@ -169,7 +169,7 @@ In the era of Exascale computing, there's a notable shift towards accelerated co
 
 ### Boundary conditions style=font-size:125%
 
-The boundary conditions of the nekRS study are taken from the corresponding system modeling of HTTF primary loop using RELAP5-3D conducted by Canadian Nuclear Laboratories. The reference lower plenum pressure is 211.9 kPa, and the helium gas has a density of 0.1950 kg/m3 with a reference temperature of 895.7 K. 
+The boundary conditions of the nekRS study are taken from the corresponding system modeling of HTTF primary loop using RELAP5-3D conducted by Canadian Nuclear Laboratories [!citep](Podila2022). The reference lower plenum pressure is 211.9 kPa, and the helium gas has a density of 0.1950 kg/m3 with a reference temperature of 895.7 K. 
 [he_condition] summarizes the key thermophysical properties of helium flow used in the NekRS simulations.  The 234 inlet channels are divided into 32 groups here as shown in [new_grouping] 
 based on the radial locations and polar angles, and each group with specific mass flow rate and temperature. Inlet channels within a certain group are assumed to have the same inflow velocity corresponding to the specific mass flow rate. 
 Details of the inlet boundary conditions are listed in [inlet_bc].
