@@ -101,7 +101,7 @@ The specific inlet temperature and mass flow rates are implemented in +userbc+ w
 !listing htgr/httf/lower_plenum_mixing/httf.usr start=if(id_face.eq.3) end=endif include-end=True
 
 
-### Nek5000 results style=font-size:125%
+### Nek5000 simulation results style=font-size:125%
 
 The aforementioned CFD cases were carried out on the Sawtooth supercomputer located at Idaho National Laboratory. A typical simulation job would use 64 compute nodes with 48 parallel processes per node.
 A characteristics based time-stepping has been used in the simulations to avoid the limitations imposed by the Courant-Friedrichs-Lewy
@@ -254,10 +254,81 @@ Now let's dive into the most important case file +httf.usr+. The sideset ids con
 
 !listing htgr/httf/lower_plenum_mixing/nekrs_case/httf.usr start=subroutine usrdat2() end=subroutine usrdat3 include-end=False
 
-The $k-\tau$ URANS model is specified in the following code block
+The fixes to the negative Jacobian errors in mesh file is called in +usrdat+
 
-!listing htgr/httf/lower_plenum_mixing/httf.usr start=subroutine usrdat3() end=subroutine turb_in(wd,tke,tau) include-end=False
+!listing htgr/httf/lower_plenum_mixing/nekrs_case/httf.usr start=subroutine usrdat end=subroutine usrdat2() include-end=False
 
-The specific inlet temperature and mass flow rates are implemented in +userbc+ with the non-dimensionalized values
+As for the implementation of inlet boundary conditions, a set of data arrays is created in +usr+ and passed over to the +udf+ and +oudf+. 
+At the +usr+ file side, the main subroutine is +getinlet+. It assembles the non-dimensionalized inlet velocity, temperature, 
+k and $\tau$ into the following arrays
 
-!listing htgr/httf/lower_plenum_mixing/httf.usr start=if(id_face.eq.3) end=endif include-end=True
+!listing htgr/httf/lower_plenum_mixing/nekrs_case/httf.usr start=real uin,vin,win,tin end=t3in(lx1,ly1,lz1,lelv) include-end=True
+
+The corresponding information is transfered to +httf.udf+ at 
+
+!listing htgr/httf/lower_plenum_mixing/nekrs_case/httf.udf start=RANSktau::setup end=void UDF_ExecuteStep include-start=False include-end=False
+
+And then the velocity and passive scalar (temperature, k and $\tau$) boundary conditions are applied in +httf.oudf+ at
+
+!listing htgr/httf/lower_plenum_mixing/nekrs_case/httf.oudf start=void velocityDirichletConditions end=  include-end=False
+
+The following code snippet in +httf.udf+ controls the frequency that +usrchk+ is called during the simulations, which is once in every 1,000 steps in the current case. 
+
+```language=bash
+  if ((tstep%1000)==0){
+    nek::ocopyToNek(time, tstep);
+    nek::userchk();
+  }
+```
+
+Time averaged statitics is collected using the following lines in +httf.udf+
+
+```language=bash
+  6 #include "plugins/tavg.hpp"
+
+ 45   tavg::setup(nrs);
+
+ 73   tavg::run(time);
+ 
+ 85   if (nrs->isOutputStep) {
+ 86     tavg::outfld();
+ 87   }
+
+```
+
+### NekRS simulation results style=font-size:125%
+
+A total simulation time of 12 non-dimensional units is achieved. Due to the nature of unsteady RANS turbulence model, only a quasi-steady state can be reached. Velocity fluctuations are observed when helium flow enters the lower plenum and passes through the LP posts. 
+The subsequent post-processing focuses primarily on the time-averaged solutions. 
+For that purpose, an analysis involving time-averaging is carried out on simulation results spanning from 6.0 to 12.0 time units. 
+[new_U] and [new_T] portray the more uniform profiles of the time-averaged velocity and temperature distributions, respectively. Through the elimination of instantaneous fluctuations, the time-averaged outcomes reveal notably symmetric patterns in both the velocity and temperature fields. Also, [new_U] illustrates the symmetrical horizontal jets emerging through the openings between the lower plenum posts as the helium flow enters the hot duct. Notably, flow recirculations become evident within the wake regions behind these posts.
+
+!media httf/lower_plenum_cfd/new_averaged_U.png
+       style=width:75%
+       id=new_U
+       caption=Time averaged velocity distribution in the lower plenum at y = -0.1 (top view).
+
+!media httf/lower_plenum_cfd/new_averaged_T.png
+       style=width:75%
+       id=new_T
+       caption=Time averaged temperature fields at y = -0.1 and z = 0.
+
+In addition to the horizontal perspective, a vertical viewpoint offers a clearer insight into the injection of helium flow originating from the inlet channels. As evidenced by [new_T] and [slice_T], the presence of helium jets is quite conspicuous within the lower plenum, characterized by notably higher velocity and temperature values. Moreover, the inflow jets exhibit greater prominence in regions farther from the hot duct, owing to the diminished local horizontal flow. Conversely, areas nearer to the hot duct showcase more pronounced disturbances in the inflow jets due to the stronger local horizontal flow. Consequently, in [slice_T], the jets positioned away from the hot duct achieve deeper penetration, while those in close proximity to the hot duct experience quicker diffusion. The presence of hot streaking is further confirmed within the lower plenum, particularly in areas distant from the hot duct. The streams of elevated temperature directly impact the lower plenum posts and floor in this specific region, resulting in uneven thermal stresses. In general, the lower section of the lower plenum encounters higher temperatures, notably at the juncture between the lower plenum and the hot duct, as visually depicted in [slice_T]. [floor_T] offers an improved perspective of the temperature distribution on the lower plenum floor, enabling the identification of the hotspot.
+
+!media httf/lower_plenum_cfd/new_T_slice_view.png
+       style=width:75%
+       id=slice_T
+       caption=Jetting of helium flow from the inlet channels.
+
+!media httf/lower_plenum_cfd/new_T_LPfloor.png
+       style=width:75%
+       id=floor_T
+       caption=Time averaged temperature distribution on the lower plenum floor.
+
+### NekRS run Script style=font-size:125%
+
+To submit a nekRS simulation job on common leadership class facilities, dedicated job submission scripts are provided in [nekRS repository](https://github.com/Nek5000/nekRS/tree/master/scripts) for supercomputers, such as Summit-OLCF, Polaris-ALCF, etc. Taking Polaris as an example, to submit the nekRS job, simply do 
+
+```language=bash
+./nrsqsub_polaris httf 50 06:00:00 
+```
