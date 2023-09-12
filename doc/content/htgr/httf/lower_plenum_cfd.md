@@ -82,7 +82,7 @@ The mean LP pressure is 100.5 $kPa$, with which the helium gas has a density of 
 
 ### Nek5000 sase setups style=font-size:125%
 
-The reader can find the Nek5000 case files and the associated HTTF lower plenum files (through github LFS) in VTB repository. The mesh information is contained in two files: +httf.re2+ (grid coordinates, sideset ids, etc.) and +httf.co2+ (mesh cell connectivity).
+The reader can find the Nek5000 case files and the associated HTTF lower plenum mesh files (through github LFS) in VTB repository. The mesh information is contained in two files: +httf.re2+ (grid coordinates, sideset ids, etc.) and +httf.co2+ (mesh cell connectivity).
 As for the Nek5000 case files, there are +SIZE+, +httf.par+, +httf.usr+, and two auxiliary files +limits.f+ and +utilities.f+ that hosts various post-processing functions, such as solution monitoring, planar averaging, and so forth.
 +SIZE+ is the metafile to specify primary discretization parameters.
 +httf.usr+ is the script where users specify the boundary conditions, turbulence modeling approach and post-processing.
@@ -170,19 +170,17 @@ In the era of Exascale computing, there's a notable shift towards accelerated co
 ### Boundary conditions style=font-size:125%
 
 The boundary conditions of the nekRS study are taken from the corresponding system modeling of HTTF primary loop using RELAP5-3D conducted by Canadian Nuclear Laboratories. The reference lower plenum pressure is 211.9 kPa, and the helium gas has a density of 0.1950 kg/m3 with a reference temperature of 895.7 K. 
-Table 3 summarizes the key thermophysical properties of helium flow used in the NekRS simulations.  The 234 inlet channels are divided into 32 groups here as shown in [new_grouping] 
+[he_condition] summarizes the key thermophysical properties of helium flow used in the NekRS simulations.  The 234 inlet channels are divided into 32 groups here as shown in [new_grouping] 
 based on the radial locations and polar angles, and each group with specific mass flow rate and temperature. Inlet channels within a certain group are assumed to have the same inflow velocity corresponding to the specific mass flow rate. 
-Details of the inlet boundary conditions are listed in Table 4.
-Figure 11 visually illustrates the boundary conditions that are enumerated in Table 4. 
-All wall surfaces are assumed to have no-slip velocity boundary condition and adiabatic thermal boundary condition. And a natural pressure condition is given to the outlet face of hot duct. The CFD simulations were carried out in a dimensionless manner. The reference velocity is the mean flow velocity at hot duct, which is 41.48 m/s. Normalization of temperature is accomplished by referencing it to the maximum inlet temperature of 984.34 K at CG0 group and the minimum inlet temperature of 810.05 K at the outer bypass group. Subsequently, during the post-processing stage, it is straightforward to convert the computational fluid dynamics (CFD) outcomes back into dimensional values, enabling additional analyses to be conducted.
+Details of the inlet boundary conditions are listed in [inlet_bc].
+[new_bc] visually illustrates the boundary conditions that are enumerated in [inlet_bc]. 
 
 !media httf/lower_plenum_cfd/new_grouping.png
        style=width:60%
        id=new_grouping
        caption=The grouping of lower plenum inlet channels.
 
-
-!table id=new_bc caption=Helium thermo-physical properties and flow conditions.
+!table id=he_condition caption=Helium thermo-physical properties and flow conditions.
 | $-$ | Value | Unit  |
 | :- | :- | :- |
 | Reference pressure | 211.9 | $kPa$ |
@@ -196,5 +194,70 @@ All wall surfaces are assumed to have no-slip velocity boundary condition and ad
 | Mean flow velocity at Reynolds number at hot duct | 41.48 | $m/s$ |
 | Reynolds number at hot duct | 3.1137×104 | $-$ |
 
+All wall surfaces are assumed to have no-slip velocity boundary condition and adiabatic thermal boundary condition. And a natural pressure condition is given to the outlet face of hot duct. The CFD simulations were carried out in a dimensionless manner. The reference velocity is the mean flow velocity at hot duct, which is 41.48 m/s. Normalization of temperature is accomplished by referencing it to the maximum inlet temperature of 984.34 K at CG0 group and the minimum inlet temperature of 810.05 K at the outer bypass group. Subsequently, during the post-processing stage, it is straightforward to convert the computational fluid dynamics (CFD) outcomes back into dimensional values, enabling additional analyses to be conducted.
 
-The mean LP pressure is 100.5 $kPa$, with which the helium gas has a density of 0.1004 $kg/m^3$. A non-dimensionalization process is performed for the Nek5000 calculations. The reference velocity is 3.47 $m/s$ that is the highest inlet velocity observed for Ring 3 inlet channels. The temperature difference with respect to the side reflector wall temperature (452.37 $K$) is normalized by $\Delta T = 562.20-452.37 = 109.83 (K)$, where the maximum temperature is from Ring 1 inlet channels. During the post-processing, the CFD results can be easily converted back to dimensional quantities for further analyses.
+!table id=inlet_bc caption=Inlet boundary conditions for the HTTF lower plenum simulations.
+| Zone ID | Velocity ($m/s$) | Temperature ($K$)  |
+| :- | :- | :- |
+| CG0 | 30.389 | 984.34 |
+| CG-1A | 23.513 | 924.658 |
+| CG-2A | 25.709 | 889.08 |
+| CG-3A | 26.618 | 944.901 |
+| CG-4A | 26.405 | 926.654 |
+| CG-5A | 21.83 | 866.424 |
+| CG-1B | 23.513 | 925.415 |
+| CG-2B | 25.69 | 890.425 |
+| CG-3B | 26.61 | 947.609 |
+| CG-4B | 26.446 | 932.229 |
+| CG-5B | 21.828 | 867.567 |
+| CG-1C | 23.511 | 924.788 |
+| CG-2C | 25.702 | 889.276 |
+| CG-3C | 26.608 | 945.155 |
+| CG-4C | 26.394 | 926.902 |
+| CG-5C | 21.825 | 866.606 |
+| CG-1D | 23.52 | 922.995 |
+| CG-2D | 25.794 | 886.395 |
+| CG-3D | 26.772 | 941.098 |
+| CG-4D | 26.586 | 922.794 |
+| CG-5D | 21.91 | 863.558 |
+| CG-1E | 23.517 | 920.054 |
+| CG-2E | 25.9 | 881.331 |
+| CG-3E | 27.101 | 932.826 |
+| CG-4E | 27.129 | 913.384 |
+| CG-5E | 22.303 | 856.71 |
+| CG-1F | 23.521 | 922.956 |
+| CG-2F | 25.796 | 886.341 |
+| CG-3F | 26.775 | 941.027 |
+| CG-4F | 26.589 | 922.725 |
+| CG-5F | 21.911 | 863.508 |
+| Outer bypass | 20.669 | 810.051 |
+
+!media httf/lower_plenum_cfd/new_inlet_bc.png
+       style=width:75%
+       id=new_bc
+       caption=Boundary conditions: (a) prescribed inlet velocity and no-slip wall condition; (b) prescribed inlet temperature and adiabatic walls.
+
+### NekRS case setups style=font-size:125%
+
+Readers can access the nekRS case files and the corresponding mesh files in the VTB repository via GitHub Large File Storage (LFS). The mesh data is contained in two files: +httf.re2+ (which includes grid coordinates and sideset ids) and +httf.co2+ (containing mesh cell connectivity information).
+Regarding the nekRS case files, there are four basic files:
+
+- +httf.udf+ serves as the primary nekRS kernel file and encompasses algorithms executed on the hosts. It's responsible for configuring RANS model settings, collecting time-averaged statistics, and determining the frequency of calls to +userchk+, which is defined in the +usr+ file.
+- +httf.oudf+ is a supplementary file housing kernel functions for devices and also plays a role in specifying boundary conditions..
+- +httf.usr+ s a legacy file inherited from Nek5000 and can be utilized to establish initial conditions and define post-processing capabilities.
+- +httf.par+  is employed to input simulation parameters, including material properties, time step size, and Reynolds number.
+
+There are also supportive scripts in the case folder. +linearize_bad_elements.f+ and +BAD_ELEMENTS+ are used to fix the mesh cells that potentially have negative Jacobian values from the quadratic tet-to-hex conversion. 
+Data file +InletProf.dat+ contains the fully developed turbulence solutions of a circular pipe, which is used to customize the profiles of velocity, TKE and tau at HTTF inlet channels. 
+
+Now let's dive into the most important case file +httf.usr+. The sideset ids contained in the mesh file are first translated into CFD boundary condition settings in +usrdat2+ block
+
+!listing htgr/httf/lower_plenum_mixing/nekrs_case/httf.usr start=subroutine usrdat2() end=subroutine usrdat3 include-end=False
+
+The $k-\tau$ URANS model is specified in the following code block
+
+!listing htgr/httf/lower_plenum_mixing/httf.usr start=subroutine usrdat3() end=subroutine turb_in(wd,tke,tau) include-end=False
+
+The specific inlet temperature and mass flow rates are implemented in +userbc+ with the non-dimensionalized values
+
+!listing htgr/httf/lower_plenum_mixing/httf.usr start=if(id_face.eq.3) end=endif include-end=True
