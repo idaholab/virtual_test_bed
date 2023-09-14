@@ -250,6 +250,23 @@ Ortensi J. and Strydom G, "OECD/NEA Coupled Neutronic/Thermal-Fluids Benchmark o
 Technical Report INL/LTD-17-43099-Revision-0, 2020
 ```
 
+- High Temperature Engineering Test Reactor (HTTR) Multiphysics Model
+
+```
+@article{LABOURE2023109838,
+         title = {Improved multiphysics model of the High Temperature Engineering Test Reactor for the simulation of loss-of-forced-cooling experiments},
+         journal = {Annals of Nuclear Energy},
+         volume = {189},
+         pages = {109838},
+         year = {2023},
+         issn = {0306-4549},
+         doi = {https://doi.org/10.1016/j.anucene.2023.109838},
+         url = {https://www.sciencedirect.com/science/article/pii/S0306454923001573},
+         author = {Vincent Labouré and Javier Ortensi and Nicolas Martin and Paolo Balestra and Derek Gaston and Yinbin Miao and Gerhard Strydom},
+}
+Vincent Labouré, Javier Ortensi, Nicolas Martin, Paolo Balestra, Derek Gaston, Yinbin Miao, Gerhard Strydom, "Improved multiphysics model of the High Temperature Engineering Test Reactor for the simulation of loss-of-forced-cooling experiments", Annals of Nuclear Energy, Volume 189, 2023, 109838, ISSN 0306-4549, https://doi.org/10.1016/j.anucene.2023.109838.
+```
+
 - PBMR-400 numerical benchmark
 
 ```
