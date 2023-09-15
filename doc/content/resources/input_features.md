@@ -1,5 +1,7 @@
 # Reactor models sorted by input file features
 
+For the experimental tag-based filter, see this [page](https://mooseframework.inl.gov/virtual_test_bed/resources/filter/index.html).
+
 While every advanced reactor has unique characteristics, with different coolants, fuel shapes or
 control mechanisms, most NEAMS tools are at their core rather reactor-agnostic and thus there
 are many similarities in the input files. The reader may find below an index of the features that are present in the input files of the virtual test bed. If the exact feature is not
