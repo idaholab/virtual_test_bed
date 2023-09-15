@@ -4,6 +4,15 @@
 
 *Model link: [FHR Bypass Flow Reflector Model](https://github.com/idaholab/virtual_test_bed/tree/devel/pbfhr/reflector)*
 
+!tag name=pbfhr_bypass pairs=reactor:pb-fhr
+                       geometry:reflector
+                       simulation_type:component_analysis
+                       code_used:cardinal
+                       multiapps:true
+                       computing_needs:hpc
+                       gpu_enabled:true
+                       fiscal_year:2021
+
 !alert note
 The meshes for this model are hosted on LFS. Please refer to [LFS instructions](resources/how_to_use_vtb.md#lfs)
 to download them.

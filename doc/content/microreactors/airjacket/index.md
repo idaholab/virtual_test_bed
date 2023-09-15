@@ -4,6 +4,15 @@
 
 *Model link: [Air Jacket CFD Model](https://github.com/idaholab/virtual_test_bed/tree/devel/microreactors/gcmr/airjacket)*
 
+!tag name='Gas-Cooled Microreactor Air Jacket' pairs=reactor_type:microreactor
+                       reactor:GCMR
+                       geometry:air_jacket
+                       simulation_type:component_CFD
+                       code_used:Nek5000
+                       open_source:true
+                       computing_needs:HPC
+                       fiscal_year:2023
+
 ## High Level Summary of Model
 
 We have created a [!ac](CFD) model  of a

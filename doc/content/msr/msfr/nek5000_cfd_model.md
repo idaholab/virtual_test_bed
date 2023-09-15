@@ -4,6 +4,15 @@
 
 *Model link: [MSFR CFD Models](https://github.com/idaholab/virtual_test_bed/tree/devel/msr/msfr/core_cfd)*
 
+!tag name='MSFR Nek5000 CFD Modeling' pairs=reactor_type:MSR
+                       reactor:MSFR
+                       geometry:core
+                       simulation_type:CFD
+                       code_used:Nek5000
+                       open_source:true
+                       computing_needs:HPC
+                       fiscal_year:2022
+
 Computational Fluid Dynamics (CFD) plays an unique role in the research and development (R&D) of
 Molten Salt Fast Reactor (MSFR). As a great complement to experiments, it offers a cost effective
 way to study the complex thermal fluid physics expected in the MSFR system.
@@ -35,7 +44,7 @@ The specific Nek5000 version used here is v19.0. Although Nek5000 input files ar
 in the Moose CI test suite, Nek5000 does offer reliable backward compability.
 No foreseeable compability issues are expected. In rare situations where there is indeed a compability
 issue, please reach out to the Nek5000 developer team
-via [Nek5000 Google Group](https://groups.google.com/g/nek5000).   
+via [Nek5000 Google Group](https://groups.google.com/g/nek5000).
 
 
 ## CFD solver and turbulence modeling
@@ -116,7 +125,7 @@ The $k-\tau$ model in Nek5000 has been benchmarked extensively across a variety
 of canonical cases including channel flow and the backward facing step, and it
 has been also applied to fuel rod bundle geometry. Interested readers
 can refer to the recent publication [!citep](Fang2021) for more details regarding
-the $k-\tau$ application and validation in fuel rod bundles.  
+the $k-\tau$ application and validation in fuel rod bundles.
 
 Both LES and RANS approaches play unique roles here. The LES approach is utilized to produce high-fidelity reference data to reveal 3-D system behavior in MSFR core. It uses the stabilizing filter of Fischer and Mullen [!citep](Fischer2001). The solution at each time step is explicitly filtered and the filtering operator $F_\alpha$ is defined as
 
@@ -187,7 +196,7 @@ As mentioned earlier, the 3-D full core model is simulated with the LES approach
     id=3d_mesh
     caption=The mesh of the 3-D MSFR full core model.
 
-Due to the high computational costs associated with the full-core MSFR model, selected partial-core wedge models are also created accounting for 1/16 of the full core region. The related 3-D simulations are much less demanding computationally.  
+Due to the high computational costs associated with the full-core MSFR model, selected partial-core wedge models are also created accounting for 1/16 of the full core region. The related 3-D simulations are much less demanding computationally.
 As shown in [wedge_mesh], three types of wedge domains are studied to better understand how the CFD results can be influenced by the inflow boundary conditions. They are labeled as  WA, WB and WC, respectively.
 Geometry WA contains one set of inlet and outlet channels that match the  dimensions in the full core model. The side faces are assigned the symmetry boundary condition for the core region and the no-slip condition for the inlet/outlet.
 Geometry WB also includes one set of inlet and outlet channels, but they are adjusted to be a 3-D equivalent of the 2-D axisymmetic case setup. The symmetry boundary condition is applied to side faces of both core and inlet/outlet channel.
@@ -284,7 +293,7 @@ In general, no or minimum editing is required for these files.
 # MSFR CFD Results
 
 The 2-D axisymmetric RANS cases were simulated at multiple Reynolds numbers up to the reference operation condition ($Re = 10^6$) defined based on the length and flow velocity at minimum core diameter.
-For the wall-resolved unsteady RANS simulations, the first layer of grid points off the wall is kept at an average distance of $y^+ < 1.0$.  
+For the wall-resolved unsteady RANS simulations, the first layer of grid points off the wall is kept at an average distance of $y^+ < 1.0$.
 After a quick initial transient phase, all the simulations reach a steady state.
 Taking the case of $Re = 10^6$ as an example, the corresponding steady-state solutions of non-dimensional velocity and turbulent kinetic energy (TKE) fields are shown in [2d_solution].
 Higher velocity magnitudes are observed close to inlet and outlet elbows due to the specific geometric designs. Although a large percentage of the bulk flow at  minimum core diameter sees a stable upward flow, lower velocity regions are noticed close to bottom and top along the centerline. It might be an indicator that a 2-D axisymmetric setup is not best suited to predict MSFR core flow distribution, or it is possible that further core geometry optimization is needed.
@@ -307,7 +316,7 @@ In general, such re-circulations are not desired, and will affect the heat remov
 
 
 The series of 2-D RANS simulations conducted at various Reynolds numbers is also useful to understand the dependency of salt flow distribution on Reynolds number (or the salt mass flow rate).
-The study can provide a guideline to coarse-mesh CFD or system codes in modeling MSFR transient scenarios, such as the reactor startup.  
+The study can provide a guideline to coarse-mesh CFD or system codes in modeling MSFR transient scenarios, such as the reactor startup.
 [vel_dist] illustrates the axial velocity profiles at the minimum core diameter with different Reynolds numbers.
 In general, the velocity magnitude is low at the centerline ($r = 0$), and it increases steadily in the radial direction up to $r = 0.5$. When $r > 0.5$, the velocity profile seems to oscillate, and does not exhibit a common trend over different Reynolds numbers. Once a peak is reached, the velocity magnitude would drop monotonically to zero at the peripheral wall.
 It is noted that with a low Reynolds number (e.g., $Re = 2\times10^4$), the axial velocity could even have a reversed direction at the centerline.
@@ -326,7 +335,7 @@ A comparison of axial velocity field from 2-D axisymmetric RANS calculations and
 The most noticeable difference is the prediction of velocity field along the  core centerline. The 2-D RANS model significantly underpredicts the axial velocity magnitude in the related regions, indicating that the two-equation $k-\tau$ or $k-\omega$ model may have a limitation in accurately modeling the turbulence in the MSFR core cavity (at least with a 2-D axisymmetric setup).
 Other RANS turbulence models will be also considered in the subsequent studies to find out the best modeling strategy balancing accuracy and computational costs.
 The difference is also noted for the velocity field close to bottom inlet. A modest separation is observed in the LES results which does not show up in the RANS solution. This is likely attributed to axisymmetric assumption in the 2-D case setup.
-Note that the core mass flow rate is fixed in both 2-D RANS and 3-D LES cases, and it is expected for the inlet velocity to be higher in the 3-D case due to the reduced total inlet area.  
+Note that the core mass flow rate is fixed in both 2-D RANS and 3-D LES cases, and it is expected for the inlet velocity to be higher in the 3-D case due to the reduced total inlet area.
 The presented LES simulation is likely a bit under-resolved due to the limited computational resources available for this work. Having said that, it is clear that a 3-D MSFR full core LES is feasible and can help reveal possible limitations of RANS modeling.
 
 !media msr/msfr/nek/3D_full_core_vel.png

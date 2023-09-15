@@ -4,6 +4,13 @@
 
 *Model link: [ABTR Model](https://github.com/idaholab/virtual_test_bed/tree/devel/sfr/abtr)*
 
+!tag name='Advanced Burner Test Reactor Loss of Flow Accident' pairs=reactor_type:SFR
+                       reactor:ABTR
+                       simulation_type:balance_of_plant
+                       code_used:SAM
+                       computing_needs:workstation
+                       fiscal_year:2022
+
 ## ABTR description
 
 A demonstrative system model based on the Advanced Burner Test Reactor (ABTR) conceptual design has been developed with the recent SAM capabitility enhancement in structure thermal expansion and reactivity feedback modeling. More details can be found in [!citep](Hu2019) regarding the implementation of Point Kinetics model and verifications of thermal expansion models.
@@ -87,14 +94,14 @@ The ABTR model described in Section 3.1 is used in the test. An unprotected loss
 
 ### Accident Sequences
 
-The accident sequence analyzed here is the loss of normal power to the reactor and intermediate loss of forced flow in the primary and intermediate coolant circuits. A programmed flow coast down of the coolant pumps is assumed to operate. The pump coast down curve during the transient is shown in [pump_cd]. In addition, it is assumed that heat removal at the sodium-CO2 heat exchanger ceases, so that the only heat removal path is through the emergency direct reactor auxiliary cooling system (DRACS). The initial condition for the accident sequence is the normal operation at full power and flow. With the loss of pumping power, flow in the primary circuit coasts down according to the programmed pump head decay. The system is running for 500s to reach the normal operation status before the transient simulation starts. Following the pump flow coast down, natural circulation flow is established. 
+The accident sequence analyzed here is the loss of normal power to the reactor and intermediate loss of forced flow in the primary and intermediate coolant circuits. A programmed flow coast down of the coolant pumps is assumed to operate. The pump coast down curve during the transient is shown in [pump_cd]. In addition, it is assumed that heat removal at the sodium-CO2 heat exchanger ceases, so that the only heat removal path is through the emergency direct reactor auxiliary cooling system (DRACS). The initial condition for the accident sequence is the normal operation at full power and flow. With the loss of pumping power, flow in the primary circuit coasts down according to the programmed pump head decay. The system is running for 500s to reach the normal operation status before the transient simulation starts. Following the pump flow coast down, natural circulation flow is established.
 
 !media abtr/pump_coast_down.png
        style=width:60%
        id=pump_cd
        caption=ABTR pump coast down transient.
 
-There are two variations of the loss-of-flow accident sequence. In the first, the reactor safety system acts to insert control rods and reduce reactor power to decay heat. This sequence is called protected loss-of-flow (PLOF) accident. In the second, the reactor safety system fails to insert the scram control rods and the loss of forced flow proceeds at full power. This sequence is called the unprotected loss-of-flow (ULOF) accident. The ULOF accident is used to demonstrate the Point-Kinetics model and the reactivity feedback models. 
+There are two variations of the loss-of-flow accident sequence. In the first, the reactor safety system acts to insert control rods and reduce reactor power to decay heat. This sequence is called protected loss-of-flow (PLOF) accident. In the second, the reactor safety system fails to insert the scram control rods and the loss of forced flow proceeds at full power. This sequence is called the unprotected loss-of-flow (ULOF) accident. The ULOF accident is used to demonstrate the Point-Kinetics model and the reactivity feedback models.
 
 In the ULOF accident, the reactor power remains at full power initially and is reduced later due to the inherent negative reactivity feedbacks. As the coolant flow rate decreases, reactor temperatures increase within the first minute. During this time, the peak fuel and cladding temperatures rise. This increase in temperatures provides the driving force for establishing the natural circulation flow, which will then reduce the peak fuel and cladding temperatures. The reactor seeks equilibrium with the available heat sink by reducing power. This will reduce the reactor temperature and establish a quasi-equilibrium condition. However, the reactor system will continue to heat slowly until the decay heat falls below the heat rejection capacity of DRACS system. When decay heat production falls below the DRACS capacity, the system temperature starts to decline.
 
@@ -119,7 +126,7 @@ In the ULOF accident, the reactor power remains at full power initially and is r
 
 ## How to run the model
 
-There are two SAM input files related to ABTR modeling. The first input model is used for the steady-state simulation, which generates a checkpoint file for the transient case. The Checkpoint file provides the initial conditions for the ABTR ULOF transient modeling. They are executed in the following sequence. 
+There are two SAM input files related to ABTR modeling. The first input model is used for the steady-state simulation, which generates a checkpoint file for the transient case. The Checkpoint file provides the initial conditions for the ABTR ULOF transient modeling. They are executed in the following sequence.
 
  `sam-opt -i abtr_ss.i`
 

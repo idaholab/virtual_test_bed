@@ -8,7 +8,7 @@ For citing purposes, please cite [!citep](s8er_garcia2022) and [!citep](s8er_nau
 
 ## Introduction
 
-The S8ER was part of a fleet of reactors built during the Systems for Nuclear Auxilliary Power (SNAP) program. These reactors were space-based aiming to be used as auxiliary power for components such as satellites. 
+The S8ER was part of a fleet of reactors built during the Systems for Nuclear Auxilliary Power (SNAP) program. These reactors were space-based aiming to be used as auxiliary power for components such as satellites.
 
 These systems were the first to explore novel microreactor technology and share many similar characteristics to modern designs that include comparable power output, compact core design, representative reactor-physics phenomena, alkali metal working fluids and high temperature solid moderators prone to hydrogen migration.
 
@@ -35,7 +35,7 @@ The S8ER was designed to operate for a total of 10,000 hrs and operate at a powe
 
 ## Core Description
 
-As described earlier, the S8ER is a compact nuclear reactor using homogenous combined HEU fuel with Zirconium-Hydride as the fuel-moderator mix. The system uses a mix of burnable poisons aswell as stationary and moveable reflectors for reactivity control. 
+As described earlier, the S8ER is a compact nuclear reactor using homogenous combined HEU fuel with Zirconium-Hydride as the fuel-moderator mix. The system uses a mix of burnable poisons aswell as stationary and moveable reflectors for reactivity control.
 
 !media s8er/core_reflector_view.png
   caption= S8ER Core and Reflector Assembly View, from [!citep](SNAP8Summary)
@@ -55,7 +55,7 @@ As described earlier, the S8ER is a compact nuclear reactor using homogenous com
 
 ## Fuel Element
 
-The core contains 211 elements arranged in a hexagonal lattice. Each rod contains the homogenous UZrH mix as the fuel base, a hydrogen diffusion barrier consisting of the ceramic AI-8763D infused with burnable poison Sm2O3, an internal atmosphere consisting of Helium as a gap, and a layer of Hastelloy N cladding. The fuel pins contain upper and lower end caps for containment as well as indexing.   
+The core contains 211 elements arranged in a hexagonal lattice. Each rod contains the homogenous UZrH mix as the fuel base, a hydrogen diffusion barrier consisting of the ceramic AI-8763D infused with burnable poison Sm2O3, an internal atmosphere consisting of Helium as a gap, and a layer of Hastelloy N cladding. The fuel pins contain upper and lower end caps for containment as well as indexing.
 
 !media s8er/fuelpin_view.png
   caption= S8ER Fuelpin Diagram, from [!citep](SNAP8Summary)
@@ -67,7 +67,7 @@ The core contains 211 elements arranged in a hexagonal lattice. Each rod contain
 | Fuel  | Zr-10 Wt% U-Hydrided to 6E+22 #/cm^3 of H |
 | Fissile Enrichment  |  U-235 93.15 Wt% |
 | Ceramic Material           |   AI-8763D  |
-| Burnable Poison           |   Sm2O3 (3.34 mg/in of clad) | 
+| Burnable Poison           |   Sm2O3 (3.34 mg/in of clad) |
 | Internal Atmosphere           |   He 0.1 atm  |
 | Cladding           |   Hastelloy-N  |
 | Fuel Rod Length           |   0.3556 m  |

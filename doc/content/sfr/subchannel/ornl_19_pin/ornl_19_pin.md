@@ -4,6 +4,13 @@
 
 *Model link: [ORNL 19-Pin Subchannel Model](https://github.com/idaholab/virtual_test_bed/tree/devel/sfr/subchannel/ornl_19_pin)*
 
+!tag name='Subchannel Model for the ORNL 19-Pin Benchmark' pairs=reactor_type:SFR
+                       geometry:assembly
+                       simulation_type:assembly_flow
+                       code_used:Pronghorn_subchannel
+                       computing_needs:workstation
+                       fiscal_year:2023
+
 ## Benchmark description
 
 The ORNL 19-pin experiment was built at Oak Ridge National Laboratory for studying the thermal-hydraulic flow characteristics in SFR assemblies as described in [!citep](fontana74).

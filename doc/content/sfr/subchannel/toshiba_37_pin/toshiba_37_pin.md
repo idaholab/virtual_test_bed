@@ -4,6 +4,13 @@
 
 *Model link: [Toshiba 37-Pin Subchannel Model](https://github.com/idaholab/virtual_test_bed/tree/devel/sfr/subchannel/toshiba_37_pin)*
 
+!tag name='Subchannel Model for the Toshiba 37-Pin Benchmark' pairs=reactor_type:SFR
+                       geometry:assembly
+                       simulation_type:assembly_flow
+                       code_used:Pronghorn_subchannel
+                       computing_needs:workstation
+                       fiscal_year:2023
+
 ## Benchmark Description
 
 The Toshiba 37-pin benchmark is based on liquid sodium experiments conducted by the Toshiba Corporation Nuclear Engineering Laboratory in Japan [!citep](namekawa1984buoyancy).

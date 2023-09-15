@@ -4,6 +4,16 @@
 
 *Model link: [Griffin-Pronghorn Transient Model](https://github.com/idaholab/virtual_test_bed/tree/devel/msr/msfr/transient)*
 
+!tag name='MSFR Griffin-Pronghorn Transient Model' pairs=reactor_type:MSR
+                       reactor:MSFR
+                       geometry:core
+                       simulation_type:core_multiphysics
+                       multiapps:true
+                       transient:ULOF
+                       code_used:BlueCrab
+                       computing_needs:workstation
+                       fiscal_year:2021
+
 In addition to the steady-state MSFR model, the Virtual Test Bed also contains
 an example transient model. This model is intended to represent a partial
 loss-of-flow accident. The exact mechanism is unspecified here (it could be a

@@ -4,6 +4,15 @@
 
 *Model link: [HPMR Model](https://github.com/idaholab/virtual_test_bed/tree/devel/microreactors/mrad)*
 
+!tag name='Micro-Reactor Multiphysics model' pairs=reactor_type:microreactor
+                       reactor:HPMR
+                       geometry:core
+                       simulation_type:core_multiphysics
+                       transient:overpower
+                       code_used:BlueCrab
+                       computing_needs:HPC
+                       fiscal_year:2023
+
 !alert note title=Acknowledgement
 This HP-MR model was built upon earlier work performed under ARPA-E MEITNER project and reported in the journal paper [!citep](matthews2021coupled), and some parts of the inputs are coming from these original models.
 
@@ -20,7 +29,7 @@ While Sockeye uses its own simple implemented 2D axisymetric heat pipe meshing c
        id=hpmr_mesh_proc
        caption=A cartoon showing the step-by-step procedures to generate the HP-MR mesh.
 
-A 1/6 HP-MR core was generated using the input file shown above with steps illustrated in [hpmr_mesh_proc]. This mesh contains stainless steel envelops for moderators and heat pipes, while the helium gap is not meshed. The mesh density in radial direction is high as multiple small features (fuel rods, moderators, heat pipes and control drums) are involved. 
+A 1/6 HP-MR core was generated using the input file shown above with steps illustrated in [hpmr_mesh_proc]. This mesh contains stainless steel envelops for moderators and heat pipes, while the helium gap is not meshed. The mesh density in radial direction is high as multiple small features (fuel rods, moderators, heat pipes and control drums) are involved.
 
 Compared with the mesh used in the [legacy model](/legacy_mrad_model.md) and created from Cubit:
 

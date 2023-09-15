@@ -1,8 +1,16 @@
-# Sodium Fast Reactor (SFR)
+# Sodium Fast Reactor (SFR) Single Assembly Model
 
 *Contact: Nicholas Martin, nicolas.martin.at.inl.gov*
 
 *Model link: [SFR Single Assembly Model](https://github.com/idaholab/virtual_test_bed/tree/devel/sfr/single_assembly)*
+
+!tag name='Sodium Fast Reactor Single Assembly Model' pairs=reactor_type:SFR
+                       geometry:assembly
+                       simulation_type:assembly_multiphysics
+                       multiapps:true
+                       code_used:BlueCrab
+                       computing_needs:workstation
+                       fiscal_year:2021
 
 ## SFR model description
 
