@@ -10,7 +10,7 @@ To run the startup transient, run the following:
 $ moose-opt -i htgr_startup_transient.i
 ```
 
-The motor and turbine torques (secondary loop)are shown in [startup_torques]: as expected, the motor torque increases quickly during the first few seconds, in order to initiate the shaft rotation speed, shown in [startup_omega]. This quantity must be lower than the rated value, to avoid breaking the equipment. This condition is verified thanks to the PID controller: it stays at 9,300 rad/s during the steady state, which is lower than the 9,950 rad/s (or 95,000 rpm) rated.
+The motor and turbine torques (secondary loop) are shown in [startup_torques]: as expected, the motor torque increases quickly during the first few seconds, in order to initiate the shaft rotation speed, shown in [startup_omega]. This quantity must be lower than the rated value, to avoid breaking the equipment. This condition is verified thanks to the PID controller: it stays at 9,300 rad/s during the steady state, which is lower than the 9,950 rad/s (or 95,000 rpm) rated.
 
 Once the shaft rotation is initiated and the turbine generates enough torque, the motor torque decreases slowly to zero.
 
@@ -58,7 +58,7 @@ The temperatures are shown in [startup_T]: once again, the steady state is reach
       id=startup_T
       caption= Startup transient - temperatures in the two loops
 
-The extracted powers are shown in [startup_power]: As expected, they increase in the core and in the heat exchanger from zero to the operating value of 15 MWth. At the same time, the power extracted by the generator increases from zero to 2 MWe.
+The extracted powers are shown in [startup_power]: As expected, they increase in the core and in the heat exchanger go from zero to the operating value of 15 MWth. At the same time, the power extracted by the generator increases from zero to 2 MWe.
 
 !media media/gcmr/balance_of_plant/results_startup/startup_power.png
       style=display: block;margin-left:auto;margin-right:auto;width:50%;
@@ -79,7 +79,7 @@ The steady state reached in the previous simulation is used as initial condition
 
 In each of the following figures, a new steady state is reached in approximately 10,000s after the power modulation at $t = 50,000 s$ and $t = 100,000 s$.
 
-The shaft, compressor and turbine of the secondary loop are already launched. Consequently, there is no need of a motor as for the first simulation.
+The shaft, compressor and turbine of the secondary loop are already launched. Consequently, there is no need for a motor as in the first simulation.
 
 
 The shaft speed, as shown in [load_follow_omega], is lower after the first modulation: its steady state value is 8,800 rad/s. The input of power is in fact lower, thus the power transferred to the turbine is lower too. The turbine is linked to the shaft and its rotation speed is lower than what it was at the beginning.
@@ -91,7 +91,7 @@ The second power modulation gives after the transient step the same values as th
       caption= Load follow transient - shaft speed
 
 The mass flow rates are shown in [load_follow_primary_m_dot] and [load_follow_seconday_m_dot]: as expected, the primary mass flow rate undergoes very small effects during the first power modulation. The pressure in the primary loop is in fact maintained by the pressurizer at 90 bar, the only change is about the heat that the fluid receives. By contrast, the secondary mass flow rate diminishes more significantly. Because of the lower power transfer, the temperature and consequently the pressure of the secondary fluid are lower than during the steady state of the previous simulation. Thus, the mass flow rate through the secondary loop becomes lower than what it was before.
-The second power modulation gives after the transient step the same values than the initial ones.
+The second power modulation reaches after the transient step the same state as the initial state.
 
 !media media/gcmr/balance_of_plant/results_load_follow/load_follow_primary_m_dot.png
       style=display: block;margin-left:auto;margin-right:auto;width:50%;

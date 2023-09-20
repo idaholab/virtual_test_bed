@@ -27,13 +27,13 @@ The solid materials of the many heat structures are declared using a [HeatStruct
 
 ### Geometry
 
-The geometry is defined using the [Components](https://mooseframework.inl.gov/syntax/Components/index.html) system. Each component is defined using a position, orientation and length for 1D components.A width is also defined for 2D components (heat structures). Channels are defined using the  [FlowChannel1Phase](https://mooseframework.inl.gov/source/components/FlowChannel1Phase.html) components and heat structures are defined using the [HeatStructureCylindrical](https://mooseframework.inl.gov/source/components/HeatStructureCylindrical.html) or [HeatStructurePlate](https://mooseframework.inl.gov/source/components/HeatStructurePlate.html) depending on the geometry.
+The geometry is defined using the [Components](https://mooseframework.inl.gov/syntax/Components/index.html) system. Each component is defined using a position, orientation and length for 1D components. A width is also defined for 2D components (heat structures). Channels are defined using the  [FlowChannel1Phase](https://mooseframework.inl.gov/source/components/FlowChannel1Phase.html) components and heat structures are defined using the [HeatStructureCylindrical](https://mooseframework.inl.gov/source/components/HeatStructureCylindrical.html) or [HeatStructurePlate](https://mooseframework.inl.gov/source/components/HeatStructurePlate.html) depending on the geometry.
 
 ### Initial conditions
 
 A common initial temperature is chosen for the whole system. It is done to avoid irregular effects in the first few seconds of the simulation due to a high temperature difference between the primary and secondary sides in the heat exchanger (`hx`). The only exceptions are the `sec_pipe1` and `hot_leg` of the secondary loop, which are respectively connected to the inlet and outlet of the cycle. Their initial temperature is 300 K.
 
- In the primary loop, a 90 bar pressure is defined and is equal to the steady state pressure in that loop. The secondary loop is initialized to the atmospheric pressure.
+In the primary loop, a 90 bar pressure is defined and is equal to the steady state pressure in that loop. The secondary loop is initialized to the atmospheric pressure.
 
 The velocities are initialized at a very small non-zero value.
 
@@ -72,7 +72,7 @@ The geometrical parameters of the coolant itself are adapted to represent all th
 
 !listing microreactors/gcmr/balance_of_plant/htgr_startup_transient.i block=Components/core
 
- The 15 MWth power is declared using a `power` block of [TotalPower](https://mooseframework.inl.gov/source/components/TotalPower.html) type.
+A power of 15 MWth is declared using a `power` block of [TotalPower](https://mooseframework.inl.gov/source/components/TotalPower.html) type.
 
 !listing microreactors/gcmr/balance_of_plant/htgr_startup_transient.i block=Components/total_power
 
@@ -84,9 +84,9 @@ A pressurizer is added to maintain a 90 bar pressure during the whole simulation
 
 #### Heat exchanger
 
-The heat exchanger is modeled as a 2 meters high structure, composed of couples of primary and secondary channels (see [heat_exchanger] ) which are replicated 20,000 times. Their diameters are respectively 3 mm and 5 mm. They are defined using [FlowChannel1Phase](https://mooseframework.inl.gov/source/components/FlowChannel1Phase.html) components. They are separated by a 1 mm steel wall defined using a [HeatStructureCylindrical](https://mooseframework.inl.gov/source/components/HeatStructureCylindrical.html) component, and the flow directions are opposite. The heat transfers are declared with [HeatTransferFromHeatStructure1Phase](https://mooseframework.inl.gov/source/components/HeatTransferFromHeatStructure1Phase.html). The wall is used as heat structure and each channel as the heated flow channel.
+The heat exchanger is modeled as a 2 meters-high structure, composed of couples of primary and secondary channels (see [heat_exchanger] ) which are replicated 20,000 times. Their diameters are respectively 3 mm and 5 mm. They are defined using [FlowChannel1Phase](https://mooseframework.inl.gov/source/components/FlowChannel1Phase.html) components. They are separated by a 1 mm steel wall defined using a [HeatStructureCylindrical](https://mooseframework.inl.gov/source/components/HeatStructureCylindrical.html) component, and the flow directions are opposite. The heat transfers are declared with [HeatTransferFromHeatStructure1Phase](https://mooseframework.inl.gov/source/components/HeatTransferFromHeatStructure1Phase.html). The wall is used as heat structure and each channel as the heated flow channel.
 
-The same principle than for the core coolant channel is used to define the `A` section, `P_hf` heating perimeter and `D_h` hydraulic diameter parameters. The replication of the couple is done using the `num_rods` parameter of the `wall` block.
+The same principle as for the core coolant channel is used to define the `A` section, `P_hf` heating perimeter and `D_h` hydraulic diameter parameters. The replication of the couple is done using the `num_rods` parameter of the `wall` block.
 
 !media media/gcmr/balance_of_plant/heat_exchanger.png
       style=display: block;margin-left:auto;margin-right:auto;width:60%;
@@ -146,7 +146,7 @@ These rated parameters are associated to the efficiency and pressure ratio funct
 
 !listing microreactors/gcmr/balance_of_plant/htgr_startup_transient.i block=Components/compressor
 
-#### Turbine
+#### Turbine id=turbine
 
 A turbine is defined using the [ShaftConnectedCompressorTurbine](https://mooseframework.inl.gov/source/components/ShaftConnectedCompressor1Phase.html) component type: a turbine can be considered as an inverted compressor. The `treat_as_turbine` parameter is defined as “true”.
 
@@ -175,7 +175,7 @@ The shaft speed is smaller than the rated value. This difference is due to a mar
 
 #### Generator
 
-A generator is added on the same shaft than the turbine to produce electricity. The [ShaftConnectedMotor](https://mooseframework.inl.gov/source/components/ShaftConnectedMotor.html) component type is once again used. The generator torque is defined as follow:
+A generator is added on the same shaft as the turbine to produce electricity. The [ShaftConnectedMotor](https://mooseframework.inl.gov/source/components/ShaftConnectedMotor.html) component type is once again used. The generator torque is defined as follow:
 
 \begin{equation}
     \Gamma=C\omega
@@ -191,7 +191,7 @@ C is defined to generate 2 MWe at the rated shaft speed:
     C=-0.025W.s^2
 \end{equation}
 
-This parameter is used in the [Functions](https://mooseframework.inl.gov/syntax/Functions/index.html) block by the `generator_torque_fn`. This one is used to define the torque of the generator in the component block. Not that the negative sign is because energy is extracted.
+This parameter is used in the [Functions](https://mooseframework.inl.gov/syntax/Functions/index.html) block by the `generator_torque_fn`. This one is used to define the torque of the generator in the component block. Note that a negative sign is present because energy is extracted.
 
 !listing microreactors/gcmr/balance_of_plant/htgr_startup_transient.i block=Components/generator
 
@@ -203,7 +203,7 @@ A motor component of [ShaftConnectedMotor](https://mooseframework.inl.gov/source
 
 #### Recuperator
 
-The recuperator includes two countercurrent coolant channels (the `hot_leg` and `cold_leg`). A [HeatStructureCylindrical](https://mooseframework.inl.gov/source/components/HeatStructureCylindrical.html) component is added to couple these two channels, and two heat transfers are defined using the [HeatTransferFromHeatStructure1Phase](https://mooseframework.inl.gov/source/components/HeatTransferFromHeatStructure1Phase.html). Each of them couples a channel with the heat structure.
+The recuperator includes two counter-current coolant channels (the `hot_leg` and `cold_leg`). A [HeatStructureCylindrical](https://mooseframework.inl.gov/source/components/HeatStructureCylindrical.html) component is added to couple these two channels, and two heat transfers are defined using the [HeatTransferFromHeatStructure1Phase](https://mooseframework.inl.gov/source/components/HeatTransferFromHeatStructure1Phase.html). Each of them couples a channel with the heat structure.
 
 !listing microreactors/gcmr/balance_of_plant/htgr_startup_transient.i block=Components/cold_leg
 
@@ -225,9 +225,9 @@ The recuperator includes two countercurrent coolant channels (the `hot_leg` and 
 
 A [ControlLogic](https://mooseframework.inl.gov/syntax/ControlLogic/index.html) block is added to control the motor torque.
 
-The `initial_motor_PID` of type [PIDControl](https://mooseframework.inl.gov/source/controllogic/PIDControl.html) defines the behavior of the motor at the beginning. It depends on the `set_point` block, whose type is a [GetFunctionValueControl](https://mooseframework.inl.gov/source/controllogic/GetFunctionValueControl.html). It declares the desired shaft speed, which is the rated shaft speed minus 9000 rpm (see the turbine paragraph)
+The `initial_motor_PID` of type [PIDControl](https://mooseframework.inl.gov/source/controllogic/PIDControl.html) defines the behavior of the motor at the beginning. It depends on the `set_point` block, whose type is a [GetFunctionValueControl](https://mooseframework.inl.gov/source/controllogic/GetFunctionValueControl.html). It declares the desired shaft speed, which is the rated shaft speed minus 9000 rpm (see the [turbine paragraph](#turbine))
 
-As the shaft speed  and heat transfer from the core progressively increase,  the turbine generates torque and the need of the motor torque becomes smaller. Thus, it progressively decreases, and it is finally  shut.
+As the shaft speed and heat transfer from the core progressively increase, the turbine generates torque and the need for the motor torque becomes smaller. Thus, it progressively decreases, and it is eventually shut off.
 
 A `motor_PID`, whose type is [SetComponentRealValueControl](https://mooseframework.inl.gov/source/controllogic/SetComponentRealValueControl.html), decides which value must be attributed to the motor torque. If the motor torque is too small, the motor is shut, using a `motor_torque_fn_shutdown` function written in the [Functions](https://mooseframework.inl.gov/syntax/Functions/index.html) block. Else, the behavior of the motor is still defined by the [PIDControl](https://mooseframework.inl.gov/source/controllogic/PIDControl.html). This condition is defined using the `logic` block, whose type is [ParsedFunctionControl](https://mooseframework.inl.gov/source/controllogic/ParsedFunctionControl.html). In this one, a time condition is added: if the elapsed time is too small, the condition on the motor torque value is not applicable. At the beginning of the simulation: the motor torque is small and increasing, but it should not be shut.
 
@@ -249,7 +249,7 @@ The model description above defines mainly the model used for the startup transi
 
 The [AuxVariables](https://mooseframework.inl.gov/syntax/AuxVariables/index.html) defined to control the motor behavior are not disabled because the input file of the load follow transient needs to import data from the startup transient. To do so, some of the defined objects in the two input file, particularly the [AuxVariables](https://mooseframework.inl.gov/syntax/AuxVariables/index.html), need to be the same.
 
-Two [ControlLogic](https://mooseframework.inl.gov/syntax/ControlLogic/index.html) blocks are added to impose the core power during the load follow transient. A `power_logic`, whose type is [ParsedFunctionControl](https://mooseframework.inl.gov/source/controllogic/ParsedFunctionControl.html), calls a `power_fn` function, which defines the power dependance on the time. It is then transferred to a `power_applied` sub block (of [SetComponentRealValueControl](https://mooseframework.inl.gov/source/controllogic/SetComponentRealValueControl.html)) which indicates to attribute this behavior to the `total_power` component block.
+Two [ControlLogic](https://mooseframework.inl.gov/syntax/ControlLogic/index.html) blocks are added to impose the core power during the load follow transient. A `power_logic`, whose type is [ParsedFunctionControl](https://mooseframework.inl.gov/source/controllogic/ParsedFunctionControl.html), calls a `power_fn` function, which defines the power dependance on the time. It is then transferred to a `power_applied` sub block (of type [SetComponentRealValueControl](https://mooseframework.inl.gov/source/controllogic/SetComponentRealValueControl.html)) which indicates to attribute this behavior to the `total_power` component block.
 
 !listing microreactors/gcmr/balance_of_plant/htgr_load_follow_transient.i block=ControlLogic
 

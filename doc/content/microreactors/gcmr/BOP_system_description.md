@@ -9,7 +9,7 @@ The simulated reactor is a HTGR (High Temperature Gas cooled Reactor). Its therm
 | Primary mass flow rate                     | 9.4 kg/s   |
 | Core inlet temperature                     | 890 K      |
 | Core outlet temperature                    | 1190 K     |
-| Primary system pressure                    | 9.10^6^ Pa |
+| Primary system pressure                    | 9.10^6 Pa  |
 | Secondary mass flow rate                   | 20 kg/s    |
 | Secondary heat exchanger inlet temperature | 490 K      |
 | Compressor pressure ratio                  | 8.9        |
