@@ -4,6 +4,15 @@
 
 *Model link: [HTTF Lower Plenum CFD Model](https://github.com/idaholab/virtual_test_bed/tree/devel/htgr/httf/lower_plenum_mixing)*
 
+!tag name='Nek5000 CFD Modeling of HTTF Lower Plenum Flow Mixing Phenomenon' pairs=reactor_type:HTGR
+                       reactor:HTTF
+                       geometry:plenum
+                       simulation_type:component_CFD
+                       code_used:Nek5000
+                       computing_needs:HPC
+                       open_source:true
+                       fiscal_year:2023
+
 ## Overview
 
 Accurate modeling and simulation capabilities are becoming increasingly important to speed up the development and deployment of advanced nuclear reactor technologies, such as high temperature gas-cooled reactors. Among the identified safety-relevant phenomena for the gas-cooled reactors (GCR), the outlet plenum flow distribution was ranked to be of high importance with a low knowledge level in the phenomenon identification and ranking table (PIRT) [!citep](Ball2008).

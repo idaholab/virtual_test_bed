@@ -4,6 +4,15 @@
 
 *Model link: [FHR Steady-State Multiphysics Model](https://github.com/idaholab/virtual_test_bed/tree/devel/pbfhr/steady)*
 
+!tag name='FHR Core Steady-State Model' pairs=reactor_type:PB-FHR
+                       reactor:Mk1
+                       geometry:core
+                       simulation_type:core_multiphysics
+                       multiapps:true
+                       code_used:BlueCrab
+                       computing_needs:workstation
+                       fiscal_year:2020
+
 These input files may be used to perform a coupled multiphysics steady state simulation of the
 Mk1-FHR. Each physics is solved by the relevant MOOSE application: the [neutronics](steady/griffin.md) by Griffin, the
 [thermal hydraulics](steady/pronghorn.md) by Pronghorn and the [fuel performance](steady/pebble.md) by the combined usage of Pronghorn and the MOOSE heat conduction module. A

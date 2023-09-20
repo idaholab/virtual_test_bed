@@ -4,6 +4,13 @@
 
 *Model link: [Generic PBR SAM Model](https://github.com/idaholab/virtual_test_bed/tree/devel/htgr/generic-pbr)*
 
+!tag name='SAM Generic PBR Model' pairs=reactor:HTGR
+                       geometry:core
+                       simulation_type:core_multiphysics
+                       code_used:SAM
+                       computing_needs:workstation
+                       fiscal_year:2021
+
 The input file (pbr.i) is a model for the generic 200 MW pebble bed reactor
 developed using SAM [!citep](Hu2021). The model focuses only on the core of the
 reactor where the auxiliary components and power conversion system are not
@@ -155,9 +162,9 @@ of temperature. For example, the built-in eos for helium can be input as
 Users can define functions for parameters used in the model. These include
 temporal, spatial, and temperature dependent functions. For example, users
 can input enthalpy as a function of temperature, power history as a function
-of time, or power profile as a function of position. Users should be cautious 
+of time, or power profile as a function of position. Users should be cautious
 when time-dependent and temperature-dependent functions are in use to avoid
-confusion between time (*t*) and temperature (*T*). Currently, only certain 
+confusion between time (*t*) and temperature (*T*). Currently, only certain
 parameters can be made temperature-dependent. These include material properties
 and the `h_gap` for the `SurfaceCoupling` component. The input below specifies
 the thermal conductivity of fuel pebbles as a function of temperature (in K).
@@ -296,8 +303,8 @@ and the mass flow rate in `F-1`
 
 ## Preconditioning
 
-This block describes the preconditioner to be used by the preconditioned JFNK 
-solver (available through PETSc). Two options are currently available, 
+This block describes the preconditioner to be used by the preconditioned JFNK
+solver (available through PETSc). Two options are currently available,
 the single matrix preconditioner (SMP) and the finite difference preconditioner (FDP).
 The theory behind the preconditioner can be found in the SAM Theory Manual [!citep](Hu2021).
 New users can leave this block unchanged.

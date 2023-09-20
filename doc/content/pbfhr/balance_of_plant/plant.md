@@ -4,6 +4,13 @@
 
 *Model link: [FHR Plant Model](https://github.com/idaholab/virtual_test_bed/tree/devel/pbfhr/plant)*
 
+!tag name='FHR Plant Model' pairs=reactor_type:PB-FHR
+                       reactor:Mk1-FHR
+                       simulation_type:balance_of_plant
+                       code_used:BlueCrab
+                       computing_needs:workstation
+                       fiscal_year:2022
+
 The [multiphysics core model](pbfhr/steady/griffin_pgh_model.md), which uses Griffin for neutronics and Pronghorn for
 coarse mesh porous media CFD, is coupled with the [balance of plant model](pbfhr/pbfhr_sam/pbfhr_sam.md),
 which uses SAM for 1D thermal hydraulics of the primary and secondary loops.

@@ -4,7 +4,14 @@
 
 *Model link: [LFR Single Assembly Model](https://github.com/idaholab/virtual_test_bed/tree/devel/lfr/heterogeneous_single_assembly_3D)*
 
-This VTB model provides a high fidelity neutronics model for a representative example of a lead-cooled fast reactor with an annular MOX (UPuO) fuel. Its design is based on an early iteration of an LFR-prototype assembly provided by Westinghouse Electric Company, LLC [!citep](WECLFR). The original purpose of this model is to characterize the impact of various sources of uncertainties, such as theoretical and experimental uncertainties, instrumentation uncertainties, manufacturing tolerances, correlation uncertainties, and the method and simulation uncertainties, on peak cladding, fuel and coolant temperatures in the system. For this purpose, high fidelity neutronics (fine mesh heterogeneous transport - Griffin) and thermalhydraulics (computational fluid dynamics - NekRS) calculations were performed to compute hot channel factors (HCFs) [!citep](HCFReport). A 3D heterogeneous single assembly steady-state problem was used since a full core model is seldom used for the HCF evaluation. In this VTB model, only the neutronics standlone model is explained. 
+!tag name='High Fidelity Neutronics Model for Lead-cooled Fast Reactor' pairs=reactor_type:LFR
+                       geometry:assembly
+                       simulation_type:assembly_neutronics
+                       code_used:Griffin
+                       computing_needs:HPC
+                       fiscal_year:2023
+
+This VTB model provides a high fidelity neutronics model for a representative example of a lead-cooled fast reactor with an annular MOX (UPuO) fuel. Its design is based on an early iteration of an LFR-prototype assembly provided by Westinghouse Electric Company, LLC [!citep](WECLFR). The original purpose of this model is to characterize the impact of various sources of uncertainties, such as theoretical and experimental uncertainties, instrumentation uncertainties, manufacturing tolerances, correlation uncertainties, and the method and simulation uncertainties, on peak cladding, fuel and coolant temperatures in the system. For this purpose, high fidelity neutronics (fine mesh heterogeneous transport - Griffin) and thermalhydraulics (computational fluid dynamics - NekRS) calculations were performed to compute hot channel factors (HCFs) [!citep](HCFReport). A 3D heterogeneous single assembly steady-state problem was used since a full core model is seldom used for the HCF evaluation. In this VTB model, only the neutronics standlone model is explained.
 
 First, the LFR model is described, followed by the cross section generation procedure using MC2-3 [!citep](MCC3manual). Then, the Griffin standalone calculation setting with the discontinuous fininte element method (`DFEM`) discrete ordinate (`SN`) scheme with the Coarse Mesh Finite Difference (`CMFD`) acceleration is explained and the results are discussed.
 
@@ -119,7 +126,7 @@ Without `l_spatial_homogenization=F` in an input, which is an easy mistake to ma
        id=XS_Hom_Vs_Reg
        caption=Relative difference of assembly average cross section to hexagonal ring-wise fuel cross section for U-238 capture
 
-For the non-fuel region, the setting is almost similar to the first step input except `c_externalspectrum_ufg=rzmflx` instead of `l_twodant=T` in the `control` block and `i_externalspectrum(composition #)=TWODANT zone #` in the `material` block. For reminder, `TWODANT zone #`s are found in the `zones=` section in the `&twodant` block of the MC2-3 input in [#xs1st]. In this input, nine compositions are differentiated by the character from A to J omitting F, resulting in library IDs from $1$ to $9$ in the ISOXML file to be converted. 
+For the non-fuel region, the setting is almost similar to the first step input except `c_externalspectrum_ufg=rzmflx` instead of `l_twodant=T` in the `control` block and `i_externalspectrum(composition #)=TWODANT zone #` in the `material` block. For reminder, `TWODANT zone #`s are found in the `zones=` section in the `&twodant` block of the MC2-3 input in [#xs1st]. In this input, nine compositions are differentiated by the character from A to J omitting F, resulting in library IDs from $1$ to $9$ in the ISOXML file to be converted.
 
 !listing lfr/heterogeneous_single_assembly_3D/cross_section/Step2/NonFuel/LFR_127Pin_NonFuel_9g.mcc3.sh
 
@@ -169,7 +176,7 @@ Defining input parameters in advance is beneficial to make the input tractable b
 
 ### Mesh id=mesh
 
-The mesh system is built on-the-fly using the MOOSE reactor module [!citep](MOOSEReactorModule). 
+The mesh system is built on-the-fly using the MOOSE reactor module [!citep](MOOSEReactorModule).
 
 First, pins for each hexagonal ring are defined using `PolygonConcentricCircleMeshGenerator`. Since there are 7 rings, 7 pins are defined. They have different block IDs (`bid_F_fuel_R1` to `bid_F_fuel_R7`) for fuel region so that different material IDs can be assigned later. Since generally different element types should have different block IDs, the innermost helium hole of a triangular element and the helium gap between fuel and cladding of a quadrilateral element need to have different block IDs (`bid_F_heliumc` and `bid_F_helium`). Through sensitivity study, carrying just one radial mesh for the annular fuel region was turned out to be enough.
 
@@ -199,7 +206,7 @@ Material IDs are assigned to block IDs. This part needs to be consistent with th
 
 !listing lfr/heterogeneous_single_assembly_3D/neutronics_standalone/neutronics.i start=[assign] end=[] include-end=True
 
-A coarse mesh is generated for the CMFD acceleration. For better alignment of peripheral pin meshes near duct, only the peripheral pins have two radial meshes divided by the cladding outer radius while inner pins have one radial mesh. Azimuthal divisions are the same as the fine mesh. The duct mesh is also the same as the fine mesh, otherwise the CMFD solve didn't converge. The axial mesh is also the same as the fine mesh because the use of a coarser axial mesh increased the number of transport sweeps significantly. 
+A coarse mesh is generated for the CMFD acceleration. For better alignment of peripheral pin meshes near duct, only the peripheral pins have two radial meshes divided by the cladding outer radius while inner pins have one radial mesh. Azimuthal divisions are the same as the fine mesh. The duct mesh is also the same as the fine mesh, otherwise the CMFD solve didn't converge. The axial mesh is also the same as the fine mesh because the use of a coarser axial mesh increased the number of transport sweeps significantly.
 
 !listing lfr/heterogeneous_single_assembly_3D/neutronics_standalone/neutronics.i start=[PinIn_CM] end=uniform_refine include-end=False
 
@@ -241,7 +248,7 @@ To output pin-wise and axial mesh-wise power, `ExtraIDIntegralVectorPostprocesso
 
 ### Materials id=materials
 
-The `[Materials]` block is constructed using `MicroNeutronicsMaterial`. The main reason for using this material instead of `MixedNeutronicsMaterial` is that each library (library ID) in the library file is not generated for each material (material ID) in the Griffin transport calculation. Using `MicroNeutronicsMaterial`, different material IDs can be freely generated in the same library ID. For example, for `Fuel_Ring1_Hole`, two materials are defined with two different IDs of `mid_F_helium` and `mid_F_fuel_R1` using isotopes in the same library ID of `lid_F_fuel_R1`. These two materials are present in three block IDs of `bid_F_fuel_R1`, `bid_F_heliumc`, and `bid_F_helium`. This specification needs to be consistent with the material assignment in [#mesh]. Note that materials must be assigned in [#mesh] to use `MicroNeutronicsMaterial`. Materials are separated by semicolons and a material name given before a material ID is not used in the code but for user information. 
+The `[Materials]` block is constructed using `MicroNeutronicsMaterial`. The main reason for using this material instead of `MixedNeutronicsMaterial` is that each library (library ID) in the library file is not generated for each material (material ID) in the Griffin transport calculation. Using `MicroNeutronicsMaterial`, different material IDs can be freely generated in the same library ID. For example, for `Fuel_Ring1_Hole`, two materials are defined with two different IDs of `mid_F_helium` and `mid_F_fuel_R1` using isotopes in the same library ID of `lid_F_fuel_R1`. These two materials are present in three block IDs of `bid_F_fuel_R1`, `bid_F_heliumc`, and `bid_F_helium`. This specification needs to be consistent with the material assignment in [#mesh]. Note that materials must be assigned in [#mesh] to use `MicroNeutronicsMaterial`. Materials are separated by semicolons and a material name given before a material ID is not used in the code but for user information.
 
 !listing lfr/heterogeneous_single_assembly_3D/neutronics_standalone/neutronics.i start=[GlobalParams] end= include-end=true
 
@@ -249,7 +256,7 @@ In `[GlobalParams]`, `is_meter=true` is to indicate that the mesh is in a unit o
 
 ## Results
 
-The k-effective result of MCNP is $1.17169\pm 15$ and that of Griffin is $1.17202$ which is $+33$ pcm off. Pin power results are also in a good agreement with a root-mean-square error of $0.47\%$ and a maximum error of $1.67\%$. [PowerDist] shows the axial power distribution of each of 127 pins normalized to have the unity average value for the whole axial and radial meshes. They are very similar to each other since fuel pins are identical and the mean free path of neutron is much larger than the pin pitch. The axial power distribution is slightly top skewed because of slighly harder spectrum at the upper part of the fuel region caused by stronger leakage to the top than to the bottom. Harder spectrum causes more fission in a fast spectrum. [PowerDistErr] compares the axial power distribution of MCNP at the center pin with that of Griffin and shows the relative error of the Griffin result. The Griffin result matches well in $1\%$ error. Errors are similar for other pins. 
+The k-effective result of MCNP is $1.17169\pm 15$ and that of Griffin is $1.17202$ which is $+33$ pcm off. Pin power results are also in a good agreement with a root-mean-square error of $0.47\%$ and a maximum error of $1.67\%$. [PowerDist] shows the axial power distribution of each of 127 pins normalized to have the unity average value for the whole axial and radial meshes. They are very similar to each other since fuel pins are identical and the mean free path of neutron is much larger than the pin pitch. The axial power distribution is slightly top skewed because of slighly harder spectrum at the upper part of the fuel region caused by stronger leakage to the top than to the bottom. Harder spectrum causes more fission in a fast spectrum. [PowerDistErr] compares the axial power distribution of MCNP at the center pin with that of Griffin and shows the relative error of the Griffin result. The Griffin result matches well in $1\%$ error. Errors are similar for other pins.
 
 !media lfr/PowerDist.png
        style=width:55%
@@ -296,9 +303,9 @@ Future works include the following.
 
 ## Run command
 
-Griffin can be run using the following command. The additional command line argument `-pc_hypre_boomeramg_agg_nl` is for the speed-up of the calculation. Detailed information can be found in 
+Griffin can be run using the following command. The additional command line argument `-pc_hypre_boomeramg_agg_nl` is for the speed-up of the calculation. Detailed information can be found in
 [HYPRE/BoomerAMG](https://mooseframework.inl.gov/releases/moose/v1.0.0/application_development/hypre.html).
 
 ```language=bash
-mpirun -np 144 griffin-opt -i neutronics.i -pc_hypre_boomeramg_agg_nl 4 
+mpirun -np 144 griffin-opt -i neutronics.i -pc_hypre_boomeramg_agg_nl 4
 ```
