@@ -2,7 +2,7 @@
 
 *Contact: Thanh Hua, hua.at.anl.gov*
 
-*Model link: [HTTF SAM 2D Ring Model](https://github.com/idaholab/virtual_test_bed/tree/devel/htgr/httf)*
+*Model link: [HTTF SAM 2D Ring Model](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/httf)*
 
 ## Problem Description
 
