@@ -80,7 +80,7 @@ Inlet channels within a specific ring are assumed to have fixed inflow velocity 
 
 The mean LP pressure is 100.5 $kPa$, with which the helium gas has a density of 0.1004 $kg/m^3$. A non-dimensionalization process is performed for the Nek5000 calculations. The reference velocity is 3.47 $m/s$ that is the highest inlet velocity observed for Ring 3 inlet channels. The temperature difference with respect to the side reflector wall temperature (452.37 $K$) is normalized by $\Delta T = 562.20-452.37 = 109.83 (K)$, where the maximum temperature is from Ring 1 inlet channels. During the post-processing, the CFD results can be easily converted back to dimensional quantities for further analyses.
 
-### Nek5000 sase setups style=font-size:125%
+### Nek5000 case setups style=font-size:125%
 
 The reader can find the Nek5000 case files and the associated HTTF lower plenum mesh files (through github LFS) in VTB repository. The mesh information is contained in two files: +httf.re2+ (grid coordinates, sideset ids, etc.) and +httf.co2+ (mesh cell connectivity).
 As for the Nek5000 case files, there are +SIZE+, +httf.par+, +httf.usr+, and two auxiliary files +limits.f+ and +utilities.f+ that hosts various post-processing functions, such as solution monitoring, planar averaging, and so forth.
@@ -169,7 +169,7 @@ In the era of Exascale computing, there's a notable shift towards accelerated co
 
 ### Boundary conditions style=font-size:125%
 
-The boundary conditions of the nekRS study are taken from the corresponding system modeling of HTTF primary loop using RELAP5-3D conducted by Canadian Nuclear Laboratories [!citep](Podila2022). The reference lower plenum pressure is 211.9 kPa, and the helium gas has a density of 0.1950 kg/m3 with a reference temperature of 895.7 K. 
+The boundary conditions of the nekRS study are taken from the corresponding system modeling of HTTF primary loop using RELAP5-3D conducted by Canadian Nuclear Laboratories [!citep](Podila2022). The reference lower plenum pressure is 211.9 kPa, and the helium gas has a density of 0.1950 kg/m$^3$ with a reference temperature of 895.7 K. 
 [he_condition] summarizes the key thermophysical properties of helium flow used in the NekRS simulations.  The 234 inlet channels are divided into 32 groups here as shown in [new_grouping] 
 based on the radial locations and polar angles, and each group with specific mass flow rate and temperature. Inlet channels within a certain group are assumed to have the same inflow velocity corresponding to the specific mass flow rate. 
 Details of the inlet boundary conditions are listed in [inlet_bc].
@@ -186,13 +186,13 @@ Details of the inlet boundary conditions are listed in [inlet_bc].
 | Reference pressure | 211.9 | $kPa$ |
 | Reference temperature | 895.7 | $K$ |
 | Helium density | 0.1075 | $kg/m^3$ |
-| Helium heat capacity | 5.193×103 | $J/kg-K$ |
-| Helium viscosity | 4.274×10-5 | $Pa-s$ |
+| Helium heat capacity | 5.193×10$^3$ | $J/kg-K$ |
+| Helium viscosity | 4.274×10$^{-5}$ | $Pa-s$ |
 | Helium thermal conductivity | 0.3323 | $W/m-K$ |
 | Helium Prandtl number | 0.67 | $-$ |
 | Hot duct diameter | 0.2984 | $m$ |
 | Mean flow velocity at Reynolds number at hot duct | 41.48 | $m/s$ |
-| Reynolds number at hot duct | 3.1137×104 | $-$ |
+| Reynolds number at hot duct | 3.1137×10$^4$ | $-$ |
 
 All wall surfaces are assumed to have no-slip velocity boundary condition and adiabatic thermal boundary condition. And a natural pressure condition is given to the outlet face of hot duct. The CFD simulations were carried out in a dimensionless manner. The reference velocity is the mean flow velocity at hot duct, which is 41.48 m/s. Normalization of temperature is accomplished by referencing it to the maximum inlet temperature of 984.34 K at CG0 group and the minimum inlet temperature of 810.05 K at the outer bypass group. Subsequently, during the post-processing stage, it is straightforward to convert the computational fluid dynamics (CFD) outcomes back into dimensional values, enabling additional analyses to be conducted.
 
@@ -243,8 +243,8 @@ Readers can access the nekRS case files and the corresponding mesh files in the 
 Regarding the nekRS case files, there are four basic files:
 
 - +httf.udf+ serves as the primary nekRS kernel file and encompasses algorithms executed on the hosts. It's responsible for configuring RANS model settings, collecting time-averaged statistics, and determining the frequency of calls to +userchk+, which is defined in the +usr+ file.
-- +httf.oudf+ is a supplementary file housing kernel functions for devices and also plays a role in specifying boundary conditions..
-- +httf.usr+ s a legacy file inherited from Nek5000 and can be utilized to establish initial conditions and define post-processing capabilities.
+- +httf.oudf+ is a supplementary file housing kernel functions for devices and also plays a role in specifying boundary conditions.
+- +httf.usr+ is a legacy file inherited from Nek5000 and can be utilized to establish initial conditions and define post-processing capabilities.
 - +httf.par+  is employed to input simulation parameters, including material properties, time step size, and Reynolds number.
 
 There are also supportive scripts in the case folder. +linearize_bad_elements.f+ and +BAD_ELEMENTS+ are used to fix the mesh cells that potentially have negative Jacobian values from the quadratic tet-to-hex conversion. 
