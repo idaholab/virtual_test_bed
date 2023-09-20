@@ -26,7 +26,7 @@ length_cond =  90.0e-2
 
 # Mesh density
 # The dimensions are nicely divisible by 3 cm mesh.
-nelem_base_evap = 50
+nelem_base_evap = 60
 nelem_base_adia = 10
 nelem_base_cond = 30
 mesh_density = 3
