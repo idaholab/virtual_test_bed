@@ -1,4 +1,16 @@
-## HTTF benchmark PCC Exercise 1A, SS 2.2 MW, 1 kg/s He, Tin = 500 K, 0.7 MPa; RCCS water 1 kg/s 313.2 K, 0.25 kg/s air flow in cavity
+# ==============================================================================
+# High Temperature Transient Facility
+# HTTF benchmark PCC Exercise 1A
+# SAM input file
+# ------------------------------------------------------------------------------
+# ANL, 09/2023
+# Author(s): Dr. Thanh Hua
+# If using or referring to this model, please cite as explained in
+# https://mooseframework.inl.gov/virtual_test_bed/citing.html
+# ==============================================================================
+
+# SS 2.2 MW, 1 kg/s He, Tin = 500 K, 0.7 MPa; RCCS water 1 kg/s 313.2 K,
+# 0.25 kg/s air flow in cavity
 # 11 coolant rings and 10 heater rings in heated core, the heater rings are rearranged and rods redistributed in order to match heat received by coolant channels
 # includes gap heat transfer to account for heat conductance in gaps in R48, R50, and R52
 
