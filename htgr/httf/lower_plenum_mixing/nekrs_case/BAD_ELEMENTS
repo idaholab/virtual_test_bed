@@ -1,0 +1,15 @@
+      parameter(nbad_max=10000)
+      real bad_list(lelt)
+      real e12(3,12),ecenter(3),elength
+      real bad_xyzr(4,nbad_max),work_array(4*nbad_max)
+
+	  integer inje_rank,nnje_rank  ! number of bad elements in this ranks
+	  real bad_eg_list(lelg)        ! bad elements eg list in this rank
+      real work_array2(lelg)
+      integer sbad_eg_list(nbad_max)
+      real minJac
+
+      common /bad_elements/ bad_list,e12,ecenter,elength,
+     & bad_xyzr,work_array,
+     & inje_rank,nnje_rank,bad_eg_list,work_array2,
+     & sbad_eg_list,minJac

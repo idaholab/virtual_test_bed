@@ -1,0 +1,88 @@
+//
+// nekRS User Defined File
+//
+#include "udf.hpp"
+#include "plugins/RANSktau.hpp"
+#include "plugins/tavg.hpp"
+
+static dfloat rho, mueLam;
+static occa::kernel scalarScaledAddKernel;
+static occa::kernel cliptKernel;
+
+void userq(nrs_t *nrs, dfloat time, occa::memory o_S, occa::memory o_FS)
+{
+  mesh_t *mesh = nrs->meshV;
+  cds_t *cds   = nrs->cds;
+
+  RANSktau::updateSourceTerms();
+}
+
+void uservp(nrs_t *nrs, dfloat time, occa::memory o_U, occa::memory o_S,
+            occa::memory o_UProp, occa::memory o_SProp)
+{
+  mesh_t *mesh = nrs->meshV;
+  cds_t *cds   = nrs->cds;
+
+  RANSktau::updateProperties();
+
+  dfloat conductivity;
+  platform->options.getArgs("SCALAR00 DIFFUSIVITY", conductivity);
+  const dfloat Pr_t = 0.91;
+  occa::memory o_mue_t = RANSktau::o_mue_t();
+  occa::memory o_temp_mue = cds->o_diff + 0*cds->fieldOffset[0]*sizeof(dfloat);
+  scalarScaledAddKernel(mesh->Nlocal, conductivity, 1/Pr_t, o_mue_t, o_temp_mue);
+}
+
+void UDF_LoadKernels(occa::properties& kernelInfo)
+{
+  scalarScaledAddKernel = oudfBuildKernel(kernelInfo, "scalarScaledAdd");
+  cliptKernel  = oudfBuildKernel(kernelInfo, "cliptOKL");
+  RANSktau::buildKernel(kernelInfo);
+}
+
+void UDF_Setup(nrs_t *nrs)
+{
+  tavg::setup(nrs);
+
+  mesh_t *mesh = nrs->meshV;
+  cds_t *cds = nrs->cds;
+
+  udf.properties = &uservp;
+  udf.sEqnSource = &userq;
+
+  const int scalarFieldStart = 1;
+  platform->options.getArgs("VISCOSITY", mueLam); 
+  platform->options.getArgs("DENSITY", rho); 
+
+  RANSktau::setup(nrs, mueLam, rho, scalarFieldStart);
+
+  //Inlet condition
+  nrs->o_usrwrk = platform->device.malloc(4*nrs->fieldOffset,sizeof(dfloat));
+  double *vin  = (double *) nek::scPtr(1);
+  double *t1in = (double *) nek::scPtr(2);
+  double *t2in = (double *) nek::scPtr(3);
+  double *t3in = (double *) nek::scPtr(4);
+  nrs->o_usrwrk.copyFrom(vin, mesh->Nlocal*sizeof(dfloat),0*nrs->fieldOffset*sizeof(dfloat));
+  nrs->o_usrwrk.copyFrom(t1in,mesh->Nlocal*sizeof(dfloat),1*nrs->fieldOffset*sizeof(dfloat));
+  nrs->o_usrwrk.copyFrom(t2in,mesh->Nlocal*sizeof(dfloat),2*nrs->fieldOffset*sizeof(dfloat));
+  nrs->o_usrwrk.copyFrom(t3in,mesh->Nlocal*sizeof(dfloat),3*nrs->fieldOffset*sizeof(dfloat));
+}
+
+void UDF_ExecuteStep(nrs_t *nrs, dfloat time, int tstep)
+{
+  tavg::run(time);
+
+  mesh_t *mesh = nrs->meshV;
+  cds_t *cds = nrs->cds;
+  
+  cliptKernel(mesh->Nelements, cds->o_S);
+
+  if ((tstep%1000)==0){
+    nek::ocopyToNek(time, tstep);
+    nek::userchk();
+  }
+
+  if (nrs->isOutputStep) {
+    tavg::outfld();
+  }
+}

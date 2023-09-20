@@ -1,0 +1,607 @@
+c-----------------------------------------------------------------------
+C
+C  USER SPECIFIED ROUTINES: 
+C
+C     - boundary conditions 
+C     - initial conditions  
+C     - variable properties 
+C     - forcing function for fluid (f)
+C     - forcing function for passive scalar (q)
+C     - general purpose routine for checking errors etc.        
+C
+c-----------------------------------------------------------------------
+      include 'linearize_bad_elements.f'
+c-----------------------------------------------------------------------
+      subroutine useric (ix,iy,iz,ieg)
+      include 'SIZE'
+      include 'TOTAL'
+      include 'NEKUSE'
+
+      ux   = 0.0  
+      uy   = 0.0 
+      uz   = 0.0
+
+      if (ifield.eq.2) then
+         temp = 0.0
+      elseif (ifield.eq.3) then
+         temp = 0.01
+      elseif (ifield.eq.4) then
+         temp = 0.1
+      endif
+      
+      return
+      end
+c-----------------------------------------------------------------------
+      subroutine userchk
+      include 'SIZE'
+      include 'TOTAL'
+
+      integer e, f
+
+      nf=lx1*ly1*lz1*nelv
+
+      dA1 = 0.0
+      vz1 = 0.0
+      do e=1,nelv
+        dv = 0.0
+        ds = 0.0
+        do f=1,2*ndim
+           if (cbc(f,e,1).eq.'v  ') then
+               call surface_int(dv,ds,vy,e,f)
+               vz1= vz1 + dv
+               dA1 = dA1 + ds
+           endif
+        enddo
+      enddo
+      vz1 = glsum(vz1,1)
+      dA1 = glsum(dA1,1)
+      vz1 = vz1/dA1
+
+      dA2 = 0.0
+      vz2 = 0.0
+      do e=1,nelv
+        dv = 0.0
+        ds = 0.0
+        do f=1,2*ndim
+           if (cbc(f,e,1).eq.'o  ') then
+              call surface_int(dv,ds,vx,e,f)
+              vz2= vz2 + dv
+              dA2 = dA2 + ds
+           endif
+        enddo
+      enddo
+      vz2 = glsum(vz2,1)
+      dA2 = glsum(dA2,1)
+      vz2 = vz2/dA2
+
+      if (nid.eq.0) then
+        write(6,'(a15,es13.4)') "U_mean_in:",vz1
+        write(6,'(a15,es13.4)') "A_in:",dA1
+        write(6,'(a15,es13.4)') "U_mean_out:",vz2
+        write(6,'(a15,es13.4)') "A_out:",dA2
+      endif
+
+      return
+      end
+c-----------------------------------------------------------------------
+      subroutine usrdat   ! This routine to modify element vertices
+      include 'SIZE'      ! _before_ mesh is generated, which 
+      include 'TOTAL'     ! guarantees GLL mapping of mesh.
+
+      integer n_correction
+      real minJacobian
+ 
+      n_correction = 2
+      call linearize_bad_elements(n_correction)  ! 2 (iterations for correction) should be enough, if not, set to 3
+
+      minScaleJacobian = 1e-3
+      call linearize_low_jacobian_elements(n_correction,
+     & minScaleJacobian) ! linearize element that with lower jacobian than minJacobian
+
+      return
+      end
+c-----------------------------------------------------------------------
+      subroutine usrdat2()  ! This routine to modify mesh coordinates
+      include 'SIZE'
+      include 'TOTAL'
+
+      integer iel, ifc, id_face
+      integer i, e, f
+
+      do iel=1,nelv
+      do ifc=1,2*ndim
+        id_face = bc(5,ifc,iel,1)
+        if (id_face.ge.5.and.id_face.le.11) then        !CG0-CG5 and OB
+           cbc(ifc,iel,1) = 'v  '
+           boundaryID(ifc,iel)  = 1
+           boundaryIDt(ifc,iel) = 1
+        elseif (id_face.eq.4) then 			!walls
+           cbc(ifc,iel,1) = 'W  '
+           boundaryID(ifc,iel)  = 2
+           boundaryIDt(ifc,iel) = 2
+        elseif (id_face.eq.3) then                 	!outlet
+           cbc(ifc,iel,1) = 'o  '
+           boundaryID(ifc,iel)  = 3
+           boundaryIDt(ifc,iel) = 3
+        else
+           cbc(ifc,iel,1) = 'E  '
+           boundaryID(ifc,iel)  = 0
+           boundaryIDt(ifc,iel) = 0
+        endif
+      enddo
+      enddo
+
+      do i=2,ldimt1
+      do e=1,nelt
+      do f=1,ldim*2
+        cbc(f,e,i)=cbc(f,e,1)
+        if(cbc(f,e,1).eq.'W  ') then
+           cbc(f,e,i)='t  '
+           if(i.eq.2) cbc(f,e,i)='I  '	!Insulated temp BC on walls
+        endif
+        if(cbc(f,e,1).eq.'v  ') cbc(f,e,i)='t  '
+        if(cbc(f,e,1).eq.'o  ') cbc(f,e,i)='o  '
+      enddo
+      enddo
+      enddo
+
+      return
+      end
+c-----------------------------------------------------------------------
+      subroutine usrdat3
+      include 'SIZE'
+      include 'TOTAL'
+
+      real uin,vin,win,tin
+      common /inarrs/
+     $     vin(lx1,ly1,lz1,lelv),
+     $     t1in(lx1,ly1,lz1,lelv),
+     $     t2in(lx1,ly1,lz1,lelv),
+     $     t3in(lx1,ly1,lz1,lelv)
+
+      real w1,w2,w3,w4,w5
+      common /SCRNS/
+     &      w1(lx1*ly1*lz1*lelv)
+     &     ,w2(lx1*ly1*lz1*lelv)
+     &     ,w3(lx1*ly1*lz1*lelv)
+     &     ,w4(lx1*ly1*lz1*lelv)
+     &     ,w5(lx1*ly1*lz1*lelv)
+
+      common /NRSSCPTR/ nrs_scptr(10)
+      integer*8 nrs_scptr
+
+      common /mywalldist/ ywd(lx1,ly1,lz1,lelt)
+      real ywd
+
+      if(istep.eq.0)then
+         call distf(ywd,1,'W  ',w1,w2,w3,w4,w5)
+         call getinlet
+         nrs_scptr(1) = loc(vin(1,1,1,1))
+         nrs_scptr(2) = loc(t1in(1,1,1,1))
+         nrs_scptr(3) = loc(t2in(1,1,1,1))
+         nrs_scptr(4) = loc(t3in(1,1,1,1))
+      endif
+
+      return
+      end
+c-----------------------------------------------------------------------
+      subroutine getinlet
+      include 'SIZE'
+      include 'TOTAL'
+
+      integer id_face
+
+      do ie=1,nelt
+      do ifc=1,2*ndim
+         ieg = lglel(ie)
+         id_face = bc(5,ifc,ie,1)
+         if(cbc(ifc,ie,1).eq.'v  ')then
+            CALL FACIND (KX1,KX2,KY1,KY2,KZ1,KZ2,lx1,ly1,lz1,IFC)
+            do IZ=KZ1,KZ2
+            do IY=KY1,KY2
+            do IX=KX1,KX2
+               CALL fillbc  (IX,IY,IZ,ifc,ieg,id_face)
+            enddo
+            enddo
+            enddo
+         endif
+      enddo
+      enddo
+
+      return
+      end
+c---------------------------------------------------------------------
+      subroutine fillbc(ix,iy,iz,iside,ieg,id_face)
+      include 'SIZE'
+      include 'TOTAL'
+
+      integer ix,iy,iz,iside,ieg,e,id_face
+
+      integer icalld
+      save icalld
+      data icalld /0/
+
+      common /mywalldist/ ywd(lx1,ly1,lz1,lelt)
+      real ywd
+
+      real rpin,upin,kpin,taupin
+      real xx,zz,uig,tig
+      real uin,vin,win,tin
+      common /inarrs/
+     $     vin(lx1,ly1,lz1,lelv),
+     $     t1in(lx1,ly1,lz1,lelv),
+     $     t2in(lx1,ly1,lz1,lelv),
+     $     t3in(lx1,ly1,lz1,lelv)
+
+      e = gllel(ieg)
+
+      if(icalld.eq.0)then
+         call getInletProf
+         icalld = 1
+      endif
+
+      rpin = ywd(ix,iy,iz,e)/0.0127 !inlet diameter is 1 inch
+      if(rpin.lt.0.0)rpin = 0.0
+      if(rpin.gt.0.5)rpin = 0.5
+
+      call initprof(rpin,upin,kpin,taupin)
+
+      xx = xm1(ix,iy,iz,e)
+      zz = zm1(ix,iy,iz,e)
+      call inGrp(id_face,xx,zz,uig,tig)
+
+C rescaling is needed later on to account for the inlet differences
+      vin(ix,iy,iz,e)  =-upin*uig/1.1911099755280039 	!adjust to have U_duct of 1
+      t1in(ix,iy,iz,e) = tig
+      t2in(ix,iy,iz,e) = kpin*uig**2.0
+      t3in(ix,iy,iz,e) = taupin/uig**2.0
+
+      return
+      end
+c--------------------------------------------------------------------
+      subroutine getInletProf
+
+      include 'SIZE'
+      include 'SPLINE'
+
+      real YY(npts),ZZ(npts)
+
+      if (nid.eq.0) then
+         write(*,'(A,I4)')      'npts  = ', npts
+         write(*,'(A,1pE10.2)') 'ymin = ', ymin
+         write(*,'(A,1pE10.2)') 'ymax = ', ymax
+         write(*,'(A,1pE10.2)') 'ymin_turb = ', ymin_turb
+         write(*,'(A,1pE10.2)') 'ymax_turb = ', ymax_turb
+      endif
+
+C  Read in the 1-D profile computed by turbChan2D
+C        velocity       in fU
+C        kinetic energy in fK
+C        omega          in fO
+
+      open(unit=100,file='InletProf.dat',status='old')
+      read(100, *)     ! skip the header
+      do i=1,npts
+        read(100,*)  YY(i), fU(i), fK(i), fO(i)
+c        write(*,*)  YY(i), fU(i), fK(i), fO(i)
+      enddo
+      close(100)
+
+C  compute spline coefficients for U
+      do i=1,npts
+        ZZ(i)  = fU(i)
+        SYY(i) = YY(i)
+      enddo
+      call spline (npts, YY, ZZ, sbU, scU, sdU)
+
+C  compute spline coefficients for T
+      do i=1,npts
+        ZZ(i) = fK(i)
+      enddo
+      call spline (npts, YY, ZZ, sbK, scK, sdK)
+
+C  compute spline coefficients for species mass fractions
+      do i=1,npts
+        ZZ(i) = fO(i)
+      enddo
+      call spline (npts, YY, ZZ, sbO, scO, sdO)
+
+      return
+      end
+
+c-----------------------------------------------------------------------
+      subroutine spline (n, x, y, b, c, d)
+
+c  the coefficients b(i), c(i), and d(i), i=1,2,...,n are computed
+c  for a cubic interpolating spline
+c
+c    s(x) = y(i) + b(i)*(x-x(i)) + c(i)*(x-x(i))**2 + d(i)*(x-x(i))**3
+c
+c    for  x(i) .le. x .le. x(i+1)
+c
+c  input..
+c
+c    n = the number of data points or knots (n.ge.2)
+c    x = the abscissas of the knots in strictly increasing order
+c    y = the ordinates of the knots
+c
+c  output..
+c
+c    b, c, d  = arrays of spline coefficients as defined above.
+c
+c  using  p  to denote differentiation,
+c
+c    y(i) = s(x(i))
+c    b(i) = sp(x(i))
+c    c(i) = spp(x(i))/2
+c    d(i) = sppp(x(i))/6  (derivative from the right)
+c
+c  the accompanying function subprogram  seval  can be used
+c  to evaluate the spline.
+
+      integer n
+      real x(n), y(n), b(n), c(n), d(n)
+
+      integer nm1, ib, i
+      real t
+
+C      do i = 1, n
+C        if (nid.eq.0) write(41,'(1p2E13.5)') x(i), y(i)
+C      enddo
+C      if (nid.eq.0) write(41,'(A)') '&'
+
+      nm1 = n-1
+      if ( n .lt. 2 ) return
+      if ( n .lt. 3 ) go to 50
+
+c  set up tridiagonal system
+c  b = diagonal, d = offdiagonal, c = right hand side.
+
+      d(1) = x(2) - x(1)
+      c(2) = (y(2) - y(1))/d(1)
+      do 10 i = 2, nm1
+         d(i) = x(i+1) - x(i)
+         b(i) = 2.*(d(i-1) + d(i))
+         c(i+1) = (y(i+1) - y(i))/d(i)
+         c(i) = c(i+1) - c(i)
+   10 continue
+
+c  end conditions.  third derivatives at  x(1)  and  x(n)
+c  obtained from divided differences
+
+      b(1) = -d(1)
+      b(n) = -d(n-1)
+      c(1) = 0.0
+      c(n) = 0.0
+      if ( n .eq. 3 ) go to 15
+      c(1) = c(3)/(x(4)-x(2)) - c(2)/(x(3)-x(1))
+      c(n) = c(n-1)/(x(n)-x(n-2)) - c(n-2)/(x(n-1)-x(n-3))
+      c(1) = c(1)*d(1)**2/(x(4)-x(1))
+      c(n) = -c(n)*d(n-1)**2/(x(n)-x(n-3))
+
+c  forward elimination
+
+   15 do 20 i = 2, n
+         t = d(i-1)/b(i-1)
+         b(i) = b(i) - t*d(i-1)
+         c(i) = c(i) - t*c(i-1)
+   20 continue
+
+c  back substitution
+
+      c(n) = c(n)/b(n)
+      do 30 ib = 1, nm1
+         i = n-ib
+         c(i) = (c(i) - d(i)*c(i+1))/b(i)
+   30 continue
+
+c  c(i) is now the sigma(i) of the text
+c
+c  compute polynomial coefficients
+
+      b(n) = (y(n) - y(nm1))/d(nm1) + d(nm1)*(c(nm1) + 2.*c(n))
+      do 40 i = 1, nm1
+         b(i) = (y(i+1) - y(i))/d(i) - d(i)*(c(i+1) + 2.*c(i))
+         d(i) = (c(i+1) - c(i))/d(i)
+         c(i) = 3.*c(i)
+   40 continue
+      c(n) = 3.0*c(n)
+      d(n) = d(n-1)
+      return
+
+   50 b(1) = (y(2)-y(1))/(x(2)-x(1))
+      c(1) = 0.0
+      d(1) = 0.0
+      b(2) = b(1)
+      c(2) = 0.0
+      d(2) = 0.0
+
+      return
+      end
+c--------------------------------------------------------------------
+      subroutine initprof(y,Uin,Kin,Oin)
+c
+c Compute temperature + species using cubic splines
+c   f(y) = s(i) + sb(i)*(y-SYY(i)) + sc(i)*(y-SYY(i))**2 + sd(i)*(y-SYY(i))**3
+
+      include 'SPLINE'
+
+      real y, Uin, Kin, Oin
+
+      ii = 0
+      do i=1,npts-1
+        if (y.ge.SYY(i) .and. y.lt.SYY(i+1)) ii=i
+      enddo
+      if(abs(y-SYY(npts)).lt.1e-7) ii=npts
+
+      if (ii.le.0) then
+        write(*,*) 'Error in init_mean: ii= ', ii,'>npts=', npts, y
+        call exitt
+      endif
+
+      Uin=fU(ii) + sbU(ii)*(y-SYY(ii))
+     *     +scU(ii)*(y-SYY(ii))**2+sdU(ii)*(y-SYY(ii))**3
+
+      if (y.ge.SYY(npts)) Uin=fU(npts)
+
+      Kin=fK(ii) + sbK(ii)*(y-SYY(ii))
+     *     +scK(ii)*(y-SYY(ii))**2+sdK(ii)*(y-SYY(ii))**3
+
+      if (y.ge.SYY(npts)) Kin=fK(npts)
+
+      Oin=fO(ii) + sbO(ii)*(y-SYY(ii))
+     *     +scO(ii)*(y-SYY(ii))**2+sdO(ii)*(y-SYY(ii))**3
+
+      if (y.ge.SYY(npts)) Oin=fO(npts)
+
+      return
+      end
+c---------------------------------------------------------------------
+      subroutine inGrp(id_face,x,z,uig,tig)
+c
+c Get the mean velocity and temperature based on the HTTF inlet channel groups
+c
+      include 'SIZE'
+      include 'TOTAL'
+
+      integer iel,ifc,id_face      
+      integer igrp
+      real x,z,theta
+
+C Calculate the polar angle
+      theta = atan2(z, x)
+    
+C Shift the angle to be between 0 and 2*pi
+      if (theta.lt.0.0) then
+        theta = theta + 2 * PI
+      endif
+    
+C Divide the plane into 6 equal area groups based on the polar angle
+      if (theta.ge.3.0*PI/2.0.and.theta.lt.11.0*PI/6.0) then
+         igrp = 1
+      elseif (theta.ge.11.0*PI/6.0.or.theta.lt.PI/6.0) then
+         igrp = 2
+      elseif (theta.ge.PI/6.0.and.theta.lt.PI/2.0) then
+         igrp = 3
+      elseif (theta.ge.PI/2.0.and.theta.lt.5.0*PI/6.0) then
+         igrp = 4
+      elseif (theta.ge.5.0*PI/6.0.and.theta.lt.7.0*PI/6.0) then
+         igrp = 5
+      else
+         igrp = 6
+      endif
+
+C Locate the channel group based igrp and id_face
+      uig = 0.0
+      tig = 0.0 
+      if (id_face.eq.5) then !CG0
+         uig = 0.732573576
+         tig = 1.0
+      elseif (id_face.eq.6) then !CG1
+         if (igrp.eq.1) then !CG1A
+            uig = 0.566817023
+            tig = 0.657568751
+         elseif (igrp.eq.2) then !CG1B
+            uig = 0.566817023
+            tig = 0.661912111
+         elseif (igrp.eq.3) then !CG1C
+            uig = 0.56676881
+            tig = 0.658314638
+         elseif (igrp.eq.4) then !CG1D
+            uig = 0.566985768
+            tig = 0.648027127
+         elseif (igrp.eq.5) then !CG1E
+            uig = 0.566913449
+            tig = 0.631152855
+         elseif (igrp.eq.6) then !CG1F
+            uig = 0.567009875
+            tig = 0.647803361
+         endif
+      elseif (id_face.eq.7) then !CG2
+         if (igrp.eq.1) then !CG2A
+            uig = 0.61975498
+            tig = 0.453436534
+         elseif (igrp.eq.2) then !CG2B
+            uig = 0.619296955
+            tig = 0.461153601
+         elseif (igrp.eq.3) then !CG2C
+            uig = 0.619586234
+            tig = 0.454561103
+         elseif (igrp.eq.4) then !CG2D
+            uig = 0.621804035
+            tig = 0.438031086
+         elseif (igrp.eq.5) then !CG2E
+            uig = 0.624359328
+            tig = 0.408975896
+         elseif (igrp.eq.6) then !CG2F
+            uig = 0.621852248
+            tig = 0.437721256
+         endif
+      elseif (id_face.eq.8) then !CG3
+         if (igrp.eq.1) then !CG3A
+            uig = 0.641667822
+            tig = 0.773714922
+         elseif (igrp.eq.2) then !CG3B
+            uig = 0.64147497
+            tig = 0.789252334
+         elseif (igrp.eq.3) then !CG3C
+            uig = 0.641426757
+            tig = 0.775172271
+         elseif (igrp.eq.4) then !CG3D
+            uig = 0.645380229
+            tig = 0.751894841
+         elseif (igrp.eq.5) then !CG3E
+            uig = 0.65331128
+            tig = 0.704433441
+         elseif (igrp.eq.6) then !CG3F
+            uig = 0.645452549
+            tig = 0.751487472
+         endif
+      elseif (id_face.eq.9) then !CG4
+         if (igrp.eq.1) then !CG4A
+            uig = 0.63653313
+            tig = 0.669020994
+         elseif (igrp.eq.2) then !CG4B
+            uig = 0.637521498
+            tig = 0.701008096
+         elseif (igrp.eq.3) then !CG4C
+            uig = 0.636267958
+            tig = 0.670443918
+         elseif (igrp.eq.4) then !CG4D
+            uig = 0.640896413
+            tig = 0.64687387
+         elseif (igrp.eq.5) then !CG4E
+            uig = 0.653986263
+            tig = 0.592883085
+         elseif (igrp.eq.6) then !CG4F
+            uig = 0.640968733
+            tig = 0.646477976
+         endif
+      elseif (id_face.eq.10) then !CG5
+         if (igrp.eq.1) then !CG5A
+            uig = 0.52624572
+            tig = 0.323445542
+         elseif (igrp.eq.2) then !CG5B
+            uig = 0.526197506
+            tig = 0.330003615
+         elseif (igrp.eq.3) then !CG5C
+            uig = 0.526125187
+            tig = 0.324489784
+         elseif (igrp.eq.4) then !CG5D
+            uig = 0.528174243
+            tig = 0.307001589
+         elseif (igrp.eq.5) then !CG5E
+            uig = 0.537648112
+            tig = 0.267710527
+         elseif (igrp.eq.6) then !CG5F
+            uig = 0.528198349
+            tig = 0.306714709
+         endif
+      elseif (id_face.eq.11) then !Outer bypass
+         uig = 0.498258029
+         tig = 0.0
+      endif
+
+      return
+      end
+c---------------------------------------------------------------------
