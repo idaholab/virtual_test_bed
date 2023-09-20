@@ -16,7 +16,7 @@
 
 [RELAP-7 High Temperature Test Facility (HTTF) model](httf/index.md)
 
-[Nek5000 HTTF lower plenum flow mixing model](httf/lower_plenum_cfd.md)
+[Nek5000/RS HTTF lower plenum CFD model](httf/lower_plenum_cfd.md)
 
 [SAM Generic Pebble Bed HTGR model](generic-pbr/index.md)
 
