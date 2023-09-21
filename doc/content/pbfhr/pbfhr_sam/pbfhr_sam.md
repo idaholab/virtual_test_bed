@@ -4,7 +4,7 @@
 
 *Model link: [FHR SAM Model](https://github.com/idaholab/virtual_test_bed/tree/devel/pbfhr/sam_model)*
 
-!tag name='FHR Core SAM Model' pairs=reactor_type:PB-FHR
+!tag name=FHR Core SAM Model pairs=reactor_type:PB-FHR
                        reactor:Mk1-FHR
                        simulation_type:core
                        transient:PLOF

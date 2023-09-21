@@ -2,7 +2,7 @@
 
 *Contacts: Ahmed Abdelhameed (aabdelhameed.at.anl.gov), Yinbin Miao (ymiao.at.anl.gov), Nicolas Stauff (nstauff.at.anl.gov)*
 
-!tag name='Gas-Cooled Microreactor Assembly' pairs=reactor_type:microreactor
+!tag name=Gas-Cooled Microreactor Assembly pairs=reactor_type:microreactor
                        reactor:GCMR
                        geometry:assembly
                        simulation_type:assembly_multiphysics

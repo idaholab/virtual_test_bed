@@ -4,7 +4,7 @@
 
 *Model link: [HTTF MultiApp Model](https://github.com/idaholab/virtual_test_bed/tree/devel/htgr/httf)*
 
-!tag name='HTTF Core Model' pairs=reactor_type:HTGR
+!tag name=HTTF Core Model pairs=reactor_type:HTGR
                        reactor:HTTF
                        geometry:core
                        simulation_type:core_multiphysics

@@ -4,7 +4,7 @@
 
 *Model link: [HTTR Null Transient](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/httr)*
 
-!tag name='High Temperature Engineering Test Reactor (HTTR) Null Transient Model' pairs=reactor_type:HTGR
+!tag name=High Temperature Engineering Test Reactor (HTTR) Null Transient Model pairs=reactor_type:HTGR
                        reactor:HTTR
                        geometry:core
                        simulation_type:core_multiphysics

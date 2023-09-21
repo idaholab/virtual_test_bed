@@ -4,7 +4,7 @@
 
 *Model link: [TRISO Bison Model](https://github.com/idaholab/virtual_test_bed/tree/devel/htgr/triso_fuel)*
 
-!tag name='TRISO Bison Model' pairs=reactor_type:HTGR
+!tag name=TRISO Bison Model pairs=reactor_type:HTGR
                        geometry:triso
                        simulation_type:fuel
                        code_used:Bison

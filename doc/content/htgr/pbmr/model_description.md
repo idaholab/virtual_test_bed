@@ -4,7 +4,7 @@
 
 *Model link: [PBMR Model](https://github.com/idaholab/virtual_test_bed/tree/devel/htgr/pbmr400)*
 
-!tag name='Pebble Bed Modular Reactor Core Multiphysics' pairs=reactor_type:HTGR
+!tag name=Pebble Bed Modular Reactor Core Multiphysics pairs=reactor_type:HTGR
                        reactor:PBMR-400
                        geometry:core
                        simulation_type:core_multiphysics

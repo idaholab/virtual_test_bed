@@ -4,7 +4,7 @@
 
 *Model link: [FHR Plant Model](https://github.com/idaholab/virtual_test_bed/tree/devel/pbfhr/plant)*
 
-!tag name='FHR Plant Model' pairs=reactor_type:PB-FHR
+!tag name=FHR Plant Model pairs=reactor_type:PB-FHR
                        reactor:Mk1-FHR
                        simulation_type:balance_of_plant
                        code_used:BlueCrab
