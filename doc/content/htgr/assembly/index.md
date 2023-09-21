@@ -4,7 +4,7 @@
 
 *Model link: [Coupled HTGR Model](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/assembly)*
 
-!tag name='Multiphysics Coupling of OpenMC, MOOSE, and THM for a HTGR' pairs=reactor:HTGR
+!tag name=Multiphysics Coupling of OpenMC, MOOSE, and THM for a HTGR pairs=reactor:HTGR
                        geometry:assembly
                        simulation_type:assembly_multiphysics
                        code_used:cardinal

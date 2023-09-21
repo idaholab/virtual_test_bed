@@ -4,7 +4,7 @@
 
 *Model link: [FHR Steady-State Multiphysics Model](https://github.com/idaholab/virtual_test_bed/tree/devel/pbfhr/steady)*
 
-!tag name='FHR Core Steady-State Model' pairs=reactor_type:PB-FHR
+!tag name=FHR Core Steady-State Model pairs=reactor_type:PB-FHR
                        reactor:Mk1
                        geometry:core
                        simulation_type:core_multiphysics

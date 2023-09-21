@@ -4,7 +4,7 @@
 
 *Model link: [Griffin-Pronghorn Transient Model](https://github.com/idaholab/virtual_test_bed/tree/devel/msr/msfr/transient)*
 
-!tag name='MSFR Griffin-Pronghorn Transient Model' pairs=reactor_type:MSR
+!tag name=MSFR Griffin-Pronghorn Transient Model pairs=reactor_type:MSR
                        reactor:MSFR
                        geometry:core
                        simulation_type:core_multiphysics

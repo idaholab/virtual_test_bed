@@ -4,7 +4,7 @@
 
 *Model link: [Toshiba 37-Pin Subchannel Model](https://github.com/idaholab/virtual_test_bed/tree/devel/sfr/subchannel/toshiba_37_pin)*
 
-!tag name='Subchannel Model for the Toshiba 37-Pin Benchmark' pairs=reactor_type:SFR
+!tag name=Subchannel Model for the Toshiba 37-Pin Benchmark pairs=reactor_type:SFR
                        geometry:assembly
                        simulation_type:assembly_flow
                        code_used:Pronghorn_subchannel

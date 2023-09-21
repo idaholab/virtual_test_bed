@@ -4,7 +4,7 @@
 
 *Model link: [Standalone SAM Model](https://github.com/idaholab/virtual_test_bed/tree/devel/msr/msfr/plant/standalone_sam_model)*
 
-!tag name='Molten Salt Fast Reactor SAM Model' pairs=reactor_type:MSR
+!tag name=Molten Salt Fast Reactor SAM Model pairs=reactor_type:MSR
                        reactor:MSFR
                        simulation_type:primary_loop
                        code_used:SAM

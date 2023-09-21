@@ -4,7 +4,7 @@
 
 *Model link: [LFR Single Assembly Model](https://github.com/idaholab/virtual_test_bed/tree/devel/lfr/heterogeneous_single_assembly_3D)*
 
-!tag name='High Fidelity Neutronics Model for Lead-cooled Fast Reactor' pairs=reactor_type:LFR
+!tag name=High Fidelity Neutronics Model for Lead-cooled Fast Reactor pairs=reactor_type:LFR
                        geometry:assembly
                        simulation_type:assembly_neutronics
                        code_used:Griffin

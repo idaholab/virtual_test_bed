@@ -4,7 +4,7 @@
 
 *Model link: [ABTR Model](https://github.com/idaholab/virtual_test_bed/tree/devel/sfr/abtr)*
 
-!tag name='Advanced Burner Test Reactor Loss of Flow Accident' pairs=reactor_type:SFR
+!tag name=Advanced Burner Test Reactor Loss of Flow Accident pairs=reactor_type:SFR
                        reactor:ABTR
                        simulation_type:balance_of_plant
                        code_used:SAM

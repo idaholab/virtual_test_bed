@@ -4,7 +4,7 @@
 
 *Model link: [67-Pebble Core Model](https://github.com/idaholab/virtual_test_bed/tree/devel/htgr/pb67_cardinal)*
 
-!tag name='Conjugate Heat Transfer Simulation of a 67-Pebble Core' pairs=reactor_type:HTGR
+!tag name=Conjugate Heat Transfer Simulation of a 67-Pebble Core pairs=reactor_type:HTGR
                        geometry:pebble_bed
                        simulation_type:CFD
                        code_used:NekRS

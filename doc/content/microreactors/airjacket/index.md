@@ -4,7 +4,7 @@
 
 *Model link: [Air Jacket CFD Model](https://github.com/idaholab/virtual_test_bed/tree/devel/microreactors/gcmr/airjacket)*
 
-!tag name='Gas-Cooled Microreactor Air Jacket' pairs=reactor_type:microreactor
+!tag name=Gas-Cooled Microreactor Air Jacket pairs=reactor_type:microreactor
                        reactor:GCMR
                        geometry:air_jacket
                        simulation_type:component_CFD
