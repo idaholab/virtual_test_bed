@@ -4,11 +4,19 @@
 
 *Model link: [FHR SAM Model](https://github.com/idaholab/virtual_test_bed/tree/devel/pbfhr/sam_model)*
 
+!tag name='FHR Core SAM Model' pairs=reactor_type:PB-FHR
+                       reactor:Mk1-FHR
+                       simulation_type:core
+                       transient:PLOF
+                       code_used:SAM
+                       computing_needs:workstation
+                       fiscal_year:2021
+
 The SAM [!citep](Hu2017) input files (`PBFHR-SS.i` for steady state and
 `PBFHR-TR.i` for loss of flow transient) were built to model the +Mark 1+
 pebble-bed fluoride-salt-cooled high temperature reactor (FHR)
-which was developed by the University of California Berkeley [!citep](Andreades2014).  
-A schematic of the reactor is shown in [pbfhr_model].  
+which was developed by the University of California Berkeley [!citep](Andreades2014).
+A schematic of the reactor is shown in [pbfhr_model].
 FHRs exhibit different thermal hydraulic phenomenon compared to conventional
 advanced nuclear reactor concepts, such as decay heat removal through
 natural circulation using Direct Reactor Auxiliary Cooling System (DRACS) loops.
@@ -89,7 +97,7 @@ for all components that make up the DRACS and primary loops. The primary loop,
 shown schematically in [pbfhr_nodalization],
 consists of three branches: core, DRACS heat exchanger (DHX), and coiled tube air heater (CTAH).
 The components and their nodalization IDs in each branch are listed in [fhr_components].
-The nodalization IDs are also specified in the input file.  
+The nodalization IDs are also specified in the input file.
 The main components in the primary loop are a reactor, the core channel,
 a heat exchanger, pump, plena, tank, and piping. The reactor power and
 decay heat profile are user-input
@@ -160,7 +168,7 @@ Components are connected using `PBSingleJunction`, or `PBBranch`. For example
 The DHX is modeled using the `PBHeatExchanger` component
 which models a shell-and-tube heat exchanger including the fluid flow
 in the primary and secondary sides, convective heat transfer, and heat conduction in tube wall.
-Either co-current or counter-current configuration can be modeled.  
+Either co-current or counter-current configuration can be modeled.
 Care should be taken when specifying the heat transfer surface area density
 (`HT_surface_area_density`). The user is advised to consult the SAM manual for further explanation.
 The heat transfer coefficients for both the shell side and tube side are calculated internally.
@@ -240,7 +248,7 @@ during normal operation and the salt flow pattern is indicated by green arrows.
 A companion plot of elevation vs. temperature traversing a closed loop of part of the system is also shown.
 In this regime, the DHX operates as a co-current heat exchanger. The area enclosed
 in the elevation-temperature plot shows that significant buoyancy force exists
-to drive natural circulation, since density is a linear function of temperature.  
+to drive natural circulation, since density is a linear function of temperature.
 This is important after transient initiation, when rapid flow reversal and establishment
 of natural circulation cooling is essential to minimize the maximum temperatures achieved by the system.
 
@@ -251,7 +259,7 @@ of natural circulation cooling is essential to minimize the maximum temperatures
 
 In this simulation, a protected loss of forced flow occurs at t = 100 s.
 The power drops immediately to about 5% of nominal power and decay heat is the sole heat source in the core.
-[pbfhr_temp2] shows the temperature profile and flow pattern at t=1400 s.  
+[pbfhr_temp2] shows the temperature profile and flow pattern at t=1400 s.
 Natural circulation is established in the primary-to-DHX loop as indicated by
 the area enclosed in the elevation-temperature plot. The flow driven upward by the core
 through pipe 2 then enters path 3-4-5, so that DHX behaves as a countercurrent heat exchanger.

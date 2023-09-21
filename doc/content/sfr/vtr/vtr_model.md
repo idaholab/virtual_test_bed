@@ -4,6 +4,14 @@
 
 *Model link: [VTR Model](https://github.com/idaholab/virtual_test_bed/tree/devel/sfr/vtr)*
 
+!tag name='Versatile Test Reactor Core model' pairs=reactor_type:SFR
+                       reactor:VTR
+                       geometry:core
+                       simulation_type:core_multiphysics
+                       code_used:BlueCrab
+                       computing_needs:workstation
+                       fiscal_year:2022
+
 ## VTR core description
 
 The VTR conceptual design presented in the works by [!citep](heidet2020)[!citep](heidet2022)[!citep](nelson_vtr) is used for this study.

@@ -4,6 +4,13 @@
 
 *Model link: [MHTGR SAM Model](https://github.com/idaholab/virtual_test_bed/tree/devel/htgr/mhtgr/mhtgr_sam)*
 
+!tag name='MHTGR SAM Model' pairs=reactor_type:HTGR
+                       reactor:MHTGR
+                       simulation_type:balance_of_plant
+                       code_used:SAM
+                       computing_needs:Workstation
+                       fiscal_year:2022
+
 The input file (MHTGR.i) is a model for the General Atomic’s 600-MWt Modular
 High Temperature Gas-Cooled Reactor. Interested readers are referred
 to the technical summary [!citep](Vollman2010) for more details about the
@@ -16,7 +23,7 @@ and reactor cavity cooling system (RCCS) are modeled as concentric cylindrical
 rings.  The active core consists of three fuel rings; inner, middle and outer
 ring. Each fuel ring is represented by 11 coolant channels and 22 heat
 structures. Thus the active core is simulated with 99 circular rings where
-66 rings for homogenized fuel heat structure and 33 rings for gas coolant.  
+66 rings for homogenized fuel heat structure and 33 rings for gas coolant.
 Each coolant ring is sandwiched between two heat structure rings. The two
 surfaces of these two heat structure rings that form the walls of the coolant
 ring are thermally equilibrated via surface coupling to prevent unphysical
@@ -88,7 +95,7 @@ in SI units are input as follows.
 
 Users can define functions for parameters used in the model.
 These include temporal, spatial, and temperature dependent functions.
-For example, users can input enthalpy as a function of temperature,  
+For example, users can input enthalpy as a function of temperature,
 power history as a function of time, or power profile as a
 function of position. The input below specifies graphite thermal
 conductivity as a function of temperature (in K)
@@ -127,7 +134,7 @@ consist of: reactor, coolant channels, heat structures (fuel,
 reflectors, core barrel, RPV and RCCS), pipes, heat exchanger,
 blower and junctions for connecting components. In the reactor
 component, the reactor power is an input and this includes
-normal operating power and decay heat.  
+normal operating power and decay heat.
 
 !listing htgr/mhtgr/mhtgr_sam/MHTGR.i block=reactor language=cpp
 
@@ -157,7 +164,7 @@ the center of the core toward the RCCS.
 
 In this configuration, each coolant channel communicates with
 its two adjacent heat structures through the variable
-`HT_surface_area_density_right` and  
+`HT_surface_area_density_right` and
 `HT_surface_area_density_left` such as shown below
 
 !listing htgr/mhtgr/mhtgr_sam/MHTGR.i language=cpp
@@ -196,7 +203,7 @@ To output the maximum temperature in `R6`:
 
 ## Preconditioning
 
-This block describes the preconditioner used by the solver.  
+This block describes the preconditioner used by the solver.
 New users can leave this block unchanged.
 
 !listing htgr/mhtgr/mhtgr_sam/MHTGR.i block=Preconditioning

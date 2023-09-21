@@ -4,6 +4,14 @@
 
 *Model link: [LEU Fuel Pulse Model](https://github.com/idaholab/virtual_test_bed/tree/devel/htgr/leu_pulse)*
 
+!tag name='LEU Fuel Pulse' pairs=reactor_type:HTGR
+                       geometry:mini-core
+                       simulation_type:core_multiphysics
+                       transient:RIA
+                       code_used:Griffin
+                       computing_needs:Workstation
+                       fiscal_year:2023
+
 ## Model Description
 
 This model represents a greatly simplified version of the Transient Reactor Test Facility (TREAT).
@@ -149,13 +157,13 @@ This block defines the heat conduction governing equation.
 
 ### AuxVariables
 
-This block sets up the power density and integrated power auxilliary variables.
+This block sets up the power density and integrated power auxiliary variables.
 
 !listing htgr/leu_pulse/ht_20r_leu_fl.i block=AuxVariables language=cpp
 
 ### AuxKernels
 
-This block calculates needed auxilliary values during the simulation.
+This block calculates needed auxiliary values during the simulation.
 
 !listing htgr/leu_pulse/ht_20r_leu_fl.i block=AuxKernels language=cpp
 

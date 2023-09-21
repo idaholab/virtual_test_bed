@@ -4,6 +4,15 @@
 
 *Model link: [Griffin-Pronghorn Steady-State Model](https://github.com/idaholab/virtual_test_bed/tree/devel/msr/msfr/steady)*
 
+!tag name='MSFR Griffin-Pronghorn Steady State Model' pairs=reactor_type:MSR
+                       reactor:MSFR
+                       geometry:core
+                       simulation_type:core_multiphysics
+                       multiapps:true
+                       code_used:BlueCrab
+                       computing_needs:workstation
+                       fiscal_year:2021
+
 The MultiApp system is used to separate the neutronics and the fluid dynamics
 problems. The fluid system is solved by the subapp and it uses the `run_ns.i`
 input files. (Here "ns" is an abbreviation for Navier-Stokes.)

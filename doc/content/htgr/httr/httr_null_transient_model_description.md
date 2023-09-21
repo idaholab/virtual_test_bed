@@ -1,5 +1,19 @@
 # High Temperature Engineering Test Reactor (HTTR) Null Transient Model Description
 
+*Contact: Vincent Laboure, vincent.laboure.at.inl.gov*
+
+*Model link: [HTTR Null Transient](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/httr)*
+
+!tag name='High Temperature Engineering Test Reactor (HTTR) Null Transient Model' pairs=reactor_type:HTGR
+                       reactor:HTTR
+                       geometry:core
+                       simulation_type:core_multiphysics
+                       multiapps:true
+                       transient:null
+                       code_used:Sabertooth
+                       computing_needs:Workstation
+                       fiscal_year:2023
+
 A detailed description of the steady-state model is available [here](httr/httr_steady_state_model_description.md). Only modifications necessary to set up a null-transient state are explained below.
 
 For all null-transient input files, initial conditions (`[ICs]` block and `initial_condition` parameters) have been removed. All child applications (thermal hydraulics and fuel element heterogeneous heat conduction) are restarted using the parent full core heat conduction checkpoint. The full-core neutronics model

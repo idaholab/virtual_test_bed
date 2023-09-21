@@ -28,3 +28,18 @@ Extensions:
     MooseDocs.extensions.analytics:
         active: True
         google_measurement_id: G-QD13S6Z119
+    MooseDocs.extensions.tagging:
+        active: True
+        js_file: index-93b559a6.js
+        allowed_keys:
+            - reactor_type
+            - reactor
+            - geometry
+            - simulation_type
+            - transient
+            - multiapps
+            - code_used
+            - open_source
+            - computing_needs
+            - gpu_enabled
+            - fiscal_year

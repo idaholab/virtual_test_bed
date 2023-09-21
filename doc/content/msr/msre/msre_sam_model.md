@@ -4,6 +4,13 @@
 
 *Model link: [Steady-State SAM Model](https://github.com/idaholab/virtual_test_bed/tree/devel/msr/msre/steady_state)*
 
+!tag name='Molten Salt Reactor Experiment SAM Model' pairs=reactor_type:MSR
+                       reactor:MSRE
+                       simulation_type:primary
+                       code_used:SAM
+                       computing_needs:workstation
+                       fiscal_year:2022
+
 ## MSRE Description
 
 The MSRE was a graphite moderated flowing salt type reactor with a design maximum operating power of 10 MW(th) developed by Oak Ridge National Laboratory [!citep](Robertson1965).
@@ -68,7 +75,7 @@ This block contains the global parameters that are applied to all SAM components
 
   global_init_P = 1e5                        # Global initial fluid pressure
   global_init_V = 0.0                        # Global initial fluid velocity
-  global_init_T = 908.15                     
+  global_init_T = 908.15
   Tsolid_sf     = 1e-3
   gravity       = '0 -9.8 0'
 
