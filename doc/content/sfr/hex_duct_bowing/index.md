@@ -1,6 +1,6 @@
 # Hexagonal Duct IAEA Benchmarks
 
-!tag name='Hexagonal Duct IAEA Benchmarks' pairs=reactor_type:SFR
+!tag name=Hexagonal Duct IAEA Benchmarks pairs=reactor_type:SFR
                        geometry:assembly_duct
                        simulation_type:component_analysis
                        code_used:tensor_mechanics

@@ -4,7 +4,7 @@
 
 *Model link: [MHTGR SAM Model](https://github.com/idaholab/virtual_test_bed/tree/devel/htgr/mhtgr/mhtgr_sam)*
 
-!tag name='MHTGR SAM Model' pairs=reactor_type:HTGR
+!tag name=MHTGR SAM Model pairs=reactor_type:HTGR
                        reactor:MHTGR
                        simulation_type:balance_of_plant
                        code_used:SAM

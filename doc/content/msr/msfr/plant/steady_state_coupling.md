@@ -2,7 +2,7 @@
 
 *Model link: [Steady-State Coupling Model](https://github.com/idaholab/virtual_test_bed/tree/devel/msr/msfr/plant/steady)*
 
-!tag name='MSFR Steady-State Griffin-Pronghorn-SAM Coupling' pairs=reactor_type:MSR
+!tag name=MSFR Steady-State Griffin-Pronghorn-SAM Coupling pairs=reactor_type:MSR
                        reactor:MSFR
                        simulation_type:primary
                        code_used:BlueCrab

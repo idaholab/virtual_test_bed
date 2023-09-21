@@ -4,7 +4,7 @@
 
 *Model link: [LEU Fuel Pulse Model](https://github.com/idaholab/virtual_test_bed/tree/devel/htgr/leu_pulse)*
 
-!tag name='LEU Fuel Pulse' pairs=reactor_type:HTGR
+!tag name=LEU Fuel Pulse pairs=reactor_type:HTGR
                        geometry:mini-core
                        simulation_type:core_multiphysics
                        transient:RIA

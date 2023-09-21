@@ -4,7 +4,7 @@
 
 *Model link: [MSFR CFD Models](https://github.com/idaholab/virtual_test_bed/tree/devel/msr/msfr/core_cfd)*
 
-!tag name='MSFR Nek5000 CFD Modeling' pairs=reactor_type:MSR
+!tag name=MSFR Nek5000 CFD Modeling pairs=reactor_type:MSR
                        reactor:MSFR
                        geometry:core
                        simulation_type:CFD

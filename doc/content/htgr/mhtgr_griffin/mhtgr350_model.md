@@ -4,7 +4,7 @@
 
 *Contact: Javier Ortensi, javier.ortensi.at.inl.gov
 
-!tag name='MHTGR Griffin Benchmark' pairs=reactor_type:HTGR
+!tag name=MHTGR Griffin Benchmark pairs=reactor_type:HTGR
                        reactor:MHTGR
                        geometry:core
                        simulation_type:core_neutronics

@@ -4,7 +4,7 @@
 
 *Model link: [HTR-10 Griffin Model](https://github.com/idaholab/virtual_test_bed/tree/devel/htgr/htr10)*
 
-!tag name='HTR-10 Griffin Neutronics Model' pairs=reactor_type:HTGR
+!tag name=HTR-10 Griffin Neutronics Model pairs=reactor_type:HTGR
                        reactor:HTR-10
                        geometry:core
                        simulation_type:core_neutronics

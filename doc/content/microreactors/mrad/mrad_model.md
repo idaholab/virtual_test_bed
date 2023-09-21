@@ -4,7 +4,7 @@
 
 *Model link: [HPMR Model](https://github.com/idaholab/virtual_test_bed/tree/devel/microreactors/mrad)*
 
-!tag name='Micro-Reactor Multiphysics model' pairs=reactor_type:microreactor
+!tag name=Micro-Reactor Multiphysics model pairs=reactor_type:microreactor
                        reactor:HPMR
                        geometry:core
                        simulation_type:core_multiphysics

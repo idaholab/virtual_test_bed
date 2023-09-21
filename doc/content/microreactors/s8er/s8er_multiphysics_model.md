@@ -5,7 +5,7 @@
 
 *Model link: [S8ER Model](https://github.com/idaholab/virtual_test_bed/tree/devel/microreactors/s8er)*
 
-!tag name='SNAP 8 Experimental Reactor Multiphysics model' pairs=reactor_type:microreactor
+!tag name=SNAP 8 Experimental Reactor Multiphysics model pairs=reactor_type:microreactor
                        reactor:SNAP-8
                        geometry:core
                        multiapps:true

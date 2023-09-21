@@ -4,7 +4,7 @@
 
 *Model link: [MSR Depletion Model](https://github.com/idaholab/virtual_test_bed/tree/devel/msr/msr_generic/depletion)*
 
-!tag name='MSR Depletion Model' pairs=reactor_type:MSR
+!tag name=MSR Depletion Model pairs=reactor_type:MSR
                        reactor:generic_msr
                        geometry:mini-core
                        simulation_type:core_depletion

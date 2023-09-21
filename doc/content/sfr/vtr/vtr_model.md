@@ -4,7 +4,7 @@
 
 *Model link: [VTR Model](https://github.com/idaholab/virtual_test_bed/tree/devel/sfr/vtr)*
 
-!tag name='Versatile Test Reactor Core model' pairs=reactor_type:SFR
+!tag name=Versatile Test Reactor Core model pairs=reactor_type:SFR
                        reactor:VTR
                        geometry:core
                        simulation_type:core_multiphysics

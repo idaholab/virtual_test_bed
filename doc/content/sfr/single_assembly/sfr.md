@@ -4,7 +4,7 @@
 
 *Model link: [SFR Single Assembly Model](https://github.com/idaholab/virtual_test_bed/tree/devel/sfr/single_assembly)*
 
-!tag name='Sodium Fast Reactor Single Assembly Model' pairs=reactor_type:SFR
+!tag name=Sodium Fast Reactor Single Assembly Model pairs=reactor_type:SFR
                        geometry:assembly
                        simulation_type:assembly_multiphysics
                        multiapps:true

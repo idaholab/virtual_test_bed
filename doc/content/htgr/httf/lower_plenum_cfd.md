@@ -4,7 +4,7 @@
 
 *Model link: [HTTF Lower Plenum CFD Model](https://github.com/idaholab/virtual_test_bed/tree/devel/htgr/httf/lower_plenum_mixing)*
 
-!tag name='Nek5000 CFD Modeling of HTTF Lower Plenum Flow Mixing Phenomenon' pairs=reactor_type:HTGR
+!tag name=Nek5000 CFD Modeling of HTTF Lower Plenum Flow Mixing Phenomenon pairs=reactor_type:HTGR
                        reactor:HTTF
                        geometry:plenum
                        simulation_type:component_CFD
@@ -17,10 +17,10 @@
 
 Accurate modeling and simulation capabilities are becoming increasingly important to speed up the development and deployment of advanced nuclear reactor technologies, such as high temperature gas-cooled reactors. Among the identified safety-relevant phenomena for the gas-cooled reactors (GCR), the outlet plenum flow distribution was ranked to be of high importance with a low knowledge level in the phenomenon identification and ranking table (PIRT) [!citep](Ball2008).
 The heated coolant (e.g., helium) flows downward through the GCR core region and enters the outlet/lower plenum through narrow channels, which causes the jetting of the gas flow. The jets have a non-uniform temperature and risk yielding high cycling thermal stresses in the lower plenum, negative pressure gradients opposing the flow ingress, and hot streaking.
-These phenomena cannot be accurately captured by 1-D system codes; instead, the modeling requires using higher fidelity CFD codes that can predict the temperature fluctuations in the HTTF lower plenum. In this study, a detailed CFD model is established for the lower plenum of scaled, electrically-heated GCR test facility (i.e., High Temperature Test Facility, or HTTF) at Oregon State University. 
+These phenomena cannot be accurately captured by 1-D system codes; instead, the modeling requires using higher fidelity CFD codes that can predict the temperature fluctuations in the HTTF lower plenum. In this study, a detailed CFD model is established for the lower plenum of scaled, electrically-heated GCR test facility (i.e., High Temperature Test Facility, or HTTF) at Oregon State University.
 Specifically, the flow mixing phenomenon in HTTF lower plenum is simulated with spectral element CFD software, +Nek5000+ and its GPU-oriented variant +nekRS+.
-The turbulence effects are modeled by the two-equation $k-\tau$ URANS model. 
-Two sets of boundary conditions are studied in the Nek5000 and nekRS simulations, respectively. 
+The turbulence effects are modeled by the two-equation $k-\tau$ URANS model.
+Two sets of boundary conditions are studied in the Nek5000 and nekRS simulations, respectively.
 The velocity and temperature fields are examined to understand the thermal-fluid physics happening during the lower plenum mixing. As part of the HTTF international benchmark campaign, the simulation results generated from this study will be used for code-to-code and code-to-data comparisons in the near future, which would lay a solid foundation for the use of CFD in GCR research and development.
 
 !alert note
@@ -178,11 +178,11 @@ In the era of Exascale computing, there's a notable shift towards accelerated co
 
 ### Boundary conditions style=font-size:125%
 
-The boundary conditions of the nekRS study are taken from the corresponding system modeling of HTTF primary loop using RELAP5-3D conducted by Canadian Nuclear Laboratories [!citep](Podila2022). The reference lower plenum pressure is 211.9 kPa, and the helium gas has a density of 0.1950 kg/m$^3$ with a reference temperature of 895.7 K. 
-[he_condition] summarizes the key thermophysical properties of helium flow used in the NekRS simulations.  The 234 inlet channels are divided into 32 groups here as shown in [new_grouping] 
-based on the radial locations and polar angles, and each group with specific mass flow rate and temperature. Inlet channels within a certain group are assumed to have the same inflow velocity corresponding to the specific mass flow rate. 
+The boundary conditions of the nekRS study are taken from the corresponding system modeling of HTTF primary loop using RELAP5-3D conducted by Canadian Nuclear Laboratories [!citep](Podila2022). The reference lower plenum pressure is 211.9 kPa, and the helium gas has a density of 0.1950 kg/m$^3$ with a reference temperature of 895.7 K.
+[he_condition] summarizes the key thermophysical properties of helium flow used in the NekRS simulations.  The 234 inlet channels are divided into 32 groups here as shown in [new_grouping]
+based on the radial locations and polar angles, and each group with specific mass flow rate and temperature. Inlet channels within a certain group are assumed to have the same inflow velocity corresponding to the specific mass flow rate.
 Details of the inlet boundary conditions are listed in [inlet_bc].
-[new_bc] visually illustrates the boundary conditions that are enumerated in [inlet_bc]. 
+[new_bc] visually illustrates the boundary conditions that are enumerated in [inlet_bc].
 
 !media httf/lower_plenum_cfd/new_grouping.png
        style=width:60%
@@ -256,8 +256,8 @@ Regarding the nekRS case files, there are four basic files:
 - +httf.usr+ is a legacy file inherited from Nek5000 and can be utilized to establish initial conditions and define post-processing capabilities.
 - +httf.par+  is employed to input simulation parameters, including material properties, time step size, and Reynolds number.
 
-There are also supportive scripts in the case folder. +linearize_bad_elements.f+ and +BAD_ELEMENTS+ are used to fix the mesh cells that potentially have negative Jacobian values from the quadratic tet-to-hex conversion. 
-Data file +InletProf.dat+ contains the fully developed turbulence solutions of a circular pipe, which is used to customize the profiles of velocity, TKE and tau at HTTF inlet channels. 
+There are also supportive scripts in the case folder. +linearize_bad_elements.f+ and +BAD_ELEMENTS+ are used to fix the mesh cells that potentially have negative Jacobian values from the quadratic tet-to-hex conversion.
+Data file +InletProf.dat+ contains the fully developed turbulence solutions of a circular pipe, which is used to customize the profiles of velocity, TKE and tau at HTTF inlet channels.
 
 Now let's dive into the most important case file +httf.usr+. The sideset ids contained in the mesh file are first translated into CFD boundary condition settings in +usrdat2+ block
 
@@ -267,13 +267,13 @@ The fixes to the negative Jacobian errors in mesh file is called in +usrdat+
 
 !listing htgr/httf/lower_plenum_mixing/nekrs_case/httf.usr start=subroutine usrdat end=subroutine usrdat2() include-end=False
 
-As for the implementation of inlet boundary conditions, a set of data arrays is created in +usr+ and passed over to the +udf+ and +oudf+. 
-At the +usr+ file side, the main subroutine is +getinlet+. It assembles the non-dimensionalized inlet velocity, temperature, 
+As for the implementation of inlet boundary conditions, a set of data arrays is created in +usr+ and passed over to the +udf+ and +oudf+.
+At the +usr+ file side, the main subroutine is +getinlet+. It assembles the non-dimensionalized inlet velocity, temperature,
 k and $\tau$ into the following arrays
 
 !listing htgr/httf/lower_plenum_mixing/nekrs_case/httf.usr start=real uin,vin,win,tin end=t3in(lx1,ly1,lz1,lelv) include-end=True
 
-The corresponding information is transfered to +httf.udf+ at 
+The corresponding information is transfered to +httf.udf+ at
 
 !listing htgr/httf/lower_plenum_mixing/nekrs_case/httf.udf start=RANSktau::setup end=void UDF_ExecuteStep include-start=False include-end=False
 
@@ -281,7 +281,7 @@ And then the velocity and passive scalar (temperature, k and $\tau$) boundary co
 
 !listing htgr/httf/lower_plenum_mixing/nekrs_case/httf.oudf start=void velocityDirichletConditions end=  include-end=False
 
-The following code snippet in +httf.udf+ controls the frequency that +usrchk+ is called during the simulations, which is once in every 1,000 steps in the current case. 
+The following code snippet in +httf.udf+ controls the frequency that +usrchk+ is called during the simulations, which is once in every 1,000 steps in the current case.
 
 ```language=bash
   if ((tstep%1000)==0){
@@ -298,7 +298,7 @@ Time averaged statitics is collected using the following lines in +httf.udf+
  45   tavg::setup(nrs);
 
  73   tavg::run(time);
- 
+
  85   if (nrs->isOutputStep) {
  86     tavg::outfld();
  87   }
@@ -307,9 +307,9 @@ Time averaged statitics is collected using the following lines in +httf.udf+
 
 ### NekRS simulation results style=font-size:125%
 
-A total simulation time of 12 non-dimensional units is achieved. Due to the nature of unsteady RANS turbulence model, only a quasi-steady state can be reached. Velocity fluctuations are observed when helium flow enters the lower plenum and passes through the LP posts. 
-The subsequent post-processing focuses primarily on the time-averaged solutions. 
-For that purpose, an analysis involving time-averaging is carried out on simulation results spanning from 6.0 to 12.0 time units. 
+A total simulation time of 12 non-dimensional units is achieved. Due to the nature of unsteady RANS turbulence model, only a quasi-steady state can be reached. Velocity fluctuations are observed when helium flow enters the lower plenum and passes through the LP posts.
+The subsequent post-processing focuses primarily on the time-averaged solutions.
+For that purpose, an analysis involving time-averaging is carried out on simulation results spanning from 6.0 to 12.0 time units.
 [new_U] and [new_T] portray the more uniform profiles of the time-averaged velocity and temperature distributions, respectively. Through the elimination of instantaneous fluctuations, the time-averaged outcomes reveal notably symmetric patterns in both the velocity and temperature fields. Also, [new_U] illustrates the symmetrical horizontal jets emerging through the openings between the lower plenum posts as the helium flow enters the hot duct. Notably, flow recirculations become evident within the wake regions behind these posts.
 
 !media httf/lower_plenum_cfd/new_averaged_U.png
@@ -336,8 +336,8 @@ In addition to the horizontal perspective, a vertical viewpoint offers a clearer
 
 ### NekRS run Script style=font-size:125%
 
-To submit a nekRS simulation job on common leadership class facilities, dedicated job submission scripts are provided in [nekRS repository](https://github.com/Nek5000/nekRS/tree/master/scripts) for supercomputers, such as Summit-OLCF, Polaris-ALCF, etc. Taking Polaris as an example, to submit the nekRS job, simply do 
+To submit a nekRS simulation job on common leadership class facilities, dedicated job submission scripts are provided in [nekRS repository](https://github.com/Nek5000/nekRS/tree/master/scripts) for supercomputers, such as Summit-OLCF, Polaris-ALCF, etc. Taking Polaris as an example, to submit the nekRS job, simply do
 
 ```language=bash
-./nrsqsub_polaris httf 50 06:00:00 
+./nrsqsub_polaris httf 50 06:00:00
 ```
