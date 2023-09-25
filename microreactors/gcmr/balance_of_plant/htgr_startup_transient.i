@@ -1,6 +1,6 @@
 # Generic gas cooled micro reactor balance of plant with open-air recuperated Brayton cycle
 # This input file models a startup transient
-# POC: Lise Charlot (lise.charlot) at inl.gov)
+# POC: Lise Charlot (lise.charlot at inl.gov)
 # If using or referring to this model, please cite as explained in
 # https://mooseframework.inl.gov/virtual_test_bed/citing.html
 
@@ -17,7 +17,7 @@
 ################  ********************      PRIMARY LOOP DESCRIPTION    ********************  ##################
 ################################################################################################################
 
-# The following components of the primary loop are inlcuded in this model:
+# The following components of the primary loop are included in this model:
 #
 # 1/ Core: Heat is provided by a prescribed power source in a cylindrical heat structure. A single channel is used for the fluid flow.
 # 2/ Pressurizer: this component is added to maintain during the simulation a pressure which stays at 90 bar approximately.
@@ -76,7 +76,7 @@ core_nb_coolant_tot = '${fparse core_nb_assembly * core_nb_coolant_per_assembly}
 
 # other parameters of the assembly
 
-core_lattice_pitch = 0.022 # m        optimal size of the lattice pitch to have a good burnup and a long life of the assemnly for UN TRISO
+core_lattice_pitch = 0.022 # m        optimal size of the lattice pitch to have a good burnup and a long life of the assembly for UN TRISO
 core_radius_fuel = 0.00794 # m
 
 # calculus of the equivalent parameters of a cylindrical heat structure around the coolant channel
@@ -98,10 +98,10 @@ tot_power = 15000000 # Wth
 
 # hx parameters
 
-hx_dia_pri = 0.003
-hx_dia_sec = 0.005
-hx_wall_thickness = 0.001
-hx_length = 2
+hx_dia_pri = 0.003 # m
+hx_dia_sec = 0.005 # m
+hx_wall_thickness = 0.001 # m
+hx_length = 2 # m
 hx_n_elems_axial = 10
 hx_nb_channels = 20000
 
@@ -109,7 +109,7 @@ hx_nb_channels = 20000
 ###################    PIPES PARAMETERS    #######################
 ##################################################################
 
-pri_pipes_radius = 0.12
+pri_pipes_radius = 0.12 # m
 pri_pipes_area = '${fparse pi * pri_pipes_radius * pri_pipes_radius}'
 pri_pipes_D_h = '${fparse 2 * pi * pri_pipes_radius}'
 
@@ -121,36 +121,36 @@ pri_pipe5_n_elems = 3
 pri_pipe6_n_elems = 20
 pri_pipe_prz_n_elems = 10
 
-PRI_L1 = 0.5
-PRI_L2 = 2.
-PRI_L3 = 2.
-PRI_L4 = 2.
+PRI_L1 = 0.5 # m
+PRI_L2 = 2. # m
+PRI_L3 = 2. # m
+PRI_L4 = 2. # m
 PRI_L5 = ${PRI_L1}
-PRI_L6 = 11.
-PRI_L_prz = 2.
+PRI_L6 = 11. # m
+PRI_L_prz = 2. # m
 
 ##################################################################
 ###################          PUMP          #######################
 ##################################################################
 
 pump_area = '${fparse 1 * pri_pipes_area}'
-pump_volume = 0.5
+pump_volume = 0.5 # m^3
 pump_inertia_coeff = '1 1 1 1'
 pump_inertia_const = 1.61397
-pump_omega_rated = 5
+pump_omega_rated = 5 # rad/s
 pump_speed_cr_I = 1e12
 pump_speed_cr_fr = 0
-pump_torque_rated = 50
-pump_volumetric_rated = 2.
-pump_head_rated = 350
+pump_torque_rated = 50 # Nm
+pump_volumetric_rated = 2. # m^3/s
+pump_head_rated = 350 # m
 pump_tau_fr_coeff = '0 0 9.084 0'
 pump_tau_fr_const = 0
-pump_density_rated = 5
+pump_density_rated = 5 # kg/m^3
 
-pri_motor_inertia = 2
-pri_motor_torque = 50
+pri_motor_inertia = 2 # kg-m^2
+pri_motor_torque = 50 # Nm
 
-shaft_initial_speed = 2
+shaft_initial_speed = 2 # rad/s
 
 ##################################################################
 ##################  GEOMETRICAL PARAMETERS  ######################
@@ -171,8 +171,8 @@ shaft_initial_speed = 2
 #
 #
 
-pri_x0 = 0.
-pri_y0 = 0.
+pri_x0 = 0. # m
+pri_y0 = 0. # m
 
 pri_x_pipe1 = ${pri_x0}
 pri_x_core = '${fparse pri_x_pipe1 + PRI_L1}'
@@ -201,7 +201,7 @@ pri_y_pipe6 = '${fparse pri_y_pipe1 - 0.1}'
 ##################################################################
 
 p_ambient = 1e5 # Pa
-p_sec = 1e5
+p_sec = 1e5 # Pa
 T_ambient = 300 # K
 
 ##################################################################
@@ -211,7 +211,7 @@ T_ambient = 300 # K
 # parameter of the shutown decrease of the motor torque
 
 motor_shutdown_value = 150.
-motor_shutdown_time = 8000
+motor_shutdown_time = 8000 # s
 
 generator_torque_per_shaft_speed = -0.025
 
@@ -219,7 +219,7 @@ I_motor = 1.0
 
 I_generator = 1.0
 
-motor_ini_val = 50.
+motor_ini_val = 50. # Nm
 motor_K_p = 0.0085
 motor_K_i = 0.00000007
 motor_K_d = 0
@@ -229,7 +229,7 @@ motor_K_d = 0
 ##################################################################
 
 # diameters of the pipes
-SEC_D1 = 0.35
+SEC_D1 = 0.35 # m
 SEC_D2 = ${SEC_D1}
 SEC_D_COLD = ${SEC_D1}
 SEC_D3 = ${SEC_D1}
@@ -248,14 +248,14 @@ SEC_A5 = '${fparse 0.25 * pi * SEC_D5^2}'
 SEC_A6 = '${fparse 0.25 * pi * SEC_D6^2}'
 SEC_A_HOT = '${fparse 0.25 * pi * SEC_D_HOT^2}'
 
-recuperator_width = 0.005
+recuperator_width = 0.005 #m
 
 #length of the pipes
-SEC_L1 = 5.0
+SEC_L1 = 5.0 # m
 SEC_L2 = '${fparse SEC_L_HX / 2}'
 SEC_L_COLD = ${SEC_L1}
 SEC_L3 = ${SEC_L1}
-SEC_L_HX = 2.
+SEC_L_HX = 2. # m
 SEC_L4 = ${SEC_L1}
 SEC_L5 = '${fparse SEC_L_HX / 2}'
 SEC_L6 = '${fparse SEC_L5 + recuperator_width}'
@@ -358,22 +358,22 @@ A_ref_turb = '${fparse 0.5 * (SEC_A5 + SEC_A6)}'
 V_turb = '${fparse A_ref_turb * 4.0}'
 
 #rated parameters of the turb and compressor
-c0_rated_comp = 340.
-rho0_rated_comp = 1.2
+c0_rated_comp = 340. # m/s
+rho0_rated_comp = 1.2 # kg/m^3
 
-c0_rated_turb = 670
-rho0_rated_turb = 1.40
+c0_rated_turb = 670 # m/s
+rho0_rated_turb = 1.40 # kg/m^3
 
-rated_mfr = 20
+rated_mfr = 20 # ks/s
 
-speed_rated_rpm = 95000
+speed_rated_rpm = 95000 # rpm
 speed_rated = '${fparse speed_rated_rpm * 2 * pi / 60.0}'
 
 #other parameters
 speed_initial = 0
 
-I_comp = 1.0
-I_turb = 1.0
+I_comp = 1.0 # kg-m^2
+I_turb = 1.0 # kg-m^2
 
 eff_comp = 0.79
 eff_turb = 0.843
@@ -387,7 +387,7 @@ eff_turb = 0.843
   closures = thm
   scaling_factor_1phase = '1 1e-2 1e-5'
 
-  gravity_vector = '0 0 0'
+  # gravity_vector = '0 0 0'
 
   scaling_factor_rhoV = 1
   scaling_factor_rhouV = 1e-2
@@ -437,9 +437,9 @@ eff_turb = 0.843
   []
   [steel]
     type = SolidMaterialProperties
-    rho = 8050
-    k = 45
-    cp = 466
+    rho = 8050 # kg/m3
+    k = 45 # W/(m.K)
+    cp = 466 # J/(kg.K)
   []
 []
 

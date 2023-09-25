@@ -15,7 +15,7 @@
     type = 'CSVDiff'
     input = 'htgr_startup_transient.i'
     csvdiff = 'htgr_startup_transient.csv'
-    cli_args = "Executioner/num_steps=10'"
+    cli_args = "Executioner/num_steps=10"
     rel_err = 1e-6
     abs_zero = 1e-7
     executable_pattern = 'moose*|thermal_hydraulics*'
