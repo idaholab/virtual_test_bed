@@ -8,7 +8,7 @@
                        reactor:MSFR
                        simulation_type:primary_loop
                        code_used:SAM
-                       computing_needs:workstation
+                       computing_needs:Workstation
                        fiscal_year:2021
 
 ## MSFR Overview

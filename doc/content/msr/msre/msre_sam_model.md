@@ -8,7 +8,7 @@
                        reactor:MSRE
                        simulation_type:primary
                        code_used:SAM
-                       computing_needs:workstation
+                       computing_needs:Workstation
                        fiscal_year:2022
 
 ## MSRE Description

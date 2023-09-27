@@ -5,12 +5,12 @@
 *Model link: [FHR Steady-State Multiphysics Model](https://github.com/idaholab/virtual_test_bed/tree/devel/pbfhr/steady)*
 
 !tag name=FHR Core Steady-State Model pairs=reactor_type:PB-FHR
-                       reactor:Mk1
+                       reactor:Mk1-FHR
                        geometry:core
                        simulation_type:core_multiphysics
-                       multiapps:true
+                       input_features:multiapps
                        code_used:BlueCrab
-                       computing_needs:workstation
+                       computing_needs:Workstation
                        fiscal_year:2020
 
 These input files may be used to perform a coupled multiphysics steady state simulation of the

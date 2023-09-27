@@ -7,9 +7,9 @@
 !tag name=Sodium Fast Reactor Single Assembly Model pairs=reactor_type:SFR
                        geometry:assembly
                        simulation_type:assembly_multiphysics
-                       multiapps:true
+                       input_features:multiapps
                        code_used:BlueCrab
-                       computing_needs:workstation
+                       computing_needs:Workstation
                        fiscal_year:2021
 
 ## SFR model description

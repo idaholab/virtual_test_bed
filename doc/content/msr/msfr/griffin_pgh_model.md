@@ -8,9 +8,9 @@
                        reactor:MSFR
                        geometry:core
                        simulation_type:core_multiphysics
-                       multiapps:true
+                       input_features:multiapps
                        code_used:BlueCrab
-                       computing_needs:workstation
+                       computing_needs:Workstation
                        fiscal_year:2021
 
 The MultiApp system is used to separate the neutronics and the fluid dynamics

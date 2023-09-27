@@ -8,7 +8,7 @@
                        geometry:assembly
                        simulation_type:assembly_flow
                        code_used:Pronghorn_subchannel
-                       computing_needs:workstation
+                       computing_needs:Workstation
                        fiscal_year:2023
 
 ## Benchmark Description

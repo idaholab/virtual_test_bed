@@ -9,8 +9,8 @@
                        geometry:core
                        simulation_type:core_multiphysics
                        code_used:RELAP-7
-                       multiapps:true
-                       computing_needs:hpc
+                       input_features:multiapps
+                       computing_needs:HPC
                        fiscal_year:2023
 
 The MOOSE MultiApp system was used to model the PG-26 transient utilizing 3-D heat conduction within the core and 1-D
