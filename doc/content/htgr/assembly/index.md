@@ -9,8 +9,8 @@
                        simulation_type:assembly_multiphysics
                        code_used:cardinal
                        open_source:true
-                       multiapps:true
-                       computing_needs:hpc
+                       input_features:multiapps
+                       computing_needs:HPC
                        fiscal_year:2022
 
 In this tutorial, we couple OpenMC Monte Carlo transport to the MOOSE heat conduction module

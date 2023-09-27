@@ -8,10 +8,10 @@
                        reactor:MSFR
                        geometry:core
                        simulation_type:core_multiphysics
-                       multiapps:true
+                       input_features:multiapps
                        transient:ULOF
                        code_used:BlueCrab
-                       computing_needs:workstation
+                       computing_needs:Workstation
                        fiscal_year:2021
 
 In addition to the steady-state MSFR model, the Virtual Test Bed also contains

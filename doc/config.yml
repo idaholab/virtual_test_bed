@@ -36,8 +36,8 @@ Extensions:
             - reactor
             - geometry
             - simulation_type
+            - input_features
             - transient
-            - multiapps
             - code_used
             - open_source
             - computing_needs

@@ -8,7 +8,7 @@
                        reactor:ABTR
                        simulation_type:balance_of_plant
                        code_used:SAM
-                       computing_needs:workstation
+                       computing_needs:Workstation
                        fiscal_year:2022
 
 ## ABTR description

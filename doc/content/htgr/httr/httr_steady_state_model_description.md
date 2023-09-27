@@ -8,7 +8,7 @@
                        reactor:HTTR
                        geometry:core
                        simulation_type:core_multiphysics
-                       multiapps:true
+                       input_features:multiapps
                        code_used:Sabertooth
                        computing_needs:Workstation
                        fiscal_year:2023

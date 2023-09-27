@@ -9,7 +9,7 @@
                        geometry:mini-core
                        simulation_type:core_depletion
                        code_used:Griffin
-                       computing_needs:workstation
+                       computing_needs:Workstation
                        fiscal_year:2023
 
 The MSR depletion model is an implementation and verification of Griffin's isotope removal capability for two multi-region MSR depletion cases.
