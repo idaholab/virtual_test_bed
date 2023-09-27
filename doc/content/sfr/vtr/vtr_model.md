@@ -9,7 +9,8 @@
                        geometry:core
                        simulation_type:core_multiphysics
                        code_used:BlueCrab
-                       computing_needs:workstation
+                       computing_needs:Workstation
+                       input_features:multiapps
                        fiscal_year:2022
 
 ## VTR core description

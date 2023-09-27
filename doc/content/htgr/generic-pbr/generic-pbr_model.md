@@ -8,7 +8,7 @@
                        geometry:core
                        simulation_type:core_multiphysics
                        code_used:SAM
-                       computing_needs:workstation
+                       computing_needs:Workstation
                        fiscal_year:2021
 
 The input file (pbr.i) is a model for the generic 200 MW pebble bed reactor

@@ -8,7 +8,7 @@
                        reactor:HTTR
                        geometry:core
                        simulation_type:core_multiphysics
-                       multiapps:true
+                       input_features:multiapps
                        transient:null
                        code_used:Sabertooth
                        computing_needs:Workstation

@@ -9,7 +9,7 @@
                        simulation_type:core
                        transient:PLOF
                        code_used:SAM
-                       computing_needs:workstation
+                       computing_needs:Workstation
                        fiscal_year:2021
 
 The SAM [!citep](Hu2017) input files (`PBFHR-SS.i` for steady state and

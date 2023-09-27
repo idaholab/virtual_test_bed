@@ -6,8 +6,8 @@
                        reactor:MSFR
                        simulation_type:primary
                        code_used:BlueCrab
-                       multiapps:true
-                       computing_needs:hpc
+                       input_features:multiapps
+                       computing_needs:HPC
                        fiscal_year:2023
 
 Griffin, Pronghorn, and SAM are coupled with a domain overlapping approach.
