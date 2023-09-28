@@ -41,6 +41,10 @@
   []
 []
 
+[Problem]
+  allow_initial_conditions_with_restart = true
+[]
+
 [AuxVariables]
   [tfuel]
     order = CONSTANT
