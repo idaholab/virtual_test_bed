@@ -1,0 +1,9 @@
+[Tests]
+  # Syntax checks
+  [coupled_multiphysics_syntax]
+    type = RunApp
+    input = 'cmsr_simple.i'
+    check_input = True
+    executable_pattern = 'blue_crab*|dire_wolf*|fenix*'
+  []
+[]
