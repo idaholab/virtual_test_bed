@@ -262,20 +262,18 @@ corr_factor = '${fparse R_hp_hole / R_clad_o * area_correction / perimeter_corre
 
 [Transfers]
   [from_sockeye_temp]
-    type = MultiAppNearestNodeTransfer
+    type = MultiAppGeneralFieldNearestLocationTransfer
     from_multi_app = sockeye
     source_variable = hp_temp_aux
     variable = hp_temp_aux
     execute_on = 'timestep_begin'
-    fixed_meshes = true
   []
   [to_sockeye_flux]
-    type = MultiAppNearestNodeTransfer
+    type = MultiAppGeneralFieldNearestLocationTransfer
     to_multi_app = sockeye
     source_variable = flux_uo_corr
     variable = master_flux
     execute_on = 'timestep_begin'
-    fixed_meshes = true
   []
 []
 
