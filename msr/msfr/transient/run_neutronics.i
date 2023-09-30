@@ -264,49 +264,49 @@
     variable = power_density
   []
   [fission_source]
-    type = MultiAppGeneralFieldNearestNodeTransfer
+    type = MultiAppGeneralFieldNearestLocationTransfer
     to_multi_app = ns
     source_variable = fission_source
     variable = fission_source
   []
   [c1]
-    type = MultiAppGeneralFieldNearestNodeTransfer
+    type = MultiAppGeneralFieldNearestLocationTransfer
     from_multi_app = ns
     source_variable = 'c1'
     variable = 'c1'
   []
   [c2]
-    type = MultiAppGeneralFieldNearestNodeTransfer
+    type = MultiAppGeneralFieldNearestLocationTransfer
     from_multi_app = ns
     source_variable = 'c2'
     variable = 'c2'
   []
   [c3]
-    type = MultiAppGeneralFieldNearestNodeTransfer
+    type = MultiAppGeneralFieldNearestLocationTransfer
     from_multi_app = ns
     source_variable = 'c3'
     variable = 'c3'
   []
   [c4]
-    type = MultiAppGeneralFieldNearestNodeTransfer
+    type = MultiAppGeneralFieldNearestLocationTransfer
     from_multi_app = ns
     source_variable = 'c4'
     variable = 'c4'
   []
   [c5]
-    type = MultiAppGeneralFieldNearestNodeTransfer
+    type = MultiAppGeneralFieldNearestLocationTransfer
     from_multi_app = ns
     source_variable = 'c5'
     variable = 'c5'
   []
   [c6]
-    type = MultiAppGeneralFieldNearestNodeTransfer
+    type = MultiAppGeneralFieldNearestLocationTransfer
     from_multi_app = ns
     source_variable = 'c6'
     variable = 'c6'
   []
   [T]
-    type = MultiAppGeneralFieldNearestNodeTransfer
+    type = MultiAppGeneralFieldNearestLocationTransfer
     from_multi_app = ns
     source_variable = 'T_fluid'
     variable = 'tfuel'

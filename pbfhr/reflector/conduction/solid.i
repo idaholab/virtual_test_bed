@@ -130,13 +130,13 @@ core_heat_flux = 5e3
 
 [Transfers]
   [temperature_from_nek]
-    type = MultiAppGeneralFieldNearestNodeTransfer
+    type = MultiAppGeneralFieldNearestLocationTransfer
     source_variable = temp
     from_multi_app = nek
     variable = nek_temp
   []
   [flux_to_nek]
-    type = MultiAppGeneralFieldNearestNodeTransfer
+    type = MultiAppGeneralFieldNearestLocationTransfer
     source_variable = flux
     to_multi_app = nek
     variable = avg_flux

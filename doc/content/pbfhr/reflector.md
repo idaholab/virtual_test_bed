@@ -693,7 +693,7 @@ run nekRS as a standalone application.
 First, a local variable, `fluid_solid_interface`, is used to define all the boundary IDs through which nekRS is coupled
 via conjugate heat transfer to MOOSE for convenience. Next, a `NekRSMesh`, a class specific to Cardinal, is
 used to construct a "mirror" of the surfaces in the nekRS mesh through which boundary condition
-coupling is performed. In order for MOOSE's [MultiAppGeneralFieldNearestNodeTransfer](https://mooseframework.inl.gov/source/transfers/MultiAppGeneralFieldNearestNodeTransfer.html)
+coupling is performed. In order for MOOSE's [MultiAppGeneralFieldNearestLocationTransfer](https://mooseframework.inl.gov/source/transfers/MultiAppGeneralFieldNearestLocationTransfer.html)
 to correctly match nodes in the solid mesh to nodes in this fluid mesh mirror, the entire mesh must be
 scaled by a factor of $L_{ref}$ to return to dimensional units.
 

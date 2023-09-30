@@ -15,8 +15,8 @@
 T_in = 400 # K
 R_l = 0.009 # m
 core_block_height = 0.198 # m
-heater_P = ${fparse 0.004877258 * 16} # m
-heater_SA = ${fparse heater_P * 10 * core_block_height} # m^2
+heater_P = '${fparse 0.004877258 * 16}' # m
+heater_SA = '${fparse heater_P * 10 * core_block_height}' # m^2
 # Necessary functions for the PG-26 Transient
 [Functions]
   # Specific heat of core ceramic material
@@ -207,14 +207,14 @@ heater_SA = ${fparse heater_P * 10 * core_block_height} # m^2
   []
   # Fluid temperature received from relap-7
   [tfluid_from_relap]
-    type = MultiAppGeneralFieldNearestNodeTransfer
+    type = MultiAppGeneralFieldNearestLocationTransfer
     from_multi_app = relap
     source_variable = T # variable name in relap-7
     variable = tfluid # AuxVariable name in main app
   []
   # Convective heat transfer coefficient received from relap-7
   [Hw_channel_from_relap]
-    type = MultiAppGeneralFieldNearestNodeTransfer
+    type = MultiAppGeneralFieldNearestLocationTransfer
     from_multi_app = relap
     source_variable = Hw_chan # AuxVariable name in relap-7
     variable = Hw_channel # AuxVariable name in main app
@@ -235,21 +235,21 @@ heater_SA = ${fparse heater_P * 10 * core_block_height} # m^2
   []
   # Fluid temperature received from relap-7
   [tfluid_upcomer_from_relap]
-    type = MultiAppGeneralFieldNearestNodeTransfer
+    type = MultiAppGeneralFieldNearestLocationTransfer
     from_multi_app = upcomer
     source_variable = T # variable name in relap-7
     variable = tfluid_upcomer # AuxVariable name in main app
   []
   # Convective heat transfer coefficient for core barrel received from relap-7
   [Hw_barrel_from_relap]
-    type = MultiAppGeneralFieldNearestNodeTransfer
+    type = MultiAppGeneralFieldNearestLocationTransfer
     from_multi_app = upcomer
     source_variable = Hw_barrel # AuxVariable name in relap-7
     variable = Hw_cb # AuxVariable name in main app
   []
   # Convective heat transfer coefficient for core barrel received from relap-7
   [Hw_RPV_from_relap]
-    type = MultiAppGeneralFieldNearestNodeTransfer
+    type = MultiAppGeneralFieldNearestLocationTransfer
     from_multi_app = upcomer
     source_variable = Hw_RPV # AuxVariable name in relap-7
     variable = Hw_vessel # AuxVariable name in main app
@@ -270,21 +270,21 @@ heater_SA = ${fparse heater_P * 10 * core_block_height} # m^2
   []
   # Convective heat transfer coefficient for RCCS inner panel received from relap-7
   [Hw_RCCS_inner]
-    type = MultiAppGeneralFieldNearestNodeTransfer
+    type = MultiAppGeneralFieldNearestLocationTransfer
     from_multi_app = RCCS
     source_variable = Hw_inner # AuxVariable name in relap-7
     variable = Hw_in # AuxVariable name in main app
   []
-   # Convective heat transfer coefficient for RCCS outer panel received from relap-7
+  # Convective heat transfer coefficient for RCCS outer panel received from relap-7
   [Hw_RCCS_outer]
-    type = MultiAppGeneralFieldNearestNodeTransfer
+    type = MultiAppGeneralFieldNearestLocationTransfer
     from_multi_app = RCCS
     source_variable = Hw_outer # AuxVariable name in relap-7
     variable = Hw_out # AuxVariable name in main app
   []
   # Fluid temperature received from relap-7
   [tfluid_RCCS_from_relap]
-    type = MultiAppGeneralFieldNearestNodeTransfer
+    type = MultiAppGeneralFieldNearestLocationTransfer
     from_multi_app = RCCS
     source_variable = T # variable name in relap-7
     variable = tfluid_RCCS # AuxVariable name in main app
@@ -863,7 +863,7 @@ heater_SA = ${fparse heater_P * 10 * core_block_height} # m^2
     point = '${fparse R_l + 0.286329987} -0.285540009 1.876'
     execute_on = 'TIMESTEP_END FINAL'
   []
-# Core Solid Temps
+  # Core Solid Temps
   [TS-1301]
     type = PointValue
     variable = temperature
