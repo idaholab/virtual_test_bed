@@ -4,6 +4,15 @@
 
 *Model link: [GCMR Core Thermal Model](https://github.com/idaholab/virtual_test_bed/tree/devel/microreactors/gcmr/bypass_flow)*
 
+!tag name=GCMR Core Thermal Model pairs=reactor_type:microreactor
+                       reactor:GCMR
+                       geometry:core
+                       simulation_type:core_thermalhydraulics
+                       input_features:multiapps
+                       code_used:Pronghorn_subchannel
+                       computing_needs:Workstation
+                       open_source:partial
+                       fiscal_year:2023
 
 ## Mesh file
 
