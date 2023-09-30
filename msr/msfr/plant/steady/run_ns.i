@@ -16,9 +16,9 @@
 # 'run_neutronics.i', saved in 'restart/run_neutronics_ns_restart.e'
 
 # Material properties
-rho = 4284  # density [kg / m^3]  (@1000K)
-cp = 1594  # specific heat capacity [J / kg / K]
-drho_dT = 0.882  # derivative of density w.r.t. temperature [kg / m^3 / K]
+rho = 4284 # density [kg / m^3]  (@1000K)
+cp = 1594 # specific heat capacity [J / kg / K]
+drho_dT = 0.882 # derivative of density w.r.t. temperature [kg / m^3 / K]
 mu = 0.0166 # viscosity [Pa s]
 k = 1.7 # thermal conductivity [W / m / K]
 # https://www.researchgate.net/publication/337161399_Development_of_a_control-\
@@ -29,16 +29,16 @@ von_karman_const = 0.41
 
 # Turbulent properties
 Pr_t = 0.9 # turbulent Prandtl number
-Sc_t = 1   # turbulent Schmidt number
+Sc_t = 1 # turbulent Schmidt number
 
 # Derived material properties
-alpha = ${fparse drho_dT / rho}  # thermal expansion coefficient
+alpha = '${fparse drho_dT / rho}' # thermal expansion coefficient
 
 # Operating parameters
 T_HX = 873.15 # heat exchanger temperature [K]
 
 # Mass flow rate tuning, for heat exchanger pressure and temperature drop
-friction = 4e3  # [kg / m^4]
+friction = 4e3 # [kg / m^4]
 pump_force = -20000. # [N / m^3]
 
 # Delayed neutron precursor parameters. Lambda values are decay constants in
@@ -102,6 +102,11 @@ beta6 = 0.000184087
     new_sideset_name = 'hx_bot'
     input = 'hx_top'
   []
+[]
+
+[Problem]
+  # Using restart for velocities & pressure initialization
+  allow_initial_conditions_with_restart = true
 []
 
 ################################################################################
@@ -175,7 +180,7 @@ beta6 = 0.000184087
     friction_types = 'FORCHHEIMER'
     friction_coeffs = ${friction}
     ambient_convection_blocks = 'hx'
-    ambient_convection_alpha = ${fparse 600 * 20e3} # HX specifications
+    ambient_convection_alpha = '${fparse 600 * 20e3}' # HX specifications
     ambient_temperature = 'hx_cold_temp'
   []
 []
@@ -273,7 +278,7 @@ beta6 = 0.000184087
     [InitialCondition]
       type = FunctionIC
       function = 'cosine_guess'
-      scaling_factor = ${fparse 3e9/2.81543}
+      scaling_factor = '${fparse 3e9/2.81543}'
     []
   []
   [fission_source]
@@ -282,7 +287,7 @@ beta6 = 0.000184087
     [InitialCondition]
       type = FunctionIC
       function = 'cosine_guess'
-      scaling_factor = ${fparse 6.303329e+01/2.81543}
+      scaling_factor = '${fparse 6.303329e+01/2.81543}'
     []
     block = 'fuel pump hx'
   []
@@ -365,15 +370,15 @@ beta6 = 0.000184087
     # This time stepper makes the time step grow exponentially
     # It can only be used with proper initialization
     type = IterationAdaptiveDT
-    dt = 1  # chosen to obtain convergence with first coupled iteration
+    dt = 1 # chosen to obtain convergence with first coupled iteration
     growth_factor = 2
   []
   # [TimeStepper]
   #   type = FunctionDT
   #   function = dts
   # []
-  steady_state_detection  = true
-  steady_state_tolerance  = 1e-8
+  steady_state_detection = true
+  steady_state_tolerance = 1e-8
   steady_state_start_time = 10
 
   # Time integration scheme
@@ -416,7 +421,6 @@ beta6 = 0.000184087
   []
 []
 
-
 [Transfers]
   # Primary and secondary loops
   [send_flow_BCs]
@@ -429,7 +433,7 @@ beta6 = 0.000184087
     type = MultiAppPostprocessorVectorTransfer
     from_multi_app = sam_balance_of_plant
     from_postprocessors = 'HX_cold_temp'
-    to_postprocessors   = 'heat_exchanger_T_ambient'
+    to_postprocessors = 'heat_exchanger_T_ambient'
   []
 []
 
