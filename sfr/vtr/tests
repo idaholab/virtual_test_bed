@@ -59,9 +59,7 @@
     prereq = 'full_simulation_syntax'
     min_parallel = 8
     method = 'opt'
-
-    # See issue #265
-    rel_err = 1e-1
+    rel_err = 1e-5
   []
   [bison_mecha_only]
     type = CSVDiff

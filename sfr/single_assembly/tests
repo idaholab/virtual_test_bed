@@ -53,7 +53,7 @@
     prereq = 'full_simulation_syntax'
 
     # See issue #265
-    rel_err = 5e-4
+    rel_err = 1e-3
   []
   [bison_mecha_only]
     type = CSVDiff

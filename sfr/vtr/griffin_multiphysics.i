@@ -8,7 +8,7 @@
 # https://mooseframework.inl.gov/virtual_test_bed/citing.html
 # ==============================================================================
 # - VTR GRIFFIN neutronics input
-# - MasterApp
+# - Main Application
 # ==============================================================================
 # - The Model has been built based on [1-2].
 # ------------------------------------------------------------------------------
@@ -19,10 +19,6 @@
 # ==============================================================================
 # MODEL PARAMETERS
 # ==============================================================================
-
-# State ------------------------------------------------------------------------
-# multi-physics
-# Power ------------------------------------------------------------------------
 
 # ==============================================================================
 # GLOBAL PARAMETERS
@@ -222,12 +218,12 @@
 
   nl_abs_tol = 1e-8
   nl_rel_tol = 1e-7
-  #fixed_point specific
 
+  #fixed_point specific
   fixed_point_force_norms = true
-  fixed_point_abs_tol = 1e-8
-  fixed_point_rel_tol = 1e-7
-  fixed_point_max_its = 20
+  fixed_point_abs_tol = 1e-10
+  fixed_point_rel_tol = 1e-10
+  fixed_point_max_its = 3
   accept_on_max_fixed_point_iteration = true
 []
 
