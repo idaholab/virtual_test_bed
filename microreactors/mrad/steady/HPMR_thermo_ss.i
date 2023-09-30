@@ -31,6 +31,9 @@ corr_factor = '${fparse R_hp_hole / R_clad_o * area_correction / perimeter_corre
 []
 
 [Kernels]
+  # The time derivative kernel has been removed
+  # We are obtaining a steady-state solution and it's preferrable not to march in time
+  # to steady state as marching is expensive.
   [heat_conduction]
     type = HeatConduction
     variable = temp
