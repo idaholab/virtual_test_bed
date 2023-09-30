@@ -300,7 +300,7 @@ beta6 = 0.000184087
     expression = 'max(0, cos(x*pi/2/1.2))*max(0, cos(y*pi/2/1.1))'
   []
   [hx_cold_temp]
-    type = ADParsedFunction
+    type = ParsedFunction
     expression = 'Tcold'
     symbol_names = 'Tcold'
     symbol_values = '${T_HX}'
@@ -417,7 +417,9 @@ beta6 = 0.000184087
     keep_solution_during_restore = False
 
     # the balance of plant needs to be run separately first for 100 steps
-    cli_args = 'Problem/restart_file_base=restart/msfr_system_1d_checkpoint_cp/0060;Problem/force_restart=true'
+    # here we are hardcoding a restart file path, to a file we checked in, but you should
+    # re-create the checkpoint file and adapt the restart_file_base path for your own runs
+    cli_args = 'Problem/restart_file_base=restart/msfr_system_1d_checkpoint_cp/0100;Problem/force_restart=true'
   []
 []
 
