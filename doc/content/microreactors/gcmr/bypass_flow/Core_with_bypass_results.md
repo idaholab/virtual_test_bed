@@ -19,7 +19,8 @@ The temperature and cross flow in the bypass are shown in [T_bypass] and [Cross_
 
 ## Run Commands
 
-This simulation is run using Pronghorn by running:
+This simulation is run using Pronghorn by running the command below.
+The Subchannel submodule of Pronghorn must be compiled with Pronghorn to run this input.
 
 !listing
 mpiexec -np number_of_cores /path/to/pronghorn-opt -i core.i

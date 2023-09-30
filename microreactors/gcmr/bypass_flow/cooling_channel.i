@@ -1,4 +1,4 @@
-## GCMR TH simulation with inter assembly bypass flow
+## GCMR TH simulation with inter-assembly bypass flow
 ## Core cooling channels input file
 ## Application: MOOSE thermal hydrualics module
 ## POC: Lise Charlot lise.charlot at inl.gov

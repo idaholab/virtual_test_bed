@@ -1,5 +1,5 @@
-## GCMR TH simulation with inter assembly bypass flow
-## Inter assembly bypass flow input file
+## GCMR TH simulation with inter-assembly bypass flow
+## Inter-assembly bypass flow input file
 ## Application: Pronghorn-SC
 ## POC: Lise Charlot lise.charlot at inl.gov
 ## If using or referring to this model, please cite as explained in
@@ -230,6 +230,8 @@ assembly_apothem = '${fparse sqrt(3) / 2 * assembly_radius}'
 
 [Executioner]
   type = Steady
+
+  # These values are not used
   nl_rel_tol = 0.9
   l_tol = 0.9
 []

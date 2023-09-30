@@ -1,12 +1,9 @@
-## GCMR TH simulation with inter assembly bypass flow
+## GCMR TH simulation with inter-assembly bypass flow
 ## Mesh input file
 ## Application: MOOSE reactor module
 ## POC: Lise Charlot lise.charlot at inl.gov
 ## If using or referring to this model, please cite as explained in
 ## https://mooseframework.inl.gov/virtual_test_bed/citing.html
-
-
-
 
 # parameters of the coolant channels
 

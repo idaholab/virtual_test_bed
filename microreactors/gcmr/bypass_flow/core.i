@@ -1,4 +1,4 @@
-## GCMR TH simulation with inter assembly bypass flow
+## GCMR TH simulation with inter-assembly bypass flow
 ## 3D heat conduction input file
 ## Application: MOOSE heat conduction module
 ## POC: Lise Charlot lise.charlot at inl.gov
