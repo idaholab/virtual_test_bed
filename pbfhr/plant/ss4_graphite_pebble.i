@@ -20,8 +20,8 @@
 # ==============================================================================
 # Problem Parameters -----------------------------------------------------------
 
-inlet_T_fluid              = 8.73150000e+02
-pebble_diameter            = 0.03
+inlet_T_fluid = 8.73150000e+02
+pebble_diameter = 0.03
 
 # ==============================================================================
 # GEOMETRY AND MESH
@@ -32,7 +32,7 @@ pebble_diameter            = 0.03
   type = GeneratedMesh
   dim = 1
   xmin = 0.0
-  xmax = ${fparse pebble_diameter / 2}
+  xmax = '${fparse pebble_diameter / 2}'
   nx = 20
 []
 
@@ -43,6 +43,10 @@ pebble_diameter            = 0.03
   [T]
     initial_condition = ${inlet_T_fluid}
   []
+[]
+
+[Problem]
+  allow_initial_conditions_with_restart = true
 []
 
 [Kernels]
@@ -96,9 +100,9 @@ pebble_diameter            = 0.03
 
   [TimeStepper]
     type = IterationAdaptiveDT
-    dt                 = 1
-    cutback_factor     = 0.5
-    growth_factor      = 4.0
+    dt = 1
+    cutback_factor = 0.5
+    growth_factor = 4.0
   []
 []
 

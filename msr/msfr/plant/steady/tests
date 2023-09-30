@@ -32,7 +32,7 @@
 
   # Regression tests with CSV output over a minimum amount of time steps/computation
   [coupled_multiphysics]
-    prereq = coupled_multiphysics_syntax
+    prereq = 'coupled_multiphysics_syntax plant_fluids_only'
     type = CSVDiff
     input = 'run_neutronics.i'
     csvdiff = 'multiphysics_out.csv multiphysics_out_ns0.csv multiphysics_out_ns0_sam_balance_of_plant0_csv.csv'

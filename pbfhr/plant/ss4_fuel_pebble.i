@@ -22,25 +22,25 @@
 
 inlet_T_fluid = 8.73150000e+02
 total_power = 236.0e6 # W, from [2]
-model_vol = 10.4      # active fuel region volume, from [2]
+model_vol = 10.4 # active fuel region volume, from [2]
 
-power_density = ${fparse total_power / model_vol}
+power_density = '${fparse total_power / model_vol}'
 
 # Material phase fractions
-UO2_phase_fraction         = 1.20427291e-01
-buffer_phase_fraction      = 2.86014816e-01
-ipyc_phase_fraction        = 1.59496539e-01
-sic_phase_fraction         = 1.96561801e-01
-opyc_phase_fraction        = 2.37499553e-01
+UO2_phase_fraction = 1.20427291e-01
+buffer_phase_fraction = 2.86014816e-01
+ipyc_phase_fraction = 1.59496539e-01
+sic_phase_fraction = 1.96561801e-01
+opyc_phase_fraction = 2.37499553e-01
 
 # Region phase fractions
-TRISO_phase_fraction       = 3.09266232e-01
+TRISO_phase_fraction = 3.09266232e-01
 fuel_matrix_phase_fraction = 3.01037037e-01
 
 # Pebble geometry
-rcore                      = 1.20000000e-02
-rfuel_matrix               = 1.40000000e-02
-pebble_diameter            = 0.03
+rcore = 1.20000000e-02
+rfuel_matrix = 1.40000000e-02
+pebble_diameter = 0.03
 
 # ==============================================================================
 # GEOMETRY AND MESH
@@ -95,6 +95,10 @@ pebble_diameter            = 0.03
   []
 []
 
+[Problem]
+  allow_initial_conditions_with_restart = true
+[]
+
 [Kernels]
   inactive = 'time time2'
   [time]
@@ -112,7 +116,7 @@ pebble_diameter            = 0.03
     type = HeatSrc
     variable = T_fuel_matrix
     heat_source = fuel_matrix_heat_source
-    scaling_factor = ${fparse 1.0/fuel_matrix_phase_fraction}
+    scaling_factor = '${fparse 1.0/fuel_matrix_phase_fraction}'
   []
 
   [time2]
@@ -215,7 +219,7 @@ pebble_diameter            = 0.03
 [Materials]
   [fuel_matrix]
     type = PronghornSolidMaterialPT
-    T_solid = T_fuel_matrix     # dummy because all properties are constant
+    T_solid = T_fuel_matrix # dummy because all properties are constant
     solid = compact
     block = '1'
   []
@@ -301,9 +305,9 @@ pebble_diameter            = 0.03
 
   [TimeStepper]
     type = IterationAdaptiveDT
-    dt                 = 1
-    cutback_factor     = 0.5
-    growth_factor      = 4.0
+    dt = 1
+    cutback_factor = 0.5
+    growth_factor = 4.0
   []
 []
 
