@@ -5,17 +5,24 @@
     exodiff = bypass_out.e
     executable_pattern = 'pronghorn*|subchannel*'
   []
+  [channel]
+    type = 'CSVDiff'
+    input = 'cooling_channel.i'
+    csvdiff = 'cooling_channel_out.csv'
+    cli_args = "Executioner/num_steps=10 Outputs/csv=true"
+    executable_pattern = 'pronghorn*|thermal_hydraulics*'
+  []
+  [mesh]
+    type = RunApp
+    input = 'mesh_bypass.i'
+    executable_pattern = 'pronghorn*'
+    cli_args = '--mesh-only'
+  []
   [core]
     type = 'RunApp'
     input = 'core.i'
     check_input = true
     executable_pattern = 'pronghorn*'
-  []
-  [startup]
-    type = 'CSVDiff'
-    input = 'cooling_channel.i'
-    csvdiff = 'cooling_channel_out.csv'
-    cli_args = "Executioner/num_steps=10 Outputs/csv=true"
-    executable_pattern = 'pronghorn**'
+    prereq = 'mesh channel subchannel'
   []
 []
