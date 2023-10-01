@@ -126,6 +126,7 @@
 [MultiApps]
   [bison]
     type = FullSolveMultiApp
+    app_type = BisonApp
     positions = '0 0 0'
     input_files = HPMR_thermo_ss.i
     execute_on = 'timestep_end'
