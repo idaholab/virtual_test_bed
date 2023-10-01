@@ -11,26 +11,26 @@
 #  This input file does not include friction.
 
 # radial/axial  dimensions at hot irradiated condition to be consistent with griffin/SAM model
-gap                  = 0. #0.5e-3
-rod_outside_diameter = 6.282e-3  # 6.25e-3
-clad_thickness       = 0.503e-3  # 0.5e-3
-slug_diameter        = 5.277e-3  # 4.547e-3
-fuel_height          = 842.4e-3  # 800.0e-3
-plenum_height        = 782.2e-3  # 778.0e-3
+gap = 0. #0.5e-3
+rod_outside_diameter = 6.282e-3 # 6.25e-3
+clad_thickness = 0.503e-3 # 0.5e-3
+slug_diameter = 5.277e-3 # 4.547e-3
+fuel_height = 842.4e-3 # 800.0e-3
+plenum_height = 782.2e-3 # 778.0e-3
 
 # ==============================================================================
 # GLOBAL PARAMETERS
 # ==============================================================================
 [GlobalParams]
-   #  Parameters that are used in multiple blocks can be included here so that
-   #  they only need to be specified one time.
-   order = FIRST
-   family = LAGRANGE
-   temperature = Temperature
-   #the following are needed in multiple UPuZr Materials
-   X_Zr = 0.225 #  U-20Pu-10Zr
-   X_Pu = 0.171
-   density = 11120.0 # kg/m3 at hot operating condition (UPuZr fuel)
+  #  Parameters that are used in multiple blocks can be included here so that
+  #  they only need to be specified one time.
+  order = FIRST
+  family = LAGRANGE
+  temperature = Temperature
+  #the following are needed in multiple UPuZr Materials
+  X_Zr = 0.225 #  U-20Pu-10Zr
+  X_Pu = 0.171
+  density = 11120.0 # kg/m3 at hot operating condition (UPuZr fuel)
 []
 
 # ==============================================================================
@@ -43,7 +43,7 @@ plenum_height        = 782.2e-3  # 778.0e-3
   [smeared_pellet_mesh]
     type = FuelPinMeshGenerator
     clad_thickness = ${clad_thickness}
-    pellet_outer_radius = ${fparse slug_diameter/2}
+    pellet_outer_radius = '${fparse slug_diameter/2}'
     pellet_height = ${fuel_height}
     clad_top_gap_height = ${plenum_height} # fixme assumes no Na bond sodium
     clad_gap_width = ${gap} # no gap for hot condition after irradiation (2 % fima)
@@ -53,7 +53,7 @@ plenum_height        = 782.2e-3  # 778.0e-3
     # meshing parameters
     clad_mesh_density = customize
     pellet_mesh_density = customize
-    nx_p = 6  # number of fuel elements in radial direction
+    nx_p = 6 # number of fuel elements in radial direction
     ny_p = 300 # number of fuel elements in axial direction
     nx_c = 3 # number of clad elements in radial direction
     ny_c = 300 # number of clad elements in axial direction
@@ -111,17 +111,17 @@ plenum_height        = 782.2e-3  # 778.0e-3
 # MODULES
 # ==============================================================================
 [ThermalContact]
-   #Action to control heat transfer in regions without meshes. Specifically
-   #the gap and the coolant.
-   [thermal_contact]
-      type = GapHeatTransfer
-      variable = Temperature
-      primary = clad_inside_right
-      secondary = pellet_outer_radial_surface
-      quadrature = true
-      gap_conductivity = 61.0 # [Fink and Leibowitz, 1995.] pg. 181 (840 K)
-      min_gap = 0.38e-03  # [Greenquist et al., 2020] pg. 4
-   []
+  #Action to control heat transfer in regions without meshes. Specifically
+  #the gap and the coolant.
+  [thermal_contact]
+    type = GapHeatTransfer
+    variable = Temperature
+    primary = clad_inside_right
+    secondary = pellet_outer_radial_surface
+    quadrature = true
+    gap_conductivity = 61.0 # [Fink and Leibowitz, 1995.] pg. 181 (840 K)
+    min_gap = 0.38e-03 # [Greenquist et al., 2020] pg. 4
+  []
 []
 
 # ==============================================================================
@@ -161,7 +161,7 @@ plenum_height        = 782.2e-3  # 778.0e-3
     type = NormalizationAux
     variable = power_density_scaled
     source_variable = power_density
-    normal_factor   =   2.66105 # Vhom/Vhet, from python script get_vol.py
+    normal_factor = 2.66105 # Vhom/Vhet, from python script get_vol.py
     block = pellet
   []
   [GetPowerDensity_from_func]
@@ -201,8 +201,8 @@ plenum_height        = 782.2e-3  # 778.0e-3
     value = 4.2725e8 # W/m3
   []
   [power_density_het]
-     type = ConstantFunction
-     value = 11.369e8 # W/m3
+    type = ConstantFunction
+    value = 11.369e8 # W/m3
   []
 []
 
@@ -210,9 +210,9 @@ plenum_height        = 782.2e-3  # 778.0e-3
 # MATERIALS AND USER OBJECTS
 # ==============================================================================
 [Materials]
-#---------------
-# thermal only
-#---------------
+  #---------------
+  # thermal only
+  #---------------
   active = 'fuel_thermal fuel_density clad_thermal clad_density'
   #fuel
   #thermal materials
@@ -222,7 +222,7 @@ plenum_height        = 782.2e-3  # 778.0e-3
     spheat_model = savage
     thcond_model = lanl
     porosity = 0
-    outputs  = all
+    outputs = all
   []
   [fuel_density]
     type = Density
@@ -271,7 +271,7 @@ plenum_height        = 782.2e-3  # 778.0e-3
 # EXECUTION PARAMETERS
 # ==============================================================================
 [Preconditioning]
-   # Used to improve the solver performance
+  # Used to improve the solver performance
   [SMP]
     type = SMP
     full = true
@@ -361,7 +361,7 @@ plenum_height        = 782.2e-3  # 778.0e-3
   []
   [sam_reporter]
     type = MultiAppReporterTransfer
-    to_reporters =   'max_tcool_r/value'
+    to_reporters = 'max_tcool_r/value'
     from_reporters = 'max_tcool/value'
     from_multi_app = sam
     subapp_index = 0
@@ -414,34 +414,34 @@ plenum_height        = 782.2e-3  # 778.0e-3
     type = ElementExtremeValue
     variable = Temperature
     value_type = min
-    block    = 4
+    block = 4
     execute_on = 'INITIAL TIMESTEP_END'
   []
   [max_twall]
     type = ElementExtremeValue
     variable = Temperature
     value_type = max
-    block    = 4
+    block = 4
     execute_on = 'INITIAL TIMESTEP_END'
   []
   [max_tclad]
     type = ElementExtremeValue
     variable = Temperature
     value_type = max
-    block    = 'clad 4'
+    block = 'clad 4'
     execute_on = 'INITIAL TIMESTEP_END'
   []
   [min_tclad]
     type = ElementExtremeValue
     variable = Temperature
     value_type = min
-    block    = 'clad 4'
+    block = 'clad 4'
     execute_on = 'INITIAL TIMESTEP_END'
   []
   [avg_tclad]
     type = ElementAverageValue
     variable = Temperature
-    block    = 'clad 4'
+    block = 'clad 4'
     execute_on = 'INITIAL TIMESTEP_END'
   []
   [avg_htc]

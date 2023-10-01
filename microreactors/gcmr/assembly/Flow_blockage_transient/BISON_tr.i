@@ -296,9 +296,9 @@ coolant_half_points_filename = ../channel_positions/coolant_half_points.txt # Fi
   # coolant_full
   [Tw_to_coolant]
     # Wall temperature from user object is transferred to fluid domain.
-    type = MultiAppUserObjectTransfer
+    type = MultiAppGeneralFieldUserObjectTransfer
     to_multi_app = coolant_full_MA
-    user_object = Tw_UO # Exists in solid.
+    source_user_object = Tw_UO # Exists in solid.
     variable = Tw # Exists in coolant.
     execute_on = 'initial TIMESTEP_END'
     displaced_target_mesh = true
@@ -327,9 +327,9 @@ coolant_half_points_filename = ../channel_positions/coolant_half_points.txt # Fi
   # coolant_half
   [Tw_to_coolant_half]
     # Wall temperature from user object is transferred to fluid domain.
-    type = MultiAppUserObjectTransfer
+    type = MultiAppGeneralFieldUserObjectTransfer
     to_multi_app = coolant_half_MA
-    user_object = Tw_UO_half # Exists in solid.
+    source_user_object = Tw_UO_half # Exists in solid.
     variable = Tw # Exists in coolant.
     execute_on = 'initial TIMESTEP_END'
     displaced_target_mesh = true

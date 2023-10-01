@@ -288,8 +288,7 @@ num_layers_for_THM = 50 # number of elements in the THM model; for the converged
     from_multi_app = bison
   []
   [heat_flux_to_openmc]
-    type = MultiAppNearestNodeTransfer
-    fixed_meshes = true
+    type = MultiAppGeneralFieldNearestNodeTransfer
     source_variable = flux
     variable = flux
     from_multi_app = bison
@@ -299,7 +298,7 @@ num_layers_for_THM = 50 # number of elements in the THM model; for the converged
     to_postprocessors_to_be_preserved = flux_integral
   []
   [source_to_bison]
-    type = MultiAppShapeEvaluationTransfer
+    type = MultiAppGeneralFieldShapeEvaluationTransfer
     source_variable = heat_source
     variable = power
     direction = to_multiapp
@@ -316,46 +315,42 @@ num_layers_for_THM = 50 # number of elements in the THM model; for the converged
   []
 
   [q_wall_to_thm]
-    type = MultiAppUserObjectTransfer
+    type = MultiAppGeneralFieldUserObjectTransfer
     variable = q_wall
     direction = to_multiapp
     multi_app = thm
-    user_object = q_wall_avg
+    source_user_object = q_wall_avg
   []
   [T_wall_from_thm]
-    type = MultiAppNearestNodeTransfer
+    type = MultiAppGeneralFieldNearestNodeTransfer
     source_variable = T_wall
     direction = from_multiapp
     multi_app = thm
     variable = thm_temp_wall
-    fixed_meshes = true
     target_boundary = 'fluid_solid_interface'
   []
   [T_bulk_from_thm]
-    type = MultiAppNearestNodeTransfer
+    type = MultiAppGeneralFieldNearestNodeTransfer
     source_variable = T
     direction = from_multiapp
     multi_app = thm
     variable = thm_temp
-    fixed_meshes = true
   []
 
   # just for postprocessing purposes
   [pressure_from_thm]
-    type = MultiAppNearestNodeTransfer
+    type = MultiAppGeneralFieldNearestNodeTransfer
     source_variable = p
     direction = from_multiapp
     multi_app = thm
     variable = thm_pressure
-    fixed_meshes = true
   []
   [velocity_from_thm]
-    type = MultiAppNearestNodeTransfer
+    type = MultiAppGeneralFieldNearestNodeTransfer
     source_variable = vel_z
     direction = from_multiapp
     multi_app = thm
     variable = thm_velocity
-    fixed_meshes = true
   []
 []
 

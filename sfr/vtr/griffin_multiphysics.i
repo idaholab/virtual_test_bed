@@ -8,7 +8,7 @@
 # https://mooseframework.inl.gov/virtual_test_bed/citing.html
 # ==============================================================================
 # - VTR GRIFFIN neutronics input
-# - MasterApp
+# - Main Application
 # ==============================================================================
 # - The Model has been built based on [1-2].
 # ------------------------------------------------------------------------------
@@ -19,10 +19,6 @@
 # ==============================================================================
 # MODEL PARAMETERS
 # ==============================================================================
-
-# State ------------------------------------------------------------------------
-# multi-physics
-# Power ------------------------------------------------------------------------
 
 # ==============================================================================
 # GLOBAL PARAMETERS
@@ -62,7 +58,7 @@
   equivalence_library = 'sph/vtr_sph.xml'
   library_name = 'vtr_xs'
   compute_factors = false
-  equivalence_grid_names  = 'tfuel tcool cr'
+  equivalence_grid_names = 'tfuel tcool cr'
   equivalence_grid_variables = 'tfuel tcool cr'
 []
 
@@ -83,21 +79,21 @@
     initial_condition = 900.
   []
   [tcool]
-   initial_condition = 700.
+    initial_condition = 700.
   []
   [disp_x] # from grid plate expansion
     initial_condition = 0
   []
-  [disp_z]  # from grid plate expansion
+  [disp_z] # from grid plate expansion
     initial_condition = 0
   []
   [disp_y] # from fuel expansion
     initial_condition = 0
   []
   [cr]
-   family = MONOMIAL
-   order = CONSTANT
-   initial_condition = 0.
+    family = MONOMIAL
+    order = CONSTANT
+    initial_condition = 0.
   []
 []
 
@@ -109,7 +105,7 @@
 
 [Functions]
   [cr_withdrawal]
-    type  = ConstantFunction
+    type = ConstantFunction
     value = 1.9183 # 1.9183 = fully out, 0.876 = fully in
   []
 []
@@ -138,7 +134,7 @@
     front_position_function = cr_withdrawal
     rod_withdrawn_direction = y # Y-axis is the one vertical
     isotopes = 'pseudo; pseudo; pseudo'
-    densities='1.0 1.0 1.0'
+    densities = '1.0 1.0 1.0'
     plus = 0
     displacements = 'disp_x disp_y disp_z'
   []
@@ -146,7 +142,7 @@
 
 [PowerDensity]
   power = 300e6
-  power_density_variable = power_density  # name of AuxVariable to be created
+  power_density_variable = power_density # name of AuxVariable to be created
   integrated_power_postprocessor = integrated_power
   power_scaling_postprocessor = power_scaling
   family = MONOMIAL
@@ -222,12 +218,12 @@
 
   nl_abs_tol = 1e-8
   nl_rel_tol = 1e-7
-  #fixed_point specific
 
+  #fixed_point specific
   fixed_point_force_norms = true
-  fixed_point_abs_tol = 1e-8
-  fixed_point_rel_tol = 1e-7
-  fixed_point_max_its = 20
+  fixed_point_abs_tol = 1e-10
+  fixed_point_rel_tol = 1e-10
+  fixed_point_max_its = 3
   accept_on_max_fixed_point_iteration = true
 []
 
@@ -392,7 +388,7 @@
   []
   [bison_reporter_1]
     type = MultiAppReporterTransfer
-    to_reporters =   'max_tfuel_r/value max_tclad_r/value max_tcool_r/value max_thcond_r/value'
+    to_reporters = 'max_tfuel_r/value max_tclad_r/value max_tcool_r/value max_thcond_r/value'
     from_reporters = 'max_tfuel/value max_tclad/value max_tcool/value max_thcond/value'
     from_multi_app = bison_1
     subapp_index = 0

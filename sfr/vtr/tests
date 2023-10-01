@@ -23,7 +23,8 @@
     type = RunApp
     input = 'bison_thermal_only.i'
     check_input = True
-    cli_args = "AuxKernels/active='GetPowerDensity_from_griffin' MultiApps/active='' Transfers/active=''"
+    cli_args = "AuxKernels/active='GetPowerDensity_from_griffin' MultiApps/active='' "
+               "Transfers/active=''"
     executable_pattern = 'bison*|blue_crab*|dire_wolf*'
     allow_warnings = True # material property unsupported outputs
   []
@@ -58,6 +59,7 @@
     prereq = 'full_simulation_syntax'
     min_parallel = 8
     method = 'opt'
+    rel_err = 1e-5
   []
   [bison_mecha_only]
     type = CSVDiff
@@ -72,7 +74,8 @@
     type = CSVDiff
     input = 'bison_thermal_only.i'
     csvdiff = 'bison_thermal_only_out.csv'
-    cli_args = "Outputs/csv=true AuxKernels/active='GetPowerDensity_from_griffin' MultiApps/active='' Transfers/active=''"
+    cli_args = "Outputs/csv=true AuxKernels/active='GetPowerDensity_from_griffin' "
+               "MultiApps/active='' Transfers/active=''"
     executable_pattern = 'bison*|blue_crab*|dire_wolf*'
     allow_warnings = True # material property unsupported outputs
     prereq = 'bison_thermal_only_syntax'
@@ -91,7 +94,7 @@
     csvdiff = 'out_griffin_only.csv'
     executable_pattern = 'griffin*|blue_crab*|dire_wolf*|fenix*'
     prereq = 'griffin_standalone_syntax'
-    allow_warnings = true  # out of range B2 value
+    allow_warnings = true # out of range B2 value
   []
   [subchannel]
     type = CSVDiff

@@ -487,7 +487,7 @@ We also require a number of transfers both for 1) sending necessary coupling dat
 the three applications and 2) visualizing the combined [!ac](THM) output. To couple OpenMC
 to MOOSE heat conduction, we use four transfers:
 
-- [MultiAppMeshFunctionTransfer](https://mooseframework.inl.gov/source/transfers/MultiAppMeshFunctionTransfer.html)
+- [MultiAppShapeEvaluationTransfer](https://mooseframework.inl.gov/source/transfers/MultiAppShapeEvaluationTransfer.html)
   to transfer power from OpenMC to MOOSE (with conservation of total power)
 
 - [MultiAppInterpolationTransfer](https://mooseframework.inl.gov/source/transfers/MultiAppInterpolationTransfer.html)

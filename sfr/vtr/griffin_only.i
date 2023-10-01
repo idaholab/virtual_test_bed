@@ -2,13 +2,12 @@
 # Model description
 # Application : Griffin
 # ------------------------------------------------------------------------------
-# Idaho Falls, INL, June 23th, 2022
+# Idaho Falls, INL, June 23rd, 2022
 # Author(s): Nicolas Martin
 # If using or referring to this model, please cite as explained on
 # https://mooseframework.inl.gov/virtual_test_bed/citing.html
 # ==============================================================================
 # - VTR GRIFFIN standalone neutronics input
-# - MasterApp
 # ==============================================================================
 # - The Model has been built based on [1].
 # ------------------------------------------------------------------------------
@@ -22,7 +21,7 @@
 
 # State ------------------------------------------------------------------------
 initial_fuel_temperature = 600. # (K)
-initial_salt_temperature = 595.  # (K)
+initial_salt_temperature = 595. # (K)
 initial_cr_fraction = 0.0
 # Power ------------------------------------------------------------------------
 tpow = 300e6 #(300 MW)
@@ -63,7 +62,7 @@ tpow = 300e6 #(300 MW)
   equivalence_library = 'sph/vtr_sph_verification.xml'
   library_name = 'vtr_xs'
   compute_factors = false
-  equivalence_grid_names  = 'tfuel tcool cr'
+  equivalence_grid_names = 'tfuel tcool cr'
   equivalence_grid_variables = 'tfuel tcool cr'
 []
 
@@ -87,9 +86,9 @@ tpow = 300e6 #(300 MW)
     initial_condition = ${initial_salt_temperature}
   []
   [cr]
-   family = MONOMIAL
-   order = CONSTANT
-   initial_condition = ${initial_cr_fraction}
+    family = MONOMIAL
+    order = CONSTANT
+    initial_condition = ${initial_cr_fraction}
   []
 []
 
@@ -104,7 +103,7 @@ tpow = 300e6 #(300 MW)
 
 [Functions]
   [cr_withdrawal]
-    type  = ConstantFunction
+    type = ConstantFunction
     value = 1.92 # 1.92 = fully out, 0.88 = fully in
   []
 []
@@ -131,7 +130,7 @@ tpow = 300e6 #(300 MW)
     front_position_function = cr_withdrawal
     rod_withdrawn_direction = y # Y-axis is the one vertical
     isotopes = 'pseudo; pseudo; pseudo'
-    densities='1.0 1.0 1.0'
+    densities = '1.0 1.0 1.0'
     plus = 0
   []
 []

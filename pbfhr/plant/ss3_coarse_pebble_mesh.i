@@ -21,9 +21,9 @@
 # Problem Parameters -----------------------------------------------------------
 
 total_power = 236.0e6 # W, from [2]
-model_vol = 10.4      # active fuel region volume, from [2]
+model_vol = 10.4 # active fuel region volume, from [2]
 
-power_density = ${fparse total_power / model_vol}
+power_density = '${fparse total_power / model_vol}'
 
 # ==============================================================================
 # GEOMETRY AND MESH
@@ -44,6 +44,7 @@ power_density = ${fparse total_power / model_vol}
 [Problem]
   kernel_coverage_check = false
   skip_nl_system_check = true
+  allow_initial_conditions_with_restart = true
 []
 
 [Debug]
@@ -123,9 +124,9 @@ power_density = ${fparse total_power / model_vol}
 
   [TimeStepper]
     type = IterationAdaptiveDT
-    dt                 = 1
-    cutback_factor     = 0.5
-    growth_factor      = 4.0
+    dt = 1
+    cutback_factor = 0.5
+    growth_factor = 4.0
   []
 []
 

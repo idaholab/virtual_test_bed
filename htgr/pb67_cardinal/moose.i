@@ -47,9 +47,9 @@
 
 [Executioner]
   type = Transient
-#  petsc_options_iname = '-pc_type -pc_hypre_type'
+  #  petsc_options_iname = '-pc_type -pc_hypre_type'
   num_steps = 16000
-#  petsc_options_value = 'hypre boomeramg'
+  #  petsc_options_value = 'hypre boomeramg'
   dt = 2e-4
   nl_rel_tol = 1e-5
   nl_abs_tol = 1e-10
@@ -80,18 +80,16 @@
 
 [Transfers]
   [nek_temp]
-    type = MultiAppNearestNodeTransfer
+    type = MultiAppGeneralFieldNearestLocationTransfer
     source_variable = temp
     from_multi_app = nek
     variable = nek_temp
-    fixed_meshes = true
   []
   [avg_flux]
-    type = MultiAppNearestNodeTransfer
+    type = MultiAppGeneralFieldNearestLocationTransfer
     source_variable = avg_flux
     to_multi_app = nek
     variable = avg_flux
-    fixed_meshes = true
   []
   [flux_integral_to_nek]
     type = MultiAppPostprocessorTransfer
