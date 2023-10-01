@@ -8,10 +8,10 @@
 R_clad_o = 0.0105 # heat pipe outer radius
 R_hp_hole = 0.0107 # heat pipe + gap
 num_sides = 12 # number of sides of heat pipe as a result of mesh polygonization
-alpha = ${fparse 2 * pi / num_sides}
-perimeter_correction = ${fparse 0.5 * alpha / sin(0.5 * alpha)} # polygonization correction factor for perimeter
-area_correction = ${fparse sqrt(alpha / sin(alpha))} # polygonization correction factor for area
-corr_factor = ${fparse R_hp_hole / R_clad_o * area_correction / perimeter_correction}
+alpha = '${fparse 2 * pi / num_sides}'
+perimeter_correction = '${fparse 0.5 * alpha / sin(0.5 * alpha)}' # polygonization correction factor for perimeter
+area_correction = '${fparse sqrt(alpha / sin(alpha))}' # polygonization correction factor for area
+corr_factor = '${fparse R_hp_hole / R_clad_o * area_correction / perimeter_correction}'
 
 [Problem]
   restart_file_base = '../steady/HPMR_dfem_griffin_ss_out_bison0_cp/LATEST'
@@ -137,7 +137,7 @@ corr_factor = ${fparse R_hp_hole / R_clad_o * area_correction / perimeter_correc
     type = NormalizationAux
     variable = flux_uo_corr
     source_variable = flux_uo
-    normal_factor = ${fparse corr_factor}
+    normal_factor = '${fparse corr_factor}'
   []
 []
 
@@ -188,7 +188,7 @@ corr_factor = ${fparse R_hp_hole / R_clad_o * area_correction / perimeter_correc
   []
   [airgap_thermal]
     type = HeatConductionMaterial
-    block = 'air_gap_tri air_gap_quad outer_shield'# Helium gap
+    block = 'air_gap_tri air_gap_quad outer_shield' # Helium gap
     temp = temp
     thermal_conductivity = 0.15 # W/m/K
     specific_heat = 5197 # random value
@@ -240,7 +240,7 @@ corr_factor = ${fparse R_hp_hole / R_clad_o * area_correction / perimeter_correc
   [B4C_density]
     type = Density
     block = B4C
-    density =2510
+    density = 2510
   []
   [SS_density]
     type = Density
@@ -262,20 +262,18 @@ corr_factor = ${fparse R_hp_hole / R_clad_o * area_correction / perimeter_correc
 
 [Transfers]
   [from_sockeye_temp]
-    type = MultiAppNearestNodeTransfer
+    type = MultiAppGeneralFieldNearestLocationTransfer
     from_multi_app = sockeye
     source_variable = hp_temp_aux
     variable = hp_temp_aux
     execute_on = 'initial timestep_begin'
-    fixed_meshes = true
   []
   [to_sockeye_flux]
-    type = MultiAppNearestNodeTransfer
+    type = MultiAppGeneralFieldNearestLocationTransfer
     to_multi_app = sockeye
     source_variable = flux_uo_corr
     variable = master_flux
     execute_on = 'initial timestep_begin'
-    fixed_meshes = true
   []
 []
 

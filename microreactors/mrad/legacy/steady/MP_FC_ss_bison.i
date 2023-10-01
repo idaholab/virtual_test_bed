@@ -23,7 +23,6 @@
   []
 []
 
-
 [Kernels]
   [heat_conduction]
     type = HeatConduction
@@ -134,7 +133,6 @@
   []
 []
 
-
 [Materials]
   [fuel_matrix_thermal]
     type = GraphiteMatrixThermal
@@ -163,14 +161,14 @@
   []
   [heat_pipes_thermal]
     type = HeatConductionMaterial
-    block = 'heat_pipes'# Vapor with high thermal conductivity
+    block = 'heat_pipes' # Vapor with high thermal conductivity
     temp = temp
     thermal_conductivity = 1e4 # W/m/K
     specific_heat = 5 # arbitrary value
   []
   [airgap_thermal]
     type = HeatConductionMaterial
-    block = 'air_gap'# Helium gap
+    block = 'air_gap' # Helium gap
     temp = temp
     thermal_conductivity = 0.15 # W/m/K
     specific_heat = 5197 # arbitrary value
@@ -222,7 +220,7 @@
   [B4C_density]
     type = Density
     block = B4C
-    density =2510
+    density = 2510
   []
 []
 
@@ -239,20 +237,18 @@
 
 [Transfers]
   [from_sockeye_flux] # Transfer heat pipe heat flux from Sockeye subapps
-    type = MultiAppNearestNodeTransfer
+    type = MultiAppGeneralFieldNearestLocationTransfer
     from_multi_app = sockeye
     source_variable = flux_uo
     variable = hp_flux_aux
     execute_on = 'timestep_begin'
-    fixed_meshes = true
   []
   [to_sockeye_temp] # Transfer heat pipe surface temperature to Sockeye subapps
-    type = MultiAppNearestNodeTransfer
+    type = MultiAppGeneralFieldNearestLocationTransfer
     to_multi_app = sockeye
     source_variable = temp_uo
     variable = T_wall_var
     execute_on = 'timestep_begin'
-    fixed_meshes = true
   []
 []
 
