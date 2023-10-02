@@ -1,5 +1,14 @@
 # Balance of Plant system
 
+!tag name=Gas-Cooled Microreactor Balance of Plant pairs=reactor_type:microreactor
+                       reactor:GCMR
+                       geometry:plant
+                       simulation_type:multiphysics
+                       code_used:BlueCrab
+                       transient:load_follow
+                       computing_needs:Workstation
+                       fiscal_year:2023
+
 The startup transient and load follow input file have the same structure and only differ by their initial condition and control system governing the transient. The components are the same.
 
 ## Fluid flow

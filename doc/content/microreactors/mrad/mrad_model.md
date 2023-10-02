@@ -7,7 +7,8 @@
 !tag name=Micro-Reactor Multiphysics model pairs=reactor_type:microreactor
                        reactor:HPMR
                        geometry:core
-                       simulation_type:core_multiphysics
+                       simulation_type:multiphysics
+                       input_features:multiapps
                        transient:overpower
                        code_used:BlueCrab
                        computing_needs:HPC

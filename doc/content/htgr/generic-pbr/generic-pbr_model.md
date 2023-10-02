@@ -4,9 +4,11 @@
 
 *Model link: [Generic PBR SAM Model](https://github.com/idaholab/virtual_test_bed/tree/devel/htgr/generic-pbr)*
 
-!tag name=SAM Generic PBR Model pairs=reactor:HTGR
+!tag name=SAM Generic PBR Model pairs=reactor_type:HTGR
+                       reactor:generic_PBR
                        geometry:core
-                       simulation_type:core_multiphysics
+                       simulation_type:multiphysics
+                       transient:load_follow
                        code_used:SAM
                        computing_needs:Workstation
                        fiscal_year:2021

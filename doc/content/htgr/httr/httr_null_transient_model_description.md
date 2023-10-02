@@ -7,7 +7,7 @@
 !tag name=High Temperature Engineering Test Reactor (HTTR) Null Transient Model pairs=reactor_type:HTGR
                        reactor:HTTR
                        geometry:core
-                       simulation_type:core_multiphysics
+                       simulation_type:multiphysics
                        input_features:multiapps
                        transient:null
                        code_used:Sabertooth

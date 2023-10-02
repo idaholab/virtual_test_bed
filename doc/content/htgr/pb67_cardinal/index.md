@@ -8,6 +8,7 @@
                        geometry:pebble_bed
                        simulation_type:CFD
                        code_used:NekRS
+                       input_features:multiapps
                        computing_needs:Workstation
                        gpu_enabled:true
                        open_source:true

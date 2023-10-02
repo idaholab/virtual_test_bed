@@ -6,7 +6,7 @@
 
 !tag name=Molten Salt Reactor Experiment SAM Model pairs=reactor_type:MSR
                        reactor:MSRE
-                       simulation_type:primary
+                       geometry:primary_loop
                        code_used:SAM
                        computing_needs:Workstation
                        fiscal_year:2022

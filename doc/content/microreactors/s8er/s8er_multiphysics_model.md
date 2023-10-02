@@ -8,8 +8,8 @@
 !tag name=SNAP 8 Experimental Reactor Multiphysics model pairs=reactor_type:microreactor
                        reactor:SNAP-8
                        geometry:core
-                       features:multiapps
-                       simulation_type:core_multiphysics
+                       input_features:multiapps
+                       simulation_type:multiphysics
                        code_used:Griffin
                        computing_needs:Workstation
                        fiscal_year:2023
