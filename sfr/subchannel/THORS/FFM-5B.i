@@ -1,6 +1,14 @@
-# J. T. Han 1977,
+################################################################################
+## THORS bundle 5B partial edge blockage benchmark                            ##
+## Pronghorn Subchannel simulation                                            ##
+## POC : Vasileios Kyriakopoulos, vasileios.kyriakopoulos@inl.gov             ##
+################################################################################
+# Details on the experimental facility modeled can be found at:
+# Han, J. T. "Blockages in LMFBR fuel assemblies: A review of experimental and theoretical studies." (1977).
 # This input file models a block next to the duct of  the of the assembly
 # 102 mm above the start of the heated section.
+
+# Boundary conditions
 # T_in = 596.75 # K, high flow case
 T_in = 541.55 #K, low flow case
 A12 = 1.00423e3
