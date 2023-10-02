@@ -2,7 +2,7 @@
 
 *Contact: Jun Fang, fangj.at.anl.gov; Mauricio Tano, mauricio.tanoretamales.at.inl.gov*
 
-*Model link: [Standalone SAM Model](https://github.com/idaholab/virtual_test_bed/tree/devel/msr/msfr/plant/standalone_sam_model)*
+*Model link: [Standalone SAM Model](https://github.com/idaholab/virtual_test_bed/tree/main/msr/msfr/plant/standalone_sam_model)*
 
 !tag name=Molten Salt Fast Reactor SAM Model pairs=reactor_type:MSR
                        reactor:MSFR

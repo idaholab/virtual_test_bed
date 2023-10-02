@@ -7,7 +7,8 @@
 !tag name=HTR-10 Griffin Neutronics Model pairs=reactor_type:HTGR
                        reactor:HTR-10
                        geometry:core
-                       simulation_type:core_neutronics
+                       simulation_type:neutronics
+                       transient:steady_state
                        code_used:Griffin
                        computing_needs:Workstation
                        fiscal_year:2021

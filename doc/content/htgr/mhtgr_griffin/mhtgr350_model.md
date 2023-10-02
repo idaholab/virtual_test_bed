@@ -7,7 +7,9 @@
 !tag name=MHTGR Griffin Benchmark pairs=reactor_type:HTGR
                        reactor:MHTGR
                        geometry:core
-                       simulation_type:core_neutronics
+                       simulation_type:neutronics
+                       transient:steady_state
+                       V&V:benchmark
                        code_used:Griffin
                        computing_needs:Workstation
                        fiscal_year:2023
