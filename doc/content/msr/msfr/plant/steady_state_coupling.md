@@ -4,7 +4,8 @@
 
 !tag name=MSFR Steady-State Griffin-Pronghorn-SAM Coupling pairs=reactor_type:MSR
                        reactor:MSFR
-                       simulation_type:primary
+                       geometry:primary_loop
+                       simulation_type:multiphysics
                        code_used:BlueCrab
                        input_features:multiapps
                        computing_needs:HPC

@@ -6,7 +6,7 @@
 
 !tag name=LEU Fuel Pulse pairs=reactor_type:HTGR
                        geometry:mini-core
-                       simulation_type:core_multiphysics
+                       simulation_type:multiphysics
                        transient:RIA
                        code_used:Griffin
                        computing_needs:Workstation

@@ -7,7 +7,7 @@
 !tag name=HTTF Core Model pairs=reactor_type:HTGR
                        reactor:HTTF
                        geometry:core
-                       simulation_type:core_multiphysics
+                       simulation_type:multiphysics
                        code_used:RELAP-7
                        input_features:multiapps
                        computing_needs:HPC

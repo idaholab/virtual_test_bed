@@ -2,10 +2,11 @@
 
 *Contact: Thanh Hua, hua.at.anl.gov*
 
-*Model link: [MHTGR SAM Model](https://github.com/idaholab/virtual_test_bed/tree/devel/htgr/mhtgr/mhtgr_sam)*
+*Model link: [MHTGR SAM Model](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/mhtgr/mhtgr_sam)*
 
 !tag name=MHTGR SAM Model pairs=reactor_type:HTGR
                        reactor:MHTGR
+                       geometry:primary
                        simulation_type:balance_of_plant
                        code_used:SAM
                        computing_needs:Workstation

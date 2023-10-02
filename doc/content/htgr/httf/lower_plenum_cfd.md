@@ -7,7 +7,8 @@
 !tag name=Nek5000 CFD Modeling of HTTF Lower Plenum Flow Mixing Phenomenon pairs=reactor_type:HTGR
                        reactor:HTTF
                        geometry:plenum
-                       simulation_type:component_CFD
+                       simulation_type:CFD
+                       transient:steady_state
                        code_used:Nek5000
                        computing_needs:HPC
                        open_source:true

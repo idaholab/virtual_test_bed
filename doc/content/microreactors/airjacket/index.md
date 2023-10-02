@@ -7,7 +7,7 @@
 !tag name=Gas-Cooled Microreactor Air Jacket pairs=reactor_type:microreactor
                        reactor:GCMR
                        geometry:air_jacket
-                       simulation_type:component_CFD
+                       simulation_type:CFD
                        code_used:Nek5000
                        open_source:true
                        computing_needs:HPC

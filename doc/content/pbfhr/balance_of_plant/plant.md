@@ -9,7 +9,7 @@
                        simulation_type:balance_of_plant
                        code_used:BlueCrab
                        computing_needs:Workstation
-                       features:multiapps
+                       input_features:multiapps
                        fiscal_year:2022
 
 The [multiphysics core model](pbfhr/steady/griffin_pgh_model.md), which uses Griffin for neutronics and Pronghorn for

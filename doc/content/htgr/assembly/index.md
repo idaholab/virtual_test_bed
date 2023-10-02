@@ -6,9 +6,10 @@
 
 !tag name=Multiphysics Coupling of OpenMC, MOOSE, and THM for a HTGR pairs=reactor:HTGR
                        geometry:assembly
-                       simulation_type:assembly_multiphysics
+                       simulation_type:multiphysics
                        code_used:cardinal
                        open_source:true
+                       transient:steady_state
                        input_features:multiapps
                        computing_needs:HPC
                        fiscal_year:2022

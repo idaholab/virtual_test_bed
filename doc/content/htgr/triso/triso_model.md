@@ -5,9 +5,10 @@
 *Model link: [TRISO Bison Model](https://github.com/idaholab/virtual_test_bed/tree/devel/htgr/triso_fuel)*
 
 !tag name=TRISO Bison Model pairs=reactor_type:HTGR
-                       geometry:triso
-                       simulation_type:fuel
+                       geometry:TRISO
+                       simulation_type:fuel_performance
                        code_used:Bison
+                       transient:depletion
                        computing_needs:Workstation
                        fiscal_year:2022
 
@@ -19,7 +20,7 @@ The fuel parameters are given in [table:fuel_parameters]. The irradiation condit
 !table id=table:fuel_parameters caption=Fuel parameters used in this input file
 | Parameter                           | Values |
 |-------------------------------------|--------|
-| $^{235}$U enrichment (wt %)           | 15.5   |
+| $^{235}$U enrichment (wt %)         | 15.5   |
 | Carbon/uranium (atomic ratio)       | 0.4    |
 | Oxygen/uranium (atomic ratio)       | 1.5    |
 | Kernel diameter ($/mu$ m)             | 425    |

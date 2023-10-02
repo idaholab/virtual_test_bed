@@ -7,10 +7,12 @@
 !tag name=Pebble Bed Modular Reactor Core Multiphysics pairs=reactor_type:HTGR
                        reactor:PBMR-400
                        geometry:core
-                       simulation_type:core_multiphysics
+                       simulation_type:multiphysics
+                       input_features:multiapps
+                       transient:PLOFC
                        code_used:BlueCrab
                        computing_needs:Workstation
-                       fiscal_year:2022
+                       fiscal_year:2021
 
 The VTB PBMR case is based on the PBMR400 coupled benchmark specifications described in [!citep](PBMR400). The benchmark design has been derived from the 400 MWth Pebble Bed Modular Reactor (PBMR) demonstration plant. The PBMR-400 is a modular thermal reactor with helium coolant and graphite moderator. It utilizes 9.6% enriched uranium dioxide fuel encapsulated with four shells of pyrolitic graphite and ceramic layers, known as TriStructural Isotropic (TRISO) particles. These particles are then embedded into larger graphite pebbles. There are roughly 15,000 of these TRISO particles in each of the 452,000 graphite pebbles in the system. These pebbles are contained in an annular region where they enter the core from the top and leave through the defueling chute at the bottom. Pebbles then are either recirculated or discarded based on their burnup; a pebble makes an average of six passes through the core. During normal operation, 192.7 kg/s of helium at an inlet temperature of 773K flows through the pebbles from the top to the bottom of the core, reaching roughly 1173K at the outlet.
 

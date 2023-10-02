@@ -4,6 +4,16 @@
 
 *Model link: [GCMR Assembly Model](https://github.com/idaholab/virtual_test_bed/tree/devel/microreactors/gcmr/assembly)*
 
+!tag name=Gas-Cooled Microreactor Assembly pairs=reactor_type:microreactor
+                       reactor:GCMR
+                       geometry:assembly
+                       simulation_type:multiphysics
+                       code_used:BlueCrab
+                       input_features:multiapps
+                       transient:RIA
+                       computing_needs:HPC
+                       fiscal_year:2023
+
 ## Mesh files
 
 !alert note
