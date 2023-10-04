@@ -21,8 +21,9 @@
   [core]
     type = 'RunApp'
     input = 'core.i'
-    check_input = true
+    check_input = True
     executable_pattern = 'pronghorn*'
     prereq = 'mesh channel subchannel'
+    max_time = 600
   []
 []
