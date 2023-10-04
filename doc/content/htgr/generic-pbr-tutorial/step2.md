@@ -46,8 +46,8 @@ Then we need to add the friction coefficients to the finite volume Navier-Stokes
 
 !listing htgr/generic-pbr-tutorial/step2.i block=Modules
 
-Drag coefficients are often split up into a component that depends linearly
-on fluid speed, called the Darcy coefficient and one that depends quadratically on flow speed, called the Forchheimer coefficient. The same distinction is made in Pronghorn.
+Drag friction sources are often split up into a component that depends linearly
+on fluid speed, called the Darcy friction (Darcy coefficient does not depend on velocity) and one that depends quadratically on flow speed, called the Forchheimer friction (Forchheimer depends linearly on velocity). The same distinction is made in Pronghorn.
 The two parameters simply express that there is a Darcy coefficient called `Darcy_coefficient` and a Forchheimer coefficient called `Forchheimer_coefficient`.
 The Darcy and Forchheimer coefficients are internally computed as functor material properties and almost always have the names given above.
 

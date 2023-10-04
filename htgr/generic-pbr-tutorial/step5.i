@@ -212,7 +212,7 @@ bottom_reflector_Dh = 0.1
     porosity_interface_pressure_treatment = 'bernoulli'
 
     # initial conditions
-    initial_velocity = '0 0 0'
+    initial_velocity = '1e-6 1e-6 0'
     initial_pressure = 5.4e6
     initial_temperature = ${T_inlet}
 

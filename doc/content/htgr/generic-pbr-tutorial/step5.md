@@ -141,15 +141,16 @@ The appropriate way to get an average outlet temperature is to weight it by the 
 !listing htgr/generic-pbr-tutorial/step5.i block=mass_flux_weighted_Tf_out
 
 It works very similar to the already discussed `VolumetricFlowRate` postprocessor objects that are used to compute mass flow rate and enthalpy flow rates.
+We obtain an average outlet temperature of $1132$ K corresponding to a temperature rise of $600$ K which is almost identical to the expected value.
 
-## Executable
+## Execution
 
 !listing
 ./pronghorn-opt -i step5.i
 
 ## Results
 
-We obtain an average outlet temperature of $1132$ K which is
+The geometry/mesh, fluid temperature, solid temperature, and superficial velocity magnitude, and solid temperatures are shown in [step5mesh] to [step5T_solid].
 
 !media generic-pbr-tutorial/MeshP5.png
     style=width:20%
@@ -159,7 +160,7 @@ We obtain an average outlet temperature of $1132$ K which is
 !media generic-pbr-tutorial/T_fluidP5.png
     style=width:20%
     id=step5T_fluid
-    caption= Tempurature of the fluid for Step 5.
+    caption= Temperature of the fluid for Step 5.
 
 !media generic-pbr-tutorial/PressureP5.png
     style=width:20%
@@ -169,9 +170,9 @@ We obtain an average outlet temperature of $1132$ K which is
 !media generic-pbr-tutorial/VelocityP5.png
     style=width:20%
     id=step5Velocity
-    caption= Velocity of the system for Step 5.
+    caption= Fluid velocity in the system for Step 5.
 
 !media generic-pbr-tutorial/T_solidP5.png
     style=width:20%
     id=step5T_solid
-    caption= Tempurature of the solid for Step 5.    
+    caption= Temperature of the solid for Step 5.

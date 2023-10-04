@@ -21,8 +21,8 @@ We define the bed height and bed radius at the top of the input file.
 !listing htgr/generic-pbr-tutorial/step1.i start=subdomains end=bed_porosity
 
 Then we use the `GeneratedMeshGenerator` to create a Cartesian mesh
-of the desired height and width. Note, how we use the ${x} syntax, where x
-stands for any defined parameter. We
+of the desired height and width. Notice how we use the ${x} syntax, where x
+stands for any defined parameter, usually defined at the top of the input file.
 
 !listing htgr/generic-pbr-tutorial/step1.i block=Mesh
 
@@ -47,7 +47,7 @@ It is shown in [step1geom].
 ### Setting the Fluid Properties
 
 Fluid properties are set by first defining a `HeliumFluidProperties` fluid properties object
-and second by creating a material that inserts the fluid properties into functors (if you do not know what a functor is then click [here](https://mooseframework.inl.gov/moose/syntax/Materials/)).
+and second by creating a material that inserts the fluid properties into functors (if you do not know what a functor is then click [here](https://mooseframework.inl.gov/moose/syntax/FunctorMaterials/)).
 
 The first task is performed by the following input syntax:
 
@@ -82,7 +82,7 @@ The thermal-hydraulics problem is set up using the finite volume Navier-Stokes a
 This action is discussed in detail [here](https://mooseframework.inl.gov/source/actions/NSFVAction.html).
 The corresponding block in the input file is:
 
-!listing htgr/generic-pbr-tutorial/step1.i block=Modules
+!listing htgr/generic-pbr-tutorial/step1.i block=NavierStokesFV
 
 Understanding the finite volume Navier-Stokes action is important.
 Therefore, each line will be explained.
@@ -102,6 +102,9 @@ as a variable and provided in the line:
 
 !listing htgr/generic-pbr-tutorial/step1.i block=NavierStokesFV start=porosity end=initial_velocity
 
+Note that porosity can also be provided as a functor material property which offers more flexibility
+when porosity smoothing is required. Porosity smoothing is not used in this tutorial because the
+`Bernoulli` treatment for porosity jumps is used.
 The names of the density and dynamic viscosity functors need to be provided to the
 action:
 
@@ -115,7 +118,8 @@ Initial conditions for the velocity and pressure are defined by the lines:
 
 Note that, since we solve a pseudo-transient, the initial conditions should be interpreted
 as initial guesses of the solution.
-We set the initial guess of the velocity to 0 and the initial guess of pressure to $5.4$ MPa.
+We set the initial guess of the velocity to a very small number (this precludes problems that some objects might have with zero velocity)
+and the initial guess of pressure to $5.4$ MPa.
 The initial condition for pressure is mismatched with the outlet pressure to make the problem
 slightly harder to solve.
 
@@ -155,7 +159,7 @@ postprocessors to be identical.
 
 ### Executioner
 
-The executioner is explained in detail [here](https://mooseframework.inl.gov/syntax/Executioner/). For Step 1 we use these specifications:
+The executioner object is explained in detail [here](https://mooseframework.inl.gov/syntax/Executioner/). For Step 1 we use these specifications:
 
 !listing htgr/generic-pbr-tutorial/step1.i block=Executioner
 

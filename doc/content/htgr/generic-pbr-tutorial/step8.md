@@ -57,14 +57,15 @@ In this object:
 - `radius_primary` signals that the geometry that is considered is cylindrical. It is the inner radius of the cylindrical gap. `radius_secondary` must be provided now,
 - `radius_secondary` is the outer radius of the cylindrical gap.
 
-## Executable
+## Execution
 
 !listing
 ./pronghorn-opt -i step8.i
 
 ## Result
 
-The solid temperature is shown in [step8_Tsolid].
+For the final exercise we show only the solid temperature in [step8_Tsolid] because the latest changes primarily changed the peripheral non-flow regions.
+Note that the fluid flow region is outlined by black lines in in [step8_Tsolid].
 
 !media generic-pbr-tutorial/T_solidP8.png
         style=width:100%

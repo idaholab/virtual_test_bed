@@ -22,13 +22,16 @@ Note, the `control_rods` block defines both flow variables and
 
 The `thermal_mass_scaling` is reduced to obtain faster convergence
 to steady-state during the pseudo-transient. The hydraulic diameter of
-the control rods is set to `control_rod_Dh = 0.1`.
+the control rods is set to `control_rod_Dh = 0.1` because we assume that the control is an empty channel with
+a diameter of $0.1$ m.
 
 !listing htgr/generic-pbr-tutorial/step7.i start=outlet_pressure end=Mesh
 
 ## Materials
 
-The control rod block has a porosity of $0.32$ which is added here:
+The control rod block has a porosity of $0.32$. The porosity is computed as the ratio of
+control rod channel area (number of control rods times area of a circle of diameter $0.1$ m) and the
+area of the porous flow region perpendicular to the vertical axis that represent the control rod in this model. The porosity is added here:
 
 !listing htgr/generic-pbr-tutorial/step7.i block=porosity_material
 
@@ -49,7 +52,7 @@ $0$ and the Forchheimer coefficient is set by a `LinearFrictionFactorFunctorMate
 
 In `Forchheimer_control_rods`, `g=1000` is the Forchheimer coefficient and `B` can be used
 to make the Forchheimer coefficient anisotropic. In this case, we just make it isotropic.
-`f` must be provided but it corresponds to a linear contribution of the pressure drop
+`f` must be provided but it corresponds to a linear contribution to the pressure drop
 which we choose to not use in this example.
 
 ## Postprocessors
@@ -75,9 +78,7 @@ to the `Executioner` block. This switches on steady-state detection starting
 at `t=1000s` and stops the simulation once the steady-state relative differential norm
 has dropped below $10^{-10}$.
 
-## Executable
+## Execution
 
 !listing
 ./pronghorn-opt -i step7.i
-
-## Results

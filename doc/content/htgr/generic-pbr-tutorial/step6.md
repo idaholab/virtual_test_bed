@@ -60,7 +60,10 @@ The characteristic length in the riser is set here:
 
 !listing htgr/generic-pbr-tutorial/step6.i block=characteristic_length
 
-## Executable
+## Execution
+
+To run step 6, you simply run:
+
 
 !listing
 ./pronghorn-opt -i step6.i

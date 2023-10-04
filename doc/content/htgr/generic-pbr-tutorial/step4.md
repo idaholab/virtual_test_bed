@@ -56,7 +56,7 @@ We add postprocessors to compute the inlet enthalpy, outlet enthalpy, and enthal
 Note that the `outputs = none` suppresses postprocessors from being printed, but they are nonetheless computed by the system and can be used
 in other objects.
 
-## Executable
+## Execution
 
 !listing
 ./pronghorn-opt -i step4.i
@@ -73,7 +73,7 @@ A few remarks are in order:
 - Fluid temperature increases monotonically from top to bottom. The temperature increases by about $600$ K which is $100$ K more than a typical pebble-bed high-temperature gas-cooled reactor.
 - The difference between solid and fluid temperature is much larger than in reality because the heat transfer coefficient is much smaller than in reality.
 - The solid temperature peaks roughly at core mid-height because of the peak in power density and the large difference between fluid and solid temperature.
-- Velocity increases towards the outlet because fluid density decreases.
+- Velocity increases towards the outlet because the fluid density decreases.
 
 
 !media generic-pbr-tutorial/MeshP4.png
