@@ -455,6 +455,18 @@ Naupa, Isaac and Garcia, Samuel and Terlizzi, Stefano and Kotlyar, Dan and Lindl
 Abdelhameed, Ahmed Amin and Cao, Yan and Nunez, Daniel and Miao, Yinbin and Mo, Kun and Lee, Changho and Shemon, Emily and Stauff, Nicolas E., "High-Fidelity Multiphysics Modeling of Load Following for 3-D Gas-Cooled Microreactor Assembly using NEAMS Codes", Proceedings of the American Nuclear Society, November 2022
 ```
 
+- Control drum rotation
+
+```
+@article{Prince2023Neutron,
+  title = {Neutron Transport Methods for Multiphysics Heterogeneous Reactor Core Simulation in Griffin},
+  author = {Zachary Prince and Joshua Hanophy and Vincent Labour\'e and Yaqi Wang and Logan Harbour and Namjae Choi},
+  year = {2023},
+  journal = {Submitted to Annals of Nuclear Energy}
+}
+Zachary Prince, Joshua Hanophy, Vincent Labouré, Yaqi Wang, Logan Harbour, and Namjae Choi. Neutron transport methods for multiphysics heterogeneous reactor core simulation in griffin. Submitted to Annals of Nuclear Energy, 2023.
+```
+
 ## Software / codes
 
 The references for various features of MOOSE may be found on this

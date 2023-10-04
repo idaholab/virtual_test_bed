@@ -1,0 +1,58 @@
+[Tests]
+  [drum_mesh]
+    type = CheckFiles
+    input = drum.i
+    cli_args = '--mesh-only'
+    executable_pattern = 'griffin*|blue_crab*|dire_wolf*'
+    check_files = drum_in.e
+  []
+  [fine_mesh]
+    type = CheckFiles
+    input = empire_2d_CD_fine.i
+    cli_args = '--mesh-only'
+    check_files = empire_2d_CD_fine_in.e
+    executable_pattern = 'griffin*|blue_crab*|dire_wolf*'
+    prereq = drum_mesh
+  []
+  [coarse_mesh]
+    type = CheckFiles
+    input = empire_2d_CD_coarse.i
+    cli_args = '--mesh-only'
+    check_files = empire_2d_CD_coarse_in.e
+    executable_pattern = 'griffin*|blue_crab*|dire_wolf*'
+    prereq = fine_mesh
+  []
+  [neutronics_eigenvalue]
+    type = CSVDiff
+    input = neutronics_eigenvalue.i
+    cli_args = 'Executioner/richardson_rel_tol=1e-6 Outputs/csv=true Outputs/exodus=false bison:Outputs/exodus=false'
+    csvdiff = neutronics_eigenvalue_90.csv
+    executable_pattern = 'griffin*|blue_crab*|dire_wolf*'
+    min_parallel = 16
+    method = 'opt'
+    max_time = 300
+    prereq = coarse_mesh
+  []
+  [neutronics_adjoint]
+    type = RunApp
+    input = neutronics_adjoint.i
+    executable_pattern = 'griffin*|blue_crab*|dire_wolf*'
+    min_parallel = 16
+    method = 'opt'
+    max_time = 100
+    prereq = neutronics_eigenvalue
+  []
+  [neutronics_transient]
+    type = CSVDiff
+    input = neutronics_transient.i
+    cli_args = 'Executioner/end_time=0.12 Executioner/output_micro_csv=false Outputs/exodus=false bison:Outputs/exodus=false bison:Outputs/csv=false'
+    csvdiff = 'neutronics_transient_out.csv neutronics_transient_out_pke_params.csv'
+    abs_zero = 1e-8
+    rel_err = 1e-4
+    executable_pattern = 'griffin*|blue_crab*|dire_wolf*'
+    min_parallel = 16
+    method = 'opt'
+    max_time = 400
+    prereq = neutronics_adjoint
+  []
+[]
