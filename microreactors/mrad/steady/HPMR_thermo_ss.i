@@ -285,8 +285,7 @@
 
   start_time = -5e4 # negative start time so we can start running from t = 0
   end_time = 0
-  dtmin = 1
-  num_steps = 1
+  dt = 5e3
 []
 
 [Postprocessors]
