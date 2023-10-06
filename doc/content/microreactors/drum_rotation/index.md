@@ -2,7 +2,17 @@
 
 *Contact: Zachary Prince, zachmprince\@gmail.com, Vincent Labour&#233;, vincent.laboure\@inl.gov*
 
-*Model link: [Micro Reactor Drum Rotation Model](https://github.com/idaholab/virtual_test_bed/tree/devel/microreactors/drum_rotation)*
+*Model link: [Micro Reactor Drum Rotation Model](https://github.com/idaholab/virtual_test_bed/tree/main/microreactors/drum_rotation)*
+
+!tag name=Micro Reactor Drum Rotation model pairs=reactor_type:microreactor
+                       reactor:Empire
+                       geometry:core
+                       simulation_type:neutronics
+                       input_features:reactor_meshing
+                       transient:reactivity_insertion
+                       code_used:Griffin
+                       computing_needs:Workstation
+                       fiscal_year:2024
 
 ## Reactor Description
 
@@ -62,7 +72,7 @@ The resulting mesh is shown in [!ref](fig:fine_mesh).
   caption=Fine mesh used for control drum rotation transient
   id=fig:fine_mesh
 
-An list of all the blocks is shown in [!ref](tab:blocks).
+A list of all the blocks is shown in [!ref](tab:blocks).
 
 !table caption=Description of blocks in geometry id=tab:blocks
 | Region | Block IDs |
@@ -77,7 +87,7 @@ An list of all the blocks is shown in [!ref](tab:blocks).
 
 #### Coarse Mesh
 
-The coarse mesh used for CMFD does not resolve pins, instead it creates hexagonal meshes for each assembly:
+The coarse mesh used for CMFD does not resolve pins, instead it creates quad4 meshes for each hexagonal assembly:
 
 !listing microreactors/drum_rotation/empire_2d_CD_coarse.i
   block=F1_1 F1_2 Core_CM
@@ -118,7 +128,7 @@ The cross sections are then loaded and applied to neutronics materials, namely `
   caption=Neutronics materials
   id=lst:xs_mat
 
-Note the exception for the material type in the drum region. Here, we use `CoupledFeedbackRoddedNeutronicsMaterial`, which is material specifically for dealing with control drum and rod movement. The position of the drum is controlled by the `front_position_function` parameter, which accepts the name of a MOOSE `Function` depending on time. Typically, three functions are define: (1) the offset between what the actual position and what the user defines as the position, (2) a user-defined position as a function of time, and (3) combining the offset and position. For the steady-state input, is function is constant:
+Note the exception for the material type in the drum region. Here, we use `CoupledFeedbackRoddedNeutronicsMaterial`, which is material specifically for dealing with control drum and rod movement. The position of the drum is controlled by the `front_position_function` parameter, which accepts the name of a MOOSE `Function` dependent on time. Typically, three functions are defined: (1) the offset between what the actual position and what the user defines as the position, (2) a user-defined position as a function of time, and (3) combining the offset and position. For the steady-state input, is function is constant:
 
 !listing microreactors/drum_rotation/neutronics_eigenvalue.i
   block=Functions AuxKernels
@@ -217,7 +227,7 @@ The coupling between the neutronics and thermal inputs utilize the `MultiApps` a
   id=ls:ss_multiapp
 
 
-Power density and drum position are tranferred to the sub-application and temperatures are retrieved. Power density simply uses a `MultiAppCopyTransfer`, which directly copies the degrees of freedom of the variable from the main application to the sub-application. The drum position is computed as a post-processor, where the data is transferred via `MultiAppReporterTransfer`. Since the cross sections are tabulated with separate temperatures for fuel and non-fuel. However, these variables must be defined everywhere in order to evaluate the cross sections. To do this, we use `MultiAppGeneralFieldNearestLocationTransfer` that is block restricted on the sub-application side. This transfer will then do a direct degree a freedom transfer for `Tfuel` in the fuel region and extrapolate from the nearest node in the non-fuel region. The same goes for `Tmod` in the non-fuel vs. fuel regions.
+Power density and drum position are transferred to the sub-application and temperatures are retrieved. Power density simply uses a `MultiAppCopyTransfer`, which directly copies the degrees of freedom of the variable from the main application to the sub-application. The drum position is computed as a post-processor, where the data is transferred via `MultiAppReporterTransfer`. Since the cross sections are tabulated with separate temperatures for fuel and non-fuel. However, these variables must be defined everywhere in order to evaluate the cross sections. To do this, we use `MultiAppGeneralFieldNearestLocationTransfer` that is block restricted on the sub-application side. This transfer will then do a direct degree a freedom transfer for `Tfuel` in the fuel region and extrapolate from the nearest node in the non-fuel region. The same goes for `Tmod` in the non-fuel vs. fuel regions.
 
 !listing microreactors/drum_rotation/neutronics_eigenvalue.i
   block=Transfers
@@ -270,7 +280,7 @@ The files are loaded with the same objects (must also be the same name) with par
 
 #### Adjoint Problem
 
-In order to compute point-kinetics parameters, like dynamic reactivity and mean generation time, Griffin requires the computation of an adjoint solution. This is done by running the adjoint version of the steady-state neutronics input. There adjoint input is basically the same as the forward input, with a couple key difference. First, the problem is de-coupled, so there are `MultiApps` or `Transfers` and the thermal solution is loaded from forward solution file. Second, `TransportSystems` must of the the parameter `for_adjoint = true` set.
+In order to compute point-kinetics parameters, like dynamic reactivity and mean generation time, Griffin requires the computation of an adjoint solution. This is done by running the adjoint version of the steady-state neutronics input. There adjoint input is basically the same as the forward input, with a couple key difference. First, the problem is de-coupled, so there are `MultiApps` or `Transfers` and the thermal solution is loaded from forward solution file. Second, `TransportSystems` must have the parameter `for_adjoint = true` set.
 
 !listing microreactors/drum_rotation/neutronics_adjoint.i
   block=UserObjects TransportSystems
@@ -304,7 +314,7 @@ Again, the transient input of the thermal model is largely the same as the stead
 
 ### Running Model
 
-This model can be run using a Griffin executable, or any application built with Griffin (BlueCRAB, Dirework, etc.). The simulations scale decently well, so either a workstation or HPC can be used. The following presents the commands used to run the model and produce results. They must be executed in this order and with the same number of processors. Run times are presented at various processor counts, which were obtained by running the simulations on the INL Sawtooth cluster.
+This model can be run using a Griffin executable, or any application built with Griffin (BlueCRAB, Direwolf, etc.). The simulations scale decently well, so either a workstation or HPC can be used. The following presents the commands used to run the model and produce results. They must be executed in this order and with the same number of processors. Run times are presented at various processor counts, which were obtained by running the simulations on the INL Sawtooth cluster.
 
 First is building the meshes, which must be run in this order, which produces `drum_in.e`, `empire_2d_CD_fine_in.e`, and `empire_2d_CD_coarse_in.e`:
 

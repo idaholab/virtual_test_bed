@@ -200,6 +200,7 @@ y_center = ${fparse r}
     variable = Tfuel
     source_variable = Tsolid
     from_blocks = '1 2'
+    # Values are transferred outside the block restriction of Tfuel, leading to some indetermination
     search_value_conflicts = false
   []
   [tmod_from_modules]
