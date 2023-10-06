@@ -4,6 +4,13 @@
 
 *Model link: [THORS edge blockage Subchannel Model](https://github.com/idaholab/virtual_test_bed/tree/devel/sfr/subchannel/THORS)*
 
+!tag name=Effect of Partial Blockages in Simulated LMFBR Fuel Assemblies pairs=reactor_type:SFR
+                       geometry:assembly
+                       simulation_type:assembly_flow
+                       code_used:Pronghorn_subchannel
+                       computing_needs:Workstation
+                       fiscal_year:2024
+
 Information on the THORS facility and experiments can be found in the following sources: [!citep](fontana1973effect),[!citep](han1977blockages),
 [!citep](jeong2005modeling). The Pronghorn-SC model's geometry and subchannel/rod index notation is shown in [fig:hex_index].
 
@@ -14,7 +21,7 @@ Information on the THORS facility and experiments can be found in the following 
 
 ## Edge blockage of 14 channels in 19-pin sodium-cooled bundles
 
-THORS bundle 5B has the same fuel configuration as bundle 2B, except that 0.0711-cm-diam wire-wrap spacers are used to separate the peripheral pins from the duct wall. The half-size spacers are used to reduce the flow in the peripheral flow channels and to cause a flatter radial temperature profile across the bundle. It also means that the flat-to-flat distance is reduced appropiately. The pins have a heated length of $45.7 cm$. A 0.3175-cm-thick stainless steel blockage plate is located $10.2 cm$  above the start of the heated zone to block $14$ edge and internal channels along the duct wall. The test section layout is shown in Fig [fig:thors2]. The experimental parameters for the chosen case are presented in [parameters2]. Pronghorn-SC modeled the THORS bundle 5B blockage with a $92$% area reduction on the affected subchannels and a local form loss coefficient of $6$. $C_T$ was set to $10$.
+THORS bundle 5B has the same fuel configuration as bundle 2B, except that 0.0711-cm-diam wire-wrap spacers are used to separate the peripheral pins from the duct wall. The half-size spacers are used to reduce the flow in the peripheral flow channels and to cause a flatter radial temperature profile across the bundle. It also means that the flat-to-flat distance is reduced appropriately. The pins have a heated length of $45.7 cm$. A 0.3175-cm-thick stainless steel blockage plate is located $10.2 cm$  above the start of the heated zone to block $14$ edge and internal channels along the duct wall. The test section layout is shown in Fig [fig:thors2]. The experimental parameters for the chosen case are presented in [parameters2]. Pronghorn-SC modeled the THORS bundle 5B blockage with a $92$% area reduction on the affected subchannels and a local form loss coefficient of $6$. $C_T$ was set to $10$.
 
 !media subchannel/thors2.png
     style=width:60%;margin-bottom:2%;margin:auto;
@@ -42,14 +49,14 @@ THORS bundle 5B has the same fuel configuration as bundle 2B, except that 0.0711
 
 ## Results for edge blockage
 
-The first case presented here is the high flow case (FFM Series 6, Test 12, Run 101). The thermocouples are located at the middle of the exit region. There is a subchannel index correspondence between the Figure [fig:thors2] and the Pronhorn-SC model shown in Figure[fig:hex_index] as follows: 34(39), 33(38), 18(20), 9(19), 3(4), 0(1), 12(11) and 25(30). Where the number outside the parentheses refers to the Pronghorn-SC model and the number inside the parentheses, refers to the experimental convention. Pronghorn-SC calculation along with the experimental measurements is shown in Figure [fig:FFM-5B]. The code calculations excibits generally good agreement with the experimental measurements. The least agreement occurs at the edge subchannels ($34,33$) which is likely due to the model not accuretally replicating the flow area there. Prongohorn-SC uses an assembly-wide constant wire diameter, while in the experimental assembly the wires at the edge subchannels had half the diameter.
+The first case presented here is the high flow case (FFM Series 6, Test 12, Run 101). The thermocouples are located at the middle of the exit region. There is a subchannel index correspondence between the Figure [fig:thors2] and the Pronghorn-SC model shown in Figure[fig:hex_index] as follows: 34(39), 33(38), 18(20), 9(19), 3(4), 0(1), 12(11) and 25(30). The number outside the parentheses refers to the Pronghorn-SC model, and the number inside the parentheses refers to the experimental convention. Pronghorn-SC calculation along with the experimental measurements are shown in Figure [fig:FFM-5B]. The code calculations exhibits generally good agreement with the experimental measurements. The least agreement occurs at the edge subchannels ($34,33$) which is likely due to the model not accurately replicating the flow area there. Pronghorn-SC uses an assembly-wide constant wire diameter, while in the experimental assembly the wires at the edge subchannels had half the diameter.
 
 !media subchannel/FFM-5B.png
     style=width:60%;margin-bottom:2%;margin:auto;
     id=fig:FFM-5B
     caption= Exit temperature profile for high flow case ($C_T = 10$).
 
-The second case presented here is the low flow case (FFM Series 6, Test 12, Run 109). The thermocouples are located at the middle of the exit region, same as before. Pronghorn-SC calculation along with the experimental measurements is shown in Figure [fig:FFM-5B2]. The code calculations excibits good agreement with the experimental measurements.
+The second case presented here is the low flow case (FFM Series 6, Test 12, Run 109). The thermocouples are located at the middle of the exit region, same as before. Pronghorn-SC calculation along with the experimental measurements is shown in Figure [fig:FFM-5B2]. The code calculations exhibits good agreement with the experimental measurements.
 
 !media subchannel/FFM-5B2.png
     style=width:60%;margin-bottom:2%;margin:auto;
@@ -61,3 +68,27 @@ The second case presented here is the low flow case (FFM Series 6, Test 12, Run 
 The input file to run the edge blockage case is presented below:
 
 !listing sfr/subchannel/THORS/FFM-5B.i language=cpp
+
+## Running the simulation
+
+### On INL HPC
+
+With at least NCRC *level 1* access to Pronghorn, the `pronghorn` module can be loaded
+
+```language=CPP
+module load use.moose moose-apps pronghorn
+
+pronghorn-opt -i FFM-5B.i
+```
+
+### Local Device
+
+For instance, if you have NCRC *level 2* access to the binaries, you can download pronghorn through the NCRC `mamba` package
+and use the binaries (once downloaded) as follows:
+
+```language=CPP
+mamba activate pronghorn
+
+pronghorn-opt -i FFM-5B.i
+```
+
