@@ -1,5 +1,14 @@
 # Step-by-Step Tutorial to Model a Generic Pebble-Bed High-Temperature Gas-Cooled Reactor Using Pronghorn
 
+!tag name=Generic Pebble Bed HTGR Pronghorn tutorial pairs=reactor_type:HTGR
+                       reactor:generic_PBR
+                       geometry:core
+                       simulation_type:thermal_hydraulics
+                       transient:steady_state
+                       code_used:Pronghorn
+                       computing_needs:Workstation
+                       fiscal_year:2024
+
 ## Setting up your environment
 
 Navigate to the right virtual test bed directory
