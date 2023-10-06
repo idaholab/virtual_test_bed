@@ -547,7 +547,7 @@ riser_Dh = 0.17
     optimal_iterations = 8
     cutback_factor = 0.8
     growth_factor = 1.6
-    dt = 0.05
+    dt = 0.003
   []
   line_search = l2
   solve_type = 'NEWTON'
