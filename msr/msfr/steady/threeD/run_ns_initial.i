@@ -1,0 +1,307 @@
+################################################################################
+## Molten Salt Fast Reactor - Euratom EVOL + Rosatom MARS Design              ##
+## Pronghorn input file to initialize velocity fields                         ##
+## This runs a slow relaxation to steady state while ramping down the fluid   ##
+## viscosity.                                                                 ##
+################################################################################
+# If using or referring to this model, please cite as explained in
+# https://mooseframework.inl.gov/virtual_test_bed/citing.html
+
+# Material properties
+rho = 4284 # density [kg / m^3]  (@1000K)
+mu = 0.0166 # viscosity [Pa s]
+# https://www.researchgate.net/publication/337161399_Development_of_a_control-\
+# oriented_power_plant_simulator_for_the_molten_salt_fast_reactor/fulltext/5dc95c\
+# 9da6fdcc57503eec39/Development-of-a-control-oriented-power-plant-simulator-for-the-molten-salt-fast-reactor.pdf
+# Derived turbulent properties
+von_karman_const = 0.41
+
+# Mass flow rate tuning
+friction = 4.0e3 # [kg / m^4]
+pump_force = -20000. # [N / m^3]
+
+[GlobalParams]
+  rhie_chow_user_object = 'ins_rhie_chow_interpolator'
+[]
+
+################################################################################
+# GEOMETRY
+################################################################################
+
+[Mesh]
+  # uniform_refine = 1
+  # coord_type = 'RZ'
+  # rz_coord_axis = Y
+  # alpha_rotation = -90
+  [fmg]
+    type = FileMeshGenerator
+    file = '1_16_MSFR_Fine.e'
+  []
+  [hx_top]
+    type = ParsedGenerateSideset
+    combinatorial_geometry = 'y > 0'
+    included_subdomains = '3'
+    included_neighbors = '1'
+    fixed_normal = true
+    normal = '0 1 0'
+    new_sideset_name = 'hx_top'
+    input = 'fmg'
+    output = true
+  []
+  [transform]
+    type = TransformGenerator
+    input = 'hx_top'
+    transform = 'SCALE'
+    vector_value = '0.001 0.001 0.001'
+  []
+  [diag]
+    type = MeshDiagnosticsGenerator
+    input = transform
+    examine_element_overlap = WARNING
+    examine_element_types = WARNING
+    examine_element_volumes = WARNING
+    examine_non_conformality = WARNING
+    examine_nonplanar_sides = INFO
+    examine_sidesets_orientation = WARNING
+  []
+  # [rename]
+  #   type = RenameBlockGenerator
+  #   input = 'hx_top'
+  #   old_block = 'msfr'
+  #   new_block = 'fuel'
+  # []
+  # [refine]
+  #   type = RefineBlockGenerator
+  #   input = 'delete_unused'
+  #   block = 'fuel hx pump'
+  #   refinement = '1'
+  # []
+  # [very_top]
+  #   type = ParsedGenerateSideset
+  #   combinatorial_geometry = 'y > 1.3226'
+  #   new_sideset_name = 'top_top'
+  #   input = 'refine'
+  # []
+  construct_side_list_from_node_list = true
+[]
+
+[Problem]
+  kernel_coverage_check = false
+[]
+
+################################################################################
+# EQUATIONS: VARIABLES, KERNELS & BCS
+################################################################################
+
+[Modules]
+  [NavierStokesFV]
+    # General parameters
+    compressibility = 'incompressible'
+    gravity = '0 -9.81 0'
+
+    # Material properties
+    density = ${rho}
+    dynamic_viscosity = 'mu'
+
+    # Initial conditions
+    initial_velocity = '1e-6 1e-6 1e-6'
+    initial_pressure = 1e5
+    initial_temperature = 600.0
+
+    # Boundary conditions
+    wall_boundaries = 'Wall Symmetry'
+    momentum_wall_types = 'wallfunction symmetry'
+
+    # Pressure pin for incompressible flow
+    pin_pressure = true
+    pinned_pressure_type = average
+    pinned_pressure_value = 1e5
+
+    # Turbulence parameters
+    turbulence_handling = 'mixing-length'
+    von_karman_const = ${von_karman_const}
+    mixing_length_delta = 0.1
+    mixing_length_walls = 'Wall'
+    mixing_length_aux_execute_on = 'initial'
+
+    # Heat exchanger friction
+    friction_blocks = 'HX'
+    friction_types = 'FORCHHEIMER'
+    friction_coeffs = ${friction}
+
+    # Numerical scheme
+    mass_advection_interpolation = 'upwind'
+    momentum_advection_interpolation = 'upwind'
+
+    # momentum_two_term_bc_expansion = false
+    # pressure_two_term_bc_expansion = false
+  []
+[]
+
+[FVKernels]
+  [pump]
+    type = INSFVBodyForce
+    variable = vel_y
+    functor = ${pump_force}
+    block = 'Pump'
+    momentum_component = 'y'
+  []
+[]
+
+[FVBCs]
+  # [top_top]
+  #   type = FVDirichletBC
+  #   variable = pressure
+  #   value = 1e5
+  #   boundary = 'top_top'
+  # []
+  # [top_top]
+  #   type = INSFVOutletPressureBC
+  #   variable = pressure
+  #   function = 1e5
+  #   boundary = 'top_top'
+  # []
+[]
+
+################################################################################
+# MATERIALS
+################################################################################
+
+[Functions]
+  [rampdown_mu_func]
+    type = ParsedFunction
+    expression = mu*(100*exp(-3*t)+1)
+    symbol_names = 'mu'
+    symbol_values = ${mu}
+  []
+[]
+
+[Materials]
+  [mu]
+    type = ADGenericFunctorMaterial #defines mu artificially for numerical convergence
+    prop_names = 'mu rho' #it converges to the real mu eventually.
+    prop_values = 'rampdown_mu_func ${rho}'
+  []
+  #[not_used]
+  #  type = ADGenericFunctorMaterial
+  #  prop_names = 'not_used'
+  #  prop_values = 0
+  #  block = 'shield reflector'
+  #[]
+[]
+
+################################################################################
+# EXECUTION / SOLVE
+################################################################################
+
+[Executioner]
+  type = Transient
+
+  # Time-stepping parameters
+  start_time = 0.0
+  end_time = 17
+
+  [TimeStepper]
+    type = IterationAdaptiveDT
+    optimal_iterations = 10
+    dt = 0.3
+    timestep_limiting_postprocessor = 'dt_limit'
+  []
+
+  # Time integration scheme
+  scheme = 'implicit-euler'
+
+  # Solver parameters
+  solve_type = 'NEWTON'
+  petsc_options_iname = '-pc_type -pc_factor_shift_type -ksp_gmres_restart'
+  petsc_options_value = 'lu NONZERO 50'
+  line_search = 'none'
+  nl_rel_tol = 1e-12
+  nl_abs_tol = 1e-6
+  nl_max_its = 12 # fail early and try again with a shorter time step
+  l_max_its = 50
+  automatic_scaling = true
+
+[]
+
+[Debug]
+  show_var_residual_norms = true
+[]
+
+################################################################################
+# Initialize from 2D
+################################################################################
+
+[MultiApps]
+  [init]
+    type = FullSolveMultiApp
+    input_files = 'run_ns.i'
+    execute_on = 'INITIAL'
+    cli_args = 'Problem/solve=false'
+  []
+[]
+
+[Transfers]
+  [vel_x]
+    type = MultiAppGeneralFieldNearestLocationTransfer
+    from_multi_app = init
+    source_variable = vel_x
+    variable = vel_x
+  []
+  [vel_y]
+    type = MultiAppGeneralFieldNearestLocationTransfer
+    from_multi_app = init
+    source_variable = vel_y
+    variable = vel_y
+  []
+  [pressure]
+    type = MultiAppGeneralFieldNearestLocationTransfer
+    from_multi_app = init
+    source_variable = pressure
+    variable = pressure
+  []
+[]
+
+################################################################################
+# SIMULATION OUTPUTS
+################################################################################
+
+[Outputs]
+  csv = true
+  hide = 'dt_limit'
+  [restart]
+    type = Exodus
+    execute_on = 'final'
+  []
+  [check]
+    type = Exodus
+  []
+  # Reduce base output
+  print_linear_converged_reason = false
+  print_linear_residuals = false
+  print_nonlinear_converged_reason = false
+[]
+
+[Postprocessors]
+  [max_v]
+    type = ElementExtremeValue
+    variable = vel_x
+    value_type = max
+    block = 'MSFR Pump HX'
+  []
+  [mu_value]
+    type = FunctionValuePostprocessor
+    function = rampdown_mu_func
+  []
+  [mdot]
+    type = VolumetricFlowRate
+    boundary = 'hx_top'
+    vel_x = vel_x
+    vel_y = vel_y
+    advected_quantity = ${rho}
+  []
+  [dt_limit]
+    type = Receiver
+    default = 1
+  []
+[]
