@@ -50,6 +50,8 @@
     min_parallel = 8
     # Increased tolerance due to loose convergence criterion
     rel_err = 1e-4
+    # see idaholab/moose#25681
+    method = 'opt'
   []
   [neutronics_only]
     prereq = neutronics_only_syntax
