@@ -98,7 +98,7 @@ pump_force = -20000. # [N / m^3]
   [NavierStokesFV]
     # General parameters
     compressibility = 'incompressible'
-    gravity = '0 -9.81 0'
+    gravity = '0 0 -9.81'
 
     # Material properties
     density = ${rho}
