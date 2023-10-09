@@ -16,9 +16,9 @@
 # 'run_neutronics.i', saved in 'restart/run_neutronics_ns_restart.e'
 
 # Material properties
-rho = 4284  # density [kg / m^3]  (@1000K)
-cp = 1594  # specific heat capacity [J / kg / K]
-drho_dT = 0.882  # derivative of density w.r.t. temperature [kg / m^3 / K]
+rho = 4284 # density [kg / m^3]  (@1000K)
+cp = 1594 # specific heat capacity [J / kg / K]
+drho_dT = 0.882 # derivative of density w.r.t. temperature [kg / m^3 / K]
 mu = 0.0166 # viscosity [Pa s]
 k = 1.7 # thermal conductivity [W / m / K]
 # https://www.researchgate.net/publication/337161399_Development_of_a_control-\
@@ -29,16 +29,16 @@ von_karman_const = 0.41
 
 # Turbulent properties
 Pr_t = 0.9 # turbulent Prandtl number
-Sc_t = 1   # turbulent Schmidt number
+Sc_t = 1 # turbulent Schmidt number
 
 # Derived material properties
-alpha = ${fparse drho_dT / rho}  # thermal expansion coefficient
+alpha = '${fparse drho_dT / rho}' # thermal expansion coefficient
 
 # Operating parameters
 T_HX = 873.15 # heat exchanger temperature [K]
 
 # Mass flow rate tuning, for heat exchanger pressure and temperature drop
-friction = 4e3  # [kg / m^4]
+friction = 4e3 # [kg / m^4]
 pump_force = -20000. # [N / m^3]
 
 # Delayed neutron precursor parameters. Lambda values are decay constants in
@@ -75,7 +75,8 @@ beta6 = 0.000184087
     # Depending on the file chosen, the initialization of variables should be
     # adjusted. The following variables can be initalized:
     # - vel_x, vel_y, p from isothermal simulation
-    file = 'restart/run_ns_initial_restart.e'
+    # file = 'restart/run_ns_initial_restart.e'
+    file = 'run_ns_initial_restart.e'
     # Below are initialization points created from this input file
     # The variable IC should be set from_file_var for temperature and precursors
     # - vel_x, vel_y, p, T_fluid, c_i from cosine heated simulation
@@ -103,6 +104,17 @@ beta6 = 0.000184087
     new_sideset_name = 'hx_bot'
     input = 'hx_top'
   []
+  # [symmetry]
+  #   type = SymmetryTransformGenerator
+  #   input = 'hx_bot'
+  #   mirror_point = '0 0 0'
+  #   mirror_normal_vector = '1 0 0'
+  # []
+  # [stitch]
+  #   type = StitchedMeshGenerator
+  #   inputs = 'symmetry hx_bot'
+  #   stitch_boundaries_pairs = 'fluid_symmetry fluid_symmetry'
+  # []
 []
 
 ################################################################################
@@ -135,10 +147,10 @@ beta6 = 0.000184087
     ref_temperature = ${T_HX}
 
     # Boundary conditions
-    wall_boundaries = 'shield_wall reflector_wall fluid_symmetry'
-    momentum_wall_types = 'wallfunction wallfunction symmetry'
-    energy_wall_types = 'heatflux heatflux heatflux'
-    energy_wall_function = '0 0 0'
+    wall_boundaries = 'shield_wall reflector_wall'
+    momentum_wall_types = 'wallfunction wallfunction'
+    energy_wall_types = 'heatflux heatflux'
+    energy_wall_function = '0 0'
 
     # Pressure pin for incompressible flow
     pin_pressure = true
@@ -176,7 +188,7 @@ beta6 = 0.000184087
     friction_types = 'FORCHHEIMER'
     friction_coeffs = ${friction}
     ambient_convection_blocks = 'hx'
-    ambient_convection_alpha = ${fparse 600 * 20e3} # HX specifications
+    ambient_convection_alpha = '${fparse 600 * 20e3}' # HX specifications
     ambient_temperature = ${T_HX}
   []
 []
@@ -274,7 +286,7 @@ beta6 = 0.000184087
     [InitialCondition]
       type = FunctionIC
       function = 'cosine_guess'
-      scaling_factor = ${fparse 3e9/2.81543}
+      scaling_factor = '${fparse 3e9/2.81543}'
     []
   []
   [fission_source]
@@ -283,7 +295,7 @@ beta6 = 0.000184087
     [InitialCondition]
       type = FunctionIC
       function = 'cosine_guess'
-      scaling_factor = ${fparse 6.303329e+01/2.81543}
+      scaling_factor = '${fparse 6.303329e+01/2.81543}'
     []
     block = 'fuel pump hx'
   []
@@ -360,15 +372,15 @@ beta6 = 0.000184087
     # This time stepper makes the time step grow exponentially
     # It can only be used with proper initialization
     type = IterationAdaptiveDT
-    dt = 1  # chosen to obtain convergence with first coupled iteration
+    dt = 1 # chosen to obtain convergence with first coupled iteration
     growth_factor = 2
   []
   # [TimeStepper]
   #   type = FunctionDT
   #   function = dts
   # []
-  steady_state_detection  = true
-  steady_state_tolerance  = 1e-8
+  steady_state_detection = true
+  steady_state_tolerance = 1e-8
   steady_state_start_time = 10
 
   # Time integration scheme

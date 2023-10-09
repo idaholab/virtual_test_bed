@@ -29,39 +29,62 @@ pump_force = -20000. # [N / m^3]
 ################################################################################
 
 [Mesh]
-  uniform_refine = 1
-  coord_type = 'RZ'
-  rz_coord_axis = Y
+  # uniform_refine = 1
+  # coord_type = 'RZ'
+  # rz_coord_axis = Y
   [fmg]
     type = FileMeshGenerator
-    file = '../mesh/msfr_rz_mesh.e'
+    # file = '1_16_MSFR_Fine.e'
+    # file = 'run_ns_initial_full_in.e'
+    file = 'run_ns_initial_full_short_check.e'
+    use_for_exodus_restart = true
   []
-  [hx_top]
-    type = ParsedGenerateSideset
-    combinatorial_geometry = 'y > 0'
-    included_subdomains = '3'
-    included_neighbors = '1'
-    fixed_normal = true
-    normal = '0 1 0'
-    new_sideset_name = 'hx_top'
-    input = 'fmg'
-  []
-  [delete_unused]
-    type = BlockDeletionGenerator
-    input = 'hx_top'
-    block = 'shield reflector'
-  []
-  [symmetry]
-    type = SymmetryTransformGenerator
-    input = 'delete_unused'
-    mirror_point = '0 0 0'
-    mirror_normal_vector = '1 0 0'
-  []
-  [stitch]
-    type = StitchedMeshGenerator
-    inputs = 'symmetry delete_unused'
-    stitch_boundaries_pairs = 'fluid_symmetry fluid_symmetry'
-  []
+  # [fix]
+  #   type = ParsedGenerateSideset
+  #   input = fmg
+  #   included_boundaries = 'Wall'
+  #   combinatorial_geometry = 'x < 10000000'
+  #   include_only_external_sides = true
+  #   new_sideset_name = 'Wall_new'
+  # []
+  # [delete_bad]
+  #   type = BoundaryDeletionGenerator
+  #   input = fix
+  #   boundary_names = 'Wall'
+  # []
+  # [rename]
+  #   type = RenameBoundaryGenerator
+  #   input = 'delete_bad'
+  #   old_boundary = 'Wall_new'
+  #   new_boundary = 'Wall'
+  # []
+  # [z_top]
+  #   type = TransformGenerator
+  #   input = rename
+  #   transform = 'ROTATE'
+  #   vector_value = '0 -90 0'
+  # []
+
+  # MISC
+  # [rename]
+  #   type = RenameBlockGenerator
+  #   input = 'hx_top'
+  #   old_block = 'msfr'
+  #   new_block = 'fuel'
+  # []
+  # [refine]
+  #   type = RefineBlockGenerator
+  #   input = 'delete_unused'
+  #   block = 'fuel hx pump'
+  #   refinement = '1'
+  # []
+  # [very_top]
+  #   type = ParsedGenerateSideset
+  #   combinatorial_geometry = 'y > 1.3226'
+  #   new_sideset_name = 'top_top'
+  #   input = 'refine'
+  # []
+  construct_side_list_from_node_list = true
 []
 
 [Problem]
@@ -76,41 +99,45 @@ pump_force = -20000. # [N / m^3]
   [NavierStokesFV]
     # General parameters
     compressibility = 'incompressible'
-    gravity = '0 -9.81 0'
+    gravity = '0 0 -9.81'
 
     # Material properties
     density = ${rho}
     dynamic_viscosity = 'mu'
 
     # Initial conditions
-    initial_velocity = '1e-6 1e-6 0'
-    initial_pressure = 1e5
-    initial_temperature = 0.0
+    # initial_velocity = '1e-6 1e-6 1e-6'
+    # initial_pressure = 1e5
+    # initial_temperature = 600.0
+    initialize_variables_from_mesh_file = true
 
     # Boundary conditions
-    wall_boundaries = 'shield_wall reflector_wall'
-    momentum_wall_types = 'wallfunction wallfunction'
+    wall_boundaries = 'Wall'
+    momentum_wall_types = 'wallfunction'
 
     # Pressure pin for incompressible flow
     pin_pressure = true
-    pinned_pressure_type = average
+    pinned_pressure_type = average-uo
     pinned_pressure_value = 1e5
 
     # Turbulence parameters
     turbulence_handling = 'mixing-length'
     von_karman_const = ${von_karman_const}
     mixing_length_delta = 0.1
-    mixing_length_walls = 'shield_wall reflector_wall'
+    mixing_length_walls = 'Wall'
     mixing_length_aux_execute_on = 'initial'
 
     # Heat exchanger friction
-    friction_blocks = 'hx'
+    friction_blocks = 'HX'
     friction_types = 'FORCHHEIMER'
     friction_coeffs = ${friction}
 
     # Numerical scheme
     mass_advection_interpolation = 'upwind'
     momentum_advection_interpolation = 'upwind'
+
+    # momentum_two_term_bc_expansion = false
+    # pressure_two_term_bc_expansion = false
   []
 []
 
@@ -119,9 +146,24 @@ pump_force = -20000. # [N / m^3]
     type = INSFVBodyForce
     variable = vel_y
     functor = ${pump_force}
-    block = 'pump'
+    block = 'Pump'
     momentum_component = 'y'
   []
+[]
+
+[FVBCs]
+  # [top_top]
+  #   type = FVDirichletBC
+  #   variable = pressure
+  #   value = 1e5
+  #   boundary = 'top_top'
+  # []
+  # [top_top]
+  #   type = INSFVOutletPressureBC
+  #   variable = pressure
+  #   function = 1e5
+  #   boundary = 'top_top'
+  # []
 []
 
 ################################################################################
@@ -129,14 +171,6 @@ pump_force = -20000. # [N / m^3]
 ################################################################################
 
 [Functions]
-  [ad_rampdown_mu_func]
-    type = ADParsedFunction
-    expression = mu*(100*exp(-3*t)+1)
-    symbol_names = 'mu'
-    symbol_values = ${mu}
-  []
-  # Duplicate definition to use in postprocessor,
-  # we will convert types more in the future and avoid duplicates
   [rampdown_mu_func]
     type = ParsedFunction
     expression = mu*(100*exp(-3*t)+1)
@@ -149,7 +183,7 @@ pump_force = -20000. # [N / m^3]
   [mu]
     type = ADGenericFunctorMaterial #defines mu artificially for numerical convergence
     prop_names = 'mu rho' #it converges to the real mu eventually.
-    prop_values = 'ad_rampdown_mu_func ${rho}'
+    prop_values = 'rampdown_mu_func ${rho}'
   []
   #[not_used]
   #  type = ADGenericFunctorMaterial
@@ -190,7 +224,85 @@ pump_force = -20000. # [N / m^3]
   nl_max_its = 12 # fail early and try again with a shorter time step
   l_max_its = 50
   automatic_scaling = true
+
 []
+
+[Debug]
+  show_var_residual_norms = true
+[]
+
+################################################################################
+# Initialize from 2D
+################################################################################
+
+# [MultiApps]
+#   [init]
+#     type = FullSolveMultiApp
+#     input_files = 'run_ns.i'
+#     execute_on = 'INITIAL'
+#     positions = "0 0 0
+#                  0 0 0
+#                  0 0 0
+#                  0 0 0
+#                  0 0 0
+#                  0 0 0
+#                  0 0 0
+#                  0 0 0
+#                  0 0 0
+#                  0 0 0
+#                  0 0 0
+#                  0 0 0
+#                  0 0 0
+#                  0 0 0
+#                  0 0 0
+#                  0 0 0"
+#     cli_args = "Problem/solve=false;Mesh/alpha_rotation=0
+#                 Problem/solve=false;Mesh/alpha_rotation=22.5
+#                 Problem/solve=false;Mesh/alpha_rotation=45
+#                 Problem/solve=false;Mesh/alpha_rotation=67.5
+#                 Problem/solve=false;Mesh/alpha_rotation=90
+#                 Problem/solve=false;Mesh/alpha_rotation=112.5
+#                 Problem/solve=false;Mesh/alpha_rotation=135
+#                 Problem/solve=false;Mesh/alpha_rotation=157.5
+#                 Problem/solve=false;Mesh/alpha_rotation=180
+#                 Problem/solve=false;Mesh/alpha_rotation=202.5
+#                 Problem/solve=false;Mesh/alpha_rotation=225
+#                 Problem/solve=false;Mesh/alpha_rotation=247.5
+#                 Problem/solve=false;Mesh/alpha_rotation=270
+#                 Problem/solve=false;Mesh/alpha_rotation=292.5
+#                 Problem/solve=false;Mesh/alpha_rotation=315
+#                 Problem/solve=false;Mesh/alpha_rotation=337.5"
+#     # output_in_position = true
+#     run_in_position = true
+#   []
+# []
+
+# [Transfers]
+#   [vel_x]
+#     type = MultiAppNearestNodeTransfer
+#     from_multi_app = init
+#     source_variable = vel_x
+#     variable = vel_x
+#   []
+#   [vel_y]
+#     type = MultiAppNearestNodeTransfer
+#     from_multi_app = init
+#     source_variable = vel_y
+#     variable = vel_y
+#   []
+#   [vel_z]
+#     type = MultiAppNearestNodeTransfer
+#     from_multi_app = init
+#     source_variable = vel_z
+#     variable = vel_z
+#   []
+#   [pressure]
+#     type = MultiAppNearestNodeTransfer
+#     from_multi_app = init
+#     source_variable = pressure
+#     variable = pressure
+#   []
+# []
 
 ################################################################################
 # SIMULATION OUTPUTS
@@ -203,6 +315,9 @@ pump_force = -20000. # [N / m^3]
     type = Exodus
     execute_on = 'final'
   []
+  [check]
+    type = Exodus
+  []
   # Reduce base output
   print_linear_converged_reason = false
   print_linear_residuals = false
@@ -214,7 +329,7 @@ pump_force = -20000. # [N / m^3]
     type = ElementExtremeValue
     variable = vel_x
     value_type = max
-    block = 'fuel pump hx'
+    block = 'MSFR Pump HX'
   []
   [mu_value]
     type = FunctionValuePostprocessor
