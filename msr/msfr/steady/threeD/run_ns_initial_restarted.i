@@ -206,8 +206,8 @@ pump_force = -20000. # [N / m^3]
 
   [TimeStepper]
     type = IterationAdaptiveDT
-    optimal_iterations = 10
-    dt = 0.3
+    optimal_iterations = 8
+    dt = 0.15
     timestep_limiting_postprocessor = 'dt_limit'
   []
 
