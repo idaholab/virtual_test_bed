@@ -1,6 +1,6 @@
 # LOTUS Molten Chloride Reactor (LMCR)
 
-[Description of the reactor](lotus_description.md)
+[Description of the reactor](lotus_description2.md)
 
 [Griffin-Pronghorn Model](lotus_multiphysics_model.md)
 
