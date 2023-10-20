@@ -1,9 +1,18 @@
-# Molten Salt Reactors
+# LOTUS Molten Chloride Reactor (LMCR)
 
-[Molten Salt Fast Reactor](msfr/index.md)
+[Description of the reactor](lotus_description.md)
 
-[Molten Salt Reactor Experiment](msre/msre_sam_model.md)
+[Griffin-Pronghorn Model](lotus_multiphysics_model.md)
 
-[Generic Molten Salt Fast Reactor](msr_generic/index.md)
+[Steady State Results](steady_state_results.md)
 
-[LOTUS Molten Chloride Reactor](lotus/index.md)
+
+
+
+
+
+
+
+
+
+
