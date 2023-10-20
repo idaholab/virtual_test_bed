@@ -1,18 +1,18 @@
 # LOTUS Molten Chloride Reactor (LMCR) Description
-What the freak
+
 *Contact: Mauricio Tano, mauricio.tanoretamales.at.inl.gov*
 
 *Model summarized, documented, and uploaded by Samuel Walker*
 
 <!-- Edits by Andres Fierro -->
 
-The MSRE was a graphite moderated flowing salt type reactor with a design maximum operating power of 10 MW(th) developed by Oak Ridge National Laboratory [!citep](Robertson1965, m3mcr2023).
-The reactor ran for more than 13,000 hours at full power before its final shut down in 1969.  The general layout of the experiment is shown in [MSRE_core_ref].
+The MSRE was a graphite moderated flowing salt type reactor with a design maximum operating power of 10 MW(th) developed by Oak Ridge National Laboratory [!citep](Robertson1965, M3mcr2023).
+The reactor ran for more than 13,000 hours at full power before its final shut down in 1969.  The general layout of the experiment is shown in [MCR_geometry_ref].
 
 !media msr/lotus/MCR_geometry.jpg
         style=width:36%; float:left;padding-top:2.5%;padding-right:5%
         id=MCR_geometry_ref
-        caption=Schematic design of LOTUS MCR [!citep](m3mcr2023).
+        caption=Schematic design of LOTUS MCR [!citep](M3mcr2023).
 
 The fuel salt was a fluoride based ionic liquid containing lithium, beryllium, zirconium and uranium fuel.
 The coolant salt was a mixture of lithium fluoride and beryllium fluoride.
@@ -53,7 +53,7 @@ We note that the MSRE was a thermal reactor with a highly negative reactivity te
 !media msr/lotus/MCR_geometry.jpg
         style=width:45%;margin-left:auto;margin-right:auto
         id=MSRE_core_ref_2
-        caption=Picture of MSRE core graphite stringers [!citep](mcr_neams_m3_2023)
+        caption=Picture of MSRE core graphite stringers [!citep](M3mcr2023)
 
 
 ## Material Properties and MSRE Setup
