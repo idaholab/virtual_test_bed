@@ -436,6 +436,7 @@ outlet_pressure_val = 2e5
     prop_names = 'alpha_b rho'
     prop_values = '${alpha_b} ${rho_fluid}'
     block = ${blocks_fluid}
+    define_dot_functors = false
   []
   [fluidprops]
     type = GeneralFunctorFluidProps
