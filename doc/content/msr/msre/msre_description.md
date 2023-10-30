@@ -22,13 +22,13 @@ The secondary loop connected the tube-side of the shell-and-tube heat exchanger 
 Two axial blowers supplied cooling air to the radiator. Piping, drain tanks and “freeze valves” made up the remaining components of the heat transport circuits.
 The heat generated in the core was transferred to the secondary loop through the heat exchanger and ultimately rejected to the atmosphere through the radiator.
 
-The three main features of this experiment are: 
+The three main features of this experiment are:
 
-- The core circulation system, where the molten salt fuel flows through rounded-rectangular channels in the vertical graphite moderator stringers 
+- The core circulation system, where the molten salt fuel flows through rounded-rectangular channels in the vertical graphite moderator stringers
 
-- The centrifugal pump that provided continuous circulation, facilitated heat transfer and the removal of fission products 
+- The centrifugal pump that provided continuous circulation, facilitated heat transfer and the removal of fission products
 
-- The two-loop heat exchanger system with an approximately 25-second fuel loop circulation time in the reactor. 
+- The two-loop heat exchanger system with an approximately 25-second fuel loop circulation time in the reactor.
 
 We note that the MSRE was a thermal reactor with a highly negative reactivity temperature coefficient. The vertical graphite stringers are shown in [MSRE_core_ref_2].
 
@@ -36,14 +36,14 @@ We note that the MSRE was a thermal reactor with a highly negative reactivity te
 !table id=MSRE_rxtr_specs caption=MSRE Reactor Specifications
 | Parameter  | Value  |
 |:-----------|:---------|
-| Core Power | 10 MW$_{th}$ (MegaWatt Thermal)| 
+| Core Power | 10 MW$_{th}$ (MegaWatt Thermal)|
 | Core height  | 1.63 m |
 | Core diameter  | 1.39 m |
 | Fuel Salt | LiF-BeF$_2$-ZrF$_4$-UF$_4$ |
 | Fuel salt molar mass | 65.0%-29.1%-5.0%-0.9% |
 | Fuel salt enrichment | 33.0% |
-| Channels in graphite moderator | 3.05 cm ✕ 1.016 cm | 
-| Channels' rounded corners radii | 0.508 cm | 
+| Channels in graphite moderator | 3.05 cm ✕ 1.016 cm |
+| Channels' rounded corners radii | 0.508 cm |
 | Vertical graphite stringers  | 5.08 cm ✕ 5.08 cm |
 
 <!-- % Should I use \bullet?? Instead of x? -->
@@ -65,10 +65,10 @@ of which the thermophysical properties are listed in [fuel_salt_properties].
 |   |   | Unit  | LiF-BeF$_4$-ZrF$_4$-UF$_4$  |
 | :- | :- | :- | :- |
 | Melting temperature | $T_{melt}$ | $K$ | $722.15$  |
-| Density | $\rho$ | $kg/m^3$  | $2553.3-0.562\bullet T$ |
-| Dynamic viscosity | $\mu$ | $Pa\bullet s$ | $8.4\times 10^{-5} exp(4340/T)$ |
-| Thermal conductivity | $k$ | $W/(m\bullet K)$ | $1.0$ |
-| Specific heat capacity | $c_p$ | $J/(kg\bullet K)$ | $2009.66$ |
+| Density | $\rho$ | $kg/m^3$  | $2553.3-0.562\cdot T$ |
+| Dynamic viscosity | $\mu$ | $Pa\cdot s$ | $8.4\times 10^{-5} exp(4340/T)$ |
+| Thermal conductivity | $k$ | $W/(m\cdot K)$ | $1.0$ |
+| Specific heat capacity | $c_p$ | $J/(kg\cdot K)$ | $2009.66$ |
 
 A conventional, cross-baffled, shell-and-tube type heat exchanger was used in MSRE.
 The fuel salt flows on the shell side while the coolant salt flows through the tube side.
@@ -82,14 +82,14 @@ All the connecting pipes have a default diameter of 0.127 m. A centrifugal pump 
 |   |   | Unit  | LiF-BeF$_2$ (0.66-0.34)  |
 | :- | :- | :- | :- |
 | Melting temperature | $T_{melt}$ | $K$ | $728$  |
-| Density | $\rho$ | $kg/m^3$  | $2146.3-0.488\bullet T$ |
-| Dynamic viscosity | $\mu$ | $Pa\bullet s$ | $1.16\times 10^{-4} exp(3755/T)$ |
-| Thermal conductivity | $k$ | $W/(m\bullet K)$ | $1.1$ |
-| Specific heat capacity | $c_p$ | $J/(kg\bullet K)$ | $2390.0$ |
+| Density | $\rho$ | $kg/m^3$  | $2146.3-0.488\cdot T$ |
+| Dynamic viscosity | $\mu$ | $Pa\cdot s$ | $1.16\times 10^{-4} exp(3755/T)$ |
+| Thermal conductivity | $k$ | $W/(m\cdot K)$ | $1.1$ |
+| Specific heat capacity | $c_p$ | $J/(kg\cdot K)$ | $2390.0$ |
 
 !table id=steel_properties caption=Thermophysical properties of Hastelloy® N alloy used in the heat exchanger.
 |   |   | Unit  | Hastelloy® N alloy  |
 | :- | :- | :- | :- |
 | Density | $\rho$ | $kg/m^3$  | $8860$ |
-| Thermal conductivity | $k$ | $W/(m\bullet K)$ | $23.6$ |
-| Specific heat capacity | $c_p$ | $J/(kg\bullet K)$ | $578$ | 
+| Thermal conductivity | $k$ | $W/(m\cdot K)$ | $23.6$ |
+| Specific heat capacity | $c_p$ | $J/(kg\cdot K)$ | $578$ |
