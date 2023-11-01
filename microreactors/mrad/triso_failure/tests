@@ -1,0 +1,47 @@
+[Tests]
+  # Syntax Check
+  # Condition Calculation Using a Unit Cell Model
+  [neutronics_griffin_syntax]
+    type = RunApp
+    input = 'UnitCell_with_TM/Exec_MP_ss_griffin.i'
+    check_input = True
+    executable_pattern = 'griffin*|blue_crab*|dire_wolf*'
+    cli_args = "MultiApps/active='' Transfers/active=''"
+  []
+  [heat_conduction_bison_syntax]
+    type = RunApp
+    input = 'UnitCell_with_TM/MP_ss_bison.i'
+    check_input = True
+    executable_pattern = 'bison*|blue_crab*|dire_wolf*'
+    cli_args = "MultiApps/active='' Transfers/active=''"
+  []
+  [tensor_mechanics_bison_syntax]
+    type = RunApp
+    input = 'UnitCell_with_TM/MP_ss_bison_TM.i'
+    check_input = True
+    executable_pattern = 'bison*|blue_crab*|dire_wolf*'
+  []
+  [fluids_sockeye_syntax]
+    type = RunApp
+    input = 'UnitCell_with_TM/MP_ss_sockeye.i'
+    check_input = True
+    executable_pattern = 'blue_crab*|sockeye*|dire_wolf*'
+    cli_args = "--app SockeyeApp"
+    # Capillary limit for vertical heat pipes is not accurate; see https://hpcgitlab.hpc.inl.gov/idaholab/sockeye/-/issues/65
+    allow_warnings = true
+  []
+  # Sampling and TRISO Calculations
+  [sampling]
+    type = RunApp
+    input = 'TRISO/triso_sampler.i'
+    check_input = True
+    executable_pattern = 'blue_crab*|bison*|dire_wolf*'
+  []
+  [triso_particle]
+    type = RunApp
+    input = 'TRISO/triso_particle.i'
+    check_input = True
+    cli_args = "particle_number=1 folder_name=gold"
+    executable_pattern = 'blue_crab*|bison*|dire_wolf*'
+  []
+[]
