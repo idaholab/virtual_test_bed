@@ -1,0 +1,23 @@
+[Tests]
+  # Syntax checks
+  [coupled_msre_multiphysics_syntax]
+    type = RunApp
+    input = 'neu.i'
+    check_input = True
+    executable_pattern = 'mcre*|blue_crab*'
+  []
+  # Regression tests with CSV output over a minimum amount of time steps/computation
+  [coupled_msre_multiphysics]
+    prereq = coupled_msre_multiphysics_syntax
+    type = CSVDiff
+    rel_err = 1.0E-4
+    input = 'neu.i'
+    csvdiff = 'msre_neutronics_ss_s2_out.csv msre_neutronics_ss_s2_out_flow_dnp0.csv'
+    executable_pattern = 'mcre*|blue_crab*'
+    # Fuel temperature is out of bounds for MGXS
+    allow_warnings = true
+    min_parallel = 16
+    max_time = 1000
+    method = 'opt'
+  []
+[]

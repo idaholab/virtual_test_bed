@@ -9,9 +9,11 @@
 
 [Standalone SAM 1-D model](msre_sam_model.md)
 
-[Pronghorn Model of Core - Steady State](msre_pronghorn_core_model.md)
+[Multiphysics RZ Model](msre_multiphysics_core_model.md)
 
-[Coupled Sam-Pronghorn Model](msre_sam_pgh.md)
+[Multiphysics RZ Transient Model](msre_multiphysics_transient_model.md)
+
+[Multiphysics RZ Model Results](msre_multiphysics_results.md)
 
 
 
