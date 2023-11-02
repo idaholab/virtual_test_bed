@@ -93,7 +93,7 @@ mult_45left = 0.307
 mult_45right = 0.261
 mult_47 = 0.260
 
-R1_rad = 0.00000
+#R1_rad = 0.00000
 R2_rad = 0.11317
 R3_rad = 0.11555
 R4_rad = 0.19133
@@ -140,7 +140,7 @@ R44_rad = 0.46467
 R45_rad = 0.46613
 R46_rad = 0.54682
 R47_rad = 0.54889
-R48_rad = 0.59345
+#R48_rad = 0.59345
 R49_rad = 0.60188
 R50_rad = 0.75088
 R51_rad = 0.757238
@@ -590,7 +590,6 @@ n_urlr = 4
     HS_BC_type = 'Adiabatic Coupled'
     HT_surface_area_density_right = ${aw_R2}
     name_comp_right = R2
-    eos_right = eos
     HT_area_multiplier_right = ${mult_1}
   []
 
@@ -612,8 +611,6 @@ n_urlr = 4
     HT_surface_area_density_right = ${aw_R4}
     name_comp_left = R2
     name_comp_right = R4
-    eos_left = eos
-    eos_right = eos
     HT_area_multiplier_left = ${mult_3left}
     HT_area_multiplier_right = ${mult_3right}
   []
@@ -635,7 +632,6 @@ n_urlr = 4
     HS_BC_type = 'Coupled Adiabatic'
     HT_surface_area_density_left = ${aw_R4}
     name_comp_left = R4
-    eos_left = eos
     HT_area_multiplier_left = ${mult_5}
   []
 
@@ -679,7 +675,6 @@ n_urlr = 4
     HS_BC_type = 'Adiabatic Coupled'
     HT_surface_area_density_right = ${aw_R8}
     name_comp_right = R8
-    eos_right = eos
     HT_area_multiplier_right = ${mult_7}
   []
 
@@ -699,7 +694,6 @@ n_urlr = 4
     HS_BC_type = 'Coupled Adiabatic'
     HT_surface_area_density_left = ${aw_R8}
     name_comp_left = R8
-    eos_left = eos
     HT_area_multiplier_left = ${mult_9}
   []
 
@@ -743,7 +737,6 @@ n_urlr = 4
     HS_BC_type = 'Adiabatic Coupled'
     HT_surface_area_density_right = ${aw_R12}
     name_comp_right = R12
-    eos_right = eos
     HT_area_multiplier_right = ${mult_11}
   []
 
@@ -763,7 +756,6 @@ n_urlr = 4
     HS_BC_type = 'Coupled Adiabatic'
     HT_surface_area_density_left = ${aw_R12}
     name_comp_left = R12
-    eos_left = eos
     HT_area_multiplier_left = ${mult_13}
   []
 
@@ -807,7 +799,6 @@ n_urlr = 4
     HS_BC_type = 'Adiabatic Coupled'
     HT_surface_area_density_right = ${aw_R16}
     name_comp_right = R16
-    eos_right = eos
     HT_area_multiplier_right = ${mult_15}
   []
 
@@ -827,7 +818,6 @@ n_urlr = 4
     HS_BC_type = 'Coupled Adiabatic'
     HT_surface_area_density_left = ${aw_R16}
     name_comp_left = R16
-    eos_left = eos
     HT_area_multiplier_left = ${mult_17}
   []
 
@@ -871,7 +861,6 @@ n_urlr = 4
     HS_BC_type = 'Adiabatic Coupled'
     HT_surface_area_density_right = ${aw_R20}
     name_comp_right = R20
-    eos_right = eos
     HT_area_multiplier_right = ${mult_19}
   []
 
@@ -893,7 +882,6 @@ n_urlr = 4
     HS_BC_type = 'Coupled Adiabatic'
     HT_surface_area_density_left = ${aw_R20}
     name_comp_left = R20
-    eos_left = eos
     HT_area_multiplier_left = ${mult_21}
   []
 
@@ -937,7 +925,6 @@ n_urlr = 4
     HS_BC_type = 'Adiabatic Coupled'
     HT_surface_area_density_right = ${aw_R24}
     name_comp_right = R24
-    eos_right = eos
     HT_area_multiplier_right = ${mult_23}
   []
 
@@ -957,7 +944,6 @@ n_urlr = 4
     HS_BC_type = 'Coupled Adiabatic'
     HT_surface_area_density_left = ${aw_R24}
     name_comp_left = R24
-    eos_left = eos
     HT_area_multiplier_left = ${mult_25}
   []
 
@@ -1001,7 +987,6 @@ n_urlr = 4
     HS_BC_type = 'Adiabatic Coupled'
     HT_surface_area_density_right = ${aw_R28}
     name_comp_right = R28
-    eos_right = eos
     HT_area_multiplier_right = ${mult_27}
   []
 
@@ -1021,7 +1006,6 @@ n_urlr = 4
     HS_BC_type = 'Coupled Adiabatic'
     HT_surface_area_density_left = ${aw_R28}
     name_comp_left = R28
-    eos_left = eos
     HT_area_multiplier_left = ${mult_29}
   []
 
@@ -1065,7 +1049,6 @@ n_urlr = 4
     HS_BC_type = 'Adiabatic Coupled'
     HT_surface_area_density_right = ${aw_R32}
     name_comp_right = R32
-    eos_right = eos
     HT_area_multiplier_right = ${mult_31}
   []
 
@@ -1087,7 +1070,6 @@ n_urlr = 4
     HS_BC_type = 'Coupled Adiabatic'
     HT_surface_area_density_left = ${aw_R32}
     name_comp_left = R32
-    eos_left = eos
     HT_area_multiplier_left = ${mult_33}
   []
 
@@ -1131,7 +1113,6 @@ n_urlr = 4
     HS_BC_type = 'Adiabatic Coupled'
     HT_surface_area_density_right = ${aw_R36}
     name_comp_right = R36
-    eos_right = eos
     HT_area_multiplier_right = ${mult_35}
   []
 
@@ -1151,7 +1132,6 @@ n_urlr = 4
     HS_BC_type = 'Coupled Adiabatic'
     HT_surface_area_density_left = ${aw_R36}
     name_comp_left = R36
-    eos_left = eos
     HT_area_multiplier_left = ${mult_37}
   []
 
@@ -1195,7 +1175,6 @@ n_urlr = 4
     HS_BC_type = 'Adiabatic Coupled'
     HT_surface_area_density_right = ${aw_R40}
     name_comp_right = R40
-    eos_right = eos
     HT_area_multiplier_right = ${mult_39}
   []
 
@@ -1215,7 +1194,6 @@ n_urlr = 4
     HS_BC_type = 'Coupled Adiabatic'
     HT_surface_area_density_left = ${aw_R40}
     name_comp_left = R40
-    eos_left = eos
     HT_area_multiplier_left = ${mult_41}
   []
 
@@ -1260,7 +1238,6 @@ n_urlr = 4
     HT_surface_area_density_right = ${aw_R44}
     name_comp_right = R44
     HT_area_multiplier_right = ${mult_43}
-    eos_right = eos
   []
 
   [R44] # outer core coolant channel
@@ -1284,8 +1261,6 @@ n_urlr = 4
     name_comp_right = R46
     HT_area_multiplier_left = ${mult_45left}
     HT_area_multiplier_right = ${mult_45right}
-    eos_left = eos
-    eos_right = eos
   []
 
   [R46] # side reflector coolant channel
@@ -1304,7 +1279,6 @@ n_urlr = 4
     HS_BC_type = 'Coupled Adiabatic'
     HT_surface_area_density_left = ${aw_R46}
     name_comp_left = R46
-    eos_left = eos
     HT_area_multiplier_left = ${mult_47}
   []
 
@@ -1439,10 +1413,8 @@ n_urlr = 4
     #   Ts_init = 323.15
     HT_surface_area_density_left = ${aw_R52}
     name_comp_left = R52
-    eos_left = eos
     name_comp_right = R54
     HT_surface_area_density_right = ${aw_R54_left}
-    eos_right = air_eos
   []
 
   ### air cavity, RCCS panels, water-cooled, set radiation boundary conditions for RPV
@@ -1513,10 +1485,8 @@ n_urlr = 4
     HT_surface_area_density_right = ${aw_R56}
     name_comp_right = R56
     Ts_init = 313.15
-    eos_right = water_eos
     name_comp_left = R54
     HT_surface_area_density_left = ${aw_R54_right}
-    eos_left = air_eos
   []
 
   [R56] # RCCS water coolant
@@ -1775,7 +1745,6 @@ n_urlr = 4
     HS_BC_type = 'Adiabatic Coupled'
     HT_surface_area_density_right = ${aw_R2}
     name_comp_right = RU2
-    eos_right = eos
     HT_area_multiplier_right = ${mult_1}
   []
 
@@ -1797,8 +1766,6 @@ n_urlr = 4
     HT_surface_area_density_right = ${aw_R4}
     name_comp_left = RU2
     name_comp_right = RU4
-    eos_left = eos
-    eos_right = eos
     HT_area_multiplier_left = ${mult_3left}
     HT_area_multiplier_right = ${mult_3right}
   []
@@ -1820,7 +1787,6 @@ n_urlr = 4
     HS_BC_type = 'Coupled Adiabatic'
     HT_surface_area_density_left = ${aw_R4}
     name_comp_left = RU4
-    eos_left = eos
     HT_area_multiplier_left = ${mult_5}
   []
 
@@ -1840,7 +1806,6 @@ n_urlr = 4
     HS_BC_type = 'Adiabatic Coupled'
     HT_surface_area_density_right = ${aw_R8}
     name_comp_right = RU8
-    eos_right = eos
     HT_area_multiplier_right = ${mult_7}
   []
 
@@ -1860,7 +1825,6 @@ n_urlr = 4
     HS_BC_type = 'Coupled Adiabatic'
     HT_surface_area_density_left = ${aw_R8}
     name_comp_left = RU8
-    eos_left = eos
     HT_area_multiplier_left = ${mult_9}
   []
 
@@ -1880,7 +1844,6 @@ n_urlr = 4
     HS_BC_type = 'Adiabatic Coupled'
     HT_surface_area_density_right = ${aw_R12}
     name_comp_right = RU12
-    eos_right = eos
     HT_area_multiplier_right = ${mult_11}
   []
 
@@ -1900,7 +1863,6 @@ n_urlr = 4
     HS_BC_type = 'Coupled Adiabatic'
     HT_surface_area_density_left = ${aw_R12}
     name_comp_left = RU12
-    eos_left = eos
     HT_area_multiplier_left = ${mult_13}
   []
 
@@ -1920,7 +1882,6 @@ n_urlr = 4
     HS_BC_type = 'Adiabatic Coupled'
     HT_surface_area_density_right = ${aw_R16}
     name_comp_right = RU16
-    eos_right = eos
     HT_area_multiplier_right = ${mult_15}
   []
 
@@ -1940,7 +1901,6 @@ n_urlr = 4
     HS_BC_type = 'Coupled Adiabatic'
     HT_surface_area_density_left = ${aw_R16}
     name_comp_left = RU16
-    eos_left = eos
     HT_area_multiplier_left = ${mult_17}
   []
 
@@ -1960,7 +1920,6 @@ n_urlr = 4
     HS_BC_type = 'Adiabatic Coupled'
     HT_surface_area_density_right = ${aw_R20}
     name_comp_right = RU20
-    eos_right = eos
     HT_area_multiplier_right = ${mult_19}
   []
 
@@ -1982,7 +1941,6 @@ n_urlr = 4
     HS_BC_type = 'Coupled Adiabatic'
     HT_surface_area_density_left = ${aw_R20}
     name_comp_left = RU20
-    eos_left = eos
     HT_area_multiplier_left = ${mult_21}
   []
 
@@ -2002,7 +1960,6 @@ n_urlr = 4
     HS_BC_type = 'Adiabatic Coupled'
     HT_surface_area_density_right = ${aw_R24}
     name_comp_right = RU24
-    eos_right = eos
     HT_area_multiplier_right = ${mult_23}
   []
 
@@ -2022,7 +1979,6 @@ n_urlr = 4
     HS_BC_type = 'Coupled Adiabatic'
     HT_surface_area_density_left = ${aw_R24}
     name_comp_left = RU24
-    eos_left = eos
     HT_area_multiplier_left = ${mult_25}
   []
 
@@ -2042,7 +1998,6 @@ n_urlr = 4
     HS_BC_type = 'Adiabatic Coupled'
     HT_surface_area_density_right = ${aw_R28}
     name_comp_right = RU28
-    eos_right = eos
     HT_area_multiplier_right = ${mult_27}
   []
 
@@ -2062,7 +2017,6 @@ n_urlr = 4
     HS_BC_type = 'Coupled Adiabatic'
     HT_surface_area_density_left = ${aw_R28}
     name_comp_left = RU28
-    eos_left = eos
     HT_area_multiplier_left = ${mult_29}
   []
 
@@ -2082,7 +2036,6 @@ n_urlr = 4
     HS_BC_type = 'Adiabatic Coupled'
     HT_surface_area_density_right = ${aw_R32}
     name_comp_right = RU32
-    eos_right = eos
     HT_area_multiplier_right = ${mult_31}
   []
 
@@ -2104,7 +2057,6 @@ n_urlr = 4
     HS_BC_type = 'Coupled Adiabatic'
     HT_surface_area_density_left = ${aw_R32}
     name_comp_left = RU32
-    eos_left = eos
     HT_area_multiplier_left = ${mult_33}
   []
 
@@ -2124,7 +2076,6 @@ n_urlr = 4
     HS_BC_type = 'Adiabatic Coupled'
     HT_surface_area_density_right = ${aw_R36}
     name_comp_right = RU36
-    eos_right = eos
     HT_area_multiplier_right = ${mult_35}
   []
 
@@ -2144,7 +2095,6 @@ n_urlr = 4
     HS_BC_type = 'Coupled Adiabatic'
     HT_surface_area_density_left = ${aw_R36}
     name_comp_left = RU36
-    eos_left = eos
     HT_area_multiplier_left = ${mult_37}
   []
 
@@ -2164,7 +2114,6 @@ n_urlr = 4
     HS_BC_type = 'Adiabatic Coupled'
     HT_surface_area_density_right = ${aw_R40}
     name_comp_right = RU40
-    eos_right = eos
     HT_area_multiplier_right = ${mult_39}
   []
 
@@ -2184,7 +2133,6 @@ n_urlr = 4
     HS_BC_type = 'Coupled Adiabatic'
     HT_surface_area_density_left = ${aw_R40}
     name_comp_left = RU40
-    eos_left = eos
     HT_area_multiplier_left = ${mult_41}
   []
 
@@ -2205,7 +2153,6 @@ n_urlr = 4
     HT_surface_area_density_right = ${aw_R44}
     name_comp_right = RU44
     HT_area_multiplier_right = ${mult_43}
-    eos_right = eos
   []
 
   [RU44] # outer core coolant channel
@@ -2229,8 +2176,6 @@ n_urlr = 4
     name_comp_right = RU46
     HT_area_multiplier_left = ${mult_45left}
     HT_area_multiplier_right = ${mult_45right}
-    eos_left = eos
-    eos_right = eos
   []
 
   [RU46] # side reflector coolant channel
@@ -2249,7 +2194,6 @@ n_urlr = 4
     HS_BC_type = 'Coupled Adiabatic'
     HT_surface_area_density_left = ${aw_R46}
     name_comp_left = RU46
-    eos_left = eos
     HT_area_multiplier_left = ${mult_47}
   []
 
@@ -2384,10 +2328,8 @@ n_urlr = 4
     #    Ts_init = 323.15
     HT_surface_area_density_left = ${aw_R52}
     name_comp_left = RU52
-    eos_left = eos
     HT_surface_area_density_right = ${aw_R54_left}
     name_comp_right = RU54
-    eos_right = air_eos
   []
 
   [RT53] # Vessel
@@ -2405,11 +2347,9 @@ n_urlr = 4
     HS_BC_type = 'Coupled Coupled'
     name_comp_left = inlet_plenum
     Hw_left = 100.
-    eos_left = eos
     #    Ts_init = 323.15
     HT_surface_area_density_right = ${aw_R54_left}
     name_comp_right = RT54
-    eos_right = air_eos
   []
 
   ### RCCS panels, water-cooled, set radiation boundary conditions for RPV
@@ -2483,10 +2423,8 @@ n_urlr = 4
     HT_surface_area_density_right = ${aw_R56}
     name_comp_right = RU56
     Ts_init = 313.15
-    eos_right = water_eos
     HT_surface_area_density_left = ${aw_R54_right}
     name_comp_left = RU54
-    eos_left = air_eos
   []
 
   [RT55] # RCCS wall (use ss as a surrogate)
@@ -2505,10 +2443,8 @@ n_urlr = 4
     HT_surface_area_density_right = ${aw_R56}
     name_comp_right = RT56
     Ts_init = 313.15
-    eos_right = water_eos
     HT_surface_area_density_left = ${aw_R54_right}
     name_comp_left = RT54
-    eos_left = air_eos
   []
 
   [RU56] # RCCS water coolant
@@ -2880,7 +2816,6 @@ n_urlr = 4
     HS_BC_type = 'Adiabatic Coupled'
     HT_surface_area_density_right = ${aw_R2}
     name_comp_right = RL2
-    eos_right = eos
     HT_area_multiplier_right = ${mult_1}
   []
 
@@ -2902,8 +2837,6 @@ n_urlr = 4
     HT_surface_area_density_right = ${aw_R4}
     name_comp_left = RL2
     name_comp_right = RL4
-    eos_left = eos
-    eos_right = eos
     HT_area_multiplier_left = ${mult_3left}
     HT_area_multiplier_right = ${mult_3right}
   []
@@ -2925,7 +2858,6 @@ n_urlr = 4
     HS_BC_type = 'Coupled Adiabatic'
     HT_surface_area_density_left = ${aw_R4}
     name_comp_left = RL4
-    eos_left = eos
     HT_area_multiplier_left = ${mult_5}
   []
 
@@ -2945,7 +2877,6 @@ n_urlr = 4
     HS_BC_type = 'Adiabatic Coupled'
     HT_surface_area_density_right = ${aw_R8}
     name_comp_right = RL8
-    eos_right = eos
     HT_area_multiplier_right = ${mult_7}
   []
 
@@ -2965,7 +2896,6 @@ n_urlr = 4
     HS_BC_type = 'Coupled Adiabatic'
     HT_surface_area_density_left = ${aw_R8}
     name_comp_left = RL8
-    eos_left = eos
     HT_area_multiplier_left = ${mult_9}
   []
 
@@ -2985,7 +2915,6 @@ n_urlr = 4
     HS_BC_type = 'Adiabatic Coupled'
     HT_surface_area_density_right = ${aw_R12}
     name_comp_right = RL12
-    eos_right = eos
     HT_area_multiplier_right = ${mult_11}
   []
 
@@ -3005,7 +2934,6 @@ n_urlr = 4
     HS_BC_type = 'Coupled Adiabatic'
     HT_surface_area_density_left = ${aw_R12}
     name_comp_left = RL12
-    eos_left = eos
     HT_area_multiplier_left = ${mult_13}
   []
 
@@ -3025,7 +2953,6 @@ n_urlr = 4
     HS_BC_type = 'Adiabatic Coupled'
     HT_surface_area_density_right = ${aw_R16}
     name_comp_right = RL16
-    eos_right = eos
     HT_area_multiplier_right = ${mult_15}
   []
 
@@ -3045,7 +2972,6 @@ n_urlr = 4
     HS_BC_type = 'Coupled Adiabatic'
     HT_surface_area_density_left = ${aw_R16}
     name_comp_left = RL16
-    eos_left = eos
     HT_area_multiplier_left = ${mult_17}
   []
 
@@ -3065,7 +2991,6 @@ n_urlr = 4
     HS_BC_type = 'Adiabatic Coupled'
     HT_surface_area_density_right = ${aw_R20}
     name_comp_right = RL20
-    eos_right = eos
     HT_area_multiplier_right = ${mult_19}
   []
 
@@ -3087,7 +3012,6 @@ n_urlr = 4
     HS_BC_type = 'Coupled Adiabatic'
     HT_surface_area_density_left = ${aw_R20}
     name_comp_left = RL20
-    eos_left = eos
     HT_area_multiplier_left = ${mult_21}
   []
 
@@ -3107,7 +3031,6 @@ n_urlr = 4
     HS_BC_type = 'Adiabatic Coupled'
     HT_surface_area_density_right = ${aw_R24}
     name_comp_right = RL24
-    eos_right = eos
     HT_area_multiplier_right = ${mult_23}
   []
 
@@ -3127,7 +3050,6 @@ n_urlr = 4
     HS_BC_type = 'Coupled Adiabatic'
     HT_surface_area_density_left = ${aw_R24}
     name_comp_left = RL24
-    eos_left = eos
     HT_area_multiplier_left = ${mult_25}
   []
 
@@ -3147,7 +3069,6 @@ n_urlr = 4
     HS_BC_type = 'Adiabatic Coupled'
     HT_surface_area_density_right = ${aw_R28}
     name_comp_right = RL28
-    eos_right = eos
     HT_area_multiplier_right = ${mult_27}
   []
 
@@ -3167,7 +3088,6 @@ n_urlr = 4
     HS_BC_type = 'Coupled Adiabatic'
     HT_surface_area_density_left = ${aw_R28}
     name_comp_left = RL28
-    eos_left = eos
     HT_area_multiplier_left = ${mult_29}
   []
 
@@ -3187,7 +3107,6 @@ n_urlr = 4
     HS_BC_type = 'Adiabatic Coupled'
     HT_surface_area_density_right = ${aw_R32}
     name_comp_right = RL32
-    eos_right = eos
     HT_area_multiplier_right = ${mult_31}
   []
 
@@ -3209,7 +3128,6 @@ n_urlr = 4
     HS_BC_type = 'Coupled Adiabatic'
     HT_surface_area_density_left = ${aw_R32}
     name_comp_left = RL32
-    eos_left = eos
     HT_area_multiplier_left = ${mult_33}
   []
 
@@ -3229,7 +3147,6 @@ n_urlr = 4
     HS_BC_type = 'Adiabatic Coupled'
     HT_surface_area_density_right = ${aw_R36}
     name_comp_right = RL36
-    eos_right = eos
     HT_area_multiplier_right = ${mult_35}
   []
 
@@ -3249,7 +3166,6 @@ n_urlr = 4
     HS_BC_type = 'Coupled Adiabatic'
     HT_surface_area_density_left = ${aw_R36}
     name_comp_left = RL36
-    eos_left = eos
     HT_area_multiplier_left = ${mult_37}
   []
 
@@ -3269,7 +3185,6 @@ n_urlr = 4
     HS_BC_type = 'Adiabatic Coupled'
     HT_surface_area_density_right = ${aw_R40}
     name_comp_right = RL40
-    eos_right = eos
     HT_area_multiplier_right = ${mult_39}
   []
 
@@ -3289,7 +3204,6 @@ n_urlr = 4
     HS_BC_type = 'Coupled Adiabatic'
     HT_surface_area_density_left = ${aw_R40}
     name_comp_left = RL40
-    eos_left = eos
     HT_area_multiplier_left = ${mult_41}
 
   []
@@ -3311,7 +3225,6 @@ n_urlr = 4
     HT_surface_area_density_right = ${aw_R44}
     name_comp_right = RL44
     HT_area_multiplier_right = ${mult_43}
-    eos_right = eos
   []
 
   [RL44] # outer core coolant channel
@@ -3335,8 +3248,6 @@ n_urlr = 4
     name_comp_right = RL46
     HT_area_multiplier_left = ${mult_45left}
     HT_area_multiplier_right = ${mult_45right}
-    eos_left = eos
-    eos_right = eos
   []
 
   [RL46] # side reflector coolant channel
@@ -3355,7 +3266,6 @@ n_urlr = 4
     HS_BC_type = 'Coupled Adiabatic'
     HT_surface_area_density_left = ${aw_R46}
     name_comp_left = RL46
-    eos_left = eos
     HT_area_multiplier_left = ${mult_47}
   []
 
@@ -3490,10 +3400,8 @@ n_urlr = 4
     #    Ts_init = 323.15
     HT_surface_area_density_left = ${aw_R52}
     name_comp_left = RL52
-    eos_left = eos
     HT_surface_area_density_right = ${aw_R54_left}
     name_comp_right = RL54
-    eos_right = air_eos
   []
 
   [RB53] # Vessel
@@ -3569,11 +3477,9 @@ n_urlr = 4
     HS_BC_type = 'Coupled Coupled'
     HT_surface_area_density_left = ${aw_R54_right}
     name_comp_left = RL54
-    eos_left = air_eos
     HT_surface_area_density_right = ${aw_R56}
     name_comp_right = RL56
     Ts_init = 313.15
-    eos_right = water_eos
   []
 
   [RB55] # RCCS wall (use ss as a surrogate)
@@ -3592,7 +3498,6 @@ n_urlr = 4
     HT_surface_area_density_right = ${aw_R56}
     name_comp_right = RB56
     Ts_init = 313.15
-    eos_right = water_eos
   []
 
   [RL56] # RCCS water coolant
@@ -4742,7 +4647,6 @@ n_urlr = 4
     height = 0.6 #0.4
     initial_P = 7.E+05
     eos = eos
-    display_pps = TRUE
   []
 
   [inpipe] # horizontal pipe connecting to R52
@@ -4771,7 +4675,6 @@ n_urlr = 4
     initial_P = 7.E+05
     initial_T = 500.
     eos = eos
-    display_pps = TRUE
   []
 
   [outpipe] # horizontal pipe connecting from outlet plenum
@@ -6199,12 +6102,12 @@ n_urlr = 4
 
   petsc_options_iname = '-ksp_gmres_restart -pc_type'
   petsc_options_value = '300 lu '
-  nl_rel_tol = 1e-4
-  nl_abs_tol = 1e-4
+  nl_rel_tol = 1e-5
+  nl_abs_tol = 1e-5
   nl_max_its = 12
   line_search = basic
 
-  l_tol = 1e-4 # Relative linear tolerance for each Krylov solve
+  l_tol = 1e-5 # Relative linear tolerance for each Krylov solve
   l_max_its = 100 # Number of linear iterations for each Krylov solve
 
   [Quadrature]
