@@ -1,0 +1,10 @@
+[Tests]
+  # Syntax checks
+  [coupled_msre_transient_multiphysics_syntax]
+    type = RunApp
+    input = 'neu.i'
+    prereq = ../steady_state/coupled_msre_multiphysics'
+    check_input = True
+    executable_pattern = 'mcre*|blue_crab*'
+  []
+[]
