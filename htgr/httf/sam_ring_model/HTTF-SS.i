@@ -230,9 +230,14 @@ n_urlr = 4
 [EOS]
 
   [eos]
-    type = PTFluidPropertiesEOS
+    type = PTFunctionsEOS
     p_0 = 7.e5 # Pa
-    fp = fluid_props1
+   rho = rhoHe
+   # beta = beta_fn
+    cp = cpHe
+    mu = muHe
+    k = kHe
+    enthalpy = HHe
   []
 
   [air_eos]
@@ -487,15 +492,6 @@ n_urlr = 4
     rho = 2370.0 # OSU-HTTF-TECH-003-R2 Appendix
   []
 
-  [fluid_props1]
-    type = FunctionFluidProperties
-    rho = rhoHe
-    beta = beta_fn
-    cp = cpHe
-    mu = muHe
-    k = kHe
-    enthalpy = HHe
-  []
 
   [fluid_props2]
     type = Water97FluidProperties
