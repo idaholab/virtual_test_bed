@@ -4,6 +4,13 @@
 
 *Model link: [HTTF SAM 2D Ring Model](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/httf)*
 
+!tag name=2D Ring Model for the High Temperature Test Facility pairs=reactor_type:HTGR
+                       reactor:HTTF
+                       geometry:core
+                       code_used:SAM
+                       computing_needs:workstation
+                       fiscal_year:2024
+
 ## Problem Description
 
 The High Temperature Test Facility (HTTF) [!citep](Gutowska2019) is an integral system test facility constructed and operated at the Oregon State University using General Atomics’ Modular High Temperature Gas-cooled Reactor (MHTGR) as its reference design. It is helium-cooled and electrically heated. [httf_geom] shows a rendering of the primary pressure vessel (PV), and the hot and cold legs connecting the PV to the reactor cavity simulation tank (RCST). Alumina ceramic blocks are used to simulate the core and top and bottom reflectors. Holes in the blocks provide channels for the heater rods, which consist of stacks of graphite rodlets. Coolant holes are arranged in the blocks to represent cooling and bypass flows in the core. The main objective of this test facility is to experimentally investigate thermal fluids behaviors of interest to MHTGR transients. A variety of tests were performed in the HTTF, providing experimental data to reflect system-level response, which are suitable for code benchmark of system analysis codes [!citep](OECD_NEA2023), and experimental data suitable for higher resolution thermal fluid codes such as CFD codes.
@@ -13,7 +20,7 @@ The High Temperature Test Facility (HTTF) [!citep](Gutowska2019) is an integral 
        id=httf_geom
        caption=The High Temperature Test Facility (used with permission).
 
-The SAM [!citep](Hu2021) model for the HTTF is based on the so-called 2D ring model approach to approximate a 3D geometry ([2d_ring]). In this approach, all components including the ceramic matrix, graphite heaters, coolant channels, core barrel, pressure vessel, and reactor cavity cooling system (RCCS) are modeled as concentric cylindrical rings. In the 2D ring model, this heat transfer pathway is represented by the sequence heater ring – ceramic ring – coolant ring – ceramic ring – heater ring, etc. The HTTF core is modeled with 13 coolant rings, 11 heater rings, 
+The SAM [!citep](Hu2021) model for the HTTF is based on the so-called 2D ring model approach to approximate a 3D geometry ([2d_ring]). In this approach, all components including the ceramic matrix, graphite heaters, coolant channels, core barrel, pressure vessel, and reactor cavity cooling system (RCCS) are modeled as concentric cylindrical rings. In the 2D ring model, this heat transfer pathway is represented by the sequence heater ring – ceramic ring – coolant ring – ceramic ring – heater ring, etc. The HTTF core is modeled with 13 coolant rings, 11 heater rings,
 25 ceramic rings. One ring each is used to model the stagnant helium gaps, upcomer, core barrel, reactor pressure vessel, RCCS, and the RCCS air cavity.
 
 !media httf/httf_sam_model/F2_RingModel.png
@@ -21,7 +28,7 @@ The SAM [!citep](Hu2021) model for the HTTF is based on the so-called 2D ring mo
        id=2d_ring
        caption=2D ring model of the HTTF.
 
-In the model, it is assumed that the HTTF was operated at full power of 2.2 MW although this was not achieved in actual experiments, and that axial heating profile is uniform. Inlet helium temperature approximating MHTGR condition is specified. The helium flow rate is chosen so that its temperature increases ~420 K after passing through the core, as is typical in MHTGR. However, the HTTF was not designed to operate at the high pressure encountered in MHTGR, a pressure about $1/10^{th}$ the MHTGR nominal pressure is specified. The heat transfer boundary condition for the reactor pressure vessel is established by specifying water flow rate and inlet temperature for the RCCS. The operating conditions for steady state simulation are given in [ring_bc]. 
+In the model, it is assumed that the HTTF was operated at full power of 2.2 MW although this was not achieved in actual experiments, and that axial heating profile is uniform. Inlet helium temperature approximating MHTGR condition is specified. The helium flow rate is chosen so that its temperature increases ~420 K after passing through the core, as is typical in MHTGR. However, the HTTF was not designed to operate at the high pressure encountered in MHTGR, a pressure about $1/10^{th}$ the MHTGR nominal pressure is specified. The heat transfer boundary condition for the reactor pressure vessel is established by specifying water flow rate and inlet temperature for the RCCS. The operating conditions for steady state simulation are given in [ring_bc].
 
 !table id=ring_bc caption=Steady state operating conditions.
 |  Parameter | Unit | Value  |
