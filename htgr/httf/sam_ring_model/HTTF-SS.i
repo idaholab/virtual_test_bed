@@ -232,8 +232,8 @@ n_urlr = 4
   [eos]
     type = PTFunctionsEOS
     p_0 = 7.e5 # Pa
-   rho = rhoHe
-   # beta = beta_fn
+    rho = rhoHe
+    # beta = beta_fn
     cp = cpHe
     mu = muHe
     k = kHe
@@ -491,7 +491,6 @@ n_urlr = 4
     Cp = cpSiC80
     rho = 2370.0 # OSU-HTTF-TECH-003-R2 Appendix
   []
-
 
   [fluid_props2]
     type = Water97FluidProperties
@@ -5197,151 +5196,151 @@ n_urlr = 4
   []
 
   [max_R1]
-    type = NodalMaxValue
+    type = NodalExtremeValue
     block = 'R1:hs0'
     variable = T_solid
   []
 
   [max_R3]
-    type = NodalMaxValue
+    type = NodalExtremeValue
     block = 'R3:hs0'
     variable = T_solid
   []
 
   [max_R5]
-    type = NodalMaxValue
+    type = NodalExtremeValue
     block = 'R5:hs0'
     variable = T_solid
   []
 
   [max_R7]
-    type = NodalMaxValue
+    type = NodalExtremeValue
     block = 'R7:hs0'
     variable = T_solid
   []
 
   [max_R9]
-    type = NodalMaxValue
+    type = NodalExtremeValue
     block = 'R9:hs0'
     variable = T_solid
   []
 
   [max_R11]
-    type = NodalMaxValue
+    type = NodalExtremeValue
     block = 'R11:hs0'
     variable = T_solid
   []
 
   [max_R13]
-    type = NodalMaxValue
+    type = NodalExtremeValue
     block = 'R13:hs0'
     variable = T_solid
   []
 
   [max_R15]
-    type = NodalMaxValue
+    type = NodalExtremeValue
     block = 'R15:hs0'
     variable = T_solid
   []
 
   [max_R17]
-    type = NodalMaxValue
+    type = NodalExtremeValue
     block = 'R17:hs0'
     variable = T_solid
   []
 
   [max_R19]
-    type = NodalMaxValue
+    type = NodalExtremeValue
     block = 'R19:hs0'
     variable = T_solid
   []
 
   [max_R21]
-    type = NodalMaxValue
+    type = NodalExtremeValue
     block = 'R21:hs0'
     variable = T_solid
   []
 
   [max_R23]
-    type = NodalMaxValue
+    type = NodalExtremeValue
     block = 'R23:hs0'
     variable = T_solid
   []
 
   [max_R25]
-    type = NodalMaxValue
+    type = NodalExtremeValue
     block = 'R25:hs0'
     variable = T_solid
   []
 
   [max_R27]
-    type = NodalMaxValue
+    type = NodalExtremeValue
     block = 'R27:hs0'
     variable = T_solid
   []
 
   [max_R29]
-    type = NodalMaxValue
+    type = NodalExtremeValue
     block = 'R29:hs0'
     variable = T_solid
   []
 
   [max_R31]
-    type = NodalMaxValue
+    type = NodalExtremeValue
     block = 'R31:hs0'
     variable = T_solid
   []
 
   [max_R33]
-    type = NodalMaxValue
+    type = NodalExtremeValue
     block = 'R33:hs0'
     variable = T_solid
   []
 
   [max_R35]
-    type = NodalMaxValue
+    type = NodalExtremeValue
     block = 'R35:hs0'
     variable = T_solid
   []
 
   [max_R37]
-    type = NodalMaxValue
+    type = NodalExtremeValue
     block = 'R37:hs0'
     variable = T_solid
   []
 
   [max_R39]
-    type = NodalMaxValue
+    type = NodalExtremeValue
     block = 'R39:hs0'
     variable = T_solid
   []
 
   [max_R41]
-    type = NodalMaxValue
+    type = NodalExtremeValue
     block = 'R41:hs0'
     variable = T_solid
   []
 
   [max_R43]
-    type = NodalMaxValue
+    type = NodalExtremeValue
     block = 'R43:hs0'
     variable = T_solid
   []
 
   [max_R45]
-    type = NodalMaxValue
+    type = NodalExtremeValue
     block = 'R45:hs0'
     variable = T_solid
   []
 
   [max_R47]
-    type = NodalMaxValue
+    type = NodalExtremeValue
     block = 'R47:hs0'
     variable = T_solid
   []
 
   [max_R49]
-    type = NodalMaxValue
+    type = NodalExtremeValue
     block = 'R49:hs0'
     variable = T_solid
   []
@@ -5497,61 +5496,61 @@ n_urlr = 4
   []
 
   [Heater_R6]
-    type = NodalMaxValue
+    type = NodalExtremeValue
     block = 'R6:hs0'
     variable = T_solid
   []
 
   [Heater_R10]
-    type = NodalMaxValue
+    type = NodalExtremeValue
     block = 'R10:hs0'
     variable = T_solid
   []
 
   [Heater_R14]
-    type = NodalMaxValue
+    type = NodalExtremeValue
     block = 'R14:hs0'
     variable = T_solid
   []
 
   [Heater_R18]
-    type = NodalMaxValue
+    type = NodalExtremeValue
     block = 'R18:hs0'
     variable = T_solid
   []
 
   [Heater_R22]
-    type = NodalMaxValue
+    type = NodalExtremeValue
     block = 'R22:hs0'
     variable = T_solid
   []
 
   [Heater_R26]
-    type = NodalMaxValue
+    type = NodalExtremeValue
     block = 'R26:hs0'
     variable = T_solid
   []
 
   [Heater_R30]
-    type = NodalMaxValue
+    type = NodalExtremeValue
     block = 'R30:hs0'
     variable = T_solid
   []
 
   [Heater_R34]
-    type = NodalMaxValue
+    type = NodalExtremeValue
     block = 'R34:hs0'
     variable = T_solid
   []
 
   [Heater_R38]
-    type = NodalMaxValue
+    type = NodalExtremeValue
     block = 'R38:hs0'
     variable = T_solid
   []
 
   [Heater_R42]
-    type = NodalMaxValue
+    type = NodalExtremeValue
     block = 'R42:hs0'
     variable = T_solid
   []
