@@ -485,7 +485,6 @@ fis_fract            = ${fparse 1 - dh_fract} # Fission power fraction at t = 0.
   csv = true
   [Checkpoint]
     type = Checkpoint
-    execute_on = 'FINAL'
   []
   # Reduce base output
   print_linear_converged_reason = false
