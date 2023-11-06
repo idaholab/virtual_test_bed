@@ -1,0 +1,23 @@
+[Tests]
+  # Syntax checks
+  [coupled_mcre_multiphysics_syntax]
+    type = RunApp
+    input = 'run_neutronics_9_group.i'
+    check_input = True
+    executable_pattern = 'mcre*|blue_crab*'
+  []
+  # Regression tests for steady-state run is too heavy - we will just check the syntax
+  #[coupled_mcre_multiphysics]
+  #  prereq = coupled_mcre_multiphysics_syntax
+  #  type = CSVDiff
+  #  input = 'run_neutronics.i'
+  #  csvdiff = 'multiphysics_out.csv multiphysics_out_ns0.csv'
+  #  executable_pattern = 'mcre*|blue_crab*'
+  #  cli_args = "Outputs/file_base=multiphysics_out"
+  #  # Fuel temperature is out of bounds for MGXS
+  #  allow_warnings = true
+  #  min_parallel = 16
+  #  max_time = 1000
+  #  method = 'opt'
+  #[]
+[]

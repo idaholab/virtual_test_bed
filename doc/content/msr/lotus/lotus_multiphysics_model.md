@@ -1,34 +1,131 @@
-# MSFR Griffin-Pronghorn Model
+# Lotus Griffin-Pronghorn Model
 
 *Contact: Mauricio Tano, mauricio.tanoretamales.at.inl.gov*
 
-*Model link: [Griffin-Pronghorn Steady-State Model](https://github.com/idaholab/virtual_test_bed/tree/devel/msr/msfr/steady)*
+*Model summarized, documented, and uploaded by Rodrigo de Oliveira and Samuel Walker*
 
-!tag name=MSFR Griffin-Pronghorn Steady State Model pairs=reactor_type:MSR
-                       reactor:MSFR
+*Model link: [Griffin-Pronghorn Steady-State Lotus Model](https://github.com/idaholab/virtual_test_bed/tree/devel/msr/lotus/steady_state)*
+
+!tag name=Lotus Griffin-Pronghorn Steady State Model pairs=reactor_type:MSR
+                       reactor:Lotus
                        geometry:core
                        simulation_type:core_multiphysics
                        input_features:multiapps
                        code_used:BlueCrab
                        computing_needs:Workstation
-                       fiscal_year:2021
+                       fiscal_year:2023
 
-The MultiApp system is used to separate the neutronics and the fluid dynamics
-problems. The fluid system is solved by the subapp and it uses the `run_ns.i`
+This multiphysics problem is solved using the MultiApp system to separate the neutronics and the fluid dynamics problems.
+
+## Neutronics
+
+Starting first with neutronics, Griffin solves the neutron transport problem via the Diffusion equation approximation. The Griffin input file will now be briefly discussed and the primary equations that are solved and how they relate to the input file will be shown. The input file to solve the 9 group neutron diffusion problem is shown below.
+
+!listing msr/lotus/steady_state/run_neutronics_9_group.i
+
+With Griffin, the process of converting the basic conservation equations into
+MOOSE variables and kernels is automated with the `TransportSystems` block:
+
+!listing msr/lotus/steady/run_neutronics.i block=TransportSystems
+
+Details about neutron transport equations can be found in Griffin theory manual.
+
+Here we are specifying an eigenvalue neutronics problem using 6 energy groups
+(`G = 6`) solved via the diffusion approximation with a continuous finite
+element discretization scheme (`scheme = CFEM-Diffusion`).
+
+Note the `external_dnp_variable = 'dnp'` parameter. This is a special option
+needed for liquid-fueled MSRs which signals that the conservation equations for
+DNP will be handled "externally" from the default
+Griffin implementation which assumes that the precursors do not have the turbulent treatment.
+This parameter is referencing the `dnp` auxiliary variable which is defined as,
+
+!listing msr/msfr/steady/run_neutronics.i block=AuxVariables/dnp
+
+Note that this is an array auxiliary variable with 6 components, corresponding
+to the 6 DNP groups used here.
+
+Support within the Framework for array variables is somewhat limited. For
+example, not all of the multiapp transfers work with array variables, and the
+Navier-Stokes module does not include the kernels that are needed to advect an
+array variable. For this reason, there is also a separate auxiliary variables for each
+of DNP. For example,
+
+!listing msr/msfr/steady/run_neutronics.i block=AuxVariables/c1
+
+The `run_ns.i` subapp is responsible for computing the precursor distributions,
+and the distributions are transferred from the subapp to the main app by blocks
+like this one,
+
+!listing msr/msfr/steady/run_neutronics.i block=Transfers/c1
+
+The values are then copied from the `c1`, `c2`, etc. variables into the `dnp`
+variable by this aux kernel:
+
+!listing msr/msfr/steady/run_neutronics.i block=AuxKernels/build_dnp
+
+Also note that solving the neutronics problem requires a set of multigroup
+cross sections. Generating cross sections is a topic that is left outside the
+scope of this example. A set has been generated for the MSFR problem and stored
+in the repository using Griffin's ISOXML format. These cross sections are included
+by the blocks,
+
+!listing msr/msfr/steady/run_neutronics.i block=Materials
+
+`CoupledFeedbackNeutronicsMaterial` is able to use the temperature transferred
+from the fluid system for evaluating multigroup cross sections based on a table lookup
+on element quadrature points to bring in the feedback effect.
+It also has the capability of adjusting cross sections based on fluid density.
+In this model, the fluid density change is negligible.
+
+Neutronics solution is normalized to the rated power $3000$MW with the `PowerDensity`
+input block
+
+!listing msr/msfr/steady/run_neutronics.i block=PowerDensity
+
+The power density is evaluated with the normalized neutronics solution.
+It provides the source of the fluid energy equation.
+Because the fluid energy equation is discretized with FV, we evaluate the power
+density variable with constant monomial.
+
+Griffin input is the main-application and includes a sub-application with the
+fluid system input `run_ns.i`.
+
+!listing msr/msfr/steady/run_neutronics.i block=MultiApps
+
+Neutronics needs to to transfer fission source, power density to fluid system
+and needs to transfer back from fluid system temperature and DNP concentrations.
+
+!listing msr/msfr/steady/run_neutronics.i block=Transfers
+
+The caculation is driven by `Eigenvalue`, an executioner available in the MOOSE framework.
+The PJFNKMO option for the `solve_type` parameter is able to
+drive the eigenvalue calculation with the contribution of DNP
+to the neutron transport equation as an external source scaled with $k$-effective.
+
+!listing msr/msfr/steady/run_neutronics.i block=Executioner
+
+
+
+
+
+The fluid system is solved by the subapp and it uses the `run_ns_initial_res.i`
 input files. (Here "ns" is an abbreviation for Navier-Stokes.)
 
 The fluid system includes conservation equations for fluid mass, momentum, and
-energy as well as the conservation of delayed neutron precursors.
+energy as well as the conservation of delayed neutron precursors. Here a porous flow and weakly-compressible formulation are used to model molten salts and the pressure drop over the mixing plate at the entrance of the reactor core.
 
-## Conservation of fluid mass
+## Thermal Hydraulics
+
+### Conservation of fluid mass
 
 The conservation of mass is,
 
 \begin{equation}
-  \nabla \cdot \rho \vec{u} = 0,
+  \frac{\partial \gamma \rho}{\partial t} + \nabla \cdot (\rho \vec{u}) = 0,
 \end{equation}
 
-where $\rho$ is the fluid density and $\vec{u}$ is the velocity vector.
+where $\rho$ is the fluid density, $\gamma$ is the porosity, and $\vec{u}$ is the velocity vector.
 
 Here the system will be simplified by modeling the flow as incompressible.  (The
 effect of Buoyancy will be re-introduced later with the Boussinesq
@@ -41,6 +138,8 @@ approximation.)  The simplified conservation of mass is then given by,
 This conservation equation is automatically added by the `NavierStokesFV` action
 when selecting the incompressible model.
 
+!listing msr/lotus/steady_state/run_ns_initial_res.i
+
 ```
 [Modules]
   [NavierStokesFV]
@@ -51,7 +150,7 @@ when selecting the incompressible model.
 
 Legacy syntax for the mass equation is included [here](griffin_pgh_model_legacy.md).
 
-## Conservation of fluid momentum
+### Conservation of fluid momentum
 
 This system also includes the conservation of momentum in the $x$-direction. A
 fairly general form of the steady-state condition is,
@@ -234,7 +333,7 @@ eddy viscosity. These are used for analysis purposes.
 
 Legacy syntax for the momentum equation is included [here](griffin_pgh_model_legacy.md).
 
-## Conservation of fluid energy
+### Conservation of fluid energy
 
 The steady-state conservation of energy can be expressed as,
 \begin{equation}
@@ -344,7 +443,11 @@ symmetry and adiabatic boundaries.
 
 Legacy syntax for the energy equation is included [here](griffin_pgh_model_legacy.md).
 
-## Conservation of delayed neutron precursors
+## Delayed Neutron Precursor Advection Equation
+
+Here the distribution of delayed neutron precursors (DNPs) is solved for in another nested sub-app that the Thermal Hydraulics application calls. The input file for solving the conservation of DNPs is listed below.
+
+!listing msr/lotus/steady_state/run_prec_transport.i
 
 The steady-state conservation of delayed neutron precursors (DNP) can be expressed as,
 \begin{equation}
@@ -388,86 +491,3 @@ The terms of [eq:energy] are added with
 ```
 
 
-## Neutronics
-
-With Griffin, the process of converting the basic conservation equations into
-MOOSE variables and kernels is automated with the `TransportSystems` block:
-
-!listing msr/msfr/steady/run_neutronics.i block=TransportSystems
-
-Details about neutron transport equations can be found in Griffin theory manual.
-
-Here we are specifying an eigenvalue neutronics problem using 6 energy groups
-(`G = 6`) solved via the diffusion approximation with a continuous finite
-element discretization scheme (`scheme = CFEM-Diffusion`).
-
-Note the `external_dnp_variable = 'dnp'` parameter. This is a special option
-needed for liquid-fueled MSRs which signals that the conservation equations for
-DNP will be handled "externally" from the default
-Griffin implementation which assumes that the precursors do not have the turbulent treatment.
-This parameter is referencing the `dnp` auxiliary variable which is defined as,
-
-!listing msr/msfr/steady/run_neutronics.i block=AuxVariables/dnp
-
-Note that this is an array auxiliary variable with 6 components, corresponding
-to the 6 DNP groups used here.
-
-Support within the Framework for array variables is somewhat limited. For
-example, not all of the multiapp transfers work with array variables, and the
-Navier-Stokes module does not include the kernels that are needed to advect an
-array variable. For this reason, there is also a separate auxiliary variables for each
-of DNP. For example,
-
-!listing msr/msfr/steady/run_neutronics.i block=AuxVariables/c1
-
-The `run_ns.i` subapp is responsible for computing the precursor distributions,
-and the distributions are transferred from the subapp to the main app by blocks
-like this one,
-
-!listing msr/msfr/steady/run_neutronics.i block=Transfers/c1
-
-The values are then copied from the `c1`, `c2`, etc. variables into the `dnp`
-variable by this aux kernel:
-
-!listing msr/msfr/steady/run_neutronics.i block=AuxKernels/build_dnp
-
-Also note that solving the neutronics problem requires a set of multigroup
-cross sections. Generating cross sections is a topic that is left outside the
-scope of this example. A set has been generated for the MSFR problem and stored
-in the repository using Griffin's ISOXML format. These cross sections are included
-by the blocks,
-
-!listing msr/msfr/steady/run_neutronics.i block=Materials
-
-`CoupledFeedbackNeutronicsMaterial` is able to use the temperature transferred
-from the fluid system for evaluating multigroup cross sections based on a table lookup
-on element quadrature points to bring in the feedback effect.
-It also has the capability of adjusting cross sections based on fluid density.
-In this model, the fluid density change is negligible.
-
-Neutronics solution is normalized to the rated power $3000$MW with the `PowerDensity`
-input block
-
-!listing msr/msfr/steady/run_neutronics.i block=PowerDensity
-
-The power density is evaluated with the normalized neutronics solution.
-It provides the source of the fluid energy equation.
-Because the fluid energy equation is discretized with FV, we evaluate the power
-density variable with constant monomial.
-
-Griffin input is the main-application and includes a sub-application with the
-fluid system input `run_ns.i`.
-
-!listing msr/msfr/steady/run_neutronics.i block=MultiApps
-
-Neutronics needs to to transfer fission source, power density to fluid system
-and needs to transfer back from fluid system temperature and DNP concentrations.
-
-!listing msr/msfr/steady/run_neutronics.i block=Transfers
-
-The caculation is driven by `Eigenvalue`, an executioner available in the MOOSE framework.
-The PJFNKMO option for the `solve_type` parameter is able to
-drive the eigenvalue calculation with the contribution of DNP
-to the neutron transport equation as an external source scaled with $k$-effective.
-
-!listing msr/msfr/steady/run_neutronics.i block=Executioner
