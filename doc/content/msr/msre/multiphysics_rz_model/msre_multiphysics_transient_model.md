@@ -4,6 +4,17 @@
 
 *Model summarized, documented, and uploaded by Andres Fierro*
 
+*Model link: [Griffin-Pronghorn Transient Model](https://github.com/idaholab/virtual_test_bed/tree/devel/msr/msre/multiphysics_core_model/transient)*
+
+!tag name=MSRE Griffin-Pronghorn Transient Model pairs=reactor_type:MSR
+                       reactor:MSRE
+                       geometry:core
+                       simulation_type:core_multiphysics
+                       input_features:multiapps
+                       code_used:BlueCrab
+                       computing_needs:Workstation
+                       fiscal_year:2023
+
 This Transient model builds off of the existing Steady state model. Here only the difference will be highlighted to perform the transient analysis.
 
 ## Neutronics Transient Model
