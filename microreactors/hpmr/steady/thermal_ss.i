@@ -27,7 +27,7 @@ qvalue_multiplier = 1.0
 [Mesh]
   [main]
     type = FileMeshGenerator
-    file = '../mesh/one_twelfth_core/one_twelfth_empire_core_thermal.e'
+    file = '../mesh/one_twelfth_empire_core_thermal.e'
   []
 []
 
@@ -238,7 +238,7 @@ qvalue_multiplier = 1.0
     variable = Tsolid
     direction = z
     bounds = '0.2 2.0' # evaporator section - FIXME: could add more layers but delta T less than 50K (do it after seeing if it messes with Sockeye)
-    points_file = '../../mesh/one_twelfth_core/twelfth_core_hp_centers.txt' # assembly centers
+    points_file = '../mesh/twelfth_core_hp_centers.txt' # assembly centers
     execute_on = 'initial timestep_end'
   []
 []
@@ -246,7 +246,7 @@ qvalue_multiplier = 1.0
 [MultiApps]
   [sockeye]
     type = TransientMultiApp
-    positions_file = '../../mesh/one_twelfth_core/twelfth_core_hp_centers.txt' # 101 HPs
+    positions_file = '../mesh/twelfth_core_hp_centers.txt' # 101 HPs
     app_type = SockeyeApp
     input_files = 'heatpipe_vapor_only.i'
     execute_on = 'timestep_end'
