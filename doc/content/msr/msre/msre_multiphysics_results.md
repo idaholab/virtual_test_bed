@@ -11,14 +11,14 @@ This section will cover both the Steady State and Transient Results from the MSR
 The multi-dimensional velocity field becomes approximately 1D due to the anisotropic friction coefficient blocking flow in the horizontal direction as seen in [MSRE_pgh_fields] (center). [MSRE_pgh_fields] (right) and [MSRE_pgh_fields] (left) show the power source distribution calculated by Griffin and the resultant temperature field respectively. The simulation predicts a temperature increase of about 60 K (kelvin) in the core. The temperature variation predicted across the downcomer is small.
 
 !media msr/msre/MSRE_pgh_fields.png
-       style=width:100%;margin-left:auto;margin-right:auto
+       style=width:110%;margin-left:auto;margin-right:auto
        id=MSRE_pgh_fields
        caption=Fuel Salt Temperature - left (K), Fuel salt velocity - center (m/s), and Power density - right (W/m$^3$).
 
 Additionally, the steady-state delayed neutron precursor group distributions calculated via Pronghorn are shown in [MSRE_pgh_dnps]. Here the long lived delayed neutron precursor group 1 is well mixed throughout the reactor core, whereas the short lived neutron precursor group 6 is centralized and decays in the reactor core.
 
 !media msr/msre/MSRE_pgh_dnps.png
-       style=width:100%;margin-left:auto;margin-right:auto
+       style=width:110%;margin-left:auto;margin-right:auto
        id=MSRE_pgh_dnps
        caption=Long lived DNP Group 1 (left), Medium lived DNP group 3(center), and short lived DNP group 6 (right).
 
@@ -66,6 +66,6 @@ For the transient results, we tested a reactivity insertion of 19 percent-mili (
 The method converges reliably and efficiently, with a maximum of 15 iterations but usually less than ten iterations in the tested case. This coupling method converges faster than comparable methods, achieving less error than the domain-segregated method or a standalone SAM model. This may be due to the improved temperature resolution in the core. Note that as the limit of the time-step goes to zero, the domain-overlapping and the domain-segregated should yield same results.
 
 !media msr/msre/MSRE_reactivity_insertion_5MW.png
-       style=width:45%;margin-left:auto;margin-right:auto
+       style=width:80%;margin-left:auto;margin-right:auto
        id=Convergence Velocity
        caption=Error Comparison, [!citep](Mau23).

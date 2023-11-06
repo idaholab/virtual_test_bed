@@ -10,7 +10,7 @@ The MSRE was a graphite moderated flowing salt type reactor with a design maximu
 The reactor ran for more than 13,000 hours at full power before its final shut down in 1969.  The general layout of the experiment is shown in [MSRE_core_ref].
 
 !media msr/msre/MSRE_core_ref.png
-        style=width:55%; float:left;padding-top:2.5%;padding-right:5%
+        style=width:65%; float:left;padding-top:2.5%;padding-right:5%
         id=MSRE_core_ref
         caption=Schematic design of MSRE loops [!citep](osti_1617123).
 
@@ -48,9 +48,9 @@ We note that the MSRE was a thermal reactor with a highly negative reactivity te
 
 
 !media msr/msre/MSRE_core_ref_2.png
-        style=width:45%;margin-left:auto;margin-right:auto
+        style=width:65%;margin-left:auto;margin-right:auto
         id=MSRE_core_ref_2
-        caption=Picture of MSRE core graphite stringers  [!citep](osti_1617123)
+        caption=Picture of MSRE core graphite stringers in core assembly [!citep](ORNL_3626).
 
 
 ## Material Properties and MSRE Setup
