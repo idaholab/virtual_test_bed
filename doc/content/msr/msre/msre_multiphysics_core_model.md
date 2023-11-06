@@ -13,10 +13,6 @@ The fuel salt flows down the `Downcomer`, through the `Lower Plenum` and up into
        id=MSRE_pgh_mesh_blocks
        caption=Subdomain (left) and mesh (right) of the multiphysics model.
 
-## Computational Model Descriptions
-
-The Griffin and Pronghorn input file adopts a block structured syntax. This section covers the important blocks in the input files.
-
 ## Neutronics Model
 
  Here Griffin is the main app detailed in the neutronics input file listed below which calls the sub app Pronghorn which is detailed in the thermal hydraulics section that is discussed later.
@@ -40,6 +36,15 @@ Next, the `Transport System` block determines what sort of neutronic solve Griff
 Additionally, the type of transport equation is selected. In this case the a simplified Diffusion equation is sufficient for fast multiphysics coupling. Additionally, options for the jacobian and fission source auxiliary variable are selected here.
 
 !listing msr/msre/multiphysics_core_model/steady_state/neu.i block=TransportSystems
+
+The multi-group diffusion equation for the eigenvalue problem solved at steady-state  is given as:
+
+\begin{equation} \label{eq:eigen_multi}
+-\nabla \cdot D_g(\mathbf{r}) \nabla \phi_g(\mathbf{r}) + \Sigma_{rg} \phi_g(\mathbf{r}) = \frac{1 - \beta_0}{k_{eff}} \chi_{p,g} \sum_{g'=1}^G (\nu\Sigma_{f})_{g'} \phi_{g'}(\mathbf{r}) + \sum_{g' \neq g}^G \Sigma_{sg'} \phi_{g'}(\mathbf{r}) + \chi_{d,g} \sum_{i=1}^m \lambda_i c_i(\mathbf{r}),
+\end{equation}
+
+where the symbols represent the following: $D_g$ diffusion coefficient for energy group $g$, $\phi_g(\mathbf{r})$ neutron scalar flux of energy group $g$ at position $\mathbf{r}$,
+$\Sigma_{rg}$ removal cross-section from energy group $g$, $k_{eff}$ eigenvalue representing the effective multiplication factor of the reactor, $\chi_{p,g}$ prompt fission spectrum for neutrons born in energy group $g$, $\nu$ number of neutrons per fission, $\Sigma_{fg'}$ average fission cross-section of neutrons in energy group $g'$, $\Sigma_{sg'}$ differential scattering cross-section for neutrons scattering from energy group $g'$ to energy group $g$, $\beta_0$ delayed neutrons fraction, $\chi_{d,g}$ delayed fission spectrum for neutrons born in energy group $g$ due to decay of neutron precursors,  $\lambda_i$ decay constant for precursor group $i$, $c_i(\mathbf{r})$ concentration of neutron precursor group $i$, at position $\mathbf{r}$, and $G$ total number of energy groups.
 
 #### Mesh
 
@@ -170,12 +175,33 @@ Porosity, friction, and turbulence treatment can be modified here using various 
 
 The action also incorporates external physics like a volumetric heat source due to the power_density calculated by Griffin. Lastly boundary conditions are set to constrain the different Navier Stokes equations.
 
-blocks The action allows users to simply modify the equations that are solved, choose numerical schemes, define the porosity and friction treatment, define fluid properties, couple with other physics for energy deposition, and set boundary conditions.
+The action allows users to simply modify the equations that are solved, choose numerical schemes, define the porosity and friction treatment, define fluid properties, couple with other physics for energy deposition, and set boundary conditions.
 
 The scalar equations for delayed neutron precursor groups are not included here in the action since they are defined externally elsewhere in the input file
 
 !listing msr/msre/multiphysics_core_model/steady_state/th.i start=[Modules] end=[FluidProperties]
 
+The porous flow equations for weakly-compressible flow read as follows:
+
+\begin{equation} \label{eq:mass_cons}
+\frac{\partial \gamma \rho}{\partial t} + \nabla \cdot (\rho \vec{v}) = 0  \quad \text{on } \Omega_f ,
+\end{equation}
+
+\begin{equation} \label{eq:mom_cons}
+\frac{\partial  \rho \vec{v}}{\partial t} + \nabla \cdot \left(\gamma^{-1}  \rho \vec{v} \otimes \vec{v}\right) - \nabla \cdot \left[ (\mu_t + \rho \nu_t) (\nabla \vec{u} + \nabla \vec{u} ^ T) \right] = -\gamma \nabla p + \gamma \rho \vec{g} -  W \rho  \vec{v}_I + \vec{S} \quad \text{on } \Omega_f ,
+\end{equation}
+
+\begin{equation} \label{eq:liq_ene_cons}
+\frac{\partial \gamma \rho e}{\partial t} + \nabla \cdot \left(  \rho H \vec{v}\right) - \nabla \cdot \left( \kappa_f \nabla T \right) - \nabla \cdot \left( \rho \alpha_t \nabla e \right) =  \dot{q_l}''' \quad \text{on } \Omega_f ,
+\end{equation}
+
+\begin{equation} \label{eq:sol_ene_cons}
+(1 - \gamma) \rho_s c_{p,s} \frac{\partial T_s}{\partial t} - \nabla \cdot \left (\kappa_s \nabla T_s \right) - \alpha(T - T_s) = \dot{q_s}''' \quad \text{on } \Omega_s ,
+\end{equation}
+
+where $\vec{v}$ is the superficial velocity defined as $\vec{v} = \gamma \vec{v}_I$ and $\vec{v}_I$ is the interstitial or physical velocity, $\rho$ is the density, $p$ is the pressure, $e$ is the internal energy, $H$ is the enthalpy, $T$ is the fluid temperature, $T_s$ is the solid temperature, $\rho_s$ is the solid density, $c_{p,s}$ is the specific heat of the solid phase, $\vec{g}$ is the gravity vector, $W$ is the pressure drop coefficient, $\vec{S}$ is the momentum source that is used to model the pump, $\kappa_f$ is the effective thermal conductivity of the fluid, $\alpha_t$ is the turbulent heat diffusivity, $\kappa_s$ is the effective solid thermal conductivity, $\dot{q}_l'''$ is the heat source being deposited directly in liquid fuel (e.g., fission heat source), and $\dot{q}_s'''$ is the heat source in the solid (e.g., residual power production in structures). The effective thermal conductivities $\kappa_f$ and $\kappa_s$ are in general diagonal tensors.
+
+The fluid domain $\Omega_f$ comprises porous regions with $0< \gamma < 1$ and free flow regions with $\gamma = 1$; in the free-flow region, $T_s$ is not solved and we have $\alpha=0$, $W=0$, and $\kappa_f=k_f$ (where $k_f$ is the thermal conductivity of the fluid). Similarly, $T_f$ is not solved in solid-only regions where $\gamma = 0$ and $\kappa_s = k_s$ with $k_s$ as the solid conductivity.
 
 #### Fluid Properties
 
@@ -201,6 +227,15 @@ This block contains the variables that are explicitly solved for in this model. 
 Furthermore, corresponding to the variables are the finite volume kernels which operate on these variables. Most of the kernels are set implicitly within the Navier Stokes action. However Kernel tweaking is possible and here the pump, delayed neutron precursor group advection equations, and solid heat conduction are explicitly set.
 
 !listing msr/msre/multiphysics_core_model/steady_state/th.i start=[FVKernels] end=[FVInterfaceKernels]
+
+Here the delayed neutron precursor distribution is modeled via an advection diffusion equation as follows:
+
+\begin{equation} \label{eq:prec_eigen}
+\nabla \cdot (\mathbf{u}(\mathbf{r}) c_i(\mathbf{r})) - \nabla \cdot H_i \nabla c_i(\mathbf{r}) - \nabla \cdot \frac{\nu_t}{Sc_t} \nabla c_i(\mathbf{r}) = \frac{\beta_0}{k_{eff}} \chi_{p,g} \sum_{g'=1}^G (\nu\Sigma_{f})_{g'} \phi_{g'}(\mathbf{r})- \lambda_i c_i(\mathbf{r}),
+\end{equation}
+
+where $\mathbf{u}(\mathbf{r})$ advection velocity vector at position $(\mathbf{r})$,
+$H_i$ average molecular diffusion for neutron precursors of type $i$, $\nu_t$ turbulent kinematic viscosity, and $Sc_t$ the turbulent Schmidt number. There are as many equations of type [eq:prec_eigen] as the number of neutron precursor groups. Since we are adding these equations in manually, the `FVKernels` entered correspond to the associated terms in the equation for the six delayed neutron precursor groups.
 
 #### Finite Volume Interface Kernels
 
@@ -257,7 +292,7 @@ Finally, the Executioner block determines how the model is run. The type of solv
 
 !listing msr/msre/multiphysics_core_model/steady_state/th.i start=[Executioner] end=[Output]
 
-#### Outpuut
+#### Output
 
 Lastly, the Output block specifies what type of output (e.g. exodus and CSV) will be created and what items should be printed during the simulation.
 

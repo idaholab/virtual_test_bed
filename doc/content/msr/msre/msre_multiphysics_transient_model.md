@@ -22,6 +22,18 @@ Here the `Executioner` block sets is set to Transient, and the numerical method 
 
 !listing msr/msre/multiphysics_core_model/transient/neu.i block=Executioner
 
+Here we add the time derivative to the multi-group diffusion equation, and to the delayed neutron precursor group equations to arrive at the following:
+
+\begin{equation} \label{eq:time_eigen}
+\frac{1}{v_g} \frac{\partial \phi_g(\mathbf{r}, t)}{\partial t} -\nabla \cdot D_g(\mathbf{r}, t) \nabla \phi_g(\mathbf{r}, t) + \Sigma_{rg} \phi_g(\mathbf{r}, t) = \frac{1 - \beta_0}{k_{\text{eff}}^{\text{st}}} \chi_{p,g} \sum_{g'=1}^G (\nu\Sigma_{f})_{g'} \phi{g'}(\mathbf{r}, t) + \sum_{g' \neq g}^G \Sigma_{sg'} \phi_{g'}(\mathbf{r}, t) + \chi_{d,g} \sum_{i=1}^m \lambda_i c_i(\mathbf{r}, t),
+\end{equation}
+
+\begin{equation} \label{eq:time_prec}
+\frac{\partial c_i(\mathbf{r}, t)}{\partial t} + \nabla \cdot (\mathbf{u} c_i(\mathbf{r}, t)) - \nabla \cdot H_i \nabla c_i(\mathbf{r}, t) - \nabla \cdot \frac{\nu_t}{Sc_t} \nabla c_i(\mathbf{r}, t) = \frac{\beta_0}{k_{\text{eff}}^{\text{st}}} \chi_{p,g} \sum_{g'=1}^G (\nu\Sigma_{f})_{g'} \phi{g'}(\mathbf{r}, t) - \lambda_i c_i(\mathbf{r}, t),
+\end{equation}
+
+where $t$ is time, $k_{\text{eff}}^{\text{st}}$ is the steady-state eigenvalue coming from a previous steady-state solve, and $v_g$ is the neutron speed for group $g$. For most practical cases, except for prompt critical reactivity insertions, the term $\frac{1}{v_g} \frac{\partial \phi_g(\mathbf{r}, t)}{\partial t}$ can be neglected. This model is complemented by the solution of thermal-hydraulcis, which determines the advection field for neutron precursors and the temperature field for cross section interpolation.
+
 #### Multi Apps
 
 Finally, the `MultiApps` block is altered to a `TransientMultiApp` solution.
