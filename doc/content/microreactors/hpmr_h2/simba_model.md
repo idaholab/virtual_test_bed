@@ -4,6 +4,17 @@
 
 *Model summarized, documented, and uploaded by Nathan Grund*
 
+*Model link: [Direwolf Steady State Model](https://github.com/idaholab/virtual_test_bed/tree/devel/microreactors/hpmr/steady)*
+
+!tag name=HPMR_H2 Direwolf Steady State Model pairs=reactor_type:MR
+                       reactor:HPMR_H2
+                       geometry:core
+                       simulation_type:core_multiphysics
+                       input_features:multiapps
+                       code_used:DireWolf
+                       computing_needs:HPC
+                       fiscal_year:2023
+
 ## Mesh
 
 The reactor module in MOOSE [!citep](MOOSEReactorModule) was used to generate three different meshes for: (a) the Discontinuous Finite Elmenet (DFEM) discrete ordinates (SN) neutronic solver shown in [simba_mesh] (a), one for the Bison model, shown in [simba_mesh] (b), and one for the Coarse Mesh Finite Difference (CMFD) acceleration mesh. displayed in [simba_mesh] (c). A one-twelfth radially reflected geometry was built by exploiting the problem symmetry to minimize the number of degrees of freedom and increase the speed of calculations [!citep](Terlizzi2023).

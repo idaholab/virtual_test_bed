@@ -61,6 +61,8 @@ obtained through INL's [NCRC](https://inl.gov/ncrc/).
 
 - Lotus Molten Chloride Reactor Steady State Model [documentation](msr/lotus/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/msr/lotus/steady_state)
 
+- Heat Pipe Micro Reactor with Yttrium Hydride (HPRM_H2) Steady State Model [documentation](microreactors/hpmr_h2/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/devel/microreactors/hpmr/steady)
+
 
 ### Cardinal / OpenMC (open-source)
 
@@ -131,6 +133,8 @@ obtained through INL's [NCRC](https://inl.gov/ncrc/).
 
 - Heat Pipe Micro-Reactor Assembly [documentation](hpmr_assembly/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/microreactors/hpmr_assembly)
 
+- Heat Pipe Micro Reactor with Yttrium Hydride (HPMR_H2) Steady State Model [documentation](microreactors/hpmr_h2/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/devel/microreactors/hpmr/steady)
+
 
 ### RELAP-7
 
@@ -154,6 +158,8 @@ obtained through INL's [NCRC](https://inl.gov/ncrc/).
 - Gas Cooled Micro Reactor assembly multiphysics [documentation](gcmr/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/microreactors/gcmr/assembly)
 
 - HTTR Core multiphysics [documentation](httr/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/httr/steady_state_and_null_transient)
+
+- Heat Pipe Micro Reactor with Yttrium Hydride (HPRM_H2) Steady State Model [documentation](microreactors/hpmr_h2/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/devel/microreactors/hpmr/steady)
 
 
 ### Thermo-mechanics module (open-source)
