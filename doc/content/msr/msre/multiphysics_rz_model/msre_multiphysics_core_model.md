@@ -4,6 +4,17 @@
 
 *Model summarized, documented, and uploaded by Andres Fierro*
 
+*Model link: [Griffin-Pronghorn Steady-State Model](https://github.com/idaholab/virtual_test_bed/tree/devel/msr/msre/multiphysics_core_model/steady_state)*
+
+!tag name=MSRE Griffin-Pronghorn Steady State Model pairs=reactor_type:MSR
+                       reactor:MSRE
+                       geometry:core
+                       simulation_type:core_multiphysics
+                       input_features:multiapps
+                       code_used:BlueCrab
+                       computing_needs:Workstation
+                       fiscal_year:2023
+
 This model of the MSRE utilizes MOOSE to create a 2D, RZ (cylindrical coordinates) mesh of the MSRE, Griffin to perform neutronics and resulting normalized power source [!citep](Javi23), and Pronghorn to perform medium-fidelity, coarse mesh thermal-hydraulics analysis of the core, upper plenum, pump, downcomer, and lower plenum [!citep](mau23). The parts of the MSRE loop are represented in [MSRE_pgh_mesh_blocks]. The model is an axisymmetric model with the left vertical axis being the axis of symmetry.
 
 The fuel salt flows down the `Downcomer`, through the `Lower Plenum` and up into the `Core`, is collected at the `Upper Plenum` and finally is recycled through the `Pump`. Here a porous medium approach is used to model flow conditions in the core with a vertical porosity of 0.22283. No rugosity is assumed when computing the friction factor. An anisotropic friction source coefficient keeps the flow approximately 1-Dimensional.

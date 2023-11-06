@@ -20,8 +20,10 @@ often by removing the `[MultiApps]` and `[Transfers]` blocks, you should be able
 Please refer to the documentation or the indexing below for the codes used.\\
 - Molten Salt Fast Reactor (using MOOSE Navier-Stokes) [documentation](msr/msfr/griffin_pgh_model.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/msr/msfr/steady)\\
 - Versatile Test Reactor core model [documentation](sfr/vtr/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/sfr/vtr) \\
-- High Temperature Test Facility transient simulations (core conduction) [documentation](htgr/httf/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/httf)
-- Lotus Molten Chloride Reactor Steady State Model (using MOOSE Navier-Stokes) [documentation](msr/lotus/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/msr/lotus/steady_state)
+- High Temperature Test Facility transient simulations (core conduction) [documentation](htgr/httf/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/httf)\\
+- Lotus Molten Chloride Reactor Steady State Model (using MOOSE Navier-Stokes) [documentation](msr/lotus/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/msr/lotus/steady_state)\\
+- Molten Salt Reactor Experiment RZ multiphysics core model [documentation](msr/msre/multiphysics_rz_model/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/msr/msre/multiphysics_core_model/steady_state)
+
 
 Multiphysics models will often require access to multiple applications linked or built together, that can run inputs for each code involved.
 Licensing for coupled applications (BlueCRAB and Direwolf) and their export-controlled (Griffin, SAM, Bison, etc) components can be
@@ -63,6 +65,8 @@ obtained through INL's [NCRC](https://inl.gov/ncrc/).
 
 - Heat Pipe Microreactor with Hydrogen Redistribution (HPMR_H2) Steady State Model [documentation](microreactors/hpmr_h2/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/devel/microreactors/hpmr_h2/steady)
 
+- Molten Salt Reactor Experiment RZ multiphysics core model [documentation](msr/msre/multiphysics_rz_model/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/msr/msre/multiphysics_core_model/steady_state)
+
 
 ### Cardinal / OpenMC (open-source)
 
@@ -91,6 +95,9 @@ obtained through INL's [NCRC](https://inl.gov/ncrc/).
 - Pebble Bed Modular Reactor [documentation](htgr/pbmr/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/pbmr400/transient)
 
 - Lotus Molten Chloride Reactor Steady State Model [documentation](msr/lotus/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/msr/lotus/steady_state)
+
+- Molten Salt Reactor Experiment RZ multiphysics core model [documentation](msr/msre/multiphysics_rz_model/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/msr/msre/multiphysics_core_model/steady_state)
+
 
 ### Pronghorn subchannel
 
