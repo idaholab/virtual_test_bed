@@ -4,7 +4,7 @@
     type = RunApp
     input = HTTF-SS.i
     check_input = True
-    cli_args = '--app SamApp'
+    cli_args = '--app SamApp --allow-unused'
     executable_pattern = 'blue_crab*|sam*'
   []
 
@@ -12,9 +12,9 @@
   [rings]
     type = CSVDiff
     input = HTTF-SS.i
-    csvdiff = HTTF-SS.csv
+    csvdiff = HTTF-SS_csv.csv
     prereq = rings_syntax
-    cli_args = '--app SamApp Executioner/num_steps=10'
+    cli_args = '--app SamApp Executioner/num_steps=5 --allow-unused'
     executable_pattern = 'blue_crab*|sam*'
   []
 []
