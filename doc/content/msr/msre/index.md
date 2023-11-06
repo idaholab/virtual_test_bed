@@ -9,11 +9,7 @@
 
 [Standalone SAM 1-D model](msre_sam_model.md)
 
-[Multiphysics RZ Model](msre_multiphysics_core_model.md)
-
-[Multiphysics RZ Transient Model](msre_multiphysics_transient_model.md)
-
-[Multiphysics RZ Model Results](msre_multiphysics_results.md)
+[Multiphysics RZ Model](multiphysics_rz_model/index.md)
 
 
 
