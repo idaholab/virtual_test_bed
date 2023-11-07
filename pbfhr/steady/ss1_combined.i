@@ -406,6 +406,7 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
     prop_names = 'alpha_b rho'
     prop_values = '${alpha_b} ${rho_fluid}'
     block = ${blocks_fluid}
+    define_dot_functors = false
   []
   [fluidprops]
     type = GeneralFunctorFluidProps
