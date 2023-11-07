@@ -21,6 +21,7 @@ Please refer to the documentation or the indexing below for the codes used.\\
 - Molten Salt Fast Reactor (using MOOSE Navier-Stokes) [documentation](msr/msfr/griffin_pgh_model.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/msr/msfr/steady)\\
 - Versatile Test Reactor core model [documentation](sfr/vtr/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/sfr/vtr) \\
 - High Temperature Test Facility transient simulations (core conduction) [documentation](htgr/httf/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/httf)
+- Lotus Molten Chloride Reactor Steady State Model (using MOOSE Navier-Stokes and Thermomechanics) [documentation](msr/lotus/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/devel/msr/lotus/steady_state)
 
 Multiphysics models will often require access to multiple applications linked or built together, that can run inputs for each code involved.
 Licensing for coupled applications (BlueCRAB and Direwolf) and their export-controlled (Griffin, SAM, Bison, etc) components can be
@@ -58,6 +59,8 @@ obtained through INL's [NCRC](https://inl.gov/ncrc/).
 
 - Micro Reactor Drum Rotation Model [documentation](microreactors/drum_rotation/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/devel/microreactors/drum_rotation)
 
+- Lotus Molten Chloride Reactor Steady State Model [documentation](msr/lotus/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/devel/msr/lotus/steady_state)
+
 
 ### Cardinal / OpenMC (open-source)
 
@@ -85,6 +88,7 @@ obtained through INL's [NCRC](https://inl.gov/ncrc/).
 
 - Pebble Bed Modular Reactor [documentation](htgr/pbmr/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/pbmr400/transient)
 
+- Lotus Molten Chloride Reactor Steady State Model [documentation](msr/lotus/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/devel/msr/lotus/steady_state)
 
 ### Pronghorn subchannel
 
@@ -155,6 +159,8 @@ obtained through INL's [NCRC](https://inl.gov/ncrc/).
 - Versatile Test Reactor core model [documentation](sfr/vtr/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/sfr/vtr)
 
 - Sodium Fast Reactor duct bowing [documentation](sfr/hex_duct_bowing/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/sfr/hex_duct_bowing)
+
+- Lotus Molten Chloride Reactor Steady State Model [documentation](msr/lotus/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/devel/msr/lotus/steady_state)
 
 
 ### Heat conduction module (open-source)

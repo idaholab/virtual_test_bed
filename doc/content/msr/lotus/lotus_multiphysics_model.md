@@ -12,7 +12,7 @@
                        simulation_type:core_multiphysics
                        input_features:multiapps
                        code_used:BlueCrab
-                       computing_needs:Workstation
+                       computing_needs:HPC
                        fiscal_year:2023
 
 This multiphysics problem is solved using the MultiApp system to separate the neutronics and the fluid dynamics problems.

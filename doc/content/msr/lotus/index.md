@@ -4,7 +4,7 @@
 
 [Griffin-Pronghorn Model](lotus_multiphysics_model.md)
 
-[Steady State Results](steady_state_results.md)
+[Steady State Results](lotus_results.md)
 
 
 
