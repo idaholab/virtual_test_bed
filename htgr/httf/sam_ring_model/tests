@@ -12,7 +12,7 @@
   [rings]
     type = CSVDiff
     input = HTTF-SS.i
-    csvdiff = HTTF-SS_csv.csv
+    csvdiff = HTTF-SS_ref.csv
     prereq = rings_syntax
     cli_args = '--app SamApp Executioner/num_steps=5 --allow-unused'
     executable_pattern = 'blue_crab*|sam*'

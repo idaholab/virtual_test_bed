@@ -6077,6 +6077,10 @@ n_urlr = 4
   []
 []
 
+[Problem]
+  restart_file_base = HTTF-SS_IC/0005
+[]
+
 [Executioner]
   type = Transient
   start_time = -50000
