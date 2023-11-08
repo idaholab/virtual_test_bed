@@ -13,19 +13,19 @@ This section will cover the steady state results from the LMCR multiphysics mode
 !media msr/lotus/mcre_fluxes.png
        style=width:110%;margin-left:auto;margin-right:auto
        id=LMCR_pgh_fluxes
-       caption=Normalized steady-state fluxes in LMCR. Specifically, group 1 (second fastest), group 4(epithermal), and group 8 (thermal-most group) are presented from left to right.
+       caption=Normalized steady-state fluxes in LMCR. Specifically, group 1 (second fastest), group 4(epithermal), and group 8 (thermal-most group) are presented from left to right [!citep](M3mcr2023).
 
 !media msr/lotus/mcre_power_density.png
        style=width:60%;margin-left:auto;margin-right:auto
        id=LMCR_pgh_power_density
-       caption= LMCR Power density (W/m$^3$).
+       caption= LMCR Power density (W/m$^3$) [!citep](M3mcr2023).
 
 Additionally, the steady-state delayed neutron precursor group distributions calculated via Pronghorn are shown in [LMCR_pgh_dnps]. Here the long lived delayed neutron precursor group 1 is well mixed throughout the reactor core, whereas the short lived neutron precursor group 6 is centralized and decays in the reactor core.
 
 !media msr/lotus/mcre_dnps.png
        style=width:110%;margin-left:auto;margin-right:auto
        id=LMCR_pgh_dnps
-       caption=Normalized distribution of the six neutron precursor families during steady-state operation.
+       caption=Normalized distribution of the six neutron precursor families during steady-state operation [!citep](M3mcr2023).
 
 Family 1, characterized by a significantly longer decay rate compared to the smaller timescales involved in the advection process, experiences an approximate homogenization throughout the fuel salt loop. However, as the decay rate of the precursor family increases, a distinct spatial distribution begins to emerge for the neutron precursors. Regardless of the family, the precursors exist in the reactor core due to their production via fission and then decay in the return pipe before re-entering the reactor core. The distribution of neutron precursors in the core exhibits noticeable advection skewness, highlighting the impact of advection on the precursor distribution.
 
@@ -34,7 +34,7 @@ The steady-state velocity field during reactor operation is depicted in [LMCR_pg
 !media msr/lotus/mcre_velocities.png
        style=width:110%;margin-left:auto;margin-right:auto
        id=LMCR_pgh_velocities
-       caption=Velocity fields during steady-state reactor operation for LMCR. (left) Velocity magnitutde, (center) velocity in vertical direction, (right) velocity in horizontal direction.
+       caption=Velocity fields during steady-state reactor operation for LMCR. (left) Velocity magnitutde, (center) velocity in vertical direction, (right) velocity in horizontal direction [!citep](M3mcr2023).
 
 At the elbows, the flow follows the expected flow profile, characterized by centripetal flow acceleration. Specifically, the flow accelerates towards the closed edge of the elbow and then deflects towards the open edge downstream. Achieving this correct behavior was possible through the calibration of the turbulent mixing length in the turbulence model. It should be noted that using a suggested mixing length model of 7% of the hydraulic diameter of the pipe would result in over-diffusive and incorrect results.
 
@@ -45,18 +45,9 @@ The temperature field in the fuel salt and the reactor reflector is illustrated 
 !media msr/lotus/mcre_temps.png
        style=width:110%;margin-left:auto;margin-right:auto
        id=LMCR_pgh_temps
-       caption=Steady-state temperature field for the fuel (left) and reflector (right) during LMCR operation.
+       caption=Steady-state temperature field for the fuel (left) and reflector (right) during LMCR operation [!citep](M3mcr2023).
 
 In the reflector, the temperature varies primarily radially as heat is conducted from the reactor wall into the lateral walls. Notably, no significant axial temperature gradients are obtained for the neutron reflector, which aligns with the expectation due to the presumed perfectly insulated top and bottom faces.
-
-Finally, the temperature variations in the reflector lead to thermal expansion, causing deformation in the neutron reflector. Key thermomechanics results for the reflector are presented in [LMCR_pgh_reflector], where the displacements in the reflector have been amplified by a factor of 500 for visualization purposes. The higher stresses occur towards the center of the reactor since the reflector is fixed at the internal reactor wall. Due to the radial temperature gradients in the reflector and its fixed position at the internal wall, an approximately spherical expansion is observed for the reflector. Consequently, the edges of the reflector experience the largest displacements, reaching approximately ∼ 0.27mm.
-
-!media msr/lotus/mcre_reflector.png
-       style=width:110%;margin-left:auto;margin-right:auto
-       id=LMCR_pgh_reflector
-       caption=Stress field and representation of the deformation in the neutron reflector. (left) reflector temperature, (center) displacements magnitude, (right) equivalent Von Mises stress. Displacements have been scaled by a factor of 500 for visualization.
-
-Furthermore, the region adjacent to the internal heated face and the path connecting this region directly to the lateral faces approach the elastic yield stress and undergo plastic deformation. It is important to note that this plastic deformation is primarily an artifact of the homogeneous structure assumed for the reflector. In reality, the blocks forming the reflector would allow for friction-controlled displacements and thus reduce the mechanical stresses.
 
 ## Execution
 

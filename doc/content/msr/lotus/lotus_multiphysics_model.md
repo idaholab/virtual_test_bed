@@ -15,479 +15,346 @@
                        computing_needs:HPC
                        fiscal_year:2023
 
-This multiphysics problem is solved using the MultiApp system to separate the neutronics and the fluid dynamics problems.
+This multiphysics problem is solved using the MultiApp system to separate the neutronics, thermal hydraulics, and delayed neutron precursors group problems. The corresponding computational domains for the neutronics and thermal hydraulics with delayed neutron precursor group distributions can bee seen in [LMCR_pgh_geometry] and [LMCR_pgh_thermal_hydraulics] respectively. Notice, this is a multiphysics problem, but not a multiscale problem since we are solving the problems at the same geometrical and time resolution. The only difference between the meshes, is that the thermal-hydraulic domain has an extra mixing plate to distribute the flow within the core.
+
+!row!
+!media msr/lotus/MCR_geometry.jpg
+       style=width:50%;float:left;padding-top:2.5%;padding-right:5%
+       id=LMCR_pgh_geometry
+       caption=LMCR geometry for neutronics evaluation [!citep](M3mcr2023).
+
+!media msr/lotus/mcr_thermal_hydraulics.png
+       style=width:45%;float:left;padding-top:2.5%;padding-right:5%
+       id=LMCR_pgh_thermal_hydraulics
+       caption=Thermal-hydraulics blocks for LMCR thermal-hydraulics & DNP domain [!citep](M3mcr2023).
+!row-end!
+
 
 ## Neutronics
 
 Starting first with neutronics, Griffin solves the neutron transport problem via the Diffusion equation approximation. The Griffin input file will now be briefly discussed and the primary equations that are solved and how they relate to the input file will be shown. The input file to solve the 9 group neutron diffusion problem is shown below.
 
+This is the main input file which calls the open source MOOSE Navier-Stokes input file `run_ns_initial_res.i` which is the sub-app for solving the Thermal Hydraulics solution of this model.
+
 !listing msr/lotus/steady_state/run_neutronics_9_group.i
 
-With Griffin, the process of converting the basic conservation equations into
-MOOSE variables and kernels is automated with the `TransportSystems` block:
+#### Mesh
 
-!listing msr/lotus/steady/run_neutronics.i block=TransportSystems
+Starting first with the mesh, this block defines the computational domain that the neutronics solve will operate on. Here, a cubit generated 3D mesh is imported as an exodus file. It is correspondingly manupiulated to add in a reactor boundary condition, and is scaled to the correct size of the reactor.
+
+!listing msr/lotus/steady_state/run_neutronics_9_group.i block=Mesh
+
+#### Transport Systems
+
+Next, the process of converting the basic conservation equations into MOOSE variables and kernels is automated with the `TransportSystems` block:
+
+!listing msr/lotus/steady_state/run_neutronics_9_group.i block=TransportSystems
 
 Details about neutron transport equations can be found in Griffin theory manual.
 
-Here we are specifying an eigenvalue neutronics problem using 6 energy groups
-(`G = 6`) solved via the diffusion approximation with a continuous finite
+Here we are specifying an eigenvalue neutronics problem using 9 energy groups
+(`G = 9`) solved via the diffusion approximation with a continuous finite
 element discretization scheme (`scheme = CFEM-Diffusion`).
 
+For brevity, the multi-group diffusion equation for the eigenvalue problem solved at steady-state is given as:
+
+\begin{equation} \label{eq:eigen_multi}
+-\nabla \cdot D_g(\mathbf{r}) \nabla \phi_g(\mathbf{r}) + \Sigma_{rg} \phi_g(\mathbf{r}) = \frac{1 - \beta_0}{k_{eff}} \chi_{p,g} \sum_{g'=1}^G (\nu\Sigma_{f})_{g'} \phi_{g'}(\mathbf{r}) + \sum_{g' \neq g}^G \Sigma_{sg'} \phi_{g'}(\mathbf{r}) + \chi_{d,g} \sum_{i=1}^m \lambda_i c_i(\mathbf{r}),
+\end{equation}
+
+where the symbols represent the following: $D_g$ diffusion coefficient for energy group $g$, $\phi_g(\mathbf{r})$ neutron scalar flux of energy group $g$ at position $\mathbf{r}$,
+$\Sigma_{rg}$ removal cross-section from energy group $g$, $k_{eff}$ eigenvalue representing the effective multiplication factor of the reactor, $\chi_{p,g}$ prompt fission spectrum for neutrons born in energy group $g$, $\nu$ number of neutrons per fission, $\Sigma_{fg'}$ average fission cross-section of neutrons in energy group $g'$, $\Sigma_{sg'}$ differential scattering cross-section for neutrons scattering from energy group $g'$ to energy group $g$, $\beta_0$ delayed neutrons fraction, $\chi_{d,g}$ delayed fission spectrum for neutrons born in energy group $g$ due to decay of neutron precursors,  $\lambda_i$ decay constant for precursor group $i$, $c_i(\mathbf{r})$ concentration of neutron precursor group $i$, at position $\mathbf{r}$, and $G$ total number of energy groups.
+
 Note the `external_dnp_variable = 'dnp'` parameter. This is a special option
-needed for liquid-fueled MSRs which signals that the conservation equations for
-DNP will be handled "externally" from the default
-Griffin implementation which assumes that the precursors do not have the turbulent treatment.
-This parameter is referencing the `dnp` auxiliary variable which is defined as,
+needed for liquid-fueled MSRs which signals that the conservation equations for delayed neutron precursors (DNPs) will be handled "externally" from the default
+Griffin implementation which assumes that the precursors do not have the turbulent treatment. DNP treament will be discussed later in the thermal-hydraulics and DNP distribution input files.
 
-!listing msr/msfr/steady/run_neutronics.i block=AuxVariables/dnp
+The type of shape function `Lagrange` and order `FIRST` are defined here as well as the `fission_source_aux` which will be used by the sub-apps.
 
-Note that this is an array auxiliary variable with 6 components, corresponding
-to the 6 DNP groups used here.
+#### Power Density
 
-Support within the Framework for array variables is somewhat limited. For
-example, not all of the multiapp transfers work with array variables, and the
-Navier-Stokes module does not include the kernels that are needed to advect an
-array variable. For this reason, there is also a separate auxiliary variables for each
-of DNP. For example,
+Next, the `Power Density` is set for this specific reactor. Here the neutronics solution is normalized to the rated power of $25$kW.
 
-!listing msr/msfr/steady/run_neutronics.i block=AuxVariables/c1
+!listing msr/lotus/steady_state/run_neutronics_9_group.i block=PowerDensity
 
-The `run_ns.i` subapp is responsible for computing the precursor distributions,
-and the distributions are transferred from the subapp to the main app by blocks
-like this one,
+The power density is evaluated with the normalized neutronics solution.
+It provides the energy source in the fluid energy conservation equation.
+Because the fluid energy equation is discretized with FV, we evaluate the power
+density variable with a constant monomial function.
 
-!listing msr/msfr/steady/run_neutronics.i block=Transfers/c1
+#### Auxiliary Variables
 
-The values are then copied from the `c1`, `c2`, etc. variables into the `dnp`
-variable by this aux kernel:
+Moving on, the `AuxVariables` are now set which are specific variables that can be passed and read in from the other sub-apps for multiphysics calculations.
 
-!listing msr/msfr/steady/run_neutronics.i block=AuxKernels/build_dnp
+!listing msr/lotus/steady_state/run_neutronics_9_group.i block=AuxVariables
 
-Also note that solving the neutronics problem requires a set of multigroup
-cross sections. Generating cross sections is a topic that is left outside the
-scope of this example. A set has been generated for the MSFR problem and stored
+Here the `tfuel` and `trefl` are the temperature of the fuel salt and reflector, whereas `c1` - `c6` are the DNP distributions, and `dnp` is an array auxiliary with 6 component corresponding
+to the 6 DNP groups used here. This array is then read into Griffin in the `external_dnp_variable = 'dnp'` parameter within the `Transport Systems` block.
+
+#### Auxiliary Kernels
+
+Correspondingly, the `AuxKernels` are functors which operate on the `AuxVariables`. Here the six seperate DNP groups are compiled into the Aux Variable `dnp` to be used within Griffin.
+
+!listing msr/lotus/steady_state/run_neutronics_9_group.i block=AuxKernels
+
+#### Materials
+
+The next critical need for any neutronics calculation is a set of multigroup cross sections. Generating cross sections is a topic that is left outside the
+scope of this example. A set has been generated for the LMCR problem and stored
 in the repository using Griffin's ISOXML format. These cross sections are included
 by the blocks,
 
-!listing msr/msfr/steady/run_neutronics.i block=Materials
+!listing msr/lotus/steady_state/run_neutronics_9_group.i block=Materials
 
 `CoupledFeedbackNeutronicsMaterial` is able to use the temperature transferred
 from the fluid system for evaluating multigroup cross sections based on a table lookup
 on element quadrature points to bring in the feedback effect.
-It also has the capability of adjusting cross sections based on fluid density.
-In this model, the fluid density change is negligible.
 
-Neutronics solution is normalized to the rated power $3000$MW with the `PowerDensity`
-input block
+#### Executioner
 
-!listing msr/msfr/steady/run_neutronics.i block=PowerDensity
+Next, the `Executioner` block sets up the type of problem, and the numerical methods to solve the neutronics and multiphysics problems.
 
-The power density is evaluated with the normalized neutronics solution.
-It provides the source of the fluid energy equation.
-Because the fluid energy equation is discretized with FV, we evaluate the power
-density variable with constant monomial.
+!listing msr/lotus/steady_state/run_neutronics_9_group.i block=Executioner
 
-Griffin input is the main-application and includes a sub-application with the
-fluid system input `run_ns.i`.
-
-!listing msr/msfr/steady/run_neutronics.i block=MultiApps
-
-Neutronics needs to to transfer fission source, power density to fluid system
-and needs to transfer back from fluid system temperature and DNP concentrations.
-
-!listing msr/msfr/steady/run_neutronics.i block=Transfers
-
-The caculation is driven by `Eigenvalue`, an executioner available in the MOOSE framework.
+The caculation is driven by `Eigenvalue`, an executioner available in Griffin.
 The PJFNKMO option for the `solve_type` parameter is able to
 drive the eigenvalue calculation with the contribution of DNP
 to the neutron transport equation as an external source scaled with $k$-effective.
 
-!listing msr/msfr/steady/run_neutronics.i block=Executioner
+Additionaly, PETSc options and tolerances for the neutronic and multiphysics fixed point iteration coupling method are provided.
+
+#### Post Processors
+
+The `PostProcessors` block sets up various calculations of reactor parameters that may be of interest to the user. This can be helpful to ensure the model is implemented correctly. Here the average, maximum, and minimum of various variables (e.g., `power`, `fluxes`, and `DNPs`) can be computed.
+
+!listing msr/lotus/steady_state/run_neutronics_9_group.i block=Postprocessors
+
+#### Outputs
+
+The `Outputs` block sets up the types of outputs the user would like to visualize or interpret the results. Here both an `exodus` and `csv` file are selected. Additionally, a `restart` file is generated so that transient solutions starting from steady-state can be computed.
+
+!listing msr/lotus/steady_state/run_neutronics_9_group.i block=Outputs
+
+#### MultiApps
+
+Finally, the `MultiApps` block sets up the sub-app that will be driven by the main Griffin app. Here, the Griffin input is the main-application and includes a single sub-application with the open source MOOSE Navier-Stokes input `run_ns_initial_res.i`.
+
+!listing msr/lotus/steady_state/run_neutronics_9_group.i block=MultiApps
+
+#### Transfers
+
+Correspondingly, the `Transfers` block sets up the Auxiliary Variables that will be passed to and from the thermal hydraulics sub app.
+
+!listing msr/lotus/steady_state/run_neutronics_9_group.i block=Transfers
+
+Here the `power_density`, and `fission_source`is transferred to the Navier-Stokes input file which operate as sources in the energy conservation and DNP advection equations respetively. Lastly, the DNP distributions for groups `c1` - `c6` and the temperature of the fuel `T` and the reflector `T_ref` are passed back to the neutronics solutution for multiphysics convergence.
 
 
-
-
-
-The fluid system is solved by the subapp and it uses the `run_ns_initial_res.i`
-input files. (Here "ns" is an abbreviation for Navier-Stokes.)
-
-The fluid system includes conservation equations for fluid mass, momentum, and
-energy as well as the conservation of delayed neutron precursors. Here a porous flow and weakly-compressible formulation are used to model molten salts and the pressure drop over the mixing plate at the entrance of the reactor core.
 
 ## Thermal Hydraulics
 
-### Conservation of fluid mass
+The fluid system is solved by the subapp and it uses the `run_ns_initial_res.i`
+input file shown below. (Here "ns" is an abbreviation for Navier-Stokes.)
 
-The conservation of mass is,
+The fluid system includes conservation equations for fluid mass, momentum, and
+energy. Here a porous flow and weakly-compressible formulation are used to model molten salts and the pressure drop over the mixing plate at the entrance of the reactor core.
 
-\begin{equation}
-  \frac{\partial \gamma \rho}{\partial t} + \nabla \cdot (\rho \vec{u}) = 0,
-\end{equation}
-
-where $\rho$ is the fluid density, $\gamma$ is the porosity, and $\vec{u}$ is the velocity vector.
-
-Here the system will be simplified by modeling the flow as incompressible.  (The
-effect of Buoyancy will be re-introduced later with the Boussinesq
-approximation.)  The simplified conservation of mass is then given by,
-
-\begin{equation}
-  \nabla \cdot \vec{u} = 0.
-\end{equation}
-
-This conservation equation is automatically added by the `NavierStokesFV` action
-when selecting the incompressible model.
+Additionally, the thermal hydraulics input file has another sub-app below it that calculates the delayed neutron precursor (DNP) group distributions in `run_prec_transport.i` which will be discussed shortly.
 
 !listing msr/lotus/steady_state/run_ns_initial_res.i
 
-```
-[Modules]
-  [NavierStokesFV]
-    # General parameters
-    compressibility = 'incompressible'
-    ...
-```
+#### Problem Parameters
 
-Legacy syntax for the mass equation is included [here](griffin_pgh_model_legacy.md).
+The physical properties of the fuel salt and reflector (e.g., `density`, `viscosity`, `thermal conductivity`, and `heat capacity`) are defined first. Additionally, other parameters such as a friction force, pump force, porosity, and area are also set. Lastly, numerical interpolation schemes such as `upwind` and `rhie-chow` are also selected and a mixing length turbulence calibration informed from high-fidelity CFD is also set here.
 
-### Conservation of fluid momentum
+!listing msr/lotus/steady_state/run_ns_initial_res.i start=# Material Properties end=[GlobalParams]
 
-This system also includes the conservation of momentum in the $x$-direction. A
-fairly general form of the steady-state condition is,
+#### Global Parameters
 
-\begin{equation}
-  \nabla \cdot \rho \vec{u} u = -\frac{\partial}{\partial x} P
-  + \mu \nabla^2 u + f_{\text{fric},x} +
-  \rho \vec{g} \cdot \hat{x},
+Next, `Global Parameters` lists variables and parameters that will be used throughout the entire input file. Here the finite volume interpolation methods are set, and `superficial velocities`, `pressure`, `porosity`, `density`, `viscosity`, and the `mixing_length` model are defined for the entire input file. Some of these values are originally set in the `Problem Parameters` and are referenced here using the ${} notation to be used implicitly for the rest of the input file.
+
+!listing msr/lotus/steady_state/run_ns_initial_res.i block=GlobalParams
+
+#### Mesh
+
+This block defines the geometry of the thermal hydraulics computational domain, as shown in [LMCR_pgh_thermal_hydraulics]. This block reads in the same 3D mesh that was generated using CUBIT which is identical for both Griffin and Pronghorn.
+
+Then several boundaries and the mixing plate subdomain are defined by editing the mesh to correctly define the boundary conditions and porosity modeling necessary in the thermal hydraulics model.
+
+!listing msr/lotus/steady_state/run_ns_initial_res.i block=Mesh
+
+#### User Objects
+
+The model now turns to implementing the equations, variables, kernels, and boundary conditions that need to be specified to solve the thermal hydraulic problem. Rather than using a `Module` where the ```Navier-Stokes Finite Volume``` action is used to define the problem, this model opts to explicitly set up the problem for added flexibility.
+
+!listing msr/lotus/steady_state/run_ns_initial_res.i block=UserObjects
+
+Here the porous formulation of the incompressible Rhie Chow Interpolator user object is specified and acts on the fluid blocks defined.
+
+#### Variables
+
+Next, the variables that must be explicitly solved for in the thermal hydraulics model are defined. Here the `pressure`, `superficial velocities`, and `temperatures` are required.
+
+!listing msr/lotus/steady_state/run_ns_initial_res.i block=Variables
+
+#### Kernels
+
+Correspondingly, the kernels are the functor or terms that manipulate the variables and form the conservation equations. Here the conservation of mass, momentum, and energy in the fuel salt and reflector are explicitly set.
+
+!listing msr/lotus/steady_state/run_ns_initial_res.i block=Kernels
+
+The porous flow equations for incompressible flow read as follows:
+
+\begin{equation} \label{eq:mass_cons}
+\frac{\partial \gamma \rho}{\partial t} + \nabla \cdot (\rho \vec{v}) = 0  \quad \text{on } \Omega_f ,
 \end{equation}
 
-where $u$ is the $x$ component of the velocity, $P$ is the pressure,
-$f_{\text{fric},x}$ is the $x$ component of the viscous friction force, and
-$\vec{g}$ is the gravity vector.
-
-In this model, gravity will point in the negative $y$-direction so the quantity
-$\vec{g} \cdot \hat{x}$ is zero,
-
-\begin{equation}
-  \nabla \cdot \rho \vec{u} u = -\frac{\partial}{\partial x} P
-  + \mu \nabla^2 u + f_{\text{fric},x}.
+\begin{equation} \label{eq:mom_cons}
+\frac{\partial  \rho \vec{v}}{\partial t} + \nabla \cdot \left(\gamma^{-1}  \rho \vec{v} \otimes \vec{v}\right) - \nabla \cdot \left[ (\mu_t + \rho \nu_t) (\nabla \vec{u} + \nabla \vec{u} ^ T) \right] = -\gamma \nabla p + \gamma \rho \vec{g} -  W \rho  \vec{v}_I + \vec{S} \quad \text{on } \Omega_f ,
 \end{equation}
 
-Practical simulations require modifications to the momentum equations in order
-to model the effects of turbulence without explicitly resolving the turbulent
-structures. Here, we will apply the Reynolds-averaging procedure and the
-Boussinesq hypothesis so that the effect of turbulent momentum transfer is
-modeled with a term analogous to viscous shear,
-
-\begin{equation}
-  \nabla \cdot \rho \vec{u} u = -\frac{\partial}{\partial x} P
-  + \left( \mu + \mu_t \right) \nabla^2 u + f_{\text{fric},x},
+\begin{equation} \label{eq:liq_ene_cons}
+\frac{\partial \gamma \rho e}{\partial t} + \nabla \cdot \left(  \rho H \vec{v}\right) - \nabla \cdot \left( \kappa_f \nabla T \right) - \nabla \cdot \left( \rho \alpha_t \nabla e \right) =  \dot{q_l}''' \quad \text{on } \Omega_f ,
 \end{equation}
 
-where $\mu_t$ is the turbulent viscosity.
-
-Here, a zero-equation model based on the mixing length model is used. In this
-model the turbulent viscosity is defined as:
-\begin{equation}
-  \mu_t = \rho \cdot {l_m}^2 \cdot |2\overline{\overline S} : \overline{\overline S}|
-\end{equation}
-and
-\begin{equation}
-  \overline{\overline S} = 0.5 \cdot \left( \nabla u + \nabla u^t \right).
+\begin{equation} \label{eq:sol_ene_cons}
+(1 - \gamma) \rho_s c_{p,s} \frac{\partial T_s}{\partial t} - \nabla \cdot \left (\kappa_s \nabla T_s \right) - \alpha(T - T_s) = \dot{q_s}''' \quad \text{on } \Omega_s ,
 \end{equation}
 
-The standard Prandtl's mixing length model dictates that $l_m$ has a linear
-dependence on the distance to the nearest wall. However, for this simulation we
-implement a capped mixing length model [!citep](escudier1966) that defines the mixing
-length as
+where $\vec{v}$ is the superficial velocity defined as $\vec{v} = \gamma \vec{v}_I$ and $\vec{v}_I$ is the interstitial or physical velocity, $\rho$ is the density, $p$ is the pressure, $e$ is the internal energy, $H$ is the enthalpy, $T$ is the fluid temperature, $T_s$ is the solid temperature, $\rho_s$ is the solid density, $c_{p,s}$ is the specific heat of the solid phase, $\vec{g}$ is the gravity vector, $W$ is the pressure drop coefficient, $\vec{S}$ is the momentum source that is used to model the pump, $\kappa_f$ is the effective thermal conductivity of the fluid, $\alpha_t$ is the turbulent heat diffusivity, $\kappa_s$ is the effective solid thermal conductivity, $\dot{q}_l'''$ is the heat source being deposited directly in liquid fuel (e.g., fission heat source), and $\dot{q}_s'''$ is the heat source in the solid (e.g., residual power production in structures). The effective thermal conductivities $\kappa_f$ and $\kappa_s$ are in general diagonal tensors.
 
-\begin{equation}
-  l_m = \kappa y_d, \quad \text{if} \: \kappa y_d < \kappa_0 \delta, \\
-  l_m = \kappa_0 \delta, \quad \text{if} \: \kappa y_d \geq \kappa_0 \delta,
-\end{equation}
+The fluid domain $\Omega_f$ comprises porous regions with $0< \gamma < 1$ and free flow regions with $\gamma = 1$; in the free-flow region, $T_s$ is not solved and we have $\alpha=0$, $W=0$, and $\kappa_f=k_f$ (where $k_f$ is the thermal conductivity of the fluid). Similarly, $T_f$ is not solved in solid-only regions where $\gamma = 0$ and $\kappa_s = k_s$ with $k_s$ as the solid conductivity.
 
-where $\kappa =0.41$ is the Von Karman constant, $\kappa_0 = 0.09$ as in
-Escudier's model and $\delta$ has length units and represents the thickness of
-the velocity boundary layer.
+#### Finite Volume Interface Kernels
 
-The viscous friction is treated with two different models for different regions
-of the reactor. The bulk of the friction is expected to occur in the heat
-exchanger region where there is a large surface area in contact with the salt to
-facilitate heat transfer. Rather than explicitly modeling the heat exchanger
-geometry, a simple, tunable model will be used,
-\begin{equation}
-  f_{\text{fric},x} = -C_q u | u |,
-\end{equation}
-where $C_q$ is a tunable volumetric friction coefficient, which is selected to match the
-desired pressure drop, in conjunction with the pump head value.
+In addition to the Kernels that operate on the variables in the bulk domain, Interface Kernels operate at an interface. In this case the `convection` Interface Kernel is selected to account for heat transfer from the fuel salt to the reflector thorugh the vessel boundary.
 
-A typical viscous friction model could be used for the regions outside of the
-heat exchanger. However, the viscous effects will be negligible due to the
-large, uniform eddy viscosity model used here. Consequently, the viscous force
-will be neglected outside of the heat exchanger,
-\begin{equation}
-  f_{\text{fric},x} = 0.
-\end{equation}
+!listing msr/lotus/steady_state/run_ns_initial_res.i block=FVInterfaceKernels
 
-By convention, we must collect all of the terms on one side of the equation.
-This gives the form that is implemented for the MSFR model,
+#### Finite Volume Boundary Conditions
 
-\begin{equation}
-  \nabla \cdot \rho \vec{u} u + \frac{\partial}{\partial x} P
-  - \left( \mu + \mu_t \right) \nabla^2 u - f_{\text{fric},x} = 0.
-  \label{eq:x_mom}
-\end{equation}
+Next, the `Finite Volume Boundary Conditions` must be set for the conservation equations. Here no slip boundary conditions for the velocities for the momentum equation, and various heat transfer boundary conditions for the energy equation are specified.
 
-The first few terms in [eq:x_mom], including the advection of momentum, the pressure gradient
-and the laminar diffusion are automatically handled by the `NavierStokesFV` action.
+!listing msr/lotus/steady_state/run_ns_initial_res.i block=FVBCs
 
-The mixing length turbulence model is added by specifying additional parameters to
-the action. This basic model is currently the most limiting issue in terms of
-accuracy.
+#### Auxiliary Variables
 
-```
-[Modules]
-  [NavierStokesFV]
-    ...
-    # Turbulence parameters
-    turbulence_handling = 'mixing-length'
-    turbulent_prandtl = ${Pr_t}
-    von_karman_const = ${von_karman_const}
-    mixing_length_delta = 0.1
-    mixing_length_walls = 'shield_wall reflector_wall'
-    mixing_length_aux_execute_on = 'initial'
-    ...
-```
+The `Auxiliary Variables` block defines variables of interest that can be operated on and transferred to sub-apps below or main-apps above. Here the `power_density` and `fission_source` is read in from the main-app neutronics solve, and `c1`-`c6` is read in from the precursor advection sub-app. Additionally, auxiliary variables that will be transferred to the precursor advection sub-app are also defined here as `a_u_var`, `a_v_var`, and `a_w_var` respectively.
 
-The friction in the heat exchanger is specified by passing the following parameters to the
-`NavierStokesFV` action. A quadratic friction model with a coefficient tuned to obtain the desired
-mass flow rate is selected.
+!listing msr/lotus/steady_state/run_ns_initial_res.i block=AuxVariables
 
-```
-[Modules]
-  [NavierStokesFV]
-    ...
-    # Heat exchanger
-    friction_blocks = 'hx'
-    friction_types = 'FORCHHEIMER'
-    friction_coeffs = ${friction}
-    ...
-```
+#### Auxiliary Kernels
 
-This model does not include a friction force for the other blocks so no kernel
-needs to be specified for those blocks.
+Correspondingly, the `Auxiliary Kernels` operate on the `Auxiliary Variables`. In this case the auxiliary variables needed by the precursor advection sub-app are generated by copying the superficial velocities given by the thermal hydraulics solution.
 
-The conservation of momentum in the $y$-direction is analogous, but it also
-includes the Boussinesq approximation in order to capture the effect of
-buoyancy and a body force in the pump region. Note that the Boussinesq term  is
-needed because of the approximation that the fluid density is uniform and
-constant,
+!listing msr/lotus/steady_state/run_ns_initial_res.i block=AuxKernels
 
-\begin{equation}
-  \nabla \cdot \rho \vec{u} v + \frac{\partial}{\partial y} P
-  - \left( \mu + \mu_t \right) \nabla^2 v - f_{\text{fric}, y}
-  - f_{\text{pump}} - \rho \alpha \vec{g} \left( T - T_0 \right) = 0,
-\end{equation}
+#### Functions
 
-where $f_{\text{pump}}$ is the pump head driving the flow, $\alpha$ is the
-expansion coefficient, $T$ is the fluid temperature, and $T_0$ is a reference
-temperature value. The pump head is tuned such that the imposed mass flow rate
-is ~18500 kg/s.
+Next, various functions are defined to be used throughout the input file. Here heat transfer coefficients, reynolds numbers, power-density functions, and cosine guesses can all be generated and used for initial conditions, kernels, etc.
 
-For each kernel describing the $x$-momentum equation, there is a corresponding
-kernel for the $y$-momentum equation. They are similarly added by the `NavierStokesFV`.
-An additional kernel is added to add a volumetric pump component to the system:
+!listing msr/lotus/steady_state/run_ns_initial_res.i block=Functions
 
-!listing msr/msfr/steady/run_ns.i block=FVKernels/pump
+#### Materials
 
-The Boussinesq buoyancy approximation is added to the model using this parameter:
+Next, the `Materials` block specifies material properties of interest in the fuel salt, reactor vessel, and reflector. Here, `viscosity`, `wall frictions`, and turbulent `mixing length` models can be implemented.
 
-```
-[Modules]
-  [NavierStokesFV]
-    ...
-    boussinesq_approximation = true
-    ...
-```
+!listing msr/lotus/steady_state/run_ns_initial_res.i block=Materials
 
-Boundary conditions include standard velocity wall functions at the walls to
-account for the non-linearity of the velocity in the boundary layer given the
-coarse mesh and symmetry at the center axis of the MSFR. They are added by the
-action based on user-input parameters:
+#### Executioner
 
-```
-[Modules]
-  [NavierStokesFV]
-    ...
-    # Boundary conditions
-    wall_boundaries = 'shield_wall reflector_wall fluid_symmetry'
-    momentum_wall_types = 'wallfunction wallfunction symmetry'
-    ...
-```
+The `Executioner` block defines how the problem will be run. Here the type of solution is a `Transient` and a `TimeStepper` function is defined. Additionally, the numerical tolerances for the solution are selected to speed up convergence.
 
-Auxkernels are used to compute the wall shear stress obtained by the standard
-wall function model, the dimensionless wall distance $y^+$ and the value for the
-eddy viscosity. These are used for analysis purposes.
+!listing msr/lotus/steady_state/run_ns_initial_res.i block=Executioner
 
-!listing msr/msfr/steady/legacy/run_ns.i block=AuxKernels
+#### Outputs
 
-Legacy syntax for the momentum equation is included [here](griffin_pgh_model_legacy.md).
+After computing the solution, the `Outputs` block defines how the user would like to process the final solution data. Here a CSV file is generated containing all of the calculations performed in the `Postprocessors` block.
 
-### Conservation of fluid energy
+!listing msr/lotus/steady_state/run_ns_initial_res.i block=Outputs
 
-The steady-state conservation of energy can be expressed as,
-\begin{equation}
-  \nabla \cdot \rho h \vec{u} - \nabla \cdot \lambda \nabla T = Q_q,
-\end{equation}
-where $h$ is the fluid specific enthalpy, $\lambda$ is the thermal conductivity,
-and $Q_q$ is the volumetric heat generation rate.
+#### Postprocessors
 
-Here it is expected that the energy released from nuclear reactions will be very
-large compared to pressure work terms. Consequently, we will use the simplified form,
-\begin{equation}
-  \nabla \cdot \rho c_p T \vec{u} - \nabla \cdot \lambda \nabla T = Q_q.
-\end{equation}
+The `Postprocessors` block is used to defined to calculate specific items of interest to the user. In this case, velocities, volumetric flow rate, temperatures, pressure drop, heat losses, and DNP concentrations can be calculated and printed in the `Outputs` CSV file.
 
-As with the momentum equations, a practical solver requires a model for the
-turbulent transport of energy,
-\begin{equation}
-  \nabla \cdot \rho c_p T \vec{u} - \nabla \cdot \lambda \nabla T
-  - \nabla \cdot \rho c_p \epsilon_q \nabla T = Q_q
-\end{equation}
-where $\epsilon_q$ is the eddy diffusivity for heat. It is related to the eddy
-diffusivity for momentum (i.e. the kinematic eddy viscosity) as
-$\text{Pr}_t = \nu_t / \epsilon_q$ where $\text{Pr}_t$ is the turbulent
-Prandtl number.
+!listing msr/lotus/steady_state/run_ns_initial_res.i block=Postprocessors
 
-As with the molecular viscosity in the momentum equations, the simple
-turbulence model used here will overwhelm the thermal conductivity. Neglecting
-that term and moving the heat generation to the left-hand-side of the equation
-gives,
-\begin{equation}
-  \nabla \cdot \rho c_p T \vec{u} - \nabla \cdot \rho c_p \epsilon_q \nabla T
-  - Q_q = 0.
-\end{equation}
+#### MultiApps
 
-The heat generation due to nuclear reactions is computed by the neutronics
-solver, and this distribution will be used directly in the $Q_q$ term. The
-effect of the heat exchanger will also be included in the $Q_q$ term as a
-volumetric heat loss per the model,
-\begin{equation}
-  Q_q = -\alpha (T - T_\text{ambient}),
-\end{equation}
-where $\alpha$ is a coefficient (equal to the surface area density times the
-heat transfer coefficient) and $T_\text{ambient}$ is the
-temperature of the coolant on the secondary side of the heat exchanger.
+Moving next to the `MultiApps` block, this block connects the present app with any sub-apps. In this case the `prec_transport` sub-app is defined using the `run_prec_transport.i` input file.
 
-Note that all material properties, including $\rho$ and $c_p$, are assumed
-constant. It will therefore be convenient to move the $\rho c_p$ factors outside
-of the divergence operators and divide the entire equation by that factor,
-\begin{equation}
-  \nabla \cdot T \vec{u} - \nabla \cdot \epsilon_q \nabla T
-  - \frac{1}{\rho c_p} Q_q = 0.
-  \label{eq:energy}
-\end{equation}
+!listing msr/lotus/steady_state/run_ns_initial_res.i block=MultiApps
 
-[eq:energy] is the final equation that is implemented in this model. It is added to
-the equation system using a parameter in the `NavierStokesFV` action:
+#### Transfers
 
-```
-[Modules]
-  [NavierStokesFV]
-    ...
-    add_energy_equation = true
-    ...
-```
+Lastly, the `Transfers` block is specified to showcase how Auxiliary Variables should be shared between the current application and the sub-app. Here `power_density`, `fission_source`, and `superficial velocities`, are sent to the precursor transport sub-app, whereas `c1` - `c6` will be returned back to the current app after solving the DNP distributions.
 
-The first term---energy advection--- is automatically added by the action syntax. The
-second term---turbulent diffusion of heat--- is added based on the momentum
-turbulent term, with the Prandtl number also to be specified to adjust the
-diffusion coefficient.
+Then the neutronics application above calls for `c1`-`c6` from the current application in it's `Transfers` block and uses these values to solve the multiphysics coupled neutronics eigenvalue problem.
 
-The third term---heat source and loss---is covered by two kernels. First, the
-nuclear heating computed by the neutronics solver is included with,
-
-```
-[Modules]
-  [NavierStokesFV]
-    ...
-    # Heat source
-    external_heat_source = power_density
-    ...
-```
-
-And second, the heat loss through the heat exchanger is implemented with the
-kernel,
-
-```
-[Modules]
-  [NavierStokesFV]
-    ...
-    # Heat exchanger
-    ambient_convection_blocks = 'hx'
-    ambient_convection_alpha = ${fparse 600 * 20e3} # HX specifications
-    ambient_temperature = ${T_HX}
-    ...
-```
-
-The boundary conditions are added similarly, by simply specifying 0 heat flux for
-symmetry and adiabatic boundaries.
-
-```
-[Modules]
-  [NavierStokesFV]
-    ...
-    energy_wall_types = 'heatflux heatflux heatflux'
-    energy_wall_function = '0 0 0'
-```
-
-Legacy syntax for the energy equation is included [here](griffin_pgh_model_legacy.md).
+!listing msr/lotus/steady_state/run_ns_initial_res.i block=Transfers
 
 ## Delayed Neutron Precursor Advection Equation
 
-Here the distribution of delayed neutron precursors (DNPs) is solved for in another nested sub-app that the Thermal Hydraulics application calls. The input file for solving the conservation of DNPs is listed below.
+Here the distribution of delayed neutron precursors (DNPs) is solved for in another nested sub-app that the Thermal Hydraulics application calls. The `run_prec_transport.i` input for solving the conservation of DNPs is listed below.
+
+This input file could be incorporated into the Thermal Hydraulics solve, but for clarity it has been seperated out as a seperate sub-app. Therefore the input file here is similar to the Thermal Hydraulics input file, and only unique differences will be highlighted.
 
 !listing msr/lotus/steady_state/run_prec_transport.i
 
-The steady-state conservation of delayed neutron precursors (DNP) can be expressed as,
-\begin{equation}
-  \nabla \cdot (\vec{u}c_i) -  \nabla \cdot \epsilon_c \nabla c_i - \lambda_i c_i = \beta_i f,\quad i=1,\cdots,I,
-  \label{eq:dnp}
+Here the delayed neutron precursor distribution is modeled via an advection diffusion equation as follows:
+
+\begin{equation} \label{eq:prec_eigen}
+\nabla \cdot (\mathbf{u}(\mathbf{r}) c_i(\mathbf{r})) - \nabla \cdot H_i \nabla c_i(\mathbf{r}) - \nabla \cdot \frac{\nu_t}{Sc_t} \nabla c_i(\mathbf{r}) = \frac{\beta_0}{k_{eff}} \chi_{p,g} \sum_{g'=1}^G (\nu\Sigma_{f})_{g'} \phi_{g'}(\mathbf{r})- \lambda_i c_i(\mathbf{r}),
 \end{equation}
-where $c_i$, $\lambda_i$ and $\beta_i$ are the concentration, the decay constant and
-the production fraction per neutron generated from fission of the $i$-th group of
-DNP respectively. $I$ is the total number of groups of DNP.
-$f$ is the fission neutron production rate.
-$\epsilon_c = \frac{\nu_t}{Sc_t}$ is the eddy diffusivity for DNP, where $\nu_t$ is the turbulnt viscosity and $Sc_t$ is the turbulent Schmidt number.
-It is noted the DNP term in the neutron transport equation is scaled with $k$-effective
-as the prompt fission term for steady-state eigenvalue calculations, where $k$-effective
-(the eigenvalue) is part of the solution.
 
-It is added to
-the equation system using a parameter in the `NavierStokesFV` action:
+where $\mathbf{u}(\mathbf{r})$ advection velocity vector at position $(\mathbf{r})$,
+$H_i$ average molecular diffusion for neutron precursors of type $i$, $\nu_t$ turbulent kinematic viscosity, and $Sc_t$ the turbulent Schmidt number. There are as many equations of type [eq:prec_eigen] as the number of neutron precursor groups.
 
-```
-[Modules]
-  [NavierStokesFV]
-    ...
-    add_scalar_equation = true
-    ...
-```
+#### Problem Parameters
 
-The terms of [eq:energy] are added with
+Similar to the thermal hydraulics input file `run_ns_initial_res.i`, the physical properties of the problem are defined first. Uniquely, the decay constants $\lambda$ and production fractions $\beta$ are defined for the six DNP groups.
 
-```
-[Modules]
-  [NavierStokesFV]
-    ...
-    # Precursor advection, diffusion and source term
-    passive_scalar_names = 'c1 c2 c3 c4 c5 c6'
-    passive_scalar_schmidt_number = '${Sc_t} ${Sc_t} ${Sc_t} ${Sc_t} ${Sc_t} ${Sc_t}'
-    passive_scalar_coupled_source = 'fission_source c1; fission_source c2; fission_source c3;
-                                     fission_source c4; fission_source c5; fission_source c6;'
-    passive_scalar_coupled_source_coeff = '${beta1} ${lambda1_m}; ${beta2} ${lambda2_m};
-                                           ${beta3} ${lambda3_m}; ${beta4} ${lambda4_m};
-                                           ${beta5} ${lambda5_m}; ${beta6} ${lambda6_m}'
-```
+!listing msr/lotus/steady_state/run_prec_transport.i start=# Material Properties end=[GlobalParams]
+
+#### User Objects
+
+Since this is a sub-app nested underneath the thermal hydraulics application, the `rhie chow interpolator` user object is updated with the superficial velocity aux variables `a_u`, `a_v`, and `a_w` transfered from the Thermal Hydraulics solve.
+
+!listing msr/lotus/steady_state/run_prec_transport.i block=UserObjects
+
+#### Variables
+
+The next difference is that the `c1` - `c6` groups are no longer `AuxVariables` but are the finite volume variables that this problem is explicitly solving for.
+
+!listing msr/lotus/steady_state/run_prec_transport.i block=Variables
+
+#### Auxiliary Variables
+
+In order for this sub-app to take advantage of the transfers from applications above it, it must define the `Auxiliary Variables` that it will receive and send.
+
+!listing msr/lotus/steady_state/run_prec_transport.i block=AuxVariables
+
+Here the `power_density`, `fission_source`, `superficial velocities`, `pressure`, and `auxiliary velocities` are defined so they can be populated via transfers from the neutronics and thermal hydraulics applications above this sub-app.
+
+#### Kernels
+
+Correspondingly, the kernels are the functor or terms that manipulate the variables and form the conservation equations. Here the conservation of DNPs as seen in [eq:prec_eigen] is implimented by explicitly setting each term for each DNP group.
+
+!listing msr/lotus/steady_state/run_prec_transport.i block=Kernels
+
+It should be noted that the `fission_source` variable used as the source term for generating the DNPs was transfered from the Neutronics -> Thermal Hydraulics -> this precursor advection sub-app.
+
+#### Finite Volume Boundary Conditions
+
+Next, no-slip boundary conditions for the superficial velocities `u`, `v`, and `w` are defined at the boundaries.
+
+!listing msr/lotus/steady_state/run_prec_transport.i block=FVBCs
+
+
+#### Materials
+
+Here, porosity and mixing length are incorporated as `Materials` into the model to correctly modify the DNP conservation equations depending on the fluid blocks porosity and turbulent mixing length.
+
+!listing msr/lotus/steady_state/run_prec_transport.i block=Materials
 
 

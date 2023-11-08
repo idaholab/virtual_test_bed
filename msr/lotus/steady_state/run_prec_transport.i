@@ -1,6 +1,6 @@
 ################################################################################
-## Molten Salt Fast Reactor - Euratom EVOL + Rosatom MARS Design              ##
-## Pronghorn input file to initialize velocity fields                         ##
+## Molten Chloride Reactor - Lotus design                                     ##
+## Pronghorn input file to initialize DNP fields                              ##
 ## This runs a slow relaxation to steady state while ramping down the fluid   ##
 ## viscosity.                                                                 ##
 ################################################################################
