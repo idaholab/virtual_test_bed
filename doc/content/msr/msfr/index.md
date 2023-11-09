@@ -14,6 +14,10 @@
 
 [Nek5000 CFD models](msfr/nek5000_cfd_model.md)
 
+[Thermochimica model](msfr/thermo_model.md)
+
+[Thermochimica results](msfr/thermo_results.md)
+
 <!---[Nek5000 CFD results](msfr/nek5000_cfd_results.md)--->
 
 !alert note
