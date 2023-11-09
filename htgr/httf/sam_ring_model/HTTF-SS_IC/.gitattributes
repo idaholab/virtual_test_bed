@@ -1,4 +1,0 @@
-0005.rd-0 filter=lfs diff=lfs merge=lfs -text
-0005.xdr filter=lfs diff=lfs merge=lfs -text
-0005.xdr.0000 filter=lfs diff=lfs merge=lfs -text
-0005_mesh.cpr filter=lfs diff=lfs merge=lfs -text
