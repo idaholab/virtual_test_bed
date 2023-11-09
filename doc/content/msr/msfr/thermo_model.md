@@ -25,7 +25,7 @@ Here MSTDB-TC V2.0 for fluoride salts was used in this modeling effort. To avoid
 
 ## Spatially Resolved Thermochemical Model
 
-With Thermochimica wrapped within MOOSE, the ability to perform various thermochemical analyses of MSRs with other multiphysics analyses now exists. The new multiphysics framework is shown in [msfr_framework]. Here various physics calculations and reactor characteristics are modeled and passed between Griffin, Pronghorn, and Thermochimica within the MOOSE multiphysics framework.
+With Thermochimica wrapped within MOOSE, the ability to perform various thermochemical analyses of MSRs with other multiphysics analyses now exists. The new multiphysics framework is shown in [neams_framework]. Here various physics calculations and reactor characteristics are modeled and passed between Griffin, Pronghorn, and Thermochimica within the MOOSE multiphysics framework.
 
 !media msr/msfr/thermochemistry/neamsframework.png
        style=width:70%;margin:auto
