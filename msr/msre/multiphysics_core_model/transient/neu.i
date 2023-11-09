@@ -1,9 +1,15 @@
 # ==============================================================================
 # Model description
-# Molten Salt Reactor Experiment (MSRE) Model / core neutronics model coupled with TH model
-# ------------------------------------------------------------------------------
-# Idaho Falls, INL, October 3, 2023
-# Author(s): Dr. Mustafa K. Jaradat, Dr. Javier Ortensi, Dr. Mauricio Tano
+# Transient Molten Salt Reactor Experiment (MSRE) Model
+# Core Neutronics Model
+# Integrates:
+# - Doppler-Temperature feedback with interpolation from tabulated cross sections
+# - Density-Temperature feedback with field functions for density
+# MSRE: reference plant design based on 5MW of MSRE Experiment.
+# Reactivity insertion is tunned to get ~19 pcms at t=0s
+# ==============================================================================
+# Author(s): Dr. Mauricio Tano, Dr. Mustafa K. Jaradat, Dr. Samuel Walker
+# ==============================================================================
 # ==============================================================================
 # MODEL PARAMETERS
 # ==============================================================================
@@ -335,7 +341,9 @@ Salt_Density_initial = 2263.0
     execute_on = 'INITIAL timestep_end'
   []
 []
-
+# ==============================================================================
+# USER OBJECTS (Needed for Restart)
+# ==============================================================================
 [UserObjects]
   [transport_solution_s1]
     type = TransportSolutionVectorFile
@@ -358,11 +366,9 @@ Salt_Density_initial = 2263.0
     execute_on = 'INITIAL'
   []
 []
-
 # ==============================================================================
 # MATERIALS
 # ==============================================================================
-
 [PowerDensity]
   power = '${fparse total_power}'
   power_density_variable = power_density
@@ -407,9 +413,8 @@ Salt_Density_initial = 2263.0
     block = 'core_barrel'
   []
 []
-
 # ==============================================================================
-# EXECUTION PARAMETERS
+# POSTPROCESSORS
 # ==============================================================================
 [Postprocessors]
   [Fuel_max_Temp]
@@ -486,7 +491,9 @@ Salt_Density_initial = 2263.0
     default = 0.25
   []
 []
-
+# ==============================================================================
+# EXECUTION PARAMETERS
+# ==============================================================================
 [Preconditioning]
   [SMP]
     type = SMP
@@ -524,10 +531,9 @@ Salt_Density_initial = 2263.0
   fixed_point_abs_tol = 1e-6
 
 []
-
-################################################################################
-# MULTIAPPS and TRANSFERS
-################################################################################
+# ==============================================================================
+# MULTIAPPS AND TRANSFERS
+# ==============================================================================
 [MultiApps]
   [flow_dnp]
     type = TransientMultiApp
@@ -626,13 +632,12 @@ Salt_Density_initial = 2263.0
   []
 []
 
-# ==============================================================================
-# POSTPROCESSORS DEBUG AND OUTPUTS
-# ==============================================================================
-
 [Debug]
   show_var_residual_norms = false
 []
+# ==============================================================================
+# OUTPUTS
+# ==============================================================================
 [Outputs]
   file_base = msre_neutronics_ss_s2_out
   exodus = true

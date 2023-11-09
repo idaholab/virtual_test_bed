@@ -1,16 +1,20 @@
 # ==============================================================================
 # Model description
-# ------------------------------------------------------------------------------
-# Steady state MSRE model Created by Mauricio Tano
-# Idaho Falls, INL, October 3, 2023
-# ==============================================================================
+# Molten Salt Reactor Experiment (MSRE) Model - Steady-State Model
+# Primary Loop Thermal Hydraulics Model
+# Integrates:
+# - Porous media model for reactor primary loop
+# - Weakly compressible, turbulent flow formulation
 # MSRE: reference plant design based on 5MW of MSRE Experiment.
+# ==============================================================================
+# Author(s): Dr. Mauricio Tano, Dr. Samuel Walker
+# ==============================================================================
 # ==============================================================================
 # MODEL PARAMETERS
 # ==============================================================================
 # Problem Parameters -----------------------------------------------------------
 # Geometry ---------------------------------------------------------------------
-core_radius           = 0.69793684
+core_radius = 0.69793684
 
 # Properties -------------------------------------------------------------------
 core_porosity = 0.222831853 # core porosity salt VF=0.222831853, Graphite VF=0.777168147
@@ -30,8 +34,8 @@ pump_force = 1.8e6
 # Hydraulic diameter -----------------------------------------------------------
 D_H_fuel_channel = 0.0191334114 # Hydraulic diameter of bypass
 D_H_downcomer = 0.045589414 # Hydraulic diameter of riser
-D_H_pipe  = ${fparse 5*0.0254} # Riser Hydraulic Diameter
-D_H_plena = ${fparse 2*core_radius} # Hydraulic diameter of riser
+D_H_pipe = '${fparse 5*0.0254}' # Riser Hydraulic Diameter
+D_H_plena = '${fparse 2*core_radius}' # Hydraulic diameter of riser
 
 fluid_blocks = 'core lower_plenum upper_plenum down_comer riser pump elbow' # fluid blocks define fluid vars and solve for them
 
@@ -121,9 +125,9 @@ Sc_t = 1 # turbulent Schmidt number
     external_heat_source = 'power_density'
 
     # boundary conditions
-    wall_boundaries =     'left      top      bottom   right    loop_boundary '
+    wall_boundaries = 'left      top      bottom   right    loop_boundary '
     momentum_wall_types = 'symmetry  slip     noslip   noslip   noslip'
-    energy_wall_types =   'heatflux  heatflux heatflux heatflux heatflux'
+    energy_wall_types = 'heatflux  heatflux heatflux heatflux heatflux'
     energy_wall_function = '0        0        0        0        0'
 
     pin_pressure = true
@@ -411,21 +415,21 @@ Sc_t = 1 # turbulent Schmidt number
   []
   [convection_core]
     type = PINSFVEnergyAmbientConvection
-    variable      = T_solid
-    T_fluid       = T_fluid
-    T_solid       = T_solid
-    is_solid      = true
+    variable = T_solid
+    T_fluid = T_fluid
+    T_solid = T_solid
+    is_solid = true
     h_solid_fluid = 100.0
-    block         = 'core'
+    block = 'core'
   []
   [convection_core_completmeent]
     type = PINSFVEnergyAmbientConvection
-    variable      = T_fluid
-    T_fluid       = T_fluid
-    T_solid       = T_solid
-    is_solid      = false
+    variable = T_fluid
+    T_fluid = T_fluid
+    T_solid = T_solid
+    is_solid = false
     h_solid_fluid = 100.0
-    block         = 'core'
+    block = 'core'
   []
 []
 
@@ -547,7 +551,6 @@ Sc_t = 1 # turbulent Schmidt number
     default = 0.25
   []
 []
-
 
 [Materials]
 
@@ -686,7 +689,7 @@ Sc_t = 1 # turbulent Schmidt number
     cutback_factor = 0.5
     timestep_limiting_postprocessor = limit_dt
   []
-  end_time   = 400.0
+  end_time = 400.0
   auto_advance = true
   # steady_state_detection = true
 []
