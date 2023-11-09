@@ -2,7 +2,7 @@
 
 *Contact: Mauricio Tano, mauricio.tanoretamales\@inl.gov*
 
-*Model summarized, documented, and uploaded by Andres Fierro*
+*Model summarized and documented by Andres Fierro, Dr. Samuel Walker, and Dr. Mauricio Tano*
 
 *Model link: [Griffin-Pronghorn Steady-State Model](https://github.com/idaholab/virtual_test_bed/tree/devel/msr/msre/multiphysics_core_model/steady_state)*
 
@@ -15,9 +15,17 @@
                        computing_needs:Workstation
                        fiscal_year:2023
 
-This model of the MSRE utilizes MOOSE to create a 2D, RZ (cylindrical coordinates) mesh of the MSRE, Griffin to perform neutronics and resulting normalized power source [!citep](Javi23), and Pronghorn to perform medium-fidelity, coarse mesh thermal-hydraulics analysis of the core, upper plenum, pump, downcomer, and lower plenum [!citep](mau23). The parts of the MSRE loop are represented in [MSRE_pgh_mesh_blocks]. The model is an axisymmetric model with the left vertical axis being the axis of symmetry.
+This model of the MSRE utilizes MOOSE to create a 2D, RZ (cylindrical coordinates) mesh of the MSRE.
+Griffin computes neutronics and resulting normalized power source [!citep](Javi23).
+Pronghorn perform medium-fidelity, coarse mesh thermal-hydraulics analysis of the core, upper plenum, pump, downcomer, and lower plenum [!citep](mau23).
+Griffin and Pronghorn are coupled via the `MultiApp` system.
+The parts of the MSRE loop are represented in [MSRE_pgh_mesh_blocks].
+The model is an axisymmetric model with the left vertical axis being the axis of symmetry.
 
-The fuel salt flows down the `Downcomer`, through the `Lower Plenum` and up into the `Core`, is collected at the `Upper Plenum` and finally is recycled through the `Pump`. Here a porous medium approach is used to model flow conditions in the core with a vertical porosity of 0.22283. No rugosity is assumed when computing the friction factor. An anisotropic friction source coefficient keeps the flow approximately 1-Dimensional.
+The fuel salt flows down the `Downcomer`, through the `Lower Plenum`, and up into the `Core`; then, it is collected at the `Upper Plenum`, and, finally, it is recycled through the `Pump`.
+A porous medium approach is used to model flow conditions in the core with a vertical porosity of `0.22283`.
+No rugosity is assumed when computing the friction factors.
+An anisotropic friction source coefficient keeps the flow approximately 1-Dimensional at the core.
 
 !media msr/msre/MSRE_pgh_mesh_blocks.png
        style=width:80%;margin-left:auto;margin-right:auto
@@ -26,7 +34,8 @@ The fuel salt flows down the `Downcomer`, through the `Lower Plenum` and up into
 
 ## Neutronics Model
 
- Here Griffin is the main app detailed in the neutronics input file listed below which calls the sub app Pronghorn which is detailed in the thermal hydraulics section that is discussed later.
+Griffin is the main tool used in the neutronics input file listed below.
+Griffin calls the Pronghorn thermal-hydraulics sub-app which is detailed in the thermal hydraulics section that is discussed later.
 
 !listing msr/msre/multiphysics_core_model/steady_state/neu.i
 
@@ -36,19 +45,22 @@ The beginning of the input file lists the problem parameters the user can edit i
 
 #### Global Parameters
 
-Next, Global Parameters are defined in the `Global Parameters` block which give the macroscopic cross sections for the MSRE.
+Next, Global Parameters are defined in the `Global Parameters` block which give the macroscopic cross section file path for the MSRE.
 
 !listing msr/msre/multiphysics_core_model/steady_state/neu.i block=GlobalParams
 
 #### Transport Systems
 
-Next, the `Transport System` block determines what sort of neutronic solve Griffin will perform. Here the eigenvalue of the MSRE system is computed and corresponding boundary conditions are set --- reflecting boundary for the RZ symmetric core and vacuum boundaries elsewhere.
+Next, the `Transport System` block determines what sort of neutronic solve Griffin will perform.
+Here the methodology to compute the eigenvalue of the MSRE system is computed and corresponding boundary conditions are set --- reflecting boundary for the RZ symmetric core and vacuum boundaries elsewhere.
 
-Additionally, the type of transport equation is selected. In this case the a simplified Diffusion equation is sufficient for fast multiphysics coupling. Additionally, options for the jacobian and fission source auxiliary variable are selected here.
+Additionally, the type of transport equation solve is selected.
+In this case the a multigroup Diffusion equation is sufficient for fast multiphysics coupling.
+Additionally, options for the jacobian and fission source auxiliary variable are selected here.
 
 !listing msr/msre/multiphysics_core_model/steady_state/neu.i block=TransportSystems
 
-The multi-group diffusion equation for the eigenvalue problem solved at steady-state  is given as:
+The steady-state, multi-group diffusion equation for the eigenvalue problem solved at steady-state is given as follows:
 
 \begin{equation} \label{eq:eigen_multi}
 -\nabla \cdot D_g(\mathbf{r}) \nabla \phi_g(\mathbf{r}) + \Sigma_{rg} \phi_g(\mathbf{r}) = \frac{1 - \beta_0}{k_{eff}} \chi_{p,g} \sum_{g'=1}^G (\nu\Sigma_{f})_{g'} \phi_{g'}(\mathbf{r}) + \sum_{g' \neq g}^G \Sigma_{sg'} \phi_{g'}(\mathbf{r}) + \chi_{d,g} \sum_{i=1}^m \lambda_i c_i(\mathbf{r}),
@@ -67,7 +79,7 @@ The `Mesh` block can either generate a mesh using the MOOSE meshing capabiility 
 
 The `AuxVariables` block is specificed next. Through the ```Auxiliary Variables```, developers can define external variables that are solved or used in the primary simulation. The variable types, functions, and scaling factors are explained in detail [here](https://mooseframework.inl.gov/syntax/AuxVariables/index.html). Aux variables can be set explicitly in this block, or passed from other apps to perform multiphysics coupling.
 
-In this case, the velocity, fuel salt and solid temperatures, and delayed neutron precursor group distributions will be informed by the sub app Pronghorn, whereas the fission rate will be calculated by Griffin and passed to the sub app Pronghorn.
+In this case, the velocity, fuel salt and solid structures temperatures, and delayed neutron precursor group distributions will be informed by the Pronghorn sub app, whereas the volumetric power and fission rate fields will be calculated by Griffin and passed to the Pronghorn sub app.
 
 !listing msr/msre/multiphysics_core_model/steady_state/neu.i block=AuxVariables
 
@@ -79,7 +91,7 @@ Correspondingly, the `AuxKernels` block specifies Kernels which act on the auxil
 
 #### User Objects
 
-Next, the `UserOjbects` block specifies User Objects that can be used by other moose applications. Here both the transport solutions and aux variable solutions are stored in their corresponding user objects.
+Next, the `UserOjbects` block specifies User Objects that can be used by other moose applications. Here both the transport solutions and aux variable solutions are stored in their corresponding user objects. This user object is necessary for restarting a transient simulation from a steady-state solution.
 
 !listing msr/msre/multiphysics_core_model/steady_state/neu.i block=UserObjects
 
@@ -91,7 +103,8 @@ The `PowerDensity` block specifies how the Power Density is calculated in Griffi
 
 #### Materials
 
-The `Materials` block specifies what materials will be used in the neutronic calculation, and defines the corresponding material IDs from the macroscopic cross section library.
+The `Materials` block specifies what materials will be used in the neutronic calculation.
+Each material links to the corresponding material IDs from the macroscopic ISOXML cross section library.
 
 Here the nuclide densities are updated through the Aux Kernel operations, and transfered to the Materials block via the `auxvar_solution_s1` user object.
 
@@ -136,32 +149,39 @@ Lastly, the `Outputs` block specifies what type of output (e.g. exodus and CSV) 
 ## Thermal Hydraulics Model
 
  Next, Pronghorn (AKA Moose Navier Stokes Module) is the sub app detailed in the neutronics input file listed below which performs the thermal hydraulic calculations of the core and primary loop.
+ Note, this application can be fully run with the open-source Moose Navier Stokes Module.
 
 !listing msr/msre/multiphysics_core_model/steady_state/th.i
 
 #### Problem Parameters
 
-The physical properties are defined first. The core porosity is defined at a ratio of 0.222831, calculated as the quotient of flow area by total core area. The porosity for the rest of the components is set to 1, full fluid region, but is editable by the user.
+The physical properties are defined first. The core porosity is defined at a ratio of 0.222831, calculated as the quotient of flow area by total core area. The porosity for the rest of the components is set to 1, full fluid region, but is editable by the user. The thermophysical properties of the solid structures are also defined here.
 
-!listing msr/msre/multiphysics_core_model/steady_state/th.i start=# Properties end=mfr
+!listing msr/msre/multiphysics_core_model/steady_state/th.i start=# Properties end=# Operational Parameters
 
-<!-- Double Check this Section Mauricio - I'm lookign at mfr which is 0.07571 for m3/s? Instead of 191.19 kg/s? And the pump force is still 98.2 kN or with the functor that's changed? -->
+The following section focuses on the operational parameters. The mass flow rate was defined at 191.19 kilograms per second, with a core outlet pressure approximately atmospheric at 101.325 kiloPascals.
+The salt core inlet temperature is defined to be 908.15 Kelvin (K) with an ambient room temperature defined to be 300K.
+Finally, this section defines the pump force scaling for the centrifugal pump functor to obtain a specific pump force of 1800.0 kiloNewton per meter cube (kN/m$^3$).
+The pump force was adapted to produce a loop circulation time of ~25 seconds.
 
-The following section focuses on the operational parameters. The mass flow rate was defined at 191.19 kilograms per second, with a core outlet pressure approximately atmospheric at 101.325 kiloPascals. The salt core inlet temperature is defined to be 908.15 Kelvin (K) with an ambient room temperature defined to be 300K. Finally, this section defines the pump force scaling for the centrifugal pump functor to obtain a pump force of 98.2 kiloNewton (kN).
-
-!listing msr/msre/multiphysics_core_model/steady_state/th.i start=mfr end=# Hydraulic diameter
+!listing msr/msre/multiphysics_core_model/steady_state/th.i start=# Operational Parameters end=# Thermal-Hydraulic diameters
 
 Next, the hydraulic diameters of the flow channels are set respectively. The fluid blocks are defined to indicate the fluid regions.
 
-!listing msr/msre/multiphysics_core_model/steady_state/th.i start=# Hydraulic diameter end=lambda1
+!listing msr/msre/multiphysics_core_model/steady_state/th.i start=# Thermal-Hydraulic diameters end=# Delayed neutron
 
-The end of the first section defines the delayed neutron group properties, both their production rate due to fission and decay rate. It also define the turbulent Schmidt number and the initial temperature of the fuel salt.
+Then, first section defines the delayed neutron group properties, both their production rate due to fission and decay rate. It also define the turbulent Schmidt number and the initial temperature of the fuel salt.
 
-!listing msr/msre/multiphysics_core_model/steady_state/th.i start=lambda1 end=[GlobalParams]
+!listing msr/msre/multiphysics_core_model/steady_state/th.i start=# Delayed neutron end=# Utils
+
+The end of the first section defines the set of blocks where the fluid flow and solid heat conduction equations will be solved.
+
+!listing msr/msre/multiphysics_core_model/steady_state/th.i start=# Utils end=# =
 
 #### Global Parameters
 
 Next, Global Parameters are defined in the `Global Parameters` block.
+This section is used to define variables and methods that are required by many methods in the input file.
 
 !listing msr/msre/multiphysics_core_model/steady_state/th.i start=[GlobalParams] end=#
 
@@ -180,15 +200,17 @@ The ```Navier Stokes Finite Volume``` action is used to define fluid properties,
 
 Here, the action operates on the fluid blocks which are defined at the top of the header and are substituted using the `$` sign. Recall that the `$` sign refers to variable substitutions. "Weakly-compressible" with porous_medium_treatment is selected for this model and the energy equation is also included.
 
-Scaling factors can be tuned to increase convergence speed if needed. Numerical schemes can also be selected for solving the Navier Stokes equations with different methods of pressure and velocity interpolation.
+Numerical schemes can be selected for solving the Navier Stokes equations with different methods of pressure and velocity interpolation.
 
 Porosity, friction, and turbulence treatment can be modified here using various correlations and models. Fluid properties are also set here and can be modified.
 
-The action also incorporates external physics like a volumetric heat source due to the power_density calculated by Griffin. Lastly boundary conditions are set to constrain the different Navier Stokes equations.
-
-The action allows users to simply modify the equations that are solved, choose numerical schemes, define the porosity and friction treatment, define fluid properties, couple with other physics for energy deposition, and set boundary conditions.
+The action also incorporates external physics like a volumetric heat source due to the power_density calculated by Griffin. Also, boundary conditions are set to constrain the different Navier Stokes equations.
 
 The scalar equations for delayed neutron precursor groups are not included here in the action since they are defined externally elsewhere in the input file
+
+Lastly, scaling factors can be tuned to increase convergence speed if needed.
+
+The action allows users to simply modify the equations that are solved, choose numerical schemes, define the porosity and friction treatment, define fluid properties, couple with other physics for energy deposition, and set boundary conditions.
 
 !listing msr/msre/multiphysics_core_model/steady_state/th.i start=[Modules] end=[FluidProperties]
 
@@ -218,20 +240,20 @@ The fluid domain $\Omega_f$ comprises porous regions with $0< \gamma < 1$ and fr
 
 This block contains parameters applied to all the core components. The `fluid_properties_obj` refers to the primary salt F-Li-Be (FLiBe), already defined within MOOSE.
 
-!listing msr/msre/multiphysics_core_model/steady_state/th.i start=[FluidProperties] end=[Variables]
+!listing msr/msre/multiphysics_core_model/steady_state/th.i start=[FluidProperties] end=[Modules]
 
 
 Fluid properties are further defined within the ```Navier Stokes Finite Volume``` action and the Materials block.
 
 !listing msr/msre/multiphysics_core_model/steady_state/th.i start=# fluid properties end=# Energy source-sink language=cpp
 
-!listing msr/msre/multiphysics_core_model/steady_state/th.i start=## Fluid end=## Drag language=cpp
+!listing msr/msre/multiphysics_core_model/steady_state/th.i start=# Setting up fluid properties end=# Setting up heat conduction language=cpp
 
 #### Variables
 
 This block contains the variables that are explicitly solved for in this model. These include the velocity, pressure, temperature, and six delayed neutron precursor groups.
 
-!listing msr/msre/multiphysics_core_model/steady_state/th.i start=[Variables] end=[FVKernels]
+!listing msr/msre/multiphysics_core_model/steady_state/th.i start=[Variables] end=# ===
 
 #### Finite Volume Kernels
 
@@ -245,14 +267,14 @@ Here the delayed neutron precursor distribution is modeled via an advection diff
 \nabla \cdot (\mathbf{u}(\mathbf{r}) c_i(\mathbf{r})) - \nabla \cdot H_i \nabla c_i(\mathbf{r}) - \nabla \cdot \frac{\nu_t}{Sc_t} \nabla c_i(\mathbf{r}) = \frac{\beta_0}{k_{eff}} \chi_{p,g} \sum_{g'=1}^G (\nu\Sigma_{f})_{g'} \phi_{g'}(\mathbf{r})- \lambda_i c_i(\mathbf{r}),
 \end{equation}
 
-where $\mathbf{u}(\mathbf{r})$ advection velocity vector at position $(\mathbf{r})$,
+where $\mathbf{u}(\mathbf{r})$ interstitial advection velocity vector at position $(\mathbf{r})$,
 $H_i$ average molecular diffusion for neutron precursors of type $i$, $\nu_t$ turbulent kinematic viscosity, and $Sc_t$ the turbulent Schmidt number. There are as many equations of type [eq:prec_eigen] as the number of neutron precursor groups. Since we are adding these equations in manually, the `FVKernels` entered correspond to the associated terms in the equation for the six delayed neutron precursor groups.
 
 #### Finite Volume Interface Kernels
 
 Additionally, finite volume interface Kernels can be deployed to account for specific interfacial modeling at boundaries. Here an explicit heat transfer correlation is implimented at the `core_downcomer_boundary`.
 
-!listing msr/msre/multiphysics_core_model/steady_state/th.i start=[FVInterfaceKernels] end=[Functions]
+!listing msr/msre/multiphysics_core_model/steady_state/th.i start=[FVInterfaceKernels] end=# =======
 
 #### Functions
 
@@ -275,7 +297,7 @@ The power density is a constant field defined in the core and plena blocks. The 
 
 Correspondingly, the ```Auxiliary Kernels``` operate on the ```Auxiliary Variables```. Here the porosity and density auxiliary variable are incorporated into the automatic differentiation process through the ```ADFunctorElementalAux```
 
-!listing msr/msre/multiphysics_core_model/steady_state/th.i start=[AuxKernels] end=[Postprocessors]
+!listing msr/msre/multiphysics_core_model/steady_state/th.i start=[AuxKernels] end=# ==
 
 #### Postprocessors
 
@@ -289,19 +311,13 @@ Here the inlet and outlet pressures and temperatures are determined as well as t
 
 The Materials block allows for users to set various material parameters and correlations for the model. Here the porosity, hydraulic diameter, fluid properties, drag correlations and porosity delayed neutron precursor distributions are set.
 
-!listing msr/msre/multiphysics_core_model/steady_state/th.i start=[Materials] end=[Debug]
-
-#### Materials
-
-The Materials block allows for users to set various material parameters and correlations for the model. Here the porosity, hydraulic diameter, fluid properties, drag correlations and porosity delayed neutron precursor distributions are set.
-
-!listing msr/msre/multiphysics_core_model/steady_state/th.i start=[Materials] end=[Debug]
+!listing msr/msre/multiphysics_core_model/steady_state/th.i start=[Materials] end=# ==
 
 #### Executioner
 
 Finally, the Executioner block determines how the model is run. The type of solve, method, PETSc options and convergence tolerances are set in this block. Additionally the time stepping method, end time, and steady state detection options are defined in this block.
 
-!listing msr/msre/multiphysics_core_model/steady_state/th.i start=[Executioner] end=[Output]
+!listing msr/msre/multiphysics_core_model/steady_state/th.i start=[Debug] end=[Outputs]
 
 #### Output
 

@@ -1,16 +1,20 @@
 # ==============================================================================
 # Model description
-# ------------------------------------------------------------------------------
-# Steady state MSRE model Created by Mauricio Tano
-# Idaho Falls, INL, October 3, 2023
-# ==============================================================================
+# Molten Salt Reactor Experiment (MSRE) Model - Steady-State Model
+# Primary Loop Thermal Hydraulics Model
+# Integrates:
+# - Porous media model for reactor primary loop
+# - Weakly compressible, turbulent flow formulation
 # MSRE: reference plant design based on 5MW of MSRE Experiment.
+# ==============================================================================
+# Author(s): Dr. Mauricio Tano, Dr. Samuel Walker
+# ==============================================================================
 # ==============================================================================
 # MODEL PARAMETERS
 # ==============================================================================
 # Problem Parameters -----------------------------------------------------------
 # Geometry ---------------------------------------------------------------------
-core_radius           = 0.69793684
+core_radius = 0.69793684
 
 # Properties -------------------------------------------------------------------
 core_porosity = 0.222831853 # core porosity salt VF=0.222831853, Graphite VF=0.777168147
@@ -21,20 +25,27 @@ riser_porosity = 1.0 # riser porosity
 pump_porosity = 1.0 # pump porosity
 elbow_porosity = 1.0 # elbow porosity
 
-mfr = 0.07571 #m3/s # 191.1900 # Salt mass flow rate (kg/s).
+cp_steel = 800.0 # (J/(kg.K)) specific heat of steel
+rho_steel = 8000.0 # (kg/(m3)) density of steel
+k_steel = 15.0 # # (W/(m.k)) density of steel
+
+# Operational Parameters --------------------------------------------------------
 p_outlet = 1.01325e+05 # Reactor outlet pressure (Pa)
 T_inlet = 908.15 # Salt inlet temperature (K).
+T_Salt_initial = 923.0 # inital salt temperature (will change in steady-state)
 
-pump_force = 1.8e6 # pump force functor
+pump_force = 1.8e6 # pump force functor (set to get a loop circulation time of ~25 seconds)
+vol_hx = 1e10 # (W/(m3.K)) volumetric heat exchange coefficient for heat exchanger
+# Note: vol_hx need to be tuned to match intermediate HX performance for transients
+bulk_hx = 100.0 # (W/(m3.K)) core bulk volumetric heat exchange coefficient (already callibrated)
 
-# Hydraulic diameter -----------------------------------------------------------
+# Thermal-Hydraulic diameters ----------------------------------------------------
 D_H_fuel_channel = 0.0191334114 # Hydraulic diameter of bypass
 D_H_downcomer = 0.045589414 # Hydraulic diameter of riser
-D_H_pipe  = ${fparse 5*0.0254} # Riser Hydraulic Diameter
-D_H_plena = ${fparse 2*core_radius} # Hydraulic diameter of riser
+D_H_pipe = '${fparse 5*0.0254}' # Riser Hydraulic Diameter
+D_H_plena = '${fparse 2*core_radius}' # Hydraulic diameter of riser
 
-fluid_blocks = 'core lower_plenum upper_plenum down_comer riser pump elbow' # fluid blocks define fluid vars and solve for them
-
+# Delayed neutron precursors constants ------------------------------------------
 lambda1 = 0.0133104
 lambda2 = 0.0305427
 lambda3 = 0.115179
@@ -50,8 +61,14 @@ beta6 = 0.000184087
 
 Sc_t = 1 # turbulent Schmidt number
 
-T_Salt_initial = 923.0
+# Utils -------------------------------------------------------------------------
+# fluid blocks define fluid vars and solve for them
+fluid_blocks = 'core lower_plenum upper_plenum down_comer riser pump elbow'
+solid_blocks = 'core core_barrel'
 
+# ==============================================================================
+# GLOBAL PARAMETERS
+# ==============================================================================
 [GlobalParams]
   fp = fluid_properties_obj
   porosity = 'porosity'
@@ -63,7 +80,6 @@ T_Salt_initial = 923.0
   advected_interp_method = 'upwind'
   velocity_interp_method = 'rc'
   mixing_length = 'mixing_length'
-
 []
 
 # ==============================================================================
@@ -81,68 +97,9 @@ T_Salt_initial = 923.0
   kernel_coverage_check = false
 []
 
-[Modules]
-  [NavierStokesFV]
-    # Basic settings
-    block = ${fluid_blocks}
-    compressibility = 'weakly-compressible'
-    porous_medium_treatment = true
-    add_energy_equation = true
-
-    #Scaling
-    #energy_scaling = 1e-6
-    momentum_scaling = 1e-3
-    mass_scaling = 10
-    gravity = '0.0 -9.81 0.0'
-
-    # Numerical schemes
-    pressure_face_interpolation = average
-    momentum_advection_interpolation = upwind
-    mass_advection_interpolation = upwind
-    energy_advection_interpolation = upwind
-    velocity_interpolation = rc
-    velocity_variable = 'vel_x vel_y'
-    pressure_variable = 'pressure'
-    fluid_temperature_variable = 'T_fluid'
-
-    # Porous & Friction treatement
-    use_friction_correction = true
-    friction_types = 'darcy forchheimer'
-    friction_coeffs = 'Darcy_coefficient Forchheimer_coefficient'
-    consistent_scaling = 100.0
-    porosity_smoothing_layers = 2
-    turbulence_handling = 'mixing-length'
-
-    # fluid properties
-    density = 'rho'
-    dynamic_viscosity = 'mu'
-    thermal_conductivity = 'kappa'
-    specific_heat = 'cp'
-
-    # Energy source-sink
-    external_heat_source = 'power_density'
-
-    # boundary conditions
-    wall_boundaries =     'left      top      bottom   right    loop_boundary '
-    momentum_wall_types = 'symmetry  slip     noslip   noslip   noslip'
-    energy_wall_types =   'heatflux  heatflux heatflux heatflux heatflux'
-    energy_wall_function = '0        0        0        0        0'
-
-    pin_pressure = true
-    pinned_pressure_value = ${p_outlet}
-    pinned_pressure_type = average-uo
-
-    # passive scalar -- solved in the multiapp because is much faster
-    add_scalar_equation = false # solving separetely
-  []
-[]
-
-[FluidProperties]
-  [fluid_properties_obj]
-    type = FlibeFluidProperties
-  []
-[]
-
+# ==============================================================================
+# FV VARIABLES
+# ==============================================================================
 [Variables]
   [vel_x]
     type = PINSFVSuperficialVelocityVariable
@@ -167,7 +124,7 @@ T_Salt_initial = 923.0
   [T_solid]
     type = INSFVEnergyVariable
     initial_condition = ${T_Salt_initial}
-    block = 'core core_barrel'
+    block = ${solid_blocks}
   []
   [c1]
     type = MooseVariableFVReal
@@ -195,8 +152,74 @@ T_Salt_initial = 923.0
   []
 []
 
-[FVKernels]
+# ==============================================================================
+# THERMAL-HYDRAULICS SETUP
+# ==============================================================================
+[FluidProperties]
+  [fluid_properties_obj]
+    type = FlibeFluidProperties
+  []
+[]
 
+[Modules]
+  [NavierStokesFV]
+    # Basic settings - weakly-compressible, turbulent flow with buoyancy
+    block = ${fluid_blocks}
+    compressibility = 'weakly-compressible'
+    porous_medium_treatment = true
+    add_energy_equation = true
+    gravity = '0.0 -9.81 0.0'
+
+    # Variable naming
+    velocity_variable = 'vel_x vel_y'
+    pressure_variable = 'pressure'
+    fluid_temperature_variable = 'T_fluid'
+
+    # Numerical schemes
+    pressure_face_interpolation = average
+    momentum_advection_interpolation = upwind
+    mass_advection_interpolation = upwind
+    energy_advection_interpolation = upwind
+    velocity_interpolation = rc
+
+    # Porous & Friction treatement
+    use_friction_correction = true
+    friction_types = 'darcy forchheimer'
+    friction_coeffs = 'Darcy_coefficient Forchheimer_coefficient'
+    consistent_scaling = 100.0
+    porosity_smoothing_layers = 2
+    turbulence_handling = 'mixing-length'
+
+    # fluid properties
+    density = 'rho'
+    dynamic_viscosity = 'mu'
+    thermal_conductivity = 'kappa'
+    specific_heat = 'cp'
+
+    # Energy source-sink
+    external_heat_source = 'power_density'
+
+    # boundary conditions
+    wall_boundaries = 'left      top      bottom   right    loop_boundary '
+    momentum_wall_types = 'symmetry  slip     noslip   noslip   noslip'
+    energy_wall_types = 'heatflux  heatflux heatflux heatflux heatflux'
+    energy_wall_function = '0        0        0        0        0'
+
+    pin_pressure = true
+    pinned_pressure_value = ${p_outlet}
+    pinned_pressure_type = average-uo
+
+    # passive scalar -- solved separetely to integrate porosity jumps
+    add_scalar_equation = false
+
+    #Scaling -- used mainly for nonlinear solves
+    momentum_scaling = 1e-3
+    mass_scaling = 10
+  []
+[]
+
+[FVKernels]
+  # Extra kernels for the thermal-hydraulics solve in the fluid
   [pump_x]
     type = INSFVBodyForce
     variable = vel_x
@@ -215,10 +238,42 @@ T_Salt_initial = 923.0
     type = NSFVEnergyAmbientConvection
     variable = T_fluid
     T_ambient = ${T_inlet}
-    alpha = 1e10
+    alpha = ${vol_hx}
     block = 'pump'
   []
 
+  # Kernels for solve in the solid blocks
+  [heat_time_solid]
+    type = INSFVEnergyTimeDerivative
+    variable = T_solid
+    cp = ${cp_steel}
+    rho = ${rho_steel}
+  []
+  [heat_diffusion_solid]
+    type = FVDiffusion
+    variable = T_solid
+    coeff = ${k_steel}
+  []
+  [convection_core]
+    type = PINSFVEnergyAmbientConvection
+    variable = T_solid
+    T_fluid = T_fluid
+    T_solid = T_solid
+    is_solid = true
+    h_solid_fluid = ${bulk_hx}
+    block = 'core'
+  []
+  [convection_core_completmeent]
+    type = PINSFVEnergyAmbientConvection
+    variable = T_fluid
+    T_fluid = T_fluid
+    T_solid = T_solid
+    is_solid = false
+    h_solid_fluid = ${bulk_hx}
+    block = 'core'
+  []
+
+  # Kernels for solve of delayed neutron precursor transport
   [c1_time]
     type = FVFunctorTimeKernel
     variable = 'c1'
@@ -243,37 +298,37 @@ T_Salt_initial = 923.0
     type = FVFunctorTimeKernel
     variable = 'c6'
   []
-  [c1_advection] # This should be porous: I need to add the kernel to MOOSE later
+  [c1_advection]
     type = PINSFVMassAdvection
     variable = c1
     rho = 'c1_porous'
     block = ${fluid_blocks}
   []
-  [c2_advection] # This should be porous: I need to add the kernel to MOOSE later
+  [c2_advection]
     type = PINSFVMassAdvection
     variable = c2
     rho = 'c2_porous'
     block = ${fluid_blocks}
   []
-  [c3_advection] # This should be porous: I need to add the kernel to MOOSE later
+  [c3_advection]
     type = PINSFVMassAdvection
     variable = c3
     rho = 'c3_porous'
     block = ${fluid_blocks}
   []
-  [c4_advection] # This should be porous: I need to add the kernel to MOOSE later
+  [c4_advection]
     type = PINSFVMassAdvection
     variable = c4
     rho = 'c4_porous'
     block = ${fluid_blocks}
   []
-  [c5_advection] # This should be porous: I need to add the kernel to MOOSE later
+  [c5_advection]
     type = PINSFVMassAdvection
     variable = c5
     rho = 'c5_porous'
     block = ${fluid_blocks}
   []
-  [c6_advection] # This should be porous: I need to add the kernel to MOOSE later
+  [c6_advection]
     type = PINSFVMassAdvection
     variable = c6
     rho = 'c6_porous'
@@ -393,45 +448,16 @@ T_Salt_initial = 923.0
     rate = ${lambda6}
     block = ${fluid_blocks}
   []
-
-  [heat_time_solid]
-    type = INSFVEnergyTimeDerivative
-    variable = T_solid
-    cp = 800.0
-    rho = 15.0
-  []
-  [heat_diffusion_solid]
-    type = FVDiffusion
-    variable = T_solid
-    coeff = 15.0
-  []
-  [convection_core]
-    type = PINSFVEnergyAmbientConvection
-    variable      = T_solid
-    T_fluid       = T_fluid
-    T_solid       = T_solid
-    is_solid      = true
-    h_solid_fluid = 100.0
-    block         = 'core'
-  []
-  [convection_core_completmeent]
-    type = PINSFVEnergyAmbientConvection
-    variable      = T_fluid
-    T_fluid       = T_fluid
-    T_solid       = T_solid
-    is_solid      = false
-    h_solid_fluid = 100.0
-    block         = 'core'
-  []
 []
 
 [FVInterfaceKernels]
+  # Conjugated heat transfer with core barrel
   [convection]
     type = FVConvectionCorrelationInterface
     variable1 = T_fluid
     variable2 = T_solid
     boundary = 'core_downcomer_boundary'
-    h = 100.0
+    h = ${bulk_hx}
     T_solid = T_solid
     T_fluid = T_fluid
     subdomain1 = 'core down_comer lower_plenum'
@@ -440,19 +466,10 @@ T_Salt_initial = 923.0
   []
 []
 
+# ==============================================================================
+# AUXVARIABLES AND AUXKERNELS
+# ==============================================================================
 [Functions]
-  [mu_ramp_fn]
-    type = PiecewiseLinear
-    x = '0  1   10'
-    y = '10 1.5 1'
-  []
-
-  [mfr_fn]
-    type = PiecewiseLinear
-    x = '0 1'
-    y = '0 ${mfr}'
-  []
-
   [cosine_guess]
     type = ParsedFunction
     expression = 'max(0, cos(x*pi/2/1.0))*max(0, cos((y-1.0)*pi/2/1.1))'
@@ -502,51 +519,12 @@ T_Salt_initial = 923.0
   []
 []
 
-[Postprocessors]
-  [outlet_p]
-    type = SideAverageValue
-    variable = pressure
-    boundary = 'pump_outlet'
-  []
-  [outlet_T]
-    type = SideAverageValue
-    variable = 'T_fluid'
-    boundary = 'pump_outlet'
-  []
-  [inlet_p]
-    type = SideAverageValue
-    variable = 'pressure'
-    boundary = 'downcomer_inlet'
-  []
-  [inlet_T]
-    type = SideAverageValue
-    variable = 'T_fluid'
-    boundary = 'downcomer_inlet'
-  []
-  [vfr_downcomer]
-    type = VolumetricFlowRate
-    vel_x = vel_x
-    vel_y = vel_y
-    advected_quantity = 1.0
-    boundary = 'downcomer_inlet'
-  []
-  [area_pp_downcomer_inlet]
-    type = AreaPostprocessor
-    boundary = 'downcomer_inlet'
-    execute_on = 'INITIAL'
-  []
-
-  [vfr_pump]
-    type = VolumetricFlowRate
-    vel_x = vel_x
-    vel_y = vel_y
-    advected_quantity = 1.0
-    boundary = 'pump_outlet'
-  []
-
+# ==============================================================================
+# MATERIALS
+# ==============================================================================
 [Materials]
 
-  # hydraulic diameter and porosity - fixed number per block
+  # Setting up material porosities at fluid blocks
   [porosity]
     type = ADPiecewiseByBlockFunctorMaterial
     prop_name = 'porosity'
@@ -559,6 +537,7 @@ T_Salt_initial = 923.0
                                elbow            ${elbow_porosity}'
   []
 
+  # Setting up hydraulic diameters at fluid blocks
   [hydraulic_diameter]
     type = PiecewiseByBlockFunctorMaterial
     prop_name = 'characteristic_length'
@@ -572,17 +551,17 @@ T_Salt_initial = 923.0
     block = ${fluid_blocks}
   []
 
-  ## Fluid properties and non-dimensional numbers
+  # Setting up fluid properties at blocks material blocks
   [fluid_props_to_mat_props]
     type = GeneralFunctorFluidProps
     pressure = 'pressure'
     T_fluid = 900.0 #'T_fluid'
     speed = 'speed'
-    # mu_rampdown = 'mu' #'mu_ramp_fn'  # To initialize with a high viscosity
     characteristic_length = characteristic_length
     block = ${fluid_blocks}
   []
 
+  # Setting up heat conduction materials at blocks
   [effective_fluid_thermal_conductivity]
     type = ADGenericVectorFunctorMaterial
     prop_names = 'kappa'
@@ -590,32 +569,29 @@ T_Salt_initial = 923.0
     block = ${fluid_blocks}
   []
 
-  ## Drag correlations
-
+  ## Drag correlations per block
   [isotropic_drag_core]
     type = FunctorChurchillDragCoefficients
     multipliers = '100000 500 100000'
     block = 'core'
   []
-
   [drag_plena]
     type = FunctorChurchillDragCoefficients
     multipliers = '1 1 1'
     block = 'lower_plenum upper_plenum'
   []
-
   [drag_downcomer]
     type = FunctorChurchillDragCoefficients
     multipliers = '1 1 1'
     block = 'down_comer'
   []
-
   [drag_piping]
     type = FunctorChurchillDragCoefficients
     multipliers = '0 0 0'
     block = 'riser pump elbow'
   []
 
+  ## Materials for computing corrected DNP advection
   [c1_mat]
     type = ADParsedFunctorMaterial
     expression = 'c1 / porosity'
@@ -660,6 +636,54 @@ T_Salt_initial = 923.0
   []
 []
 
+# ==============================================================================
+# POSTPROCESSORS
+# ==============================================================================
+[Postprocessors]
+  [outlet_p]
+    type = SideAverageValue
+    variable = pressure
+    boundary = 'pump_outlet'
+  []
+  [outlet_T]
+    type = SideAverageValue
+    variable = 'T_fluid'
+    boundary = 'pump_outlet'
+  []
+  [inlet_p]
+    type = SideAverageValue
+    variable = 'pressure'
+    boundary = 'downcomer_inlet'
+  []
+  [inlet_T]
+    type = SideAverageValue
+    variable = 'T_fluid'
+    boundary = 'downcomer_inlet'
+  []
+  [vfr_downcomer]
+    type = VolumetricFlowRate
+    vel_x = vel_x
+    vel_y = vel_y
+    advected_quantity = 1.0
+    boundary = 'downcomer_inlet'
+  []
+  [area_pp_downcomer_inlet]
+    type = AreaPostprocessor
+    boundary = 'downcomer_inlet'
+    execute_on = 'INITIAL'
+  []
+  [vfr_pump]
+    type = VolumetricFlowRate
+    vel_x = vel_x
+    vel_y = vel_y
+    advected_quantity = 1.0
+    boundary = 'pump_outlet'
+  []
+[]
+
+# ==============================================================================
+# EXECUTION PARAMETERS
+# ==============================================================================
 [Debug]
   show_var_residual_norms = true
 []
