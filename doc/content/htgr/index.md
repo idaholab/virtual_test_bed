@@ -18,6 +18,8 @@
 
 [Nek5000/RS HTTF lower plenum CFD model](httf/lower_plenum_cfd.md)
 
+[SAM HTTF 2D ring model](httf/httf_sam_model.md)
+
 [SAM Generic Pebble Bed HTGR model](generic-pbr/index.md)
 
 [LEU Pulse](leu_pulse/index.md)
