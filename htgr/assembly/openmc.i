@@ -179,12 +179,11 @@ num_layers_for_THM = 50 # number of elements in the THM model; for the converged
 
   power = '${fparse power / n_bundles}'
   scaling = 100.0
-  solid_blocks = 'graphite compacts poison'
-  fluid_blocks = '101'
+  temperature_blocks = 'graphite compacts poison 101'
+  density_blocks = '101'
   tally_blocks = '2'
   tally_type = cell
-  solid_cell_level = 1
-  fluid_cell_level = 1
+  cell_level = 1
 
   relaxation = constant
   relaxation_factor = 0.5
