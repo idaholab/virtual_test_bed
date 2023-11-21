@@ -47,7 +47,7 @@ where $t$ is time, $k_{\text{eff}}^{\text{st}}$ is the steady-state eigenvalue c
 
 #### Multi Apps
 
-Finally, the `MultiApps` block is altered to a `TransientMultiApp` solution.
+Finally, the `MultiApps` block is altered to a `TransientMultiApp` solution. The trasfers that are used are identical to the [steady-state case](msre_multiphysics_core_model.md).
 
 !listing msr/msre/multiphysics_core_model/transient/neu.i block=MultiApps
 
@@ -63,7 +63,7 @@ Here the Mesh block loads in a restart file to correctly initialize the transien
 
 Similarly, this block initializes these variables from the restart file with the `initial_from_file_var` option.
 
-!listing msr/msre/multiphysics_core_model/transient/th.i start=[Variables] end=[FVKernels]
+!listing msr/msre/multiphysics_core_model/transient/th.i start=[Variables] end=# =====
 
 #### Aux Variables
 

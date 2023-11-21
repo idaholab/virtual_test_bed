@@ -19,13 +19,13 @@ core_radius = 0.69793684
 # Properties -------------------------------------------------------------------
 core_porosity = 0.222831853 # core porosity salt VF=0.222831853, Graphite VF=0.777168147
 down_comer_porosity = 1.0 # downcomer porosity
-lower_plenum_porosity = 1.0 # lower pelnum porosity
+lower_plenum_porosity = 0.5 # lower pelnum porosity
 upper_plenum_porosity = 1.0 # upper pelnum porosity
 riser_porosity = 1.0 # riser porosity
 pump_porosity = 1.0 # pump porosity
 elbow_porosity = 1.0 # elbow porosity
 
-cp_steel = 800.0 # (J/(kg.K)) specific heat of steel
+cp_steel = 500.0 # (J/(kg.K)) specific heat of steel
 rho_steel = 8000.0 # (kg/(m3)) density of steel
 k_steel = 15.0 # # (W/(m.k)) density of steel
 
@@ -34,7 +34,7 @@ p_outlet = 1.01325e+05 # Reactor outlet pressure (Pa)
 T_inlet = 908.15 # Salt inlet temperature (K).
 T_Salt_initial = 923.0 # inital salt temperature (will change in steady-state)
 
-pump_force = 1.8e6 # pump force functor (set to get a loop circulation time of ~25 seconds)
+pump_force = 1.3e6 # pump force functor (set to get a loop circulation time of ~25 seconds)
 vol_hx = 1e10 # (W/(m3.K)) volumetric heat exchange coefficient for heat exchanger
 # Note: vol_hx need to be tuned to match intermediate HX performance for transients
 bulk_hx = 100.0 # (W/(m3.K)) core bulk volumetric heat exchange coefficient (already callibrated)
@@ -153,7 +153,7 @@ solid_blocks = 'core core_barrel'
 []
 
 # ==============================================================================
-# THERMAL-HYDRAULICS SETUP
+# THERMAL-HYDRAULICS PROBLEM SETUP
 # ==============================================================================
 [FluidProperties]
   [fluid_properties_obj]
@@ -199,17 +199,18 @@ solid_blocks = 'core core_barrel'
     # Energy source-sink
     external_heat_source = 'power_density'
 
-    # boundary conditions
+    # Boundary Conditions
     wall_boundaries = 'left      top      bottom   right    loop_boundary '
     momentum_wall_types = 'symmetry  slip     noslip   noslip   noslip'
     energy_wall_types = 'heatflux  heatflux heatflux heatflux heatflux'
     energy_wall_function = '0        0        0        0        0'
 
+    # Constrain Pressure
     pin_pressure = true
     pinned_pressure_value = ${p_outlet}
     pinned_pressure_type = average-uo
 
-    # passive scalar -- solved separetely to integrate porosity jumps
+    # Passive Scalar -- solved separetely to integrate porosity jumps
     add_scalar_equation = false
 
     #Scaling -- used mainly for nonlinear solves
@@ -246,7 +247,7 @@ solid_blocks = 'core core_barrel'
   [heat_time_solid]
     type = INSFVEnergyTimeDerivative
     variable = T_solid
-    cp = ${cp_steel}
+    dh_dt = ${cp_steel}
     rho = ${rho_steel}
   []
   [heat_diffusion_solid]
@@ -483,16 +484,16 @@ solid_blocks = 'core core_barrel'
   []
   [power_density]
     type = MooseVariableFVReal
-    [InitialCondition]
-      type = FunctionIC
+    [FVInitialCondition]
+      type = FVFunctionIC
       function = 'cosine_guess'
       scaling_factor = '${fparse 2.9183E+6}'
     []
   []
   [fission_source]
     type = MooseVariableFVReal
-    [InitialCondition]
-      type = FunctionIC
+    [FVInitialCondition]
+      type = FVFunctionIC
       function = 'cosine_guess'
       scaling_factor = '${fparse 1.0}'
     []
@@ -555,7 +556,7 @@ solid_blocks = 'core core_barrel'
   [fluid_props_to_mat_props]
     type = GeneralFunctorFluidProps
     pressure = 'pressure'
-    T_fluid = 900.0 #'T_fluid'
+    T_fluid = 'T_fluid'
     speed = 'speed'
     characteristic_length = characteristic_length
     block = ${fluid_blocks}
@@ -572,13 +573,18 @@ solid_blocks = 'core core_barrel'
   ## Drag correlations per block
   [isotropic_drag_core]
     type = FunctorChurchillDragCoefficients
-    multipliers = '100000 500 100000'
+    multipliers = '100000 100 100000'
     block = 'core'
   []
-  [drag_plena]
+  [drag_lower_plenum]
+    type = FunctorChurchillDragCoefficients
+    multipliers = '10 1 10'
+    block = 'upper_plenum'
+  []
+  [drag_upper_plenum]
     type = FunctorChurchillDragCoefficients
     multipliers = '1 1 1'
-    block = 'lower_plenum upper_plenum'
+    block = 'lower_plenum'
   []
   [drag_downcomer]
     type = FunctorChurchillDragCoefficients

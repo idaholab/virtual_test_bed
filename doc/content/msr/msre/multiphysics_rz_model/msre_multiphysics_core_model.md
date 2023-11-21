@@ -148,7 +148,7 @@ Lastly, the `Outputs` block specifies what type of output (e.g. exodus and CSV) 
 
 ## Thermal Hydraulics Model
 
- Next, Pronghorn (AKA Moose Navier Stokes Module) is the sub app detailed in the neutronics input file listed below which performs the thermal hydraulic calculations of the core and primary loop.
+Next, Pronghorn (AKA Moose Navier Stokes Module) is the sub app detailed in the neutronics input file listed below which performs the thermal hydraulic calculations of the core and primary loop.
  Note, this application can be fully run with the open-source Moose Navier Stokes Module.
 
 !listing msr/msre/multiphysics_core_model/steady_state/th.i
@@ -212,7 +212,7 @@ Lastly, scaling factors can be tuned to increase convergence speed if needed.
 
 The action allows users to simply modify the equations that are solved, choose numerical schemes, define the porosity and friction treatment, define fluid properties, couple with other physics for energy deposition, and set boundary conditions.
 
-!listing msr/msre/multiphysics_core_model/steady_state/th.i start=[Modules] end=[FluidProperties]
+!listing msr/msre/multiphysics_core_model/steady_state/th.i start=[Modules] end=[FVKernels]
 
 The porous flow equations for weakly-compressible flow read as follows:
 

@@ -1,15 +1,9 @@
 # ==============================================================================
 # Model description
-# Transient Molten Salt Reactor Experiment (MSRE) Model
-# Core Neutronics Model
-# Integrates:
-# - Doppler-Temperature feedback with interpolation from tabulated cross sections
-# - Density-Temperature feedback with field functions for density
-# MSRE: reference plant design based on 5MW of MSRE Experiment.
-# Reactivity insertion is tunned to get ~19 pcms at t=0s
-# ==============================================================================
-# Author(s): Dr. Mauricio Tano, Dr. Mustafa K. Jaradat, Dr. Samuel Walker
-# ==============================================================================
+# Molten Salt Reactor Experiment (MSRE) Model / core neutronics model coupled with TH model
+# ------------------------------------------------------------------------------
+# Idaho Falls, INL, October 3, 2023
+# Author(s): Dr. Mustafa K. Jaradat, Dr. Javier Ortensi, Dr. Mauricio Tano
 # ==============================================================================
 # MODEL PARAMETERS
 # ==============================================================================
@@ -24,6 +18,9 @@ Salt_Density_initial = 2263.0
   library_name = 'MSRE-Simplified'
   is_meter = true
 []
+# ==============================================================================
+# TRANSPORT SYSTEM
+# ==============================================================================
 [TransportSystems]
   particle = neutron
   equation_type = transient
@@ -457,28 +454,40 @@ Salt_Density_initial = 2263.0
     type = FluxRxnIntegral
     block = 'core lower_plenum upper_plenum down_comer riser pump elbow'
     cross_section = nu_sigma_fission
-    coupled_flux_groups = ' sflux_g0    sflux_g1    sflux_g2    sflux_g3 sflux_g4    sflux_g5    sflux_g6    sflux_g7 sflux_g8    sflux_g9    sflux_g10   sflux_g11 sflux_g12   sflux_g13   sflux_g14   sflux_g15'
+    coupled_flux_groups = ' sflux_g0    sflux_g1    sflux_g2    sflux_g3
+	                           sflux_g4    sflux_g5    sflux_g6    sflux_g7
+	                           sflux_g8    sflux_g9    sflux_g10   sflux_g11
+	                           sflux_g12   sflux_g13   sflux_g14   sflux_g15'
     execute_on = 'transfer timestep_end'
   []
   [absorption_RR]
     type = FluxRxnIntegral
     block = 'core lower_plenum upper_plenum down_comer riser pump elbow'
     cross_section = sigma_absorption
-    coupled_flux_groups = ' sflux_g0    sflux_g1    sflux_g2    sflux_g3 sflux_g4    sflux_g5    sflux_g6    sflux_g7 sflux_g8    sflux_g9    sflux_g10   sflux_g11 sflux_g12   sflux_g13   sflux_g14   sflux_g15'
+    coupled_flux_groups = ' sflux_g0    sflux_g1    sflux_g2    sflux_g3
+	                           sflux_g4    sflux_g5    sflux_g6    sflux_g7
+	                           sflux_g8    sflux_g9    sflux_g10   sflux_g11
+	                           sflux_g12   sflux_g13   sflux_g14   sflux_g15'
     execute_on = 'transfer timestep_end'
   []
   [fission_RR]
     type = FluxRxnIntegral
     block = 'core lower_plenum upper_plenum down_comer riser pump elbow'
     cross_section = sigma_fission
-    coupled_flux_groups = ' sflux_g0    sflux_g1    sflux_g2    sflux_g3 sflux_g4    sflux_g5    sflux_g6    sflux_g7 sflux_g8    sflux_g9    sflux_g10   sflux_g11 sflux_g12   sflux_g13   sflux_g14   sflux_g15'
+    coupled_flux_groups = ' sflux_g0    sflux_g1    sflux_g2    sflux_g3
+	                           sflux_g4    sflux_g5    sflux_g6    sflux_g7
+	                           sflux_g8    sflux_g9    sflux_g10   sflux_g11
+	                           sflux_g12   sflux_g13   sflux_g14   sflux_g15'
     execute_on = 'transfer timestep_end'
   []
   [ngamma_RR]
     type = FluxRxnIntegral
     block = 'core lower_plenum upper_plenum down_comer riser pump elbow'
     cross_section = sigma_ngamma
-    coupled_flux_groups = ' sflux_g0    sflux_g1    sflux_g2    sflux_g3 sflux_g4    sflux_g5    sflux_g6    sflux_g7 sflux_g8    sflux_g9    sflux_g10   sflux_g11 sflux_g12   sflux_g13   sflux_g14   sflux_g15'
+    coupled_flux_groups = ' sflux_g0    sflux_g1    sflux_g2    sflux_g3
+	                           sflux_g4    sflux_g5    sflux_g6    sflux_g7
+	                           sflux_g8    sflux_g9    sflux_g10   sflux_g11
+	                           sflux_g12   sflux_g13   sflux_g14   sflux_g15'
     execute_on = 'transfer timestep_end'
   []
   [Leakage]
@@ -531,9 +540,9 @@ Salt_Density_initial = 2263.0
   fixed_point_abs_tol = 1e-6
 
 []
-# ==============================================================================
-# MULTIAPPS AND TRANSFERS
-# ==============================================================================
+################################################################################
+# MULTIAPPS and TRANSFERS
+################################################################################
 [MultiApps]
   [flow_dnp]
     type = TransientMultiApp
@@ -631,13 +640,12 @@ Salt_Density_initial = 2263.0
     execute_on = 'timestep_end'
   []
 []
-
+# ==============================================================================
+# POSTPROCESSORS DEBUG AND OUTPUTS
+# ==============================================================================
 [Debug]
   show_var_residual_norms = false
 []
-# ==============================================================================
-# OUTPUTS
-# ==============================================================================
 [Outputs]
   file_base = msre_neutronics_ss_s2_out
   exodus = true
