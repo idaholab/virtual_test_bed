@@ -212,61 +212,84 @@ beta6 = 0.000184087
     type = MooseVariableFVReal
     block = 'fuel pump hx'
     # initial_from_file_var = c1
-    [InitialCondition]
-      type = FunctionIC
-      function = 'cosine_guess'
-      scaling_factor = 0.02
-    []
   []
   [c2]
     type = MooseVariableFVReal
     block = 'fuel pump hx'
     # initial_from_file_var = c2
-    [InitialCondition]
-      type = FunctionIC
-      function = 'cosine_guess'
-      scaling_factor = 0.1
-    []
   []
   [c3]
     type = MooseVariableFVReal
     block = 'fuel pump hx'
     # initial_from_file_var = c3
-    [InitialCondition]
-      type = FunctionIC
-      function = 'cosine_guess'
-      scaling_factor = 0.03
-    []
   []
   [c4]
     type = MooseVariableFVReal
     block = 'fuel pump hx'
     # initial_from_file_var = c4
-    [InitialCondition]
-      type = FunctionIC
-      function = 'cosine_guess'
-      scaling_factor = 0.04
-    []
   []
   [c5]
     type = MooseVariableFVReal
     block = 'fuel pump hx'
     # initial_from_file_var = c5
-    [InitialCondition]
-      type = FunctionIC
-      function = 'cosine_guess'
-      scaling_factor = 0.01
-    []
   []
   [c6]
     type = MooseVariableFVReal
     block = 'fuel pump hx'
     # initial_from_file_var = c6
-    [InitialCondition]
-      type = FunctionIC
-      function = 'cosine_guess'
-      scaling_factor = 0.001
-    []
+  []
+[]
+
+[FVICs]
+  [c1]
+    type = FVFunctionIC
+    variable = c1
+    function = 'cosine_guess'
+    scaling_factor = 0.02
+  []
+  [c2]
+    type = FVFunctionIC
+    variable = c2
+    function = 'cosine_guess'
+    scaling_factor = 0.1
+  []
+  [c3]
+    type = FVFunctionIC
+    variable = c3
+    function = 'cosine_guess'
+    scaling_factor = 0.03
+  []
+  [c4]
+    type = FVFunctionIC
+    variable = c4
+    function = 'cosine_guess'
+    scaling_factor = 0.04
+  []
+  [c5]
+    type = FVFunctionIC
+    variable = c5
+    function = 'cosine_guess'
+    scaling_factor = 0.01
+  []
+  [c6]
+    type = FVFunctionIC
+    variable = c6
+    function = 'cosine_guess'
+    scaling_factor = 0.001
+  []
+  # Power density is re-initalized by a transfer from neutronics
+  [power]
+    type = FVFunctionIC
+    variable = power_density
+    function = 'cosine_guess'
+    scaling_factor = '${fparse 3e9/2.81543}'
+  []
+  # Fission source is re-initalized by a transfer from neutronics
+  [fission_source]
+    type = FVFunctionIC
+    variable = fission_source
+    function = 'cosine_guess'
+    scaling_factor = '${fparse 6.303329e+01/2.81543}'
   []
 []
 
@@ -274,21 +297,9 @@ beta6 = 0.000184087
   [power_density]
     type = MooseVariableFVReal
     block = 'fuel pump hx'
-    # Power density is re-initalized by a transfer from neutronics
-    [InitialCondition]
-      type = FunctionIC
-      function = 'cosine_guess'
-      scaling_factor = '${fparse 3e9/2.81543}'
-    []
   []
   [fission_source]
     type = MooseVariableFVReal
-    # Fission source is re-initalized by a transfer from neutronics
-    [InitialCondition]
-      type = FunctionIC
-      function = 'cosine_guess'
-      scaling_factor = '${fparse 6.303329e+01/2.81543}'
-    []
     block = 'fuel pump hx'
   []
 []
