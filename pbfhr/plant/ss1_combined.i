@@ -138,7 +138,6 @@ inlet_T_fluid = 873.15 # K, from [2]
   porosity = porosity_viz
   characteristic_length = 0.03
   pebble_diameter = ${pebble_diameter}
-  mu = 'mu'
   speed = 'speed'
 
   fp = fp
@@ -255,10 +254,12 @@ inlet_T_fluid = 873.15 # K, from [2]
     block = ${blocks_fluid}
   []
   [temp_solid_time]
-    type = INSFVEnergyTimeDerivative
+    type = PINSFVEnergyTimeDerivative
     variable = T_solid
     cp = 'cp_s'
     rho = 'rho_s'
+    porosity = 0
+    is_solid = true
     block = ${blocks_solid}
   []
   [temp_solid_conduction_core]
@@ -427,6 +428,10 @@ inlet_T_fluid = 873.15 # K, from [2]
     type = GeneralFunctorFluidProps
     block = ${blocks_fluid}
     mu_rampdown = 1
+  []
+  [enthalpy]
+    type = INSFVEnthalpyFunctorMaterial
+    block = ${blocks_fluid}
   []
 
   # closures in the pebble bed

@@ -131,7 +131,6 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
   porosity = porosity_viz
   characteristic_length = 0.01 #${pebble_diameter}
   pebble_diameter = ${pebble_diameter}
-  mu = 'mu'
   speed = 'speed'
 
   fp = fp
@@ -241,10 +240,12 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
     block = ${blocks_fluid}
   []
   [temp_solid_time]
-    type = INSFVEnergyTimeDerivative
+    type = PINSFVEnergyTimeDerivative
     variable = T_solid
     cp = 'cp_s'
     rho = 'rho_s'
+    porosity = 0
+    is_solid = true
     block = ${blocks_solid}
   []
   [temp_solid_conduction_core]

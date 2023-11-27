@@ -132,7 +132,6 @@ outlet_pressure_val = 2e5
   porosity = porosity_viz
   characteristic_length = 0.03
   pebble_diameter = ${pebble_diameter}
-  mu = 'mu'
   speed = 'speed'
 
   fp = fp
@@ -253,10 +252,12 @@ outlet_pressure_val = 2e5
     block = ${blocks_fluid}
   []
   [temp_solid_time]
-    type = INSFVEnergyTimeDerivative
+    type = PINSFVEnergyTimeDerivative
     variable = T_solid
     cp = 'cp_s'
     rho = 'rho_s'
+    porosity = 0
+    is_solid = true
     block = ${blocks_solid}
   []
   [temp_solid_conduction_core]
@@ -321,7 +322,7 @@ outlet_pressure_val = 2e5
 
 [AuxKernels]
   [eps]
-    type = ADFunctorElementalAux
+    type = FunctorAux
     variable = porosity_viz
     functor = porosity
     block = ${blocks_fluid}
