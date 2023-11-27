@@ -23,9 +23,9 @@
 # 'run_neutronics.i', saved in 'restart/run_neutronics_ns_restart.e'
 
 # Material properties
-rho = 4284  # density [kg / m^3]  (@1000K)
-cp = 1594  # specific heat capacity [J / kg / K]
-drho_dT = 0.882  # derivative of density w.r.t. temperature [kg / m^3 / K]
+rho = 4284 # density [kg / m^3]  (@1000K)
+cp = 1594 # specific heat capacity [J / kg / K]
+drho_dT = 0.882 # derivative of density w.r.t. temperature [kg / m^3 / K]
 mu = 0.0166 # viscosity [Pa s]
 k = 1.7 # thermal conductivity [W / m / K]
 # https://www.researchgate.net/publication/337161399_Development_of_a_control-\
@@ -35,16 +35,16 @@ k = 1.7 # thermal conductivity [W / m / K]
 
 # Turbulent properties
 Pr_t = 10 # turbulent Prandtl number
-Sc_t = 1  # turbulent Schmidt number
+Sc_t = 1 # turbulent Schmidt number
 
 # Derived material properties
-alpha = ${fparse drho_dT / rho}  # thermal expansion coefficient
+alpha = '${fparse drho_dT / rho}' # thermal expansion coefficient
 
 # Operating parameters
 T_HX = 873.15 # heat exchanger temperature [K]
 
 # Mass flow rate tuning, for heat exchanger pressure and temperature drop
-friction = 4e3  # [kg / m^4]
+friction = 4e3 # [kg / m^4]
 pump_force = -20000. # [N / m^3]
 
 # Delayed neutron precursor parameters. Lambda values are decay constants in
@@ -163,61 +163,84 @@ beta6 = 0.000184087
     type = MooseVariableFVReal
     block = 'fuel pump hx'
     # initial_from_file_var = c1
-    [InitialCondition]
-      type = FunctionIC
-      function = 'cosine_guess'
-      scaling_factor = 0.02
-    []
   []
   [c2]
     type = MooseVariableFVReal
     block = 'fuel pump hx'
     # initial_from_file_var = c2
-    [InitialCondition]
-      type = FunctionIC
-      function = 'cosine_guess'
-      scaling_factor = 0.1
-    []
   []
   [c3]
     type = MooseVariableFVReal
     block = 'fuel pump hx'
     # initial_from_file_var = c3
-    [InitialCondition]
-      type = FunctionIC
-      function = 'cosine_guess'
-      scaling_factor = 0.03
-    []
   []
   [c4]
     type = MooseVariableFVReal
     block = 'fuel pump hx'
     # initial_from_file_var = c4
-    [InitialCondition]
-      type = FunctionIC
-      function = 'cosine_guess'
-      scaling_factor = 0.04
-    []
   []
   [c5]
     type = MooseVariableFVReal
     block = 'fuel pump hx'
     # initial_from_file_var = c5
-    [InitialCondition]
-      type = FunctionIC
-      function = 'cosine_guess'
-      scaling_factor = 0.01
-    []
   []
   [c6]
     type = MooseVariableFVReal
     block = 'fuel pump hx'
     # initial_from_file_var = c6
-    [InitialCondition]
-      type = FunctionIC
-      function = 'cosine_guess'
-      scaling_factor = 0.001
-    []
+  []
+[]
+
+[FVICs]
+  [c1]
+    type = FVFunctionIC
+    variable = c1
+    function = 'cosine_guess'
+    scaling_factor = 0.02
+  []
+  [c2]
+    type = FVFunctionIC
+    variable = c2
+    function = 'cosine_guess'
+    scaling_factor = 0.1
+  []
+  [c3]
+    type = FVFunctionIC
+    variable = c3
+    function = 'cosine_guess'
+    scaling_factor = 0.03
+  []
+  [c4]
+    type = FVFunctionIC
+    variable = c4
+    function = 'cosine_guess'
+    scaling_factor = 0.04
+  []
+  [c5]
+    type = FVFunctionIC
+    variable = c5
+    function = 'cosine_guess'
+    scaling_factor = 0.01
+  []
+  [c6]
+    type = FVFunctionIC
+    variable = c6
+    function = 'cosine_guess'
+    scaling_factor = 0.001
+  []
+  # Power density is re-initalized by a transfer from neutronics
+  [power]
+    type = FVFunctionIC
+    variable = power_density
+    function = 'cosine_guess'
+    scaling_factor = '${fparse 3e9/2.81543}'
+  []
+  # Fission source is re-initalized by a transfer from neutronics
+  [fission_source]
+    type = FVFunctionIC
+    variable = fission_source
+    function = 'cosine_guess'
+    scaling_factor = '${fparse 6.303329e+01/2.81543}'
   []
 []
 
@@ -230,21 +253,9 @@ beta6 = 0.000184087
   [power_density]
     type = MooseVariableFVReal
     block = 'fuel pump hx'
-    # Power density is re-initalized by a transfer from neutronics
-    [InitialCondition]
-      type = FunctionIC
-      function = 'cosine_guess'
-      scaling_factor = ${fparse 3e9/2.81543}
-    []
   []
   [fission_source]
     type = MooseVariableFVReal
-    # Fission source is re-initalized by a transfer from neutronics
-    [InitialCondition]
-      type = FunctionIC
-      function = 'cosine_guess'
-      scaling_factor = ${fparse 6.303329e+01/2.81543}
-    []
     block = 'fuel pump hx'
   []
 
@@ -725,8 +736,8 @@ beta6 = 0.000184087
     type = FunctionDT
     function = dts
   []
-  steady_state_detection  = true
-  steady_state_tolerance  = 1e-8
+  steady_state_detection = true
+  steady_state_tolerance = 1e-8
   steady_state_start_time = 10
 
   # Solver parameters

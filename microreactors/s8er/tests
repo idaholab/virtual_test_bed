@@ -34,6 +34,8 @@
                 Executioner/set_sam_default_petsc_options=false"
     prereq = 'neutronics_griffin_syntax'
     allow_unused = true
+    # Missing cross section for energy deposition
+    allow_warnings = true
     method = 'opt'
 
     min_parallel = 8
@@ -48,6 +50,8 @@
     cli_args = "Outputs/file_base=core_2D_out
                 Executioner/set_sam_default_petsc_options=false"
     allow_unused = true
+    # Missing cross section for energy deposition
+    allow_warnings = true
     min_parallel = 8
   []
 []
