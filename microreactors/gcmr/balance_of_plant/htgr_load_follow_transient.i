@@ -1773,7 +1773,6 @@ eff_turb = 0.843
   [PID_trip_status]
     order = FIRST
     family = SCALAR
-    initial_condition = 0
   []
 []
 
