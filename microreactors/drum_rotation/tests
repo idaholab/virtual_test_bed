@@ -35,6 +35,9 @@
     method = 'opt'
     max_time = 300
     prereq = coarse_mesh
+
+    # BISON element quality checker emits a warning when using TRI3
+    allow_warnings = true
   []
   [neutronics_adjoint]
     type = RunApp
@@ -44,6 +47,9 @@
     method = 'opt'
     max_time = 100
     prereq = neutronics_eigenvalue
+
+    # BISON element quality checker emits a warning when using TRI3
+    allow_warnings = true
   []
   [neutronics_transient]
     type = CSVDiff
@@ -57,5 +63,8 @@
     method = 'opt'
     max_time = 400
     prereq = neutronics_adjoint
+
+    # BISON element quality checker emits a warning when using TRI3
+    allow_warnings = true
   []
 []
