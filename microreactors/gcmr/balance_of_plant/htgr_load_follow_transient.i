@@ -336,6 +336,8 @@ eff_turb = 0.843
 
 [Problem]
   restart_file_base = htgr_startup_transient_cp/LATEST
+  # Component areas are set using initial conditions
+  allow_initial_conditions_with_restart = true
 []
 
 [GlobalParams]
@@ -1773,7 +1775,6 @@ eff_turb = 0.843
   [PID_trip_status]
     order = FIRST
     family = SCALAR
-    initial_condition = 0
   []
 []
 
