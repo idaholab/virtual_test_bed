@@ -1,0 +1,29 @@
+//
+// nekRS User Defined File
+//
+#include "udf.hpp"
+#include "plugins/tavg.hpp"
+
+#ifdef __okl__
+
+#include "msre.oudf"
+
+#endif
+
+void UDF_LoadKernels(occa::properties& kernelInfo)
+{
+}
+
+void UDF_Setup(nrs_t *nrs)
+{
+  tavg::setup(nrs);
+}
+
+void UDF_ExecuteStep(nrs_t *nrs, dfloat time, int tstep)
+{
+  tavg::run(time);
+
+  if (nrs->isOutputStep) {
+    tavg::outfld();
+  }
+}
