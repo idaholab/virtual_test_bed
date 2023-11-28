@@ -9,7 +9,7 @@ folder_name = fuelsample
 
 [GlobalParams]
   flux_conversion_factor = 1.0
-  order = FIRST 
+  order = FIRST
   family = LAGRANGE
   displacements = 'disp_x'
   volumetric_locking_correction = false
@@ -28,7 +28,7 @@ folder_name = fuelsample
     buffer_thickness = 1e-4
     IPyC_thickness = 0.4e-4
     SiC_thickness = 0.35e-4
-    OPyC_thickness = 0.4e-4   
+    OPyC_thickness = 0.4e-4
     kernel_mesh_density = 5
     buffer_mesh_density = 3
     IPyC_mesh_density = 5
@@ -90,30 +90,29 @@ folder_name = fuelsample
   []
 []
 
-
 [Functions]
   [pressure_function]
-    type=PiecewiseLinear
-    format=columns
-    data_file=${raw '../UnitCell_with_TM/ ${folder_name} /pressuredata ${particle_number} .csv'}
+    type = PiecewiseLinear
+    format = columns
+    data_file = ${raw '../UnitCell_with_TM/ ${folder_name} /pressuredata ${particle_number} .csv'}
   []
   [pdens_function]
-    type=PiecewiseLinear
-    format=columns
-    data_file=${raw '../UnitCell_with_TM/ ${folder_name} /powdata ${particle_number} .csv'}
+    type = PiecewiseLinear
+    format = columns
+    data_file = ${raw '../UnitCell_with_TM/ ${folder_name} /powdata ${particle_number} .csv'}
   []
   [temperature_function]
-    type=PiecewiseLinear
-    format=columns
-    data_file=${raw '../UnitCell_with_TM/ ${folder_name} /tempdata ${particle_number} .csv'}
-  []    
+    type = PiecewiseLinear
+    format = columns
+    data_file = ${raw '../UnitCell_with_TM/ ${folder_name} /tempdata ${particle_number} .csv'}
+  []
   [fission_rate]
-    type=ParsedFunction
+    type = ParsedFunction
     expression = 'Pdens * PackingFraction * Vol / Jfiss'
     symbol_names = 'Pdens PackingFraction Vol Jfiss'
     symbol_values = 'pdens_function 0.4 kernel_volume 3.2e-11'
-  []  
-   [high_fidelity_strength_crackedIPyC]
+  []
+  [high_fidelity_strength_crackedIPyC]
     type = ConstantFunction
     value = 1401355124.9454
   []
@@ -264,7 +263,7 @@ folder_name = fuelsample
     variable = disp_x
     boundary = exterior
     function = pressure_function
-  [] 
+  []
   [PlenumPressure]
     [plenumPressure]
       boundary = buffer_IPyC_boundary
@@ -285,7 +284,7 @@ folder_name = fuelsample
     type = GenericConstantMaterial
     prop_names = 'radius'
     prop_values = '1.0'
-    block=fuel
+    block = fuel
   []
   [radial_stress]
     type = RankTwoCylindricalComponent
@@ -556,26 +555,26 @@ folder_name = fuelsample
     execute_on = 'initial timestep_begin'
   []
   [frate_value]
-    type=FunctionValuePostprocessor
-    function=fission_rate
-    execute_on='initial'
-    indirect_dependencies='pdens_value'
+    type = FunctionValuePostprocessor
+    function = fission_rate
+    execute_on = 'initial'
+    indirect_dependencies = 'pdens_value'
   []
   [strain_opyc]
-    type=ElementAverageValue
-    variable='strain_xx'
-    block='OPyC'
+    type = ElementAverageValue
+    variable = 'strain_xx'
+    block = 'OPyC'
   []
   [strain_ipyc]
-    type=ElementAverageValue
-    variable='strain_xx'
-    block='IPyC'
+    type = ElementAverageValue
+    variable = 'strain_xx'
+    block = 'IPyC'
   []
   [strain_sic]
-    type=ElementAverageValue
-    variable='strain_xx'
-    block='SiC'
-  [] 
+    type = ElementAverageValue
+    variable = 'strain_xx'
+    block = 'SiC'
+  []
   [pres_sic_avg]
     type = ElementAverageValue
     variable = hydrostatic_stress
@@ -591,7 +590,7 @@ folder_name = fuelsample
     variable = hydrostatic_stress
     value_type = min
     block = 'SiC'
-  []  
+  []
   [pres_ipyc_avg]
     type = ElementAverageValue
     variable = hydrostatic_stress
@@ -607,7 +606,7 @@ folder_name = fuelsample
     variable = hydrostatic_stress
     value_type = min
     block = 'IPyC'
-  []    
+  []
   [pres_opyc_avg]
     type = ElementAverageValue
     variable = hydrostatic_stress
@@ -623,9 +622,9 @@ folder_name = fuelsample
     variable = hydrostatic_stress
     value_type = min
     block = 'OPyC'
-  []    
+  []
   [stress_SiC_crackedIPyC]
-  type = WeibullFailureOutputUsingCorrelation
+    type = WeibullFailureOutputUsingCorrelation
     block = SiC
     weibull_modulus = 6
     stress_name = stress_yy
@@ -680,25 +679,25 @@ folder_name = fuelsample
     use_displaced_mesh = true
   []
   [particle_power]
-     type = ElementIntegralPower
-     variable = temperature
-     use_material_fission_rate = true
-     fission_rate_material = fission_rate
-     block = fuel
-     execute_on = 'initial timestep_end'
+    type = ElementIntegralPower
+    variable = temperature
+    use_material_fission_rate = true
+    fission_rate_material = fission_rate
+    block = fuel
+    execute_on = 'initial timestep_end'
   []
   [max_fluence]
-     type = ElementExtremeValue
-     variable = fast_neutron_fluence
-     value_type = 'max'
-     execute_on = 'initial timestep_end'
+    type = ElementExtremeValue
+    variable = fast_neutron_fluence
+    value_type = 'max'
+    execute_on = 'initial timestep_end'
   []
   [max_burnup]
-     type = ElementExtremeValue
-     variable = burnup
-     block = fuel
-     value_type = 'max'
-     execute_on = 'initial timestep_end'
+    type = ElementExtremeValue
+    variable = burnup
+    block = fuel
+    value_type = 'max'
+    execute_on = 'initial timestep_end'
   []
   [SiC_stress]
     type = ElementExtremeMaterialProperty
@@ -717,37 +716,37 @@ folder_name = fuelsample
     block = OPyC
     value_type = min
     mat_prop = stress_yy
-  []    
+  []
   [strength_SiC]
-     type = WeibullEffectiveMeanStrength
-     block = SiC
-     weibull_modulus = 6
+    type = WeibullEffectiveMeanStrength
+    block = SiC
+    weibull_modulus = 6
   []
   [failure_indicator_SiC]
-     type = WeibullFailureOutputUsingCorrelation
-     block = SiC
-     weibull_modulus = 6
-     stress_name = stress_yy
-     high_fidelity_analysis_strength = 'high_fidelity_strength_asphericity'
-     stress_correlation_function = 'stress_correlation_asphericity'
-     stress_change_correlation_function = 'stress_change_correlation_asphericity'
+    type = WeibullFailureOutputUsingCorrelation
+    block = SiC
+    weibull_modulus = 6
+    stress_name = stress_yy
+    high_fidelity_analysis_strength = 'high_fidelity_strength_asphericity'
+    stress_correlation_function = 'stress_correlation_asphericity'
+    stress_change_correlation_function = 'stress_change_correlation_asphericity'
   []
   [strength_IPyC]
-     type = WeibullEffectiveMeanStrength
-     block = IPyC
-     weibull_modulus = 9.5
+    type = WeibullEffectiveMeanStrength
+    block = IPyC
+    weibull_modulus = 9.5
   []
   [strength_OPyC]
     type = WeibullEffectiveMeanStrength
     block = OPyC
     weibull_modulus = 9.5
- []  
+  []
   [failure_indicator_IPyC]
-     type = WeibullFailureOutputUsingCorrelation
-     block = IPyC
-     weibull_modulus = 9.5
-     stress_name = max_principal_stress
-     effective_mean_strength = strength_IPyC
+    type = WeibullFailureOutputUsingCorrelation
+    block = IPyC
+    weibull_modulus = 9.5
+    stress_name = max_principal_stress
+    effective_mean_strength = strength_IPyC
   []
   [failure_indicator_SiC_crackedIPyC]
     type = WeibullFailureOutputUsingCorrelation

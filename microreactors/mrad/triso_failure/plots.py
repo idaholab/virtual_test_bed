@@ -43,7 +43,7 @@ sic_cracks=[]
 for fname in np.sort(glob.glob(path1_sic)):
    df=pd.read_csv(fname)
    sic_data=df["sic_failure_overall_particle"+str(looper)+":sic_failure_overall"]
-   sic_cracks.append(sic_data[sic_data>0.5].count()/sic_data.count())  
+   sic_cracks.append(sic_data[sic_data>0.5].count()/sic_data.count())
    looper+=1
 for fname in np.sort(glob.glob(path2_sic)):
    df=pd.read_csv(fname)
