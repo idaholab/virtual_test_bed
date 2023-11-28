@@ -2,7 +2,7 @@
 
 *Contact: Jun Fang, fangj.at.anl.gov*
 
-*Model link: [MSRE Lower Plenum CFD Model](https://github.com/idaholab/virtual_test_bed/tree/devel/msr/msre/)*
+*Model link: [MSRE Lower Plenum CFD Model](https://github.com/idaholab/virtual_test_bed/tree/devel/msr/msre/lp_cfd)*
 
 !tag name=Molten Salt Reactor Experiment nekRS Model pairs=reactor_type:MSR
                        reactor:MSRE
