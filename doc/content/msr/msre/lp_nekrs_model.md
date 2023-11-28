@@ -4,6 +4,13 @@
 
 *Model link: [MSRE Lower Plenum CFD Model](https://github.com/idaholab/virtual_test_bed/tree/devel/msr/msre/)*
 
+!tag name=Molten Salt Reactor Experiment nekRS Model pairs=reactor_type:MSR
+                       reactor:MSRE
+                       geometry:lower_plenum
+                       code_used:nekRS
+                       computing_needs:HPC
+                       fiscal_year:2023
+
 ## Model Overview
 
 The MSRE was a graphite moderated flowing salt type reactor with a design maximum operating power of 10 MW(th) developed by Oak Ridge National Laboratory [!citep](Robertson1965).
