@@ -4,13 +4,6 @@
 
 *Model link: [MSRE Lower Plenum CFD Model](https://github.com/idaholab/virtual_test_bed/tree/devel/msr/msre/)*
 
-!tag name=Molten Salt Reactor Experiment SAM Model pairs=reactor_type:MSR
-                       reactor:MSRE
-                       geometry:primary_loop
-                       code_used:SAM
-                       computing_needs:Workstation
-                       fiscal_year:2022
-
 ## Model Overview
 
 The MSRE was a graphite moderated flowing salt type reactor with a design maximum operating power of 10 MW(th) developed by Oak Ridge National Laboratory [!citep](Robertson1965).
@@ -37,7 +30,7 @@ The discretization and numerical models used by the CFD flow solver Nek5000/RS c
 
 ### Model creation and meshing style=font-size:125%
 
-A geometric model of the MSRE full core was obtained through the collaboration with Copenhagen Atomics. As shown in [lp_cad], the lower plenum portion is taken out from the full core model and prepared for the meshing process. A computational mesh consisting of tetrahedral and wedge cells is first created using 3rd party meshing software, ANSYS Mesh. Due to the presence of numerous small features within the original CAD model, several adjustments were made to facilitate practical mesh generation. This involved removing minor structures, such as the narrow gaps between mounting rods and the horizontal plates to which the rods are connected. Since the nekRS spectral element code requires a pure hexahedral mesh for calculations, an additional step was necessary to convert the initial mesh, created in Exodus format by ANSYS Mesh, into the nekRS-supported re2 format.
+A geometric model of the MSRE full core was obtained through the collaboration with Copenhagen Atomics [!citep](Stubsgaard2023). As shown in [lp_cad], the lower plenum portion is taken out from the full core model and prepared for the meshing process. A computational mesh consisting of tetrahedral and wedge cells is first created using 3rd party meshing software, ANSYS Mesh. Due to the presence of numerous small features within the original CAD model, several adjustments were made to facilitate practical mesh generation. This involved removing minor structures, such as the narrow gaps between mounting rods and the horizontal plates to which the rods are connected. Since the nekRS spectral element code requires a pure hexahedral mesh for calculations, an additional step was necessary to convert the initial mesh, created in Exodus format by ANSYS Mesh, into the nekRS-supported re2 format.
 
 To maintain the accuracy of geometric features, the latest quadratic tet-to-hex converter was employed, improving upon the previous linear tet-to-hex converter and enhancing the resolution of surface curvature, particularly along circular boundaries. It's important to note that, due to technical challenges associated with implementing a boundary layer mesh, the computational grid shown in [lp_mesh] does not feature a more refined mesh near the wall surfaces. This was a deliberate compromise to maintain reasonable mesh quality and cell count. While this choice may impact simulation accuracy with respect to capturing near-wall flow physics, it is deemed justifiable, given that the primary objective is to analyze velocity distribution in the lower plenum outlet channels. Additionally, it's expected that the velocity gradient will be relatively modest on most of the lower plenum walls. The resulting mesh comprises 23.6 million cells, and with a polynomial order of 3, the total number of unique grid points amounts to approximately 664 million in actual nekRS calculations.
 
