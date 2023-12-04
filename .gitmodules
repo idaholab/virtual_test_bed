@@ -25,3 +25,6 @@
 [submodule "apps/relap-7"]
 	path = apps/relap-7
 	url = git@github.inl.gov:ncrc/relap-7.git
+[submodule "apps/moose"]
+	path = apps/moose
+	url = https://github.com/idaholab/moose.git
