@@ -6,13 +6,3 @@
 
 [Steady State Results](lotus_results.md)
 
-
-
-
-
-
-
-
-
-
-

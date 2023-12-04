@@ -7,13 +7,13 @@
 *Model link: [Griffin-Pronghorn Steady-State Lotus Model](https://github.com/idaholab/virtual_test_bed/tree/devel/msr/lotus/steady_state)*
 
 !tag name=Lotus Griffin-Pronghorn Steady State Model pairs=reactor_type:MSR
-                       reactor:Lotus
+                       reactor:generic-msr
                        geometry:core
                        simulation_type:core_multiphysics
                        input_features:multiapps
                        code_used:BlueCrab
                        computing_needs:HPC
-                       fiscal_year:2023
+                       fiscal_year:2024
 
 This multiphysics problem is solved using the MultiApp system to separate the neutronics, thermal hydraulics, and delayed neutron precursors group problems. The corresponding computational domains for the neutronics and thermal hydraulics with delayed neutron precursor group distributions can bee seen in [LMCR_pgh_geometry] and [LMCR_pgh_thermal_hydraulics] respectively. Notice, this is a multiphysics problem, but not a multiscale problem since we are solving the problems at the same geometrical and time resolution. The only difference between the meshes, is that the thermal-hydraulic domain has an extra mixing plate to distribute the flow within the core.
 
@@ -40,7 +40,7 @@ This is the main input file which calls the open source MOOSE Navier-Stokes inpu
 
 #### Mesh
 
-Starting first with the mesh, this block defines the computational domain that the neutronics solve will operate on. Here, a cubit generated 3D mesh is imported as an exodus file. It is correspondingly manupiulated to add in a reactor boundary condition, and is scaled to the correct size of the reactor.
+Starting first with the mesh, this block defines the computational domain that the neutronics solve will operate on. Here, a cubit generated 3D mesh is imported as an exodus file. It is correspondingly manipulated to add in a reactor boundary condition, and is scaled to the correct size of the reactor.
 
 !listing msr/lotus/steady_state/run_neutronics_9_group.i block=Mesh
 
@@ -93,7 +93,7 @@ to the 6 DNP groups used here. This array is then read into Griffin in the `exte
 
 #### Auxiliary Kernels
 
-Correspondingly, the `AuxKernels` are functors which operate on the `AuxVariables`. Here the six seperate DNP groups are compiled into the Aux Variable `dnp` to be used within Griffin.
+Correspondingly, the `AuxKernels` are functors which operate on the `AuxVariables`. Here the six separate DNP groups are compiled into the Aux Variable `dnp` to be used within Griffin.
 
 !listing msr/lotus/steady_state/run_neutronics_9_group.i block=AuxKernels
 

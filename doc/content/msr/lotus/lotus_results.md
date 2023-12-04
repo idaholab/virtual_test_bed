@@ -20,7 +20,7 @@ This section will cover the steady state results from the LMCR multiphysics mode
        id=LMCR_pgh_power_density
        caption= LMCR Power density (W/m$^3$) [!citep](M3mcr2023).
 
-Additionally, the steady-state delayed neutron precursor group distributions calculated via Pronghorn are shown in [LMCR_pgh_dnps]. Here the long lived delayed neutron precursor group 1 is well mixed throughout the reactor core, whereas the short lived neutron precursor group 6 is centralized and decays in the reactor core.
+Additionally, the steady-state delayed neutron precursor group distributions calculated via Pronghorn are shown in [LMCR_pgh_dnps]. Here the long lived delayed neutron precursor group 1 is well mixed throughout the reactor core and primary loop, whereas the short lived neutron precursor group 6 is centralized and decays in the reactor core.
 
 !media msr/lotus/mcre_dnps.png
        style=width:110%;margin-left:auto;margin-right:auto

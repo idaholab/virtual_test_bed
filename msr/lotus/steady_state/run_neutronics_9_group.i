@@ -175,7 +175,7 @@
 
   nl_abs_tol = 1e-9
 
-  # MultiApp Parameters
+  # Parameters for fixed point iteration with MultiApps
   fixed_point_abs_tol = 1e-3
   fixed_point_algorithm = picard
   fixed_point_min_its = 4
@@ -198,7 +198,6 @@
     type = ElementIntegralVariablePostprocessor
     variable = power_density
     execute_on = 'initial timestep_begin timestep_end transfer'
-    outputs = all
     block = 'reactor pump pipe'
   []
   [dt_limit]
