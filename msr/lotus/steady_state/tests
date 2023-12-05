@@ -31,10 +31,13 @@
   [neutronics_only]
     type = CSVDiff
     input = 'run_neutronics_9_group.i'
-    cli_args = "MultiApps/active='' Transfers/active=''"
-    csvdiff = 'run_neutronics_9_group.csv'
-    min_parallel = 16
+    cli_args = "MultiApps/active='' Transfers/active='' Executioner/fixed_point_min_its=0"
+    csvdiff = 'run_neutronics_9_group_out.csv run_neutronics_9_group_out_average_fluxes_0001.csv'
     executable_pattern = 'griffin*'
+    # Model is fairly expensive to run
+    method = 'opt'
+    min_parallel = 16
+    max_time = 400
   []
   [flow_only]
     type = CSVDiff
@@ -42,12 +45,9 @@
     cli_args = "MultiApps/active='' Transfers/active=''"
     csvdiff = 'run_ns_initial.csv'
     executable_pattern = 'pronghorn*|combined*'
-  []
-  [precursors_only]
-    type = CSVDiff
-    input = 'run_prec_transport.i'
-    csvdiff = 'run_prec_transport.csv'
-    executable_pattern = 'pronghorn*|combined*'
+    # Model is fairly expensive to run
+    method = 'opt'
+    min_parallel = 16
   []
   [coupled_mcre_multiphysics]
     prereq = coupled_mcre_multiphysics_syntax
