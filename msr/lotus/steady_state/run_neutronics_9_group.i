@@ -23,6 +23,34 @@
     transform = 'SCALE'
     vector_value = '0.001 0.001 0.001'
   []
+  [delete_bad_sideset]
+    type = BoundaryDeletionGenerator
+    input = 'scaling'
+    boundary_names = 'reactor_out'
+  []
+
+  [repair_mesh]
+    type = MeshRepairGenerator
+    input = delete_bad_sideset
+    fix_node_overlap = true
+  []
+  [recreate_outer]
+    type = SideSetsFromNormalsGenerator
+    input = repair_mesh
+    new_boundary = 'reactor_out'
+    # Dummy parameter
+    normals = '1 0 0'
+    tolerance = '1'
+    variance = '1'
+  []
+  [recreate_outer_part2]
+    type = ParsedGenerateSideset
+    input = 'recreate_outer'
+    combinatorial_geometry = 'x<=-0.24999999'
+    included_subdomains = 'reactor'
+    new_sideset_name = 'reactor_out'
+    include_only_external_sides = true
+  []
 []
 
 [TransportSystems]
@@ -203,26 +231,252 @@
   []
 []
 
-[MeshDivisions]
-  [blocks]
-    type = SubdomainsDivision
-  []
-[]
+# [MeshDivisions]
+#   [blocks]
+#     type = SubdomainsDivision
+#   []
+# []
 
-[VectorPostprocessors]
-  [average_fluxes]
-    type = MeshDivisionFunctorReductionVectorPostprocessor
-    # Outputs all flux-averages on a per-block and per-variable basis
-    reduction = 'average'
-    functors = 'sflux_g0 sflux_g1 sflux_g2 sflux_g3 sflux_g4 sflux_g5 sflux_g6 sflux_g7'
-    mesh_division = blocks
+# [VectorPostprocessors]
+#   [average_fluxes]
+#     type = MeshDivisionFunctorReductionVectorPostprocessor
+#     # Outputs all flux-averages on a per-block and per-variable basis
+#     reduction = 'average'
+#     functors = 'sflux_g0 sflux_g1 sflux_g2 sflux_g3 sflux_g4 sflux_g5 sflux_g6 sflux_g7'
+#     mesh_division = blocks
+#   []
+#   [max_fluxes]
+#     type = MeshDivisionFunctorReductionVectorPostprocessor
+#     # Outputs all flux-maxima on a per-block and per-variable basis
+#     reduction = 'max'
+#     functors = 'sflux_g0 sflux_g1 sflux_g2 sflux_g3 sflux_g4 sflux_g5 sflux_g6 sflux_g7'
+#     mesh_division = blocks
+#   []
+# []
+
+# Note: If you are using a modern version of BlueCrab, you can delete the next 200 lines
+# and use the comment out ten or so lines above
+
+[Postprocessors]
+  [flux_0_average_reac]
+    type = ElementAverageValue
+    variable = sflux_g0
+    block = 'reactor'
   []
-  [max_fluxes]
-    type = MeshDivisionFunctorReductionVectorPostprocessor
-    # Outputs all flux-maxima on a per-block and per-variable basis
-    reduction = 'max'
-    functors = 'sflux_g0 sflux_g1 sflux_g2 sflux_g3 sflux_g4 sflux_g5 sflux_g6 sflux_g7'
-    mesh_division = blocks
+  [flux_1_average_reac]
+    type = ElementAverageValue
+    variable = sflux_g1
+    block = 'reactor'
+  []
+  [flux_2_average_reac]
+    type = ElementAverageValue
+    variable = sflux_g2
+    block = 'reactor'
+  []
+  [flux_3_average_reac]
+    type = ElementAverageValue
+    variable = sflux_g3
+    block = 'reactor'
+  []
+  [flux_4_average_reac]
+    type = ElementAverageValue
+    variable = sflux_g4
+    block = 'reactor'
+  []
+  [flux_5_average_reac]
+    type = ElementAverageValue
+    variable = sflux_g5
+    block = 'reactor'
+  []
+  [flux_6_average_reac]
+    type = ElementAverageValue
+    variable = sflux_g6
+    block = 'reactor'
+  []
+  [flux_7_average_reac]
+    type = ElementAverageValue
+    variable = sflux_g7
+    block = 'reactor'
+  []
+  [flux_0_average_ref]
+    type = ElementAverageValue
+    variable = sflux_g0
+    block = 'reactor'
+  []
+  [flux_1_average_ref]
+    type = ElementAverageValue
+    variable = sflux_g1
+    block = 'reflector'
+  []
+  [flux_2_average_ref]
+    type = ElementAverageValue
+    variable = sflux_g2
+    block = 'reflector'
+  []
+  [flux_3_average_ref]
+    type = ElementAverageValue
+    variable = sflux_g3
+    block = 'reflector'
+  []
+  [flux_4_average_ref]
+    type = ElementAverageValue
+    variable = sflux_g4
+    block = 'reflector'
+  []
+  [flux_5_average_ref]
+    type = ElementAverageValue
+    variable = sflux_g5
+    block = 'reflector'
+  []
+  [flux_6_average_ref]
+    type = ElementAverageValue
+    variable = sflux_g6
+    block = 'reflector'
+  []
+  [flux_7_average_ref]
+    type = ElementAverageValue
+    variable = sflux_g7
+    block = 'reflector'
+  []
+  [flux_0_average_reac_max]
+    type = ElementExtremeValue
+    variable = sflux_g0
+    block = 'reactor'
+  []
+  [flux_1_average_reac_max]
+    type = ElementExtremeValue
+    variable = sflux_g1
+    block = 'reactor'
+  []
+  [flux_2_average_reac_max]
+    type = ElementExtremeValue
+    variable = sflux_g2
+    block = 'reactor'
+  []
+  [flux_3_average_reac_max]
+    type = ElementExtremeValue
+    variable = sflux_g3
+    block = 'reactor'
+  []
+  [flux_4_average_reac_max]
+    type = ElementExtremeValue
+    variable = sflux_g4
+    block = 'reactor'
+  []
+  [flux_5_average_reac_max]
+    type = ElementExtremeValue
+    variable = sflux_g5
+    block = 'reactor'
+  []
+  [flux_6_average_reac_max]
+    type = ElementExtremeValue
+    variable = sflux_g6
+    block = 'reactor'
+  []
+  [flux_7_average_reac_max]
+    type = ElementExtremeValue
+    variable = sflux_g7
+    block = 'reactor'
+  []
+  [flux_0_average_ref_max]
+    type = ElementExtremeValue
+    variable = sflux_g0
+    block = 'reactor'
+  []
+  [flux_1_average_ref_max]
+    type = ElementExtremeValue
+    variable = sflux_g1
+    block = 'reflector'
+  []
+  [flux_2_average_ref_max]
+    type = ElementExtremeValue
+    variable = sflux_g2
+    block = 'reflector'
+  []
+  [flux_3_average_ref_max]
+    type = ElementExtremeValue
+    variable = sflux_g3
+    block = 'reflector'
+  []
+  [flux_4_average_ref_max]
+    type = ElementExtremeValue
+    variable = sflux_g4
+    block = 'reflector'
+  []
+  [flux_5_average_ref_max]
+    type = ElementExtremeValue
+    variable = sflux_g5
+    block = 'reflector'
+  []
+  [flux_6_average_ref_max]
+    type = ElementExtremeValue
+    variable = sflux_g6
+    block = 'reflector'
+  []
+  [flux_7_average_ref_max]
+    type = ElementExtremeValue
+    variable = sflux_g7
+    block = 'reflector'
+  []
+  [c1_average_reac]
+    type = ElementAverageValue
+    variable = c1
+    block = 'reactor'
+  []
+  [c2_average_reac]
+    type = ElementAverageValue
+    variable = c2
+    block = 'reactor'
+  []
+  [c3_average_reac]
+    type = ElementAverageValue
+    variable = c3
+    block = 'reactor'
+  []
+  [c4_average_reac]
+    type = ElementAverageValue
+    variable = c4
+    block = 'reactor'
+  []
+  [c5_average_reac]
+    type = ElementAverageValue
+    variable = c5
+    block = 'reactor'
+  []
+  [c6_average_reac]
+    type = ElementAverageValue
+    variable = c6
+    block = 'reactor'
+  []
+  [c1_average_pipe]
+    type = ElementAverageValue
+    variable = c1
+    block = 'pipe pump'
+  []
+  [c2_average_pipe]
+    type = ElementAverageValue
+    variable = c2
+    block = 'pipe pump'
+  []
+  [c3_average_pipe]
+    type = ElementAverageValue
+    variable = c3
+    block = 'pipe pump'
+  []
+  [c4_average_pipe]
+    type = ElementAverageValue
+    variable = c4
+    block = 'pipe pump'
+  []
+  [c5_average_pipe]
+    type = ElementAverageValue
+    variable = c5
+    block = 'pipe pump'
+  []
+  [c6_average_pipe]
+    type = ElementAverageValue
+    variable = c6
+    block = 'pipe pump'
   []
 []
 
@@ -234,6 +488,10 @@
   exodus = true
   csv = true
   checkpoint = true
+  [console]
+    type = Console
+    show = 'power dt_limit eigenvalue power_scaling'
+  []
   [restart]
     type = Exodus
     execute_on = 'final'
@@ -251,7 +509,7 @@
 [MultiApps]
   [ns]
     type = FullSolveMultiApp
-    input_files = 'run_ns_initial_res.i'
+    input_files = 'run_ns_initial.i'
     execute_on = 'timestep_end'
     no_backup_and_restore = true
     keep_solution_during_restore = true
