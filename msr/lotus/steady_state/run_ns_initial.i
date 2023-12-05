@@ -10,6 +10,8 @@
 # - These inputs are not using the shorthand syntaxes to be consistent with inputs
 #   from another project.
 #   Please consider using the shorthand syntaxes for setting up flow simulations for your own models
+# - These inputs are deliberately not using later developments of the code.
+#   Please contact the model owner if you require an updated version.
 
 # Material properties fuel
 rho = 3279. # density [kg / m^3]  (@1000K)
