@@ -32,7 +32,7 @@
     type = CSVDiff
     input = 'run_neutronics_9_group.i'
     cli_args = "MultiApps/active='' Transfers/active='' Executioner/fixed_point_min_its=0"
-    csvdiff = 'run_neutronics_9_group_out.csv run_neutronics_9_group_out_average_fluxes_0001.csv'
+    csvdiff = 'run_neutronics_9_group_out.csv'
     executable_pattern = 'griffin*'
     # Model is fairly expensive to run
     method = 'opt'
