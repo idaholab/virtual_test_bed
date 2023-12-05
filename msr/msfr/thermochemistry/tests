@@ -4,7 +4,7 @@
     type = RunApp
     input = 'thermo.i'
     check_input = True
-    executable_pattern = 'blue_crab*|moose*|griffin*|pronghorn*|bison*|fenix*'
+    executable_pattern = 'blue_crab*|combined*|griffin*|pronghorn*|bison*|fenix*'
   []
   # Regression tests with CSV output over a minimum amount of time steps/computation
   [thermo_regression]
@@ -12,8 +12,8 @@
     type = CSVDiff
     input = 'thermo.i'
     csvdiff = 'thermo_out.csv'
-    executable_pattern = 'blue_crab*|moose*|griffin*|pronghorn*|bison*|fenix*'
-    # Fuel temperature is out of bounds for MGXS
+    executable_pattern = 'blue_crab*|combined*|griffin*|pronghorn*|bison*|fenix*'
+    required_submodule = 'apps/moose/modules/chemical_reactions/contrib/thermochimica'
     allow_warnings = true
     min_parallel = 8
     max_time = 300

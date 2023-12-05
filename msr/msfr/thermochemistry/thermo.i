@@ -1,3 +1,18 @@
+################################################################################
+## Molten Salt Fast Reactor - Euratom EVOL + Rosatom MARS Design              ##
+## Thermochimica Main Application input file                                  ##
+## Steady state spatially-resolved thermochemistry model                      ##
+## Depletion history and it's effects on thermochemistry included             ##
+## Model developed by Samuel Walker                                           ##
+## Thermochimica wrapped into MOOOSE by Parikshit Bajpai and Daniel Schwen    ##
+################################################################################
+# If using or referring to this model, please cite as explained in
+# https://mooseframework.inl.gov/virtual_test_bed/citing.html
+
+*******************************************
+* SETTING UP PROBLEM - MESH, GLOBAL PARAMS, CHEMICAL COMPOSITION
+*******************************************
+
 [Mesh]
   coord_type = 'RZ'
   [restart]
@@ -36,6 +51,10 @@
   reinitialization_type = nodal
 []
 
+*******************************************
+* AUX VARIABLES, KERNELS, and ICs
+*******************************************
+
 [AuxVariables]
   [tfuel]
     order = CONSTANT
@@ -63,16 +82,16 @@
   [ProjAuxT]
     type = ProjectionAux
     v = tfuel
-    variable = tfuel_nod 
+    variable = tfuel_nod
     execute_on = INITIAL
   []
   [ProjAuxP]
     type = ProjectionAux
     v = pressure
-    variable = pressure_nod 
+    variable = pressure_nod
     execute_on = INITIAL
   []
-[] 
+[]
 
 [ICs]
   [F]
@@ -94,7 +113,7 @@
     type = FunctionIC
     variable = Th
     function = ThSumSet
-  []  
+  []
   [Ni]
     type = ConstantIC
     variable = Ni
@@ -110,38 +129,42 @@
     type = FunctionIC
     variable = Nd
     function = NdSumSet
-  []  
+  []
   [Ce]
     type = FunctionIC
     variable = Ce
     function = CeSumSet
-  []  
+  []
   [La]
     type = FunctionIC
     variable = La
     function = LaSumSet
-  []  
+  []
   [Cs]
     type = FunctionIC
     variable = Cs
     function = CsSumSet
-  []  
+  []
   [I]
     type = FunctionIC
     variable = I
     function = ISumSet
-  []  
+  []
   [Kr]
     type = FunctionIC
     variable = Kr
     function = KrSumSet
-  []  
+  []
   [Ne]
     type = FunctionIC
     variable = Ne
     function = NeSumSet
-  []  
+  []
 []
+
+*******************************************
+* PROBLEM, EXECUTIONER, and OUTPUTS
+*******************************************
 
 [Problem]
   solve = false
@@ -158,6 +181,10 @@
   exodus = true
 []
 
+*******************************************
+* POSTPROCESSING DEPLETION STEPS
+*******************************************
+
 [Postprocessors]
   [total_ideal_gas]
     type = NodalSum
@@ -170,7 +197,7 @@
     block = 'fuel pump hx'
   []
   [total_Li]
-    type = NodalSum 
+    type = NodalSum
     variable = Li
     block = 'fuel pump hx'
   []
@@ -2044,7 +2071,7 @@
     type = NumNodes
     force_preic = True
     execute_on = INITIAL
-  [] 
+  []
 []
 
 [Functions]

@@ -1,4 +1,4 @@
-# MSFR Griffin-Pronghorn-Thermochimica Model
+# MSFR Spatially-resolved thermochemistry model using Thermochimica
 
 *Contact: Samuel Walker, samuel.walker@inl.gov*
 
@@ -65,7 +65,7 @@ Next, the `ChemicalComposition` block is used to set up the Thermochimica calcul
 
 !listing msr/msfr/thermochemistry/thermo.i block=ChemicalComposition
 
-Next, the auxiliary variables of the temperature and pressure are specified as `tfuel_nod` and `pressure_nod` respetively. It should be noted that the element Auxiliary variables were already declared in the `GlobalParams` block. Lastly, a `reinitilization_type` is specified to use cached Thermochimica solutions to speed up calculations.
+Next, the auxiliary variables of the temperature and pressure are specified as `tfuel_nod` and `pressure_nod` respectively. It should be noted that the element Auxiliary variables were already declared in the `GlobalParams` block. Lastly, a `reinitialization_type` is specified to use cached Thermochimica solutions to speed up calculations.
 
 #### Auxiliary Variables
 
@@ -89,7 +89,7 @@ Next, the `Initial Conditions` block sets up the initial conditions for various 
 
 #### Problem
 
-The `Problem` block is used here to tell MOOSE that a finite element solve is not required, since a MOOSE-wrapped application via `UserObject` is being used instead. Additionally, the `allow_initial_conditions_with_restart` argument is used to allow for reading in the temperature and pressure variables from the multiphysics restart file.
+The `Problem` block is used here to tell MOOSE that a finite element solve is not required, since a MOOSE-wrapped application via `UserObject` is being used instead. Additionally, the `allow_initial_conditions_with_restart` argument is used to allow for reading in the temperature and pressure variables from the multiphysics restart file, while initializing other variables from the input file.
 
 !listing msr/msfr/thermochemistry/thermo.i block=Problem
 
@@ -99,7 +99,7 @@ Next, the largest block of the input, the `Postprocessors` block is used to calc
 
 Here each nuclide density in $[atoms/(b-cm)]$ is read from a `VectorPostProcessor` named `reader` (discussed in the `VectorPostprocessors` block) at a specific burnup index. In order to visualize the depletion-driven, spatially-resolved thermochemical effect, the user can replace the `index = 0` value with a later index point to model how the solution changes throughout depletion.
 
-Admittedly, this is a clunky method of passing information, and current efforts are streamlining nuclide, element, and species accounting for MSR analyses within the MOOSE framework. This will allow for a more user friendly interface between online Griffin-depletion coupling with Thermochimica + Pronghorn for depletion-driven, spatially-resolved thermochemistry modeling and simulation. Therefore, this model will likely be updated in the near term future with a more efficient streamlined version.
+Admittedly, this is a clunky method of passing information, and current efforts are streamlining nuclide, element, and species accounting for MSR analyses within the MOOSE framework. This will allow for a more user friendly interface between online Griffin-depletion coupling with Thermochimica + Pronghorn for depletion-driven, spatially-resolved thermochemistry modeling and simulation. Therefore, this model will likely be updated in the near term with a more efficient streamlined version.
 
 !listing msr/msfr/thermochemistry/thermo.i block=Postprocessors
 

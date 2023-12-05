@@ -1,4 +1,4 @@
-# MSFR Griffin-Pronghorn-Thermochimica Results
+# MSFR Spatially-resolved thermochemistry model Results
 
 The results of the MSFR Griffin-Pronghorn-Thermochimica model showcase what has been coined 'Depletion driven thermochemistry' [!citep](Frontiers). This process details the effect that neutronic fuel depletion has on altering the thermochemistry of the fuel salt. Typically this process is slightly oxidizing where the fission products generated are less thermodynamically stable in the fuel salt as opposed to the original uranium fuel, and the chemical fluorine or redox potenial of the fuel salt increases [!citep](Frontiers). This increases corrosion rates in a molten salt reactor and must be actively controlled [!citep](Zhang2018).
 
