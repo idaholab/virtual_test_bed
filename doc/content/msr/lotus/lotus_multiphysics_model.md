@@ -127,7 +127,7 @@ Additionaly, PETSc options and tolerances for the neutronic and multiphysics fix
 
 The `PostProcessors` block sets up various calculations of reactor parameters that may be of interest to the user. This can be helpful to ensure the model is implemented correctly. Here the average, maximum, and minimum of various variables (e.g., `power`, `fluxes`, and `DNPs`) can be computed.
 
-!listing msr/lotus/steady_state/run_neutronics_9_group.i block=Postprocessors VectorPostprocessors
+!listing msr/lotus/steady_state/run_neutronics_9_group.i block=Postprocessors
 
 #### Outputs
 
