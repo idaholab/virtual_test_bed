@@ -28,8 +28,7 @@ iterated, and fully-coupled if a single calculation/matrix was used to solve the
        style=width:70%;margin-left:15%
        caption=Figure 1: Current multiphysics computation scheme for the Mk1-FHR model steady state model
 
-Results for the steady state solution are shown [here](steady/griffin_pgh_results.md). Future plans for improving this
-model are listed [here](steady/improvements.md).
+Results for the steady state solution are shown [here](steady/griffin_pgh_results.md).
 
 !alert note
 To request access to Direwolf, Pronghorn or Griffin, please submit a request on the
@@ -46,5 +45,3 @@ To request access to Direwolf, Pronghorn or Griffin, please submit a request on 
 [TRISO heat conduction](steady/triso.md)
 
 [Griffin-Pronghorn steady state results](steady/griffin_pgh_results.md)
-
-[Future improvements](steady/improvements.md)
