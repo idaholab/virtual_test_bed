@@ -34,7 +34,7 @@ This multiphysics problem is solved using the MultiApp system to separate the ne
 
 Starting first with neutronics, Griffin solves the neutron transport problem via the Diffusion equation approximation. The Griffin input file will now be briefly discussed and the primary equations that are solved and how they relate to the input file will be shown. The input file to solve the 9 group neutron diffusion problem is shown below.
 
-This is the main input file which calls the open source MOOSE Navier-Stokes input file `run_ns_initial_res.i` which is the sub-app for solving the Thermal Hydraulics solution of this model.
+This is the main input file which calls the open source MOOSE Navier-Stokes input file `run_ns_initial.i` which is the sub-app for solving the Thermal Hydraulics solution of this model.
 
 !listing msr/lotus/steady_state/run_neutronics_9_group.i
 
@@ -127,7 +127,7 @@ Additionaly, PETSc options and tolerances for the neutronic and multiphysics fix
 
 The `PostProcessors` block sets up various calculations of reactor parameters that may be of interest to the user. This can be helpful to ensure the model is implemented correctly. Here the average, maximum, and minimum of various variables (e.g., `power`, `fluxes`, and `DNPs`) can be computed.
 
-!listing msr/lotus/steady_state/run_neutronics_9_group.i block=Postprocessors
+!listing msr/lotus/steady_state/run_neutronics_9_group.i block=Postprocessors VectorPostprocessors
 
 #### Outputs
 
@@ -137,7 +137,7 @@ The `Outputs` block sets up the types of outputs the user would like to visualiz
 
 #### MultiApps
 
-Finally, the `MultiApps` block sets up the sub-app that will be driven by the main Griffin app. Here, the Griffin input is the main-application and includes a single sub-application with the open source MOOSE Navier-Stokes input `run_ns_initial_res.i`.
+Finally, the `MultiApps` block sets up the sub-app that will be driven by the main Griffin app. Here, the Griffin input is the main-application and includes a single sub-application with the open source MOOSE Navier-Stokes input `run_ns_initial.i`.
 
 !listing msr/lotus/steady_state/run_neutronics_9_group.i block=MultiApps
 
@@ -153,7 +153,7 @@ Here the `power_density`, and `fission_source`is transferred to the Navier-Stoke
 
 ## Thermal Hydraulics
 
-The fluid system is solved by the subapp and it uses the `run_ns_initial_res.i`
+The fluid system is solved by the subapp and it uses the `run_ns_initial.i`
 input file shown below. (Here "ns" is an abbreviation for Navier-Stokes.)
 
 The fluid system includes conservation equations for fluid mass, momentum, and
@@ -161,19 +161,19 @@ energy. Here a porous flow and weakly-compressible formulation are used to model
 
 Additionally, the thermal hydraulics input file has another sub-app below it that calculates the delayed neutron precursor (DNP) group distributions in `run_prec_transport.i` which will be discussed shortly.
 
-!listing msr/lotus/steady_state/run_ns_initial_res.i
+!listing msr/lotus/steady_state/run_ns_initial.i
 
 #### Problem Parameters
 
 The physical properties of the fuel salt and reflector (e.g., `density`, `viscosity`, `thermal conductivity`, and `heat capacity`) are defined first. Additionally, other parameters such as a friction force, pump force, porosity, and area are also set. Lastly, numerical interpolation schemes such as `upwind` and `rhie-chow` are also selected and a mixing length turbulence calibration informed from high-fidelity CFD is also set here.
 
-!listing msr/lotus/steady_state/run_ns_initial_res.i start=# Material Properties end=[GlobalParams]
+!listing msr/lotus/steady_state/run_ns_initial.i start=# Material Properties end=[GlobalParams]
 
 #### Global Parameters
 
-Next, `Global Parameters` lists variables and parameters that will be used throughout the entire input file. Here the finite volume interpolation methods are set, and `superficial velocities`, `pressure`, `porosity`, `density`, `viscosity`, and the `mixing_length` model are defined for the entire input file. Some of these values are originally set in the `Problem Parameters` and are referenced here using the ${} notation to be used implicitly for the rest of the input file.
+Next, `Global Parameters` lists variables and parameters that will be used throughout the entire input file. Here the finite volume interpolation methods are set, and `superficial velocities`, `pressure`, `porosity`, `density`, `viscosity`, and the `mixing_length` model are defined for the entire input file. Some of these values are originally set in the `Problem Parameters` / header of the input and are referenced here using the ${} notation to be used implicitly for the rest of the input file.
 
-!listing msr/lotus/steady_state/run_ns_initial_res.i block=GlobalParams
+!listing msr/lotus/steady_state/run_ns_initial.i block=GlobalParams
 
 #### Mesh
 
@@ -181,13 +181,13 @@ This block defines the geometry of the thermal hydraulics computational domain, 
 
 Then several boundaries and the mixing plate subdomain are defined by editing the mesh to correctly define the boundary conditions and porosity modeling necessary in the thermal hydraulics model.
 
-!listing msr/lotus/steady_state/run_ns_initial_res.i block=Mesh
+!listing msr/lotus/steady_state/run_ns_initial.i block=Mesh
 
 #### User Objects
 
 The model now turns to implementing the equations, variables, kernels, and boundary conditions that need to be specified to solve the thermal hydraulic problem. Rather than using a `Module` where the ```Navier-Stokes Finite Volume``` action is used to define the problem, this model opts to explicitly set up the problem for added flexibility.
 
-!listing msr/lotus/steady_state/run_ns_initial_res.i block=UserObjects
+!listing msr/lotus/steady_state/run_ns_initial.i block=UserObjects
 
 Here the porous formulation of the incompressible Rhie Chow Interpolator user object is specified and acts on the fluid blocks defined.
 
@@ -195,13 +195,13 @@ Here the porous formulation of the incompressible Rhie Chow Interpolator user ob
 
 Next, the variables that must be explicitly solved for in the thermal hydraulics model are defined. Here the `pressure`, `superficial velocities`, and `temperatures` are required.
 
-!listing msr/lotus/steady_state/run_ns_initial_res.i block=Variables
+!listing msr/lotus/steady_state/run_ns_initial.i block=Variables
 
 #### Kernels
 
 Correspondingly, the kernels are the functor or terms that manipulate the variables and form the conservation equations. Here the conservation of mass, momentum, and energy in the fuel salt and reflector are explicitly set.
 
-!listing msr/lotus/steady_state/run_ns_initial_res.i block=Kernels
+!listing msr/lotus/steady_state/run_ns_initial.i block=Kernels
 
 The porous flow equations for incompressible flow read as follows:
 
@@ -229,61 +229,61 @@ The fluid domain $\Omega_f$ comprises porous regions with $0< \gamma < 1$ and fr
 
 In addition to the Kernels that operate on the variables in the bulk domain, Interface Kernels operate at an interface. In this case the `convection` Interface Kernel is selected to account for heat transfer from the fuel salt to the reflector thorugh the vessel boundary.
 
-!listing msr/lotus/steady_state/run_ns_initial_res.i block=FVInterfaceKernels
+!listing msr/lotus/steady_state/run_ns_initial.i block=FVInterfaceKernels
 
 #### Finite Volume Boundary Conditions
 
 Next, the `Finite Volume Boundary Conditions` must be set for the conservation equations. Here no slip boundary conditions for the velocities for the momentum equation, and various heat transfer boundary conditions for the energy equation are specified.
 
-!listing msr/lotus/steady_state/run_ns_initial_res.i block=FVBCs
+!listing msr/lotus/steady_state/run_ns_initial.i block=FVBCs
 
 #### Auxiliary Variables
 
 The `Auxiliary Variables` block defines variables of interest that can be operated on and transferred to sub-apps below or main-apps above. Here the `power_density` and `fission_source` is read in from the main-app neutronics solve, and `c1`-`c6` is read in from the precursor advection sub-app. Additionally, auxiliary variables that will be transferred to the precursor advection sub-app are also defined here as `a_u_var`, `a_v_var`, and `a_w_var` respectively.
 
-!listing msr/lotus/steady_state/run_ns_initial_res.i block=AuxVariables
+!listing msr/lotus/steady_state/run_ns_initial.i block=AuxVariables
 
 #### Auxiliary Kernels
 
 Correspondingly, the `Auxiliary Kernels` operate on the `Auxiliary Variables`. In this case the auxiliary variables needed by the precursor advection sub-app are generated by copying the superficial velocities given by the thermal hydraulics solution.
 
-!listing msr/lotus/steady_state/run_ns_initial_res.i block=AuxKernels
+!listing msr/lotus/steady_state/run_ns_initial.i block=AuxKernels
 
 #### Functions
 
 Next, various functions are defined to be used throughout the input file. Here heat transfer coefficients, reynolds numbers, power-density functions, and cosine guesses can all be generated and used for initial conditions, kernels, etc.
 
-!listing msr/lotus/steady_state/run_ns_initial_res.i block=Functions
+!listing msr/lotus/steady_state/run_ns_initial.i block=Functions
 
 #### Materials
 
 Next, the `Materials` block specifies material properties of interest in the fuel salt, reactor vessel, and reflector. Here, `viscosity`, `wall frictions`, and turbulent `mixing length` models can be implemented.
 
-!listing msr/lotus/steady_state/run_ns_initial_res.i block=Materials
+!listing msr/lotus/steady_state/run_ns_initial.i block=Materials
 
 #### Executioner
 
-The `Executioner` block defines how the problem will be run. Here the type of solution is a `Transient` and a `TimeStepper` function is defined. Additionally, the numerical tolerances for the solution are selected to speed up convergence.
+The `Executioner` block defines how the problem will be run. Here the type of solution is a `Transient` and a `TimeStepper` function is defined. Additionally, the numerical tolerances for the solution are selected to control the level of convergence required.
 
-!listing msr/lotus/steady_state/run_ns_initial_res.i block=Executioner
+!listing msr/lotus/steady_state/run_ns_initial.i block=Executioner
 
 #### Outputs
 
 After computing the solution, the `Outputs` block defines how the user would like to process the final solution data. Here a CSV file is generated containing all of the calculations performed in the `Postprocessors` block.
 
-!listing msr/lotus/steady_state/run_ns_initial_res.i block=Outputs
+!listing msr/lotus/steady_state/run_ns_initial.i block=Outputs
 
 #### Postprocessors
 
 The `Postprocessors` block is used to defined to calculate specific items of interest to the user. In this case, velocities, volumetric flow rate, temperatures, pressure drop, heat losses, and DNP concentrations can be calculated and printed in the `Outputs` CSV file.
 
-!listing msr/lotus/steady_state/run_ns_initial_res.i block=Postprocessors
+!listing msr/lotus/steady_state/run_ns_initial.i block=Postprocessors
 
 #### MultiApps
 
 Moving next to the `MultiApps` block, this block connects the present app with any sub-apps. In this case the `prec_transport` sub-app is defined using the `run_prec_transport.i` input file.
 
-!listing msr/lotus/steady_state/run_ns_initial_res.i block=MultiApps
+!listing msr/lotus/steady_state/run_ns_initial.i block=MultiApps
 
 #### Transfers
 
@@ -291,13 +291,13 @@ Lastly, the `Transfers` block is specified to showcase how Auxiliary Variables s
 
 Then the neutronics application above calls for `c1`-`c6` from the current application in it's `Transfers` block and uses these values to solve the multiphysics coupled neutronics eigenvalue problem.
 
-!listing msr/lotus/steady_state/run_ns_initial_res.i block=Transfers
+!listing msr/lotus/steady_state/run_ns_initial.i block=Transfers
 
 ## Delayed Neutron Precursor Advection Equation
 
 Here the distribution of delayed neutron precursors (DNPs) is solved for in another nested sub-app that the Thermal Hydraulics application calls. The `run_prec_transport.i` input for solving the conservation of DNPs is listed below.
 
-This input file could be incorporated into the Thermal Hydraulics solve, but for clarity it has been seperated out as a seperate sub-app. Therefore the input file here is similar to the Thermal Hydraulics input file, and only unique differences will be highlighted.
+This input file could be incorporated into the Thermal Hydraulics solve, but for clarity it has been separated out as a separate sub-app. Therefore the input file here is similar to the Thermal Hydraulics input file, and only unique differences will be highlighted.
 
 !listing msr/lotus/steady_state/run_prec_transport.i
 
@@ -312,7 +312,7 @@ $H_i$ average molecular diffusion for neutron precursors of type $i$, $\nu_t$ tu
 
 #### Problem Parameters
 
-Similar to the thermal hydraulics input file `run_ns_initial_res.i`, the physical properties of the problem are defined first. Uniquely, the decay constants $\lambda$ and production fractions $\beta$ are defined for the six DNP groups.
+Similar to the thermal hydraulics input file `run_ns_initial.i`, the physical properties of the problem are defined first. Uniquely, the decay constants $\lambda$ and production fractions $\beta$ are defined for the six DNP groups.
 
 !listing msr/lotus/steady_state/run_prec_transport.i start=# Material Properties end=[GlobalParams]
 
