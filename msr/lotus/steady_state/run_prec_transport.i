@@ -1,8 +1,6 @@
 ################################################################################
 ## Molten Chloride Reactor - Lotus design                                     ##
 ## Pronghorn input file to initialize DNP fields                              ##
-## This runs a slow relaxation to steady state while ramping down the fluid   ##
-## viscosity.                                                                 ##
 ################################################################################
 
 # Mass flow rate tuning
@@ -14,12 +12,12 @@ advected_interp_method = 'upwind'
 velocity_interp_method = 'rc'
 
 # Dynamic scaling paramters
-mixing_length_pipe_callibrated = '${fparse 0.07 * 0.1 * 0.06}'
-mixing_length_reactor_callibrated = '${fparse 0.07 * 0.1 * 2}'
+mixing_length_pipe_calibrated = '${fparse 0.07 * 0.1 * 0.06}'
+mixing_length_reactor_calibrated = '${fparse 0.07 * 0.1 * 2}'
 Sc_t = 0.9
 
 # Delayed neutron precursor parameters. Lambda values are decay constants in
-# [1 / s]. Beta values are production fractions.
+# [1 / s]. Beta values are production fractions [-].
 lambda1 = 0.0124667
 lambda2 = 0.0282917
 lambda3 = 0.0425244
@@ -390,18 +388,18 @@ beta6 = 0.000680667
 
 [Materials]
   [porous_mat]
-    type = ADGenericFunctorMaterial #defines mu artificially for numerical convergence
-    prop_names = 'porosity' #it converges to the real mu eventually.
+    type = ADGenericFunctorMaterial
+    prop_names = 'porosity'
     prop_values = '${porosity}'
     block = 'reactor pipe pump mixing-plate reflector'
   []
   [mixing_length_mat]
     type = ADPiecewiseByBlockFunctorMaterial
     prop_name = 'mixing_length'
-    subdomain_to_prop_value = 'reactor      ${mixing_length_reactor_callibrated}
-                               mixing-plate ${mixing_length_reactor_callibrated}
-                               pipe         ${mixing_length_pipe_callibrated}
-                               pump         ${mixing_length_pipe_callibrated}'
+    subdomain_to_prop_value = 'reactor      ${mixing_length_reactor_calibrated}
+                               mixing-plate ${mixing_length_reactor_calibrated}
+                               pipe         ${mixing_length_pipe_calibrated}
+                               pump         ${mixing_length_pipe_calibrated}'
   []
 []
 
