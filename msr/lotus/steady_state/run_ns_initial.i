@@ -106,14 +106,14 @@ mixing_length_reactor_calibrated = '${fparse 0.07 * 0.1 * 2}'
     block_id = '5'
     block_name = 'mixing-plate'
   []
-  [delete_reactor_caps_bdry]
+  [delete_old_sidesets]
     type = BoundaryDeletionGenerator
     input = mixing_plate
-    boundary_names = 'wall-reactor-caps'
+    boundary_names = 'wall-reactor-caps  wall-reactor-reflector'
   []
   [mix_plate_downstream]
     type = ParsedGenerateSideset
-    input = 'delete_reactor_caps_bdry'
+    input = 'delete_old_sidesets'
     new_sideset_name = 'mixing-plate-downstream'
     included_subdomains = ' mixing-plate'
     combinatorial_geometry = ' (x > -0.23 & x < -0.2) & (y*y + z*z<0.12*0.12) '
@@ -153,6 +153,19 @@ mixing_length_reactor_calibrated = '${fparse 0.07 * 0.1 * 2}'
     new_sideset_name = 'reactor_out'
     combinatorial_geometry = '(y > 775) | ((y <= 775) & (x > 1150 | x < -250))'
     include_only_external_sides = true
+  []
+  [regenerate_reactor_wall_to_reflector]
+    type = SideSetsBetweenSubdomainsGenerator
+    input = 'reactor_out_bdry'
+    primary_block = 'reactor'
+    paired_block = 'reflector'
+    new_boundary = 'wall-reactor-reflector'
+  []
+
+  [repair_mesh]
+    type = MeshRepairGenerator
+    input = regenerate_reactor_wall_to_reflector
+    fix_node_overlap = true
   []
 []
 
@@ -260,17 +273,14 @@ mixing_length_reactor_calibrated = '${fparse 0.07 * 0.1 * 2}'
     variable = superficial_vel_x
     momentum_component = 'x'
     Darcy_name = 'DFC'
-    Forchheimer_name = 'FFC'
     block = 'pump'
   []
   [u_friction_pump_correction]
     type = PINSFVMomentumFrictionCorrection
     variable = superficial_vel_x
     momentum_component = 'x'
-    porosity = porosity
     rho = ${rho}
     Darcy_name = 'DFC'
-    Forchheimer_name = 'FFC'
     block = 'mixing-plate'
     consistent_scaling = 100.
   []
@@ -280,17 +290,14 @@ mixing_length_reactor_calibrated = '${fparse 0.07 * 0.1 * 2}'
     variable = superficial_vel_x
     momentum_component = 'x'
     Darcy_name = 'DFC_plate'
-    Forchheimer_name = 'FFC_plate'
     block = 'mixing-plate'
   []
   [u_friction_mixing_plate_correction]
     type = PINSFVMomentumFrictionCorrection
     variable = superficial_vel_x
     momentum_component = 'x'
-    porosity = porosity
     rho = ${rho}
     Darcy_name = 'DFC_plate'
-    Forchheimer_name = 'FFC_plate'
     block = 'mixing-plate'
     consistent_scaling = 100.
   []
@@ -339,17 +346,14 @@ mixing_length_reactor_calibrated = '${fparse 0.07 * 0.1 * 2}'
     variable = superficial_vel_y
     momentum_component = 'y'
     Darcy_name = 'DFC'
-    Forchheimer_name = 'FFC'
     block = 'pump'
   []
   [v_friction_pump_correction]
     type = PINSFVMomentumFrictionCorrection
     variable = superficial_vel_y
     momentum_component = 'y'
-    porosity = porosity
     rho = ${rho}
     Darcy_name = 'DFC'
-    Forchheimer_name = 'FFC'
     block = 'mixing-plate'
     consistent_scaling = 100.
   []
@@ -358,7 +362,6 @@ mixing_length_reactor_calibrated = '${fparse 0.07 * 0.1 * 2}'
     variable = superficial_vel_y
     momentum_component = 'y'
     Darcy_name = 'DFC_plate'
-    Forchheimer_name = 'FFC_plate'
     block = 'mixing-plate'
   []
   [pump]
@@ -405,7 +408,6 @@ mixing_length_reactor_calibrated = '${fparse 0.07 * 0.1 * 2}'
     variable = superficial_vel_z
     momentum_component = 'z'
     Darcy_name = 'DFC'
-    Forchheimer_name = 'FFC'
     block = 'pump'
   []
   [w_friction_mixing_plate]
@@ -413,7 +415,6 @@ mixing_length_reactor_calibrated = '${fparse 0.07 * 0.1 * 2}'
     variable = superficial_vel_z
     momentum_component = 'z'
     Darcy_name = 'DFC_plate'
-    Forchheimer_name = 'FFC_plate'
     block = 'mixing-plate'
   []
 
@@ -451,10 +452,12 @@ mixing_length_reactor_calibrated = '${fparse 0.07 * 0.1 * 2}'
   ####### REFLECTOR ENERGY EQUATION #######
 
   [heat_time_ref]
-    type = INSFVEnergyTimeDerivative
+    type = PINSFVEnergyTimeDerivative
     variable = T_ref
     cp = ${cp_ref}
     rho = ${rho_ref}
+    is_solid = true
+    porosity = 0
   []
   [heat_diffusion_ref]
     type = FVDiffusion
@@ -678,7 +681,7 @@ mixing_length_reactor_calibrated = '${fparse 0.07 * 0.1 * 2}'
     expression = '${power}/0.21757 * max(0, cos(x*pi/2/1.5))*max(0, cos(y*pi/2/1.5))*max(0, cos(z*pi/2/1.5))'
   []
   [ad_rampdown_mu_func]
-    type = ADParsedFunction
+    type = ParsedFunction
     # This expression can be set to impose a slowly decreasing profile in mu
     expression = 'mu' # *(0.1*exp(-3*t)+1)
     symbol_names = 'mu'
@@ -695,11 +698,18 @@ mixing_length_reactor_calibrated = '${fparse 0.07 * 0.1 * 2}'
   []
 []
 
-[Materials]
+[FunctorMaterials]
   [generic]
     type = ADGenericFunctorMaterial
     prop_names = 'rho porosity'
     prop_values = '${rho} ${porosity}'
+  []
+  [interstitial_velocity_norm]
+    type = PINSFVSpeedFunctorMaterial
+    superficial_vel_x = superficial_vel_x
+    superficial_vel_y = superficial_vel_y
+    superficial_vel_z = superficial_vel_z
+    porosity = porosity
   []
   [mu_spatial]
     type = ADPiecewiseByBlockFunctorMaterial
@@ -709,20 +719,36 @@ mixing_length_reactor_calibrated = '${fparse 0.07 * 0.1 * 2}'
                                mixing-plate ad_rampdown_mu_func
                                reactor ad_rampdown_mu_func'
   []
+  # TODO: remove this, fix ParsedFunctorMaterial
+  [constant]
+    type = GenericFunctorMaterial
+    prop_names = 'constant_1'
+    prop_values = '${fparse 2 * friction}'
+  []
+  [D_friction]
+    type = ADParsedFunctorMaterial
+    property_name = D_friction
+    # This convoluted expression is because the model was developed back when
+    # Pronghorn used a linear friction force as W * rho * v.
+    # Now Pronghorn has explicit Darcy and Forchheimer coefficients
+    expression = '2 * friction * rho / porosity / mu'
+    functor_symbols = 'friction rho porosity mu'
+    functor_names = 'constant_1 rho porosity mu'
+  []
   [friction_material_pump]
     type = ADGenericVectorFunctorMaterial
     prop_names = 'DFC FFC'
-    prop_values = '${fparse 1*friction} ${fparse 1*friction} ${fparse 1*friction}
-                   ${fparse 1*friction} ${fparse 1*friction} ${fparse 1*friction}'
+    prop_values = 'D_friction D_friction D_friction
+                   0 0 0'
   []
   [friction_material_mixing_plate]
     type = ADGenericVectorFunctorMaterial
     prop_names = 'DFC_plate FFC_plate'
-    prop_values = '${fparse 1*friction} ${fparse 1*friction} ${fparse 1*friction}
-                   ${fparse 1*friction} ${fparse 1*friction} ${fparse 1*friction}'
+    prop_values = 'D_friction D_friction D_friction
+                   0 0 0'
   []
   [ins_fv]
-    type = INSFVEnthalpyMaterial
+    type = INSFVEnthalpyFunctorMaterial
     rho = ${rho}
     cp = ${cp}
     temperature = 'T'
@@ -752,7 +778,7 @@ mixing_length_reactor_calibrated = '${fparse 0.07 * 0.1 * 2}'
   [TimeStepper]
     type = IterationAdaptiveDT
     optimal_iterations = 10
-    dt = 0.01
+    dt = 0.005
     timestep_limiting_postprocessor = 'dt_limit'
   []
 

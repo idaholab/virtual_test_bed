@@ -205,24 +205,24 @@
 
 [MeshDivisions]
   [blocks]
-    type = SubdomainDivision
+    type = SubdomainsDivision
   []
 []
 
 [VectorPostprocessors]
   [average_fluxes]
-    type = MeshDivisionFunctorReduction
+    type = MeshDivisionFunctorReductionVectorPostprocessor
     # Outputs all flux-averages on a per-block and per-variable basis
-    reduction_type = 'average'
+    reduction = 'average'
     functors = 'sflux_g0 sflux_g1 sflux_g2 sflux_g3 sflux_g4 sflux_g5 sflux_g6 sflux_g7'
-    mesh_divison = blocks
+    mesh_division = blocks
   []
   [max_fluxes]
-    type = MeshDivisionFunctorReduction
+    type = MeshDivisionFunctorReductionVectorPostprocessor
     # Outputs all flux-maxima on a per-block and per-variable basis
-    reduction_type = 'max'
+    reduction = 'max'
     functors = 'sflux_g0 sflux_g1 sflux_g2 sflux_g3 sflux_g4 sflux_g5 sflux_g6 sflux_g7'
-    mesh_divison = blocks
+    mesh_division = blocks
   []
 []
 
