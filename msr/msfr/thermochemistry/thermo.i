@@ -9,9 +9,9 @@
 # If using or referring to this model, please cite as explained in
 # https://mooseframework.inl.gov/virtual_test_bed/citing.html
 
-*******************************************
-* SETTING UP PROBLEM - MESH, GLOBAL PARAMS, CHEMICAL COMPOSITION
-*******************************************
+###########################################
+# SETTING UP PROBLEM - MESH, GLOBAL PARAMS, CHEMICAL COMPOSITION
+###########################################
 
 [Mesh]
   coord_type = 'RZ'
@@ -51,9 +51,9 @@
   reinitialization_type = nodal
 []
 
-*******************************************
-* AUX VARIABLES, KERNELS, and ICs
-*******************************************
+###########################################
+# AUX VARIABLES, KERNELS, and ICs
+###########################################
 
 [AuxVariables]
   [tfuel]
@@ -162,9 +162,9 @@
   []
 []
 
-*******************************************
-* PROBLEM, EXECUTIONER, and OUTPUTS
-*******************************************
+###########################################
+# PROBLEM, EXECUTIONER, and OUTPUTS
+###########################################
 
 [Problem]
   solve = false
@@ -181,9 +181,9 @@
   exodus = true
 []
 
-*******************************************
-* POSTPROCESSING DEPLETION STEPS
-*******************************************
+###########################################
+# POSTPROCESSING
+###########################################
 
 [Postprocessors]
   [total_ideal_gas]
@@ -317,6 +317,9 @@
     block = 'fuel pump hx'
   []
 
+###########################################
+# POSTPROCESSING DEPLETION STEPS
+###########################################
   #Initializing From Depletion
   #U
   [U230]
