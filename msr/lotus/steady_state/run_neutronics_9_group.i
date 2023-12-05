@@ -169,21 +169,18 @@
 
   petsc_options_iname = '-pc_type -pc_hypre_type -ksp_gmres_restart '
   petsc_options_value = 'hypre boomeramg 50'
+  nl_abs_tol = 1e-9
   #l_max_its = 100
 
   free_power_iterations = 5 # important to obtain fundamental mode eigenvalue
-
-  nl_abs_tol = 1e-9
+  normalization = fission_source_integral
 
   # Parameters for fixed point iteration with MultiApps
-  fixed_point_abs_tol = 1e-3
   fixed_point_algorithm = picard
   fixed_point_min_its = 4
   fixed_point_max_its = 30
+  fixed_point_abs_tol = 1e-3
   relaxation_factor = 0.7
-
-  normalization = fission_source_integral
-
 []
 
 [Debug]
@@ -204,225 +201,28 @@
     type = Receiver
     default = 0.1
   []
-  [flux_0_average_reac]
-    type = ElementAverageValue
-    variable = sflux_g0
-    block = 'reactor'
+[]
+
+[MeshDivisions]
+  [blocks]
+    type = SubdomainDivision
   []
-  [flux_1_average_reac]
-    type = ElementAverageValue
-    variable = sflux_g1
-    block = 'reactor'
+[]
+
+[VectorPostprocessors]
+  [average_fluxes]
+    type = MeshDivisionFunctorReduction
+    # Outputs all flux-averages on a per-block and per-variable basis
+    reduction_type = 'average'
+    functors = 'sflux_g0 sflux_g1 sflux_g2 sflux_g3 sflux_g4 sflux_g5 sflux_g6 sflux_g7'
+    mesh_divison = blocks
   []
-  [flux_2_average_reac]
-    type = ElementAverageValue
-    variable = sflux_g2
-    block = 'reactor'
-  []
-  [flux_3_average_reac]
-    type = ElementAverageValue
-    variable = sflux_g3
-    block = 'reactor'
-  []
-  [flux_4_average_reac]
-    type = ElementAverageValue
-    variable = sflux_g4
-    block = 'reactor'
-  []
-  [flux_5_average_reac]
-    type = ElementAverageValue
-    variable = sflux_g5
-    block = 'reactor'
-  []
-  [flux_6_average_reac]
-    type = ElementAverageValue
-    variable = sflux_g6
-    block = 'reactor'
-  []
-  [flux_7_average_reac]
-    type = ElementAverageValue
-    variable = sflux_g7
-    block = 'reactor'
-  []
-  [flux_0_average_ref]
-    type = ElementAverageValue
-    variable = sflux_g0
-    block = 'reactor'
-  []
-  [flux_1_average_ref]
-    type = ElementAverageValue
-    variable = sflux_g1
-    block = 'reflector'
-  []
-  [flux_2_average_ref]
-    type = ElementAverageValue
-    variable = sflux_g2
-    block = 'reflector'
-  []
-  [flux_3_average_ref]
-    type = ElementAverageValue
-    variable = sflux_g3
-    block = 'reflector'
-  []
-  [flux_4_average_ref]
-    type = ElementAverageValue
-    variable = sflux_g4
-    block = 'reflector'
-  []
-  [flux_5_average_ref]
-    type = ElementAverageValue
-    variable = sflux_g5
-    block = 'reflector'
-  []
-  [flux_6_average_ref]
-    type = ElementAverageValue
-    variable = sflux_g6
-    block = 'reflector'
-  []
-  [flux_7_average_ref]
-    type = ElementAverageValue
-    variable = sflux_g7
-    block = 'reflector'
-  []
-  [flux_0_average_reac_max]
-    type = ElementExtremeValue
-    variable = sflux_g0
-    block = 'reactor'
-  []
-  [flux_1_average_reac_max]
-    type = ElementExtremeValue
-    variable = sflux_g1
-    block = 'reactor'
-  []
-  [flux_2_average_reac_max]
-    type = ElementExtremeValue
-    variable = sflux_g2
-    block = 'reactor'
-  []
-  [flux_3_average_reac_max]
-    type = ElementExtremeValue
-    variable = sflux_g3
-    block = 'reactor'
-  []
-  [flux_4_average_reac_max]
-    type = ElementExtremeValue
-    variable = sflux_g4
-    block = 'reactor'
-  []
-  [flux_5_average_reac_max]
-    type = ElementExtremeValue
-    variable = sflux_g5
-    block = 'reactor'
-  []
-  [flux_6_average_reac_max]
-    type = ElementExtremeValue
-    variable = sflux_g6
-    block = 'reactor'
-  []
-  [flux_7_average_reac_max]
-    type = ElementExtremeValue
-    variable = sflux_g7
-    block = 'reactor'
-  []
-  [flux_0_average_ref_max]
-    type = ElementExtremeValue
-    variable = sflux_g0
-    block = 'reactor'
-  []
-  [flux_1_average_ref_max]
-    type = ElementExtremeValue
-    variable = sflux_g1
-    block = 'reflector'
-  []
-  [flux_2_average_ref_max]
-    type = ElementExtremeValue
-    variable = sflux_g2
-    block = 'reflector'
-  []
-  [flux_3_average_ref_max]
-    type = ElementExtremeValue
-    variable = sflux_g3
-    block = 'reflector'
-  []
-  [flux_4_average_ref_max]
-    type = ElementExtremeValue
-    variable = sflux_g4
-    block = 'reflector'
-  []
-  [flux_5_average_ref_max]
-    type = ElementExtremeValue
-    variable = sflux_g5
-    block = 'reflector'
-  []
-  [flux_6_average_ref_max]
-    type = ElementExtremeValue
-    variable = sflux_g6
-    block = 'reflector'
-  []
-  [flux_7_average_ref_max]
-    type = ElementExtremeValue
-    variable = sflux_g7
-    block = 'reflector'
-  []
-  [c1_average_reac]
-    type = ElementAverageValue
-    variable = c1
-    block = 'reactor'
-  []
-  [c2_average_reac]
-    type = ElementAverageValue
-    variable = c2
-    block = 'reactor'
-  []
-  [c3_average_reac]
-    type = ElementAverageValue
-    variable = c3
-    block = 'reactor'
-  []
-  [c4_average_reac]
-    type = ElementAverageValue
-    variable = c4
-    block = 'reactor'
-  []
-  [c5_average_reac]
-    type = ElementAverageValue
-    variable = c5
-    block = 'reactor'
-  []
-  [c6_average_reac]
-    type = ElementAverageValue
-    variable = c6
-    block = 'reactor'
-  []
-  [c1_average_pipe]
-    type = ElementAverageValue
-    variable = c1
-    block = 'pipe pump'
-  []
-  [c2_average_pipe]
-    type = ElementAverageValue
-    variable = c2
-    block = 'pipe pump'
-  []
-  [c3_average_pipe]
-    type = ElementAverageValue
-    variable = c3
-    block = 'pipe pump'
-  []
-  [c4_average_pipe]
-    type = ElementAverageValue
-    variable = c4
-    block = 'pipe pump'
-  []
-  [c5_average_pipe]
-    type = ElementAverageValue
-    variable = c5
-    block = 'pipe pump'
-  []
-  [c6_average_pipe]
-    type = ElementAverageValue
-    variable = c6
-    block = 'pipe pump'
+  [max_fluxes]
+    type = MeshDivisionFunctorReduction
+    # Outputs all flux-maxima on a per-block and per-variable basis
+    reduction_type = 'max'
+    functors = 'sflux_g0 sflux_g1 sflux_g2 sflux_g3 sflux_g4 sflux_g5 sflux_g6 sflux_g7'
+    mesh_divison = blocks
   []
 []
 
