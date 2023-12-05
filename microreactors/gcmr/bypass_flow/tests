@@ -25,5 +25,6 @@
     executable_pattern = 'pronghorn*'
     prereq = 'mesh channel subchannel'
     max_time = 600
+    method = 'opt'
   []
 []
