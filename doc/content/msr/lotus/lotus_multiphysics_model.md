@@ -67,7 +67,7 @@ $\Sigma_{rg}$ removal cross-section from energy group $g$, $k_{eff}$ eigenvalue 
 
 Note the `external_dnp_variable = 'dnp'` parameter. This is a special option
 needed for liquid-fueled MSRs which signals that the conservation equations for delayed neutron precursors (DNPs) will be handled "externally" from the default
-Griffin implementation which assumes that the precursors do not have the turbulent treatment. DNP treament will be discussed later in the thermal-hydraulics and DNP distribution input files.
+Griffin implementation which assumes that the precursors do not have the turbulent treatment. DNP treatment will be discussed later in the thermal-hydraulics and DNP distribution input files.
 
 The type of shape function `Lagrange` and order `FIRST` are defined here as well as the `fission_source_aux` which will be used by the sub-apps.
 
@@ -116,12 +116,12 @@ Next, the `Executioner` block sets up the type of problem, and the numerical met
 
 !listing msr/lotus/steady_state/run_neutronics_9_group.i block=Executioner
 
-The caculation is driven by `Eigenvalue`, an executioner available in Griffin.
+The calculation is driven by `Eigenvalue`, an executioner available in Griffin.
 The PJFNKMO option for the `solve_type` parameter is able to
 drive the eigenvalue calculation with the contribution of DNP
 to the neutron transport equation as an external source scaled with $k$-effective.
 
-Additionaly, PETSc options and tolerances for the neutronic and multiphysics fixed point iteration coupling method are provided.
+Additionally, PETSc options and tolerances for the neutronics and multiphysics fixed point iteration coupling method are provided.
 
 #### Post Processors
 
@@ -147,7 +147,7 @@ Correspondingly, the `Transfers` block sets up the Auxiliary Variables that will
 
 !listing msr/lotus/steady_state/run_neutronics_9_group.i block=Transfers
 
-Here the `power_density`, and `fission_source`is transferred to the Navier-Stokes input file which operate as sources in the energy conservation and DNP advection equations respetively. Lastly, the DNP distributions for groups `c1` - `c6` and the temperature of the fuel `T` and the reflector `T_ref` are passed back to the neutronics solutution for multiphysics convergence.
+Here the `power_density`, and `fission_source`is transferred to the Navier-Stokes input file which operate as sources in the energy conservation and DNP advection equations respectively. Lastly, the DNP distributions for groups `c1` - `c6` and the temperature of the fuel `T` and the reflector `T_ref` are passed back to the neutronics solutution for multiphysics convergence.
 
 
 
@@ -318,7 +318,7 @@ Similar to the thermal hydraulics input file `run_ns_initial.i`, the physical pr
 
 #### User Objects
 
-Since this is a sub-app nested underneath the thermal hydraulics application, the `rhie chow interpolator` user object is updated with the superficial velocity aux variables `a_u`, `a_v`, and `a_w` transfered from the Thermal Hydraulics solve.
+Since this is a sub-app nested underneath the thermal hydraulics application, the `rhie chow interpolator` user object is updated with the superficial velocity aux variables `a_u`, `a_v`, and `a_w` transferred from the Thermal Hydraulics solve.
 
 !listing msr/lotus/steady_state/run_prec_transport.i block=UserObjects
 
@@ -338,7 +338,7 @@ Here the `power_density`, `fission_source`, `superficial velocities`, `pressure`
 
 #### Kernels
 
-Correspondingly, the kernels are the functor or terms that manipulate the variables and form the conservation equations. Here the conservation of DNPs as seen in [eq:prec_eigen] is implimented by explicitly setting each term for each DNP group.
+Correspondingly, the kernels are the functor or terms that manipulate the variables and form the conservation equations. Here the conservation of DNPs as seen in [eq:prec_eigen] is implemented by explicitly setting each term for each DNP group.
 
 !listing msr/lotus/steady_state/run_prec_transport.i block=Kernels
 
