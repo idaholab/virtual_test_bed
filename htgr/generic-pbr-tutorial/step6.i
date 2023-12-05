@@ -22,7 +22,8 @@ flow_vel = '${fparse mass_flow_rate / flow_area / inlet_density}'
 power_fn_scaling = 0.9792628
 
 # drag coefficient in open flow spaces, set to allow convergence
-c_drag = 10
+# The convention for friction factors changed
+c_drag_old = 10
 
 # moves the heat source around axially to have the peak in the right spot
 offset = -1.45819
@@ -429,24 +430,34 @@ riser_Dh = 0.17
     block = pebble_bed
   []
 
+  [drag_new_convention]
+    type = ADParsedFunctorMaterial
+    # This performs the conversion from the old convention of specifying W for a (W rho u) friction term
+    # to the current one of specifying the coefficient for friction computed as: Darcy_coef * mu * u / eps
+    expression = '${c_drag_old} * rho_fluid / porosity / fluid_mu'
+    property_name = c_drag
+    functor_symbols = 'rho_fluid porosity fluid_mu'
+    functor_names = 'rho porosity mu'
+  []
+
   [drag_cavity]
     type = ADGenericVectorFunctorMaterial
     prop_names = 'Darcy_coefficient Forchheimer_coefficient'
-    prop_values = '${c_drag} ${c_drag} ${c_drag} 0 0 0'
+    prop_values = 'c_drag c_drag c_drag 0 0 0'
     block = 'cavity'
   []
 
   [drag_upper_plenum]
     type = ADGenericVectorFunctorMaterial
     prop_names = 'Darcy_coefficient Forchheimer_coefficient'
-    prop_values = '${c_drag} ${c_drag} ${c_drag} 0 0 0'
+    prop_values = 'c_drag c_drag c_drag 0 0 0'
     block = 'upper_plenum'
   []
 
   [drag_bottom_plenum]
     type = ADGenericVectorFunctorMaterial
     prop_names = 'Darcy_coefficient Forchheimer_coefficient'
-    prop_values = '${c_drag} ${c_drag} ${c_drag} 0 0 0'
+    prop_values = 'c_drag c_drag c_drag 0 0 0'
     block = 'bottom_plenum'
   []
 
