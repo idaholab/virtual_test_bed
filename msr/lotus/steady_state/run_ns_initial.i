@@ -1,22 +1,28 @@
 ################################################################################
 ## Molten Chloride Reactor - Lotus design                                     ##
 ## Pronghorn input file to initialize velocity fields                         ##
-## This runs a slow relaxation to steady state while ramping down the fluid   ##
-## viscosity.                                                                 ##
+##                                                                            ##
+## This input can be set to run a slow relaxation to steady state while       ##
+## ramping down the fluid viscosity.                                          ##
 ################################################################################
+
+# Notes:
+# - These inputs are not using the shorthand syntaxes to be consistent with inputs
+#   from another project.
+#   Please consider using the shorthand syntaxes for setting up flow simulations for your own models
 
 # Material properties fuel
 rho = 3279. # density [kg / m^3]  (@1000K)
 mu = 0.005926 # viscosity [Pa s]
-k = 0.38
-cp = 640.
+k = 0.38 # [W / m / K]
+cp = 640. # [J / kg / K]
 
 # Material properties reflector
-k_ref = 30.
-cp_ref = 880.
-rho_ref = 3580.
+k_ref = 30. # [W / m / K]
+cp_ref = 880. # [J / kg / K]
+rho_ref = 3580. # [kg / m^3]
 
-power = 25e3
+power = 25e3 # [W]
 
 # alpha_b = '${fparse 1.0/rho}'
 
@@ -32,8 +38,9 @@ Pr = '${fparse mu*cp/k}'
 advected_interp_method = 'upwind'
 velocity_interp_method = 'rc'
 
-mixing_length_pipe_callibrated = '${fparse 0.07 * 0.1 * 0.06}'
-mixing_length_reactor_callibrated = '${fparse 0.07 * 0.1 * 2}'
+# Calibration of the mixing length parameter
+mixing_length_pipe_calibrated = '${fparse 0.07 * 0.1 * 0.06}'
+mixing_length_reactor_calibrated = '${fparse 0.07 * 0.1 * 2}'
 
 [GlobalParams]
   rhie_chow_user_object = 'pins_rhie_chow_interpolator'
@@ -51,9 +58,6 @@ mixing_length_reactor_callibrated = '${fparse 0.07 * 0.1 * 2}'
   mu = mu
 
   mixing_length = 'mixing_length'
-
-  #temperature = T
-  #gravity = '-9.81 0 0'
 []
 
 ################################################################################
@@ -204,7 +208,7 @@ mixing_length_reactor_callibrated = '${fparse 0.07 * 0.1 * 2}'
 []
 
 [FVKernels]
-
+  # The inactive parameter can be used to solve for a steady state
   # inactive = 'u_time v_time w_time heat_time heat_time_ref'
 
   [mass]
@@ -314,7 +318,7 @@ mixing_length_reactor_callibrated = '${fparse 0.07 * 0.1 * 2}'
     type = INSFVMixingLengthReynoldsStress
     variable = superficial_vel_y
     rho = ${rho}
-    mixing_length = ${mixing_length_pipe_callibrated}
+    mixing_length = ${mixing_length_pipe_calibrated}
     momentum_component = 'y'
     block = 'pipe pump'
   []
@@ -536,7 +540,7 @@ mixing_length_reactor_callibrated = '${fparse 0.07 * 0.1 * 2}'
     type = MooseVariableFVReal
     block = 'reactor pipe pump mixing-plate'
   []
-  [h_DeltaT_rad_aux]
+  [DeltaT_rad_aux]
     type = MooseVariableFVReal
     block = 'reflector'
   []
@@ -601,34 +605,34 @@ mixing_length_reactor_callibrated = '${fparse 0.07 * 0.1 * 2}'
     coupled_variables = 'T'
     expression = '3.*(T-300.)'
   []
-  [h_DeltaT_rad_out_pre]
+  [DeltaT_rad_out]
     type = ParsedAux
-    variable = h_DeltaT_rad_aux
+    variable = DeltaT_rad_aux
     coupled_variables = 'T_ref'
     expression = 'T_ref-350.'
   []
   [h_DeltaT_rad_out]
-    type = FunctorElementalAux
-    functor = 'h_DeltaT_rad_aux'
+    type = FunctorAux
+    functor = 'DeltaT_rad_aux'
     variable = h_DeltaT_rad
     factor = 'htc_rad_ref'
   []
   [comp_a_u]
-    type = FunctorElementalAux
+    type = FunctorAux
     functor = 'ax'
     variable = 'a_u_var'
     block = 'reactor pipe pump mixing-plate'
     execute_on = 'timestep_end'
   []
   [comp_a_v]
-    type = FunctorElementalAux
+    type = FunctorAux
     functor = 'ay'
     variable = 'a_v_var'
     block = 'reactor pipe pump mixing-plate'
     execute_on = 'timestep_end'
   []
   [comp_a_w]
-    type = FunctorElementalAux
+    type = FunctorAux
     functor = 'az'
     variable = 'a_w_var'
     block = 'reactor pipe pump mixing-plate'
@@ -664,7 +668,8 @@ mixing_length_reactor_callibrated = '${fparse 0.07 * 0.1 * 2}'
   []
   [htc_rad_ref]
     type = ParsedFunction
-    expression = '(T_ref_wall^2+350.^2)*(T_ref_wall+350.)*5.67e-8 / (1/0.18+1/0.35-1.)' #https://web.mit.edu/16.unified/www/FALL/thermodynamics/notes/node136.html #e_mgo=0.18 #e_steel=0.35
+    # See https://web.mit.edu/16.unified/www/FALL/thermodynamics/notes/node136.html
+    expression = '(T_ref_wall^2+350.^2)*(T_ref_wall+350.)*5.67e-8 / (1/0.18+1/0.35-1.)' #e_mgo=0.18 #e_steel=0.35
     symbol_names = 'T_ref_wall'
     symbol_values = 'T_ref_wall'
   []
@@ -674,7 +679,8 @@ mixing_length_reactor_callibrated = '${fparse 0.07 * 0.1 * 2}'
   []
   [ad_rampdown_mu_func]
     type = ADParsedFunction
-    expression = mu*(0.1*exp(-3*t)+1)
+    # This expression can be set to impose a slowly decreasing profile in mu
+    expression = 'mu' # *(0.1*exp(-3*t)+1)
     symbol_names = 'mu'
     symbol_values = ${mu}
   []
@@ -691,8 +697,8 @@ mixing_length_reactor_callibrated = '${fparse 0.07 * 0.1 * 2}'
 
 [Materials]
   [generic]
-    type = ADGenericFunctorMaterial #defines mu artificially for numerical convergence
-    prop_names = 'rho porosity' #it converges to the real mu eventually.
+    type = ADGenericFunctorMaterial
+    prop_names = 'rho porosity'
     prop_values = '${rho} ${porosity}'
   []
   [mu_spatial]
@@ -704,14 +710,14 @@ mixing_length_reactor_callibrated = '${fparse 0.07 * 0.1 * 2}'
                                reactor ad_rampdown_mu_func'
   []
   [friction_material_pump]
-    type = ADGenericVectorFunctorMaterial #defines mu artificially for numerical convergence
-    prop_names = 'DFC FFC' #it converges to the real mu eventually.
+    type = ADGenericVectorFunctorMaterial
+    prop_names = 'DFC FFC'
     prop_values = '${fparse 1*friction} ${fparse 1*friction} ${fparse 1*friction}
                    ${fparse 1*friction} ${fparse 1*friction} ${fparse 1*friction}'
   []
   [friction_material_mixing_plate]
-    type = ADGenericVectorFunctorMaterial #defines mu artificially for numerical convergence
-    prop_names = 'DFC_plate FFC_plate' #it converges to the real mu eventually.
+    type = ADGenericVectorFunctorMaterial
+    prop_names = 'DFC_plate FFC_plate'
     prop_values = '${fparse 1*friction} ${fparse 1*friction} ${fparse 1*friction}
                    ${fparse 1*friction} ${fparse 1*friction} ${fparse 1*friction}'
   []
@@ -724,10 +730,10 @@ mixing_length_reactor_callibrated = '${fparse 0.07 * 0.1 * 2}'
   [mixing_length_mat]
     type = ADPiecewiseByBlockFunctorMaterial
     prop_name = 'mixing_length'
-    subdomain_to_prop_value = 'reactor      ${mixing_length_reactor_callibrated}
-                               mixing-plate ${mixing_length_reactor_callibrated}
-                               pipe         ${mixing_length_pipe_callibrated}
-                               pump         ${mixing_length_pipe_callibrated}'
+    subdomain_to_prop_value = 'reactor      ${mixing_length_reactor_calibrated}
+                               mixing-plate ${mixing_length_reactor_calibrated}
+                               pipe         ${mixing_length_pipe_calibrated}
+                               pump         ${mixing_length_pipe_calibrated}'
   []
 []
 
@@ -750,16 +756,6 @@ mixing_length_reactor_callibrated = '${fparse 0.07 * 0.1 * 2}'
     timestep_limiting_postprocessor = 'dt_limit'
   []
 
-  # [TimeStepper]
-  #   type = SolutionTimeAdaptiveDT
-  #   dt = 0.1
-  # []
-
-  # [TimeStepper]
-  #   type = FunctionDT
-  #   function = dts
-  # []
-
   # Solver parameters
   solve_type = 'NEWTON'
   petsc_options_iname = '-pc_type -pc_factor_shift_type -ksp_gmres_restart'
@@ -771,9 +767,8 @@ mixing_length_reactor_callibrated = '${fparse 0.07 * 0.1 * 2}'
   l_max_its = 80
   automatic_scaling = true
 
-  # MultiApp
+  # MultiApp iteration parameters
   relaxation_factor = 1.0
-
 []
 
 [Debug]
@@ -999,6 +994,7 @@ mixing_length_reactor_callibrated = '${fparse 0.07 * 0.1 * 2}'
     input_files = 'run_prec_transport.i'
     execute_on = 'timestep_end'
     # no_backup_and_restore = true
+    # Allow smaller time steps by the child applications
     sub_cycling = true
   []
 []
