@@ -1,0 +1,38 @@
+[GENERAL]
+polynomialOrder = 3
+#startFrom = "msre.run01"+time=0
+startFrom = "msre.run10"+time=0
+stopAt = endTime
+endTime = 20
+#numSteps = 50000
+dt = targetCFL=3 + initial=2e-5
+#dt = 2.0e-5
+timeStepper = tombo2
+writeControl = simulationTime
+writeInterval = 2.0
+#writeInterval = 5000
+
+#regularization = hpfrt + nModes=1 + scalingCoeff=0.2/${dt}
+regularization = hpfrt + nModes=1 + scalingCoeff=10
+subCyclingSteps = 2
+
+#verbose=true
+
+#[PROBLEMTYPE]
+#equation = navierStokes+variableViscosity
+
+[MESH]
+writeToFieldFile = yes
+
+[PRESSURE]
+residualTol = 1e-04
+smootherType = Chebyshev+JAC
+
+[VELOCITY]
+boundaryTypeMap = inlet,outlet,wall
+residualTol = 1e-06
+density = 1.0
+viscosity = -4321.57 
+
+[TEMPERATURE]
+solver = none

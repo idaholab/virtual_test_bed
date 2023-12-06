@@ -18,7 +18,7 @@ The High Temperature Test Facility (HTTF) [!citep](Gutowska2019) is an integral 
 !media httf/httf_sam_model/F1_HTTF_facility.png
        style=width:50%
        id=httf_geom
-       caption=The High Temperature Test Facility (used with permission).
+       caption=The High Temperature Test Facility (used with permission, source: [OECD/NEA Benchmark Website](https://www.oecd-nea.org/jcms/pl_71708/thermal-hydraulic-code-validation-benchmark-for-high-temperature-gas-cooled-reactors-using-httf-data-htgr-t/h)).
 
 The SAM [!citep](Hu2021) model for the HTTF is based on the so-called 2D ring model approach to approximate a 3D geometry ([2d_ring]). In this approach, all components including the ceramic matrix, graphite heaters, coolant channels, core barrel, pressure vessel, and reactor cavity cooling system (RCCS) are modeled as concentric cylindrical rings. In the 2D ring model, this heat transfer pathway is represented by the sequence heater ring – ceramic ring – coolant ring – ceramic ring – heater ring, etc. The HTTF core is modeled with 13 coolant rings, 11 heater rings,
 25 ceramic rings. One ring each is used to model the stagnant helium gaps, upcomer, core barrel, reactor pressure vessel, RCCS, and the RCCS air cavity.

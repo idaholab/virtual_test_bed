@@ -1,0 +1,10 @@
+The mesh files msre.re2.tgz and msre.co2.tgz have to be unzipped before being used
+in the nekRS CFD simulations. To unzip the file, type
+
+```
+tar -xvzf msre.re2.tgz
+tar -xvzf msre.co2.tgz
+
+```
+
+

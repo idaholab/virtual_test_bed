@@ -1,0 +1,14 @@
+void velocityDirichletConditions(bcData *bc)
+{
+  bc->u = 0.0;
+  bc->v = 0.0;
+  bc->w =-1.0;
+}
+
+void pressureDirichletConditions(bcData *bc)
+{
+  const dfloat iU0delta = 20.0;
+  const dfloat un = bc->u*bc->nx + bc->v*bc->ny + bc->w*bc->nz;
+  const dfloat s0 = 0.5 * (1.0 - tanh(un*iU0delta)); 
+  bc->p = -0.5 * (bc->u*bc->u + bc->v*bc->v + bc->w*bc->w) * s0;
+}

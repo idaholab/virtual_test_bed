@@ -1,0 +1,118 @@
+      include 'linearize_bad_elements.f'
+c-----------------------------------------------------------------------
+C
+C  USER SPECIFIED ROUTINES: 
+C
+C     - boundary conditions 
+C     - initial conditions  
+C     - variable properties 
+C     - forcing function for fluid (f)
+C     - forcing function for passive scalar (q)
+C     - general purpose routine for checking errors etc.        
+C
+c-----------------------------------------------------------------------
+      subroutine useric (ix,iy,iz,ieg)
+      include 'SIZE'
+      include 'TOTAL'
+      include 'NEKUSE'
+
+      ux   = 0.0  
+      uy   = 0.0 
+      uz   = 0.0
+      temp = 0.0
+      
+      return
+      end
+c-----------------------------------------------------------------------
+      subroutine userchk
+      include 'SIZE'
+      include 'TOTAL'
+
+      dt = 1e-5
+      call compute_cfl(cfl,vx,vy,vz,dt)
+
+      clf_max = glmax(cflf,ntot)
+      clf_max_x = 0.0
+      clf_max_y = 0.0
+      clf_max_z = 0.0
+
+      do i =1,ntot
+        if(cflf(i,1,1,1).ge.clf_max) then
+           clf_max_x = xm1(i,1,1,1)
+           clf_max_y = ym1(i,1,1,1)
+           clf_max_z = zm1(i,1,1,1)
+        endif         
+      enddo
+
+      vec = sqrt(clf_max_x**2 + clf_max_y**2+ clf_max_z**2)
+      if(vec.gt.0.0) then
+        write(6,*) "max clf xyz: ", clf_max_x,clf_max_y,clf_max_z
+      endif
+      
+      return
+      end
+c-----------------------------------------------------------------------
+      subroutine usrdat   ! This routine to modify element vertices
+      include 'SIZE'      ! _before_ mesh is generated, which
+      include 'TOTAL'     ! guarantees GLL mapping of mesh.
+
+      integer n_correction
+      real minJacobian
+
+      n_correction = 2
+      call linearize_bad_elements(n_correction)  ! 2 (iterations for correction) should be enough, if not, set to 3
+
+      minScaleJacobian = 1e-3
+      call linearize_low_jacobian_elements(n_correction,
+     & minScaleJacobian) ! linearize element that with lower jacobian than minJacobian
+
+      return
+      end
+c-----------------------------------------------------------------------
+      subroutine usrdat2()  ! This routine to modify mesh coordinates
+      include 'SIZE'
+      include 'TOTAL'
+
+      integer iel, ifc, id_face, ntot
+      integer i, e, f
+      real ti
+
+      do iel=1,nelv
+      do ifc=1,2*ndim
+        id_face = bc(5,ifc,iel,1)
+        boundaryID(ifc,iel)  = 0
+        if (id_face.eq.2) then   	
+           cbc(ifc,iel,1) = 'v  '
+           boundaryID(ifc,iel)  = 1
+        elseif (id_face.eq.3) then
+           cbc(ifc,iel,1) = 'O  '
+           boundaryID(ifc,iel)  = 2
+        elseif (id_face.eq.4) then
+           cbc(ifc,iel,1) = 'W  '
+           boundaryID(ifc,iel)  = 3
+        else
+           cbc(ifc,iel,1) = 'E  '
+           boundaryID(ifc,iel)  = 0
+        endif
+      enddo
+      enddo
+
+C Rescale the geometry so that the downcomer annulus thickness is 1.0
+      ntot = nelt*lx1*ly1*lz1
+      ti = 1.0/0.0254
+      do i=1,ntot
+        xm1(i,1,1,1)=xm1(i,1,1,1)*ti
+        ym1(i,1,1,1)=ym1(i,1,1,1)*ti
+        zm1(i,1,1,1)=zm1(i,1,1,1)*ti
+      enddo
+
+      return
+      end
+c-----------------------------------------------------------------------
+      subroutine usrdat3
+      include 'SIZE'
+      include 'TOTAL'
+            
+      return
+      end
+c-----------------------------------------------------------------------
