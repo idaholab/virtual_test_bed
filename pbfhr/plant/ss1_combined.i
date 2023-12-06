@@ -31,54 +31,59 @@ blocks_fluid = '3 4 5 6'
 blocks_solid = '1 2 6 7 8 9 10'
 
 # Material compositions
-UO2_phase_fraction           = 1.20427291e-01
-buffer_phase_fraction        = 2.86014816e-01
-ipyc_phase_fraction          = 1.59496539e-01
-sic_phase_fraction           = 1.96561801e-01
-opyc_phase_fraction          = 2.37499553e-01
-TRISO_phase_fraction         = 3.09266232e-01
-core_phase_fraction          = 5.12000000e-01
-fuel_matrix_phase_fraction   = 3.01037037e-01
-shell_phase_fraction         = 1.86962963e-01
+UO2_phase_fraction = 1.20427291e-01
+buffer_phase_fraction = 2.86014816e-01
+ipyc_phase_fraction = 1.59496539e-01
+sic_phase_fraction = 1.96561801e-01
+opyc_phase_fraction = 2.37499553e-01
+TRISO_phase_fraction = 3.09266232e-01
+core_phase_fraction = 5.12000000e-01
+fuel_matrix_phase_fraction = 3.01037037e-01
+shell_phase_fraction = 1.86962963e-01
 
 # FLiBe properties #TODO: Rely only on PronghornFluidProps
-# fluid_mu = 7.5e-3  # Pa.s at 900K [3]
+fluid_mu = 7.5e-3 # Pa.s at 900K [3]
 # k_fluid =  1.1     # suggested constant [3]
 # cp_fluid = 2385    # suggested constant [3]
-rho_fluid = 1970.0   # kg/m3 at 900K [3]
-alpha_b = 2e-4       # /K from [4]
+rho_fluid = 1970.0 # kg/m3 at 900K [3]
+alpha_b = 2e-4 # /K from [4]
 
 # Graphite properties
-heat_capacity_multiplier = 1e0  # >1 gets faster to steady state
+heat_capacity_multiplier = 1e0 # >1 gets faster to steady state
 solid_rho = 1780.0
 # solid_k = 26.0
-solid_cp = ${fparse 1697.0*heat_capacity_multiplier}
+solid_cp = '${fparse 1697.0*heat_capacity_multiplier}'
+
+# Core geometry
+pebble_diameter = 0.03
+bed_porosity = 0.4
+IR_porosity = 0
+OR_porosity = 0.1123
+plenum_porosity = 0.5
+model_inlet_rin = 0.45
+model_inlet_rout = 0.8574
+# model_vol        = 10.4
+model_inlet_area = '${fparse 3.14159265 * (model_inlet_rout * model_inlet_rout - model_inlet_rin * model_inlet_rin)}'
+
+# The convention for friction factors changed
+darcy_conversion_plenum = '${fparse rho_fluid / plenum_porosity / fluid_mu}'
+# The porosity simplfies out from the previous definition of the coefficients
+darcy_conversion_or = '${fparse rho_fluid / fluid_mu}'
+forchheimer_partial_conversion = 2 # divide further by speed
 
 # Outer reflector drag parameters
 # TODO: tune using CFD
 # TODO: verify current values (imported from [1])
-Ah = 1337.76
-Bh = 2.58
-Av = 599.30
-Bv = 0.95
+Ah = '${fparse 1337.76 * darcy_conversion_or}'
+Bh = '${fparse 2.58 * forchheimer_partial_conversion}'
+Av = '${fparse 599.30 * darcy_conversion_or}'
+Bv = '${fparse 0.95 * forchheimer_partial_conversion}'
 Dh = 0.02582
 Dv = 0.02006
 
 # Plenum drag parameters. The core hot legs cannot be represented in 2D RZ
 # accurately, so this should be tuned to obtain the desired mass flow rates
-plenum_friction = 0.5
-
-# Core geometry
-pebble_diameter  = 0.03
-bed_porosity     = 0.4
-IR_porosity      = 0
-OR_porosity      = 0.1123
-plenum_porosity  = 0.5
-model_inlet_rin  = 0.45
-model_inlet_rout = 0.8574
-# model_vol        = 10.4
-model_inlet_area = ${fparse 3.14159265 * (model_inlet_rout * model_inlet_rout -
-                                          model_inlet_rin * model_inlet_rin)}
+plenum_friction = '${fparse 0.5 * darcy_conversion_plenum}'
 
 # Operating parameters
 # mfr = 976.0            # kg/s, from [2]
@@ -125,6 +130,25 @@ inlet_T_fluid = 873.15 # K, from [2]
     included_subdomains = '6'
     input = OR_inlet
   []
+  [add_bed_right]
+    type = SideSetsBetweenSubdomainsGenerator
+    input = OR_outlet
+    new_boundary = 'bed_right'
+    primary_block = '6'
+    paired_block = '4 5'
+  []
+  [remove_bad_sideset]
+    type = BoundaryDeletionGenerator
+    input = add_bed_right
+    boundary_names = bed_left
+  []
+  [add_sideset_again]
+    type = SideSetsBetweenSubdomainsGenerator
+    input = remove_bad_sideset
+    new_boundary = 'bed_left'
+    primary_block = '3'
+    paired_block = '1 2'
+  []
 []
 
 [Problem]
@@ -138,7 +162,6 @@ inlet_T_fluid = 873.15 # K, from [2]
   porosity = porosity_viz
   characteristic_length = 0.03
   pebble_diameter = ${pebble_diameter}
-  mu = 'mu'
   speed = 'speed'
 
   fp = fp
@@ -255,10 +278,12 @@ inlet_T_fluid = 873.15 # K, from [2]
     block = ${blocks_fluid}
   []
   [temp_solid_time]
-    type = INSFVEnergyTimeDerivative
+    type = PINSFVEnergyTimeDerivative
     variable = T_solid
     cp = 'cp_s'
     rho = 'rho_s'
+    porosity = 0
+    is_solid = true
     block = ${blocks_solid}
   []
   [temp_solid_conduction_core]
@@ -323,7 +348,7 @@ inlet_T_fluid = 873.15 # K, from [2]
 
 [AuxKernels]
   [eps]
-    type = ADFunctorElementalAux
+    type = FunctorAux
     variable = porosity_viz
     functor = porosity
     block = ${blocks_fluid}
@@ -368,7 +393,7 @@ inlet_T_fluid = 873.15 # K, from [2]
     type = FVDirichletBC
     variable = T_solid
     boundary = 'brick_surface'
-    value = ${fparse 35 + 273.15}
+    value = '${fparse 35 + 273.15}'
   []
 []
 
@@ -454,12 +479,24 @@ inlet_T_fluid = 873.15 # K, from [2]
   []
 
   # closures in the outer reflector and the plenum
+  [Fh]
+    type = ADParsedFunctorMaterial
+    property_name = Fh
+    expression = 'Bh / Dh / speed'
+    functor_symbols = 'Bh Dh speed'
+    functor_names = '${Bh} ${Dh} speed'
+  []
+  [Fv]
+    type = ADParsedFunctorMaterial
+    property_name = Fv
+    expression = 'Bv / Dv / speed'
+    functor_symbols = 'Bv Dv speed'
+    functor_names = '${Bv} ${Dv} speed'
+  []
   [drag_OR]
     type = FunctorAnisotropicFunctorDragCoefficients
-    Darcy_coefficient = '${fparse OR_porosity * Ah / Dh / Dh}
-    ${fparse OR_porosity * Av / Dv / Dv} ${fparse OR_porosity * Av / Dv / Dv}'
-    Forchheimer_coefficient = '${fparse OR_porosity * Bh / Dh}
-    ${fparse OR_porosity * Bv / Dv} ${fparse OR_porosity * Bv / Dv}'
+    Darcy_coefficient = '${fparse Ah / Dh / Dh} ${fparse Av / Dv / Dv} ${fparse Av / Dv / Dv}'
+    Forchheimer_coefficient = 'Fh Fv Fv'
     block = '6'
   []
   [drag_plenum]
@@ -500,7 +537,7 @@ inlet_T_fluid = 873.15 # K, from [2]
   [graphite]
     type = FunctionSolidProperties
     rho_s = 1780
-    cp_s = ${fparse 1800.0 * heat_capacity_multiplier}
+    cp_s = '${fparse 1800.0 * heat_capacity_multiplier}'
     k_s = 26.0
   []
   [pebble_graphite]
@@ -536,8 +573,7 @@ inlet_T_fluid = 873.15 # K, from [2]
   [TRISO]
     type = CompositeSolidProperties
     materials = 'UO2 buffer pyc SiC pyc'
-    fractions = '${UO2_phase_fraction} ${buffer_phase_fraction} ${ipyc_phase_fraction} '
-                '${sic_phase_fraction} ${opyc_phase_fraction}'
+    fractions = '${UO2_phase_fraction} ${buffer_phase_fraction} ${ipyc_phase_fraction} ${sic_phase_fraction} ${opyc_phase_fraction}'
   []
   [fuel_matrix]
     type = CompositeSolidProperties
@@ -586,7 +622,7 @@ inlet_T_fluid = 873.15 # K, from [2]
 
   # Iterations parameters
   l_max_its = 500
-  l_tol     = 1e-8
+  l_tol = 1e-8
   nl_max_its = 25
   nl_rel_tol = 5e-7
   nl_abs_tol = 5e-7
@@ -604,9 +640,9 @@ inlet_T_fluid = 873.15 # K, from [2]
 
   [TimeStepper]
     type = IterationAdaptiveDT
-    dt                 = 1
-    cutback_factor     = 0.5
-    growth_factor      = 2.0
+    dt = 1
+    cutback_factor = 0.5
+    growth_factor = 2.0
   []
 
   # Time integration scheme
@@ -679,7 +715,7 @@ inlet_T_fluid = 873.15 # K, from [2]
     type = MultiAppPostprocessorVectorTransfer
     from_multi_app = primary
     from_postprocessors = 'Core_outlet_p Core_inlet_mdot Core_inlet_T'
-    to_postprocessors   = 'outlet_pressure inlet_mdot inlet_temp_fluid'
+    to_postprocessors = 'outlet_pressure inlet_mdot inlet_temp_fluid'
     # Initial execution is important to avoid using a default BC
     execute_on = 'INITIAL TIMESTEP_END'
   []
@@ -842,8 +878,7 @@ inlet_T_fluid = 873.15 # K, from [2]
   csv = true
   [console]
     type = Console
-    show = 'T_flow_in inlet_temp_fluid T_flow_out pressure_in outlet_pressure '
-           'inlet_mdot mass_flow_out'
+    show = 'T_flow_in inlet_temp_fluid T_flow_out pressure_in outlet_pressure inlet_mdot mass_flow_out'
   []
   [exodus]
     type = Exodus
