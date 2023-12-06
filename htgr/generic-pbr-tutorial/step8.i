@@ -22,7 +22,7 @@ flow_vel = '${fparse mass_flow_rate / flow_area / inlet_density}'
 power_fn_scaling = 0.9792628
 
 # drag coefficient in open flow spaces, set to allow convergence
-c_drag = 10
+c_drag_old = 10
 
 # moves the heat source around axially to have the peak in the right spot
 offset = -2.25819
@@ -405,7 +405,7 @@ control_rod_Dh = 0.1
 
     # initial conditions
     initial_velocity = '1e-6 1e-6 0'
-    initial_pressure =${outlet_pressure}
+    initial_pressure = ${outlet_pressure}
     initial_temperature = ${T_inlet}
 
     # inlet boundary conditions
@@ -531,24 +531,34 @@ control_rod_Dh = 0.1
     block = pebble_bed
   []
 
+  [drag_new_convention]
+    type = ADParsedFunctorMaterial
+    # This performs the conversion from the old convention of specifying W for a (W rho u) friction term
+    # to the current one of specifying the coefficient for friction computed as: Darcy_coef * mu * u / eps
+    expression = '${c_drag_old} * rho_fluid / porosity / fluid_mu'
+    property_name = c_drag
+    functor_symbols = 'rho_fluid porosity fluid_mu'
+    functor_names = 'rho porosity mu'
+  []
+
   [drag_cavity]
     type = ADGenericVectorFunctorMaterial
     prop_names = 'Darcy_coefficient Forchheimer_coefficient'
-    prop_values = '${c_drag} ${c_drag} ${c_drag} 0 0 0'
+    prop_values = 'c_drag c_drag c_drag 0 0 0'
     block = 'cavity'
   []
 
   [drag_upper_plenum]
     type = ADGenericVectorFunctorMaterial
     prop_names = 'Darcy_coefficient Forchheimer_coefficient'
-    prop_values = '${c_drag} ${c_drag} ${c_drag} 0 0 0'
+    prop_values = 'c_drag c_drag c_drag 0 0 0'
     block = 'upper_plenum'
   []
 
   [drag_bottom_plenum]
     type = ADGenericVectorFunctorMaterial
     prop_names = 'Darcy_coefficient Forchheimer_coefficient'
-    prop_values = '${c_drag} ${c_drag} ${c_drag} 0 0 0'
+    prop_values = 'c_drag c_drag c_drag 0 0 0'
     block = 'bottom_plenum'
   []
 
@@ -565,6 +575,15 @@ control_rod_Dh = 0.1
     block = 'control_rods'
   []
 
+  [quad_drag_new_convention]
+    type = ADParsedFunctorMaterial
+    # This performs the conversion from the old convention of specifying W for a (W rho u) friction term
+    # to the current one of specifying the coefficient for friction computed as: Forchheimer_coef * rho * v / 2
+    expression = '1000 * 2 / porosity / speed'
+    property_name = new_g
+    functor_symbols = 'porosity speed'
+    functor_names = 'porosity speed'
+  []
   [Forchheimer_control_rods]
     type = LinearFrictionFactorFunctorMaterial
     porosity = porosity
@@ -572,7 +591,7 @@ control_rod_Dh = 0.1
     superficial_vel_x = superficial_vel_x
     superficial_vel_y = superficial_vel_y
     f = 0
-    g = '1000'
+    g = new_g
     B = '1 1 1'
     block = 'control_rods'
   []
