@@ -5,3 +5,5 @@
 [Molten Salt Reactor Experiment](msre/index.md)
 
 [Generic Molten Salt Fast Reactor](msr_generic/index.md)
+
+[LOTUS Molten Chloride Reactor](lotus/index.md)

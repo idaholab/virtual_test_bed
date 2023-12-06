@@ -1,0 +1,66 @@
+[Tests]
+  # Syntax checks
+  [neutronics_only_syntax]
+    type = RunApp
+    input = 'run_neutronics_9_group.i'
+    cli_args = "MultiApps/active='' Transfers/active=''"
+    check_input = True
+    executable_pattern = 'griffin*'
+  []
+  [flow_only_syntax]
+    type = RunApp
+    input = 'run_ns_initial.i'
+    cli_args = "MultiApps/active='' Transfers/active=''"
+    check_input = True
+    executable_pattern = 'pronghorn*|combined*'
+  []
+  [precursors_only_syntax]
+    type = RunApp
+    input = 'run_prec_transport.i'
+    check_input = True
+    executable_pattern = 'pronghorn*|combined*'
+  []
+  [coupled_mcre_multiphysics_syntax]
+    type = RunApp
+    input = 'run_neutronics_9_group.i'
+    check_input = True
+    executable_pattern = 'mcre*|blue_crab*'
+  []
+
+  # Regression tests
+  [neutronics_only]
+    type = CSVDiff
+    input = 'run_neutronics_9_group.i'
+    cli_args = "MultiApps/active='' Transfers/active='' Executioner/fixed_point_min_its=0"
+    csvdiff = 'run_neutronics_9_group_out.csv'
+    executable_pattern = 'griffin*'
+    # Model is fairly expensive to run
+    method = 'opt'
+    min_parallel = 8
+    max_time = 400
+  []
+  [flow_only]
+    type = CSVDiff
+    input = 'run_ns_initial.i'
+    cli_args = "MultiApps/active='' Transfers/active='' Executioner/num_steps=3"
+    csvdiff = 'run_ns_initial_out.csv'
+    executable_pattern = 'pronghorn*|combined*'
+    # Model is fairly expensive to run
+    method = 'opt'
+    min_parallel = 16
+    max_time = 400
+  []
+  [coupled_mcre_multiphysics]
+    prereq = coupled_mcre_multiphysics_syntax
+    type = CSVDiff
+    input = 'run_neutronics.i'
+    csvdiff = 'multiphysics_out.csv multiphysics_out_ns0.csv'
+    executable_pattern = 'mcre*|blue_crab*'
+    cli_args = "Outputs/file_base=multiphysics_out"
+    # Fuel temperature is out of bounds for MGXS
+    allow_warnings = true
+    min_parallel = 32
+    max_time = 1000
+    method = 'opt'
+  []
+[]
