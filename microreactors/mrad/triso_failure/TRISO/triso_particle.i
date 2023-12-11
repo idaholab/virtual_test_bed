@@ -6,6 +6,7 @@
 ################################################################################
 
 folder_name = fuelsample
+end_time = 315576000
 
 [GlobalParams]
   flux_conversion_factor = 1.0
@@ -544,7 +545,7 @@ folder_name = fuelsample
   l_max_its = 50
 
   start_time = 0.0
-  end_time = 315576000
+  end_time = '${end_time}'
   dt = 1e7
 []
 

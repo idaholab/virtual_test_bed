@@ -5,6 +5,10 @@
 ## Stochastic Module Model for Sampling                                       ##
 ################################################################################
 
+# Folder hosting the pressure data
+folder_name = 'fuelsample'
+end_time = 315576000
+
 coord1 = 2.125e-4
 coord2 = '${fparse 1e-4 + coord1}'
 coord3 = '${fparse 0.4e-4 + coord2}'
@@ -70,7 +74,7 @@ coord5 = '${fparse 0.4e-4 + coord4}'
     type = SamplerFullSolveMultiApp
     mode = batch-reset
     input_files = triso_particle.i
-    cli_args = 'particle_number=1'
+    cli_args = 'particle_number=1;folder_name=${folder_name};end_time=${end_time}'
     sampler = sample
     execute_on = initial
   []
@@ -78,7 +82,7 @@ coord5 = '${fparse 0.4e-4 + coord4}'
     type = SamplerFullSolveMultiApp
     mode = batch-reset
     input_files = triso_particle.i
-    cli_args = 'particle_number=2'
+    cli_args = 'particle_number=2;folder_name=${folder_name};end_time=${end_time}'
     sampler = sample
     execute_on = initial
   []
@@ -86,7 +90,7 @@ coord5 = '${fparse 0.4e-4 + coord4}'
     type = SamplerFullSolveMultiApp
     mode = batch-reset
     input_files = triso_particle.i
-    cli_args = 'particle_number=3'
+    cli_args = 'particle_number=3;folder_name=${folder_name};end_time=${end_time}'
     sampler = sample
     execute_on = initial
   []
@@ -94,7 +98,7 @@ coord5 = '${fparse 0.4e-4 + coord4}'
     type = SamplerFullSolveMultiApp
     mode = batch-reset
     input_files = triso_particle.i
-    cli_args = 'particle_number=4'
+    cli_args = 'particle_number=4;folder_name=${folder_name};end_time=${end_time}'
     sampler = sample
     execute_on = initial
   []
@@ -102,7 +106,7 @@ coord5 = '${fparse 0.4e-4 + coord4}'
     type = SamplerFullSolveMultiApp
     mode = batch-reset
     input_files = triso_particle.i
-    cli_args = 'particle_number=5'
+    cli_args = 'particle_number=5;folder_name=${folder_name};end_time=${end_time}'
     sampler = sample
     execute_on = initial
   []
@@ -110,7 +114,7 @@ coord5 = '${fparse 0.4e-4 + coord4}'
     type = SamplerFullSolveMultiApp
     mode = batch-reset
     input_files = triso_particle.i
-    cli_args = 'particle_number=6'
+    cli_args = 'particle_number=6;folder_name=${folder_name};end_time=${end_time}'
     sampler = sample
     execute_on = initial
   []
@@ -118,7 +122,7 @@ coord5 = '${fparse 0.4e-4 + coord4}'
     type = SamplerFullSolveMultiApp
     mode = batch-reset
     input_files = triso_particle.i
-    cli_args = 'particle_number=7'
+    cli_args = 'particle_number=7;folder_name=${folder_name};end_time=${end_time}'
     sampler = sample
     execute_on = initial
   []
@@ -126,7 +130,7 @@ coord5 = '${fparse 0.4e-4 + coord4}'
     type = SamplerFullSolveMultiApp
     mode = batch-reset
     input_files = triso_particle.i
-    cli_args = 'particle_number=8'
+    cli_args = 'particle_number=8;folder_name=${folder_name};end_time=${end_time}'
     sampler = sample
     execute_on = initial
   []
@@ -134,7 +138,7 @@ coord5 = '${fparse 0.4e-4 + coord4}'
     type = SamplerFullSolveMultiApp
     mode = batch-reset
     input_files = triso_particle.i
-    cli_args = 'particle_number=9'
+    cli_args = 'particle_number=9;folder_name=${folder_name};end_time=${end_time}'
     sampler = sample
     execute_on = initial
   []
@@ -142,7 +146,7 @@ coord5 = '${fparse 0.4e-4 + coord4}'
     type = SamplerFullSolveMultiApp
     mode = batch-reset
     input_files = triso_particle.i
-    cli_args = 'particle_number=10'
+    cli_args = 'particle_number=10;folder_name=${folder_name};end_time=${end_time}'
     sampler = sample
     execute_on = initial
   []
@@ -150,7 +154,7 @@ coord5 = '${fparse 0.4e-4 + coord4}'
     type = SamplerFullSolveMultiApp
     mode = batch-reset
     input_files = triso_particle.i
-    cli_args = 'particle_number=11'
+    cli_args = 'particle_number=11;folder_name=${folder_name};end_time=${end_time}'
     sampler = sample
     execute_on = initial
   []
@@ -158,7 +162,7 @@ coord5 = '${fparse 0.4e-4 + coord4}'
     type = SamplerFullSolveMultiApp
     mode = batch-reset
     input_files = triso_particle.i
-    cli_args = 'particle_number=12'
+    cli_args = 'particle_number=12;folder_name=${folder_name};end_time=${end_time}'
     sampler = sample
     execute_on = initial
   []
@@ -166,7 +170,7 @@ coord5 = '${fparse 0.4e-4 + coord4}'
     type = SamplerFullSolveMultiApp
     mode = batch-reset
     input_files = triso_particle.i
-    cli_args = 'particle_number=13'
+    cli_args = 'particle_number=13;folder_name=${folder_name};end_time=${end_time}'
     sampler = sample
     execute_on = initial
   []
@@ -174,7 +178,7 @@ coord5 = '${fparse 0.4e-4 + coord4}'
     type = SamplerFullSolveMultiApp
     mode = batch-reset
     input_files = triso_particle.i
-    cli_args = 'particle_number=14'
+    cli_args = 'particle_number=14;folder_name=${folder_name};end_time=${end_time}'
     sampler = sample
     execute_on = initial
   []
@@ -182,7 +186,7 @@ coord5 = '${fparse 0.4e-4 + coord4}'
     type = SamplerFullSolveMultiApp
     mode = batch-reset
     input_files = triso_particle.i
-    cli_args = 'particle_number=15'
+    cli_args = 'particle_number=15;folder_name=${folder_name};end_time=${end_time}'
     sampler = sample
     execute_on = initial
   []
@@ -190,7 +194,7 @@ coord5 = '${fparse 0.4e-4 + coord4}'
     type = SamplerFullSolveMultiApp
     mode = batch-reset
     input_files = triso_particle.i
-    cli_args = 'particle_number=16'
+    cli_args = 'particle_number=16;folder_name=${folder_name};end_time=${end_time}'
     sampler = sample
     execute_on = initial
   []
@@ -198,7 +202,7 @@ coord5 = '${fparse 0.4e-4 + coord4}'
     type = SamplerFullSolveMultiApp
     mode = batch-reset
     input_files = triso_particle.i
-    cli_args = 'particle_number=17'
+    cli_args = 'particle_number=17;folder_name=${folder_name};end_time=${end_time}'
     sampler = sample
     execute_on = initial
   []
@@ -206,7 +210,7 @@ coord5 = '${fparse 0.4e-4 + coord4}'
     type = SamplerFullSolveMultiApp
     mode = batch-reset
     input_files = triso_particle.i
-    cli_args = 'particle_number=18'
+    cli_args = 'particle_number=18;folder_name=${folder_name};end_time=${end_time}'
     sampler = sample
     execute_on = initial
   []
@@ -214,7 +218,7 @@ coord5 = '${fparse 0.4e-4 + coord4}'
     type = SamplerFullSolveMultiApp
     mode = batch-reset
     input_files = triso_particle.i
-    cli_args = 'particle_number=19'
+    cli_args = 'particle_number=19;folder_name=${folder_name};end_time=${end_time}'
     sampler = sample
     execute_on = initial
   []
@@ -222,7 +226,7 @@ coord5 = '${fparse 0.4e-4 + coord4}'
     type = SamplerFullSolveMultiApp
     mode = batch-reset
     input_files = triso_particle.i
-    cli_args = 'particle_number=20'
+    cli_args = 'particle_number=20;folder_name=${folder_name};end_time=${end_time}'
     sampler = sample
     execute_on = initial
   []
@@ -230,7 +234,7 @@ coord5 = '${fparse 0.4e-4 + coord4}'
     type = SamplerFullSolveMultiApp
     mode = batch-reset
     input_files = triso_particle.i
-    cli_args = 'particle_number=21'
+    cli_args = 'particle_number=21;folder_name=${folder_name};end_time=${end_time}'
     sampler = sample
     execute_on = initial
   []
@@ -238,7 +242,7 @@ coord5 = '${fparse 0.4e-4 + coord4}'
     type = SamplerFullSolveMultiApp
     mode = batch-reset
     input_files = triso_particle.i
-    cli_args = 'particle_number=22'
+    cli_args = 'particle_number=22;folder_name=${folder_name};end_time=${end_time}'
     sampler = sample
     execute_on = initial
   []
@@ -246,7 +250,7 @@ coord5 = '${fparse 0.4e-4 + coord4}'
     type = SamplerFullSolveMultiApp
     mode = batch-reset
     input_files = triso_particle.i
-    cli_args = 'particle_number=23'
+    cli_args = 'particle_number=23;folder_name=${folder_name};end_time=${end_time}'
     sampler = sample
     execute_on = initial
   []
@@ -254,7 +258,7 @@ coord5 = '${fparse 0.4e-4 + coord4}'
     type = SamplerFullSolveMultiApp
     mode = batch-reset
     input_files = triso_particle.i
-    cli_args = 'particle_number=24'
+    cli_args = 'particle_number=24;folder_name=${folder_name};end_time=${end_time}'
     sampler = sample
     execute_on = initial
   []
@@ -262,7 +266,7 @@ coord5 = '${fparse 0.4e-4 + coord4}'
     type = SamplerFullSolveMultiApp
     mode = batch-reset
     input_files = triso_particle.i
-    cli_args = 'particle_number=25'
+    cli_args = 'particle_number=25;folder_name=${folder_name};end_time=${end_time}'
     sampler = sample
     execute_on = initial
   []
@@ -270,7 +274,7 @@ coord5 = '${fparse 0.4e-4 + coord4}'
     type = SamplerFullSolveMultiApp
     mode = batch-reset
     input_files = triso_particle.i
-    cli_args = 'particle_number=26'
+    cli_args = 'particle_number=26;folder_name=${folder_name};end_time=${end_time}'
     sampler = sample
     execute_on = initial
   []
@@ -278,7 +282,7 @@ coord5 = '${fparse 0.4e-4 + coord4}'
     type = SamplerFullSolveMultiApp
     mode = batch-reset
     input_files = triso_particle.i
-    cli_args = 'particle_number=27'
+    cli_args = 'particle_number=27;folder_name=${folder_name};end_time=${end_time}'
     sampler = sample
     execute_on = initial
   []
@@ -286,7 +290,7 @@ coord5 = '${fparse 0.4e-4 + coord4}'
     type = SamplerFullSolveMultiApp
     mode = batch-reset
     input_files = triso_particle.i
-    cli_args = 'particle_number=28'
+    cli_args = 'particle_number=28;folder_name=${folder_name};end_time=${end_time}'
     sampler = sample
     execute_on = initial
   []
@@ -294,7 +298,7 @@ coord5 = '${fparse 0.4e-4 + coord4}'
     type = SamplerFullSolveMultiApp
     mode = batch-reset
     input_files = triso_particle.i
-    cli_args = 'particle_number=29'
+    cli_args = 'particle_number=29;folder_name=${folder_name};end_time=${end_time}'
     sampler = sample
     execute_on = initial
   []
@@ -302,7 +306,7 @@ coord5 = '${fparse 0.4e-4 + coord4}'
     type = SamplerFullSolveMultiApp
     mode = batch-reset
     input_files = triso_particle.i
-    cli_args = 'particle_number=30'
+    cli_args = 'particle_number=30;folder_name=${folder_name};end_time=${end_time}'
     sampler = sample
     execute_on = initial
   []
@@ -310,7 +314,7 @@ coord5 = '${fparse 0.4e-4 + coord4}'
     type = SamplerFullSolveMultiApp
     mode = batch-reset
     input_files = triso_particle.i
-    cli_args = 'particle_number=31'
+    cli_args = 'particle_number=31;folder_name=${folder_name};end_time=${end_time}'
     sampler = sample
     execute_on = initial
   []
@@ -318,7 +322,7 @@ coord5 = '${fparse 0.4e-4 + coord4}'
     type = SamplerFullSolveMultiApp
     mode = batch-reset
     input_files = triso_particle.i
-    cli_args = 'particle_number=32'
+    cli_args = 'particle_number=32;folder_name=${folder_name};end_time=${end_time}'
     sampler = sample
     execute_on = initial
   []
