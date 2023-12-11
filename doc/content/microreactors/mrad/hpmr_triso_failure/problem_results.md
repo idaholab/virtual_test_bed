@@ -1,6 +1,6 @@
 # Multiphysics results
 
-A systematic multiphysics analysis was completed in the unit-cell HP-MR model for steady state operation by coupling the Griffin CFEM-SN(1,3) neutronics solver, the BISON thermal physics solver,the Sockeye heat-pipe thermal performance solver, adn the BISON tensor mechanics solver. The resulting temperature, pressure, and power density output were then used to statistically determine failure rates for the HP-MR TRISO fuel particle, accounting for inevitable variations in fuel particle geometry that will insecapably arise during fuel particle fabrication. In this section, the simulation results are discussed.
+A systematic multiphysics analysis was completed in the unit-cell HP-MR model for steady state operation by coupling the Griffin DFEM-SN(1,3) neutronics solver, the BISON thermal physics solver, the Sockeye heat-pipe thermal performance solver, and the BISON tensor mechanics solver. The resulting temperature, pressure, and power density output were then used to statistically determine failure rates for the HP-MR TRISO fuel particle, accounting for inevitable variations in fuel particle geometry that will inescapably arise during fuel particle fabrication. In this section, the simulation results are discussed.
 
 ## Unit-Cell Steady State Simulation Results
 

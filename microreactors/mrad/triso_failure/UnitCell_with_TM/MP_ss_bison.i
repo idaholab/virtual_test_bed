@@ -185,7 +185,7 @@ hp_surfs = 'HP_surf'
     packing_fraction = 0.4
     specific_heat_scale_factor = 1.0
     thermal_conductivity_scale_factor = 1.0
-    fast_neutron_fluence = 0 #6.75E+24 # this value is nuetron fluence over 0.1MeV
+    fast_neutron_fluence = 0 #6.75E+24 # this value is neutron fluence over 0.1MeV
     temperature = temp
   []
   [monolith_matrix_thermal]
@@ -194,7 +194,7 @@ hp_surfs = 'HP_surf'
     packing_fraction = 0
     specific_heat_scale_factor = 1.0
     thermal_conductivity_scale_factor = 1.0
-    fast_neutron_fluence = 0 #6.75E+24 # this value is nuetron fluence over 0.1MeV
+    fast_neutron_fluence = 0 #6.75E+24 # this value is neutron fluence over 0.1MeV
     temperature = temp
   []
   [normalized_matrix_conductivity]
@@ -276,14 +276,14 @@ hp_surfs = 'HP_surf'
 
 [Transfers]
   [from_sockeye_temp]
-    type = MultiAppNearestNodeTransfer
+    type = MultiAppGeneralFieldNearestLocationTransfer
     from_multi_app = sockeye
     source_variable = hp_temp_aux
     variable = hp_temp_aux
     execute_on = 'timestep_begin'
   []
   [to_sockeye_flux]
-    type = MultiAppNearestNodeTransfer
+    type = MultiAppGeneralFieldNearestLocationTransfer
     to_multi_app = sockeye
     source_variable = flux_uo
     variable = master_flux

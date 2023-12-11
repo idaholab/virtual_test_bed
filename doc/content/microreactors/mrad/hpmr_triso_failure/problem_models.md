@@ -4,14 +4,14 @@
 
 *Primary Contributors: Nicholas Fassino, Yinbin Miao, Kun Mo, Nicolas Stauff*
 
-*Model link: [HPMR Model](https://github.com/idaholab/virtual_test_bed/tree/devel/microreactors/mrad)*
+*Model link: [HPMR Model](https://github.com/idaholab/virtual_test_bed/tree/main/microreactors/mrad)*
 
 !alert note title=Acknowledgement
 This HP-MR model was built upon earlier work performed under ARPA-E MEITNER project and reported in the journal paper [!citep](matthews2021coupled), and some parts of the inputs are coming from these original models. The TRISO failure analysis BISON input files were adapted from inputs available in the BISON repository and reported in [!citep](bison_triso_model).
 
 ## TRISO Failure Model Description
 
-The HP-MR TRISO fuel particle model used in this exercise is a one-dimensional simplification of the model detailed in [!citep](Stauff2021). The model is separated into two component inputs: (1) a main particle model and (2) a master input that employs the MOOSE MultiApp functionality and the Samplers system to sample a user-specified number of simulations of the particle model. Particle layer widths are provided in the master input file, which converts them to normal distributions with user-provided standard deviations and bounds. Upon each execution of the particle simulation, these geometry distributions are sampled, and a set of layer coordinates is passed to the particle simulation with the Samplers system. Following the particle simulation, layer failure data are extracted from the particle simulation with the Transfers system. This information includes, for example, binary flags for multiple failure modes, the maximum neutron fluence in the particle, and fluence at failure (if applicable). The failure rate of the particle due to several mechanisms is then reported with VectorPostprocessors that track the stochastic results of the simulation.
+The HP-MR TRISO fuel particle model used in this exercise is a one-dimensional simplification of the model detailed in [!citep](Stauff2021). The model is separated into two component inputs: (1) a main particle model and (2) a parent application input that employs the MOOSE MultiApp functionality and the Samplers system to sample a user-specified number of simulations of the particle model. Particle layer widths are provided in the parent input file, which converts them to normal distributions with user-provided standard deviations and bounds. Upon each execution of the particle simulation, these geometry distributions are sampled, and a set of layer coordinates is passed to the particle simulation with the Samplers system. Following the particle simulation, layer failure data are extracted from the particle simulation with the Transfers system. This information includes, for example, binary flags for multiple failure modes, the maximum neutron fluence in the particle, and fluence at failure (if applicable). The failure rate of the particle due to several mechanisms is then reported with VectorPostprocessors that track the stochastic results of the simulation.
 
 The  HP-MR TRISO model, documented in ANL/NEAMS-21/3 [!citep](Stauff2021), received a number of changes for this work. First, the fission rate, fuel exterior temperature, and hydrostatic pressure of the particle are time-dependent quantities retrieved from outputs of the HP-MR multiphysics simulation. Fission rate is calculated within each particle simulation with a volume integral of the power density, using a fuel kernel volume that varies for each simulation due to the statistical sampling of the fuel kernel radius. Second, in accordance with the modeling approach taken by [!citep](bison_triso_model), a Terminator UserObject is implemented to end the simulation early if the SiC layer is determined to have failed. This is because the TRISO fuel particle is considered to have undergone failure if the SiC layer fails, as fission gases can no longer be retained within the particle layers. Finally, also proposed by [!citep](bison_triso_model), several TRISOStressCorrelationFunction and ConstantFunction objects have been implemented to describe the effects of multi-dimensional particle phenomena on layers stresses in a one-dimensional simulation. 
 
@@ -32,7 +32,7 @@ The reader is encouraged to consult [!citep](bison_triso_model) for further deta
 
 ## HP-MR TRISO MultiApps Model Setup
 
-MOOSE-based TRISO failure analysis in this demonstration is conducted with two BISON inputs in a MultiApps setup: (1) a TRISO sampler input serving as the master BISON app and (2) a TRISO particle input as the sub-app.
+MOOSE-based TRISO failure analysis in this demonstration is conducted with two BISON inputs in a MultiApps setup: (1) a TRISO sampler input serving as the parent BISON app and (2) a TRISO particle input as the sub-app.
 
 ### TRISO Sampler
 

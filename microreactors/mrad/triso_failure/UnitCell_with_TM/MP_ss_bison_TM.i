@@ -231,7 +231,6 @@ mod_env_blocks = 'mod_envelope_01 mod_envelope_02 mod_envelope_03 mod_envelope_0
   nl_rel_tol = 1e-5
 
   nl_max_its = 20
-  fixed_point_max_its = 1
   start_time = 0
   end_time = '${fparse 10 * 365.25 * 24 * 3600}'
   dtmin = 1e-6
@@ -243,224 +242,192 @@ mod_env_blocks = 'mod_envelope_01 mod_envelope_02 mod_envelope_03 mod_envelope_0
     type = ElementAverageValue
     variable = 'hydrostatic_stress'
     block = fuel_01
-    # outputs='pp_fuelsampler_pressure_1'
     execute_on = 'initial timestep_end'
   []
   [axial_pressure_2]
     type = ElementAverageValue
     variable = 'hydrostatic_stress'
     block = fuel_02
-    # outputs='pp_fuelsampler_pressure_2'
     execute_on = 'initial timestep_end'
   []
   [axial_pressure_3]
     type = ElementAverageValue
     variable = 'hydrostatic_stress'
     block = fuel_03
-    # outputs='pp_fuelsampler_pressure_3'
     execute_on = 'initial timestep_end'
   []
   [axial_pressure_4]
     type = ElementAverageValue
     variable = 'hydrostatic_stress'
     block = fuel_04
-    # outputs='pp_fuelsampler_pressure_4'
     execute_on = 'initial timestep_end'
   []
   [axial_pressure_5]
     type = ElementAverageValue
     variable = 'hydrostatic_stress'
     block = fuel_05
-    # outputs='pp_fuelsampler_pressure_5'
     execute_on = 'initial timestep_end'
   []
   [axial_pressure_6]
     type = ElementAverageValue
     variable = 'hydrostatic_stress'
     block = fuel_06
-    # outputs='pp_fuelsampler_pressure_6'
     execute_on = 'initial timestep_end'
   []
   [axial_pressure_7]
     type = ElementAverageValue
     variable = 'hydrostatic_stress'
     block = fuel_07
-    # outputs='pp_fuelsampler_pressure_7'
     execute_on = 'initial timestep_end'
   []
   [axial_pressure_8]
     type = ElementAverageValue
     variable = 'hydrostatic_stress'
     block = fuel_08
-    # outputs='pp_fuelsampler_pressure_8'
     execute_on = 'initial timestep_end'
   []
   [axial_pressure_9]
     type = ElementAverageValue
     variable = 'hydrostatic_stress'
     block = fuel_09
-    # outputs='pp_fuelsampler_pressure_9'
     execute_on = 'initial timestep_end'
   []
   [axial_pressure_10]
     type = ElementAverageValue
     variable = 'hydrostatic_stress'
     block = fuel_10
-    # outputs='pp_fuelsampler_pressure_10'
     execute_on = 'initial timestep_end'
   []
   [axial_pressure_11]
     type = ElementAverageValue
     variable = 'hydrostatic_stress'
     block = fuel_11
-    # outputs='pp_fuelsampler_pressure_11'
     execute_on = 'initial timestep_end'
   []
   [axial_pressure_12]
     type = ElementAverageValue
     variable = 'hydrostatic_stress'
     block = fuel_12
-    # outputs='pp_fuelsampler_pressure_12'
     execute_on = 'initial timestep_end'
   []
   [axial_pressure_13]
     type = ElementAverageValue
     variable = 'hydrostatic_stress'
     block = fuel_13
-    # outputs='pp_fuelsampler_pressure_13'
     execute_on = 'initial timestep_end'
   []
   [axial_pressure_14]
     type = ElementAverageValue
     variable = 'hydrostatic_stress'
     block = fuel_14
-    # outputs='pp_fuelsampler_pressure_14'
     execute_on = 'initial timestep_end'
   []
   [axial_pressure_15]
     type = ElementAverageValue
     variable = 'hydrostatic_stress'
     block = fuel_15
-    # outputs='pp_fuelsampler_pressure_15'
     execute_on = 'initial timestep_end'
   []
   [axial_pressure_16]
     type = ElementAverageValue
     variable = 'hydrostatic_stress'
     block = fuel_16
-    # outputs='pp_fuelsampler_pressure_16'
     execute_on = 'initial timestep_end'
   []
   [axial_pressure_17]
     type = ElementAverageValue
     variable = 'hydrostatic_stress'
     block = fuel_17
-    # outputs='pp_fuelsampler_pressure_17'
     execute_on = 'initial timestep_end'
   []
   [axial_pressure_18]
     type = ElementAverageValue
     variable = 'hydrostatic_stress'
     block = fuel_18
-    # outputs='pp_fuelsampler_pressure_18'
     execute_on = 'initial timestep_end'
   []
   [axial_pressure_19]
     type = ElementAverageValue
     variable = 'hydrostatic_stress'
     block = fuel_19
-    # outputs='pp_fuelsampler_pressure_19'
     execute_on = 'initial timestep_end'
   []
   [axial_pressure_20]
     type = ElementAverageValue
     variable = 'hydrostatic_stress'
     block = fuel_20
-    # outputs='pp_fuelsampler_pressure_20'
     execute_on = 'initial timestep_end'
   []
   [axial_pressure_21]
     type = ElementAverageValue
     variable = 'hydrostatic_stress'
     block = fuel_21
-    # outputs='pp_fuelsampler_pressure_21'
     execute_on = 'initial timestep_end'
   []
   [axial_pressure_22]
     type = ElementAverageValue
     variable = 'hydrostatic_stress'
     block = fuel_22
-    # outputs='pp_fuelsampler_pressure_22'
     execute_on = 'initial timestep_end'
   []
   [axial_pressure_23]
     type = ElementAverageValue
     variable = 'hydrostatic_stress'
     block = fuel_23
-    # outputs='pp_fuelsampler_pressure_23'
     execute_on = 'initial timestep_end'
   []
   [axial_pressure_24]
     type = ElementAverageValue
     variable = 'hydrostatic_stress'
     block = fuel_24
-    # outputs='pp_fuelsampler_pressure_24'
     execute_on = 'initial timestep_end'
   []
   [axial_pressure_25]
     type = ElementAverageValue
     variable = 'hydrostatic_stress'
     block = fuel_25
-    # outputs='pp_fuelsampler_pressure_25'
     execute_on = 'initial timestep_end'
   []
   [axial_pressure_26]
     type = ElementAverageValue
     variable = 'hydrostatic_stress'
     block = fuel_26
-    # outputs='pp_fuelsampler_pressure_26'
     execute_on = 'initial timestep_end'
   []
   [axial_pressure_27]
     type = ElementAverageValue
     variable = 'hydrostatic_stress'
     block = fuel_27
-    # outputs='pp_fuelsampler_pressure_27'
     execute_on = 'initial timestep_end'
   []
   [axial_pressure_28]
     type = ElementAverageValue
     variable = 'hydrostatic_stress'
     block = fuel_28
-    # outputs='pp_fuelsampler_pressure_28'
     execute_on = 'initial timestep_end'
   []
   [axial_pressure_29]
     type = ElementAverageValue
     variable = 'hydrostatic_stress'
     block = fuel_29
-    # outputs='pp_fuelsampler_pressure_29'
     execute_on = 'initial timestep_end'
   []
   [axial_pressure_30]
     type = ElementAverageValue
     variable = 'hydrostatic_stress'
     block = fuel_30
-    # outputs='pp_fuelsampler_pressure_30'
     execute_on = 'initial timestep_end'
   []
   [axial_pressure_31]
     type = ElementAverageValue
     variable = 'hydrostatic_stress'
     block = fuel_31
-    # outputs='pp_fuelsampler_pressure_31'
     execute_on = 'initial timestep_end'
   []
   [axial_pressure_32]
     type = ElementAverageValue
     variable = 'hydrostatic_stress'
     block = fuel_32
-    # outputs='pp_fuelsampler_pressure_32'
     execute_on = 'initial timestep_end'
   []
 []
