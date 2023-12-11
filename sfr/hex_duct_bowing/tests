@@ -37,5 +37,8 @@
     # To make results reproducible
     cli_args = 'Executioner/num_steps=5 VectorPostprocessors/duct_1/sort_by=id VectorPostprocessors/duct_3/sort_by=id VectorPostprocessors/duct_10/sort_by=id'
     abs_zero = 1e-5
+
+    # warning in penetration locator
+    allow_warnings = true
   []
 []
