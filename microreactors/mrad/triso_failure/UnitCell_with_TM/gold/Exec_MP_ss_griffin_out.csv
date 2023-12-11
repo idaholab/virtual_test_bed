@@ -1,0 +1,3 @@
+time,eigenvalue,fuel_temp_avg,fuel_temp_max,fuel_temp_min,hp_temp,hydro_stress,integrated_power,power_scaling,scaled_power_avg
+0,0,800,800,800,0,0,1800,3.9713646307733e+32,3583295.5980136
+1,0.9692573263027,800,800,800,0,0,1800,12663086648272,3583295.5980136
