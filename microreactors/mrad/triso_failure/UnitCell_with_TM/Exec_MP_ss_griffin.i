@@ -234,8 +234,7 @@ fuel_blocks = 'fuel_01 fuel_02 fuel_03 fuel_04 fuel_05 fuel_06 fuel_07 fuel_08
 [Transfers]
   [to_sub_power_density]
     type = MultiAppProjectionTransfer
-    direction = to_multiapp
-    multi_app = bison_diff
+    from_multi_app = bison_diff
     variable = power_density
     source_variable = power_density
     execute_on = 'initial timestep_end'
@@ -263,8 +262,7 @@ fuel_blocks = 'fuel_01 fuel_02 fuel_03 fuel_04 fuel_05 fuel_06 fuel_07 fuel_08
   []
   [from_bison_hptemp]
     type = MultiAppPostprocessorTransfer
-    direction = from_multiapp
-    multi_app = bison_diff
+    from_multi_app = bison_diff
     from_postprocessor = heatpipe_surface_temp_avg
     to_postprocessor = hp_temp
     execute_on = 'initial timestep_end'
