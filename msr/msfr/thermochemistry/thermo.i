@@ -31,18 +31,22 @@
 []
 
 [GlobalParams]
-  elements = 'F Li U Th Ni Nd Ce La Cs Xe I Kr Ne'
-  output_phases = 'MSFL gas_ideal Ni_Solid_FCC(s) U_Solid-A(s)'
+  #elements = 'F Li U Th Ni Nd Ce La Cs Xe I Kr Ne'
+  elements = 'F Li U Th Ni Nd Ce La Cs I'
+  #output_phases = 'MSFL gas_ideal Ni_Solid_FCC(s) U_Solid-A(s)'
+  output_phases = 'MSFL gas_ideal'
   #output_phases = 'ALL'
-  output_species = 'MSFL:UF3 MSFL:U3+//I MSFL:U2F8 MSFL:U2//I MSFL:U[VII]//F MSFL:U[VII]//I MSFL:U[VI]//F MSFL:U[VI]//I  MSFL:NiF2 MSFL:Ni//I gas_ideal:CsI gas_ideal:CsF gas_ideal:I gas_ideal:I2 gas_ideal:I2Ni gas_ideal:ILi gas_ideal:Xe gas_ideal:Kr gas_ideal:Ne'
+  #output_species = 'MSFL:UF3 MSFL:U3+//I MSFL:U2F8 MSFL:U2//I MSFL:U[VII]//F MSFL:U[VII]//I MSFL:U[VI]//F MSFL:U[VI]//I  MSFL:NiF2 MSFL:Ni//I gas_ideal:CsI gas_ideal:CsF gas_ideal:I gas_ideal:I2 gas_ideal:I2Ni gas_ideal:ILi gas_ideal:Xe gas_ideal:Kr gas_ideal:Ne'
+  output_species = 'ALL'
   #output_species = 'ALL'
   output_element_potentials = 'ALL'
-  output_vapor_pressures = 'vp:gas_ideal:CsI vp:gas_ideal:CsF vp:gas_ideal:I vp:gas_ideal:I2 vp:gas_ideal:I2Ni vp:gas_ideal:ILi'
-  #output_vapor_pressures = 'ALL'
+  #output_vapor_pressures = 'vp:gas_ideal:CsI vp:gas_ideal:CsF vp:gas_ideal:I vp:gas_ideal:I2 vp:gas_ideal:I2Ni vp:gas_ideal:ILi'
+  output_vapor_pressures = 'ALL'
 []
 
 [ChemicalComposition]
-  thermofile = MSTDTC_Noble_metal_gases.dat
+  #thermofile = MSTDTC_Noble_metal_gases.dat
+  thermofile = MSTDB-TC_V3.0_Fluorides_No_Functions_8-2.dat
   tunit = K
   punit = Pa
   munit = moles
@@ -120,11 +124,11 @@
     #value = 7.1e-03
     value = 1
   []
-  [Xe]
-    type = FunctionIC
-    variable = Xe
-    function = XeSumSet
-  []
+  #[Xe]
+  #  type = FunctionIC
+  #  variable = Xe
+  #  function = XeSumSet
+  #[]
   [Nd]
     type = FunctionIC
     variable = Nd
@@ -150,16 +154,16 @@
     variable = I
     function = ISumSet
   []
-  [Kr]
-    type = FunctionIC
-    variable = Kr
-    function = KrSumSet
-  []
-  [Ne]
-    type = FunctionIC
-    variable = Ne
-    function = NeSumSet
-  []
+  #[Kr]
+  #  type = FunctionIC
+  #  variable = Kr
+  #  function = KrSumSet
+  #[]
+  #[Ne]
+  #  type = FunctionIC
+  #  variable = Ne
+  #  function = NeSumSet
+  #[]
 []
 
 ###########################################
@@ -236,86 +240,86 @@
     variable = I
     block = 'fuel pump hx'
   []
-  [total_Kr]
-    type = NodalSum
-    variable = Kr
-    block = 'fuel pump hx'
-  []
-  [total_Ne]
-    type = NodalSum
-    variable = Ne
-    block = 'fuel pump hx'
-  []
-  [total_I_gas]
-    type = NodalSum
-    variable = gas_ideal:I
-    block = 'fuel pump hx'
-  []
-  [total_I2]
-    type = NodalSum
-    variable = gas_ideal:I2
-    block = 'fuel pump hx'
-  []
-  [total_I2Ni]
-    type = NodalSum
-    variable = gas_ideal:I2Ni
-    block = 'fuel pump hx'
-  []
-  [total_ILi]
-    type = NodalSum
-    variable = gas_ideal:ILi
-    block = 'fuel pump hx'
-  []
-  [total_CsI]
-    type = NodalSum
-    variable = gas_ideal:CsI
-    block = 'fuel pump hx'
-  []
-  [total_CsF]
-    type = NodalSum
-    variable = gas_ideal:CsF
-    block = 'fuel pump hx'
-  []
-  [total_UF3]
-    type = NodalSum
-    variable = MSFL:UF3
-    block = 'fuel pump hx'
-  []
-  [total_U3I]
-    type = NodalSum
-    variable = MSFL:U3+//I
-    block = 'fuel pump hx'
-  []
-  [total_U2F8]
-    type = NodalSum
-    variable = MSFL:U2F8
-    block = 'fuel pump hx'
-  []
-  [total_U2I]
-    type = NodalSum
-    variable = MSFL:U2//I
-    block = 'fuel pump hx'
-  []
-  [total_UVIIF]
-    type = NodalSum
-    variable = 'MSFL:U[VII]//F'
-    block = 'fuel pump hx'
-  []
-  [total_UVIII]
-    type = NodalSum
-    variable = 'MSFL:U[VII]//I'
-    block = 'fuel pump hx'
-  []
-  [total_UVIF]
-    type = NodalSum
-    variable = 'MSFL:U[VI]//F'
-    block = 'fuel pump hx'
-  []
-  [total_UVII]
-    type = NodalSum
-    variable = 'MSFL:U[VI]//I'
-    block = 'fuel pump hx'
-  []
+  #[total_Kr]
+  #  type = NodalSum
+  #  variable = Kr
+  #  block = 'fuel pump hx'
+  #[]
+  # [total_Ne]
+  #   type = NodalSum
+  #   variable = Ne
+  #   block = 'fuel pump hx'
+  # []
+  # [total_I_gas]
+  #   type = NodalSum
+  #   variable = gas_ideal:I
+  #   block = 'fuel pump hx'
+  # []
+  # [total_I2]
+  #   type = NodalSum
+  #   variable = gas_ideal:I2
+  #   block = 'fuel pump hx'
+  # []
+  # [total_I2Ni]
+  #   type = NodalSum
+  #   variable = gas_ideal:I2Ni
+  #   block = 'fuel pump hx'
+  # []
+  # [total_ILi]
+  #   type = NodalSum
+  #   variable = gas_ideal:ILi
+  #   block = 'fuel pump hx'
+  # []
+  # [total_CsI]
+  #   type = NodalSum
+  #   variable = gas_ideal:CsI
+  #   block = 'fuel pump hx'
+  # []
+  # [total_CsF]
+  #   type = NodalSum
+  #   variable = gas_ideal:CsF
+  #   block = 'fuel pump hx'
+  # []
+  # [total_UF3]
+  #   type = NodalSum
+  #   variable = MSFL:UF3
+  #   block = 'fuel pump hx'
+  # []
+  # [total_U3I]
+  #   type = NodalSum
+  #   variable = MSFL:U3+//I
+  #   block = 'fuel pump hx'
+  # []
+  # [total_U2F8]
+  #   type = NodalSum
+  #   variable = MSFL:U2F8
+  #   block = 'fuel pump hx'
+  # []
+  # [total_U2I]
+  #   type = NodalSum
+  #   variable = MSFL:U2//I
+  #   block = 'fuel pump hx'
+  # []
+  # [total_UVIIF]
+  #   type = NodalSum
+  #   variable = 'MSFL:U[VII]//F'
+  #   block = 'fuel pump hx'
+  # []
+  # [total_UVIII]
+  #   type = NodalSum
+  #   variable = 'MSFL:U[VII]//I'
+  #   block = 'fuel pump hx'
+  # []
+  # [total_UVIF]
+  #   type = NodalSum
+  #   variable = 'MSFL:U[VI]//F'
+  #   block = 'fuel pump hx'
+  # []
+  # [total_UVII]
+  #   type = NodalSum
+  #   variable = 'MSFL:U[VI]//I'
+  #   block = 'fuel pump hx'
+  # []
 
 ###########################################
 # POSTPROCESSING DEPLETION STEPS
