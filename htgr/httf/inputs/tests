@@ -3,6 +3,7 @@
   [core_syntax]
     type = RunApp
     input = HTTF_PG26_multiapp.i
+    cli_args = "MultiApps/active='' Transfers/active=''"
     check_input = True
     executable_pattern = 'combined*|relap-7*'
     allow_warnings = true
@@ -58,7 +59,7 @@
     csvdiff = HTTF_PG26_transient.csv
     prereq = core_syntax
     executable_pattern = 'combined*|relap-7*'
-    cli_args = 'MultiApps/active='' Transfers/active='' Executioner/num_steps=1'
+    cli_args = 'MultiApps/active= Transfers/active= Executioner/num_steps=1'
     allow_warnings = true
     min_parallel = 16
     max_time = 800

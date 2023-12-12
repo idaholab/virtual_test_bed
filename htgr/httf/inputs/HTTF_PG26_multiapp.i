@@ -83,9 +83,9 @@ heater_SA = '${fparse heater_P * 10 * core_block_height}' # m^2
   # Converts power to surface heat flux based on recorded heater power output and heater channel surface area
   [q_103_104]
     type = ParsedFunction
-    value = 'if(z<0.489,0, if(z>2.469,0,(heater_power / (42 * heater_SA))))'
-    vars = 'core_block_height heater_power heater_SA'
-    vals = '${core_block_height} power_103_104 ${heater_SA}'
+    expression = 'if(z<0.489,0, if(z>2.469,0,(heater_power / (42 * heater_SA))))'
+    symbol_names = 'core_block_height heater_power heater_SA'
+    symbol_values = '${core_block_height} power_103_104 ${heater_SA}'
   []
   # Creates a function with respect to time for the power output of heater bank 107/110 based on a data file from the PG-26 Transient
   [power_107_110]
@@ -98,24 +98,24 @@ heater_SA = '${fparse heater_P * 10 * core_block_height}' # m^2
   # Converts power to surface heat flux based on recorded heater power output and heater channel surface area
   [q_107_110]
     type = ParsedFunction
-    value = 'if(z<0.489,0, if(z>2.469,0,(heater_power / (42 * heater_SA))))'
-    vars = 'core_block_height heater_power heater_SA'
-    vals = '${core_block_height} power_107_110 ${heater_SA}'
+    expression = 'if(z<0.489,0, if(z>2.469,0,(heater_power / (42 * heater_SA))))'
+    symbol_names = 'core_block_height heater_power heater_SA'
+    symbol_values = '${core_block_height} power_107_110 ${heater_SA}'
   []
   # Function for the upper plenum coolant temperature which interacts with the top core surface
   [top_core_surface]
     type = ParsedFunction
-    value = 'if(t<=0, 373.15, upcomer_outlet_main)'
-    vals = 'upcomer_outlet_main'
-    vars = 'upcomer_outlet_main'
+    expression = 'if(t<=0, 373.15, upcomer_outlet_main)'
+    symbol_values = 'upcomer_outlet_main'
+    symbol_names = 'upcomer_outlet_main'
   []
   # Function for the lower plenum coolant temperature which interacts with the bottom core surface
   # Uses a PostProcessor value T_out_bulk
   [bottom_core_surface]
     type = ParsedFunction
-    value = 'if(t<= 0, 373.15, T_out_bulk)'
-    vals = 'T_out_bulk'
-    vars = 'T_out_bulk'
+    expression = 'if(t<= 0, 373.15, T_out_bulk)'
+    symbol_values = 'T_out_bulk'
+    symbol_names = 'T_out_bulk'
   []
 []
 # Creates a mesh from supplied file
