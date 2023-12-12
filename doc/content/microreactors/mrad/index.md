@@ -13,3 +13,11 @@
 [Legacy Multiphysics model](mrad/legacy_mrad_model.md)
 
 [Legacy Multiphysics results](mrad/legacy_mrad_results.md)
+
+## HP-MR Based TRISO Failure Model
+
+[Problem Description](mrad/hpmr_triso_failure/problem_description.md)
+
+[Model Description](mrad/hpmr_triso_failure/problem_models.md)
+
+[Results](mrad/hpmr_triso_failure/problem_results.md)
