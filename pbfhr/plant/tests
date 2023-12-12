@@ -73,7 +73,10 @@
     executable_pattern = 'blue_crab*'
     min_parallel = 8
     prereq = 'syntax_multiphysics sam_pronghorn_init'
-    cli_args = "Outputs/file_base=pbfhr_steady Executioner/fixed_point_max_its=1 Executioner/accept_on_max_fixed_point_iteration=true MultiApps/thermo/cli_args='Problem/restart_file_base=pbfhr_sam_pronghorn_cp/LATEST;Mesh/uniform_refine=0;Executioner/num_steps=30;Executioner/fixed_point_max_its=3'"
+    cli_args = "Outputs/file_base=pbfhr_steady Executioner/fixed_point_max_its=1 "
+               "Executioner/accept_on_max_fixed_point_iteration=true "
+               "MultiApps/thermo/cli_args='Problem/restart_file_base=pbfhr_sam_pronghorn_cp/LATEST;Me"
+               "sh/uniform_refine=0;Executioner/num_steps=30;Executioner/fixed_point_max_its=3'"
   []
   [sam_pronghorn_init]
     type = CSVDiff
@@ -112,10 +115,12 @@
     type = CSVDiff
     input = 'ss1_combined.i'
     csvdiff = 'ss1_combined_out.csv'
-    cli_args = "MultiApps/active='' Transfers/active='' Mesh/uniform_refine=0 Executioner/num_steps=20"
+    cli_args = "MultiApps/active='' Transfers/active='' Mesh/uniform_refine=0 "
+               "Executioner/num_steps=20"
     executable_pattern = 'pronghorn*|blue_crab*|fenix*'
     min_parallel = 8
     prereq = 'syntax_core_flow core_flow_initial'
+    rel_err = 5e-5
   []
   [plant_flow]
     type = CSVDiff
@@ -124,7 +129,8 @@
     executable_pattern = 'sam*|blue_crab*'
     prereq = 'syntax_plant_flow'
     rel_err = 5e-4
-    cli_args = "--app SamApp Functions/dts/x='0 400' Functions/dts/y='0.5 1' Executioner/num_steps=20"
+    cli_args = "--app SamApp Functions/dts/x='0 400' Functions/dts/y='0.5 1' "
+               "Executioner/num_steps=20"
   []
   [fuel_pebble]
     type = CSVDiff

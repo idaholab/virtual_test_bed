@@ -26,3 +26,7 @@ microreactors/gcmr/airjacket/mesh/airjacket.re2 filter=lfs diff=lfs merge=lfs -t
 microreactors/gcmr/airjacket/restart_airjacket.fld filter=lfs diff=lfs merge=lfs -text
 microreactors/drum_rotation/empire_core_modified_11G_CD.xml filter=lfs diff=lfs merge=lfs -text
 doc/content/media/drum_rotation/transient.mp4 filter=lfs diff=lfs merge=lfs -text
+microreactors/mrad/triso_failure/mesh/3D_unit_cell_FY21_simple_YAN_40sectoins_5cm_axial_dist.e filter=lfs diff=lfs merge=lfs -text
+microreactors/mrad/triso_failure/mesh/3D_unit_cell_FY21_simple_YAN_40sectoins_5cm_axial_dist_bison.e filter=lfs diff=lfs merge=lfs -text
+microreactors/mrad/triso_failure/mesh/3D_unit_cell_FY21_simple_YAN_40sections_5cm_axial_dist.e filter=lfs diff=lfs merge=lfs -text
+microreactors/mrad/triso_failure/mesh/3D_unit_cell_FY21_simple_YAN_40sections_5cm_axial_dist_bison.e filter=lfs diff=lfs merge=lfs -text

@@ -1,0 +1,161 @@
+[Tests]
+  # Syntax Check
+  # Condition Calculation Using a Unit Cell Model
+  [neutronics_griffin_syntax]
+    type = RunApp
+    input = 'UnitCell_with_TM/Exec_MP_ss_griffin.i'
+    check_input = True
+    executable_pattern = 'griffin*|blue_crab*|dire_wolf*'
+    cli_args = "MultiApps/active='' Transfers/active=''"
+  []
+  [heat_conduction_bison_syntax]
+    type = RunApp
+    input = 'UnitCell_with_TM/MP_ss_bison.i'
+    check_input = True
+    executable_pattern = 'bison*|blue_crab*|dire_wolf*'
+    cli_args = "MultiApps/active='' Transfers/active=''"
+  []
+  [tensor_mechanics_bison_syntax]
+    type = RunApp
+    input = 'UnitCell_with_TM/MP_ss_bison_TM.i'
+    check_input = True
+    executable_pattern = 'bison*|blue_crab*|dire_wolf*'
+
+    # Trivial warning on material property output
+    allow_warnings = true
+  []
+  [fluids_sockeye_syntax]
+    type = RunApp
+    input = 'UnitCell_with_TM/MP_ss_sockeye.i'
+    check_input = True
+    executable_pattern = 'sockeye*|dire_wolf*'
+    cli_args = "--app SockeyeApp"
+    # Capillary limit for vertical heat pipes is not accurate; see https://hpcgitlab.hpc.inl.gov/idaholab/sockeye/-/issues/65
+    allow_warnings = true
+  []
+  # Sampling and TRISO Calculations
+  [sampling_syntax]
+    type = RunApp
+    input = 'TRISO/triso_sampler.i'
+    check_input = True
+    executable_pattern = 'blue_crab*|bison*|dire_wolf*'
+  []
+  [triso_particle_syntax]
+    type = RunApp
+    input = 'TRISO/triso_particle.i'
+    check_input = True
+    cli_args = "particle_number=1 folder_name=gold"
+    executable_pattern = 'blue_crab*|bison*|dire_wolf*'
+
+    # Trivial warning on material property output
+    allow_warnings = true
+  []
+
+  # Regression tests
+  # Condition Calculation Using a Unit Cell Model
+  [neutronics_griffin]
+    type = CSVDiff
+    working_directory = 'UnitCell_with_TM'
+    input = 'Exec_MP_ss_griffin.i'
+    executable_pattern = 'griffin*|blue_crab*|dire_wolf*'
+    cli_args = "MultiApps/active='' Transfers/active='' Executioner/richardson_abs_tol=1e4"
+    csvdiff = 'Exec_MP_ss_griffin_out.csv'
+
+    # Missing data in XS file
+    allow_warnings = true
+
+    # Unit cell very expensive smh so we only run one iteration and keep
+    # the number of core consistent
+    min_parallel = 8
+    rel_err = 1e-3
+  []
+  [heat_conduction_bison]
+    type = CSVDiff
+    working_directory = 'UnitCell_with_TM'
+    input = 'MP_ss_bison.i'
+    executable_pattern = 'bison*|blue_crab*|dire_wolf*'
+    cli_args = "MultiApps/active='' Transfers/active='' Executioner/num_steps=3 Outputs/csv=true "
+               "Outputs/pp_fuelsampler_temp_1/file_base=pp_fuelsampler_temp_1 "
+               "Outputs/pp_fuelsampler_pow_1/file_base=pp_fuelsampler_pow_1 "
+               "Outputs/pp_fuelsampler_temp_11/file_base=pp_fuelsampler_temp_11 "
+               "Outputs/pp_fuelsampler_pow_11/file_base=pp_fuelsampler_pow_11"
+    csvdiff = "pp_fuelsampler_temp_1.csv pp_fuelsampler_pow_1.csv pp_fuelsampler_temp_11.csv "
+              "pp_fuelsampler_pow_11.csv"
+
+    # Packing fraction and temperature out of bounds
+    allow_warnings = true
+    # Diffs on temperature near 2e-7
+    abs_zero = 1e-6
+  []
+  [tensor_mechanics_bison]
+    type = CSVDiff
+    working_directory = 'UnitCell_with_TM'
+    input = 'MP_ss_bison_TM.i'
+    cli_args = 'Executioner/num_steps=3 Outputs/csv=true'
+    executable_pattern = 'bison*|blue_crab*|dire_wolf*'
+    csvdiff = 'MP_ss_bison_TM_out.csv'
+
+    # Trivial warning on material property output
+    allow_warnings = true
+    method = 'opt'
+  []
+  [fluids_sockeye]
+    type = CSVDiff
+    working_directory = 'UnitCell_with_TM'
+    input = 'MP_ss_sockeye.i'
+    executable_pattern = 'sockeye*|dire_wolf*'
+    cli_args = "--app SockeyeApp Outputs/csv=true Executioner/num_steps=3 "
+               "VectorPostprocessors/env_vpp/sort_by=id VectorPostprocessors/core_vpp/sort_by=id"
+    csvdiff = "MP_ss_sockeye_out_core_vpp_0001.csv MP_ss_sockeye_out_env_vpp_0001.csv "
+              "MP_ss_sockeye_out_core_vpp_0002.csv MP_ss_sockeye_out_env_vpp_0002.csv"
+    # Capillary limit for vertical heat pipes is not accurate; see https://hpcgitlab.hpc.inl.gov/idaholab/sockeye/-/issues/65
+    allow_warnings = true
+  []
+
+  # Sampling and TRISO Calculations
+  [sampling]
+    type = CSVDiff
+    working_directory = 'TRISO'
+    input = 'triso_sampler.i'
+    cli_args = "folder_name=gold Outputs/csv=true end_time=1e7 Samplers/sample/num_rows=1 "
+               "Outputs/particle1_out/file_base='particle1_out' "
+               "Outputs/particle11_out/file_base='particle11_out'"
+    csvdiff = "particle11_out_particle11_failure_indicator_kernel_migration_0001.csv "
+              "particle11_out_particle11_sic_failure_due_to_ipyc_cracking_0001.csv   "
+              "particle1_out_particle1_max_fluence_0001.csv "
+              "particle11_out_particle11_failure_indicator_pd_penetration_0001.csv   "
+              "particle11_out_particle11_sic_failure_due_to_pressure_0001.csv        "
+              "particle1_out_particle1_pd_penetration_0001.csv "
+              "particle11_out_particle11_fluence_at_failure_0001.csv                 "
+              "particle11_out_particle11_sic_failure_overall_0001.csv                "
+              "particle1_out_particle1_sampler_data_0001.csv "
+              "particle11_out_particle11_ipyc_cracking_0001.csv                      "
+              "particle1_out_particle1_failure_indicator_kernel_migration_0001.csv   "
+              "particle1_out_particle1_sic_failure_due_to_ipyc_cracking_0001.csv "
+              "particle11_out_particle11_kernel_migration_distance_0001.csv          "
+              "particle1_out_particle1_failure_indicator_pd_penetration_0001.csv     "
+              "particle1_out_particle1_sic_failure_due_to_pressure_0001.csv "
+              "particle11_out_particle11_max_fluence_0001.csv                        "
+              "particle1_out_particle1_fluence_at_failure_0001.csv                   "
+              "particle1_out_particle1_sic_failure_overall_0001.csv "
+              "particle11_out_particle11_pd_penetration_0001.csv                     "
+              "particle1_out_particle1_ipyc_cracking_0001.csv "
+              "particle11_out_particle11_sampler_data_0001.csv                       "
+              "particle1_out_particle1_kernel_migration_distance_0001.csv"
+    executable_pattern = 'blue_crab*|bison*|dire_wolf*'
+
+    allow_warnings = true
+    allow_unused = true
+  []
+  [triso_particle]
+    type = CSVDiff
+    working_directory = 'TRISO'
+    csvdiff = 'triso_particle_out.csv'
+    input = 'triso_particle.i'
+    cli_args = "particle_number=1 folder_name=gold Outputs/csv=true"
+    executable_pattern = 'blue_crab*|bison*|dire_wolf*'
+
+    # Trivial warning on material property output
+    allow_warnings = true
+  []
+[]
