@@ -40,7 +40,7 @@ mpiexec -n 6 blue_crab-opt -i neu.i
 
 #### Local Device:
 
-Note: need at least NCRC level 2 access to Griffin
+Note: With NCRC level 2 access to BlueCrab, once you have installed the mamba environment:
 
 ```language=Bash
 
@@ -51,7 +51,7 @@ mamba activate bluecrab
 mpiexec -n 6 blue_crab-opt -i neu.i
 ```
 
-Note: With source-code access to Pronghorn
+Note: With source-code access to BlueCrab, once you have compiled the executable you may run:
 
 ```language=Bash
 mpiexec -n 6 ~/projects/bluecrab/blue_crab-opt -i neu.i

@@ -5,7 +5,7 @@
 *Model summarized and documented by Andres Fierro, Dr. Samuel Walker, and Dr. Mauricio Tano*
 
 The MSRE was a graphite moderated flowing salt type reactor with a design maximum operating power of 10 MW(th) developed by Oak Ridge National Laboratory [!citep](Robertson1965).
-The reactor ran for more than 13,000 hours at full power before its final shut down in 1969.  The general layout of the experiment is shown in [MSRE_core_ref].
+The reactor ran for more than 13,000 hours at full power before its final shutdown in 1969.  The general layout of the experiment is shown in [MSRE_core_ref].
 
 !media msr/msre/MSRE_core_ref.png
         style=width:65%; float:left;padding-top:2.5%;padding-right:5%

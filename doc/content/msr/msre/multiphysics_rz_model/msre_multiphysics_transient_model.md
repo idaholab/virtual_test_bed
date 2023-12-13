@@ -11,6 +11,7 @@
                        geometry:core
                        simulation_type:core_multiphysics
                        input_features:multiapps
+                       transient:Reactivity_insertion
                        code_used:BlueCrab
                        computing_needs:Workstation
                        fiscal_year:2023
@@ -43,11 +44,11 @@ Here we add the time derivative to the multi-group diffusion equation, and to th
 \frac{\partial c_i(\mathbf{r}, t)}{\partial t} + \nabla \cdot (\mathbf{u} c_i(\mathbf{r}, t)) - \nabla \cdot H_i \nabla c_i(\mathbf{r}, t) - \nabla \cdot \frac{\nu_t}{Sc_t} \nabla c_i(\mathbf{r}, t) = \frac{\beta_0}{k_{\text{eff}}^{\text{st}}} \chi_{p,g} \sum_{g'=1}^G (\nu\Sigma_{f})_{g'} \phi{g'}(\mathbf{r}, t) - \lambda_i c_i(\mathbf{r}, t),
 \end{equation}
 
-where $t$ is time, $k_{\text{eff}}^{\text{st}}$ is the steady-state eigenvalue coming from a previous steady-state solve, and $v_g$ is the neutron speed for group $g$. For most practical cases, except for prompt critical reactivity insertions, the term $\frac{1}{v_g} \frac{\partial \phi_g(\mathbf{r}, t)}{\partial t}$ can be neglected. This model is complemented by the solution of thermal-hydraulcis, which determines the advection field for neutron precursors and the temperature field for cross section interpolation.
+where $t$ is time, $k_{\text{eff}}^{\text{st}}$ is the steady-state eigenvalue coming from a previous steady-state solve, and $v_g$ is the neutron speed for group $g$. For most practical cases, except for prompt critical reactivity insertions, the term $\frac{1}{v_g} \frac{\partial \phi_g(\mathbf{r}, t)}{\partial t}$ can be neglected. This model is complemented by the solution of thermal-hydraulics, which determines the advection field for neutron precursors and the temperature field for cross section interpolation.
 
 #### Multi Apps
 
-Finally, the `MultiApps` block is altered to a `TransientMultiApp` solution. The trasfers that are used are identical to the [steady-state case](msre_multiphysics_core_model.md).
+Finally, the `MultiApps` block is altered to use a `TransientMultiApp`, to indicate there will be information transfers at every time step. The transfers that are used are identical to the [steady-state case](msre_multiphysics_core_model.md).
 
 !listing msr/msre/multiphysics_core_model/transient/neu.i block=MultiApps
 
@@ -55,7 +56,7 @@ Finally, the `MultiApps` block is altered to a `TransientMultiApp` solution. The
 
 #### Mesh
 
-Here the Mesh block loads in a restart file to correctly initialize the transient.
+Here the Mesh block loads in a restart file to initialize the transient.
 
 !listing msr/msre/multiphysics_core_model/transient/th.i start=[Mesh] end=[Problem]
 
