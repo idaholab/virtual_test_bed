@@ -207,160 +207,160 @@ Salt_Density_initial = 2263.0
     type = ParsedAux
     block = 'lower_plenum upper_plenum down_comer riser pump elbow'
     variable = ad_U235
-    args = 'T_salt'
-    function = '9.692763E-05*(1.0-0.4798*(T_salt-${T_Salt_initial})/${Salt_Density_initial})'
+    coupled_variables = 'T_salt'
+    expression = '9.692763E-05*(1.0-0.4798*(T_salt-${T_Salt_initial})/${Salt_Density_initial})'
     execute_on = 'INITIAL timestep_end'
   []
   [update_ad_f_U238]
     type = ParsedAux
     block = 'lower_plenum upper_plenum down_comer riser pump elbow'
     variable = ad_U238
-    args = 'T_salt'
-    function = '1.967924E-04 *(1.0-0.4798*(T_salt-${T_Salt_initial})/${Salt_Density_initial})'
+    coupled_variables = 'T_salt'
+    expression = '1.967924E-04 *(1.0-0.4798*(T_salt-${T_Salt_initial})/${Salt_Density_initial})'
     execute_on = 'INITIAL timestep_end'
   []
   [update_ad_f_Be9]
     type = ParsedAux
     block = 'lower_plenum upper_plenum down_comer riser pump elbow'
     variable = ad_Be9
-    args = 'T_salt'
-    function = '9.496943E-03*(1.0-0.4798*(T_salt-${T_Salt_initial})/${Salt_Density_initial})'
+    coupled_variables = 'T_salt'
+    expression = '9.496943E-03*(1.0-0.4798*(T_salt-${T_Salt_initial})/${Salt_Density_initial})'
     execute_on = 'INITIAL timestep_end'
   []
   [update_ad_f_Li7]
     type = ParsedAux
     block = 'lower_plenum upper_plenum down_comer riser pump elbow'
     variable = ad_Li7
-    args = 'T_salt'
-    function = '2.121311E-02 *(1.0-0.4798*(T_salt-${T_Salt_initial})/${Salt_Density_initial})'
+    coupled_variables = 'T_salt'
+    expression = '2.121311E-02 *(1.0-0.4798*(T_salt-${T_Salt_initial})/${Salt_Density_initial})'
     execute_on = 'INITIAL timestep_end'
   []
   [update_ad_f_F9]
     type = ParsedAux
     block = 'lower_plenum upper_plenum down_comer riser pump elbow'
     variable = ad_F9
-    args = 'T_salt'
-    function = '4.790899E-02*(1.0-0.4798*(T_salt-${T_Salt_initial})/${Salt_Density_initial})'
+    coupled_variables = 'T_salt'
+    expression = '4.790899E-02*(1.0-0.4798*(T_salt-${T_Salt_initial})/${Salt_Density_initial})'
     execute_on = 'INITIAL timestep_end'
   []
   [update_ad_f_Zr90]
     type = ParsedAux
     block = 'lower_plenum upper_plenum down_comer riser pump elbow'
     variable = ad_Zr90
-    args = 'T_salt'
-    function = '8.395505E-04*(1.0-0.4798*(T_salt-${T_Salt_initial})/${Salt_Density_initial})'
+    coupled_variables = 'T_salt'
+    expression = '8.395505E-04*(1.0-0.4798*(T_salt-${T_Salt_initial})/${Salt_Density_initial})'
     execute_on = 'INITIAL timestep_end'
   []
   [update_ad_f_Zr91]
     type = ParsedAux
     block = 'lower_plenum upper_plenum down_comer riser pump elbow'
     variable = ad_Zr91
-    args = 'T_salt'
-    function = '1.830855E-04*(1.0-0.4798*(T_salt-${T_Salt_initial})/${Salt_Density_initial})'
+    coupled_variables = 'T_salt'
+    expression = '1.830855E-04*(1.0-0.4798*(T_salt-${T_Salt_initial})/${Salt_Density_initial})'
     execute_on = 'INITIAL timestep_end'
   []
   [update_ad_f_Zr92]
     type = ParsedAux
     block = 'lower_plenum upper_plenum down_comer riser pump elbow'
     variable = ad_Zr92
-    args = 'T_salt'
-    function = '2.798495E-04*(1.0-0.4798*(T_salt-${T_Salt_initial})/${Salt_Density_initial})'
+    coupled_variables = 'T_salt'
+    expression = '2.798495E-04*(1.0-0.4798*(T_salt-${T_Salt_initial})/${Salt_Density_initial})'
     execute_on = 'INITIAL timestep_end'
   []
   [update_ad_f_Zr94]
     type = ParsedAux
     block = 'lower_plenum upper_plenum down_comer riser pump elbow'
     variable = ad_Zr94
-    args = 'T_salt'
-    function = '2.836027E-04*(1.0-0.4798*(T_salt-${T_Salt_initial})/${Salt_Density_initial})'
+    coupled_variables = 'T_salt'
+    expression = '2.836027E-04*(1.0-0.4798*(T_salt-${T_Salt_initial})/${Salt_Density_initial})'
     execute_on = 'INITIAL timestep_end'
   []
   [update_ad_f_Zr96]
     type = ParsedAux
     block = 'lower_plenum upper_plenum down_comer riser pump elbow'
     variable = ad_Zr96
-    args = 'T_salt'
-    function = '4.568967E-05*(1.0-0.4798*(T_salt-${T_Salt_initial})/${Salt_Density_initial})'
+    coupled_variables = 'T_salt'
+    expression = '4.568967E-05*(1.0-0.4798*(T_salt-${T_Salt_initial})/${Salt_Density_initial})'
     execute_on = 'INITIAL timestep_end'
   []
   [update_ad_c_U235]
     type = ParsedAux
     block = 'core'
     variable = ad_U235
-    args = 'T_salt'
-    function = '2.159856E-05*(1.0-0.4798*(T_salt-${T_Salt_initial})/${Salt_Density_initial})'
+    coupled_variables = 'T_salt'
+    expression = '2.159856E-05*(1.0-0.4798*(T_salt-${T_Salt_initial})/${Salt_Density_initial})'
     execute_on = 'INITIAL timestep_end'
   []
   [update_ad_c_U238]
     type = ParsedAux
     block = 'core'
     variable = ad_U238
-    args = 'T_salt'
-    function = '4.385162E-05*(1.0-0.4798*(T_salt-${T_Salt_initial})/${Salt_Density_initial})'
+    coupled_variables = 'T_salt'
+    expression = '4.385162E-05*(1.0-0.4798*(T_salt-${T_Salt_initial})/${Salt_Density_initial})'
     execute_on = 'INITIAL timestep_end'
   []
   [update_ad_c_Be9]
     type = ParsedAux
     block = 'core'
     variable = ad_Be9
-    args = 'T_salt'
-    function = '2.116221E-03*(1.0-0.4798*(T_salt-${T_Salt_initial})/${Salt_Density_initial})'
+    coupled_variables = 'T_salt'
+    expression = '2.116221E-03*(1.0-0.4798*(T_salt-${T_Salt_initial})/${Salt_Density_initial})'
     execute_on = 'INITIAL timestep_end'
   []
   [update_ad_c_Li7]
     type = ParsedAux
     block = 'core'
     variable = ad_Li7
-    args = 'T_salt'
-    function = '4.726958E-03*(1.0-0.4798*(T_salt-${T_Salt_initial})/${Salt_Density_initial})'
+    coupled_variables = 'T_salt'
+    expression = '4.726958E-03*(1.0-0.4798*(T_salt-${T_Salt_initial})/${Salt_Density_initial})'
     execute_on = 'INITIAL timestep_end'
   []
   [update_ad_c_F9]
     type = ParsedAux
     block = 'core'
     variable = ad_F9
-    args = 'T_salt'
-    function = '1.067565E-02*(1.0-0.4798*(T_salt-${T_Salt_initial})/${Salt_Density_initial})'
+    coupled_variables = 'T_salt'
+    expression = '1.067565E-02*(1.0-0.4798*(T_salt-${T_Salt_initial})/${Salt_Density_initial})'
     execute_on = 'INITIAL timestep_end'
   []
   [update_ad_c_Zr90]
     type = ParsedAux
     block = 'core'
     variable = ad_Zr90
-    args = 'T_salt'
-    function = '1.870786E-04*(1.0-0.4798*(T_salt-${T_Salt_initial})/${Salt_Density_initial})'
+    coupled_variables = 'T_salt'
+    expression = '1.870786E-04*(1.0-0.4798*(T_salt-${T_Salt_initial})/${Salt_Density_initial})'
     execute_on = 'INITIAL timestep_end'
   []
   [update_ad_c_Zr91]
     type = ParsedAux
     block = 'core'
     variable = ad_Zr91
-    args = 'T_salt'
-    function = '4.079728E-05*(1.0-0.4798*(T_salt-${T_Salt_initial})/${Salt_Density_initial})'
+    coupled_variables = 'T_salt'
+    expression = '4.079728E-05*(1.0-0.4798*(T_salt-${T_Salt_initial})/${Salt_Density_initial})'
     execute_on = 'INITIAL timestep_end'
   []
   [update_ad_c_Zr92]
     type = ParsedAux
     block = 'core'
     variable = ad_Zr92
-    args = 'T_salt'
-    function = '6.235937E-05*(1.0-0.4798*(T_salt-${T_Salt_initial})/${Salt_Density_initial})'
+    coupled_variables = 'T_salt'
+    expression = '6.235937E-05*(1.0-0.4798*(T_salt-${T_Salt_initial})/${Salt_Density_initial})'
     execute_on = 'INITIAL timestep_end'
   []
   [update_ad_c_Zr94]
     type = ParsedAux
     block = 'core'
     variable = ad_Zr94
-    args = 'T_salt'
-    function = '6.319571E-05*(1.0-0.4798*(T_salt-${T_Salt_initial})/${Salt_Density_initial})'
+    coupled_variables = 'T_salt'
+    expression = '6.319571E-05*(1.0-0.4798*(T_salt-${T_Salt_initial})/${Salt_Density_initial})'
     execute_on = 'INITIAL timestep_end'
   []
   [update_ad_Zr96]
     type = ParsedAux
     block = 'core'
     variable = ad_Zr96
-    args = 'T_salt'
-    function = '1.018111E-05*(1.0-0.4798*(T_salt-${T_Salt_initial})/${Salt_Density_initial})'
+    coupled_variables = 'T_salt'
+    expression = '1.018111E-05*(1.0-0.4798*(T_salt-${T_Salt_initial})/${Salt_Density_initial})'
     execute_on = 'INITIAL timestep_end'
   []
 []
@@ -550,86 +550,86 @@ Salt_Density_initial = 2263.0
 
 [Transfers]
   [power_density]
-    type = MultiAppShapeEvaluationTransfer
+    type = MultiAppGeneralFieldShapeEvaluationTransfer
     to_multi_app = flow_dnp
     source_variable = power_density
     variable = power_density
     execute_on = 'timestep_end'
   []
   [fission_source]
-    type = MultiAppShapeEvaluationTransfer
+    type = MultiAppGeneralFieldShapeEvaluationTransfer
     to_multi_app = flow_dnp
     source_variable = fission_source
     variable = fission_source
     execute_on = 'timestep_end'
   []
   [c1]
-    type = MultiAppShapeEvaluationTransfer
+    type = MultiAppGeneralFieldShapeEvaluationTransfer
     from_multi_app = flow_dnp
     source_variable = 'c1'
     variable = 'c1'
     execute_on = 'timestep_end'
   []
   [c2]
-    type = MultiAppShapeEvaluationTransfer
+    type = MultiAppGeneralFieldShapeEvaluationTransfer
     from_multi_app = flow_dnp
     source_variable = 'c2'
     variable = 'c2'
     execute_on = 'timestep_end'
   []
   [c3]
-    type = MultiAppShapeEvaluationTransfer
+    type = MultiAppGeneralFieldShapeEvaluationTransfer
     from_multi_app = flow_dnp
     source_variable = 'c3'
     variable = 'c3'
     execute_on = 'timestep_end'
   []
   [c4]
-    type = MultiAppShapeEvaluationTransfer
+    type = MultiAppGeneralFieldShapeEvaluationTransfer
     from_multi_app = flow_dnp
     source_variable = 'c4'
     variable = 'c4'
     execute_on = 'timestep_end'
   []
   [c5]
-    type = MultiAppShapeEvaluationTransfer
+    type = MultiAppGeneralFieldShapeEvaluationTransfer
     from_multi_app = flow_dnp
     source_variable = 'c5'
     variable = 'c5'
     execute_on = 'timestep_end'
   []
   [c6]
-    type = MultiAppShapeEvaluationTransfer
+    type = MultiAppGeneralFieldShapeEvaluationTransfer
     from_multi_app = flow_dnp
     source_variable = 'c6'
     variable = 'c6'
     execute_on = 'timestep_end'
   []
   [T_salt]
-    type = MultiAppShapeEvaluationTransfer
+    type = MultiAppGeneralFieldShapeEvaluationTransfer
     from_multi_app = flow_dnp
     source_variable = 'T_fluid'
     variable = 'T_salt'
     execute_on = 'timestep_end'
   []
   [T_graph]
-    type = MultiAppShapeEvaluationTransfer
+    type = MultiAppGeneralFieldShapeEvaluationTransfer
     from_multi_app = flow_dnp
     source_variable = 'T_solid'
     variable = 'T_solid'
     execute_on = 'timestep_end'
   []
   [vel_x]
-    type = MultiAppShapeEvaluationTransfer
+    type = MultiAppGeneralFieldShapeEvaluationTransfer
     from_multi_app = flow_dnp
-    source_variable = 'vel_x'
+    source_variable = 'superficial_vel_x'
     variable = 'vel_x'
     execute_on = 'timestep_end'
   []
   [vel_y]
-    type = MultiAppShapeEvaluationTransfer
+    type = MultiAppGeneralFieldShapeEvaluationTransfer
     from_multi_app = flow_dnp
-    source_variable = 'vel_y'
+    source_variable = 'superficial_vel_y'
     variable = 'vel_y'
     execute_on = 'timestep_end'
   []

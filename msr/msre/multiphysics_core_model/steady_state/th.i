@@ -74,8 +74,8 @@ solid_blocks = 'core core_barrel'
   porosity = 'porosity'
   rhie_chow_user_object = 'pins_rhie_chow_interpolator'
 
-  u = vel_x
-  v = vel_y
+  u = superficial_vel_x
+  v = superficial_vel_y
 
   advected_interp_method = 'upwind'
   velocity_interp_method = 'rc'
@@ -101,12 +101,12 @@ solid_blocks = 'core core_barrel'
 # FV VARIABLES
 # ==============================================================================
 [Variables]
-  [vel_x]
+  [superficial_vel_x]
     type = PINSFVSuperficialVelocityVariable
     initial_condition = 1e-8
     block = ${fluid_blocks}
   []
-  [vel_y]
+  [superficial_vel_y]
     type = PINSFVSuperficialVelocityVariable
     initial_condition = 1e-8
     block = ${fluid_blocks}
@@ -171,7 +171,7 @@ solid_blocks = 'core core_barrel'
     gravity = '0.0 -9.81 0.0'
 
     # Variable naming
-    velocity_variable = 'vel_x vel_y'
+    velocity_variable = 'superficial_vel_x superficial_vel_y'
     pressure_variable = 'pressure'
     fluid_temperature_variable = 'T_fluid'
 
@@ -208,6 +208,8 @@ solid_blocks = 'core core_barrel'
     # Constrain Pressure
     pin_pressure = true
     pinned_pressure_value = ${p_outlet}
+    #pinned_pressure_point = '0.0 2.13859 0.0'
+    #pinned_pressure_type = point-value-uo
     pinned_pressure_type = average-uo
 
     # Passive Scalar -- solved separetely to integrate porosity jumps
@@ -223,18 +225,34 @@ solid_blocks = 'core core_barrel'
   # Extra kernels for the thermal-hydraulics solve in the fluid
   [pump_x]
     type = INSFVBodyForce
-    variable = vel_x
+    variable = superficial_vel_x
     functor = '${pump_force}'
     block = 'pump'
     momentum_component = 'x'
   []
   [pump_y]
     type = INSFVBodyForce
-    variable = vel_y
+    variable = superficial_vel_y
     functor = '${pump_force}'
     block = 'pump'
     momentum_component = 'y'
   []
+  # [pump_x]
+  #   type = INSFVPump
+  #   momentum_component = x
+  #   rhie_chow_user_object = 'pins_rhie_chow_interpolator'
+  #   variable = superficial_vel_x
+  #   block = 'pump'
+  #   pump_volume_force = ${pump_force}
+  # []
+  # [pump_y]
+  #   type = INSFVPump
+  #   momentum_component = y
+  #   rhie_chow_user_object = 'pins_rhie_chow_interpolator'
+  #   variable = superficial_vel_y
+  #   block = 'pump'
+  #   pump_volume_force = ${pump_force}
+  # []
   [convection_fluid_hx]
     type = NSFVEnergyAmbientConvection
     variable = T_fluid
@@ -507,13 +525,13 @@ solid_blocks = 'core core_barrel'
 
 [AuxKernels]
   [porosity_var_aux]
-    type = ADFunctorElementalAux
+    type = FunctorAux
     variable = porosity_var
     functor = 'porosity'
     block = ${fluid_blocks}
   []
   [rho_var_aux]
-    type = ADFunctorElementalAux
+    type = FunctorAux
     variable = 'rho_var'
     functor = 'rho'
     block = ${fluid_blocks}
@@ -668,8 +686,8 @@ solid_blocks = 'core core_barrel'
   []
   [vfr_downcomer]
     type = VolumetricFlowRate
-    vel_x = vel_x
-    vel_y = vel_y
+    vel_x = superficial_vel_x
+    vel_y = superficial_vel_y
     advected_quantity = 1.0
     boundary = 'downcomer_inlet'
   []
@@ -680,8 +698,8 @@ solid_blocks = 'core core_barrel'
   []
   [vfr_pump]
     type = VolumetricFlowRate
-    vel_x = vel_x
-    vel_y = vel_y
+    vel_x = superficial_vel_x
+    vel_y = superficial_vel_y
     advected_quantity = 1.0
     boundary = 'pump_outlet'
   []

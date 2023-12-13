@@ -17,15 +17,15 @@
 
 This model of the MSRE utilizes MOOSE to create a 2D, RZ (cylindrical coordinates) mesh of the MSRE.
 Griffin computes neutronics and resulting normalized power source [!citep](Javi23).
-Pronghorn perform medium-fidelity, coarse mesh thermal-hydraulics analysis of the core, upper plenum, pump, downcomer, and lower plenum [!citep](mau23).
+Pronghorn performs medium-fidelity, coarse mesh thermal-hydraulics analysis of the core, upper plenum, pump, downcomer, and lower plenum [!citep](mau23).
 Griffin and Pronghorn are coupled via the `MultiApp` system.
 The parts of the MSRE loop are represented in [MSRE_pgh_mesh_blocks].
 The model is an axisymmetric model with the left vertical axis being the axis of symmetry.
 
-The fuel salt flows down the `Downcomer`, through the `Lower Plenum`, and up into the `Core`; then, it is collected at the `Upper Plenum`, and, finally, it is recycled through the `Pump`.
+The fuel salt flows down the `Downcomer`, through the `Lower Plenum`, and up into the `Core`; then, it is collected at the `Upper Plenum`, and, finally, it is circulated through the `Pump` into the loop again.
 A porous medium approach is used to model flow conditions in the core with a vertical porosity of `0.22283`.
 No rugosity is assumed when computing the friction factors.
-An anisotropic friction source coefficient keeps the flow approximately 1-Dimensional at the core.
+An anisotropic friction source coefficient keeps the flow approximately 1-Dimensional at the core, to reproduce the fluid behaviors in the core channels.
 
 !media msr/msre/MSRE_pgh_mesh_blocks.png
        style=width:80%;margin-left:auto;margin-right:auto
@@ -56,7 +56,7 @@ Here the methodology to compute the eigenvalue of the MSRE system is computed an
 
 Additionally, the type of transport equation solve is selected.
 In this case the a multigroup Diffusion equation is sufficient for fast multiphysics coupling.
-Additionally, options for the jacobian and fission source auxiliary variable are selected here.
+Additionally, options for the Jacobian and fission source auxiliary variable are selected here.
 
 !listing msr/msre/multiphysics_core_model/steady_state/neu.i block=TransportSystems
 
@@ -77,7 +77,7 @@ The `Mesh` block can either generate a mesh using the MOOSE meshing capabiility 
 
 #### Aux Variables
 
-The `AuxVariables` block is specificed next. Through the ```Auxiliary Variables```, developers can define external variables that are solved or used in the primary simulation. The variable types, functions, and scaling factors are explained in detail [here](https://mooseframework.inl.gov/syntax/AuxVariables/index.html). Aux variables can be set explicitly in this block, or passed from other apps to perform multiphysics coupling.
+The `AuxVariables` block is specificed next. Through the ```Auxiliary Variables```, developers can define external variables that are solved or used in the primary simulation. The variable types, computation, and scaling factors are explained in detail [here](https://mooseframework.inl.gov/syntax/AuxVariables/index.html). Auxiliary variables can be set explicitly in the ```AuxKernel``` section, or set from another app using Transfers to perform multiphysics coupling.
 
 In this case, the velocity, fuel salt and solid structures temperatures, and delayed neutron precursor group distributions will be informed by the Pronghorn sub app, whereas the volumetric power and fission rate fields will be calculated by Griffin and passed to the Pronghorn sub app.
 
@@ -91,7 +91,7 @@ Correspondingly, the `AuxKernels` block specifies Kernels which act on the auxil
 
 #### User Objects
 
-Next, the `UserOjbects` block specifies User Objects that can be used by other moose applications. Here both the transport solutions and aux variable solutions are stored in their corresponding user objects. This user object is necessary for restarting a transient simulation from a steady-state solution.
+Next, the `UserOjbects` block specifies User Objects that can be used by other MOOSE applications. Here both the transport solutions and aux variable solutions are stored in their corresponding user objects. This user object is necessary for restarting a transient simulation from a steady-state solution.
 
 !listing msr/msre/multiphysics_core_model/steady_state/neu.i block=UserObjects
 
@@ -148,8 +148,8 @@ Lastly, the `Outputs` block specifies what type of output (e.g. exodus and CSV) 
 
 ## Thermal Hydraulics Model
 
-Next, Pronghorn (AKA Moose Navier Stokes Module) is the sub app detailed in the neutronics input file listed below which performs the thermal hydraulic calculations of the core and primary loop.
- Note, this application can be fully run with the open-source Moose Navier Stokes Module.
+Next, Pronghorn (here mostly leveraging the MOOSE Navier Stokes Module) is the sub app detailed in the neutronics input file listed below which performs the thermal hydraulic calculations of the core and primary loop.
+ Note, this application can be fully run with the open-source MOOSE Navier Stokes Module.
 
 !listing msr/msre/multiphysics_core_model/steady_state/th.i
 
