@@ -2,7 +2,7 @@
 
 *Contact: Mauricio Tano, mauricio.tanoretamales\@inl.gov*
 
-*Model summarized, documented, and uploaded by Andres Fierro*
+*Model summarized, documented, and uploaded by Andres Fierro, Dr. Samuel Walker, and Dr. Mauricio Tano*
 
 *Model link: [Griffin-Pronghorn Transient Model](https://github.com/idaholab/virtual_test_bed/tree/devel/msr/msre/multiphysics_core_model/transient)*
 
@@ -18,9 +18,15 @@
 
 This Transient model builds off of the existing Steady state model. Here only the difference will be highlighted to perform the transient analysis.
 
+This transient is a reactivity insertion of 19 percent-mili (pcm) at 5MW documented in a Oak Ridge National Laboratory report [!citep](steffy1970).
+
 ## Neutronics Transient Model
 
-<!-- Double Check this Section Mauricio - Could write a short description how you "fake" the control rod movement and where this is done in the code?-->
+#### Auxiliary Kernels
+
+To model a reactivity insertion transient, we artificially increase the density of U235 in the fuel. This can be seen in the `update_ad_f_U235` auxiliary kernel, where the fraction of U235 is increased corresponding to a 19 pcm insertion.
+
+!listing msr/msre/multiphysics_core_model/transient/neu.i block=AuxKernels
 
 #### User Objects
 

@@ -2,7 +2,7 @@
 
 *Contact: Mauricio Tano, mauricio.tanoretamales\@inl.gov*
 
-*Model summarized, documented, and uploaded by Andres Fierro*
+*Model summarized, documented, and uploaded by Andres Fierro, Dr. Samuel Walker, and Dr. Mauricio Tano*
 
 This section will cover both the Steady State and Transient Results from the MSRE multiphysics model.
 
@@ -61,7 +61,7 @@ mpiexec -n 6 ~/projects/bluecrab/blue_crab-opt -i neu.i
 
 ## Transient Results
 
-For the transient results, we tested a reactivity insertion of 19 percent-mili (pcm) at 5 MegaWatts, from ORNL (Oak Ridge National Laboratory) reports [!citep](steffy1970). Note: because there are no control rods in the Griffin model, the increase was achieved by temporarily artificially increasing the fission cross-section of the fuel. The multiphsyics model successfully captured the thermal oscillations induced by the density-Doppler power-temperature relationship.
+For the transient results, we tested a reactivity insertion of 19 percent-mili (pcm) at 5 MegaWatts, from ORNL (Oak Ridge National Laboratory) reports [!citep](steffy1970). Note: because there are no control rods in the Griffin model, the increase was achieved by temporarily artificially increasing the density of U235 in the fuel. The multiphsyics model successfully captured the thermal oscillations induced by the density-Doppler power-temperature relationship.
 
 The method converges reliably and efficiently, with a maximum of 15 iterations but usually less than ten iterations in the tested case. This coupling method converges faster than comparable methods, achieving less error than the domain-segregated method or a standalone SAM model. This may be due to the improved temperature resolution in the core. Note that as the limit of the time-step goes to zero, the domain-overlapping and the domain-segregated should yield same results.
 

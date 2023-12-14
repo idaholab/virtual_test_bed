@@ -30,10 +30,11 @@ rho_steel = 8000.0 # (kg/(m3)) density of steel
 k_steel = 15.0 # # (W/(m.k)) density of steel
 
 # Operational Parameters --------------------------------------------------------
-p_outlet = 1.01325e+05 # Reactor outlet pressure (Pa)
+#p_outlet = 1.01325e+05 # Reactor outlet pressure (Pa)
+p_outlet = 1.50653e+05 # Reactor outlet pressure (Pa)
 T_inlet = 908.15 # Salt inlet temperature (K).
 
-pump_force = 1.3e6 # pump force functor (set to get a loop circulation time of ~25 seconds)
+pump_force = -1.3e6 # pump force functor (set to get a loop circulation time of ~25 seconds)
 vol_hx = 1e10 # (W/(m3.K)) volumetric heat exchange coefficient for heat exchanger
 # Note: vol_hx need to be tuned to match intermediate HX performance for transients
 bulk_hx = 100.0 # (W/(m3.K)) core bulk volumetric heat exchange coefficient (already callibrated)
@@ -73,8 +74,8 @@ solid_blocks = 'core core_barrel'
   porosity = 'porosity'
   rhie_chow_user_object = 'pins_rhie_chow_interpolator'
 
-  u = vel_x
-  v = vel_y
+  u = superficial_vel_x
+  v = superficial_vel_y
 
   advected_interp_method = 'upwind'
   velocity_interp_method = 'rc'
@@ -101,15 +102,15 @@ solid_blocks = 'core core_barrel'
 # FV VARIABLES
 # ==============================================================================
 [Variables]
-  [vel_x]
+  [superficial_vel_x]
     type = PINSFVSuperficialVelocityVariable
     block = ${fluid_blocks}
-    initial_from_file_var = vel_x
+    initial_from_file_var = superficial_vel_x
   []
-  [vel_y]
+  [superficial_vel_y]
     type = PINSFVSuperficialVelocityVariable
     block = ${fluid_blocks}
-    initial_from_file_var = vel_y
+    initial_from_file_var = superficial_vel_y
   []
   [pressure]
     type = INSFVPressureVariable
@@ -177,7 +178,7 @@ solid_blocks = 'core core_barrel'
     gravity = '0.0 -9.81 0.0'
 
     # Variable naming
-    velocity_variable = 'vel_x vel_y'
+    velocity_variable = 'superficial_vel_x superficial_vel_y'
     pressure_variable = 'pressure'
     fluid_temperature_variable = 'T_fluid'
 
@@ -228,18 +229,20 @@ solid_blocks = 'core core_barrel'
 
   # Extra kernels for the thermal-hydraulics solve in the fluid
   [pump_x]
-    type = INSFVBodyForce
-    variable = vel_x
-    functor = '${pump_force}'
+    type = INSFVPump
+    momentum_component = x
+    rhie_chow_user_object = 'pins_rhie_chow_interpolator'
+    variable = superficial_vel_x
     block = 'pump'
-    momentum_component = 'x'
+    pump_volume_force = ${pump_force}
   []
   [pump_y]
-    type = INSFVBodyForce
-    variable = vel_y
-    functor = '${pump_force}'
+    type = INSFVPump
+    momentum_component = y
+    rhie_chow_user_object = 'pins_rhie_chow_interpolator'
+    variable = superficial_vel_y
     block = 'pump'
-    momentum_component = 'y'
+    pump_volume_force = ${pump_force}
   []
   [convection_fluid_hx]
     type = NSFVEnergyAmbientConvection
@@ -251,11 +254,20 @@ solid_blocks = 'core core_barrel'
 
   # Kernels for solve in the solid blocks
   [heat_time_solid]
-    type = INSFVEnergyTimeDerivative
+    type = PINSFVEnergyTimeDerivative
+    is_solid = true
+    porosity = 1
     variable = T_solid
-    dh_dt = ${cp_steel}
+    #dh_dt = dh_dt
     rho = ${rho_steel}
+    cp = ${cp_steel}
   []
+  # [heat_time_solid]
+  #   type = INSFVEnergyTimeDerivative
+  #   variable = T_solid
+  #   dh_dt = dh_dt
+  #   rho = ${rho_steel}
+  # []
   [heat_diffusion_solid]
     type = FVDiffusion
     variable = T_solid
@@ -467,7 +479,7 @@ solid_blocks = 'core core_barrel'
     h = 100.0
     T_solid = T_solid
     T_fluid = T_fluid
-    subdomain1 = 'core down_comer lower_plenum'
+    subdomain1 = 'core down_comer lower_plenum upper_plenum'
     subdomain2 = 'core_barrel'
     wall_cell_is_bulk = true
   []
@@ -499,13 +511,13 @@ solid_blocks = 'core core_barrel'
 
 [AuxKernels]
   [porosity_var_aux]
-    type = ADFunctorElementalAux
+    type = FunctorAux
     variable = porosity_var
     functor = 'porosity'
     block = ${fluid_blocks}
   []
   [rho_var_aux]
-    type = ADFunctorElementalAux
+    type = FunctorAux
     variable = 'rho_var'
     functor = 'rho'
     block = ${fluid_blocks}
@@ -555,6 +567,14 @@ solid_blocks = 'core core_barrel'
   []
 
   # Setting up heat conduction materials at blocks
+  [dh_dt_mat]
+    type = INSFVEnthalpyFunctorMaterial
+    rho = ${rho_steel}
+    temperature = T_solid
+    cp = ${cp_steel}
+    block = 'core_barrel'
+  []
+
   [effective_fluid_thermal_conductivity]
     type = ADGenericVectorFunctorMaterial
     prop_names = 'kappa'
@@ -660,8 +680,8 @@ solid_blocks = 'core core_barrel'
   []
   [vfr_downcomer]
     type = VolumetricFlowRate
-    vel_x = vel_x
-    vel_y = vel_y
+    vel_x = superficial_vel_x
+    vel_y = superficial_vel_y
     advected_quantity = 1.0
     boundary = 'downcomer_inlet'
   []
@@ -672,8 +692,8 @@ solid_blocks = 'core core_barrel'
   []
   [vfr_pump]
     type = VolumetricFlowRate
-    vel_x = vel_x
-    vel_y = vel_y
+    vel_x = superficial_vel_x
+    vel_y = superficial_vel_y
     advected_quantity = 1.0
     boundary = 'pump_outlet'
   []
