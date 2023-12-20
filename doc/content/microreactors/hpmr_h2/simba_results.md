@@ -1,4 +1,4 @@
-# SiMBA Reactor Results
+# HPMR-H_2 Reactor Results
 
 *Contact: Stefano Terlizzi, Stefano.Terlizzi\@inl.gov , Vincent Labour&#233;, vincent.laboure\@inl.gov*
 
@@ -39,15 +39,15 @@ In that table, Assembly 1 is any of the center fuel assembly and Assemblies 2 an
 
 ## Coupled Solution
 
-[simba_results1] (a) and (b) show the 3-D temperature and the $YH_x$ stoichiometric ratio spatial distributions in the moderator pins, respectively. These figures reveal the stoichiometric ratio and moderator temperature to be inversely proportional. In fact, the hydrogen stoichiometric ratio increases when the moderator temperature decreases and vice-versa. This is further illustrated in [simba_results1] (c), which reports the radially averaged moderator temperature and hydrogen concentration as a function of the distance from the bottom of the moderator pins.
+[hpmr_h2_results1] (a) and (b) show the 3-D temperature and the $YH_x$ stoichiometric ratio spatial distributions in the moderator pins, respectively. These figures reveal the stoichiometric ratio and moderator temperature to be inversely proportional. In fact, the hydrogen stoichiometric ratio increases when the moderator temperature decreases and vice-versa. This is further illustrated in [hpmr_h2_results1] (c), which reports the radially averaged moderator temperature and hydrogen concentration as a function of the distance from the bottom of the moderator pins.
 
 
-!media hpmr_h2/simba_results1.jpeg
+!media hpmr_h2/hpmr_h2_results1.jpeg
     caption= Three-dimensional temperature spatial distribution in the moderator pins, (b) 3-D hydrogen stoichiometric ratio spatial distribution, and (c) radially averaged moderator temperature and hydrogen stoichiometric ratio for 16 10-cm-high axial levels as a function of the distance from the bottom of the YHx moderator pins.
-    id=simba_results1
+    id=hpmr_h2_results1
     style=width:80%; margin-left:auto; margin-right:auto
 
-[table-floating2] reports the average, minimum, and maximum value for fuel temperature, denoted as $T_f$, moderator temperature, $T_m$, and, stoiciometric ration, $c_H$.
+[table-floating2] reports the average, minimum, and maximum value for fuel temperature, denoted as $T_f$, moderator temperature, $T_m$, and, stoichiometric ratio, $c_H$.
 
 !table id=table-floating2 caption=Maximum, minimum, and average values for the fuel temperature, moderator temperature, and hydrogen stoichiometric ratio.
 | Variable | Average | Minimum | Maximum |

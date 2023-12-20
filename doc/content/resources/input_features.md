@@ -183,6 +183,8 @@ specified. The MRAD and PBMR-400 models listed below are an example of this.
 
 - Heat Pipe Micro Reactor with Yttrium Hydride (HPRM_H2) Steady State Model [documentation](microreactors/hpmr_h2/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/devel/microreactors/hpmr/steady)
 
+- Heat Pipe Microreactor with Hydrogen Redistribution (HPRM_H2) Steady State Model [documentation](microreactors/hpmr_h2/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/devel/microreactors/hpmr_h2/steady)
+
 - Reflector bypass flow in the PB-FHR [documentation](pbfhr/reflector.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/pbfhr/reflector)
 
 - High Temperature Test Facility transient simulations [documentation](htgr/httf/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/httf)
@@ -204,9 +206,6 @@ specified. The MRAD and PBMR-400 models listed below are an example of this.
 - HTTR Core multiphysics [documentation](httr/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/httr/steady_state_and_null_transient)
 
 - Lotus Molten Chloride Reactor Steady State Model [documentation](msr/lotus/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/msr/lotus/steady_state)
-
-- Heat Pipe Micro Reactor with Yttrium Hydride (HPRM_H2) Steady State Model [documentation](microreactors/hpmr_h2/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/devel/microreactors/hpmr/steady)
-
 
 ### GPU-enabled
 

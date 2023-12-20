@@ -2,9 +2,7 @@
 
 *Contact: Stefano Terlizzi, stefano.terlizzi\@inl.gov, Vincent Labour&#233;, vincent.laboure\@inl.gov*
 
-*Model summarized, documented, and uploaded by Nathan Grund*
-
-*Model link: [Direwolf Steady State Model](https://github.com/idaholab/virtual_test_bed/tree/devel/microreactors/hpmr/steady)*
+*Model link: [Direwolf Steady State Model](https://github.com/idaholab/virtual_test_bed/tree/devel/microreactors/hpmr_h2/steady)*
 
 !tag name=HPMR_H2 Direwolf Steady State Model pairs=reactor_type:MR
                        reactor:HPMR_H2
@@ -17,11 +15,11 @@
 
 ## Mesh
 
-The reactor module in MOOSE [!citep](MOOSEReactorModule) was used to generate three different meshes for: (a) the Discontinuous Finite Elmenet (DFEM) discrete ordinates (SN) neutronic solver shown in [simba_mesh] (a), one for the Bison model, shown in [simba_mesh] (b), and one for the Coarse Mesh Finite Difference (CMFD) acceleration mesh. displayed in [simba_mesh] (c). A one-twelfth radially reflected geometry was built by exploiting the problem symmetry to minimize the number of degrees of freedom and increase the speed of calculations [!citep](Terlizzi2023).
+The reactor module in MOOSE [!citep](MOOSEReactorModule) was used to generate three different meshes for: (a) the Discontinuous Finite Element (DFEM) discrete ordinates (SN) neutronic solver shown in [hpmr_h2_mesh] (a), one for the Bison model, shown in [hpmr_h2_mesh] (b), and one for the Coarse Mesh Finite Difference (CMFD) acceleration mesh. displayed in [hpmr_h2_mesh] (c). A one-twelfth radially reflected geometry was built by exploiting the problem symmetry to minimize the number of degrees of freedom and increase the speed of calculations [!citep](Terlizzi2023).
 
-!media hpmr_h2/simba_mesh2.jpeg
+!media hpmr_h2/hpmr_h2_mesh2.jpeg
     caption= (a) DFEM-SN mesh, (b) Bison mesh, and (c) CMFD mesh [!citep](Terlizzi2023).
-    id=simba_mesh
+    id=hpmr_h2_mesh
     style=width:60%; margin-left:auto; margin-right:auto
 
 
@@ -40,11 +38,11 @@ Serpent (v. 2.1.32) was used to generate the multigroup cross sections for the H
 | 5     | 4.54E-04     | 11    | 6.70E-08     |
 | 6     | 4.81E-05     |       |              |
 
-The boundaries were set to capture the main resonances, and the thermal peak in the spectra is shown in [simba_spectrum] [!citep](Terlizzi2023).
+The boundaries were set to capture the main resonances, and the thermal peak in the spectra is shown in [hpmr_h2_spectrum] [!citep](Terlizzi2023).
 
-!media hpmr_h2/simba_spectrum.jpeg
+!media hpmr_h2/hpmr_h2_spectrum.jpeg
     caption= Spectrum per unit lethargy for the first ring of assemblies, second ring of assemblies, full reactor, and group boundaries (dotted vertical gray lines) [!citep](Terlizzi2023).
-    id=simba_spectrum
+    id=hpmr_h2_spectrum
     style=width:80%;margin-left:auto; margin-right:auto
 
 The cross sections were parametrized with respect to four variables: (1) fuel temperature, $T_f$; (2) moderator, monolith, and HP temperature, $T_m$; (3)
@@ -95,11 +93,11 @@ The Sockeye input contains the model for a single heat pipe. The latter uses the
 
 ## Multiphysics Coupling
 
-[simba_mpmap] shows the computational workflow for the coupled simulation. The left box includes the preliminary operations—namely, the mesh preparation and cross-section tabulations performed with Serpent (v. 2.1.32).
+[hpmr_h2_mpmap] shows the computational workflow for the coupled simulation. The left box includes the preliminary operations—namely, the mesh preparation and cross-section tabulations performed with Serpent (v. 2.1.32).
 
-!media hpmr_h2/simba_mpmap.jpeg
+!media hpmr_h2/hpmr_h2_mpmap.jpeg
     caption= Integrated computational workflow [!citep](Terlizzi2023).
-    id=simba_mpmap
+    id=hpmr_h2_mpmap
     style=width:80%; margin-left:auto; margin-right:auto
 
 Griffin is run to simulate the neutron transport in the core. The power density, $P_d$, computed from the neutron flux, is then transferred to Bison that is utilized to solve for the temperature in the reflector, $T_r$, moderator, $T_m$, and fuel, $T_f$, and the hydrogen-yttrium stoichiometric ratio in the yttrium hydride, here denoted as $c_H$. Bison is coupled to 101 single heat pipes sub-applications that are used to compute the equivalent heat transfer coefficient, $h_{eq}$, and the secondary-side temperature, $T_{secondary}^i$, to obtain the thermal fluids' response. The updated temperature field and the hydrogen-yttrium stoichiometric ratio are then fed back into Griffin, where the macroscopic cross sections are updated based on the new operating conditions,
