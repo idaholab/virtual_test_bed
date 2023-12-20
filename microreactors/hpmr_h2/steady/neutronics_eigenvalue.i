@@ -36,7 +36,7 @@ bison_ref_blocks = '${reflector_blocks} ${absorber_blocks}'
 []
 
 [PowerDensity]
-  power = 1.66666e5 # power: 2e6 / 12 = 1.66666e5 W/m
+  power = 1.66666e5 # power: 2e6 / 12 = 1.66666e5 W (per 1/12th core)
   power_density_variable = power_density
   integrated_power_postprocessor = integrated_power
 []
@@ -55,8 +55,8 @@ bison_ref_blocks = '${reflector_blocks} ${absorber_blocks}'
     family = MONOMIAL
     order = FIRST
     AQtype = Gauss-Chebyshev
-    NPolar = 1 # use >=2 for final runs (4 sawtooth nodes sufficient)
-    NAzmthl = 3 # use >=6 for final runs (4 sawtooth nodes sufficient)
+    NPolar = 1
+    NAzmthl = 3
     NA = 1
     sweep_type = asynchronous_parallel_sweeper
     using_array_variable = true
@@ -150,7 +150,7 @@ bison_ref_blocks = '${reflector_blocks} ${absorber_blocks}'
   diffusion_eigen_solver_type = newton
   prolongation_type = multiplicative
   max_diffusion_coefficient = 1
-  # Fixed point
+  # Fixed point iteration with MultiApps
   fixed_point_solve_outer = true
   fixed_point_algorithm = picard
   custom_pp = eigenvalue

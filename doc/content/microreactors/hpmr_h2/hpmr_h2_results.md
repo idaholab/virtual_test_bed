@@ -39,7 +39,7 @@ In that table, Assembly 1 is any of the center fuel assembly and Assemblies 2 an
 
 ## Coupled Solution
 
-[hpmr_h2_results1] (a) and (b) show the 3-D temperature and the $YH_x$ stoichiometric ratio spatial distributions in the moderator pins, respectively. These figures reveal the stoichiometric ratio and moderator temperature to be inversely proportional. In fact, the hydrogen stoichiometric ratio increases when the moderator temperature decreases and vice-versa. This is further illustrated in [hpmr_h2_results1] (c), which reports the radially averaged moderator temperature and hydrogen concentration as a function of the distance from the bottom of the moderator pins.
+[hpmr_h2_results1] (a) and (b) show the 3-D temperature and the $YH_x$ stoichiometric ratio spatial distributions in the moderator pins, respectively. These figures reveal the stoichiometric ratio and moderator temperature to be inversely correlated. In fact, the hydrogen stoichiometric ratio increases when the moderator temperature decreases and vice-versa. This is further illustrated in [hpmr_h2_results1] (c), which reports the radially averaged moderator temperature and hydrogen concentration as a function of the distance from the bottom of the moderator pins.
 
 
 !media hpmr_h2/hpmr_h2_results1.jpeg

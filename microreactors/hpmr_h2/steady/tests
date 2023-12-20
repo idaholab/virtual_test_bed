@@ -41,4 +41,13 @@
     input = 'heatpipe_vapor_only.i'
     executable_pattern = 'dire_wolf*|sockeye*|fenix*'
   []
+
+  [coupled_run]
+    prereq = neutronics_only_syntax
+    type = CSVDiff
+    csvdiff = 'neutronics_eigenvalue_out.csv'
+    input = 'neutronics_eigenvalue.i'
+    executable_pattern = 'dire_wolf*|sockeye*|fenix*'
+    min_parallel = 192 # won't be tested for now
+  []
 []
