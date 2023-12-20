@@ -4,14 +4,14 @@
 
 *Model link: [Direwolf Steady State Model](https://github.com/idaholab/virtual_test_bed/tree/devel/microreactors/hpmr_h2/steady)*
 
-!tag name=HPMR_H2 Direwolf Steady State Model pairs=reactor_type:MR
+!tag name=HPMR_H2 Direwolf Steady State Model pairs=reactor_type:microreactor
                        reactor:HPMR_H2
                        geometry:core
                        simulation_type:core_multiphysics
                        input_features:multiapps
                        code_used:DireWolf
                        computing_needs:HPC
-                       fiscal_year:2023
+                       fiscal_year:2024
 
 ## Mesh
 
@@ -26,7 +26,7 @@ The reactor module in MOOSE [!citep](MOOSEReactorModule) was used to generate th
 
 ## Cross Sections
 
-Serpent (v. 2.1.32) was used to generate the multigroup cross sections for the HPMR-H$_2$ problem. The ENDF/B-VIII.0 continuous energy library was utilized to leverage the $YH_x$ scattering libraries, which was then converted into an 11-group structure to perform the calculations. The group upper boundaries are reported in the [table-floating1].
+Serpent (v. 2.1.32) was used to generate the multigroup cross sections for the HPMR-H$_2$ problem. The ENDF/B-VIII.0 continuous energy library was utilized to leverage the $YH_x$ scattering libraries, which was then converted into an 11-group structure to perform the calculations. The conversion is performed via ISOXML (which is contained within Griffin) by reading the Serpent tallies and converting them into a multigroup XS library readable by Griffin. The group upper boundaries are reported in the [table-floating1].
 
 !table id=table-floating1 caption=Energy group (upper) boundries for the 11-group structure used in the Griffin model [!citep](Terlizzi2023).
 | Group | Energy (MeV) | Group | Energy (MeV) |
@@ -105,7 +105,15 @@ Griffin is run to simulate the neutron transport in the core. The power density,
 
 ## Running the Model
 
-To run the input via the HPC, load the following modules:
+To run the input on the INL HPC, an interactive node can be requested, e.g., using:
+
+```language=CPP
+qsub -I -l walltime=1:00:00  -l select=4:ncpus=48:mpiprocs=48 -P project
+```
+
+where 'project' should be replaced with the relevant project name (see [here](https://hpcweb.hpc.inl.gov/home/pbs) for a list of project names).
+
+Then, load the following modules:
 
 ```language=CPP
 module load use.moose moose-apps direwolf
@@ -117,7 +125,7 @@ Finally, to run the input, make sure you are in the correct directory, then use 
 mpirun -np 192 dire_wolf-opt -i neutronics_eigenvalue.i
 ```
 
-With these commands, the run should take 20-25 minutes. The input can be also run with the BlueCRAB executable if Sockeye executable is available using:
+With these commands, the run should take 20-25 minutes. The input can be also run with the BlueCRAB executable as long as it contains Sockeye using:
 
 ```language=CPP
 mpirun -np 192 blue_crab-opt -i neutronics_eigenvalue.i
