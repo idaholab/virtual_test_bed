@@ -66,7 +66,7 @@ bison_ref_blocks = '${reflector_blocks} ${absorber_blocks}'
 []
 
 [GlobalParams]
-  library_file = '../cross_sections_library/empire_fmh_b_fine.xml'
+  library_file = '../cross_sections_library/simba_fmh_b_fine.xml'
   library_name = empire_fmh_b_fine
   densities = 1.0
   isotopes = 'pseudo'
