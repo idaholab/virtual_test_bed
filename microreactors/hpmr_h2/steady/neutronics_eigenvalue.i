@@ -21,11 +21,11 @@ bison_ref_blocks = '${reflector_blocks} ${absorber_blocks}'
 [Mesh]
   [main]
     type = FileMeshGenerator
-    file = '../mesh/one_twelfth_empire_core_in.e'
+    file = 'one_twelfth_simba_core_in.e'
   []
   [coarse_mesh]
     type = FileMeshGenerator
-    file = '../mesh/one_twelfth_empire_core_CM_in.e'
+    file = 'one_twelfth_simba_core_CM_in.e'
   []
   [mesh]
     type = CoarseMeshExtraElementIDGenerator
@@ -67,7 +67,7 @@ bison_ref_blocks = '${reflector_blocks} ${absorber_blocks}'
 
 [GlobalParams]
   library_file = '../cross_sections_library/simba_fmh_b_fine.xml'
-  library_name = empire_fmh_b_fine
+  library_name = simba_fmh_b_fine
   densities = 1.0
   isotopes = 'pseudo'
   dbgmat = false
@@ -130,7 +130,7 @@ bison_ref_blocks = '${reflector_blocks} ${absorber_blocks}'
   []
   [axial_refl]
     type = CoupledFeedbackNeutronicsMaterial
-    block = '16 17'
+    block = '16 17 18 19'
     material_id = 1008
   []
 []
@@ -264,8 +264,7 @@ bison_ref_blocks = '${reflector_blocks} ${absorber_blocks}'
 
 [Outputs]
   csv = true
-  # nemesis = true
-  file_base = 'output/neutronics_eigenvalue'
+  file_base = 'neutronics_eigenvalue'
   [console]
     type = Console
     outlier_variable_norms = false

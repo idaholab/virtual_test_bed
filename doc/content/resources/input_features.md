@@ -181,8 +181,6 @@ specified. The MRAD and PBMR-400 models listed below are an example of this.
 
 - Micro reactor with heat pipes [documentation](mrad/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/microreactors/mrad)
 
-- Heat Pipe Micro Reactor with Yttrium Hydride (HPRM_H2) Steady State Model [documentation](microreactors/hpmr_h2/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/devel/microreactors/hpmr/steady)
-
 - Heat Pipe Microreactor with Hydrogen Redistribution (HPRM_H2) Steady State Model [documentation](microreactors/hpmr_h2/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/devel/microreactors/hpmr_h2/steady)
 
 - Reflector bypass flow in the PB-FHR [documentation](pbfhr/reflector.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/pbfhr/reflector)

@@ -62,15 +62,15 @@ points at which the multigroup cross sections were computed are as follows in [t
 
 Griffin is the parent application for this simulation and is the input associated to the neutronic simulation. The Griffin model uses the discontinuous finite element method (DFEM-SN) accelerated through the coarse mesh finite difference (CMFD) acceleration to solve the multigroup neutron transport equation [!citep](Wang2021perimp). This is visible from the transport system block where the type of problem to be solved and the angular and energy approximation used are specified.
 
-!listing microreactors/hpmr/steady/neutronics_eigenvalue.i block=TransportSystems language=cpp
+!listing microreactors/hpmr_h2/steady/neutronics_eigenvalue.i block=TransportSystems language=cpp
 
 The fixed point logics based upon the effective multiplication factor convergence within 1 pcm is enforced through "fixed_point_solve_outer = true" and the imposition of the multiplication factor as a custom postprocessor in the executioner block.
 
-!listing microreactors/hpmr/steady/neutronics_eigenvalue.i block=Executioner language=cpp
+!listing microreactors/hpmr_h2/steady/neutronics_eigenvalue.i block=Executioner language=cpp
 
 The full input is reported below for the sake of completeness.
 
-!listing microreactors/hpmr/steady/neutronics_eigenvalue.i language=cpp
+!listing microreactors/hpmr_h2/steady/neutronics_eigenvalue.i language=cpp
 
 ## Bison Input for Heat Conduction and Hydrogen Redistribution
 
@@ -84,11 +84,11 @@ where D is the diffusion coefficient of hydrogen in $YH_x$, R is the gas constan
 
 The full input is reported below for the sake of completeness.
 
-!listing microreactors/hpmr/steady/thermal_ss.i language=cpp
+!listing microreactors/hpmr_h2/steady/thermal_ss.i language=cpp
 
 The Sockeye input contains the model for a single heat pipe. The latter uses the VOFM to model the 1D sodium flow within the core region of the HP and a 2D heat conduction model in the annulus and wick region.  The full input is reported below for the sake of completeness.
 
-!listing microreactors/hpmr/steady/heatpipe_vapor_only.i language=cpp
+!listing microreactors/hpmr_h2/steady/heatpipe_vapor_only.i language=cpp
 
 
 ## Multiphysics Coupling

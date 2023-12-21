@@ -34,7 +34,7 @@ The HPMR-H$_2$ is a 2-MW microreactor composed of 18 hexagonal assemblies arrang
 
 The thermal conductivities of the materials are constant and do not depend on hydrogen content and hydride temperature. However, using more realistic temperature-dependent functions is a trivial change in the DireWolf model. The values were chosen based on the actual values of the properties at 1100 K, a temperature that is representative of the average thermal conditions in the reactor. The geometrical dimensions and material properties of the HPs were taken from Table II of [!citep](matthews2021coupled). In the neutronic model, the sodium and the wall material (stainless steel) of the HPs are homogenized.
 
-!table id=table-floating2 caption=Overview of the HPMR-H$_2$ reactor assembly [!citep](Terlizzi2023).
+!table id=table-floating2 caption=Overview of the HPMR-H$_2$ reactor specifications [!citep](Terlizzi2023).
 | Property      | Value  |
 | ----------- | ----------- |
 | Fuel Radius, cm                  | 1.0   |
