@@ -28,6 +28,15 @@
     executable_pattern = 'bison*'
     cli_args = 'Executioner/num_steps=1'
   []
+  [triso_3d_bison]
+    type = CSVDiff
+    input = 'triso_3d.i'
+    csvdiff = 'triso_3d_out.csv'
+    executable_pattern = 'bison*'
+    # see #236 on vtb
+    rel_err = '1e-3'
+    cli_args = 'Executioner/num_steps=1'
+  []
   [triso_bluecrab]
     type = CSVDiff
     input = 'triso_1d.i'

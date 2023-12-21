@@ -89,13 +89,10 @@ opens between the buffer and IPyC layers.
 
 !listing htgr/triso_fuel/triso_2d_aspherical.i block=gen language=cpp
 
-<<<<<<< HEAD
 `TRISO3DMeshGenerator` creates a 3D mesh appropriate for use in TRISO analysis.  The user supplies radial coordinates that mark the boundaries of mesh blocks.  A list of numbers of elements per block is also supplied. A `0` for the elements in the block represents a gap and is typically used for the gap that opens between the buffer and IPyC layers.
 
 !listing htgr/triso_fuel/triso_3d.i block=gen language=cpp
 
-=======
->>>>>>> 310f403 (add TRISO 2D example)
 ## UserObjects
 
 `TRISOGeometry` outputs the TRISO particle and pebble geometry determined from the mesh at the beginning of the simulation. This capability is available in 2D and 3D.
@@ -142,11 +139,9 @@ If IPyC cracking is modeled, the symmetric boundary conditions need to exclude t
 
 !listing htgr/triso_fuel/triso_2d_ipyc_cracking.i block=no_disp_y language=cpp
 
-<<<<<<< HEAD
+
 For this 3D example, symmetric boundary conditions are applied.
 
-=======
->>>>>>> 310f403 (add TRISO 2D example)
 ## Material
 
 Thermo-mechanical properties of a TRISO particle are specified in this block. The description of each model can be found in [!cite](bison_triso_model).
