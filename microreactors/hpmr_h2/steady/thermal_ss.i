@@ -27,7 +27,41 @@ qvalue_multiplier = 1.0
 [Mesh]
   [main]
     type = FileMeshGenerator
-    file = '../mesh/one_twelfth_empire_core_thermal.e'
+    file = 'one_twelfth_simba_core_in.e'
+  []
+  # remove blocks and add sidesets to apply boundary conditions
+  [add_sideset_hp]
+    type = SideSetsBetweenSubdomainsGenerator
+    input = main
+    primary_block = '8 17' # add 16 so the HP boundary extends into the upper axial reflector
+    paired_block = '7'
+    new_boundary = 'hp'
+  []
+  [add_sideset_inner_mod_gap]
+    type = SideSetsBetweenSubdomainsGenerator
+    input = add_sideset_hp
+    primary_block = '4'
+    paired_block = '5'
+    new_boundary = 'gap_mod_inner'
+  []
+  [add_sideset_outer_mod_gap]
+    type = SideSetsBetweenSubdomainsGenerator
+    input = add_sideset_inner_mod_gap
+    primary_block = '8'
+    paired_block = '5'
+    new_boundary = 'gap_mod_outer'
+  []
+  [add_sideset_central_hole]
+    type = SideSetsBetweenSubdomainsGenerator
+    input = add_sideset_outer_mod_gap
+    primary_block = '22'
+    paired_block = '21'
+    new_boundary = 'central_hole'
+  []
+  [remove_blocks] # remove HPs, moderator gap and central shutdown cooling hole
+    type = BlockDeletionGenerator
+    input = add_sideset_central_hole
+    block = '6 7 5 20 21'
   []
 []
 
@@ -222,7 +256,6 @@ qvalue_multiplier = 1.0
   end_time = 3e4
 
   [TimeStepper]
-    # type = SolutionTimeAdaptiveDT
     type = IterationAdaptiveDT
     growth_factor = 1.5
     dt = 0.01 # the initial timestep should be very small to avoid discrepancy due to lagging at the beginning of each new Richardson iteration
@@ -237,8 +270,8 @@ qvalue_multiplier = 1.0
     boundary = 'hp'
     variable = Tsolid
     direction = z
-    bounds = '0.2 2.0' # evaporator section - FIXME: could add more layers but delta T less than 50K (do it after seeing if it messes with Sockeye)
-    points_file = '../mesh/twelfth_core_hp_centers.txt' # assembly centers
+    bounds = '0.2 2.0' # evaporator section - could add more layers but delta T less than 50K (do it after seeing if it messes with Sockeye)
+    points_file = 'twelfth_core_hp_centers.txt' # assembly centers
     execute_on = 'initial timestep_end'
   []
 []
@@ -246,7 +279,7 @@ qvalue_multiplier = 1.0
 [MultiApps]
   [sockeye]
     type = TransientMultiApp
-    positions_file = '../mesh/twelfth_core_hp_centers.txt' # 101 HPs
+    positions_file = 'twelfth_core_hp_centers.txt' # 101 HPs
     app_type = SockeyeApp
     input_files = 'heatpipe_vapor_only.i'
     execute_on = 'timestep_end'

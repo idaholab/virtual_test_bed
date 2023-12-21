@@ -2,8 +2,6 @@
 
 *Contact: Stefano Terlizzi, Stefano.Terlizzi\@inl.gov , Vincent Labour&#233;, vincent.laboure\@inl.gov*
 
-*Model summarized, documented, and uploaded by Nathan Grund*
-
 ## Neutronics Verification
 
 
