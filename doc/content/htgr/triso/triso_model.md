@@ -12,7 +12,7 @@
                        computing_needs:Workstation
                        fiscal_year:2022
 
-There are three input files. The first input file (triso_1d.i) is a 1D TRISO model with perfectly spherical geometry. The other two input files (triso_2d_aspherical.i and triso_2d_ipyc_cracking.i) are 2D RZ-symmetric TRISO models with spherical geometry and IPyC cracking, respectively. Interested readers are referred to [!citep](bison_triso_model) for more details about TRISO modeling capability in Bison.
+The input file of `triso_1d.i` is a 1D TRISO model with perfectly spherical geometry. The input files of `triso_2d_aspherical.i` and `triso_2d_ipyc_cracking.i` are 2D RZ-symmetric TRISO models with spherical geometry and IPyC cracking, respectively. The input file of `triso_3d` is a one-eighth 3D TRISO model with perfectly spherical geometry. Interested readers are referred to [!citep](bison_triso_model) for more details about TRISO modeling capability in Bison.
 
 The fuel parameters are given in [table:fuel_parameters]. The irradiation condition is summarized in [table:condition]
 
@@ -87,6 +87,10 @@ opens between the buffer and IPyC layers.
 
 !listing htgr/triso_fuel/triso_2d_aspherical.i block=gen language=cpp
 
+`TRISO3DMeshGenerator` creates a 3D mesh appropriate for use in TRISO analysis.  The user supplies radial coordinates that mark the boundaries of mesh blocks.  A list of numbers of elements per block is also supplied. A `0` for the elements in the block represents a gap and is typically used for the gap that opens between the buffer and IPyC layers.
+
+!listing htgr/triso_fuel/triso_3d.i block=gen language=cpp
+
 ## UserObjects
 
 `TRISOGeometry` outputs the TRISO particle and pebble geometry determined from the mesh at the beginning of the simulation. This capability is available in 2D and 3D.
@@ -132,6 +136,8 @@ The boundary conditions of displacements and temperature are set in this block. 
 If IPyC cracking is modeled, the symmetric boundary conditions need to exclude the boundary of crack surface.
 
 !listing htgr/triso_fuel/triso_2d_ipyc_cracking.i block=no_disp_y language=cpp
+
+For this 3D example, symmetric boundary conditions are applied.
 
 ## Material
 
