@@ -8,6 +8,7 @@
                        reactor:MSRE
                        geometry:primary_loop
                        code_used:SAM
+                       transient:steady_state;RIA
                        computing_needs:Workstation
                        fiscal_year:2022
 

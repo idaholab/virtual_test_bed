@@ -9,7 +9,9 @@
                        geometry:core
                        simulation_type:core_multiphysics
                        input_features:multiapps
-                       code_used:BlueCrab
+                       transient:steady_state;ULOF
+                       code_used:BlueCrab;Griffin;Pronghorn;MOOSE_NavierStokes
+                       open_source:partial
                        computing_needs:Workstation
                        fiscal_year:2021
 

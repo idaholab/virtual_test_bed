@@ -8,6 +8,7 @@
                        reactor:MSFR
                        simulation_type:primary_loop
                        code_used:SAM
+                       transient:steady_state;ULOF
                        computing_needs:Workstation
                        fiscal_year:2021
 
