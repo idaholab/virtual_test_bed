@@ -10,7 +10,7 @@
                        simulation_type:multiphysics
                        input_features:multiapps;reactor_meshing;mixed_restart
                        transient:steady_state;overpower;load_follow;ULOC
-                       code_used:BlueCrab;Griffin;BISON;Sockeye
+                       codes_used:BlueCrab;Griffin;BISON;Sockeye
                        computing_needs:HPC
                        fiscal_year:2023
 

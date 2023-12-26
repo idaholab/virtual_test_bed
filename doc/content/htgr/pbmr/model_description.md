@@ -10,7 +10,7 @@
                        simulation_type:multiphysics
                        input_features:multiapps;mixed_restart
                        transient:steady_state;PLOFC
-                       code_used:BlueCrab;Griffin;Pronghorn
+                       codes_used:BlueCrab;Griffin;Pronghorn
                        computing_needs:Workstation
                        fiscal_year:2021
 

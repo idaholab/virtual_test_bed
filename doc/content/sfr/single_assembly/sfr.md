@@ -9,7 +9,7 @@
                        simulation_type:assembly_multiphysics
                        input_features:multiapps
                        transient:steady_state
-                       code_used:BlueCrab;Griffin;BISON;SAM
+                       codes_used:BlueCrab;Griffin;BISON;SAM
                        computing_needs:Workstation
                        fiscal_year:2021
 

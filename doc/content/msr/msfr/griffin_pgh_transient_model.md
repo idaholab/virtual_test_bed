@@ -10,7 +10,7 @@
                        simulation_type:multiphysics
                        input_features:multiapps
                        transient:ULOF
-                       code_used:BlueCrab;Griffin;Pronghorn;MOOSE_NavierStokes
+                       codes_used:BlueCrab;Griffin;Pronghorn;MOOSE_NavierStokes
                        computing_needs:Workstation
                        fiscal_year:2021
 

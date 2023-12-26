@@ -6,7 +6,7 @@
                        geometry:core
                        simulation_type:thermal_hydraulics
                        transient:steady_state
-                       code_used:Pronghorn
+                       codes_used:Pronghorn
                        computing_needs:Workstation
                        fiscal_year:2024
 

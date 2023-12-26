@@ -7,7 +7,7 @@
 !tag name=Conjugate Heat Transfer Simulation of a 67-Pebble Core pairs=reactor_type:HTGR
                        geometry:pebble_bed
                        simulation_type:CFD
-                       code_used:Cardinal;NekRS;MOOSE_HeatTransfer
+                       codes_used:Cardinal;NekRS;MOOSE_HeatTransfer
                        input_features:multiapps
                        computing_needs:Workstation
                        gpu_enabled:true

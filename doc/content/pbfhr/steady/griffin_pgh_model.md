@@ -10,7 +10,7 @@
                        simulation_type:core_multiphysics
                        input_features:multiapps
                        transient:steady_state
-                       code_used:BlueCrab;Griffin;Pronghorn
+                       codes_used:BlueCrab;Griffin;Pronghorn
                        computing_needs:Workstation
                        fiscal_year:2020
 

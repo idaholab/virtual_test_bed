@@ -8,7 +8,7 @@
                        reactor:GCMR
                        geometry:assembly
                        simulation_type:multiphysics
-                       code_used:BlueCrab;Griffin;BISON
+                       codes_used:BlueCrab;Griffin;BISON
                        input_features:multiapps
                        transient:steady_state;RIA;flow_blockage
                        computing_needs:HPC

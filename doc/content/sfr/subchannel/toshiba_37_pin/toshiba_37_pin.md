@@ -8,7 +8,7 @@
                        geometry:assembly
                        simulation_type:assembly_flow
                        transient:steady_state
-                       code_used:Pronghorn_subchannel
+                       codes_used:Pronghorn_subchannel
                        computing_needs:Workstation
                        fiscal_year:2023
 

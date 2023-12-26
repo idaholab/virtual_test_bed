@@ -10,7 +10,7 @@
                        simulation_type:neutronics;multiphysics
                        input_features:reactor_meshing;multiapps;solution_vector_restart
                        transient:steady_state;reactivity_insertion
-                       code_used:Griffin;MOOSE_HeatTransfer
+                       codes_used:Griffin;MOOSE_HeatTransfer
                        computing_needs:Workstation
                        open_source:partial
                        fiscal_year:2024
