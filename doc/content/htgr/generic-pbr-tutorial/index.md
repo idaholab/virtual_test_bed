@@ -2,6 +2,7 @@
 
 !tag name=Generic Pebble Bed HTGR Pronghorn tutorial pairs=reactor_type:HTGR
                        reactor:generic_PBR
+                       tutorials:PBR
                        geometry:core
                        simulation_type:thermal_hydraulics
                        transient:steady_state

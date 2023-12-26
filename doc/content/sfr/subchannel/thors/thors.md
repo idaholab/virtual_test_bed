@@ -7,6 +7,7 @@
 !tag name=Effect of Partial Blockages in Simulated LMFBR Fuel Assemblies pairs=reactor_type:SFR
                        geometry:assembly
                        simulation_type:assembly_flow
+                       transient:steady_state
                        code_used:Pronghorn_subchannel
                        computing_needs:Workstation
                        fiscal_year:2024

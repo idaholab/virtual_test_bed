@@ -1,5 +1,13 @@
 # MOOSE MultiApps Tutorial for Reactor Applications
 
+!tag name=MOOSE MultiApps Tutorial for Reactor Applications pairs=tutorials:multiapps
+                       simulation_type:multiphysics
+                       code_used:Griffin
+                       open_source:partial
+                       input_features:multiapps
+                       computing_needs:Workstation
+                       fiscal_year:2022
+
 1. [Introduction to Multiphysics Coupling with MOOSE](multiapps_chps/chp_1_motives.md).
 
 2. [Important Terminology and Hierarchy Rules.](multiapps_chps/chp_2_terminology.md).

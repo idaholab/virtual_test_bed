@@ -7,11 +7,12 @@
 !tag name=Micro Reactor Drum Rotation model pairs=reactor_type:microreactor
                        reactor:Empire
                        geometry:core
-                       simulation_type:neutronics
-                       input_features:reactor_meshing
-                       transient:reactivity_insertion
-                       code_used:Griffin
+                       simulation_type:neutronics;multiphysics
+                       input_features:reactor_meshing;multiapps;solution_vector_restart
+                       transient:steady_state;reactivity_insertion
+                       code_used:Griffin;MOOSE_HeatTransfer
                        computing_needs:Workstation
+                       open_source:partial
                        fiscal_year:2024
 
 ## Reactor Description

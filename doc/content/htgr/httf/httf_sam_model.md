@@ -9,6 +9,7 @@
                        geometry:core
                        code_used:SAM
                        computing_needs:workstation
+                       transient:steady_state
                        fiscal_year:2024
 
 ## Problem Description

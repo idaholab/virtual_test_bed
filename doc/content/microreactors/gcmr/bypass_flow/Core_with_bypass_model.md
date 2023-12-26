@@ -9,7 +9,7 @@
                        geometry:core
                        simulation_type:core_thermalhydraulics
                        input_features:multiapps
-                       code_used:Pronghorn_subchannel
+                       code_used:Pronghorn_subchannel;MOOSE_HeatTransfer;MOOSE_ThermalHydraulics
                        computing_needs:Workstation
                        open_source:partial
                        fiscal_year:2023

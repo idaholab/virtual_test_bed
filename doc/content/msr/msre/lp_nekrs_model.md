@@ -6,8 +6,8 @@
 
 !tag name=Molten Salt Reactor Experiment nekRS Model pairs=reactor_type:MSR
                        reactor:MSRE
-                       geometry:lower_plenum
-                       code_used:nekRS
+                       geometry:plenum
+                       code_used:NekRS
                        computing_needs:HPC
                        fiscal_year:2023
 

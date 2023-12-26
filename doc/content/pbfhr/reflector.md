@@ -7,7 +7,7 @@
 !tag name=pbfhr_bypass pairs=reactor_type:PB-FHR
                        geometry:reflector
                        simulation_type:component_analysis
-                       code_used:cardinal
+                       code_used:Cardinal;NekRS;MOOSE_HeatTransfer
                        open_source:true
                        input_features:multiapps
                        computing_needs:HPC

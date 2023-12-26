@@ -8,9 +8,9 @@
                        reactor:HPMR
                        geometry:core
                        simulation_type:multiphysics
-                       input_features:multiapps
-                       transient:overpower
-                       code_used:BlueCrab
+                       input_features:multiapps;reactor_meshing;mixed_restart
+                       transient:steady_state;overpower;load_follow;ULOC
+                       code_used:BlueCrab;Griffin;BISON;Sockeye
                        computing_needs:HPC
                        fiscal_year:2023
 

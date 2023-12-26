@@ -9,6 +9,7 @@
                        simulation_type:primary_loop
                        code_used:SAM
                        transient:steady_state;ULOF
+                       input_features:checkpoint_restart
                        computing_needs:Workstation
                        fiscal_year:2021
 

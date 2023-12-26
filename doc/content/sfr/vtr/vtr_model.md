@@ -8,7 +8,8 @@
                        reactor:VTR
                        geometry:core
                        simulation_type:core_multiphysics
-                       code_used:BlueCrab
+                       transient:steady_state
+                       code_used:BlueCrab;Griffin;BISON;SAM
                        computing_needs:Workstation
                        input_features:multiapps
                        fiscal_year:2022
