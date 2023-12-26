@@ -7,8 +7,8 @@
 !tag name=MSR Depletion Model pairs=reactor_type:MSR
                        reactor:generic_msr
                        geometry:mini-core
-                       simulation_type:core_depletion
-                       code_used:Griffin
+                       simulation_type:depletion
+                       codes_used:Griffin
                        computing_needs:Workstation
                        fiscal_year:2023
 

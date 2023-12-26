@@ -9,8 +9,8 @@
                        geometry:core
                        simulation_type:multiphysics
                        input_features:multiapps
-                       transient:null
-                       code_used:Sabertooth
+                       transient:steady_state;null
+                       codes_used:Sabertooth;Griffin;MOOSE_HeatTransfer;RELAP-7
                        computing_needs:Workstation
                        fiscal_year:2023
 
@@ -186,7 +186,7 @@ The 'Mesh' block loads a mesh to simulate the 5 fuel pins within the fuel column
 
 #### Thermal Contact
 
-The 'ThermalContact' block solves for the heat conduction and radiation in the gap between the graphite sleeve and the top of the fuel compact, the gap between the side of graphite sleeve and side of the fuel compact, and the gap between the side of the graphite sleeve and the side of the moderator block.
+The `ThermalContact` block solves for the heat conduction and radiation in the gap between the graphite sleeve and the top of the fuel compact, the gap between the side of graphite sleeve and side of the fuel compact, and the gap between the side of the graphite sleeve and the side of the moderator block.
 
 !listing httr/steady_state_and_null_transient/fuel_elem_steady.i block=ThermalContact/gap_top
 

@@ -7,10 +7,11 @@
 !tag name=HTTF Core Model pairs=reactor_type:HTGR
                        reactor:HTTF
                        geometry:core
-                       simulation_type:multiphysics
-                       code_used:RELAP-7
-                       input_features:multiapps
+                       simulation_type:thermal_hydraulics
+                       codes_used:RELAP-7;MOOSE_HeatTransfer
+                       input_features:multiapps;control_logic
                        computing_needs:HPC
+                       open_source:partial
                        fiscal_year:2023
 
 The MOOSE MultiApp system was used to model the PG-26 transient utilizing 3-D heat conduction within the core and 1-D

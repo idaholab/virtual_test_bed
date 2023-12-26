@@ -4,8 +4,10 @@
                        reactor:GCMR
                        geometry:plant
                        simulation_type:multiphysics
-                       code_used:BlueCrab
-                       transient:load_follow
+                       codes_used:BlueCrab;Griffin;MOOSE_ThermalHydraulics
+                       input_features:control_logic
+                       transient:startup;load_follow
+                       open_source:partial
                        computing_needs:Workstation
                        fiscal_year:2023
 

@@ -7,11 +7,13 @@
 *Model link: [Griffin-Pronghorn Steady-State Lotus Model](https://github.com/idaholab/virtual_test_bed/tree/devel/msr/lotus/steady_state)*
 
 !tag name=Lotus Griffin-Pronghorn Steady State Model pairs=reactor_type:MSR
-                       reactor:generic-msr
+                       reactor:generic_msr
                        geometry:core
-                       simulation_type:core_multiphysics
+                       simulation_type:multiphysics
                        input_features:multiapps
-                       code_used:BlueCrab
+                       transient:steady_state
+                       codes_used:BlueCrab;Griffin;Pronghorn;MOOSE_NavierStokes
+                       open_source:partial
                        computing_needs:HPC
                        fiscal_year:2024
 

@@ -8,9 +8,9 @@
                        reactor:PBMR-400
                        geometry:core
                        simulation_type:multiphysics
-                       input_features:multiapps
-                       transient:PLOFC
-                       code_used:BlueCrab
+                       input_features:multiapps;mixed_restart
+                       transient:steady_state;PLOFC
+                       codes_used:BlueCrab;Griffin;Pronghorn
                        computing_needs:Workstation
                        fiscal_year:2021
 

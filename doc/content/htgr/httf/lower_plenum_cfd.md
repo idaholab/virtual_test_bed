@@ -9,7 +9,7 @@
                        geometry:plenum
                        simulation_type:CFD
                        transient:steady_state
-                       code_used:Nek5000
+                       codes_used:Nek5000
                        computing_needs:HPC
                        open_source:true
                        fiscal_year:2023

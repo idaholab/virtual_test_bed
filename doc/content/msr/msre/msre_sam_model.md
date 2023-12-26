@@ -7,7 +7,9 @@
 !tag name=Molten Salt Reactor Experiment SAM Model pairs=reactor_type:MSR
                        reactor:MSRE
                        geometry:primary_loop
-                       code_used:SAM
+                       codes_used:SAM
+                       transient:steady_state;RIA
+                       input_features:checkpoint_restart
                        computing_needs:Workstation
                        fiscal_year:2022
 
@@ -148,7 +150,7 @@ There are three types of output files:
 
 
 [msre_sam] shows the steady state fuel salt temperature in the primary loop during the normal operating condition.
-The fuel salt enters the MSRE core at an average temeprature of 908K, and through the nuclear reactions in the core region, leaves the core at an average temperature of 937K.
+The fuel salt enters the MSRE core at an average temperature of 908K, and through the nuclear reactions in the core region, leaves the core at an average temperature of 937K.
 The primary pump is located at the top-right corner, driving the fuel salt in the system.
 The U-tube primiary heat exchanger cools down the fuel salt, which returns to the core through the connecting pipes, downcomer and the core inlet plenum. The overall layout shown in [msre_sam] follows that of the original MSRE designs.
 
