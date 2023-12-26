@@ -6,8 +6,9 @@
                        reactor:MSFR
                        geometry:primary_loop
                        simulation_type:multiphysics
-                       code_used:BlueCrab
+                       code_used:BlueCrab;Griffin;Pronghorn;SAM
                        input_features:multiapps
+                       transient:steady_state
                        computing_needs:HPC
                        fiscal_year:2023
 
