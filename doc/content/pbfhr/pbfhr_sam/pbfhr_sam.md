@@ -7,7 +7,8 @@
 !tag name=FHR Core SAM Model pairs=reactor_type:PB-FHR
                        reactor:Mk1-FHR
                        simulation_type:core
-                       transient:PLOF
+                       transient:steady_state;PLOF
+                       input_features:checkpoint_restart
                        code_used:SAM
                        computing_needs:Workstation
                        fiscal_year:2021

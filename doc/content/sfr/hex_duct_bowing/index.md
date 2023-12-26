@@ -3,7 +3,8 @@
 !tag name=Hexagonal Duct IAEA Benchmarks pairs=reactor_type:SFR
                        geometry:assembly_duct
                        simulation_type:component_analysis
-                       code_used:MOOSE_tensor_mechanics
+                       code_used:MOOSE_TensorMechanics
+                       transient:steady_state
                        computing_needs:Workstation
                        open_source:true
                        fiscal_year:2022

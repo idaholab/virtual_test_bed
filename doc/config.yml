@@ -32,6 +32,7 @@ Extensions:
         active: True
         js_file: index-6fae072b.js
         allowed_keys:
+            - tutorials
             - reactor_type
             - reactor
             - geometry

@@ -7,6 +7,7 @@
 !tag name=Subchannel Model for the Toshiba 37-Pin Benchmark pairs=reactor_type:SFR
                        geometry:assembly
                        simulation_type:assembly_flow
+                       transient:steady_state
                        code_used:Pronghorn_subchannel
                        computing_needs:Workstation
                        fiscal_year:2023

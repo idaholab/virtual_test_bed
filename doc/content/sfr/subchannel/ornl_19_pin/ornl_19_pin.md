@@ -9,6 +9,7 @@
                        simulation_type:assembly_flow
                        code_used:Pronghorn_subchannel
                        computing_needs:Workstation
+                       transient:steady_state
                        fiscal_year:2023
 
 ## Benchmark description
