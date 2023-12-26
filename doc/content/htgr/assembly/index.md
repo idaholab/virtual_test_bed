@@ -8,7 +8,7 @@
                        reactor:generic_prismatic_htgr
                        geometry:assembly
                        simulation_type:multiphysics
-                       codes_used:Cardinal;OpenMC;MOOSE_HeatTranfer;MOOSE_ThermalHydraulics
+                       codes_used:Cardinal;OpenMC;MOOSE_HeatTransfer;MOOSE_ThermalHydraulics
                        open_source:true
                        transient:steady_state
                        input_features:multiapps;reactor_meshing
