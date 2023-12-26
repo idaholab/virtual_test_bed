@@ -22,6 +22,7 @@ Users will need to request access to the controlled NEAMS software from the [Nuc
 
 ## Reactor Models
 
+- [Models automated indexing](https://mooseframework.inl.gov/virtual_test_bed/resources/filter/index.html)\\
 - [Models sorted by code used](resources/codes_used.md) \\
 - [Models sorted by type of simulation](resources/simulation_type.md) \\
 - [Models sorted by input file feature](resources/input_features.md) \\
