@@ -6,7 +6,7 @@
 
 !tag name=Subchannel Model for the ORNL 19-Pin Benchmark pairs=reactor_type:SFR
                        geometry:assembly
-                       simulation_type:assembly_flow
+                       simulation_type:thermal_hydraulics
                        codes_used:Pronghorn_subchannel
                        computing_needs:Workstation
                        transient:steady_state

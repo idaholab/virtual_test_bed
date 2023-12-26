@@ -7,7 +7,7 @@
 !tag name=FHR Core Steady-State Model pairs=reactor_type:PB-FHR
                        reactor:Mk1-FHR
                        geometry:core
-                       simulation_type:core_multiphysics
+                       simulation_type:multiphysics
                        input_features:multiapps
                        transient:steady_state
                        codes_used:BlueCrab;Griffin;Pronghorn

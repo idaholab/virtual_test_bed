@@ -6,7 +6,7 @@
 
 !tag name=Sodium Fast Reactor Single Assembly Model pairs=reactor_type:SFR
                        geometry:assembly
-                       simulation_type:assembly_multiphysics
+                       simulation_type:multiphysics
                        input_features:multiapps
                        transient:steady_state
                        codes_used:BlueCrab;Griffin;BISON;SAM

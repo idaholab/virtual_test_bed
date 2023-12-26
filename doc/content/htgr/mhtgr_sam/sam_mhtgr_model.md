@@ -6,7 +6,7 @@
 
 !tag name=MHTGR SAM Model pairs=reactor_type:HTGR
                        reactor:MHTGR
-                       geometry:primary
+                       geometry:primary_loop
                        simulation_type:balance_of_plant
                        input_features:checkpoint_restart
                        codes_used:SAM
