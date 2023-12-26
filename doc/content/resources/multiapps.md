@@ -2,7 +2,7 @@
 
 !tag name=MOOSE MultiApps Tutorial for Reactor Applications pairs=tutorials:multiapps
                        simulation_type:multiphysics
-                       code_used:Griffin
+                       codes_used:Griffin
                        open_source:partial
                        input_features:multiapps
                        computing_needs:Workstation

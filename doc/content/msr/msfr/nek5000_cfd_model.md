@@ -8,7 +8,7 @@
                        reactor:MSFR
                        geometry:core
                        simulation_type:CFD
-                       code_used:Nek5000
+                       codes_used:Nek5000
                        open_source:true
                        computing_needs:HPC
                        fiscal_year:2022

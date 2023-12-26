@@ -8,7 +8,7 @@
                        geometry:mini-core
                        simulation_type:multiphysics
                        transient:RIA
-                       code_used:Griffin;MOOSE_HeatTransfer
+                       codes_used:Griffin;MOOSE_HeatTransfer
                        computing_needs:Workstation
                        fiscal_year:2023
 

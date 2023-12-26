@@ -7,7 +7,7 @@
 !tag name=Molten Salt Fast Reactor SAM Model pairs=reactor_type:MSR
                        reactor:MSFR
                        simulation_type:primary_loop
-                       code_used:SAM
+                       codes_used:SAM
                        transient:steady_state;ULOF
                        input_features:checkpoint_restart
                        computing_needs:Workstation

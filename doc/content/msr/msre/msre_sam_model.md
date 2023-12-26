@@ -7,7 +7,7 @@
 !tag name=Molten Salt Reactor Experiment SAM Model pairs=reactor_type:MSR
                        reactor:MSRE
                        geometry:primary_loop
-                       code_used:SAM
+                       codes_used:SAM
                        transient:steady_state;RIA
                        input_features:checkpoint_restart
                        computing_needs:Workstation

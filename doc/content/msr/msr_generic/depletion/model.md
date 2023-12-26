@@ -8,7 +8,7 @@
                        reactor:generic_msr
                        geometry:mini-core
                        simulation_type:core_depletion
-                       code_used:Griffin
+                       codes_used:Griffin
                        computing_needs:Workstation
                        fiscal_year:2023
 

@@ -7,7 +7,7 @@
 !tag name=FHR Plant Model pairs=reactor_type:PB-FHR
                        reactor:Mk1-FHR
                        simulation_type:balance_of_plant
-                       code_used:BlueCrab;Griffin;Pronghorn
+                       codes_used:BlueCrab;Griffin;Pronghorn
                        computing_needs:Workstation
                        input_features:multiapps;mixed_restart
                        sponsor:NRIC

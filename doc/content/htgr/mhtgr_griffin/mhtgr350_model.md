@@ -10,7 +10,7 @@
                        simulation_type:neutronics
                        transient:steady_state
                        V&V:benchmark
-                       code_used:Griffin
+                       codes_used:Griffin
                        computing_needs:Workstation
                        fiscal_year:2023
 

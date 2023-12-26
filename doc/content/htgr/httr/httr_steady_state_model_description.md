@@ -10,7 +10,7 @@
                        simulation_type:multiphysics
                        input_features:multiapps
                        transient:steady_state;null
-                       code_used:Sabertooth;Griffin;MOOSE_HeatTransfer;RELAP-7
+                       codes_used:Sabertooth;Griffin;MOOSE_HeatTransfer;RELAP-7
                        computing_needs:Workstation
                        fiscal_year:2023
 
