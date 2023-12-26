@@ -9,7 +9,8 @@
                        geometry:core
                        simulation_type:multiphysics
                        transient:load_follow
-                       code_used:SAM
+                       input_features:checkpoint_restart
+                       codes_used:SAM
                        computing_needs:Workstation
                        fiscal_year:2021
 

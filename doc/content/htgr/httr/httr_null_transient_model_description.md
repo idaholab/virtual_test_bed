@@ -8,9 +8,9 @@
                        reactor:HTTR
                        geometry:core
                        simulation_type:multiphysics
-                       input_features:multiapps
+                       input_features:multiapps;mixed_restart
                        transient:null
-                       code_used:Sabertooth
+                       codes_used:Sabertooth;Griffin;MOOSE_HeatTransfer;RELAP-7
                        computing_needs:Workstation
                        fiscal_year:2023
 

@@ -7,9 +7,10 @@
 !tag name=FHR Plant Model pairs=reactor_type:PB-FHR
                        reactor:Mk1-FHR
                        simulation_type:balance_of_plant
-                       code_used:BlueCrab
+                       codes_used:BlueCrab;Griffin;Pronghorn
                        computing_needs:Workstation
-                       input_features:multiapps
+                       input_features:multiapps;mixed_restart
+                       sponsor:NRIC
                        fiscal_year:2022
 
 The [multiphysics core model](pbfhr/steady/griffin_pgh_model.md), which uses Griffin for neutronics and Pronghorn for

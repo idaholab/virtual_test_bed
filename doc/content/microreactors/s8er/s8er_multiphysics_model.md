@@ -10,7 +10,8 @@
                        geometry:core
                        input_features:multiapps
                        simulation_type:multiphysics
-                       code_used:Griffin
+                       transient:steady_state
+                       codes_used:Griffin;BISON;Serpent
                        computing_needs:Workstation
                        fiscal_year:2023
 

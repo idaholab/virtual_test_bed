@@ -7,7 +7,7 @@
 !tag name=TRISO Bison Model pairs=reactor_type:HTGR
                        geometry:TRISO
                        simulation_type:fuel_performance
-                       code_used:Bison
+                       codes_used:BISON
                        transient:depletion
                        computing_needs:Workstation
                        fiscal_year:2022

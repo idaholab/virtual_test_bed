@@ -7,7 +7,9 @@
 !tag name=Advanced Burner Test Reactor Loss of Flow Accident pairs=reactor_type:SFR
                        reactor:ABTR
                        simulation_type:balance_of_plant
-                       code_used:SAM
+                       codes_used:SAM
+                       input_features:checkpoint_restart
+                       transient:steady_state;ULOF
                        computing_needs:Workstation
                        fiscal_year:2022
 

@@ -8,7 +8,7 @@
                        geometry:mini-core
                        simulation_type:multiphysics
                        transient:RIA
-                       code_used:Griffin
+                       codes_used:Griffin;MOOSE_HeatTransfer
                        computing_needs:Workstation
                        fiscal_year:2023
 
@@ -52,7 +52,7 @@ The dimensions of the macro-scale simulation model are given in [cubedim], and t
 | Moderator regular mesh element | $3$ |
 
 The neutronics analysis is performed on a mesh characterized by centimeter-sized elements, while grain treatment is on the micrometer element scale where heat conduction problems are solved on microscopic domains encompassing a single fuel grain and a proportional amount of graphite.
-This model makes use of the Griffin code for neutron transport and MOOSE heat conduction modules for heat transport and radiation. Serpent 2 was used to prepare cross section libraries
+This model makes use of the Griffin code for neutron transport and the MOOSE heat transfer module for heat transport and radiation. Serpent 2 was used to prepare cross section libraries
 [!citep](zabriskie2019), [!citep](doi:10.1080/00295639.2018.1528802).
 
 The particles are spaced $13.52$ cm apart in a regular grid lattice, and are spaced half that distance when next to a boundary.

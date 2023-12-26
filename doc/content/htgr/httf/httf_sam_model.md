@@ -7,8 +7,9 @@
 !tag name=2D Ring Model for the High Temperature Test Facility pairs=reactor_type:HTGR
                        reactor:HTTF
                        geometry:core
-                       code_used:SAM
-                       computing_needs:workstation
+                       codes_used:SAM
+                       computing_needs:Workstation
+                       transient:steady_state
                        fiscal_year:2024
 
 ## Problem Description
