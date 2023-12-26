@@ -4,9 +4,9 @@
 
 *Model link: [FHR Bypass Flow Reflector Model](https://github.com/idaholab/virtual_test_bed/tree/devel/pbfhr/reflector)*
 
-!tag name=pbfhr_bypass pairs=reactor_type:PB-FHR
+!tag name=FHR Bypass Flow Reflector Model pairs=reactor_type:PB-FHR
                        geometry:reflector
-                       simulation_type:component_analysis
+                       simulation_type:component_analysis;CFD
                        codes_used:Cardinal;NekRS;MOOSE_HeatTransfer
                        open_source:true
                        input_features:multiapps

@@ -39,7 +39,7 @@ Extensions:
             - simulation_type
             - input_features
             - transient
-            - code_used
+            - codes_used
             - open_source
             - computing_needs
             - gpu_enabled
