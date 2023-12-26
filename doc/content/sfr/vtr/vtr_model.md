@@ -7,7 +7,7 @@
 !tag name=Versatile Test Reactor Core model pairs=reactor_type:SFR
                        reactor:VTR
                        geometry:core
-                       simulation_type:core_multiphysics
+                       simulation_type:multiphysics
                        transient:steady_state
                        codes_used:BlueCrab;Griffin;BISON;SAM
                        computing_needs:Workstation

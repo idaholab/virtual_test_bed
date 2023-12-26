@@ -9,7 +9,7 @@
 !tag name=Lotus Griffin-Pronghorn Steady State Model pairs=reactor_type:MSR
                        reactor:generic_msr
                        geometry:core
-                       simulation_type:core_multiphysics
+                       simulation_type:multiphysics
                        input_features:multiapps
                        transient:steady_state
                        codes_used:BlueCrab;Griffin;Pronghorn;MOOSE_NavierStokes

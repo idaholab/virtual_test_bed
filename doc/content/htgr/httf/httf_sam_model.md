@@ -8,7 +8,7 @@
                        reactor:HTTF
                        geometry:core
                        codes_used:SAM
-                       computing_needs:workstation
+                       computing_needs:Workstation
                        transient:steady_state
                        fiscal_year:2024
 

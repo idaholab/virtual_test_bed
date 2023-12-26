@@ -7,7 +7,7 @@
 !tag name=MSFR Griffin-Pronghorn Steady State Model pairs=reactor_type:MSR
                        reactor:MSFR
                        geometry:core
-                       simulation_type:core_multiphysics
+                       simulation_type:multiphysics
                        input_features:multiapps
                        transient:steady_state;ULOF
                        codes_used:BlueCrab;Griffin;Pronghorn;MOOSE_NavierStokes

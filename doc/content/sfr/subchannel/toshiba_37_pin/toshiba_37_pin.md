@@ -6,7 +6,7 @@
 
 !tag name=Subchannel Model for the Toshiba 37-Pin Benchmark pairs=reactor_type:SFR
                        geometry:assembly
-                       simulation_type:assembly_flow
+                       simulation_type:thermal_hydraulics
                        transient:steady_state
                        codes_used:Pronghorn_subchannel
                        computing_needs:Workstation

@@ -6,7 +6,7 @@
 
 !tag name=High Fidelity Neutronics Model for Lead-cooled Fast Reactor pairs=reactor_type:LFR
                        geometry:assembly
-                       simulation_type:assembly_neutronics
+                       simulation_type:neutronics
                        codes_used:Griffin;MCC3
                        computing_needs:HPC
                        input_features:reactor_meshing
