@@ -31,28 +31,40 @@ P_out = 2.0e5 # Pa
 
 [AuxVariables]
   [mdot]
+    block = subchannel
   []
   [SumWij]
+    block = subchannel
   []
   [P]
+    block = subchannel
   []
   [DP]
+    block = subchannel
   []
   [h]
+    block = subchannel
   []
   [T]
+    block = subchannel
   []
   [rho]
+    block = subchannel
   []
   [S]
-  []
-  [Sij]
+    block = subchannel
   []
   [w_perim]
-  []
-  [q_prime]
+    block = subchannel
   []
   [mu]
+    block = subchannel
+  []
+  [q_prime]
+    block = subchannel
+  []
+  [displacement]
+    block = subchannel
   []
 []
 
@@ -196,6 +208,6 @@ P_out = 2.0e5 # Pa
   [xfer]
     type = MultiAppDetailedSolutionTransfer
     to_multi_app = viz
-    variable = 'mdot SumWij P DP h T rho mu q_prime S'
+    variable = 'mdot SumWij P DP h T rho mu q_prime S displacement w_perim'
   []
 []

@@ -8,7 +8,7 @@
 
 T_in = 660
 # [1e+6 kg/m^2-hour] turns into kg/m^2-sec
-mass_flux_in = ${fparse 1e+6 * 37.00 / 36000.*0.5}
+mass_flux_in = '${fparse 1e+6 * 37.00 / 36000.*0.5}'
 P_out = 2.0e5 # Pa
 [TriSubChannelMesh]
   [subchannel]
@@ -28,28 +28,40 @@ P_out = 2.0e5 # Pa
 
 [AuxVariables]
   [mdot]
+    block = subchannel
   []
   [SumWij]
+    block = subchannel
   []
   [P]
+    block = subchannel
   []
   [DP]
+    block = subchannel
   []
   [h]
+    block = subchannel
   []
   [T]
+    block = subchannel
   []
   [rho]
+    block = subchannel
   []
   [S]
-  []
-  [Sij]
+    block = subchannel
   []
   [w_perim]
-  []
-  [q_prime]
+    block = subchannel
   []
   [mu]
+    block = subchannel
+  []
+  [q_prime]
+    block = subchannel
+  []
+  [displacement]
+    block = subchannel
   []
 []
 
@@ -89,7 +101,7 @@ P_out = 2.0e5 # Pa
     variable = w_perim
   []
 
-   [q_prime_IC]
+  [q_prime_IC]
     type = TriPowerIC
     variable = q_prime
     power = 1.000e5 # W
@@ -113,14 +125,13 @@ P_out = 2.0e5 # Pa
     variable = DP
     value = 0.0
   []
-    [Viscosity_ic]
+  [Viscosity_ic]
     type = ViscosityIC
     variable = mu
     p = ${P_out}
     T = T
     fp = sodium
   []
-
 
   [rho_ic]
     type = RhoFromPressureTemperatureIC
@@ -194,6 +205,6 @@ P_out = 2.0e5 # Pa
   [xfer]
     type = MultiAppDetailedSolutionTransfer
     to_multi_app = viz
-    variable = 'mdot SumWij P DP h T rho mu q_prime S'
+    variable = 'mdot SumWij P DP h T rho mu q_prime S displacement w_perim'
   []
 []

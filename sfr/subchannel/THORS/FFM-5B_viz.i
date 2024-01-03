@@ -24,26 +24,40 @@
 
 [AuxVariables]
   [mdot]
+    block = subchannel
   []
   [SumWij]
+    block = subchannel
   []
   [P]
+    block = subchannel
   []
   [DP]
+    block = subchannel
   []
   [h]
+    block = subchannel
   []
   [T]
+    block = subchannel
   []
   [rho]
-  []
-  [mu]
+    block = subchannel
   []
   [S]
+    block = subchannel
   []
   [w_perim]
+    block = subchannel
+  []
+  [mu]
+    block = subchannel
   []
   [q_prime]
+    block = subchannel
+  []
+  [displacement]
+    block = subchannel
   []
 []
 
