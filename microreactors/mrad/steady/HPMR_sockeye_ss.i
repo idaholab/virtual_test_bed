@@ -64,7 +64,7 @@ length_cond = 90.0e-2
 
 # Mesh density
 # The dimensions are nicely divisible by 3 cm mesh.
-nelem_base_evap = 50
+nelem_base_evap = 60
 nelem_base_adia = 10
 nelem_base_cond = 30
 mesh_density = 3
@@ -427,8 +427,7 @@ q_evap = '${fparse Q_hp / S_evap}'
 
   start_time = -5e4 # negative start time so we can start running from t = 0
   end_time = 0
-  dtmin = 1
-  dt = 1000
+  dt = 5e3
 []
 
 [Outputs]

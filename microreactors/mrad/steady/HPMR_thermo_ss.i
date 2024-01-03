@@ -5,14 +5,6 @@
 ## Thermal Only Physics                                                       ##
 ################################################################################
 
-R_clad_o = 0.0105 # heat pipe outer radius
-R_hp_hole = 0.0107 # heat pipe + gap
-num_sides = 12 # number of sides of heat pipe as a result of mesh polygonization
-alpha = '${fparse 2 * pi / num_sides}'
-perimeter_correction = '${fparse 0.5 * alpha / sin(0.5 * alpha)}' # polygonization correction factor for perimeter
-area_correction = '${fparse sqrt(alpha / sin(alpha))}' # polygonization correction factor for area
-corr_factor = '${fparse R_hp_hole / R_clad_o * area_correction / perimeter_correction}'
-
 [GlobalParams]
   flux_conversion_factor = 1
 []
@@ -82,9 +74,6 @@ corr_factor = '${fparse R_hp_hole / R_clad_o * area_correction / perimeter_corre
   [flux_uo] #auxvariable to hold heat pipe surface flux from UserObject
     block = 'reflector_quad monolith'
   []
-  [flux_uo_corr] #auxvariable to hold corrected flux_uo
-    block = 'reflector_quad monolith'
-  []
   [hp_temp_aux]
     block = 'reflector_quad monolith'
   []
@@ -131,12 +120,6 @@ corr_factor = '${fparse R_hp_hole / R_clad_o * area_correction / perimeter_corre
     type = SpatialUserObjectAux
     variable = flux_uo
     user_object = flux_uo
-  []
-  [flux_uo_corr]
-    type = NormalizationAux
-    variable = flux_uo_corr
-    source_variable = flux_uo
-    normal_factor = '${fparse corr_factor}'
   []
 []
 
@@ -271,10 +254,10 @@ corr_factor = '${fparse R_hp_hole / R_clad_o * area_correction / perimeter_corre
   []
   [to_sockeye_flux]
     type = MultiAppGeneralFieldUserObjectTransfer
-    variable = master_flux
     to_multi_app = sockeye
-    execute_on = 'timestep_begin'
     source_user_object = flux_uo
+    variable = master_flux
+    execute_on = 'timestep_begin'
   []
 []
 
@@ -302,8 +285,7 @@ corr_factor = '${fparse R_hp_hole / R_clad_o * area_correction / perimeter_corre
 
   start_time = -5e4 # negative start time so we can start running from t = 0
   end_time = 0
-  dtmin = 1
-  num_steps = 1
+  dt = 5e3
 []
 
 [Postprocessors]
