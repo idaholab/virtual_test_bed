@@ -20,26 +20,40 @@
 
 [AuxVariables]
   [mdot]
+    block = subchannel
   []
   [SumWij]
+    block = subchannel
   []
   [P]
+    block = subchannel
   []
   [DP]
+    block = subchannel
   []
   [h]
+    block = subchannel
   []
   [T]
+    block = subchannel
   []
   [rho]
-  []
-  [mu]
+    block = subchannel
   []
   [S]
+    block = subchannel
   []
   [w_perim]
+    block = subchannel
+  []
+  [mu]
+    block = subchannel
   []
   [q_prime]
+    block = subchannel
+  []
+  [displacement]
+    block = subchannel
   []
 []
 
@@ -53,6 +67,4 @@
 
 [Executioner]
   type = Steady
-  nl_rel_tol = 0.9
-  l_tol = 0.9
 []
