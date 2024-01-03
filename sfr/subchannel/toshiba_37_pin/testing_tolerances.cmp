@@ -2,7 +2,6 @@ NODAL VARIABLES relative 1.e-5 floor 1e-9
 	DP
 	P
 	S
-	Sij
 	T
 	h
 	mdot
