@@ -212,12 +212,14 @@ hp_positions = '
 
   # Receive heat pipe outer cladding temperature from sub-app
   [T_from_hp_app]
-    type = MultiAppUserObjectTransfer
+    type = MultiAppGeneralFieldUserObjectTransfer
     variable = T_hp
-    boundary = 'hp_holes'
+    to_boundaries = 'hp_holes'
     from_multi_app = hp_app
-    user_object = T_hp_uo
-    nearest_sub_app = true
+    source_user_object = T_hp_uo
+    use_nearest_app = true
+    fixed_bounding_box_size = '${fparse 4 * r_hp} ${fparse 5 * r_hp} 0'
+    error_on_miss = true
   []
 []
 
