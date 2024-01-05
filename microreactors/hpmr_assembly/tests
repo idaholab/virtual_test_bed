@@ -1,0 +1,27 @@
+[Tests]
+  [generate_mesh]
+    type = RunApp
+    input = mesh.i
+    cli_args = '--mesh-only mesh.e'
+    recover = False # No recover for --mesh-only
+    executable_pattern = 'dire_wolf*'
+  []
+  [check_input]
+    type = RunApp
+    prereq = 'generate_mesh'
+    input = 'main.i'
+    check_input = True
+    executable_pattern = 'dire_wolf*'
+    allow_warnings = true
+  []
+  [test_one_step]
+    type = CSVDiff
+    prereq = 'generate_mesh'
+    input = 'main.i'
+    cli_args = 'Executioner/num_steps=1'
+    csvdiff = 'main.csv'
+    method = 'opt'
+    executable_pattern = 'dire_wolf*'
+    allow_warnings = true
+  []
+[]

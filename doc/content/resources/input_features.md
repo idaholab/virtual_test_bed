@@ -13,7 +13,7 @@ help creating it.
 - Dispersed UO2 LEU pulse model [documentation](leu_pulse/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/leu_pulse)
 
 
-### In-MOOSE reactor mesh generation
+### In-MOOSE reactor module mesh generation
 
 - HTGR assembly multiphysics simulation [documentation](htgr/assembly/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/assembly)
 
@@ -30,6 +30,8 @@ help creating it.
 - Gas Cooled Micro Reactor assembly multiphysics [documentation](gcmr/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/microreactors/gcmr/assembly)
 
 - Micro Reactor Drum Rotation Model [documentation](microreactors/drum_rotation/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/microreactors/drum_rotation)
+
+- Heat Pipe Micro-Reactor Assembly [documentation](hpmr_assembly/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/microreactors/hpmr_assembly)
 
 
 ### Cubit mesh generation
@@ -73,6 +75,8 @@ the input file, but generally reside in the same folder in the repository.
 - Micro Reactor Drum Rotation Model [documentation](microreactors/drum_rotation/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/microreactors/drum_rotation)
 
 - Lotus Molten Chloride Reactor Steady State Model [documentation](msr/lotus/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/msr/lotus/steady_state)
+
+- Heat Pipe Micro-Reactor Assembly [documentation](hpmr_assembly/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/microreactors/hpmr_assembly)
 
 
 ### Multiphysics and multiscale simulations
@@ -166,6 +170,8 @@ specified. The MRAD and PBMR-400 models listed below are an example of this.
 - Generic Pebble Bed Reactor core model [documentation](htgr/generic-pbr/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/generic-pbr)
 
 - Micro Reactor Drum Rotation Model [documentation](microreactors/drum_rotation/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/microreactors/drum_rotation)
+
+- Heat Pipe Micro-Reactor Assembly [documentation](hpmr_assembly/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/microreactors/hpmr_assembly)
 
 ### HPC required
 

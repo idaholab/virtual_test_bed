@@ -30,22 +30,21 @@ While Sockeye uses its own simple implemented 2D axisymetric heat pipe meshing c
        id=hpmr_mesh_proc
        caption=A cartoon showing the step-by-step procedures to generate the HP-MR mesh.
 
-A 1/6 HP-MR core was generated using the input file shown above with steps illustrated in [hpmr_mesh_proc]. This mesh contains stainless steel envelops for moderators and heat pipes, while the helium gap is not meshed. The mesh density in radial direction is high as multiple small features (fuel rods, moderators, heat pipes and control drums) are involved.
+A 1/6 HP-MR core was generated using the input file shown above with steps illustrated in [hpmr_mesh_proc]. This mesh contains stainless steel envelopes for moderators and heat pipes, while the helium gaps are not meshed. The mesh density in radial direction is high, as multiple small features (fuel rods, moderators, heat pipes and control drums) are involved.
 
-Compared with the mesh used in the [legacy model](/legacy_mrad_model.md) and created from Cubit:
+Compared with the mesh used in the [legacy model](/legacy_mrad_model.md), which was created from Cubit:
 
-    - An outer surface zone surrounding the reflectors was added to provide the appropriate convex boundary for neutronic calculation.
-
-    - The mesh was adjusted to preserve the actual physical volume of each material region.
+- An outer surface zone surrounding the reflectors was added to provide the appropriate convex boundary for neutronic calculation.
+- The mesh was adjusted to preserve the actual physical volume of each material region.
 
 The same mesh used by Griffin could also be adopted by BISON. However, the relatively coarse Griffin mesh would lead to power balance issues. To be specific, near the external boundaries (i.e., top/bottom/peripheral surfaces) as well as the interfaces between the reactor matrix and heat pipes, the mesh is not fine enough to ensure accurate calculation of heat flux, which is proportional to the temperature gradient. This issue is especially important to the interfaces between the reactor matrix and heat pipe outer surfaces, because they are the major heat sink of the system. Therefore, for the BISON mesh, the `boundary layer` and `biased meshing` features available in the [Reactor Module](https://mooseframework.inl.gov/modules/reactor/index.html) are used to create a finer mesh with a focus on these external boundaries and interfaces. Only minor modifications on the mesh generation input file are needed to achieve these features, as indicated in the comments in the Griffin mesh generation input file shown above. The differences between the Griffin and the BISON meshes are illustrated in [hpmr_mesh_diff].
 
 !media media/mrad/MeshDen.png
        style=display: block;margin-left:auto;margin-right:auto;width:70%;
        id=hpmr_mesh_diff
-       caption=The difference between the meshes used by Griffin and BISON model.
+       caption=The difference between the meshes used by the Griffin model (left) and the BISON model (right).
 
-A more detailed comparison can be found in [hpmr_mesh_effect], which showing that using a finer mesh for BISON significantly reduced the power imbalance issue.
+A more detailed comparison can be found in [hpmr_mesh_effect], which shows that using a finer mesh for BISON significantly reduced the power imbalance issue.
 
 !table id=hpmr_mesh_effect caption=Percentages of power removed from different surfaces of the HPMR showing i the improvements made by using a finer mesh for BISON modeling.
 |  | Total Energy Removed | Heat Pipes | Top/Bottom Surfaces | Symmetric Boundary | Peripheral Surface |
@@ -125,13 +124,13 @@ On the other hand, when the HP-MR is operating at an overpower level (e.g., 720 
 
 ## Guidance of Running Different Simulation Cases
 
-Fist of all, the user need to run the mesh generation input [file](/mrad/mesh/HPMR_OneSixth_Core_meshgenerator_tri.i) to generate the needed EXODUS mesh file that is required by Griffin simulation. The mesh generation input file only uses objects available in MOOSE Framework and the Reactor Module. So the file can be run by any MOOSE applications that compiled with the Reactor Module, such as Griffin. The example command to generate the mesh EXODUS file is list as follows:
+Fist of all, the user needs to run the mesh generation input [file](/mrad/mesh/HPMR_OneSixth_Core_meshgenerator_tri.i) to generate the needed EXODUS mesh file that is required by the Griffin simulation. The mesh generation input file only uses objects available in the MOOSE Framework and the Reactor Module, so the input file can be run by any MOOSE applications that are compiled with the Reactor Module, such as Griffin. The example command to generate the mesh EXODUS file is listed as follows:
 
 !listing language=bash
 cd /mrad/mesh
 griffin-opt -i HPMR_OneSixth_Core_meshgenerator_tri.i --mesh-only HPMR_OneSixth_Core_meshgenerator_tri_rotate_bdry.e
 
-The mesh used by BISON is finer than the Griffin mesh. Thus, some modifications need to be made on [file](/mrad/mesh/HPMR_OneSixth_Core_meshgenerator_tri.i). Meanwhile, the heat pipe surface boundaries need to be defined and the heat pipe blocks themselves need to be removed. Thus, a separate [input file](/mrad/mesh/HPMR_OneSixth_Core_meshgenerator_tri_fine.i) is provided for the BISON mesh generation. Users can run the following command to generate the BISON mesh as an EXODUS file:
+The mesh used by BISON is finer than the Griffin mesh, so some modifications need to be made to [file](/mrad/mesh/HPMR_OneSixth_Core_meshgenerator_tri.i). Also, the heat pipe surface boundaries need to be defined, and the heat pipe blocks themselves need to be removed. Thus, a separate [input file](/mrad/mesh/HPMR_OneSixth_Core_meshgenerator_tri_fine.i) is provided for the BISON mesh generation. Users can run the following command to generate the BISON mesh as an EXODUS file:
 
 !listing language=bash
 cd /mrad/mesh
