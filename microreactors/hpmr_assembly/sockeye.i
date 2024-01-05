@@ -1,5 +1,5 @@
 # Heat pipe sub-app input file for heat-pipe cooled microreactor assembly
-
+# Sockeye input
 length_evap = 1.8
 length_adia = 0.4
 length_cond = 1.8

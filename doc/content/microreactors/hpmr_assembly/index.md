@@ -4,6 +4,16 @@
 
 *Model link: [Heat-Pipe Microreactor Assembly](https://github.com/idaholab/virtual_test_bed/tree/devel/microreactors/hpmr_assembly)*
 
+!tag name=Heat-Pipe Microreactor Assembly pairs=reactor_type:microreactor
+                       reactor:HPMR
+                       geometry:assembly
+                       simulation_type:multiphysics
+                       input_features:multiapps;reactor_meshing
+                       transient:steady_state
+                       codes_used:DireWolf;BISON;Sockeye
+                       computing_needs:Workstation
+                       fiscal_year:2024
+
 ## Problem Description
 
 This problem consists of a fictitious heat-pipe-cooled micro-reactor (HPMR) assembly,
@@ -197,7 +207,7 @@ coupling surface, and reflectors. As expected, the maximum temperature was
 attained in the fuel, and has a value of approximately 1235 K. The heat pipe
 coupling surfaces achieved some of the lowest temperatures, around 1100 K,
 but the top reflector averaged a temperature even lower, around 1090 K. Recall
-the unlike the bottom reflector, it features coupling to heat pipes, hence
+that unlike the bottom reflector, it features coupling to heat pipes, hence
 the lower temperature.
 
 !media media/hpmr_assembly/temperature_transient.png
