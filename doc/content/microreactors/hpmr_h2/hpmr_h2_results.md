@@ -32,7 +32,7 @@ To verify the quality of the neutronics model, the Griffin and Serpent models ar
 | 20	        | 0	        | 0	        | 0	        | 0	    |
 | RMSE	    | 1.66%	    | 1.41%	    | 1.75%	    | 1.31% |
 
-In that table, Assembly 1 is any of the center fuel assembly and Assemblies 2 and 3 correspond to any peripheral fuel assembly surrounded by 4 and 3 fuel assemblies, respectively. The relative errors in power are shown for each axial 10-cm thick axial layer of each assembly type and for all of them combined (Total), with axial layers 1 and 20 corresponding to the bottom and top of the core, respectively. The values are 0 for the top and bottom two layers because they do not contain any fissile material. The last row reports the Root Mean Square (RMSE) of the error in the corresponding assembly types.
+In that table, Assembly 1 is any of the center fuel assembly and Assemblies 2 and 3 correspond to any peripheral fuel assembly surrounded by 4 and 3 fuel assemblies, respectively. The relative errors in power are shown for each 10-cm thick axial layer of each assembly type and for all of them combined (Total), with axial layers 1 and 20 corresponding to the bottom and top of the core, respectively. The values are 0 for the top and bottom two layers because they do not contain any fissile material. The last row reports the Root Mean Square (RMSE) of the error in the corresponding assembly types.
 
 
 ## Coupled Solution

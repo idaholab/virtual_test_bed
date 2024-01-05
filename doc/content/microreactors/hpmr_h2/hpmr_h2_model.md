@@ -7,9 +7,9 @@
 !tag name=HPMR_H2 Direwolf Steady State Model pairs=reactor_type:microreactor
                        reactor:HPMR_H2
                        geometry:core
-                       simulation_type:core_multiphysics
-                       input_features:multiapps
-                       code_used:DireWolf
+                       simulation_type:multiphysics
+                       input_features:multiapps;reactor_meshing
+                       codes_used:DireWolf;Griffin;BISON;Sockeye
                        computing_needs:HPC
                        fiscal_year:2024
 
@@ -28,7 +28,7 @@ The reactor module in MOOSE [!citep](MOOSEReactorModule) was used to generate th
 
 Serpent (v. 2.1.32) was used to generate the multigroup cross sections for the HPMR-H$_2$ problem. The ENDF/B-VIII.0 continuous energy library was utilized to leverage the $YH_x$ scattering libraries, which was then converted into an 11-group structure to perform the calculations. The conversion is performed via ISOXML (which is contained within Griffin) by reading the Serpent tallies and converting them into a multigroup XS library readable by Griffin. The group upper boundaries are reported in the [table-floating1].
 
-!table id=table-floating1 caption=Energy group (upper) boundries for the 11-group structure used in the Griffin model [!citep](Terlizzi2023).
+!table id=table-floating1 caption=Energy group (upper) boundaries for the 11-group structure used in the Griffin model [!citep](Terlizzi2023).
 | Group | Energy (MeV) | Group | Energy (MeV) |
 | ----- | ------------ | ----- | ------------ |
 | 1     | 4.00E+01     | 7     | 9.88E-06     |

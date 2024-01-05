@@ -467,7 +467,7 @@ Abdelhameed, Ahmed Amin and Cao, Yan and Nunez, Daniel and Miao, Yinbin and Mo, 
 Zachary Prince, Joshua Hanophy, Vincent Labouré, Yaqi Wang, Logan Harbour, and Namjae Choi, "Neutron transport methods for multiphysics heterogeneous reactor core simulation in Griffin", submitted to Annals of Nuclear Energy, 2023.
 ```
 
-- Heat Pipe Micro Reactor with Hydrogen Redistribution (HPRM_H2)
+- Heat Pipe Micro Reactor with Hydrogen Redistribution (HPMR_H2)
 
 ```
 @article{terlizzi_empire,
