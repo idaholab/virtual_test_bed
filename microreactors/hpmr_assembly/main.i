@@ -1,5 +1,8 @@
 # Main input file for heat-pipe cooled microreactor assembly
-
+# BISON input file for solving the energy equation in the assembly
+# Must be run with DireWolf if the MultiApps are active
+# If using or referring to this model, please cite as explained in
+# https://mooseframework.inl.gov/virtual_test_bed/citing.html
 graph_blocks = 'monolith monolith_tri brefl brefl_tri trefl trefl_tri'
 fuel_blocks = 'fuel'
 

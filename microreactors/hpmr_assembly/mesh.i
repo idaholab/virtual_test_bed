@@ -1,7 +1,8 @@
-# Mesh input file for heat-pipe-cooled microreactor assembly
+# Mesh input file for a heat-pipe-cooled microreactor assembly
+# This input must be run with BISON
 #
 # Execute as:
-#   app-opt -i mesh.i --mesh-only mesh.e
+#   <app_name>-opt -i mesh.i --mesh-only mesh.e
 
 asm_apothem = ${fparse 17.368 / 2}
 cell_apothem = ${fparse 2.782 / 2}
