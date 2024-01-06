@@ -464,7 +464,24 @@ Abdelhameed, Ahmed Amin and Cao, Yan and Nunez, Daniel and Miao, Yinbin and Mo, 
   year = {2023},
   journal = {Submitted to Annals of Nuclear Energy}
 }
-Zachary Prince, Joshua Hanophy, Vincent Labouré, Yaqi Wang, Logan Harbour, and Namjae Choi. Neutron transport methods for multiphysics heterogeneous reactor core simulation in griffin. Submitted to Annals of Nuclear Energy, 2023.
+Zachary Prince, Joshua Hanophy, Vincent Labouré, Yaqi Wang, Logan Harbour, and Namjae Choi, "Neutron transport methods for multiphysics heterogeneous reactor core simulation in Griffin", submitted to Annals of Nuclear Energy, 2023.
+```
+
+- Heat Pipe Micro Reactor with Hydrogen Redistribution (HPMR_H2)
+
+```
+@article{terlizzi_empire,
+  title = {Asymptotic hydrogen redistribution analysis in yttrium-hydride-moderated heat-pipe-cooled microreactors using DireWolf},
+  journal = {Annals of Nuclear Energy},
+  volume = {186},
+  pages = {109735},
+  year = {2023},
+  issn = {0306-4549},
+  doi = {https://doi.org/10.1016/j.anucene.2023.109735},
+  url = {https://www.sciencedirect.com/science/article/pii/S0306454923000543},
+  author = {Stefano Terlizzi and Vincent Labour\'e}
+}
+Stefano Terlizzi and Vincent Labouré, "Asymptotic hydrogen redistribution analysis in yttrium-hydride-moderated heat-pipe-cooled microreactors using DireWolf", Annals of Nuclear Energy, Volume 186, 2023, 109735,	ISSN 0306-4549,	https://doi.org/10.1016/j.anucene.2023.109735
 ```
 
 ## Software / codes
