@@ -9,9 +9,10 @@
 !tag name=MSRE Griffin-Pronghorn Steady State Model pairs=reactor_type:MSR
                        reactor:MSRE
                        geometry:core
-                       simulation_type:core_multiphysics
+                       simulation_type:multiphysics
+                       transient:steady_state
                        input_features:multiapps
-                       code_used:BlueCrab
+                       codes_used:BlueCrab;Griffin;Pronghorn
                        computing_needs:Workstation
                        fiscal_year:2023
 
@@ -31,6 +32,21 @@ An anisotropic friction source coefficient keeps the flow approximately 1-Dimens
        style=width:80%;margin-left:auto;margin-right:auto
        id=MSRE_pgh_mesh_blocks
        caption=Subdomain (left) and mesh (right) of the multiphysics model.
+
+## Generating the mesh
+
+Both the neutronics and multi-dimensional thermal hydraulics model require the pre-generation of the mesh before
+the simulation can be run.
+The mesh input in is the `msre/multiphysics_rz_model/mesh` folder and should be executed with:
+
+```
+cd msr/msre/multiphysics_core_model/mesh
+blue_crab-opt -i mesh.i --mesh-only
+```
+
+The mesh input can be seen below:
+
+!listing msr/msre/multiphysics_core_model/mesh/mesh.i
 
 ## Neutronics Model
 
