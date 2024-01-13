@@ -145,7 +145,6 @@ area_inlet = 0.33911699112746213
 
   [defueling] #Upper Hot salt extraction pipe
     type = PBOneDFluidComponent
-    input_parameters = SC80-24in
     position = '0 4.94445 -0.86'
     orientation = '0 0 -1'
     length = 0.3
