@@ -4786,6 +4786,15 @@ n_urlr = 4
   []
 []
 
+[Postprocessors]
+  [pseudo_dt]
+    type = PseudoTimestep
+    alpha = 1.5
+    initial_dt = 0.1
+    method = EXP
+  []
+[]
+
 [Preconditioning]
   [SMP_PJFNK]
     type = SMP
@@ -4803,26 +4812,31 @@ n_urlr = 4
   dtmax = 2000.0
 
   [TimeStepper]
-    type = IterationAdaptiveDT
-    growth_factor = 1.25
-    optimal_iterations = 8
-    linear_iteration_ratio = 150
-    dt = 0.1
-
-    cutback_factor = 0.8
-    cutback_factor_at_failure = 0.8
+    type = PostprocessorDT
+    postprocessor = pseudo_dt
   []
 
-  #  [./TimeStepper]
+  # [TimeStepper]
+  #   type = IterationAdaptiveDT
+  #   growth_factor = 1.25
+  #   optimal_iterations = 8
+  #   linear_iteration_ratio = 150
+  #   dt = 0.1
+
+  #   cutback_factor = 0.8
+  #   cutback_factor_at_failure = 0.8
+  # []
+
+  #  [TimeStepper]
   #    type = FunctionDT
   #    function = time_stepper
   #    min_dt = 1e-6
-  #  [../]
+  #  []
 
   petsc_options_iname = '-ksp_gmres_restart -pc_type'
   petsc_options_value = '300 lu '
-  nl_rel_tol = 1e-5
-  nl_abs_tol = 1e-5
+  nl_rel_tol = 1e-6
+  nl_abs_tol = 1e-8
   nl_max_its = 30
 
   l_tol = 1e-5 # Relative linear tolerance for each Krylov solve

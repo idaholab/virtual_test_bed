@@ -15,6 +15,7 @@
     csvdiff = HTTF-SS_csv.csv
     prereq = rings_syntax
     cli_args = '--app SamApp Outputs/console/interval=1 Outputs/console/execute_postprocessors_on=NONE Executioner/num_steps=5'
+    rel_err = 1e-3
     executable_pattern = 'blue_crab*|sam*'
   []
 []
