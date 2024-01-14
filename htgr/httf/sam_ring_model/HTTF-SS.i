@@ -14,8 +14,7 @@
 # 11 coolant rings and 10 heater rings in heated core, the heater rings are rearranged and rods redistributed in order to match heat received by coolant channels
 # includes gap heat transfer to account for heat conductance in gaps in R48, R50, and R52
 
-# Postprocessors and outputs defined in sub-input file
-!include HTTF-output.i
+# Postprocessors and outputs defined in sub-input file: HTTF-output.i
 
 emissivity_GC94 = 0.581
 emissivity_SiC = 0.721
@@ -4826,7 +4825,7 @@ n_urlr = 4
   nl_abs_tol = 1e-5
   nl_max_its = 30
 
-  l_tol = 1e-4 # Relative linear tolerance for each Krylov solve
+  l_tol = 1e-5 # Relative linear tolerance for each Krylov solve
   l_max_its = 100 # Number of linear iterations for each Krylov solve
 
   [Quadrature]
