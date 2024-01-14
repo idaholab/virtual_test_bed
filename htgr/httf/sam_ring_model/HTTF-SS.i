@@ -306,7 +306,7 @@ n_urlr = 4
   [power_history]
     # ANS94 standard
     type = PiecewiseLinear
-    x = ' -1.e6 0 0.01    1.5    2    4    6    8    10    15    20
+    x = ' -1.e6   0    0.01    1.5    2    4    6    8    10    15    20
 40    60    80    100    150    200    400    600    800    1000
 1500    2000    4000    6000    8000    10000    15000    20000    40000    60000
 80000    100000    500000    1000000    2000000    3000000    4000000    5000000'
@@ -504,6 +504,7 @@ n_urlr = 4
     HTC_geometry_type = Pipe
     n_elems = ${n_core}
     initial_V = -15.00
+#    initial_T = 800
   []
 
   [Ceramic]
@@ -514,9 +515,9 @@ n_urlr = 4
     length = 1.981
     elem_number_radial = 5
     elem_number_axial = ${n_core}
-
     dim_hs = 2
     material_hs = 'GC-94F'
+#    Ts_init = 900
   []
 
   [HeaterRods]
@@ -529,7 +530,7 @@ n_urlr = 4
     elem_number_axial = ${n_core}
     dim_hs = 2
     material_hs = 'graphite-mat'
-    Ts_init = 1000
+#    Ts_init = 900
   []
 
   [UR-CoolantChannel]
@@ -540,6 +541,7 @@ n_urlr = 4
     HTC_geometry_type = Pipe
     n_elems = ${n_urlr}
     initial_V = -15.00
+#    initial_T = 900
   []
 
   [UR-Ceramic]
@@ -552,6 +554,7 @@ n_urlr = 4
     elem_number_axial = ${n_urlr}
     dim_hs = 2
     material_hs = 'GC-94F'
+#    Ts_init = 900
   []
 
   [LR-CoolantChannel]
@@ -562,6 +565,7 @@ n_urlr = 4
     HTC_geometry_type = Pipe
     n_elems = ${n_urlr}
     initial_V = -15.00
+#    initial_T = 600
   []
 
   [LR-Ceramic]
@@ -574,6 +578,7 @@ n_urlr = 4
     elem_number_axial = ${n_urlr}
     dim_hs = 2
     material_hs = 'GC-94F'
+#    Ts_init = 600
   []
 
 []
@@ -1387,6 +1392,7 @@ n_urlr = 4
     A = 0.2838829
     Dh = ${Dh_R52}
     initial_V = 5
+    initial_T = 500
   []
 
   [R52cond]
@@ -1427,6 +1433,7 @@ n_urlr = 4
     A = 3.4827
     Dh = 1.02
     Hw = 10.
+    initial_P = 1.E+05
     initial_T = 313.15
     initial_V = 0.01
     eos = air_eos
@@ -1440,6 +1447,7 @@ n_urlr = 4
     Dh = 0.1 #2*0.05*10 /10.05 = 0.1
     length = 0.93185
     A = 0.00785
+    initial_P = 1.E+05
     initial_T = 313.15
     initial_V = 3.
     n_elems = 10
@@ -1454,6 +1462,7 @@ n_urlr = 4
     Dh = 0.1
     length = 1
     A = 0.007854
+    initial_P = 1.E+05
     initial_T = 313.15
     initial_V = 3.
     n_elems = 10
@@ -1503,6 +1512,7 @@ n_urlr = 4
     n_elems = ${n_core}
     A = ${R56_area}
     Dh = ${Dh_R56}
+    initial_P = 1.E+05
     initial_T = 298.15
     initial_V = 0.0118
     eos = water_eos
@@ -2291,6 +2301,7 @@ n_urlr = 4
     A = 0.2838829
     Dh = ${Dh_R52}
     initial_V = 5
+    initial_T = 500
   []
 
   [RU52cond]
@@ -2366,6 +2377,7 @@ n_urlr = 4
     A = 3.4827
     Dh = 1.02
     Hw = 10.
+    initial_P = 1.E+05
     initial_T = 313.15
     initial_V = 0.01
     eos = air_eos
@@ -2380,6 +2392,7 @@ n_urlr = 4
     Dh = 1.02
     length = 1.
     Hw = 10.
+    initial_P = 1.E+05
     initial_T = 313.15
     initial_V = 0.01
     eos = air_eos
@@ -2464,6 +2477,7 @@ n_urlr = 4
     n_elems = ${n_urlr}
     A = ${R56_area}
     Dh = ${Dh_R56}
+    initial_P = 1.E+05
     initial_T = 298.15
     initial_V = 0.0118
     eos = water_eos
@@ -2478,6 +2492,7 @@ n_urlr = 4
     n_elems = ${n_urlr}
     A = ${R56_area}
     Dh = ${Dh_R56}
+    initial_P = 1.E+05
     initial_T = 298.15
     initial_V = 0.0118
     eos = water_eos
@@ -3366,6 +3381,7 @@ n_urlr = 4
     A = 0.2838829
     Dh = ${Dh_R52}
     initial_V = 5
+    initial_T = 500
   []
 
   [RL52cond]
@@ -3437,6 +3453,7 @@ n_urlr = 4
     A = 3.4827
     Dh = 1.02
     Hw = 10.
+    initial_P = 1.E+05
     initial_T = 313.15
     initial_V = 0.01
     eos = air_eos
@@ -3519,6 +3536,7 @@ n_urlr = 4
     n_elems = ${n_urlr}
     A = ${R56_area}
     Dh = ${Dh_R56}
+    initial_P = 1.E+05
     initial_T = 298.15
     initial_V = 0.0118
     eos = water_eos
@@ -3533,6 +3551,7 @@ n_urlr = 4
     n_elems = ${n_urlr}
     A = ${R56_area}
     Dh = ${Dh_R56}
+    initial_P = 1.E+05
     initial_T = 298.15
     initial_V = 0.0118
     eos = water_eos
@@ -4685,7 +4704,7 @@ n_urlr = 4
     width = 0.7572 #0.6428
     height = 0.4
     initial_P = 7.E+05
-    #initial_T = 900.
+#    initial_T = 900.
     initial_V = 1.5
     eos = eos
   []
@@ -4700,6 +4719,7 @@ n_urlr = 4
     position = '0.3 0.0 -0.2'
     eos = eos
     initial_V = 20.0
+    initial_T = 900.
   []
 
   [j1]
@@ -4788,7 +4808,7 @@ n_urlr = 4
     growth_factor = 1.25
     optimal_iterations = 8
     linear_iteration_ratio = 150
-    dt = 0.01
+    dt = 0.1
 
     cutback_factor = 0.8
     cutback_factor_at_failure = 0.8
