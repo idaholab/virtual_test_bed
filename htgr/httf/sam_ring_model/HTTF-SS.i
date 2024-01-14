@@ -4809,7 +4809,7 @@ n_urlr = 4
   end_time = 0
   dt = 1.00
   dtmin = 1e-4
-  dtmax = 2000.0
+  dtmax = 10000.0
 
   [TimeStepper]
     type = PostprocessorDT
@@ -4835,8 +4835,8 @@ n_urlr = 4
 
   petsc_options_iname = '-ksp_gmres_restart -pc_type'
   petsc_options_value = '300 lu '
-  nl_rel_tol = 1e-6
-  nl_abs_tol = 1e-8
+  nl_rel_tol = 1e-5
+  nl_abs_tol = 1e-5
   nl_max_its = 30
 
   l_tol = 1e-5 # Relative linear tolerance for each Krylov solve

@@ -14,7 +14,8 @@
     input = 'HTTF-output.i HTTF-SS.i'
     csvdiff = HTTF-SS_csv.csv
     prereq = rings_syntax
-    cli_args = '--app SamApp Outputs/console/interval=1 Outputs/console/execute_postprocessors_on=NONE Executioner/num_steps=5'
+    cli_args = '--app SamApp Outputs/console/interval=1 Outputs/console/execute_postprocessors_on=NONE Outputs/csv/sync_times=0.0 Outputs/csv/sync_only=true'
+    max_time = 400
     rel_err = 1e-3
     executable_pattern = 'blue_crab*|sam*'
   []
