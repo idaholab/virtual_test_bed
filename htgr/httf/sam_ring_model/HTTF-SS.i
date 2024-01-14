@@ -4860,6 +4860,7 @@ n_urlr = 4
   [checkpoint]
     type = Checkpoint
     num_files = 1
+    execute_on = 'final'
   []
   [console]
     type = Console
