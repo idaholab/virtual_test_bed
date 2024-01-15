@@ -1220,7 +1220,6 @@
   [checkpoint]
     type = Checkpoint
     num_files = 1
-    execute_on = 'FINAL FAILED'
   []
   [console]
     type = Console
