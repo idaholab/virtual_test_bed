@@ -1,8 +1,8 @@
 # Contribution guidelines
 
 The Virtual Test Bed welcomes contributions in advanced nuclear reactor modeling from all horizons,
-including, but not limited to, regulatory, industrial and academic institutions. 
-[A VTB model template](template.md) is provided to facilitate the documentation. 
+including, but not limited to, regulatory, industrial and academic institutions.
+[A VTB model template](template.md) is provided to facilitate the documentation.
 
 ## Minimum viable contribution
 
@@ -20,7 +20,8 @@ Any contribution must:
   the input file and briefly summarizing the simulation performed
 
 - be tested, using either syntax checking to avoid deprecation, or reasonably sized regression tests. This
-  requirement is waived for simulation tools which cannot leverage the CIVET testing suite
+  requirement is waived for simulation tools which cannot leverage the CIVET testing suite.
+  See [resources/running_vtb_tests.md] if you would like to try running your new tests locally.
 
 - use the Git Large File System (lfs) to host any large file (3D mesh for example)
 
