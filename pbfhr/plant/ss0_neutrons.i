@@ -6,9 +6,13 @@
 # Author(s): Dr. Guillaume Giudicelli, Dr. Paolo Balestra
 # If using or referring to this model, please cite as explained in
 # https://mooseframework.inl.gov/virtual_test_bed/citing.html
+# ------------------------------------------------------------------------------
+#
+# NOTE: This model is deprecated and is scheduled for removal from the VTB
+#
 # ==============================================================================
 # - MK1-FHR GRIFFIN neutronics input
-# - MasterApp
+# - Parent Application
 # ==============================================================================
 # - The Model has been built based on [1-2].
 # ------------------------------------------------------------------------------
@@ -21,12 +25,12 @@
 # ==============================================================================
 
 initial_fuel_temperature = 1073.15 # (K)
-initial_salt_temperature = 923.15  # (K)
+initial_salt_temperature = 923.15 # (K)
 
 # Power ------------------------------------------------------------------------
-total_power          = ${fparse 236.0e6} # Total reactor Power (W)
-dh_fract             = 6.426e-2               # Decay heat fraction at t = 0.0s.
-fis_fract            = ${fparse 1 - dh_fract} # Fission power fraction at t = 0.0s.
+total_power = '${fparse 236.0e6}' # Total reactor Power (W)
+dh_fract = 6.426e-2 # Decay heat fraction at t = 0.0s.
+fis_fract = '${fparse 1 - dh_fract}' # Fission power fraction at t = 0.0s.
 
 # ==============================================================================
 # GLOBAL PARAMETERS
@@ -115,13 +119,13 @@ fis_fract            = ${fparse 1 - dh_fract} # Fission power fraction at t = 0.
     family = MONOMIAL
     order = CONSTANT
     initial_condition = ${initial_fuel_temperature}
-    block = '1 2 3 4 5 6 7 8 9'  #FIXME
+    block = '1 2 3 4 5 6 7 8 9' #FIXME
   []
   [Tsalt]
     family = MONOMIAL
     order = CONSTANT
     initial_condition = ${initial_salt_temperature}
-    block = '1 2 3 4 5 6 7 8 9'  #FIXME
+    block = '1 2 3 4 5 6 7 8 9' #FIXME
   []
   [CR_insertion]
     family = MONOMIAL
@@ -267,7 +271,7 @@ fis_fract            = ${fparse 1 - dh_fract} # Fission power fraction at t = 0.
 # MATERIALS AND USER OBJECTS
 # ==============================================================================
 [PowerDensity]
-  power = ${fparse total_power * fis_fract}
+  power = '${fparse total_power * fis_fract}'
   power_density_variable = inst_power_density
   integrated_power_postprocessor = total_power
   power_scaling_postprocessor = power_scaling
@@ -279,7 +283,7 @@ fis_fract            = ${fparse 1 - dh_fract} # Fission power fraction at t = 0.
   # TODO: Make a Tsalt_ave variable to propagate effect of Tsalt to other regions
   # TODO: Generate cross sections for the plenum region separately
   [inner_reflector]
-    type = CoupledFeedbackNeutronicsMaterial  #FIXME
+    type = CoupledFeedbackNeutronicsMaterial #FIXME
     grid_names = 'Tfuel Tsalt CR'
     grid_variables = 'Tfuel Tsalt CR_insertion'
     plus = true
@@ -291,7 +295,7 @@ fis_fract            = ${fparse 1 - dh_fract} # Fission power fraction at t = 0.
     block = 1
   []
   [control_rod]
-    type = CoupledFeedbackNeutronicsMaterial  #FIXME
+    type = CoupledFeedbackNeutronicsMaterial #FIXME
     grid_names = 'Tfuel Tsalt CR'
     grid_variables = 'Tfuel Tsalt CR_insertion'
     plus = true
@@ -315,7 +319,7 @@ fis_fract            = ${fparse 1 - dh_fract} # Fission power fraction at t = 0.
     block = 3
   []
   [pebble_reflector]
-    type = CoupledFeedbackNeutronicsMaterial  #FIXME
+    type = CoupledFeedbackNeutronicsMaterial #FIXME
     grid_names = 'Tfuel Tsalt'
     grid_variables = 'Tfuel Tsalt'
     plus = true
@@ -327,7 +331,7 @@ fis_fract            = ${fparse 1 - dh_fract} # Fission power fraction at t = 0.
     block = 4
   []
   [outer_reflector]
-    type = CoupledFeedbackNeutronicsMaterial  #FIXME
+    type = CoupledFeedbackNeutronicsMaterial #FIXME
     grid_names = 'Tfuel Tsalt'
     grid_variables = 'Tfuel Tsalt'
     plus = true
@@ -339,7 +343,7 @@ fis_fract            = ${fparse 1 - dh_fract} # Fission power fraction at t = 0.
     block = '5 6'
   []
   [barrel_vessel]
-    type = CoupledFeedbackNeutronicsMaterial  #FIXME
+    type = CoupledFeedbackNeutronicsMaterial #FIXME
     grid_names = 'Tfuel Tsalt'
     grid_variables = 'Tfuel Tsalt'
     plus = true
