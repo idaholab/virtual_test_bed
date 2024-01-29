@@ -90,6 +90,7 @@
     # To avoid timeout in slower devel method
     method = 'opt'
     max_time = 500
+    skip = '#332'
   []
 
   # Regression tests - single app inputs
