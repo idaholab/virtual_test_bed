@@ -48,7 +48,7 @@
     type = CSVDiff
     input = fuel_elem_steady.i
     executable_pattern = 'sabertooth*|griffin*'
-    cli_args = 'Executioner/end_time=10'
+    cli_args = 'Executioner/end_time=10 AuxVariables/power_density/initial_condition=1e6'
     csvdiff = 'fuel_elem_steady_out.csv'
     prereq = 'syntax_steady_elem_hc'
   []
