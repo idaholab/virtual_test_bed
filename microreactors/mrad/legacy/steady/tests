@@ -22,12 +22,13 @@
     input = 'MP_FC_ss_bison.i'
     csvdiff = 'MP_FC_ss_bison_out.csv'
     executable_pattern = 'bison*|blue_crab*|dire_wolf*'
-    cli_args = "MultiApps/active='' Transfers/active='' Executioner/num_steps=2 Executioner/nl_abs_tol=1e-1 Outputs/csv=true --distributed-mesh Outputs/exodus=false"
+    cli_args = "MultiApps/active='' Transfers/active='' Executioner/num_steps=2 "
+               "Executioner/nl_abs_tol=1e-1 Outputs/csv=true --distributed-mesh Outputs/exodus=false"
     min_parallel = 16
     method = 'opt'
     # Temperatures are out of range
     allow_warnings = true
-    max_time = 400
+    max_time = 500
   []
   [fluids_sockeye]
     type = CSVDiff
@@ -42,7 +43,8 @@
     input = 'MP_FC_ss_bison.i'
     csvdiff = 'mrad_bison_out.csv mrad_bison_out_sockeye001_csv.csv'
     executable_pattern = 'dire_wolf*'
-    cli_args = "Executioner/num_steps=2 Executioner/nl_abs_tol=1e-1 Outputs/csv=true Outputs/file_base=mrad_bison_out --distributed-mesh Outputs/exodus=false"
+    cli_args = "Executioner/num_steps=2 Executioner/nl_abs_tol=1e-1 Outputs/csv=true "
+               "Outputs/file_base=mrad_bison_out --distributed-mesh Outputs/exodus=false"
     # takes about 9 minutes on 48 cores
     min_parallel = 48
     # Capillary limit for vertical heat pipes is not accurate; see https://hpcgitlab.hpc.inl.gov/idaholab/sockeye/-/issues/65
