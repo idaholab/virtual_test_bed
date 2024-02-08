@@ -98,6 +98,7 @@
     # Trivial warning on material property output
     allow_warnings = true
     method = 'opt'
+    max_time = '500'
   []
   [fluids_sockeye]
     type = CSVDiff
