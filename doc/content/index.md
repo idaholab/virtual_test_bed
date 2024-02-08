@@ -13,12 +13,12 @@ Users will need to request access to the controlled NEAMS software from the [Nuc
 
 ## Information about the Virtual Test Bed
 
-- [How to use the Virtual Test Bed?](resources/how_to_use_vtb.md) \\
-- [How to run a Virtual Test Bed example with the NEAMS Workbench on Sawtooth?](neams-workbench.md) \\
-- [How to cite a model on the Virtual Test Bed?](citing.md) \\
+- [How to use the Virtual Test Bed](resources/how_to_use_vtb.md) \\
+- [How to run a Virtual Test Bed example with the NEAMS Workbench on Sawtooth](neams-workbench.md) \\
+- [How to cite a model on the Virtual Test Bed](citing.md) \\
+- [How to contribute to the Virtual Test Bed](contributing.md)
 - [Multiphysics reactor modeling using the MultiApps system](resources/multiapps.md) \\
 - [Frequently Asked Questions and Discussion Forum](https://github.com/idaholab/virtual_test_bed/discussions) \\
-- [Contribution guidelines to add a new model](contributing.md)
 
 ## Models documentation
 
