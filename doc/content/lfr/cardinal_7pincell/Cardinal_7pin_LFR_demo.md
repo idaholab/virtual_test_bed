@@ -164,6 +164,19 @@ In the Griffin input file, we can load the mesh files produced by MOOSE Reactor 
 
 !listing lfr/7pin_cardinal_demo/NT.i block=Mesh
 
+
+Please note that the Griffin mesh provided is already in Exodus format, created using the MOOSE mesh module and the input file +NTmesh.i+. Users can generate this mesh using +NTmesh.i+ with +griffin-opt+ or any other MOOSE application: 
+
+```language=bash
+griffin-opt -i NTmesh.i --mesh-only
+```
+
+The Heat Conduction mesh can be generated in the similar way using the input file +HCmesh.i+ provided.
+
+```language=bash
+griffin-opt -i HCmesh.i --mesh-only
+```
+
 ### Executioner style=font-size:125%
 
 The `SweepUpdate` executioner is used for the CMFD acceleration. `SweepUpdate` is a special Richardson executioner for performing source iteration with a transport sweeper. This source iteration can be accelerated by turning on `cmfd_acceleration` which invokes the CMFD solve where the low order diffusion equation is solved with a convection closure term to make the diffusion system and the transport system consistent. 
