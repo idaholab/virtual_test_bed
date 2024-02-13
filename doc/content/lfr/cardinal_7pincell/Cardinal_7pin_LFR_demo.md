@@ -164,7 +164,6 @@ In the Griffin input file, we can load the mesh files produced by MOOSE Reactor 
 
 !listing lfr/7pin_cardinal_demo/NT.i block=Mesh
 
-
 Please note that the Griffin mesh provided is already in Exodus format, created using the MOOSE mesh module and the input file +NTmesh.i+. Users can generate this mesh using +NTmesh.i+ with +griffin-opt+ or any other MOOSE application: 
 
 ```language=bash
@@ -298,6 +297,40 @@ Following that, a +Transient+ executioner is defined. This executioner remains c
 Similar to its application in the Griffin and Heat Conduction input files, the `[Postprocessors]` block in Cardinal serves to monitor crucial quantities of interest. These include the average temperature and heat fluxes on boundary faces, as well as the minimum and maximum temperatures. It is important to emphasize that specifying +field = unity+ is same as calculating the area in the context of +NekSideIntegral+, equivalent to determining volume in the case of +NekVolumeIntegral+, and corresponds to computing the mass flow rate for +NekMassFluxWeightedSideIntegral+.
 
 !listing lfr/7pin_cardinal_demo/nek.i block=Postprocessors
+
+Note that +nek.i+ input file here only describes how nekRS is wrapped within the MOOSE framework; with the +7pin.re2+ mesh file, each nekRS simulation requires at least three additional files, that share the same case name +7pin+ but with different extensions. The additional nekRS files are:
+
+- `7pin.par`: High-level settings for the solver, boundary
+  condition mappings to sidesets, and the equations to solve.
+- `7pin.udf`: User-defined C++ functions for on-line postprocessing and model setup
+- `7pin.oudf`: User-defined [!ac](OCCA) kernels for boundary conditions and
+  source terms
+
+A detailed description of all of the available parameters, settings, and use cases
+for these input files is available on the
+[nekRS documentation website](https://nekrsdoc.readthedocs.io/en/latest/input_files.html).
+The configuration file, +7pin.par+, contains several sections specifying settings for different aspects of simulations.
+In the `[OCCA]` section, the backend OCCA device settings are defined, currently set to use CPU for nekRS simulations.
+The `[GENERAL]` block outlines parameters such as time stepping, simulation end control, and polynomial order. Specifically, it sets a time step of 0.01 (non-dimensional) and specifies that a nekRS output file is written every 5000 time steps. However, the stopAt and numSteps fields are ignored because nekRS is run as a sub-application to MOOSE. Instead, the simulation termination is dictated by the steady state tolerance in the MOOSE main application.
+Sections like `[VELOCITY]` and `[PRESSURE]` describe the solution methodologies for the pressure Poisson equation and velocity Helmholtz equations respectively. It's worth noting that the velocity field isn't solved, as indicated by the setting `nrs->flow = 0` in the +7pin.udf+ file.
+The `[TEMPERATURE]` block describes the solution of the temperature passive scalar equation. Parameters like rhoCp are set to unity due to the non-dimensional form of the solve, while conductivity is defined as the inverse of the Peclet number.
+The +boundaryTypeMap+ is utilized to map boundary IDs to types of boundary conditions, enabling specification of boundary conditions for different parts of the simulation domain. And the specific boundary conditions involved here includes: 
+
+- `f`: user-defined flux
+- `I`: insulated
+- `t`: user-defined temperature
+
+!listing lfr/7pin_cardinal_demo/7pin.par
+
+!listing lfr/7pin_cardinal_demo/7pin.udf 
+
+The +usr+ file is a legacy from Nek5000 code, and we still use to specify the boundary conditons together with the par file in NekRS calculations. The geometry is rescaled by 1.0807535 so the characteristic length scale is 1.0. In addition, +usr+ file also calls user subroutines from file +utilities.usr+ for the purpose of solution monitoring. 
+
+!listing lfr/7pin_cardinal_demo/7pin.usr  start=subroutine usrdat2 end=subroutine usrdat3 include-end=False
+
+The +oudf+ file contains the additioanal setup for the required boundary conditions. Note that we have `bc->flux = bc->usrwrk[bc->idM]` in `scalarNeumannConditions` block. This line allows NekRS to use the heat flux provided by the MOOSE Heat Conduction module at the surfaces of fuel rods and duct wall.
+
+!listing lfr/7pin_cardinal_demo/7pin.oudf 
 
 ## Results id=results
 
