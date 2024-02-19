@@ -610,7 +610,7 @@ T_out = 623.15  #1000
 ####
 [ComponentInputParameters]
   [./R2_LHS_param]
-    type =HeatStructureParameters
+    type = PBCoupledHeatStructureParameters
     position = '0 0 0'
     orientation = '0 0 1'
     hs_type = cylinder
@@ -627,7 +627,7 @@ T_out = 623.15  #1000
   [../]
 
   [./R2_RHS_param]
-    type =HeatStructureParameters
+    type = PBCoupledHeatStructureParameters
     position = '0 0 0'
     orientation = '0 0 1'
     hs_type = cylinder
@@ -645,7 +645,7 @@ T_out = 623.15  #1000
 
 ###
   [./R3_LHS_param]
-    type =HeatStructureParameters
+    type = PBCoupledHeatStructureParameters
     position = '0 0 0'
     orientation = '0 0 1'
     hs_type = cylinder
@@ -662,7 +662,7 @@ T_out = 623.15  #1000
   [../]
 
   [./R3_RHS_param]
-    type =HeatStructureParameters
+    type = PBCoupledHeatStructureParameters
     position = '0 0 0'
     orientation = '0 0 1'
     hs_type = cylinder
@@ -680,7 +680,7 @@ T_out = 623.15  #1000
 
 ##
   [./R4_LHS_param]
-    type =HeatStructureParameters
+    type = PBCoupledHeatStructureParameters
     position = '0 0 0'
     orientation = '0 0 1'
     hs_type = cylinder
@@ -697,7 +697,7 @@ T_out = 623.15  #1000
   [../]
 
   [./R4_RHS_param]
-    type =HeatStructureParameters
+    type = PBCoupledHeatStructureParameters
     position = '0 0 0'
     orientation = '0 0 1'
     hs_type = cylinder
@@ -755,7 +755,7 @@ T_out = 623.15  #1000
 ##################################
 ## Upper Structure
   [./R2UP_LHS_param]
-    type =HeatStructureParameters
+    type = PBCoupledHeatStructureParameters
     position = '0 0 ${axial_length_1}'
     orientation = '0 0 1'
     hs_type = cylinder
@@ -770,7 +770,7 @@ T_out = 623.15  #1000
   [../]
 
   [./R2UP_RHS_param]
-    type =HeatStructureParameters
+    type = PBCoupledHeatStructureParameters
     position = '0 0 ${axial_length_1}'
     orientation = '0 0 1'
     hs_type = cylinder
@@ -787,7 +787,7 @@ T_out = 623.15  #1000
 
 ###
   [./R3UP_LHS_param]
-    type =HeatStructureParameters
+    type = PBCoupledHeatStructureParameters
     position = '0 0 ${axial_length_1}'
     orientation = '0 0 1'
     hs_type = cylinder
@@ -802,7 +802,7 @@ T_out = 623.15  #1000
   [../]
 
   [./R3UP_RHS_param]
-    type =HeatStructureParameters
+    type = PBCoupledHeatStructureParameters
     position = '0 0 ${axial_length_1}'
     orientation = '0 0 1'
     hs_type = cylinder
@@ -819,7 +819,7 @@ T_out = 623.15  #1000
 
 ##
   [./R4UP_LHS_param]
-    type =HeatStructureParameters
+    type = PBCoupledHeatStructureParameters
     position = '0 0 ${axial_length_1}'
     orientation = '0 0 1'
     hs_type = cylinder
@@ -834,7 +834,7 @@ T_out = 623.15  #1000
   [../]
 
   [./R4UP_RHS_param]
-    type =HeatStructureParameters
+    type = PBCoupledHeatStructureParameters
     position = '0 0 ${axial_length_1}'
     orientation = '0 0 1'
     hs_type = cylinder
@@ -891,7 +891,7 @@ T_out = 623.15  #1000
 ##################################
 ## LOWER  CORE SUPPORT Structure
   [./R2LP_LHS_param]
-    type =HeatStructureParameters
+    type = PBCoupledHeatStructureParameters
     position = '0 0 -${axial_length_3}'
     orientation = '0 0 1'
     hs_type = cylinder
@@ -906,7 +906,7 @@ T_out = 623.15  #1000
   [../]
 
   [./R2LP_RHS_param]
-    type =HeatStructureParameters
+    type = PBCoupledHeatStructureParameters
     position = '0 0 -${axial_length_3}'
     orientation = '0 0 1'
     hs_type = cylinder
@@ -923,7 +923,7 @@ T_out = 623.15  #1000
 
 ###
   [./R3LP_LHS_param]
-    type =HeatStructureParameters
+    type = PBCoupledHeatStructureParameters
     position = '0 0 -${axial_length_3}'
     orientation = '0 0 1'
     hs_type = cylinder
@@ -938,7 +938,7 @@ T_out = 623.15  #1000
   [../]
 
   [./R3LP_RHS_param]
-    type =HeatStructureParameters
+    type = PBCoupledHeatStructureParameters
     position = '0 0 -${axial_length_3}'
     orientation = '0 0 1'
     hs_type = cylinder
@@ -955,7 +955,7 @@ T_out = 623.15  #1000
 
 ##
   [./R4LP_LHS_param]
-    type =HeatStructureParameters
+    type = PBCoupledHeatStructureParameters
     position = '0 0 -${axial_length_3}'
     orientation = '0 0 1'
     hs_type = cylinder
@@ -970,7 +970,7 @@ T_out = 623.15  #1000
   [../]
 
   [./R4LP_RHS_param]
-    type =HeatStructureParameters
+    type = PBCoupledHeatStructureParameters
     position = '0 0 -${axial_length_3}'
     orientation = '0 0 1'
     hs_type = cylinder
