@@ -123,7 +123,6 @@ richardsonmaxits=1000
   power_density_variable = power_density
   integrated_power_postprocessor = integrated_power
   power_scaling_postprocessor = power_scaling
-  use_energydeposition = true
   family = MONOMIAL
   order = CONSTANT
 []

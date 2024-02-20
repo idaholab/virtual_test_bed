@@ -57,9 +57,6 @@ powerdensity = ${fparse linearpower / (pi * (fuel_r_o * fuel_r_o - fuel_r_i * fu
   dt = 0.0455311973018550    # 0.9106239460371001 ms (deltaT_NekRS) * 50
   end_time = 4.5531197301855 # 0.0455311973018550 s * 100
 
-#  check_aux = true
-#  steady_state_detection = true
-#  steady_state_tolerance = 1E-6
 []
 
 [Problem]
