@@ -4,7 +4,7 @@
 
 *Model was co-developed by Yiqi Yu, Emily Shemon, and it was documented and uploaded by Jun Fang*
 
-*Model link: [7-Pin Cardinal Model](https://github.com/idaholab/virtual_test_bed/tree/devel/lfr/heterogeneous_single_assembly_3D)*
+*Model link: [7-Pin Cardinal Model](https://github.com/idaholab/virtual_test_bed/tree/devel/lfr/7pin_cardinal_demo)*
 
 !tag name=High Fidelity Neutronics Model for Lead-cooled Fast Reactor pairs=reactor_type:LFR
                        geometry:assembly
@@ -60,7 +60,7 @@ H.C. proceeds for one time step, and then the heat fluxes at the solid-fluid (cl
 to NekRS for use as Neumann boundary conditions. 
 Then, multiple NekRS time steps are solved using the +sub_cycling+ option, and wall temperatures at the same interfaces are transferred back to H.C. for use as Dirichlet boundary conditions. 
 Picard iteration is essentially achieved “in time”, so that running a large number of time steps is equivalent to converging to a pseudo-steady state. 
-Note that the H.C. solve does not have the time derivative term in the equation but is driven by the timedependent boundary condition in its +Transient+ executioner, while NekRS solves the timedependent Navier-Stokes equations.
+Note that the H.C. solve does not have the time derivative term in the equation but is driven by the timedependent boundary condition in its +Transient+ executioner, while NekRS solves the time-dependent Navier-Stokes equations.
 
 !media lfr/cardinal_7pin/iterations.png
        style=width:100%
@@ -113,7 +113,7 @@ Otherwise, the boundary condition in H.C. would be re-set per Picard iteration. 
 ### Doppler and Coolant Density Reactivity Feedbacks style=font-size:125%
 
 For the Doppler feedback, 9-group cross sections of each material are tabulated at two to three temperatures and linearly interpolated at the target temperature of each spatial quadrature point in an element. 
-The detailed cross section generation procedure can be found in the [Virtual Test Bed model](https://mooseframework.inl.gov/virtual_test_bed/lfr/heterogeneous_single_assembly_3D/Griffin_standalone_LFR.html). 
+The detailed cross section generation procedure can be found in the [LFR Single Assembly Model](https://mooseframework.inl.gov/virtual_test_bed/lfr/heterogeneous_single_assembly_3D/Griffin_standalone_LFR.html). 
 For the coolant density feedback, the +AuxVariable+ for the temperature dependent fluid density in [setup] is evaluated using the +ParsedAux AuxKernel+ that uses the coupled variable for the coolant temperature in its expression. This fluid density +AuxVariable+ is coupled to
 +MultigroupTransportMaterial+ of Griffin for adjusting atomic density of the coolant material at each quadrature point in an element.
 
@@ -184,7 +184,7 @@ If `richardson_postprocessor` is specified, its `PostProcessor` value is used as
 `richardson_value` is for the console output purpose to show the history of `PostProcessor` values over Richardson iterations, and it is set to be `eigenvalue`. 
 `inner_solve_type` is about the way to perform the inner solve of the Richardson iteration. There are three options: `none`, `SI` and `GMRes`. `none` is just a direct transport operator inversion per residual evaluation, while scattering source is updated together for `SI` and `GMRes` per residual evaluation. The latter two options involve more number of transport sweeps per residual evaluation than `none`, leading to the reduction of the number of residual evaluations and possibly the total run time. For `GMRes`, the scattering source effect is accounted for at once by performing the GMRes iterations and `max_inner_its` is the maximum number of GMRes iterations. For `SI`, the scattering source effect is accounted for by performing source iterations and `max_inner_its` is the maximum number of source iterations.
 
-`fixed_point_solve_outer` is configured to allow Griffin to invoke the Picard iteration between the heat conduction and nekRS outside the Richardson iteration. This approach has been demonstrated to be more computationally efficient for weakly coupled problems in the multiphysics hierarchy. The convergence criterion is based on the temperature field with a relative tolerance `custom_rel_tol` of +1e-5+.
+`fixed_point_solve_outer` is configured to allow Griffin to invoke the Picard iteration between Griffin and its sub-app (H.C. and nekRS) calculations outside the Richardson iteration. This approach has been demonstrated to be more computationally efficient for weakly coupled problems in the multiphysics hierarchy. The convergence criterion is based on the temperature field with a relative tolerance `custom_rel_tol` of +1e-5+.
 
 `coarse_element_id` is a name of the extra element integer ID assigned in the mesh file. 
 If the CMFD solve does not converge, one can try different options for `diffusion_eigen_solver_type` which is the eigenvalue solver for CMFD. There are four options: `power`, `arnoldi`, `krylovshur` and `newton`. `newton` is the default which is recommended to stick with. If `newton` does not converge a solution, either `krylovshur` is the second option to go with, or `cmfd_prec_type` can be changed to `lu` from its default value of `boomeramg` for a small problem. Also one can try `cmfd_closure_type=syw` or `cmfd_closure_type=pcmfd` as different ways, but it is recommended to stick with its default value of `traditional_cmfd`.
@@ -207,7 +207,7 @@ The angular quadrature type (`AQtype`) is set to `Gauss-Chebyshev` for having a 
 
 ### AuxVariables style=font-size:125%
 
-The AuxVariables block is specificed next. Through the Auxiliary Variables, developers can define external variables that are solved or used in the Griffin simulation. Specifically,  the additional variables defined include the solid temperature `solid_temp`, the fluid density `fluid_density`, the solid-fluid surface temperature `nek_surf_temp`, and the fluid bulk temperature `nek_bulk_temp` sourced from nekRS. 
+The AuxVariables block is specified next. Through the Auxiliary Variables, developers can define external variables that are solved or used in the Griffin simulation. Specifically,  the additional variables defined include the solid temperature `solid_temp`, the fluid density `fluid_density`, the solid-fluid surface temperature `nek_surf_temp`, and the fluid bulk temperature `nek_bulk_temp` sourced from nekRS. 
 
 !listing lfr/7pin_cardinal_demo/NT.i start=[AuxVariables] end=[AuxKernels] include-end=False
 
@@ -225,7 +225,7 @@ In `[GlobalParams]`, `is_meter=true` is to indicate that the mesh is in a unit o
 
 ### Compositions style=font-size:125%
 
-The `[Compositions]` block is employed to define the compositions of the six materials considered in the Griffin model.
+The `[Compositions]` block is employed to define the compositions of the six materials considered in the Griffin model. `composition_ids` serves as `material_id` that has been already assigned in the mesh generation stage.
 
 !listing lfr/7pin_cardinal_demo/NT.i start=[Compositions] end=[Materials] include-end=False
 
@@ -233,6 +233,8 @@ The `[Compositions]` block is employed to define the compositions of the six mat
 
 The `[Materials]` block is constructed using `MicroNeutronicsMaterial`. This neutronics material loads a multigroup library with tabulated micro-scopic cross sections of isotopes in ISOXML format. It evaluates macro-scopic cross sections with multiple material IDs based on the inputted isotope densities.
 The main reason for using this material instead of `MixedNeutronicsMaterial` is that each library (library ID) in the library file is not generated for each material (material ID) in the Griffin transport calculation. Using `MicroNeutronicsMaterial`, different material IDs can be freely generated in the same library ID. 
+
+Library ID refers to the value of the attribute named `ID` of the `Multigroup_Cross_Section_Library` element in the isoxml file. One should make sure that isotope names in the composition of a `material_id` covered by each `MicroNeutronicsMaterial` exist under the `Multigroup_Cross_Section_Library` with the ID specified by `library_id` in the isoxml file. `grid_variables` is the coupled variable used for temperature interpolation of cross sections for the Doppler feedback. For the coolant density feedback, a domain is recognized as fluid by `fluid_density` and `reference_fluid_density` input parameters and the macroscopic cross section of the region is scaled by the ratio of the value of the coupled variable `fluid_density` to the reference density per element quadrature. One caveat is that `library_file` and `library_name` common for all `MicroNeutronicsMaterial`s should not be taken out to `[GlobalParams]` because the `[MultiApps]` block has the same input parameters meant for the dynamic library of sub-applications.
 
 !listing lfr/7pin_cardinal_demo/NT.i start=[Materials] end=[MultiApps] include-end=False
 
@@ -272,7 +274,7 @@ The MOOSE heat conduction module will receive power from Griffin in the form of 
 !listing lfr/7pin_cardinal_demo/HC.i block=AuxKernels
 
 The coupling and data transfer are handled by blocks `[MultiApps]` and `[Transfers]`. The input file structures are very similar to those described in Griffin input model above, with the main difference is that MOOSE Heat Conduction Module now uses nekRS as the sub-app. Similarly, `[Postprocessors]` and `[VectorPostprocessors]` are employed to compute additional quantities of interest for solution monitoring and visualization. 
-Finally, we specify a Transient executioner. Because there are no time-dependent kernels in this input file, this is equivalent in practice to using a Steady executioner. 
+Finally, we specify a Transient executioner. Because there are no time-dependent kernels in this input file, this is equivalent in practice to using a steady executioner.
 
 !listing lfr/7pin_cardinal_demo/HC.i block=Executioner
 
