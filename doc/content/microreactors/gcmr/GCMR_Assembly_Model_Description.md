@@ -51,3 +51,32 @@ The B4C poison particles have the following regions
 | B4C | 100.0E-4  | 2.47 |
 | C (buffer) | 118.0E-4 | 1.04 |
 | PyC1 | 141.0E-4 | 1.882 |
+
+The following thermal conductivities are used for modeling heat conduction. Certain materials have dedicated MOOSE (BISON) objects to represent their thermal properties as functions of temperature, while others can use a nominal value:
+
+Either a specific value or a more detailed BISON model that computes thermal conductivity as a function of temperature is specified.
+
+| Region |  Thermal Conductivity ($W/m-K$) |
+| - | - |
+| UCO | [UCOThermal BISON Model](https://mooseframework.inl.gov/bison/source/materials/UCOThermal.html) |
+| C (buffer) | [BufferThermal BISON Model](https://mooseframework.inl.gov/bison/source/materials/BufferThermal.html) |
+| PyC1 | 4.0 |
+| SiC | [MonolithicSiCThermal](https://mooseframework.inl.gov/bison/source/materials/MonolithicSiCThermal.html) |
+| PyC2 | 4.0 |
+| B4C | 92 |
+| YH2 | 20 |
+| Cr coating | [ChromiumThermal](https://mooseframework.inl.gov/bison/source/materials/ChromiumThermal.html)| 
+| FeCrAl envelope | [FeCrAlThermal](https://mooseframework.inl.gov/bison/source/materials/FeCrAlThermal.html) |
+| Graphite Matrix | [GraphiteMatrixThermal](https://mooseframework.inl.gov/bison/source/materials/GraphiteMatrixThermal.html) |
+| BeO | [BeOThermal](https://mooseframework.inl.gov/bison/source/materials/BeOThermal.html) |
+
+The [GraphiteMatrixThermal](https://mooseframework.inl.gov/bison/source/materials/GraphiteMatrixThermal.html) also provides various models for homogenizing TRISO into graphite.
+
+The helium coolant has the following properties
+
+| Property | Value | Units |
+| - | - | - |
+| Molar Mass | 0.004003 | $kg/mol$ |
+| Dynamic Viscosity | 4.2926127588e-05 | $Pa-s$ |
+| Thermal Conductivity | 0.338475615 | $W/m-K$ |
+| $\gamma=\frac{c_{p}}{c_{v}}$ | 1.66 | - |
