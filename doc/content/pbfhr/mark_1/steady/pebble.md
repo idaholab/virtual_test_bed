@@ -1,5 +1,11 @@
 # Pebble heat conduction simulation
 
+*Contact: Dr. Mustafa Jaradat, Mustafa.Jaradat\@inl.gov*
+
+*Sponsor: Dr. Steve Bajorek (NRC)*
+
+*Model summarized, documented, and uploaded by Dr. Mustafa Jaradat and Dr. Samuel Walker*
+
 The neutronics and thermal hydraulics simulation provide us with the power distribution and
 the fluid and solid phase temperature on the macroscale. They do not resolve the individual pebbles,
 and therefore cannot directly inform us on local effects such as temperature gradients within a pebble.
@@ -11,7 +17,7 @@ over a coarse mesh using a [CentroidMultiApp](https://mooseframework.inl.gov/sou
 outer reflector and fueled pebbles in the active region of the core.
 In the reflector, each sub-app is a 1D spherical heat conduction simulation.
 
-!listing /pbfhr/steady/ss3_coarse_pebble_mesh.i block=MultiApps/graphite_pebble
+!listing /pbfhr/mark_1/steady/ss3_coarse_pebble_mesh.i block=MultiApps/graphite_pebble
 
 !alert note
 The `app_type` may be specified to use a smaller, faster application to run a simulation. For example, a
@@ -21,13 +27,13 @@ this smaller application.
 
 As is the case with the graphite pebbles, the fuel pebbles are treated using a sub-app; fuel pebbles are modeled with a 1-D multiscale heat conduction model.
 
-!listing /pbfhr/steady/ss3_coarse_pebble_mesh.i block=MultiApps/fuel_pebble
+!listing /pbfhr/mark_1/steady/ss3_coarse_pebble_mesh.i block=MultiApps/fuel_pebble
 
 [MultiAppVariableValueSamplePostprocessorTransfer](https://mooseframework.inl.gov/source/transfers/MultiAppVariableValueSamplePostprocessorTransfer.html) and [MultiAppVariableValueSampleTransfer](https://mooseframework.inl.gov/source/transfers/MultiAppVariableValueSampleTransfer.html) allow us to sample the temperature
 of the solid phase and the power density at these locations and populate a postprocessor / a variable respectively in the
 sub-app.
 
-!listing /pbfhr/steady/ss3_coarse_pebble_mesh.i block=Transfers/fuel_matrix_heat_source Transfers/pebble_surface_temp_1
+!listing /pbfhr/mark_1/steady/ss3_coarse_pebble_mesh.i block=Transfers/fuel_matrix_heat_source Transfers/pebble_surface_temp_1
 
 [MultiAppPostprocessorInterpolationTransfer](https://mooseframework.inl.gov/source/transfers/MultiAppPostprocessorInterpolationTransfer.html) can interpolate from postprocessors in each of subapp at their
 specified location into auxiliary variables in the macroscale simulation.
@@ -39,26 +45,26 @@ spawn more pebble simulations, in the regions of interest. Finally, having acces
 solid phase in the pebble allows for more accurate self-shielding calculations, for group cross section
 generation.
 
-!listing /pbfhr/steady/ss3_coarse_pebble_mesh.i block=Transfers/max_T_UO2 Transfers/average_T_UO2 Transfers/average_T_matrix Transfers/average_T_graphite Transfers/average_T_shell
+!listing /pbfhr/mark_1/steady/ss3_coarse_pebble_mesh.i block=Transfers/max_T_UO2 Transfers/average_T_UO2 Transfers/average_T_matrix Transfers/average_T_graphite Transfers/average_T_shell
 
 ## Reflector pebble heat conduction
 
 Reflector pebbles are modeled as homogeneous graphite spherical pebbles. We represent them with
 a 1D mesh in spherical coordinates.
 
-!listing /pbfhr/steady/ss4_graphite_pebble.i block=Mesh
+!listing /pbfhr/mark_1/steady/ss4_graphite_pebble.i block=Mesh
 
 The heat conduction equation with no source is described with a time derivative kernel
 and a diffusion kernel, specialized as [HeatConduction](https://mooseframework.inl.gov/modules/heat_conduction/index.html) kernels in the heat conduction module.
 
-!listing /pbfhr/steady/ss4_graphite_pebble.i block=Kernels
+!listing /pbfhr/mark_1/steady/ss4_graphite_pebble.i block=Kernels
 
 The center of this spherical pebble is naturally a zero flux symmetry boundary condition. The
 temperature at the outer surface of the pebble is the temperature of the solid phase. This
 temperature is received from the main-app in a [Receiver](https://mooseframework.inl.gov/source/postprocessors/Receiver.html) postprocessor. It is then used by a
 [PostprocessorDirichletBC](https://mooseframework.inl.gov/source/bcs/PostprocessorDirichletBC.html) to set the boundary condition.
 
-!listing /pbfhr/steady/ss4_graphite_pebble.i block=Postprocessors/pebble_surface_T BCs
+!listing /pbfhr/mark_1/steady/ss4_graphite_pebble.i block=Postprocessors/pebble_surface_T BCs
 
 !alert note
 The pebble conduction simulations are led using a finite element discretization. While the kernels
@@ -70,7 +76,7 @@ The fueled pebble is modeled using a similar approach, except the sphere is not 
 Its center is a graphite core, surrounded by a fuel matrix then a graphite shell. We still represent
 the pebble as a 1D spherical system, with each zone defined as a different subdomain.
 
-!listing /pbfhr/steady/ss4_fuel_pebble.i block=Mesh
+!listing /pbfhr/mark_1/steady/ss4_fuel_pebble.i block=Mesh
 
 We use a Heat Source Decomposition approach [!citep](novak2021) to solve the multiscale heat conduction
 problem with sources. The heat source is decomposed in its mean and fluctuation (of zero average) terms, corresponding to
@@ -106,12 +112,12 @@ where $x$ is the local coordinate and i is the index of the particles or microsc
 
 In the fuel matrix, there is heat generation from the fission reactions. We solve the mesoscale conduction equation with the mean heat source.
 
-!listing /pbfhr/steady/ss4_fuel_pebble.i block=Kernels/time Kernels/diffusion Kernels/heat_source
+!listing /pbfhr/mark_1/steady/ss4_fuel_pebble.i block=Kernels/time Kernels/diffusion Kernels/heat_source
 
 Since there is no fuel in the core and the shell, and we do not model non-fission heating, there is
 no heat source in those subdomains.
 
-!listing /pbfhr/steady/ss4_fuel_pebble.i block=Kernels/time2 Kernels/diffusion2
+!listing /pbfhr/mark_1/steady/ss4_fuel_pebble.i block=Kernels/time2 Kernels/diffusion2
 
 The fuel matrix temperature and the graphite temperatures match on their interfaces. We use an interface kernel to impose the equality conditions on both sides of the fuel matrix.
 
@@ -121,19 +127,19 @@ T(x_{left/right}) = T_{meso}(x_{left/right}) + T_{micro}(x_{outer}) = T_{graphit
 
 where $x_{outer}$ is the outer boundary of the microscale domain, which will be detailed further in the next section. $T_{micro}(x_{outer})$ is obtained from the TRISO scale calculation.
 
-!listing /pbfhr/steady/ss4_fuel_pebble.i block=InterfaceKernels
+!listing /pbfhr/mark_1/steady/ss4_fuel_pebble.i block=InterfaceKernels
 
 The material definitions, and the mixing of material properties from different components of a phase,
-is covered in the [macroscale thermal-hydraulics simulation input](pbfhr/steady/pronghorn.md).
+is covered in the [macroscale thermal-hydraulics simulation input](pbfhr/mark_1/steady/pronghorn.md).
 
 We solve the microscale equation in the fuel matrix with a separate simulation, using the
 [MultiApp](https://mooseframework.inl.gov/syntax/MultiApps/index.html) system. We pass the heat source to the microscale simulation, and receive the outer
 surface temperature of the microscale particle. The maximum and average temperatures reached in
 the microscale simulations are also passed for postprocessing purposes.
 
-!listing /pbfhr/steady/ss4_fuel_pebble.i block=MultiApps Transfers/particle_heat_source Transfers/particle_surface_temp
+!listing /pbfhr/mark_1/steady/ss4_fuel_pebble.i block=MultiApps Transfers/particle_heat_source Transfers/particle_surface_temp
 
-We cover the microscale equation treatment in the [fuel matrix microscale simulation](pbfhr/steady/triso.md).
+We cover the microscale equation treatment in the [fuel matrix microscale simulation](pbfhr/mark_1/steady/triso.md).
 
 !alert note
 INL has recently developed a continuous tracking algorithm to assess

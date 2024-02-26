@@ -19,7 +19,7 @@ The next block is a [GlobalParams](https://mooseframework.inl.gov/syntax/GlobalP
 and are used to reduce the size of the input file. Here we specify the group cross section library. We will give
 additional details about the group cross sections in the [Materials](https://mooseframework.inl.gov/moose/syntax/Materials/) block.
 
-!listing /pbfhr/steady/ss0_neutrons.i block=GlobalParams
+!listing /pbfhr/mark_1/steady/ss0_neutrons.i block=GlobalParams
 
 The `[TransportSystems]` block is used to specify the solver parameters. We chose a diffusion solver
 as accuracy is generally satisfactory with graphite-moderated reactors, as we confirmed by benchmarking
@@ -29,7 +29,7 @@ steady flux distribution. We also specify the boundary conditions in this block.
 so the center of the geometry is an axis of symmetry. A vacuum boundary condition is placed on the other
 boundaries. This approximation is appropriate when the boundaries are sufficiently far from the active region.
 
-!listing /pbfhr/steady/ss0_neutrons.i block=TransportSystems
+!listing /pbfhr/mark_1/steady/ss0_neutrons.i block=TransportSystems
 
 The next part of the input specifies the geometry. The geometry in MOOSE is described by an unstructured mesh.
 MOOSE also contains basic mesh generation capabilities which can be leveraged to generated rectilinear meshes.
@@ -37,14 +37,14 @@ However, for realistic reactor models, it is more common to use an external mesh
 generate meshes for the Mk1-FHR. The mesh may be shared between applications, but it is generally recommended to
 tailor the mesh to the physics equations being solved. We specify the external mesh using a [FileMeshGenerator](https://mooseframework.inl.gov/source/meshgenerators/FileMeshGenerator.html).
 
-!listing /pbfhr/steady/ss0_neutrons.i block=Mesh/mesh_reader
+!listing /pbfhr/mark_1/steady/ss0_neutrons.i block=Mesh/mesh_reader
 
 This mesh is then modified using MOOSE mesh generators. We remove the brick insulation from the system using a
 [BlockDeletionGenerator](https://mooseframework.inl.gov/source/meshgenerators/BlockDeletionGenerator.html) as its influence on the neutronics is negligible. Before that, we added a sideset, a
 collection of element sides, to the mesh. This new sideset is used to define the boundary condition for the outer
 boundary of the core.
 
-!listing /pbfhr/steady/ss0_neutrons.i block=Mesh/new_boundary
+!listing /pbfhr/mark_1/steady/ss0_neutrons.i block=Mesh/new_boundary
 
 Variables and kernels need not be defined when using Griffin, as the `TransportSystems` block is an [Action](https://mooseframework.inl.gov/source/actions/Action.html) in
 MOOSE vocabulary that takes care of defining those. We will explain those blocks more in details for the Pronghorn
@@ -55,35 +55,35 @@ computing material properties, for outputting quantities of interests, and many 
 `Tfuel` and `Tsalt` are used to couple to the thermal hydraulics simulation. These fields are populated by
 [Transfers](https://mooseframework.inl.gov/syntax/Transfers/) from the Pronghorn app, further in the input file.
 
-!listing /pbfhr/steady/ss0_neutrons.i block=AuxVariables/Tfuel AuxVariables/Tsalt
+!listing /pbfhr/mark_1/steady/ss0_neutrons.i block=AuxVariables/Tfuel AuxVariables/Tsalt
 
 The `CR_insertion` auxiliary variable is the insertion of the control rod in the system.
 
-!listing /pbfhr/steady/ss0_neutrons.i block=AuxVariables/CR_insertion
+!listing /pbfhr/mark_1/steady/ss0_neutrons.i block=AuxVariables/CR_insertion
 
 The next three [AuxVariables](https://mooseframework.inl.gov/syntax/AuxVariables/) are the fission, decay heat and total power densities. They are computed
 from `inst_power_density` which is computed by Griffin. The decay heat is important to track for loss of flow
 transients, the total power density will be required as the heat source in the thermal hydraulics simulation.
 
-!listing /pbfhr/steady/ss0_neutrons.i block=AuxVariables/fission_power_density AuxVariables/decay_heat_power_density AuxVariables/decay_heat_power_density
+!listing /pbfhr/mark_1/steady/ss0_neutrons.i block=AuxVariables/fission_power_density AuxVariables/decay_heat_power_density AuxVariables/decay_heat_power_density
 
 The fluxes output by Griffin are normalized with regards to the solver fission source. To output the physical fluxes
 normalized to the real core power, which may be used to compute material damage in the fuel for example,
 we define the `scaled_sflux_gi` [AuxVariables](https://mooseframework.inl.gov/syntax/AuxVariables/).
 
-!listing /pbfhr/steady/ss0_neutrons.i block=AuxVariables/scaled_sflux_g0
+!listing /pbfhr/mark_1/steady/ss0_neutrons.i block=AuxVariables/scaled_sflux_g0
 
 [AuxKernels](https://mooseframework.inl.gov/moose/syntax/AuxKernels/) are used to operate on [AuxVariables](https://mooseframework.inl.gov/syntax/AuxVariables/). They may scale, multiply, add and perform many other operations.
 They may be block restricted, as some [AuxVariables](https://mooseframework.inl.gov/syntax/AuxVariables/) are not defined over the entire domain, or they may inherit the
 same block restriction as the variable.
 
-!listing /pbfhr/steady/ss0_neutrons.i block=AuxKernels
+!listing /pbfhr/mark_1/steady/ss0_neutrons.i block=AuxKernels
 
 Functions may be defined in MOOSE in a [Functions](https://mooseframework.inl.gov/syntax/Functions/index.html) block. The control rod position is set in this input using
 a function. Since it's a steady state calculation, we could also have simply used an initial condition. The
 [FunctionAux](https://mooseframework.inl.gov/source/auxkernels/FunctionAux.html) is using the function to set the `CR_insertion` auxiliary variable.
 
-!listing /pbfhr/steady/ss0_neutrons.i block=Functions
+!listing /pbfhr/mark_1/steady/ss0_neutrons.i block=Functions
 
 Grffin uses the `PowerDensity` as a shorthand to define variables and postprocessors related to the power of the
 core. The following fields are used:
@@ -100,7 +100,7 @@ core. The following fields are used:
 The `CONSTANT MONOMIAL` basis is used to represent the power distribution. This will be able to match the
 discontinuities in the fission group cross sections
 
-!listing /pbfhr/steady/ss0_neutrons.i block=PowerDensity
+!listing /pbfhr/mark_1/steady/ss0_neutrons.i block=PowerDensity
 
 The group cross secions are distributed through the geometry using the [Materials](https://mooseframework.inl.gov/moose/syntax/Materials/) block. Each block in this
 section is a `Material` object defining the group cross section in a block. We will go over the `pebble_bed`
@@ -113,7 +113,7 @@ are matched to the variables in the simulation using `grid_names` and `grid_vari
 library is selected using the `material_id`. Since macroscopic group cross sections are used, the isotopes aren't
 specified and a pseudo-isotope is used.
 
-!listing /pbfhr/steady/ss0_neutrons.i block=Materials/inner_reflector
+!listing /pbfhr/mark_1/steady/ss0_neutrons.i block=Materials/inner_reflector
 
 The boundary conditions were already specified by the `TransportSystems` action so no additional boundary condition
 is specified.
@@ -126,7 +126,7 @@ The number of non-linear iterations and the non-linear relative and absolute con
 respectively reduced and loosened to reduce the computational cost of the solution at the expense of its
 convergence.
 
-!listing /pbfhr/steady/ss0_neutrons.i block=Executioner
+!listing /pbfhr/mark_1/steady/ss0_neutrons.i block=Executioner
 
 The Pronghorn sub-application is created by the [MultiApps](https://mooseframework.inl.gov/syntax/MultiApps/index.html) block. Since we are seeking a steady state solution, we
 want the thermal hydraulics problem to be fully solved at every multiphysics iteration. This is accomplished by a
@@ -135,7 +135,7 @@ performed after the neutronics solve. This means that for the first multiphysics
 in the neutronics solve will be set to an initial guess, while the power distribution in the thermal hydraulics
 solve will be updated once already. `0 0 0` is specified for the position since the two meshes are aligned.
 
-!listing /pbfhr/steady/ss0_neutrons.i block=MultiApps
+!listing /pbfhr/mark_1/steady/ss0_neutrons.i block=MultiApps
 
 The coupling to the thermal hydraulics simulation is done by using a [MultiAppProjectionTransfer](https://mooseframework.inl.gov/source/transfers/MultiAppProjectionTransfer.html) of the power
 density. This transfer is conservative, in that the total power in both applications is preserved. This is
@@ -145,7 +145,7 @@ on the power density profile and the difference between the neutronics and therm
 not as important in this direction, as discretization errors on the temperature do not propagate to large errors in
 the flux distribution.
 
-!listing /pbfhr/steady/ss0_neutrons.i block=Transfers
+!listing /pbfhr/mark_1/steady/ss0_neutrons.i block=Transfers
 
 The `[RestartVariables]` block is commented out, but it may be used to quickly recover the solution from a previous
 run instead of calculating it again. It is important that both main and auxiliary variables are recovered. As the
@@ -166,4 +166,4 @@ types:
   output at a regular interval, specified by the `num_files` field.
 
 
-!listing /pbfhr/steady/ss0_neutrons.i block=Outputs
+!listing /pbfhr/mark_1/steady/ss0_neutrons.i block=Outputs
