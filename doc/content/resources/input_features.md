@@ -41,7 +41,7 @@ the input file, but generally reside in the same folder in the repository.
 
 - Molten Salt Fast Reactor core multiphysics [documentation](msr/msfr/griffin_pgh_model.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/msr/msfr/steady)
 
-- Pebble Bed Fluoride salt cooled High temperature Reactor [documentation](pbfhr/steady/griffin_pgh_model.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/pbfhr/steady)
+- Pebble Bed Fluoride salt cooled High temperature Reactor [documentation](pbfhr/mark_1/steady/griffin_pgh_model.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/pbfhr/mark_1/steady)
 
 
 ## Coupling through MultiApps
@@ -50,7 +50,7 @@ the input file, but generally reside in the same folder in the repository.
 
 - Molten Salt Fast Reactor [documentation](msr/msfr/griffin_pgh_model.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/msr/msfr/steady)
 
-- Pebble Bed Fluoride salt cooled High temperature Reactor [documentation](pbfhr/balance_of_plant/plant.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/pbfhr/plant)
+- Pebble Bed Fluoride salt cooled High temperature Reactor [documentation](pbfhr/mark_1/balance_of_plant/plant.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/pbfhr/mark_1/plant)
 
 - Pebble Bed Modular Reactor (PBMR400) [documentation](htgr/pbmr/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/pbmr400/steady)
 
@@ -62,7 +62,7 @@ the input file, but generally reside in the same folder in the repository.
 
 - HTGR assembly multiphysics simulation [documentation](htgr/assembly/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/assembly)
 
-- Reflector bypass flow in the PB-FHR [documentation](pbfhr/reflector.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/pbfhr/reflector)
+- Reflector bypass flow in the PB-FHR [documentation](pbfhr/mark_1/reflector.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/pbfhr/mark_1/reflector)
 
 - SNAP-8 NTP reactor core model [documentation](microreactors/s8er/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/microreactors/s8er)
 
@@ -86,7 +86,7 @@ the input file, but generally reside in the same folder in the repository.
 
 ### Multiphysics and multiscale simulations
 
-- Pebble Bed Fluoride salt cooled High temperature Reactor [documentation](pbfhr/steady/griffin_pgh_model.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/pbfhr/steady)
+- Pebble Bed Fluoride salt cooled High temperature Reactor [documentation](pbfhr/mark_1/steady/griffin_pgh_model.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/pbfhr/mark_1/steady)
 
 - High Temperature Test Facility coupling between core and hundreds of channel calculations [documentation](htgr/httf/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/httf)
 
@@ -106,7 +106,7 @@ Documentation for the [Checkpoint system](https://mooseframework.inl.gov/applica
 
 - Molten Salt Reactor Experiment reactivity insertion transients [documentation](msr/msre/msre_sam_model.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/msr/msre/reactivity_insertion)
 
-- Pebble Bed Fluoride salt cooled High temperature Reactor Plant multiphysics [documentation](pbfhr/balance_of_plant/plant.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/pbfhr/plant)
+- Pebble Bed Fluoride salt cooled High temperature Reactor Plant multiphysics [documentation](pbfhr/mark_1/balance_of_plant/plant.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/pbfhr/mark_1/plant)
 
 - Advanced Burner Test Reactor loss of flow transient [documentation](sfr/abtr/abtr.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/sfr/abtr)
 
@@ -156,7 +156,7 @@ specified. The MRAD and PBMR-400 models listed below are an example of this.
 
 - Molten Salt Reactor Experiment [documentation](msr/msre/msre_sam_model.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/msr/msre)
 
-- Pebble Bed Fluoride salt cooled High temperature Reactor [documentation](pbfhr/pbfhr_sam/pbfhr_sam.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/pbfhr/sam_model)
+- Pebble Bed Fluoride salt cooled High temperature Reactor [documentation](pbfhr/mark_1/pbfhr_sam/pbfhr_sam.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/mark_1/pbfhr/sam_model)
 
 - 1D TRISO fuel depletion [documentation](htgr/triso/triso_model.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/triso_fuel)
 
@@ -172,7 +172,7 @@ specified. The MRAD and PBMR-400 models listed below are an example of this.
 
 - Dispersed UO2 LEU pulse model [documentation](leu_pulse/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/leu_pulse)
 
-- Mk1 FHR Primary loop simulation [documentation](pbfhr/pbfhr_sam/pbfhr_sam.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/pbfhr/sam_model)
+- Mk1 FHR Primary loop simulation [documentation](pbfhr/mark_1/pbfhr_sam/pbfhr_sam.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/pbfhr/mark_1/sam_model)
 
 - Generic Pebble Bed Reactor core model [documentation](htgr/generic-pbr/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/generic-pbr)
 
@@ -194,13 +194,13 @@ specified. The MRAD and PBMR-400 models listed below are an example of this.
 
 - Heat Pipe Microreactor with Hydrogen Redistribution (HPMR_H2) Steady State Model [documentation](microreactors/hpmr_h2/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/devel/microreactors/hpmr_h2/steady)
 
-- Reflector bypass flow in the PB-FHR [documentation](pbfhr/reflector.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/pbfhr/reflector)
+- Reflector bypass flow in the PB-FHR [documentation](pbfhr/mark_1/reflector.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/pbfhr/mark_1/reflector)
 
 - High Temperature Test Facility transient simulations [documentation](htgr/httf/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/httf)
 
 - Molten Salt Fast Reactor plant multiphysics [documentation](msr/msfr/plant/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/msr/msfr/plant)
 
-- Pebble Bed Fluoride salt cooled High temperature Reactor Plant multiphysics [documentation](pbfhr/balance_of_plant/plant.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/pbfhr/plant)
+- Pebble Bed Fluoride salt cooled High temperature Reactor Plant multiphysics [documentation](pbfhr/mark_1/balance_of_plant/plant.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/pbfhr/mark_1/plant)
 
 - Molten Salt Fast Reactor core CFD [documentation](msr/msfr/nek5000_cfd_model.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/msr/msfr/core_cfd)
 
@@ -218,7 +218,7 @@ specified. The MRAD and PBMR-400 models listed below are an example of this.
 
 ### GPU-enabled
 
-- Reflector bypass flow in the PB-FHR [documentation](pbfhr/reflector.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/pbfhr/reflector)
+- Reflector bypass flow in the PB-FHR [documentation](pbfhr/mark_1/reflector.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/pbfhr/mark_1/reflector)
 
 - 67 pebbles conjugate heat transfer [documentation](pb67_cardinal/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/pb67_cardinal)
 
