@@ -2,7 +2,7 @@
 
 *Contact: Guillaume Giudicelli, guillaume.giudicelli.at.inl.gov*
 
-*Model link: [FHR Plant Model](https://github.com/idaholab/virtual_test_bed/tree/devel/pbfhr/mark_1/plant)*
+*Model link: [FHR Plant Model](https://github.com/idaholab/virtual_test_bed/tree/devel/pbfhr/mark1/plant)*
 
 !tag name=FHR Plant Model pairs=reactor_type:PB-FHR
                        reactor:Mk1-FHR
@@ -35,32 +35,32 @@ In particular, the `MultiAppPostprocessorsTransfer` from SAM enables the transfe
 [postprocessors](https://mooseframework.inl.gov/syntax/Postprocessors/index.html)
 by a single object.
 
-!listing pbfhr/mark_1/plant/ss1_combined.i block=Transfers/receive_flow_BCs
+!listing pbfhr/mark1/plant/ss1_combined.i block=Transfers/receive_flow_BCs
 
 The outlet pressure is passed from SAM to Pronghorn and stored in a
 [Receiver](https://mooseframework.inl.gov/source/postprocessors/Receiver.html), as are the
 core inlet mass flow rate and temperature.
 
-!listing pbfhr/mark_1/plant/ss1_combined.i block=Postprocessors/inlet_mdot Postprocessors/inlet_temp_fluid Postprocessors/outlet_pressure
+!listing pbfhr/mark1/plant/ss1_combined.i block=Postprocessors/inlet_mdot Postprocessors/inlet_temp_fluid Postprocessors/outlet_pressure
 
 The boundary conditions are modified appropriately to use the boundary information newly stored in those Postprocessors.
 Flux boundary conditions are utilized as they are naturally conservative in a finite volume method.
 The fluxes for the mass, momentum and energy equations are all provided, computed by
 the boundary conditions based on the mass flow rates, local density and inlet surface area.
 
-!listing pbfhr/mark_1/plant/ss1_combined.i block=Modules/NavierStokesFV start=inlet_boundaries end=pressure_function include-end=True
+!listing pbfhr/mark1/plant/ss1_combined.i block=Modules/NavierStokesFV start=inlet_boundaries end=pressure_function include-end=True
 
 In the other direction of the coupling, the boundary conditions that will be passed to SAM are collected using
 side integrals and flow rate postprocessors. These are executed at the end of each time step
 and collect the outlet flow conditions as well as the inlet pressure. The inlet temperature
 is also computed in case of a flow reversal.
 
-!listing pbfhr/mark_1/plant/ss1_combined.i block=Postprocessors/pressure_in Postprocessors/mass_flow_out Postprocessors/T_flow_out Postprocessors/T_flow_in
+!listing pbfhr/mark1/plant/ss1_combined.i block=Postprocessors/pressure_in Postprocessors/mass_flow_out Postprocessors/T_flow_out Postprocessors/T_flow_in
 
 The `Transfer` system is once again leveraged, this time to send data to SAM. The modifications to the
 SAM input are detailed in the next section.
 
-!listing pbfhr/mark_1/plant/ss1_combined.i block=Transfers/send_flow_BCs
+!listing pbfhr/mark1/plant/ss1_combined.i block=Transfers/send_flow_BCs
 
 ## Modifications to the balance of plant 1D model
 
@@ -70,20 +70,20 @@ as well as estimating the coolant travel time in the core and the pressure drop 
 This 1D core component is removed in the coupled model, as it is replaced with a 2D RZ Pronghorn model of the core.
 The `Transfer` previously shown populates the following `Receiver` postprocessors:
 
-!listing pbfhr/mark_1/plant/ss2_primary.i block=Postprocessors/Core_outlet_mdot Postprocessors/Core_outlet_T Postprocessors/Core_inlet_pressure Postprocessors/Core_inlet_T_reversal
+!listing pbfhr/mark1/plant/ss2_primary.i block=Postprocessors/Core_outlet_mdot Postprocessors/Core_outlet_T Postprocessors/Core_inlet_pressure Postprocessors/Core_inlet_T_reversal
 
 SAM uses velocity rather than mass flow rates, so the core outlet velocity is computed from
 the mass flow rate obtained from Pronghorn.
 
-!listing pbfhr/mark_1/plant/ss2_primary.i block=Postprocessors/Core_outlet_rho Postprocessors/Core_outlet_v
+!listing pbfhr/mark1/plant/ss2_primary.i block=Postprocessors/Core_outlet_rho Postprocessors/Core_outlet_v
 
 These `Receivers` are then fed into dedicated coupling components, placed at the inlet and outlet of the core.
 
-!listing pbfhr/mark_1/plant/ss2_primary.i block=Components/core_inlet Components/core_outlet
+!listing pbfhr/mark1/plant/ss2_primary.i block=Components/core_inlet Components/core_outlet
 
 These components are connected to the reset of the primary using pipes, which were chosen arbitrarily for this model.
 
-!listing pbfhr/mark_1/plant/ss2_primary.i block=Components/fueling Components/defueling
+!listing pbfhr/mark1/plant/ss2_primary.i block=Components/fueling Components/defueling
 
 The core bypass flow is modeled by SAM, with both its inlet and outlet in the primary outside of the core model.
 
