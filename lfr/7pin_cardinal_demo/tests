@@ -1,0 +1,54 @@
+[Tests]
+  [generate_mesh]
+    type = RunApp
+    executable_pattern = 'cardinal*'
+    input = 'NTmesh.i  HCmesh.i'
+    cli_args = '--mesh-only'
+  []
+  [syntax_griffin]
+    type = RunApp
+    input = 'NT.i'
+    check_input = true
+    executable_pattern = 'cardinal*'
+    prereq = generate_mesh
+    max_time = 400
+  []
+  [syntax_conduction]
+    type = RunApp
+    input = 'HC.i'
+    check_input = true
+    executable_pattern = 'cardinal*'
+    prereq = generate_mesh
+  []
+  [syntax_nekrs]
+    type = RunApp
+    input = 'nek.i'
+    check_input = true
+    executable_pattern = 'cardinal*'
+  []
+
+  [run_multiphysics]
+    type = RunApp
+    input = 'NT.i'
+    cli_args = "Executioner/num_steps=2"
+    executable_pattern = 'cardinal*'
+    prereq = 'syntax_griffin'
+    min_parallel = 144
+    max_time = 2000
+    mesh_mode = DISTRIBUTED
+  []
+  [run_conduction]
+    type = RunApp
+    check_input = True
+    input = 'HC.i'
+    executable_pattern = 'cardinal*'
+    prereq = 'syntax_conduction'
+  []
+  [run_nekrs]
+    type = RunApp
+    input = 'nek.i'
+    check_input = true
+    executable_pattern = 'cardinal*'
+    prereq = 'syntax_nekrs'
+  []
+[]
