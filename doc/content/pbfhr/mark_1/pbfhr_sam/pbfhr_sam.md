@@ -2,7 +2,7 @@
 
 *Contact: Jun Fang, fangj.at.anl.gov*
 
-*Model link: [FHR SAM Model](https://github.com/idaholab/virtual_test_bed/tree/devel/pbfhr/mark_1/sam_model)*
+*Model link: [FHR SAM Model](https://github.com/idaholab/virtual_test_bed/tree/devel/pbfhr/mark1/sam_model)*
 
 !tag name=FHR Core SAM Model pairs=reactor_type:PB-FHR
                        reactor:Mk1-FHR
@@ -71,7 +71,7 @@ molten salts, etc. The user can also input the properties of the fluid
 as constants or function of temperature. For example,
 the built-in eos for FLIBE can be input as
 
-!listing pbfhr/mark_1/sam_model/pbfhr-ss.i block=eos language=cpp
+!listing pbfhr/mark1/sam_model/pbfhr-ss.i block=eos language=cpp
 
 ## MaterialProperties
 
@@ -79,7 +79,7 @@ Material properties are input in this block. The values can be constants or
 temperature dependent as defined in the Functions block. For example,
 the properties of stainless steel are input as
 
-!listing pbfhr/mark_1/sam_model/pbfhr-ss.i block=ss-mat language=cpp
+!listing pbfhr/mark1/sam_model/pbfhr-ss.i block=ss-mat language=cpp
 
 Note that all units are in SI by default.
 
@@ -91,7 +91,7 @@ For example, users can input enthalpy as a function of temperature,
 power history as a function of time, or power profile as a function of position.
 The input below specifies decay heat as a function of time
 
-!listing pbfhr/mark_1/sam_model/pbfhr-ss.i block=shutdownPower language=cpp
+!listing pbfhr/mark1/sam_model/pbfhr-ss.i block=shutdownPower language=cpp
 
 ## Components
 
@@ -105,7 +105,7 @@ The main components in the primary loop are a reactor, the core channel,
 a heat exchanger, pump, plena, tank, and piping. The reactor power and
 decay heat profile are user-input
 
-!listing pbfhr/mark_1/sam_model/pbfhr-ss.i block=reactor language=cpp
+!listing pbfhr/mark1/sam_model/pbfhr-ss.i block=reactor language=cpp
 
 The core channel is modeled using `PBCoreChannel` in which
 the cylindrical fuel elements are modeled as three heat structures:
@@ -162,11 +162,11 @@ Their locations are specified with variables position and orientation.
 Flow area, hydraulic diameter, and pipe length are the main variables that
 define the element. An example of piping is as follows
 
-!listing pbfhr/mark_1/sam_model/pbfhr-ss.i block=pipe040 language=cpp
+!listing pbfhr/mark1/sam_model/pbfhr-ss.i block=pipe040 language=cpp
 
 Components are connected using `PBSingleJunction`, or `PBBranch`. For example
 
-!listing pbfhr/mark_1/sam_model/pbfhr-ss.i block=Branch611 language=cpp
+!listing pbfhr/mark1/sam_model/pbfhr-ss.i block=Branch611 language=cpp
 
 The DHX is modeled using the `PBHeatExchanger` component
 which models a shell-and-tube heat exchanger including the fluid flow
@@ -178,14 +178,14 @@ The heat transfer coefficients for both the shell side and tube side are calcula
 However, users can override them using variables `Hw` and `Hw_secondary`
 (commented out in the input file)
 
-!listing pbfhr/mark_1/sam_model/pbfhr-ss.i block=DHX language=cpp
+!listing pbfhr/mark1/sam_model/pbfhr-ss.i block=DHX language=cpp
 
 The salt pump is modeled using the PBPump component.
 The user specifies a constant pump head or pump head function (`Phead`)
 which is time dependent. Large reverse pump loss coefficients are
 input to prevent reverse flow.
 
-!listing pbfhr/mark_1/sam_model/pbfhr-ss.i block=Pump language=cpp
+!listing pbfhr/mark1/sam_model/pbfhr-ss.i block=Pump language=cpp
 
 The DRACS loop, shown schematically in Figure 3, consists of the tube side of
 the DHX heat exchanger, manifold and piping.  The nodalization of the components
@@ -203,11 +203,11 @@ This block is used to specify the output variables written to a `csv` file
 that can be further processed in Excel. For example, to output
 the exit temperature on the secondary side of the DHX:
 
-!listing pbfhr/mark_1/sam_model/pbfhr-ss.i block=DHXTubeTop language=cpp
+!listing pbfhr/mark1/sam_model/pbfhr-ss.i block=DHXTubeTop language=cpp
 
 To output the velocity and density of the flow exiting the core:
 
-!listing pbfhr/mark_1/sam_model/pbfhr-ss.i language=cpp
+!listing pbfhr/mark1/sam_model/pbfhr-ss.i language=cpp
         start=Corev
         end=Bypassv
 

@@ -22,7 +22,7 @@ approximation.)  The simplified conservation of mass is then given by,
 
 This conservation is expressed by the `FVKernels/mass` kernel:
 
-!listing /pbfhr/mark_1/steady/legacy/ss1_combined.i block=FVKernels/mass
+!listing /pbfhr/mark1/steady/legacy/ss1_combined.i block=FVKernels/mass
 
 (Note that this kernel uses `variable = pressure` even though pressure does not
 appear in the mass conservation equation. This is an artifact of the way systems
@@ -77,23 +77,23 @@ gives the form that is implemented for the FHR model,
 
 The first term in [eq:x_mom]---the momentum time derivative---is input with the time derivative kernel:
 
-!listing /pbfhr/mark_1/steady/legacy/ss1_combined.i block=FVKernels/vel_x_time
+!listing /pbfhr/mark1/steady/legacy/ss1_combined.i block=FVKernels/vel_x_time
 
 The second term---the advection of momentum---is handled by a [PINSFVMomentumAdvection](https://mooseframework.inl.gov/source/fvkernels/PINSFVMomentumAdvection.html) kernel
 
-!listing /pbfhr/mark_1/steady/legacy/ss1_combined.i block=FVKernels/vel_x_advection
+!listing /pbfhr/mark1/steady/legacy/ss1_combined.i block=FVKernels/vel_x_advection
 
 The third term---the pressure gradient---is handled by a [PINSFVMomentumPressure](https://mooseframework.inl.gov/source/fvkernels/PINSFVMomentumPressure.html) kernel,
 
-!listing /pbfhr/mark_1/steady/legacy/ss1_combined.i block=FVKernels/u_pressure
+!listing /pbfhr/mark1/steady/legacy/ss1_combined.i block=FVKernels/u_pressure
 
 The third term---the effective diffusion---with a [PINSFVMomentumDiffusion](https://mooseframework.inl.gov/source/fvkernels/PINSFVMomentumDiffusion.html) kernel,
 
-!listing /pbfhr/mark_1/steady/legacy/ss1_combined.i block=FVKernels/vel_x_viscosity
+!listing /pbfhr/mark1/steady/legacy/ss1_combined.i block=FVKernels/vel_x_viscosity
 
 And the fourth term--the friction term---with a [PNSFVMomentumFriction](https://mooseframework.inl.gov/source/fvkernels/PINSFVMomentumFriction.html) kernel,
 
-!listing /pbfhr/mark_1/steady/legacy/ss1_combined.i block=FVKernels/u_friction
+!listing /pbfhr/mark1/steady/legacy/ss1_combined.i block=FVKernels/u_friction
 
 The conservation of momentum in the $y$-direction is analogous, but it also
 includes the Boussinesq approximation in order to capture the effect of
@@ -108,7 +108,7 @@ For each kernel describing the $x$-momentum equation, there is a corresponding
 kernel for the $y$-momentum equation. The additional Boussinesq and gravity kernels for this
 equation are,
 
-!listing /pbfhr/mark_1/steady/legacy/ss1_combined.i block=FVKernels/buoyancy_boussinesq FVKernels/gravity
+!listing /pbfhr/mark1/steady/legacy/ss1_combined.i block=FVKernels/buoyancy_boussinesq FVKernels/gravity
 
 ## Kernel syntax (legacy) for the conservation of fluid energy
 
@@ -141,19 +141,19 @@ reactor analysis.
 
 The first term of [eq:energy]---the energy time derivative---is captured by the kernel,
 
-!listing /pbfhr/mark_1/steady/legacy/ss1_combined.i block=FVKernels/temp_fluid_time
+!listing /pbfhr/mark1/steady/legacy/ss1_combined.i block=FVKernels/temp_fluid_time
 
 The second term of [eq:energy]---energy advection---is expressed by,
 
-!listing /pbfhr/mark_1/steady/legacy/ss1_combined.i block=FVKernels/temp_fluid_advection
+!listing /pbfhr/mark1/steady/legacy/ss1_combined.i block=FVKernels/temp_fluid_advection
 
 The third term---the effective diffusion of heat---corresponds to the kernel,
 
-!listing /pbfhr/mark_1/steady/legacy/ss1_combined.i block=FVKernels/temp_fluid_conduction
+!listing /pbfhr/mark1/steady/legacy/ss1_combined.i block=FVKernels/temp_fluid_conduction
 
 The final term---the fluid-solid heat convection---is added by the kernel,
 
-!listing /pbfhr/mark_1/steady/legacy/ss1_combined.i block=FVKernels/temp_solid_to_fluid
+!listing /pbfhr/mark1/steady/legacy/ss1_combined.i block=FVKernels/temp_solid_to_fluid
 
 ## Legacy explicit boundary conditions syntax
 
@@ -162,20 +162,20 @@ this simplified model of the Mk1-FHR, there is no flow coming from the inner ref
 temperature are currently set to a constant value, but will be coupled in the future to a SAM simulation of the
 primary loop.
 
-!listing /pbfhr/mark_1/steady/legacy/ss1_combined.i block=FVBCs/inlet_vel_y FVBCs/inlet_temp_fluid
+!listing /pbfhr/mark1/steady/legacy/ss1_combined.i block=FVBCs/inlet_vel_y FVBCs/inlet_temp_fluid
 
 Since the model does not include flow in the inner and outer reflector, we define wall boundary conditions on these
 surfaces. We chose free-slip boundary conditions as the friction on the fluid is heavily dominated by the friction
 with the pebbles, so wall friction may be neglected.
 
-!listing /pbfhr/mark_1/steady/legacy/ss1_combined.i block=FVBCs/free-slip-wall-x FVBCs/free-slip-wall-x
+!listing /pbfhr/mark1/steady/legacy/ss1_combined.i block=FVBCs/free-slip-wall-x FVBCs/free-slip-wall-x
 
 The outflow boundary condition is a pressure boundary condition. Since this model does not include flow in the
 outer reflector, all the flow goes through the defueling chute. The velocity is very high in this region, causing a
 large pressure drop. This is a known result of the simplified model. This boundary condition is a fully developed
 flow boundary condition. It may only be used sufficiently far from modifications of the flow path.
 
-!listing /pbfhr/mark_1/steady/legacy/ss1_combined.i block=FVBCs/outlet_p
+!listing /pbfhr/mark1/steady/legacy/ss1_combined.i block=FVBCs/outlet_p
 
 ## Material properties
 
@@ -187,4 +187,4 @@ primary variables. For example, the fluid energy equation is specified in terms 
 instead of $T_f$. Similarly the momentum advection kernels are specified in terms of $\rho u$,
 the momentum, instead of $u$, the velocity variable.
 
-!listing /pbfhr/mark_1/steady/legacy/ss1_combined.i block=Materials/ins_fv
+!listing /pbfhr/mark1/steady/legacy/ss1_combined.i block=Materials/ins_fv

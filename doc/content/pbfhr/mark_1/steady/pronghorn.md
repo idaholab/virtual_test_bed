@@ -12,12 +12,12 @@ detailed in the [Pronghorn manual](https://inldigitallibrary.inl.gov/sites/sti/s
 
 We first define in the input file header physical quantities such as the pebble geometry, the material compositions as well as some constant material properties.
 
-!listing /pbfhr/mark_1/steady/ss1_combined.i start=blocks_fluid =  end=power_density =
+!listing /pbfhr/mark1/steady/ss1_combined.i start=blocks_fluid =  end=power_density =
 
 We also define a few global parameters that will be added to every block that may use them. This is
 done to reduce the length of the input file and improve its readability.
 
-!listing /pbfhr/mark_1/steady/ss1_combined.i block=GlobalParams
+!listing /pbfhr/mark1/steady/ss1_combined.i block=GlobalParams
 
 ## Mesh and geometry
 
@@ -26,13 +26,13 @@ one we saw for Griffin. We load a different mesh file for this application. The 
 as aligned as possible to the flow lines to avoid false diffusion. The CFD
 mesh should also be as orthogonal as possible as there is no skewness correction implemented.
 
-!listing /pbfhr/mark_1/steady/ss1_combined.i block=Mesh
+!listing /pbfhr/mark1/steady/ss1_combined.i block=Mesh
 
 The geometry is also specified in the `WallDistance` model, which is used to account for the presence
 of the wall in material closures. For the Mk1-FHR we use a `WallDistanceAngledCylindricalBed` which
 is specific to the shape of this core. This is defined in the [UserObjects](https://mooseframework.inl.gov/syntax/UserObjects/) block.
 
-!listing /pbfhr/mark_1/steady/ss1_combined.i block=UserObjects/wall_dist
+!listing /pbfhr/mark1/steady/ss1_combined.i block=UserObjects/wall_dist
 
 ## Variables
 
@@ -43,7 +43,7 @@ The solid temperature
 is defined in the entire domain, as the solid phase temperature in the pebble bed, and as the regular solid temperature in the rest of the core. It is defined as shown in the block below. The `NavierStokesFV` syntax may in the future
 include the definition of the solid variables as porous flow simulation capabilities increase.
 
-!listing /pbfhr/mark_1/steady/ss1_combined.i block=Variables
+!listing /pbfhr/mark1/steady/ss1_combined.i block=Variables
 
 The fluid system includes conservation equations for fluid mass, momentum, and
 energy. The conservation of energy for the solid / solid phase is solved simultaneously.
@@ -245,19 +245,19 @@ Each effect is represented by a separate correlation, lumped together in the eff
 
 The first term of [eq:solid_energy]---the energy time derivative---is captured by the kernel,
 
-!listing /pbfhr/mark_1/steady/ss1_combined.i block=FVKernels/temp_solid_time
+!listing /pbfhr/mark1/steady/ss1_combined.i block=FVKernels/temp_solid_time
 
 The second term---the effective diffusion and diffusion of heat---corresponds to the kernels,
 
-!listing /pbfhr/mark_1/steady/ss1_combined.i block=FVKernels/temp_solid_core_conduction block=FVKernels/temp_solid_conduction
+!listing /pbfhr/mark1/steady/ss1_combined.i block=FVKernels/temp_solid_core_conduction block=FVKernels/temp_solid_conduction
 
 The third term---the fluid-solid heat convection---is added by the kernel,
 
-!listing /pbfhr/mark_1/steady/ss1_combined.i block=FVKernels/temp_fluid_to_solid
+!listing /pbfhr/mark1/steady/ss1_combined.i block=FVKernels/temp_fluid_to_solid
 
 The final term---the heat source---is added by the kernel,
 
-!listing /pbfhr/mark_1/steady/ss1_combined.i block=FVKernels/temp_solid_source
+!listing /pbfhr/mark1/steady/ss1_combined.i block=FVKernels/temp_solid_source
 
 
 ## Auxiliary system and initialization
@@ -268,7 +268,7 @@ of the models, something which is currently not possible with material propertie
 auxiliary field that is passed on from the neutronics simulation, and used to compute the energy conservation
 in the solid phase.
 
-!listing /pbfhr/mark_1/steady/ss1_combined.i block=AuxVariables
+!listing /pbfhr/mark1/steady/ss1_combined.i block=AuxVariables
 
 There are numerous options to initialize a [Variable](https://mooseframework.inl.gov/syntax/Variables/) or an [AuxVariable](https://mooseframework.inl.gov/syntax/AuxVariables/) in MOOSE. The `initial_condition` can
 be set directly in the relevant [Variables](https://mooseframework.inl.gov/syntax/Variables/) block. It can also be set using an initial condition, [ICs](https://mooseframework.inl.gov/syntax/ICs/index.html), block.
@@ -289,7 +289,7 @@ We initialize in the `[ICs]` block the power distribution, which will be overrid
 by the power distribution provided by Griffin, and the solid temperature. The solid temperature can take a long
 time to relax to its steady state value, so a closer reasonable flat guess can save computation time.
 
-!listing /pbfhr/mark_1/steady/ss1_combined.i block=ICs
+!listing /pbfhr/mark1/steady/ss1_combined.i block=ICs
 
 Another important part of the simulation initialization is the viscosity ramp-down. It is very difficult to
 initialize a high-Reynolds number fluid simulation from an initial guess and let it relax to the steady state
@@ -298,7 +298,7 @@ the flow very slow and easy to solve for. We then ramp-down viscosity to its val
 seconds. This is not particularly expensive considering the length of the relaxation pseudo-transient. The
 ramp down is performed using a piecewise linear function and a functionalized material property.
 
-!listing /pbfhr/mark_1/steady/ss1_combined.i block=Functions/mu_func
+!listing /pbfhr/mark1/steady/ss1_combined.i block=Functions/mu_func
 
 ## Boundary conditions
 
@@ -359,7 +359,7 @@ the model. For the top and bottom surfaces, this is equivalent to perfect insula
 will distinguish between the pebble bed solid phase and top and bottom surfaces of the core regions. Finally, on the outer
 cylindrical boundary of the model, we define a fixed temperature boundary condition, as an approximation of the outer environment.
 
-!listing /pbfhr/mark_1/steady/ss1_combined.i block=FVBCs/outer
+!listing /pbfhr/mark1/steady/ss1_combined.i block=FVBCs/outer
 
 ## Material properties
 
@@ -376,12 +376,12 @@ There are four main types of [materials](https://mooseframework.inl.gov/moose/sy
 
 The properties of the firebrick around the core are specified directly, using an [ADGenericConstantMaterial](https://mooseframework.inl.gov/source/materials/GenericConstantMaterial.html), neglecting their temperature dependence.
 
-!listing /pbfhr/mark_1/steady/ss1_combined.i block=Materials/firebrick_properties
+!listing /pbfhr/mark1/steady/ss1_combined.i block=Materials/firebrick_properties
 
 The properties of the other solid phases are obtained through volumetric mixing. The base material
 properties of each type of graphite, UO2 and other materials are defined first:
 
-!listing /pbfhr/mark_1/steady/ss1_combined.i block=UserObjects/graphite UserObjects/pebble_graphite UserObjects/pebble_core UserObjects/UO2 UserObjects/pyc UserObjects/buffer UserObjects/SiC UserObjects/solid_flibe
+!listing /pbfhr/mark1/steady/ss1_combined.i block=UserObjects/graphite UserObjects/pebble_graphite UserObjects/pebble_core UserObjects/UO2 UserObjects/pyc UserObjects/buffer UserObjects/SiC UserObjects/solid_flibe
 
 Then these properties are mixed using `CompositeSolidProperties`. We specify the volumetric fraction of
 each material and how the properties should be combined. The default option is simply volume
@@ -390,17 +390,17 @@ pebble. Note that this step is obtaining macroscopic phase solid properties, the
 is resolved later on using a MultiApp. The effective thermal conductivity is determined by a closure
 relation, further detailed below.
 
-!listing /pbfhr/mark_1/steady/ss1_combined.i block=UserObjects/TRISO UserObjects/fuel_matrix UserObjects/pebble UserObjects/inner_reflector
+!listing /pbfhr/mark1/steady/ss1_combined.i block=UserObjects/TRISO UserObjects/fuel_matrix UserObjects/pebble UserObjects/inner_reflector
 
 Finally, these materials, defined as user objects, are placed in each subdomain of the mesh in the [Materials](https://mooseframework.inl.gov/moose/syntax/Materials/) block.
 
-!listing /pbfhr/mark_1/steady/ss1_combined.i block=Materials/solid_fuel_pebbles Materials/solid_blanket_pebbles Materials/plenum_and_OR Materials/IR Materials/barrel_and_vessel
+!listing /pbfhr/mark1/steady/ss1_combined.i block=Materials/solid_fuel_pebbles Materials/solid_blanket_pebbles Materials/plenum_and_OR Materials/IR Materials/barrel_and_vessel
 
 ### Closure relations
 
 The closure relations used for friction and effective thermal diffusivities are documented in the [Pronghorn manual](https://inldigitallibrary.inl.gov/sites/sti/sti/Sort_24425.pdf).
 
-!listing /pbfhr/mark_1/steady/ss1_combined.i block=Materials/alpha Materials/drag Materials/kappa Materials/kappa_s
+!listing /pbfhr/mark1/steady/ss1_combined.i block=Materials/alpha Materials/drag Materials/kappa Materials/kappa_s
 
 ### Fluid properties
 
@@ -408,9 +408,9 @@ The fluid properties are similar to variable materials but are specific to Prong
 act as an aggregator of both materials properties and variables and allow the computation of
 closure inputs such as the Reynolds and Prandtl number.
 
-!listing /pbfhr/mark_1/steady/ss1_combined.i block=FluidProperties
+!listing /pbfhr/mark1/steady/ss1_combined.i block=FluidProperties
 
-!listing /pbfhr/mark_1/steady/ss1_combined.i block=Materials/fluidprops
+!listing /pbfhr/mark1/steady/ss1_combined.i block=Materials/fluidprops
 
 ## Solving the equations
 
@@ -431,7 +431,7 @@ are very slow to heat up. We use an adaptive time-stepper to increase the time s
 Because we are using an implicit scheme, we can take very large time steps and still have a stable simulation.
 An alternative strategy is to artificially decrease the specific heat capacity of the solid materials for the steady state solve.
 
-!listing /pbfhr/mark_1/steady/ss1_combined.i block=Executioner
+!listing /pbfhr/mark1/steady/ss1_combined.i block=Executioner
 
 ## MultiApp Coupling
 
@@ -439,13 +439,13 @@ We couple the thermal-hydraulics simulation with simulation of the pebbles sprea
 phase temperature is then the boundary condition to a heat conduction problem that allows us to examine the
 temperature profile in fueled and reflector pebbles. The sub-application is defined using the [MultiApps](https://mooseframework.inl.gov/syntax/MultiApps/index.html) block.
 
-!listing /pbfhr/mark_1/steady/ss1_combined.i block=MultiApps
+!listing /pbfhr/mark1/steady/ss1_combined.i block=MultiApps
 
 Pronghorn is running as a sub-application of Griffin. As such it does not need to handle transfers with Griffin, as
 they are defined in Griffin's input file. We transfer the power distribution, previously received from Griffin,
 and the solid phase temperature in the pebble bed.
 
-!listing /pbfhr/mark_1/steady/ss1_combined.i block=Transfers
+!listing /pbfhr/mark1/steady/ss1_combined.i block=Transfers
 
 ## Outputs
 
@@ -453,23 +453,23 @@ We first define a few postprocessors to:
 
 - help quantify the convergence of our mesh.
 
-!listing /pbfhr/mark_1/steady/ss1_combined.i block=Postprocessors/max_Tf Postprocessors/max_vy Postprocessors/pressure_in
+!listing /pbfhr/mark1/steady/ss1_combined.i block=Postprocessors/max_Tf Postprocessors/max_vy Postprocessors/pressure_in
 
 - pass inlet and outlet conditions to a future SAM model of the primary loop
 
-!listing /pbfhr/mark_1/steady/ss1_combined.i block=Postprocessors/pressure_in Postprocessors/T_flow_out
+!listing /pbfhr/mark1/steady/ss1_combined.i block=Postprocessors/pressure_in Postprocessors/T_flow_out
 
 - examine conservation of mass
 
-!listing /pbfhr/mark_1/steady/ss1_combined.i block=Postprocessors/mass_flow_out
+!listing /pbfhr/mark1/steady/ss1_combined.i block=Postprocessors/mass_flow_out
 
 - examine conservation of energy (missing diffusion term, under development)
 
-!listing /pbfhr/mark_1/steady/ss1_combined.i Postprocessors/flow_in_m Postprocessors/flow_out Postprocessors/core_balance
+!listing /pbfhr/mark1/steady/ss1_combined.i Postprocessors/flow_in_m Postprocessors/flow_out Postprocessors/core_balance
 
 
 We then define an [Exodus](https://mooseframework.inl.gov/source/outputs/Exodus.html) output. This will have the multi-dimensional distributions of the quantities Pronghorn
 solved for: the fluid velocities, the pressure and the temperature fields. We also include the material properties
 to help us understand the behavior of the core.
 
-!listing /pbfhr/mark_1/steady/ss1_combined.i block=Outputs
+!listing /pbfhr/mark1/steady/ss1_combined.i block=Outputs
