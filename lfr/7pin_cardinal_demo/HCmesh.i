@@ -38,7 +38,7 @@ powerdensity = ${fparse linearpower / (pi * (fuel_r_o * fuel_r_o - fuel_r_i * fu
 [Mesh]
   # These make the 7 unique pins
   [./P]
-    type = PolygonConcentricCircleMeshGenerator 
+    type = PolygonConcentricCircleMeshGenerator
     num_sides = 6 # must be six to use hex pattern
     num_sectors_per_side = '${numside} ${numside} ${numside} ${numside} ${numside} ${numside}'
     polygon_size = ${half_pinpitch}
