@@ -90,7 +90,7 @@ richardsonmaxits=1000
 [Mesh]
   # These make the 7 unique pins
   [./P000]
-    type = PolygonConcentricCircleMeshGenerator 
+    type = PolygonConcentricCircleMeshGenerator
     num_sides = 6 # must be six to use hex pattern
     num_sectors_per_side = '${numside} ${numside} ${numside} ${numside} ${numside} ${numside}'
     polygon_size = ${half_pinpitch}
@@ -231,7 +231,7 @@ richardsonmaxits=1000
     new_boundary = 'ROD_SIDE DUCT_INNERSIDE    ASSEMBLY_TOP ASSEMBLY_BOTTOM ASSEMBLY_SIDE'
   []
 
-  [assign]  
+  [assign]
     type = SubdomainExtraElementIDGenerator
     input = rename_sidesets
     extra_element_id_names = 'material_id'
@@ -240,7 +240,7 @@ richardsonmaxits=1000
   []
 
   [Pcm]
-    type = PolygonConcentricCircleMeshGenerator 
+    type = PolygonConcentricCircleMeshGenerator
     num_sides = 6 # must be six to use hex pattern
     num_sectors_per_side = '${numside} ${numside} ${numside} ${numside} ${numside} ${numside}'
     polygon_size = ${half_pinpitch}
