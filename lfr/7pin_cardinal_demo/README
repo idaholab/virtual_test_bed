@@ -5,7 +5,7 @@ tar -xvzf 7pin.re2
 tar -xvzf 7pin_ic.fld.tgz 
 ```
 
-The cross section file can be unzipped 
+The cross section file can be unzipped: 
 
 ```
 tar -xvzf LFR9g_P5.xml.tgz 
