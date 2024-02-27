@@ -27,7 +27,7 @@
   volume = true
 
   # nekRS runs in non-dimensional form, which means that we shrunk the mesh
-  # from physical units of meters to our characteristic scale of 1 
+  # from physical units of meters to our characteristic scale of 1
   # That means that we must multiply
   # the nekRS mesh by 0.008638 to get back in units of meters that MOOSE is
   # running in.
@@ -161,10 +161,7 @@
 [Outputs]
   exodus = true
   interval = 500
-#  execute_on = 'timestep_end'
-
   [screen]
     type = Console
-#    hide = 'synchronization_in'
   []
 []
