@@ -91,7 +91,7 @@ richardsonmaxits=1000
   [fmg]
     type = FileMeshGenerator
     file = 'NTmesh_out.e'
-	exodus_extra_element_integers = 'material_id pin_id coarse_element_id'
+    exodus_extra_element_integers = 'material_id pin_id coarse_element_id'
   []
 []
 
@@ -171,7 +171,7 @@ richardsonmaxits=1000
     variable = fluid_density
     coupled_variables = 'nek_bulk_temp'
     expression = '10678-13174*(nek_bulk_temp-600.6)/10000'
-	execute_on = 'timestep_begin timestep_end'
+    execute_on = 'timestep_begin timestep_end'
   []
 []
 
@@ -387,8 +387,8 @@ richardsonmaxits=1000
     library_id = 2
     block = ${bid_cool}
     grid_variables = nek_bulk_temp
-	fluid_density  = fluid_density
-	reference_fluid_density = ${coolantdensity_ref}
+    fluid_density  = fluid_density
+    reference_fluid_density = ${coolantdensity_ref}
   []
 []
 
@@ -400,7 +400,7 @@ richardsonmaxits=1000
     input_files = HC.i
     keep_solution_during_restore = true
     execute_on = 'timestep_end'
-	cli_args = 'Materials/HeatConduct_Fuel/thermal_conductivity=${fuelconductance}'
+    cli_args = 'Materials/HeatConduct_Fuel/thermal_conductivity=${fuelconductance}'
   []
 []
 
@@ -425,7 +425,7 @@ richardsonmaxits=1000
     source_variable = nek_bulk_temp
     variable = nek_bulk_temp
   []
- 
+
   [nek_surf_temp_rod_from_HeatConduction]
     type = MultiAppGeneralFieldNearestLocationTransfer
     source_variable = nek_surf_temp
@@ -433,7 +433,7 @@ richardsonmaxits=1000
     from_boundaries = 'ROD_SIDE'
     to_boundaries = 'ROD_SIDE'
     from_multi_app = HeatConduction
-	search_value_conflicts = false
+    search_value_conflicts = false
   []
   [nek_surf_temp_rod_to_HeatConduction]
     type = MultiAppGeneralFieldNearestLocationTransfer
@@ -442,7 +442,7 @@ richardsonmaxits=1000
     from_boundaries = 'ROD_SIDE'
     to_boundaries = 'ROD_SIDE'
     to_multi_app = HeatConduction
-	search_value_conflicts = false
+    search_value_conflicts = false
   []
   [nek_surf_temp_duct_from_HeatConduction]
     type = MultiAppGeneralFieldNearestLocationTransfer
@@ -451,7 +451,7 @@ richardsonmaxits=1000
     from_boundaries = 'DUCT_INNERSIDE'
     to_boundaries = 'DUCT_INNERSIDE'
     from_multi_app = HeatConduction
-	search_value_conflicts = false
+    search_value_conflicts = false
   []
   [nek_surf_temp_duct_to_HeatConduction]
     type = MultiAppGeneralFieldNearestLocationTransfer
@@ -460,15 +460,15 @@ richardsonmaxits=1000
     from_boundaries = 'DUCT_INNERSIDE'
     to_boundaries = 'DUCT_INNERSIDE'
     to_multi_app = HeatConduction
-	search_value_conflicts = false
+    search_value_conflicts = false
   []
-  
+
   [nek_bulk_temp_pp]
     type = MultiAppPostprocessorTransfer
     to_postprocessor = nek_bulk_temp_pp
     from_postprocessor = nek_bulk_temp_pp
     from_multi_app = HeatConduction
-	reduction_type = maximum
+    reduction_type = maximum
   []
 []
 
@@ -719,7 +719,7 @@ richardsonmaxits=1000
   [nek_bulk_temp_min]
     type = ElementExtremeValue
     variable = nek_bulk_temp
-	value_type = min
+    value_type = min
     block = ${bid_cool}
     execute_on = 'initial timestep_begin timestep_end'
   []
@@ -732,7 +732,7 @@ richardsonmaxits=1000
   [gap_temp_min]
     type = ElementExtremeValue
     variable = solid_temp
-	value_type = min
+    value_type = min
     block = '${bid_gapc} ${bid_gap}'
     execute_on = 'initial timestep_begin timestep_end'
   []
@@ -745,7 +745,7 @@ richardsonmaxits=1000
   [innerfuel_temp_min]
     type = ElementExtremeValue
     variable = solid_temp
-	value_type = min
+    value_type = min
     block = ${bid_ifl}
     execute_on = 'initial timestep_begin timestep_end'
   []
@@ -758,7 +758,7 @@ richardsonmaxits=1000
   [outerfuel1_temp_min]
     type = ElementExtremeValue
     variable = solid_temp
-	value_type = min
+    value_type = min
     block = ${bid_ofl1}
     execute_on = 'initial timestep_begin timestep_end'
   []
@@ -771,7 +771,7 @@ richardsonmaxits=1000
   [outerfuel2_temp_min]
     type = ElementExtremeValue
     variable = solid_temp
-	value_type = min
+    value_type = min
     block = ${bid_ofl2}
     execute_on = 'initial timestep_begin timestep_end'
   []
@@ -784,7 +784,7 @@ richardsonmaxits=1000
   [outerfuel3_temp_min]
     type = ElementExtremeValue
     variable = solid_temp
-	value_type = min
+    value_type = min
     block = ${bid_ofl3}
     execute_on = 'initial timestep_begin timestep_end'
   []
@@ -797,7 +797,7 @@ richardsonmaxits=1000
   [outerfuel4_temp_min]
     type = ElementExtremeValue
     variable = solid_temp
-	value_type = min
+    value_type = min
     block = ${bid_ofl4}
     execute_on = 'initial timestep_begin timestep_end'
   []
@@ -810,7 +810,7 @@ richardsonmaxits=1000
   [outerfuel5_temp_min]
     type = ElementExtremeValue
     variable = solid_temp
-	value_type = min
+    value_type = min
     block = ${bid_ofl5}
     execute_on = 'initial timestep_begin timestep_end'
   []
@@ -823,7 +823,7 @@ richardsonmaxits=1000
   [outerfuel6_temp_min]
     type = ElementExtremeValue
     variable = solid_temp
-	value_type = min
+    value_type = min
     block = ${bid_ofl6}
     execute_on = 'initial timestep_begin timestep_end'
   []
@@ -836,7 +836,7 @@ richardsonmaxits=1000
   [clad_temp_min]
     type = ElementExtremeValue
     variable = solid_temp
-	value_type = min
+    value_type = min
     block = ${bid_clad}
     execute_on = 'initial timestep_begin timestep_end'
   []
@@ -942,7 +942,6 @@ richardsonmaxits=1000
     type = PerfGraphOutput
     level = 2
   []
-#  interval = 100
   csv = true
   exodus = true
   perf_graph = true

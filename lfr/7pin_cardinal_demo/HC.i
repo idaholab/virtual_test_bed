@@ -39,7 +39,7 @@ powerdensity = ${fparse linearpower / (pi * (fuel_r_o * fuel_r_o - fuel_r_i * fu
   [fmg]
     type = FileMeshGenerator
     file = 'HCmesh_out.e'
-	exodus_extra_element_integers = 'pin_id'
+    exodus_extra_element_integers = 'pin_id'
   []
 []
 
@@ -208,7 +208,7 @@ powerdensity = ${fparse linearpower / (pi * (fuel_r_o * fuel_r_o - fuel_r_i * fu
   [duct_temp_min]
     type = ElementExtremeValue
     variable = solid_temp
-	value_type = min
+    value_type = min
     block = '${bid_duct}'
     execute_on = 'initial timestep_begin timestep_end'
   []
@@ -227,7 +227,7 @@ powerdensity = ${fparse linearpower / (pi * (fuel_r_o * fuel_r_o - fuel_r_i * fu
   [gap_temp_min]
     type = ElementExtremeValue
     variable = solid_temp
-	value_type = min
+    value_type = min
     block = '${bid_gapc} ${bid_gap}'
     execute_on = 'initial timestep_begin timestep_end'
   []
@@ -240,7 +240,7 @@ powerdensity = ${fparse linearpower / (pi * (fuel_r_o * fuel_r_o - fuel_r_i * fu
   [fuel_temp_min]
     type = ElementExtremeValue
     variable = solid_temp
-	value_type = min
+    value_type = min
     block = ${bid_fl}
     execute_on = 'initial timestep_begin timestep_end'
   []
@@ -253,7 +253,7 @@ powerdensity = ${fparse linearpower / (pi * (fuel_r_o * fuel_r_o - fuel_r_i * fu
   [clad_temp_min]
     type = ElementExtremeValue
     variable = solid_temp
-	value_type = min
+    value_type = min
     block = ${bid_clad}
     execute_on = 'initial timestep_begin timestep_end'
   []
@@ -266,7 +266,7 @@ powerdensity = ${fparse linearpower / (pi * (fuel_r_o * fuel_r_o - fuel_r_i * fu
   [reflB_temp_min]
     type = ElementExtremeValue
     variable = solid_temp
-	value_type = min
+    value_type = min
     block = '${bid_lrflc} ${bid_lrfl}'
     execute_on = 'initial timestep_begin timestep_end'
   []
@@ -279,7 +279,7 @@ powerdensity = ${fparse linearpower / (pi * (fuel_r_o * fuel_r_o - fuel_r_i * fu
   [reflT_temp_min]
     type = ElementExtremeValue
     variable = solid_temp
-	value_type = min
+    value_type = min
     block = '${bid_urflc} ${bid_urfl}'
     execute_on = 'initial timestep_begin timestep_end'
   []
@@ -410,8 +410,8 @@ powerdensity = ${fparse linearpower / (pi * (fuel_r_o * fuel_r_o - fuel_r_i * fu
     from_boundaries = 'ROD_SIDE'
     to_boundaries = '3'
     to_multi_app = nek
-	greedy_search = true
-	search_value_conflicts = false
+    greedy_search = true
+    search_value_conflicts = false
   []
   [heat_flux_duct_to_nek]
     type = MultiAppGeneralFieldNearestLocationTransfer
@@ -420,8 +420,8 @@ powerdensity = ${fparse linearpower / (pi * (fuel_r_o * fuel_r_o - fuel_r_i * fu
     from_boundaries = 'DUCT_INNERSIDE'
     to_boundaries = '4'
     to_multi_app = nek
-	greedy_search = true
-	search_value_conflicts = false
+    greedy_search = true
+    search_value_conflicts = false
   []
   [flux_integral_to_nek]
     type = MultiAppReporterTransfer
@@ -436,7 +436,7 @@ powerdensity = ${fparse linearpower / (pi * (fuel_r_o * fuel_r_o - fuel_r_i * fu
     from_boundary = '3'
     to_boundary = 'ROD_SIDE'
     from_multi_app = nek
-	search_value_conflicts = false
+    search_value_conflicts = false
   []
   [nek_surf_temp_duct_to_heatconduction]
     type = MultiAppGeneralFieldNearestLocationTransfer
@@ -445,14 +445,14 @@ powerdensity = ${fparse linearpower / (pi * (fuel_r_o * fuel_r_o - fuel_r_i * fu
     from_boundary = '4'
     to_boundary = 'DUCT_INNERSIDE'
     from_multi_app = nek
-	search_value_conflicts = false
+    search_value_conflicts = false
   []
   [nek_bulk_temp_to_heatconduction]
     type = MultiAppGeneralFieldNearestLocationTransfer
     source_variable = temp
     variable = nek_bulk_temp
     from_multi_app = nek
-	search_value_conflicts = false
+    search_value_conflicts = false
   []
   [synchronization_to_nek]
     type = MultiAppPostprocessorTransfer
