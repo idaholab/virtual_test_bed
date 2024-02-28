@@ -499,7 +499,7 @@ power_density = ${fparse total_power / model_vol / 258 * 236}  # adjusted using 
   []
 []
 
-[Materials]
+[FunctorMaterials]
   # solid material properties
   [solid_fuel_pebbles]
     type = PronghornSolidFunctorMaterialPT
