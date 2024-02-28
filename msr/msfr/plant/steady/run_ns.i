@@ -332,7 +332,7 @@ beta6 = 0.000184087
 # MATERIALS
 ################################################################################
 
-[Materials]
+[FunctorMaterials]
   # Most of these constants could be specified directly to the action
   [mu]
     type = ADGenericFunctorMaterial

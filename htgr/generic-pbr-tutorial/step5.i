@@ -14,8 +14,8 @@ pebble_diameter = 0.06
 thermal_mass_scaling = 1
 
 mass_flow_rate = 64.3
-flow_area = ${fparse pi * bed_radius * bed_radius}
-flow_vel = ${fparse mass_flow_rate / flow_area / inlet_density}
+flow_area = '${fparse pi * bed_radius * bed_radius}'
+flow_vel = '${fparse mass_flow_rate / flow_area / inlet_density}'
 
 # scales the heat source to integrate to 200 MW
 power_fn_scaling = 0.9792628
@@ -44,7 +44,7 @@ bottom_reflector_Dh = 0.1
 
     ix = '1 1 1 1 1 1 1 1'
 
-    dy =  '0.1709 0.1709 0.1709 0.1709 0.1709
+    dy = '0.1709 0.1709 0.1709 0.1709 0.1709
            0.4465 0.4465 0.4465 0.4465 0.4465 0.4465 0.4465 0.4465 0.4465 0.4465
            0.4465 0.4465 0.4465 0.4465 0.4465 0.4465 0.4465 0.4465 0.4465 0.4465
            0.458 0.712'
@@ -254,7 +254,7 @@ bottom_reflector_Dh = 0.1
   []
 []
 
-[Materials]
+[FunctorMaterials]
   [fluid_props_to_mat_props]
     type = GeneralFunctorFluidProps
     fp = fluid_properties_obj
@@ -268,21 +268,21 @@ bottom_reflector_Dh = 0.1
 
   [graphite_rho_and_cp_bed]
     type = ADGenericFunctorMaterial
-    prop_names =  'rho_s  cp_s k_s'
+    prop_names = 'rho_s  cp_s k_s'
     prop_values = '1780.0 1697 26'
     block = 'pebble_bed'
   []
 
   [graphite_rho_and_cp_side_reflector]
     type = ADGenericFunctorMaterial
-    prop_names =  'rho_s  cp_s kappa_s'
+    prop_names = 'rho_s  cp_s kappa_s'
     prop_values = '1780.0 1697 ${fparse 1 * 26}'
     block = 'side_reflector'
   []
 
   [graphite_rho_and_cp_bottom_reflector]
     type = ADGenericFunctorMaterial
-    prop_names =  'rho_s  cp_s kappa_s'
+    prop_names = 'rho_s  cp_s kappa_s'
     prop_values = '1780.0 1697 ${fparse 0.7 * 26}'
     block = 'bottom_reflector'
   []
@@ -290,7 +290,7 @@ bottom_reflector_Dh = 0.1
   [drag_pebble_bed]
     type = FunctorKTADragCoefficients
     fp = fluid_properties_obj
-    pebble_diameter =  ${pebble_diameter}
+    pebble_diameter = ${pebble_diameter}
     porosity = porosity
     T_fluid = T_fluid
     T_solid = T_solid
@@ -332,7 +332,7 @@ bottom_reflector_Dh = 0.1
     coordination_number = You
     wall_distance = bed_geometry
     block = 'pebble_bed'
-    pebble_diameter =  ${pebble_diameter}
+    pebble_diameter = ${pebble_diameter}
     acceleration = '0.00 -9.81 0.00 '
   []
 
@@ -366,7 +366,7 @@ bottom_reflector_Dh = 0.1
     porosity = porosity
     pressure = pressure
     fp = fluid_properties_obj
-    pebble_diameter =  ${pebble_diameter}
+    pebble_diameter = ${pebble_diameter}
     block = 'pebble_bed'
   []
 
