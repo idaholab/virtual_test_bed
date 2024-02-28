@@ -667,6 +667,9 @@ beta6 = 0.000184087
     prop_values = '${fparse 600 * 20e3}'
     block = 'fuel pump hx'
   []
+[]
+
+[FunctorMaterials]
   [boussinesq]
     type = ADGenericFunctorMaterial
     prop_names = 'alpha_b'
@@ -679,12 +682,12 @@ beta6 = 0.000184087
     block = 'fuel pump hx'
   []
   [total_viscosity]
-    type = MixingLengthTurbulentViscosityMaterial
+    type = MixingLengthTurbulentViscosityFunctorMaterial
     mu = 'mu'
     block = 'fuel pump hx'
   []
   [ins_fv]
-    type = INSFVEnthalpyMaterial
+    type = INSFVEnthalpyFunctorMaterial
     block = 'fuel pump hx'
   []
   # [not_used]

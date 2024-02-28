@@ -538,7 +538,7 @@ beta6 = 0.000184087
 # MATERIALS
 ################################################################################
 
-[Materials]
+[FunctorMaterials]
   [matprops_former_type]  # Yplus kernel not migrated to functor materials
     type = ADGenericFunctionMaterial
     prop_names = 'alpha'
@@ -546,11 +546,11 @@ beta6 = 0.000184087
     block = 'fuel pump hx'
   []
   [ins_fv]
-    type = INSFVEnthalpyMaterial
+    type = INSFVEnthalpyFunctorMaterial
     block = 'fuel pump hx'
   []
   [total_viscosity]
-    type = MixingLengthTurbulentViscosityMaterial
+    type = MixingLengthTurbulentViscosityFunctorMaterial
     mu = 'mu'
     block = 'fuel pump hx'
   []

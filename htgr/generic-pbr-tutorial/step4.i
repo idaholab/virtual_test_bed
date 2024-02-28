@@ -18,8 +18,8 @@ T_inlet = 300
 thermal_mass_scaling = 1
 
 mass_flow_rate = 60.0
-flow_area = ${fparse pi * bed_radius * bed_radius}
-flow_vel = ${fparse mass_flow_rate / flow_area / density}
+flow_area = '${fparse pi * bed_radius * bed_radius}'
+flow_vel = '${fparse mass_flow_rate / flow_area / density}'
 
 # scales the heat source to integrate to 200 MW
 power_fn_scaling = 0.88689239556
@@ -174,13 +174,13 @@ offset = 0.56331
   []
 []
 
-[Materials]
+[FunctorMaterials]
   [fluid_props_to_mat_props]
     type = GeneralFunctorFluidProps
     fp = fluid_properties_obj
     porosity = porosity
     pressure = pressure
-    T_fluid =  T_fluid
+    T_fluid = T_fluid
     speed = speed
     characteristic_length = ${pebble_diameter}
   []
@@ -188,7 +188,7 @@ offset = 0.56331
   [drag_pebble_bed]
     type = FunctorKTADragCoefficients
     fp = fluid_properties_obj
-    pebble_diameter =  ${pebble_diameter}
+    pebble_diameter = ${pebble_diameter}
     porosity = porosity
     T_fluid = T_fluid
     T_solid = T_solid

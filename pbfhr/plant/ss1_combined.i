@@ -410,7 +410,7 @@ inlet_T_fluid = 873.15 # K, from [2]
   []
 []
 
-[Materials]
+[FunctorMaterials]
   # solid material properties
   [solid_fuel_pebbles]
     type = PronghornSolidFunctorMaterialPT

@@ -386,7 +386,7 @@ beta6 = 0.000680667
 # MATERIALS
 ################################################################################
 
-[Materials]
+[FunctorMaterials]
   [porous_mat]
     type = ADGenericFunctorMaterial
     prop_names = 'porosity'

@@ -8,7 +8,7 @@
 # https://mooseframework.inl.gov/virtual_test_bed/citing.html
 
 # Material properties
-rho = 4284  # density [kg / m^3]  (@1000K)
+rho = 4284 # density [kg / m^3]  (@1000K)
 mu = 0.0166 # viscosity [Pa s]
 # https://www.researchgate.net/publication/337161399_Development_of_a_control-\
 # oriented_power_plant_simulator_for_the_molten_salt_fast_reactor/fulltext/5dc95c\
@@ -17,7 +17,7 @@ mu = 0.0166 # viscosity [Pa s]
 von_karman_const = 0.41
 
 # Mass flow rate tuning
-friction = 4.0e3  # [kg / m^4]
+friction = 4.0e3 # [kg / m^4]
 pump_force = -20000. # [N / m^3]
 
 [GlobalParams]
@@ -134,10 +134,10 @@ pump_force = -20000. # [N / m^3]
   []
 []
 
-[Materials]
+[FunctorMaterials]
   [mu]
-    type = ADGenericFunctorMaterial      #defines mu artificially for numerical convergence
-    prop_names = 'mu rho'                     #it converges to the real mu eventually.
+    type = ADGenericFunctorMaterial #defines mu artificially for numerical convergence
+    prop_names = 'mu rho' #it converges to the real mu eventually.
     prop_values = 'ad_rampdown_mu_func ${rho}'
   []
   #[not_used]
@@ -176,7 +176,7 @@ pump_force = -20000. # [N / m^3]
   line_search = 'none'
   nl_rel_tol = 1e-12
   nl_abs_tol = 1e-6
-  nl_max_its = 12    # fail early and try again with a shorter time step
+  nl_max_its = 12 # fail early and try again with a shorter time step
   l_max_its = 50
   automatic_scaling = true
 []

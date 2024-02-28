@@ -373,7 +373,7 @@ riser_Dh = 0.17
   []
 []
 
-[Materials]
+[FunctorMaterials]
   [fluid_props_to_mat_props]
     type = GeneralFunctorFluidProps
     fp = fluid_properties_obj

@@ -427,7 +427,7 @@ outlet_pressure_val = 2e5
   []
 []
 
-[Materials]
+[FunctorMaterials]
   # solid material properties
   [solid_fuel_pebbles]
     type = PronghornSolidFunctorMaterialPT
