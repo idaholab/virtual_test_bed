@@ -14,8 +14,8 @@ T_fluid = 300
 density = 8.60161
 
 mass_flow_rate = 60.0
-flow_area = ${fparse pi * bed_radius * bed_radius}
-flow_vel = ${fparse mass_flow_rate / flow_area / density}
+flow_area = '${fparse pi * bed_radius * bed_radius}'
+flow_vel = '${fparse mass_flow_rate / flow_area / density}'
 
 [Mesh]
   [gen]
@@ -66,7 +66,7 @@ flow_vel = ${fparse mass_flow_rate / flow_area / density}
   []
 []
 
-[Materials]
+[FunctorMaterials]
   [fluid_props_to_mat_props]
     type = GeneralFunctorFluidProps
     fp = fluid_properties_obj
