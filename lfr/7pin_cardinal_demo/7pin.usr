@@ -1,20 +1,3 @@
-c
-c  Exact fully 3D Navier-Stokes benchmark
-c   
-c  Reference:
-c
-c    C Ross Ethier, David Steinman,
-c    Exact fully 3D Navier-Stokes solutions for benchmarking,
-c    International Journal for Numerical Methods in Fluids,
-c    Volume 19, Number 5, March 1994, pages 369-375.
-c
-c  Setup:
-c
-c    [-1,1] cube centered at (0,0,0), 
-c    from t = 0 to t = 0.1, with parameters a = PI/4 and d = PI/2,
-c    and with Dirichlet boundary conditions on all faces of the cube.
-
-c#include "casedata.h"
 c-----------------------------------------------------------------------
       include 'utilities.usr'
 C-----------------------------------------------------------------------

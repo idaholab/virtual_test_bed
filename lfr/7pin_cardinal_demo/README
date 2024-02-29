@@ -1,11 +1,15 @@
-Users can unzip the nekRS mesh file and IC file 
+Please note that users need to download the nekRS mesh file and initial
+condition file from github LFS before they can run this multiphysics 
+demonstration case. 
+
+Users can unzip the nekRS mesh file and initial condition file 
 
 ```
 tar -xvzf 7pin.re2
 tar -xvzf 7pin_ic.fld.tgz 
 ```
 
-The cross section file can be unzipped: 
+The cross section file that Griffin may require can be unzipped: 
 
 ```
 tar -xvzf LFR9g_P5.xml.tgz 
