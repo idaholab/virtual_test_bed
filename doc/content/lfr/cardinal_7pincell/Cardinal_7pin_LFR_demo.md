@@ -9,10 +9,11 @@
 !tag name=High Fidelity Neutronics Model for Lead-cooled Fast Reactor pairs=reactor_type:LFR
                        geometry:assembly
                        simulation_type:neutronics
-                       codes_used:Griffin;MCC3
+                       codes_used:Griffin;MCC3;NekRS
                        computing_needs:HPC
-                       input_features:reactor_meshing
+                       input_features:reactor_meshing;multiapps
                        cross_sections:MC2
+                       open_source:partial
                        fiscal_year:2023
 
 
@@ -22,7 +23,7 @@ For high fidelity modeling, the reactor physics code Griffin [!citep](Lee2021) p
 ordinates (DFEM-$S_N$) solver with Coarse Mesh Finite Difference (CMFD) acceleration, and the thermal hydraulics code NekRS [!citep](NekRS) performs the computational fluid dynamics (CFD) calculation.
 These codes were individually assessed in prior work to ensure the necessary capabilities were in place [!citep](HCFReport). 
 This work describes initial efforts to couple the codes using the MultiApp system of the MOOSE framework [!citep](Lindsay2022). 
-The open-source MOOSE-wrapper for NekRS, Cardinal [!citep](Novak2022), is used to bring NekRS into the MOOSE coupled ecosystem for fluid temperature calculations, and the open source MOOSE heat conduction (H.C.) module is leveraged to perform solid temperature calculations.
+The open-source MOOSE-wrapper for NekRS, Cardinal [!citep](Novak2022), is used to bring NekRS into the MOOSE coupled ecosystem for fluid temperature calculations, and the open source MOOSE heat transfer (H.T.) module is leveraged to perform solid temperature calculations.
 
 ## Problem Specification
 
@@ -34,7 +35,7 @@ adopted as-is. Cylindrical solid clad reflectors of length 20 cm and with the sa
 For simplicity, the lead coolant inlet velocity was reduced from the original value of 1 m/s to 11.86 cm/s to keep the flow in the laminar regime (Reynolds number of 780), which can significantly
 reduce the runtime required for CFD. Accordingly, the total power was reduced by a factor of seven to bound the coolant temperature increase (~less than 300 K). However, we did not adjust the thermal conductivity of the solid materials, so the solid temperature range from fuel
 centerline to outer cladding surface is lower than in the prototypical concept. The coolant density is represented as a linear function of temperature for the coolant density reactivity feedback effect
-in neutronics calculation. MOOSE’s heat conduction module solves for solid temperature in all regions except the coolant.
+in neutronics calculation. MOOSE’s heat transfer module solves for solid temperature in all regions except the coolant.
 
 !media lfr/cardinal_7pin/setup.png
        style=width:100%
@@ -52,7 +53,7 @@ When performing multiphysics simulations using the MOOSE +MultiApp+ system [!cit
 when each solver is called and when data transfers occur. 
 The “main” application sits at the top of the hierarchy and drives the simulation by calling “sub-applications” which sit below it. Subapplications can also drive their own sub-applications. The time step size of a sub-application cannot be bigger than that of the application above it. 
 This rule requires NekRS to be placed at the lowest level (because NekRS uses the smallest time step size, due to constraints on the Courant Friedrichs-Lewy (CFL) number). 
-Since NekRS and MOOSE H.C. solutions are tightly coupled through conjugate heat transfer, they are directly connected by H.C. calling NekRS as a subapplication.
+Since NekRS and MOOSE H.T. solutions are tightly coupled through conjugate heat transfer, they are directly connected by H.T. calling NekRS as a subapplication.
 The Griffin neutronics solve is placed at the top of the hierarchy since it does not need to be called as frequently as the H.C. solve.
 
 The detailed coupling scheme is shown in  [its]. The conjugate heat transfer calculation between H.C. and NekRS is performed using the operator splitting method. 
@@ -60,17 +61,17 @@ H.C. proceeds for one time step, and then the heat fluxes at the solid-fluid (cl
 to NekRS for use as Neumann boundary conditions. 
 Then, multiple NekRS time steps are solved using the +sub_cycling+ option, and wall temperatures at the same interfaces are transferred back to H.C. for use as Dirichlet boundary conditions. 
 Picard iteration is essentially achieved “in time”, so that running a large number of time steps is equivalent to converging to a pseudo-steady state. 
-Note that the H.C. solve does not have the time derivative term in the equation but is driven by the timedependent boundary condition in its +Transient+ executioner, while NekRS solves the time-dependent Navier-Stokes equations.
+Note that the solid heat conduction solve does not have the time derivative term in the equation but is driven by the time dependent boundary condition in its +Transient+ executioner, while NekRS solves the time-dependent Navier-Stokes equations.
 
 !media lfr/cardinal_7pin/iterations.png
        style=width:100%
        id=its
        caption=MOOSE +MultiApp+ hierarchy for multiphysics coupling: (A) and (B) are possible choices for multiphysics coupling in the DFEM-$S_N$/CMFD solver of Griffin.
 
-The coupled H.C. and NekRS system is plugged under the +MultiApp+ system of Griffin. Griffin solves a steady state eigenvalue problem and performs a Picard iteration with its sub-apps. 
+The coupled MOOSE heat transfer and NekRS system is plugged under the +MultiApp+ system of Griffin. Griffin solves a steady state eigenvalue problem and performs a Picard iteration with its sub-apps. 
 The Griffin DFEM-$S_N$/CMFD solver has the option to call sub-applications either inside or outside the Richardson iteration loop (controlled by the +fixed_point_solve_outer+ parameter in the
 +SweepUpdate+ executioner part of the input file). 
-The calling of HC/NekRS from inside and outside the Richardson iteration loop are shown in (A) and (B) in [its], respectively [!citep](Wang2021perimp).
+The calling of HT/NekRS from inside and outside the Richardson iteration loop are shown in (A) and (B) in [its], respectively [!citep](Wang2021perimp).
 In (A), temperature field is updated iteratively with the low order diffusion (CMFD) solution until temperature is converged, and once the temperature is converged, the high order transport (DFEM-$S_N$)
 calculation is performed to update the closure term to be used in the diffusion calculation. 
 The whole simulation is terminated once the neutron angular flux solution is converged. 
@@ -100,7 +101,7 @@ Note that the heat flux variable computed by H.C. is an elemental type, while th
 of the NekRS native mesh, is the nodal type. 
 Thus, the heat flux value at the nearest centroid of an element in the H.C. mesh is taken to the target node in the Cardinal mesh using
 +MultiAppGeneralFieldNearestNodeTransfer+ [!citep](Lindsay2022). 
-If there are multiple nearest centroids near parallel process boundaries, parallel resolution between nearly equi-distant points may be inaccurate unless extense searches are done over every process. 
+If there are multiple nearest centroids near parallel process boundaries, parallel resolution between nearly equi-distant points may be inaccurate unless extensive searches are done over every process. 
 To avoid this, the +greedy_search+ option was turned on to check the points of all the processors. This transfer takes place separately for different interfaces (e.g. duct-coolant and clad-coolant) with spatial restrictions on source and target boundaries for the search. 
 To preserve the total energy, the total power produced in the fuel rods
 and in the duct are separately transferred to Cardinal for normalization of the transferred heat flux at each of interfaces by Cardinal.
@@ -164,7 +165,7 @@ In the Griffin input file, we can load the mesh files produced by MOOSE Reactor 
 
 !listing lfr/7pin_cardinal_demo/NT.i block=Mesh
 
-Please note that the Griffin mesh provided is already in Exodus format, created using the MOOSE mesh module and the input file +NTmesh.i+. Users can generate this mesh using +NTmesh.i+ with +griffin-opt+ or any other MOOSE application: 
+Please note that the Griffin mesh provided is already in Exodus format, created using the MOOSE mesh module and the input file +NTmesh.i+. Users can generate this mesh using +NTmesh.i+ with +griffin-opt+ or any other MOOSE application including the Reactor module: 
 
 ```language=bash
 griffin-opt -i NTmesh.i --mesh-only
@@ -262,7 +263,7 @@ The solid tempearture is solved by the MOOSE Heat Conduction Module here. We def
 
 !listing lfr/7pin_cardinal_demo/HC.i start=half_pinpitch end=[Executioner] include-end=False
 
-The main field to be solved in the Heat Conduction model is temperature, which is defined in the `[Variables]`. 
+The main field to be solved for in the Heat Conduction model is temperature, which is defined in the `[Variables]`. 
 The governing equations and boundary conditions are specified accordingly in `[Kernels]` and `[BCs]`. 
 
 !listing lfr/7pin_cardinal_demo/HC.i start=[Variables] end=[Materials] include-end=False

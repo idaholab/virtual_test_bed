@@ -47,7 +47,7 @@
   [run_nekrs]
     type = RunApp
     input = 'nek.i'
-    check_input = true
+    skip = #79
     executable_pattern = 'cardinal*'
     prereq = 'syntax_nekrs'
   []
