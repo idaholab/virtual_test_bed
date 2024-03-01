@@ -23,7 +23,7 @@ For high fidelity modeling, the reactor physics code Griffin [!citep](Lee2021) p
 ordinates (DFEM-$S_N$) solver with Coarse Mesh Finite Difference (CMFD) acceleration, and the thermal hydraulics code NekRS [!citep](NekRS) performs the computational fluid dynamics (CFD) calculation.
 These codes were individually assessed in prior work to ensure the necessary capabilities were in place [!citep](HCFReport). 
 This work describes initial efforts to couple the codes using the MultiApp system of the MOOSE framework [!citep](Lindsay2022). 
-The open-source MOOSE-wrapper for NekRS, Cardinal [!citep](Novak2022), is used to bring NekRS into the MOOSE coupled ecosystem for fluid temperature calculations, and the open source MOOSE heat conduction (H.C.) module is leveraged to perform solid temperature calculations.
+The open-source MOOSE-wrapper for NekRS, Cardinal [!citep](Novak2022), is used to bring NekRS into the MOOSE coupled ecosystem for fluid temperature calculations, and the open source MOOSE heat transfer (H.T.) module is leveraged to perform solid temperature calculations.
 
 ## Problem Specification
 
