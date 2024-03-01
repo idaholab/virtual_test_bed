@@ -71,7 +71,7 @@ Note that the solid heat conduction solve does not have the time derivative term
 The coupled MOOSE heat transfer and NekRS system is plugged under the +MultiApp+ system of Griffin. Griffin solves a steady state eigenvalue problem and performs a Picard iteration with its sub-apps. 
 The Griffin DFEM-$S_N$/CMFD solver has the option to call sub-applications either inside or outside the Richardson iteration loop (controlled by the +fixed_point_solve_outer+ parameter in the
 +SweepUpdate+ executioner part of the input file). 
-The calling of HC/NekRS from inside and outside the Richardson iteration loop are shown in (A) and (B) in [its], respectively [!citep](Wang2021perimp).
+The calling of HT/NekRS from inside and outside the Richardson iteration loop are shown in (A) and (B) in [its], respectively [!citep](Wang2021perimp).
 In (A), temperature field is updated iteratively with the low order diffusion (CMFD) solution until temperature is converged, and once the temperature is converged, the high order transport (DFEM-$S_N$)
 calculation is performed to update the closure term to be used in the diffusion calculation. 
 The whole simulation is terminated once the neutron angular flux solution is converged. 
