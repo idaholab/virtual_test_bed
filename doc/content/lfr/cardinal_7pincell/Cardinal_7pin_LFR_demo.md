@@ -263,7 +263,7 @@ The solid tempearture is solved by the MOOSE Heat Conduction Module here. We def
 
 !listing lfr/7pin_cardinal_demo/HC.i start=half_pinpitch end=[Executioner] include-end=False
 
-The main field to be solved in the Heat Conduction model is temperature, which is defined in the `[Variables]`. 
+The main field to be solved for in the Heat Conduction model is temperature, which is defined in the `[Variables]`. 
 The governing equations and boundary conditions are specified accordingly in `[Kernels]` and `[BCs]`. 
 
 !listing lfr/7pin_cardinal_demo/HC.i start=[Variables] end=[Materials] include-end=False
