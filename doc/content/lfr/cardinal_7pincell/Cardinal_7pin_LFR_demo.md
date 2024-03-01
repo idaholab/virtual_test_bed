@@ -53,7 +53,7 @@ When performing multiphysics simulations using the MOOSE +MultiApp+ system [!cit
 when each solver is called and when data transfers occur. 
 The “main” application sits at the top of the hierarchy and drives the simulation by calling “sub-applications” which sit below it. Subapplications can also drive their own sub-applications. The time step size of a sub-application cannot be bigger than that of the application above it. 
 This rule requires NekRS to be placed at the lowest level (because NekRS uses the smallest time step size, due to constraints on the Courant Friedrichs-Lewy (CFL) number). 
-Since NekRS and MOOSE H.C. solutions are tightly coupled through conjugate heat transfer, they are directly connected by H.C. calling NekRS as a subapplication.
+Since NekRS and MOOSE H.T. solutions are tightly coupled through conjugate heat transfer, they are directly connected by H.T. calling NekRS as a subapplication.
 The Griffin neutronics solve is placed at the top of the hierarchy since it does not need to be called as frequently as the H.C. solve.
 
 The detailed coupling scheme is shown in  [its]. The conjugate heat transfer calculation between H.C. and NekRS is performed using the operator splitting method. 
