@@ -1,10 +1,10 @@
 #!/bin/bash
-#PBS -N HCFwork
+#PBS -N <your_jobname>
 #PBS -l select=4:ncpus=36:mpiprocs=36:mem=128GB:ompthreads=1
 #PBS -l walltime=03:00:00
 #PBS -m ae
 #PBS -j oe
-#PBS -P neams
+#PBS -P <your_hpc_project>
 
 module load use.moose
 module load moose-tools
