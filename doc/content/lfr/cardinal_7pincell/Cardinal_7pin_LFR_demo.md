@@ -61,7 +61,7 @@ H.C. proceeds for one time step, and then the heat fluxes at the solid-fluid (cl
 to NekRS for use as Neumann boundary conditions. 
 Then, multiple NekRS time steps are solved using the +sub_cycling+ option, and wall temperatures at the same interfaces are transferred back to H.C. for use as Dirichlet boundary conditions. 
 Picard iteration is essentially achieved “in time”, so that running a large number of time steps is equivalent to converging to a pseudo-steady state. 
-Note that the H.C. solve does not have the time derivative term in the equation but is driven by the timedependent boundary condition in its +Transient+ executioner, while NekRS solves the time-dependent Navier-Stokes equations.
+Note that the solid heat conduction solve does not have the time derivative term in the equation but is driven by the time dependent boundary condition in its +Transient+ executioner, while NekRS solves the time-dependent Navier-Stokes equations.
 
 !media lfr/cardinal_7pin/iterations.png
        style=width:100%
