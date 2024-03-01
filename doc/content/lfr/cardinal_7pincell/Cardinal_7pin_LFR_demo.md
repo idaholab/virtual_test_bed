@@ -66,7 +66,7 @@ Note that the solid heat transfer solve does not have the time derivative term i
 !media lfr/cardinal_7pin/iterations.png
        style=width:100%
        id=its
-       caption=MOOSE +MultiApp+ hierarchy for multiphysics coupling: (A) and (B) are possible choices for multiphysics coupling in the DFEM-$S_N$/CMFD solver of Griffin.
+       caption=MOOSE +MultiApp+ hierarchy for multiphysics coupling: (A) and (B) are both candidate choices for multiphysics coupling in the DFEM-$S_N$/CMFD solver of Griffin.
 
 The coupled MOOSE heat transfer and NekRS system is plugged under the +MultiApp+ system of Griffin. Griffin solves a steady state eigenvalue problem and performs a Picard iteration with its sub-apps. 
 The Griffin DFEM-$S_N$/CMFD solver has the option to call sub-applications either inside or outside the Richardson iteration loop (controlled by the +fixed_point_solve_outer+ parameter in the
@@ -382,15 +382,15 @@ Scheme (A) in [its] resulted in false temperature convergence unless the Richard
        id=power
        caption=Fast convergence of power distribution due to weak coupling.
 
-One noteworthy observation was that infrequent data communication between H.T. and NekRS may result in solution instability. 
-[bugs] shows that when H.T. is called 10 times less frequently (500:1 rather than 50:1 NekRS:H.T.), a large unphysical oscillation appears in the solution.
-Although only the duct heat flux is shown, other solutions also diverged. 
+One noteworthy observation was that infrequent data communication between H.T. and NekRS may result in solution oscillations. 
+[bugs] shows that when H.T. is called 10 times less frequently (500:1 rather than 50:1 NekRS:H.T.), a large unphysical fluctuation appears in the solution.
+Although only the duct heat flux is shown, other solutions also deviate from expected results. 
 This observation is consistent with the fact that the operator splitting method is first order accurate in time, and such an observation would occur with other codes selected for the fluid solve and the solid solve (i.e this effect is not specific to Cardinal or MOOSE).
 
 !media lfr/cardinal_7pin/bugs.png
        style=width:80%
        id=bugs
-       caption=Divergence (large oscillation) of solution (duct heat flux) caused by the infrequent data communication in the conjugate heat transfer with the operator splitting method.
+       caption=Unphysical pattern of solution (duct heat flux) caused by the infrequent data communication in the conjugate heat transfer with the operator splitting method.
 
 ### Verification of radial temperature profile and axial speed style=font-size:125%
 
