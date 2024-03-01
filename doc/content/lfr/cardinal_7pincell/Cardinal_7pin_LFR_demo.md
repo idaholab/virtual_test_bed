@@ -13,6 +13,7 @@
                        computing_needs:HPC
                        input_features:reactor_meshing;multiapps
                        cross_sections:MC2
+                       open_source:partial
                        fiscal_year:2023
 
 
