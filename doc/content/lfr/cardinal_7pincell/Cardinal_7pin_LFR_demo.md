@@ -54,19 +54,19 @@ when each solver is called and when data transfers occur.
 The “main” application sits at the top of the hierarchy and drives the simulation by calling “sub-applications” which sit below it. Subapplications can also drive their own sub-applications. The time step size of a sub-application cannot be bigger than that of the application above it. 
 This rule requires NekRS to be placed at the lowest level (because NekRS uses the smallest time step size, due to constraints on the Courant Friedrichs-Lewy (CFL) number). 
 Since NekRS and MOOSE H.T. solutions are tightly coupled through conjugate heat transfer, they are directly connected by H.T. calling NekRS as a subapplication.
-The Griffin neutronics solve is placed at the top of the hierarchy since it does not need to be called as frequently as the H.C. solve.
+The Griffin neutronics solve is placed at the top of the hierarchy since it does not need to be called as frequently as the H.T. solve.
 
-The detailed coupling scheme is shown in  [its]. The conjugate heat transfer calculation between H.C. and NekRS is performed using the operator splitting method. 
-H.C. proceeds for one time step, and then the heat fluxes at the solid-fluid (clad-coolant and duct-coolant) interfaces are transferred
+The detailed coupling scheme is shown in  [its]. The conjugate heat transfer calculation between H.T. and NekRS is performed using the operator splitting method. 
+H.T. proceeds for one time step, and then the heat fluxes at the solid-fluid (clad-coolant and duct-coolant) interfaces are transferred
 to NekRS for use as Neumann boundary conditions. 
-Then, multiple NekRS time steps are solved using the +sub_cycling+ option, and wall temperatures at the same interfaces are transferred back to H.C. for use as Dirichlet boundary conditions. 
+Then, multiple NekRS time steps are solved using the +sub_cycling+ option, and wall temperatures at the same interfaces are transferred back to H.T. for use as Dirichlet boundary conditions. 
 Picard iteration is essentially achieved “in time”, so that running a large number of time steps is equivalent to converging to a pseudo-steady state. 
-Note that the solid heat conduction solve does not have the time derivative term in the equation but is driven by the time dependent boundary condition in its +Transient+ executioner, while NekRS solves the time-dependent Navier-Stokes equations.
+Note that the solid heat transfer solve does not have the time derivative term in the equation but is driven by the time dependent boundary condition in its +Transient+ executioner, while NekRS solves the time-dependent Navier-Stokes equations.
 
 !media lfr/cardinal_7pin/iterations.png
        style=width:100%
        id=its
-       caption=MOOSE +MultiApp+ hierarchy for multiphysics coupling: (A) and (B) are possible choices for multiphysics coupling in the DFEM-$S_N$/CMFD solver of Griffin.
+       caption=MOOSE +MultiApp+ hierarchy for multiphysics coupling: (A) and (B) are both candidate choices for multiphysics coupling in the DFEM-$S_N$/CMFD solver of Griffin.
 
 The coupled MOOSE heat transfer and NekRS system is plugged under the +MultiApp+ system of Griffin. Griffin solves a steady state eigenvalue problem and performs a Picard iteration with its sub-apps. 
 The Griffin DFEM-$S_N$/CMFD solver has the option to call sub-applications either inside or outside the Richardson iteration loop (controlled by the +fixed_point_solve_outer+ parameter in the
@@ -81,35 +81,35 @@ allowed to converge first (it is not highly dependent on temperature), which the
 
 ### Data transfer style=font-size:125%
 
-[transfer] shows the data transfer scheme between different physics solvers. For transferring volumetric heat source from Griffin to H.C., Griffin computes constant volumetric heat source per element and the value at the centroid of an element in the H.C. mesh is queried from the finite element solution in the Griffin mesh and used as a constant value over the element (see +MultiAppShapeEvaluationTransfer+ [!citep](Lindsay2022)).
+[transfer] shows the data transfer scheme between different physics solvers. For transferring volumetric heat source from Griffin to H.T., Griffin computes constant volumetric heat source per element and the value at the centroid of an element in the H.T. mesh is queried from the finite element solution in the Griffin mesh and used as a constant value over the element (see +MultiAppShapeEvaluationTransfer+ [!citep](Lindsay2022)).
 The transferred heat source is normalized to preserve the original total power using MOOSE’s conservative transfer features. 
-For transferring the temperature field from H.C. to Griffin for Doppler and coolant density feedback, temperature values at the three closest nodes in the H.C. mesh to the target node in the Griffin mesh are
+For transferring the temperature field from H.T. to Griffin for Doppler and coolant density feedback, temperature values at the three closest nodes in the H.T. mesh to the target node in the Griffin mesh are
 interpolated using inverse distance weighting (see +MultiAppGeometricInterpolationTransfer+ [!citep](Lindsay2022)).
 Nearest points are searched only in the solid region for solid temperatures and in the fluid region for fluid temperatures. 
-Even though H.C. does not need the fluid domain for solving the heat
-conduction equation, the H.C. problem contains a mesh for the fluid domain in order to receive the coolant temperature field transferred from Cardinal (on its way to Griffin) and compute its L2-norm for convergence check. 
+Even though H.T. does not need the fluid domain for solving the heat
+conduction equation, the H.T. problem contains a mesh for the fluid domain in order to receive the coolant temperature field transferred from Cardinal (on its way to Griffin) and compute its L2-norm for convergence check. 
 Note that Griffin does not need a fine mesh in the coolant region for
-neutronics solution, and a fine coolant mesh in H.C. does not degrade computational efficiency except in memory-limited cases.
+neutronics solution, and a fine coolant mesh in H.T. does not degrade computational efficiency except in memory-limited cases.
 
 !media lfr/cardinal_7pin/transfer.png
        style=width:100%
        id=transfer
-       caption=Data transfer scheme among Griffin, H.C., and Cardinal.
+       caption=Data transfer scheme among Griffin, H.T., and Cardinal.
 
-For the conjugate heat transfer, H.C. computes constant monomial heat flux per element at the cladding outer surfaces and the duct inner surface. 
-Note that the heat flux variable computed by H.C. is an elemental type, while the variable automatically added by Cardinal on the mirror mesh
+For the conjugate heat transfer, H.T. computes constant monomial heat flux per element at the cladding outer surfaces and the duct inner surface. 
+Note that the heat flux variable computed by H.T. is an elemental type, while the variable automatically added by Cardinal on the mirror mesh
 of the NekRS native mesh, is the nodal type. 
-Thus, the heat flux value at the nearest centroid of an element in the H.C. mesh is taken to the target node in the Cardinal mesh using
+Thus, the heat flux value at the nearest centroid of an element in the H.T. mesh is taken to the target node in the Cardinal mesh using
 +MultiAppGeneralFieldNearestNodeTransfer+ [!citep](Lindsay2022). 
 If there are multiple nearest centroids near parallel process boundaries, parallel resolution between nearly equi-distant points may be inaccurate unless extensive searches are done over every process. 
 To avoid this, the +greedy_search+ option was turned on to check the points of all the processors. This transfer takes place separately for different interfaces (e.g. duct-coolant and clad-coolant) with spatial restrictions on source and target boundaries for the search. 
 To preserve the total energy, the total power produced in the fuel rods
 and in the duct are separately transferred to Cardinal for normalization of the transferred heat flux at each of interfaces by Cardinal.
 
-The solid-fluid wall temperature is transferred from Cardinal to H.C. in the same manner as the transfer of heat flux. 
-Since the wall temperature is a part of the +AuxiliarySystem+ in H.C. which is not restored during the Picard iteration even with +keep_solution_during_restore = true+ in
-+FullSolveMultiApp+, it is backed up via Griffin using the same transfer from Cardinal to H.C.
-Otherwise, the boundary condition in H.C. would be re-set per Picard iteration. The fluid temperature is transferred from Cardinal to H.C. in the same manner as the transfer from H.C. to Griffin.
+The solid-fluid wall temperature is transferred from Cardinal to H.T. in the same manner as the transfer of heat flux. 
+Since the wall temperature is a part of the +AuxiliarySystem+ in H.T. which is not restored during the Picard iteration even with +keep_solution_during_restore = true+ in
++FullSolveMultiApp+, it is backed up via Griffin using the same transfer from Cardinal to H.T.
+Otherwise, the boundary condition in H.T. would be re-set per Picard iteration. The fluid temperature is transferred from Cardinal to H.T. in the same manner as the transfer from H.T. to Griffin.
 
 ### Doppler and Coolant Density Reactivity Feedbacks style=font-size:125%
 
@@ -123,7 +123,7 @@ For the coolant density feedback, the +AuxVariable+ for the temperature dependen
 For the scheme (B) in [its], there are two convergence control parameters: the tolerances on the Richardson and Picard iterations. 
 The Richardson iteration exits once $\lVert \Psi^{(l)} - \Psi^{(l-1)} \rVert _2$ drops down below $\lVert \Psi^{(1)} - \Psi^{(0)} \rVert _2 \times 0.001$ (+richardson_rel_tol = 1E-3+) where $\Psi^{(l)}$ is the neutron angular flux field at $l^{th}$ Richardson iteration. $10^{-3}$ is a loose criterion but sufficient because the root-mean-square value of power distribution errors drops down below 0.01% at the relative Richardson error of $10^{-3}$ in a non-coupled calculation. 
 To exit the Picard iteration (end the whole simulation), the tolerance
-on the relative difference of the L2-norm of temperature field values computed by H.C. between successive Picard iterations was set as $10^{-5}$.
+on the relative difference of the L2-norm of temperature field values computed by H.T. between successive Picard iterations was set as $10^{-5}$.
 
 ### Computational strategy style=font-size:125%
 
@@ -132,7 +132,7 @@ First, a NekRS standalone calculation was performed to provide reasonable initia
 condition was assigned uniformly to all regions. The dimensionless NekRS time step size of $10^{-3}$ (0.09106 ms, after dimensionalization) was used to keep the Courant number less than 0.3. The simulation was run for 9.106 s, which is 75% of the time required for the flow to pass through from inlet to outlet.
 
 As the flow is developed, the fully coupled simulation can freeze the velocity to speed up the development of the temperature During the coupled simulation, the dimensionless NekRS time step size was increased by +10x+ (0.9106 ms) since the velocity was frozen. 
-The H.C. solve was called every 50 NekRS time steps. Insufficiently frequent calls of H.C. cause instability in the solution (discussed in Results section). One hundred time steps were taken in H.C. per Picard iteration, so Griffin was called every 4.553 s, leading to the 5000:100:1 ratio of NekRS, H.C., and Griffin
+The H.T. solve was called every 50 NekRS time steps. Insufficiently frequent calls of H.T. cause instability in the solution (discussed in Results section). One hundred time steps were taken in H.T. per Picard iteration, so Griffin was called every 4.553 s, leading to the 5000:100:1 ratio of NekRS, H.T., and Griffin
 calculations. 
 
 ## Griffin Input Model
@@ -145,21 +145,21 @@ Defining input parameters in advance is beneficial to make the input tractable b
 
 !listing lfr/7pin_cardinal_demo/NT.i start=activefuelheight end=richardsonmaxits include-end=True
 
-### Meshes for Griffin, Heat Conduction and Cardinal solvers style=font-size:125% id=mesh
+### Meshes for Griffin, heat transfer and Cardinal solvers style=font-size:125% id=mesh
 
-The Griffin and H.C. meshes were generated with the MOOSE Reactor module [!citep](MOOSEReactorModule) which allows for mesh perturbation using the MOOSE Stochastic Tools in the future.
+The Griffin and H.T. meshes were generated with the MOOSE Reactor module [!citep](MOOSEReactorModule) which allows for mesh perturbation using the MOOSE Stochastic Tools in the future.
 The Cardinal mesh is the mirror mesh of the NekRS native mesh and is built by Cardinal automatically by looping through the CFD mesh and copying elements into a lower-order representation. 
-Attention was paid to keeping the azimuthal division in the Griffin and H.C. meshes similar to that in the Cardinal mesh for better alignment of nodes on the cladding outer surfaces and duct inner surfaces among the different meshes. 
-Each duct side was divided into 18 segments in all meshes. H.C. has a finer mesh radially and axially than Griffin: 23 vs. 6 in a fuel rod, 10 vs. 2 in a duct, and 16 vs. 4 in a coolant in the radial direction and 48 vs. 24 in the axial direction. 
-In H.C., fine meshes in the fuel rod and the duct are needed for accurate
-temperature and heat flux calculations. The finer meshes in the coolant region are used for better convergence metric of the coolant temperature, and those in the axial direction are used for better +NearestNode+ data transfer of heat flux and surface temperature between H.C. and Cardinal. 
+Attention was paid to keeping the azimuthal division in the Griffin and H.T. meshes similar to that in the Cardinal mesh for better alignment of nodes on the cladding outer surfaces and duct inner surfaces among the different meshes. 
+Each duct side was divided into 18 segments in all meshes. H.T. has a finer mesh radially and axially than Griffin: 23 vs. 6 in a fuel rod, 10 vs. 2 in a duct, and 16 vs. 4 in a coolant in the radial direction and 48 vs. 24 in the axial direction. 
+In H.T., fine meshes in the fuel rod and the duct are needed for accurate
+temperature and heat flux calculations. The finer meshes in the coolant region are used for better convergence metric of the coolant temperature, and those in the axial direction are used for better +NearestNode+ data transfer of heat flux and surface temperature between H.T. and Cardinal. 
 The Cardinal (NekRS) axial mesh is finer in the inlet region to accurately compute the entrance effect.
 The overall mesh configurations for each individual physics solver can be found in [meshes].
 
 !media lfr/cardinal_7pin/mesh.png
        style=width:100%
        id=meshes
-       caption=Radial (top) and axial (bottom) meshes of Griffin, H.C., and Cardinal.
+       caption=Radial (top) and axial (bottom) meshes of Griffin, H.T., and Cardinal.
 
 In the Griffin input file, we can load the mesh files produced by MOOSE Reactor module as follows
 
@@ -171,7 +171,7 @@ Please note that the Griffin mesh provided is already in Exodus format, created 
 griffin-opt -i NTmesh.i --mesh-only
 ```
 
-The Heat Conduction mesh can be generated in the similar way using the input file +HCmesh.i+ provided.
+The heat transfer mesh can be generated in the similar way using the input file +HCmesh.i+ provided.
 
 ```language=bash
 griffin-opt -i HCmesh.i --mesh-only
@@ -185,7 +185,7 @@ If `richardson_postprocessor` is specified, its `PostProcessor` value is used as
 `richardson_value` is for the console output purpose to show the history of `PostProcessor` values over Richardson iterations, and it is set to be `eigenvalue`. 
 `inner_solve_type` is about the way to perform the inner solve of the Richardson iteration. There are three options: `none`, `SI` and `GMRes`. `none` is just a direct transport operator inversion per residual evaluation, while scattering source is updated together for `SI` and `GMRes` per residual evaluation. The latter two options involve more number of transport sweeps per residual evaluation than `none`, leading to the reduction of the number of residual evaluations and possibly the total run time. For `GMRes`, the scattering source effect is accounted for at once by performing the GMRes iterations and `max_inner_its` is the maximum number of GMRes iterations. For `SI`, the scattering source effect is accounted for by performing source iterations and `max_inner_its` is the maximum number of source iterations.
 
-`fixed_point_solve_outer` is configured to allow Griffin to invoke the Picard iteration between Griffin and its sub-app (H.C. and nekRS) calculations outside the Richardson iteration. This approach has been demonstrated to be more computationally efficient for weakly coupled problems in the multiphysics hierarchy. The convergence criterion is based on the temperature field with a relative tolerance `custom_rel_tol` of +1e-5+.
+`fixed_point_solve_outer` is configured to allow Griffin to invoke the Picard iteration between Griffin and its sub-app (H.T. and nekRS) calculations outside the Richardson iteration. This approach has been demonstrated to be more computationally efficient for weakly coupled problems in the multiphysics hierarchy. The convergence criterion is based on the temperature field with a relative tolerance `custom_rel_tol` of +1e-5+.
 
 `coarse_element_id` is a name of the extra element integer ID assigned in the mesh file. 
 If the CMFD solve does not converge, one can try different options for `diffusion_eigen_solver_type` which is the eigenvalue solver for CMFD. There are four options: `power`, `arnoldi`, `krylovshur` and `newton`. `newton` is the default which is recommended to stick with. If `newton` does not converge a solution, either `krylovshur` is the second option to go with, or `cmfd_prec_type` can be changed to `lu` from its default value of `boomeramg` for a small problem. Also one can try `cmfd_closure_type=syw` or `cmfd_closure_type=pcmfd` as different ways, but it is recommended to stick with its default value of `traditional_cmfd`.
@@ -241,7 +241,7 @@ Library ID refers to the value of the attribute named `ID` of the `Multigroup_Cr
 
 ### MultiApps and Transfers style=font-size:125% 
 
-`[MultiApps]` specifies how the Griffin model interacts with its sub-app +HC.i+, which is a MOOSE Heat Conduction model. Meanwhile, `[Transfers]` defines how the data is exchanged between Griffin model +NT.i+ and the sub-app +HC.i+ as illustrated in [transfer]. 
+`[MultiApps]` specifies how the Griffin model interacts with its sub-app +HC.i+, which is a MOOSE heat transfer model. Meanwhile, `[Transfers]` defines how the data is exchanged between Griffin model +NT.i+ and the sub-app +HC.i+ as illustrated in [transfer]. 
 
 !listing lfr/7pin_cardinal_demo/NT.i start=[MultiApps] end=[UserObjects] include-end=False
 
@@ -257,24 +257,24 @@ Finally, the `[Outputs]` block sets the output files from the simulation. Two of
 
 !listing lfr/7pin_cardinal_demo/NT.i block=Outputs 
 
-## MOOSE Heat Conduction Input Model
+## MOOSE heat transfer Input Model
 
-The solid tempearture is solved by the MOOSE Heat Conduction Module here. We define a number of constants at the beginning of the file and set up the mesh from a file.
+The solid tempearture is solved by the MOOSE heat transfer Module here. We define a number of constants at the beginning of the file and set up the mesh from a file.
 
 !listing lfr/7pin_cardinal_demo/HC.i start=half_pinpitch end=[Executioner] include-end=False
 
-The main field to be solved for in the Heat Conduction model is temperature, which is defined in the `[Variables]`. 
+The main field to be solved for in the heat transfer model is temperature, which is defined in the `[Variables]`. 
 The governing equations and boundary conditions are specified accordingly in `[Kernels]` and `[BCs]`. 
 
 !listing lfr/7pin_cardinal_demo/HC.i start=[Variables] end=[Materials] include-end=False
 
-The MOOSE heat conduction module will receive power from Griffin in the form of an AuxVariable, so we define a receiver variable for the fission power, as +heat_source+. The MOOSE heat conduction module will also receive a fluid wall temperature from Cardinal as another AuxVariable which we name +nek_surf_temp+. The fluid bluk temperature is also passed from Cardinal to HC for convergence check. Finally, the MOOSE heat conduction module will send the heat flux to Cardinal, so we add a variable named +heat_flux+ that we will use to compute the heat flux using the DiffusionFluxAux auxiliary kernel.
+The MOOSE heat transfer module will receive power from Griffin in the form of an AuxVariable, so we define a receiver variable for the fission power, as +heat_source+. The MOOSE heat transfer module will also receive a fluid wall temperature from Cardinal as another AuxVariable which we name +nek_surf_temp+. The fluid bluk temperature is also passed from Cardinal to HC for convergence check. Finally, the MOOSE heat transfer module will send the heat flux to Cardinal, so we add a variable named +heat_flux+ that we will use to compute the heat flux using the DiffusionFluxAux auxiliary kernel.
 
 !listing lfr/7pin_cardinal_demo/HC.i block=AuxVariables
 
 !listing lfr/7pin_cardinal_demo/HC.i block=AuxKernels
 
-The coupling and data transfer are handled by blocks `[MultiApps]` and `[Transfers]`. The input file structures are very similar to those described in Griffin input model above, with the main difference is that MOOSE Heat Conduction Module now uses nekRS as the sub-app. Similarly, `[Postprocessors]` and `[VectorPostprocessors]` are employed to compute additional quantities of interest for solution monitoring and visualization. 
+The coupling and data transfer are handled by blocks `[MultiApps]` and `[Transfers]`. The input file structures are very similar to those described in Griffin input model above, with the main difference is that MOOSE heat transfer Module now uses nekRS as the sub-app. Similarly, `[Postprocessors]` and `[VectorPostprocessors]` are employed to compute additional quantities of interest for solution monitoring and visualization. 
 Finally, we specify a Transient executioner. Because there are no time-dependent kernels in this input file, this is equivalent in practice to using a steady executioner.
 
 !listing lfr/7pin_cardinal_demo/HC.i block=Executioner
@@ -287,7 +287,7 @@ The `[Problem]` block describes all objects necessary for the actual physics sol
 The nekRS computations were executed in a dimensionless manner, and a set of reference/characteristic scales is provided  in `[Problem]` for dimensional conversion. The variable +casename+ instructs Cardinal regarding the case setup files required by nekRS for conducting CFD simulations, such as +casename.udf+, +casename.usr+, and so on. 
 In this model, the heat source was exclusively deposited in the fuel region, resulting in setting +has_heat_source+ to +false+ for the fluid.
 
-The class +NekRSMesh+, specific to Cardinal, is employed to generate a "mirror" of the surfaces within the nekRS mesh. This mirror is utilized for coupling boundary conditions. The +boundary+ parameter is employed to define all the boundary IDs, enabling conjugate heat transfer coupling between nekRS and the MOOSE Heat Conduction module. To revert to dimensional units, the entire mesh must be scaled by a factor of $L_{ref}$.
+The class +NekRSMesh+, specific to Cardinal, is employed to generate a "mirror" of the surfaces within the nekRS mesh. This mirror is utilized for coupling boundary conditions. The +boundary+ parameter is employed to define all the boundary IDs, enabling conjugate heat transfer coupling between nekRS and the MOOSE heat transfer module. To revert to dimensional units, the entire mesh must be scaled by a factor of $L_{ref}$.
 
 !listing lfr/7pin_cardinal_demo/nek.i start=[Problem] end=[Executioner] include-end=False
 
@@ -297,7 +297,7 @@ Following that, a +Transient+ executioner is defined. This executioner remains c
 
 !listing lfr/7pin_cardinal_demo/nek.i block=Outputs
 
-Similar to its application in the Griffin and Heat Conduction input files, the `[Postprocessors]` block in Cardinal serves to monitor crucial quantities of interest. These include the average temperature and heat fluxes on boundary faces, as well as the minimum and maximum temperatures. It is important to emphasize that specifying +field = unity+ is same as calculating the area in the context of +NekSideIntegral+, equivalent to determining volume in the case of +NekVolumeIntegral+, and corresponds to computing the mass flow rate for +NekMassFluxWeightedSideIntegral+.
+Similar to its application in the Griffin and heat transfer input files, the `[Postprocessors]` block in Cardinal serves to monitor crucial quantities of interest. These include the average temperature and heat fluxes on boundary faces, as well as the minimum and maximum temperatures. It is important to emphasize that specifying +field = unity+ is same as calculating the area in the context of +NekSideIntegral+, equivalent to determining volume in the case of +NekVolumeIntegral+, and corresponds to computing the mass flow rate for +NekMassFluxWeightedSideIntegral+.
 
 !listing lfr/7pin_cardinal_demo/nek.i block=Postprocessors
 
@@ -331,7 +331,7 @@ The +usr+ file is a legacy from Nek5000 code, and we still use to specify the bo
 
 !listing lfr/7pin_cardinal_demo/7pin.usr  start=subroutine usrdat2 end=subroutine usrdat3 include-end=False
 
-The +oudf+ file contains the additioanal setup for the required boundary conditions. Note that we have `bc->flux = bc->usrwrk[bc->idM]` in `scalarNeumannConditions` block. This line allows NekRS to use the heat flux provided by the MOOSE Heat Conduction module at the surfaces of fuel rods and duct wall.
+The +oudf+ file contains the additioanal setup for the required boundary conditions. Note that we have `bc->flux = bc->usrwrk[bc->idM]` in `scalarNeumannConditions` block. This line allows NekRS to use the heat flux provided by the MOOSE heat transfer module at the surfaces of fuel rods and duct wall.
 
 !listing lfr/7pin_cardinal_demo/7pin.oudf 
 
@@ -365,8 +365,8 @@ The coolant temperature rise should be consistent with the total power calculate
 
 [convergence] illustrates the simulation history. 
 The NekRS standalone calculation to generate initial conditions occupies the first 9.016 seconds. Once the fully coupled calculation is initiated, the CMFD + DFEM-$S_N$ calculations continued until the relative Richardson error hit the tolerance of $10^{-3}$. 
-Then, H.C. + NekRS calculations were performed until the end time of H.C. was met. The L2-norm of the coolant temperature field was first calculated then, and the next set of CMFD + DFEM-$S_N$ calculations were performed, which dropped the relative Richardson errors down to $10^{-5}$. 
-After the next cycle of H.C. + NekRS calculations, the L2-norm of the coolant temperature field was updated and its relative difference to its previous value was computed. This process was repeated until the relative change of the L2-norm of the coolant temperature field dropped below $10^{-5}$. 
+Then, H.T. + NekRS calculations were performed until the end time of H.T. was met. The L2-norm of the coolant temperature field was first calculated then, and the next set of CMFD + DFEM-$S_N$ calculations were performed, which dropped the relative Richardson errors down to $10^{-5}$. 
+After the next cycle of H.T. + NekRS calculations, the L2-norm of the coolant temperature field was updated and its relative difference to its previous value was computed. This process was repeated until the relative change of the L2-norm of the coolant temperature field dropped below $10^{-5}$. 
 Even though the relative Richardson error in Griffin jumped at each subsequent Picard iteration, the overall error as well as the eigenvalue difference decreased with increasing number of Picard iterations.
 
 !media lfr/cardinal_7pin/convergence.png
@@ -382,15 +382,15 @@ Scheme (A) in [its] resulted in false temperature convergence unless the Richard
        id=power
        caption=Fast convergence of power distribution due to weak coupling.
 
-One noteworthy observation was that infrequent data communication between H.C. and NekRS may result in solution instability. 
-[bugs] shows that when H.C. is called 10 times less frequently (500:1 rather than 50:1 NekRS:H.C.), a large unphysical oscillation appears in the solution.
-Although only the duct heat flux is shown, other solutions also diverged. 
+One noteworthy observation was that infrequent data communication between H.T. and NekRS may result in solution oscillations. 
+[bugs] shows that when H.T. is called 10 times less frequently (500:1 rather than 50:1 NekRS:H.T.), a large unphysical fluctuation appears in the solution.
+Although only the duct heat flux is shown, other solutions also deviate from expected results. 
 This observation is consistent with the fact that the operator splitting method is first order accurate in time, and such an observation would occur with other codes selected for the fluid solve and the solid solve (i.e this effect is not specific to Cardinal or MOOSE).
 
 !media lfr/cardinal_7pin/bugs.png
        style=width:80%
        id=bugs
-       caption=Divergence (large oscillation) of solution (duct heat flux) caused by the infrequent data communication in the conjugate heat transfer with the operator splitting method.
+       caption=Unphysical pattern of solution (duct heat flux) caused by the infrequent data communication in the conjugate heat transfer with the operator splitting method.
 
 ### Verification of radial temperature profile and axial speed style=font-size:125%
 
@@ -407,10 +407,10 @@ As an experiment, forcing a radially uniform axial speed resulted in the more co
 
 ## Summary and Future works
 
-A multiphysics coupled code system with Griffin, MOOSE heat conduction, and NekRS (Cardinal), has been established using the MOOSE framework for the purpose of hot channel factor evaluation in LFR applications. 
+A multiphysics coupled code system with Griffin, MOOSE heat transfer, and NekRS (Cardinal), has been established using the MOOSE framework for the purpose of hot channel factor evaluation in LFR applications. 
 Griffin drives the coupled simulation using the multiphysics coupling scheme
 of the DFEM-$S_N$/CMFD solver. 
-The Richardson iterations for the DFEM-$S_N$CMFD calculation are performed first, followed by the H.C. and NekRS coupled calculation that uses the operator
+The Richardson iterations for the DFEM-$S_N$CMFD calculation are performed first, followed by the H.T. and NekRS coupled calculation that uses the operator
 splitting method for the conjugate heat coupling, in the Picard iteration loop until the relative difference of the L2-norm of the coolant temperature field in successive Picard iterations drops down below $10^{-5}$. 
 Locating the Picard iteration loop outside the Richardson iteration loop needs to
 be set in an input manually and is important to avoid false temperature convergence in weakly coupled problems. 
