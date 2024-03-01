@@ -101,7 +101,7 @@ Note that the heat flux variable computed by H.C. is an elemental type, while th
 of the NekRS native mesh, is the nodal type. 
 Thus, the heat flux value at the nearest centroid of an element in the H.C. mesh is taken to the target node in the Cardinal mesh using
 +MultiAppGeneralFieldNearestNodeTransfer+ [!citep](Lindsay2022). 
-If there are multiple nearest centroids near parallel process boundaries, parallel resolution between nearly equi-distant points may be inaccurate unless extense searches are done over every process. 
+If there are multiple nearest centroids near parallel process boundaries, parallel resolution between nearly equi-distant points may be inaccurate unless extensive searches are done over every process. 
 To avoid this, the +greedy_search+ option was turned on to check the points of all the processors. This transfer takes place separately for different interfaces (e.g. duct-coolant and clad-coolant) with spatial restrictions on source and target boundaries for the search. 
 To preserve the total energy, the total power produced in the fuel rods
 and in the duct are separately transferred to Cardinal for normalization of the transferred heat flux at each of interfaces by Cardinal.
