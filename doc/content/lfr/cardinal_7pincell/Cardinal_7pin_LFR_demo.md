@@ -165,7 +165,7 @@ In the Griffin input file, we can load the mesh files produced by MOOSE Reactor 
 
 !listing lfr/7pin_cardinal_demo/NT.i block=Mesh
 
-Please note that the Griffin mesh provided is already in Exodus format, created using the MOOSE mesh module and the input file +NTmesh.i+. Users can generate this mesh using +NTmesh.i+ with +griffin-opt+ or any other MOOSE application: 
+Please note that the Griffin mesh provided is already in Exodus format, created using the MOOSE mesh module and the input file +NTmesh.i+. Users can generate this mesh using +NTmesh.i+ with +griffin-opt+ or any other MOOSE application including the Reactor module: 
 
 ```language=bash
 griffin-opt -i NTmesh.i --mesh-only
