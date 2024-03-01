@@ -35,7 +35,7 @@ adopted as-is. Cylindrical solid clad reflectors of length 20 cm and with the sa
 For simplicity, the lead coolant inlet velocity was reduced from the original value of 1 m/s to 11.86 cm/s to keep the flow in the laminar regime (Reynolds number of 780), which can significantly
 reduce the runtime required for CFD. Accordingly, the total power was reduced by a factor of seven to bound the coolant temperature increase (~less than 300 K). However, we did not adjust the thermal conductivity of the solid materials, so the solid temperature range from fuel
 centerline to outer cladding surface is lower than in the prototypical concept. The coolant density is represented as a linear function of temperature for the coolant density reactivity feedback effect
-in neutronics calculation. MOOSE’s heat conduction module solves for solid temperature in all regions except the coolant.
+in neutronics calculation. MOOSE’s heat transfer module solves for solid temperature in all regions except the coolant.
 
 !media lfr/cardinal_7pin/setup.png
        style=width:100%
