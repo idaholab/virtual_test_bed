@@ -11,7 +11,7 @@
                        simulation_type:neutronics
                        codes_used:Griffin;MCC3;NekRS
                        computing_needs:HPC
-                       input_features:reactor_meshing
+                       input_features:reactor_meshing;multiapps
                        cross_sections:MC2
                        fiscal_year:2023
 
