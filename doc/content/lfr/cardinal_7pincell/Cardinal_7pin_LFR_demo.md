@@ -68,7 +68,7 @@ Note that the solid heat conduction solve does not have the time derivative term
        id=its
        caption=MOOSE +MultiApp+ hierarchy for multiphysics coupling: (A) and (B) are possible choices for multiphysics coupling in the DFEM-$S_N$/CMFD solver of Griffin.
 
-The coupled H.C. and NekRS system is plugged under the +MultiApp+ system of Griffin. Griffin solves a steady state eigenvalue problem and performs a Picard iteration with its sub-apps. 
+The coupled MOOSE heat transfer and NekRS system is plugged under the +MultiApp+ system of Griffin. Griffin solves a steady state eigenvalue problem and performs a Picard iteration with its sub-apps. 
 The Griffin DFEM-$S_N$/CMFD solver has the option to call sub-applications either inside or outside the Richardson iteration loop (controlled by the +fixed_point_solve_outer+ parameter in the
 +SweepUpdate+ executioner part of the input file). 
 The calling of HC/NekRS from inside and outside the Richardson iteration loop are shown in (A) and (B) in [its], respectively [!citep](Wang2021perimp).
