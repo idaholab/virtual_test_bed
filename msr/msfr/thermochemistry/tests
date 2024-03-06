@@ -13,7 +13,7 @@
     input = 'thermo.i'
     csvdiff = 'thermo_out.csv'
     executable_pattern = 'combined*'
-    required_submodule = 'apps/moose/modules/chemical_reactions/contrib/thermochimica'
+    required_submodule = 'apps/moose/modules/chemical_reactions/contrib/thermochimica apps/ci/mstdb'
     allow_warnings = true
     min_parallel = 8
     max_time = 300
