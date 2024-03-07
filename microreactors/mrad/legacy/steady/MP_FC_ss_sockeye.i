@@ -175,14 +175,14 @@ corr_factor = ${fparse 2 * R_clad_o / R_hp_hole / R_hp_hole / area_correction / 
 
 [Functions]
   [hp_ax1_vf]
-    type = VectorPostprocessorFunction
+    type = PiecewiseLinearFromVectorPostprocessor
     argument_column = z
     component  = z
     value_column = T_solid
     vectorpostprocessor_name = hp_ax1
   []
   [flux_vf]
-    type = VectorPostprocessorFunction
+    type = PiecewiseLinearFromVectorPostprocessor
     argument_column = z
     component  = z
     value_column = main_flux
