@@ -42,7 +42,7 @@ Tsf    = 623.15 # stress-free temperature for the ComputeMeanThermalExpansionFun
   []
 []
 
-[Modules/TensorMechanics/Master]
+[Physics/SolidMechanics/QuasiStatic]
   [plate]
     add_variables = true
     strain = SMALL
