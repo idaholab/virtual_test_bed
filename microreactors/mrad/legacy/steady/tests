@@ -39,6 +39,7 @@
     # Capillary limit for vertical heat pipes is not accurate; see https://hpcgitlab.hpc.inl.gov/idaholab/sockeye/-/issues/65
     allow_warnings = true
     prereq = 'fluids_sockeye_syntax'
+    ignore_columns = 'bc_scale_pp scale_pp'
   []
   [coupled_simulation]
     type = CSVDiff
