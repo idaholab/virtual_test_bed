@@ -8433,7 +8433,7 @@ T_out = 623.15  #1000
   [../]
 
   [./EHXLoop_out]
-    type = PressureOutlet
+    type = PBTDV
 #    input = 'EHXsout_pipe1(out)'
     input = 'EHX(secondary_out)'
     p_bc = '${p_out}'
