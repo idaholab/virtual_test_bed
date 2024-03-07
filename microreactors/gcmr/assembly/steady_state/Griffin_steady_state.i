@@ -56,7 +56,7 @@
 
   cmfd_acceleration = true #false
   coarse_element_id = coarse_element_id
-  cmfd_eigen_solver_type = newton
+  diffusion_eigen_solver_type = newton
   prolongation_type = multiplicative
   max_diffusion_coefficient = 1
 []

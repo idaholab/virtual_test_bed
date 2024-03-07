@@ -306,28 +306,28 @@
     type = ParsedSubdomainMeshGenerator
     input = main
     combinatorial_geometry = 'y < 0' # & x < 0.9 & y > 0.1 & y < 0.9'
-    excluded_subdomain_ids = '2 4 5 7 8 11 12 13 15 21 22'
+    excluded_subdomains = '2 4 5 7 8 11 12 13 15 21 22'
     block_id = 100
   []
   [subdomains_quad]
     type = ParsedSubdomainMeshGenerator
     input = subdomains_tri
     combinatorial_geometry = 'y < 0'
-    excluded_subdomain_ids = '1 3 6 10 14 20 100'
+    excluded_subdomains = '1 3 6 10 14 20 100'
     block_id = 101
   []
   [subdomains_tri2]
     type = ParsedSubdomainMeshGenerator
     input = subdomains_quad
     combinatorial_geometry = 'y > x / sqrt(3)'
-    excluded_subdomain_ids = '2 4 5 7 8 11 12 13 15 21 22 101'
+    excluded_subdomains = '2 4 5 7 8 11 12 13 15 21 22 101'
     block_id = 200
   []
   [subdomains_quad2]
     type = ParsedSubdomainMeshGenerator
     input = subdomains_tri2
     combinatorial_geometry = 'y > x / sqrt(3)'
-    excluded_subdomain_ids = '1 3 6 10 14 20 100 100 200'
+    excluded_subdomains = '1 3 6 10 14 20 100 100 200'
     block_id = 201
   []
 

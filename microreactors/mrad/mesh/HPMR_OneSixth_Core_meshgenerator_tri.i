@@ -82,7 +82,7 @@
   # Control drum at 12 o'clock
   [cd0_12]
     type = HexagonConcentricCircleAdaptiveBoundaryMeshGenerator
-    inputs = 'Patterned Patterned'
+    meshes_to_adapt_to = 'Patterned Patterned'
     sides_to_adapt = '3 4'
     num_sectors_per_side= '4 4 4 4 4 4'
     hexagon_size = 13.376
@@ -106,7 +106,7 @@
   # Control drum at 6 o'clock
   [cd0_6]
     type = HexagonConcentricCircleAdaptiveBoundaryMeshGenerator
-    inputs = 'Patterned Patterned'
+    meshes_to_adapt_to = 'Patterned Patterned'
     sides_to_adapt = '0 1'
     num_sectors_per_side= '4 4 4 4 4 4'
     hexagon_size = 13.376
@@ -130,7 +130,7 @@
   # Control drum at 9 o'clock
   [cd0_9]
     type = HexagonConcentricCircleAdaptiveBoundaryMeshGenerator
-    inputs = 'Patterned Patterned Patterned'
+    meshes_to_adapt_to = 'Patterned Patterned Patterned'
     sides_to_adapt = '0 4 5'
     num_sectors_per_side= '4 4 4 4 4 4'
     hexagon_size = 13.376
@@ -154,7 +154,7 @@
   # Control drum at 3 o'clock
   [cd0_3]
     type = HexagonConcentricCircleAdaptiveBoundaryMeshGenerator
-    inputs = 'Patterned Patterned Patterned'
+    meshes_to_adapt_to = 'Patterned Patterned Patterned'
     sides_to_adapt = '1 2 3'
     num_sectors_per_side= '4 4 4 4 4 4'
     hexagon_size = 13.376
@@ -178,7 +178,7 @@
   # Control drum at 1 o'clock
   [cd0_1]
     type = HexagonConcentricCircleAdaptiveBoundaryMeshGenerator
-    inputs = 'Patterned Patterned Patterned'
+    meshes_to_adapt_to = 'Patterned Patterned Patterned'
     sides_to_adapt = '2 3 4'
     num_sectors_per_side= '4 4 4 4 4 4'
     hexagon_size = 13.376
@@ -202,7 +202,7 @@
   # Control drum at 2 o'clock
   [cd0_2]
     type = HexagonConcentricCircleAdaptiveBoundaryMeshGenerator
-    inputs = 'Patterned Patterned'
+    meshes_to_adapt_to = 'Patterned Patterned'
     sides_to_adapt = '2 3'
     num_sectors_per_side= '4 4 4 4 4 4'
     hexagon_size = 13.376
@@ -226,7 +226,7 @@
   # Control drum at 4 o'clock
   [cd0_4]
     type = HexagonConcentricCircleAdaptiveBoundaryMeshGenerator
-    inputs = 'Patterned Patterned'
+    meshes_to_adapt_to = 'Patterned Patterned'
     sides_to_adapt = '1 2'
     num_sectors_per_side= '4 4 4 4 4 4'
     hexagon_size = 13.376
@@ -250,7 +250,7 @@
   # Control drum at 5 o'clock
   [cd0_5]
     type = HexagonConcentricCircleAdaptiveBoundaryMeshGenerator
-    inputs = ' Patterned Patterned Patterned'
+    meshes_to_adapt_to = ' Patterned Patterned Patterned'
     sides_to_adapt = '0 1 2'
     num_sectors_per_side= '4 4 4 4 4 4'
     hexagon_size = 13.376
@@ -274,7 +274,7 @@
   # Control drum at 7 o'clock
   [cd0_7]
     type = HexagonConcentricCircleAdaptiveBoundaryMeshGenerator
-    inputs = ' Patterned Patterned Patterned'
+    meshes_to_adapt_to = ' Patterned Patterned Patterned'
     sides_to_adapt = '0 1 5'
     num_sectors_per_side= '4 4 4 4 4 4'
     hexagon_size = 13.376
@@ -298,7 +298,7 @@
   # Control drum at 8 o'clock
   [cd0_8]
     type = HexagonConcentricCircleAdaptiveBoundaryMeshGenerator
-    inputs = 'Patterned Patterned'
+    meshes_to_adapt_to = 'Patterned Patterned'
     sides_to_adapt = '0 5'
     num_sectors_per_side= '4 4 4 4 4 4'
     hexagon_size = 13.376
@@ -322,7 +322,7 @@
   # Control drum at 10 o'clock
   [cd0_10]
     type =HexagonConcentricCircleAdaptiveBoundaryMeshGenerator
-    inputs = 'Patterned Patterned'
+    meshes_to_adapt_to = 'Patterned Patterned'
     sides_to_adapt = '4 5'
     num_sectors_per_side= '4 4 4 4 4 4'
     hexagon_size = 13.376
@@ -346,7 +346,7 @@
   # Control drum at 11 o'clock
   [cd0_11]
     type = HexagonConcentricCircleAdaptiveBoundaryMeshGenerator
-    inputs = 'Patterned Patterned Patterned'
+    meshes_to_adapt_to = 'Patterned Patterned Patterned'
     sides_to_adapt = '3 4 5'
     num_sectors_per_side= '4 4 4 4 4 4'
     hexagon_size = 13.376
@@ -370,7 +370,7 @@
   # Reflector blocks * 6
   [ref_0]
     type = HexagonConcentricCircleAdaptiveBoundaryMeshGenerator
-    inputs = 'Patterned'
+    meshes_to_adapt_to = 'Patterned'
     sides_to_adapt = '0'
     num_sectors_per_side= '4 4 4 4 4 4'
     hexagon_size = 13.376
@@ -379,7 +379,7 @@
   []
   [ref_1]
     type = HexagonConcentricCircleAdaptiveBoundaryMeshGenerator
-    inputs = 'Patterned'
+    meshes_to_adapt_to = 'Patterned'
     sides_to_adapt = '1'
     num_sectors_per_side= '4 4 4 4 4 4'
     hexagon_size = 13.376
@@ -388,7 +388,7 @@
   []
   [ref_2]
     type = HexagonConcentricCircleAdaptiveBoundaryMeshGenerator
-    inputs = 'Patterned'
+    meshes_to_adapt_to = 'Patterned'
     sides_to_adapt = '2'
     num_sectors_per_side= '4 4 4 4 4 4'
     hexagon_size = 13.376
@@ -397,7 +397,7 @@
   []
   [ref_3]
     type = HexagonConcentricCircleAdaptiveBoundaryMeshGenerator
-    inputs = 'Patterned'
+    meshes_to_adapt_to = 'Patterned'
     sides_to_adapt = '3'
     num_sectors_per_side= '4 4 4 4 4 4'
     hexagon_size = 13.376
@@ -406,7 +406,7 @@
   []
   [ref_4]
     type = HexagonConcentricCircleAdaptiveBoundaryMeshGenerator
-    inputs = 'Patterned'
+    meshes_to_adapt_to = 'Patterned'
     sides_to_adapt = '4'
     num_sectors_per_side= '4 4 4 4 4 4'
     hexagon_size = 13.376
@@ -415,7 +415,7 @@
   []
   [ref_5]
     type = HexagonConcentricCircleAdaptiveBoundaryMeshGenerator
-    inputs = 'Patterned'
+    meshes_to_adapt_to = 'Patterned'
     sides_to_adapt = '5'
     num_sectors_per_side= '4 4 4 4 4 4'
     hexagon_size = 13.376
@@ -426,7 +426,7 @@
   [air_center]
     type = HexagonConcentricCircleAdaptiveBoundaryMeshGenerator
     num_sectors_per_side= '4 4 4 4 4 4'
-    inputs = 'Patterned Patterned Patterned Patterned Patterned Patterned'
+    meshes_to_adapt_to = 'Patterned Patterned Patterned Patterned Patterned Patterned'
     sides_to_adapt = '0 1 2 3 4 5'
     hexagon_size = 13.376
     background_intervals = 2
