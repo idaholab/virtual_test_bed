@@ -1,39 +1,5 @@
-half_pinpitch = 0.0067123105    # m
-fuel_r_o = 0.004318648          # m
-fuel_r_i = 0.00202042           # m
-gap_i = ${fparse fuel_r_i * 0.25}
-clad_r = 0.0054037675           # m
-duct_thickness = 0.0035327      # m
-flat_to_flat = 0.037164         # m
-activefuelheight = 1.06072      # m
-lowerreflectorheight = 0.2      # m
-upperreflectorheight = 0.2      # m
-
-num_coolreg = 8
-num_coolreg_back = 8
-num_layers_fuel = 40
-num_layers_refl = 8
-numside = 6
-
-linearpower = 27466.11572112955 # W/m
-inlet_T = 693.15                # K
-#fuelconductance = 1.882         # W/m/K
-cladconductance = 21.6          # W/m/K
-gapconductance = 0.251          # W/m/K
-
-bid_gapc = 9
-bid_gap = 1
-bid_fl  = 100
-bid_clad = 2
-bid_cool = 4
-bid_duct = 3
-bid_lrfl = 5
-bid_urfl = 6
-bid_lrflc = 7
-bid_urflc = 8
-
-half_asmpitch = ${fparse flat_to_flat / 2 + duct_thickness}
-powerdensity = ${fparse linearpower / (pi * (fuel_r_o * fuel_r_o - fuel_r_i * fuel_r_i))}
+!include mesh_baseparam.i
+!include mesh_HCparam.i
 
 [Mesh]
   # These make the 7 unique pins

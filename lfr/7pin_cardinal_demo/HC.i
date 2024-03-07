@@ -1,38 +1,10 @@
-half_pinpitch = 0.0067123105    # m
-fuel_r_o = 0.004318648          # m
-fuel_r_i = 0.00202042           # m
-gap_i = ${fparse fuel_r_i * 0.25}
-clad_r = 0.0054037675           # m
-duct_thickness = 0.0035327      # m
-flat_to_flat = 0.037164         # m
-activefuelheight = 1.06072      # m
-lowerreflectorheight = 0.2      # m
-upperreflectorheight = 0.2      # m
+!include mesh_baseparam.i
+!include mesh_HCparam.i
+!include common.i
 
-num_coolreg = 8
-num_coolreg_back = 8
-num_layers_fuel = 40
-num_layers_refl = 8
-numside = 6
-
-linearpower = 27466.11572112955 # W/m
-inlet_T = 693.15                # K
-#fuelconductance = 1.882         # W/m/K
 cladconductance = 21.6          # W/m/K
 gapconductance = 0.251          # W/m/K
 
-bid_gapc = 9
-bid_gap = 1
-bid_fl  = 100
-bid_clad = 2
-bid_cool = 4
-bid_duct = 3
-bid_lrfl = 5
-bid_urfl = 6
-bid_lrflc = 7
-bid_urflc = 8
-
-half_asmpitch = ${fparse flat_to_flat / 2 + duct_thickness}
 powerdensity = ${fparse linearpower / (pi * (fuel_r_o * fuel_r_o - fuel_r_i * fuel_r_i))}
 
 [Mesh]
@@ -393,74 +365,6 @@ powerdensity = ${fparse linearpower / (pi * (fuel_r_o * fuel_r_o - fuel_r_i * fu
   []
 []
 
-[MultiApps]
-  [nek]
-    type = TransientMultiApp
-    input_files = 'nek.i'
-    sub_cycling = true
-    execute_on = timestep_end
-  []
-[]
-
-[Transfers]
-  [heat_flux_rod_to_nek]
-    type = MultiAppGeneralFieldNearestLocationTransfer
-    source_variable = heat_flux
-    variable = avg_flux
-    from_boundaries = 'ROD_SIDE'
-    to_boundaries = '3'
-    to_multi_app = nek
-    greedy_search = true
-    search_value_conflicts = false
-  []
-  [heat_flux_duct_to_nek]
-    type = MultiAppGeneralFieldNearestLocationTransfer
-    source_variable = heat_flux
-    variable = avg_flux
-    from_boundaries = 'DUCT_INNERSIDE'
-    to_boundaries = '4'
-    to_multi_app = nek
-    greedy_search = true
-    search_value_conflicts = false
-  []
-  [flux_integral_to_nek]
-    type = MultiAppReporterTransfer
-    to_reporters = 'flux_integral/value'
-    from_reporters = 'flux/flux'
-    to_multi_app = nek
-  []
-  [nek_surf_temp_rod_to_heatconduction]
-    type = MultiAppGeneralFieldNearestLocationTransfer
-    source_variable = temp
-    variable = nek_surf_temp
-    from_boundary = '3'
-    to_boundary = 'ROD_SIDE'
-    from_multi_app = nek
-    search_value_conflicts = false
-  []
-  [nek_surf_temp_duct_to_heatconduction]
-    type = MultiAppGeneralFieldNearestLocationTransfer
-    source_variable = temp
-    variable = nek_surf_temp
-    from_boundary = '4'
-    to_boundary = 'DUCT_INNERSIDE'
-    from_multi_app = nek
-    search_value_conflicts = false
-  []
-  [nek_bulk_temp_to_heatconduction]
-    type = MultiAppGeneralFieldNearestLocationTransfer
-    source_variable = temp
-    variable = nek_bulk_temp
-    from_multi_app = nek
-    search_value_conflicts = false
-  []
-  [synchronization_to_nek]
-    type = MultiAppPostprocessorTransfer
-    to_postprocessor = transfer_in
-    from_postprocessor = synchronization_to_nek
-    to_multi_app = nek
-  []
-[]
 
 [Outputs]
   [console]
