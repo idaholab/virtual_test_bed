@@ -799,7 +799,7 @@
     K = '0 0'
     K_reverse = '2000000 2000000'
     Area = 0.3041
-    Head = 0.0
+    Head = 5e-8
     Desired_mass_flow_rate = 0.0
     Mass_flow_rate_tolerance = 0.000001
     initial_V = 1.783
