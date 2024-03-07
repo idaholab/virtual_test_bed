@@ -315,7 +315,7 @@ corr_factor = '${fparse R_hp_hole / R_clad_o * area_correction / perimeter_corre
 
 [VectorPostprocessors]
   [reader]
-    type = CSVReader
+    type = CSVReaderVectorPostprocessor
     csv_file = 'hp_params.data'
     header = true
     allow_duplicate_execution_on_initial = true

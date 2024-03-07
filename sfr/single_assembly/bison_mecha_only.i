@@ -41,10 +41,11 @@ plenum_height        = 1.
     clad_thickness = ${clad_thickness}
     pellet_outer_radius = ${fparse slug_diameter/2}
     pellet_height = ${fuel_height}
-    clad_top_gap_height = ${plenum_height} # FIXME assumes no Na bond sodium
     clad_gap_width = ${gap}
-    top_bot_clad_height = ${clad_thickness}
     clad_bot_gap_height = 0.
+    bottom_clad_height = ${clad_thickness}
+    top_clad_height = ${clad_thickness}
+    clad_top_gap_height = ${plenum_height} # FIXME assumes no Na bond sodium
     # meshing parameters
     clad_mesh_density = customize
     pellet_mesh_density = customize
@@ -84,11 +85,11 @@ plenum_height        = 1.
 []
 
 
-[Modules]
+[Physics]
    # Modules are prepackaged actions to create objects in other blocks.
-   [TensorMechanics]
+   [SolidMechanics]
       # Solid mechanics
-      [Master]
+      [QuasiStatic]
          add_variables = true
          strain = SMALL # changed from finite for enabling steady solve
          generate_output = 'stress_xx stress_yy  strain_xx strain_yy' #  'hoop_stress vonmises_stress hydrostatic_stress volumetric_strain'
