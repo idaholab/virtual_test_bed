@@ -11,6 +11,8 @@
                        transient:depletion
                        computing_needs:Workstation
                        fiscal_year:2022
+                       sponsor:NEAMS
+                       institution:INL
 
 The input file of `triso_1d.i` is a 1D TRISO model with perfectly spherical geometry. The input files of `triso_2d_aspherical.i` and `triso_2d_ipyc_cracking.i` are 2D RZ-symmetric TRISO models with spherical geometry and IPyC cracking, respectively. The input file of `triso_3d` is a one-eighth 3D TRISO model with perfectly spherical geometry. Interested readers are referred to [!citep](bison_triso_model) for more details about TRISO modeling capability in Bison.
 

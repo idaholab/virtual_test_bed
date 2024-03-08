@@ -10,7 +10,8 @@
                        codes_used:BlueCrab;Griffin;Pronghorn
                        computing_needs:Workstation
                        input_features:multiapps;mixed_restart
-                       sponsor:NRIC
+                       sponsor:NRIC;NEAMS
+                       institution:INL
                        fiscal_year:2022
 
 The [multiphysics core model](pbfhr/steady/griffin_pgh_model.md), which uses Griffin for neutronics and Pronghorn for

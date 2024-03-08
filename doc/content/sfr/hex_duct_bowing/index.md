@@ -8,6 +8,8 @@
                        computing_needs:Workstation
                        open_source:true
                        fiscal_year:2022
+                       sponsor:NEAMS
+                       institution:ANL
 
 [Hexagonal Duct Bowing - Linear Thermal Gradient (IAEA VP1)](/hex_duct_linear.md)
 

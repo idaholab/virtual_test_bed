@@ -13,6 +13,8 @@
                        transient:steady_state;RIA;flow_blockage
                        computing_needs:HPC
                        fiscal_year:2023
+                       institution:ANL
+                       sponsor:NEAMS
 
 ## Mesh files
 

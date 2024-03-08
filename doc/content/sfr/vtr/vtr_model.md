@@ -13,6 +13,8 @@
                        computing_needs:Workstation
                        input_features:multiapps
                        fiscal_year:2022
+                       institution:INL
+                       sponsor:VTR
 
 ## VTR core description
 

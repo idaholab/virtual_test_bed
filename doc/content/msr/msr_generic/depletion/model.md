@@ -11,6 +11,8 @@
                        codes_used:Griffin
                        computing_needs:Workstation
                        fiscal_year:2023
+                       sponsor:ART
+                       institution:INL
 
 The MSR depletion model is an implementation and verification of Griffin's isotope removal capability for two multi-region MSR depletion cases.
 This model consists of two regions. The first is the primary loop, which includes the reactor core, primary heat exchanger, and pump all homogenized into a single region, and the second is the off-gas system.

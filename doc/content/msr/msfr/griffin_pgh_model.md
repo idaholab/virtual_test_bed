@@ -14,6 +14,8 @@
                        open_source:partial
                        computing_needs:Workstation
                        fiscal_year:2021
+                       sponsor:NRIC
+                       institution:INL
 
 The MultiApp system is used to separate the neutronics and the fluid dynamics
 problems. The fluid system is solved by the subapp and it uses the `run_ns.i`
