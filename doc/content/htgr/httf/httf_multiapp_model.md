@@ -13,6 +13,8 @@
                        computing_needs:HPC
                        open_source:partial
                        fiscal_year:2023
+                       sponsor:NEAMS
+                       institution:INL
 
 The MOOSE MultiApp system was used to model the PG-26 transient utilizing 3-D heat conduction within the core and 1-D
 fluid flow for each coolant and bypass channel. Due to radial variations in the HTTF core, the 3-D model allowed for high fidelity

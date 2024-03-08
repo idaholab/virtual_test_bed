@@ -11,6 +11,8 @@
                        transient:steady_state
                        computing_needs:HPC
                        fiscal_year:2023
+                       institution:INL
+                       sponsor:NEAMS;NRIC
 
 Griffin, Pronghorn, and SAM are coupled with a domain overlapping approach.
 The steady-state Griffin-Pronghorn coupled model is described at [Griffin-Pronghorn model](msfr/griffin_pgh_model.md).

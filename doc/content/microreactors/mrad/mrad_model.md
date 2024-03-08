@@ -13,6 +13,8 @@
                        codes_used:BlueCrab;Griffin;BISON;Sockeye
                        computing_needs:HPC
                        fiscal_year:2023
+                       sponsor:NEAMS
+                       institution:ANL
 
 !alert note title=Acknowledgement
 This HP-MR model was built upon earlier work performed under ARPA-E MEITNER project and reported in the journal paper [!citep](matthews2021coupled), and some parts of the inputs are coming from these original models.

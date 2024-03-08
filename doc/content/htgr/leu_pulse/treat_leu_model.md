@@ -11,6 +11,8 @@
                        codes_used:Griffin;MOOSE_HeatTransfer
                        computing_needs:Workstation
                        fiscal_year:2023
+                       sponsor:NRIC
+                       institution:INL
 
 ## Model Description
 

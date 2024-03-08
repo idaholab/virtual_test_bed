@@ -15,6 +15,8 @@
                        codes_used:BlueCrab;Griffin;Pronghorn
                        computing_needs:Workstation
                        fiscal_year:2023
+                       institution:INL
+                       sponsor:NEAMS;NRIC
 
 This model of the MSRE utilizes MOOSE to create a 2D, RZ (cylindrical coordinates) mesh of the MSRE.
 Griffin computes neutronics and resulting normalized power source [!citep](Javi23).

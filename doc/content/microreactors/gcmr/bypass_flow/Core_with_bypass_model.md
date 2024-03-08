@@ -13,6 +13,8 @@
                        computing_needs:Workstation
                        open_source:partial
                        fiscal_year:2023
+                       sponsor:NRIC
+                       institution:INL
 
 ## Mesh file
 

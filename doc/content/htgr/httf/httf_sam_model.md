@@ -11,6 +11,8 @@
                        computing_needs:Workstation
                        transient:steady_state
                        fiscal_year:2024
+                       sponsor:NEAMS
+                       institution:ANL
 
 ## Problem Description
 

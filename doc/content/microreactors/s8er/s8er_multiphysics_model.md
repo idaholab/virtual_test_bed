@@ -14,6 +14,8 @@
                        codes_used:Griffin;BISON;Serpent
                        computing_needs:Workstation
                        fiscal_year:2023
+                       sponsor:NRIC;NEUP
+                       institution:INL
 
 !alert note
 For citing purposes, please cite [!citep](s8er_garcia2022) and [!citep](s8er_naupa2022).

@@ -2,7 +2,7 @@
 
 *Contact: Anshuman Chaube (achaube.at.anl.gov), April Novak (anovak.at.anl.gov), Dillon Shaver (dshaver.at.anl.gov)*
 
-*Model link: [Air Jacket CFD Model](https://github.com/idaholab/virtual_test_bed/tree/devel/microreactors/gcmr/airjacket)*
+*Model link: [Air Jacket CFD Model](https://github.com/idaholab/virtual_test_bed/tree/main/microreactors/gcmr/airjacket)*
 
 !tag name=Gas-Cooled Microreactor Air Jacket pairs=reactor_type:microreactor
                        reactor:GCMR
@@ -12,6 +12,8 @@
                        open_source:true
                        computing_needs:HPC
                        fiscal_year:2023
+                       institution:ANL
+                       sponsor:NRIC
 
 ## High Level Summary of Model
 

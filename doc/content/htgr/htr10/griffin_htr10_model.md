@@ -12,6 +12,8 @@
                        codes_used:Griffin
                        computing_needs:Workstation
                        fiscal_year:2021
+                       sponsor:NRC
+                       institution:INL
 
 The HTR-10 is a small pebble-bed test reactor rated at a thermal power
 of $10$ MWt intended as a steppingstone for the development of PBR

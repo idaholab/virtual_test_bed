@@ -9,6 +9,8 @@
                        codes_used:Pronghorn
                        computing_needs:Workstation
                        fiscal_year:2024
+                       sponsor:ART;NRIC
+                       institution:INL
 
 ## Setting up your environment
 

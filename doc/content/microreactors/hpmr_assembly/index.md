@@ -13,6 +13,8 @@
                        codes_used:DireWolf;BISON;Sockeye
                        computing_needs:Workstation
                        fiscal_year:2024
+                       sponsor:NEAMS
+                       institution:INL
 
 ## Problem Description
 
