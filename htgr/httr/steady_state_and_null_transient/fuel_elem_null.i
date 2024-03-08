@@ -41,9 +41,6 @@ cond = 0.2309 # He at 523K, 2.8MPa
     file = '../mesh/fuel_element/HTTR_fuel_pin_2D_refined_m_5pins_axialref.e'
   []
   uniform_refine = 0 # do not modify if using ThermalContact
-[]
-
-[Problem]
   coord_type = RZ
   rz_coord_axis = X
 []

@@ -542,8 +542,8 @@
   # Assgin block names
   [rename_blocks]
     type = RenameBlockGenerator
-    old_block_id = '     101       100         103          201        200           203            301       303        400            401         10      503      600         601        504          500                501          502         1000           1003'
-    new_block_name = ' mod_ss moderator_quad moderator_tri hp_ss  heat_pipes_quad heat_pipes_tri fuel_quad fuel_tri reflector_tri reflector_quad monolith B4C air_gap_tri air_gap_quad air_gap_quad reflector_tri  reflector_quad reflector_quad reflector_quad reflector_tri'
+    old_block = '     101       100         103          201        200           203            301       303        400            401         10      503      600         601        504          500                501          502         1000           1003'
+    new_block = ' mod_ss moderator_quad moderator_tri hp_ss  heat_pipes_quad heat_pipes_tri fuel_quad fuel_tri reflector_tri reflector_quad monolith B4C air_gap_tri air_gap_quad air_gap_quad reflector_tri  reflector_quad reflector_quad reflector_quad reflector_tri'
     input = reflector_top_tri
   []
   # Assign boundary names
