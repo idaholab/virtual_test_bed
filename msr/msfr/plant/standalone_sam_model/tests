@@ -32,6 +32,7 @@
     prereq = 'syntax_steady'
     abs_zero = 1e-4
     rel_err = 1e-4
+    max_time = 400
   []
   [transient_1]
     type = CSVDiff

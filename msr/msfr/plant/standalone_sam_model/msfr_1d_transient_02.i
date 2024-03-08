@@ -166,8 +166,7 @@
     inputs    = 'pipe1(out)'
     outputs   = 'pipe2(in)'
     initial_P = 1.0e5
-    #Head      = 156010.45
-    Head_fn   = head_func
+    Head   = head_func
   []
 
   [pipe2] # Vertical hot channel from pump to HX

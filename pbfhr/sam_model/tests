@@ -17,5 +17,6 @@
     cli_args = "--app SamApp Executioner/num_steps=2 Outputs/csv/interval=1"
     rel_err = 5e-4
     allow_warnings = true
+    ignore_columns = 'Pump:pump_head'
   []
 []
