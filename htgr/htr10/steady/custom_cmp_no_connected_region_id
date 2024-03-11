@@ -1,0 +1,61 @@
+
+#  *****************************************************************
+#             EXODIFF	(Version: 2.90) Modified: 2018-02-15
+#             Authors:  Richard Drake, rrdrake@sandia.gov           
+#                       Greg Sjaardema, gdsjaar@sandia.gov          
+#             Run on    2024/03/11   17:36:03 CDT
+#  *****************************************************************
+
+#  FILE 1: /Users/wangy2/projects/virtual_test_bed/htgr/htr10/steady/gold/out-HTR-10-full-Diff-SPH-ARO.e
+#   Title: out-HTR-10-full-Diff-SPH-ARO.e
+#          Dim = 3, Blocks = 24, Nodes = 21543, Elements = 21840, Nodesets = 3, Sidesets = 3
+#          Vars: Global = 9, Nodal = 12, Element = 4, Nodeset = 0, Sideset = 0, Times = 2
+
+
+# ==============================================================
+#  NOTE: All node and element ids are reported as global ids.
+
+# NOTES:  - The min/max values are reporting the min/max in absolute value.
+#         - Time values (t) are 1-offset time step numbers.
+#         - Element block numbers are the block ids.
+#         - Node(n) and element(e) numbers are 1-offset.
+
+COORDINATES absolute 1.e-6    # min separation not calculated
+
+TIME STEPS relative 1.e-6 floor 0.0     # min:               0 @ t1 max:               1 @ t2
+
+GLOBAL VARIABLES relative 1.e-6 floor 0.0
+	RR_Absorption     # min:               0 @ t1	max:       57.921569 @ t2
+	RR_Generation     # min:               0 @ t1	max:       72.045781 @ t2
+	RR_Leakage        # min:               0 @ t1	max:       6.3595828 @ t2
+	absorption        # min:               0 @ t1	max:   6.0448831e+10 @ t2
+	eigenvalue        # min:               1 @ t1	max:       1.1234735 @ t2
+	integrated_power  # min:               1 @ t1	max:               1 @ t2
+	nufission         # min:               0 @ t1	max:   7.5189318e+10 @ t2
+	power             # min:               0 @ t1	max:      0.99974128 @ t2
+	power_scaling     # min:   1.0436325e+09 @ t2	max:   1.1659231e+09 @ t1
+
+NODAL VARIABLES relative 1.e-6 floor 0.0
+	AbsorptionRR  # min:               0 @ t1,n1	max:       12457.065 @ t2,n8589
+	NuFissionRR   # min:               0 @ t1,n1	max:       21408.716 @ t2,n8589
+	sflux_g0      # min:   2.9553596e-12 @ t2,n5005	max:    0.0017944351 @ t2,n8589
+	sflux_g1      # min:    3.236299e-12 @ t2,n5509	max:    0.0014941171 @ t2,n8589
+	sflux_g2      # min:   2.1313562e-12 @ t2,n5509	max:    0.0013032235 @ t2,n8589
+	sflux_g3      # min:    2.160633e-12 @ t2,n5509	max:    0.0010364143 @ t2,n8589
+	sflux_g4      # min:   4.3870725e-12 @ t2,n5509	max:   0.00092161185 @ t2,n8589
+	sflux_g5      # min:   4.1383806e-11 @ t2,n5401	max:   0.00046496864 @ t2,n8589
+	sflux_g6      # min:    2.779615e-09 @ t2,n5071	max:    0.0013135066 @ t2,n8589
+	sflux_g7      # min:   3.3739848e-09 @ t2,n5071	max:   0.00091576518 @ t2,n8589
+	sflux_g8      # min:   4.8440703e-09 @ t2,n5401	max:   0.00099776356 @ t2,n13303
+	sflux_g9      # min:   2.7462449e-09 @ t2,n5068	max:   0.00044176285 @ t1,n1
+
+ELEMENT VARIABLES relative 1.e-6 floor 0.0
+	equivalence_id  # min:             112 @ t1,b10,e106	max:            1211 @ t1,b46,e21801
+	eqv_id          # min:             112 @ t1,b10,e106	max:            1211 @ t1,b46,e21801
+	material_id     # min:            5001 @ t1,b10,e66	max:           14079 @ t1,b31,e16918
+	power_density   # min:               0 @ t1,b11,e701	max:   3.0121112e-07 @ t1,b21,e8044
+
+# No NODESET VARIABLES
+
+# No SIDESET VARIABLES
+
