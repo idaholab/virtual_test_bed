@@ -18,6 +18,7 @@
     exodiff = out_HTR-10_critical.e
     prereq = 'griffin_syntax_1'
     executable_pattern = 'griffin*|blue_crab*'
+    custom_cmp = custom_cmp_no_connected_region_id
   []
   [griffin_regression_2]
     type = Exodiff
@@ -26,5 +27,6 @@
     prereq = 'griffin_syntax_2'
     executable_pattern = 'griffin*|blue_crab*'
     max_time = 400
+    custom_cmp = custom_cmp_no_connected_region_id
   []
 []
