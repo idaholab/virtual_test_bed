@@ -186,6 +186,17 @@ Nicolas Martin, Ryan Stewart and Sam Bays, "A multiphysics model of the versatil
 Hu, G., Zhang, G., & Hu, R., "Reactivity Feedback Modeling in SAM", Argonne National Laboratory, ANL/NSE-19/1150747 (2019)
 ```
 
+- Advanced Burner Test Reactor (ABTR) cross section generation and full-core model
+
+```
+@techreport{lee2023improved,
+            author = {Lee, C., Jung, Y.S., Kumar, S., Choi, N., Hanophy, J., & Wang, Y.},
+            year = 2023,
+            title = {{Improved Fast Reactor Capability of Griffin in FY23.}}
+           }
+Lee, C., Jung, Y.S., Kumar, S., Choi, N., Hanophy, J., & Wang, Y., "Improved Fast Reactor Capability of Griffin in FY23", Idaho National Laboratory; Argonne National Laboratory, INL/RPT-23-74897; ANL/NSE-23/73 (2023)
+```
+
 - Sodium Fast Reactor (SFR) duct bowing IAEA benchmarks VP1 and VP3A
 
 ```
