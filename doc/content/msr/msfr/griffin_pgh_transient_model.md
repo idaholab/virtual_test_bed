@@ -13,6 +13,8 @@
                        codes_used:BlueCrab;Griffin;Pronghorn;MOOSE_NavierStokes
                        computing_needs:Workstation
                        fiscal_year:2021
+                       sponsor:NRIC
+                       institution:INL
 
 In addition to the steady-state MSFR model, the Virtual Test Bed also contains
 an example transient model. This model is intended to represent a partial

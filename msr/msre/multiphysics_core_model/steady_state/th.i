@@ -528,7 +528,7 @@ solid_blocks = 'core core_barrel'
 # ==============================================================================
 # MATERIALS
 # ==============================================================================
-[Materials]
+[FunctorMaterials]
 
   # Setting up material porosities at fluid blocks
   [porosity]

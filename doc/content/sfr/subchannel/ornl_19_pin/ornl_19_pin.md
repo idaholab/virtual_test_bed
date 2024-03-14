@@ -11,6 +11,8 @@
                        computing_needs:Workstation
                        transient:steady_state
                        fiscal_year:2023
+                       sponsor:NEAMS
+                       institution:INL
 
 ## Benchmark description
 

@@ -14,6 +14,8 @@
                        input_features:multiapps;reactor_meshing
                        computing_needs:HPC
                        fiscal_year:2022
+                       sponsor:NEAMS
+                       institution:ANL
 
 In this tutorial, we couple OpenMC Monte Carlo transport to the MOOSE heat transfer module
 and the MOOSE [!ac](THM), a set of 1-D systems-level thermal-hydraulics kernels in MOOSE

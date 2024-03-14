@@ -10,6 +10,8 @@
                        codes_used:NekRS
                        computing_needs:HPC
                        fiscal_year:2023
+                       sponsor:NEAMS
+                       institution:ANL
 
 ## Model Overview
 
@@ -31,7 +33,7 @@ More detailed geometric information can be found in the ORNL report by [!cite](K
        id=lp_cad
        caption=Geometric model of MSRE lower plenum: (a) the bottom view with MSRE lower head surface hidden to show internal structures such as anti-swirl fans, support grid, etc.; (b) the top view to show the annulus inlet from downcomer and outlet channels into the MSRE core region; (c) a slice view through MSRE lower plenum.
 
-The discretization and numerical models used by the CFD flow solver Nek5000/RS can be found on [MSFR CFD documentation webpage](https://mooseframework.inl.gov/virtual_test_bed/msr/msfr/nek5000_cfd_model.html). 
+The discretization and numerical models used by the CFD flow solver Nek5000/RS can be found on [MSFR CFD documentation webpage](https://mooseframework.inl.gov/virtual_test_bed/msr/msfr/nek5000_cfd_model.html).
 
 ## CFD Case Setups
 
@@ -70,8 +72,8 @@ Regarding the nekRS case files, there are four basic files:
 
 There are also supportive scripts in the case folder. +linearize_bad_elements.f+ and +BAD_ELEMENTS+ are used to fix the mesh cells that potentially have negative Jacobian values from the quadratic tet-to-hex conversion.
 
-Now let's first explore the key case file +msre.usr+. The sideset ids contained in the mesh file are  translated into nekRS boundary condition information in +usrdat2+ block. 
-It is preferred to conduct nekRS CFD simulations in a non-dimensional manner. Thus, we also did the geometry rescaling here such that the reference length, which is the donwcomer annulus thickness, is 1.0. 
+Now let's first explore the key case file +msre.usr+. The sideset ids contained in the mesh file are  translated into nekRS boundary condition information in +usrdat2+ block.
+It is preferred to conduct nekRS CFD simulations in a non-dimensional manner. Thus, we also did the geometry rescaling here such that the reference length, which is the donwcomer annulus thickness, is 1.0.
 
 !listing msr/msre/lp_cfd/msre.usr start=subroutine usrdat2() end=subroutine usrdat3 include-end=False
 
@@ -87,14 +89,14 @@ subCyclingSteps = 2
 
 ```
 
-To maintain a balance between numerical stability and simulation efficiency, a variable time step sizing is implemented. The simulation utilizes an Operator-Integration-Factor Splitting (OIFS) scheme to mitigate the CFL restrictions arising from the small-size mesh cells resulting that are created by unstructured meshing and tet-to-hex conversion. A minimum time step of $2.0e-5$ is specified with the target CFL number at around 3.0. 
+To maintain a balance between numerical stability and simulation efficiency, a variable time step sizing is implemented. The simulation utilizes an Operator-Integration-Factor Splitting (OIFS) scheme to mitigate the CFL restrictions arising from the small-size mesh cells resulting that are created by unstructured meshing and tet-to-hex conversion. A minimum time step of $2.0e-5$ is specified with the target CFL number at around 3.0.
 
 ```language=bash
 dt = targetCFL=3 + initial=2e-5
 
 ```
 
-A constant inflow velocity is given to the downcomer annulus surface. 
+A constant inflow velocity is given to the downcomer annulus surface.
 
 !listing msr/msre/lp_cfd/msre.oudf start=void velocityDirichletConditions(bcData *bc) end=void pressureDirichletConditions(bcData *bc) include-end=False
 
@@ -113,7 +115,7 @@ Time averaged statitics is collected using the following lines in +msre.udf+
 
 ```
 
-## Results 
+## Results
 
 [lp_vel01] provides an instantaneous snapshot of the velocity distribution in the lower plenum. The flow of molten salt into the lower plenum occurs through an annulus downcomer in the peripheral region. Upon entry, the salt comes into contact with anti-swirl fans that are installed on the MSRE lower head. These 48 fans are designed to effectively eliminate most of the circumferential velocity components that develop in the downcomer. It's important to note that in the bulk region of the lower plenum, the velocity magnitude is quite low. This suggests that using a Reynolds-Averaged Navier-Stokes (RANS) model may not be necessary for modeling this flow behavior. Above the anti-swirl fans, there is the main support grid, which bears the weight of the MSRE core. Some flow recirculations are observed as the salt flows past the bottom tips of the support grid. Moving further above the main support grid, there are two layers of horizontal plates that serve to secure the graphite stringers in place. These plates often have small gaps, which further restrict the lateral movement of the molten salt. Due to the presence of anti-swirl fans and other structures in the lower plenum, the circumferential fluid motion is completely eliminated by the time the salt reaches the outlet channels. Regarding the vertical velocity component, it's noteworthy that the central region experiences the highest upward flow.
 

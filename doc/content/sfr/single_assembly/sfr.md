@@ -12,6 +12,8 @@
                        codes_used:BlueCrab;Griffin;BISON;SAM
                        computing_needs:Workstation
                        fiscal_year:2021
+                       institution:INL
+                       sponsor:VTR
 
 ## SFR model description
 

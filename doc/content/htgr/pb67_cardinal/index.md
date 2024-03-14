@@ -13,6 +13,8 @@
                        gpu_enabled:true
                        open_source:true
                        fiscal_year:2023
+                       institution:PSU;ANL
+                       sponsor:NEAMS
 
 In this tutorial we are going to set up and simulate a simple [!ac](CHT) case using a helium (Pr=0.71) cooled 67-pebble bed.
 This tutorial was developed from an example case provided with NekRS and couples to MOOSE's [!ac](CHT) module using Cardinal as a wrapper.

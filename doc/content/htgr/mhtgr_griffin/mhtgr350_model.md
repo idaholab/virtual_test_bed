@@ -13,6 +13,8 @@
                        codes_used:Griffin
                        computing_needs:Workstation
                        fiscal_year:2023
+                       institution:INL
+                       sponsor:ART
 
 The MHTGR-350 is a benchmark problem organized by the OECD/NEA ([!cite](mhtgr_benchmark)).
 The scope of the benchmark is twofold: 1) to establish a well-defined problem, based on a

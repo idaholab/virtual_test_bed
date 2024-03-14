@@ -11,6 +11,8 @@
                        codes_used:Pronghorn_subchannel
                        computing_needs:Workstation
                        fiscal_year:2024
+                       sponsor:NEAMS
+                       institution:INL
 
 Information on the THORS facility and experiments can be found in the following sources: [!citep](fontana1973effect),[!citep](han1977blockages),
 [!citep](jeong2005modeling). The Pronghorn-SC model's geometry and subchannel/rod index notation is shown in [fig:hex_index].
