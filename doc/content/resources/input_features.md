@@ -78,9 +78,11 @@ the input file, but generally reside in the same folder in the repository.
 
 - Heat Pipe Micro-Reactor Assembly [documentation](hpmr_assembly/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/microreactors/hpmr_assembly)
 
-
 - Molten Salt Reactor Experiment RZ multiphysics steady state and transient [documentation](msr/msre/multiphysics_rz_model/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/devel/msr/msre/multiphysics_core_model)
 
+- Micro Reactor Drum Rotation Model [documentation](microreactors/drum_rotation/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/devel/microreactors/drum_rotation)
+
+- Thermochimica Steady-State Model of Molten Salt Fast Reactor Core [documentation](msr/msfr/thermo_model) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/devel/msr/msfr/thermochemistry)
 
 ### Multiphysics and multiscale simulations
 
@@ -127,6 +129,8 @@ specified. The MRAD and PBMR-400 models listed below are an example of this.
 ### Restarting from Exodus simulation files
 
 - Molten Salt Fast Reactor core multiphysics [documentation](msr/msfr/griffin_pgh_model.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/msr/msfr/steady)
+
+- Thermochimica Steady-State Model of Molten Salt Fast Reactor Core [documentation](msr/msfr/thermo_model) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/devel/msr/msfr/thermochemistry)
 
 
 ### Mixed Exodus/Checkpoint Multiapp restart
@@ -177,6 +181,8 @@ specified. The MRAD and PBMR-400 models listed below are an example of this.
 - Heat Pipe Micro-Reactor Assembly [documentation](hpmr_assembly/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/microreactors/hpmr_assembly)
 
 - Molten Salt Reactor Experiment RZ multiphysics core model [documentation](msr/msre/multiphysics_rz_model/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/msr/msre/multiphysics_core_model/steady_state)
+
+- Thermochimica Steady-State Model of Molten Salt Fast Reactor Core [documentation](msr/msfr/thermo_model) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/devel/msr/msfr/thermochemistry)
 
 ### HPC required
 

@@ -65,11 +65,11 @@ help creating it.
 
 - Lotus Molten Chloride Reactor Steady State Model [documentation](msr/lotus/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/msr/lotus/steady_state)
 
-
 - Heat Pipe Microreactor with Hydrogen Redistribution (HPMR_H2) Steady State Model [documentation](microreactors/hpmr_h2/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/devel/microreactors/hpmr_h2/steady)
 
 - Molten Salt Reactor Experiment RZ multiphysics core model [documentation](msr/msre/multiphysics_rz_model/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/msr/msre/multiphysics_core_model/steady_state)
 
+- Thermochimica Steady-State Model of Molten Salt Fast Reactor Core [documentation](msr/msfr/thermo_model) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/devel/msr/msfr/thermochemistry)
 
 ### Primary loop analysis
 

@@ -28,3 +28,6 @@
 [submodule "apps/moose"]
 	path = apps/moose
 	url = https://github.com/idaholab/moose.git
+[submodule "apps/ci/mstdb"]
+	path = apps/ci/mstdb
+	url = git@code.ornl.gov:neams/mstdb.git

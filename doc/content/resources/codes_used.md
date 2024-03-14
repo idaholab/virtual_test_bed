@@ -10,9 +10,9 @@ The codes required to run these inputs are all open-source. Please refer to the 
 - Reflector bypass flow in the PB-FHR [documentation](pbfhr/reflector.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/pbfhr/reflector)\\
 - Molten Salt Fast Reactor core CFD [documentation](msr/msfr/nek5000_cfd_model.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/msr/msfr/core_cfd)\\
 - HTGR assembly multiphysics simulation [documentation](htgr/assembly/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/assembly)\\
-- Sodium Fast Reactor duct bowing [documentation](sfr/hex_duct_bowing/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/sfr/hex_duct_bowing)
-- HTGR pebble bed Large Eddy Simulation with conjugate heat transfer [documentation](htgr/pb67_cardinal/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/pb67_cardinal)
-
+- Sodium Fast Reactor duct bowing [documentation](sfr/hex_duct_bowing/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/sfr/hex_duct_bowing)\\
+- HTGR pebble bed Large Eddy Simulation with conjugate heat transfer [documentation](htgr/pb67_cardinal/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/devel/htgr/pb67_cardinal)\\
+- Thermochimica Steady-State Model of Molten Salt Fast Reactor Core [documentation](msr/msfr/thermo_model) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/devel/msr/msfr/thermochemistry)
 
 !alert note title=Partially Open-Source
 Some of the codes required to run these inputs are open-source. You will not be able to run the full multiphysics simulation, but
@@ -174,6 +174,11 @@ obtained through INL's [NCRC](https://inl.gov/ncrc/).
 - Versatile Test Reactor core model [documentation](sfr/vtr/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/sfr/vtr)
 
 - Sodium Fast Reactor duct bowing [documentation](sfr/hex_duct_bowing/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/sfr/hex_duct_bowing)
+
+
+### Chemical Reactions module - (open-source)
+
+- Thermochimica Steady-State Model of Molten Salt Fast Reactor Core [documentation](msr/msfr/thermo_model) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/devel/msr/msfr/thermochemistry)
 
 
 ### Heat conduction module (open-source)
