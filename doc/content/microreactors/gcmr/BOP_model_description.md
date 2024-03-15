@@ -10,6 +10,8 @@
                        open_source:partial
                        computing_needs:Workstation
                        fiscal_year:2023
+                       institution:INL
+                       sponsor:NRIC
 
 The startup transient and load follow input file have the same structure and only differ by their initial condition and control system governing the transient. The components are the same.
 

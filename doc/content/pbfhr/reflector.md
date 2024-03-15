@@ -13,6 +13,8 @@
                        computing_needs:HPC
                        gpu_enabled:true
                        fiscal_year:2021
+                       sponsor:NRIC
+                       institution:ANL
 
 !alert note
 The meshes for this model are hosted on LFS. Please refer to [LFS instructions](resources/how_to_use_vtb.md#lfs)

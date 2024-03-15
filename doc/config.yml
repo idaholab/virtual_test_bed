@@ -44,3 +44,5 @@ Extensions:
             - computing_needs
             - gpu_enabled
             - fiscal_year
+            - sponsor
+            - institution

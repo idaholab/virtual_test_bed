@@ -14,6 +14,8 @@
                        computing_needs:Workstation
                        open_source:partial
                        fiscal_year:2024
+                       sponsor:NEAMS
+                       institution:INL
 
 ## Reactor Description
 

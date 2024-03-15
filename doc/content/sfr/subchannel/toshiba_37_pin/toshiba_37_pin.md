@@ -11,6 +11,8 @@
                        codes_used:Pronghorn_subchannel
                        computing_needs:Workstation
                        fiscal_year:2023
+                       sponsor:NEAMS
+                       institution:INL
 
 ## Benchmark Description
 

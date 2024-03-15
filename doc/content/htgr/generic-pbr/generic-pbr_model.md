@@ -13,6 +13,8 @@
                        codes_used:SAM
                        computing_needs:Workstation
                        fiscal_year:2021
+                       sponsor:NEAMS
+                       institution:ANL
 
 The input file (pbr.i) is a model for the generic 200 MW pebble bed reactor
 developed using SAM [!citep](Hu2021). The model focuses only on the core of the

@@ -12,6 +12,8 @@
                        codes_used:SAM
                        computing_needs:Workstation
                        fiscal_year:2021
+                       sponsor:NEAMS
+                       institution:ANL
 
 The SAM [!citep](Hu2017) input files (`PBFHR-SS.i` for steady state and
 `PBFHR-TR.i` for loss of flow transient) were built to model the +Mark 1+

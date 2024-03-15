@@ -12,6 +12,8 @@
                        codes_used:SAM
                        computing_needs:Workstation
                        fiscal_year:2022
+                       sponsor:NEAMS
+                       institution:ANL
 
 The input file (MHTGR.i) is a model for the General Atomic’s 600-MWt Modular
 High Temperature Gas-Cooled Reactor. Interested readers are referred

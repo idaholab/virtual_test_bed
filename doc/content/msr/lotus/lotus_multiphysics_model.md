@@ -16,6 +16,8 @@
                        open_source:partial
                        computing_needs:HPC
                        fiscal_year:2024
+                       institution:INL
+                       sponsor:NEAMS
 
 This multiphysics problem is solved using the MultiApp system to separate the neutronics, thermal hydraulics, and delayed neutron precursors group problems. The corresponding computational domains for the neutronics and thermal hydraulics with delayed neutron precursor group distributions can bee seen in [LMCR_pgh_geometry] and [LMCR_pgh_thermal_hydraulics] respectively. Notice, this is a multiphysics problem, but not a multiscale problem since we are solving the problems at the same geometrical and time resolution. The only difference between the meshes, is that the thermal-hydraulic domain has an extra mixing plate to distribute the flow within the core.
 

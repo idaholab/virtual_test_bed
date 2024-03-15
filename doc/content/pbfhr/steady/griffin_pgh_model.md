@@ -13,6 +13,8 @@
                        codes_used:BlueCrab;Griffin;Pronghorn
                        computing_needs:Workstation
                        fiscal_year:2020
+                       sponsor:NRIC
+                       institution:INL
 
 These input files may be used to perform a coupled multiphysics steady state simulation of the
 Mk1-FHR. Each physics is solved by the relevant MOOSE application: the [neutronics](steady/griffin.md) by Griffin, the

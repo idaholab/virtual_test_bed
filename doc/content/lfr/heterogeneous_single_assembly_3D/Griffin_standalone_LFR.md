@@ -12,6 +12,8 @@
                        input_features:reactor_meshing
                        cross_sections:MC2
                        fiscal_year:2023
+                       institution:ANL
+                       sponsor:NEAMS
 
 This VTB model provides a high fidelity neutronics model for a representative example of a lead-cooled fast reactor with an annular MOX (UPuO) fuel. Its design is based on an early iteration of an LFR-prototype assembly provided by Westinghouse Electric Company, LLC [!citep](WECLFR). The original purpose of this model is to characterize the impact of various sources of uncertainties, such as theoretical and experimental uncertainties, instrumentation uncertainties, manufacturing tolerances, correlation uncertainties, and the method and simulation uncertainties, on peak cladding, fuel and coolant temperatures in the system. For this purpose, high fidelity neutronics (fine mesh heterogeneous transport - Griffin) and thermalhydraulics (computational fluid dynamics - NekRS) calculations were performed to compute hot channel factors (HCFs) [!citep](HCFReport). A 3D heterogeneous single assembly steady-state problem was used since a full core model is seldom used for the HCF evaluation. In this VTB model, only the neutronics standlone model is explained.
 

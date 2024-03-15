@@ -11,6 +11,8 @@
                        transient:depletion
                        computing_needs:Workstation
                        fiscal_year:2022
+                       sponsor:NEAMS
+                       institution:INL
 
 The input file (triso_1d.i) is a 1D TRISO model. Interested readers are referred
 to [!citep](bison_triso_model) for more details about TRISO modeling capability in Bison.
