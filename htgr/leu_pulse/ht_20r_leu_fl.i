@@ -216,7 +216,7 @@
     coupled_variables = 'temperature' # Variable
     property_name = 'thermal_conductivity' # Property name
     expression = 'lt := temperature / 1000.0; fresh := (100.0 / (6.548 + 23.533 * lt) + 6400.0 * exp(-16.35 / lt) / pow(lt, 5.0/2.0)) / 100.0; kap1d := (1.09 / pow(beta, 3.265) + 0.0643 * sqrt(temperature) / sqrt(beta)) * atan(1.0 / (1.09 / pow(beta, 3.265) + sqrt(temperature) * 0.0643 / sqrt(beta))); kap1p := 1.0 + 0.019 * beta / ((3.0 - 0.019 * beta) * (1.0 + exp(-(temperature - 1200.0) / 100.0))); kap2p := (1.0 - p_vol) / (1.0 + (sigma - 1.0) * p_vol); kap4r := 1.0 - 0.2 / (1.0 + exp((temperature - 900.0) / 80.0)); fresh * kap1d * kap1p * kap2p * kap3x * kap4r'
-      # Divided fresh by 100 to get it into cm
+    # Divided fresh by 100 to get it into cm
   []
   [grain_rho_cp]
     type = ParsedMaterial
@@ -269,7 +269,7 @@
 []
 
 [Outputs]
-  interval = 1
+  time_step_interval = 1
   csv = true
   exodus = true
   [console]
