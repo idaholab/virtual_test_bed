@@ -1,11 +1,35 @@
 [Tests]
-  [triso_bison]
+  [triso_1d_bison]
     type = CSVDiff
     input = 'triso_1d.i'
     csvdiff = 'triso_1d_out.csv'
     executable_pattern = 'bison*'
-    # see #114 on vtb
-    rel_err = '1e-3'
+    rel_err = '1e-6'
+  []
+  [triso_2d_aspherical_bison]
+    type = CSVDiff
+    input = 'triso_2d_aspherical.i'
+    csvdiff = 'triso_2d_aspherical_out.csv'
+    executable_pattern = 'bison*'
+    cli_args = 'Executioner/num_steps=1'
+    rel_err = '1e-6'
+  []
+  [triso_2d_ipyc_cracking_bison]
+    type = CSVDiff
+    input = 'triso_2d_ipyc_cracking.i'
+    csvdiff = 'triso_2d_ipyc_cracking_out.csv'
+    executable_pattern = 'bison*'
+    cli_args = 'Executioner/num_steps=1'
+    rel_err = '1e-6'
+  []
+  [triso_3d_bison]
+    type = CSVDiff
+    input = 'triso_3d.i'
+    csvdiff = 'triso_3d_out.csv'
+    executable_pattern = 'bison*'
+    cli_args = 'Executioner/num_steps=1'
+    rel_err = '1e-6'
+    method = 'opt'
   []
   [triso_bluecrab]
     type = CSVDiff
@@ -13,7 +37,6 @@
     csvdiff = 'triso_1d_out.csv'
     cli_args = '--app BisonApp'
     executable_pattern = 'blue_crab*'
-    # see #114 on vtb
-    rel_err = 1e-3
+    rel_err = '1e-6'
   []
 []
