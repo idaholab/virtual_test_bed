@@ -51,47 +51,47 @@ non_fuel_blocks = '10 11 12 13 14 15 18 22 32 40 41 42 43 44 45 46 50 52'
 # GEOMETRY AND MESH
 # ==============================================================================
 [Mesh]
-  [./fmg]
+  [fmg]
     type = FileMeshGenerator
     file = '../data/mesh/htr-10-full-a-rev3.e'
     exodus_extra_element_integers = 'eqv_id material_id'
-  [../]
-  [./eqvid]
+  []
+  [eqvid]
     type = ExtraElementIDCopyGenerator
     input = fmg
     source_extra_element_id = eqv_id
     target_extra_element_ids = 'equivalence_id'
-  [../]
+  []
   uniform_refine = 0
   # These modifiers are used to remove the boronated bricks that surround the core
   # from the original mesh
-  [./delete_bricks]
+  [delete_bricks]
     type = BlockDeletionGenerator
     input = eqvid
     block = '3 4 5'
-  [../]
-  [./sideset_side]
+  []
+  [sideset_side]
     type = ParsedGenerateSideset
     input = delete_bricks
     combinatorial_geometry = 'sqrt(x*x+y*y) > 165.0'
     new_sideset_name = 1
-  [../]
-  [./sideset_bot]
+  []
+  [sideset_bot]
     type = ParsedGenerateSideset
     input = sideset_side
     combinatorial_geometry = 'z < 41'
     included_subdomains = '10 11 12'
     normal = '0 0 -1'
     new_sideset_name = 2
-  [../]
-  [./sideset_top]
+  []
+  [sideset_top]
     type = ParsedGenerateSideset
     input = sideset_bot
     combinatorial_geometry = 'z > 490'
     included_subdomains = '52 45 46'
     normal = '0 0 1'
     new_sideset_name = 3
-  [../]
+  []
 []
 
 [Equivalence]
@@ -116,20 +116,20 @@ non_fuel_blocks = '10 11 12 13 14 15 18 22 32 40 41 42 43 44 45 46 50 52'
 # AUXVARIABLES AND AUXKERNELS
 # ==============================================================================
 [AuxVariables]
-  [./AbsorptionRR]
+  [AbsorptionRR]
     order = FIRST
     family = MONOMIAL
     block = ${absorption_blocks}
-  [../]
-  [./NuFissionRR]
+  []
+  [NuFissionRR]
     order = FIRST
     family = MONOMIAL
     block = ${fuel_blocks}
-  [../]
+  []
 []
 
 [AuxKernels]
-  [./AbsorptionRR]
+  [AbsorptionRR]
     type = VectorReactionRate
     block = ${absorption_blocks}
     variable = AbsorptionRR
@@ -137,8 +137,8 @@ non_fuel_blocks = '10 11 12 13 14 15 18 22 32 40 41 42 43 44 45 46 50 52'
     scale_factor = power_scaling
     dummies = _unscaled_total_power
     execute_on = timestep_end
-  [../]
-  [./nuFissionRR]
+  []
+  [nuFissionRR]
     type = VectorReactionRate
     block = ${fuel_blocks}
     variable = NuFissionRR
@@ -146,7 +146,7 @@ non_fuel_blocks = '10 11 12 13 14 15 18 22 32 40 41 42 43 44 45 46 50 52'
     scale_factor = power_scaling
     dummies = _unscaled_total_power
     execute_on = timestep_end
-  [../]
+  []
 []
 
 # ==============================================================================
@@ -162,14 +162,14 @@ non_fuel_blocks = '10 11 12 13 14 15 18 22 32 40 41 42 43 44 45 46 50 52'
 # MATERIALS AND USER OBJECTS
 # ==============================================================================
 [Materials]
-  [./fissile]
+  [fissile]
     type = MixedMatIDNeutronicsMaterial
     block = ${fuel_blocks}
-  [../]
-  [./non_fissile]
+  []
+  [non_fissile]
     type = MixedMatIDNeutronicsMaterial
     block = ${non_fuel_blocks}
-  [../]
+  []
 []
 
 [PowerDensity]
@@ -196,14 +196,14 @@ non_fuel_blocks = '10 11 12 13 14 15 18 22 32 40 41 42 43 44 45 46 50 52'
   G = 10
   VacuumBoundary = '1 2 3'
 
-  [./ts]
-   scheme = CFEM-Diffusion
-   n_delay_groups = 0
-   family = LAGRANGE
-   order = FIRST
-   assemble_scattering_jacobian = true
-   assemble_fission_jacobian = true
-  [../]
+  [ts]
+    scheme = CFEM-Diffusion
+    n_delay_groups = 0
+    family = LAGRANGE
+    order = FIRST
+    assemble_scattering_jacobian = true
+    assemble_fission_jacobian = true
+  []
 []
 
 # ==============================================================================
@@ -240,44 +240,44 @@ non_fuel_blocks = '10 11 12 13 14 15 18 22 32 40 41 42 43 44 45 46 50 52'
 # POSTPROCESSORS DEBUG AND OUTPUTS
 # ==============================================================================
 [Postprocessors]
-  [./power]
+  [power]
     type = ElementIntegralVariablePostprocessor
     variable = power_density
     block = ${fuel_blocks}
-  [../]
-  [./nufission]
+  []
+  [nufission]
     type = ElementIntegralVariablePostprocessor
     variable = NuFissionRR
     block = ${fuel_blocks}
-  [../]
-  [./absorption]
+  []
+  [absorption]
     type = ElementIntegralVariablePostprocessor
     variable = AbsorptionRR
     block = ${absorption_blocks}
-  [../]
-  [./RR_Generation]
+  []
+  [RR_Generation]
     type = FluxRxnIntegral
     cross_section = nu_sigma_fission
     block = ${fuel_blocks}
-  [../]
-  [./RR_Absorption]
+  []
+  [RR_Absorption]
     type = FluxRxnIntegral
     cross_section = sigma_absorption
     block = ${absorption_blocks}
-  [../]
-  [./RR_Leakage]
+  []
+  [RR_Leakage]
     type = PartialSurfaceCurrent
     boundary = '1 2 3'
     transport_system = ts
-   [../]
+  []
 []
 
 [Outputs]
- file_base = out-HTR-10-full-Diff-SPH-ARO
- interval = 1
- exodus = true
- csv = true
- [./console]
-   type = Console
- [../]
+  file_base = out-HTR-10-full-Diff-SPH-ARO
+  time_step_interval = 1
+  exodus = true
+  csv = true
+  [console]
+    type = Console
+  []
 []

@@ -1,4 +1,3 @@
-
 # Modeling the UC Berkerkey Mk-1 pebble bed FHR conceptual design
 # Includes DRACS loop for emergency heat removal
 # Steady state and transient simulation (loss of forced flow with SCRAM)
@@ -7,20 +6,19 @@
 # If using or referring to this model, please cite as explained on
 # https://mooseframework.inl.gov/virtual_test_bed/citing.html
 
-[GlobalParams]                  # global parameters initialization
+[GlobalParams] # global parameters initialization
   global_init_P = 1.0e5
   global_init_V = 1.796
   global_init_T = 874
   Tsolid_sf = 1e-3
 
-  scaling_factor_var = '1 1e-2 1e-6'  # fluid model solver parameters
+  scaling_factor_var = '1 1e-2 1e-6' # fluid model solver parameters
   p_order = 2
 []
 
-
 [EOS]
   [eos]
-    type = SaltEquationOfState     # use built-in equation of state of Flibe
+    type = SaltEquationOfState # use built-in equation of state of Flibe
     salt_type = Flibe
   []
 []
@@ -48,12 +46,11 @@
 
 [Functions]
 
-  [Paxial]                                 # used to describe axial power shape
-    type = PiecewiseConstant                 # function type
-    axis = x                                 # x-co-ordinate is used for x
+  [Paxial] # used to describe axial power shape
+    type = PiecewiseConstant # function type
+    axis = x # x-co-ordinate is used for x
     direction = right
-    xy_data =
-  '0.176153846153846 0.0939862040
+    xy_data = '0.176153846153846 0.0939862040
   0.352307692307692 0.2648701900
   0.528461538461539 0.4186657800
   0.704615384615385 0.5895497920
@@ -99,11 +96,11 @@
 
   [reactor]
     type = ReactorPower
-    initial_power = 2.36e8    # Initial total reactor power
-    power_history = shutdownPower          # decay heat profile
+    initial_power = 2.36e8 # Initial total reactor power
+    power_history = shutdownPower # decay heat profile
   []
 
-  [pipe010]                           #Active core region (1)
+  [pipe010] #Active core region (1)
     type = PBCoreChannel
     eos = eos
     position = '0 4.94445 -5.34'
@@ -120,7 +117,7 @@
     WF_user_option = User
     User_defined_WF_parameters = '5.467 847.17 -1.0'
 
-    HT_surface_area_density = 133.33  #Preserves surface area
+    HT_surface_area_density = 133.33 #Preserves surface area
     Ts_init = 950
     elem_number_of_hs = '5 5 2'
     material_hs = 'h451 fuel h451'
@@ -136,7 +133,7 @@
     dim_hs = 2
   []
 
-  [pipe020]                           #Core bypass (2)
+  [pipe020] #Core bypass (2)
     type = PBOneDFluidComponent
     eos = eos
     position = '0 5.92445 -5.34'
@@ -150,14 +147,14 @@
     initial_P = 2.6e5
   []
 
-  [Branch030]                          #Outlet plenum (3)
+  [Branch030] #Outlet plenum (3)
     type = PBVolumeBranch
     inputs = 'pipe010(out) pipe020(out)' # A = 1.327511 (0.2524495) A = 0.065
-    outputs = 'pipe040(in)'       # A = 0.2512732
+    outputs = 'pipe040(in)' # A = 0.2512732
     center = '0 4.94445 -0.76'
     volume = 0.99970002
-    K = '0.3668 0.35336 0.0006'    # loss coefficients
-    Area = 0.2524495      # L = 3.96
+    K = '0.3668 0.35336 0.0006' # loss coefficients
+    Area = 0.2524495 # L = 3.96
     eos = eos
     initial_V = 2.040
     initial_T = 970
@@ -167,7 +164,7 @@
     nodal_Tbc = true
   []
 
-  [pipe040]                            #Hot salt extraction pipe (4)
+  [pipe040] #Hot salt extraction pipe (4)
     type = PBOneDFluidComponent
     eos = eos
     position = '0 3.96445 -0.76'
@@ -182,7 +179,7 @@
     initial_P = 1.3e5
   []
 
-  [pipe050]                            #Reactor vessel to hot salt well (5)
+  [pipe050] #Reactor vessel to hot salt well (5)
     type = PBOneDFluidComponent
     eos = eos
     position = '0 4.46445 3.01'
@@ -196,7 +193,7 @@
     initial_T = 970
   []
 
-  [pipe060]                            #Hot well (6)
+  [pipe060] #Hot well (6)
     type = PBOneDFluidComponent
     eos = eos
     position = '0 8.30 3.09' #'0 8.19357 3.091'
@@ -210,7 +207,7 @@
     initial_T = 970
   []
 
-  [pipe070]                            #Hot salt well to CTAH (7)
+  [pipe070] #Hot salt well to CTAH (7)
     type = PBOneDFluidComponent
     eos = eos
     position = '0 10.271 3.43'
@@ -225,7 +222,7 @@
     initial_P = 4.6e5
   []
 
-  [pipe080]                            #CTAH hot manifold (8)
+  [pipe080] #CTAH hot manifold (8)
     type = PBOneDFluidComponent
     eos = eos
     position = '0 13.5 3.384'
@@ -240,7 +237,7 @@
     initial_P = 4.9e5
   []
 
-  [pipe090]                            #CTAH tubes (salt side) (9)
+  [pipe090] #CTAH tubes (salt side) (9)
     type = PBPipe
     eos = eos
     position = '0 13.5 -0.034'
@@ -255,7 +252,7 @@
     initial_P = 4.1e5
 
     HS_BC_type = Temperature
-    Hw = 2000   #cut for transient
+    Hw = 2000 #cut for transient
     Ph = 392.9818537
     T_wall = 873.15
     Twall_init = 900
@@ -267,7 +264,7 @@
     wall_thickness = 0.000889
   []
 
-  [pipe100]                            #CTAH cold manifold (10)
+  [pipe100] #CTAH cold manifold (10)
     type = PBOneDFluidComponent
     eos = eos
     position = '0 18.2055 -0.197'
@@ -281,7 +278,7 @@
     initial_P = 2.8e5
   []
 
-  [pipe110]                            #CTAH to drain tank (11)
+  [pipe110] #CTAH to drain tank (11)
     type = PBOneDFluidComponent
     eos = eos
     position = '0 18.2055 -3.615'
@@ -294,7 +291,7 @@
     initial_P = 3.1e5
   []
 
-  [pipe120]                            #Stand pipe (12)
+  [pipe120] #Stand pipe (12)
     type = PBOneDFluidComponent
     eos = eos
     position = '0 14.7263 -3.69'
@@ -307,7 +304,7 @@
     initial_P = 2.5e5
   []
 
-  [pipe130]                            #Stand pipe to reactor vessel (13)
+  [pipe130] #Stand pipe to reactor vessel (13)
     type = PBOneDFluidComponent
     eos = eos
     position = '0 14.7263 2.82'
@@ -320,7 +317,7 @@
     initial_P = 1.8e5
   []
 
-  [pipe140]                            #Injection plenum (14)
+  [pipe140] #Injection plenum (14)
     type = PBOneDFluidComponent
     eos = eos
     position = '0 8.12445 2.96'
@@ -333,7 +330,7 @@
     initial_P = 2.1e5
   []
 
-  [pipe150]                            #Downcomer (15)
+  [pipe150] #Downcomer (15)
     type = PBOneDFluidComponent
     eos = eos
     position = '0 8.12445 -0.58'
@@ -347,7 +344,7 @@
     initial_P = 2.9e5
   []
 
-  [pipe160]                            #Downcomer to DHX (16)
+  [pipe160] #Downcomer to DHX (16)
     type = PBOneDFluidComponent
     eos = eos
     position = '0 1 -0.58'
@@ -361,7 +358,7 @@
     initial_P = 2.5e5
   []
 
-  [DHX]                                # DHX shell side (17), DHX tube side (19), DHX tubes structure
+  [DHX] # DHX shell side (17), DHX tube side (19), DHX tubes structure
     type = PBHeatExchanger
     eos = eos
     eos_secondary = eos
@@ -386,7 +383,7 @@
     initial_P = 1.9e5
     initial_P_secondary = 2.0e5
 
-    HT_surface_area_density =  441.287971
+    HT_surface_area_density = 441.287971
     HT_surface_area_density_secondary = 458.715596
     #Hw = 526.266
     #Hw_secondary = 440
@@ -401,7 +398,7 @@
     n_wall_elems = 4
   []
 
-  [pipe180]                            #DHX to hot leg (18)
+  [pipe180] #DHX to hot leg (18)
     type = PBOneDFluidComponent
     eos = eos
     position = '0 1 2.5'
@@ -416,7 +413,7 @@
     initial_P = 2.6e5
   []
 
-  [pipe200]                            #DRACS hot leg 1 (20)
+  [pipe200] #DRACS hot leg 1 (20)
     type = PBOneDFluidComponent
     eos = eos
     position = '0 0 2.5'
@@ -428,7 +425,7 @@
     n_elems = 10 #20
   []
 
-  [pipe210]                            #DRACS hot leg 2 (21)
+  [pipe210] #DRACS hot leg 2 (21)
     type = PBOneDFluidComponent
     eos = eos
     position = '0 -0.2 5.95'
@@ -440,7 +437,7 @@
     n_elems = 11 #21
   []
 
-  [pipe220]                            #TCHX Manifold (22)
+  [pipe220] #TCHX Manifold (22)
     type = PBOneDFluidComponent
     eos = eos
     position = '0 -3.87 5.95'
@@ -452,7 +449,7 @@
     n_elems = 8 #15
   []
 
-  [pipe230]                            #TCHX salt tube (23)
+  [pipe230] #TCHX salt tube (23)
     type = PBPipe
     eos = eos
     position = '0 -3.87 8.55'
@@ -478,7 +475,7 @@
     wall_thickness = 0.0009
   []
 
-  [pipe240]                            #DRACS cold leg 1 (24)
+  [pipe240] #DRACS cold leg 1 (24)
     type = PBOneDFluidComponent
     eos = eos
     position = '1 -4.43 5.95'
@@ -490,7 +487,7 @@
     n_elems = 13 #25
   []
 
-  [pipe250]                            #DRACS cold leg 2 (25)
+  [pipe250] #DRACS cold leg 2 (25)
     type = PBOneDFluidComponent
     eos = eos
     position = '1 0 5.95'
@@ -502,14 +499,14 @@
     n_elems = 17 #34
   []
 
-  [Branch260]                         #Top branch (26)
+  [Branch260] #Top branch (26)
     type = PBVolumeBranch
     inputs = 'pipe180(out) pipe040(out)' # A = 0.03534292 A = 0.2512732
-    outputs = 'pipe050(in)'      # A = 0.264208
+    outputs = 'pipe050(in)' # A = 0.264208
     center = '0 4.21445 3.01'
     volume = 0.132104
-    K = '0.3713 0.00636 0.0'   # loss coefficients
-    Area = 0.264208      # L = 0.5
+    K = '0.3713 0.00636 0.0' # loss coefficients
+    Area = 0.264208 # L = 0.5
     eos = eos
     initial_V = 2.052
     initial_T = 970
@@ -517,29 +514,29 @@
     nodal_Tbc = true
   []
 
-  [Branch270]                         #Middle branch (27)
+  [Branch270] #Middle branch (27)
     type = PBVolumeBranch
-    inputs = 'pipe140(out)'    # A = 0.3019068
+    inputs = 'pipe140(out)' # A = 0.3019068
     outputs = 'pipe150(in) pipe160(in)' # A = 0.3038791 A = 0.03534292
     center = '0 8.12445 -0.33'
     volume = 0.15193955
     K = '0.0 0.0 0.3727'
-    Area = 0.3038791     # L = 0.5
+    Area = 0.3038791 # L = 0.5
     eos = eos
     initial_V = 1.784
     initial_P = 2.5e5
     width = 0.2
   []
 
-  [Branch280]                         #Bottom branch (28)
+  [Branch280] #Bottom branch (28)
     type = PBVolumeBranch
-    inputs = 'pipe150(out)'    # A = 0.3038791
+    inputs = 'pipe150(out)' # A = 0.3038791
     outputs = 'pipe010(in) pipe020(in)' # A = 1.327511  A = 0.065
     center = '0 6.53445 -5.34'
     volume = 0.2655022
     #K = '0.35964 0.0 0.3750'
     K = '0.35964 0.0 0.6000'
-    Area = 1.327511      # L = 0.2
+    Area = 1.327511 # L = 0.2
     eos = eos
     initial_V = 0.388
     initial_P = 3.4e5
@@ -547,7 +544,7 @@
     height = 0.2
   []
 
-  [pipe2]                             #Pipe to primary tank
+  [pipe2] #Pipe to primary tank
     type = PBOneDFluidComponent
     eos = eos #eos3
     position = '0 8.25 3.19'
@@ -560,7 +557,7 @@
     initial_T = 970
   []
 
-  [pool2]                             #Primary Loop Expansion Tank
+  [pool2] #Primary Loop Expansion Tank
     type = PBLiquidVolume
     center = '0 8.25 3.74'
     inputs = 'pipe2(out)'
@@ -576,29 +573,29 @@
   []
 
   [cover_gas2]
- type = CoverGas
- n_liquidvolume = 1
- name_of_liquidvolume = 'pool2'
- initial_P = 9e4
- initial_Vol = 0.5
- initial_T = 970
+    type = CoverGas
+    n_liquidvolume = 1
+    name_of_liquidvolume = 'pool2'
+    initial_P = 9e4
+    initial_Vol = 0.5
+    initial_T = 970
   []
 
-  [Branch501]                         #Primary tank branch
+  [Branch501] #Primary tank branch
     type = PBVolumeBranch
-    inputs = 'pipe050(out)'    # A = 0.264208
-    outputs = 'pipe060(in) pipe2(in)'   # A = 3.3145 (0.264208) A = 1 (0.264208)
+    inputs = 'pipe050(out)' # A = 0.264208
+    outputs = 'pipe060(in) pipe2(in)' # A = 3.3145 (0.264208) A = 1 (0.264208)
     center = '0 8.25 3.09'
     volume = 0.0264208
     K = '0 0.3744 0.35187'
-    Area = 0.264208      # L = 0.2
+    Area = 0.264208 # L = 0.2
     eos = eos
     initial_V = 2.052
     initial_T = 970
     width = 0.1
   []
 
-  [pipe1]                             #Pipe to DRACS tank
+  [pipe1] #Pipe to DRACS tank
     type = PBOneDFluidComponent
     eos = eos #eos3
     position = '0 0 5.95'
@@ -610,7 +607,7 @@
     initial_T = 852.7
   []
 
-  [pool1]                             #DRACS tank
+  [pool1] #DRACS tank
     type = PBLiquidVolume
     center = '0 0 6.5'
     inputs = 'pipe1(out)'
@@ -626,18 +623,18 @@
   []
 
   [cover_gas1]
- type = CoverGas
- n_liquidvolume = 1
- name_of_liquidvolume = 'pool1'
- initial_P = 2e5
- initial_Vol = 0.5
- initial_T = 852.7
+    type = CoverGas
+    n_liquidvolume = 1
+    name_of_liquidvolume = 'pool1'
+    initial_P = 2e5
+    initial_Vol = 0.5
+    initial_T = 852.7
   []
 
-  [Branch502]                         #DRACS tank branch
+  [Branch502] #DRACS tank branch
     type = PBVolumeBranch
-    inputs = 'pipe200(out)'       # A = 0.1836403
-    outputs = 'pipe210(in) pipe1(in)'   # A = 0.1836403 A = 1
+    inputs = 'pipe200(out)' # A = 0.1836403
+    outputs = 'pipe210(in) pipe1(in)' # A = 0.1836403 A = 1
     center = '0 -0.1 5.95'
     volume = 0.003534292
     K = '0.0 0.0 0.3673'
@@ -645,10 +642,10 @@
     eos = eos
   []
 
-  [Branch601]                         # In to hot manifold
+  [Branch601] # In to hot manifold
     type = PBBranch
-    inputs = 'pipe070(out)'       # A = 0.3041
-    outputs = 'pipe080(in)'       # A = 0.4926017
+    inputs = 'pipe070(out)' # A = 0.3041
+    outputs = 'pipe080(in)' # A = 0.4926017
     eos = eos
     K = '0.16804 0.16804'
     Area = 0.3041
@@ -657,10 +654,10 @@
     initial_P = 4.6e5
   []
 
-  [Branch602]                         # In to CTAH salt side
+  [Branch602] # In to CTAH salt side
     type = PBBranch
-    inputs = 'pipe080(out)'       # A = 0.4926017
-    outputs = 'pipe090(in)'       # A = 0.4491779
+    inputs = 'pipe080(out)' # A = 0.4926017
+    outputs = 'pipe090(in)' # A = 0.4491779
     eos = eos
     K = '0.01146 0.01146'
     Area = 0.4491779
@@ -669,10 +666,10 @@
     initial_P = 5.2e5
   []
 
-  [Branch603]                         # In to cold manifold
+  [Branch603] # In to cold manifold
     type = PBBranch
-    inputs = 'pipe090(out)'       # A = 0.4491779
-    outputs = 'pipe100(in)'       # A = 0.1924226
+    inputs = 'pipe090(out)' # A = 0.4491779
+    outputs = 'pipe100(in)' # A = 0.1924226
     eos = eos
     K = '0.28882 0.28882'
     Area = 0.1924226
@@ -682,8 +679,8 @@
 
   [Branch604] # In to pipe to drain tank
     type = PBBranch
-    inputs = 'pipe100(out)'       # A = 0.1924226
-    outputs = 'pipe110(in)'       # A = 0.3019068
+    inputs = 'pipe100(out)' # A = 0.1924226
+    outputs = 'pipe110(in)' # A = 0.3019068
     eos = eos
     K = '0.15422 0.15422'
     K_reverse = '2000000 2000000'
@@ -691,7 +688,7 @@
     initial_P = 3.1e5
   []
 
-  [Branch605]                         # In to stand pipe
+  [Branch605] # In to stand pipe
     type = PBSingleJunction
     inputs = 'pipe110(out)'
     outputs = 'pipe120(in)'
@@ -699,7 +696,7 @@
     initial_P = 3.1e5
   []
 
-  [Branch606]                         # In to pipe to reactor vessel
+  [Branch606] # In to pipe to reactor vessel
     type = PBSingleJunction
     inputs = 'pipe120(out)'
     outputs = 'pipe130(in)'
@@ -707,7 +704,7 @@
     initial_P = 1.9e5
   []
 
-  [Branch607]                         # In to injection plenum
+  [Branch607] # In to injection plenum
     type = PBSingleJunction
     inputs = 'pipe130(out)'
     outputs = 'pipe140(in)'
@@ -715,10 +712,10 @@
     initial_P = 1.8e5
   []
 
-  [Diode608]                          # Fluidic diode
+  [Diode608] # Fluidic diode
     type = PBBranch
-    inputs = 'pipe160(out)'       # A = 0.03534292
-    outputs = 'DHX(primary_in)'      # A = 0.2224163
+    inputs = 'pipe160(out)' # A = 0.03534292
+    outputs = 'DHX(primary_in)' # A = 0.2224163
     eos = eos
     K = '50.0 50.0'
     K_reverse = '1.0 1.0'
@@ -727,10 +724,10 @@
     initial_P = 2.3e5
   []
 
-  [Branch609]                         # Out of DHX
+  [Branch609] # Out of DHX
     type = PBBranch
-    inputs = 'DHX(primary_out)'      # A = 0.2224163
-    outputs = 'pipe180(in)'       # A = 0.03534292
+    inputs = 'DHX(primary_out)' # A = 0.2224163
+    outputs = 'pipe180(in)' # A = 0.03534292
     eos = eos
     K = '94.8693 94.8693'
     Area = 0.03534292
@@ -738,53 +735,53 @@
     initial_P = 1.3e5
   []
 
-  [Branch610]                         #In to DRACS hot leg 1
+  [Branch610] #In to DRACS hot leg 1
     type = PBBranch
-    inputs = 'DHX(secondary_in)'  # A = 0.1836403
-    outputs = 'pipe200(in)'       # A = 0.03534292
+    inputs = 'DHX(secondary_in)' # A = 0.1836403
+    outputs = 'pipe200(in)' # A = 0.03534292
     eos = eos
     K = '56.3666 56.3666'
     Area = 0.03534292
   []
 
-  [Branch611]                         #In to TCHX manifold
+  [Branch611] #In to TCHX manifold
     type = PBSingleJunction
     inputs = 'pipe210(out)'
     outputs = 'pipe220(in)'
     eos = eos
   []
 
-  [Branch612]                         #In to TCHX salt tube
+  [Branch612] #In to TCHX salt tube
     type = PBBranch
-    inputs = 'pipe220(out)'    # A = 0.03534292
-    outputs = 'pipe230(in)'    # A = 0.1746822
+    inputs = 'pipe220(out)' # A = 0.03534292
+    outputs = 'pipe230(in)' # A = 0.1746822
     eos = eos
     K = '0.3655 0.3655'
     #K = '0.0 0.3655'
     Area = 0.03534292
   []
 
-  [Branch613]                         #In to DRACS cold leg 1
+  [Branch613] #In to DRACS cold leg 1
     type = PBBranch
-    inputs = 'pipe230(out)'    # A = 0.1746822
-    outputs = 'pipe240(in)'    # A = 0.03534292
+    inputs = 'pipe230(out)' # A = 0.1746822
+    outputs = 'pipe240(in)' # A = 0.03534292
     eos = eos
     K = '0.3655 0.3655'
     #K = '0.3655 0.0'
     Area = 0.03534292
   []
 
-  [Branch614]                         #In to DRACS cold leg 2
+  [Branch614] #In to DRACS cold leg 2
     type = PBSingleJunction
     inputs = 'pipe240(out)'
     outputs = 'pipe250(in)'
     eos = eos
   []
 
-  [Branch615]                         #In to DHX tube side
+  [Branch615] #In to DHX tube side
     type = PBBranch
-    inputs = 'pipe250(out)'    # A = 0.03534292
-    outputs = 'DHX(secondary_out)'      # A = 0.1836403
+    inputs = 'pipe250(out)' # A = 0.03534292
+    outputs = 'DHX(secondary_out)' # A = 0.1836403
     eos = eos
     K = '0.3666 0.3666'
     #K = '0.0 0.3666'
@@ -799,7 +796,7 @@
     K = '0 0'
     K_reverse = '2000000 2000000'
     Area = 0.3041
-    Head = 0.0
+    Head = 5e-8
     Desired_mass_flow_rate = 0.0
     Mass_flow_rate_tolerance = 0.000001
     initial_V = 1.783
@@ -877,9 +874,8 @@
     full = true
     solve_type = 'PJFNK'
   []
-
-[] # End preconditioning block
-
+ # End preconditioning block
+[]
 
 [Executioner]
   type = Transient
@@ -915,10 +911,10 @@
   l_tol = 1e-5 # Relative linear tolerance for each Krylov solve
   l_max_its = 200 # Number of linear iterations for each Krylov solve
 
-   [Quadrature]
-      type = GAUSS
-      order = SECOND
-   []
+  [Quadrature]
+    type = GAUSS
+    order = SECOND
+  []
 []
 
 [Problem]
@@ -935,7 +931,7 @@
     type = Exodus
     use_displaced = true
     execute_on = 'initial timestep_end'
-    interval = 5
+    time_step_interval = 5
     sequence = false
   []
   [csv]
@@ -944,6 +940,6 @@
 
   [console]
     type = Console
-    interval = 20
+    time_step_interval = 20
   []
 []

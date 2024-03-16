@@ -39,7 +39,7 @@
 [Mesh]
   [fmg]
     type = FileMeshGenerator
-    file = mesh/vtr_core.e # Y-axis = vertical direction for consistency with BISON tensor mechanics RZ model
+    file = mesh/vtr_core.e # Y-axis = vertical direction for consistency with BISON solid mechanics RZ model
     exodus_extra_element_integers = 'equivalence_id material_id'
   []
   [eqvid]

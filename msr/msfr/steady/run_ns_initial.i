@@ -119,7 +119,7 @@ pump_force = -20000. # [N / m^3]
 
 [Functions]
   [ad_rampdown_mu_func]
-    type = ADParsedFunction
+    type = ParsedFunction
     expression = mu*(100*exp(-3*t)+1)
     symbol_names = 'mu'
     symbol_values = ${mu}

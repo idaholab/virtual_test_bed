@@ -1,30 +1,40 @@
 [submodule "apps/bison"]
 	path = apps/bison
 	url = git@github.inl.gov:ncrc/bison
+	ignore = dirty
 [submodule "apps/griffin"]
 	path = apps/griffin
 	url = git@github.inl.gov:ncrc/griffin
+	ignore = dirty
 [submodule "apps/pronghorn"]
 	path = apps/pronghorn
 	url = git@github.inl.gov:ncrc/pronghorn
+	ignore = dirty
 [submodule "apps/SAM"]
 	path = apps/SAM
 	url = git@github.inl.gov:ncrc/SAM
+	ignore = dirty
 [submodule "apps/sockeye"]
 	path = apps/sockeye
 	url = git@github.inl.gov:ncrc/sockeye
+	ignore = dirty
 [submodule "apps/dire_wolf"]
 	path = apps/dire_wolf
 	url = git@github.inl.gov:ncrc/dire_wolf
+	ignore = dirty
 [submodule "apps/blue_crab"]
 	path = apps/blue_crab
 	url = git@github.inl.gov:ncrc/blue_crab
+	ignore = dirty
 [submodule "apps/cardinal"]
 	path = apps/cardinal
 	url = https://github.com/neams-th-coe/cardinal
+	ignore = dirty
 [submodule "apps/relap-7"]
 	path = apps/relap-7
 	url = git@github.inl.gov:ncrc/relap-7.git
+	ignore = dirty
 [submodule "apps/moose"]
 	path = apps/moose
 	url = https://github.com/idaholab/moose.git
+	ignore = dirty

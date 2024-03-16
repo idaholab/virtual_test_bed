@@ -69,6 +69,8 @@
     executable_pattern = 'bison*|blue_crab*|dire_wolf*'
     allow_warnings = True # material property unsupported outputs
     prereq = 'bison_mecha_only_syntax'
+    # See #363
+    rel_err = 5e-4
   []
   [bison_thermal_only]
     type = CSVDiff

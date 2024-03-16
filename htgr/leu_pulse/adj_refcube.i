@@ -23,15 +23,15 @@
 # Simple Reflected Cube Reactor
 # Units are W, kg, J, cm
 [Debug]
-#  show_actions = true          #True prints out actions
-#  show_material_props = true   #True prints material properties
-#  show_parser = true
-#  show_top_residuals = 3        #Number to print
-#  show_var_residual_norms = true
-#  check_boundary_coverage = true
-#  print_block_volume = true
-#  show_neutronics_material_coverage = true
-#  show_petsc_options = true
+  #  show_actions = true          #True prints out actions
+  #  show_material_props = true   #True prints material properties
+  #  show_parser = true
+  #  show_top_residuals = 3        #Number to print
+  #  show_var_residual_norms = true
+  #  check_boundary_coverage = true
+  #  print_block_volume = true
+  #  show_neutronics_material_coverage = true
+  #  show_petsc_options = true
 []
 
 # ==================================================================================
@@ -70,7 +70,7 @@
   particle = neutron
   equation_type = eigenvalue
   for_adjoint = true
-  G = 6     #Number of energy groups
+  G = 6 #Number of energy groups
 
   # In 3D, back = 0, bottom = 1, right = 2, top = 3, left = 4, front = 5
   # back is -z, bottom is -y, right is +x
@@ -82,7 +82,7 @@
     scheme = CFEM-Diffusion
     family = LAGRANGE
     order = FIRST
-    n_delay_groups = 6  #Number of delay neutron groups
+    n_delay_groups = 6 #Number of delay neutron groups
   []
 []
 
@@ -295,7 +295,7 @@
 []
 
 [Outputs]
-  interval = 1
+  time_step_interval = 1
   csv = true
   [console]
     type = Console

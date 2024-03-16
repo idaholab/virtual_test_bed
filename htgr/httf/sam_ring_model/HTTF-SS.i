@@ -214,7 +214,6 @@ h_gap = 1.e5
 n_core = 20
 n_urlr = 4
 
-
 [GlobalParams]
   global_init_P = 7.e5
   global_init_V = 1.75
@@ -503,7 +502,7 @@ n_urlr = 4
     HTC_geometry_type = Pipe
     n_elems = ${n_core}
     initial_V = -15.00
-#    initial_T = 800
+    #    initial_T = 800
   []
 
   [Ceramic]
@@ -516,7 +515,7 @@ n_urlr = 4
     elem_number_axial = ${n_core}
     dim_hs = 2
     material_hs = 'GC-94F'
-#    Ts_init = 900
+    #    Ts_init = 900
   []
 
   [HeaterRods]
@@ -529,7 +528,7 @@ n_urlr = 4
     elem_number_axial = ${n_core}
     dim_hs = 2
     material_hs = 'graphite-mat'
-#    Ts_init = 900
+    #    Ts_init = 900
   []
 
   [UR-CoolantChannel]
@@ -540,7 +539,7 @@ n_urlr = 4
     HTC_geometry_type = Pipe
     n_elems = ${n_urlr}
     initial_V = -15.00
-#    initial_T = 900
+    #    initial_T = 900
   []
 
   [UR-Ceramic]
@@ -553,7 +552,7 @@ n_urlr = 4
     elem_number_axial = ${n_urlr}
     dim_hs = 2
     material_hs = 'GC-94F'
-#    Ts_init = 900
+    #    Ts_init = 900
   []
 
   [LR-CoolantChannel]
@@ -564,7 +563,7 @@ n_urlr = 4
     HTC_geometry_type = Pipe
     n_elems = ${n_urlr}
     initial_V = -15.00
-#    initial_T = 600
+    #    initial_T = 600
   []
 
   [LR-Ceramic]
@@ -577,7 +576,7 @@ n_urlr = 4
     elem_number_axial = ${n_urlr}
     dim_hs = 2
     material_hs = 'GC-94F'
-#    Ts_init = 600
+    #    Ts_init = 600
   []
 
 []
@@ -4703,7 +4702,7 @@ n_urlr = 4
     width = 0.7572 #0.6428
     height = 0.4
     initial_P = 7.E+05
-#    initial_T = 900.
+    #    initial_T = 900.
     initial_V = 1.5
     eos = eos
   []
@@ -4781,7 +4780,7 @@ n_urlr = 4
     type = PBTDV
     eos = water_eos
     p_bc = 1.E+05
-    T_bc    =  303.15
+    T_bc = 303.15
     input = 'RT56(out)'
   []
 []
@@ -4864,7 +4863,7 @@ n_urlr = 4
   []
   [console]
     type = Console
-    interval = 25
+    time_step_interval = 25
     execute_scalars_on = 'none'
   []
   [csv]

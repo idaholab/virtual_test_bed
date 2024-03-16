@@ -109,9 +109,9 @@ Only for 2D IPyC cracking case, we need to use this userobject to model the crac
 
 We only need to add this Action for the 2D IPyC cracking case. The X-FEM `XFEM` action is needed to model a crack in the IPyC layer. The X-FEM quadrature rule is selected through the `qrule` parameter and the output the XFEM cut plane and volume fraction can be specicifed by `output_cut_plane` parameter.
 
-## Tensor Mechanics Action
+## Solid Mechanics Action
 
-The tensor mechanics `QuasiStatic` action simplifies the input file syntax for creating a tensor mechanics model. It specifies the thermo-mechanical models of the kernel, buffer, IPyC/OPyC and SiC.
+The solid mechanics `QuasiStatic` action simplifies the input file syntax for creating a solid mechanics model. It specifies the thermo-mechanical models of the kernel, buffer, IPyC/OPyC and SiC.
 
 !listing htgr/triso_fuel/triso_1d.i block=Physics/SolidMechanics/QuasiStatic language=cpp
 

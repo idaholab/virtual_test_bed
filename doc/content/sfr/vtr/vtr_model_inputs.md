@@ -458,7 +458,7 @@ in the steady state solution.
 
 `ThermalContact` is a MOOSE module to control the heat transfer in regions without meshes.
 In this model, we use `[ThermalContact]` to model the gap between the pellet and clad.
-We do this by defining the [!style color=red](GapHeatTransfer) type and coresponding parameters.
+We do this by defining the [!style color=red](GapHeatTransfer) type and corresponding parameters.
 Detailed information about the ThermalContact module may be found in the MOOSE
 [documentation](https://mooseframework.inl.gov/source/actions/ThermalContactAction.html).
 
@@ -656,11 +656,11 @@ will make sure every object uses the displaced mesh instead of the original mesh
 The mechanical model utilizes the solid mechanics module in MOOSE.
 The model is setup such that the mechanical behavior is modeled in both the fuel and clad.
 For a detailed explanation of the TensorMechanics model, the authors defer to the
-[TensorMechanics](https://mooseframework.inl.gov/syntax/Modules/TensorMechanics/Master/)
+[SolidMechanics](https://mooseframework.inl.gov/syntax/Physics/SolidMechanics/QuasiStatic/)
 section of the MOOSE documentation.
 
 !listing sfr/vtr/bison_mecha_only.i
-         block=Modules
+         block=Physics
 
 ### Materials and UserObjects
 
@@ -692,7 +692,7 @@ radial and axial directions, and the strains.
 
 ## Core Support Plate
 
-The input file for the core support plate tensor mechanics model is displayed below.
+The input file for the core support plate solid mechanics model is displayed below.
 The objective of this simulation is to capture the radial thermal expansion of the support plate.
 
 !listing sfr/vtr/core_support_plate_3d.i
@@ -739,11 +739,11 @@ We are interested in the thermal expansion of the core support plate so we set t
 [!style color=red](eigenstrain_names) to `thermal_expansion` and generate a stress and strain
 output in each coordinate direction.
 For a detailed explanation of the TensorMechanics model, the authors defer to the
-[TensorMechanics](https://mooseframework.inl.gov/syntax/Modules/TensorMechanics/Master/)
+[SolidMechanics](https://mooseframework.inl.gov/syntax/Physics/SolidMechanics/QuasiStatic/)
 section of the MOOSE documentation.
 
 !listing sfr/vtr/core_support_plate_3d.i
-         block=Modules/TensorMechanics/Master
+         block=Physics/SolidMechanics/QuasiStatic
 
 ### Initial Conditions and Functions
 
@@ -762,7 +762,7 @@ Material characteristics are defined in the `[Materials]` block.
 Characteristics include the mechanical properties of 316 stainless steel such as the
 elasticity tensor, stress, and thermal expansion.
 For a detailed explanation of the material types, the authors defer the reader to
-the [TensorMechanics](https://mooseframework.inl.gov/syntax/Modules/TensorMechanics/Master/)
+the [SolidMechanics](https://mooseframework.inl.gov/syntax/Physics/SolidMechanics/QuasiStatic)
 section of the MOOSE documentation.
 
 !listing sfr/vtr/core_support_plate_3d.i

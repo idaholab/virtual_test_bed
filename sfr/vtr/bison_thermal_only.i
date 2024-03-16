@@ -47,8 +47,9 @@ plenum_height = 782.2e-3 # 778.0e-3
     pellet_height = ${fuel_height}
     clad_top_gap_height = ${plenum_height} # fixme assumes no Na bond sodium
     clad_gap_width = ${gap} # no gap for hot condition after irradiation (2 % fima)
-    top_bot_clad_height = ${clad_thickness}
     clad_bot_gap_height = 0.
+    bottom_clad_height = ${clad_thickness}
+    top_clad_height = ${clad_thickness}
 
     # meshing parameters
     clad_mesh_density = customize

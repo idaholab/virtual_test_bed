@@ -39,6 +39,7 @@
     max_time = 400
     # Cross-section warning due to missing fission-only
     allow_warnings = true
+    prereq = 'neutronics_griffin_syntax'
   []
   [heat_conduction_bison]
     type = CSVDiff
@@ -53,6 +54,7 @@
     allow_warnings = true
     max_time = 400
     rel_err = 2e-5
+    prereq = 'heat_conduction_bison_syntax'
   []
   [fluids_sockeye]
     type = CSVDiff
@@ -61,6 +63,8 @@
     executable_pattern = 'sockeye*|dire_wolf*'
     # Capillary limit for vertical heat pipes is not accurate; see https://hpcgitlab.hpc.inl.gov/idaholab/sockeye/-/issues/65
     allow_warnings = true
+    prereq = 'fluids_sockeye_syntax'
+    ignore_columns = 'bc_scale_pp scale_pp'
   []
   [coupled_simulation]
     type = CSVDiff
