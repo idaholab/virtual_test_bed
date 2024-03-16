@@ -65,6 +65,8 @@ OPyC_thickness = 43.4e-6 # micron
 
 In Bison, comments are entered after the `#` sign
 
+If not explicitly specified, the blocks described below apply across 1D, 2D, and 3D cases.
+
 ## Global parameters
 
 This block contains the parameters that might be used in multiple blocks.  For example, to specify initial Oxygen to Uranium atom ratio, the user can input
@@ -99,13 +101,13 @@ opens between the buffer and IPyC layers.
 
 !listing htgr/triso_fuel/triso_1d.i block=particle_geometry language=cpp
 
-For IPyC cracking case, the crack is modeled using the X-FEM module. The crack geometry is specified by `LineSegmentCutUserObject`.
+Only for 2D IPyC cracking case, we need to use this userobject to model the crack with the X-FEM module. The crack geometry is specified by `LineSegmentCutUserObject`.
 
 !listing htgr/triso_fuel/triso_2d_ipyc_cracking.i block=ipyc_crack language=cpp
 
 ## XFEM Action
 
-The X-FEM `XFEM` action is needed to model a crack in the IPyC layer. The X-FEM quadrature rule is selected through the `qrule` parameter and the output the XFEM cut plane and volume fraction can be specicifed by `output_cut_plane` parameter.
+We only need to add this Action for the 2D IPyC cracking case. The X-FEM `XFEM` action is needed to model a crack in the IPyC layer. The X-FEM quadrature rule is selected through the `qrule` parameter and the output the XFEM cut plane and volume fraction can be specicifed by `output_cut_plane` parameter.
 
 ## Tensor Mechanics Action
 
@@ -138,7 +140,6 @@ The boundary conditions of displacements and temperature are set in this block. 
 If IPyC cracking is modeled, the symmetric boundary conditions need to exclude the boundary of crack surface.
 
 !listing htgr/triso_fuel/triso_2d_ipyc_cracking.i block=no_disp_y language=cpp
-
 
 For this 3D example, symmetric boundary conditions are applied.
 

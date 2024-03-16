@@ -94,7 +94,7 @@ coordinates5 = '${fparse coordinates4+OPyC_thickness}'
   []
 []
 
-[Modules/TensorMechanics/Master]
+[Physics/SolidMechanics/QuasiStatic]
   generate_output = 'stress_xx stress_yy stress_zz strain_xx strain_yy strain_zz max_principal_stress'
   add_variables = true
   strain = FINITE
