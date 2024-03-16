@@ -29,6 +29,7 @@
     executable_pattern = 'bison*'
     cli_args = 'Executioner/num_steps=1'
     rel_err = '1e-6'
+    method = 'opt'
   []
   [triso_bluecrab]
     type = CSVDiff
