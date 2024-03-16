@@ -1,4 +1,4 @@
-# TRISO 1D (spherical) thermal-mechanics input
+# TRISO 3D thermal-mechanics (octant of a sphere) input
 # Application: BISON
 # POC: Wen Jiang, wjiang8.at.ncsu.edu
 # If using or referring to this model, please cite as explained in
@@ -21,7 +21,7 @@ coordinates5 = '${fparse coordinates4+OPyC_thickness}'
 [GlobalParams]
   order = FIRST
   family = LAGRANGE
-  displacements = 'disp_x'
+  displacements = 'disp_x disp_y disp_z'
   initial_enrichment = 0.155 # [wt-]
   flux_conversion_factor = 1.0 # convert E>0.10 to E>0.18 MeV
   stress_free_temperature = ${temperature} # used for thermal expansion
@@ -31,13 +31,14 @@ coordinates5 = '${fparse coordinates4+OPyC_thickness}'
 []
 
 [Mesh]
-  coord_type = RSPHERICAL
   [gen]
-    type = TRISO1DMeshGenerator
-    elem_type = EDGE2
+    type = TRISO3DMeshGenerator
+    elem_type = HEX8
     coordinates = '0 ${coordinates1} ${coordinates2} ${coordinates2} ${coordinates3} ${coordinates4} ${coordinates5}'
-    mesh_density = '5 3 0 5 3 4'
+    mesh_density = '10 6 0 4 4 4'
     block_names = 'fuel buffer IPyC SiC OPyC'
+    num_sectors = 20
+    portion = eighth
   []
 []
 
@@ -58,9 +59,6 @@ coordinates5 = '${fparse coordinates4+OPyC_thickness}'
     outer_kernel = fuel_outer_boundary
     include_particle = true
     include_pebble = false
-    IPyC_thickness_mean = 40.4e-6
-    SiC_thickness_mean = 35.2e-6
-    OPyC_thickness_mean = 43.4e-6
   []
 []
 
@@ -188,10 +186,11 @@ coordinates5 = '${fparse coordinates4+OPyC_thickness}'
     released_gas_types = 'Kr Xe'
     released_fractions = '0.185 0.815'
     tangential_tolerance = 1e-6
-    quadrature = false
+    quadrature = true
     min_gap = 1e-7
     max_gap = 50e-6
     gap_geometry_type = sphere
+    sphere_origin = '0 0 0'
   []
 []
 
@@ -199,7 +198,19 @@ coordinates5 = '${fparse coordinates4+OPyC_thickness}'
   [no_disp_x]
     type = DirichletBC
     variable = disp_x
-    boundary = xzero
+    boundary = yz_plane
+    value = 0.0
+  []
+  [no_disp_y]
+    type = DirichletBC
+    variable = disp_y
+    boundary = xz_plane
+    value = 0.0
+  []
+  [no_disp_z]
+    type = DirichletBC
+    variable = disp_z
+    boundary = xy_plane
     value = 0.0
   []
   [freesurf_temp]
