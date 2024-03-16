@@ -403,13 +403,13 @@ inlet_T_fluid             = 949.81667 # (K)
     # [core_vol_adjust] # TO BE FIXED (number of 'vol' needs to match the number of blocks)
     #     type = VolumeAdjuster
     #     block = '1 2 3 4 5 6 7 8 9 10'
-    #     vol = 0.040999863
+    #     volume = 0.040999863
     #     execute_on = 'initial timestep_begin timestep_end'
     # []
     [int_ref_vol_adjust]
         type = VolumeAdjuster
         block = '11'
-        vol = 0.00331416
+        volume = 0.00331416
         execute_on = 'initial timestep_begin timestep_end'
     []
     # [Tcore]

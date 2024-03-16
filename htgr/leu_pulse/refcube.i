@@ -53,7 +53,7 @@
   []
   [set_core_id]
     type = SubdomainBoundingBoxGenerator
-    block_id =  10
+    block_id = 10
     input = ref_mesh
     bottom_left = '0.0 0.0 0.0'
     top_right = '67.58663568 67.58663568 67.58663568'
@@ -152,7 +152,7 @@
   # In 3D, back = 0, bottom = 1, right = 2, top = 3, left = 4, front = 5
   # back is -z, bottom is -y, right is +x
   #Boundary Conditions#
-  G =  6
+  G = 6
   ReflectingBoundary = '0 1 4'
   VacuumBoundary = '2 3 5'
   equation_type = transient
@@ -160,7 +160,7 @@
   particle = neutron
   [diffing]
     family = LAGRANGE
-    n_delay_groups =  6
+    n_delay_groups = 6
     order = FIRST
     scheme = CFEM-Diffusion
   []
@@ -173,7 +173,7 @@
 [Variables]
   [temperature]
     family = LAGRANGE
-    initial_condition =  300.0
+    initial_condition = 300.0
     order = FIRST
     scaling = 1e-8
   []
@@ -231,21 +231,21 @@
   [avg_coretemp]
     block = 0
     family = LAGRANGE
-    initial_condition =  300.0
+    initial_condition = 300.0
     order = FIRST
   []
   [temp_fg]
     #Fuel Grain
     block = 10
     family = LAGRANGE
-    initial_condition =  300.0
+    initial_condition = 300.0
     order = FIRST
   []
   [temp_ms]
     #Moderator Shell
     block = 10
     family = LAGRANGE
-    initial_condition =  300.0
+    initial_condition = 300.0
     order = FIRST
   []
 []
@@ -262,7 +262,7 @@
     cross_section = kappa_sigma_fission
     dummies = UnscaledTotalPower
     execute_on = 'initial linear'
-    scalar_flux =  'sflux_g0 sflux_g1 sflux_g2 sflux_g3 sflux_g4 sflux_g5'
+    scalar_flux = 'sflux_g0 sflux_g1 sflux_g2 sflux_g3 sflux_g4 sflux_g5'
     scale_factor = PowerScaling
     variable = PowerDensity
   []
@@ -270,7 +270,7 @@
     type = VariableTimeIntegrationAux
     block = 10
     execute_on = timestep_end
-    variable =  IntegralPower
+    variable = IntegralPower
     variable_to_integrate = PowerDensity
   []
   [Set_coreT]
@@ -395,7 +395,7 @@
   []
   [Eq_TREAT_Power]
     type = ScalePostprocessor
-    scaling_factor =  2469860.77609
+    scaling_factor = 2469860.77609
     value = avg_powerden
   []
 []
@@ -420,10 +420,10 @@
   [neut_mix]
     type = CoupledFeedbackNeutronicsMaterial
     block = 10
-    densities =  '0.998448391539 0.00155160846058'
+    densities = '0.998448391539 0.00155160846058'
     grid_names = 'Tfuel Tmod Rod'
     grid_variables = 'temp_fg temp_ms Boron_Conc'
-    isotopes =  'pseudo1 pseudo2'
+    isotopes = 'pseudo1 pseudo2'
     library_file = 'cross_sections/leu_20r_is_6g_d.xml'
     library_name = leu_20r_is_6g_d
     material_id = 1
@@ -433,21 +433,21 @@
     # Volume weighted harmonic mean
     # Divided fg_kth by 100 to get it into cm
     type = ParsedMaterial
-    coupled_variables =  'temp_fg'
+    coupled_variables = 'temp_fg'
     block = 10
-    constant_expressions =  '3.35103216383e-08 1.31125888571e-07 2.14325144175e-05 0.3014 0.01046 1.0 0.05 1.5 1.0'
+    constant_expressions = '3.35103216383e-08 1.31125888571e-07 2.14325144175e-05 0.3014 0.01046 1.0 0.05 1.5 1.0'
     constant_names = 'vol_fg vol_fl vol_gr gr_kth fl_kth beta p_vol sigma kap3x'
-    property_name =  'thermal_conductivity'
-    expression =  'lt := temp_fg / 1000.0; fresh := (100.0 / (6.548 + 23.533 * lt) + 6400.0 * exp(-16.35 / lt) / pow(lt, 5.0/2.0)) / 100.0; kap1d := (1.09 / pow(beta, 3.265) + 0.0643 * sqrt(temp_fg) / sqrt(beta)) * atan(1.0 / (1.09 / pow(beta, 3.265) + sqrt(temp_fg) * 0.0643 / sqrt(beta))); kap1p := 1.0 + 0.019 * beta / ((3.0 - 0.019 * beta) * (1.0 + exp(-(temp_fg - 1200.0) / 100.0))); kap2p := (1.0 - p_vol) / (1.0 + (sigma - 1.0) * p_vol); kap4r := 1.0 - 0.2 / (1.0 + exp((temp_fg - 900.0) / 80.0)); fg_kth := fresh * kap1d * kap1p * kap2p * kap3x * kap4r; (vol_fg + vol_fl + vol_gr) / (vol_fg / fg_kth + vol_fl / fl_kth + vol_gr / gr_kth)'
+    property_name = 'thermal_conductivity'
+    expression = 'lt := temp_fg / 1000.0; fresh := (100.0 / (6.548 + 23.533 * lt) + 6400.0 * exp(-16.35 / lt) / pow(lt, 5.0/2.0)) / 100.0; kap1d := (1.09 / pow(beta, 3.265) + 0.0643 * sqrt(temp_fg) / sqrt(beta)) * atan(1.0 / (1.09 / pow(beta, 3.265) + sqrt(temp_fg) * 0.0643 / sqrt(beta))); kap1p := 1.0 + 0.019 * beta / ((3.0 - 0.019 * beta) * (1.0 + exp(-(temp_fg - 1200.0) / 100.0))); kap2p := (1.0 - p_vol) / (1.0 + (sigma - 1.0) * p_vol); kap4r := 1.0 - 0.2 / (1.0 + exp((temp_fg - 900.0) / 80.0)); fg_kth := fresh * kap1d * kap1p * kap2p * kap3x * kap4r; (vol_fg + vol_fl + vol_gr) / (vol_fg / fg_kth + vol_fl / fl_kth + vol_gr / gr_kth)'
   []
   [rho_cp]
     # Volume weighted arithmetic mean (Irradiation has no effect)
     type = ParsedMaterial
-    coupled_variables =  'temp_fg temp_ms'
+    coupled_variables = 'temp_fg temp_ms'
     block = 10
-    constant_expressions =  '3.35103216383e-08 2.1563640306e-05 0.0018 0.010963'
-    constant_names =  'vol_fg vol_gr rho_gr rho_fg'
-    property_name =  'heat_capacity'
+    constant_expressions = '3.35103216383e-08 2.1563640306e-05 0.0018 0.010963'
+    constant_names = 'vol_fg vol_gr rho_gr rho_fg'
+    property_name = 'heat_capacity'
     expression = 'lt := temp_fg / 1000.0; gr_rhocp := rho_gr / (11.07 * pow(temp_ms, -1.644) + 0.0003688 * pow(temp_ms, 0.02191)); fink_cp := 52.1743 + 87.951 * lt - 84.2411 * pow(lt, 2) + 31.542 * pow(lt, 3) - 2.6334 * pow(lt, 4) - 0.71391 * pow(lt, -2); fg_rhocp := rho_fg * fink_cp / 267.2 * 1000.0; (vol_fg * fg_rhocp + vol_gr * gr_rhocp) / (vol_fg + vol_gr)'
   []
   [neut_refl]
@@ -466,16 +466,16 @@
     type = GenericConstantMaterial
     block = 0
     prop_names = 'thermal_conductivity'
-    prop_values =  '0.3014'
+    prop_values = '0.3014'
   []
   [ref_rho_cp]
     type = ParsedMaterial
-    coupled_variables =  'temperature'
+    coupled_variables = 'temperature'
     block = '0'
-    constant_expressions =  '0.0018'
+    constant_expressions = '0.0018'
     constant_names = 'rho_gr'
-    property_name =  'heat_capacity'
-    expression =  'rho_gr / (11.07 * pow(temperature, -1.644) + 0.0003688 * pow(temperature, 0.02191))'
+    property_name = 'heat_capacity'
+    expression = 'rho_gr / (11.07 * pow(temperature, -1.644) + 0.0003688 * pow(temperature, 0.02191))'
   []
 []
 
@@ -507,7 +507,7 @@
   # Time evolution parameters
   dtmin = 1e-7
   start_time = 0.0
-  end_time =  10.0
+  end_time = 10.0
   [TimeStepper]
     type = ConstantDT
     dt = 0.005
@@ -528,7 +528,7 @@
 []
 [Outputs]
   file_base = out~refcube
-  interval = 1
+  time_step_interval = 1
   [console]
     type = Console
     output_linear = true

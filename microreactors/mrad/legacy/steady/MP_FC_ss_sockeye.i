@@ -141,7 +141,7 @@ corr_factor = ${fparse 2 * R_clad_o / R_hp_hole / R_hp_hole / area_correction / 
     hs = hp
     T_ambient = ${T_ext_cond}
     htc_ambient = ${htc_ext_cond} # large value to approach an effective DirichletBC
-    scale_pp = bc_scale_pp        # A trivial scale_pp == 1
+    scale = 1
   []
   [evaporator_boundary]
     type = HSBoundaryExternalAppConvection
@@ -149,7 +149,7 @@ corr_factor = ${fparse 2 * R_clad_o / R_hp_hole / R_hp_hole / area_correction / 
     hs = hp
     T_ext = T_wall_var
     htc_ext = htc_wall_var
-    scale_pp = bc_scale_pp        # A trivial scale_pp == 1
+    scale = 1
   []
 []
 
@@ -175,14 +175,14 @@ corr_factor = ${fparse 2 * R_clad_o / R_hp_hole / R_hp_hole / area_correction / 
 
 [Functions]
   [hp_ax1_vf]
-    type = VectorPostprocessorFunction
+    type = PiecewiseLinearFromVectorPostprocessor
     argument_column = z
     component  = z
     value_column = T_solid
     vectorpostprocessor_name = hp_ax1
   []
   [flux_vf]
-    type = VectorPostprocessorFunction
+    type = PiecewiseLinearFromVectorPostprocessor
     argument_column = z
     component  = z
     value_column = main_flux
@@ -254,11 +254,6 @@ corr_factor = ${fparse 2 * R_clad_o / R_hp_hole / R_hp_hole / area_correction / 
     type = RelativeDifferencePostprocessor
     value1 = evaporator_boundary_integral
     value2 = Integral_BC_Cond
-    execute_on = 'INITIAL TIMESTEP_END'
-  []
-  [bc_scale_pp]
-    type = FunctionValuePostprocessor
-    function = 1.0
     execute_on = 'INITIAL TIMESTEP_END'
   []
   [operational_pp]
@@ -346,10 +341,6 @@ corr_factor = ${fparse 2 * R_clad_o / R_hp_hole / R_hp_hole / area_correction / 
     value1 = T_evap_inner
     value2 = T_cond_inner
     execute_on = 'INITIAL TIMESTEP_END'
-  []
-  [scale_pp]
-    type = FunctionValuePostprocessor
-    function = scale_fcn
   []
 []
 

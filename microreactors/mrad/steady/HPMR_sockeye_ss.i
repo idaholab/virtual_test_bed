@@ -170,7 +170,7 @@ q_evap = '${fparse Q_hp / S_evap}'
     hs = hp
     T_ambient = ${T_ext_cond}
     htc_ambient = ${htc_ext_cond} #large value to approach an effective DirichletBC
-    scale_pp = bc_scale_pp
+    scale = 1
   []
   [evaporator_boundary]
     type = HSBoundaryExternalAppConvection
@@ -277,11 +277,6 @@ q_evap = '${fparse Q_hp / S_evap}'
     value2 = Integral_BC_Cond
     execute_on = 'INITIAL TIMESTEP_END'
   []
-  [bc_scale_pp]
-    type = FunctionValuePostprocessor
-    function = 1.0
-    execute_on = 'INITIAL TIMESTEP_END'
-  []
   [operational_pp]
     type = ElementAverageValue
     variable = operational_aux
@@ -366,10 +361,6 @@ q_evap = '${fparse Q_hp / S_evap}'
     value1 = T_evap_inner
     value2 = T_cond_inner
     execute_on = 'INITIAL TIMESTEP_END'
-  []
-  [scale_pp]
-    type = FunctionValuePostprocessor
-    function = scale_fcn
   []
   [A_int_master_flux]
     type = SideIntegralVariablePostprocessor

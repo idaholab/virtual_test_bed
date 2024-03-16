@@ -63,10 +63,10 @@
 
 [Outputs]
   exodus = true
-  interval = 500
+  time_step_interval = 500
   [csv]
     type = CSV
-    interval = 1
+    time_step_interval = 1
   []
 []
 

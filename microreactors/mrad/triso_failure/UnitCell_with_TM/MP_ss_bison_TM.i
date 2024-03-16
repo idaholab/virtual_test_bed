@@ -31,7 +31,7 @@ mod_env_blocks = 'mod_envelope_01 mod_envelope_02 mod_envelope_03 mod_envelope_0
   file = ../mesh/3D_unit_cell_FY21_simple_YAN_40sections_5cm_axial_dist_bison.e
 []
 
-[Modules/TensorMechanics/Master]
+[Physics/SolidMechanics/QuasiStatic]
   [fuel]
     block = ${fuel_blocks}
     add_variables = true

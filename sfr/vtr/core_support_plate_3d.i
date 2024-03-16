@@ -65,7 +65,7 @@ Tref   = 293.15 # reference temperature for the linear thermal expansion for SS3
 # ==============================================================================
 # MODULES
 # ==============================================================================
-[Modules/TensorMechanics/Master]
+[Physics/SolidMechanics/QuasiStatic]
   [plate]
     add_variables = true
     strain = SMALL

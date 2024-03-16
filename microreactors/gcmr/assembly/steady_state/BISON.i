@@ -451,7 +451,7 @@ coolant_half_points_filename = ../channel_positions/coolant_half_points.txt # Fi
 []
 
 [Outputs]
-  interval = 1
+  time_step_interval = 1
   [exodus]
     type = Exodus
   []

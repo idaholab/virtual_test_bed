@@ -9,7 +9,7 @@
   global_init_V = 1
   global_init_T = 628.15
   Tsolid_sf = 1e-3
-  scaling_factor_var = '1 1e-3 1e-6'  # fluid model solver parameters
+  scaling_factor_var = '1 1e-3 1e-6' # fluid model solver parameters
 []
 
 [EOS]
@@ -1215,7 +1215,7 @@
     use_displaced = true
     execute_on = 'initial timestep_end'
     sequence = false
-    interval = 40
+    time_step_interval = 40
   []
   [checkpoint]
     type = Checkpoint
@@ -1227,11 +1227,11 @@
     output_nonlinear = false
     output_linear = false
     execute_scalars_on = 'NONE'
-    interval = 20
+    time_step_interval = 20
   []
   [csv]
     type = CSV
-    interval = 10
+    time_step_interval = 10
     execute_scalars_on = 'NONE'
     hide = 'CH1:fuel_Fuel_Doppler_Reactivity CH1:pipe_Coolant_Density_Reactivity CH1_Fuel_Axial_Expansion_Reactivity CH2:fuel_Fuel_Doppler_Reactivity CH2:pipe_Coolant_Density_Reactivity CH2_Fuel_Axial_Expansion_Reactivity CH3:fuel_Fuel_Doppler_Reactivity CH3:pipe_Coolant_Density_Reactivity CH3_Fuel_Axial_Expansion_Reactivity CH4:fuel_Fuel_Doppler_Reactivity CH4:pipe_Coolant_Density_Reactivity CH4_Fuel_Axial_Expansion_Reactivity'
   []

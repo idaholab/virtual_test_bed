@@ -51,7 +51,6 @@ reactor_inlet_free_rho_u = ${fparse -reactor_total_mfr/reactor_inlet_free_flow_a
   kernel_coverage_check = false
 
   restart_file_base = '../steady/oecd_pbmr400_ss1_phtn_flow_path_cp/LATEST'
-  skip_additional_restart_data = true
   force_restart = true
 []
 
