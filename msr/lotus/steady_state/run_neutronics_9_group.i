@@ -40,8 +40,7 @@
     new_boundary = 'reactor_out'
     # Dummy parameter
     normals = '1 0 0'
-    tolerance = '1'
-    variance = '1'
+    normal_tol = 1
   []
   [recreate_outer_part2]
     type = ParsedGenerateSideset
