@@ -70,7 +70,7 @@ The process initiated with generating homogenized multi-group cross-sections usi
 
 
 
-!listing microreactors/gcmr/core/Neutronics/Griffin_GCMR_Core.i
+!listing microreactors/gcmr/core/Neutronics/Griffin_steady_state.i
 
 
 ## Run Commands
