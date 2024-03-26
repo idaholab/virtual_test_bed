@@ -1,0 +1,11 @@
+half_pinpitch = 0.0067123105    # m
+fuel_r_o = 0.004318648          # m
+fuel_r_i = 0.00202042           # m
+gap_i = ${fparse fuel_r_i * 0.25}
+clad_r = 0.0054037675           # m
+duct_thickness = 0.0035327      # m
+flat_to_flat = 0.037164         # m
+activefuelheight = 1.06072      # m
+lowerreflectorheight = 0.2      # m
+upperreflectorheight = 0.2      # m
+half_asmpitch = ${fparse flat_to_flat / 2 + duct_thickness}
