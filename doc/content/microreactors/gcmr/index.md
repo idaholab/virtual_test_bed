@@ -32,3 +32,10 @@
 [Multiphysics Models](gcmr/bypass_flow/Core_with_bypass_model.md)
 
 [Steady-State Results](gcmr/bypass_flow/Core_with_bypass_results.md)
+
+# Gas-Cooled Whole Core
+
+*Contacts: Ahmed Abdelhameed (aabdelhameed.at.anl.gov), Nicolas Stauff (nstauff.at.anl.gov), Yinbin Miao (ymiao.at.anl.gov),*
+
+[Neutronic Modeling of the Whole Core Gas-Cooled Microreactor (GCMR)](gcmr/GCMR_Core_Neutronics.md)
+
