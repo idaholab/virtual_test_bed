@@ -1,10 +1,5 @@
-#  OFFICIAL USE ONLY
-#  May be exempt from public release under the Freedom of Information Act
-#  (5 U.S.C. 552), exemption number and category: 4 Commercial/Proprietary
-#  Review required before public release Name/Org: Javier Ortensi C110.
-#  Date: 11/4/2021. Guidance (if applicable): N/A
-# ==============================================================================
-# Model description:
+# ------------------------------------------------------------------------------
+# Description:
 # Coupled neutronics-thermal-fluids model to streamline method for equilibrium core
 # The pebble model resolution is based on fluids mesh
 #
@@ -66,11 +61,10 @@ Rho_ref = 1973.8 # kg/m^3
   [diff]
     scheme = CFEM-Diffusion
     family = LAGRANGE
-    order = FIRST
+    order = SECOND
     n_delay_groups = 6
     assemble_scattering_jacobian = true
     assemble_fission_jacobian = true
-    diffusion_kernel_type = vector
   []
 []
 
@@ -85,10 +79,10 @@ Rho_ref = 1973.8 # kg/m^3
     dim = 2
 
     dx = '0.9 0.3 0.156 0.444 0.02 0.05 0.04'
-    ix = ' 12   4    4     4    1     1    1'
+    ix = '  6   2    1     3    1     1    1'
 
     dy = '0.6 0.30947 2.47576 0.30947 0.6'
-    iy = '  8    4       32       4     8'
+    iy = '  4    2       16       2     4'
 
     subdomain_id = '
    3 3 3 3 4 5 4
@@ -112,6 +106,7 @@ Rho_ref = 1973.8 # kg/m^3
     new_block = '1 1 3 4 5 6'
   []
   coord_type = RZ
+  second_order = true
 []
 
 # ==============================================================================
@@ -168,6 +163,15 @@ Rho_ref = 1973.8 # kg/m^3
     order = CONSTANT
     family = MONOMIAL
   []
+  [power_peaking]
+    order = CONSTANT
+    family = MONOMIAL
+  []
+  [rod_position]
+    order = CONSTANT
+    family = MONOMIAL
+    block = 'cr'
+  []
 []
 
 [AuxKernels]
@@ -187,6 +191,13 @@ Rho_ref = 1973.8 # kg/m^3
     pebble_volume_fraction = pebble_volume_fraction
     n_fresh_pebble_types = 1
     execute_on = 'INITIAL TIMESTEP_END'
+  []
+  [power_peaking_aux]
+    type = ParsedAux
+    block = 'pebble_bed'
+    variable = power_peaking
+    coupled_variables = 'total_power_density pden_avg'
+    expression = 'total_power_density / pden_avg'
   []
   [Tfuel_avg]
     type = PebbleAveragedAux
@@ -248,32 +259,14 @@ Rho_ref = 1973.8 # kg/m^3
   []
   [CR_pos_f]
     type = ConstantFunction
-    value = '2.614' #Note that when position is 3.6947 CR is withdrawn
+    value = '3.38523' #Note that when position is 3.6947 CR is withdrawn
   []
 []
-
-[UserObjects]
-  [transport_solution_cr]
-    type = TransportSolutionVectorFile
-    transport_system = diff
-    writing = true
-    execute_on = 'FINAL'
-  []
-  [depletion_solution_cr]
-    type = SolutionVectorFile
-    var = 'pebble_isotope_density pebble_volume_fraction graphite_temperature triso_temperature total_power_density partial_power_density
-           Rho Tsolid'
-    writing = true
-    execute_on = 'FINAL'
-  []
-[]
-
 # ==============================================================================
 # DEPLETION
 # ==============================================================================
 [PebbleDepletion]
   block = 'pebble_bed'
-  # scale_factor = power_scaling
 
   power = ${total_power}
   integrated_power_postprocessor = total_power
@@ -289,20 +282,16 @@ Rho_ref = 1973.8 # kg/m^3
   # coolant settings
   coolant_composition_name = coolant
   coolant_density_variable = 'Rho'
-  #coolant_atomic_densities = 'LI6 4.38333E-07 LI7 2.40010E-02 BE9 1.20001E-02 F19 4.80084E-02' # equilibrium values
   coolant_density_ref = ${Rho_ref}
 
   # transmutation data
   dataset = ISOXML
   isoxml_data_file = '../data/DRAGON5_DT.xml'
   isoxml_lib_name = 'DRAGON'
-  #strictness = 0 # to avoid errors in ISOXML w.r.t. unphysical branching ratios for DH pseudos
-  dtl_physicality = RATIO_SUM
+  dtl_physicality = DISABLE
 
   # Isotopic options
   n_fresh_pebble_types = 1
-  #fresh_pebble_isotopes = 'U234           U235            U238            C12              O16              O17            Graphite          SI28        SI29              SI30           pseudo_G'
-  #fresh_pebble_compositions = 'U234 1.43856269E-08 U235 5.09162564E-05 U238  2.06863668E-04 C12 9.03720735E-04 O16 3.86545726E-04 O17 1.46942583E-07 Graphite  4.81177028E-03 SI28 7.14571157E-04 SI29  3.63004146E-05 SI30 2.39580131E-05 pseudo_G 7.41205513E-02'
   fresh_pebble_compositions = pebble
   track_isotopes = 'U235 U236 U238 PU238 PU239 PU240 PU241 PU242 AM241 AM242M CS135 CS137 XE135 XE136 I131 I135 SR90'
   decay_heat = true
@@ -320,12 +309,11 @@ Rho_ref = 1973.8 # kg/m^3
 
     # Streamline definition
     major_streamline_axis = y
-    streamline_points = '0.152  0.6 0  0.152  3.69469 0;
-                         0.450  0.6 0  0.450  3.69469 0;
-                         0.750  0.6 0  0.750  3.69469 0;
-                         1.1248 0.6 0  1.1248 3.69469 0;'
-    streamline_segment_subdivisions = '20; 20; 20; 20' # looks like there are 40 axial elements so choose number that will align with the neutronics mesh
-    #material_ids = '1; 1; 1; 1'
+    streamline_points = '0.152  0.60 0  0.152  3.6947 0;
+                         0.450  0.60 0  0.450  3.6947 0;
+                         0.750  0.60 0  0.750  3.6947 0;
+                         1.050  0.60 0  1.050  3.6947 0;'
+    streamline_segment_subdivisions = '20; 20; 20; 20' # align with the neutronics mesh
 
     # Pebble options
     pebble_unloading_rate = ${pebble_unloading_rate}
@@ -343,7 +331,7 @@ Rho_ref = 1973.8 # kg/m^3
 
   # pebble conduction
   pebble_conduction_input_file = 'gFHR_pebble_triso_ss.i'
-  pebble_positions_file = '../data/pebble_heat_pos_16r_40z.txt'
+  pebble_positions_file = '../data/pebble_heat_pos_8r_20z.txt'
   surface_temperature_sub_app_postprocessor = T_surface
   surface_temperature_main_app_variable = Tsolid
   power_sub_app_postprocessor = pebble_power_density
@@ -418,26 +406,14 @@ Rho_ref = 1973.8 # kg/m^3
 [Executioner]
   type = Eigenvalue
   solve_type = PJFNKMO
-  # only set this flag to true after testing that the matrix is not spectrum dependent
-  constant_matrices = false
-  petsc_options_iname = '-pc_type -pc_hypre_type -ksp_gmres_restart '
-  petsc_options_value = 'hypre boomeramg 100'
-  line_search = l2
 
   #Linear/nonlinear iterations.
-  l_tol = 1e-3
-  l_max_its = 100
-
   nl_max_its = 50
-  nl_rel_tol = 1e-7
-  nl_abs_tol = 1e-8
+  nl_abs_tol = 1e-6
 
+  fixed_point_force_norms = true
   fixed_point_max_its = 50
-  fixed_point_rel_tol = 1e-7
-  fixed_point_abs_tol = 1e-8
-
-  # Power iterations.
-  free_power_iterations = 2
+  fixed_point_abs_tol = 1e-6
 []
 
 # ==============================================================================
@@ -463,21 +439,18 @@ Rho_ref = 1973.8 # kg/m^3
     variable = power_density
     from_postprocessors_to_be_preserved = total_power
     to_postprocessors_to_be_preserved = total_power
-    #fixed_meshes = true
   []
   [Tsolid_from_flow]
     type = MultiAppGeneralFieldNearestLocationTransfer
     from_multi_app = flow
     source_variable = T_solid
     variable = Tsolid
-    #fixed_meshes = true
   []
   [Rho_from_flow]
     type = MultiAppGeneralFieldNearestLocationTransfer
     from_multi_app = flow
     source_variable = rho_var
     variable = Rho
-    #fixed_meshes = true
   []
 []
 
@@ -486,6 +459,12 @@ Rho_ref = 1973.8 # kg/m^3
 # ==============================================================================
 
 [Postprocessors]
+  [power_peak]
+    type        = ElementExtremeValue
+    variable    = power_peaking
+    value_type  = max
+    block       = 'pebble_bed'
+  []
   [Tsolid_core]
     type = ElementAverageValue
     block = 'pebble_bed'
@@ -540,6 +519,7 @@ Rho_ref = 1973.8 # kg/m^3
 
 [Debug]
   show_var_residual_norms = false
+  show_rodded_materials_average_segment_in = rod_position
 []
 
 [DefaultElementQuality]
