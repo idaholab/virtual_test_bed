@@ -1,9 +1,5 @@
-#  OFFICIAL USE ONLY
-#  May be exempt from public release under the Freedom of Information Act
-#  (5 U.S.C. 552), exemption number and category: 4 Commercial/Proprietary
-#  Review required before public release Name/Org: Javier Ortensi C110.
-#  Date: 11/4/2021. Guidance (if applicable): N/A
-# ==============================================================================
+# ------------------------------------------------------------------------------
+# Description:
 # gFHR salt simulation
 # Porous Flow Incompressible Media Finite Volume
 # sprvel: superficial formulation of the velocities
@@ -23,7 +19,7 @@ pebble_volume = '${fparse 4/3*pi*pow(pebble_radius,3)}' # volume of the pebble (
 pebble_fuel_volume = '${fparse 4/3*pi*(pow(pebble_fuel_radius,3)-pow(pebble_center_core_radius,3))}' # volume of the pebble occupied by TRISO (m3)
 kernel_radius = 2.125e-04 # kernel particle radius (m)
 kernel_volume = '${fparse 4/3*pi*pow(kernel_radius,3)}' # volume of the kernel (m3)
-triso_number = 9022 # Number of TRISO particle in a pebble (//)
+triso_number = 9022 # Number of TRISO particles in a pebble
 
 # Initial values.
 initial_temperature = 873.15 # (K)

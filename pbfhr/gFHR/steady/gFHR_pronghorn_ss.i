@@ -1,9 +1,3 @@
-#  OFFICIAL USE ONLY
-#  May be exempt from public release under the Freedom of Information Act
-#  (5 U.S.C. 552), exemption number and category: 4 Commercial/Proprietary
-#  Review required before public release Name/Org: Javier Ortensi C110.
-#  Date: 11/4/2021. Guidance (if applicable): N/A
-# ==============================================================================
 # ------------------------------------------------------------------------------
 # Description:
 # gFHR input
@@ -32,7 +26,6 @@ D_H_flow2 = 0.9
 D_H_flow5 = 0.3
 D_H_diode = 0.1
 D_H_outlet = 0.8
-#D_H_core_buffer = 1.2
 
 # porosities
 porosity_bed = 0.401150593
@@ -46,9 +39,6 @@ velocity_interp_method = 'rc'
 
 core_power_density = 1.999987E+07
 blocks_fluid = 'flow1 flow2 flow3 flow4 flow5 dio1 dio2 dio3 flowp inlet outlet '
-#blocks_open = 'flow1 flow2 flow5 inlet outlet core_buffer'
-#blocks_porous = 'flow3 flow4 dio1 dio2 dio3 flowp'
-#blocks_solid = 'reflector barrel vessel1 vessel2'
 
 blocks_free_flow = 'flow1 flow2 flow5 dio1 dio2 dio3 inlet outlet '
 blocks_bed = 'flow3 flow4 flowp'
@@ -74,7 +64,6 @@ Forch_open = 1.25
   two_term_boundary_expansion = true
   advected_interp_method = ${advected_interp_method}
   velocity_interp_method = ${velocity_interp_method}
-  #mu = 'mu'
   rho = 'rho'
   force_define_density = true
   acceleration = '0.0 -9.8 0.0'
@@ -97,10 +86,10 @@ Forch_open = 1.25
 
     # keep mesh in the pebble bed roughly 3xpebble diameter ~12 cm for gFHR
     dx = '0.8 0.1 0.3 0.2 0.2 0.2 0.02 0.05 0.04'
-    ix = '  12  4   12   2   2  4   1    10     6'
+    ix = '  6   1   3   2   2   2    1    2    1'
 
     dy = '0.04 0.05  0.3 0.3  0.154735 2.78523 0.154735  0.6  0.5  0.05 0.1 0.2 0.4'
-    iy = '  6    5   10   18      8      18       8      20    12    5   4   8    8'
+    iy = '   1    2    2   2         1      18        1    4    4     2   1   2   2'
 
     subdomain_id = '
    14 13 13 13 13 13 13 13 13
@@ -201,19 +190,6 @@ Forch_open = 1.25
   []
   uniform_refine = 0
 []
-
-#[Problem]
-#  coord_type = RZ
-#  rz_coord_axis = Y
-#  restart_file_base = gFHR_griffin_ss_out_flow0_restart_cp/LATEST
-#  force_restart = true
-#[]
-
-#[Mesh]
-#  file = gFHR_griffin_ss_out_flow0_restart_cp/LATEST
-#  coord_type = RZ
-#  rz_coord_axis = Y
-#[]
 
 [Modules]
   [NavierStokesFV]
@@ -460,7 +436,6 @@ Forch_open = 1.25
     block = 'flow3' # only in the pebble bed core
   []
   [solid_energy_diffusion_core]
-    #    type = FVAnisotropicDiffusion
     type = PINSFVEnergyAnisotropicDiffusion
     variable = T_solid
     kappa = 'eff_solid_conductivity'
@@ -468,7 +443,6 @@ Forch_open = 1.25
     # porosity won't be used because effective_diffusivity = true
     # so set it to 1
     porosity = 1
-    #    coeff = 'eff_solid_conductivity'
   []
 []
 
@@ -553,12 +527,6 @@ Forch_open = 1.25
     von_karman_const_0 = 1
     walls = 'wall1'
   []
-  # [h_var_aux]
-  #   type = ADFunctorElementalAux
-  #   variable = htc_material
-  #   functor = wall_htc
-  #   block = ${blocks_fluid}
-  # []
   [Adjust_HTC]
     type = ParsedAux
     variable = Adjusted_HTC_Material
@@ -1123,26 +1091,11 @@ Forch_open = 1.25
     dt = 1e-1
     postprocessor = New_Dt
   []
-  # [TimeStepper]
-  #   type = IterationAdaptiveDT
-  #   dt                 = 1e-3
-  #   cutback_factor     = 0.8
-  #   growth_factor      = 5.0
-  #   optimal_iterations = 25
-  # []
-
-  # Time integrating schemes.
-  # [TimeIntegrator]
-  #   type = ImplicitEuler
-  # []
 
   # Automatic scaling
   automatic_scaling = true
   off_diagonals_in_auto_scaling = true
   compute_scaling_once = true
-
-  # relaxation_factor = 0.95
-  # transformed_variables = 'T_solid T_fluid'
 []
 
 [Outputs]
@@ -1157,10 +1110,6 @@ Forch_open = 1.25
     outlier_variable_norms = false
     all_variable_norms = false
   []
-  #[restart]
-  #  type = Checkpoint
-  #  additional_execute_on = 'FINAL'
-  #[]
   [exo]
     type = Exodus
     execute_on = 'FINAL'
