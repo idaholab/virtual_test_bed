@@ -36,5 +36,5 @@
 	ignore = dirty
 [submodule "apps/moose"]
 	path = apps/moose
-	url = https://github.com/idaholab/moose.git
+	url = https://github.com/pbehne/moose.git
 	ignore = dirty
