@@ -269,10 +269,10 @@ corr_factor = '${fparse R_hp_hole / R_clad_o * area_correction / perimeter_corre
     execute_on = 'initial timestep_begin'
   []
   [to_sockeye_flux]
-    type = MultiAppGeneralFieldNearestLocationTransfer
-    to_multi_app = sockeye
-    source_variable = flux_uo_corr
+    type = MultiAppGeneralFieldUserObjectTransfer
     variable = master_flux
+    to_multi_app = sockeye
+    source_user_object = flux_uo
     execute_on = 'initial timestep_begin'
   []
 []
