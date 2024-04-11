@@ -69,12 +69,12 @@
   [coupled_simulation]
     type = CSVDiff
     input = 'HPMR_dfem_griffin_ss.i'
-    csvdiff = 'mrad_bison_out.csv mrad_bison_out_sockeye001_csv.csv'
+    csvdiff = 'mrad_coupled_out.csv'
     executable_pattern = 'dire_wolf*'
-    cli_args = "Executioner/num_steps=2 Executioner/nl_abs_tol=1e-1 Outputs/csv=true "
-               "Outputs/file_base=mrad_bison_out Outputs/exodus=false"
-    # takes about 9 minutes on 48 cores
+    cli_args = "Executioner/richardson_max_its=2 Executioner/richardson_abs_tol=1e-1 Outputs/csv=true "
+               "Outputs/file_base=mrad_coupled_out Outputs/exodus=false MultiApps/bison/cli_args='Outputs/exodus=false'"
     min_parallel = 48
+    max_time = 1080
     # Capillary limit for vertical heat pipes is not accurate; see https://hpcgitlab.hpc.inl.gov/idaholab/sockeye/-/issues/65
     # Cross-section warning due to missing fission-only
     allow_warnings = true
