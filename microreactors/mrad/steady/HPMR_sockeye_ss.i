@@ -419,7 +419,7 @@ q_evap = '${fparse Q_hp / S_evap}'
   start_time = -5e4 # negative start time so we can start running from t = 0
   end_time = 0
   dtmin = 1
-  dt = 1000
+  dt = 5000
 []
 
 [Outputs]

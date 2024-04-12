@@ -252,6 +252,7 @@ corr_factor = '${fparse R_hp_hole / R_clad_o * area_correction / perimeter_corre
 [MultiApps]
   [sockeye]
     type = TransientMultiApp
+    app_type = SockeyeApp
     positions_file = 'hp_centers.txt'
     input_files = 'HPMR_sockeye_trN.i'
     execute_on = 'initial timestep_begin' # execute on timestep begin because hard to have a good initial guess on heat flux
@@ -269,10 +270,10 @@ corr_factor = '${fparse R_hp_hole / R_clad_o * area_correction / perimeter_corre
     execute_on = 'initial timestep_begin'
   []
   [to_sockeye_flux]
-    type = MultiAppGeneralFieldNearestLocationTransfer
-    to_multi_app = sockeye
-    source_variable = flux_uo_corr
+    type = MultiAppGeneralFieldUserObjectTransfer
     variable = master_flux
+    to_multi_app = sockeye
+    source_user_object = flux_uo
     execute_on = 'initial timestep_begin'
   []
 []

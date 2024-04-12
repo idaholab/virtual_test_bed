@@ -303,7 +303,8 @@ corr_factor = '${fparse R_hp_hole / R_clad_o * area_correction / perimeter_corre
   start_time = -5e4 # negative start time so we can start running from t = 0
   end_time = 0
   dtmin = 1
-  num_steps = 1
+  # Multiple steps are needed to allow iteration between the thermo and heat pipe applications
+  num_steps = 5
 []
 
 [Postprocessors]
