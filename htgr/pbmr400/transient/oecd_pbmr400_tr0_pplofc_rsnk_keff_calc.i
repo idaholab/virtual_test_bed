@@ -691,6 +691,7 @@ fis_fract            = ${fparse 1 - dh_fract} # Fission power fraction at t = 0.
   type = Transient
 
   scheme = implicit-euler
+  use_pre_SMO_residual = true
 
   # end_time = 6000.0
   end_time = 180000.0
