@@ -33,7 +33,7 @@
 
 [Steady-State Results](gcmr/bypass_flow/Core_with_bypass_results.md)
 
-# Gas-Cooled Whole Core
+# Gas-Cooled Whole Core Neutronics
 
 *Contacts: Ahmed Abdelhameed (aabdelhameed.at.anl.gov), Nicolas Stauff (nstauff.at.anl.gov), Yinbin Miao (ymiao.at.anl.gov),*
 

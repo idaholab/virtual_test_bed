@@ -2,7 +2,7 @@
 
 ## GCMR Core Description
 
-The GC-MR, developed at ANL, serves as a modeling experiment to explore design options considered by microreactor vendors, encompassing features like control drums, hydride metal, and TRISO fuel. This horizontal gas-cooled microreactor system boasts a thermal power of 20 MW and an approximate lifespan of 9.5 years. Its power conversion cycle utilizes a Brayton cycle, circulating high-temperature (650°C-850°C) and high-pressure (7 MPa) helium coolant. Surrounding the core are BeO radial and axial neutron reflectors, with twelve control drums positioned in the reflector encircling the core. These control rods, containing 96%-enriched B4C, are inserted into holes within the middle core assemblies. Displayed in [Fig_1] and [Fig_2]  are radial and axial views of the core, which is relatively compact, measuring 2.42 m in diameter and 2.40 m in length.
+The GCMR, developed at ANL, serves as a modeling experiment to explore design options considered by microreactor vendors, encompassing features like control drums, hydride metal, and TRISO fuel. This horizontal gas-cooled microreactor system boasts a thermal power of 20 MW and an approximate lifespan of 9.5 years. Its power conversion cycle utilizes a Brayton cycle, circulating high-temperature (650°C-850°C) and high-pressure (7 MPa) helium coolant. Surrounding the core are BeO radial and axial neutron reflectors, with twelve control drums positioned in the reflector encircling the core. These control rods, containing 96%-enriched B4C, are inserted into holes within the middle core assemblies. Displayed in [Fig_1] and [Fig_2]  are radial and axial views of the core, which is relatively compact, measuring 2.42 m in diameter and 2.40 m in length.
 
 !media media/gcmr/core/Fig_1.png
       style=display: block;margin-left:auto;margin-right:auto;width:80%;
@@ -14,7 +14,7 @@ The GC-MR, developed at ANL, serves as a modeling experiment to explore design o
       id=Fig_2
       caption= Axial view of the GCMR core
 
-The core comprises three types of fuel assemblies: Assembly A in the inner region, Assembly B in the middle, and Assembly C in the outer core region. Each fuel assembly incorporates TRISO fuel blocks containing 19.75 wt% of LEU fuel and Yttrium hydride moderator pins encased in FeCrAl envelopes. Additionally, burnable poison blocks, composed of Gd2O3 particles with a 25% packing fraction distributed axially, and Helium coolant channels are integrated. Assembly A's detailed design is provided in [Fig_3], while [Fig_4] illustrates the design differences among the three assemblies. Notably, Assemblies B and C share similarities, except for Assembly B's inclusion of a core center location for a control rod. Key design parameters of the GCMR core are:
+The core comprises three types of fuel assemblies: Assembly A in the inner region, Assembly B in the middle, and Assembly C in the outer core region. Each fuel assembly incorporates TRISO fuel blocks containing 19.75 wt% of LEU fuel and Yttrium hydride moderator pins encased in FeCrAl envelopes. Additionally, burnable poison blocks, composed of Gd2O3 particles with a 25% packing fraction distributed axially, and Helium coolant channels are integrated. Assembly A's detailed design is provided in [Fig_3], while [Fig_4] illustrates the design differences among the three assemblies. Assemblies B and C are nearly identical, except for the presence of a central shutdown rod location in assembly B. Each of assemblies B and C is equipped with 6 burnable poison rods, 6 moderator pins, and 48 fuel rods. In contrast, Assembly A contains 12 burnable poison rods and 42 fuel rods. The key design parameters of the GCMR core comprise of:
 
 !media media/gcmr/core/Fig_3.png
       style=display: block;margin-left:auto;margin-right:auto;width:80%;
@@ -32,7 +32,7 @@ The core comprises three types of fuel assemblies: Assembly A in the inner regio
 | Core diameter (cm) | 242.0 |
 | Core height (cm) | 240.0 |
 | Active height (cm) | 200.0 |
-| Different core zones | 3 |
+| Different radial core zones | 3 |
 | Number of control drums | 12 |
 | Lattice pitch (cm) | 20.8 |
 | Pin pitch (cm) | 2.0 |
@@ -74,15 +74,18 @@ The process initiated with generating homogenized multi-group cross-sections usi
 
 
 ## Run Commands
+
+The mesh file can be generated using the --mesh-only option as such:
+
+!listing  
+mpirun -np number_of_cores /path/to/blue_crab-opt -i mesh_input.i --mesh-only
+
+
 The Griffin code is a component of the blue_crab code package, and we can execute the simulation as follows:
 
 !listing  
 mpirun -np number_of_cores /path/to/blue_crab-opt -i Griffin_steady_state.i
 
-It should be noticed that the mesh file can be generated using the --mesh-only option as such:
-
-!listing  
-mpirun -np number_of_cores /path/to/blue_crab-opt -i mesh_input.i --mesh-only
 
 ## Results
 
