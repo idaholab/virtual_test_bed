@@ -11,9 +11,6 @@
     ring_intervals = '2 1 1'
     ring_block_ids = '101 100 102 103'
     preserve_volumes = on
-    #quad_center_elements = true
-    #external_boundary_id = 100
-    #interface_boundary_id_shift = 100
   []
 
   [Coolant_hole]
@@ -28,9 +25,6 @@
     ring_intervals = '2'
     ring_block_ids = '201 200'
     preserve_volumes = on
-    #quad_center_elements = true
-    #external_boundary_id = 100
-    #interface_boundary_id_shift = 100
   []
 
   [Control_hole]
@@ -45,9 +39,6 @@
     ring_intervals = '2'
     ring_block_ids = '301 300'
     preserve_volumes = on
-    #quad_center_elements = true
-    #external_boundary_id = 100
-    #interface_boundary_id_shift = 100
   []
 
   [TRISO_fuel_in]
@@ -62,9 +53,6 @@
     ring_intervals = '2'
     ring_block_ids = '401 400'
     preserve_volumes = on
-    #quad_center_elements = true
-    #external_boundary_id = 100
-    #interface_boundary_id_shift = 100
   []
 
   [TRISO_fuel_mid]
@@ -79,12 +67,9 @@
     ring_intervals = '2'
     ring_block_ids = '4001 4000'
     preserve_volumes = on
-    #quad_center_elements = true
-    #external_boundary_id = 100
-    #interface_boundary_id_shift = 100
   []
 
-    [TRISO_fuel_out]
+  [TRISO_fuel_out]
     type = PolygonConcentricCircleMeshGenerator
     num_sides = 6
     num_sectors_per_side = '2 2 2 2 2 2'
@@ -96,9 +81,6 @@
     ring_intervals = '2'
     ring_block_ids = '40001 40000'
     preserve_volumes = on
-    #quad_center_elements = true
-    #external_boundary_id = 100
-    #interface_boundary_id_shift = 100
   []
 
   [Poison_LBP0]
@@ -113,9 +95,6 @@
     ring_intervals = '2'
     ring_block_ids = '501 500'
     preserve_volumes = on
-    #quad_center_elements = true
-    #external_boundary_id = 100
-    #interface_boundary_id_shift = 100
   []
 
   [Poison_LBP1]
@@ -130,12 +109,9 @@
     ring_intervals = '2'
     ring_block_ids = '5001 5000'
     preserve_volumes = on
-    #quad_center_elements = true
-    #external_boundary_id = 100
-    #interface_boundary_id_shift = 100
   []
 
-    [centralFA]
+  [centralFA]
     type = PatternedHexMeshGenerator
     inputs = 'YH_pin Coolant_hole  TRISO_fuel_in Poison_LBP0  Control_hole  Poison_LBP1   TRISO_fuel_out  TRISO_fuel_mid'
     #           0          1            2           3          4            5             6               7
@@ -146,18 +122,16 @@
                   2  2  1  2  2  1  2  2;
                 2  1  2  3  1  3  2  1  2;
               1  2  2  1  2  2  1  2  2  1;
-            3  0  1  3  2  1  2  3  1  0  3;
-            1  2  2  1  2  2  1  2  2  1;
-            2  1  2  3  1  3  2  1  2;
-            2  2  1  2  2  1  2  2;
-            1  0  2  1  2  0  1;
-            3  1  2  2  1  3'
+             3  0  1  3  2  1  2  3  1  0  3;
+               1  2  2  1  2  2  1  2  2  1;
+                2  1  2  3  1  3  2  1  2;
+                 2  2  1  2  2  1  2  2;
+                  1  0  2  1  2  0  1;
+                    3  1  2  2  1  3'
 
-    #id_name = 'material_id'
-    #assign_type = 'cell'
   background_block_id = 10
   background_intervals = 1
-   []
+  []
 
   [Innercore]
     type = PatternedHexMeshGenerator
@@ -171,51 +145,48 @@
                 2  1  2  3  1  3  2  1  2;
               1  2  2  1  2  2  1  2  2  1;
             3  0  1  3  2  1  2  3  1  0  3;
-            1  2  2  1  2  2  1  2  2  1;
-            2  1  2  3  1  3  2  1  2;
-            2  2  1  2  2  1  2  2;
-            1  0  2  1  2  0  1;
-            3  1  2  2  1  3'
+              1  2  2  1  2  2  1  2  2  1;
+               2  1  2  3  1  3  2  1  2;
+                2  2  1  2  2  1  2  2;
+                 1  0  2  1  2  0  1;
+                  3  1  2  2  1  3'
 
-    #id_name = 'material_id'
-    #assign_type = 'cell'
+
   background_block_id = 10
   background_intervals = 1
-   []
+  []
 
-    [dummy]
+  [dummy]
     type =HexagonConcentricCircleAdaptiveBoundaryMeshGenerator
     num_sectors_per_side= '2 2 2 2 2 2'
     hexagon_size = 10.4
     background_intervals = 1
     background_block_ids = '700'
-   []
+  []
 
-    [Outercore]
+  [Outercore]
     type = PatternedHexMeshGenerator
     inputs = 'YH_pin Coolant_hole  TRISO_fuel_in Poison_LBP0  Control_hole  Poison_LBP1   TRISO_fuel_out  TRISO_fuel_mid'
     #           0          1            2           3         4             5             6              7
     hexagon_size = 10.4
     pattern =
                       '7  1  7  7  1  7;
-                    1  0  7  1  7  0  1;
-                  7  7  1  7  7  1  7  7;
-                7  1  7  5  1  5  7  1  7;
+                    1  0  7  1  7  0   1;
+                  7  7  1  7  7  1  7   7;
+                7  1  7  5  1  5  7  1   7;
+              1  7  7  1  7  7  1  7  7   1;
+             7  0  1  5  7  4  7  5  1  0  7;
               1  7  7  1  7  7  1  7  7  1;
-            7  0  1  5  7  4  7  5  1  0  7;
-            1  7  7  1  7  7  1  7  7  1;
-            7  1  7  5  1  5  7  1  7;
-            7  7  1  7  7  1  7  7;
-            1  0  7  1  7  0  1;
-            7  1  7  7  1  7'
+               7  1  7  5  1  5  7  1  7;
+                7  7  1  7  7  1  7  7;
+                 1  0  7  1  7  0  1;
+                  7  1  7  7  1  7'
 
-    #id_name = 'material_id'
-    #assign_type = 'cell'
     background_block_id = 10
     background_intervals = 1
-   []
+  []
 
-    [Outercore2]
+  [Outercore2]
     type = PatternedHexMeshGenerator
     inputs = 'YH_pin Coolant_hole  TRISO_fuel_in Poison_LBP0  Control_hole  Poison_LBP1   TRISO_fuel_out  TRISO_fuel_mid'
     #           0          1            2           3         4             5             6
@@ -226,44 +197,40 @@
                   7  7  1  7  7  1  7  7;
                 7  1  7  5  1  5  7  1  7;
               1  7  7  1  7  7  1  7  7  1;
-            7  0  1  5  7  4  7  5  1  0  7;
-            1  7  7  1  7  7  1  7  7  1;
-            7  1  7  5  1  5  7  1  7;
-            7  7  1  7  7  1  7  7;
-            1  0  7  1  7  0  1;
-            7  1  7  7  1  7'
+             7  0  1  5  7  4  7  5  1  0  7;
+              1  7  7  1  7  7  1  7  7  1;
+               7  1  7  5  1  5  7  1  7;
+                7  7  1  7  7  1  7  7;
+                 1  0  7  1  7  0  1;
+                  7  1  7  7  1  7'
 
-    #id_name = 'material_id'
-    #assign_type = 'cell'
     background_block_id = 10
     background_intervals = 1
-   []
+  []
 
-    [Innercore2]
+  [Innercore2]
     type = PatternedHexMeshGenerator
     inputs = 'YH_pin Coolant_hole  TRISO_fuel_in Poison_LBP0  Control_hole  Poison_LBP1   TRISO_fuel_out  TRISO_fuel_mid'
     #           0          1            2           3         4             5             6               7
     hexagon_size = 10.4
     pattern =
                       '6  1  6  6  1  6;
-                    1  0  6  1  6  0  1;
-                  6  6  1  6  6  1  6  6;
-                6  1  6  5  1  5  6  1  6;
+                    1  0  6  1  6  0   1;
+                  6  6  1  6  6  1  6   6;
+                6  1  6  5  1  5  6  1   6;
+              1  6  6  1  6  6  1  6  6   1;
+             6  0  1  5  6  1  6  5  1  0  6;
               1  6  6  1  6  6  1  6  6  1;
-            6  0  1  5  6  1  6  5  1  0  6;
-            1  6  6  1  6  6  1  6  6  1;
-            6  1  6  5  1  5  6  1  6;
-            6  6  1  6  6  1  6  6;
-            1  0  6  1  6  0  1;
-            6  1  6  6  1  6'
+               6  1  6  5  1  5  6  1  6;
+                6  6  1  6  6  1  6  6;
+                 1  0  6  1  6  0  1;
+                  6  1  6  6  1  6'
 
-    #id_name = 'material_id'
-    #assign_type = 'cell'
     background_block_id = 10
     background_intervals = 1
-   []
+  []
 
- [cd0_12]
+  [cd0_12]
     type =HexagonConcentricCircleAdaptiveBoundaryMeshGenerator
     inputs = 'Innercore2 Innercore2'
     sides_to_adapt = '3 4'
@@ -573,8 +540,6 @@
           3   3  3  9  3  3   3'
 
     rotate_angle = 0
-    #id_name = 'material_id'
-    #assign_type = 'cell'
    []
 
    [del_dummy]
@@ -594,23 +559,23 @@
      #peripheral_ring_block_name = outer_shield
    []
 
-   [del_1]
+  [del_1]
      type = PlaneDeletionGenerator
      point = '0 0 0'
      normal = '10 17.32 0'
      input = ADD_outer_shield
      new_boundary = 147
-   []
+  []
 
-   [del_2]
+  [del_2]
      type = PlaneDeletionGenerator
      point = '0 0 0'
      normal = '10 -17.32 0'
      input = del_1
      new_boundary = 147
-   []
+  []
 
-   [extrude]
+  [extrude]
      type = FancyExtruderGenerator
      input = del_2
      heights = '20 40 40 40 40 40 20'
@@ -625,26 +590,26 @@
       direction = '0 0 1'
       top_boundary = 2000
       bottom_boundary = 3000
-     []
+  []
 
-    [rename_blocks]
+  [rename_blocks]
       type = RenameBlockGenerator
       old_block_id =   ' 10      100        101           102  103     200     201          400     401          4000     4001          40000    40001          300          301                  600         602          603        604          1000              1003            19000  29000  39000  49000  59000  19003  29003  39003  49003  59003  19900  29900  39900  49900  59900  19903  29903  39903  49903  59903  1777 1773  250'
       new_block_name = 'monolith moderator  moderator_tri Cr   FECRAL  coolant coolant_tri  Fuel_in Fuel_tri_in  Fuel_mid Fuel_tri_mid  Fuel_out Fuel_tri_out   Control_hole Control_hole_tri     CD_Radial1  CD_Radial2   CD_poison  CD_coolant   reflector_quad    reflector_tri   BP0_1  BP0_2  BP0_3  BP0_4  BP0_5  BP0_tr_1  BP0_tr_2  BP0_tr_3  BP0_tr_4  BP0_tr_5  BP1_1  BP1_2  BP1_3  BP1_4  BP1_5  BP1_tr_1  BP1_tr_2  BP1_tr_3  BP1_tr_4  BP1_tr_5 Control_ref Control_ref_tri Rad_ref'
       input = extrude
-    []
+  []
 
-    [rename_sidesets]
+  [rename_sidesets]
       type = RenameBoundaryGenerator
       input = rename_blocks
       old_boundary = '2000         3000            10000  147 '
       new_boundary = 'top_boundary bottom_boundary side   cut_surf'
-   []
+  []
 
-   [scale] # unit convert from cm to m
+  [scale] # unit convert from cm to m
      type = TransformGenerator
      input = rename_sidesets
      transform = SCALE
      vector_value = '1e-2 1e-2 1e-2'
-   []
+  []
 []
