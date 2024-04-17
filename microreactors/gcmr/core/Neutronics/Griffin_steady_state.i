@@ -42,6 +42,7 @@
 
 [Executioner]
   type = SweepUpdate
+  # Richardson iterations
   richardson_abs_tol = 1e-8
   richardson_rel_tol = 1e-8
   richardson_value = eigenvalue
@@ -52,7 +53,9 @@
   # custom_pp = fission_source_integral
   custom_rel_tol = 1e-6
   force_fixed_point_solve = true
-  cmfd_acceleration = true  # false
+
+  #CMFD  acceletation
+  cmfd_acceleration = true
   coarse_element_id = coarse_element_id
   cmfd_eigen_solver_type = newton
   prolongation_type = multiplicative
@@ -102,7 +105,6 @@
   isotopes = 'pseudo'
   densities = 1.0
   is_meter = true
-  # power normalization
   plus = true
   dbgmat = false
   grid_names = 'Tfuel'
@@ -112,7 +114,6 @@
 [PowerDensity]
   power = 20000000
   power_density_variable = power_density
-  # integrated_power_postprocessor = integrated_power
 []
 
 [Materials]
@@ -149,12 +150,12 @@
 []
 
 [VectorPostprocessors]
-  [./axial_power_inner_elm]
+  [axial_power_inner_elm]
     type = ElementValueSampler
     variable = axial_power_inner
     sort_by = z
     execute_on = timestep_end
-  [../]
+  []
 []
 
 [Outputs]
