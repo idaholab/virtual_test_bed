@@ -10,7 +10,6 @@
     ring_radii = '0.693 0.7 0.75'
     ring_intervals = '2 1 1'
     ring_block_ids = '101 100 102 103'
-    preserve_volumes = on
   []
 
   [Coolant_hole]
@@ -24,7 +23,6 @@
     ring_radii = '0.6'
     ring_intervals = '2'
     ring_block_ids = '201 200'
-    preserve_volumes = on
   []
 
   [Control_hole]
@@ -38,7 +36,6 @@
     ring_radii = '0.95'
     ring_intervals = '2'
     ring_block_ids = '301 300'
-    preserve_volumes = on
   []
 
   [TRISO_fuel_in]
@@ -52,7 +49,6 @@
     ring_radii = '0.85'
     ring_intervals = '2'
     ring_block_ids = '401 400'
-    preserve_volumes = on
   []
 
   [TRISO_fuel_mid]
@@ -66,7 +62,6 @@
     ring_radii = '0.85'
     ring_intervals = '2'
     ring_block_ids = '4001 4000'
-    preserve_volumes = on
   []
 
   [TRISO_fuel_out]
@@ -80,7 +75,6 @@
     ring_radii = '0.85'
     ring_intervals = '2'
     ring_block_ids = '40001 40000'
-    preserve_volumes = on
   []
 
   [Poison_LBP0]
@@ -94,7 +88,6 @@
     ring_radii = '0.25'
     ring_intervals = '2'
     ring_block_ids = '501 500'
-    preserve_volumes = on
   []
 
   [Poison_LBP1]
@@ -108,7 +101,6 @@
     ring_radii = '0.25'
     ring_intervals = '2'
     ring_block_ids = '5001 5000'
-    preserve_volumes = on
   []
 
   [centralFA]
@@ -241,7 +233,6 @@
     ring_radii = '9 10'
     ring_intervals = '1 1'
     ring_block_ids = '600 602'
-    preserve_volumes = true
     is_control_drum = true
   []
 
@@ -265,7 +256,6 @@
     ring_radii = '9 10'
     ring_intervals = '1 1'
     ring_block_ids = '600 602'
-    preserve_volumes = true
     is_control_drum = true
   []
 
@@ -289,7 +279,6 @@
     ring_radii = '9 10'
     ring_intervals = '1 1'
     ring_block_ids = '600 602'
-    preserve_volumes = true
     is_control_drum = true
   []
 
@@ -313,7 +302,6 @@
     ring_radii = '9 10'
     ring_intervals = '1 1'
     ring_block_ids = '600 602'
-    preserve_volumes = true
     is_control_drum = true
   []
 
@@ -337,7 +325,6 @@
     ring_radii = '9 10'
     ring_intervals = '1 1'
     ring_block_ids = '600 602'
-    preserve_volumes = true
     is_control_drum = true
   []
 
@@ -361,7 +348,6 @@
     ring_radii = '9 10'
     ring_intervals = '1 1'
     ring_block_ids = '600 602'
-    preserve_volumes = true
     is_control_drum = true
   []
 
@@ -385,7 +371,6 @@
     ring_radii = '9 10'
     ring_intervals = '1 1'
     ring_block_ids = '600 602'
-    preserve_volumes = true
     is_control_drum = true
   []
 
@@ -409,7 +394,6 @@
     ring_radii = '9 10'
     ring_intervals = '1 1'
     ring_block_ids = '600 602'
-    preserve_volumes = true
     is_control_drum = true
   []
   [cd_5]
@@ -431,7 +415,6 @@
     ring_radii = '9 10'
     ring_intervals = '1 1'
     ring_block_ids = '600 602'
-    preserve_volumes = true
     is_control_drum = true
   []
 
@@ -455,7 +438,6 @@
     ring_radii = '9 10'
     ring_intervals = '1 1'
     ring_block_ids = '600 602'
-    preserve_volumes = true
     is_control_drum = true
   []
 
@@ -479,7 +461,6 @@
     ring_radii = '9 10'
     ring_intervals = '1 1'
     ring_block_ids = '600 602'
-    preserve_volumes = true
     is_control_drum = true
   []
 
@@ -502,7 +483,6 @@
     ring_radii = '9 10'
     ring_intervals = '1 1'
     ring_block_ids = '600 602'
-    preserve_volumes = true
     is_control_drum = true
   []
 
