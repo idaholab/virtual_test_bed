@@ -2,19 +2,18 @@
   # Syntax Check
   [rings_syntax]
     type = RunApp
-    input = 'HTTF-output.i HTTF-SS.i'
+    input = 'HTTF-SS.i'
     check_input = True
-    cli_args = '--app SamApp'
     executable_pattern = 'blue_crab*|sam*'
   []
 
   # Regression test
   [rings]
     type = CSVDiff
-    input = 'HTTF-output.i HTTF-SS.i'
+    input = 'HTTF-SS.i'
     csvdiff = HTTF-SS_csv.csv
     prereq = rings_syntax
-    cli_args = '--app SamApp Outputs/console/time_step_interval=1 Outputs/console/execute_postprocessors_on=NONE Outputs/csv/sync_times=0.0 Outputs/csv/sync_only=true'
+    cli_args = 'Outputs/console/time_step_interval=1 Outputs/console/execute_postprocessors_on=NONE Outputs/csv/sync_times=0.0 Outputs/csv/sync_only=true'
     min_parallel = 2
     max_time = 500
     rel_err = 1e-3
