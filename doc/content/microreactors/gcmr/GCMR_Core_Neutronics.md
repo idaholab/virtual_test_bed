@@ -48,19 +48,19 @@ The core comprises three types of fuel assemblies: Assembly A in the inner regio
 | TRISO fuel compact radius (cm) | 0.85 |
 | Moderator compact radius (cm) | 0.75 |
 | Cr coating thickness (cm) | 0.007 |
-| FeCrAl envelope thickness (cm)| 0.05 |
+| FeCrAl envelope thickness (cm) | 0.05 |
 | Burnable poison compact radius (cm) | 0.25 |
 | Coolant compact radius (cm) | 0.6 |
 | Control compact radius (cm) | 0.95 |
 | Fuel | TRISO, 40% packing fraction |
 | Coolant | He |
-| Moderator (Coating, Envelope)| YH1.8 (Cr, FeCrAl) |
+| Moderator (Coating, Envelope) | YH1.8 (Cr, FeCrAl) |
 | Burnable poison absorber | Gd2O3 particles, 25% packing fraction |
 | Control rod | B4C (96% B-10 enrichment) |
 
 ## Mesh
 
-MOOSE's Reactor Module was applied to create the mesh structure for the entire core of the GC-MR reactor. This tool was particularly useful in addressing intricate modeling prerequisites for the microreactor core such as fuel assemblies exhibiting different designs, distinct axial loading configurations of the burnable absorbers within the core, and modeling intricacies of control drum designs. The transition of the mesh from a 2D to a 3D structure, along with the incorporation of distinct axial regions, was made notably straightforward by employing the FancyExtruderGenerator. The tool's adaptability became especially useful when altering the mesh element size to examine the trade-off between accuracy and computational cost through coarser mesh. [Fig_5]  illustrates a depiction of the 3-D GCMR, detailing both the axial and radial discretization.
+MOOSE's Reactor Module was used to create the mesh structure for the entire core of the GC-MR reactor. This tool was particularly useful in addressing intricate modeling prerequisites for the microreactor core such as fuel assemblies exhibiting different designs, distinct axial loading configurations of the burnable absorbers within the core, and modeling intricacies of control drum designs. The transition of the mesh from a 2D to a 3D structure, along with the incorporation of distinct axial regions, was made notably straightforward by employing the [AdvancedExtruderGenerator](https://mooseframework.inl.gov/source/meshgenerators/AdvancedExtruderGenerator.html). The tool's adaptability became especially useful when altering the mesh element size to examine the trade-off between accuracy and computational cost through coarser mesh. [Fig_5]  illustrates a depiction of the 3-D GCMR, detailing both the axial and radial discretization.
 
 !media media/gcmr/core/Fig_5.png
       style=display: block;margin-left:auto;margin-right:auto;width:80%;
@@ -75,7 +75,7 @@ MOOSE's Reactor Module was applied to create the mesh structure for the entire c
 
 ## Griffin Model
 
-The process initiated with generating homogenized multi-group cross-sections using Serpent-2, which were then converted into XML-format cross-section file. Griffin utilizes the cross-sections in an XML-format file in conjunction with the mesh file. The 3D whole-core mesh was constructed utilizing MOOSE’s Reactor module, ensuring consistency between geometric representations in the mesh file and Serpent-2. Griffin solves the neutron transport equation employing discontinuous finite element (DFEM) with SN transport and CMFD acceleration, utilizing on-the-fly coarse mesh generation for CMFD. Efforts were dedicated to simplifying the 3D whole-core GC-MR mesh to alleviate computational demands, with careful consideration to avoid excessive mesh sizes, particularly in specific regions like the radial reflector and control drum areas, to ensure proper convergence of DFEM-SN with CMFD.
+The first step is to generate homogenized multi-group cross-sections using Serpent-2, which are then converted into XML-format cross-section file. Griffin utilizes the cross-sections in an XML-format file in conjunction with the mesh file. The 3D whole-core mesh was constructed utilizing MOOSE’s Reactor module, ensuring consistency between geometric representations in the mesh file and Serpent-2. Griffin solves the neutron transport equation employing discontinuous finite element (DFEM) with SN transport and CMFD acceleration, utilizing on-the-fly coarse mesh generation for CMFD. Efforts were dedicated to simplifying the 3D whole-core GC-MR mesh to alleviate computational demands, with careful consideration to avoid excessive mesh sizes, particularly in specific regions like the radial reflector and control drum areas, to ensure proper convergence of DFEM-SN with CMFD.
 
 
 
@@ -87,18 +87,21 @@ The process initiated with generating homogenized multi-group cross-sections usi
 The mesh file can be generated using the --mesh-only option as such:
 
 !listing  
-mpirun -np <number_of_cores> /path/to/blue_crab-opt -i mesh_input.i --mesh-only
+mpirun -np <number_of_cores> /path/to/griffin-opt -i mesh_input.i --mesh-only
 
 
-The Griffin code is a component of the blue_crab code package, and we can execute the simulation as follows:
+We can then execute the simulation as follows:
 
 !listing  
-mpirun -np <number_of_cores> /path/to/blue_crab-opt -i Griffin_steady_state.i
+mpirun -np <number_of_cores> /path/to/griffin-opt -i Griffin_steady_state.i
+
+The Griffin code is a component of the blue_crab code package, so `griffin-opt` can be replaced with the
+BlueCrab executable : `blue_crab-opt`.
 
 
 ## Results
 
-Segmentations of the whole-core GC-MR mesh utilized in the analyses, employing DFEM-SN with CMFD and an 11-energy-group structure, are illustrated in [Fig_6]. The simulation was conducted for 1/6 of the core with reflected boundary conditions on the cut surfaces and vacuum boundaries for the remaining surfaces. The resulting k-eff value for 2 polar angles and 3 azimuthal angles in the SN was determined as 1.051468, reasonably aligning with the k-eff value obtained from the Monte Carlo Serpent-2 code, which is 1.054670 ± 16 pcm. It was determined that even closer alignment could be achieved with higher numbers of polar and azimuthal angles. [Fig_7] presents a comparison between the normalized axial power distribution computed by both Serpent-2 and Griffin for DFEM-SN (n_polar=2,n_azimuthal=3) with CMFD.
+Segmentations of the whole-core GC-MR mesh utilized in the analyses, employing DFEM-SN with CMFD and an 11-energy-group structure, are illustrated in [Fig_6]. The simulation was conducted for 1/6 of the core with reflected boundary conditions on the cut surfaces and vacuum boundaries for the remaining surfaces. The resulting k-eff value for 2 polar angles and 3 azimuthal angles in the SN was determined as 1.051468, reasonably aligning with the k-eff value obtained from the Monte Carlo Serpent-2 code, which is 1.054670 ± 16 pcm. It was determined that an even closer alignment could be achieved with higher numbers of polar and azimuthal angles. [Fig_7] presents a comparison between the normalized axial power distribution computed by both Serpent-2 and Griffin for DFEM-SN (n_polar=2,n_azimuthal=3) with CMFD.
 
 !media media/gcmr/core/Fig_6.png
       style=display: block;margin-left:auto;margin-right:auto;width:80%;
