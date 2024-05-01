@@ -224,7 +224,7 @@
 
   [cd0_12]
     type =HexagonConcentricCircleAdaptiveBoundaryMeshGenerator
-    inputs = 'Innercore2 Innercore2'
+    meshes_to_adapt_to = 'Innercore2 Innercore2'
     sides_to_adapt = '3 4'
     num_sectors_per_side= '4 4 4 4 4 4'
     hexagon_size = 10.4
@@ -247,7 +247,7 @@
 
   [cd0_6]
     type =HexagonConcentricCircleAdaptiveBoundaryMeshGenerator
-    inputs = 'Innercore2 Innercore2'
+    meshes_to_adapt_to = 'Innercore2 Innercore2'
     sides_to_adapt = '0 1'
     num_sectors_per_side= '4 4 4 4 4 4'
     hexagon_size = 10.4
@@ -270,7 +270,7 @@
 
   [cd0_9]
     type =HexagonConcentricCircleAdaptiveBoundaryMeshGenerator
-    inputs = 'Innercore2 Innercore2 Innercore2'
+    meshes_to_adapt_to = 'Innercore2 Innercore2 Innercore2'
     sides_to_adapt = '0 5 4'
     num_sectors_per_side= '4 4 4 4 4 4'
     hexagon_size = 10.4
@@ -293,7 +293,7 @@
 
   [cd0_3]
     type =HexagonConcentricCircleAdaptiveBoundaryMeshGenerator
-    inputs = 'Innercore2 Innercore2 Innercore2'
+    meshes_to_adapt_to = 'Innercore2 Innercore2 Innercore2'
     sides_to_adapt = '1 2 3'
     num_sectors_per_side= '4 4 4 4 4 4'
     hexagon_size = 10.4
@@ -316,7 +316,7 @@
 
   [cd0_1]
     type =HexagonConcentricCircleAdaptiveBoundaryMeshGenerator
-    inputs = 'Innercore2 Innercore2 Innercore2'
+    meshes_to_adapt_to = 'Innercore2 Innercore2 Innercore2'
     sides_to_adapt = '2 3 4'
     num_sectors_per_side= '4 4 4 4 4 4'
     hexagon_size = 10.4
@@ -339,7 +339,7 @@
 
   [cd0_2]
     type =HexagonConcentricCircleAdaptiveBoundaryMeshGenerator
-    inputs = 'Innercore2  Innercore2'
+    meshes_to_adapt_to = 'Innercore2  Innercore2'
     sides_to_adapt = '2 3'
     num_sectors_per_side= '4 4 4 4 4 4'
     hexagon_size = 10.4
@@ -362,7 +362,7 @@
 
   [cd0_4]
     type =HexagonConcentricCircleAdaptiveBoundaryMeshGenerator
-    inputs = 'Innercore2 Innercore2 '
+    meshes_to_adapt_to = 'Innercore2 Innercore2 '
     sides_to_adapt = '1 2'
     num_sectors_per_side= '4 4 4 4 4 4'
     hexagon_size = 10.4
@@ -385,7 +385,7 @@
 
   [cd0_5]
     type =HexagonConcentricCircleAdaptiveBoundaryMeshGenerator
-    inputs =  'Innercore2 Innercore2 Innercore2'
+    meshes_to_adapt_to =  'Innercore2 Innercore2 Innercore2'
     sides_to_adapt = '0 1 2'
     num_sectors_per_side= '4 4 4 4 4 4'
     hexagon_size = 10.4
@@ -406,7 +406,7 @@
   []
   [cd0_7]
     type =HexagonConcentricCircleAdaptiveBoundaryMeshGenerator
-    inputs = ' Innercore2 Innercore2 Innercore2'
+    meshes_to_adapt_to = ' Innercore2 Innercore2 Innercore2'
     sides_to_adapt = '0 1 5'
     num_sectors_per_side= '4 4 4 4 4 4'
     hexagon_size = 10.4
@@ -429,7 +429,7 @@
 
   [cd0_8]
     type =HexagonConcentricCircleAdaptiveBoundaryMeshGenerator
-    inputs = 'Innercore2 Innercore2 '
+    meshes_to_adapt_to = 'Innercore2 Innercore2 '
     sides_to_adapt = '0 5'
     num_sectors_per_side= '4 4 4 4 4 4'
     hexagon_size = 10.4
@@ -452,7 +452,7 @@
 
   [cd0_10]
     type =HexagonConcentricCircleAdaptiveBoundaryMeshGenerator
-    inputs = 'Innercore2 Innercore2 '
+    meshes_to_adapt_to = 'Innercore2 Innercore2 '
     sides_to_adapt = ' 4 5'
     num_sectors_per_side= '4 4 4 4 4 4'
     hexagon_size = 10.4
@@ -474,7 +474,7 @@
   []
   [cd0_11]
     type =HexagonConcentricCircleAdaptiveBoundaryMeshGenerator
-    inputs = 'Outercore  Outercore Outercore'
+    meshes_to_adapt_to = 'Outercore  Outercore Outercore'
     sides_to_adapt = '3 4 5'
     num_sectors_per_side= '4 4 4 4 4 4'
     hexagon_size = 10.4
@@ -556,7 +556,7 @@
   []
 
   [extrude]
-     type = FancyExtruderGenerator
+     type = AdvancedExtruderGenerator
      input = del_2
      heights = '20 40 40 40 40 40 20'
      num_layers ='2 4 4  4  4  4 2'
@@ -574,8 +574,8 @@
 
   [rename_blocks]
       type = RenameBlockGenerator
-      old_block_id =   ' 10      100        101           102  103     200     201          400     401          4000     4001          40000    40001          300          301                  600         602          603        604          1000              1003            19000  29000  39000  49000  59000  19003  29003  39003  49003  59003  19900  29900  39900  49900  59900  19903  29903  39903  49903  59903  1777 1773  250'
-      new_block_name = 'monolith moderator  moderator_tri Cr   FECRAL  coolant coolant_tri  Fuel_in Fuel_tri_in  Fuel_mid Fuel_tri_mid  Fuel_out Fuel_tri_out   Control_hole Control_hole_tri     CD_Radial1  CD_Radial2   CD_poison  CD_coolant   reflector_quad    reflector_tri   BP0_1  BP0_2  BP0_3  BP0_4  BP0_5  BP0_tr_1  BP0_tr_2  BP0_tr_3  BP0_tr_4  BP0_tr_5  BP1_1  BP1_2  BP1_3  BP1_4  BP1_5  BP1_tr_1  BP1_tr_2  BP1_tr_3  BP1_tr_4  BP1_tr_5 Control_ref Control_ref_tri Rad_ref'
+      old_block =   ' 10      100        101           102  103     200     201          400     401          4000     4001          40000    40001          300          301                  600         602          603        604          1000              1003            19000  29000  39000  49000  59000  19003  29003  39003  49003  59003  19900  29900  39900  49900  59900  19903  29903  39903  49903  59903  1777 1773  250'
+      new_block = 'monolith moderator  moderator_tri Cr   FECRAL  coolant coolant_tri  Fuel_in Fuel_tri_in  Fuel_mid Fuel_tri_mid  Fuel_out Fuel_tri_out   Control_hole Control_hole_tri     CD_Radial1  CD_Radial2   CD_poison  CD_coolant   reflector_quad    reflector_tri   BP0_1  BP0_2  BP0_3  BP0_4  BP0_5  BP0_tr_1  BP0_tr_2  BP0_tr_3  BP0_tr_4  BP0_tr_5  BP1_1  BP1_2  BP1_3  BP1_4  BP1_5  BP1_tr_1  BP1_tr_2  BP1_tr_3  BP1_tr_4  BP1_tr_5 Control_ref Control_ref_tri Rad_ref'
       input = extrude
   []
 
