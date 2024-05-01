@@ -287,6 +287,7 @@ angle_step = 0.2
     type = StitchedMeshGenerator
     inputs = 'drum_boundary drum_remove'
     stitch_boundaries_pairs = 'drum_outer drum_inner'
+    clear_stitched_boundary_ids = false
   []
   [bottom_boundary]
     type = SideSetsFromNormalsGenerator
