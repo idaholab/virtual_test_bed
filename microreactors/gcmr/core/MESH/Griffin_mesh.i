@@ -1,3 +1,9 @@
+#####################################################################################################
+# Whole-core mesh for a Gas-cooled Microreactor
+# If using or referring to this model, please cite as explained in
+# https://mooseframework.inl.gov/virtual_test_bed/citing.html
+#####################################################################################################
+
 [Mesh]
   [YH_pin]
     type = PolygonConcentricCircleMeshGenerator

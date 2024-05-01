@@ -1,5 +1,6 @@
-######################################################################################################
-## Griffin steady state Model of whole-core Gas-cooled Microreactor
+#####################################################################################################
+# Griffin steady state Model of whole-core Gas-cooled Microreactor
+# DFEM-SN with CMFD acceleration
 # If using or referring to this model, please cite as explained in
 # https://mooseframework.inl.gov/virtual_test_bed/citing.html
 #####################################################################################################
