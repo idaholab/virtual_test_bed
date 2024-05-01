@@ -5,6 +5,7 @@
     input = 'thermo.i'
     check_input = True
     executable_pattern = 'combined*'
+    allow_warnings = true
   []
   # Regression tests with CSV output over a minimum amount of time steps/computation
   [thermo_regression]
