@@ -46,14 +46,11 @@ The cross section generation workflow has been implemented in such a way that ma
 This section focuses on the input files needed to run the cross section generation worfklow. Two input files are called for this section in order to split mesh generation from the actual execution of the cross section generation workflow calculations. `xs_generation_mesh.i` defines the input heterogeneous mesh through [!ac](RGMB) mesh generators and generates the equivalent R-Z mesh that will used as part of the Griffin R-Z spectrum calculation, while `xs_generation.i` imports this mesh through [FileMeshGenerator](https://mooseframework.inl.gov/source/meshgenerators/FileMeshGenerator.html) and defines all control parameters related to the cross section generation workflow. The commands to run the cross section generation workflow from start to finish are shown below:
 
 ```
-# Generate equivalent R-Z spectrum mesh as checkpoint file
-/path/to/griffin/griffin-opt -i xs_generation_mesh.i --mesh-only xs_generation_mesh.cpr
-
-# Run XS generation workflow through Griffin
-mpirun -np [N_PROC_TOTAL] /path/to/griffin/griffin-opt -i xs_generation.i
+# Generate equivalent R-Z spectrum mesh and run XS generation workflow through Griffin
+mpirun -np [N_PROC_TOTAL] /path/to/griffin/griffin-opt -i xs_generation_mesh.i xs_generation.i
 ```
 
-, where `[N_PROC_TOTAL]` refers to the total number of MPI processes available for the simulation. The first Griffin call to `xs_generation_mesh.i` generates an output R-Z mesh as a checkpoint file. This allows for both the mesh and metadata defined by the mesh generation steps to be imported into the second Griffin call to run all the steps related to the cross section generation worklow. [#subsec:rgmb_meshgen] and [#subsec:rz_eqv_core] describe sections of `xs_generation_mesh.i` in more detail, while [#subsec:mcc3_params] and [#subsec:griffin_rz_params] describe the specifics of `xs_generation.i`.
+, where `[N_PROC_TOTAL]` refers to the total number of MPI processes available for the simulation. The first Griffin file `xs_generation_mesh.i` generates an output 2-D R-Z mesh from an input mesh that represents the geometry and material ID assignment for the 3-D heterogeneous [!ac](ABTR) core. The second Griffin input file `xs_generation.i` contains all of the information related to the cross section generation worklow. [#subsec:rgmb_meshgen] and [#subsec:rz_eqv_core] describe sections of `xs_generation_mesh.i` in more detail, while [#subsec:mcc3_params] and [#subsec:griffin_rz_params] describe the specifics of `xs_generation.i`.
 
 ### Heterogeneous input mesh generation through [!ac](RGMB) mesh generators id=subsec:rgmb_meshgen
 
@@ -65,9 +62,9 @@ At the top of the `xs_generation_mesh.i` file, all global variables related to t
 
 Within the `[Mesh]` block, the `ReactorMeshParams` object defines the global parameters related to the heterogeneous mesh. This includes:
 
-- Number of dimensions of the output mesh, controlled by `ReactorMeshParams/dim` 
-- Geometry type of the output mesh (Hexagonal or Cartesian), controlled by `ReactorMeshParams/geom` 
-- Assembly pitch, controlled by `ReactorMeshParams/assembly_pitch` 
+- Number of dimensions of the output mesh, controlled by `ReactorMeshParams/dim`
+- Geometry type of the output mesh (Hexagonal or Cartesian), controlled by `ReactorMeshParams/geom`
+- Assembly pitch, controlled by `ReactorMeshParams/assembly_pitch`
 - Assembly layer thicknesses and number of subintervals per axial layer, controlled by `ReactorMeshParams/axial_regions` and `ReactorMeshParams/axial_mesh_intervals`, respectively
 - Boundary IDs assigned to the top, bottom, and radial sidesets of the outer boundary of the reactor core, controlled by `ReactorMeshParams/top_boundary_id`, `ReactorMeshParams/bottom_boundary_id` and `ReactorMeshParams/radial_boundary_id`, respectively.
 
@@ -110,7 +107,7 @@ The resulting assembly structure definitions can then be stitched together to de
        id=fig:hetcore_region_ids
        caption=3D region ID distribution of heterogeneous core created through [!ac](RGMB) mesh generators.
 
-### Definition of cross section workflow metadata and generation of equivalent R-Z core through `EquivalentCoreMeshGenerator` id=subsec:rz_eqv_core
+### Definition of equivalent R-Z core through `EquivalentCoreMeshGenerator` id=subsec:rz_eqv_core
 
 Through the definition of the heterogeneous core input mesh using [!ac](RGMB) mesh generators, a Griffin-specific mesh generator called `EquivalentCoreMeshGenerator` is called to enable all downstream calculations used as part of the cross section generation workflow.
 
@@ -169,9 +166,11 @@ For a more comprehensive list of metadata stored by `EquivalentCoreMeshGenerator
 
 !listing sfr/abtr_xsgen_workflow/xs_generation_mesh.i start=Define and apply coarse mesh to RZ mesh
 
+Finally, `Mesh/data_driven_generator` indicates to the mesh generator system to define the input heterogeneous mesh specfications through metadata defined by [!ac](RGMB), instead of building a physical heterogeneous input mesh. The value of this parameter should point to the name of the `EquivalentCoreMeshGenerator` instance, and this is an optimization that Griffin requires to speed up mesh generation workflows that invoke `EquivalentCoreMeshGenerator`.
+
 ### Input Parameters Specific to MC$^2$-3 Execution and Overall Cross Section Generation Workflow id=subsec:mcc3_params
 
-Running Griffin on the `xs_generation_mesh.i` file explained in [#subsec:rgmb_meshgen] and [#subsec:rz_eqv_core] generates a checkpoint file that will be imported and loaded into the `[Mesh]` block of the `xs_generation.i` file. Since the  generated mesh does not contain any information about the isotopic compositions related to each region ID defined on the input mesh, the `[Compositions]` block is used to map the region ID's defined in `xs_generation_mesh.i` to physical isotopic compositions within each region:
+As explained in [#subsec:rgmb_meshgen] and [#subsec:rz_eqv_core], `xs_generation_mesh.i` defines the `[Mesh]` block that generates a 2-D R-Z mesh from a fully-heterogeneous core geometry definition. However, since the output mesh does not contain any information about the isotopic compositions related to each region ID defined on the input mesh, the `[Compositions]` block in `xs_generation.i` is used to map the region ID's defined in `xs_generation_mesh.i` to physical isotopic compositions within each heterogeneous region:
 
 !listing sfr/abtr_xsgen_workflow/xs_generation.i block=Compositions
 
@@ -213,21 +212,24 @@ Here, `TransportSystems/G` must match the number of groups defined in `MCC3Cross
 By running Griffin on the `xs_generation.i` file, two files are created that are used for the full-core eigenvalue calculation step that will be explained in this section. The first is the BG cross section library, named `mcc3xs.xml` (this name is controlled by `MCCCrossSection/xml_filename`), and the second is the Griffin input file that will be used for this section, named `core_hom_macro.i` (this is a fixed name, based on whether assembly homogenized cross sections are calculated, and whether microscopic or macroscopic cross sections are used in the output cross section library). The automatic generation of this input file streamlines the setup of the full-core analysis step, and the contents of this file are shown below:
 
 ```
-# TODO User should update Mesh/core/file to point to full-core mesh checkpoint file
+# TODO User should define heterogeneous RGMB core mesh in [Mesh] block or as separate input file
+# TODO User should set Mesh/eqv_core/input to name of heterogeneous RGMB CoreMeshGenerator mesh
 # TODO User should make sure boundary sidesets (outer_core, top, and bottom) are defined
 #      in either TransportSystems/VacuumBoundary or TransportSystems/ReflectingBoundary
 #      but not both
 
 [Mesh]
-  [core]
-    type = FileMeshGenerator
-    file = output_file.cpr
+  [eqv_core]
+    type = EquivalentCoreMeshGenerator
+    input = het_core
+    target_geometry = full_hom
   []
   [block_numbering]
     type = ElementIDToSubdomainID
-    input = 'core'
+    input = 'eqv_core'
     extra_element_id_name = 'material_id'
   []
+  data_driven_generator = eqv_core
 []
 
 [GlobalParams]
@@ -289,35 +291,41 @@ By running Griffin on the `xs_generation.i` file, two files are created that are
 []
 ```
 
-Users are encouraged to look through this input file in detail and update input parameters accordingly based on their modeling needs. At a minimum however, a checkpoint file related to the homogeneous reactor core needs to be passed as a parameter to `Mesh/core/file`, and boundary conditions for the full-core eigenvalue problem need to be defined by setting the appropriate outer boundary sidesets using `TransportSystems/VacuumBoundary` and `TransportSystems/ReflectingBoundary`. By looking at this file, however, it can be seen that the mapping between mesh blocks and cross section material ID is automatically done by calling `MixedMatIDNeutronicsMaterial` in the `[Materials]` block, and this assumes that the homogeneous input reactor core mesh has been generated with `EquivalentCoreMeshGenerator`.
+Users are encouraged to look through this input file in detail and update input parameters accordingly based on their modeling needs. At a minimum however, a mesh file related to the heterogeneous reactor core needs to be defined with a name that matches `Mesh/eqv_core/input`, and boundary conditions for the full-core eigenvalue problem need to be defined by setting the appropriate outer boundary sidesets using `TransportSystems/VacuumBoundary` and `TransportSystems/ReflectingBoundary`. By looking at this file, it can be seen that the mapping between mesh blocks and cross section material ID is automatically done by calling `MixedMatIDNeutronicsMaterial` in the `[Materials]` block, and this assumes that the homogeneous input reactor core mesh has been generated with `EquivalentCoreMeshGenerator`.
 
-This homogeneous reactor core mesh is created in the `full_core_solve_mesh.i` file, and follows very similar steps as the ones explained in `xs_generation_mesh.i`, where an input heterogeneous mesh is defined with [!ac](RGMB) mesh generators, and `EquivalentCoreMeshGenerator` is responsible for generating the homogeneous mesh from the heterogeneous mesh specifications. The mesh block corresponding to the call to `EquivalentCoreMeshGenerator` is shown below:
+The heterogeneous reactor core mesh can be copied directly from the `xs_generation_mesh.i` (everything up to and including the `Mesh/het_core` block), and pasted into `core_hom_macro.i` above the `Mesh/eqv_core` block. The remainder of the `[Mesh]` block in `core_hom_macro.i` follows very similar steps as the ones explained in `xs_generation_mesh.i`, `EquivalentCoreMeshGenerator` is responsible for generating the homogeneous mesh from the input heterogeneous mesh specifications.
 
-!listing sfr/abtr_xsgen_workflow/full_core_solve_mesh.i start=Define equivalent fully-homogeneous core end=Apply mesh refinement include-end=False
-
-Here, `EquivalentCoreMeshGenerator/target_geometry` is set to `full_hom` to specify a full-homogeneous reactor mesh as the output mesh, `EquivalentCoreMeshGenerator/quad_center_elements` dictates whether the homogeneized hexagonal prism regions are discretized into 2 quadrilaterial prism regions (true) or 6 triangular prism regions (false), and `EquivalentCoreMeshGenerator/max_axial_mesh_size` sets the maximum axial mesh size to sub-discretize each axial layer of the output mesh. 
+In `core_hom_macro.i`, `EquivalentCoreMeshGenerator/target_geometry` is set to `full_hom` to specify a full-homogeneous reactor mesh as the output mesh. Additionally, `EquivalentCoreMeshGenerator/quad_center_elements` can be set to dictate whether the homogeneized hexagonal prism regions are discretized into 2 quadrilaterial prism regions (true) or 6 triangular prism regions (false), and `EquivalentCoreMeshGenerator/max_axial_mesh_size` sets the maximum axial mesh size to sub-discretize each axial layer of the output mesh.
 
 !media plots/eqv_fullhomcore.png
        style=width:80%
        id=fig:eqv_fullhomcore
        caption=Generation of 3-D fully homogeneous core mesh (right) from 3-D heterogeneous core created through [!ac](RGMB) mesh generators (left).
 
-Similar to the output mesh created in `xs_generation_mesh.i`, the final step of mesh generation for use with the full core eigenvalue calculation is to define the coarse mesh to use with [!ac](CMFD) acceleration. This is done first by applying mesh refinement to the output mesh created by `EquivalentCoreMeshGenerator` to set the fine mesh, and defining the coarse mesh as the un-refined mesh in `[coarse_mesh]`:
-
-!listing sfr/abtr_xsgen_workflow/full_core_solve_mesh.i start=Apply mesh refinement
-
-Thus, the full-core eigenvalue calculation can be run by running the following commands:
+While `core_hom_macro.i` does not define a coarse mesh for the output mesh, this can be done manually by adding the following lines to the end of the `[Mesh]` block in `core_hom_macro.i`:
 
 ```
-# Generate the 3-D fully homogeneous hexagonal core mesh as checkpoint file
-/path/to/griffin/griffin-opt -i full_core_solve_mesh.i --mesh-only full_core_solve_mesh.cpr
+[Mesh]
+  # Existing lines within core_hom_macro.i
+  [coarse_mesh]
+    type = CoarseMeshExtraElementIDGenerator
+    input = block_numbering
+    coarse_mesh = block_numbering
+    extra_element_id_name = coarse_element_id
+  []  
+[]
+```
 
+Here, the coarse mesh is defined to be identical to the fine mesh, which in this case is the assembly-homogeneous mesh created by `EquivalentCoreMeshGenerator`. Thus, the full-core eigenvalue calculation can be run by running the following commands:
+
+```
 # Run full-core eigenvalue calculation and override default parameters defined in core_hom_macro.i
-mpirun -np [N_PROC_TOTAL] /path/to/griffin/griffin-opt -i core_hom_macro.i Mesh/core/file=full_core_solve_mesh.cpr
+mpirun -np [N_PROC_TOTAL] /path/to/griffin/griffin-opt -i core_hom_macro.i
+    Mesh/eqv_core/quad_center_elements=true Mesh/eqv_core/max_axial_mesh_size=10 Mesh/uniform_refine=1 
     TransportSystems/ReflectingBoundary='' TransportSystems/VacuumBoundary='outer_core top bottom'
     TransportSystems/dfem_sn/NAzmthl=4 TransportSystems/dfem_sn/NPolar=3
     Executioner/coarse_element_id=coarse_element_id Executioner/cmfd_eigen_solver_type=krylovshur
     PowerDensity/power=250000000 PowerDensity/power_density_variable=power --distributed-mesh
 ```
 
-Here, the checkpoint file created by the first command is passed into the second command through `FileMeshGenerator`, and boundary conditions sidesets are set and DFEM-SN angular discretizations are updated to increase solution accuracy through the `[TransportSystems]` block, CMFD settings are updated through the `[Executioner]` block, and the reactor power is set through the `[PowerDensity]` block. These parameter settings ensure that calculated eigenvalues are predicted to within 100pcm of previous work that has looked at modeling the [!ac](ABTR) reactor core [!citep](pyarc_report).
+Here, mesh refinement is applied and `EquivalentCoreMeshGenerator` settings are updated through the `[Mesh]` block, the boundary conditions sidesets are set and DFEM-SN angular discretizations are updated to increase solution accuracy through the `[TransportSystems]` block, CMFD settings are updated through the `[Executioner]` block, and the reactor power is set through the `[PowerDensity]` block. These parameter settings ensure that calculated eigenvalues are predicted to within 100pcm of previous work that has looked at modeling the [!ac](ABTR) reactor core [!citep](pyarc_report).

@@ -300,18 +300,17 @@ mid_control_empty = 12
     target_geometry = rz
     max_axial_mesh_size = 8
     max_radial_mesh_size = 5
-    radial_boundaries = '7.7 27.6 30.7 35.9 44.7 46.6 50.3 65.5 90.4 104.8 108.1'
-    radial_assembly_names = 'control_assembly fuel_assembly_1 control_assembly
-                             fuel_assembly_3 fuel_assembly_1 reflector_assembly
-                             control_assembly fuel_assembly_2 reflector_assembly
-                             shielding_assembly reflector_assembly'
+    radial_boundaries = '7.66 20.28 27.63 35.95 48.47 64.13 94.18 108.12'
+    radial_assembly_names = 'control_assembly fuel_assembly_1 fuel_assembly_3
+                             control_assembly fuel_assembly_1 fuel_assembly_2
+                             reflector_assembly shielding_assembly'
     debug_equivalent_core = true
   []
   # Define and apply coarse mesh to RZ mesh
   [coarse_mesh]
     type = CartesianMeshGenerator
     dim = 2
-    dx = '7.7 19.9 3.1 5.2 8.8 1.9 3.7 15.2 24.9 14.4 3.3'
+    dx = '7.66 12.61 7.36 8.31 12.52 15.65 30.06 13.94'
     dy = '60 80 20 100'
   []
   [coarse_id]
@@ -321,4 +320,5 @@ mid_control_empty = 12
     extra_element_id_name = coarse_elem_id
   []
   coord_type = RZ
+  data_driven_generator = rz_core
 []

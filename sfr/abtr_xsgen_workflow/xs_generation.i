@@ -1,11 +1,3 @@
-[Mesh]
-  [fmg]
-    type = FileMeshGenerator
-    file = 'xs_generation_mesh.cpr'
-  []
-  coord_type = RZ
-[]
-
 [MCC3CrossSection]
   remove_pwfiles    = false
   remove_inputs     = true
