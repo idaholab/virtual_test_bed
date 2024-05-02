@@ -49,8 +49,9 @@
 
 [ChemicalComposition]
   [salt]
-    #thermofile = MSTDTC_Noble_metal_gases.dat
-    thermofile = MSTDB-TC_V3.0_Fluorides_No_Functions_8-2.dat
+    # Note: you must download the latest version of this file from MSTDB-TC
+    thermofile = MSTDTC_Noble_metal_gases.dat
+    # thermofile = MSTDB-TC_V3.0_Fluorides_No_Functions_8-2.dat
     tunit = K
     punit = Pa
     munit = moles
