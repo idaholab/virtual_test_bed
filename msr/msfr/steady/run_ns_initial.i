@@ -61,45 +61,47 @@ pump_force = -20000. # [N / m^3]
 # EQUATIONS: VARIABLES, KERNELS & BCS
 ################################################################################
 
-[Modules]
-  [NavierStokesFV]
-    # General parameters
-    compressibility = 'incompressible'
-    gravity = '0 -9.81 0'
+[Physics]
+  [NavierStokes]
+    [Flow/salt]
+      # General parameters
+      compressibility = 'incompressible'
+      gravity = '0 -9.81 0'
 
-    # Material properties
-    density = ${rho}
-    dynamic_viscosity = 'mu'
+      # Material properties
+      density = ${rho}
+      dynamic_viscosity = 'mu'
 
-    # Initial conditions
-    initial_velocity = '1e-6 1e-6 0'
-    initial_pressure = 1e5
-    initial_temperature = 0.0
+      # Initial conditions
+      initial_velocity = '1e-6 1e-6 0'
+      initial_pressure = 1e5
 
-    # Boundary conditions
-    wall_boundaries = 'shield_wall reflector_wall fluid_symmetry'
-    momentum_wall_types = 'wallfunction wallfunction symmetry'
+      # Boundary conditions
+      wall_boundaries = 'shield_wall reflector_wall fluid_symmetry'
+      momentum_wall_types = 'wallfunction wallfunction symmetry'
 
-    # Pressure pin for incompressible flow
-    pin_pressure = true
-    pinned_pressure_type = average
-    pinned_pressure_value = 1e5
+      # Pressure pin for incompressible flow
+      pin_pressure = true
+      pinned_pressure_type = average
+      pinned_pressure_value = 1e5
 
-    # Turbulence parameters
-    turbulence_handling = 'mixing-length'
-    von_karman_const = ${von_karman_const}
-    mixing_length_delta = 0.1
-    mixing_length_walls = 'shield_wall reflector_wall'
-    mixing_length_aux_execute_on = 'initial'
+      # Heat exchanger friction
+      friction_blocks = 'hx'
+      friction_types = 'FORCHHEIMER'
+      friction_coeffs = ${friction}
 
-    # Heat exchanger friction
-    friction_blocks = 'hx'
-    friction_types = 'FORCHHEIMER'
-    friction_coeffs = ${friction}
-
-    # Numerical scheme
-    mass_advection_interpolation = 'upwind'
-    momentum_advection_interpolation = 'upwind'
+      # Numerical scheme
+      mass_advection_interpolation = 'upwind'
+      momentum_advection_interpolation = 'upwind'
+    []
+    [Turbulence/salt]
+      # Turbulence parameters
+      turbulence_handling = 'mixing-length'
+      von_karman_const = ${von_karman_const}
+      mixing_length_delta = 0.1
+      mixing_length_walls = 'shield_wall reflector_wall'
+      mixing_length_aux_execute_on = 'initial'
+    []
   []
 []
 
