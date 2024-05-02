@@ -33,26 +33,32 @@
 [GlobalParams]
   #elements = 'F Li U Th Ni Nd Ce La Cs Xe I Kr Ne'
   elements = 'F Li U Th Ni Nd Ce La Cs I'
+
   #output_phases = 'MSFL gas_ideal Ni_Solid_FCC(s) U_Solid-A(s)'
   output_phases = 'MSFL gas_ideal'
   #output_phases = 'ALL'
+
   #output_species = 'MSFL:UF3 MSFL:U3+//I MSFL:U2F8 MSFL:U2//I MSFL:U[VII]//F MSFL:U[VII]//I MSFL:U[VI]//F MSFL:U[VI]//I  MSFL:NiF2 MSFL:Ni//I gas_ideal:CsI gas_ideal:CsF gas_ideal:I gas_ideal:I2 gas_ideal:I2Ni gas_ideal:ILi gas_ideal:Xe gas_ideal:Kr gas_ideal:Ne'
   output_species = 'ALL'
   #output_species = 'ALL'
+
   output_element_potentials = 'ALL'
   #output_vapor_pressures = 'vp:gas_ideal:CsI vp:gas_ideal:CsF vp:gas_ideal:I vp:gas_ideal:I2 vp:gas_ideal:I2Ni vp:gas_ideal:ILi'
   output_vapor_pressures = 'ALL'
 []
 
 [ChemicalComposition]
-  #thermofile = MSTDTC_Noble_metal_gases.dat
-  thermofile = MSTDB-TC_V3.0_Fluorides_No_Functions_8-2.dat
-  tunit = K
-  punit = Pa
-  munit = moles
-  temperature = tfuel_nod
-  pressure = pressure_nod
-  reinitialization_type = nodal
+  [salt]
+    #thermofile = MSTDTC_Noble_metal_gases.dat
+    thermofile = MSTDB-TC_V3.0_Fluorides_No_Functions_8-2.dat
+    tunit = K
+    punit = Pa
+    munit = moles
+    output_species_unit = moles
+    temperature = tfuel_nod
+    pressure = pressure_nod
+    reinitialization_type = nodal
+  []
 []
 
 ###########################################
@@ -2181,7 +2187,7 @@
 
 [VectorPostprocessors]
   [reader]
-    type = CSVReader
+    type = CSVReaderVectorPostprocessor
     csv_file = run_dep_out_in-core_number_densities.csv
     force_preic = True
   []
