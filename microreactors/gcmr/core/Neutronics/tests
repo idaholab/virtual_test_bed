@@ -28,7 +28,8 @@
     min_parallel = 16
     rel_err = 1e-3
     method = 'opt'
-    max_time = 400
+    max_time = 600
+    # Griffin does not have the sam petsc option parameter
     allow_unused = true
   []
 []
