@@ -8,6 +8,10 @@
 
 core_power_val = 3e9
 
+[Application]
+  type = SamApp
+[]
+
 [GlobalParams]
   global_init_P = 1e5
   global_init_V = 0.01
