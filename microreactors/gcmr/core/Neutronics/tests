@@ -19,7 +19,10 @@
     min_parallel = 16
     method = 'opt'
     max_time = 600
+    # Griffin does not have the sam petsc option parameter
     allow_unused = true
+    # we will need HPC to even test the syntax
+    heavy = true
   []
   [griffin_alone]
     type = 'CSVDiff'
@@ -36,5 +39,7 @@
     max_time = 600
     # Griffin does not have the sam petsc option parameter
     allow_unused = true
+    # we will need HPC to run the test
+    heavy = true
   []
 []
