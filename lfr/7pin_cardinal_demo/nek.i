@@ -155,7 +155,6 @@
     field = unity
     boundary = '2'
   []
-
 []
 
 [Outputs]
