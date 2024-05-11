@@ -17,7 +17,7 @@ numside = 6
 
 linearpower = 27466.11572112955 # W/m
 inlet_T = 693.15                # K
-#fuelconductance = 1.882         # W/m/K
+fuelconductance = 1.882         # W/m/K
 cladconductance = 21.6          # W/m/K
 gapconductance = 0.251          # W/m/K
 
@@ -32,13 +32,13 @@ bid_urfl = 6
 bid_lrflc = 7
 bid_urflc = 8
 
-half_asmpitch = ${fparse flat_to_flat / 2 + duct_thickness}
+half_asmpitch = '${fparse flat_to_flat / 2 + duct_thickness}'
 powerdensity = ${fparse linearpower / (pi * (fuel_r_o * fuel_r_o - fuel_r_i * fuel_r_i))}
 
 [Mesh]
   [fmg]
     type = FileMeshGenerator
-    file = 'HCmesh_out.e'
+    file = 'HCmesh_in.e'
     exodus_extra_element_integers = 'pin_id'
   []
 []
@@ -468,10 +468,9 @@ powerdensity = ${fparse linearpower / (pi * (fuel_r_o * fuel_r_o - fuel_r_i * fu
     outlier_variable_norms = false
   []
   execute_on = 'timestep_end'
-  interval = 10
+  time_step_interval = 10
   hide = 'synchronization_to_nek'
   exodus = true
   csv = true
   perf_graph = true
 []
-

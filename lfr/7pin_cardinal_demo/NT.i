@@ -90,7 +90,7 @@ richardsonmaxits=1000
 [Mesh]
   [fmg]
     type = FileMeshGenerator
-    file = 'NTmesh_out.e'
+    file = 'NTmesh_in.e'
     exodus_extra_element_integers = 'material_id pin_id coarse_element_id'
   []
 []
@@ -395,8 +395,9 @@ richardsonmaxits=1000
 [MultiApps]
   [HeatConduction]
     type = FullSolveMultiApp
-    app_type = CardinalApp
-    library_path = '/projects/neams_ad_fr/testing_dl/cardinal/lib'
+    # To be replaced by the Application block
+    # app_type = CardinalApp
+    # library_path = '/projects/neams_ad_fr/testing_dl/cardinal/lib'
     input_files = HC.i
     keep_solution_during_restore = true
     execute_on = 'timestep_end'
