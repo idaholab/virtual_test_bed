@@ -167,7 +167,7 @@ T_ref_fill_ratio = '${fparse T_sink - 50}'
 
   [htc_equiv_cond]
     type = ParsedPostprocessor
-    function = 'evaporator_boundary_integral / (Text_avg - T_secondary) / ${S_evap} / ${surface_correction}'
+    expression = 'evaporator_boundary_integral / (Text_avg - T_secondary) / ${S_evap} / ${surface_correction}'
     pp_names = 'evaporator_boundary_integral Text_avg T_secondary' # evaporator_boundary_integral is the true numerical flux through the heat_pipe:hs:evap:outer
   []
   [T_secondary]
@@ -176,7 +176,7 @@ T_ref_fill_ratio = '${fparse T_sink - 50}'
   []
   [total_condenser_power]
     type = ParsedPostprocessor
-    function = '-${weight} * condenser_boundary_integral'
+    expression = '-${weight} * condenser_boundary_integral'
     pp_names = 'condenser_boundary_integral'
   []
 []
