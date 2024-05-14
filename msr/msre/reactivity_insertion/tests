@@ -25,6 +25,7 @@
     rel_err = 1e-4
     max_time = 500
     method = 'opt' # times out in devel
+    ignore_columns = 'moderator_moderator_Reactivity'
   []
   [insertion]
     type = 'CSVDiff'

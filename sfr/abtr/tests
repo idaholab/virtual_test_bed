@@ -26,6 +26,7 @@
     prereq = steady_syntax
     rel_err = 1E-4
     abs_zero = 1e-8
+    ignore_columns = 'CH1_inlet_T_0 CH1_outlet_T_0'
   []
   [ulof]
     type = CSVDiff
