@@ -316,7 +316,7 @@ mid_control_empty = 12
   [rz_coarse_id]
     type = CoarseMeshExtraElementIDGenerator
     input = rz_core
-    coarse_mesh = coarse_mesh
+    coarse_mesh = rz_coarse_mesh
     extra_element_id_name = coarse_elem_id
   []
   coord_type = RZ
