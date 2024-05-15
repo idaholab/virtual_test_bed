@@ -1,0 +1,66 @@
+[Tests]
+  # Steady state
+  # Griffin tests
+  # TODO does min_parallel need to be set for syntax test?
+  # TODO update path to griffin_data
+  [xs_generation_syntax]
+    type = RunApp
+    check_input = true
+    input = 'xs_generation_mesh.i xs_generation.i'
+    executable_pattern = 'griffin*|blue_crab*'
+    #min_parallel = 16
+    method = 'opt'
+    max_time = 600
+    # Griffin does not have the sam petsc option parameter
+    allow_unused = true
+    # we will need HPC to even test the syntax
+    heavy = true
+  []
+  # TODO update min_parallel
+  # TODO update path to griffin_data
+  [xs_generation]
+    type = 'XMLDiff'
+    input = 'xs_generation_mesh.i xs_generation.i'
+    xmldiff = 'mcc3xs.xml'
+    executable_pattern = 'griffin*|blue_crab*'
+    prereq = 'xs_generation_syntax'
+    min_parallel = 16
+    rel_err = 1e-3
+    abs_zero = 1e-8
+    method = 'opt'
+    ignored_attributes = '@TimeCreated'
+    max_time = 600
+    # Griffin does not have the sam petsc option parameter
+    allow_unused = true
+    # we will need HPC to run the test
+    heavy = true
+  []
+  [full_core_solve]
+    type = 'RunApp'
+    input = 'xs_generation_mesh.i core_hom_macro.i'
+    executable_pattern = 'griffin*|blue_crab*'
+    cli_args = "Mesh/inactive='rz_core rz_coarse_mesh rz_coarse_id'
+                Mesh/eqv_core/quad_center_elements=true
+                Mesh/eqv_core/max_axial_mesh_size=10
+                Mesh/eqv_core_coarse_mesh/type=CoarseMeshExtraElementIDGenerator
+                Mesh/eqv_core_coarse_mesh/input=block_numbering
+                Mesh/eqv_core_coarse_mesh/coarse_mesh=block_numbering
+                Mesh/eqv_core_coarse_mesh/extra_element_id_name=coarse_element_id
+                Mesh/uniform_refine=1
+                TransportSystems/ReflectingBoundary=''
+                TransportSystems/VacuumBoundary='outer_core top bottom'
+                TransportSystems/dfem_sn/NAzmthl=4
+                TransportSystems/dfem_sn/NPolar=3
+                Executioner/coarse_element_id=coarse_element_id
+                Executioner/cmfd_eigen_solver_type=krylovshur"
+    prereq = 'xs_generation'
+    min_parallel = 16
+    method = 'opt'
+    ignored_attributes = '@TimeCreated'
+    max_time = 600
+    # Griffin does not have the sam petsc option parameter
+    allow_unused = true
+    # we will need HPC to run the test
+    heavy = true
+  []
+[]

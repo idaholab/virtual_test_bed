@@ -6,6 +6,7 @@
 
 !tag name=Advanced Burner Test Reactor Cross Section Generation and Full-Core Eigenvalue Calculation pairs=reactor_type:SFR
                        reactor:ABTR
+                       geometry:core
                        simulation_type:neutronics
                        codes_used:Griffin
                        transient:steady_state
@@ -54,7 +55,7 @@ mpirun -np [N_PROC_TOTAL] /path/to/griffin/griffin-opt -i xs_generation_mesh.i x
 
 ### Heterogeneous input mesh generation through [!ac](RGMB) mesh generators id=subsec:rgmb_meshgen
 
-The use of [ReactorMeshParams](https://mooseframework.inl.gov/source/meshgenerators/ReactorMeshParams.html), [PinMeshGenerator](https://mooseframework.inl.gov/source/meshgenerators/ReactorMeshParams.html), [AssemblyMeshGenerator](https://mooseframework.inl.gov/source/meshgenerators/AssemblyMeshGenerator.html), and [CoreMeshGenerator](https://mooseframework.inl.gov/source/meshgenerators/CoreMeshGenerator.html) in `xs_generation_mesh.i` make use of the [!ac](RGMB) mesh generation system within the Reactor module to streamline the definition of latticed core geometries and the reporting IDs associated with such structures. Mesh generation through [!ac](RGMB) is a requirement for taking advantage of Griffin's [!ac](SFR) cross section generation workflow, as it ensures that all reporting IDs related to region ID mappings as well as IDs corresponding to groupings of pin structures, assembly structures, and axial layers are defined in a consistent and predictable manner.
+The use of [ReactorMeshParams](https://mooseframework.inl.gov/source/meshgenerators/ReactorMeshParams.html), [PinMeshGenerator](https://mooseframework.inl.gov/source/meshgenerators/ReactorMeshParams.html), [AssemblyMeshGenerator](https://mooseframework.inl.gov/source/meshgenerators/AssemblyMeshGenerator.html), and [CoreMeshGenerator](https://mooseframework.inl.gov/source/meshgenerators/CoreMeshGenerator.html) in `xs_generation_mesh.i` make use of the [!ac](RGMB) mesh generation system within the Reactor module to streamline the definition of latticed core geometries and the reporting IDs associated with such structures [!citep](shemon2023reactor). Mesh generation through [!ac](RGMB) is a requirement for taking advantage of Griffin's [!ac](SFR) cross section generation workflow, as it ensures that all reporting IDs related to region ID mappings as well as IDs corresponding to groupings of pin structures, assembly structures, and axial layers are defined in a consistent and predictable manner.
 
 At the top of the `xs_generation_mesh.i` file, all global variables related to the mesh geometry as well as the region/material IDs are defined as global constants to be used within the `[Mesh]` block. For the purposes of this workflow, the region/material IDs defined in this section can be understood as unique material zones on the heterogeneous mesh that each have their own mappings of isotopic compositions. Thus, for this problem there are 12 unique material types within the heterogeneous core specifications.
 

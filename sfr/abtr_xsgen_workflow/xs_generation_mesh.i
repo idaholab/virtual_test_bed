@@ -307,13 +307,13 @@ mid_control_empty = 12
     debug_equivalent_core = true
   []
   # Define and apply coarse mesh to RZ mesh
-  [coarse_mesh]
+  [rz_coarse_mesh]
     type = CartesianMeshGenerator
     dim = 2
     dx = '7.66 12.61 7.36 8.31 12.52 15.65 30.06 13.94'
     dy = '60 80 20 100'
   []
-  [coarse_id]
+  [rz_coarse_id]
     type = CoarseMeshExtraElementIDGenerator
     input = rz_core
     coarse_mesh = coarse_mesh
