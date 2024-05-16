@@ -1,12 +1,17 @@
 # ==============================================================================
-# Geometry Info.
+# ABTR Equivalent-full core cross section generation mesh
+# Application: Griffin
+# POC: Shikhar Kumar (kumars at anl.gov)
+# If using or referring to this model, please cite as explained in
+# https://mooseframework.inl.gov/virtual_test_bed/citing.html
 # ==============================================================================
+
 fuel_pin_pitch = 0.908
 fuel_clad_r_i = 0.348
-fuel_clad_r_o = 0.40333  # Adjusts for wire wrap diameter
+fuel_clad_r_o = 0.40333 # Adjusts for wire wrap diameter
 control_pin_pitch = 1.243
 control_clad_r_i = 0.485
-control_clad_r_o = 0.55904  # Adjusts for wire wrap diameter
+control_clad_r_o = 0.55904 # Adjusts for wire wrap diameter
 control_duct_pitch_inner = 12.198
 control_duct_pitch_outer = 12.798
 duct_pitch_inner = 13.598
@@ -18,16 +23,16 @@ z_active_core_upper = 140
 z_sodium_gp_upper = 160
 z_gp_upper = 260
 
-dz_active_core_lower = ${fparse z_active_core_lower - 0}
-dz_active_core_upper = ${fparse z_active_core_upper - z_active_core_lower}
-dz_sodium_gp_upper = ${fparse z_sodium_gp_upper - z_active_core_upper}
-dz_gp_upper = ${fparse z_gp_upper - z_sodium_gp_upper}
+dz_active_core_lower = '${fparse z_active_core_lower - 0}'
+dz_active_core_upper = '${fparse z_active_core_upper - z_active_core_lower}'
+dz_sodium_gp_upper = '${fparse z_sodium_gp_upper - z_active_core_upper}'
+dz_gp_upper = '${fparse z_gp_upper - z_sodium_gp_upper}'
 
 max_axial_mesh_size = 20
-naxial_active_core_lower = ${fparse dz_active_core_lower / max_axial_mesh_size}
-naxial_active_core_upper = ${fparse dz_active_core_upper / max_axial_mesh_size}
-naxial_sodium_gp_upper = ${fparse dz_sodium_gp_upper / max_axial_mesh_size}
-naxial_gp_upper = ${fparse dz_gp_upper / max_axial_mesh_size}
+naxial_active_core_lower = '${fparse dz_active_core_lower / max_axial_mesh_size}'
+naxial_active_core_upper = '${fparse dz_active_core_upper / max_axial_mesh_size}'
+naxial_sodium_gp_upper = '${fparse dz_sodium_gp_upper / max_axial_mesh_size}'
+naxial_gp_upper = '${fparse dz_gp_upper / max_axial_mesh_size}'
 
 # ==============================================================================
 # Material IDs
@@ -55,7 +60,7 @@ mid_control_empty = 12
     dim = 3
     geom = "Hex"
     assembly_pitch = ${assembly_pitch}
-    axial_regions  = '${dz_active_core_lower} ${dz_active_core_upper} ${dz_sodium_gp_upper} ${dz_gp_upper}'
+    axial_regions = '${dz_active_core_lower} ${dz_active_core_upper} ${dz_sodium_gp_upper} ${dz_gp_upper}'
     axial_mesh_intervals = '${naxial_active_core_lower} ${naxial_active_core_upper}
                             ${naxial_sodium_gp_upper} ${naxial_gp_upper}'
     top_boundary_id = 201
@@ -70,7 +75,7 @@ mid_control_empty = 12
     pitch = ${fuel_pin_pitch}
     num_sectors = 2
     ring_radii = '${fuel_clad_r_i} ${fuel_clad_r_o}'
-    mesh_intervals = '1 1 1'    # Fuel, cladding, background
+    mesh_intervals = '1 1 1' # Fuel, cladding, background
     region_ids = '${mid_lower_refl}     ${mid_lower_refl}     ${mid_lower_refl};
                   ${mid_fuel_1}         ${mid_ht9}            ${mid_sodium};
                   ${mid_upper_na_plen}  ${mid_upper_na_plen}  ${mid_upper_na_plen};
@@ -84,7 +89,7 @@ mid_control_empty = 12
     pitch = ${fuel_pin_pitch}
     num_sectors = 2
     ring_radii = '${fuel_clad_r_i} ${fuel_clad_r_o}'
-    mesh_intervals = '1 1 1'    # Fuel, cladding, background
+    mesh_intervals = '1 1 1' # Fuel, cladding, background
     region_ids = '${mid_lower_refl}     ${mid_lower_refl}     ${mid_lower_refl};
                   ${mid_fuel_2}         ${mid_ht9}            ${mid_sodium};
                   ${mid_upper_na_plen}  ${mid_upper_na_plen}  ${mid_upper_na_plen};
@@ -98,7 +103,7 @@ mid_control_empty = 12
     pitch = ${fuel_pin_pitch}
     num_sectors = 2
     ring_radii = '${fuel_clad_r_i} ${fuel_clad_r_o}'
-    mesh_intervals = '1 1 1'    # Fuel, cladding, background
+    mesh_intervals = '1 1 1' # Fuel, cladding, background
     region_ids = '${mid_lower_refl}     ${mid_lower_refl}     ${mid_lower_refl};
                   ${mid_fuel_3}         ${mid_ht9}            ${mid_sodium};
                   ${mid_upper_na_plen}  ${mid_upper_na_plen}  ${mid_upper_na_plen};
@@ -113,11 +118,11 @@ mid_control_empty = 12
     pitch = ${control_pin_pitch}
     num_sectors = 2
     ring_radii = '${control_clad_r_i} ${control_clad_r_o}'
-    mesh_intervals = '1 1 1'    # Fuel, cladding, background
+    mesh_intervals = '1 1 1' # Fuel, cladding, background
     region_ids = '${mid_control_empty} ${mid_control_empty} ${mid_control_empty};
                   ${mid_control_empty} ${mid_control_empty} ${mid_control_empty};
                   ${mid_b4c}            ${mid_ht9}            ${mid_sodium};
-                  ${mid_b4c}            ${mid_ht9}            ${mid_sodium};'     # Fuel, cladding, background
+                  ${mid_b4c}            ${mid_ht9}            ${mid_sodium};' # Fuel, cladding, background
     quad_center_elements = false
   []
   # Define fuel assemblies

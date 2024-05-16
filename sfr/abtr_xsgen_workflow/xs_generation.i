@@ -1,14 +1,22 @@
+# ==============================================================================
+# ABTR Equivalent-full core cross section generation
+# Application: Griffin / MCC3
+# POC: Shikhar Kumar (kumars at anl.gov)
+# If using or referring to this model, please cite as explained in
+# https://mooseframework.inl.gov/virtual_test_bed/citing.html
+# ==============================================================================
+
 [MCC3CrossSection]
-  remove_pwfiles    = false
-  remove_inputs     = true
-  remove_outputs    = true
-  remove_xmlfiles   = true
-  griffin_data      = '../../../griffin/griffin_data'
-  endfb_version     = 'ENDF/B-VII.0'
+  remove_pwfiles = false
+  remove_inputs = true
+  remove_outputs = true
+  remove_xmlfiles = true
+  griffin_data = '../../../griffin/griffin_data'
+  endfb_version = 'ENDF/B-VII.0'
   library_pointwise = 'pw_data'
 
-  xml_macro_cross_section=true
-  xml_filename      = 'mcc3xs.xml'
+  xml_macro_cross_section = true
+  xml_filename = 'mcc3xs.xml'
   generate_core_input = true
 
   rz_calculation = true
@@ -33,7 +41,7 @@
   map_het_grid_values = 'Tfuel 900
                          Tcool 700'
 
-  rz_meshgenerator=rz_core
+  rz_meshgenerator = rz_core
   het_cross_sections = 'fuel1 fuel2 fuel3 control_b4c'
   max_het_mesh_size = 0.5
   target_core = full_hom
