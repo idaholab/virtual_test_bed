@@ -15,7 +15,7 @@
   # Adapt this path to your installation of griffin_data
   griffin_data = '../../apps/griffin/griffin_data'
   endfb_version = 'ENDF/B-VII.0'
-  library_pointwise = 'pw_data'
+  library_pointwise = './'
 
   xml_macro_cross_section = true
   xml_filename = 'mcc3xs.xml'

@@ -9,7 +9,6 @@
     method = 'opt'
     max_time = 600
   []
-  # TODO update path to griffin_data
   [xs_generation]
     type = 'XMLDiff'
     input = 'xs_generation_mesh.i xs_generation.i'
@@ -51,7 +50,7 @@
     max_time = 600
   []
   [full_core_solve]
-    type = 'RunApp'
+    type = 'CSVDiff'
     input = 'xs_generation_mesh.i core_hom_macro.i'
     executable_pattern = 'griffin*|blue_crab*'
     cli_args = "Mesh/inactive='rz_core rz_coarse_mesh rz_coarse_id'
@@ -68,8 +67,10 @@
                 TransportSystems/dfem_sn/NAzmthl=4
                 TransportSystems/dfem_sn/NPolar=3
                 Executioner/coarse_element_id=coarse_element_id
-                Executioner/cmfd_eigen_solver_type=krylovshur"
+                Executioner/cmfd_eigen_solver_type=krylovshur
+                Outputs/csv=true"
     prereq = 'xs_generation'
+    csvdiff = 'core_hom_macro_out.csv'
     min_parallel = 16
     method = 'opt'
     max_time = 600
