@@ -35,6 +35,7 @@
     type = RunApp
     input = 'ss2_primary.i'
     check_input = True
+    cli_args = "--app SamApp"
     executable_pattern = 'sam*|blue_crab*'
   []
   [syntax_coarse_pebble_mesh]

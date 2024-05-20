@@ -27,6 +27,7 @@
     input = 'msfr_system_1d.i'
     check_input = True
     executable_pattern = 'sam*|blue_crab*'
+    cli_args = "--app SamApp"
   []
 
   # Regression tests with CSV output over a minimum amount of time steps/computation
