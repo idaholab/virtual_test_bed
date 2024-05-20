@@ -12,6 +12,7 @@
 # - User should make sure boundary sidesets (outer_core, top, and bottom) are defined
 #   in either TransportSystems/VacuumBoundary or TransportSystems/ReflectingBoundary
 #   but not both
+# - Optionally, a coarse mesh can be defined at the end of this Mesh block by the user to run Griffin with CMFD
 # See 'tests' file for the command line arguments to pass to do this
 # Adding command line arguments from the input is coming in MOOSE FY24
 

@@ -52,22 +52,22 @@ The cross section generation workflow has been implemented in such a way that ma
 
 ## Input File Description for Cross Section Generation Workflow id=sec:xsgen_input_description
 
-This section focuses on the input files needed to run the cross section generation worfklow. Two input files are called for this section in order to split mesh generation from the actual execution of the cross section generation workflow calculations. `xs_generation_mesh.i` defines the input heterogeneous mesh through [!ac](RGMB) mesh generators and generates the equivalent R-Z mesh that will be used as part of the Griffin R-Z spectrum calculation, while `xs_generation.i` imports this mesh through [FileMeshGenerator](https://mooseframework.inl.gov/source/meshgenerators/FileMeshGenerator.html) and defines all control parameters related to the cross section generation workflow. The commands to run the cross section generation workflow from start to finish are shown below:
+This section focuses on the input files needed to run the cross section generation worfklow. Three input files are called for this section in order to split mesh generation from the actual execution of the cross section generation workflow calculations. `abtr_het_mesh.i` defines the heterogeneous mesh through [!ac](RGMB) mesh generators, `xs_generation_mesh.i` takes this heterogeneous mesh as input and generates the equivalent R-Z mesh that will be used as part of the Griffin R-Z spectrum calculation, while `xs_generation.i` defines all control parameters related to the cross section generation workflow. The commands to run the cross section generation workflow from start to finish are shown below:
 
 ```
 # Generate equivalent R-Z spectrum mesh and run XS generation workflow through Griffin
-mpirun -np [N_PROC_TOTAL] /path/to/griffin/griffin-opt -i xs_generation_mesh.i xs_generation.i
+mpirun -np <N_PROC_TOTAL> /path/to/griffin/griffin-opt -i abtr_het_mesh.i xs_generation_mesh.i xs_generation.i
 ```
 
-, where `[N_PROC_TOTAL]` refers to the total number of MPI processes available for the simulation. The first Griffin file `xs_generation_mesh.i` generates an output 2-D R-Z mesh from an input mesh that represents the geometry and material ID assignment for the 3-D heterogeneous [!ac](ABTR) core. The second Griffin input file `xs_generation.i` contains all of the information related to the cross section generation worklow. [#subsec:rgmb_meshgen] and [#subsec:rz_eqv_core] describe sections of `xs_generation_mesh.i` in more detail, while [#subsec:mcc3_params] and [#subsec:griffin_rz_params] describe the specifics of `xs_generation.i`.
+, where `<N_PROC_TOTAL>` refers to the total number of MPI processes available for the simulation. The first two Griffin files `abtr_het_mesh.i` and `xs_generation_mesh.i` generate an output 2-D R-Z mesh from an input mesh that represents the geometry and material ID assignment for the 3-D heterogeneous [!ac](ABTR) core. The third Griffin input file `xs_generation.i` contains all of the information related to the cross section generation worklow. [#subsec:rgmb_meshgen] and [#subsec:rz_eqv_core] describe sections of `abtr_het_mesh.i` and `xs_generation_mesh.i` in more detail, respectively, while [#subsec:mcc3_params] and [#subsec:griffin_rz_params] describe the specifics of `xs_generation.i`.
 
 ### Heterogeneous input mesh generation through [!ac](RGMB) mesh generators id=subsec:rgmb_meshgen
 
-The [ReactorMeshParams](https://mooseframework.inl.gov/source/meshgenerators/ReactorMeshParams.html), [PinMeshGenerator](https://mooseframework.inl.gov/source/meshgenerators/ReactorMeshParams.html), [AssemblyMeshGenerator](https://mooseframework.inl.gov/source/meshgenerators/AssemblyMeshGenerator.html), and [CoreMeshGenerator](https://mooseframework.inl.gov/source/meshgenerators/CoreMeshGenerator.html) in `xs_generation_mesh.i` make use of the [!ac](RGMB) mesh generation system within the Reactor module to streamline the definition of latticed core geometries and the reporting IDs associated with such structures [!citep](shemon2023reactor). Mesh generation through [!ac](RGMB) is a requirement for taking advantage of Griffin's [!ac](SFR) cross section generation workflow, as it ensures that all reporting IDs related to region ID mappings as well as IDs corresponding to groupings of pin structures, assembly structures, and axial layers are defined in a consistent and predictable manner.
+The [ReactorMeshParams](https://mooseframework.inl.gov/source/meshgenerators/ReactorMeshParams.html), [PinMeshGenerator](https://mooseframework.inl.gov/source/meshgenerators/ReactorMeshParams.html), [AssemblyMeshGenerator](https://mooseframework.inl.gov/source/meshgenerators/AssemblyMeshGenerator.html), and [CoreMeshGenerator](https://mooseframework.inl.gov/source/meshgenerators/CoreMeshGenerator.html) in `abtr_het_mesh.i` make use of the [!ac](RGMB) mesh generation system within the Reactor module to streamline the definition of latticed core geometries and the reporting IDs associated with such structures [!citep](shemon2023reactor). Mesh generation through [!ac](RGMB) is a requirement for taking advantage of Griffin's [!ac](SFR) cross section generation workflow, as it ensures that all reporting IDs related to region ID mappings as well as IDs corresponding to groupings of pin structures, assembly structures, and axial layers are defined in a consistent and predictable manner.
 
-At the top of the `xs_generation_mesh.i` file, all global variables related to the mesh geometry as well as the region/material IDs are defined as global constants to be used within the `[Mesh]` block. For the purposes of this workflow, the region/material IDs defined in this section can be understood as unique material zones on the heterogeneous mesh that each have their own mappings of isotopic compositions. Thus, for this problem there are 12 unique material types within the heterogeneous core specifications.
+At the top of the `abtr_het_mesh.i` file, all global variables related to the mesh geometry as well as the region/material IDs are defined as global constants to be used within the `[Mesh]` block. For the purposes of this workflow, the region/material IDs defined in this section can be understood as unique material zones on the heterogeneous mesh that each have their own mappings of isotopic compositions. Thus, for this problem there are 12 unique material types within the heterogeneous core specifications.
 
-!listing sfr/abtr_xsgen_workflow/xs_generation_mesh.i start=Geometry Info. end=mid_control_empty include-end=True
+!listing sfr/abtr_xsgen_workflow/abtr_het_mesh.i start=fuel_pin_pitch end=mid_control_empty include-end=True
 
 Within the `[Mesh]` block, the `ReactorMeshParams` object defines the global parameters related to the heterogeneous mesh. This includes:
 
@@ -77,11 +77,11 @@ Within the `[Mesh]` block, the `ReactorMeshParams` object defines the global par
 - Assembly layer thicknesses and number of subintervals per axial layer, controlled by `ReactorMeshParams/axial_regions` and `ReactorMeshParams/axial_mesh_intervals`, respectively
 - Boundary IDs assigned to the top, bottom, and radial sidesets of the outer boundary of the reactor core, controlled by `ReactorMeshParams/top_boundary_id`, `ReactorMeshParams/bottom_boundary_id` and `ReactorMeshParams/radial_boundary_id`, respectively.
 
-!listing sfr/abtr_xsgen_workflow/xs_generation_mesh.i start=Define global reactor mesh parameters end=Define constituent pins include-end=False
+!listing sfr/abtr_xsgen_workflow/abtr_het_mesh.i start=Define global reactor mesh parameters end=Define constituent pins include-end=False
 
 Pin structures are defined by calling `PinMeshGenerator`, and four different pin types are created, three of them used to create three fuel assembly types of varying fuel compositions, and one to define the control rod assembly. Each of these pin definitions have a unique values for `PinMeshGenerator/pin_type` to indicate uniqueness of pin types to the [!ac](RGMB) workflow.
 
-!listing sfr/abtr_xsgen_workflow/xs_generation_mesh.i start=Define constituent pins of fuel assemblies end=Define fuel assemblies include-end=False
+!listing sfr/abtr_xsgen_workflow/abtr_het_mesh.i start=Define constituent pins of fuel assemblies end=Define fuel assemblies include-end=False
 
 Pins are defined as a collection of ring radii surrounded by a background region and an optional duct region. The following parameters control the geometrical aspects of the pin structure:
 
@@ -94,7 +94,7 @@ The `region_ids` parameter is used to set the region ID reporting IDs for the pi
 
 These four pin types are then stitched into assembly structures by calling `AssemblyMeshGenerator`. Here, three different fuel assembly types and one control assembly type are created, each of which has a different value for `AssemblyMeshGenerator/assembly_type` to indicate uniqueness of assembly types to the [!ac](RGMB) workflow. `AssemblyMeshGenerator/background_intervals` and `AssemblyMeshGenerator/duct_intervals` control how many subdiscretizations should be applied for each background and duct region, respectively, and `AssemblyMeshGenerator/duct_halfpitch` defines the halfpitch of each duct region.
 
-!listing sfr/abtr_xsgen_workflow/xs_generation_mesh.i start=Define fuel assemblies end=Define homogenized reflector and shielding assemblies include-end=False
+!listing sfr/abtr_xsgen_workflow/abtr_het_mesh.i start=Define fuel assemblies end=Define homogenized reflector and shielding assemblies include-end=False
 
 Similar to `PinMeshGenerator/region_ids`, `AssemblyMeshGenerator/background_region_id` and `AssemblyMeshGenerator/duct_region_ids` set the region IDs of the background and duct regions, respectively, where the horizontal axis represents the radial region IDs (from innermost to outermost), and the vertical axis represents the axial region IDs (from bottom to top). [fig:assembly_region_ids] shows how the 3-D region IDs are represented for `Mesh/fuel_assembly_1` and `Mesh/control_assembly`.
 
@@ -109,7 +109,7 @@ In order to define homogenized assembly regions, `PinMeshGenerator` is called wi
 
 The resulting assembly structure definitions can then be stitched together to define the heterogeneous core mesh. Here, a dummy assembly mesh does not have to be explicitly defined, and can be specified in `CoreMeshGenerator/inputs` by providing a dummy assembly name in `CoreMeshGenerator/dummy_assembly_name`. [fig:hetcore_region_ids] shows the resulting region ID distribution for the 3-D heterogeneous reactor core mesh.
 
-!listing sfr/abtr_xsgen_workflow/xs_generation_mesh.i start=Define heterogeneous core end=Define equivalent RZ core from input heterogeneous RGMB core include-end=False
+!listing sfr/abtr_xsgen_workflow/abtr_het_mesh.i start=Define heterogeneous core end=Define equivalent RZ core from input heterogeneous RGMB core include-end=False
 
 !media plots/hetcore_region_ids.png
        style=width:60%
@@ -127,7 +127,7 @@ In this step, `EquivalentCoreMeshGenerator` accomplishes two tasks:
 1. Generation of equivalent R-Z mesh for use with downstream Griffin R-Z spectrum calculation
 2. Definition of all metadata related to setting up downstream MC$^2$-3 calculations.
 
-Related to the first point, `EquivalentCoreMeshGenerator/input` takes an heterogeneous input core mesh defined through the use of `CoreMeshGenerator`, and creates an equivalent homogenized, partially homogenized, or 2-D R-Z mesh without the need for a user to generate this intermediate mesh from scratch. Since the downstream Griffin calculation in the cross section generation workflow requires a 2-D R-Z mesh, `EquivalentCoreMeshGenerator/target_geometry` is set to `rz`. However, at the full-core analysis step described in [#sec:fullcorecalc_input_description], a fully homogeneous input mesh needs to be generated from the input heterogeneous mesh instead, so this is done by following the same mesh generation workflow and setting `EquivalentCoreMeshGenerator/target_geometry` to `full_hom`. Other options for this parameter include `ring_het` and `duct_het` for ring-heterogeneous and duct heterogeneous intermediate output meshes, respectively.
+Related to the first point, `EquivalentCoreMeshGenerator/input` takes a heterogeneous input core mesh defined through the use of `CoreMeshGenerator`, and creates an equivalent homogenized, partially homogenized, or 2-D R-Z mesh without the need for a user to generate this intermediate mesh from scratch. Since the downstream Griffin calculation in the cross section generation workflow requires a 2-D R-Z mesh, `EquivalentCoreMeshGenerator/target_geometry` is set to `rz`. However, at the full-core analysis step described in [#sec:fullcorecalc_input_description], a fully homogeneous input mesh needs to be generated from the input heterogeneous mesh instead, so this is done by following the same mesh generation workflow and setting `EquivalentCoreMeshGenerator/target_geometry` to `full_hom`. Other options for this parameter include `ring_het` and `duct_het` for ring-heterogeneous and duct heterogeneous intermediate output meshes, respectively.
 
 Most of the remaining parameters in the `[rz_core]` control how the 2-D R-Z mesh should be discretized, where `max_axial_mesh_size` controls the maximum axial mesh size to subdivide the axial layers of the 2-D R-Z mesh, and  `max_radial_mesh_size` controls the maximum radial mesh size to subdivide the radial boundaries of the 2-D R-Z mesh. By default, `EquivalentCoreMeshGenerator` automatically infers the R-Z mesh boundaries by collapsing the input core lattice pattern by each hexagonal ring and grouping like assembly types. However, the R-Z mesh radial boundary and region assignments can also be specified manually by setting `EquivalentCoreMeshGenerator/radial_boundaries` and `EquivalentCoreMeshGenerator/radial_assembly_names`, respectively, where the names in `EquivalentCoreMeshGenerator/radial_assembly_names` correspond to the assembly names defined in `CoreMeshGenerator/inputs` to place the homogenized region IDs in each radial and axial region of the 2-D R-Z mesh. The manual approach is taken in this example, where the radial boundary and region assignments are based on prior studies done for the [!ac](ABTR) core [!citep](pyarc_report).
 
@@ -179,7 +179,7 @@ Finally, `Mesh/data_driven_generator` indicates to the mesh generator system to 
 
 ### Input Parameters Specific to MC$^2$-3 Execution and Overall Cross Section Generation Workflow id=subsec:mcc3_params
 
-As explained in [#subsec:rgmb_meshgen] and [#subsec:rz_eqv_core], `xs_generation_mesh.i` defines the `[Mesh]` block that generates a 2-D R-Z mesh from a fully-heterogeneous core geometry definition. However, since the output mesh does not contain any information about the isotopic compositions related to each region ID defined on the input mesh, the `[Compositions]` block in `xs_generation.i` is used to map the region ID's defined in `xs_generation_mesh.i` to physical isotopic compositions within each heterogeneous region:
+As explained in [#subsec:rgmb_meshgen] and [#subsec:rz_eqv_core], the combination of `abtr_het_mesh.i` and `xs_generation_mesh.i` define the `[Mesh]` block that generates a 2-D R-Z mesh from a fully-heterogeneous core geometry definition. However, since the output mesh does not contain any information about the isotopic compositions related to each region ID defined on the input mesh, the `[Compositions]` block in `xs_generation.i` is used to map the region ID's defined in `xs_generation_mesh.i` to physical isotopic compositions within each heterogeneous region:
 
 !listing sfr/abtr_xsgen_workflow/xs_generation.i block=Compositions
 
@@ -210,7 +210,7 @@ For Step 2 MC$^2$-3 input file generation, the same subassembly regions are cons
 
 ### Input Parameters Specific to Intermediate Griffin R-Z flux calculation id=subsec:griffin_rz_params
 
-Outside of the `[Compositions]` and `[MCC3CrossSection]` blocks, the rest of the `xs_generation.i` input file specifies control parameters for the intermediate R-Z flux spectrum calculation that is calculated in Griffin. The associated mesh that is imported in the `[Mesh]` block is the R-Z mesh that will be used to solve for the [!ac](UFG) flux spectrum, and the `[TransportSystems]` block sets up the eigenvalue transport problem that will be solved with the DFEM-SN solver, while the `[Executioner]` block defines the problem convergence tolerances and parameters specific to [!ac](CMFD) acceleration.
+Outside of the `[Compositions]` and `[MCC3CrossSection]` blocks, the rest of the `xs_generation.i` input file specifies control parameters for the intermediate R-Z flux spectrum calculation that is calculated in Griffin. The associated mesh that is defined in the `[Mesh]` block is the R-Z mesh that will be used to solve for the [!ac](UFG) flux spectrum, and the `[TransportSystems]` block sets up the eigenvalue transport problem that will be solved with the DFEM-SN solver, while the `[Executioner]` block defines the problem convergence tolerances and parameters specific to [!ac](CMFD) acceleration.
 
 !listing sfr/abtr_xsgen_workflow/xs_generation.i start=[TransportSystems] end=[Outputs] include-end=False
 
@@ -220,89 +220,11 @@ Here, `TransportSystems/G` must match the number of groups defined in `MCC3Cross
 
 By running Griffin on the `xs_generation.i` file, two files are created that are used for the full-core eigenvalue calculation step that will be explained in this section. The first is the BG cross section library, named `mcc3xs.xml` (this name is controlled by `MCCCrossSection/xml_filename`), and the second is the Griffin input file that will be used for this section, named `core_hom_macro.i` (this is a fixed name, based on whether assembly homogenized cross sections are calculated, and whether microscopic or macroscopic cross sections are used in the output cross section library). The automatic generation of this input file streamlines the setup of the full-core analysis step, and the contents of this file are shown below:
 
-```
-# TODO User should define heterogeneous RGMB core mesh in [Mesh] block or as separate input file
-# TODO User should set Mesh/eqv_core/input to name of heterogeneous RGMB CoreMeshGenerator mesh
-# TODO User should make sure boundary sidesets (outer_core, top, and bottom) are defined
-#      in either TransportSystems/VacuumBoundary or TransportSystems/ReflectingBoundary
-#      but not both
-
-[Mesh]
-  [eqv_core]
-    type = EquivalentCoreMeshGenerator
-    input = het_core
-    target_geometry = full_hom
-  []
-  [block_numbering]
-    type = ElementIDToSubdomainID
-    input = 'eqv_core'
-    extra_element_id_name = 'material_id'
-  []
-  data_driven_generator = eqv_core
-[]
-
-[GlobalParams]
-  is_meter     = false
-  plus         = true
-  library_file = 'mcc3xs.xml'
-  library_name = 'ISOTXS-neutron'
-[]
-
-[TransportSystems]
-  particle = neutron
-  equation_type = eigenvalue
-  G = 33
-  ReflectingBoundary = 'outer_core top bottom'
-  VacuumBoundary = 'outer_core top bottom'
-  [dfem_sn]
-    scheme = DFEM-SN
-    family = L2_LAGRANGE
-    order = FIRST
-    AQtype = Gauss-Chebyshev
-    NPolar = 2
-    NAzmthl = 3
-    NA = 1
-    using_array_variable = true
-    using_averaged_xs = true
-    direction_major_ordering = true
-  []
-[]
-
-[Executioner]
-  type = SweepUpdate
-  richardson_rel_tol = 1e-6
-  richardson_abs_tol = 1e-6
-  richardson_max_its = 100
-  richardson_value = eigenvalue
-  inner_solve_type = GMRes
-  max_inner_its = 4
-  inner_tol = 1.e-3
-  cmfd_acceleration = true
-[]
-
-[Materials]
-  [material_core_grid1]
-    type = MixedMatIDNeutronicsMaterial
-    isotopes = 'pseudo_REG'
-    densities = '1.0'
-    block = '100 300 400 700 800 900 1000'
-    grid_names = 'Tcool'
-    grid = '1'
-  []
-  [material_core_grid2]
-    type = MixedMatIDNeutronicsMaterial
-    isotopes = 'pseudo_REG'
-    densities = '1.0'
-    block = '200 500 600'
-    grid_names = 'Tcool Tfuel'
-    grid = '1 1'
-  []
-[]
-```
+!listing sfr/abtr_xsgen_workflow/core_hom_macro.i
 
 Users are encouraged to look through this input file in detail and update input parameters accordingly based on their modeling needs. At a minimum however, a mesh file related to the heterogeneous reactor core needs to be defined with a name that matches `Mesh/eqv_core/input`, and boundary conditions for the full-core eigenvalue problem need to be defined by setting the appropriate outer boundary sidesets using `TransportSystems/VacuumBoundary` and `TransportSystems/ReflectingBoundary`. By looking at this file, it can be seen that the mapping between mesh blocks and cross section material ID is automatically done by calling `MixedMatIDNeutronicsMaterial` in the `[Materials]` block, and this assumes that the homogeneous input reactor core mesh has been generated with `EquivalentCoreMeshGenerator`.
 
-The heterogeneous reactor core mesh can be copied directly from the `xs_generation_mesh.i` (everything up to and including the `Mesh/het_core` block), and pasted into `core_hom_macro.i` above the `Mesh/eqv_core` block. The remainder of the `[Mesh]` block in `core_hom_macro.i` follows very similar steps as the ones explained in `xs_generation_mesh.i`, `EquivalentCoreMeshGenerator` is responsible for generating the homogeneous mesh from the input heterogeneous mesh specifications.
+In its current form, the `[Mesh]` block in `core_hom_macro.i` is incomplete and needs the heterogeneous reactor specifications to be defined as input to `[eqv_core]`. Since the heterogeneous input mesh was already defined in the cross section generation step, `abtr_het_mesh.i` can be used directly for this purpose in the full-core calculation step as well. The `[Mesh]` block in `core_hom_macro.i` follows very similar steps as the ones explained in `xs_generation_mesh.i`, `EquivalentCoreMeshGenerator` is responsible for generating the homogeneous mesh from the input heterogeneous mesh specifications.
 
 In `core_hom_macro.i`, `EquivalentCoreMeshGenerator/target_geometry` is set to `full_hom` to specify a full-homogeneous reactor mesh as the output mesh. Additionally, `EquivalentCoreMeshGenerator/quad_center_elements` can be set to dictate whether the homogeneized hexagonal prism regions are discretized into 2 quadrilaterial prism regions (true) or 6 triangular prism regions (false), and `EquivalentCoreMeshGenerator/max_axial_mesh_size` sets the maximum axial mesh size to sub-discretize each axial layer of the output mesh.
 
@@ -315,7 +237,6 @@ While `core_hom_macro.i` does not define a coarse mesh for the output mesh, this
 
 ```
 [Mesh]
-  # Existing lines within core_hom_macro.i
   [coarse_mesh]
     type = CoarseMeshExtraElementIDGenerator
     input = block_numbering
@@ -329,7 +250,7 @@ Here, the coarse mesh is defined to be identical to the fine mesh, which in this
 
 ```
 # Run full-core eigenvalue calculation and override default parameters defined in core_hom_macro.i
-mpirun -np [N_PROC_TOTAL] /path/to/griffin/griffin-opt -i core_hom_macro.i
+mpirun -np <N_PROC_TOTAL> /path/to/griffin/griffin-opt -i abtr_het_mesh.i core_hom_macro.i
     Mesh/eqv_core/quad_center_elements=true Mesh/eqv_core/max_axial_mesh_size=10 Mesh/uniform_refine=1 
     TransportSystems/ReflectingBoundary='' TransportSystems/VacuumBoundary='outer_core top bottom'
     TransportSystems/dfem_sn/NAzmthl=4 TransportSystems/dfem_sn/NPolar=3
