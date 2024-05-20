@@ -6,6 +6,8 @@
 # https://mooseframework.inl.gov/virtual_test_bed/citing.html
 # ==============================================================================
 
+!include xs_generation_mesh.i
+
 [MCC3CrossSection]
   remove_pwfiles = false
   remove_inputs = true

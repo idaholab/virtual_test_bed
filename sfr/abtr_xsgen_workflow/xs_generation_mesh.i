@@ -6,6 +6,8 @@
 # https://mooseframework.inl.gov/virtual_test_bed/citing.html
 # ==============================================================================
 
+!include abtr_het_mesh.i
+
 [Mesh]
   # Define equivalent RZ core from input heterogeneous RGMB core
   [rz_core]
@@ -20,7 +22,7 @@
                              reflector_assembly shielding_assembly'
     debug_equivalent_core = true
   []
-  # Define and apply coarse mesh to RZ mesh
+  # Define and apply a coarse RZ mesh
   [rz_coarse_mesh]
     type = CartesianMeshGenerator
     dim = 2

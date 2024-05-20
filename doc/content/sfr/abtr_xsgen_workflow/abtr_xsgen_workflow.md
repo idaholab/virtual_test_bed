@@ -120,7 +120,7 @@ The resulting assembly structure definitions can then be stitched together to de
 
 Through the definition of the heterogeneous core input mesh using [!ac](RGMB) mesh generators, a Griffin-specific mesh generator called `EquivalentCoreMeshGenerator` is called to enable all downstream calculations used as part of the cross section generation workflow.
 
-!listing sfr/abtr_xsgen_workflow/xs_generation_mesh.i start=Define equivalent RZ core from input heterogeneous RGMB core end=Define and apply coarse mesh to RZ mesh include-end=False
+!listing sfr/abtr_xsgen_workflow/xs_generation_mesh.i start=Define equivalent RZ core from input heterogeneous RGMB core end=Define and apply a coarse RZ mesh include-end=False
 
 In this step, `EquivalentCoreMeshGenerator` accomplishes two tasks:
 
@@ -169,21 +169,21 @@ Most of the remaining parameters in the `[rz_core]` control how the 2-D R-Z mesh
 The mapping shown in [tab:subassembly_id_mapping] is computed by `EquivalentCoreMeshGenerator` and stored as metadata on the mesh. This metadata is what is primarily used to set up the MCC-3 execution and MCC-3 input file generation, which all happens under the hood. For example, each subassembly region ID shown in the third column of [tab:subassembly_id_mapping] represents a separate subassembly region for which MC$^2$-3 needs to be executed. The following metadata is also defined by `EquivalentCoreMeshGenerator`, which is used by downstream MC$^2$-3 calculations:
 
 - Homogenized volume fractions: For each subassembly ID shown in [tab:subassembly_id_mapping], a list of volume fractions for each heterogeneous region ID found within the subassembly is stored. This is used in the Step 1 MC$^2$-3 calculation step to set the compositions of the homogenized mixture calculation for each subassembly region.
-- 1-D radial boundaries: For each subassembly ID shown in [tab:subassembly_id_mapping], the heterogeneous subassembly geometry and region ID layout is represted as a series of volume-preserved concentric rings, and this 1-D ring representation is used by the Step 2 MC$^2$-3 calculation to setup the 1-D CPM calculations wherever needed.
+- 1-D radial boundaries: For each subassembly ID shown in [tab:subassembly_id_mapping], the heterogeneous subassembly geometry and region ID layout is represented as a series of volume-preserved concentric rings, and this 1-D ring representation is used by the Step 2 MC$^2$-3 calculation to setup the 1-D CPM calculations wherever needed.
 
-For a more comprehensive list of metadata stored by `EquivalentCoreMeshGenerator`, the console output from setting `EquivalentCoreMeshGenerator/debug_equivalent_core = true` can be inspected. As a final step for mesh generation, an explicity defined coarse mesh is defined for the output R-Z mesh in order to use with [!ac](CMFD) acceleration as part of the downstream Griffin R-Z spectrum calculation step, and setting `Mesh/coord_type = RZ` specifies that an RZ coordinate system should be used for this.
+For a more comprehensive list of metadata stored by `EquivalentCoreMeshGenerator`, the console output from setting `EquivalentCoreMeshGenerator/debug_equivalent_core = true` can be inspected. As a final step for mesh generation, an explicity defined coarse mesh is defined for the output R-Z mesh in order to use with [!ac](CMFD) acceleration as part of the downstream Griffin R-Z spectrum calculation step, and setting `Mesh/coord_type = RZ` specifies that an RZ coordinate system should be used with the 2D mesh.
 
-!listing sfr/abtr_xsgen_workflow/xs_generation_mesh.i start=Define and apply coarse mesh to RZ mesh
+!listing sfr/abtr_xsgen_workflow/xs_generation_mesh.i start=Define and apply a coarse RZ mesh end=data_driven_generator include-end=True
 
-Finally, `Mesh/data_driven_generator` indicates to the mesh generator system to define the input heterogeneous mesh specfications through metadata defined by [!ac](RGMB), instead of building a physical heterogeneous input mesh. The value of this parameter should point to the name of the `EquivalentCoreMeshGenerator` instance, and this is an optimization that Griffin requires to speed up mesh generation workflows that invoke `EquivalentCoreMeshGenerator`.
+Finally, `Mesh/data_driven_generator` indicates to the mesh generator system that it should define the input heterogeneous mesh specifications through metadata defined by [!ac](RGMB), instead of building a physical heterogeneous input mesh. The value of this parameter should point to the name of the `EquivalentCoreMeshGenerator` instance. The data-driven model is an optimization that Griffin requires to speed up mesh generation workflows that invoke `EquivalentCoreMeshGenerator`.
 
 ### Input Parameters Specific to MC$^2$-3 Execution and Overall Cross Section Generation Workflow id=subsec:mcc3_params
 
-As explained in [#subsec:rgmb_meshgen] and [#subsec:rz_eqv_core], the combination of `abtr_het_mesh.i` and `xs_generation_mesh.i` define the `[Mesh]` block that generates a 2-D R-Z mesh from a fully-heterogeneous core geometry definition. However, since the output mesh does not contain any information about the isotopic compositions related to each region ID defined on the input mesh, the `[Compositions]` block in `xs_generation.i` is used to map the region ID's defined in `xs_generation_mesh.i` to physical isotopic compositions within each heterogeneous region:
+As explained in [#subsec:rgmb_meshgen] and [#subsec:rz_eqv_core], the combination of `abtr_het_mesh.i` and `xs_generation_mesh.i` defines the `[Mesh]` block that generates a 2-D R-Z mesh from a fully-heterogeneous core geometry definition. However, since the output mesh does not contain any information about the isotopic compositions related to each region ID defined on the input mesh, the `[Compositions]` block in `xs_generation.i` is used to map the region IDs defined in `xs_generation_mesh.i` to physical isotopic compositions within each heterogeneous region:
 
 !listing sfr/abtr_xsgen_workflow/xs_generation.i block=Compositions
 
-`IsotopeComposition` is used to map compositions of inidividual isotopes and their atomic densities to a specific region, while `MixedComposition` is used to define compositions as volume fractions of existing `IsotopeComposition` instances. Compositions listed in the `[Compositions]` block are mapped to a region ID defined on the heterogeneous mesh through the parameter `IsotopeComposition/composition_ids` or `MixedComposition/composition_ids`.
+`IsotopeComposition` is used to map compositions of individual isotopes and their atomic densities to a specific region, while `MixedComposition` is used to define compositions as volume fractions of existing `IsotopeComposition` instances. Compositions listed in the `[Compositions]` block are mapped to a region ID defined on the heterogeneous mesh through the parameter `IsotopeComposition/composition_ids` or `MixedComposition/composition_ids`.
 
 `xs_generation.i` also defines the control logic related to the cross section generation workflow calculations in Griffin and MC$^2$-3 that are set by the user. This file resembles a typical Griffin input file except for a key difference, which is the `[MCC3CrossSection]` block. This input block controls aspects specific to the cross section generation workflow, and will be explained in more detail in this section.
 
@@ -201,7 +201,7 @@ Finally, `MCC3CrossSection/rz_meshgenerator` defines the mesh generator name tha
 
 In order to provide more detail about how Step 1 MC$^2$-3 input files are created, the metadata extracted from the mesh generator listed in `MCC3CrossSection/rz_meshgenerator` defines all unique subassembly regions within the reactor core. For each unique subassembly region, the homogenized mixture composition is then inferred using the volume fractions for each heterogeneous region IDs found in the subassembly (also computed as metadata), as well as the isotopic compositions for each of these region IDs. This mixture composition is written as part of the MC$^2$-3 input file before being executed by MC$^2$-3 and processed for use with the downstream Griffin R-Z flux spectrum calculation.
 
-For Step 2 MC$^2$-3 input file generation, the same subassembly regions are considered as part of the BG cross section condensation step, with the primary difference being that some of these subassembly regions undergo a 1D CPM calculation step to incorporate local spatial self-shielding effects into the condensed cross sections. Only subassembly regions that contain region IDs associated with any of the compositions listed in `MCCCrossSection/het_cross_sections` will undergo this 1D CPM calculation step. Otherwise the condensation occurs assuming a homogenized mixture composition. Based on the data presented in [tab:subassembly_id_mapping], subassemblies with IDs 200, 500, 600, and 800 will undergo 1D CPM calculations, as these are the fuel and control subassemblies that contain the compositions specified by `MCCCrossSection/het_cross_sections`. The problem parameters for each of these 1D CPM calculations are based on specifying the ring boundaries and isotopic compositions for each ring region through the MC$^2$-3 input file, and this is automatically inferred through the 1D ring model that is defined by `EquivalentCoreMeshGenerator` and stored as metadata. For example, for the fuel subassembly region with ID 200 (assembly named `[fuel_assembly_1]` in mesh input file at second-to-the-bottom axial layer) that undergoes the 1D CPM calculation step, [fig:1d_cpm_geometry] shows the equivalent 1D ring geometry that MC$^2$-3 uses to run the 1D CPM calculation. Since 1D CPM calculations require a fission source to run, for heterogeneous regions such as control subassemblies that do not have any fuel material, the 1D CPM calculation will arbitrarily add a fuel region surrounding the 1D geometry, based on the homogenized composition of one of the fuel subassembly regions in the reactor core.
+For Step 2 MC$^2$-3 input file generation, the same subassembly regions are considered as part of the BG cross section condensation step, with the primary difference being that some of these subassembly regions undergo a 1D CPM calculation step to incorporate local spatial self-shielding effects into the condensed cross sections. Only subassembly regions that contain region IDs associated with any of the compositions listed in `MCCCrossSection/het_cross_sections` will undergo this 1D CPM calculation step. Otherwise the condensation occurs assuming a homogenized mixture composition. Based on the data presented in [tab:subassembly_id_mapping], subassemblies with IDs 200, 500, 600, and 800 will undergo 1D CPM calculations, as these are the fuel and control subassemblies that contain the compositions specified by `MCCCrossSection/het_cross_sections`. The problem parameters for each of these 1D CPM calculations are based on the specifications of the ring boundaries and isotopic compositions for each ring region in the MC$^2$-3 input file. This is automatically inferred through the 1D ring model that is defined by `EquivalentCoreMeshGenerator` and stored as metadata. For example, for the fuel subassembly region with ID 200 (assembly named `[fuel_assembly_1]` in mesh input file at second-to-the-bottom axial layer) that undergoes the 1D CPM calculation step, [fig:1d_cpm_geometry] shows the equivalent 1D ring geometry that MC$^2$-3 uses to run the 1D CPM calculation. Since 1D CPM calculations require a fission source to run, for heterogeneous regions such as control subassemblies that do not have any fuel material, the 1D CPM calculation will arbitrarily add a fuel region surrounding the 1D geometry, based on the homogenized composition of one of the fuel subassembly regions in the reactor core.
 
 !media plots/1d_cpm_geometry.png
        style=width:60%
@@ -242,7 +242,7 @@ While `core_hom_macro.i` does not define a coarse mesh for the output mesh, this
     input = block_numbering
     coarse_mesh = block_numbering
     extra_element_id_name = coarse_element_id
-  []  
+  []
 []
 ```
 
@@ -258,4 +258,13 @@ mpirun -np <N_PROC_TOTAL> /path/to/griffin/griffin-opt -i abtr_het_mesh.i core_h
     PowerDensity/power=250000000 PowerDensity/power_density_variable=power --distributed-mesh
 ```
 
-Here, mesh refinement is applied and `EquivalentCoreMeshGenerator` settings are updated through the `[Mesh]` block, the boundary conditions sidesets are set and DFEM-SN angular discretizations are updated to increase solution accuracy through the `[TransportSystems]` block, CMFD settings are updated through the `[Executioner]` block, and the reactor power is set through the `[PowerDensity]` block. These parameter settings ensure that calculated eigenvalues are predicted to within 100pcm of previous work that has looked at modeling the [!ac](ABTR) reactor core [!citep](pyarc_report).
+The command line options specify the following:
+
+ - mesh refinement should be applied
+ - `EquivalentCoreMeshGenerator` settings are updated through the `[Mesh]` block
+ - the boundary conditions sidesets are set
+ - DFEM-SN angular discretizations are updated to increase solution accuracy through the `[TransportSystems]` block
+ - CMFD settings are updated through the `[Executioner]` block
+ - the reactor power is set through the `[PowerDensity]` block.
+
+These parameter settings ensure that calculated eigenvalues are predicted to within 100pcm of previous modeling work for the [!ac](ABTR) reactor core [!citep](pyarc_report).
