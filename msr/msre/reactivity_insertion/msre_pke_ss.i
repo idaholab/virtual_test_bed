@@ -5,6 +5,10 @@
 # If using or referring to this model, please cite as explained in
 # https://mooseframework.inl.gov/virtual_test_bed/citing.html
 
+[Application]
+  type = SamApp
+[]
+
 [GlobalParams]
   global_init_P = 2.392e5
   global_init_V = 1.0
@@ -143,7 +147,7 @@
     position           = '0.7366 0.0 -1.7272'
     eos                = eos
     power_fraction     = '0.8752'
-    coolant_density_reactivity_feedback = False
+    coolant_density_reactivity_feedback = True
     n_layers_coolant                    = 20
     coolant_reactivity_coefficients     = -3.0014E-04
   []
@@ -162,7 +166,7 @@
     Ts_init            = 905.4
     HS_BC_type         = 'Coupled  Adiabatic'
     name_comp_left     = ch2
-    moderator_reactivity_feedback     = False
+    moderator_reactivity_feedback     = True
     n_layers_moderator                = 20
     moderator_reactivity_coefficients = -2.9070E-06
   []

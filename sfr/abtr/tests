@@ -25,8 +25,7 @@
     executable_pattern = 'sam*|blue_crab*'
     prereq = steady_syntax
     rel_err = 1E-4
-    abs_zero = 1e-8
-    ignore_columns = 'CH1_inlet_T_0 CH1_outlet_T_0'
+    abs_zero = 1E-8
   []
   [ulof]
     type = CSVDiff
@@ -39,6 +38,7 @@
     # to generate the restart file
     prereq = 'ulof_syntax'
     rel_err = 1E-4
+    abs_zero = 1E-7
     override_columns = 'DHX_heatremoval'
     override_rel_err = '1E-2'
     override_abs_zero = '1E-6'

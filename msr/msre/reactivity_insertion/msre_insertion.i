@@ -5,6 +5,10 @@
 # If using or referring to this model, please cite as explained in
 # https://mooseframework.inl.gov/virtual_test_bed/citing.html
 
+[Application]
+  type = SamApp
+[]
+
 [GlobalParams]
   global_init_P = 2.392e5
   global_init_V = 1.0
@@ -425,7 +429,7 @@
 []
 
 [Problem]
-  restart_file_base = msre_pke_ss_ckpt_cp/1257
+  restart_file_base = msre_pke_ss_ckpt_cp/LATEST
 []
 
 [Outputs]
