@@ -19,6 +19,10 @@ pump_head = 4.62e5
 # Adjust 'fueling' component initial velocity if adjusting inlet area
 area_inlet = 0.33911699112746213
 
+[Application]
+  type = SamApp
+[]
+
 [GlobalParams] # global parameters initialization
   global_init_P = 1.0e5
   global_init_V = 1.796
