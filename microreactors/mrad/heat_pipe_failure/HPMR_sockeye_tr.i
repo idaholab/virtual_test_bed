@@ -163,7 +163,7 @@ T_ext_cond = 800.
     hs = hp
     T_ambient = ${T_ext_cond}
     htc_ambient = hp_htc_func
-    scale_pp = scale_pp
+    scale = scale_pp
   []
   [evaporator_boundary]
     type = HSBoundaryExternalAppConvection
