@@ -164,7 +164,7 @@ htc_ext_cond = 1.0e6
     hs = hp
     T_ambient = ${T_ext_cond}
     htc_ambient = ${htc_ext_cond} #large value to approach an effective DirichletBC
-    scale_pp = bc_scale_pp
+    scale = bc_scale_pp
   []
   [evaporator_boundary]
     type = HSBoundaryExternalAppConvection
