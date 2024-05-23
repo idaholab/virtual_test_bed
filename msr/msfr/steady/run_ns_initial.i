@@ -86,9 +86,10 @@ pump_force = -20000. # [N / m^3]
       pinned_pressure_value = 1e5
 
       # Heat exchanger friction
+      standard_friction_formulation = false
       friction_blocks = 'hx'
       friction_types = 'FORCHHEIMER'
-      friction_coeffs = ${friction}
+      friction_coeffs = 'friction_coeff_vector'
 
       # Numerical scheme
       mass_advection_interpolation = 'upwind'
@@ -102,6 +103,14 @@ pump_force = -20000. # [N / m^3]
       mixing_length_walls = 'shield_wall reflector_wall'
       mixing_length_aux_execute_on = 'initial'
     []
+  []
+[]
+
+[FunctorMaterials]
+  [friction_coeff_mat]
+    type = ADGenericVectorFunctorMaterial
+    prop_names = 'friction_coeff_vector'
+    prop_values = '${friction} ${friction} ${friction}'
   []
 []
 

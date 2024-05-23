@@ -149,10 +149,11 @@ beta6 = 0.000184087
       momentum_advection_interpolation = 'upwind'
       mass_advection_interpolation = 'upwind'
 
-      # Heat exchanger
+      # Heat exchanger friction
+      standard_friction_formulation = false
       friction_blocks = 'hx'
       friction_types = 'FORCHHEIMER'
-      friction_coeffs = ${friction}
+      friction_coeffs = 'friction_coeff_vector'
     []
     [FluidHeatTransfer/salt]
       block = 'fuel pump hx'
@@ -310,6 +311,11 @@ beta6 = 0.000184087
     prop_names = 'cp'
     prop_values = '${cp}'
     block = 'fuel pump hx'
+  []
+  [friction_coeff_mat]
+    type = ADGenericVectorFunctorMaterial
+    prop_names = 'friction_coeff_vector'
+    prop_values = '${friction} ${friction} ${friction}'
   []
 []
 

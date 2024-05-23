@@ -176,9 +176,10 @@ beta6 = 0.000184087
                                            ${beta5} ${lambda5_m}; ${beta6} ${lambda6_m}'
 
     # Heat exchanger
+    standard_friction_formulation = false
     friction_blocks = 'hx'
     friction_types = 'FORCHHEIMER'
-    friction_coeffs = ${friction}
+    friction_coeffs = 'friction_coeff_vector'
     ambient_convection_blocks = 'hx'
     ambient_convection_alpha = '${fparse 600 * 20e3}' # HX specifications
     ambient_temperature = 'hx_cold_temp'
@@ -351,6 +352,11 @@ beta6 = 0.000184087
     prop_names = 'cp'
     prop_values = '${cp}'
     block = 'fuel pump hx'
+  []
+  [friction_coeff_mat]
+    type = ADGenericVectorFunctorMaterial
+    prop_names = 'friction_coeff_vector'
+    prop_values = '${friction} ${friction} ${friction}'
   []
 []
 
