@@ -760,7 +760,7 @@ power_density = '${fparse total_power / model_vol / 258 * 236}' # adjusted using
   [core_balance]
     type = ParsedPostprocessor
     pp_names = 'power flow_in_m flow_out' #diffusion_in  outer_heat_loss'
-    function = 'power - flow_in_m - flow_out' # + diffusion_in + outer_heat_loss'
+    expression = 'power - flow_in_m - flow_out' # + diffusion_in + outer_heat_loss'
   []
 
   # Bypass
@@ -779,12 +779,12 @@ power_density = '${fparse total_power / model_vol / 258 * 236}' # adjusted using
   [bypass_fraction]
     type = ParsedPostprocessor
     pp_names = 'mass_flow_OR mass_flow_out'
-    function = 'mass_flow_OR / mass_flow_out'
+    expression = 'mass_flow_OR / mass_flow_out'
   []
   [plenum_fraction]
     type = ParsedPostprocessor
     pp_names = 'mass_flow_plenum mass_flow_out'
-    function = 'mass_flow_plenum / mass_flow_out'
+    expression = 'mass_flow_plenum / mass_flow_out'
   []
 
   # Miscellaneous

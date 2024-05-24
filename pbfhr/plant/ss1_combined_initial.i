@@ -744,7 +744,7 @@ outlet_pressure_val = 2e5
   []
   [inlet_vel_y_pp]
     type = ParsedPostprocessor
-    function = 'inlet_mdot / model_inlet_area / rho_fluid'
+    expression = 'inlet_mdot / model_inlet_area / rho_fluid'
     pp_names = 'inlet_mdot'
     constant_names = 'model_inlet_area rho_fluid'
     constant_expressions = '${model_inlet_area} ${rho_fluid}'
@@ -776,7 +776,7 @@ outlet_pressure_val = 2e5
   []
   [T_flow_in]
     type = ParsedPostprocessor
-    function = '-e_flow_in_m / inlet_mdot / cp_fluid'
+    expression = '-e_flow_in_m / inlet_mdot / cp_fluid'
     pp_names = 'e_flow_in_m inlet_mdot'
     constant_names = 'cp_fluid'
     constant_expressions = '2416'
@@ -784,7 +784,7 @@ outlet_pressure_val = 2e5
   []
   [T_flow_out]
     type = ParsedPostprocessor
-    function = 'e_flow_out / mass_flow_out / cp_fluid'
+    expression = 'e_flow_out / mass_flow_out / cp_fluid'
     pp_names = 'e_flow_out mass_flow_out'
     constant_names = 'cp_fluid'
     constant_expressions = '2416'
@@ -844,7 +844,7 @@ outlet_pressure_val = 2e5
   [core_balance]
     type = ParsedPostprocessor
     pp_names = 'power e_flow_in_m e_flow_out' #diffusion_in  outer_heat_loss'
-    function = 'power - e_flow_in_m - e_flow_out' # + diffusion_in + outer_heat_loss'
+    expression = 'power - e_flow_in_m - e_flow_out' # + diffusion_in + outer_heat_loss'
   []
 
   # Bypass
@@ -863,12 +863,12 @@ outlet_pressure_val = 2e5
   [bypass_fraction]
     type = ParsedPostprocessor
     pp_names = 'mass_flow_OR mass_flow_out'
-    function = 'mass_flow_OR / mass_flow_out'
+    expression = 'mass_flow_OR / mass_flow_out'
   []
   [plenum_fraction]
     type = ParsedPostprocessor
     pp_names = 'mass_flow_plenum mass_flow_out'
-    function = 'mass_flow_plenum / mass_flow_out'
+    expression = 'mass_flow_plenum / mass_flow_out'
   []
 
   # Miscellaneous

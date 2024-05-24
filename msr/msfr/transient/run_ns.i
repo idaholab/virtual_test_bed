@@ -366,7 +366,7 @@ beta6 = 0.000184087
   []
   [dT]
     type = ParsedPostprocessor
-    function = '-max_flow_T / flow_hx_bot + min_flow_T / flow_hx_top'
+    expression = '-max_flow_T / flow_hx_bot + min_flow_T / flow_hx_top'
     pp_names = 'max_flow_T min_flow_T flow_hx_bot flow_hx_top'
   []
   [total_power]
