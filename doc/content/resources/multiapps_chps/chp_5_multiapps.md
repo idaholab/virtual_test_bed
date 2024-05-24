@@ -35,7 +35,7 @@ In the [`TransientMultiApp`](https://mooseframework.inl.gov/source/multiapps/Tra
  [Transientmultiapp] shows an example of a `TransientMultiApp` where the main application (Griffin) and the child application (SAM) progress together in time.
  `TransientMultiApp` is simultaneously advancing the time-steps of the main and child applications by default. This means that no coupling fixed point iterations are done at any time-step. This approach is commonly referred to as loose coupling.
 
- If a tight coupling approach is desired,  Picard [`fixed point iterations`](https://mooseframework.inl.gov/syntax/Executioner/FixedPointAlgorithms/index.html) may be used by specifying appropriate `Executioner` parameters for the parent application. Picard iterations are nonlinear iterations for tight coupling which repeat the simulation at the same time-step until a convergence criterion is satisfied.  Picard iterations are particularly important if the physics solved in the different apps have very strong nonlinear effects.  
+ If a tight coupling approach is desired,  Picard [`fixed point iterations`](https://mooseframework.inl.gov/syntax/Executioner/FixedPointAlgorithms/index.html) may be used by specifying appropriate `Executioner` parameters for the parent application. Picard iterations are nonlinear iterations for tight coupling which repeat the simulation at the same time-step until a convergence criterion is satisfied.  Picard iterations are particularly important if the physics solved in the different apps have very strong nonlinear effects.
 
 The following two examples describe the use of the `TransientMultiApp`. The definitions of execute_on and positions will be given in the optional parameters.
 
@@ -114,7 +114,7 @@ The `execute_on` parameter specifies when a child application is to be executed,
 
   3. `INITIAL`: Launch child application only at the initial condition to set up the initial conditions for the solve
 
-  4. `NONLINEAR`: This option has limited applications and is used to inject the coupling information into the middle of the Newton solve. It will likely slow down the newton convergence, as the contribution to the Jacobian are not considered, but could speed up the convergence of the entire system.  
+  4. `NONLINEAR`: This option has limited applications and is used to inject the coupling information into the middle of the Newton solve. It will likely slow down the newton convergence, as the contribution to the Jacobian are not considered, but could speed up the convergence of the entire system.
 
 #### Finer Timesteps in Child Applications
 
@@ -129,7 +129,7 @@ Applications may use different time step sizes by allowing `subcycling`. The sub
 
 #### Locations of Child Applications
 
-Child applications can be launched at various spatial positions of the parent application geometry by using the 'positions' input parameter. Positions are simply a list of 3D coordinates that describe the offset of the child application's origin from the parent application's origin. If no positions are provided, the child application will be launched at the position `0 0 0` within the parent application. Notice that in the example below, the number of child applications to be invoked is not explicitly defined but rather is inferred from the number of positions given. The example shows five different positions, thus, five independent versions of the child application `BisonApp` will be created and each of them will be associated with a different position within the parent application domain. The user may also provide a position file instead of explicitly providing the positions in the MultiApp block; this feature is useful when the user wants to invoke thousands of child application as the separate input file can contain all this information without cluttering the main input file. A common use of positions in nuclear reactor analysis is the launching of individual fuel rod (BISON) simulations at various fuel rods within a reactor assembly or core.  
+Child applications can be launched at various spatial positions of the parent application geometry by using the 'positions' input parameter. Positions are simply a list of 3D coordinates that describe the offset of the child application's origin from the parent application's origin. If no positions are provided, the child application will be launched at the position `0 0 0` within the parent application. Notice that in the example below, the number of child applications to be invoked is not explicitly defined but rather is inferred from the number of positions given. The example shows five different positions, thus, five independent versions of the child application `BisonApp` will be created and each of them will be associated with a different position within the parent application domain. The user may also provide a position file instead of explicitly providing the positions in the MultiApp block; this feature is useful when the user wants to invoke thousands of child application as the separate input file can contain all this information without cluttering the main input file. A common use of positions in nuclear reactor analysis is the launching of individual fuel rod (BISON) simulations at various fuel rods within a reactor assembly or core.
 
 !listing
 [MultiApps]
@@ -153,7 +153,7 @@ The user may also provide positions in a "position file" rather than in the the 
 
 The list and location of each heat-pipe are provided in +hp_centers.txt+ as follows:
 
-!listing mrad/legacy/steady/hp_centers.txt        
+!listing mrad/legacy/steady/hp_centers.txt
 
 #### Parallel Options
 
@@ -165,7 +165,7 @@ The list and location of each heat-pipe are provided in +hp_centers.txt+ as foll
 
  For the MOOSE Apps: `FullSolveMultiApp`, `TransientMultiApp`, and `CentroidMultiApp`. There are various common optional parameters such as `app_type`, `bounding_box_inflation`, `bounding_box_padding`,  `catch_up`, `cli_args`, `cli_args_files` , `clone_master_mesh` , `detect_steady_state`,  `global_time_offset` , `keep_solution_during_restore`, `library_name`, `library_path`,`output_in_position`, and `execute_on`.
 
- Other parameters are allowed only for specific MultiApps type. For example, `positions` is an optional parameter for FullSolveMultiApp and TransientMultiApp, but it is not a parameter for CentroidMultiApp. Generally, these optional parameters were developed to facilitate flexible multi-physics simulations.  The `no_backup_and_restore` optional parameter is useful when doing steady-state Picard iterations where we want to use the solution of previous Picard iteration as the initial guess of the current Picard iteration.
+ Other parameters are allowed only for specific MultiApps type. For example, `positions` is an optional parameter for FullSolveMultiApp and TransientMultiApp, but it is not a parameter for CentroidMultiApp. Generally, these optional parameters were developed to facilitate flexible multi-physics simulations.  The `no_restore` optional parameter is useful when doing steady-state Picard iterations where we want to use the solution of previous Picard iteration as the initial guess of the current Picard iteration.
 
  In addittion, if the user wants to pass additional command line argument to the sub apps this can be done using `cli_args`, or the file names that should be looked in for additional command line arguments to pass to the sub apps can be defined using `cli_args_files`.
 
