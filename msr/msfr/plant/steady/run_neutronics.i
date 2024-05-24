@@ -186,7 +186,7 @@
     type = FullSolveMultiApp
     input_files = 'run_ns.i'
     execute_on = 'timestep_end'
-    no_backup_and_restore = true
+    no_restore = true
   []
 []
 

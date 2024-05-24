@@ -177,7 +177,7 @@ y_center = ${fparse r}
     type = FullSolveMultiApp
     input_files = thermal_ss.i
     execute_on = 'timestep_end'
-    no_backup_and_restore = true
+    no_restore = true
   []
 []
 
