@@ -1,6 +1,6 @@
 # Neutronic Modeling of the Whole Core Gas-Cooled Microreactor (GCMR)
 
-*Contacts: Ahmed Abdelhameed (aabdelhameed.at.anl.gov)
+*Contacts: Ahmed Abdelhameed (aabdelhameed.at.anl.gov), Yinbin Miao (ymiao.at.anl.gov), Nicolas Stauff (nstauff.at.anl.gov)*
 
 !tag name=Gas-Cooled Microreactor Core pairs=reactor_type:microreactor
                        reactor:GCMR
@@ -20,6 +20,7 @@ The GCMR model, developed at ANL, serves as a modeling experiment to explore des
 
 !media media/gcmr/Fig12.jpg
       id=Fig_1
+      style=display: block;margin-left:auto;margin-right:auto;width:60%;
       caption=Radial View of the GCMR core
 
 
@@ -27,6 +28,7 @@ The GCMR model, developed at ANL, serves as a modeling experiment to explore des
 
 !media media/gcmr/Fig13.jpg
       id=Fig_2
+      style=display: block;margin-left:auto;margin-right:auto;width:60%;
       caption= Axial view of the GCMR core
 
 
@@ -38,6 +40,7 @@ The core comprises three types of fuel assemblies: Assembly A in the inner regio
 
 !media media/gcmr/Fig14.jpg
       id=Fig_3
+      style=display: block;margin-left:auto;margin-right:auto;width:60%;
       caption= GCMR assembly of Type A
 
 
@@ -83,6 +86,7 @@ MOOSE's Reactor Module was used to create the mesh structure for the entire core
 
 !media media/gcmr/Fig16.jpg
       id=Fig_5
+      style=display: block;margin-left:auto;margin-right:auto;width:60%;
       caption= Detailed 3-D GCMR core mesh
 
 
@@ -126,6 +130,7 @@ Segmentations of the whole-core GC-MR mesh utilized in the analyses, employing D
 
 !media media/gcmr/Fig17.jpg
       id=Fig_6
+      style=display: block;margin-left:auto;margin-right:auto;width:60%;
       caption= 1/6 GCMR core with reflective boundary condition
 
 
@@ -133,4 +138,5 @@ Segmentations of the whole-core GC-MR mesh utilized in the analyses, employing D
 
 !media media/gcmr/Fig18.jpg
       id=Fig_7
+      style=display: block;margin-left:auto;margin-right:auto;width:60%;
       caption= Normalized axial power distribution computed by both Serpent-2 and Griffin
