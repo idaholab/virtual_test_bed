@@ -1,5 +1,7 @@
 # Neutronic Modeling of the Whole Core Gas-Cooled Microreactor (GCMR)
 
+*Contacts: Ahmed Abdelhameed (aabdelhameed.at.anl.gov)
+
 !tag name=Gas-Cooled Microreactor Core pairs=reactor_type:microreactor
                        reactor:GCMR
                        geometry:core
@@ -13,25 +15,25 @@
 
 The GCMR model, developed at ANL, serves as a modeling experiment to explore design options considered by microreactor vendors, encompassing features like control drums, hydride metal, and TRISO fuel. This horizontal gas-cooled microreactor system boasts a thermal power of 20 MW and an approximate lifespan of 9.5 years. Its power conversion cycle utilizes a Brayton cycle, circulating high-temperature (650°C-850°C) and high-pressure (7 MPa) helium coolant. Surrounding the core are BeO radial and axial neutron reflectors, with twelve control drums positioned in the reflector encircling the core. These control rods, containing 96%-enriched B4C, are inserted into holes within the middle core assemblies. Displayed in [Fig_1] and [Fig_2]  are radial and axial views of the core, which is relatively compact, measuring 2.42 m in diameter and 2.40 m in length.
 
-!media media/gcmr/core/Fig_1.png
-      style=display: block;margin-left:auto;margin-right:auto;width:80%;
+!media media/gcmr/core/Fig1.png
+      style=display: block;margin-left:auto;margin-right:auto;width:60%;
       id=Fig_1
       caption= Radial View of the GCMR core
 
-!media media/gcmr/core/Fig_2.png
-      style=display: block;margin-left:auto;margin-right:auto;width:80%;
+!media media/gcmr/core/Fig2.png
+      style=display: block;margin-left:auto;margin-right:auto;width:60%;
       id=Fig_2
       caption= Axial view of the GCMR core
 
 The core comprises three types of fuel assemblies: Assembly A in the inner region, Assembly B in the middle, and Assembly C in the outer core region. Each fuel assembly incorporates TRISO fuel blocks containing 19.75 wt% of LEU fuel and Yttrium hydride moderator pins encased in FeCrAl envelopes. Additionally, burnable poison blocks, composed of Gd2O3 particles with a 25% packing fraction distributed axially, and Helium coolant channels are integrated. Assembly A's detailed design is provided in [Fig_3], while [Fig_4] illustrates the design differences among the three assemblies. Assemblies B and C are nearly identical, except for the presence of a central shutdown rod location in assembly B. Each of assemblies B and C is equipped with 6 burnable poison rods, 6 moderator pins, and 48 fuel rods. In contrast, Assembly A contains 12 burnable poison rods and 42 fuel rods. The key design parameters of the GCMR core comprise of:
 
-!media media/gcmr/core/Fig_3.png
-      style=display: block;margin-left:auto;margin-right:auto;width:80%;
+!media media/gcmr/core/Fig3.png
+      style=display: block;margin-left:auto;margin-right:auto;width:60%;
       id=Fig_3
       caption= GCMR assembly of Type A
 
-!media media/gcmr/core/Fig_4.png
-      style=display: block;margin-left:auto;margin-right:auto;width:80%;
+!media media/gcmr/core/Fig4.png
+      style=display: block;margin-left:auto;margin-right:auto;width:60%;
       id=Fig_4
       caption= Design of the three types of fuel assemblies in the core
 
@@ -62,8 +64,8 @@ The core comprises three types of fuel assemblies: Assembly A in the inner regio
 
 MOOSE's Reactor Module was used to create the mesh structure for the entire core of the GC-MR reactor. This tool was particularly useful in addressing intricate modeling prerequisites for the microreactor core such as fuel assemblies exhibiting different designs, distinct axial loading configurations of the burnable absorbers within the core, and modeling intricacies of control drum designs. The transition of the mesh from a 2D to a 3D structure, along with the incorporation of distinct axial regions, was made notably straightforward by employing the [AdvancedExtruderGenerator](https://mooseframework.inl.gov/source/meshgenerators/AdvancedExtruderGenerator.html). The tool's adaptability became especially useful when altering the mesh element size to examine the trade-off between accuracy and computational cost through coarser mesh. [Fig_5]  illustrates a depiction of the 3-D GCMR, detailing both the axial and radial discretization.
 
-!media media/gcmr/core/Fig_5.png
-      style=display: block;margin-left:auto;margin-right:auto;width:80%;
+!media media/gcmr/core/Fig5.png
+      style=display: block;margin-left:auto;margin-right:auto;width:60%;
       id=Fig_5
       caption= Detailed 3-D GCMR core mesh
 
@@ -103,13 +105,13 @@ BlueCrab executable : `blue_crab-opt`.
 
 Segmentations of the whole-core GC-MR mesh utilized in the analyses, employing DFEM-SN with CMFD and an 11-energy-group structure, are illustrated in [Fig_6]. The simulation was conducted for 1/6 of the core with reflected boundary conditions on the cut surfaces and vacuum boundaries for the remaining surfaces. The resulting k-eff value for 2 polar angles and 3 azimuthal angles in the SN was determined as 1.051468, reasonably aligning with the k-eff value obtained from the Monte Carlo Serpent-2 code, which is 1.054670 ± 16 pcm. It was determined that an even closer alignment could be achieved with higher numbers of polar and azimuthal angles. [Fig_7] presents a comparison between the normalized axial power distribution computed by both Serpent-2 and Griffin for DFEM-SN (n_polar=2,n_azimuthal=3) with CMFD.
 
-!media media/gcmr/core/Fig_6.png
-      style=display: block;margin-left:auto;margin-right:auto;width:80%;
+!media media/gcmr/core/Fig6.png
+      style=display: block;margin-left:auto;margin-right:auto;width:60%;
       id=Fig_6
       caption= 1/6 GCMR core with reflective boundary condition
 
 
-!media media/gcmr/core/Fig_7.png
-      style=display: block;margin-left:auto;margin-right:auto;width:80%;
+!media media/gcmr/core/Fig7.png
+      style=display: block;margin-left:auto;margin-right:auto;width:60%;
       id=Fig_7
       caption= Normalized axial power distribution computed by both Serpent-2 and Griffin
