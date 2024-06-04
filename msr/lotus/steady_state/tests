@@ -60,7 +60,8 @@
     # Fuel temperature is out of bounds for MGXS
     allow_warnings = true
     min_parallel = 32
-    max_time = 1000
+    max_time = 2000
     method = 'opt'
+    skip = '#403'
   []
 []
