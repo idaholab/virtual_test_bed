@@ -334,9 +334,6 @@ mid_control_empty = 12
   remove_inputs = true
   remove_outputs = true
   remove_xmlfiles = true
-  # This path is selected for VTB continuous integration
-  # Adapt this path to your installation of griffin_data
-  griffin_data = '../../apps/griffin/griffin_data'
   endfb_version = 'ENDF/B-VII.0'
   library_pointwise = './'
 
