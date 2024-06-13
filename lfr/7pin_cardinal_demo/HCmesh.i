@@ -103,6 +103,13 @@ powerdensity = ${fparse linearpower / (pi * (fuel_r_o * fuel_r_o - fuel_r_i * fu
     new_boundary = 'ROD_SIDE DUCT_INNERSIDE    ASSEMBLY_TOP ASSEMBLY_BOTTOM ASSEMBLY_SIDE'
   []
 
+  [block_rename]
+    type = RenameBlockGenerator
+    input = rename_sidesets
+    old_block = '${bid_gapc} ${bid_gap} ${bid_fl} ${bid_clad} ${bid_cool} ${bid_duct} ${bid_lrfl} ${bid_urfl} ${bid_lrflc} ${bid_urflc}'
+    new_block = 'HeliumHolePrism HeliumHole Fuel Clad Lead Duct LowerReflector UpperReflector LowerReflectorPrism UpperReflectorPrism'
+  []
+
   uniform_refine = 0
 
 []
