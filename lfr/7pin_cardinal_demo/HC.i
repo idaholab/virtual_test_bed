@@ -1,19 +1,7 @@
-half_pinpitch = 0.0067123105    # m
 fuel_r_o = 0.004318648          # m
 fuel_r_i = 0.00202042           # m
-gap_i = ${fparse fuel_r_i * 0.25}
-clad_r = 0.0054037675           # m
-duct_thickness = 0.0035327      # m
-flat_to_flat = 0.037164         # m
-activefuelheight = 1.06072      # m
-lowerreflectorheight = 0.2      # m
-upperreflectorheight = 0.2      # m
-
-num_coolreg = 8
-num_coolreg_back = 8
 num_layers_fuel = 40
 num_layers_refl = 8
-numside = 6
 
 linearpower = 27466.11572112955 # W/m
 inlet_T = 693.15                # K
@@ -21,18 +9,7 @@ fuelconductance = 1.882         # W/m/K
 cladconductance = 21.6          # W/m/K
 gapconductance = 0.251          # W/m/K
 
-bid_gapc = 9
-bid_gap = 1
-bid_fl  = 100
-bid_clad = 2
-bid_cool = 4
-bid_duct = 3
-bid_lrfl = 5
-bid_urfl = 6
-bid_lrflc = 7
-bid_urflc = 8
-
-half_asmpitch = '${fparse flat_to_flat / 2 + duct_thickness}'
+#half_asmpitch = '${fparse flat_to_flat / 2 + duct_thickness}'
 powerdensity = ${fparse linearpower / (pi * (fuel_r_o * fuel_r_o - fuel_r_i * fuel_r_i))}
 
 [Mesh]
@@ -72,7 +49,7 @@ powerdensity = ${fparse linearpower / (pi * (fuel_r_o * fuel_r_o - fuel_r_i * fu
   []
   [nek_bulk_temp]
     initial_condition= ${inlet_T}
-    block = ${bid_cool}
+    block = 'Lead'
   []
   [nek_surf_temp]
     initial_condition= ${inlet_T}
@@ -86,7 +63,7 @@ powerdensity = ${fparse linearpower / (pi * (fuel_r_o * fuel_r_o - fuel_r_i * fu
 [Variables]
   [solid_temp]
     initial_condition = ${inlet_T}
-    block = '${bid_gapc} ${bid_gap} ${bid_fl} ${bid_clad} ${bid_duct} ${bid_lrfl} ${bid_urfl} ${bid_lrflc} ${bid_urflc}'
+    block = 'HeliumHolePrism HeliumHole Fuel Clad Duct LowerReflector UpperReflector LowerReflectorPrism UpperReflectorPrism'
   []
 []
 
@@ -110,13 +87,13 @@ powerdensity = ${fparse linearpower / (pi * (fuel_r_o * fuel_r_o - fuel_r_i * fu
   [diff]
      type = HeatConduction
      variable = solid_temp
-     block = '${bid_gapc} ${bid_gap} ${bid_fl} ${bid_clad} ${bid_duct} ${bid_lrfl} ${bid_urfl} ${bid_lrflc} ${bid_urflc}'
+     block = 'HeliumHolePrism HeliumHole Fuel Clad Duct LowerReflector UpperReflector LowerReflectorPrism UpperReflectorPrism'
   []
   [sourceterm]
      type = CoupledForce
      variable = solid_temp
      v = heat_source
-     block = '${bid_gapc} ${bid_gap} ${bid_fl} ${bid_clad} ${bid_duct} ${bid_lrfl} ${bid_urfl} ${bid_lrflc} ${bid_urflc}'
+     block = 'HeliumHolePrism HeliumHole Fuel Clad Duct LowerReflector UpperReflector LowerReflectorPrism UpperReflectorPrism'
   []
 []
 
@@ -125,25 +102,25 @@ powerdensity = ${fparse linearpower / (pi * (fuel_r_o * fuel_r_o - fuel_r_i * fu
     type = HeatConductionMaterial
     temp = solid_temp
     thermal_conductivity = ${fuelconductance}
-    block = '${bid_fl}'
+    block = 'Fuel'
   []
   [HeatConduct_Gap]
     type = HeatConductionMaterial
     temp = solid_temp
     thermal_conductivity = ${gapconductance}
-    block = '${bid_gapc} ${bid_gap}'
+    block = 'HeliumHolePrism HeliumHole'
   []
   [HeatConduct_Clad]
     type = HeatConductionMaterial
     temp = solid_temp
     thermal_conductivity = ${cladconductance}
-    block = '${bid_clad} ${bid_duct} ${bid_lrfl} ${bid_urfl} ${bid_lrflc} ${bid_urflc}'
+    block = 'Clad Duct LowerReflector UpperReflector LowerReflectorPrism UpperReflectorPrism'
   []
   [HeatConduct_dummy]
     type = HeatConductionMaterial
     temp = nek_bulk_temp
     thermal_conductivity = 1.0
-    block = '${bid_cool}'
+    block = 'Lead'
   []
 []
 
@@ -162,19 +139,19 @@ powerdensity = ${fparse linearpower / (pi * (fuel_r_o * fuel_r_o - fuel_r_i * fu
   [heat_source_rod_duct]
     type = ElementIntegralVariablePostprocessor
     variable = heat_source
-    block = '${bid_gapc} ${bid_gap} ${bid_fl} ${bid_clad} ${bid_duct} ${bid_lrfl} ${bid_urfl} ${bid_lrflc} ${bid_urflc}'
+    block = 'HeliumHolePrism HeliumHole Fuel Clad Duct LowerReflector UpperReflector LowerReflectorPrism UpperReflectorPrism'
     execute_on = 'initial timestep_begin transfer timestep_end'
   []
   [heat_source_rod]
     type = ElementIntegralVariablePostprocessor
     variable = heat_source
-    block = '${bid_gapc} ${bid_gap} ${bid_fl} ${bid_clad} ${bid_lrfl} ${bid_urfl} ${bid_lrflc} ${bid_urflc}'
+    block = 'HeliumHolePrism HeliumHole Fuel Clad LowerReflector UpperReflector LowerReflectorPrism UpperReflectorPrism'
     execute_on = 'initial timestep_begin transfer timestep_end'
   []
   [heat_source_duct]
     type = ElementIntegralVariablePostprocessor
     variable = heat_source
-    block = '${bid_duct}'
+    block = 'Duct'
     execute_on = 'initial timestep_begin transfer timestep_end'
   []
   [flux_integral_rod]
@@ -192,7 +169,7 @@ powerdensity = ${fparse linearpower / (pi * (fuel_r_o * fuel_r_o - fuel_r_i * fu
   [nek_bulk_temp_pp]
     type = NodalL2Norm
     variable = nek_bulk_temp
-    block = ${bid_cool}
+    block = 'Lead'
     execute_on = 'timestep_begin timestep_end'
   []
   [synchronization_to_nek]
@@ -202,85 +179,85 @@ powerdensity = ${fparse linearpower / (pi * (fuel_r_o * fuel_r_o - fuel_r_i * fu
   [duct_temp_max]
     type = ElementExtremeValue
     variable = solid_temp
-    block = '${bid_duct}'
+    block = 'Duct'
     execute_on = 'initial timestep_begin timestep_end'
   []
   [duct_temp_min]
     type = ElementExtremeValue
     variable = solid_temp
     value_type = min
-    block = '${bid_duct}'
+    block = 'Duct'
     execute_on = 'initial timestep_begin timestep_end'
   []
   [duct_temp_avg]
     type = ElementIntegralVariablePostprocessor
     variable = solid_temp
-    block = '${bid_duct}'
+    block = 'Duct'
     execute_on = 'initial timestep_begin timestep_end'
   []
   [gap_temp_max]
     type = ElementExtremeValue
     variable = solid_temp
-    block = '${bid_gapc} ${bid_gap}'
+    block = 'HeliumHolePrism HeliumHole'
     execute_on = 'initial timestep_begin timestep_end'
   []
   [gap_temp_min]
     type = ElementExtremeValue
     variable = solid_temp
     value_type = min
-    block = '${bid_gapc} ${bid_gap}'
+    block = 'HeliumHolePrism HeliumHole'
     execute_on = 'initial timestep_begin timestep_end'
   []
   [fuel_temp_max]
     type = ElementExtremeValue
     variable = solid_temp
-    block = ${bid_fl}
+    block = 'Fuel'
     execute_on = 'initial timestep_begin timestep_end'
   []
   [fuel_temp_min]
     type = ElementExtremeValue
     variable = solid_temp
     value_type = min
-    block = ${bid_fl}
+    block = 'Fuel'
     execute_on = 'initial timestep_begin timestep_end'
   []
   [clad_temp_max]
     type = ElementExtremeValue
     variable = solid_temp
-    block = ${bid_clad}
+    block = 'Clad'
     execute_on = 'initial timestep_begin timestep_end'
   []
   [clad_temp_min]
     type = ElementExtremeValue
     variable = solid_temp
     value_type = min
-    block = ${bid_clad}
+    block = 'Clad'
     execute_on = 'initial timestep_begin timestep_end'
   []
   [reflB_temp_max]
     type = ElementExtremeValue
     variable = solid_temp
-    block = '${bid_lrflc} ${bid_lrfl}'
+    block = 'LowerReflectorPrism LowerReflector'
     execute_on = 'initial timestep_begin timestep_end'
   []
   [reflB_temp_min]
     type = ElementExtremeValue
     variable = solid_temp
     value_type = min
-    block = '${bid_lrflc} ${bid_lrfl}'
+    block = 'LowerReflectorPrism LowerReflector'
     execute_on = 'initial timestep_begin timestep_end'
   []
   [reflT_temp_max]
     type = ElementExtremeValue
     variable = solid_temp
-    block = '${bid_urflc} ${bid_urfl}'
+    block = 'UpperReflectorPrism UpperReflector'
     execute_on = 'initial timestep_begin timestep_end'
   []
   [reflT_temp_min]
     type = ElementExtremeValue
     variable = solid_temp
     value_type = min
-    block = '${bid_urflc} ${bid_urfl}'
+    block = 'UpperReflectorPrism UpperReflector'
     execute_on = 'initial timestep_begin timestep_end'
   []
 []
@@ -291,42 +268,42 @@ powerdensity = ${fparse linearpower / (pi * (fuel_r_o * fuel_r_o - fuel_r_i * fu
     variable = heat_source
     direction = z
     num_layers = ${fparse num_layers_fuel + 2 * num_layers_refl}
-    block = '${bid_cool}'
+    block = 'Lead'
   []
   [powerfuel_axial_uo]
     type = LayeredAverage
     variable = heat_source
     direction = z
     num_layers = ${fparse num_layers_fuel + 2 * num_layers_refl}
-    block = '${bid_fl} ${bid_lrfl} ${bid_urfl}'
+    block = 'Fuel LowerReflector UpperReflector'
   []
   [powerduct_axial_uo]
     type = LayeredAverage
     variable = heat_source
     direction = z
     num_layers = ${fparse num_layers_fuel + 2 * num_layers_refl}
-    block = '${bid_duct}'
+    block = 'Duct'
   []
   [solidtemp_axial_uo]
     type = LayeredAverage
     variable = solid_temp
     direction = z
     num_layers = ${fparse num_layers_fuel + 2 * num_layers_refl}
-    block = '${bid_fl} ${bid_lrfl} ${bid_urfl}'
+    block = 'Fuel LowerReflector UpperReflector'
   []
   [cooltemp_axial_uo]
     type = LayeredAverage
     variable = nek_bulk_temp
     direction = z
     num_layers = ${fparse num_layers_fuel + 2 * num_layers_refl}
-    block = '${bid_cool}'
+    block = 'Lead'
   []
   [ducttemp_axial_uo]
     type = LayeredAverage
     variable = solid_temp
     direction = z
     num_layers = ${fparse num_layers_fuel + 2 * num_layers_refl}
-    block = '${bid_duct}'
+    block = 'Duct'
   []
   [heatfluxrod_axial_uo]
     type = LayeredSideDiffusiveFluxAverage

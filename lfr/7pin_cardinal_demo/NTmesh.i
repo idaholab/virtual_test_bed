@@ -239,6 +239,13 @@ richardsonmaxits=1000
     extra_element_ids = '${mid_gap}  ${mid_gap} ${mid_clad} ${mid_ifl} ${mid_ofl}  ${mid_ofl}  ${mid_ofl}  ${mid_ofl}  ${mid_ofl}  ${mid_ofl}  ${mid_clad}  ${mid_clad} ${mid_clad}  ${mid_clad} ${mid_clad}  ${mid_clad}  ${mid_clad}  ${mid_clad}  ${mid_clad}  ${mid_clad}  ${mid_clad}  ${mid_clad} ${mid_clad}  ${mid_clad} ${mid_clad}  ${mid_clad}  ${mid_clad}  ${mid_clad}  ${mid_clad}  ${mid_clad}  ${mid_duct} ${mid_cool}'
   []
 
+  [block_rename]
+    type = RenameBlockGenerator
+    input = assign
+    old_block = '${bid_gapc} ${bid_gap} ${bid_clad} ${bid_ifl} ${bid_ofl1} ${bid_ofl2} ${bid_ofl3} ${bid_ofl4} ${bid_ofl5} ${bid_ofl6} ${bid_gapcl} ${bid_gapl} ${bid_cladl} ${bid_ifll} ${bid_ofl1l} ${bid_ofl2l} ${bid_ofl3l} ${bid_ofl4l} ${bid_ofl5l} ${bid_ofl6l} ${bid_gapch} ${bid_gaph} ${bid_cladh} ${bid_iflh} ${bid_ofl1h} ${bid_ofl2h} ${bid_ofl3h} ${bid_ofl4h} ${bid_ofl5h} ${bid_ofl6h} ${bid_duct} ${bid_cool}'
+    new_block = 'HeliumHolePrism HeliumHole Clad Fuel00 Fuel10 Fuel11 Fuel12 Fuel13 Fuel14 Fuel15 LowerHeliumHolePrism LowerHeliumHole LowerClad LowerFuel00 LowerFuel10 LowerFuel11 LowerFuel12 LowerFuel13 LowerFuel14 LowerFuel15 UpperHeliumHolePrism UpperHeliumHole UpperClad UpperFuel00 UpperFuel10 UpperFuel11 UpperFuel12 UpperFuel13 UpperFuel14 UpperFuel15 Duct Lead'
+  []
+
   [Pcm]
     type = PolygonConcentricCircleMeshGenerator
     num_sides = 6 # must be six to use hex pattern
@@ -285,7 +292,7 @@ richardsonmaxits=1000
 
   [cmesh]
     type = CoarseMeshExtraElementIDGenerator
-    input = assign
+    input = block_rename
     coarse_mesh = coarse_mesh
     extra_element_id_name = coarse_element_id
   []

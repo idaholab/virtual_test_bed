@@ -27,46 +27,6 @@ mid_clad = 4
 mid_cool = 5
 mid_duct = 6
 
-bid_gapc = 9
-bid_gap = 1
-bid_ifl = 100
-bid_ofl1 = 101
-bid_ofl2 = 102
-bid_ofl3 = 103
-bid_ofl4 = 104
-bid_ofl5 = 105
-bid_ofl6 = 106
-bid_clad = 2
-bid_cool = 4
-bid_duct = 3
-
-bid_gapcl = 1000
-bid_gapl  = 1001
-bid_ifll  = 1002
-bid_ofl1l = 1003
-bid_ofl2l = 1004
-bid_ofl3l = 1005
-bid_ofl4l = 1006
-bid_ofl5l = 1007
-bid_ofl6l = 1008
-bid_cladl = 1009
-
-bid_gapch = 2000
-bid_gaph  = 2001
-bid_iflh  = 2002
-bid_ofl1h = 2003
-bid_ofl2h = 2004
-bid_ofl3h = 2005
-bid_ofl4h = 2006
-bid_ofl5h = 2007
-bid_ofl6h = 2008
-bid_cladh = 2009
-
-#bid_lrfl = 5
-#bid_urfl = 6
-#bid_lrflc = 7
-#bid_urflc = 8
-
 # === derived
 #half_asmpitch = ${fparse flat_to_flat / 2 + duct_thickness}
 coolantdensity_ref = ${fparse 10678-13174*(inlet_T-600.6)/10000} # kg/m^3
@@ -149,15 +109,15 @@ richardsonmaxits=1000
 
 [AuxVariables]
   [nek_bulk_temp]
-    block = ${bid_cool}
+    block = 'Lead'
     initial_condition = ${inlet_T}  # K
   []
   [solid_temp]
-    block = '${bid_gapc} ${bid_gap} ${bid_clad} ${bid_ifl} ${bid_ofl1} ${bid_ofl2} ${bid_ofl3} ${bid_ofl4} ${bid_ofl5} ${bid_ofl6} ${bid_gapcl} ${bid_gapl} ${bid_cladl} ${bid_ifll} ${bid_ofl1l} ${bid_ofl2l} ${bid_ofl3l} ${bid_ofl4l} ${bid_ofl5l} ${bid_ofl6l} ${bid_gapch} ${bid_gaph} ${bid_cladh} ${bid_iflh} ${bid_ofl1h} ${bid_ofl2h} ${bid_ofl3h} ${bid_ofl4h} ${bid_ofl5h} ${bid_ofl6h} ${bid_duct}'
+    block = 'HeliumHolePrism HeliumHole Clad Fuel00 Fuel10 Fuel11 Fuel12 Fuel13 Fuel14 Fuel15 LowerHeliumHolePrism LowerHeliumHole LowerClad LowerFuel00 LowerFuel10 LowerFuel11 LowerFuel12 LowerFuel13 LowerFuel14 LowerFuel15 UpperHeliumHolePrism UpperHeliumHole UpperClad UpperFuel00 UpperFuel10 UpperFuel11 UpperFuel12 UpperFuel13 UpperFuel14 UpperFuel15 Duct'
     initial_condition = ${inlet_T} # K
   []
   [fluid_density]
-    block = ${bid_cool}
+    block = 'Lead'
     initial_condition = ${coolantdensity_ref}  # kg/m^3
   []
   [nek_surf_temp]
@@ -369,7 +329,7 @@ richardsonmaxits=1000
     library_file = /projects/neams_ad_fr/cross_section/LFR9g_P5.xml
     library_name = ISOTXS-neutron
     library_id = 3
-    block = '${bid_gapc} ${bid_gap} ${bid_ifl} ${bid_ofl1} ${bid_ofl2} ${bid_ofl3} ${bid_ofl4} ${bid_ofl5} ${bid_ofl6}'
+    block = 'HeliumHolePrism HeliumHole Fuel00 Fuel10 Fuel11 Fuel12 Fuel13 Fuel14 Fuel15'
     grid_variables = solid_temp
   []
   [Neutronics_clad_duct]
@@ -377,7 +337,7 @@ richardsonmaxits=1000
     library_file = /projects/neams_ad_fr/cross_section/LFR9g_P5.xml
     library_name = ISOTXS-neutron
     library_id = 2
-    block = '${bid_clad} ${bid_duct} ${bid_gapcl} ${bid_gapl} ${bid_cladl} ${bid_ifll} ${bid_ofl1l} ${bid_ofl2l} ${bid_ofl3l} ${bid_ofl4l} ${bid_ofl5l} ${bid_ofl6l} ${bid_gapch} ${bid_gaph} ${bid_cladh} ${bid_iflh} ${bid_ofl1h} ${bid_ofl2h} ${bid_ofl3h} ${bid_ofl4h} ${bid_ofl5h} ${bid_ofl6h}'
+    block = 'Clad Duct LowerHeliumHolePrism LowerHeliumHole LowerClad LowerFuel00 LowerFuel10 LowerFuel11 LowerFuel12 LowerFuel13 LowerFuel14 LowerFuel15 UpperHeliumHolePrism UpperHeliumHole UpperClad UpperFuel00 UpperFuel10 UpperFuel11 UpperFuel12 UpperFuel13 UpperFuel14 UpperFuel15'
     grid_variables = solid_temp
   []
   [Neutronics_cool]
@@ -385,7 +345,7 @@ richardsonmaxits=1000
     library_file = /projects/neams_ad_fr/cross_section/LFR9g_P5.xml
     library_name = ISOTXS-neutron
     library_id = 2
-    block = ${bid_cool}
+    block = 'Lead'
     grid_variables = nek_bulk_temp
     fluid_density  = fluid_density
     reference_fluid_density = ${coolantdensity_ref}
@@ -485,147 +445,147 @@ richardsonmaxits=1000
     variable = power_density
     direction = z
     num_layers = ${fparse num_layers_refl + num_layers_fuel + num_layers_refl}
-    block = '${bid_cool}'
+    block = 'Lead'
   []
   [powergap_axial_uo]
     type = LayeredAverage
     variable = power_density
     direction = z
     num_layers = ${fparse num_layers_refl + num_layers_fuel + num_layers_refl}
-    block = '${bid_gapc} ${bid_gap} ${bid_gapcl} ${bid_gapl} ${bid_gapch} ${bid_gaph}'
+    block = 'HeliumHolePrism HeliumHole LowerHeliumHolePrism LowerHeliumHole UpperHeliumHolePrism UpperHeliumHole'
   []
   [powerclad_axial_uo]
     type = LayeredAverage
     variable = power_density
     direction = z
     num_layers = ${fparse num_layers_refl + num_layers_fuel + num_layers_refl}
-    block = '${bid_clad} ${bid_cladl} ${bid_cladh}'
+    block = 'Clad LowerClad UpperClad'
   []
   [powerduct_axial_uo]
     type = LayeredAverage
     variable = power_density
     direction = z
    num_layers = ${fparse num_layers_refl + num_layers_fuel + num_layers_refl}
-    block = '${bid_duct}'
+    block = 'Duct'
   []
   [powerif_axial_uo]
     type = LayeredAverage
     variable = power_density
     direction = z
     num_layers = ${fparse num_layers_refl + num_layers_fuel + num_layers_refl}
-    block = '${bid_ifl} ${bid_ifll} ${bid_iflh}'
+    block = 'Fuel00 LowerFuel00 UpperFuel00'
   []
   [powerof1_axial_uo]
     type = LayeredAverage
     variable = power_density
     direction = z
     num_layers = ${fparse num_layers_refl + num_layers_fuel + num_layers_refl}
-    block = '${bid_ofl1} ${bid_ofl1l} ${bid_ofl1h}'
+    block = 'Fuel10 LowerFuel10 UpperFuel10'
   []
   [powerof2_axial_uo]
     type = LayeredAverage
     variable = power_density
     direction = z
     num_layers = ${fparse num_layers_refl + num_layers_fuel + num_layers_refl}
-    block = '${bid_ofl2} ${bid_ofl2l} ${bid_ofl2h}'
+    block = 'Fuel11 LowerFuel11 UpperFuel11'
   []
   [powerof3_axial_uo]
     type = LayeredAverage
     variable = power_density
     direction = z
     num_layers = ${fparse num_layers_refl + num_layers_fuel + num_layers_refl}
-    block = '${bid_ofl3} ${bid_ofl3l} ${bid_ofl3h}'
+    block = 'Fuel12 LowerFuel12 UpperFuel12'
   []
   [powerof4_axial_uo]
     type = LayeredAverage
     variable = power_density
     direction = z
     num_layers = ${fparse num_layers_refl + num_layers_fuel + num_layers_refl}
-    block = '${bid_ofl4} ${bid_ofl4l} ${bid_ofl4h}'
+    block = 'Fuel13 LowerFuel13 UpperFuel13'
   []
   [powerof5_axial_uo]
     type = LayeredAverage
     variable = power_density
     direction = z
     num_layers = ${fparse num_layers_refl + num_layers_fuel + num_layers_refl}
-    block = '${bid_ofl5} ${bid_ofl5l} ${bid_ofl5h}'
+    block = 'Fuel14 LowerFuel14 UpperFuel14'
   []
   [powerof6_axial_uo]
     type = LayeredAverage
     variable = power_density
     direction = z
     num_layers = ${fparse num_layers_refl + num_layers_fuel + num_layers_refl}
-    block = '${bid_ofl6} ${bid_ofl6l} ${bid_ofl6h}'
+    block = 'Fuel15 LowerFuel15 UpperFuel15'
   []
   [fluidtemp_axial_uo]
     type = LayeredAverage
     variable = nek_bulk_temp
     direction = z
     num_layers = ${fparse num_layers_refl + num_layers_fuel + num_layers_refl}
-    block = '${bid_cool}'
+    block = 'Lead'
   []
   [iftemp_axial_uo]
     type = LayeredAverage
     variable = solid_temp
     direction = z
     num_layers = ${fparse num_layers_refl + num_layers_fuel + num_layers_refl}
-    block = '${bid_ifl} ${bid_ifll} ${bid_iflh}'
+    block = 'Fuel00 LowerFuel00 UpperFuel00'
   []
   [of1temp_axial_uo]
     type = LayeredAverage
     variable = solid_temp
     direction = z
     num_layers = ${fparse num_layers_refl + num_layers_fuel + num_layers_refl}
-    block = '${bid_ofl1} ${bid_ofl1l} ${bid_ofl1h}'
+    block = 'Fuel10 LowerFuel10 UpperFuel10'
   []
   [of2temp_axial_uo]
     type = LayeredAverage
     variable = solid_temp
     direction = z
     num_layers = ${fparse num_layers_refl + num_layers_fuel + num_layers_refl}
-    block = '${bid_ofl2} ${bid_ofl2l} ${bid_ofl2h}'
+    block = 'Fuel11 LowerFuel11 UpperFuel11'
   []
   [of3temp_axial_uo]
     type = LayeredAverage
     variable = solid_temp
     direction = z
     num_layers = ${fparse num_layers_refl + num_layers_fuel + num_layers_refl}
-    block = '${bid_ofl3} ${bid_ofl3l} ${bid_ofl3h}'
+    block = 'Fuel12 LowerFuel12 UpperFuel12'
   []
   [of4temp_axial_uo]
     type = LayeredAverage
     variable = solid_temp
     direction = z
     num_layers = ${fparse num_layers_refl + num_layers_fuel + num_layers_refl}
-    block = '${bid_ofl4} ${bid_ofl4l} ${bid_ofl4h}'
+    block = 'Fuel13 LowerFuel13 UpperFuel13'
   []
   [of5temp_axial_uo]
     type = LayeredAverage
     variable = solid_temp
     direction = z
     num_layers = ${fparse num_layers_refl + num_layers_fuel + num_layers_refl}
-    block = '${bid_ofl5} ${bid_ofl5l} ${bid_ofl5h}'
+    block = 'Fuel14 LowerFuel14 UpperFuel14'
   []
   [of6temp_axial_uo]
     type = LayeredAverage
     variable = solid_temp
     direction = z
     num_layers = ${fparse num_layers_refl + num_layers_fuel + num_layers_refl}
-    block = '${bid_ofl6} ${bid_ofl6l} ${bid_ofl6h}'
+    block = 'Fuel15 LowerFuel15 UpperFuel15'
   []
   [cladtemp_axial_uo]
     type = LayeredAverage
     variable = solid_temp
     direction = z
     num_layers = ${fparse num_layers_refl + num_layers_fuel + num_layers_refl}
-    block = '${bid_clad} ${bid_cladl} ${bid_cladh}'
+    block = 'Clad LowerClad UpperClad'
   []
   [ducttemp_axial_uo]
     type = LayeredAverage
     variable = solid_temp
     direction = z
     num_layers = ${fparse num_layers_refl + num_layers_fuel + num_layers_refl}
-    block = '${bid_duct}'
+    block = 'Duct'
   []
 []
 
@@ -636,209 +596,209 @@ richardsonmaxits=1000
   [fluid_density]
     type = ElementAverageValue
     variable = fluid_density
-    block = ${bid_cool}
+    block = 'Lead'
     execute_on = 'timestep_begin timestep_end'
   []
   [power_density_pp]
     type = ElementIntegralVariablePostprocessor
     variable = power_density
-    block = '${bid_gapc} ${bid_gap} ${bid_clad} ${bid_ifl} ${bid_ofl1} ${bid_ofl2} ${bid_ofl3} ${bid_ofl4} ${bid_ofl5} ${bid_ofl6} ${bid_duct} ${bid_gapcl} ${bid_gapl} ${bid_cladl} ${bid_ifll} ${bid_ofl1l} ${bid_ofl2l} ${bid_ofl3l} ${bid_ofl4l} ${bid_ofl5l} ${bid_ofl6l} ${bid_gapch} ${bid_gaph} ${bid_cladh} ${bid_iflh} ${bid_ofl1h} ${bid_ofl2h} ${bid_ofl3h} ${bid_ofl4h} ${bid_ofl5h} ${bid_ofl6h}'
+    block = 'HeliumHolePrism HeliumHole Clad Fuel00 Fuel10 Fuel11 Fuel12 Fuel13 Fuel14 Fuel15 Duct LowerHeliumHolePrism LowerHeliumHole LowerClad LowerFuel00 LowerFuel10 LowerFuel11 LowerFuel12 LowerFuel13 LowerFuel14 LowerFuel15 UpperHeliumHolePrism UpperHeliumHole UpperClad UpperFuel00 UpperFuel10 UpperFuel11 UpperFuel12 UpperFuel13 UpperFuel14 UpperFuel15'
     execute_on = 'transfer initial timestep_end'
   []
   [power_density_duct]
     type = ElementIntegralVariablePostprocessor
     variable = power_density
-    block = '${bid_duct}'
+    block = 'Duct'
     execute_on = 'initial timestep_begin timestep_end'
   []
   [power_density_gap]
     type = ElementIntegralVariablePostprocessor
     variable = power_density
-    block = '${bid_gapc} ${bid_gap}'
+    block = 'HeliumHolePrism HeliumHole'
     execute_on = 'initial timestep_begin timestep_end'
   []
   [power_density_clad]
     type = ElementIntegralVariablePostprocessor
     variable = power_density
-    block = '${bid_clad}'
+    block = 'Clad'
     execute_on = 'initial timestep_begin timestep_end'
   []
   [power_density_ifl]
     type = ElementIntegralVariablePostprocessor
     variable = power_density
-    block = '${bid_ifl}'
+    block = 'Fuel00'
     execute_on = 'initial timestep_begin timestep_end'
   []
   [power_density_ofl1]
     type = ElementIntegralVariablePostprocessor
     variable = power_density
-    block = '${bid_ofl1}'
+    block = 'Fuel10'
     execute_on = 'initial timestep_begin timestep_end'
   []
   [power_density_ofl2]
     type = ElementIntegralVariablePostprocessor
     variable = power_density
-    block = '${bid_ofl2}'
+    block = 'Fuel11'
     execute_on = 'initial timestep_begin timestep_end'
   []
   [power_density_ofl3]
     type = ElementIntegralVariablePostprocessor
     variable = power_density
-    block = '${bid_ofl3}'
+    block = 'Fuel12'
     execute_on = 'initial timestep_begin timestep_end'
   []
   [power_density_ofl4]
     type = ElementIntegralVariablePostprocessor
     variable = power_density
-    block = '${bid_ofl4}'
+    block = 'Fuel13'
     execute_on = 'initial timestep_begin timestep_end'
   []
   [power_density_ofl5]
     type = ElementIntegralVariablePostprocessor
     variable = power_density
-    block = '${bid_ofl5}'
+    block = 'Fuel14'
     execute_on = 'initial timestep_begin timestep_end'
   []
   [power_density_ofl6]
     type = ElementIntegralVariablePostprocessor
     variable = power_density
-    block = '${bid_ofl6}'
+    block = 'Fuel15'
     execute_on = 'initial timestep_begin timestep_end'
   []
   [power_density_cool]
     type = ElementIntegralVariablePostprocessor
     variable = power_density
-    block = ${bid_cool}
+    block = 'Lead'
     execute_on = 'initial timestep_begin timestep_end'
   []
   [nek_bulk_temp_max]
     type = ElementExtremeValue
     variable = nek_bulk_temp
-    block = ${bid_cool}
+    block = 'Lead'
     execute_on = 'initial timestep_begin timestep_end'
   []
   [nek_bulk_temp_min]
     type = ElementExtremeValue
     variable = nek_bulk_temp
     value_type = min
-    block = ${bid_cool}
+    block = 'Lead'
     execute_on = 'initial timestep_begin timestep_end'
   []
   [gap_temp_max]
     type = ElementExtremeValue
     variable = solid_temp
-    block = '${bid_gapc} ${bid_gap}'
+    block = 'HeliumHolePrism HeliumHole'
     execute_on = 'initial timestep_begin timestep_end'
   []
   [gap_temp_min]
     type = ElementExtremeValue
     variable = solid_temp
     value_type = min
-    block = '${bid_gapc} ${bid_gap}'
+    block = 'HeliumHolePrism HeliumHole'
     execute_on = 'initial timestep_begin timestep_end'
   []
   [innerfuel_temp_max]
     type = ElementExtremeValue
     variable = solid_temp
-    block = ${bid_ifl}
+    block = 'Fuel00'
     execute_on = 'initial timestep_begin timestep_end'
   []
   [innerfuel_temp_min]
     type = ElementExtremeValue
     variable = solid_temp
     value_type = min
-    block = ${bid_ifl}
+    block = 'Fuel00'
     execute_on = 'initial timestep_begin timestep_end'
   []
   [outerfuel1_temp_max]
     type = ElementExtremeValue
     variable = solid_temp
-    block = ${bid_ofl1}
+    block = 'Fuel10'
     execute_on = 'initial timestep_begin timestep_end'
   []
   [outerfuel1_temp_min]
     type = ElementExtremeValue
     variable = solid_temp
     value_type = min
-    block = ${bid_ofl1}
+    block = 'Fuel10'
     execute_on = 'initial timestep_begin timestep_end'
   []
   [outerfuel2_temp_max]
     type = ElementExtremeValue
     variable = solid_temp
-    block = ${bid_ofl2}
+    block = 'Fuel11'
     execute_on = 'initial timestep_begin timestep_end'
   []
   [outerfuel2_temp_min]
     type = ElementExtremeValue
     variable = solid_temp
     value_type = min
-    block = ${bid_ofl2}
+    block = 'Fuel11'
     execute_on = 'initial timestep_begin timestep_end'
   []
   [outerfuel3_temp_max]
     type = ElementExtremeValue
     variable = solid_temp
-    block = ${bid_ofl3}
+    block = 'Fuel12'
     execute_on = 'initial timestep_begin timestep_end'
   []
   [outerfuel3_temp_min]
     type = ElementExtremeValue
     variable = solid_temp
     value_type = min
-    block = ${bid_ofl3}
+    block = 'Fuel12'
     execute_on = 'initial timestep_begin timestep_end'
   []
   [outerfuel4_temp_max]
     type = ElementExtremeValue
     variable = solid_temp
-    block = ${bid_ofl4}
+    block = 'Fuel13'
     execute_on = 'initial timestep_begin timestep_end'
   []
   [outerfuel4_temp_min]
     type = ElementExtremeValue
     variable = solid_temp
     value_type = min
-    block = ${bid_ofl4}
+    block = 'Fuel13'
     execute_on = 'initial timestep_begin timestep_end'
   []
   [outerfuel5_temp_max]
     type = ElementExtremeValue
     variable = solid_temp
-    block = ${bid_ofl5}
+    block = 'Fuel14'
     execute_on = 'initial timestep_begin timestep_end'
   []
   [outerfuel5_temp_min]
     type = ElementExtremeValue
     variable = solid_temp
     value_type = min
-    block = ${bid_ofl5}
+    block = 'Fuel14'
     execute_on = 'initial timestep_begin timestep_end'
   []
   [outerfuel6_temp_max]
     type = ElementExtremeValue
     variable = solid_temp
-    block = ${bid_ofl6}
+    block = 'Fuel15'
     execute_on = 'initial timestep_begin timestep_end'
   []
   [outerfuel6_temp_min]
     type = ElementExtremeValue
     variable = solid_temp
     value_type = min
-    block = ${bid_ofl6}
+    block = 'Fuel15'
     execute_on = 'initial timestep_begin timestep_end'
   []
   [clad_temp_max]
     type = ElementExtremeValue
     variable = solid_temp
-    block = ${bid_clad}
+    block = 'Clad'
     execute_on = 'initial timestep_begin timestep_end'
   []
   [clad_temp_min]
     type = ElementExtremeValue
     variable = solid_temp
     value_type = min
-    block = ${bid_clad}
+    block = 'Clad'
     execute_on = 'initial timestep_begin timestep_end'
   []
 []
