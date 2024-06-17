@@ -29,13 +29,16 @@ D_H_outlet = 0.8
 
 # porosities
 porosity_bed = 0.401150593
-porosity_free_flow = 0.9999
+porosity_free_flow = 0.9999999
 porosity_cone = 0.75
 porosity_solid = 0
 
 # Numerical scheme parameters
 advected_interp_method = 'upwind'
 velocity_interp_method = 'rc'
+
+# To reach steady state faster if needed
+cp_multiplier = 1
 
 core_power_density = 1.999987E+07
 blocks_fluid = 'flow1 flow2 flow3 flow4 flow5 dio1 dio2 dio3 flowp inlet outlet '
@@ -44,12 +47,15 @@ blocks_free_flow = 'flow1 flow2 flow5 dio1 dio2 dio3 inlet outlet '
 blocks_bed = 'flow3 flow4 flowp'
 blocks_non_bed = 'flow1 flow2 flow5 dio1 dio2 dio3 reflector
                   barrel vessel1 vessel2 inlet outlet '
+blocks_solid_only = '${blocks_bed} reflector barrel vessel1 vessel2'
 
 # volumetric heat transfer coefficients computed
 # from areal heat transfer coefficients
 C_DB = 0.023
-ApV_flow_1 = 40
-ApV_diode = 40
+#ApV_flow_1 = 40
+#ApV_diode = 40
+ApV_flow_1 = 1
+ApV_diode = 1
 
 # Forchheimer coefficient in an open plenum
 Forch_open = 1.25
@@ -66,7 +72,7 @@ Forch_open = 1.25
   velocity_interp_method = ${velocity_interp_method}
   rho = 'rho'
   force_define_density = true
-  acceleration = '0.0 -9.8 0.0'
+  acceleration = '0.0 -9.81 0.0'
   rhie_chow_user_object = 'pins_rhie_chow_interpolator'
 []
 
@@ -86,11 +92,13 @@ Forch_open = 1.25
 
     # keep mesh in the pebble bed roughly 3xpebble diameter ~12 cm for gFHR
     dx = '0.8 0.1 0.3 0.2 0.2 0.2 0.02 0.05 0.04'
-    ix = '  6   1   3   2   2   2    1    2    1'
+    ix = '  6   1   3   2   2   2    1    2    2'
 
     dy = '0.04 0.05  0.3 0.3  0.154735 2.78523 0.154735  0.6  0.5  0.05 0.1 0.2 0.4'
-    iy = '   1    2    2   2         1      18        1    4    4     2   1   2   2'
+    iy = '   2    2    2   2         1      18        1    4    4     2   1   2   2'
 
+    # lower X is at the beginning of this array
+    # higher X is at the bottom, Y is as-expected
     subdomain_id = '
    14 13 13 13 13 13 13 13 13
     2  1  1  1  1  1  1  1 13
@@ -159,13 +167,22 @@ Forch_open = 1.25
     paired_block = 10
     new_boundary = wall1
   []
+  [walls_free_flow_convection]
+    type = ParsedGenerateSideset
+    input = 'vertical_walls_04'
+    included_subdomains = '1 2 5 6 7 8 20 21'
+    new_sideset_name = 'walls_free_flow_convection'
+    included_boundaries = 'wall1'
+    combinatorial_geometry = 'x < 1e10'
+  []
   [RCSS_Boundary]
     type = SideSetsAroundSubdomainGenerator
-    input = vertical_walls_04
+    input = walls_free_flow_convection
     fixed_normal = true
     block = '13 14'
     normal = '1 0 0'
     new_boundary = RCSS
+    include_only_external_sides = true
   []
   [Mass_Flow_Sensor_1]
     type = SideSetsBetweenSubdomainsGenerator
@@ -191,54 +208,6 @@ Forch_open = 1.25
   uniform_refine = 0
 []
 
-[Modules]
-  [NavierStokesFV]
-    # General parameters
-    compressibility = 'weakly-compressible'
-    porous_medium_treatment = true
-    add_energy_equation = false
-    block = ${blocks_fluid}
-
-    # Boussinesq parameters
-    gravity = '0 -9.81 0'
-
-    # Variables
-    velocity_variable = 'superficial_vel_x superficial_vel_y'
-    pressure_variable = 'pressure'
-    fluid_temperature_variable = 'T_fluid'
-
-    # Wall boundary conditions
-    wall_boundaries = 'wall1'
-    momentum_wall_types = 'slip'
-
-    # Inlet boundary conditions
-    inlet_boundaries = 'inlet'
-    momentum_inlet_types = 'fixed-velocity'
-    momentum_inlet_function = '-0.242984118 0'
-
-    # Outlet boundary conditions
-    outlet_boundaries = 'outlet'
-    momentum_outlet_types = 'fixed-pressure'
-    pressure_function = 'Outlet_Average_Pressure_Function'
-
-    # Porous flow parameters
-    ambient_convection_blocks = ${blocks_fluid}
-    ambient_convection_alpha = 'alpha'
-    ambient_temperature = 'T_solid'
-
-    # Friction in porous media
-    friction_types = 'darcy forchheimer'
-    friction_coeffs = 'combined_linear combined_quadratic'
-    use_friction_correction = True
-    consistent_scaling = 200
-    # porosity_smoothing_layers = 8
-
-    # Numerical scheme
-    momentum_advection_interpolation = 'upwind'
-    mass_advection_interpolation = 'upwind'
-  []
-[]
-
 # ==============================================================================
 # VARIABLES, AUXILIARY VARIABLES, INITIAL CONDITIONS DEFINITION AND FUNCTIONS
 # ==============================================================================
@@ -261,6 +230,7 @@ Forch_open = 1.25
   [T_solid]
     type = INSFVEnergyVariable
     initial_condition = 823.14
+    block = ${blocks_solid_only}
   []
   [T_fluid]
     type = INSFVEnergyVariable
@@ -291,21 +261,17 @@ Forch_open = 1.25
   [real_vel_x]
     type = MooseVariableFVReal
     initial_condition = 0
+    block = ${blocks_fluid}
   []
   [real_vel_y]
     type = MooseVariableFVReal
     initial_condition = 0.0
+    block = ${blocks_fluid}
   []
   [power_density]
     type = MooseVariableFVReal
     initial_condition = '${fparse core_power_density}'
     block = 'flow3'
-  []
-  [rho_var]
-    type = MooseVariableFVReal
-  []
-  [cp_var]
-    type = MooseVariableFVReal
   []
   [T_fluid_WD]
     type = MooseVariableFVReal
@@ -315,18 +281,23 @@ Forch_open = 1.25
   []
   [htc_material]
     type = MooseVariableFVReal
+    block = ${blocks_fluid}
   []
   [Adjusted_HTC_Material]
     type = MooseVariableFVReal
+    block = ${blocks_fluid}
   []
   [kappa_fluid]
     type = MooseVariableFVReal
+    block = ${blocks_fluid}
   []
   [Darcy_Value]
     type = MooseVariableFVReal
+    block = ${blocks_fluid}
   []
   [Forchheimer_Value]
     type = MooseVariableFVReal
+    block = ${blocks_fluid}
   []
 []
 
@@ -366,14 +337,59 @@ Forch_open = 1.25
   [mu_rampdown]
     type = ParsedFunction
     expression = 1
-    symbol_names = 'NP'
-    symbol_values = 'Num_Picards'
   []
 []
 
 # ==============================================================================
 # KERNEL AND AUXILIARY KERNELS
 # ==============================================================================
+
+[Modules]
+  [NavierStokesFV]
+    # General parameters
+    compressibility = 'weakly-compressible'
+    porous_medium_treatment = true
+    add_energy_equation = false
+    block = ${blocks_fluid}
+    gravity = '0 -9.81 0'
+
+    # Variables
+    velocity_variable = 'superficial_vel_x superficial_vel_y'
+    pressure_variable = 'pressure'
+    fluid_temperature_variable = 'T_fluid'
+
+    # Wall boundary conditions
+    wall_boundaries = 'wall1'
+    momentum_wall_types = 'slip'
+
+    # Inlet boundary conditions
+    inlet_boundaries = 'inlet'
+    momentum_inlet_types = 'fixed-velocity'
+    momentum_inlet_function = '-0.242984118 0'
+
+    # Outlet boundary conditions
+    outlet_boundaries = 'outlet'
+    momentum_outlet_types = 'fixed-pressure'
+    pressure_function = 'Outlet_Average_Pressure_Function'
+
+    # Porous flow parameters
+    ambient_convection_blocks = ${blocks_fluid}
+    ambient_convection_alpha = 'alpha'
+    ambient_temperature = 'T_solid'
+
+    # Friction in porous media
+    friction_types = 'darcy forchheimer'
+    friction_coeffs = 'combined_linear combined_quadratic'
+    use_friction_correction = True
+    consistent_scaling = 200
+    # porosity_smoothing_layers = 8
+
+    # Numerical scheme
+    momentum_advection_interpolation = 'upwind'
+    mass_advection_interpolation = 'upwind'
+  []
+[]
+
 [FVKernels]
   # Equation 3 (fluid energy conservation).
   [fluid_energy_time]
@@ -407,7 +423,7 @@ Forch_open = 1.25
     h_solid_fluid = 'alpha'
     T_fluid = T_fluid
     T_solid = T_solid
-    block = ${blocks_fluid}
+    block = ${blocks_bed}
   []
 
   # Equation 4 (solid energy conservation).
@@ -427,7 +443,7 @@ Forch_open = 1.25
     T_solid = 'T_solid'
     is_solid = true
     h_solid_fluid = 'alpha'
-    block = ${blocks_fluid}
+    block = ${blocks_bed}
   []
   [solid_energy_production]
     type = FVCoupledForce
@@ -436,13 +452,40 @@ Forch_open = 1.25
     block = 'flow3' # only in the pebble bed core
   []
   [solid_energy_diffusion_core]
-    type = PINSFVEnergyAnisotropicDiffusion
+    type = PINSFVEnergyDiffusion
     variable = T_solid
-    kappa = 'eff_solid_conductivity'
+    k = 'eff_solid_conductivity'
     effective_diffusivity = true
     # porosity won't be used because effective_diffusivity = true
     # so set it to 1
     porosity = 1
+  []
+[]
+
+[FVInterfaceKernels]
+  [free-flow-to-solid]
+    type = FVConvectionCorrelationInterface
+    variable1 = T_fluid
+    variable2 = T_solid
+    boundary = 'walls_free_flow_convection'
+    h = 'wall_htc'
+    T_solid = T_solid
+    T_fluid = T_fluid
+    subdomain1 = ${blocks_free_flow}
+    subdomain2 = 'vessel1 vessel2 barrel reflector'
+    wall_cell_is_bulk = true
+  []
+  [free-flow-to-solid_other]
+    type = FVConvectionCorrelationInterface
+    variable1 = T_solid
+    variable2 = T_fluid
+    boundary = 'walls_free_flow_convection'
+    h = 'wall_htc'
+    T_solid = T_solid
+    T_fluid = T_fluid
+    subdomain2 = ${blocks_free_flow}
+    subdomain1 = 'vessel1 vessel2 barrel reflector'
+    wall_cell_is_bulk = true
   []
 []
 
@@ -476,20 +519,6 @@ Forch_open = 1.25
     variable = real_vel_y
     coupled_variables = 'superficial_vel_y porosity_1'
     expression = 'superficial_vel_y / porosity_1'
-    block = ${blocks_fluid}
-  []
-  [rho_out]
-    type = FunctorAux
-    functor = 'rho'
-    variable = 'rho_var'
-    execute_on = 'timestep_begin timestep_end Final'
-    block = ${blocks_fluid}
-  []
-  [cp_out]
-    type = FunctorAux
-    functor = 'cp'
-    variable = 'cp_var'
-    execute_on = 'timestep_begin'
     block = ${blocks_fluid}
   []
   [Whole_Domain_Fluid_Temp]
@@ -564,6 +593,8 @@ Forch_open = 1.25
   [Action_Creates]
     type = INSFVEnthalpyFunctorMaterial
     temperature = T_fluid
+    output_properties = 'cp'
+    outputs = 'exo'
   []
 
   [GFFP]
@@ -576,6 +607,8 @@ Forch_open = 1.25
     speed = speed
     mu_rampdown = 'mu_rampdown'
     block = ${blocks_fluid}
+    output_properties = 'rho'
+    outputs = 'exo'
   []
 
   ## Characteristic length: fix the 1's wherever we need Reynolds number!!
@@ -635,6 +668,8 @@ Forch_open = 1.25
                                12 ${porosity_solid}
                                13 ${porosity_solid}
                                14 ${porosity_solid}'
+    output_properties = 'porosity'
+    outputs = 'exo'
   []
 
   [diode]
@@ -727,7 +762,8 @@ Forch_open = 1.25
   [equivalent_alpha_flow1]
     type = FunctorDittusBoelterWallHTC
     C = '${fparse C_DB * ApV_flow_1}'
-    block = flow1
+    # block = 'flow1'
+    block = 'flow1 flow2 flow3 flow4 flow5 inlet outlet'
   []
 
   [equivalent_alpha_diodes]
@@ -736,12 +772,12 @@ Forch_open = 1.25
     block = 'dio1 dio2 dio3'
   []
 
-  [convert_wall_htc_to_alpha]
-    type = ADGenericFunctorMaterial
-    prop_names = 'alpha'
-    prop_values = 'wall_htc'
-    block = 'dio1 dio2 dio3 flow1'
-  []
+#  [convert_wall_htc_to_alpha]
+#    type = ADGenericFunctorMaterial
+#    prop_names = 'alpha'
+#    prop_values = 'wall_htc'
+#    block = 'dio1 dio2 dio3 flow1'
+#  []
 
   # in some regions we do not care about volumetric
   # heat transfer, but we might have to do sanity checks here
@@ -749,7 +785,7 @@ Forch_open = 1.25
     type = ADGenericFunctorMaterial
     prop_names = 'alpha'
     prop_values = '0'
-    block = 'flow2 flow5 outlet  inlet'
+    block = 'flow2 flow5 outlet  inlet dio1 dio2 dio3 flow1'
   []
 
   ## Solid phase properties
@@ -778,14 +814,14 @@ Forch_open = 1.25
     type = ADGenericFunctorMaterial
     block = 'barrel vessel1 vessel2'
     prop_names = 'rho_s cp_s k_s'
-    prop_values = '8000.0 ${fparse 500.0} 21.5'
+    prop_values = '8000.0 ${fparse 500.0 * cp_multiplier} 21.5'
   []
 
   [reflector_full_density_graphite]
     type = ADGenericFunctorMaterial
     block = 'reflector'
     prop_names = 'rho_s cp_s k_s'
-    prop_values = '1740.0 ${fparse 1697.0} 26.0'
+    prop_values = '1740.0 ${fparse 1697.0 * cp_multiplier} 26.0'
   []
 
   # Modeling solid everywhere. Open flow regions are modeled
@@ -801,18 +837,23 @@ Forch_open = 1.25
 
   # write k_s into kappa_s so we can use the same
   # kernel everywhere
+
   [non_pebble_bed_eff_solid_conductivity]
-    type = ADGenericVectorFunctorMaterial
+    type = ADGenericFunctorMaterial
     prop_names = 'eff_solid_conductivity'
-    prop_values = 'k_s k_s k_s'
+    prop_values = 'k_s'
     block = '${blocks_free_flow} reflector barrel vessel1 vessel2'
+    output_properties = 'eff_solid_conductivity'
+    outputs = 'exo'
   []
 
   [pebble_bed_eff_solid_conductivity]
-    type = ADGenericVectorFunctorMaterial
+    type = ADGenericFunctorMaterial
     prop_names = 'eff_solid_conductivity'
-    prop_values = 'kappa_s kappa_s kappa_s'
+    prop_values = 'kappa_s'
     block = '${blocks_bed}'
+    output_properties = 'eff_solid_conductivity'
+    outputs = 'exo'
   []
 []
 
@@ -845,6 +886,7 @@ Forch_open = 1.25
   [T_solid_conduction]
     type = FunctorThermalResistanceBC
     boundary = 'RCSS'
+    geometry = 'cylindrical'
     variable = T_solid
     emissivity = 1e-10
     htc = 1e-10
@@ -1006,7 +1048,7 @@ Forch_open = 1.25
   [mass_flow_out]
     type = VolumetricFlowRate
     boundary = 'outlet'
-    advected_quantity = 'rho_var'
+    advected_quantity = 'rho_out'
     vel_x = superficial_vel_x
     vel_y = superficial_vel_y
     execute_on = 'INITIAL TIMESTEP_END TRANSFER'
@@ -1014,7 +1056,7 @@ Forch_open = 1.25
   [mass_flow_in]
     type = VolumetricFlowRate
     boundary = 'inlet'
-    advected_quantity = 'rho_var'
+    advected_quantity = 'rho_out'
     vel_x = superficial_vel_x
     vel_y = superficial_vel_y
     execute_on = 'INITIAL TIMESTEP_END TRANSFER'
@@ -1022,7 +1064,7 @@ Forch_open = 1.25
   [mass_flow_1]
     type = VolumetricFlowRate
     boundary = 'MF_1'
-    advected_quantity = 'rho_var'
+    advected_quantity = 'rho_out'
     vel_x = superficial_vel_x
     vel_y = superficial_vel_y
     execute_on = 'TIMESTEP_END TRANSFER'
@@ -1030,7 +1072,7 @@ Forch_open = 1.25
   [mass_flow_2]
     type = VolumetricFlowRate
     boundary = 'MF_2'
-    advected_quantity = 'rho_var'
+    advected_quantity = 'rho_out'
     vel_x = superficial_vel_x
     vel_y = superficial_vel_y
     execute_on = 'TIMESTEP_END TRANSFER'
@@ -1038,7 +1080,7 @@ Forch_open = 1.25
   [mass_flow_3]
     type = VolumetricFlowRate
     boundary = 'MF_3'
-    advected_quantity = 'rho_var'
+    advected_quantity = 'rho_out'
     vel_x = superficial_vel_x
     vel_y = superficial_vel_y
     execute_on = 'TIMESTEP_END TRANSFER'
