@@ -58,6 +58,8 @@ powerdensity = ${fparse linearpower / (pi * (fuel_r_o * fuel_r_o - fuel_r_i * fu
     family = MONOMIAL
     order = CONSTANT
   []
+  [heat_flux_nodal]
+  []
 []
 
 [Variables]
@@ -133,9 +135,19 @@ powerdensity = ${fparse linearpower / (pi * (fuel_r_o * fuel_r_o - fuel_r_i * fu
     variable = heat_flux
     boundary = 'ROD_SIDE DUCT_INNERSIDE'
   []
+  [heat_flux_nodal]
+    type = ProjectionAux
+    variable = heat_flux_nodal
+    v = heat_flux
+  []
 []
 
 [Postprocessors]
+  [heat_flux_l2_difference]
+    type = ElementL2Difference
+    variable = heat_flux
+    other_variable = heat_flux_nodal
+  []
   [heat_source_rod_duct]
     type = ElementIntegralVariablePostprocessor
     variable = heat_source
@@ -382,7 +394,7 @@ powerdensity = ${fparse linearpower / (pi * (fuel_r_o * fuel_r_o - fuel_r_i * fu
 [Transfers]
   [heat_flux_rod_to_nek]
     type = MultiAppGeneralFieldNearestLocationTransfer
-    source_variable = heat_flux
+    source_variable = heat_flux_nodal
     variable = avg_flux
     from_boundaries = 'ROD_SIDE'
     to_boundaries = '3'
@@ -392,7 +404,7 @@ powerdensity = ${fparse linearpower / (pi * (fuel_r_o * fuel_r_o - fuel_r_i * fu
   []
   [heat_flux_duct_to_nek]
     type = MultiAppGeneralFieldNearestLocationTransfer
-    source_variable = heat_flux
+    source_variable = heat_flux_nodal
     variable = avg_flux
     from_boundaries = 'DUCT_INNERSIDE'
     to_boundaries = '4'
