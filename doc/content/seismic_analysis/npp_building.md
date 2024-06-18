@@ -14,27 +14,27 @@ Before performing the seismic analysis of the full NPP building, the base-isolat
 !row!
 
 !col! small=12 medium=6 large=6
-!media media/examples/ex14/isolation_plan.png
+!media media/seismic_analysis/isolation_plan.png
        style=width:100%;margin-right:0px;float:center;
        id=fig:iso_plan
        caption=Isolators under the basemat of the NPP building analyzed in Part 1 of this example
 !col-end!
 
 !col! small=12 medium=6 large=6
-!media media/examples/ex14/building1.png
+!media media/seismic_analysis/building1.png
       style=width:100% id=fig:building_iso
       caption=Isometric view of the NPP building mesh analyzed in Part 2 of this example.
 !col-end!
 
 !row-end!
 
-The basemat is modeled to be almost rigid, with an elastic modulus of almost 99.2 GPa, which is four times stiffer than concrete. Each of the isolators is independently attached to the basemat with rigid beam elements, thereby simulating a rigid connection between them. The isolators themselves are 0.3m long and have a friction coefficient, `mu_ref=0.06`, radius of curvature, and `r_eff=1.0`. These properties result in a sliding period of 2 sec, which is reasonable for the NPP building. Two methods of modeling the isolation system are demonstrated here. In method 1, the friction coefficients of the isolators are assumed to be independent of pressure, temperature, and velocity and the `mu_ref` value is used throughout the simulations. (See the [theory manual](manuals/theory/index.md) for a detailed description of pressure, temperature, velocity dependency of the friction coefficient of FP isolators). Additionally, a unidirectional ground motion is applied in the X direction. In method 2, the pressure, temperature, and velocity dependencies are switched on and ground motions are applied in all three directions. The Materials blocks for the isolators for the two mwethods are listed below, and the acceleration histories of the input motions are presented in [fig:inp_motion_xyz] below.
+The basemat is modeled to be almost rigid, with an elastic modulus of almost 99.2 GPa, which is four times stiffer than concrete. Each of the isolators is independently attached to the basemat with rigid beam elements, thereby simulating a rigid connection between them. The isolators themselves are 0.3m long and have a friction coefficient, `mu_ref=0.06`, radius of curvature, and `r_eff=1.0`. These properties result in a sliding period of 2 sec, which is reasonable for the NPP building. Two methods of modeling the isolation system are demonstrated here. In method 1, the friction coefficients of the isolators are assumed to be independent of pressure, temperature, and velocity and the `mu_ref` value is used throughout the simulations. (See the [theory manual](https://mooseframework.inl.gov/mastodon/manuals/theory/index.html) for a detailed description of pressure, temperature, velocity dependency of the friction coefficient of FP isolators). Additionally, a unidirectional ground motion is applied in the X direction. In method 2, the pressure, temperature, and velocity dependencies are switched on and ground motions are applied in all three directions. The Materials blocks for the isolators for the two mwethods are listed below, and the acceleration histories of the input motions are presented in [fig:inp_motion_xyz] below.
 
-!listing examples/ex14/basemat_with_isolators_new.i block=Materials/elasticity
+!listing seismic_analysis/basemat_with_isolators_new.i block=Materials/elasticity
 
-!listing examples/ex14/basemat_with_isolators_new_3D.i block=Materials/elasticity
+!listing seismic_analysis/basemat_with_isolators_new_3D.i block=Materials/elasticity
 
-!media media/examples/ex14/inp_motion_xyz.png
+!media media/seismic_analysis/inp_motion_xyz.png
        style=width:50%;margin-right:0px;float:center;
        id=fig:inp_motion_xyz
        caption=Acceleration histories of the input ground motions used in this example.
@@ -49,20 +49,20 @@ Gravity analysis is an integral part of seismic analysis of base-isolated struct
 
 An important output in seismic analysis of isolated systems is the force-displacement relationship from the isolators. The forces and deformations in the isolators can be recorded directly using [`MaterialRealCMMAux`](syntax/AuxKernels/MaterialRealCMMAux), which can retrieve the isolator deformations, forces, stiffnesses (all of which, are of MOOSE `ColumnMajorMatrix` type in their implementation; see source code) and store them in an `AuxVariable`. In this example, the isolator deformations and forces in the basic co-ordinate system are recorded and presented. A sample `MaterialRealCMMAux` definition for the calculation and storage of the axial forces in the isolators is shown below. On examination of the source code for `ComputeFPIsolatorElasticity` it can be seen that the forces in the basic co-ordinate system are stored in the material property named `basic_forces`. This is 6 x 1 matrix that stores the forces and moments of the isolators. The first element (`row=0` and `column=0`) corresponds to the axial forces in the isolators and is calculated and stored here. Similarly, the deformations are also evaluated in other blocks.
 
-!listing examples/ex14/basemat_with_isolators_new.i block=AuxKernels/Fb_x
+!listing seismic_analysis/basemat_with_isolators_new.i block=AuxKernels/Fb_x
 
 Both the acceleration responses of the basemat and the force-displacement relationship of one of the isolators is presented in this section. In [fig:bm_fb_xz] and [fig:bm_fb_yz], the orange and blue lines correspond to methods 1 and 2, respectively. Note that when the pressure, temperature, and velocity dependencies are switched on (method 2, blue) the hysteresis is a lot more complicated and the stiffness varies significantly during the earthquake. Note that the results for method 1 do not appear in [fig:bm_fb_yz] because they are almost zero, given that the ground motion for method 1 is unidirectional. The results presented here are for an isolator at the center of the basemat plan.
 
 !row!
 
 !col! small=12 medium=6 large=6
-!media media/examples/ex14/basemat_fb_XZ.png
+!media media/seismic_analysis/basemat_fb_XZ.png
        style=width:100% id=fig:bm_fb_xz
        caption=Shear force-displacement history in the XZ direction. Orange is method 1 and blue is method 2.
 !col-end!
 
 !col! small=12 medium=6 large=6
-!media media/examples/ex14/basemat_fb_YZ.png
+!media media/seismic_analysis/basemat_fb_YZ.png
       style=width:100% id=fig:bm_fb_yz
       caption=Shear force-displacement history in the YZ direction. Orange is method 1 and blue is method 2.
 !col-end!
@@ -74,31 +74,31 @@ The acceleration response spectra calculated at the center of the basemat are pr
 !row!
 
 !col! small=12 medium=4 large=4
-!media media/examples/ex14/inp_sa_x.png
+!media media/seismic_analysis/inp_sa_x.png
        style=width:100% id=fig:inp_sa_x
        caption=5% damped acceleration response spectra in X direction (input)
 
-!media media/examples/ex14/basemat_sa_x.png
+!media media/seismic_analysis/basemat_sa_x.png
        style=width:100% id=fig:basemat_sa_x
        caption=5% damped acceleration response spectra in X direction (basemat center)
 !col-end!
 
 !col! small=12 medium=4 large=4
-!media media/examples/ex14/inp_sa_y.png
+!media media/seismic_analysis/inp_sa_y.png
        style=width:100% id=fig:inp_sa_y
        caption=5% damped acceleration response spectra in Y direction (input)
 
-!media media/examples/ex14/basemat_sa_y.png
+!media media/seismic_analysis/basemat_sa_y.png
        style=width:100% id=fig:basemat_sa_y
        caption=5% damped acceleration response spectra in Y direction (basemat center)
 !col-end!
 
 !col! small=12 medium=4 large=4
-!media media/examples/ex14/inp_sa_z.png
+!media media/seismic_analysis/inp_sa_z.png
        style=width:100% id=fig:inp_sa_z
        caption=5% damped acceleration response spectra in Z direction (input)
 
-!media media/examples/ex14/basemat_sa_z.png
+!media media/seismic_analysis/basemat_sa_z.png
        style=width:100% id=fig:basemat_sa_z
        caption=5% damped acceleration response spectra in Z direction (basemat center)
 !col-end!
@@ -117,31 +117,31 @@ The finite-element mesh of the building, developed in Cubit is presented in [fig
 !row!
 
 !col! small=12 medium=6 large=6
-!media media/examples/ex14/building2.png
+!media media/seismic_analysis/building2.png
        style=width:100%;margin-right:0px;float:center;
        id=fig:building_int_iso
        caption=Isometric view of the internal components of the NPP building.
 !col-end!
 
 !col! small=12 medium=6 large=6
-!media media/examples/ex14/building3.png
+!media media/seismic_analysis/building3.png
       style=width:100% id=fig:building_int_plan
       caption=Plan view of the internal components of the NPP building.
 !col-end!
 
 !row-end!
 
-!media media/examples/ex14/rv_bot.png
+!media media/seismic_analysis/rv_bot.png
       style=width:50% id=fig:rv_bot
       caption=Head-supported reactor vessel as seen from the bottom.
-
-All the materials in the building are modeled using a linear elastic material and 3D 8-noded HEX elements, except for the FP isolators, which are modeled using two noded link elements with the FP isolator material model (see [theory](manuals/theory/index.md) and [user](manuals/user/index.md) manuals for more information). The reactor vessel is modeled as a thin cylindrical vessel using continuum elements. The fluid inside the reactor vessel is modeled using a linear elastic material with a very small shear modulus to reproduce fluid-like behavior. A more comprehensive, fluid-structure interaction (FSI) approach is also possible in MASTODON to model the fluid. More information on FSI modeling in MOOSE and MASTODON is provided [here](modules/fsi/index.md). Further information on the building model is also provided in [!citet](inl-ext-20-59608).
+#issue here
+All the materials in the building are modeled using a linear elastic material and 3D 8-noded HEX elements, except for the FP isolators, which are modeled using two noded link elements with the FP isolator material model see [theory manual](https://mooseframework.inl.gov/mastodon/manuals/theory/index.html) and [user manual](https://mooseframework.inl.gov/mastodon/manuals/user/index.html) for more information. The reactor vessel is modeled as a thin cylindrical vessel using continuum elements. The fluid inside the reactor vessel is modeled using a linear elastic material with a very small shear modulus to reproduce fluid-like behavior. A more comprehensive, fluid-structure interaction (FSI) approach is also possible in MASTODON to model the fluid. More information on FSI modeling in MOOSE and MASTODON is provided [here](https://mooseframework.inl.gov/modules/fsi/index.html). Further information on the building model is also provided in [!citet](inl-ext-20-59608).
 
 In this demonstration, the building is subjected to ground motions in X, Y, and Z directions at the base of the isolation system. These ground motions are presented in [fig:inp_motion_xyz] above, and their spectral accelerations are shown in [fig:inp_sa_x], [fig:inp_sa_y], and [fig:inp_sa_z] above. Pressure, temperature, and velocity dependencies of the isolators are switched on, as described in method 2 of Part 1 of this example. The first three timesteps of the analysis involve a static gravity analysis as described in the note above.
 
 The input file for the simulation of Part 2 is listed below.
 
-!listing examples/ex14/building_basemat_with_isolators_new.i
+!listing seismic_analysis/building_basemat_with_isolators_new.i
 
 ### Outputs
 
@@ -152,13 +152,13 @@ The figures below present the isolator shear responses in XZ and YZ directions c
 !row!
 
 !col! small=12 medium=6 large=6
-!media media/examples/ex14/building_fb_XZ.png
+!media media/seismic_analysis/building_fb_XZ.png
        style=width:100% id=fig:bu_fb_xz
        caption=Shear force-displacement history in the XZ direction for an isolator at the center of the isolation system.
 !col-end!
 
 !col! small=12 medium=6 large=6
-!media media/examples/ex14/building_fb_YZ.png
+!media media/seismic_analysis/building_fb_YZ.png
       style=width:100% id=fig:bu_fb_yz
       caption=Shear force-displacement history in the YZ direction for an isolator at the center of the isolation system.
 !col-end!
@@ -170,19 +170,19 @@ The figure below present the building responses for the same input ground motion
 !row!
 
 !col! small=12 medium=4 large=4
-!media media/examples/ex14/bm_sa_x.png
+!media media/seismic_analysis/bm_sa_x.png
        style=width:100% id=fig:bm_sa_x
        caption=5% damped acceleration response spectra in X direction (basemat center)
 !col-end!
 
 !col! small=12 medium=4 large=4
-!media media/examples/ex14/bm_sa_y.png
+!media media/seismic_analysis/bm_sa_y.png
        style=width:100% id=fig:bm_sa_y
        caption=5% damped acceleration response spectra in Y direction (basemat center)
 !col-end!
 
 !col! small=12 medium=4 large=4
-!media media/examples/ex14/bm_sa_z.png
+!media media/seismic_analysis/bm_sa_z.png
        style=width:100% id=fig:bm_sa_z
        caption=5% damped acceleration response spectra in Z direction (basemat center)
 !col-end!
@@ -192,19 +192,19 @@ The figure below present the building responses for the same input ground motion
 !row!
 
 !col! small=12 medium=4 large=4
-!media media/examples/ex14/broof_sa_x.png
+!media media/seismic_analysis/broof_sa_x.png
        style=width:100% id=fig:broof_sa_x
        caption=5% damped acceleration response spectra in X direction (center of the building roof)
 !col-end!
 
 !col! small=12 medium=4 large=4
-!media media/examples/ex14/broof_sa_y.png
+!media media/seismic_analysis/broof_sa_y.png
        style=width:100% id=fig:broof_sa_y
        caption=5% damped acceleration response spectra in Y direction (center of the building roof)
 !col-end!
 
 !col! small=12 medium=4 large=4
-!media media/examples/ex14/broof_sa_z.png
+!media media/seismic_analysis/broof_sa_z.png
        style=width:100% id=fig:broof_sa_z
        caption=5% damped acceleration response spectra in Z direction (center of the building roof)
 !col-end!
@@ -214,19 +214,19 @@ The figure below present the building responses for the same input ground motion
 !row!
 
 !col! small=12 medium=4 large=4
-!media media/examples/ex14/rv_bot_sa_x.png
+!media media/seismic_analysis/rv_bot_sa_x.png
        style=width:100% id=fig:rv_bot_sa_x
        caption=5% damped acceleration response spectra in X direction (center of reactor vessel head)
 !col-end!
 
 !col! small=12 medium=4 large=4
-!media media/examples/ex14/rv_bot_sa_y.png
+!media media/seismic_analysis/rv_bot_sa_y.png
        style=width:100% id=fig:rv_bot_sa_y
        caption=5% damped acceleration response spectra in Y direction (center of reactor vessel head)
 !col-end!
 
 !col! small=12 medium=4 large=4
-!media media/examples/ex14/rv_bot_sa_z.png
+!media media/seismic_analysis/rv_bot_sa_z.png
        style=width:100% id=fig:rv_bot_sa_z
        caption=5% damped acceleration response spectra in Z direction (center of reactor vessel head)
 !col-end!
@@ -236,19 +236,19 @@ The figure below present the building responses for the same input ground motion
 !row!
 
 !col! small=12 medium=4 large=4
-!media media/examples/ex14/sg_bot_sa_x.png
+!media media/seismic_analysis/sg_bot_sa_x.png
        style=width:100% id=fig:sg_bot_sa_x
        caption=5% damped acceleration response spectra in X direction (base of one of the steam generators)
 !col-end!
 
 !col! small=12 medium=4 large=4
-!media media/examples/ex14/sg_bot_sa_y.png
+!media media/seismic_analysis/sg_bot_sa_y.png
        style=width:100% id=fig:sg_bot_sa_y
        caption=5% damped acceleration response spectra in Y direction (base of one of the steam generators)
 !col-end!
 
 !col! small=12 medium=4 large=4
-!media media/examples/ex14/sg_bot_sa_z.png
+!media media/seismic_analysis/sg_bot_sa_z.png
        style=width:100% id=fig:sg_bot_sa_z
        caption=5% damped acceleration response spectra in Z direction (base of one of the steam generators)
 !col-end!
