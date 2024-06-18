@@ -44,4 +44,3 @@
 [submodule "apps/mastodon"]
 	path = apps/mastodon
 	url = https://github.com/idaholab/mastodon.git
-

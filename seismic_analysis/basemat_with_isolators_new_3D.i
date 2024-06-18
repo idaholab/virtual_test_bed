@@ -1,7 +1,7 @@
 [Mesh]
   [mesh_gen]
     type = FileMeshGenerator
-    file = basemat_with_isolators_new.e
+    file = mesh/basemat_with_isolators_new.e
   []
 []
 
@@ -116,12 +116,12 @@
 [Physics/SolidMechanics/Dynamic]
     displacements = 'disp_x disp_y disp_z'
     [all]
-    strain = FINITE 
-    displacements = 'disp_x disp_y disp_z'
-    block = 'upper_basemat'
-    hht_alpha = -0.05
-    static_initialization = true
-    stiffness_damping_coefficient = 0.0019
+      strain = FINITE
+      displacements = 'disp_x disp_y disp_z'
+      block = 'upper_basemat'
+      hht_alpha = -0.05
+      static_initialization = true
+      stiffness_damping_coefficient = 0.0019
     []
 []
 

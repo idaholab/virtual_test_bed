@@ -1,7 +1,7 @@
 [Mesh]
   [mesh_gen]
     type = FileMeshGenerator
-    file = full_structure_with_isolators_new.e
+    file = mesh/full_structure_with_isolators_new.e
   []
 []
 
@@ -114,15 +114,15 @@
 []
 
 [Physics/SolidMechanics/Dynamic]
-    displacements = 'disp_x disp_y disp_z'
-    [all]
-    strain = FINITE 
+  displacements = 'disp_x disp_y disp_z'
+  [all]
+    strain = FINITE
     displacements = 'disp_x disp_y disp_z'
     block = 'roof ext_buttresses ext_walls int_buttresses SG_bases SGs int_wall int_slab RV_housing RV small_walls upper_basemat fluid_material RV_slab'
     hht_alpha = -0.05
     static_initialization = true
     stiffness_damping_coefficient = 0.0019
-    []
+  []
 []
 
 [Kernels]
@@ -719,7 +719,6 @@
     regularize_dt = 0.01
     damping_ratio = 0.05
     start_frequency = 0.1
-    end_frequency = 50
     outputs = out1
   []
 []
