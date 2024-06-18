@@ -113,14 +113,19 @@
   []
 []
 
-[Kernels]
-  [DynamicTensorMechanics]
+[Physics/SolidMechanics/Dynamic]
+    displacements = 'disp_x disp_y disp_z'
+    [all]
+    strain = FINITE 
     displacements = 'disp_x disp_y disp_z'
     block = 'upper_basemat'
-    alpha = -0.05
+    hht_alpha = -0.05
     static_initialization = true
-    zeta = 0.0019
-  []
+    stiffness_damping_coefficient = 0.0019
+    []
+[]
+
+[Kernels]
   [inertia_x]
     type = InertialForce
     block = 'upper_basemat'
@@ -355,11 +360,6 @@
     youngs_modulus = 99.2 #GPa # concrete x 4 making basemat rigid
     poissons_ratio = 0.2
   []
-  [strain_1]
-    type = ComputeFiniteStrain
-    displacements = 'disp_x disp_y disp_z'
-    block = 'upper_basemat'
-  []
   [stress_1]
     type = ComputeFiniteStrainElasticStress
     block = 'upper_basemat'
@@ -509,7 +509,7 @@
   [TimeIntegrator]
     type = NewmarkBeta
     beta = 0.275625
-    gamma = 0.55
+    gamma = 0.5
     inactive_tsteps = 2
   []
 []

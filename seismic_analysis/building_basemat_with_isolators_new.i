@@ -113,14 +113,19 @@
   []
 []
 
-[Kernels]
-  [DynamicTensorMechanics]
+[Physics/SolidMechanics/Dynamic]
+    displacements = 'disp_x disp_y disp_z'
+    [all]
+    strain = FINITE 
     displacements = 'disp_x disp_y disp_z'
     block = 'roof ext_buttresses ext_walls int_buttresses SG_bases SGs int_wall int_slab RV_housing RV small_walls upper_basemat fluid_material RV_slab'
-    alpha = -0.05
+    hht_alpha = -0.05
     static_initialization = true
-    zeta = 0.0019
-  []
+    stiffness_damping_coefficient = 0.0019
+    []
+[]
+
+[Kernels]
   [inertia_x]
     type = InertialForce
     block = 'roof ext_buttresses ext_walls int_buttresses SG_bases SGs int_wall int_slab RV_housing RV small_walls upper_basemat fluid_material RV_slab'
@@ -373,11 +378,6 @@
     bulk_modulus = 2 #GPa #water
     poissons_ratio = 0.45 #water
   []
-  [strain_1]
-    type = ComputeFiniteStrain
-    displacements = 'disp_x disp_y disp_z'
-    block = 'roof ext_buttresses ext_walls int_buttresses SG_bases SGs int_wall int_slab RV_housing RV small_walls upper_basemat fluid_material RV_slab'
-  []
   [stress_1]
     type = ComputeFiniteStrainElasticStress
     block = 'roof ext_buttresses ext_walls int_buttresses SG_bases SGs int_wall int_slab RV_housing RV small_walls upper_basemat fluid_material RV_slab'
@@ -561,7 +561,7 @@
   [TimeIntegrator]
     type = NewmarkBeta
     beta = 0.275625
-    gamma = 0.55
+    gamma = 0.5
     inactive_tsteps = 2
   []
 []
