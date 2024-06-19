@@ -58,5 +58,6 @@
     type = RunCommand
     command = 'mkdir test_dir; cp assembly.py test_dir/assembly.py; cd test_dir; python assembly.py'
     required_python_packages = 'matplotlib uncertainties h5py'
+    use_shell = true
   []
 []
