@@ -57,8 +57,7 @@
   [run_python_generation]
     type = RunCommand
     command = 'mkdir test_dir; cp assembly.py test_dir/assembly.py; cd test_dir; python assembly.py'
-    required_python_packages = 'matplotlib uncertainties h5py'
+    required_python_packages = 'matplotlib uncertainties h5py openmc'
     use_shell = true
-    executable_pattern = 'cardinal*'
   []
 []
