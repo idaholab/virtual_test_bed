@@ -105,13 +105,13 @@ inlet_T_fluid = 873.15 # K, from [2]
   coord_type = RZ
   # Mesh should be fairly orthogonal for finite volume fluid flow
   # If you are running this input file for the first time, run core_with_reflectors.py
-  # in pbfhr/meshes using Cubit to generate the mesh
+  # in pbfhr/steady/meshes using Cubit to generate the mesh
   # Modify the parameters (mesh size, refinement areas) for each application
   # neutronics, thermal hydraulics and fuel performance
   uniform_refine = 1
   [fmg]
     type = FileMeshGenerator
-    file = '../meshes/core_pronghorn.e'
+    file = '../steady/meshes/core_pronghorn.e'
   []
   [barrel]
     type = SideSetsBetweenSubdomainsGenerator

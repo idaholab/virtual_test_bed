@@ -106,7 +106,7 @@ power_density = '${fparse total_power / model_vol / 258 * 236}' # adjusted using
   uniform_refine = 1
   [fmg]
     type = FileMeshGenerator
-    file = '../meshes/core_pronghorn.e'
+    file = 'meshes/core_pronghorn.e'
   []
   [barrel]
     type = SideSetsBetweenSubdomainsGenerator

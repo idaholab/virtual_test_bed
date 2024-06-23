@@ -32,7 +32,7 @@ power_density = ${fparse total_power / model_vol}
   coord_type = RZ
   [read_mesh]
     type = FileMeshGenerator
-    file = '../meshes/core_coarse.e'
+    file = 'meshes/core_coarse.e'
   []
   [delete_1]
     type = BlockDeletionGenerator
