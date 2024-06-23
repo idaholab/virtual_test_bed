@@ -70,7 +70,7 @@ fis_fract = '${fparse 1 - dh_fract}' # Fission power fraction at t = 0.0s.
   uniform_refine = 2
   [mesh_reader]
     type = FileMeshGenerator
-    file = '../meshes/core_pronghorn.e'
+    file = '../steady/meshes/core_pronghorn.e'
   []
   [new_boundary]
     type = SideSetsBetweenSubdomainsGenerator
