@@ -51,12 +51,6 @@ Rho_ref = 1973.8 # kg/m^3
   is_meter = true
 []
 
-[Application]
-  type = BlueCrabApp
-  # The 'DefaultElementQuality' block at the bottom of the input must be
-  # commented out to use a GriffinApp
-[]
-
 [TransportSystems]
   particle = neutron
   equation_type = eigenvalue

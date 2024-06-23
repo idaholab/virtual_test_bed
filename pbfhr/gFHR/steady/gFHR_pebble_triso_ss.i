@@ -337,7 +337,7 @@ initial_power_density = 3.34e+07 # (W/m3)
   []
   [triso_total_power]
     type = ParsedPostprocessor
-    function = 'triso_int_power * ${triso_number}'
+    expression = 'triso_int_power * ${triso_number}'
     pp_names = 'triso_int_power'
     execute_on = 'TIMESTEP_END'
   []
