@@ -1,0 +1,8 @@
+bugs.png filter=lfs diff=lfs merge=lfs -text
+comparison.png filter=lfs diff=lfs merge=lfs -text
+convergence.png filter=lfs diff=lfs merge=lfs -text
+iterations.png filter=lfs diff=lfs merge=lfs -text
+mesh.png filter=lfs diff=lfs merge=lfs -text
+power.png filter=lfs diff=lfs merge=lfs -text
+setup.png filter=lfs diff=lfs merge=lfs -text
+transfer.png filter=lfs diff=lfs merge=lfs -text

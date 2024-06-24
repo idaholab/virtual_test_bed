@@ -1,0 +1,103 @@
+c-----------------------------------------------------------------------
+      include 'utilities.usr'
+C-----------------------------------------------------------------------
+      subroutine userchk()
+      include 'SIZE'
+      include 'TOTAL'
+
+      real tmax
+	  real ypmin,ypmax,ypave,utmin,utmax,utave
+      common /walldist/ wd(lx1*ly1*lz1*lelv)
+
+      nv = nx1*ny1*nz1*nelv
+      nt = nx1*ny1*nz1*nelt
+
+      if (mod(istep,10).eq.0) then
+      call print_limits
+      call y_p_limits(wd,ypmin,ypmax,ypave,utmin,utmax,utave)
+
+      tmax = glmax(t ,nt)
+          if (nid.eq.0) write(6,1) istep,time,tmax
+   1     format(i9,1p3e12.5,' tmax')
+
+
+c      if(istep.eq.0) call gfldr("ini/onepin0.f00001")
+
+      endif
+      return
+      end
+c-----------------------------------------------------------------------
+      subroutine usrdat()   ! This routine to modify element vertices
+      include 'SIZE'
+      include 'TOTAL'
+
+
+
+      return
+      end
+c-----------------------------------------------------------------------
+      subroutine usrdat2()  ! This routine to modify mesh coordinates
+      include 'SIZE'
+      include 'TOTAL'
+
+	  integer n,i
+	   
+      n = lx1*ly1*lz1*nelv
+	  
+
+      do i=1,n
+        xm1(i,1,1,1)=xm1(i,1,1,1)/1.0807535
+        ym1(i,1,1,1)=ym1(i,1,1,1)/1.0807535
+        zm1(i,1,1,1)=zm1(i,1,1,1)*1.377102346/1.0807535
+      enddo
+
+      do iel=1,nelt
+      do ifc=1,2*ndim
+        id_face = bc(5,ifc,iel,1)
+        boundaryID(ifc,iel) = 0
+      if (id_face.eq.1) then ! inlet
+      boundaryID(ifc,iel) = 1
+      elseif (id_face.eq.2) then !  outlet
+      boundaryID(ifc,iel) = 2
+      elseif (id_face.eq.3) then ! rod interface
+      boundaryID(ifc,iel) = 3
+      elseif (id_face.eq.4) then ! duct interface
+      boundaryID(ifc,iel) = 4      
+      endif
+      
+      enddo
+      enddo
+
+
+      return
+      end
+c-----------------------------------------------------------------------
+      subroutine usrdat3()
+      implicit none
+      include 'SIZE'
+      include 'TOTAL'
+
+      real wd
+      common /walldist/ wd(lx1*ly1*lz1*lelv)
+
+      call cheap_dist(wd,1,'W  ')
+
+      call count_boundaries
+
+      return
+      end
+c-----------------------------------------------------------------------
+      subroutine useric(ix,iy,iz,eg) ! set up initial conditions
+      include 'SIZE'
+      include 'TOTAL'
+      include 'NEKUSE'
+      integer e,eg
+
+      ux   = 0.0
+      uy   = 0.0
+      uz   = 1.0
+      temp = 0.0
+
+      return
+      end
+c-----------------------------------------------------------------------
