@@ -1,0 +1,3 @@
+time,T_fuel,T_mod,T_surface,pebble_fuel_average_temp,pebble_int_power,pebble_power_density,pfuel_int_power,triso_int_power,triso_total_power
+0,873.15,873.15,873.15,873.15,0,33400000,0,0,0
+1,910.30388121074,884.13988948942,873.15,885.36362043025,1119.2447427189,33400000,1119.2447427189,0.12405727585002,1119.2447427189
