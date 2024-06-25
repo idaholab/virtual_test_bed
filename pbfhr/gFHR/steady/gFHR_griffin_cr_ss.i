@@ -3,7 +3,7 @@
 # Coupled neutronics-thermal-fluids model to streamline method for equilibrium core
 # The pebble model resolution is based on fluids mesh
 #
-# 4 energy group structure:
+# 4 energy group structure [eV] :
 #   1.96403000E+07  1.95007703E+05
 #   1.95007703E+05  1.75647602E+01
 #   1.75647602E+01  2.33006096E+00
@@ -16,8 +16,8 @@
 # MODEL PARAMETERS
 # ==============================================================================
 # parameters describing the reactor geometry --------------------------------------------
-core_height = 3.0947
-active_core_radius = 1.2
+core_height = 3.0947 # [m]
+active_core_radius = 1.2 # [m]
 porosity = 0.4011505932
 
 # parameters describing the pebbles --------------------------------------------

@@ -6,11 +6,11 @@
 
 *Model summarized, documented, and uploaded by Dr. Mustafa Jaradat and Dr. Samuel Walker*
 
-Pronghorn is the thermal hydraulics solver we use to simulate fluid flow and conjugate heat transfer in the gFHR core. In the same input file, we model the heat transfer in the solid phase in the core and heat conduction in the solid components around the core, for a total of five equations: conservation of mass, x- and y-momentum (in RZ),
+Pronghorn is the thermal hydraulics solver we use to simulate fluid flow and conjugate heat transfer in the gFHR core. In the same input file, we model the heat transfer in the solid phase in the core and heat conduction in the solid components around the core, for a total of five equations: conservation of mass, x- and y-momentum (in RZ coordinates),
 fluid and solid energy.
 
 We are using the finite volume capabilities in MOOSE to model all these physics. We use an
-weakly-compressible approximation for the fluid flow, with a Boussinesq approximation to model buoyancy. There are various closures used in the pebble bed for the heat transfer coefficients, the drag models, which are
+weakly-compressible approximation for the fluid flow. There are various closures used in the pebble bed for the heat transfer coefficients, the drag models, which are
 detailed in the [Pronghorn manual](https://inldigitallibrary.inl.gov/sites/sti/sti/Sort_24425.pdf). For a more detailed analyses of the specific Navier-Stokes equations that are solved for FHRs please see the [Mark 1 Pronghorn Model](pbfhr/mark_1/steady/pronghorn.md).
 
 ## Problem Parameters
@@ -152,6 +152,6 @@ We then define an [Exodus](https://mooseframework.inl.gov/source/outputs/Exodus.
 solved for: the fluid velocities, the pressure and the temperature fields. We also include the material properties
 to help us understand the behavior of the core.
 
-We also define a [CSV](https://mooseframework.inl.gov/source/outputs/CSV.html) which will list all of the postprocessors for each time step.
+We also define a [CSV](https://mooseframework.inl.gov/source/outputs/CSV.html) output which will list all of the postprocessors for each time step.
 
 !listing /pbfhr/gFHR/steady/gFHR_pronghorn_ss.i block=Outputs
