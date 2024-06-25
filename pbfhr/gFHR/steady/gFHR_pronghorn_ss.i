@@ -516,7 +516,7 @@ Forch_open = 1.25
     block = ${blocks_fluid}
   []
 
-  ## Characteristic length: fix the 1's wherever we need Reynolds number!!
+  ## Characteristic length
   [characteristic_length]
     type = PiecewiseByBlockFunctorMaterial
     prop_name = characteristic_length

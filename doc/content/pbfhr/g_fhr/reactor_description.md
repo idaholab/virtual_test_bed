@@ -8,16 +8,6 @@
 
 *Model link: [Griffin-Pronghorn Steady-State Model](https://github.com/idaholab/virtual_test_bed/tree/devel/pbfhr/gFHR/steady_state)*
 
-!tag name=gFHR Griffin-Pronghorn Steady State Model pairs=reactor_type:PBFHR
-                       reactor:gFHR
-                       geometry:core
-                       simulation_type:multiphysics
-                       transient:steady_state
-                       input_features:multiapps
-                       codes_used:BlueCrab;Griffin;Pronghorn
-                       computing_needs:Workstation
-                       fiscal_year:2024
-
 The gFHR is a pre-conceptual design of a fluoride salt cooled high temperature reactor based on material publish by Kairos Power [!citep](gFHR). The geometry is shown in [gFHR_geometry].
 
 !media gFHR/gFHR_geometry.png

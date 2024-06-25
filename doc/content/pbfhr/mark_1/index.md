@@ -1,4 +1,4 @@
-# Pebble Bed Fluoride-Salt-Cooled High-Temperature Reactor (PB-FHR)
+# Mark-1 Pebble Bed Fluoride-Salt-Cooled High-Temperature Reactor (Mk1 PB-FHR)
 
 [Description of the reactor](pbfhr/mark_1/reactor_description.md)
 

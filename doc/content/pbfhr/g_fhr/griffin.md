@@ -91,7 +91,7 @@ a `ConstantFunction`.
 
 ### User Objects
 
-Next, we will define two User Objects, which load in the steady state solution for the diffusion solution in `TransportSolutionVectorFile` as well as several final solutions to variables in `SolutionVectorFile`. This is done so that Transient simulations can be run which start from the steady-state solution calculated in this model.
+Next, we will define two User Objects, which load in the steady state solution for the diffusion solution with the  `TransportSolutionVectorFile`, and several other variables with `SolutionVectorFile`. This is done so that Transient simulations can be run which start from the steady-state solution calculated in this model.
 
 !listing /pbfhr/gFHR/steady/gFHR_griffin_cr_ss.i block=UserObjects
 
@@ -107,7 +107,7 @@ More specifically, the specific `DepletionScheme` that is used here is the [Cons
 
 !listing /pbfhr/gFHR/steady/gFHR_griffin_cr_ss.i block=PebbleDepletion/DepletionScheme
 
-Lastly, the pebble conduction problem is solved through a sub-app `gFHR_pebble_triso_ss.i` where the positions are loaded in from the text data file `pebble_heat_pos_16r_40z.txt`. Specific postprocessors from that sub-app are then read in and used in the `PebbleDepletion` action. Click [here](pebble_triso.md) more information on the multiscale pebble - triso fuel performance model.
+Lastly, the pebble conduction problem is solved through a sub-app `gFHR_pebble_triso_ss.i` where the positions are loaded in from the text data file `pebble_heat_pos_16r_40z.txt`. Specific postprocessors from that sub-app are then read in and used in the `PebbleDepletion` action. See [this page](pebble_triso.md) for more information on the multiscale pebble - triso fuel performance model.
 
 ### Compositions
 
@@ -149,6 +149,8 @@ performed after the neutronics solve. This means that for the first multiphysics
 
 The coupling to the thermal hydraulics simulation is done by using a [MultiAppGeneralFieldNearestLocationTransfer](https://mooseframework.inl.gov/source/transfers/MultiAppGeneralFieldNearestLocationTransfer.html) of the power density to the pronghorn sub-app. This transfer is conservative, in that the total power in both applications is preserved. This is important for the multiphysics coupling, as the power will not fluctuate in the thermal hydraulics simulation based
 on the power density profile and the difference between the neutronics and thermal hydraulics meshes.
+
+The conservation of the transfer is achieved through the specification of two postprocessors, one in the source and one in the receiving simulations, which are used to compute a scaling factor.
 
 Additionally, the pronghorn sub-application sends steady state thermal hydraulics solutions of the temperature `Tsolid` and density `Rho` back to the neutronics solve to update the new flux, and eigenvalue until the multiphysics solution converges within tolerance set in the `Executioner`.
 

@@ -6,7 +6,7 @@
 
 *Model summarized, documented, and uploaded by Dr. Mustafa Jaradat and Dr. Samuel Walker*
 
-Here we report here the steady state results of this coupled multiphysics simulation.
+Here we report the steady state results of this coupled multiphysics simulation.
 
 The power multiphysics coupling methodology is shown in [multiphysics_coupling].
 
@@ -89,13 +89,12 @@ mpiexec -n 48 blue_crab-opt -i gFHR_griffin_cr_ss.i
 
 ### Local Device:
 
-Note: With NCRC level 2 access to BlueCrab, once you have installed the mamba environment:
+Note: With NCRC level 2 access to BlueCrab, once you have installed the blue_crab environment with conda:
 
 ```language=Bash
 
-mamba deactivate
-
-mamba activate bluecrab
+conda deactivate
+conda activate bluecrab
 
 mpiexec -n 48 blue_crab-opt -i gFHR_griffin_cr_ss.i
 ```

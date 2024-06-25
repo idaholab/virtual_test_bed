@@ -1,13 +1,12 @@
 # ------------------------------------------------------------------------------
 # Description:
-# gFHR salt simulation
-# Porous Flow Incompressible Media Finite Volume
-# sprvel: superficial formulation of the velocities
-# Use a reduced heat capacity to accelerate the steady state convergence
+# gFHR pebble heat conduction
+# Finite Element - Continuous Galerkin
+# Single pebble calculation, meant to be distributed over the volume using MultiApps
 # ------------------------------------------------------------------------------
 # Description:
 # gFHR Pebble temperature model for equilibrium core calculation
-# Currently using a Dirichlet BC
+# Currently using a Dirichlet BC for the pebble surface temperature
 # ==============================================================================
 # MODEL PARAMETERS
 # ==============================================================================
@@ -16,7 +15,7 @@ pebble_center_core_radius = 1.38e-2 # pebble fuel free zone radius (graphite cor
 pebble_fuel_radius = 1.8e-2 # pebble fuel zone radius (m)
 pebble_radius = 2.0e-2 # pebble radius (m)
 pebble_volume = '${fparse 4/3*pi*pow(pebble_radius,3)}' # volume of the pebble (m3)
-pebble_fuel_volume = '${fparse 4/3*pi*(pow(pebble_fuel_radius,3)-pow(pebble_center_core_radius,3))}' # volume of the pebble occupied by TRISO (m3)
+pebble_fueled_volume = '${fparse 4/3*pi*(pow(pebble_fuel_radius,3)-pow(pebble_center_core_radius,3))}' # volume of the pebble occupied by TRISO (m3)
 kernel_radius = 2.125e-04 # kernel particle radius (m)
 kernel_volume = '${fparse 4/3*pi*pow(kernel_radius,3)}' # volume of the kernel (m3)
 triso_number = 9022 # Number of TRISO particles in a pebble
@@ -148,7 +147,7 @@ initial_power_density = 3.34e+07 # (W/m3)
     type = ParsedAux
     block = 'pfuel'
     variable = pfuel_power_density
-    expression = 'pebble_power_density * ${fparse pebble_volume / pebble_fuel_volume}'
+    expression = 'pebble_power_density * ${fparse pebble_volume / pebble_fueled_volume}'
     coupled_variables = 'pebble_power_density'
   []
   [kernel_power_density]
