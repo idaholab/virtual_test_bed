@@ -163,6 +163,7 @@ Forch_open = 1.25
     type = SideSetsAroundSubdomainGenerator
     input = vertical_walls_04
     fixed_normal = true
+    include_only_external_sides = true
     block = '13 14'
     normal = '1 0 0'
     new_boundary = RCSS
@@ -191,83 +192,97 @@ Forch_open = 1.25
   uniform_refine = 0
 []
 
-[Modules]
-  [NavierStokesFV]
-    # General parameters
-    compressibility = 'weakly-compressible'
-    porous_medium_treatment = true
-    add_energy_equation = false
-    block = ${blocks_fluid}
+[Physics]
+  [NavierStokes]
+    [Flow]
+      [salt]
+        # General parameters
+        compressibility = 'weakly-compressible'
+        porous_medium_treatment = true
+        block = ${blocks_fluid}
+        gravity = '0 -9.81 0'
 
-    # Boussinesq parameters
-    gravity = '0 -9.81 0'
+        # Initial conditions
+        initial_pressure = 1e5
+        initial_velocity = '1e-10 1e-10 0'
 
-    # Variables
-    velocity_variable = 'superficial_vel_x superficial_vel_y'
-    pressure_variable = 'pressure'
-    fluid_temperature_variable = 'T_fluid'
+        # Variables
+        velocity_variable = 'superficial_vel_x superficial_vel_y'
+        pressure_variable = 'pressure'
 
-    # Wall boundary conditions
-    wall_boundaries = 'wall1'
-    momentum_wall_types = 'slip'
+        # Wall boundary conditions
+        wall_boundaries = 'wall1'
+        momentum_wall_types = 'slip'
 
-    # Inlet boundary conditions
-    inlet_boundaries = 'inlet'
-    momentum_inlet_types = 'fixed-velocity'
-    momentum_inlet_function = '-0.242984118 0'
+        # Inlet boundary conditions
+        inlet_boundaries = 'inlet'
+        momentum_inlet_types = 'fixed-velocity'
+        momentum_inlet_functors = '-0.242984118 0'
 
-    # Outlet boundary conditions
-    outlet_boundaries = 'outlet'
-    momentum_outlet_types = 'fixed-pressure'
-    pressure_function = 'Outlet_Average_Pressure_Function'
+        # Outlet boundary conditions
+        outlet_boundaries = 'outlet'
+        momentum_outlet_types = 'fixed-pressure'
+        pressure_functors = 'Outlet_Average_Pressure_Function'
 
-    # Porous flow parameters
-    ambient_convection_blocks = ${blocks_fluid}
-    ambient_convection_alpha = 'alpha'
-    ambient_temperature = 'T_solid'
+        # Friction in porous media
+        friction_types = 'darcy forchheimer'
+        friction_coeffs = 'combined_linear combined_quadratic'
+        use_friction_correction = True
+        consistent_scaling = 200
+        # porosity_smoothing_layers = 8
 
-    # Friction in porous media
-    friction_types = 'darcy forchheimer'
-    friction_coeffs = 'combined_linear combined_quadratic'
-    use_friction_correction = True
-    consistent_scaling = 200
-    # porosity_smoothing_layers = 8
+        # Numerical scheme
+        momentum_advection_interpolation = 'upwind'
+        mass_advection_interpolation = 'upwind'
+      []
+    []
+    [FluidHeatTransfer]
+      [salt]
+        fluid_temperature_variable = 'T_fluid'
+        initial_temperature = 823.14
+        block = ${blocks_fluid}
 
-    # Numerical scheme
-    momentum_advection_interpolation = 'upwind'
-    mass_advection_interpolation = 'upwind'
+        energy_inlet_types = 'fixed-temperature'
+        energy_inlet_functors = 'Inlet_Temperature_BC'
+
+        # Wall convection is modeled with a volumetric term
+        energy_wall_types = 'heatflux'
+        energy_wall_functors = '0'
+
+        thermal_conductivity = 'kappa'
+        effective_conductivity = false
+
+        # Porous flow parameters
+        ambient_convection_blocks = ${blocks_fluid}
+        ambient_convection_alpha = 'alpha'
+        ambient_temperature = 'T_solid'
+      []
+    []
+    [SolidHeatTransfer]
+      [solid]
+        # On all blocks
+        block = '${blocks_bed} ${blocks_non_bed}'
+        initial_temperature = 823.14
+
+        thermal_conductivity_solid = 'eff_solid_conductivity'
+        cp_solid = 'cp_s'
+        rho_solid = 'rho_s'
+
+        # Heat source
+        external_heat_source = power_density
+        external_heat_source_blocks = 'flow3'
+
+        # Porous flow parameters
+        ambient_convection_blocks = ${blocks_fluid}
+        ambient_convection_alpha = 'alpha'
+      []
+    []
   []
 []
 
 # ==============================================================================
-# VARIABLES, AUXILIARY VARIABLES, INITIAL CONDITIONS DEFINITION AND FUNCTIONS
+# AUXILIARY VARIABLES, INITIAL CONDITIONS DEFINITION AND FUNCTIONS
 # ==============================================================================
-[Variables]
-  [pressure]
-    type = INSFVPressureVariable
-    block = ${blocks_fluid}
-    initial_condition = 1e5
-  []
-  [superficial_vel_x]
-    type = PINSFVSuperficialVelocityVariable
-    block = ${blocks_fluid}
-    initial_condition = 1e-10
-  []
-  [superficial_vel_y]
-    type = PINSFVSuperficialVelocityVariable
-    block = ${blocks_fluid}
-    initial_condition = 1e-10
-  []
-  [T_solid]
-    type = INSFVEnergyVariable
-    initial_condition = 823.14
-  []
-  [T_fluid]
-    type = INSFVEnergyVariable
-    block = ${blocks_fluid}
-    initial_condition = 823.14
-  []
-[]
 
 [AuxVariables]
   [Volume_of_Cell]
@@ -374,77 +389,6 @@ Forch_open = 1.25
 # ==============================================================================
 # KERNEL AND AUXILIARY KERNELS
 # ==============================================================================
-[FVKernels]
-  # Equation 3 (fluid energy conservation).
-  [fluid_energy_time]
-    type = PINSFVEnergyTimeDerivative
-    is_solid = false
-    variable = T_fluid
-    cp = cp
-    rho = rho
-    drho_dt = drho_dt
-    #dcp_dt = dcp_dt
-    porosity = 'porosity_energy'
-    block = ${blocks_fluid}
-  []
-  [fluid_energy_space]
-    type = PINSFVEnergyAdvection
-    variable = T_fluid
-    block = ${blocks_fluid}
-  []
-  [fluid_energy_diffusive]
-    type = PINSFVEnergyAnisotropicDiffusion
-    variable = T_fluid
-    effective_diffusivity = false
-    kappa = 'kappa'
-    porosity = 'porosity_energy'
-    block = ${blocks_fluid}
-  []
-  [fluid_energy_solid_fluid_source]
-    type = PINSFVEnergyAmbientConvection
-    variable = T_fluid
-    is_solid = false
-    h_solid_fluid = 'alpha'
-    T_fluid = T_fluid
-    T_solid = T_solid
-    block = ${blocks_fluid}
-  []
-
-  # Equation 4 (solid energy conservation).
-  [solid_energy_time]
-    type = PINSFVEnergyTimeDerivative
-    variable = T_solid
-    rho = 'rho_s'
-    cp = 'cp_s'
-    #dcp_dt = 0
-    is_solid = true
-    porosity = porosity_energy
-  []
-  [temp_fluid_to_solid]
-    type = PINSFVEnergyAmbientConvection
-    variable = T_solid
-    T_fluid = 'T_fluid'
-    T_solid = 'T_solid'
-    is_solid = true
-    h_solid_fluid = 'alpha'
-    block = ${blocks_fluid}
-  []
-  [solid_energy_production]
-    type = FVCoupledForce
-    variable = T_solid
-    v = power_density
-    block = 'flow3' # only in the pebble bed core
-  []
-  [solid_energy_diffusion_core]
-    type = PINSFVEnergyAnisotropicDiffusion
-    variable = T_solid
-    kappa = 'eff_solid_conductivity'
-    effective_diffusivity = true
-    # porosity won't be used because effective_diffusivity = true
-    # so set it to 1
-    porosity = 1
-  []
-[]
 
 [AuxKernels]
   [volume_Calc]
@@ -560,12 +504,6 @@ Forch_open = 1.25
 []
 
 [FunctorMaterials]
-  # Generating materials for non linear variables and the fluid.
-  [Action_Creates]
-    type = INSFVEnthalpyFunctorMaterial
-    temperature = T_fluid
-  []
-
   [GFFP]
     type = GeneralFunctorFluidProps
     T_fluid = 'T_fluid'
@@ -788,6 +726,13 @@ Forch_open = 1.25
     prop_values = '1740.0 ${fparse 1697.0} 26.0'
   []
 
+  [time_derivatives_constants]
+    type = ADGenericFunctorMaterial
+    prop_names = 'drho_s_dt'
+    prop_values = '0'
+    block = '${blocks_bed}'
+  []
+
   # Modeling solid everywhere. Open flow regions are modeled
   # as very low density/conductivity regions. Heat transfer
   # through them will be facilitated by conjugate heat transfer
@@ -863,12 +808,12 @@ Forch_open = 1.25
     cylinder_radius = 3.41
     Tinfinity = 293.15
   []
-  [Tinlet]
-    type = FVPostprocessorDirichletBC
-    boundary = 'inlet'
-    variable = T_fluid
-    postprocessor = 'Inlet_Temperature_BC'
-  []
+  # [Tinlet]
+  #   type = FVPostprocessorDirichletBC
+  #   boundary = 'inlet'
+  #   variable = T_fluid
+  #   postprocessor = 'Inlet_Temperature_BC'
+  # []
 []
 
 [Postprocessors]
@@ -1095,7 +1040,7 @@ Forch_open = 1.25
   # Automatic scaling
   automatic_scaling = true
   off_diagonals_in_auto_scaling = true
-  compute_scaling_once = true
+  compute_scaling_once = false
 []
 
 [Outputs]
