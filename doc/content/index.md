@@ -18,7 +18,7 @@ Users will need to request access to the controlled NEAMS software from the [Nuc
 - [How to cite a model on the Virtual Test Bed](citing.md) \\
 - [How to contribute to the Virtual Test Bed](contributing.md)
 - [Multiphysics reactor modeling using the MultiApps system](resources/multiapps.md) \\
-- [Frequently Asked Questions and Discussion Forum](https://github.com/idaholab/virtual_test_bed/discussions) \\
+- [Frequently Asked Questions and Discussion Forum](https://github.com/idaholab/virtual_test_bed/discussions)
 
 ## Models documentation
 
