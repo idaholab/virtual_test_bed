@@ -303,7 +303,7 @@ plenum_height = 782.2e-3 # 778.0e-3
     execute_on = 'TIMESTEP_END'
     max_procs_per_app = 1
     output_in_position = true
-    #no_backup_and_restore = true
+    #no_restore = true
   []
   [bison_mechanics]
     type = FullSolveMultiApp
@@ -313,7 +313,7 @@ plenum_height = 782.2e-3 # 778.0e-3
     execute_on = 'TIMESTEP_END'
     max_procs_per_app = 1
     output_in_position = true
-    #no_backup_and_restore = true
+    #no_restore = true
   []
 []
 

@@ -606,7 +606,7 @@ riser_Dh = 0.17
   [pressure_drop]
     type = ParsedPostprocessor
     pp_names = 'inlet_pressure outlet_pressure'
-    function = 'inlet_pressure - outlet_pressure'
+    expression = 'inlet_pressure - outlet_pressure'
   []
 
   [enthalpy_inlet]
@@ -634,7 +634,7 @@ riser_Dh = 0.17
   [enthalpy_balance]
     type = ParsedPostprocessor
     pp_names = 'enthalpy_inlet enthalpy_outlet'
-    function = 'abs(enthalpy_outlet) - abs(enthalpy_inlet)'
+    expression = 'abs(enthalpy_outlet) - abs(enthalpy_inlet)'
   []
 
   [heat_source_integral]

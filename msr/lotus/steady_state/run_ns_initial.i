@@ -1021,7 +1021,7 @@ mixing_length_reactor_calibrated = '${fparse 0.07 * 0.1 * 2}'
     type = TransientMultiApp
     input_files = 'run_prec_transport.i'
     execute_on = 'timestep_end'
-    # no_backup_and_restore = true
+    # no_restore = true
     # Allow smaller time steps by the child applications
     sub_cycling = true
   []

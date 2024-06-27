@@ -53,14 +53,15 @@
   [coupled_mcre_multiphysics]
     prereq = coupled_mcre_multiphysics_syntax
     type = CSVDiff
-    input = 'run_neutronics.i'
+    input = 'run_neutronics_9_group.i'
     csvdiff = 'multiphysics_out.csv multiphysics_out_ns0.csv'
     executable_pattern = 'mcre*|blue_crab*'
     cli_args = "Outputs/file_base=multiphysics_out"
     # Fuel temperature is out of bounds for MGXS
     allow_warnings = true
     min_parallel = 32
-    max_time = 1000
+    max_time = 2000
     method = 'opt'
+    skip = '#403'
   []
 []

@@ -442,7 +442,7 @@ bottom_reflector_Dh = 0.1
   [pressure_drop]
     type = ParsedPostprocessor
     pp_names = 'inlet_pressure outlet_pressure'
-    function = 'inlet_pressure - outlet_pressure'
+    expression = 'inlet_pressure - outlet_pressure'
   []
 
   [enthalpy_inlet]
@@ -470,7 +470,7 @@ bottom_reflector_Dh = 0.1
   [enthalpy_balance]
     type = ParsedPostprocessor
     pp_names = 'enthalpy_inlet enthalpy_outlet'
-    function = 'enthalpy_inlet + enthalpy_outlet'
+    expression = 'enthalpy_inlet + enthalpy_outlet'
   []
 
   [heat_source_integral]
