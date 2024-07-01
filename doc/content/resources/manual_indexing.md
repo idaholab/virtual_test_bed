@@ -9,6 +9,7 @@
 - [Sodium Fast Reactor (SFR)](sfr/index.md) \\
 - [Lead-cooled Fast Reactor (LFR)](lfr/index.md) \\
 - [Micro Reactors (MR)](microreactors/index.md)
+- [Seismic Analysis](seismic_analysis/index.md)
 
 
 !alert note

@@ -41,3 +41,6 @@
 [submodule "apps/ci/mstdb"]
 	path = apps/ci/mstdb
 	url = git@code.ornl.gov:neams/mstdb.git
+[submodule "apps/mastodon"]
+	path = apps/mastodon
+	url = https://github.com/idaholab/mastodon.git
