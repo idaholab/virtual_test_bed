@@ -136,12 +136,12 @@ initial_power_density = 3.34e+07 # (W/m3)
 []
 
 [AuxKernels]
-  # we need an AuxKernel that can set a constant value based on a pp
   [pebble_power_density]
-    type = ScaleAux
-    source_variable = dummy_pden
+    type = ParsedAux
     variable = pebble_power_density
-    multiplying_pp = pebble_power_density
+    expression = 'dummy_pden * pebble_power_density_pp'
+    coupled_variables = 'dummy_pden'
+    functor_names = 'pebble_power_density_pp'
   []
   [pfuel_power_density]
     type = ParsedAux
@@ -342,7 +342,7 @@ initial_power_density = 3.34e+07 # (W/m3)
   []
 
   # FROM Griffin
-  [pebble_power_density]
+  [pebble_power_density_pp]
     type = Receiver
     default = ${initial_power_density}
   []

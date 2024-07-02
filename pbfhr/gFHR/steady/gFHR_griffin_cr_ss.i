@@ -334,7 +334,7 @@ Rho_ref = 1973.8 # kg/m^3
   pebble_positions_file = '../data/pebble_heat_pos_8r_20z.txt'
   surface_temperature_sub_app_postprocessor = T_surface
   surface_temperature_main_app_variable = Tsolid
-  power_sub_app_postprocessor = pebble_power_density
+  power_sub_app_postprocessor = pebble_power_density_pp
   fuel_temperature_sub_app_postprocessor = T_fuel
   moderator_temperature_sub_app_postprocessor = T_mod
 []
@@ -460,10 +460,10 @@ Rho_ref = 1973.8 # kg/m^3
 
 [Postprocessors]
   [power_peak]
-    type        = ElementExtremeValue
-    variable    = power_peaking
-    value_type  = max
-    block       = 'pebble_bed'
+    type = ElementExtremeValue
+    variable = power_peaking
+    value_type = max
+    block = 'pebble_bed'
   []
   [Tsolid_core]
     type = ElementAverageValue
