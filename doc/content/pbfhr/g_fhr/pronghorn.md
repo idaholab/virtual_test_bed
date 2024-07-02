@@ -45,23 +45,33 @@ The thermal-hydraulic mesh is shown in [thermal_hydraulic_mesh].
 
 !listing /pbfhr/gFHR/steady/gFHR_pronghorn_ss.i block=Mesh
 
-## Modules - Navier Stokes Finite Volume Action
+## Physics - Navier Stokes Finite Volume Physics
 
-Next we introduce a simplified approach to solving the thermal-hydraulic equations using the [Navier Stokes Finite Volume Action](https://mooseframework.inl.gov/syntax/Modules/NavierStokesFV/index.html)
+Next we introduce a simplified approach to solving the thermal-hydraulic equations using the [Navier Stokes Finite Volume Physics](https://mooseframework.inl.gov/syntax/Physics/NavierStokes/index.html)
 
-This action directly sets up the numerical form of the thermal-hydraulic equations that will be solved rather than making the user define every single kernel explicitly. In this case the action uses a `weakly-compressible` formulation of the Navier-Stokes equations and adds in `porous_medium_treatment` to model flow through the graphite pebbles.
+The Physics directly set up the numerical form of the thermal-hydraulic equations that will be solved rather than making the user define every single kernel explicitly. In this case the action uses a `weakly-compressible` formulation of the Navier-Stokes equations and adds in `porous_medium_treatment` to model flow through the graphite pebbles.
 
 Boundary conditions are set here, with no slip `wall_boundaries`, `inlet_boundaries`, and `outlet_boundaries` where in fluid dynamics fashion, the inlet is a `fixed-velocity`, and the outlet is a `fixed-pressure`.
 
-The heat convection from blocks to the coolant is defined in the `ambient_convection` section. Friction factors using the darcy and forcheimer friction factors are also read into the equations here. Lastly, the remaining advection interpolation methods for momentum and mass are defined as well.
+The heat convection from blocks to the coolant is defined in the `ambient_convection` section. Friction factors using the darcy and forchheimer friction factors are also read into the equations here. Lastly, the remaining advection interpolation methods for momentum and mass are defined as well.
 
-!listing /pbfhr/gFHR/steady/gFHR_pronghorn_ss.i block=Modules
+A `Physics` is set up for every equation that is being solved. The `Physics` communicate with each other to verify their parameters to some extent, attempting to minimize the number of errors. The equations being solved here are:
 
-## Variables
+- the mass and momentum equations by the `Flow` Physics
 
-The fluid variables are defined automatically by the `NavierStokesFV` action: the two velocity components, pressure and fluid temperature. Here the pressure, and superficial velocities for the porous media flow are initialized. Additionally, the temperature of the solid pebbles, and fluid coolant are initialized as well for the energy conservation equation.
 
-!listing /pbfhr/gFHR/steady/gFHR_pronghorn_ss.i block=Variables
+!listing /pbfhr/gFHR/steady/gFHR_pronghorn_ss.i block=Physics/NavierStokes/Flow
+
+- the fluid energy conservation equation by the `FluidHeatTransfer` Physics
+
+
+!listing /pbfhr/gFHR/steady/gFHR_pronghorn_ss.i block=Physics/NavierStokes/FluidHeatTransfer
+
+
+- the solid energy conservation equation by the `SolidHeatTransfer` Physics
+
+
+!listing /pbfhr/gFHR/steady/gFHR_pronghorn_ss.i block=Physics/NavierStokes/SolidHeatTransfer
 
 ## Auxiliary Variables
 
@@ -75,16 +85,6 @@ computing material properties, for outputting quantities of interests, and many 
 The [Functions](https://mooseframework.inl.gov/syntax/Functions/index.html) block is defined next. Here functions are defined that can be used elsewhere in the input file. Most of these function define porosity for specific locations in the model using the `ParsedFunction` which is a versatile way of setting up various functions.
 
 !listing /pbfhr/gFHR/steady/gFHR_pronghorn_ss.i block=Functions
-
-## Finite Volume Kernels
-
-Next the [Finite Volume Kernels](https://mooseframework.inl.gov/syntax/FVKernels/index.html) are listed here explicitly. These kernels operate on the Variables which are being solved by the simulation (i.e. the pressure, velocity, T_solid and T_fluid). Typically the [Navier Stokes Finite Volume Action](https://mooseframework.inl.gov/syntax/Modules/NavierStokesFV/index.html) takes care of implementing the explicit kernels which make up the Navier-Stokes equations which are solved for using the finite volume method. In this case, the energy equation was not selected in the `NavierStokesFV` block, and hence it is incorporated here using various Finite Volume Kernels to form the equation.
-
-First we have the fluid energy conservation equation which uses the `PINSFVEnergyTimeDerivative` for time dependence, the `PINSFVEnergyAdvection` for thermal advection, `PINSFVEnergyAnisotropicDiffusion` for thermal diffusion, and `PINSFVEnergyAmbientConvection` for an ambient thermal sink in the equation which is described analogously in the [Mark 1 Pronghorn Model](pbfhr/mark_1/steady/pronghorn.md)/.
-
-Similarly, the solid energy conservation equation is made up of the same kernels without the `PINSFVEnergyAdvection` since it there is no advection term in the solid, and with the addition of a `FVCoupledForce` which implements the `power_density` as a volumetric heating source from fission in the packed graphite pebble bed.
-
-!listing /pbfhr/gFHR/steady/gFHR_pronghorn_ss.i block=FVKernels
 
 ## Auxiliary Kernels
 
@@ -105,18 +105,6 @@ Next we define [Functor Materials](https://mooseframework.inl.gov/moose/syntax/F
 A few examples here are the `GeneralFunctorFluidProps` which performs the evaluation of thermophysical properties of the FliBe salt from the `FluidProperties` and the thermal hydraulic variables that are being solved for (i.e., T_fluid, pressure, speed). Additionally, the characteristic length or the hydraulic diameter, porosity, and friction factors of flow regions in the model can also be defined here and used in the Action or FVKernels.
 
 !listing /pbfhr/gFHR/steady/gFHR_pronghorn_ss.i block=FunctorMaterials
-
-## User Objects
-
-The [User Objects](https://mooseframework.inl.gov/moose/syntax/UserObjects/) are incorporated next where we define a few objects that will be used - namely the graphite solid properties, the stainless steel properties, and the geometry of the packed pebble bed.
-
-!listing /pbfhr/gFHR/steady/gFHR_pronghorn_ss.i block=UserObjects
-
-## Finite Volume Boundary Conditions
-
-Since we explicitly defined the energy conservation equations in the `FVKernels` block, we need to add the corresponding [Finite Volume Boundary Conditions](https://mooseframework.inl.gov/moose/syntax/FVBCs/). Here we set a `FunctorThermalResistanceBC` to model the radial conduction and a `FVInfinitelyCylinderRadiativeBC` to model the radiation heat boundary condition from the solid to stagnant ambient air on the outside of the reactor vessel. Lastly a `FVPostprocessorDirichletBC` is implemented for the fluid energy conservation equation which sets an inlet boundary condition for the temperature of the fluid.
-
-!listing /pbfhr/gFHR/steady/gFHR_pronghorn_ss.i block=FVBCs
 
 ## Postprocessors
 

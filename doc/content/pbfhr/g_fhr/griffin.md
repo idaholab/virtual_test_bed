@@ -89,12 +89,6 @@ a `ConstantFunction`.
 
 !listing /pbfhr/gFHR/steady/gFHR_griffin_cr_ss.i block=Functions
 
-### User Objects
-
-Next, we will define two User Objects, which load in the steady state solution for the diffusion solution with the  `TransportSolutionVectorFile`, and several other variables with `SolutionVectorFile`. This is done so that Transient simulations can be run which start from the steady-state solution calculated in this model.
-
-!listing /pbfhr/gFHR/steady/gFHR_griffin_cr_ss.i block=UserObjects
-
 ### Pebble Depletion
 
 Now we introduce a new capability developed in Griffin for this specific model to do PBFHR depletion with streamlines for pebble shuffling and achieve an equilibrium core. This [PebbleDepletion](https://griffin-docs.hpc.inl.gov/latest/syntax/PebbleDepletion/index.html) action is quite extensive and the theory can be found [here](https://griffin-docs.hpc.inl.gov/latest/memoranda/pebble_depletion_theory.html).
