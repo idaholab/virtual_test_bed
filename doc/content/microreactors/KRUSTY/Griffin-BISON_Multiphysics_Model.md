@@ -41,7 +41,8 @@ The MC2-3 calculation takes a two-step approach. The first step creates energy s
 !media media/KRUSTY/Fig_6.jpg
       style=display: block;margin-left:auto;margin-right:auto;width:60%;
       id=Fig_6
-      caption= KRUSTY RZ model for twodant calculation
+      caption= KRUSTY RZ model for TWODANT calculation
+
 
 
 
@@ -75,7 +76,8 @@ The MC2-3 calculation takes a two-step approach. The first step creates energy s
 
 ## c) Griffin Stand-Alone Neutronic Model
 
-The stand-alone Griffin input for the neutronic model of KRUSTY is included. Figure 8(a) shows the mesh block of this input that has used the unstructured file `Krusty_3D_vol_pre_densify_fuel_v0_hp_all_in.e`. The volume for each material region in the mesh file is preserved and made to be consistent with the KRUSTY Serpent reference model. All heat pipe locations are filled. The list in the `subdomains` block references block ids in the mesh file, and the `extra_element_ids` is the list of material ids filling the mesh block.
+The standalone Griffin input for the neutronic model of KRUSTY is included. Figure 8(a) shows the mesh block of this input that was used to generate the unstructured file `Krusty_3D_vol_pre_densify_fuel_v0_hp_all_in.e`. The volume for each material region in the mesh file is preserved and made to be consistent with the KRUSTY Serpent reference model. All heat pipe locations are filled. The list in the `subdomains` block references block ids in the mesh file, and the `extra_element_ids` is the list of material ids filling the mesh block.
+
 
 
 
@@ -107,7 +109,8 @@ The KRUSTY mesh file has modeled 1/4th of the core with reflecting boundaries ap
 
 The Griffin neutronic model solves the k-eff and the flux distributions at critical state. Figure 10 shows the transport system block. It used the DFEM-SN solver. Spatial variables are discretized by the DFEM method with shape functions from the first order MONOMIAL family. Angular variables are discretized by the SN method using the Gauss-Chebyshev quadratures. Sensitivity analysis showed that the calculated k-eff was converged after considering the anisotropic terms NA=3 and using NPolar=3 angles per octant in the polar direction and NAzmthl=5 angles per octant in the azimuthal direction. As shown in Figure 10, six groups of delayed neutron group families were considered in the numerical calculations. Six delayed neutron data were obtained using Serpent and the values for each group were included in the ISOXML cross section file.
 
-Figure 11 shows the executioner block in the Griffin input where the maximum number of allowed iterations and convergence criteria are specified. The SweepUpdate executioner unique for DFEM-SN was used. The Coarse-Mesh Finite Difference (CMFD) method was deployed to accelerate the DFEM-SN solver. The coarse mesh for the low-order diffusion calculation was a regular mesh that was generated in the mesh block as shown in Figure 8(b). The maximum diffusion coefficient was set to 10.0, as a limit value facilitating convergence in problems that contain void regions. It can be adjusted and will not significantly affect the accuracy of the results. Newton’s method was used to solve the low-order diffusion equation. Another option to use is the krylovshur method. It was found that it is important to use preconditioners for solving the diffusion equation in order to converge the DFEM-SN solver with CMFD acceleration. In this case, the LU decomposition was used and was found to be effective. The multiplicative prolongation was chosen to update all transport flux moments after solving the low-order diffusion calculation.
+Figure 11 shows the executioner block in the Griffin input where the maximum number of allowed iterations and convergence criteria are specified. The `SweepUpdate` executioner unique for DFEM-SN was used. The Coarse-Mesh Finite Difference (CMFD) method was deployed to accelerate the DFEM-SN solver. The coarse mesh for the low-order diffusion calculation was a regular mesh that was generated in the mesh block as shown in Figure 8(b). The maximum diffusion coefficient was set to 10.0, as a limit value facilitating convergence in problems that contain void regions. It can be adjusted and will not significantly affect the accuracy of the results. Newton’s method was used to solve the low-order diffusion equation. Another option to use is the krylovshur method. It was found that it is important to use preconditioners for solving the diffusion equation in order to converge the DFEM-SN solver with CMFD acceleration. In this case, the LU decomposition was used and was found to be effective. The multiplicative prolongation was chosen to update all transport flux moments after solving the low-order diffusion calculation.
+
 
 
 
