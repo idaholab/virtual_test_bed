@@ -20,7 +20,7 @@
   # [id]
   #   type = SubdomainExtraElementIDGenerator
   #   input = rot
-  #   subdomains = '1 2 3 4 5 6 
+  #   subdomains = '1 2 3 4 5 6
   #                64 71 72 73
   #                8 9 10 11
   #                12 1212
@@ -147,7 +147,7 @@
 [Materials]
   [all]
     type = CoupledFeedbackMatIDNeutronicsMaterial
-    block = '1 2 3 4 5 6 
+    block = '1 2 3 4 5 6
          64 71 72 73
          8 9 10 11
          12 1212
@@ -160,7 +160,7 @@
          4081 4091 4101 4111 4121 4131 4141
          4082 4092 4102 4112 4122 4132 4142'
     library_file ='Serp_hbrid_reflector_updated.xml'
-    library_name ='krusty_serpent_ANL_endf70_g22'  
+    library_name ='krusty_serpent_ANL_endf70_g22'
     isotopes = 'pseudo'
     densities = '1.0'
     grid_names = 'Tfuel Tsteel'
