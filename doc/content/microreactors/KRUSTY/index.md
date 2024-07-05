@@ -4,7 +4,7 @@
 
 [Simplified KRUSTY Monte Carlo Model](KRUSTY/Simplified_KRUSTY_Monte_Carlo_Model.md)
 
-[Griffin-BISON Multiphysics Model](KRUSTY/Model_Description.md)
+[Griffin-BISON Multiphysics Model](KRUSTY/Griffin-BISON_Multiphysics_Model.md)
 
 [Neutronic and Multiphysics Steady State Results](KRUSTY/Neutronic_Multiphysics_Steady_State_Results.md)
 
