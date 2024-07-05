@@ -6,7 +6,7 @@
  [id]
    type=SubdomainExtraElementIDGenerator
    input = fmg
-   subdomains = '1 2 3 4 5 6 
+   subdomains = '1 2 3 4 5 6
                  71 72 73
                  8 9 10 11
                  12 1212
@@ -18,7 +18,7 @@
                  3082 3092 3102 3112 3122 3132 3142
                  4081 4091 4101 4111 4121 4131 4141
                  4082 4092 4102 4112 4122 4132 4142'
-                 
+
    extra_element_id_names = 'material_id'
    extra_element_ids ='99 17 11 15 70 18
                        6 6 60
@@ -32,7 +32,7 @@
                        203  213  223  233  243  253  263
                        104  114  124  134  144  154  164
                        105  115  125  135  145  155  165'
-  []   
+  []
   [coarse_mesh]
     type = GeneratedMeshGenerator
     dim= 3
@@ -52,7 +52,7 @@
      coarse_mesh = coarse_mesh
      extra_element_id_name = coarse_element_id
    []
-   # parallel_type = distributed  # transfer dependent user object / interpolation transfer 
+   # parallel_type = distributed  # transfer dependent user object / interpolation transfer
 []
 
 [AuxVariables]
@@ -73,9 +73,9 @@
   equation_type = eigenvalue
   G =22
   VacuumBoundary = '9527 9528 9529'
-  ReflectingBoundary = '1982 1983' 
-  
-    
+  ReflectingBoundary = '1982 1983'
+
+
   [sn]
     scheme = DFEM-SN
     family = MONOMIAL
@@ -117,9 +117,9 @@
 []
 
 [Materials]
- [all] 
+ [all]
   type=CoupledFeedbackMatIDNeutronicsMaterial
-  block='1 2 3 4 5 6 
+  block='1 2 3 4 5 6
          71 72 73
          8 9 10 11
          12 1212
@@ -132,14 +132,14 @@
          4081 4091 4101 4111 4121 4131 4141
          4082 4092 4102 4112 4122 4132 4142'
   library_file ='Serp_hbrid_reflector_updated.xml'
-  library_name ='krusty_serpent_ANL_endf70_g22'  
+  library_name ='krusty_serpent_ANL_endf70_g22'
   isotopes = 'pseudo'
   densities = '1.0'
   grid_names = 'Tfuel Tsteel'
   grid_variables = 'Tf Ts'
   plus = 1
   is_meter = true
-  dbgmat = false  
+  dbgmat = false
  []
 []
 
