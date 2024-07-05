@@ -8,7 +8,7 @@
     # 5. Recover the changes and use the presplit mesh
     type = FileMeshGenerator
     type = FileMeshGenerator
-    # file = 'Krusty_3D_vol_pre_densify_fuel_v1_hp_all_high_cond_in.e'
+    # file = '../MESH/Griffin_mesh.e'
     file = 'griffin_mesh.cpr'
   []
   # [rot]
@@ -49,9 +49,9 @@
   # [coarse_mesh]
   #   type = GeneratedMeshGenerator
   #   dim = 3
-  #   nx = 15 #20 # about 2 cm may need to adjust
-  #   ny = 15 #20 # about 2 cm may need to adjust
-  #   nz = 15 #20 # about 5 cm may need to adjust to test convergence or performance
+  #   nx = 15
+  #   ny = 15
+  #   nz = 15
   #   xmin = -0.02
   #   xmax = 0.52
   #   ymin = -0.02
@@ -65,7 +65,7 @@
   #   coarse_mesh = coarse_mesh
   #   extra_element_id_name = coarse_element_id
   # []
-  parallel_type = distributed  # transfer dependent user object / interpolation transfer 
+  parallel_type = distributed
   displacements = 'disp_x disp_y disp_z'
 []
 
@@ -185,7 +185,7 @@
 [MultiApps]
   [bison]
     type = FullSolveMultiApp
-    input_files = KRUSTY_BISON_FY23_V1.i
+    input_files = KRUSTY_BISON_THERMOMECHANICS.i
     execute_on = 'timestep_end'
     keep_solution_during_restore = true
   []

@@ -4,11 +4,8 @@
 # iaea2: "Thermophysical Properties of Materials For Nuclear Engineering: A Tutorial and Collection of Data"
 # rest: "U-Mo Fuels Handbook"
 
-# init_htc = 34969.4 #25569.02 #16450
+reflector_disp = 0.0
 
-reflector_disp = 0.0 #1.48e-3
-
-## file_mesh = 'Krusty_3D_vol_pre_densify_fuel_v1_hp_all_high_cond_in.e'
 # blocks_all = '1 2	3	4	5	6	8	9	11	12	13	14	15	16	17	18	19	20	21	22	23	24	64 71	72	73	1212	2081	2082	2091	2092	2101	2102	2111	2112	2121	2122	2131	2132	2141	2142	3081	3082	3091	3092	3101	3102	3111	3112	3121	3122	3131	3132	3141	3142	4081	4082	4091	4092	4101	4102	4111	4112	4121	4122	4131	4132	4141	4142'
 no_void = '2	3	4	5	6	8	9	11	12	13	14	15	16	17	18	19	20	21	22	23	24 71	72	73	1212	2081	2082	2091	2092	2101	2102	2111	2112	2121	2122	2131	2132	2141	2142	3081	3082	3091	3092	3101	3102	3111	3112	3121	3122	3131	3132	3141	3142	4081	4082	4091	4092	4101	4102	4111	4112	4121	4122	4131	4132	4141	4142'
 fuel_all = '2081	2082	2091	2092	2101	2102	2111	2112	2121	2122	2131	2132	2141	2142	3081	3082	3091	3092	3101	3102	3111	3112	3121	3122	3131	3132	3141	3142	4081	4082	4091	4092	4101	4102	4111	4112	4121	4122	4131	4132	4141	4142'
@@ -112,7 +109,6 @@ Be_sph = 3103.0
   temperature = temp
   displacements = 'disp_x disp_y disp_z'
   stress_free_temperature = 298
-  #   outputs = all
 []
 
 [Problem]
@@ -131,7 +127,7 @@ Be_sph = 3103.0
     # 4. Use moose to presplit the mesh
     # 5. Recover the changes and use the presplit mesh
     type = FileMeshGenerator
-    # file = 'KRUSTY_BISON_FY23_V1_in.e'
+    # file = '../MESH/BISON_mesh.e'
     file = 'bison_mesh.cpr'
   []
   # [hp_mli]

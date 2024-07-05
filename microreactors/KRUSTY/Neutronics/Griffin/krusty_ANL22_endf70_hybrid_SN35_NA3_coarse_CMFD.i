@@ -1,7 +1,7 @@
 [Mesh]
  [fmg]
   type = FileMeshGenerator
-  file = '../Krusty_3D_vol_pre_densify_fuel_v0_hp_all_in.e'
+  file = '../../MESH/Griffin_mesh.e'
  []
  [id]
    type=SubdomainExtraElementIDGenerator
