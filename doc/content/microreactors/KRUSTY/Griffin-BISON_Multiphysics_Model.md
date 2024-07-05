@@ -151,7 +151,7 @@ For a thermo-mechanical model, thermophysical properties (i.e., thermal conducti
 
 | BISON/MOOSE models                   | Materials | Description                                           |
 |--------------------------------------|-----------|-------------------------------------------------------|
-| HeatConductionMaterial               | UMo       | Thermal properties of UMo [18, 19]                    |
+| HeatConductionMaterial               | UMo       | Thermal properties of UMo [!citep](Parida2001,Burkes2010)                    |
 | BeOThermal                           | BeO       | Thermal properties of BeO                             |
 | BeOElasticityTensor                  | BeO       | Young's modulus and Poisson's ratio for BeO           |
 | BeOThermalExpansionEigenstrain       | BeO       | Computation of eigenstrain due to thermal expansion in BeO |
@@ -165,7 +165,7 @@ As mentioned above, in the KRUSTY design, a thin insulation layer is used to the
 
 ## (b) MOOSE Multiphysics Coupling
 
-In KRUSTY warm critical experiments, the power excursion transient was initiated by shifting the radial reflector of KRUSTY upward to insert positive reactivity when the reactor was in a cold/critical state [5]. This VTB model includes the multiphysics model prepared for modeling this reactivity insertion test. A two-level MOOSE MultiApps hierarchy which tightly couples the aforementioned Griffin neutronics model and BISON thermo-mechanical model has been developed to simulate the KRUSTY warm critical tests. Griffin is set as the parent (main) application and uses the DFEM-SN(2,3) solver with CMFD acceleration and NA=3 (anisotropic scattering order), while BISON is set as the child application.
+In KRUSTY warm critical experiments, the power excursion transient was initiated by shifting the radial reflector of KRUSTY upward to insert positive reactivity when the reactor was in a cold/critical state [!citep](Poston2020_1). This VTB model includes the multiphysics model prepared for modeling this reactivity insertion test. A two-level MOOSE MultiApps hierarchy which tightly couples the aforementioned Griffin neutronics model and BISON thermo-mechanical model has been developed to simulate the KRUSTY warm critical tests. Griffin is set as the parent (main) application and uses the DFEM-SN(2,3) solver with CMFD acceleration and NA=3 (anisotropic scattering order), while BISON is set as the child application.
 
 The power density profile, initially calculated by Griffin, is then transferred to BISON. In BISON, thermo-mechanical computations take place, allowing for the determination of temperature distribution within all solid components. This subsequently leads to the calculation of thermal expansion. Both the fuel temperature profile and displacement field are then sent back to Griffin as feedback for the neutronics simulation. The coupling of these two applications occurs through fixed point iteration. Notably, in this calculation, all heat is passively removed through the external boundary of the reactor, as no heat pipes are involved.
 

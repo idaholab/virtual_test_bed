@@ -1,6 +1,5 @@
 # Simplified KRUSTY Monte Carlo Model
 
-
 KRUSTY is a small-sized fast neutron reactor which features three U-7.65Mo fuel cylinders stacked on top of each other with a hole at the center for placing source boxes or control stack. These fuel cylinders, with their axial BeO reflectors, top axial shield plates, and radial stainless steel (SS) shield blocks, hang down from the top of the testing facility. The radial BeO reflectors and the bottom SS shielding plates sit on a movable platen. The reactor core reaches criticality by pushing the movable platen up to allow radial reflectors to cover the fuel disk and reduce neutron leakage from the core.
 
 Figure 1 (a) and (b) are drawings of the facility using the simplified MCNP6 model based on the models in the ICSBEP benchmark in which four out of the eight locations for heat pipes were filled. Some of the key geometry parameters such as the radius and height of the fuel, reflector, and shield regions are marked in Figure 2 and are listed in Table I. Detailed geometry dimensions of each region can be found in the attached input for the MOOSE Reactor module.
