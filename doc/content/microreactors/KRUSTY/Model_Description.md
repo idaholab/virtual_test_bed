@@ -2,8 +2,10 @@
 
 *Model link: [KRUSTY](https://github.com/idaholab/virtual_test_bed/microreactors/KRUSTY)*
 
+*Contacts: Yan Cao (ycao.at.anl.gov), Yinbin Miao (ymiao.at.anl.gov), Nicolas Stauff (nstauff.at.anl.gov)*
+
 !alert note title=Acknowledgement
-Placeholder for acknowledgment for prior work.
+This VTB model was developed based on the International Criticality Safety Benchmark Evaluation Project (ICSBEP) benchmark model HEU-MET-FAST-101 [!citep](Smith2019) and has also referenced the prior multiphysics modeling work by B. Wilkerson, J. Galloway and C. Matthews.
 
 The +K+ilopower +R+eactor +U+sing +S+tirling +T+echnolog+Y+ (KRUSTY) is a kilopower test reactor which was developed for space exploration missions [!citep](Mcclure2020_1). This document describes a VTB model that details the work sponsored by DOE NEAMS under the Micro-Reactor Application Drivers area from 2022-2023 [!citep](Stauff2022,Stauff2023,Cao2024). The multiphysics model was developed based on the technical work published in the open literature [!citep](Poston2020_1,Poston2020_2,Poston2020_3,Mcclure2020_2,Sanchez2020,Grove2020) and a detailed MCNP6 model included in the ICSBEP HEU-MET-FAST-101 handbook [!citep](Smith2019). Approximations have been made in the surrounding areas of the fuel disk to alleviate the burden of creating an equivalent mesh model with good mesh quality and reasonable mesh size. The simplified model will be detailed in Section I of this document.
 

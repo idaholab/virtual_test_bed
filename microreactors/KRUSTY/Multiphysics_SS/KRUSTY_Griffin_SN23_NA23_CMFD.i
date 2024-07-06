@@ -1,3 +1,10 @@
+################################################################################
+## NEAMS Micro-Reactor Application Driver                                     ##
+## KRUSTY Multiphysics Steady State                                           ##
+## Griffin neutronics input file (Main App)                                   ##
+## DFEM-SN (2, 3) NA = 3 with CMFD acceleration                               ##
+################################################################################
+
 [Mesh]
   [fmg]
     # If you do not have a presplit mesh already, you should:
