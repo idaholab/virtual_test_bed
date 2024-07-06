@@ -1,3 +1,10 @@
+################################################################################
+## NEAMS Micro-Reactor Application Driver                                     ##
+## KRUSTY Multiphysics Steady State                                           ##
+## BISON thermomechanics input file (Child App)                               ##
+## Heat Conduction, Thermal Expansion, Thermal Stress                         ##
+################################################################################
+
 # References
 # poston: "Krusty Reactor Design"
 # iaea: "Material Properties of Unirradiated Uranium\u2013 Molybdenum (U\u2013Mo) Fuel for Research Reactors"

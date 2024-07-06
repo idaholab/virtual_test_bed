@@ -27,7 +27,7 @@ KRUSTY is a small fast spectrum core with a significant amount of neutrons leaki
 
 Both Serpent and MC2-3 were used to prepare cross sections for modeling KRUSTY. Sensitivity analysis showed that MC2-3 provides better anisotropic scattering cross sections in the BeO reflector regions, and Serpent provides better cross sections in the fuel region for accounting fuel Doppler reactivity feedback. Therefore, a hybrid multigroup cross section set that used MC2-3 cross sections in the reflector region and used Serpent cross sections in other regions was prepared for modeling KRUSTY.
 
-The MC2-3 calculation takes a two-step approach. The first step creates energy self-shielded cross sections and the number of energy-groups used is larger than 1000 groups. These cross sections are imported into an approximated RZ model of KRUSTY as shown in Figure 6. Neutron transport calculation was performed by TWODANT to solve the neutron fluxes in each material region in the RZ model. The neutron fluxes calculated by TWODANT have considered both the neutron leakage effects and spatial self-shielding effects and were imported into the MC2-3 second step. Multigroup cross sections were condensed based on the TWODANT fluxes in each material zone. Table III lists the 40-group structure used in the calculations. The MC2-3 input for the first step and the input for TWODANT are documented in `mc_s1.in`. The MC2-3 input for the second step calculation is similar to the input in the first step but has a different control block as shown in Figure 7.
+The MC2-3 calculation takes a two-step approach. The first step creates energy self-shielded cross sections and the number of energy-groups used is larger than 1000 groups. These cross sections are imported into an approximated RZ model of KRUSTY as shown in Figure 6. Neutron transport calculation was performed by TWODANT to solve the neutron fluxes in each material region in the RZ model. The neutron fluxes calculated by TWODANT have considered both the neutron leakage effects and spatial self-shielding effects and were imported into the MC2-3 second step. Multigroup cross sections were condensed based on the TWODANT fluxes in each material zone. [energy_group] lists the 40-group structure used in the calculations. The MC2-3 input for the first step and the input for TWODANT are documented in `mc_s1.in`. The MC2-3 input for the second step calculation is similar to the input in the first step but has a different control block as shown in Figure 7.
 
 
 
@@ -44,10 +44,7 @@ The MC2-3 calculation takes a two-step approach. The first step creates energy s
       id=Fig_7
       caption= MC2-3 input control blocks in a) step 1 calculation b) step 2 calculation
 
-
-
-**Table III. The 40-Energy Group Structure for Modeling KRUSTY**
-
+!table id=energy_group caption=The 40-Energy Group Structure for Modeling KRUSTY
 | Group # | Upper bond (MeV) | Group # | Upper bond (MeV) | Group # | Upper bond (MeV) |
 | - | - | - | - | - | - |
 | 1       | 1.4191E+01        | 15      | 2.1445E-04        | 29      | 6.4759E-06        |
@@ -153,10 +150,9 @@ Finally, [axial_output] shows the steps to tally the axial power distribution in
 
 BISON was utilized to conduct thermo-mechanical simulations. In KRUSTY, the fuel disk and its radial shield hung down from the top stainless-steel plates. The bottom and radial reflectors sat on a movable platen below the fuel disk and were pushed up into the radial shield region to reach criticality. With very good insulation of the fuel disk, the top and bottom plates were about room temperature. Therefore, the reactor core was modeled between the fixed top and bottom surfaces with no total displacement in the axial direction but allowing radial thermal expansion or contraction. The top and bottom parts of KRUSTY were connected by “soft materials” to represent the vacuum and air region surrounding the fuel disk. In the KRUSTY thermo-mechanical model, the radial reflector expands upward into the “soft material” region when the fission power increases, and the fuel expansion is downward resulting in more part of fuel covered by the reflectors. Convective heat flux boundary conditions (h=5 W/m²·K) were applied to the top, bottom, and side surfaces of the core.
 
-For a thermo-mechanical model, thermophysical properties (i.e., thermal conductivity, density, specific heat, and thermal expansion coefficient) and mechanical properties (i.e., elastic modulus) of all the involved components are needed. Table IV lists the BISON/MOOSE models used for thermo-mechanical simulations. BISON doesn't include models for KRUSTY’s U-7.65Mo fuel material, so the thermal conductivity of U-10Mo and specific heat of U-8Mo are currently applied. Other thermal and mechanical attributes for U-7.65Mo and B4C were sourced from the open literature or based on certain assumptions. The displacements in the “soft materials” regions are not solved using MOOSE’s tensor mechanics solver as the solid components. Instead, simple diffusion is used for these regions to simply propagate the deformation of the solid components.
+For a thermo-mechanical model, thermophysical properties (i.e., thermal conductivity, density, specific heat, and thermal expansion coefficient) and mechanical properties (i.e., elastic modulus) of all the involved components are needed. [thm_model] lists the BISON/MOOSE models used for thermo-mechanical simulations. BISON doesn't include models for KRUSTY’s U-7.65Mo fuel material, so the thermal conductivity of U-10Mo and specific heat of U-8Mo are currently applied. Other thermal and mechanical attributes for U-7.65Mo and B4C were sourced from the open literature or based on certain assumptions. The displacements in the “soft materials” regions are not solved using MOOSE’s tensor mechanics solver as the solid components. Instead, simple diffusion is used for these regions to simply propagate the deformation of the solid components.
 
-**Table IV. Thermophysical and Elasticity Models Used for Thermo-Mechanical Simulation**
-
+!table id=thm_model caption=Thermophysical and Elasticity Models Used for Thermo-Mechanical Simulation
 | BISON/MOOSE models                   | Materials | Description                                           |
 | - | - | - |
 | HeatConductionMaterial               | UMo       | Thermal properties of UMo [!citep](Parida2001,Burkes2010)                    |
@@ -168,8 +164,6 @@ For a thermo-mechanical model, thermophysical properties (i.e., thermal conducti
 | SS316ThermalExpansion Eigenstrain    | SS        | Computation of eigenstrain due to thermal expansion in SS316 |
 
 As mentioned above, in the KRUSTY design, a thin insulation layer is used to thermally isolate the fuel from other components to reduce the loss of energy through heat transfer from fuel to reactor external surface. In order to simulate the thermal behavior of this thin insulation layer, MOOSE’s interface kernel is adopted to model the thermal resistance of the insulation layer without the need to explicitly mesh the thin structure. The thermal resistance of the insulation layer is tuned to match the reported behavior of KRUSTY (i.e., 30 W power leading to 200ºC fuel temperature).
-
-
 
 ## MOOSE Multiphysics Coupling
 

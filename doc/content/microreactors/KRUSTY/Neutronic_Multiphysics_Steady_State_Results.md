@@ -10,7 +10,7 @@ Results from running the Griffin input are shown in Table V and Figure 16. The k
 The axial power densities within the fuel region were tallied with both the Griffin neutronic model and the Serpent reference model when fuel and structure temperatures were all at 300 K. Figure 16 demonstrated excellent agreements of the Griffin calculations to the reference results in most of the core region. Griffin slightly overestimated the power production in the outermost layer (“r7”); however, this layer is very thin and its thickness is only about 2.1 mm as listed in Table I.
 
 !table id=res_comp caption=Comparison of the Griffin neutronic results with Monte Carlo reference result using the hybrid cross sections
-|                | Serpent Reference |                 | Griffin + hybrid XS |                 |
+|   | Serpent Reference |   | Griffin + hybrid XS |   |
 | - | - | - | - | - |
 |                | Tf = 300 K        | Tf = 800 K      | Tf = 300 K           | Tf = 800 K      |
 | $k_{eff}$          | 1.00592           | 1.00523         | 1.007535             | 1.006908        |
@@ -30,14 +30,10 @@ mpirun -n 640 griffin-opt -i krusty_ANL40_endf70_hybrid_SN35_NA3_coarse_CMFD_pd.
 
 Two sets of steady-state Multiphysics simulations are performed with the hybrid XS to estimate the height that the axial reflector is moved into the core to introduce 15₵ external reactivity. The displacement field that originates from axial reflector movement calculated by BISON is visualized in Figure 17. As shown in this figure, applying the 1.48 mm shift boundary condition to the bottom of the axial reflector assembly leads to a uniform shift of the structure as expected. The keff values before and after applying the axial reflector shift were calculated to be 1.007013 and 1.008018 using the Multiphysics coupled model. That leads to an increase of Δkeff by about 100.5 pcm which is about 14.5 ₵ with Serpent calculated β-eff of 690 pcm. Figure 18 shows the axial power distribution within the fuel disk. The upward shift of the axial reflector also slightly moves the power peaking upward within KRUSTY fuel region.
 
-
-
 !media media/KRUSTY/Fig_17.jpg
       style=display: block;margin-left:auto;margin-right:auto;width:60%;
       id=Fig_17
       caption= Displacement field caused by axial reflector movement to insert reactivity
-
-
 
 !media media/KRUSTY/Fig_18.jpg
       style=display: block;margin-left:auto;margin-right:auto;width:60%;

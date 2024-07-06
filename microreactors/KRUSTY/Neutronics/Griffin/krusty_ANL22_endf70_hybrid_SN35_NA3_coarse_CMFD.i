@@ -1,3 +1,10 @@
+################################################################################
+## NEAMS Micro-Reactor Application Driver                                     ##
+## KRUSTY Steady State                                                        ##
+## Griffin neutronics only input file                                         ##
+## DFEM-SN (3, 5) NA = 3 with CMFD acceleration                               ##
+################################################################################
+
 [Mesh]
  [fmg]
   type = FileMeshGenerator
@@ -56,17 +63,17 @@
 []
 
 [AuxVariables]
-  [./Tf]
+  [Tf]
     initial_condition = 300
     order = CONSTANT
     family = MONOMIAL
-  [../]
+  []
 
-  [./Ts]
+  [Ts]
       initial_condition = 300
       order = CONSTANT
       family = MONOMIAL
-  [../]
+  []
 []
 [TransportSystems]
   particle = neutron
@@ -90,7 +97,6 @@
     collapse_scattering  = true
     n_delay_groups = 6
   []
-
 []
 
 [PowerDensity]
