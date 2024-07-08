@@ -42,8 +42,6 @@ hp_fuel_gap_names = 'hp_fuel_gap'
 hp_mli_all = '999 998'
 hp_mli_names = 'hp_mli hp_mli_2'
 
-nonhpgap_all = '${Be_all} ${Al_all} ${hp_all} ${beo_all} ${ss_all} ${b4c_all} ${air_all} ${fuel_all}'
-non_hp_all = '${Be_all} ${Al_all} ${beo_all} ${ss_all} ${b4c_all} ${air_all} ${hp_fuel_gap_all} 999'
 nonfuel_all = '${Be_all} ${Al_all} ${hp_all} ${beo_all} ${ss_all} ${b4c_all} ${air_all} ${hp_fuel_gap_all} ${hp_mli_all}'
 nonfuel_mech = '${Be_all} ${Al_all} ${hp_all} ${beo_all} ${ss_all} ${b4c_all}'
 non_ss_998_all = '${fuel_all} ${Be_all} ${Al_all} ${hp_all} ${beo_all} ${b4c_all} ${air_all} ${hp_fuel_gap_all} 999'
@@ -107,24 +105,8 @@ Be_sph = 3103.0
     # 2. Use the cpr file in the fmg block
     # 3. Uncomment the "parallel_type = distributed" line
     type = FileMeshGenerator
-    file = '../MESH/BISON_mesh.e'
+    file = '../gold/MESH/BISON_mesh.e'
     # file = 'bison_mesh.cpr'
-  []
-  [hp_mli]
-    type = ParsedSubdomainMeshGenerator
-    input = fmg
-    block_id = 999
-    block_name = 'hp_mli'
-    combinatorial_geometry = 'z>=0.6 | z<=0.35'
-    excluded_subdomains = ${nonhpgap_all}
-  []
-  [hp_mli_2]
-    type = ParsedSubdomainMeshGenerator
-    input = hp_mli
-    block_id = 998
-    block_name = 'hp_mli_2'
-    combinatorial_geometry = 'z>=0.24205 & z<=0.2484'
-    excluded_subdomains = ${non_hp_all}
   []
   parallel_type = distributed
 []
