@@ -8,7 +8,7 @@
 [Mesh]
  [fmg]
   type = FileMeshGenerator
-  file = '../../MESH/Griffin_mesh.e'
+  file = '../../gold/MESH/Griffin_mesh.e'
  []
  [id]
    type=SubdomainExtraElementIDGenerator

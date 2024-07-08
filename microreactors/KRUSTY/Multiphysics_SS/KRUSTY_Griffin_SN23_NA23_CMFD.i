@@ -17,7 +17,7 @@
     # 2. Use the cpr file in the fmg block
     # 3. Uncomment the "parallel_type = distributed" line
     type = FileMeshGenerator
-    file = '../MESH/Griffin_mesh.e'
+    file = '../gold/MESH/Griffin_mesh.e'
     # file = 'griffin_mesh.cpr'
   []
   [rot]
