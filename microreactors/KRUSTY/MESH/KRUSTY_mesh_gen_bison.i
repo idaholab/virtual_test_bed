@@ -8,11 +8,11 @@
 ## - Dr. Soon Kyu Lee (soon.lee@anl.gov)                                      ##
 ################################################################################
 
-fuel_all = '2081	2082	2091	2092	2101	2102	2111	2112	2121	2122	2131	2132	2141	2142	3081	3082	3091	3092	3101	3102	3111	3112	3121	3122	3131	3132	3141	3142	4081	4082	4091	4092	4101	4102	4111	4112	4121	4122	4131	4132	4141	4142'
-fuel_names = 'fuel_01 fuel_02 fuel_03 fuel_04 fuel_05 fuel_06 fuel_07 fuel_08 fuel_09 fuel_10 
-              fuel_11 fuel_12 fuel_13 fuel_14 fuel_15 fuel_16 fuel_17 fuel_18 fuel_19 fuel_20 
-              fuel_21 fuel_22 fuel_23 fuel_24 fuel_25 fuel_26 fuel_27 fuel_28 fuel_29 fuel_30 
-              fuel_31 fuel_32 fuel_33 fuel_34 fuel_35 fuel_36 fuel_37 fuel_38 fuel_39 fuel_40 
+fuel_all = '2081 2082 2091 2092 2101 2102 2111 2112 2121 2122 2131 2132 2141 2142 3081 3082 3091 3092 3101 3102 3111 3112 3121 3122 3131 3132 3141 3142 4081 4082 4091 4092 4101 4102 4111 4112 4121 4122 4131 4132 4141 4142'
+fuel_names = 'fuel_01 fuel_02 fuel_03 fuel_04 fuel_05 fuel_06 fuel_07 fuel_08 fuel_09 fuel_10
+              fuel_11 fuel_12 fuel_13 fuel_14 fuel_15 fuel_16 fuel_17 fuel_18 fuel_19 fuel_20
+              fuel_21 fuel_22 fuel_23 fuel_24 fuel_25 fuel_26 fuel_27 fuel_28 fuel_29 fuel_30
+              fuel_31 fuel_32 fuel_33 fuel_34 fuel_35 fuel_36 fuel_37 fuel_38 fuel_39 fuel_40
               fuel_41 fuel_42'
 
 Be_all = '14'
