@@ -161,7 +161,7 @@ assembly_apothem = '${fparse sqrt(3) / 2 * assembly_radius}'
 []
 
 [SubChannel]
-  type = LiquidMetalInterWrapper1PhaseProblem
+  type = TriInterWrapper1PhaseProblem
   fp = helium
   n_blocks = 1
   beta = 0.1
@@ -230,8 +230,4 @@ assembly_apothem = '${fparse sqrt(3) / 2 * assembly_radius}'
 
 [Executioner]
   type = Steady
-
-  # These values are not used
-  nl_rel_tol = 0.9
-  l_tol = 0.9
 []
