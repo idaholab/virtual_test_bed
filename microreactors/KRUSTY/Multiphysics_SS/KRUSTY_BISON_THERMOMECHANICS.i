@@ -42,49 +42,29 @@ hp_fuel_gap_names = 'hp_fuel_gap'
 hp_mli_all = '999 998'
 hp_mli_names = 'hp_mli hp_mli_2'
 
-# nonhpgap_all = '${Be_all} ${Al_all} ${hp_all} ${beo_all} ${ss_all} ${b4c_all} ${air_all} ${fuel_all}'
-# non_hp_all = '${Be_all} ${Al_all} ${beo_all} ${ss_all} ${b4c_all} ${air_all} ${hp_fuel_gap_all} 999'
+nonhpgap_all = '${Be_all} ${Al_all} ${hp_all} ${beo_all} ${ss_all} ${b4c_all} ${air_all} ${fuel_all}'
+non_hp_all = '${Be_all} ${Al_all} ${beo_all} ${ss_all} ${b4c_all} ${air_all} ${hp_fuel_gap_all} 999'
 nonfuel_all = '${Be_all} ${Al_all} ${hp_all} ${beo_all} ${ss_all} ${b4c_all} ${air_all} ${hp_fuel_gap_all} ${hp_mli_all}'
 nonfuel_mech = '${Be_all} ${Al_all} ${hp_all} ${beo_all} ${ss_all} ${b4c_all}'
 non_ss_998_all = '${fuel_all} ${Be_all} ${Al_all} ${hp_all} ${beo_all} ${b4c_all} ${air_all} ${hp_fuel_gap_all} 999'
 
-# hp_dens = 2600.0 # dummy
-# hp_ym = 0.1e10 # dummy
-# hp_pr = 0.3 # dummy
-# hp_exp = 1e-6 # dummy
-# hp_cond = 275000.0 # dummy
-# hp_htc = 1e8 # dummy
-# hp_sph = 2300.0 # dummy
 umo_dens = 17340 # from poston
-# umo_x_mo     = 0.0765 # from poston : The KRUSTY fuel is highly enriched uranium (HEU) U-8Mo; note that the actual weight fraction of Mo was 7.65%,
-# e_u          = 0.931 # from poston
-# A_umo        = ${fparse (1 - umo_x_mo) * (0.235 * e_u + 0.238 * (1.0 - e_u)) + umo_x_mo * 0.09595}
 umo_ym = 54.3e9 # from iaea
 umo_pr = 0.35 # INL/CON-11-22390
+
 beo_dens = 2870.0 # from iaea2
-# beo_ym = 3.45e11 # (331.7 - 400 GPa) Azo
-# beo_pr = 0.26
+ss_dens = 7950
+al_dens = 2700
 
-ss_dens = 7950 #7670 # 316 : 7.95@300K/7.67@900K
-al_dens = 2700 # RT
-# ss_ym = 1.95e11 # ASM Matweb
-# ss_pr = 0.29 # ASM Matweb
-# ss_exp = 1.45e-5 # (14 - 15)e-6 /K
-# ss_cond = 15.0 # (12 - 16) W/m-K - 0 - 200C.
-# ss_sph = 500.0 # (490 - 530) Azo J/kg-K
-
-# void_cond = 0.0015 # Void Conductivity, Not Ideal But Used
-# void_sph = 20.0 # Void Spec Heat,
-# void_dens = 0.01 # Void Density kg/m3
 air_cond = 0.001 # ~1 Pa vacuum https://doi.org/10.1016/j.egypro.2016.06.196
 air_sph = 1000.6 # engineering toolbox 0 C, J/kg/K
 air_dens = 1.276e-5 # kg/m3 engineering toolbox scaled to 1e-5 atm (1Pa)
 
-hp_fuel_couple_cond = 12 # number used by Topher
+hp_fuel_couple_cond = 12 # number used by LANL
 hp_fuel_couple_sph = 1000.6 # same as air
 hp_fuel_couple_dens = 1.276 # same as air
 
-hp_mli_cond = 0.001 # 0.001
+hp_mli_cond = 0.001
 hp_mli_sph = 1000.6 # same as air
 hp_mli_dens = 1.276 # same as air
 
@@ -102,16 +82,6 @@ Be_exp = 17.3e-6
 Be_cond = 91
 Be_sph = 3103.0
 
-# R_clad_o = 0.006477 # heat pipe outer radius
-# R_hp_hole = 0.006477 # We are meshing the gap here so it is the same as R_clad_o
-# num_sides = 20 # number of sides of heat pipe as a result of mesh polygonization
-# alpha = '${fparse 2 * pi / num_sides}'
-# perimeter_correction = '${fparse 0.5 * alpha / sin(0.5 * alpha)}' # polygonization correction factor for perimeter
-# area_correction = '${fparse sqrt(alpha / sin(alpha))}' # polygonization correction factor for area
-# corr_factor = '${fparse R_hp_hole / R_clad_o * area_correction / perimeter_correction}'
-
-## ss_bot_pos = 0.07065
-
 [GlobalParams]
   temperature = temp
   displacements = 'disp_x disp_y disp_z'
@@ -127,36 +97,42 @@ Be_sph = 3103.0
 
 [Mesh]
   [fmg]
-    # If you do not have a presplit mesh already, you should:
-    # 1. Uncomment the other blocks
-    # 2. Use the exodus file in FMG
-    # 3. Comment the distributed mesh line
-    # 4. Use moose to presplit the mesh
-    # 5. Recover the changes and use the presplit mesh
+    # If you do not have a presplit mesh already, you should generate it first:
+    # 1. Uncomment all the mesh blocks
+    # 2. Use the exodus file in the fmg block
+    # 3. Comment the "parallel_type = distributed" line
+    # 4. Use moose executable to presplit the mesh
+    # Once you have the presplit mesh
+    # 1. Comment all the mesh blocks except the fmg block
+    # 2. Use the cpr file in the fmg block
+    # 3. Uncomment the "parallel_type = distributed" line
     type = FileMeshGenerator
-    # file = '../MESH/BISON_mesh.e'
-    file = 'bison_mesh.cpr'
+    file = '../MESH/BISON_mesh.e'
+    # file = 'bison_mesh.cpr'
   []
-  # [hp_mli]
-  #   type = ParsedSubdomainMeshGenerator
-  #   input = fmg
-  #   block_id = 999
-  #   block_name = 'hp_mli'
-  #   combinatorial_geometry = 'z>=0.6 | z<=0.35'
-  #   excluded_subdomains = ${nonhpgap_all}
-  # []
-  # [hp_mli_2]
-  #   type = ParsedSubdomainMeshGenerator
-  #   input = hp_mli
-  #   block_id = 998
-  #   block_name = 'hp_mli_2'
-  #   combinatorial_geometry = 'z>=0.24205 & z<=0.2484'
-  #   excluded_subdomains = ${non_hp_all}
-  # []
+  [hp_mli]
+    type = ParsedSubdomainMeshGenerator
+    input = fmg
+    block_id = 999
+    block_name = 'hp_mli'
+    combinatorial_geometry = 'z>=0.6 | z<=0.35'
+    excluded_subdomains = ${nonhpgap_all}
+  []
+  [hp_mli_2]
+    type = ParsedSubdomainMeshGenerator
+    input = hp_mli
+    block_id = 998
+    block_name = 'hp_mli_2'
+    combinatorial_geometry = 'z>=0.24205 & z<=0.2484'
+    excluded_subdomains = ${non_hp_all}
+  []
   parallel_type = distributed
 []
 
 [Variables]
+  # We have two temperature variables, one for the fuel and one for the non-fuel
+  # This is to allow discontinuity on the fuel surface so that the insulation
+  # can be better simulated using `InterfaceKernels`
   [temp]
     initial_condition = 300
     block = ${nonfuel_all}
@@ -183,9 +159,6 @@ Be_sph = 3103.0
     family = MONOMIAL
   []
   [external_power]
-  []
-  [hp_temp_aux]
-    initial_condition = 975.0
   []
 []
 
@@ -318,20 +291,6 @@ Be_sph = 3103.0
     v = power_density
     extra_vector_tags = 'ref'
   []
-  # [ext_heatsource]
-  #   type = CoupledForce
-  #   variable = temp
-  #   v = external_power
-  #   extra_vector_tags = 'ref'
-  #   block = ${nonfuel_all}
-  # []
-  # [ext_heatsource_f]
-  #   type = CoupledForce
-  #   variable = temp_f
-  #   v = external_power
-  #   extra_vector_tags = 'ref'
-  #   block = ${fuel_all}
-  # []
 
   # These diffusion kernels evenly disperse the displacement across the void
   [diff_x]
@@ -357,7 +316,7 @@ Be_sph = 3103.0
   []
 []
 
-[Modules/TensorMechanics/Master]
+[Physics/SolidMechanics/QuasiStatic]
   [mech_parts_fuel]
     block = '${fuel_all}'
     temperature = temp_f
@@ -445,9 +404,6 @@ Be_sph = 3103.0
     porosity = 0
     fast_neutron_fluence = 0
   []
-  #VOIDS, Tricky Assumptions made throughout, malleable poor conductor, etc
-  #Some of approach is assuming no radiative heat loss yet so compensating in
-  #this manner
   [AirDens]
     type = Density
     block = ${air_all}
@@ -461,6 +417,7 @@ Be_sph = 3103.0
   []
 
   # HP Fuel Coupling Material
+  # Note HP was replaced with steel rods
   [HPFDens]
     type = Density
     block = ${hp_fuel_gap_names}
@@ -767,17 +724,13 @@ Be_sph = 3103.0
   csv = true
   [exodus]
     type = Exodus
-    # execute_on = 'final'
+    execute_on = 'final'
+    enable = false
   []
   [checkpoint]
     type = Checkpoint
-    additional_execute_on = 'FINAL' # seems to be necessary to avoid a Checkpoint bug
-    # enable = false
+    additional_execute_on = 'FINAL'
   []
-  # [console]
-  #   type = Console
-  #   show = '_dt total_power avg_fuel_temp max_fuel_temp min_fuel_temp fuel_volume'
-  # []
   perf_graph = true
   color = true
 []

@@ -14,7 +14,7 @@
    type=SubdomainExtraElementIDGenerator
    input = fmg
    subdomains = '1 2 3 4 5 6
-                 71 72 73
+                 64 71 72 73
                  8 9 10 11
                  12 1212
                  13 14 15 16 17 18 19
@@ -28,7 +28,7 @@
 
    extra_element_id_names = 'material_id'
    extra_element_ids ='99 17 11 15 70 18
-                       6 6 60
+                       99 6 6 60
                        8 5 10 40
                        51 52
                        4 20 18 40 50 14 13
@@ -126,7 +126,7 @@
  [all]
   type=CoupledFeedbackMatIDNeutronicsMaterial
   block='1 2 3 4 5 6
-         71 72 73
+         64 71 72 73
          8 9 10 11
          12 1212
          13 14 15 16 17 18 19
@@ -137,7 +137,7 @@
          3082 3092 3102 3112 3122 3132 3142
          4081 4091 4101 4111 4121 4131 4141
          4082 4092 4102 4112 4122 4132 4142'
-  library_file ='Serp_hbrid_reflector_updated.xml'
+  library_file ='../Serp_hbrid_reflector_updated.xml'
   library_name ='krusty_serpent_ANL_endf70_g22'
   isotopes = 'pseudo'
   densities = '1.0'
