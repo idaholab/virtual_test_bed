@@ -2,16 +2,16 @@
 
 KRUSTY is a small-sized fast neutron reactor which features three U-7.65Mo fuel cylinders stacked on top of each other with a hole at the center for placing source boxes or control stack. These fuel cylinders, with their axial BeO reflectors, top axial shield plates, and radial stainless steel (SS) shield blocks, hang down from the top of the testing facility. The radial BeO reflectors and the bottom SS shielding plates sit on a movable platen. The reactor core reaches criticality by pushing the movable platen up to allow radial reflectors to cover the fuel disk and reduce neutron leakage from the core.
 
-!media media/KRUSTY/Fig_1.jpg
+!media media/KRUSTY/sim_mcnp6_model.jpg
       style=display: block;margin-left:auto;margin-right:auto;width:60%;
-      id=Fig_1
+      id=sim_mcnp_model
       caption= New/VTB simplified MCNP6 model (a) Y-Z view (b) X-Z view
 
-[Fig_1] (a) and (b) are drawings of the facility using the simplified MCNP6 model based on the models in the ICSBEP benchmark in which four out of the eight locations for heat pipes were filled. Some of the key geometry parameters such as the radius and height of the fuel, reflector, and shield regions are marked in [Fig_2] and are listed in [geo_params]. Detailed geometry dimensions of each region can be found in the attached input for the MOOSE Reactor module.
+[sim_mcnp_model] (a) and (b) are drawings of the facility using the simplified MCNP6 model based on the models in the ICSBEP benchmark in which four out of the eight locations for heat pipes were filled. Some of the key geometry parameters such as the radius and height of the fuel, reflector, and shield regions are marked in [mcnp_geom] and are listed in [geo_params]. Detailed geometry dimensions of each region can be found in the attached input for the MOOSE Reactor module.
 
-!media media/KRUSTY/Fig_2.jpg
+!media media/KRUSTY/mcnp6_key_geom.jpg
       style=display: block;margin-left:auto;margin-right:auto;width:60%;
-      id=Fig_2
+      id=mcnp_geom
       caption= Key geometry parameters of VTB simplified MCNP6 model with 4 heat pipe locations filled (a) Y-Z view (b) X-Z view
 
 The simplified MCNP6 model was obtained for this VTB model through the following:
