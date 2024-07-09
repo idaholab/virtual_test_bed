@@ -1,5 +1,7 @@
 # Seismic analysis of a base-isolated nuclear power plant building
 
+This model was adopted from the list of examples on the [MASTODON](https://mooseframework.inl.gov/mastodon/examples/index.html) website.
+
 !alert note title=Units of this model
 GN, GPa, m, and sec
 
