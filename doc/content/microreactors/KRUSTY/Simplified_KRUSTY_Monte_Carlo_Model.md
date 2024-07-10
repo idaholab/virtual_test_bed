@@ -19,7 +19,7 @@ The simplified MCNP6 model was obtained for this VTB model through the following
 2. Homogenizing the different radial reflector blocks.
 3. Closing air gaps and holes for plugs below the lower reflectors.
 
-The eigenvalue from the simplified MCNP6 model is listed in [tab_keff] and is compared with that obtained from the ICSBEP benchmark model. The results show that using ENDF/B-VIII.0, the simplified MCNP6 model is close to the detailed ICSBEP model with a slightly larger $k_{eff}$ of about 34 pcm. An equivalent Serpent model of the simplified MCNP6 model was created for providing reference solutions and generating multigroup cross sections for the Griffin neutronic model. Its $k_{eff}$ agreed with the result from the MCNP6 model as shown in [tab_keff]. With all heat pipe locations filled and the use of the ENDF/B-VII.0 library, the reference $k_{eff}$ for the Griffin neutronic calculation is 1.00590±3 pcm.
+The eigenvalue from the simplified MCNP6 model is listed in [tab_keff] and is compared with that obtained from the ICSBEP benchmark model. The results show that using ENDF/B-VIII.0, the simplified MCNP6 model is close to the detailed ICSBEP model with a slightly larger $k_{eff}$ of about 34 pcm. An equivalent Serpent model of the simplified MCNP6 model was created for providing reference solutions and generating multigroup cross sections for the Griffin neutronic model. Its $k_{eff}$ agreed with the result from the MCNP6 model as shown in [tab_keff]. With all heat pipe locations filled and the use of the ENDF/B-VII.0 library, the reference $k_{eff}$ for the Griffin neutronic calculation is 1.00592±3 pcm.
 
 !table id=geo_params caption=Key Geometry Parameters of ANL Simplified Model
 | Label | Value (cm) | Label | Value (cm) | Label | Value (cm) | Label | Value (cm) |
@@ -36,4 +36,4 @@ The eigenvalue from the simplified MCNP6 model is listed in [tab_keff] and is co
 | ICSBEP MCNP6 | (ENDF/B-VIII.0) | 1.00042 ± 2 pcm |
 | MCNP6 | (ENDF/B-VIII.0) | 1.00076 ± 1 pcm |
 | Serpent | (ENDF/B-VIII.0) | 1.00081 ± 3 pcm |
-| Serpent | (ENDF/B-VII.0) | 1.00590 ± 3 pcm |
+| Serpent | (ENDF/B-VII.0) | 1.00592 ± 3 pcm |
