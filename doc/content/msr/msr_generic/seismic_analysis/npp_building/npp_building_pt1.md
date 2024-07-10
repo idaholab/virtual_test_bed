@@ -1,6 +1,16 @@
 # Seismic analysis of a base-isolated nuclear power plant building
 
-This model was adopted from the list of examples on the [MASTODON](https://mooseframework.inl.gov/mastodon/examples/index.html) website.
+This model was adopted from the list of examples on the [MASTODON](https://mooseframework.inl.gov/mastodon/examples/index.html) website. The inputs can be found [here](https://github.com/idaholab/virtual_test_bed/tree/devel/msr/msr_generic/seismic_analysis).
+
+!tag name=Seismic Analysis Model pairs=reactor_type:MSR
+                       reactor:generic_msr
+                       geometry:
+                       codes_used:MASTODON
+                       computing_needs:
+                       fiscal_year:
+                       sponsor:
+                       institution:INL
+                       simulation_type:seismic analysis
 
 !alert note title=Units of this model
 GN, GPa, m, and sec
@@ -30,7 +40,7 @@ The isolation system of the building comprises 70 Friction Pendulum^TM^ (FP) iso
 
 !row-end!
 
-The basemat is modeled to be almost rigid, with an elastic modulus of almost 99.2 GPa, which is four times stiffer than concrete. Each of the isolators is independently attached to the basemat with rigid beam elements, thereby simulating a rigid connection between them. The isolators themselves are 0.3m long and have a friction coefficient, `mu_ref=0.06`, radius of curvature, and `r_eff=1.0`. These properties result in a sliding period of 2 sec, which is reasonable for the NPP building. Two methods of modeling the isolation system are demonstrated here. In method 1, the friction coefficients of the isolators are assumed to be independent of pressure, temperature, and velocity and the `mu_ref` value is used throughout the simulations. (See the [theory manual](https://mooseframework.inl.gov/mastodon/manuals/theory/index.html) for a detailed description of pressure, temperature, velocity dependency of the friction coefficient of FP isolators). Additionally, a unidirectional ground motion is applied in the X direction. In method 2, the pressure, temperature, and velocity dependencies are switched on and ground motions are applied in all three directions. The Materials blocks for the isolators for the two mwethods are listed below, and the acceleration histories of the input motions are presented in [fig:inp_motion_xyz] below.
+The basemat is modeled to be almost rigid, with an elastic modulus of almost 99.2 GPa, which is four times stiffer than concrete. Each of the isolators is independently attached to the basemat with rigid beam elements, thereby simulating a rigid connection between them. The isolators themselves are 0.3m long and have a friction coefficient, `mu_ref=0.06`, radius of curvature, and `r_eff=1.0`. These properties result in a sliding period of 2 sec, which is reasonable for the NPP building. Two methods of modeling the isolation system are demonstrated here. In method 1, the friction coefficients of the isolators are assumed to be independent of pressure, temperature, and velocity and the `mu_ref` value is used throughout the simulations. (See the [theory manual](https://mooseframework.inl.gov/mastodon/manuals/theory/index.html) for a detailed description of pressure, temperature, velocity dependency of the friction coefficient of FP isolators). Additionally, a unidirectional ground motion is applied in the X direction. In method 2, the pressure, temperature, and velocity dependencies are switched on and ground motions are applied in all three directions. The Materials blocks for the isolators for the two methods are listed below, and the acceleration histories of the input motions are presented in [fig:inp_motion_xyz] below.
 
 !listing seismic_analysis/basemat_with_isolators_new.i block=Materials/elasticity
 
