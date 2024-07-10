@@ -13,9 +13,9 @@ The axial power densities within the fuel region were tallied with both the Grif
 |   | Serpent Reference |   | Griffin + hybrid XS |   |
 | - | - | - | - | - |
 |                | Tf = 300 K        | Tf = 800 K      | Tf = 300 K           | Tf = 800 K      |
-| $k_{eff}$          | 1.00592           | 1.00523         | 1.007535             | 1.006908        |
-| $\Delta k_{eff}$ (pcm) ($k_{eff,Serp}$–$k_{eff,Griffin}$) |   |   | -161.5          | -167.8          |
-| $\Delta k_{eff}$ (pcm) ($k_{eff,800K}$–$k_{eff,300K}$) | 69.0 |   | 62.7 |   |
+| $k_{eff}$          | 1.00592           | 1.00523         | 1.00815             | 1.00752        |
+| $\Delta k_{eff}$ (pcm) ($k_{eff,Serp}$–$k_{eff,Griffin}$) |   |   | -222.6          | -229.1          |
+| $\Delta k_{eff}$ (pcm) ($k_{eff,800K}$–$k_{eff,300K}$) | 69.0 |   | 62.0 |   |
 
 !listing id=griffin_exec_cmd caption=Griffin execution command
 module load use.moose moose-apps griffin
@@ -28,7 +28,7 @@ mpirun -n 640 griffin-opt -i krusty_ANL40_endf70_hybrid_SN35_NA3_coarse_CMFD_pd.
 
 ## Steady-State Multiphysics Simulation Result for the 15 ₵ Reactivity Insertion
 
-Two sets of steady-state Multiphysics simulations are performed with the hybrid XS to estimate the height that the axial reflector is moved into the core to introduce 15₵ external reactivity. The displacement field that originates from axial reflector movement calculated by BISON is visualized in [reactivity_insert]. As shown in this figure, applying the 1.48 mm shift boundary condition to the bottom of the axial reflector assembly leads to a uniform shift of the structure as expected. The keff values before and after applying the axial reflector shift were calculated to be 1.00701 and 1.00802 using the Multiphysics coupled model. That leads to an increase of $\Delta k_{eff}$ by about 100.5 pcm which is about 14.5 ₵ with Serpent calculated β-eff of 690 pcm. [ax_power_mp] shows the axial power distribution within the fuel disk. The upward shift of the axial reflector also slightly moves the power peaking upward within KRUSTY fuel region.
+Two sets of steady-state Multiphysics simulations are performed with the hybrid XS to estimate the height that the axial reflector is moved into the core to introduce 15₵ external reactivity. The displacement field that originates from axial reflector movement calculated by BISON is visualized in [reactivity_insert]. As shown in this figure, applying the 1.48 mm shift boundary condition to the bottom of the axial reflector assembly leads to a uniform shift of the structure as expected. The keff values before and after applying the axial reflector shift were calculated to be 1.00701 and 1.00801 using the Multiphysics coupled model. That leads to an increase of $\Delta k_{eff}$ by ~100 pcm which is about 14.5 ₵ with Serpent calculated β-eff of 690 pcm. [ax_power_mp] shows the axial power distribution within the fuel disk. The upward shift of the axial reflector also slightly moves the power peaking upward within KRUSTY fuel region.
 
 !media media/KRUSTY/reactivity_insertion.png
       style=display: block;margin-left:auto;margin-right:auto;width:60%;
