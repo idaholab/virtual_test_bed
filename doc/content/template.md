@@ -4,10 +4,25 @@
 
 *Model link: [Model Name](hyperlink)*
 
+!devel! example caption=Example of a page tag for the automated model indexing (remove # before tag)
+#!tag name=model_name pairs=reactor_type:MSR/FHR/SFR/...
+                       reactor:<reactor name>
+                       geometry:<reactor part being simulated>
+                       simulation_type:<type of simulation>
+                       input_features:<specific features in use>
+                       transient:steady/transient/startup/RIA/...
+                       codes_used:BlueCrab;Griffin;Pronghorn;MOOSE_NavierStokes;...
+                       open_source:partial/true
+                       computing_needs:workstation/HPC
+                       fiscal_year:2024
+                       institution:ANL/INL/...
+                       sponsor:NRC/NEAMS/NEUP/...
+!devel-end!
+
 ## High Level Summary of Model
 
-High level introduction is expected here about the model of interest. Figures and tables can be added 
-in the model description, of which the examples are provided below. 
+High level introduction is expected here about the model of interest. Figures and tables can be added
+in the model description, of which the examples are provided below.
 
 
 !devel! example id=example-figure caption=Example of adding a figure in VTB documentation.
@@ -19,9 +34,9 @@ in the model description, of which the examples are provided below.
 
 !alert note
 One should put a copy of the figure at the specific file path.
-The VTB media is now arranged by reactor types under the folder +/media+. 
+The VTB media is now arranged by reactor types under the folder +/media+.
 For more detailed instructions on figure formatting, please refer to
-the [MooseDocs media tutorial](https://mooseframework.inl.gov/python/MooseDocs/extensions/media.html). 
+the [MooseDocs media tutorial](https://mooseframework.inl.gov/python/MooseDocs/extensions/media.html).
 
 
 !devel! example id=example-table caption=Example of adding a table in VTB documentation.
@@ -37,7 +52,7 @@ the [MooseDocs media tutorial](https://mooseframework.inl.gov/python/MooseDocs/e
 
 !alert note
 For more detailed instructions on table formatting, please refer to
-the [MooseDocs table tutorial](https://mooseframework.inl.gov/python/MooseDocs/extensions/table.html). 
+the [MooseDocs table tutorial](https://mooseframework.inl.gov/python/MooseDocs/extensions/table.html).
 
 !devel! example id=example-equations caption=Example of adding equations in VTB documentation.
 NekRS solves the incompressible Navier-Stokes equations:
@@ -65,8 +80,8 @@ the [MooseDocs equation tutorial](https://mooseframework.inl.gov/python/MooseDoc
 
 ### Adding references style=font-size:125%
 
-If the model has been previously published, one should provide the reference to the published works together with key references used for model development. 
-+MooseDocs+ supports BibTex style references, and some examples about how to cite technical report, conference proceeding and journal article are given below.  
+If the model has been previously published, one should provide the reference to the published works together with key references used for model development.
++MooseDocs+ supports BibTex style references, and some examples about how to cite technical report, conference proceeding and journal article are given below.
 
 ```language=bash
 @techreport{Hu2017,
@@ -108,7 +123,7 @@ If the model has been previously published, one should provide the reference to 
 ```
 
 
-The bibtex entries must be added into the VTB bibliography file +vtb.bib+. 
+The bibtex entries must be added into the VTB bibliography file +vtb.bib+.
 A reference list will be generated automatically at the end of the VTB documentation page.
 
 
@@ -123,20 +138,20 @@ Description part A [!citep](Hu2017), description part B [!citep](novak_2021c), d
 
 - Type of simulation: e.g., 3D core multiphysics (neutronics-TH) transient, 1D system steady-state
 
-- NEAMS MOOSE Codes Used: Griffin, Heat Conduction, Cardinal, etc. 
+- NEAMS MOOSE Codes Used: Griffin, Heat Conduction, Cardinal, etc.
 
-- NEAMS non-MOOSE Codes Used: MC2-3, Nek5000/RS, etc. 
+- NEAMS non-MOOSE Codes Used: MC2-3, Nek5000/RS, etc.
 
 - Non-NEAMS Codes Used: Cubit, OpenFOAM, etc.
 
 
 !alert note
-More information is available online about [the list of NEAMS codes](https://neams.inl.gov/code-descriptions/) and the codes that have been used for [the models available in VTB repository](https://mooseframework.inl.gov/virtual_test_bed/resources/codes_used.html). 
+More information is available online about [the list of NEAMS codes](https://neams.inl.gov/code-descriptions/) and the codes that have been used for [the models available in VTB repository](https://mooseframework.inl.gov/virtual_test_bed/resources/codes_used.html).
 Providing the related information in documentation can better help the VTB team to categorize/sort the model.
 
 ## Computational Model Description
 
-Walk through the main kernel/blocks, show snippets of example inputs when needed. 
+Walk through the main kernel/blocks, show snippets of example inputs when needed.
 The markdown source can be as simple as the following to show the `EOS` block from the `msre_loop.i` input file:
 
 !devel! example id=example-list caption=Example of including input block in VTB documentation.
@@ -146,12 +161,12 @@ The markdown source can be as simple as the following to show the `EOS` block fr
 
 ## Results
 
-Here one can document the most important results from the related simulations. Please refer to aforementioned examples about how to add figures and tables when discussing the main results and discoveries. 
+Here one can document the most important results from the related simulations. Please refer to aforementioned examples about how to add figures and tables when discussing the main results and discoveries.
 
 
-## Run Command 
+## Run Command
 
-Please provide the run command for model execution on INL’s HPC Cluster or otherwise. Below is a simple example how to run a SAM system modeling job. 
+Please provide the run command for model execution on INL’s HPC Cluster or otherwise. Below is a simple example how to run a SAM system modeling job.
 
 ```language=bash
 mpirun -np 48 /path/to/sam-opt -i sam_input.i
