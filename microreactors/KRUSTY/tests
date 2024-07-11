@@ -36,4 +36,30 @@
       cli_args = "--mesh-only MESH/BISON_mesh.e"
     []
   []
+  [simplified_regression]
+    [griffin_simple]
+      type = CSVDiff
+      input = 'Neutronics/Griffin/krusty_ANL22_endf70_hybrid_SN35_NA3_coarse_CMFD.i'
+      csvdiff = 'Neutronics/Griffin/krusty_ANL22_endf70_hybrid_SN35_NA3_coarse_CMFD_out.csv'
+      cli_args = "Outputs/exodus=false
+                  TransportSystems/sn/NPolar=1
+                  TransportSystems/sn/NAzmthl=3
+                  TransportSystems/sn/NA=1"
+      executable_pattern = 'bison*|blue_crab*|dire_wolf*'
+      min_parallel = 48
+      max_time = 1800
+      heavy = true
+    []
+    [bison_simple]
+      type = CSVDiff
+      input = 'Multiphysics_SS/KRUSTY_BISON_THERMOMECHANICS.i'
+      csvdiff = 'Multiphysics_SS/KRUSTY_BISON_THERMOMECHANICS_out.csv'
+      cli_args = "Outputs/checkpoint/wall_time_interval=86400
+                  Outputs/checkpoint/enable=false
+                  Executioner/dt=1e6"
+      executable_pattern = 'bison*|blue_crab*|dire_wolf*'
+      min_parallel = 8
+      heavy = true
+    []
+  []
 []

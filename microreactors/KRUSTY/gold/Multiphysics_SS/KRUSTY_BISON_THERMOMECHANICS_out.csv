@@ -1,0 +1,3 @@
+time,_dt,avg_fuel_cond,avg_fuel_temp,avg_nonfuel_temp,fuel_volume,max_fuel_temp,max_nonfuel_temp,min_fuel_temp,min_nonfuel_temp,power_density_avg,power_density_avg_everywhere,power_density_max,power_density_min,total_power
+-1000000,0,0,300,300,0.0004642839822038,300,300,300,300,0,0,0,0,0.0004642839822038
+0,1000000,0,300.01098027478,300.0002010001,0.00046431698669964,300.01125437903,300.01178026906,300.00981509337,299.99997667301,1,1,1,1,0.0004642839822038
