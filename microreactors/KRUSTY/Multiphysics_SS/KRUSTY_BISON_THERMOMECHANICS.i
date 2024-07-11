@@ -130,7 +130,7 @@ Be_sph = 3103.0
     block = ${fuel_all}
     family = L2_LAGRANGE
     order = FIRST
-    initial_condition = 1.0e6
+    initial_condition = 1.0
   []
   [Tfuel]
     order = CONSTANT
@@ -608,12 +608,6 @@ Be_sph = 3103.0
   end_time = 0
   dt = 1e5
   dtmin = 1
-  # dtmax = 1e5
-
-  # [TimeStepper]
-  #   type = IterationAdaptiveDT
-  #   dt = 100
-  # []
 []
 
 [Postprocessors]
