@@ -129,12 +129,6 @@ pump_force = -20000. # [N / m^3]
 ################################################################################
 
 [Functions]
-  [ad_rampdown_mu_func]
-    type = ParsedFunction
-    expression = mu*(100*exp(-3*t)+1)
-    symbol_names = 'mu'
-    symbol_values = ${mu}
-  []
   # Duplicate definition to use in postprocessor,
   # we will convert types more in the future and avoid duplicates
   [rampdown_mu_func]
@@ -149,14 +143,8 @@ pump_force = -20000. # [N / m^3]
   [mu]
     type = ADGenericFunctorMaterial #defines mu artificially for numerical convergence
     prop_names = 'mu rho' #it converges to the real mu eventually.
-    prop_values = 'ad_rampdown_mu_func ${rho}'
+    prop_values = 'rampdown_mu_func ${rho}'
   []
-  #[not_used]
-  #  type = ADGenericFunctorMaterial
-  #  prop_names = 'not_used'
-  #  prop_values = 0
-  #  block = 'shield reflector'
-  #[]
 []
 
 ################################################################################
