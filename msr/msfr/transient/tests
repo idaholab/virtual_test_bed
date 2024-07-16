@@ -60,5 +60,7 @@
     executable_pattern = 'moose*|blue_crab*|dire_wolf*|pronghorn*|fenix*'
     cli_args = 'Executioner/num_steps=2 Executioner/dt=0.25'
     min_parallel = 4
+    # Loosening tolerance post friction model change in moose#27257
+    rel_err = 4e-4
   []
 []

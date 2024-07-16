@@ -19,6 +19,8 @@
     input = 'th.i'
     check_input = True
     executable_pattern = 'pronghorn*'
+    # TODO: remove this one https://github.com/idaholab/moose/pull/27614 is merged
+    method = 'opt'
   []
   # Regression tests with CSV output over a minimum amount of time steps/computation
   [neu_msre]

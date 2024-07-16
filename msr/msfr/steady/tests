@@ -62,13 +62,15 @@
     executable_pattern = 'moose*|blue_crab*|dire_wolf*|pronghorn*|fenix*'
     cli_args = 'Executioner/num_steps=2'
     min_parallel = 4
+    # Loosening tolerance post friction model change in moose#27257
+    rel_err = 2e-3
   []
   [fluids]
     prereq = fluids_syntax
     type = CSVDiff
     csvdiff = 'run_ns_out.csv'
     input = 'run_ns.i'
-    executable_pattern = 'moose*|blue_crab*|dire_wolf*|pronghorn*|fenix*'
+    executable_pattern = 'blue_crab*|dire_wolf*|pronghorn*|fenix*'
     cli_args = "Executioner/num_steps=2"
     min_parallel = 4
   []

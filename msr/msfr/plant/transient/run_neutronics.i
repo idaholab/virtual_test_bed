@@ -276,7 +276,7 @@
     source_variable = 'T_fluid'
     variable = 'T_fluid'
   []
-  [precusors]
+  [precursors]
     type = MultiAppGeneralFieldShapeEvaluationTransfer
     from_multi_app = ns
     source_variable = 'c1 c2 c3 c4 c5 c6'

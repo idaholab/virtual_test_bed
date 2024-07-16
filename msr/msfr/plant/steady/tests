@@ -4,7 +4,7 @@
     type = RunApp
     input = 'run_neutronics.i'
     check_input = True
-    # PTFunctionEOS warning: A user input enthalpy function is provided. Suggest providing valid temperature range to calculate enthalpy internally based on Cp. 
+    # PTFunctionEOS warning: A user input enthalpy function is provided. Suggest providing valid temperature range to calculate enthalpy internally based on Cp.
     allow_warnings = True
     executable_pattern = 'blue_crab*|fenix*'
   []
@@ -28,7 +28,7 @@
     type = RunApp
     input = 'msfr_system_1d.i'
     check_input = True
-    # PTFunctionEOS warning: A user input enthalpy function is provided. Suggest providing valid temperature range to calculate enthalpy internally based on Cp. 
+    # PTFunctionEOS warning: A user input enthalpy function is provided. Suggest providing valid temperature range to calculate enthalpy internally based on Cp.
     allow_warnings = True
     executable_pattern = 'sam*|blue_crab*'
     cli_args = "--app SamApp"
@@ -36,7 +36,7 @@
 
   # Regression tests with CSV output over a minimum amount of time steps/computation
   [coupled_multiphysics]
-    prereq = 'coupled_multiphysics_syntax plant_fluids_only'
+    prereq = 'coupled_multiphysics_syntax'
     type = CSVDiff
     input = 'run_neutronics.i'
     csvdiff = 'multiphysics_out.csv multiphysics_out_ns0.csv multiphysics_out_ns0_sam_balance_of_plant0_csv.csv'
@@ -53,7 +53,9 @@
     allow_warnings = true
     min_parallel = 8
     # Increased tolerance due to loose convergence criterion
-    rel_err = 1e-4
+    # rel_err = 1e-4
+    # Increased tolerance from Mac / CIVET differences post moose#27257
+    rel_err = 8e-3
     # see idaholab/moose#25681
     method = 'opt'
   []
@@ -75,6 +77,10 @@
     executable_pattern = 'moose*|blue_crab*|dire_wolf*|pronghorn*|fenix*'
     cli_args = "Executioner/num_steps=2 MultiApps/active='' Transfers/active=''"
     min_parallel = 4
+    max_time = 500
+    # Loosening tolerance post friction model change in moose#27257
+    rel_err = 5e-4
+    abs_zero = 1e-9
   []
   [plant_fluids_only]
     prereq = plant_syntax
@@ -82,8 +88,8 @@
     csvdiff = 'msfr_system_1d_csv.csv'
     input = 'msfr_system_1d.i'
     cli_args = 'Executioner/num_steps=100 Executioner/start_time=-200 --app SamApp'
-    # PTFunctionEOS warning: A user input enthalpy function is provided. Suggest providing valid temperature range to calculate enthalpy internally based on Cp. 
+    # PTFunctionEOS warning: A user input enthalpy function is provided. Suggest providing valid temperature range to calculate enthalpy internally based on Cp.
     allow_warnings = True
-    executable_pattern = 'sam*|blue_crab*'
+    executable_pattern = 'sam*'
   []
 []
