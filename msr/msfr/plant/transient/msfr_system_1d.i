@@ -61,9 +61,9 @@ core_power_val = 3e9
   [../]
   [core_specific_power]
     type = ParsedFunction
-    value = 'core_power / 9.27'
-    vars = 'core_power'
-    vals = 'core_power'
+    expression = 'core_power / 9.27'
+    symbol_names = 'core_power'
+    symbol_values = 'core_power'
   []
 []
 

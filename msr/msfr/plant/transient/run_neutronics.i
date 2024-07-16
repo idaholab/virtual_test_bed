@@ -257,8 +257,9 @@
 []
 
 [Transfers]
+  # NOTE: These four transfers could be condensed down to only two transfers
   [power_density]
-    type = MultiAppInterpolationTransfer
+    type = MultiAppGeometricInterpolationTransfer
     to_multi_app = ns
     source_variable = power_density
     variable = power_density
@@ -269,46 +270,16 @@
     source_variable = fission_source
     variable = fission_source
   []
-  [c1]
-    type = MultiAppGeneralFieldShapeEvaluationTransfer
-    from_multi_app = ns
-    source_variable = 'c1'
-    variable = 'c1'
-  []
-  [c2]
-    type = MultiAppGeneralFieldShapeEvaluationTransfer
-    from_multi_app = ns
-    source_variable = 'c2'
-    variable = 'c2'
-  []
-  [c3]
-    type = MultiAppGeneralFieldShapeEvaluationTransfer
-    from_multi_app = ns
-    source_variable = 'c3'
-    variable = 'c3'
-  []
-  [c4]
-    type = MultiAppGeneralFieldShapeEvaluationTransfer
-    from_multi_app = ns
-    source_variable = 'c4'
-    variable = 'c4'
-  []
-  [c5]
-    type = MultiAppGeneralFieldShapeEvaluationTransfer
-    from_multi_app = ns
-    source_variable = 'c5'
-    variable = 'c5'
-  []
-  [c6]
-    type = MultiAppGeneralFieldShapeEvaluationTransfer
-    from_multi_app = ns
-    source_variable = 'c6'
-    variable = 'c6'
-  []
-  [T]
+  [T_fluid]
     type = MultiAppGeneralFieldShapeEvaluationTransfer
     from_multi_app = ns
     source_variable = 'T_fluid'
-    variable = 'tfuel'
+    variable = 'T_fluid'
+  []
+  [precusors]
+    type = MultiAppGeneralFieldShapeEvaluationTransfer
+    from_multi_app = ns
+    source_variable = 'c1 c2 c3 c4 c5 c6'
+    variable = 'c1 c2 c3 c4 c5 c6'
   []
 []

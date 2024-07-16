@@ -83,12 +83,10 @@ beta6 = 0.000184087
     boussinesq_approximation = true
     block = 'fuel pump hx'
 
-    # Variables, defined below for the Exodus restart
+    # Variables
     velocity_variable = 'vel_x vel_y'
     pressure_variable = 'pressure'
     fluid_temperature_variable = 'T_fluid'
-
-    # This uses Exodus restart
     initialize_variables_from_mesh_file = true
 
     # Material properties
