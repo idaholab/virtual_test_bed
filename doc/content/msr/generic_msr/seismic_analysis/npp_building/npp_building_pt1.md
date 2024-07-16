@@ -1,6 +1,6 @@
 # Seismic analysis of a base-isolated nuclear power plant building
 
-This model was adopted from the list of examples on the [MASTODON](https://mooseframework.inl.gov/mastodon/examples/index.html) website. The inputs can be found [here](https://github.com/idaholab/virtual_test_bed/tree/devel/msr/msr_generic/seismic_analysis).
+This model was adopted from the list of examples on the [MASTODON](https://mooseframework.inl.gov/mastodon/examples/index.html) website. The inputs can be found [here](https://github.com/idaholab/virtual_test_bed/tree/devel/msr/generic_msr/seismic_analysis).
 
 !alert note title=Units of this model
 GN, GPa, m, and sec

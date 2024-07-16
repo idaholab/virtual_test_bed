@@ -140,7 +140,7 @@ help creating it.
 
 - 1D TRISO fuel depletion [documentation](htgr/triso/triso_model.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/triso_fuel)
 
-- Generic Molten Salt Fast Reactor Depletion [documentation](msr/msr_generic/depletion/model.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/msr/msr_generic/depletion)
+- Generic Molten Salt Fast Reactor Depletion [documentation](msr/generic_msr/depletion/model.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/msr/generic_msr/depletion)
 
 
 !alert note
