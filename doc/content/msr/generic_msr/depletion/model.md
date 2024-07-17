@@ -2,7 +2,7 @@
 
 *Contact: Samuel Walker, Samuel.Walker@inl.gov*
 
-*Model link: [MSR Depletion Model](https://github.com/idaholab/virtual_test_bed/tree/devel/msr/msr_generic/depletion)*
+*Model link: [MSR Depletion Model](https://github.com/idaholab/virtual_test_bed/tree/devel/msr/generic_msr/depletion)*
 
 !tag name=MSR Depletion Model pairs=reactor_type:MSR
                        reactor:generic_msr
@@ -56,7 +56,7 @@ resolution, chemistry, and species transport will be accomplished in FY23 which 
 The complete input file for the *Depletion with no isotopic removal* model is
 shown below.
 
-!listing msr/msr_generic/depletion/norem1G.i
+!listing msr/generic_msr/depletion/norem1G.i
 
 In the following sections, we will discuss each of
 the input blocks.
@@ -67,10 +67,10 @@ the input blocks.
 In this section, we will cover the mesh and problem inputs.
 The full input blocks can be found below.
 
-!listing msr/msr_generic/depletion/norem1G.i
+!listing msr/generic_msr/depletion/norem1G.i
          block=Mesh
 
-!listing msr/msr_generic/depletion/norem1G.i
+!listing msr/generic_msr/depletion/norem1G.i
          block=Problem
 
 Here a very simple mesh is generated using the [!style color=orange](GeneratedIDMeshGenerator)
@@ -88,7 +88,7 @@ the AuxVariable (i.e., reaction rate).
 There are two AuxVariables that are defined in this model:
 the burnup measured in time and the neutron flux.
 
-!listing msr/msr_generic/depletion/norem1G.i
+!listing msr/generic_msr/depletion/norem1G.i
          block=AuxVariables
 
 The AuxKernels are locally defined with the names
@@ -98,12 +98,12 @@ The AuxVariable that the kernel acts on is defined with
 [!style color=red](AuxVariable) defined previously.
 Lastly, we tell it to [!style color=red](execute_on) the end of a time step.
 
-!listing msr/msr_generic/depletion/norem1G.i
+!listing msr/generic_msr/depletion/norem1G.i
          block=AuxKernels
 
 Since we are using a [!style color=orange](FunctionAux) we will still need to define this function in another block.
 
-!listing msr/msr_generic/depletion/norem1G.i
+!listing msr/generic_msr/depletion/norem1G.i
          block=Functions
 
 Here we set the depletion time steps (given in seconds) that we would like to use via a
@@ -123,7 +123,7 @@ of this block is to set up the [!style color=red](grid_variables) = 'Burnup' and
 [!style color=red](scalar_fluxes) = 'flux' and not to operate on the macroscopic cross sections
 defined here.
 
-!listing msr/msr_generic/depletion/norem1G.i
+!listing msr/generic_msr/depletion/norem1G.i
          block=Materials
 
 ### Executioner and Outputs
@@ -134,7 +134,7 @@ Here, we select [!style color=orange](Transient) as the executioner
 type which will solve the depletion problem for the isotopic evolution
 of the system given the time steps laid out in the `[TimeStepper]`.
 
-!listing msr/msr_generic/depletion/norem1G.i
+!listing msr/generic_msr/depletion/norem1G.i
          block=Executioner
 
 Additionally, the output block sets the output files from the simulation.
@@ -142,7 +142,7 @@ Two of the most common options include the exodus and csv file.
 In this case only a csv output file is currently possible where the csv file
 stores a summary of the solution.
 
-!listing msr/msr_generic/depletion/norem1G.i
+!listing msr/generic_msr/depletion/norem1G.i
          block=Outputs
 
 ### Vector Post-processors
@@ -160,7 +160,7 @@ Additionally, the initial isotopic concentration of the fuel-salt needs to be sp
 [!style color=red](isotope_fixed_removal_rates) option for specific isotopes that can be extracted to the off-gas
 system. Lastly, there are various options on how to solve the Bateman equation included in the block as well.
 
-!listing msr/msr_generic/depletion/norem1G.i
+!listing msr/generic_msr/depletion/norem1G.i
          block=VectorPostprocessors
 
 
@@ -169,7 +169,7 @@ system. Lastly, there are various options on how to solve the Bateman equation i
 The complete input file for the *Depletion with Isotopic Removal* model is
 shown below.
 
-!listing msr/msr_generic/depletion/rem1G.i
+!listing msr/generic_msr/depletion/rem1G.i
 
 The input file for the *Depletion with Isotopic Removal* model is exactly the same as the
 *Depletion with no Isotopic Removal* model with one key exception. Here the

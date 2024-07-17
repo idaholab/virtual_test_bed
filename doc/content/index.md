@@ -9,7 +9,7 @@ This repository is a National Reactor Innovation Center ([NRIC](https://nric.inl
 The VTB repository hosts a wide variety of example challenge problems based on advanced reactor designs. This website contains the background and documentation for each use case. Click on a reactor type below to find out more. To access the corresponding inputs and supporting file, refer to the [repository](https://github.com/idaholab/virtual_test_bed).
 
 
-Users will need to request access to the controlled NEAMS software from the [Nuclear Computational Resource Center](https://inl.gov/ncrc/). For additional information on the VTB, please reach out to Dr. Abou-Jaoude at abdalla.aboujaoude.at.inl.gov.
+Users will need to request access to the controlled NEAMS software from the [Nuclear Computational Resource Center](https://inl.gov/ncrc/). For additional information on the VTB, please reach out to Dr. Charlot at lise.charlot@inl.gov.
 
 ## Information about the Virtual Test Bed
 
@@ -18,7 +18,7 @@ Users will need to request access to the controlled NEAMS software from the [Nuc
 - [How to cite a model on the Virtual Test Bed](citing.md) \\
 - [How to contribute to the Virtual Test Bed](contributing.md)
 - [Multiphysics reactor modeling using the MultiApps system](resources/multiapps.md) \\
-- [Frequently Asked Questions and Discussion Forum](https://github.com/idaholab/virtual_test_bed/discussions) \\
+- [Frequently Asked Questions and Discussion Forum](https://github.com/idaholab/virtual_test_bed/discussions)
 
 ## Models documentation
 

@@ -1,0 +1,56 @@
+[Tests]
+  [seismic_analysis_syntax1a]
+    type = RunApp
+    input = basemat_with_isolators_new.i
+    check_input = True
+    allow_warnings = True
+    executable_pattern = 'mastodon*'
+  []
+  [seismic_analysis_syntax1b]
+    type = RunApp
+    input = basemat_with_isolators_new_3D.i
+    check_input = True
+    allow_warnings = True
+    executable_pattern = 'mastodon*'
+  []
+  [seismic_analysis_syntax2]
+    type = RunApp
+    input = building_basemat_with_isolators_new.i
+    check_input = True
+    allow_warnings = True
+    executable_pattern = 'mastodon*'
+  []
+  [seismic_analysis1]
+    type = CSVDiff
+    input = 'basemat_with_isolators_new.i'
+    csvdiff = 'basemat_with_isolators_new_out.csv'
+    executable_pattern = 'mastodon*'
+    abs_zero = 1e-5
+    rel_err = 1e-4
+    max_time = 1000
+    method = 'opt'
+    cli_args = 'Executioner/num_steps=70'
+  []
+  [seismic_analysis2]
+    type = CSVDiff
+    input = 'basemat_with_isolators_new_3D.i'
+    csvdiff = 'basemat_with_isolators_new_3D_out.csv'
+    executable_pattern = 'mastodon*'
+    abs_zero = 1e-5
+    rel_err = 1e-4
+    max_time = 1000
+    method = 'opt'
+    cli_args = 'Executioner/num_steps=58'
+  []
+  [seismic_analysis3]
+    type = CSVDiff
+    input = 'building_basemat_with_isolators_new.i'
+    csvdiff = 'building_basemat_with_isolators_new_out.csv'
+    executable_pattern = 'mastodon*'
+    abs_zero = 1e-5
+    rel_err = 1e-4
+    max_time = 1000
+    method = 'opt'
+    cli_args = 'Executioner/num_steps=2'
+  []
+[]
