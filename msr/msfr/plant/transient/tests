@@ -1,0 +1,40 @@
+[Tests]
+  # Syntax checks
+  [coupled_multiphysics_syntax]
+    type = RunApp
+    input = 'run_neutronics.i'
+    check_input = True
+    executable_pattern = 'blue_crab*|fenix*'
+    # PTFunctionEOS warning: A user input enthalpy function is provided. Suggest providing valid temperature range to calculate enthalpy internally based on Cp.
+    allow_warnings = True
+    # See Griffin #2020
+    method = 'opt'
+  []
+  [neutronics_only_syntax]
+    type = RunApp
+    input = 'run_neutronics.i'
+    check_input = True
+    executable_pattern = 'griffin*|blue_crab*|dire_wolf*|fenix*'
+    cli_args = "MultiApps/active='' Transfers/active=''"
+    # Cross section chi spectrum does not sum to 1
+    allow_warnings = true
+    # See Griffin #2020
+    method = 'opt'
+  []
+  [core_fluids_syntax]
+    type = RunApp
+    input = 'run_ns.i'
+    check_input = True
+    cli_args = "MultiApps/active='' Transfers/active=''"
+    executable_pattern = 'moose*|blue_crab*|dire_wolf*|pronghorn*|fenix*'
+  []
+  [plant_syntax]
+    type = RunApp
+    input = 'msfr_system_1d.i'
+    check_input = True
+    # PTFunctionEOS warning: A user input enthalpy function is provided. Suggest providing valid temperature range to calculate enthalpy internally based on Cp.
+    allow_warnings = True
+    executable_pattern = 'sam*|blue_crab*'
+    cli_args = "--app SamApp"
+  []
+[]
