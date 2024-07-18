@@ -157,7 +157,7 @@ flow_vel = '${fparse mass_flow_rate / flow_area / density}'
   [pressure_drop]
     type = ParsedPostprocessor
     pp_names = 'inlet_pressure outlet_pressure'
-    function = 'inlet_pressure - outlet_pressure'
+    expression = 'inlet_pressure - outlet_pressure'
   []
 
   [integral_density]
@@ -169,7 +169,7 @@ flow_vel = '${fparse mass_flow_rate / flow_area / density}'
   [average_density]
     type = ParsedPostprocessor
     pp_names = 'volume integral_density'
-    function = 'integral_density / volume'
+    expression = 'integral_density / volume'
   []
 
   [integral_mu]
@@ -181,7 +181,7 @@ flow_vel = '${fparse mass_flow_rate / flow_area / density}'
   [average_mu]
     type = ParsedPostprocessor
     pp_names = 'volume integral_mu'
-    function = 'integral_mu / volume'
+    expression = 'integral_mu / volume'
   []
 
   [area]

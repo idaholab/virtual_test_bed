@@ -241,7 +241,7 @@
     execute_on = 'TIMESTEP_END'
     max_procs_per_app = 1
     output_in_position = true
-    #no_backup_and_restore = true
+    #no_restore = true
     cli_args = "MultiApps/sam/cli_args='m_dot_in=29.8'"
   []
   [bison_2]
@@ -252,7 +252,7 @@
     execute_on = 'TIMESTEP_END'
     max_procs_per_app = 1
     output_in_position = true
-    #no_backup_and_restore = true
+    #no_restore = true
     cli_args = "MultiApps/sam/cli_args='m_dot_in=23.2'"
   []
   [bison_3]
@@ -263,7 +263,7 @@
     execute_on = 'TIMESTEP_END'
     max_procs_per_app = 1
     output_in_position = true
-    #no_backup_and_restore = true
+    #no_restore = true
     cli_args = "MultiApps/sam/cli_args='m_dot_in=15.9'"
   []
   [core_support_plate]
@@ -274,7 +274,7 @@
     execute_on = 'INITIAL' # no need for other calls - since tinlet is fixed only one update of the XS required
     max_procs_per_app = 1
     output_in_position = true
-    #no_backup_and_restore = true
+    #no_restore = true
   []
 []
 

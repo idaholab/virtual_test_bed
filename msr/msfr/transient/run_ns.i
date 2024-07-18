@@ -12,9 +12,9 @@
 # coupled.
 
 # Material properties
-rho = 4284  # density [kg / m^3]  (@1000K)
-cp = 1594  # specific heat capacity [J / kg / K]
-drho_dT = 0.882  # derivative of density w.r.t. temperature [kg / m^3 / K]
+rho = 4284 # density [kg / m^3]  (@1000K)
+cp = 1594 # specific heat capacity [J / kg / K]
+drho_dT = 0.882 # derivative of density w.r.t. temperature [kg / m^3 / K]
 mu = 0.0166 # viscosity [Pa s]
 k = 1.7 # thermal conductivity [W / m / K]
 # https://www.researchgate.net/publication/337161399_Development_of_a_control-\
@@ -25,16 +25,16 @@ von_karman_const = 0.41
 
 # Turbulent properties
 Pr_t = 0.9 # turbulent Prandtl number
-Sc_t = 1   # turbulent Schmidt number
+Sc_t = 1 # turbulent Schmidt number
 
 # Derived material properties
-alpha = ${fparse drho_dT / rho}  # thermal expansion coefficient
+alpha = '${fparse drho_dT / rho}' # thermal expansion coefficient
 
 # Operating parameters
 T_HX = 873.15 # heat exchanger temperature [K]
 
 # Mass flow rate tuning, for heat exchanger pressure and temperature drop
-friction = 4e3  # [kg / m^4]
+friction = 4e3 # [kg / m^4]
 pump_force = -20000. # [N / m^3]
 
 # Delayed neutron precursor parameters. Lambda values are decay constants in
@@ -83,10 +83,11 @@ beta6 = 0.000184087
     boussinesq_approximation = true
     block = 'fuel pump hx'
 
-    # Variables, defined below for the Exodus restart
+    # Variables
     velocity_variable = 'vel_x vel_y'
     pressure_variable = 'pressure'
     fluid_temperature_variable = 'T_fluid'
+    initialize_variables_from_mesh_file = true
 
     # Material properties
     density = ${rho}
@@ -137,65 +138,13 @@ beta6 = 0.000184087
                                            ${beta5} ${lambda5_m}; ${beta6} ${lambda6_m}'
 
     # Heat exchanger
+    standard_friction_formulation = false
     friction_blocks = 'hx'
     friction_types = 'FORCHHEIMER'
-    friction_coeffs = ${friction}
+    friction_coeffs = 'friction_coeff_vector'
     ambient_convection_blocks = 'hx'
-    ambient_convection_alpha = ${fparse 600 * 20e3} # HX specifications
+    ambient_convection_alpha = '${fparse 600 * 20e3}' # HX specifications
     ambient_temperature = ${T_HX}
-  []
-[]
-
-[Variables]
-  [vel_x]
-    type = INSFVVelocityVariable
-    block = 'fuel pump hx'
-    initial_from_file_var = vel_x
-  []
-  [vel_y]
-    type = INSFVVelocityVariable
-    block = 'fuel pump hx'
-    initial_from_file_var = vel_y
-  []
-  [pressure]
-    type = INSFVPressureVariable
-    block = 'fuel pump hx'
-    initial_from_file_var = pressure
-  []
-  [T_fluid]
-    type = INSFVEnergyVariable
-    block = 'fuel pump hx'
-    initial_from_file_var = T_fluid
-  []
-  [c1]
-    type = MooseVariableFVReal
-    block = 'fuel pump hx'
-    initial_from_file_var = c1
-  []
-  [c2]
-    type = MooseVariableFVReal
-    block = 'fuel pump hx'
-    initial_from_file_var = c2
-  []
-  [c3]
-    type = MooseVariableFVReal
-    block = 'fuel pump hx'
-    initial_from_file_var = c3
-  []
-  [c4]
-    type = MooseVariableFVReal
-    block = 'fuel pump hx'
-    initial_from_file_var = c4
-  []
-  [c5]
-    type = MooseVariableFVReal
-    block = 'fuel pump hx'
-    initial_from_file_var = c5
-  []
-  [c6]
-    type = MooseVariableFVReal
-    block = 'fuel pump hx'
-    initial_from_file_var = c6
   []
 []
 
@@ -245,6 +194,11 @@ beta6 = 0.000184087
     prop_names = 'cp'
     prop_values = '${cp}'
     block = 'fuel pump hx'
+  []
+  [friction_coeff_mat]
+    type = ADGenericVectorFunctorMaterial
+    prop_names = 'friction_coeff_vector'
+    prop_values = '${friction} ${friction} ${friction}'
   []
 []
 
@@ -360,7 +314,7 @@ beta6 = 0.000184087
   []
   [dT]
     type = ParsedPostprocessor
-    function = '-max_flow_T / flow_hx_bot + min_flow_T / flow_hx_top'
+    expression = '-max_flow_T / flow_hx_bot + min_flow_T / flow_hx_top'
     pp_names = 'max_flow_T min_flow_T flow_hx_bot flow_hx_top'
   []
   [total_power]

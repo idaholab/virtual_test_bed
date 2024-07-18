@@ -678,7 +678,7 @@ control_rod_Dh = 0.1
   [cr_mfr_fraction]
     type = ParsedPostprocessor
     pp_names = 'cr_mfr inlet_mfr'
-    function = 'abs(cr_mfr / inlet_mfr * 100)'
+    expression = 'abs(cr_mfr / inlet_mfr * 100)'
   []
 
   [inlet_pressure]
@@ -698,7 +698,7 @@ control_rod_Dh = 0.1
   [pressure_drop]
     type = ParsedPostprocessor
     pp_names = 'inlet_pressure outlet_pressure'
-    function = 'inlet_pressure - outlet_pressure'
+    expression = 'inlet_pressure - outlet_pressure'
   []
 
   [enthalpy_inlet]
@@ -726,7 +726,7 @@ control_rod_Dh = 0.1
   [enthalpy_balance]
     type = ParsedPostprocessor
     pp_names = 'enthalpy_inlet enthalpy_outlet'
-    function = 'abs(enthalpy_outlet) - abs(enthalpy_inlet)'
+    expression = 'abs(enthalpy_outlet) - abs(enthalpy_inlet)'
   []
 
   [heat_source_integral]

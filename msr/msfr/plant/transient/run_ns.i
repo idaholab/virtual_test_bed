@@ -88,10 +88,11 @@ beta6 = 0.000184087
     boussinesq_approximation = true
     block = 'fuel pump hx'
 
-    # Variables, defined below for the Exodus restart
+    # Variables
     velocity_variable = 'vel_x vel_y'
     pressure_variable = 'pressure'
     fluid_temperature_variable = 'T_fluid'
+    initialize_variables_from_mesh_file = true
 
     # Material properties
     density = ${rho}
@@ -108,7 +109,7 @@ beta6 = 0.000184087
     wall_boundaries = 'shield_wall reflector_wall fluid_symmetry'
     momentum_wall_types = 'wallfunction wallfunction symmetry'
     energy_wall_types = 'heatflux heatflux heatflux'
-    energy_wall_function = '0 0 0'
+    energy_wall_functors = '0 0 0'
 
     # Pressure pin for incompressible flow
     pin_pressure = true
@@ -144,63 +145,10 @@ beta6 = 0.000184087
     # Heat exchanger
     friction_blocks = 'hx'
     friction_types = 'FORCHHEIMER'
-    friction_coeffs = ${friction}
+    friction_coeffs = 'friction_coeff_vector'
     ambient_convection_blocks = 'hx'
     ambient_convection_alpha = '${fparse 600 * 20e3}' # HX specifications
     ambient_temperature = 'hx_cold_temp'
-  []
-[]
-
-[Variables]
-  [vel_x]
-    type = INSFVVelocityVariable
-    block = 'fuel pump hx'
-    initial_from_file_var = vel_x
-  []
-  [vel_y]
-    type = INSFVVelocityVariable
-    block = 'fuel pump hx'
-    initial_from_file_var = vel_y
-  []
-  [pressure]
-    type = INSFVPressureVariable
-    block = 'fuel pump hx'
-    initial_from_file_var = pressure
-  []
-  [T_fluid]
-    type = INSFVEnergyVariable
-    block = 'fuel pump hx'
-    initial_from_file_var = T_fluid
-  []
-  [c1]
-    type = MooseVariableFVReal
-    block = 'fuel pump hx'
-    initial_from_file_var = c1
-  []
-  [c2]
-    type = MooseVariableFVReal
-    block = 'fuel pump hx'
-    initial_from_file_var = c2
-  []
-  [c3]
-    type = MooseVariableFVReal
-    block = 'fuel pump hx'
-    initial_from_file_var = c3
-  []
-  [c4]
-    type = MooseVariableFVReal
-    block = 'fuel pump hx'
-    initial_from_file_var = c4
-  []
-  [c5]
-    type = MooseVariableFVReal
-    block = 'fuel pump hx'
-    initial_from_file_var = c5
-  []
-  [c6]
-    type = MooseVariableFVReal
-    block = 'fuel pump hx'
-    initial_from_file_var = c6
   []
 []
 
@@ -239,17 +187,16 @@ beta6 = 0.000184087
     prop_values = '${mu}'
     block = 'fuel pump hx'
   []
-  # [not_used]
-  #   type = ADGenericFunctorMaterial
-  #   prop_names = 'not_used'
-  #   prop_values = 0
-  #   block = 'shield reflector'
-  # []
   [cp]
     type = ADGenericFunctorMaterial
     prop_names = 'cp'
     prop_values = '${cp}'
     block = 'fuel pump hx'
+  []
+  [friction_coeff_mat]
+    type = ADGenericVectorFunctorMaterial
+    prop_names = 'friction_coeff_vector'
+    prop_values = '${friction} ${friction} ${friction}'
   []
 []
 
@@ -265,7 +212,7 @@ beta6 = 0.000184087
     direction = 'left'
   []
   [hx_cold_temp]
-    type = ADParsedFunction
+    type = ParsedFunction
     expression = 'Tcold'
     symbol_names = 'Tcold'
     symbol_values = '${T_HX}'
@@ -402,7 +349,7 @@ beta6 = 0.000184087
   []
   [dT]
     type = ParsedPostprocessor
-    function = '-max_flow_T / flow_hx_bot + min_flow_T / flow_hx_top'
+    expression = '-max_flow_T / flow_hx_bot + min_flow_T / flow_hx_top'
     pp_names = 'max_flow_T min_flow_T flow_hx_bot flow_hx_top'
   []
   [total_power]
@@ -413,7 +360,7 @@ beta6 = 0.000184087
   []
   [total_power_density]
     type = ParsedPostprocessor
-    function = 'total_power / 9.27'
+    expression = 'total_power / 9.27'
     pp_names = 'total_power'
     execute_on = 'INITIAL TIMESTEP_BEGIN TIMESTEP_END TRANSFER'
   []

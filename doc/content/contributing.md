@@ -146,7 +146,7 @@ and the subdirectory `tests`, which contains the tests. Go to the directory with
 
 ```
 cd ~/projects/sockeye/tests
-sockeye-opt --run --spec-file /scratch/hansje/projects/virtual_test_bed -j 20
+sockeye-opt --run --spec-file ~/projects/virtual_test_bed -j 20
 ```
 
 !alert! tip
@@ -156,7 +156,7 @@ in a directory `some_reactor/`, use the following:
 
 ```
 cd ~/projects/sockeye/tests
-sockeye-opt --run --spec-file /scratch/hansje/projects/virtual_test_bed -j 20 --re=some_reactor
+sockeye-opt --run --spec-file ~/projects/virtual_test_bed -j 20 --re=some_reactor
 ```
 !alert-end!
 
