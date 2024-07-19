@@ -53,7 +53,6 @@ A nonzero linear heat rate is only assigned to the heated part of the rod, while
 | Inlet Temperature (K) | 588.5 |
 | Power profile (-) | Uniform |
 
-
 Due to hexagonal symmetry in the experiment, the temperature distribution has been measured over the subchannels that approximately lie on a the diagonal line that connects the opposed vertices in the duct.
 The orientation of the meassuring line connects the south-west vertex to the north-east one.
 For our numbering convention, this lines includes subchannels 37, 36, 20, 10, 4, 1, 12, and 28.
@@ -136,7 +135,7 @@ Auxiliary kernels are used to apply the boundary conditions on pressure, tempera
 !alert note
 Boundary conditions are set in the subchannel problem through the boundary values of auxiliary variables. This
 is a more succinct alternative to using several postprocessors, one for each channel. There is also no explicit
-`[BCs]` block in subchannel inputs, as the boundary condition is handled by the custom `LiquidMetalSubChannel1PhaseProblem`
+`[BCs]` block in subchannel inputs, as the boundary condition is handled by the custom `TriSubChannel1PhaseProblem`
 problem.
 
 ### Executioner
@@ -160,8 +159,6 @@ The detailed mesh uses a *DetailedTriSubChannelMeshGenerator* and the solution v
 
 !listing sfr/subchannel/ornl_19_pin/ornl_19_pin_viz.i language=cpp
 
-
-
 ## Results
 
 The key factor dominating the temperature profile in the outlet of the domain is the competing effect between heat convection and heat conduction in the coolant.
@@ -179,10 +176,8 @@ In summary, the temperature distribution measured at the outlet of the assembly 
        id=3dres
        caption=Example of simulation results for the high-flow test case in the ORNL-19 benchmark. (a) Distribution of axial mass flow. (b) Distribution of lateral mass flow. (c) Distribution of temperature. (d) Distribution of dynamic viscosity due to heating.
 
-
 The results obtained are compared against the experimental values and the SUBAC and MATRA-LMR codes in [plots].
 It is observed that for every single case our code predicts temperature distribution values that match more closely the experimental results.
-
 
 !media subchannel/ORNL_19_results_plots.png
        style=width:55%
