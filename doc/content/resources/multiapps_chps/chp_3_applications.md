@@ -92,7 +92,7 @@ The [+Heat-Pipe Microreactor (HP-MR) core multiphysics model+](mrad/index.md) us
 
 #### VTB-PBFHR
 
-The [+Pebble Bed Fluoride-Salt-Cooled High-Temperature Reactor (PB-FHR) Griffin-Pronghorn steady state model+](pbfhr/steady/griffin_pgh_model.md) uses an approach similar to the HTGR example. Unlike the MSFR model in VTB where fuel is dissolved in the salt, the fuel of PBFHR has a solid form. Therefore delayed neutron information no longer needs to be handled by fluid dynamics application. However, the thermal physics inside the fuel pebbles need to be simulated by an additional grandchild Heat Conduction application.
+The [+Pebble Bed Fluoride-Salt-Cooled High-Temperature Reactor (PB-FHR) Griffin-Pronghorn steady state model+](pbfhr/mark_1/steady/griffin_pgh_model.md) uses an approach similar to the HTGR example. Unlike the MSFR model in VTB where fuel is dissolved in the salt, the fuel of PBFHR has a solid form. Therefore delayed neutron information no longer needs to be handled by fluid dynamics application. However, the thermal physics inside the fuel pebbles need to be simulated by an additional grandchild Heat Conduction application.
 
 #### VTB-SFR
 
