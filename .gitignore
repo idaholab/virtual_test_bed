@@ -100,6 +100,18 @@ tmp_*
 !**/gold/*.vtk
 !**/gold/*.vtu
 !**/gold/*.pvtu
+!**/gold/*/*.e
+!**/gold/*/*.e-s*
+!**/gold/*/*.csv
+!**/gold/*/*.vtk
+!**/gold/*/*.vtu
+!**/gold/*/*.pvtu
+!**/gold/*/*/*.e
+!**/gold/*/*/*.e-s*
+!**/gold/*/*/*.csv
+!**/gold/*/*/*.vtk
+!**/gold/*/*/*.vtu
+!**/gold/*/*/*.pvtu
 
 peacock_run_tmp.i
 yaml_dump*
