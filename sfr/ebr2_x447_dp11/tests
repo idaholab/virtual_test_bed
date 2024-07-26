@@ -1,0 +1,16 @@
+[Tests]
+  [x447_dp11_syntax]
+    type = RunApp
+    input = 'x447_dp11.i'
+    check_input = True
+    executable_pattern = 'bison*|blue_crab*'
+  []
+  [x447_dp11_short_run]
+    type = CSVDiff
+    input = 'x447_dp11.i'
+    cli_args = 'Executioner/num_steps=1'
+    csvdiff = 'x447_DP11_csv_general.csv'
+    min_parallel = 8
+    executable_pattern = 'bison*|blue_crab*'
+  []
+[]
