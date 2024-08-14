@@ -10,9 +10,15 @@
   type = FileMeshGenerator
   file = '../../gold/MESH/Griffin_mesh.e'
  []
+ [rot]
+  type = TransformGenerator
+  input = fmg
+  transform = ROTATE
+  vector_value = '-90 0 0'
+ []
  [id]
    type=SubdomainExtraElementIDGenerator
-   input = fmg
+   input = rot
    subdomains = '1 2 3 4 5 6
                  64 71 72 73
                  8 9 10 11
@@ -59,7 +65,6 @@
      coarse_mesh = coarse_mesh
      extra_element_id_name = coarse_element_id
    []
-   # parallel_type = distributed  # transfer dependent user object / interpolation transfer
 []
 
 [AuxVariables]
@@ -115,7 +120,7 @@
 
   cmfd_acceleration = true
   coarse_element_id = coarse_element_id
-  max_diffusion_coefficient = 10.0 # might need to be smaller  0.05
+  max_diffusion_coefficient = 10.0
   diffusion_eigen_solver_type = newton
   diffusion_prec_type = lu
   prolongation_type = multiplicative
@@ -137,7 +142,7 @@
          3082 3092 3102 3112 3122 3132 3142
          4081 4091 4101 4111 4121 4131 4141
          4082 4092 4102 4112 4122 4132 4142'
-  library_file ='../Serp_hbrid_reflector_updated.xml'
+  library_file = '../Serp_hbrid_reflector_updated.xml'
   library_name ='krusty_serpent_ANL_endf70_g22'
   isotopes = 'pseudo'
   densities = '1.0'
@@ -152,7 +157,7 @@
 
 [Outputs]
   csv = true
-  exodus=true
+  exodus = true
   [pgraph]
     type = PerfGraphOutput
     level = 2
