@@ -18,7 +18,7 @@ fuel_names = 'fuel_01 fuel_02 fuel_03 fuel_04 fuel_05 fuel_06 fuel_07 fuel_08 fu
 Be_all = '14'
 Be_names = 'Be_01'
 
-Al_all = '11 13 16' # currenly using Al 6061 properites
+Al_all = '11 13 16'
 Al_names = 'Al_01 Al_02 Al_03'
 
 hp_all = '10'
@@ -27,7 +27,7 @@ hp_names = 'hp_01'
 beo_all = '12 1212 17 9'
 beo_names = 'beo_01 beo_02 beo_03 beo_04'
 
-ss_all = '2 3 4 6 71 72 73 8 15 18 19 20 22 23 24' # remove 14; it is Be
+ss_all = '2 3 4 6 71 72 73 8 15 18 19 20 22 23 24'
 ss_names = 'ss_01 ss_02 ss_03 ss_04 ss_05 ss_06 ss_07 ss_08 ss_09 ss_10 ss_11 ss_12 ss_13 ss_14 ss_15'
 
 b4c_all = '5 21'

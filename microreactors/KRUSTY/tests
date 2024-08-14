@@ -21,12 +21,21 @@
     []
   []
   [mesh_gen]
+    # We do not run Exodiff for the griffin mesh due to the randomness of the triangulation
+    # We do run a --mesh-only to make sure the exodus file can be generated
+    # We also run a CSVDiff to make sure the mesh generation is consistent
+    # For the BISON mesh, we do run Exodiff as it is deterministic based on the gold griffin mesh
     [mesh_gen_griffin]
-      type = Exodiff
+      type = RunApp
       input = 'MESH/KRUSTY_mesh_gen_griffin.i'
-      exodiff = MESH/Griffin_mesh.e
       executable_pattern = 'griffin*|blue_crab*|dire_wolf*'
       cli_args = "--mesh-only MESH/Griffin_mesh.e"
+    []
+    [mesh_gen_griffin_check]
+      type = CSVDiff
+      input = 'MESH/KRUSTY_mesh_gen_griffin.i'
+      csvdiff = MESH/KRUSTY_mesh_gen_griffin_out.csv
+      executable_pattern = 'griffin*|blue_crab*|dire_wolf*'
     []
     [mesh_gen_bison]
       type = Exodiff
@@ -46,8 +55,8 @@
                   TransportSystems/sn/NAzmthl=3
                   TransportSystems/sn/NA=1"
       executable_pattern = 'bison*|blue_crab*|dire_wolf*'
-      min_parallel = 48
-      max_time = 1800
+      min_parallel = 40
+      max_time = 3600
       heavy = true
     []
     [bison_simple]

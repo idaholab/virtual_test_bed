@@ -105,6 +105,19 @@ h38=3.81008           #38  47.87138
 h39=1.27              #39  49.14138
 
 ################################################################################
+# Block ID Information
+fuel_all = '2081 2082 2091 2092 2101 2102 2111 2112 2121 2122 2131 2132 2141 2142 3081 3082 3091 3092 3101 3102 3111 3112 3121 3122 3131 3132 3141 3142 4081 4082 4091 4092 4101 4102 4111 4112 4121 4122 4131 4132 4141 4142'
+Be_all = '14'
+Al_all = '11 13 16'
+hp_all = '10'
+beo_all = '12 1212 17 9'
+ss_all = '2 3 4 6 71 72 73 8 15 18 19 20 22 23 24'
+b4c_all = '5 21'
+air_all = '1'
+hp_fuel_gap_all = '64'
+################################################################################
+
+################################################################################
 # Starting of the Mesh Input Block
 ################################################################################
 [Mesh]
@@ -145,7 +158,7 @@ h39=1.27              #39  49.14138
     # add_nodes_per_boundary_segment = 2
     refine_boundary = false
     desired_area = 0.1
-    output_boundary=9527
+    output_boundary = 9527
     output_subdomain_name = 101
   []
   [Region2]
@@ -2295,4 +2308,58 @@ h39=1.27              #39  49.14138
     transform = SCALE
     vector_value = '1e-2 1e-2 1e-2'
   []
+[]
+
+
+[Problem]
+  solve = false
+[]
+
+[Executioner]
+  type = Transient
+  num_steps = 1
+[]
+
+[Postprocessors]
+  [fuel_vol]
+    type = VolumePostprocessor
+    block = ${fuel_all}
+  []
+  [be_vol]
+    type = VolumePostprocessor
+    block = ${Be_all}
+  []
+  [al_vol]
+    type = VolumePostprocessor
+    block = ${Al_all}
+  []
+  [hp_vol]
+    type = VolumePostprocessor
+    block = ${hp_all}
+  []
+  [beo_vol]
+    type = VolumePostprocessor
+    block = ${beo_all}
+  []
+  [ss_vol]
+    type = VolumePostprocessor
+    block = ${ss_all}
+  []
+  [b4c_vol]
+    type = VolumePostprocessor
+    block = ${b4c_all}
+  []
+  [air_vol]
+    type = VolumePostprocessor
+    block = ${air_all}
+  []
+  [hp_fuel_gap_vol]
+    type = VolumePostprocessor
+    block = ${hp_fuel_gap_all}
+  []
+[]
+
+[Outputs]
+  csv = true
+  execute_on = FINAL
 []

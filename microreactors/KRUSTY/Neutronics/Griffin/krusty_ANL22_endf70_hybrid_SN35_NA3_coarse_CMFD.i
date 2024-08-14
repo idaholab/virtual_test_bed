@@ -84,9 +84,8 @@
   particle = neutron
   equation_type = eigenvalue
   G =22
-  VacuumBoundary = '9527 9528 9529'
-  ReflectingBoundary = '1982 1983'
-
+  VacuumBoundary = 'Core_top Core_bottom Core_outer_boundary'
+  ReflectingBoundary = 'Mirror_X_surf Mirror_Y_surf'
 
   [sn]
     scheme = DFEM-SN
