@@ -57,8 +57,10 @@ powerdensity = ${fparse linearpower / (pi * (fuel_r_o * fuel_r_o - fuel_r_i * fu
   [heat_flux]
     family = MONOMIAL
     order = CONSTANT
+    block = 'HeliumHolePrism HeliumHole Fuel Clad Duct LowerReflector UpperReflector LowerReflectorPrism UpperReflectorPrism'
   []
   [heat_flux_nodal]
+    block = 'HeliumHolePrism HeliumHole Fuel Clad Duct LowerReflector UpperReflector LowerReflectorPrism UpperReflectorPrism'
   []
 []
 
@@ -147,6 +149,7 @@ powerdensity = ${fparse linearpower / (pi * (fuel_r_o * fuel_r_o - fuel_r_i * fu
     type = ElementL2Difference
     variable = heat_flux
     other_variable = heat_flux_nodal
+    block = 'HeliumHolePrism HeliumHole Fuel Clad Duct LowerReflector UpperReflector LowerReflectorPrism UpperReflectorPrism'
   []
   [heat_source_rod_duct]
     type = ElementIntegralVariablePostprocessor
