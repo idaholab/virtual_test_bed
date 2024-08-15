@@ -38,6 +38,13 @@ Tref   = 293.15 # reference temperature for the linear thermal expansion for SS3
     top_right = '1e-3 0 1e-3'
     bottom_left = '-1e-3  0 -1e-3'
   []
+  [add_outer_nodeset]
+    type = BoundingBoxNodeSetGenerator
+    input = add_nodeset
+    new_boundary = outer_node
+    top_right = '1.443 0 1e-3'
+    bottom_left = '1.437 0 -1e-3'
+  []
   parallel_type = REPLICATED
 []
 
@@ -118,6 +125,12 @@ Tref   = 293.15 # reference temperature for the linear thermal expansion for SS3
     type = DirichletBC
     variable = disp_x
     boundary = center # node at (0,0,0)
+    value = 0
+  []
+  [xz_0]   # outer edge along x-axis (remove rotation motion)
+    type = DirichletBC
+    variable = disp_z
+    boundary = outer_node # node at (1.44,0,0)
     value = 0
   []
   [z_0]   # center of support plate bottom surface
