@@ -43,7 +43,6 @@ powerdensity = ${fparse linearpower / (pi * (fuel_r_o * fuel_r_o - fuel_r_i * fu
 
 [AuxVariables]
   [heat_source]
-    initial_condition= ${powerdensity}
     family = MONOMIAL
     order = CONSTANT
   []
@@ -71,6 +70,20 @@ powerdensity = ${fparse linearpower / (pi * (fuel_r_o * fuel_r_o - fuel_r_i * fu
   []
 []
 
+[ICs]
+  [heat_fuel]
+    type = ConstantIC
+    variable = heat_source
+    value = ${powerdensity}
+    block = 'Fuel'
+  []
+  [heat_duct]
+    type = ConstantIC
+    variable = heat_source
+    value = ${fparse powerdensity*0.01}
+    block = 'Duct'
+  []
+[]
 
 [BCs]
   [rod_outer]
