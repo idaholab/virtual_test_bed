@@ -74,77 +74,96 @@ beta6 = 0.000184087
 # EQUATIONS: VARIABLES, KERNELS, BOUNDARY CONDITIONS
 ################################################################################
 
-[Modules]
-  [NavierStokesFV]
-    # General parameters
-    compressibility = 'incompressible'
-    add_energy_equation = true
-    add_scalar_equation = true
-    boussinesq_approximation = true
-    block = 'fuel pump hx'
+[Physics]
+  [NavierStokes]
+    [Flow/salt]
+      # General parameters
+      compressibility = 'incompressible'
+      block = 'fuel pump hx'
+      initialize_variables_from_mesh_file = true
 
-    # Variables
-    velocity_variable = 'vel_x vel_y'
-    pressure_variable = 'pressure'
-    fluid_temperature_variable = 'T_fluid'
-    initialize_variables_from_mesh_file = true
+      # Variables, defined below for the Exodus restart
+      velocity_variable = 'vel_x vel_y'
+      pressure_variable = 'pressure'
 
-    # Material properties
-    density = ${rho}
-    dynamic_viscosity = ${mu}
-    thermal_conductivity = ${k}
-    specific_heat = 'cp'
-    thermal_expansion = ${alpha}
+      # Material properties
+      density = ${rho}
+      dynamic_viscosity = ${mu}
+      thermal_expansion = ${alpha}
 
-    # Boussinesq parameters
-    gravity = '0 -9.81 0'
-    ref_temperature = ${T_HX}
+      # Boussinesq parameters
+      boussinesq_approximation = true
+      gravity = '0 -9.81 0'
+      ref_temperature = ${T_HX}
 
-    # Boundary conditions
-    wall_boundaries = 'shield_wall reflector_wall fluid_symmetry'
-    momentum_wall_types = 'wallfunction wallfunction symmetry'
-    energy_wall_types = 'heatflux heatflux heatflux'
-    energy_wall_function = '0 0 0'
+      # Boundary conditions
+      wall_boundaries = 'shield_wall reflector_wall fluid_symmetry'
+      momentum_wall_types = 'wallfunction wallfunction symmetry'
 
-    # Pressure pin for incompressible flow
-    pin_pressure = true
-    pinned_pressure_type = average
-    pinned_pressure_value = 1e5
+      # Pressure pin for incompressible flow
+      pin_pressure = true
+      pinned_pressure_type = average
+      pinned_pressure_value = 1e5
 
-    # Turbulence parameters
-    turbulence_handling = 'mixing-length'
-    turbulent_prandtl = ${Pr_t}
-    von_karman_const = ${von_karman_const}
-    mixing_length_delta = 0.1
-    mixing_length_walls = 'shield_wall reflector_wall'
-    mixing_length_aux_execute_on = 'initial'
+      # Numerical scheme
+      momentum_advection_interpolation = 'upwind'
+      mass_advection_interpolation = 'upwind'
 
-    # Numerical scheme
-    momentum_advection_interpolation = 'upwind'
-    mass_advection_interpolation = 'upwind'
-    energy_advection_interpolation = 'upwind'
-    passive_scalar_advection_interpolation = 'upwind'
+      # Heat exchanger friction
+      standard_friction_formulation = false
+      friction_blocks = 'hx'
+      friction_types = 'FORCHHEIMER'
+      friction_coeffs = 'friction_coeff_vector'
+    []
+    [FluidHeatTransfer/salt]
+      block = 'fuel pump hx'
+      fluid_temperature_variable = 'T_fluid'
+      energy_advection_interpolation = 'upwind'
+      initialize_variables_from_mesh_file = true
 
-    # Heat source
-    external_heat_source = power_density
+      # Material properties
+      thermal_conductivity = ${k}
+      specific_heat = 'cp'
 
-    # Precursor advection, diffusion and source term
-    passive_scalar_names = 'c1 c2 c3 c4 c5 c6'
-    passive_scalar_schmidt_number = '${Sc_t} ${Sc_t} ${Sc_t} ${Sc_t} ${Sc_t} ${Sc_t}'
-    passive_scalar_coupled_source = 'fission_source c1; fission_source c2; fission_source c3;
-                                     fission_source c4; fission_source c5; fission_source c6;'
-    passive_scalar_coupled_source_coeff = '${beta1} ${lambda1_m}; ${beta2} ${lambda2_m};
-                                           ${beta3} ${lambda3_m}; ${beta4} ${lambda4_m};
-                                           ${beta5} ${lambda5_m}; ${beta6} ${lambda6_m}'
+      # See Flow for wall boundaries
+      energy_wall_types = 'heatflux heatflux heatflux'
+      energy_wall_functors = '0 0 0'
 
-    # Heat exchanger
-    standard_friction_formulation = false
-    friction_blocks = 'hx'
-    friction_types = 'FORCHHEIMER'
-    friction_coeffs = 'friction_coeff_vector'
-    ambient_convection_blocks = 'hx'
-    ambient_convection_alpha = '${fparse 600 * 20e3}' # HX specifications
-    ambient_temperature = ${T_HX}
+      # Heat source
+      external_heat_source = power_density
+
+      ambient_convection_blocks = 'hx'
+      ambient_convection_alpha = '${fparse 600 * 20e3}' # HX specifications
+      ambient_temperature = ${T_HX}
+    []
+    [ScalarTransport/salt]
+      block = 'fuel pump hx'
+      passive_scalar_advection_interpolation = 'upwind'
+      initialize_variables_from_mesh_file = true
+
+      # Precursor advection, diffusion and source term
+      passive_scalar_names = 'c1 c2 c3 c4 c5 c6'
+      passive_scalar_coupled_source = 'fission_source c1; fission_source c2; fission_source c3;
+                                       fission_source c4; fission_source c5; fission_source c6;'
+      passive_scalar_coupled_source_coeff = '${beta1} ${lambda1_m}; ${beta2} ${lambda2_m};
+                                             ${beta3} ${lambda3_m}; ${beta4} ${lambda4_m};
+                                             ${beta5} ${lambda5_m}; ${beta6} ${lambda6_m}'
+    []
+    [Turbulence/salt]
+      block = 'fuel pump hx'
+
+      fluid_heat_transfer_physics = salt
+      scalar_transport_physics = salt
+
+      # Turbulence parameters
+      turbulence_handling = 'mixing-length'
+      turbulent_prandtl = ${Pr_t}
+      passive_scalar_schmidt_number = '${Sc_t} ${Sc_t} ${Sc_t} ${Sc_t} ${Sc_t} ${Sc_t}'
+      von_karman_const = ${von_karman_const}
+      mixing_length_delta = 0.1
+      mixing_length_walls = 'shield_wall reflector_wall'
+      mixing_length_aux_execute_on = 'initial'
+    []
   []
 []
 
