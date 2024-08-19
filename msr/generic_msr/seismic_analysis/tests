@@ -1,4 +1,5 @@
 [Tests]
+  # Syntax tests
   [seismic_analysis_syntax1a]
     type = RunApp
     input = basemat_with_isolators_new.i
@@ -20,6 +21,8 @@
     allow_warnings = True
     executable_pattern = 'mastodon*'
   []
+
+  # Regression tests
   [seismic_analysis1]
     type = CSVDiff
     input = 'basemat_with_isolators_new.i'
@@ -27,8 +30,9 @@
     executable_pattern = 'mastodon*'
     abs_zero = 1e-5
     rel_err = 1e-4
-    max_time = 1000
+    max_time = 600
     method = 'opt'
+    min_parallel = 4
     cli_args = 'Executioner/num_steps=70'
   []
   [seismic_analysis2]
@@ -38,8 +42,9 @@
     executable_pattern = 'mastodon*'
     abs_zero = 1e-5
     rel_err = 1e-4
-    max_time = 1000
+    max_time = 600
     method = 'opt'
+    min_parallel = 4
     cli_args = 'Executioner/num_steps=58'
   []
   [seismic_analysis3]
@@ -49,8 +54,9 @@
     executable_pattern = 'mastodon*'
     abs_zero = 1e-5
     rel_err = 1e-4
-    max_time = 1000
+    max_time = 600
     method = 'opt'
+    min_parallel = 4
     cli_args = 'Executioner/num_steps=2'
   []
 []
