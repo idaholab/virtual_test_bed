@@ -28,6 +28,13 @@ Tsf    = 623.15 # stress-free temperature for the ComputeMeanThermalExpansionFun
     top_right = '1e-3 1e-3 0'
     bottom_left = '-1e-3 -1e-3 0'
   []
+  [add_outer_nodeset]
+    type = BoundingBoxNodeSetGenerator
+    input = add_nodeset
+    new_boundary = outer_node
+    top_right = '0.064 1e-3 0'
+    bottom_left = '0.058 -1e-3 0'
+  []
   parallel_type = REPLICATED
 []
 
@@ -56,6 +63,12 @@ Tsf    = 623.15 # stress-free temperature for the ComputeMeanThermalExpansionFun
     type = DirichletBC
     variable = disp_x
     boundary = center # node at (0,0)
+    value = 0
+  []
+  [xy_0]   # outer edge along x-axis (remove rotation motion)
+    type = DirichletBC
+    variable = disp_y
+    boundary = outer_node # node at (0.061,0)
     value = 0
   []
   [y_0]   # center of support plate bottom surface
