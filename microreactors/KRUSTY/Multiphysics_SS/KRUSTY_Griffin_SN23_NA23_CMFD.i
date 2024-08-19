@@ -44,6 +44,8 @@
 []
 
 [PowerDensity]
+  # use a low power as the multiphysics model is for KRUSTY warm critical tests that did not use heat pipes
+  power := 0.01
   integrated_power_postprocessor = integrated_power
 []
 
