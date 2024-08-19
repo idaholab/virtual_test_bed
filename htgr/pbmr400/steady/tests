@@ -94,15 +94,16 @@
   []
 
   [transient_multiphysics]
-    type = RunApp
+    type = CSVDiff
     working_directory = '../transient'
     input = 'oecd_pbmr400_tr0_pplofc_rsnk_keff_calc.i'
+    csvdiff = 'core.csv'
     executable_pattern = 'dire_wolf*|blue_crab*|fenix*'
     # This is not a lot of iterations, because the model is too slow and because the convergence criteria
     # are set very loose which causes convergence issues on a second step
     cli_args = "Executioner/fixed_point_max_its=1 Executioner/num_steps=1 "
                "MultiApps/th_sub/cli_args='Executioner/num_steps=12' "
-               "MultiApps/th_sub/max_procs_per_app=1"
+               "MultiApps/th_sub/max_procs_per_app=1 Outputs/file_base=core"
     method = 'opt' # too slow for devel
     # Checkpoint file must have been generated with same number of ranks
     prereq = 'steady_multiphysics'
