@@ -152,8 +152,6 @@ num_layers_for_THM = 50 # number of elements in the THM model; for the converged
 
 [Problem]
   type = OpenMCCellAverageProblem
-  output = 'unrelaxed_tally_std_dev'
-  check_equal_mapped_tally_volumes = true
 
   # optimizations to increase tracking rate by assuring that the tallies
   # are spatially independent
@@ -163,9 +161,6 @@ num_layers_for_THM = 50 # number of elements in the THM model; for the converged
 
   power = '${fparse power / n_bundles}'
   scaling = 100.0
-  tally_blocks = '2'
-  tally_type = cell
-  cell_level = 1
 
   relaxation = constant
   relaxation_factor = 0.5
@@ -181,8 +176,20 @@ num_layers_for_THM = 50 # number of elements in the THM model; for the converged
 
   density_blocks = '101'
 
-  tally_score = heating
-  tally_name = heat_source
+  [Tallies]
+    [heat_source]
+      type = CellTally
+      blocks = '2'
+      name = heat_source
+      score = heating
+
+      trigger = rel_err
+      trigger_threshold = 2e-2
+
+      check_equal_mapped_tally_volumes = true
+      output = 'unrelaxed_tally_std_dev'
+    []
+  []
 []
 
 [Postprocessors]
