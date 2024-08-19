@@ -1,2 +1,0 @@
-HTTR_5x5_9MW_equiv_corrected.xml filter=lfs diff=lfs merge=lfs -text
-HTTR_5x5_9MW_profiled_VR_kappa_adjusted.xml filter=lfs diff=lfs merge=lfs -text
