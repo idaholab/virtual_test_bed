@@ -4,7 +4,7 @@
     type = RunApp
     input = 'run_neutronics.i'
     check_input = True
-    executable_pattern = 'blue_crab*|dire_wolf*|fenix*'
+    executable_pattern = 'blue_crab*|fenix*'
     # multiapps and transfers execute_on are different
     allow_warnings = true
   []
@@ -29,7 +29,7 @@
     type = CSVDiff
     input = 'run_neutronics.i'
     csvdiff = 'multiphysics_out.csv multiphysics_out_ns0.csv'
-    executable_pattern = 'blue_crab*|dire_wolf*|fenix*'
+    executable_pattern = 'blue_crab*|fenix*'
     cli_args = "Executioner/num_steps=2 Executioner/fixed_point_max_its=1 "
                "Executioner/accept_on_max_fixed_point_iteration=true "
                "Outputs/file_base=multiphysics_out"
