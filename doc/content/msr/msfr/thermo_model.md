@@ -12,7 +12,7 @@
                        geometry:core
                        simulation_type:multiphysics
                        input_features:multiapps
-                       code_used:BlueCrab
+                       codes_used:BlueCrab
                        computing_needs:Workstation
                        fiscal_year:2023
 
