@@ -29,7 +29,8 @@
     csvdiff = 'basemat_with_isolators_new_out.csv'
     executable_pattern = 'mastodon*'
     abs_zero = 1e-5
-    rel_err = 1e-4
+    # Tolerance set from p=4 and p=1 comparison
+    rel_err = 4e-4
     max_time = 600
     method = 'opt'
     min_parallel = 4
@@ -41,7 +42,8 @@
     csvdiff = 'basemat_with_isolators_new_3D_out.csv'
     executable_pattern = 'mastodon*'
     abs_zero = 1e-5
-    rel_err = 1e-4
+    # Tolerance set from p=4 and p=1 comparison
+    rel_err = 2e-4
     max_time = 600
     method = 'opt'
     min_parallel = 4
