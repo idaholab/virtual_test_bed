@@ -1,0 +1,17 @@
+[Tests]
+  [2D_gHPMR_mesh]
+    type = JSONDiff
+    input = '2D_gHPMR_Final.i'
+    jsondiff = 'gHPMR_3d_core-10cm.json'
+    requirement = 'the system shall be able to create a mesh for the 2D gHPMR model'
+  []
+  [2D_gHPMR_syntax]
+    type = RunApp
+    input = 2D_gHPMR_Final.i
+    check_input = True
+    allow_warnings = True
+    executable_pattern = 'moose*'
+  []
+[]
+
+
