@@ -13,3 +13,5 @@
 [Control Drum Rotation](drum_rotation/index.md)
 
 [Heat Pipe Micro Reactor with Hydrogen Redistribution (HPMR-H$_2$)](hpmr_h2/index.md)
+
+[Kilopower Reactor Using Stirling TechnologY (KRUSTY)](KRUSTY/index.md)
