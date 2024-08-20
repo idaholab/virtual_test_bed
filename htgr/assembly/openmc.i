@@ -173,6 +173,7 @@ num_layers_for_THM = 50 # number of elements in the THM model; for the converged
   # create those variabes for us
   temperature_variables = 'solid_temp; solid_temp; solid_temp; thm_temp'
   temperature_blocks = 'graphite; compacts; poison; 101'
+  cell_level = 0
 
   density_blocks = '101'
 
