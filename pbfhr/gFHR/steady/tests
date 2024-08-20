@@ -4,6 +4,7 @@
     input = 'gFHR_griffin_cr_ss.i'
     check_input = True
     executable_pattern = 'blue_crab*'
+    min_parallel = 8
   []
   [syntax_neutronics]
     type = RunApp
@@ -11,6 +12,7 @@
     check_input = True
     cli_args = "MultiApps/active='' Transfers/active=''"
     executable_pattern = 'blue_crab*'
+    min_parallel = 4
   []
   [syntax_core_flow]
     type = RunApp
