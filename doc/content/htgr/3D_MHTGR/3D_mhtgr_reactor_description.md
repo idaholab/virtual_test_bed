@@ -1,26 +1,26 @@
 # Modular High-Temperature Gas-Cooled Reactor (3D-MHTGR) 350MW Model Reactor Description
 
-The Modular High Temperature Gas-Cooled Reactor (MHTGR) is a Generation-IV reactor design. It was designed to allow coupling to industrial applications, such as "co-generation of electricity and steam supply or high temperature gas supply to petrochemical and refining plants, electricity and steam supply for oil recovery from oil sands, and high temperature steam or gas and electricity for hydrogen production" [!cite](osti_1149009). The modularity of the design along with a relatively modest power rating would allow for a reduction of construction costs. MHTGR technology present the opportunity for significantly reduced reliance on fossil fuels for process heat production and greenhouse gas emissions.
+The Modular High Temperature Gas-Cooled Reactor (MHTGR) is a Generation-IV reactor design. It was designed to allow coupling to industrial applications, such as "co-generation of electricity and steam supply or high temperature gas supply to petrochemical and refining plants, electricity and steam supply for oil recovery from oil sands, and high temperature steam or gas and electricity for hydrogen production" [!cite](osti_1149009). The modularity of the design, along with a relatively modest 350MW power rating, would allow for a reduction of construction costs. MHTGR technology presents an opportunity for process heat generation, thereby reducing greenhouse gas emissions.
 
 ## Historical and International Context of MHTGR Development
 
-Since the 1980s, HTGR designs using both pebble bed and prismatic reactor fuel designs have been developed by the U.S., South Africa, China, Japan, France, and Germany [!cite](osti_1149009).
+Since the 1980s, HTGR designs using both pebble bed and prismatic reactor fuel designs have been developed by the United States, South Africa, China, Japan, France, and Germany [!cite](osti_1149009).
 
-Germany built and operated the AVR 15-MWe, one of the first HTGR plants, in the mid-1960's. It operated for over 20 years as a valuable test bed for fuel and safety experiments relevant to the MHTGR concept. In 1987, the 300MWe THTR-300 prototype HTR plant was commissioned and started operating at full power, but was shut down in 1989 due to economics and lack of government financial support [!cite](status_of_HTGR_dev_design).
+Germany built and operated the AVR 15MWe, one of the first HTGR plants, in the mid-1960s. It operated for over 20 years as a valuable test bed for fuel and safety experiments relevant to the MHTGR concept. In 1987, the 300MWe THTR-300 (thorium cycle high-temperature nuclear reactor) prototype HTR plant was commissioned and started operating at full power. The plant was shut down in 1989 due to economics and lack of government financial support [!cite](status_of_HTGR_dev_design).
 
 The Japan Atomic Energy Agency constructed the prismatic-based High Temperature Engineering Test Reactor (HTTR), which achieved first criticality in 1998 and operation of the high temperature test operation mode in 2004 [!cite](osti_1149009).
 
-The Chinese Institute of Nuclear and New Energy Technology (INET) constructed the 10 MW(t) High Temperature Reactor (HTR)-10 in Beijing in 1992. The HTR-10 achieved first criticality in 2000 and successfully connected to the electric grid in 2003. INET completed four safety experiments to confirm safety features of HTRs from 2003 to 2006 [!cite](osti_1149009).
+The Chinese Institute of Nuclear and New Energy Technology (INET) constructed the 10MW(t) High Temperature Reactor (HTR)-10 in Beijing in 1992. The HTR-10 achieved first criticality in 2000 and successfully connected to the electric grid in 2003. INET completed four safety experiments to confirm safety features of HTRs from 2003 to 2006 [!cite](osti_1149009).
 
-In 2006, the Department of Energy (DOE) initiated the Next Generation Nuclear Plant (NGNP) project at INL. An objective of the NGNP project was to demonstrate HTGR technology's ability to produce high temperature heat and electricity. In 2007, South African group Pebble Bed Modular Reactor (PBMR) Pty Ltd. and French group AREVA NP, Inc. developed preconceptual designs for pebble bed & prismatic based nuclear power plants [!cite](osti_1149009).
+In 2006, the Department of Energy (DOE) initiated the Next Generation Nuclear Plant (NGNP) project at the Idaho National Laboratory. An objective of the NGNP project was to demonstrate HTGR technology's ability to produce high temperature heat and electricity. In 2007, South African group Pebble Bed Modular Reactor (PBMR) Pty Ltd. and French group AREVA NP, Inc. developed preconceptual designs for pebble bed and prismatic based nuclear power plants [!cite](osti_1149009).
 
-The 3D Modular High-Temperature Gas-Cooled Reactor (MHTGR) Model is based on the MHTGR 350 MW, annular prismatic block core design developed by General Atomics (GA) and the Department of Energy (DOE) in the 1980s [!cite](NEYLAN198899). This design was chosen to maximize power rating while still permitting passive core heat removal and maintaining silicon carbide temperature below 600$^{\circ}$C during a cooldown event [!cite](osti_1832146).
-    s
+The 3D Modular High-Temperature Gas-Cooled Reactor Model is based on the MHTGR 350MW, annular prismatic block core design developed by General Atomics (GA) and the Department of Energy in the 1980s [!cite](NEYLAN198899). This design was chosen to maximize power rating while still permitting passive core heat removal and maintaining silicon carbide temperature below 600$^{\circ}$C during a cooldown event [!cite](osti_1832146).
+
 ## Reactor Core Design
 
 The axial and radial core layouts of this simplified model are presented below in Figures 1 and 2.
 
-The axial core layout, show below in Figure 1, includes the Reactor Pressure Vessel (RPV), the Upper Plenum Thermal Protection Structure (UPTPS), coolant channels on the exterior of the core, fuel columns containing 10 fuel blocks surrounded by 2 upper reflector blocks and 2 bottom reflector blocks, replacable reflector columns composed of 13 blocks, a bottom layer of flow distribution and central reflector support blocks, and a top layer of Alloy 800H blocks covering the core.
+The axial core layout, show below in Figure 1, includes the Reactor Pressure Vessel (RPV), the Upper Plenum Thermal Protection Structure (UPTPS), coolant channels on the exterior of the core, fuel columns containing 10 fuel blocks surrounded by 2 upper reflector blocks and 2 bottom reflector blocks, replaceable reflector columns composed of 13 blocks, a bottom layer of flow distribution and central reflector support blocks, and a top layer of Alloy 800H blocks covering the core.
 
 !media media/htgr/3D_mhtgr/3D_mhtgr_axial_core_layout.png
     style=width:45%
@@ -45,6 +45,7 @@ The general 3D-MHGTR design specifications are summarized below in Table I, from
 | Mass Flow Rate                                | 157.1                  | kg/s        |
 | Outlet Temperature                            | 687                    | $^{\circ}$C |
 
+
 | Dimensions/Geometry                           | Value/Type             | Unit        |
 |:----------------------------------------------|:-----------------------|:------------|
 | Core Configuration                            | Annular                |             |
@@ -61,6 +62,7 @@ The general 3D-MHGTR design specifications are summarized below in Table I, from
 | Lattice Radial Size                           | 3.5                    | m           |
 | Core Active Fuel Height                       | 7.93                   | m           |
 | Core Reflector Heights                        | 9.7/12.2               | m           |
+
 
 | Materials                                     | Type                                 |
 |:----------------------------------------------|:-------------------------------------|
@@ -80,6 +82,7 @@ The general 3D-MHGTR design specifications are summarized below in Table I, from
 | Core Restraint Element                        | Alloy 800H                           |
 | Insulation                                    | Kaowool                              |
 | Reactor Pressure Vessel                       | SA-533B Steel                        |
+
 
 | Core Layout                                   | Quantity                             |
 |:----------------------------------------------|:-------------------------------------|

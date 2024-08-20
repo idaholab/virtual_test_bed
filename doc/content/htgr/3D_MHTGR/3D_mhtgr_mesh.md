@@ -15,7 +15,10 @@ The hexagonal core mesh is created in several steps:
 
 A more detailed explanation of each step follows below.
 
-Throughout the steps, the metadata from the fine hexagonal core mesh is reapplied to the individual meshes. When the hexagonal meshes are modified, such as adding in the RSC channel and modeling all the positional variations of the fuel & reflector blocks, they lose the original metadata. Thus reapplying the metadata from before the modifications is necessary to generate the assembly of pin meshes and the whole core.
+Throughout the steps, the metadata from the fine hexagonal core mesh is reapplied to the individual meshes. When the hexagonal meshes are modified, for example when adding the RSC channel to the model or modeling all the positional variations of the fuel and reflector blocks, they lose the metadata originally attached to the mesh. Thus, reapplying the metadata from before the modifications is necessary to generate the assembly of pin meshes and the whole core.
+
+!alert note
+Metadata propagation is now mostly automatically handled. 
 
 ## Fuel Pin
 
@@ -54,7 +57,7 @@ The assembly with the RSC is composed of 6 burnable poison pin meshes, 132 fuel 
 !listing htgr/3D_mhtgr/3D_mhtgr_final.i block=Mesh/fuel_assembly_with_rsc
 
 The hexagonal fuel assembly with RSC then undergoes many modifications.
-First, the pin cells are deleted. Then, a new block ID is assigned to the holes left by the deletion and the holes are remeshed. The boundary of the RSC channel is then generated and stitched back into the fuel assembly mesh. Finally the holes and the assembly meshes are stitched together.
+First, the pin cells are deleted. Then, a new block ID is assigned to the holes left by the deletion and the holes are remeshed. The boundary of the RSC channel is then generated and stitched back into the fuel assembly mesh. Finally, the holes and the assembly meshes are stitched together.
 
 !listing htgr/3D_mhtgr/3D_mhtgr_final.i start=[delete_pins_for_rsc] end=[fuel_assembly_w_rsc_stitched]
 
@@ -70,11 +73,11 @@ The following code is repeated for each transformation.
 
 ## Reflector Assembly
 
-The base of the assembly is generated first, then the interior is deleted in order to re-mesh the assembly to border the fuel assemblies without leaving long, thin elements which intersect in the center of the hexagon.
+The base of the assembly is generated first. Then, the interior is deleted in order to re-mesh the assembly to border the fuel assemblies without leaving long, thin elements that intersect in the center of the hexagon.
 
 !listing htgr/3D_mhtgr/3D_mhtgr_final.i start=[reflector_assembly_base] end=[reflector_assembly]
 
-A reflector assembly which borders fuel assemblies on 3 sides must be adapted by deleting, rebuilding, remeshing, triangulating, stitching, and lastly reapplying the metadata to the interior.
+A reflector assembly which borders fuel assemblies on 3 sides must be adapted by deleting, rebuilding, remeshing, triangulating, stitching, and reapplying the metadata to the interior.
 
 !listing htgr/3D_mhtgr/3D_mhtgr_final.i start=[reflector_assembly_base_0_1_2] end=[reflector_assembly_0_1_2]
 
@@ -92,7 +95,7 @@ The entire process of adapting the reflector assembly and generating the 6 diffe
 
 !listing htgr/3D_mhtgr/3D_mhtgr_final.i start=[reflector_assembly_base_0_1] end=[reflector_assembly_1_2]
 
-The process is repeated again for the reflector assemblies with have a control rod (CR) hole in them and border 2 fuel assemblies. These assemblies are also reflected so we need 12 permutations, not 6.
+The process is repeated again for the reflector assemblies which have a control rod (CR) hole in them and border 2 fuel assemblies. These assemblies are also reflected, so we need 12 permutations, not 6.
 
 !media media/htgr/3D_mhtgr/3d_mhtgr_meshes/reflector_assembly_w_cr_hole_0_1.png
     style=width:45%
@@ -106,7 +109,7 @@ The following code is repeated for each of the 12 permutations.
 
 !listing htgr/3D_mhtgr/3D_mhtgr_final.i block=Mesh/reflector_assembly_w_cr_hole_0_1_reflected
 
-Lastly, the process is repeated for the reflector assemblies with have a control rod (CR) hole in them and border only 1 fuel assembly.
+Lastly, the process is repeated for the reflector assemblies which have a control rod (CR) hole in them and border only 1 fuel assembly.
 
 !media media/htgr/3D_mhtgr/3d_mhtgr_meshes/reflector_assembly_w_cr_hole_2.png
     style=width:45%
@@ -138,7 +141,7 @@ The following code is repeated for each of the 6 permutations.
 
 ## Assembly to Remove
 
-The last step of generating the core mesh is to create an assembly with a unique block ID which can be removed from the mesh later; this ensures that the final core is not required to have a perfect hexagonal pattern, and can have one assembly removed in each corner.
+The last step of generating the core mesh is to create an assembly with a unique block ID that can be removed from the mesh later; this ensures that the final core is not required to have a perfect hexagonal pattern and can have one assembly removed in each corner.
 
 !listing htgr/3D_mhtgr/3D_mhtgr_final.i block=Mesh/assembly_to_remove
 
@@ -148,7 +151,7 @@ All of the smaller, previously generated assembly meshes are used as inputs and 
 
 !media media/htgr/3D_mhtgr/3d_mhtgr_meshes/hex_core.png
     style=width:85%
-    caption=Figure 8: Hexagonal Core Mesh featuring close up of Core Assembly Meshes
+    caption=Figure 8: Hexagonal core mesh featuring close up of core assembly meshes
 
 !listing htgr/3D_mhtgr/3D_mhtgr_final.i block=Mesh/hex_core
 
@@ -156,7 +159,7 @@ An additional ring boundary is added to the 2D mesh.
 
 !media media/htgr/3D_mhtgr/3d_mhtgr_meshes/ring_boundary.png
     style=width:85%
-    caption=Figure 9: Hexagonal Core Mesh with Ring Boundary featuring close ups of Ring Boundary Mesh and Core Assembly Meshes
+    caption=Figure 9: Hexagonal core mesh with ring boundary featuring close ups of ring boundary mesh and core assembly meshes
 
 !listing htgr/3D_mhtgr/3D_mhtgr_final.i block=Mesh/ring_boundary
 
@@ -180,7 +183,7 @@ Lastly the coarse mesh hexagon is generated with the same dimensions as the fine
 
 !media media/htgr/3D_mhtgr/3d_mhtgr_meshes/coarse_hex_core.png
     style=width:45%
-    caption=Figure 11: Coarse Hexagonal Core Mesh
+    caption=Figure 11: Coarse hexagonal core mesh
 
 !listing htgr/3D_mhtgr/3D_mhtgr_final.i block=Mesh/coarse_mesh_hex
 
@@ -192,19 +195,19 @@ The metadata is added to the coarse mesh, another ring boundary is created, and 
 
 !media media/htgr/3D_mhtgr/3d_mhtgr_meshes/coarse_mesh_ring_extrude.png
     style=width:75%
-    caption=Figure 12: Left: Coarse Hexagonal Core Mesh with Ring Boundary; Right: 3D, Extruded Coarse Hexagonal Core Mesh
+    caption=Figure 12: Left: Coarse hexagonal core mesh with ring boundary; Right: 3D, Extruded coarse hexagonal core mesh
 
 !listing htgr/3D_mhtgr/3D_mhtgr_final.i block=Mesh/coarse_ring
 
 !listing htgr/3D_mhtgr/3D_mhtgr_final.i block=Mesh/coarse_extrude
 
-Finally the coarse mesh is superimposed onto the fine mesh. The coarse mesh is used for Coarse Mesh Finite Difference, a transport acceleration technique. This results in the final 3D MHTGR Hexagonal core Mesh for the 350MW Model.
+Finally the coarse mesh is superimposed onto the fine mesh. The coarse mesh is used for Coarse Mesh Finite Difference, a transport acceleration technique. This results in the final 3D MHTGR hexagonal core mesh for the 350MW Model.
 
 !listing htgr/3D_mhtgr/3D_mhtgr_final.i block=Mesh/coarse_mesh_id
 
-This method is used when solving full-core analysis in Nuclear Energy Advanced Modeling and Simulation (NEAMS) code Griffin. More information regarding Griffin is available [here](https://mooseframework.inl.gov/moose/help/inl/applications.html).
+This method is used when solving full-core analysis in the Nuclear Energy Advanced Modeling and Simulation (NEAMS) code Griffin. More information regarding Griffin is available [here](https://mooseframework.inl.gov/moose/help/inl/applications.html).
 
 !media media/htgr/3D_mhtgr/3d_mhtgr_meshes/final_mesh.png
     style=width:85%
-    caption=Figure 13: 3D MHTGR Hexagonal Core Mesh featuring close ups of Core Assembly Meshes and Ring Barrier Mesh
+    caption=Figure 13: 3D MHTGR Hexagonal core mesh featuring close ups of core assembly meshes and ring barrier mesh
 
