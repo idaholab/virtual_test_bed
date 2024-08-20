@@ -19,11 +19,11 @@ The PBMR concept represents a significant advancement in nuclear reactor technol
 In the 1990s, the electric utility company of South Africa, Eskom, developed the PBMR concept as a possible option for increased power generation through the installation of a nuclear power plant (NPP).
 This PBMR power plant incorporates a closed cycle primary coolant system using helium to transport heat energy directly from the modular pebble bed reactor. [!cite](pbmr_neutronics).
 
-In 2012, China started construction of its own high-temperature gas-cooled reactor pebble-bed module (HTR-PM) demonstration power plant, located in Rongcheng, Shandong Province. The aim of the plant is to extend nuclear energy application beyond the grid, including high-temperature heat utilization, cogeneration, and hydrogen production. Another goal was to prove that "innovation can provide another solution fo inherently safe nuclear energy technology." During research and development, international experiences with HTGR were carefully studied, and much of the research was conducted alongside German scientists in the field of pebble-bed HTGR. [!cite](htr-pm_Zhang).
+In 2012, China started construction of its own high-temperature gas-cooled reactor pebble-bed module (HTR-PM) demonstration power plant, located in Rongcheng, Shandong Province. The aim of the plant is to extend nuclear energy application beyond the grid, including high-temperature heat utilization, co-generation, and hydrogen production. Another goal was to prove that "innovation can provide another solution for inherently safe nuclear energy technology." During research and development, international experiences with HTGR were carefully studied, and much of the research was conducted alongside German scientists in the field of pebble-bed HTGR. [!cite](htr-pm_Zhang).
 
 ## Model Description
 
-The HTR-PB is 250 MWth, helium-cooled reactor including a cylindrical pebble-bed surrounded by radial, lower, and upper reflectors made of graphite. The radial reflectors include designated areas for the control rod channels, fluid riser channels, and Kleine Absorber Kugel System (KLAK) channels (shutdown system).
+The Pebble Bed High Temperature Reactor, HTR-PB, is 250 MWth, helium-cooled reactor including a cylindrical pebble-bed surrounded by radial, lower, and upper reflectors made of graphite. The radial reflectors include designated areas for the control rod channels, fluid riser channels, and Kleine Absorber Kugel System (KLAK) channels (shutdown system).
 
 Below are the design specifications for the Gas-Cooled High-Temperature Pebble-Bed (HTR-PB) Model, from [!cite](htr-pm_Zhang), [!cite](pbmr_neutronics), and [!cite](htr_pb_pm).
 
@@ -52,12 +52,12 @@ Below are the design specifications for the Gas-Cooled High-Temperature Pebble-B
 | Vessel Diameter                               | 6 m                                   |
 | Fuel Element Diameter                         | 60 mm                                 |
 
-| Fuel Cycle                                    | Value                                 |
-|:----------------------------------------------|:--------------------------------------|
-| Fuel Type                                     | TRISO Ceramic Coated U-235 in Graphite|
-| Heavy Metal Loading per Fuel Element          | 7 g                                   |
-| Number of Fuel Elements in 1 Core             | 419,384                               |
-| Fuel Pebble Types                             | 1 Pebble Type                         |
-| Average Number of Passes                      | 15                                    |
-| Average Pebble Residence Time                 | 70.5 Days                             |
-| Fuel Enrichment                               | 8.6%                                  |
+| Fuel Cycle                                    | Value                                  |
+|:----------------------------------------------|:---------------------------------------|
+| Fuel Type                                     | TRISO Ceramic Coated U-235 in Graphite |
+| Heavy Metal Loading per Fuel Element          | 7 g                                    |
+| Number of Fuel Elements in 1 Core             | 419,384                                |
+| Fuel Pebble Types                             | 1 Pebble Type                          |
+| Average Number of Passes                      | 15                                     |
+| Average Pebble Residence Time                 | 70.5 Days                              |
+| Fuel Enrichment                               | 8.6%                                   |
