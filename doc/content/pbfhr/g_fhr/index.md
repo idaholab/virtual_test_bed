@@ -1,6 +1,6 @@
 # Generic fluoride-cooled high-temperature reactor (gFHR)
 
-!tag name=gFHR Griffin-Pronghorn Steady State Model pairs=reactor_type:PBFHR
+!tag name=gFHR Griffin-Pronghorn Steady State Model pairs=reactor_type:PB-FHR
                        reactor:gFHR
                        geometry:core
                        simulation_type:multiphysics
@@ -8,6 +8,7 @@
                        input_features:multiapps;physics_syntax
                        codes_used:BlueCrab;Griffin;Pronghorn
                        computing_needs:Workstation
+                       sponsor:NRC
                        fiscal_year:2024
 
 [Description of the reactor](pbfhr/g_fhr/reactor_description.md)
