@@ -1,0 +1,18 @@
+[Tests]
+  [3D_AGN-201_mesh]
+    type = JSONDiff
+    input = '3D_AGN-201_Final.i'
+    jsondiff = 'gHPMR_asm_mesh_2D.json'
+    max_time = 1000
+    requirement = 'the system shall be able to create a mesh for the 3D AGN-201 model'
+  []
+  [3D_AGN-201_syntax]
+    type = RunApp
+    input = 3D_AGN-201_Final.i
+    check_input = True
+    allow_warnings = True
+    executable_pattern = 'moose*'
+  []
+[]
+
+
