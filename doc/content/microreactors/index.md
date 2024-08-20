@@ -15,3 +15,5 @@
 [Heat Pipe Micro Reactor with Hydrogen Redistribution (HPMR-H$_2$)](hpmr_h2/index.md)
 
 [Kilopower Reactor Using Stirling TechnologY (KRUSTY)](KRUSTY/index.md)
+
+[2D Generic Heat Pipe Microreactor (gHPMR)](gHPMR/index.md)
