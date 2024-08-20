@@ -15,6 +15,7 @@
   # Regression checks for 19-pin model
   [channel]
     type = Exodiff
+    custom_cmp = 'test.exodiff'
     input = ornl_19_pin.i
     exodiff = 'ornl_19_pin_out.e'
     prereq = 'channel_syntax'

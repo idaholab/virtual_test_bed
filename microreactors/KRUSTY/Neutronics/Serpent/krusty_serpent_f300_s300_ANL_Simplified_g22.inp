@@ -1,0 +1,5434 @@
+% Serpent krusty model for the simplified ANL model
+%  C Y. Cao date: 2024-03-08
+% definition of the fuel universe 
+cell 1 104 fuel_104 -inf
+cell 2 105 fuel_105 -inf
+cell 3 202 fuel_202 -inf
+cell 4 203 fuel_203 -inf
+cell 5 300 fuel_300 -inf
+cell 6 301 fuel_301 -inf
+cell 7 114 fuel_114 -inf
+cell 8 115 fuel_115 -inf
+cell 9 212 fuel_212 -inf
+cell 10 213 fuel_213 -inf
+cell 11 310 fuel_310 -inf
+cell 12 311 fuel_311 -inf
+cell 13 124 fuel_124 -inf
+cell 14 125 fuel_125 -inf
+cell 15 222 fuel_222 -inf
+cell 16 223 fuel_223 -inf
+cell 17 320 fuel_320 -inf
+cell 18 321 fuel_321 -inf
+cell 19 134 fuel_134 -inf
+cell 20 135 fuel_135 -inf
+cell 21 232 fuel_232 -inf
+cell 22 233 fuel_233 -inf
+cell 23 330 fuel_330 -inf
+cell 24 331 fuel_331 -inf
+cell 25 144 fuel_144 -inf
+cell 26 145 fuel_145 -inf
+cell 27 242 fuel_242 -inf
+cell 28 243 fuel_243 -inf
+cell 29 340 fuel_340 -inf
+cell 30 341 fuel_341 -inf
+cell 31 154 fuel_154 -inf
+cell 32 155 fuel_155 -inf
+cell 33 252 fuel_252 -inf
+cell 34 253 fuel_253 -inf
+cell 35 350 fuel_350 -inf
+cell 36 351 fuel_351 -inf
+cell 37 164 fuel_164 -inf
+cell 38 165 fuel_165 -inf
+cell 39 262 fuel_262 -inf
+cell 40 263 fuel_263 -inf
+cell 41 360 fuel_360 -inf
+cell 42 361 fuel_361 -inf
+cell 43 4 Al -inf
+cell 44 40 Al_AmBe_holder -inf
+cell 45 5 beo_axial_plug_top -inf
+cell 46 50 beo_axial_refl_top -inf
+cell 47 51 beo_radial_refl_inner -inf
+cell 48 52 beo_radial_refl_outer -inf
+cell 49 6 bore_shield_axial_bottom_t -inf
+cell 50 60 bore_shield_axial_bottom_b -inf
+cell 51 7 b4c_shield -inf
+cell 52 70 b4c_platen -inf
+cell 53 8 dig_spacer_bottom -inf
+cell 54 9 hanger_top -inf
+cell 55 10 support_rod -inf
+cell 56 11 ss_level_plate -inf
+cell 57 12 ss_low_level_plate -inf
+cell 58 13 top_ring_shield_outer -inf
+cell 59 14 top_ring_shield_inner -inf
+cell 60 15 rad_shield -inf
+cell 61 17 comet_plate -inf
+cell 62 18 ss316 -inf
+cell 63 99 air -inf
+cell 64 20 AmBe -inf
+
+ % geometry definition 
+cell 65  0    fill 99  2 -5 1 -4   % air_below_comet_plate
+cell 66  0    fill 17  2 -5 4 -3   % comet_plate
+cell 67  0    fill 15  3 -6 2 -5   % radial_shield_block
+cell 68  0    fill 99  -2 1 -11   % air_below_platen
+cell 69  0    fill 11  -7 11 -13   % platen_refl_1
+cell 70  0    fill 70  -7 13 -14   % platen_b4C
+cell 71  0    fill 11  14 -15 16 -7   % platen_ss_upper_plate
+cell 72  0    fill 99  7 -2 11 -15   % platen_refl_shield_air_gap
+cell 73  0    fill 52  19 -18 15 -20   % radial_refl_outer
+cell 74  0    fill 51  16 -19 15 -20   % radial_refl_inner
+cell 75  0    fill 18  17 -16 14 -40   % center_ring
+cell 76  0    fill 99  16 -19 20 -40   % radial_refl_inner_air
+cell 77  0    fill 99  19 -18 20 -40   % radial_refl_outer_air
+cell 78  0    fill 99  18 -2 15 -40   % refl_shield_air_gap
+cell 79  0    fill 99  92 -2 40 -22   % air_gap_above_refl
+cell 80  0    fill 14  22 -23 17 -21   % top_ring_inner_l
+cell 81  0    fill 14  23 -24 17 -26   % top_ring_inner_h
+cell 82  0    fill 13  22 -23 21 -2   % top_ring_outer_l
+cell 83  0    fill 13  23 -6 26 -2   % top_ring_outer_h
+cell 84  0    fill 7   24 -140 25 -26   % top_ring_inner_b4C
+cell 85  0    fill 99  22 -24 92 -17   % top_ring_inner_air_2
+cell 86  0    fill 99  24 -140 92 -25   % top_ring_inner_air_3
+cell 87  0    fill 6   -100 130 -92   % end_plate
+cell 88  0    fill 99  -100 130 92 -17   % air_out_end_plate
+cell 89  0    fill 99  14 -130 -17   % air_between_end_plate_platen
+cell 90  0    fill 8   -101 100 -95   % low_retaining_plate_spacer
+cell 91  0    fill 10  100 -95 -106   % rd_across_retaining_plate_e
+cell 92  0    fill 10  100 -95 -108   % rd_across_retaining_plate_n
+cell 93  0    fill 10  100 -95 -107   % rd_across_retaining_plate_w
+cell 94  0    fill 10  100 -95 -109   % rd_across_retaining_plate_s
+cell 95  0    fill 10  100 -95 -110   % rd_across_retaining_plate_ne
+cell 96  0    fill 10  100 -95 -111   % rd_across_retaining_plate_nw
+cell 97  0    fill 10  100 -95 -113   % rd_across_retaining_plate_sw
+cell 98  0    fill 10  100 -95 -112   % rd_across_retaining_plate_se
+cell 99  0    fill 6   99 -95 101 -92 106 107 108 109 110 111 113 112   % low_retaining_plate_top
+cell 100 0    fill 60  100 -99 101 -92 106 107 108 109 110 111 113 112   % low_retaining_plate_bottom
+cell 101 0    fill 99  100 -95 92 -17   % air_out_retaining_plate
+cell 102 0    fill 10  95 -34 -41   % support_rod_low_axial_hp_e
+cell 103 0    fill 10  95 -34 -43   % support_rod_low_axial_hp_n
+cell 104 0    fill 10  95 -34 -42   % support_rod_low_axial_hp_w
+cell 105 0    fill 10  95 -34 -44   % support_rod_low_axial_hp_s
+cell 106 0    fill 10  95 -34 -45   % support_rod_low_axial_hp_ne
+cell 107 0    fill 10  95 -34 -46   % support_rod_low_axial_hp_nw
+cell 108 0    fill 10  95 -34 -48   % support_rod_low_axial_hp_sw
+cell 109 0    fill 10  95 -34 -47   % support_rod_low_axial_hp_se
+cell 110 0    fill 99  95 -34 -33 -53 41   % air_in_loc_low_axial_hp_e
+cell 111 0    fill 99  95 -34 -33 -54 42   % air_in_loc_low_axial_hp_w
+cell 112 0    fill 99  95 -34 -33 -55 43   % air_in_loc_low_axial_hp_n
+cell 113 0    fill 99  95 -34 -33 -56 44   % air_in_loc_low_axial_hp_s
+cell 114 0    fill 99  95 -34 -33 -61 45   % air_in_loc_low_axial_hp_ne
+cell 115 0    fill 99  95 -34 -33 -62 46   % air_in_loc_low_axial_hp_nw
+cell 116 0    fill 99  95 -34 -33 -63 48   % air_in_loc_low_axial_hp_sw
+cell 117 0    fill 99  95 -34 -33 -64 47   % air_in_loc_low_axial_hp_se
+cell 118 0    fill 99  95 -34 33 75 -77 -92 41 42   % air_outer_loc_low_axial_hp_e_w
+cell 119 0    fill 99  95 -34 33 69 -71 -92 43 44   % air_outer_loc_low_axial_hp_n_s
+cell 120 0    fill 99  95 -34 33 87 -88 -92 45 48   % air_outer_loc_low_axial_hp_ne_sw
+cell 121 0    fill 99  95 -34 33 89 -90 -92 46 47   % air_outer_loc_low_axial_hp_nw_se
+cell 122 0    fill 5   101 -33 95 -34 53 54 55 56 61 62 63 64   % low_axial_ref_boundary_cut_inner_layer
+cell 123 0    fill 5   33 -92 95 -34 77 88   % low_axial_ref_boundary_cut_outer_layer_e
+cell 124 0    fill 5   33 -92 95 -34 -87 71   % low_axial_ref_boundary_cut_outer_layer_w
+cell 125 0    fill 5   33 -92 95 -34 -69 90   % low_axial_ref_boundary_cut_outer_layer_n
+cell 126 0    fill 5   33 -92 95 -34 -89 77   % low_axial_ref_boundary_cut_outer_layer_s
+cell 127 0    fill 5   33 -92 95 -34 -75 -87   % low_axial_ref_boundary_cut_outer_layer_ne
+cell 128 0    fill 5   33 -92 95 -34 88 -69   % low_axial_ref_boundary_cut_outer_layer_nw
+cell 129 0    fill 5   33 -92 95 -34 71 -89   % low_axial_ref_boundary_cut_outer_layer_sw
+cell 130 0    fill 5   33 -92 95 -34 90 -75   % low_axial_ref_boundary_cut_outer_layer_se
+cell 131 0    fill 99  -34 95 92 -17   % low_refl_out_airgap
+cell 132 0    fill 5   -94 95 93 -101   % low_refl_inner
+cell 133 0    fill 99  -34 94 93 -101   % low_refl_top_airgap
+cell 134 0    fill 20  -156 157 -158   % AmBe Source
+cell 135 0    fill 18  -163 156 160 -161   % AmBe Clad Outer
+cell 136 0    fill 18  -156 160 -157   % AmBe Clad Bottom
+cell 137 0    fill 18  -156 158 -161   % AmBe Clad Top
+cell 138 0    fill 40  -162 163 160 -161   % Source box side
+cell 139 0    fill 40  -162 164 -160   % AmBe box Bottom
+cell 140 0    fill 40  -162 161 -165   % AmBe box Top
+cell 141 0    fill 40  95 -164 -93   % Box holder top
+cell 142 0    fill 99  165 -40 -27   % disk_inside_air_top
+cell 143 0    fill 99  34 -164 -27 93   % disk_inside_air_bottom
+cell 144 0    fill 99  164 -165 -27 162   % disk_inside_air_middle
+cell 145 0    fill 300 27 -28 34 -35   % fuel_r1_fuel_b_1
+cell 146 0    fill 301 27 -28 35 -36   % fuel_r1_fuel_b_2
+cell 147 0    fill 202 27 -28 36 -37   % fuel_r1_fuel_m_1
+cell 148 0    fill 203 27 -28 37 -38   % fuel_r1_fuel_m_2
+cell 149 0    fill 104 27 -28 38 -39   % fuel_r1_fuel_t_1
+cell 150 0    fill 105 27 -28 39 -40   % fuel_r1_fuel_t_2
+cell 151 0    fill 310 28 -101 34 -35   % fuel_r2_fuel_b_1
+cell 152 0    fill 311 28 -101 35 -36   % fuel_r2_fuel_b_2
+cell 153 0    fill 212 28 -101 36 -37   % fuel_r2_fuel_m_1
+cell 154 0    fill 213 28 -101 37 -38   % fuel_r2_fuel_m_2
+cell 155 0    fill 114 28 -101 38 -39   % fuel_r2_fuel_t_1
+cell 156 0    fill 115 28 -101 39 -40   % fuel_r2_fuel_t_2
+cell 157 0    fill 320 101 -29 34 -35   % fuel_r3_fuel_b_1
+cell 158 0    fill 321 101 -29 35 -36   % fuel_r3_fuel_b_2
+cell 159 0    fill 222 101 -29 36 -37   % fuel_r3_fuel_m_1
+cell 160 0    fill 223 101 -29 37 -38   % fuel_r3_fuel_m_2
+cell 161 0    fill 124 101 -29 38 -39   % fuel_r3_fuel_t_1
+cell 162 0    fill 125 101 -29 39 -40   % fuel_r3_fuel_t_2
+cell 163 0    fill 330 29 -30 34 -35   % fuel_r4_fuel_b_1
+cell 164 0    fill 331 29 -30 35 -36   % fuel_r4_fuel_b_2
+cell 165 0    fill 232 29 -30 36 -37   % fuel_r4_fuel_m_1
+cell 166 0    fill 233 29 -30 37 -38   % fuel_r4_fuel_m_2
+cell 167 0    fill 134 29 -30 38 -39   % fuel_r4_fuel_t_1
+cell 168 0    fill 135 29 -30 39 -40   % fuel_r4_fuel_t_2
+cell 169 0    fill 340 30 -31 34 -35   % fuel_r5_fuel_b_1
+cell 170 0    fill 341 30 -31 35 -36   % fuel_r5_fuel_b_2
+cell 171 0    fill 242 30 -31 36 -37   % fuel_r5_fuel_m_1
+cell 172 0    fill 243 30 -31 37 -38   % fuel_r5_fuel_m_2
+cell 173 0    fill 144 30 -31 38 -39   % fuel_r5_fuel_t_1
+cell 174 0    fill 145 30 -31 39 -40   % fuel_r5_fuel_t_2
+cell 175 0    fill 350 31 -33 34 -35 49 50 51 52 57 58 59 60   % fuel_boundary_fuel_b_1_inner_layer
+cell 176 0    fill 360 33 -32 34 -35 78 80   % fuel_boundary_fuel_b_1_outer_layer_e
+cell 177 0    fill 360 33 -32 34 -35 -79 72   % fuel_boundary_fuel_b_1_outer_layer_w
+cell 178 0    fill 360 33 -32 34 -35 -70 82   % fuel_boundary_fuel_b_1_outer_layer_n
+cell 179 0    fill 360 33 -32 34 -35 -81 78   % fuel_boundary_fuel_b_1_outer_layer_s
+cell 180 0    fill 360 33 -32 34 -35 -76 -79   % fuel_boundary_fuel_b_1_outer_layer_ne
+cell 181 0    fill 360 33 -32 34 -35 80 -70   % fuel_boundary_fuel_b_1_outer_layer_nw
+cell 182 0    fill 360 33 -32 34 -35 72 -81   % fuel_boundary_fuel_b_1_outer_layer_sw
+cell 183 0    fill 360 33 -32 34 -35 82 -76   % fuel_boundary_fuel_b_1_outer_layer_se
+cell 184 0    fill 351 31 -33 35 -36 49 50 51 52 57 58 59 60   % fuel_boundary_fuel_b_2_inner_layer
+cell 185 0    fill 361 33 -32 35 -36 78 80   % fuel_boundary_fuel_b_2_outer_layer_e
+cell 186 0    fill 361 33 -32 35 -36 -79 72   % fuel_boundary_fuel_b_2_outer_layer_w
+cell 187 0    fill 361 33 -32 35 -36 -70 82   % fuel_boundary_fuel_b_2_outer_layer_n
+cell 188 0    fill 361 33 -32 35 -36 -81 78   % fuel_boundary_fuel_b_2_outer_layer_s
+cell 189 0    fill 361 33 -32 35 -36 -76 -79   % fuel_boundary_fuel_b_2_outer_layer_ne
+cell 190 0    fill 361 33 -32 35 -36 80 -70   % fuel_boundary_fuel_b_2_outer_layer_nw
+cell 191 0    fill 361 33 -32 35 -36 72 -81   % fuel_boundary_fuel_b_2_outer_layer_sw
+cell 192 0    fill 361 33 -32 35 -36 82 -76   % fuel_boundary_fuel_b_2_outer_layer_se
+cell 193 0    fill 252 31 -33 36 -37 49 50 51 52 57 58 59 60   % fuel_boundary_fuel_m_1_inner_layer
+cell 194 0    fill 262 33 -32 36 -37 78 80   % fuel_boundary_fuel_m_1_outer_layer_e
+cell 195 0    fill 262 33 -32 36 -37 -79 72   % fuel_boundary_fuel_m_1_outer_layer_w
+cell 196 0    fill 262 33 -32 36 -37 -70 82   % fuel_boundary_fuel_m_1_outer_layer_n
+cell 197 0    fill 262 33 -32 36 -37 -81 78   % fuel_boundary_fuel_m_1_outer_layer_s
+cell 198 0    fill 262 33 -32 36 -37 -76 -79   % fuel_boundary_fuel_m_1_outer_layer_ne
+cell 199 0    fill 262 33 -32 36 -37 80 -70   % fuel_boundary_fuel_m_1_outer_layer_nw
+cell 200 0    fill 262 33 -32 36 -37 72 -81   % fuel_boundary_fuel_m_1_outer_layer_sw
+cell 201 0    fill 262 33 -32 36 -37 82 -76   % fuel_boundary_fuel_m_1_outer_layer_se
+cell 202 0    fill 253 31 -33 37 -38 49 50 51 52 57 58 59 60   % fuel_boundary_fuel_m_2_inner_layer
+cell 203 0    fill 263 33 -32 37 -38 78 80   % fuel_boundary_fuel_m_2_outer_layer_e
+cell 204 0    fill 263 33 -32 37 -38 -79 72   % fuel_boundary_fuel_m_2_outer_layer_w
+cell 205 0    fill 263 33 -32 37 -38 -70 82   % fuel_boundary_fuel_m_2_outer_layer_n
+cell 206 0    fill 263 33 -32 37 -38 -81 78   % fuel_boundary_fuel_m_2_outer_layer_s
+cell 207 0    fill 263 33 -32 37 -38 -76 -79   % fuel_boundary_fuel_m_2_outer_layer_ne
+cell 208 0    fill 263 33 -32 37 -38 80 -70   % fuel_boundary_fuel_m_2_outer_layer_nw
+cell 209 0    fill 263 33 -32 37 -38 72 -81   % fuel_boundary_fuel_m_2_outer_layer_sw
+cell 210 0    fill 263 33 -32 37 -38 82 -76   % fuel_boundary_fuel_m_2_outer_layer_se
+cell 211 0    fill 154 31 -33 38 -39 49 50 51 52 57 58 59 60   % fuel_boundary_fuel_t_1_inner_layer
+cell 212 0    fill 164 33 -32 38 -39 78 80   % fuel_boundary_fuel_t_1_outer_layer_e
+cell 213 0    fill 164 33 -32 38 -39 -79 72   % fuel_boundary_fuel_t_1_outer_layer_w
+cell 214 0    fill 164 33 -32 38 -39 -70 82   % fuel_boundary_fuel_t_1_outer_layer_n
+cell 215 0    fill 164 33 -32 38 -39 -81 78   % fuel_boundary_fuel_t_1_outer_layer_s
+cell 216 0    fill 164 33 -32 38 -39 -76 -79   % fuel_boundary_fuel_t_1_outer_layer_ne
+cell 217 0    fill 164 33 -32 38 -39 80 -70   % fuel_boundary_fuel_t_1_outer_layer_nw
+cell 218 0    fill 164 33 -32 38 -39 72 -81   % fuel_boundary_fuel_t_1_outer_layer_sw
+cell 219 0    fill 164 33 -32 38 -39 82 -76   % fuel_boundary_fuel_t_1_outer_layer_se
+cell 220 0    fill 155 31 -33 39 -40 49 50 51 52 57 58 59 60   % fuel_boundary_fuel_t_2_inner_layer
+cell 221 0    fill 165 33 -32 39 -40 78 80   % fuel_boundary_fuel_t_2_outer_layer_e
+cell 222 0    fill 165 33 -32 39 -40 -79 72   % fuel_boundary_fuel_t_2_outer_layer_w
+cell 223 0    fill 165 33 -32 39 -40 -70 82   % fuel_boundary_fuel_t_2_outer_layer_n
+cell 224 0    fill 165 33 -32 39 -40 -81 78   % fuel_boundary_fuel_t_2_outer_layer_s
+cell 225 0    fill 165 33 -32 39 -40 -76 -79   % fuel_boundary_fuel_t_2_outer_layer_ne
+cell 226 0    fill 165 33 -32 39 -40 80 -70   % fuel_boundary_fuel_t_2_outer_layer_nw
+cell 227 0    fill 165 33 -32 39 -40 72 -81   % fuel_boundary_fuel_t_2_outer_layer_sw
+cell 228 0    fill 165 33 -32 39 -40 82 -76   % fuel_boundary_fuel_t_2_outer_layer_se
+cell 229 0    fill 10  34 -40 -41   % support_rod_fuel_disk_e
+cell 230 0    fill 10  34 -40 -43   % support_rod_fuel_disk_n
+cell 231 0    fill 10  34 -40 -42   % support_rod_fuel_disk_w
+cell 232 0    fill 10  34 -40 -44   % support_rod_fuel_disk_s
+cell 233 0    fill 10  34 -40 -45   % support_rod_fuel_disk_ne
+cell 234 0    fill 10  34 -40 -46   % support_rod_fuel_disk_nw
+cell 235 0    fill 10  34 -40 -48   % support_rod_fuel_disk_sw
+cell 236 0    fill 10  34 -40 -47   % support_rod_fuel_disk_se
+cell 237 0    fill 99  34 -40 -33 -49 41   % air_in_loc_fuel_disk_e
+cell 238 0    fill 99  34 -40 -33 -50 42   % air_in_loc_fuel_disk_w
+cell 239 0    fill 99  34 -40 -33 -51 43   % air_in_loc_fuel_disk_n
+cell 240 0    fill 99  34 -40 -33 -52 44   % air_in_loc_fuel_disk_s
+cell 241 0    fill 99  34 -40 -33 -57 45   % air_in_loc_fuel_disk_ne
+cell 242 0    fill 99  34 -40 -33 -58 46   % air_in_loc_fuel_disk_nw
+cell 243 0    fill 99  34 -40 -33 -59 48   % air_in_loc_fuel_disk_sw
+cell 244 0    fill 99  34 -40 -33 -60 47   % air_in_loc_fuel_disk_se
+cell 245 0    fill 99  34 -40 33 76 -78 -32 41 42   % air_outer_loc_fuel_disk_e_w
+cell 246 0    fill 99  34 -40 33 70 -72 -32 43 44   % air_outer_loc_fuel_disk_n_s
+cell 247 0    fill 99  34 -40 33 79 -80 -32 45 48   % air_outer_loc_fuel_disk_ne_sw
+cell 248 0    fill 99  34 -40 33 81 -82 -32 46 47   % air_outer_loc_fuel_disk_nw_se
+cell 249 0    fill 4   34 -40 91 -92   % jacket
+cell 250 0    fill 99  32 -91 34 -40 41 43 42 44 45 46 48 47   % air_in_jacket
+cell 251 0    fill 99  92 -17 34 -40   % out_air_fuel_jacket
+cell 252 0    fill 10  40 -98 -41   % support_rod_top_axial_hp_e
+cell 253 0    fill 10  40 -98 -43   % support_rod_top_axial_hp_n
+cell 254 0    fill 10  40 -98 -42   % support_rod_top_axial_hp_w
+cell 255 0    fill 10  40 -98 -44   % support_rod_top_axial_hp_s
+cell 256 0    fill 10  40 -98 -45   % support_rod_top_axial_hp_ne
+cell 257 0    fill 10  40 -98 -46   % support_rod_top_axial_hp_nw
+cell 258 0    fill 10  40 -98 -48   % support_rod_top_axial_hp_sw
+cell 259 0    fill 10  40 -98 -47   % support_rod_top_axial_hp_se
+cell 260 0    fill 99  40 -98 -33 -53 41   % air_in_loc_top_axial_hp_e
+cell 261 0    fill 99  40 -98 -33 -54 42   % air_in_loc_top_axial_hp_w
+cell 262 0    fill 99  40 -98 -33 -55 43   % air_in_loc_top_axial_hp_n
+cell 263 0    fill 99  40 -98 -33 -56 44   % air_in_loc_top_axial_hp_s
+cell 264 0    fill 99  40 -98 -33 -61 45   % air_in_loc_top_axial_hp_ne
+cell 265 0    fill 99  40 -98 -33 -62 46   % air_in_loc_top_axial_hp_nw
+cell 266 0    fill 99  40 -98 -33 -63 48   % air_in_loc_top_axial_hp_sw
+cell 267 0    fill 99  40 -98 -33 -64 47   % air_in_loc_top_axial_hp_se
+cell 268 0    fill 99  40 -98 33 75 -77 -92 41 42   % air_outer_loc_top_axial_hp_e_w
+cell 269 0    fill 99  40 -98 33 69 -71 -92 43 44   % air_outer_loc_top_axial_hp_n_s
+cell 270 0    fill 99  40 -98 33 87 -88 -92 45 48   % air_outer_loc_top_axial_hp_ne_sw
+cell 271 0    fill 99  40 -98 33 89 -90 -92 46 47   % air_outer_loc_top_axial_hp_nw_se
+cell 272 0    fill 50  96 -33 40 -97 53 54 55 56 61 62 63 64   % top_axial_ref_plug_boundary_cut_inner_layer
+cell 273 0    fill 50  33 -92 40 -97 77 88   % top_axial_ref_plug_boundary_cut_outer_layer_e
+cell 274 0    fill 50  33 -92 40 -97 -87 71   % top_axial_ref_plug_boundary_cut_outer_layer_w
+cell 275 0    fill 50  33 -92 40 -97 -69 90   % top_axial_ref_plug_boundary_cut_outer_layer_n
+cell 276 0    fill 50  33 -92 40 -97 -89 77   % top_axial_ref_plug_boundary_cut_outer_layer_s
+cell 277 0    fill 50  33 -92 40 -97 -75 -87   % top_axial_ref_plug_boundary_cut_outer_layer_ne
+cell 278 0    fill 50  33 -92 40 -97 88 -69   % top_axial_ref_plug_boundary_cut_outer_layer_nw
+cell 279 0    fill 50  33 -92 40 -97 71 -89   % top_axial_ref_plug_boundary_cut_outer_layer_sw
+cell 280 0    fill 50  33 -92 40 -97 90 -75   % top_axial_ref_plug_boundary_cut_outer_layer_se
+cell 281 0    fill 50  -33 97 -98 53 54 55 56 61 62 63 64   % top_axial_ref_no_plug_boundary_cut_inner_layer
+cell 282 0    fill 50  33 -92 97 -98 77 88   % top_axial_ref_no_plug_boundary_cut_outer_layer_e
+cell 283 0    fill 50  33 -92 97 -98 -87 71   % top_axial_ref_no_plug_boundary_cut_outer_layer_w
+cell 284 0    fill 50  33 -92 97 -98 -69 90   % top_axial_ref_no_plug_boundary_cut_outer_layer_n
+cell 285 0    fill 50  33 -92 97 -98 -89 77   % top_axial_ref_no_plug_boundary_cut_outer_layer_s
+cell 286 0    fill 50  33 -92 97 -98 -75 -87   % top_axial_ref_no_plug_boundary_cut_outer_layer_ne
+cell 287 0    fill 50  33 -92 97 -98 88 -69   % top_axial_ref_no_plug_boundary_cut_outer_layer_nw
+cell 288 0    fill 50  33 -92 97 -98 71 -89   % top_axial_ref_no_plug_boundary_cut_outer_layer_sw
+cell 289 0    fill 50  33 -92 97 -98 90 -75   % top_axial_ref_no_plug_boundary_cut_outer_layer_se
+cell 290 0    fill 99  40 -98 92 -92   % top_refl_out_airgap
+cell 291 0    fill 99  40 -97 -96   % top_refl_inner
+cell 292 0    fill 10  98 -139 -41   % support_rod_support_rod_top_borated_plug_e
+cell 293 0    fill 10  98 -139 -43   % support_rod_support_rod_top_borated_plug_n
+cell 294 0    fill 10  98 -139 -42   % support_rod_support_rod_top_borated_plug_w
+cell 295 0    fill 10  98 -139 -44   % support_rod_support_rod_top_borated_plug_s
+cell 296 0    fill 10  98 -139 -45   % support_rod_support_rod_top_borated_plug_ne
+cell 297 0    fill 10  98 -139 -46   % support_rod_support_rod_top_borated_plug_nw
+cell 298 0    fill 10  98 -139 -48   % support_rod_support_rod_top_borated_plug_sw
+cell 299 0    fill 10  98 -139 -47   % support_rod_support_rod_top_borated_plug_se
+cell 300 0    fill 99  98 -139 -33 -53 41   % air_in_loc_support_rod_top_borated_plug_e
+cell 301 0    fill 99  98 -139 -33 -54 42   % air_in_loc_support_rod_top_borated_plug_w
+cell 302 0    fill 99  98 -139 -33 -55 43   % air_in_loc_support_rod_top_borated_plug_n
+cell 303 0    fill 99  98 -139 -33 -56 44   % air_in_loc_support_rod_top_borated_plug_s
+cell 304 0    fill 99  98 -139 -33 -61 45   % air_in_loc_support_rod_top_borated_plug_ne
+cell 305 0    fill 99  98 -139 -33 -62 46   % air_in_loc_support_rod_top_borated_plug_nw
+cell 306 0    fill 99  98 -139 -33 -63 48   % air_in_loc_support_rod_top_borated_plug_sw
+cell 307 0    fill 99  98 -139 -33 -64 47   % air_in_loc_support_rod_top_borated_plug_se
+cell 308 0    fill 99  98 -139 33 75 -77 -92 41 42   % air_outer_loc_support_rod_top_borated_plug_e_w
+cell 309 0    fill 99  98 -139 33 69 -71 -92 43 44   % air_outer_loc_support_rod_top_borated_plug_n_s
+cell 310 0    fill 99  98 -139 33 87 -88 -92 45 48   % air_outer_loc_support_rod_top_borated_plug_ne_sw
+cell 311 0    fill 99  98 -139 33 89 -90 -92 46 47   % air_outer_loc_support_rod_top_borated_plug_nw_se
+cell 312 0    fill 6   -33 98 -139 53 54 55 56 61 62 63 64   % top_axial_borated_plug_inner_layer
+cell 313 0    fill 6   33 -92 98 -139 77 88   % top_axial_borated_plug_outer_layer_e
+cell 314 0    fill 6   33 -92 98 -139 -87 71   % top_axial_borated_plug_outer_layer_w
+cell 315 0    fill 6   33 -92 98 -139 -69 90   % top_axial_borated_plug_outer_layer_n
+cell 316 0    fill 6   33 -92 98 -139 -89 77   % top_axial_borated_plug_outer_layer_s
+cell 317 0    fill 6   33 -92 98 -139 -75 -87   % top_axial_borated_plug_outer_layer_ne
+cell 318 0    fill 6   33 -92 98 -139 88 -69   % top_axial_borated_plug_outer_layer_nw
+cell 319 0    fill 6   33 -92 98 -139 71 -89   % top_axial_borated_plug_outer_layer_sw
+cell 320 0    fill 6   33 -92 98 -139 90 -75   % top_axial_borated_plug_outer_layer_se
+cell 321 0    fill 99  98 -139 92 -92   % outer_air_top_borated_plug
+cell 322 0    fill 10  139 -140 -41   % support_rod_support_rod_top_borated_flange_l_e
+cell 323 0    fill 10  139 -140 -43   % support_rod_support_rod_top_borated_flange_l_n
+cell 324 0    fill 10  139 -140 -42   % support_rod_support_rod_top_borated_flange_l_w
+cell 325 0    fill 10  139 -140 -44   % support_rod_support_rod_top_borated_flange_l_s
+cell 326 0    fill 10  139 -140 -45   % support_rod_support_rod_top_borated_flange_l_ne
+cell 327 0    fill 10  139 -140 -46   % support_rod_support_rod_top_borated_flange_l_nw
+cell 328 0    fill 10  139 -140 -48   % support_rod_support_rod_top_borated_flange_l_sw
+cell 329 0    fill 10  139 -140 -47   % support_rod_support_rod_top_borated_flange_l_se
+cell 330 0    fill 99  139 -140 -33 -53 41   % air_in_loc_support_rod_top_borated_flange_l_e
+cell 331 0    fill 99  139 -140 -33 -54 42   % air_in_loc_support_rod_top_borated_flange_l_w
+cell 332 0    fill 99  139 -140 -33 -55 43   % air_in_loc_support_rod_top_borated_flange_l_n
+cell 333 0    fill 99  139 -140 -33 -56 44   % air_in_loc_support_rod_top_borated_flange_l_s
+cell 334 0    fill 99  139 -140 -33 -61 45   % air_in_loc_support_rod_top_borated_flange_l_ne
+cell 335 0    fill 99  139 -140 -33 -62 46   % air_in_loc_support_rod_top_borated_flange_l_nw
+cell 336 0    fill 99  139 -140 -33 -63 48   % air_in_loc_support_rod_top_borated_flange_l_sw
+cell 337 0    fill 99  139 -140 -33 -64 47   % air_in_loc_support_rod_top_borated_flange_l_se
+cell 338 0    fill 99  139 -140 33 75 -77 -92 41 42   % air_outer_loc_support_rod_top_borated_flange_l_e_w
+cell 339 0    fill 99  139 -140 33 69 -71 -92 43 44   % air_outer_loc_support_rod_top_borated_flange_l_n_s
+cell 340 0    fill 99  139 -140 33 87 -88 -92 45 48   % air_outer_loc_support_rod_top_borated_flange_l_ne_sw
+cell 341 0    fill 99  139 -140 33 89 -90 -92 46 47   % air_outer_loc_support_rod_top_borated_flange_l_nw_se
+cell 342 0    fill 7   -33 139 -140 53 54 55 56 61 62 63 64   % top_axial_borated_flagne_low_stage_inner_layer
+cell 343 0    fill 7   33 -92 139 -140 77 88   % top_axial_borated_flagne_low_stage_outer_layer_e
+cell 344 0    fill 7   33 -92 139 -140 -87 71   % top_axial_borated_flagne_low_stage_outer_layer_w
+cell 345 0    fill 7   33 -92 139 -140 -69 90   % top_axial_borated_flagne_low_stage_outer_layer_n
+cell 346 0    fill 7   33 -92 139 -140 -89 77   % top_axial_borated_flagne_low_stage_outer_layer_s
+cell 347 0    fill 7   33 -92 139 -140 -75 -87   % top_axial_borated_flagne_low_stage_outer_layer_ne
+cell 348 0    fill 7   33 -92 139 -140 88 -69   % top_axial_borated_flagne_low_stage_outer_layer_nw
+cell 349 0    fill 7   33 -92 139 -140 71 -89   % top_axial_borated_flagne_low_stage_outer_layer_sw
+cell 350 0    fill 7   33 -92 139 -140 90 -75   % top_axial_borated_flagne_low_stage_outer_layer_se
+cell 351 0    fill 99  139 -140 92 -92   % outer_air_top_borated_flange_l
+cell 352 0    fill 10  140 -141 -41   % support_rod_support_rod_top_borated_flange_t_e
+cell 353 0    fill 10  140 -141 -43   % support_rod_support_rod_top_borated_flange_t_n
+cell 354 0    fill 10  140 -141 -42   % support_rod_support_rod_top_borated_flange_t_w
+cell 355 0    fill 10  140 -141 -44   % support_rod_support_rod_top_borated_flange_t_s
+cell 356 0    fill 10  140 -141 -45   % support_rod_support_rod_top_borated_flange_t_ne
+cell 357 0    fill 10  140 -141 -46   % support_rod_support_rod_top_borated_flange_t_nw
+cell 358 0    fill 10  140 -141 -48   % support_rod_support_rod_top_borated_flange_t_sw
+cell 359 0    fill 10  140 -141 -47   % support_rod_support_rod_top_borated_flange_t_se
+cell 360 0    fill 99  140 -141 -33 -53 41   % air_in_loc_support_rod_top_borated_flange_t_e
+cell 361 0    fill 99  140 -141 -33 -54 42   % air_in_loc_support_rod_top_borated_flange_t_w
+cell 362 0    fill 99  140 -141 -33 -55 43   % air_in_loc_support_rod_top_borated_flange_t_n
+cell 363 0    fill 99  140 -141 -33 -56 44   % air_in_loc_support_rod_top_borated_flange_t_s
+cell 364 0    fill 99  140 -141 -33 -61 45   % air_in_loc_support_rod_top_borated_flange_t_ne
+cell 365 0    fill 99  140 -141 -33 -62 46   % air_in_loc_support_rod_top_borated_flange_t_nw
+cell 366 0    fill 99  140 -141 -33 -63 48   % air_in_loc_support_rod_top_borated_flange_t_sw
+cell 367 0    fill 99  140 -141 -33 -64 47   % air_in_loc_support_rod_top_borated_flange_t_se
+cell 368 0    fill 99  140 -141 33 75 -77 -142 41 42   % air_outer_loc_support_rod_top_borated_flange_t_e_w
+cell 369 0    fill 99  140 -141 33 69 -71 -142 43 44   % air_outer_loc_support_rod_top_borated_flange_t_n_s
+cell 370 0    fill 99  140 -141 33 87 -88 -142 45 48   % air_outer_loc_support_rod_top_borated_flange_t_ne_sw
+cell 371 0    fill 99  140 -141 33 89 -90 -142 46 47   % air_outer_loc_support_rod_top_borated_flange_t_nw_se
+cell 372 0    fill 7   -33 140 -141 53 54 55 56 61 62 63 64   % top_axial_borated_flagne_top_stage_inner_layer
+cell 373 0    fill 7   33 -142 140 -141 77 88   % top_axial_borated_flagne_top_stage_outer_layer_e
+cell 374 0    fill 7   33 -142 140 -141 -87 71   % top_axial_borated_flagne_top_stage_outer_layer_w
+cell 375 0    fill 7   33 -142 140 -141 -69 90   % top_axial_borated_flagne_top_stage_outer_layer_n
+cell 376 0    fill 7   33 -142 140 -141 -89 77   % top_axial_borated_flagne_top_stage_outer_layer_s
+cell 377 0    fill 7   33 -142 140 -141 -75 -87   % top_axial_borated_flagne_top_stage_outer_layer_ne
+cell 378 0    fill 7   33 -142 140 -141 88 -69   % top_axial_borated_flagne_top_stage_outer_layer_nw
+cell 379 0    fill 7   33 -142 140 -141 71 -89   % top_axial_borated_flagne_top_stage_outer_layer_sw
+cell 380 0    fill 7   33 -142 140 -141 90 -75   % top_axial_borated_flagne_top_stage_outer_layer_se
+cell 381 0    fill 99  140 -141 142 -26   % outer_air_top_borated_flange_t
+cell 382 0    fill 12  143 -144 146 -145 6 -139 26   % ss_low_plate
+cell 383 0    fill 7   143 -144 148 -146 6 -149 -5   % B4C_side_bar_s
+cell 384 0    fill 99  143 -144 148 -146 149 -141 -5   % B4C_side_bar_s_air
+cell 385 0    fill 7   143 -144 145 -147 6 -149 -5   % B4C_side_bar_n
+cell 386 0    fill 99  143 -144 145 -147 149 -141 -5   % B4C_side_bar_n_air
+cell 387 0    fill 7   143 -144 146 -145 139 -141 26   % B4C_inner_plate
+cell 388 0    fill 11  143 -144 148 -147 141 -150 26 -5   % ss_upper_plate
+cell 389 0    fill 10  141 -150 -41   % support_rod_support_rod_below_hanger_e
+cell 390 0    fill 10  141 -150 -43   % support_rod_support_rod_below_hanger_n
+cell 391 0    fill 10  141 -150 -42   % support_rod_support_rod_below_hanger_w
+cell 392 0    fill 10  141 -150 -44   % support_rod_support_rod_below_hanger_s
+cell 393 0    fill 10  141 -150 -45   % support_rod_support_rod_below_hanger_ne
+cell 394 0    fill 10  141 -150 -46   % support_rod_support_rod_below_hanger_nw
+cell 395 0    fill 10  141 -150 -48   % support_rod_support_rod_below_hanger_sw
+cell 396 0    fill 10  141 -150 -47   % support_rod_support_rod_below_hanger_se
+cell 397 0    fill 99  141 -150 -33 -53 41   % air_in_loc_support_rod_below_hanger_e
+cell 398 0    fill 99  141 -150 -33 -54 42   % air_in_loc_support_rod_below_hanger_w
+cell 399 0    fill 99  141 -150 -33 -55 43   % air_in_loc_support_rod_below_hanger_n
+cell 400 0    fill 99  141 -150 -33 -56 44   % air_in_loc_support_rod_below_hanger_s
+cell 401 0    fill 99  141 -150 -33 -61 45   % air_in_loc_support_rod_below_hanger_ne
+cell 402 0    fill 99  141 -150 -33 -62 46   % air_in_loc_support_rod_below_hanger_nw
+cell 403 0    fill 99  141 -150 -33 -63 48   % air_in_loc_support_rod_below_hanger_sw
+cell 404 0    fill 99  141 -150 -33 -64 47   % air_in_loc_support_rod_below_hanger_se
+cell 405 0    fill 99  141 -150 33 75 -77 -26 41 42   % air_outer_loc_support_rod_below_hanger_e_w
+cell 406 0    fill 99  141 -150 33 69 -71 -26 43 44   % air_outer_loc_support_rod_below_hanger_n_s
+cell 407 0    fill 99  141 -150 33 87 -88 -26 45 48   % air_outer_loc_support_rod_below_hanger_ne_sw
+cell 408 0    fill 99  141 -150 33 89 -90 -26 46 47   % air_outer_loc_support_rod_below_hanger_nw_se
+cell 409 0    fill 9   27 -33 141 -150 53 54 55 56 61 62 63 64   % square_hanger_low_stage_inner_layer
+cell 410 0    fill 9   33 -26 141 -150 77 88   % square_hanger_low_stage_outer_layer_e
+cell 411 0    fill 9   33 -26 141 -150 -87 71   % square_hanger_low_stage_outer_layer_w
+cell 412 0    fill 9   33 -26 141 -150 -69 90   % square_hanger_low_stage_outer_layer_n
+cell 413 0    fill 9   33 -26 141 -150 -89 77   % square_hanger_low_stage_outer_layer_s
+cell 414 0    fill 9   33 -26 141 -150 -75 -87   % square_hanger_low_stage_outer_layer_ne
+cell 415 0    fill 9   33 -26 141 -150 88 -69   % square_hanger_low_stage_outer_layer_nw
+cell 416 0    fill 9   33 -26 141 -150 71 -89   % square_hanger_low_stage_outer_layer_sw
+cell 417 0    fill 9   33 -26 141 -150 90 -75   % square_hanger_low_stage_outer_layer_se
+cell 418 0    fill 99  -27 141 -155   % squre_hanger_air
+cell 419 0    fill 9   27 151 -152 154 -153 150 -155   % square_hanger_top
+cell 420 0    fill 99  -5 -151 150 -155   % square_hanger_top_air_w
+cell 421 0    fill 99  -5 152 150 -155   % square_hanger_top_air_e
+cell 422 0    fill 99  -5 151 -152 153 150 -155   % square_hanger_top_air_n
+cell 423 0    fill 99  -5 151 -152 -154 150 -155   % square_hanger_top_air_s
+cell 424 0    fill 99  -5 -143 6 -150   % air_shield_w
+cell 425 0    fill 99  -5 144 6 -150   % air_shield_e
+cell 426 0    fill 99  -5 143 -144 147 6 -150   % air_shield_n
+cell 427 0    fill 99  -5 143 -144 -148 6 -150   % air_shield_s
+cell 428 0    outside         155   % outer_world_top
+cell 429 0    outside         -1   % outer_world_bottom
+cell 430 0    outside         5 1 -155   % outer_world_side
+ % end of the geometry definition 
+surf inf inf
+surf 1    pz -3.50000e+01
+surf 2    cyl 0.00000     0.00000     20.48002    
+surf 3    pz -2.53950e+01
+surf 4    pz -2.79350e+01
+surf 5    cyl 0.00000     0.00000     50.96002    
+surf 6    pz 3.77113e+01 
+surf 7    cyl 0.00000     0.00000     19.84375    
+surf 8    cyl -17.78000   0.00000     0.65722     
+surf 9    cyl 8.89000     15.39793    0.65722     
+surf 10   cyl 8.89000     -15.39793   0.65722     
+surf 11   pz -2.79350e+01
+surf 12   pz -2.55576e+01
+surf 13   pz -2.04776e+01
+surf 14   pz -1.53976e+01
+surf 15   pz -5.23760e+00
+surf 16   cyl 0.00000     0.00000     7.14058     
+surf 17   cyl 0.00000     0.00000     7.04913     
+surf 18   cyl 0.00000     0.00000     19.05000    
+surf 19   cyl 0.00000     0.00000     12.70000    
+surf 20   pz 2.33667e+01 
+surf 21   cyl 0.00000     0.00000     15.22413    
+surf 22   pz 3.13613e+01 
+surf 23   pz 3.23240e+01 
+surf 24   pz 3.67690e+01 
+surf 25   cyl 0.00000     0.00000     7.87400     
+surf 26   cyl 0.00000     0.00000     10.47750    
+surf 27   cyl 0.00000     0.00000     1.99390     
+surf 28   cyl 0.00000     0.00000     2.60000     
+surf 29   cyl 0.00000     0.00000     3.60000     
+surf 30   cyl 0.00000     0.00000     4.10000     
+surf 31   cyl 0.00000     0.00000     4.45168     
+surf 32   cyl 0.00000     0.00000     5.49910     
+surf 33   cyl 0.00000     0.00000     5.28591     
+surf 34   pz 0.00000e+00 
+surf 35   pz 4.00000e+00 
+surf 36   pz 8.33374e+00 
+surf 37   pz 1.20000e+01 
+surf 38   pz 1.66675e+01 
+surf 39   pz 2.00000e+01 
+surf 40   pz 2.50012e+01 
+surf 41   cyl 5.19938     0.00000     0.63500     
+surf 42   cyl -5.19938    0.00000     0.63500     
+surf 43   cyl 0.00000     5.19938     0.63500     
+surf 44   cyl 0.00000     -5.19938    0.63500     
+surf 45   cyl 3.67652     3.67652     0.63500     
+surf 46   cyl -3.67652    3.67652     0.63500     
+surf 47   cyl 3.67652     -3.67652    0.63500     
+surf 48   cyl -3.67652    -3.67652    0.63500     
+surf 49   cyl 5.19938     0.00000     0.64770     
+surf 50   cyl -5.19938    0.00000     0.64770     
+surf 51   cyl 0.00000     5.19938     0.64770     
+surf 52   cyl 0.00000     -5.19938    0.64770     
+surf 53   cyl 5.19938     0.00000     0.95250     
+surf 54   cyl -5.19938    0.00000     0.95250     
+surf 55   cyl 0.00000     5.19938     0.95250     
+surf 56   cyl 0.00000     -5.19938    0.95250     
+surf 57   cyl 3.67652     3.67652     0.64770     
+surf 58   cyl -3.67652    3.67652     0.64770     
+surf 59   cyl -3.67652    -3.67652    0.64770     
+surf 60   cyl 3.67652     -3.67652    0.64770     
+surf 61   cyl 3.67652     3.67652     0.95250     
+surf 62   cyl -3.67652    3.67652     0.95250     
+surf 63   cyl -3.67652    -3.67652    0.95250     
+surf 64   cyl 3.67652     -3.67652    0.95250     
+surf 65   py 0.00000e+00 
+surf 66   px 0.00000e+00 
+surf 67   px -5.19938e+00
+surf 68   px 5.19938e+00 
+surf 69   px -9.52500e-01
+surf 70   px -6.47700e-01
+surf 71   px 9.52500e-01 
+surf 72   px 6.47700e-01 
+surf 73   py -5.19938e+00
+surf 74   py 5.19938e+00 
+surf 75   py -9.52500e-01
+surf 76   py -6.47700e-01
+surf 77   py 9.52500e-01 
+surf 78   py 6.47700e-01 
+surf 79   plane 1.00000e+00  -1.00000e+00 0.00000e+00  -9.15986e-01 
+surf 80   plane 1.00000e+00  -1.00000e+00 0.00000e+00  9.15986e-01  
+surf 81   plane 1.00000e+00  1.00000e+00  0.00000e+00  -9.15986e-01 
+surf 82   plane 1.00000e+00  1.00000e+00  0.00000e+00  9.15986e-01  
+surf 83   plane 1.00000e+00  1.00000e+00  0.00000e+00  7.35391e+00  
+surf 84   plane 1.00000e+00  -1.00000e+00 0.00000e+00  -7.35391e+00 
+surf 85   plane 1.00000e+00  1.00000e+00  0.00000e+00  -7.35391e+00 
+surf 86   plane 1.00000e+00  -1.00000e+00 0.00000e+00  7.35391e+00  
+surf 87   plane 1.00000e+00  -1.00000e+00 0.00000e+00  -1.34704e+00 
+surf 88   plane 1.00000e+00  -1.00000e+00 0.00000e+00  1.34704e+00  
+surf 89   plane 1.00000e+00  1.00000e+00  0.00000e+00  -1.34704e+00 
+surf 90   plane 1.00000e+00  1.00000e+00  0.00000e+00  1.34704e+00  
+surf 91   cyl 0.00000     0.00000     6.03250     
+surf 92   cyl 0.00000     0.00000     6.35000     
+surf 93   cyl 0.00000     0.00000     0.33655     
+surf 94   pz -1.57480e-01
+surf 95   pz -1.01600e+01
+surf 96   cyl 0.00000     0.00000     0.55944     
+surf 97   pz 2.88366e+01 
+surf 98   pz 3.51612e+01 
+surf 99   pz -1.07950e+01
+surf 100  pz -1.20650e+01
+surf 101  cyl 0.00000     0.00000     3.17500     
+surf 102  cyl 3.59210     3.59210     0.31750     
+surf 103  cyl -3.59210    3.59210     0.31750     
+surf 104  cyl -3.59210    -3.59210    0.31750     
+surf 105  cyl 3.59210     -3.59210    0.31750     
+surf 106  cyl 5.19938     0.00000     0.47625     
+surf 107  cyl -5.19938    0.00000     0.47625     
+surf 108  cyl 0.00000     5.19938     0.47625     
+surf 109  cyl 0.00000     -5.19938    0.47625     
+surf 110  cyl 3.59210     3.59210     0.47625     
+surf 111  cyl -3.59210    3.59210     0.47625     
+surf 112  cyl 3.59210     -3.59210    0.47625     
+surf 113  cyl -3.59210    -3.59210    0.47625     
+surf 114  cyl 5.19938     0.00000     0.51880     
+surf 115  cyl -5.19938    0.00000     0.51880     
+surf 116  cyl 0.00000     5.19938     0.51880     
+surf 117  cyl 0.00000     -5.19938    0.51880     
+surf 118  cyl 3.59210     3.59210     0.51880     
+surf 119  cyl -3.59210    3.59210     0.51880     
+surf 120  cyl -3.59210    -3.59210    0.51880     
+surf 121  cyl 3.59210     -3.59210    0.51880     
+surf 122  cyl 5.19938     0.00000     2.54000     
+surf 123  cyl -5.19938    0.00000     2.54000     
+surf 124  cyl 0.00000     5.19938     2.54000     
+surf 125  cyl 0.00000     -5.19938    2.54000     
+surf 126  cyl 3.59210     3.59210     2.54000     
+surf 127  cyl -3.59210    3.59210     2.54000     
+surf 128  cyl -3.59210    -3.59210    2.54000     
+surf 129  cyl 3.59210     -3.59210    2.54000     
+surf 130  pz -1.41351e+01
+surf 131  cyl 3.59210     3.59210     0.36005     
+surf 132  cyl -3.59210    3.59210     0.36005     
+surf 133  cyl -3.59210    -3.59210    0.36005     
+surf 134  cyl 3.59210     -3.59210    0.36005     
+surf 135  cyl 3.59210     3.59210     0.54610     
+surf 136  cyl -3.59210    3.59210     0.54610     
+surf 137  cyl -3.59210    -3.59210    0.54610     
+surf 138  cyl 3.59210     -3.59210    0.54610     
+surf 139  pz 3.89712e+01 
+surf 140  pz 4.08762e+01 
+surf 141  pz 4.40613e+01 
+surf 142  cyl 0.00000     0.00000     7.30250     
+surf 143  px -3.81000e+01
+surf 144  px 3.81000e+01 
+surf 145  py 3.17500e+01 
+surf 146  py -3.17500e+01
+surf 147  py 4.69900e+01 
+surf 148  py -4.69900e+01
+surf 149  pz 4.27913e+01 
+surf 150  pz 4.78714e+01 
+surf 151  px -1.27000e+01
+surf 152  px 1.27000e+01 
+surf 153  py 1.27000e+01 
+surf 154  py -1.27000e+01
+surf 155  pz 4.91414e+01 
+surf 156  cyl 0.00000     0.00000     0.69000     
+surf 157  pz 1.03801e+01 
+surf 158  pz 1.41801e+01 
+surf 159  cyl 0.00000     0.00000     0.95500     
+surf 160  pz 9.85012e+00 
+surf 161  pz 1.47101e+01 
+surf 162  cyl 0.00000     0.00000     1.41288     
+surf 163  cyl 0.00000     0.00000     1.00330     
+surf 164  pz 9.62152e+00 
+surf 165  pz 1.49514e+01 
+% data cards 
+ % boundary condition 
+set bc 1
+set ures 1
+mat fuel_104 4.95875e-02  tmp 300
+3006.03c  7.1710E-08
+3007.03c  8.8442E-07
+4009.03c  1.6235E-07
+5010.03c  1.5582E-07
+5011.03c  6.2721E-07
+11023.03c  1.7047E-06
+13027.03c  3.3925E-06
+14028.03c  2.0363E-05
+14029.03c  1.0311E-06
+14030.03c  6.8445E-07
+15031.03c  4.4989E-06
+19039.03c  2.6590E-06
+19040.03c  3.3359E-10
+19041.03c  1.9189E-07
+20040.03c  1.3208E-06
+20042.03c  8.8154E-09
+20043.03c  1.8394E-09
+20044.03c  2.8422E-08
+20046.03c  5.4500E-11
+20048.03c  2.5479E-09
+22046.03c  2.8910E-08
+22047.03c  2.6381E-08
+22048.03c  2.6670E-07
+22049.03c  1.9876E-08
+22050.03c  1.9515E-08
+24050.03c  1.4556E-07
+24052.03c  2.8069E-06
+24053.03c  3.1824E-07
+24054.03c  7.9226E-08
+25055.03c  1.0463E-06
+26054.03c  6.5514E-07
+26056.03c  1.0185E-05
+26057.03c  2.3319E-07
+26058.03c  3.1092E-08
+28058.03c  6.8892E-06
+28060.03c  2.6338E-06
+28061.03c  1.1403E-07
+28062.03c  3.6227E-07
+28064.03c  9.1829E-08
+29063.03c  1.1642E-06
+29065.03c  5.1888E-07
+38084.03c  4.2417E-10
+38086.03c  7.4683E-09
+38087.03c  5.3021E-09
+38088.03c  6.2549E-08
+40090.03c  4.5780E-07
+40091.03c  9.9834E-08
+40092.03c  1.5260E-07
+40094.03c  1.5465E-07
+40096.03c  2.4914E-08
+42092.03c  1.2222E-03
+42094.03c  7.6184E-04
+42095.03c  1.3112E-03
+42096.03c  1.3738E-03
+42097.03c  7.8655E-04
+42098.03c  1.9874E-03
+42100.03c  7.9314E-04
+44096.03c  3.6378E-09
+44098.03c  1.2214E-09
+44099.03c  8.3393E-09
+44100.03c  8.2737E-09
+44101.03c  1.1229E-08
+44102.03c  2.0750E-08
+44104.03c  1.2214E-08
+45103.03c  6.4490E-08
+48106.03c  2.9635E-10
+48108.03c  2.1100E-10
+48110.03c  2.9611E-09
+48111.03c  3.0346E-09
+48112.03c  5.7207E-09
+48113.03c  2.8971E-09
+48114.03c  6.8112E-09
+48116.03c  1.7757E-09
+49113.03c  2.4854E-09
+49115.03c  5.5314E-08
+64152.03c  2.7249E-11
+64154.03c  2.9701E-10
+64155.03c  2.0164E-09
+64156.03c  2.7889E-09
+64157.03c  2.1322E-09
+64158.03c  3.3843E-09
+64160.03c  2.9783E-09
+74182.03c  2.9901E-07
+74183.03c  1.6235E-07
+74184.03c  3.4903E-07
+74186.03c  3.2516E-07
+95241.03c  2.1922E-12
+93237.03c  3.6063E-08
+94238.03c  2.9097E-12
+94239.03c  8.2134E-10
+94240.03c  2.2375E-10
+92232.03c  7.5512E-12
+92233.03c  4.1429E-07
+92234.03c  4.1665E-04
+92235.03c  3.8242E-02
+92236.03c  1.6661E-04
+92238.03c  2.2238E-03
+6000.03c  2.34641e-04 
+mat fuel_105 4.95875e-02  tmp 300
+3006.03c  7.1710E-08
+3007.03c  8.8442E-07
+4009.03c  1.6235E-07
+5010.03c  1.5582E-07
+5011.03c  6.2721E-07
+11023.03c  1.7047E-06
+13027.03c  3.3925E-06
+14028.03c  2.0363E-05
+14029.03c  1.0311E-06
+14030.03c  6.8445E-07
+15031.03c  4.4989E-06
+19039.03c  2.6590E-06
+19040.03c  3.3359E-10
+19041.03c  1.9189E-07
+20040.03c  1.3208E-06
+20042.03c  8.8154E-09
+20043.03c  1.8394E-09
+20044.03c  2.8422E-08
+20046.03c  5.4500E-11
+20048.03c  2.5479E-09
+22046.03c  2.8910E-08
+22047.03c  2.6381E-08
+22048.03c  2.6670E-07
+22049.03c  1.9876E-08
+22050.03c  1.9515E-08
+24050.03c  1.4556E-07
+24052.03c  2.8069E-06
+24053.03c  3.1824E-07
+24054.03c  7.9226E-08
+25055.03c  1.0463E-06
+26054.03c  6.5514E-07
+26056.03c  1.0185E-05
+26057.03c  2.3319E-07
+26058.03c  3.1092E-08
+28058.03c  6.8892E-06
+28060.03c  2.6338E-06
+28061.03c  1.1403E-07
+28062.03c  3.6227E-07
+28064.03c  9.1829E-08
+29063.03c  1.1642E-06
+29065.03c  5.1888E-07
+38084.03c  4.2417E-10
+38086.03c  7.4683E-09
+38087.03c  5.3021E-09
+38088.03c  6.2549E-08
+40090.03c  4.5780E-07
+40091.03c  9.9834E-08
+40092.03c  1.5260E-07
+40094.03c  1.5465E-07
+40096.03c  2.4914E-08
+42092.03c  1.2222E-03
+42094.03c  7.6184E-04
+42095.03c  1.3112E-03
+42096.03c  1.3738E-03
+42097.03c  7.8655E-04
+42098.03c  1.9874E-03
+42100.03c  7.9314E-04
+44096.03c  3.6378E-09
+44098.03c  1.2214E-09
+44099.03c  8.3393E-09
+44100.03c  8.2737E-09
+44101.03c  1.1229E-08
+44102.03c  2.0750E-08
+44104.03c  1.2214E-08
+45103.03c  6.4490E-08
+48106.03c  2.9635E-10
+48108.03c  2.1100E-10
+48110.03c  2.9611E-09
+48111.03c  3.0346E-09
+48112.03c  5.7207E-09
+48113.03c  2.8971E-09
+48114.03c  6.8112E-09
+48116.03c  1.7757E-09
+49113.03c  2.4854E-09
+49115.03c  5.5314E-08
+64152.03c  2.7249E-11
+64154.03c  2.9701E-10
+64155.03c  2.0164E-09
+64156.03c  2.7889E-09
+64157.03c  2.1322E-09
+64158.03c  3.3843E-09
+64160.03c  2.9783E-09
+74182.03c  2.9901E-07
+74183.03c  1.6235E-07
+74184.03c  3.4903E-07
+74186.03c  3.2516E-07
+95241.03c  2.1922E-12
+93237.03c  3.6063E-08
+94238.03c  2.9097E-12
+94239.03c  8.2134E-10
+94240.03c  2.2375E-10
+92232.03c  7.5512E-12
+92233.03c  4.1429E-07
+92234.03c  4.1665E-04
+92235.03c  3.8242E-02
+92236.03c  1.6661E-04
+92238.03c  2.2238E-03
+6000.03c  2.34641e-04 
+mat fuel_114 4.95875e-02  tmp 300
+3006.03c  7.1710E-08
+3007.03c  8.8442E-07
+4009.03c  1.6235E-07
+5010.03c  1.5582E-07
+5011.03c  6.2721E-07
+11023.03c  1.7047E-06
+13027.03c  3.3925E-06
+14028.03c  2.0363E-05
+14029.03c  1.0311E-06
+14030.03c  6.8445E-07
+15031.03c  4.4989E-06
+19039.03c  2.6590E-06
+19040.03c  3.3359E-10
+19041.03c  1.9189E-07
+20040.03c  1.3208E-06
+20042.03c  8.8154E-09
+20043.03c  1.8394E-09
+20044.03c  2.8422E-08
+20046.03c  5.4500E-11
+20048.03c  2.5479E-09
+22046.03c  2.8910E-08
+22047.03c  2.6381E-08
+22048.03c  2.6670E-07
+22049.03c  1.9876E-08
+22050.03c  1.9515E-08
+24050.03c  1.4556E-07
+24052.03c  2.8069E-06
+24053.03c  3.1824E-07
+24054.03c  7.9226E-08
+25055.03c  1.0463E-06
+26054.03c  6.5514E-07
+26056.03c  1.0185E-05
+26057.03c  2.3319E-07
+26058.03c  3.1092E-08
+28058.03c  6.8892E-06
+28060.03c  2.6338E-06
+28061.03c  1.1403E-07
+28062.03c  3.6227E-07
+28064.03c  9.1829E-08
+29063.03c  1.1642E-06
+29065.03c  5.1888E-07
+38084.03c  4.2417E-10
+38086.03c  7.4683E-09
+38087.03c  5.3021E-09
+38088.03c  6.2549E-08
+40090.03c  4.5780E-07
+40091.03c  9.9834E-08
+40092.03c  1.5260E-07
+40094.03c  1.5465E-07
+40096.03c  2.4914E-08
+42092.03c  1.2222E-03
+42094.03c  7.6184E-04
+42095.03c  1.3112E-03
+42096.03c  1.3738E-03
+42097.03c  7.8655E-04
+42098.03c  1.9874E-03
+42100.03c  7.9314E-04
+44096.03c  3.6378E-09
+44098.03c  1.2214E-09
+44099.03c  8.3393E-09
+44100.03c  8.2737E-09
+44101.03c  1.1229E-08
+44102.03c  2.0750E-08
+44104.03c  1.2214E-08
+45103.03c  6.4490E-08
+48106.03c  2.9635E-10
+48108.03c  2.1100E-10
+48110.03c  2.9611E-09
+48111.03c  3.0346E-09
+48112.03c  5.7207E-09
+48113.03c  2.8971E-09
+48114.03c  6.8112E-09
+48116.03c  1.7757E-09
+49113.03c  2.4854E-09
+49115.03c  5.5314E-08
+64152.03c  2.7249E-11
+64154.03c  2.9701E-10
+64155.03c  2.0164E-09
+64156.03c  2.7889E-09
+64157.03c  2.1322E-09
+64158.03c  3.3843E-09
+64160.03c  2.9783E-09
+74182.03c  2.9901E-07
+74183.03c  1.6235E-07
+74184.03c  3.4903E-07
+74186.03c  3.2516E-07
+95241.03c  2.1922E-12
+93237.03c  3.6063E-08
+94238.03c  2.9097E-12
+94239.03c  8.2134E-10
+94240.03c  2.2375E-10
+92232.03c  7.5512E-12
+92233.03c  4.1429E-07
+92234.03c  4.1665E-04
+92235.03c  3.8242E-02
+92236.03c  1.6661E-04
+92238.03c  2.2238E-03
+6000.03c  2.34641e-04 
+mat fuel_115 4.95875e-02  tmp 300
+3006.03c  7.1710E-08
+3007.03c  8.8442E-07
+4009.03c  1.6235E-07
+5010.03c  1.5582E-07
+5011.03c  6.2721E-07
+11023.03c  1.7047E-06
+13027.03c  3.3925E-06
+14028.03c  2.0363E-05
+14029.03c  1.0311E-06
+14030.03c  6.8445E-07
+15031.03c  4.4989E-06
+19039.03c  2.6590E-06
+19040.03c  3.3359E-10
+19041.03c  1.9189E-07
+20040.03c  1.3208E-06
+20042.03c  8.8154E-09
+20043.03c  1.8394E-09
+20044.03c  2.8422E-08
+20046.03c  5.4500E-11
+20048.03c  2.5479E-09
+22046.03c  2.8910E-08
+22047.03c  2.6381E-08
+22048.03c  2.6670E-07
+22049.03c  1.9876E-08
+22050.03c  1.9515E-08
+24050.03c  1.4556E-07
+24052.03c  2.8069E-06
+24053.03c  3.1824E-07
+24054.03c  7.9226E-08
+25055.03c  1.0463E-06
+26054.03c  6.5514E-07
+26056.03c  1.0185E-05
+26057.03c  2.3319E-07
+26058.03c  3.1092E-08
+28058.03c  6.8892E-06
+28060.03c  2.6338E-06
+28061.03c  1.1403E-07
+28062.03c  3.6227E-07
+28064.03c  9.1829E-08
+29063.03c  1.1642E-06
+29065.03c  5.1888E-07
+38084.03c  4.2417E-10
+38086.03c  7.4683E-09
+38087.03c  5.3021E-09
+38088.03c  6.2549E-08
+40090.03c  4.5780E-07
+40091.03c  9.9834E-08
+40092.03c  1.5260E-07
+40094.03c  1.5465E-07
+40096.03c  2.4914E-08
+42092.03c  1.2222E-03
+42094.03c  7.6184E-04
+42095.03c  1.3112E-03
+42096.03c  1.3738E-03
+42097.03c  7.8655E-04
+42098.03c  1.9874E-03
+42100.03c  7.9314E-04
+44096.03c  3.6378E-09
+44098.03c  1.2214E-09
+44099.03c  8.3393E-09
+44100.03c  8.2737E-09
+44101.03c  1.1229E-08
+44102.03c  2.0750E-08
+44104.03c  1.2214E-08
+45103.03c  6.4490E-08
+48106.03c  2.9635E-10
+48108.03c  2.1100E-10
+48110.03c  2.9611E-09
+48111.03c  3.0346E-09
+48112.03c  5.7207E-09
+48113.03c  2.8971E-09
+48114.03c  6.8112E-09
+48116.03c  1.7757E-09
+49113.03c  2.4854E-09
+49115.03c  5.5314E-08
+64152.03c  2.7249E-11
+64154.03c  2.9701E-10
+64155.03c  2.0164E-09
+64156.03c  2.7889E-09
+64157.03c  2.1322E-09
+64158.03c  3.3843E-09
+64160.03c  2.9783E-09
+74182.03c  2.9901E-07
+74183.03c  1.6235E-07
+74184.03c  3.4903E-07
+74186.03c  3.2516E-07
+95241.03c  2.1922E-12
+93237.03c  3.6063E-08
+94238.03c  2.9097E-12
+94239.03c  8.2134E-10
+94240.03c  2.2375E-10
+92232.03c  7.5512E-12
+92233.03c  4.1429E-07
+92234.03c  4.1665E-04
+92235.03c  3.8242E-02
+92236.03c  1.6661E-04
+92238.03c  2.2238E-03
+6000.03c  2.34641e-04 
+mat fuel_124 4.95875e-02  tmp 300
+3006.03c  7.1710E-08
+3007.03c  8.8442E-07
+4009.03c  1.6235E-07
+5010.03c  1.5582E-07
+5011.03c  6.2721E-07
+11023.03c  1.7047E-06
+13027.03c  3.3925E-06
+14028.03c  2.0363E-05
+14029.03c  1.0311E-06
+14030.03c  6.8445E-07
+15031.03c  4.4989E-06
+19039.03c  2.6590E-06
+19040.03c  3.3359E-10
+19041.03c  1.9189E-07
+20040.03c  1.3208E-06
+20042.03c  8.8154E-09
+20043.03c  1.8394E-09
+20044.03c  2.8422E-08
+20046.03c  5.4500E-11
+20048.03c  2.5479E-09
+22046.03c  2.8910E-08
+22047.03c  2.6381E-08
+22048.03c  2.6670E-07
+22049.03c  1.9876E-08
+22050.03c  1.9515E-08
+24050.03c  1.4556E-07
+24052.03c  2.8069E-06
+24053.03c  3.1824E-07
+24054.03c  7.9226E-08
+25055.03c  1.0463E-06
+26054.03c  6.5514E-07
+26056.03c  1.0185E-05
+26057.03c  2.3319E-07
+26058.03c  3.1092E-08
+28058.03c  6.8892E-06
+28060.03c  2.6338E-06
+28061.03c  1.1403E-07
+28062.03c  3.6227E-07
+28064.03c  9.1829E-08
+29063.03c  1.1642E-06
+29065.03c  5.1888E-07
+38084.03c  4.2417E-10
+38086.03c  7.4683E-09
+38087.03c  5.3021E-09
+38088.03c  6.2549E-08
+40090.03c  4.5780E-07
+40091.03c  9.9834E-08
+40092.03c  1.5260E-07
+40094.03c  1.5465E-07
+40096.03c  2.4914E-08
+42092.03c  1.2222E-03
+42094.03c  7.6184E-04
+42095.03c  1.3112E-03
+42096.03c  1.3738E-03
+42097.03c  7.8655E-04
+42098.03c  1.9874E-03
+42100.03c  7.9314E-04
+44096.03c  3.6378E-09
+44098.03c  1.2214E-09
+44099.03c  8.3393E-09
+44100.03c  8.2737E-09
+44101.03c  1.1229E-08
+44102.03c  2.0750E-08
+44104.03c  1.2214E-08
+45103.03c  6.4490E-08
+48106.03c  2.9635E-10
+48108.03c  2.1100E-10
+48110.03c  2.9611E-09
+48111.03c  3.0346E-09
+48112.03c  5.7207E-09
+48113.03c  2.8971E-09
+48114.03c  6.8112E-09
+48116.03c  1.7757E-09
+49113.03c  2.4854E-09
+49115.03c  5.5314E-08
+64152.03c  2.7249E-11
+64154.03c  2.9701E-10
+64155.03c  2.0164E-09
+64156.03c  2.7889E-09
+64157.03c  2.1322E-09
+64158.03c  3.3843E-09
+64160.03c  2.9783E-09
+74182.03c  2.9901E-07
+74183.03c  1.6235E-07
+74184.03c  3.4903E-07
+74186.03c  3.2516E-07
+95241.03c  2.1922E-12
+93237.03c  3.6063E-08
+94238.03c  2.9097E-12
+94239.03c  8.2134E-10
+94240.03c  2.2375E-10
+92232.03c  7.5512E-12
+92233.03c  4.1429E-07
+92234.03c  4.1665E-04
+92235.03c  3.8242E-02
+92236.03c  1.6661E-04
+92238.03c  2.2238E-03
+6000.03c  2.34641e-04 
+mat fuel_125 4.95875e-02  tmp 300
+3006.03c  7.1710E-08
+3007.03c  8.8442E-07
+4009.03c  1.6235E-07
+5010.03c  1.5582E-07
+5011.03c  6.2721E-07
+11023.03c  1.7047E-06
+13027.03c  3.3925E-06
+14028.03c  2.0363E-05
+14029.03c  1.0311E-06
+14030.03c  6.8445E-07
+15031.03c  4.4989E-06
+19039.03c  2.6590E-06
+19040.03c  3.3359E-10
+19041.03c  1.9189E-07
+20040.03c  1.3208E-06
+20042.03c  8.8154E-09
+20043.03c  1.8394E-09
+20044.03c  2.8422E-08
+20046.03c  5.4500E-11
+20048.03c  2.5479E-09
+22046.03c  2.8910E-08
+22047.03c  2.6381E-08
+22048.03c  2.6670E-07
+22049.03c  1.9876E-08
+22050.03c  1.9515E-08
+24050.03c  1.4556E-07
+24052.03c  2.8069E-06
+24053.03c  3.1824E-07
+24054.03c  7.9226E-08
+25055.03c  1.0463E-06
+26054.03c  6.5514E-07
+26056.03c  1.0185E-05
+26057.03c  2.3319E-07
+26058.03c  3.1092E-08
+28058.03c  6.8892E-06
+28060.03c  2.6338E-06
+28061.03c  1.1403E-07
+28062.03c  3.6227E-07
+28064.03c  9.1829E-08
+29063.03c  1.1642E-06
+29065.03c  5.1888E-07
+38084.03c  4.2417E-10
+38086.03c  7.4683E-09
+38087.03c  5.3021E-09
+38088.03c  6.2549E-08
+40090.03c  4.5780E-07
+40091.03c  9.9834E-08
+40092.03c  1.5260E-07
+40094.03c  1.5465E-07
+40096.03c  2.4914E-08
+42092.03c  1.2222E-03
+42094.03c  7.6184E-04
+42095.03c  1.3112E-03
+42096.03c  1.3738E-03
+42097.03c  7.8655E-04
+42098.03c  1.9874E-03
+42100.03c  7.9314E-04
+44096.03c  3.6378E-09
+44098.03c  1.2214E-09
+44099.03c  8.3393E-09
+44100.03c  8.2737E-09
+44101.03c  1.1229E-08
+44102.03c  2.0750E-08
+44104.03c  1.2214E-08
+45103.03c  6.4490E-08
+48106.03c  2.9635E-10
+48108.03c  2.1100E-10
+48110.03c  2.9611E-09
+48111.03c  3.0346E-09
+48112.03c  5.7207E-09
+48113.03c  2.8971E-09
+48114.03c  6.8112E-09
+48116.03c  1.7757E-09
+49113.03c  2.4854E-09
+49115.03c  5.5314E-08
+64152.03c  2.7249E-11
+64154.03c  2.9701E-10
+64155.03c  2.0164E-09
+64156.03c  2.7889E-09
+64157.03c  2.1322E-09
+64158.03c  3.3843E-09
+64160.03c  2.9783E-09
+74182.03c  2.9901E-07
+74183.03c  1.6235E-07
+74184.03c  3.4903E-07
+74186.03c  3.2516E-07
+95241.03c  2.1922E-12
+93237.03c  3.6063E-08
+94238.03c  2.9097E-12
+94239.03c  8.2134E-10
+94240.03c  2.2375E-10
+92232.03c  7.5512E-12
+92233.03c  4.1429E-07
+92234.03c  4.1665E-04
+92235.03c  3.8242E-02
+92236.03c  1.6661E-04
+92238.03c  2.2238E-03
+6000.03c  2.34641e-04 
+mat fuel_134 4.95875e-02  tmp 300
+3006.03c  7.1710E-08
+3007.03c  8.8442E-07
+4009.03c  1.6235E-07
+5010.03c  1.5582E-07
+5011.03c  6.2721E-07
+11023.03c  1.7047E-06
+13027.03c  3.3925E-06
+14028.03c  2.0363E-05
+14029.03c  1.0311E-06
+14030.03c  6.8445E-07
+15031.03c  4.4989E-06
+19039.03c  2.6590E-06
+19040.03c  3.3359E-10
+19041.03c  1.9189E-07
+20040.03c  1.3208E-06
+20042.03c  8.8154E-09
+20043.03c  1.8394E-09
+20044.03c  2.8422E-08
+20046.03c  5.4500E-11
+20048.03c  2.5479E-09
+22046.03c  2.8910E-08
+22047.03c  2.6381E-08
+22048.03c  2.6670E-07
+22049.03c  1.9876E-08
+22050.03c  1.9515E-08
+24050.03c  1.4556E-07
+24052.03c  2.8069E-06
+24053.03c  3.1824E-07
+24054.03c  7.9226E-08
+25055.03c  1.0463E-06
+26054.03c  6.5514E-07
+26056.03c  1.0185E-05
+26057.03c  2.3319E-07
+26058.03c  3.1092E-08
+28058.03c  6.8892E-06
+28060.03c  2.6338E-06
+28061.03c  1.1403E-07
+28062.03c  3.6227E-07
+28064.03c  9.1829E-08
+29063.03c  1.1642E-06
+29065.03c  5.1888E-07
+38084.03c  4.2417E-10
+38086.03c  7.4683E-09
+38087.03c  5.3021E-09
+38088.03c  6.2549E-08
+40090.03c  4.5780E-07
+40091.03c  9.9834E-08
+40092.03c  1.5260E-07
+40094.03c  1.5465E-07
+40096.03c  2.4914E-08
+42092.03c  1.2222E-03
+42094.03c  7.6184E-04
+42095.03c  1.3112E-03
+42096.03c  1.3738E-03
+42097.03c  7.8655E-04
+42098.03c  1.9874E-03
+42100.03c  7.9314E-04
+44096.03c  3.6378E-09
+44098.03c  1.2214E-09
+44099.03c  8.3393E-09
+44100.03c  8.2737E-09
+44101.03c  1.1229E-08
+44102.03c  2.0750E-08
+44104.03c  1.2214E-08
+45103.03c  6.4490E-08
+48106.03c  2.9635E-10
+48108.03c  2.1100E-10
+48110.03c  2.9611E-09
+48111.03c  3.0346E-09
+48112.03c  5.7207E-09
+48113.03c  2.8971E-09
+48114.03c  6.8112E-09
+48116.03c  1.7757E-09
+49113.03c  2.4854E-09
+49115.03c  5.5314E-08
+64152.03c  2.7249E-11
+64154.03c  2.9701E-10
+64155.03c  2.0164E-09
+64156.03c  2.7889E-09
+64157.03c  2.1322E-09
+64158.03c  3.3843E-09
+64160.03c  2.9783E-09
+74182.03c  2.9901E-07
+74183.03c  1.6235E-07
+74184.03c  3.4903E-07
+74186.03c  3.2516E-07
+95241.03c  2.1922E-12
+93237.03c  3.6063E-08
+94238.03c  2.9097E-12
+94239.03c  8.2134E-10
+94240.03c  2.2375E-10
+92232.03c  7.5512E-12
+92233.03c  4.1429E-07
+92234.03c  4.1665E-04
+92235.03c  3.8242E-02
+92236.03c  1.6661E-04
+92238.03c  2.2238E-03
+6000.03c  2.34641e-04 
+mat fuel_135 4.95875e-02  tmp 300
+3006.03c  7.1710E-08
+3007.03c  8.8442E-07
+4009.03c  1.6235E-07
+5010.03c  1.5582E-07
+5011.03c  6.2721E-07
+11023.03c  1.7047E-06
+13027.03c  3.3925E-06
+14028.03c  2.0363E-05
+14029.03c  1.0311E-06
+14030.03c  6.8445E-07
+15031.03c  4.4989E-06
+19039.03c  2.6590E-06
+19040.03c  3.3359E-10
+19041.03c  1.9189E-07
+20040.03c  1.3208E-06
+20042.03c  8.8154E-09
+20043.03c  1.8394E-09
+20044.03c  2.8422E-08
+20046.03c  5.4500E-11
+20048.03c  2.5479E-09
+22046.03c  2.8910E-08
+22047.03c  2.6381E-08
+22048.03c  2.6670E-07
+22049.03c  1.9876E-08
+22050.03c  1.9515E-08
+24050.03c  1.4556E-07
+24052.03c  2.8069E-06
+24053.03c  3.1824E-07
+24054.03c  7.9226E-08
+25055.03c  1.0463E-06
+26054.03c  6.5514E-07
+26056.03c  1.0185E-05
+26057.03c  2.3319E-07
+26058.03c  3.1092E-08
+28058.03c  6.8892E-06
+28060.03c  2.6338E-06
+28061.03c  1.1403E-07
+28062.03c  3.6227E-07
+28064.03c  9.1829E-08
+29063.03c  1.1642E-06
+29065.03c  5.1888E-07
+38084.03c  4.2417E-10
+38086.03c  7.4683E-09
+38087.03c  5.3021E-09
+38088.03c  6.2549E-08
+40090.03c  4.5780E-07
+40091.03c  9.9834E-08
+40092.03c  1.5260E-07
+40094.03c  1.5465E-07
+40096.03c  2.4914E-08
+42092.03c  1.2222E-03
+42094.03c  7.6184E-04
+42095.03c  1.3112E-03
+42096.03c  1.3738E-03
+42097.03c  7.8655E-04
+42098.03c  1.9874E-03
+42100.03c  7.9314E-04
+44096.03c  3.6378E-09
+44098.03c  1.2214E-09
+44099.03c  8.3393E-09
+44100.03c  8.2737E-09
+44101.03c  1.1229E-08
+44102.03c  2.0750E-08
+44104.03c  1.2214E-08
+45103.03c  6.4490E-08
+48106.03c  2.9635E-10
+48108.03c  2.1100E-10
+48110.03c  2.9611E-09
+48111.03c  3.0346E-09
+48112.03c  5.7207E-09
+48113.03c  2.8971E-09
+48114.03c  6.8112E-09
+48116.03c  1.7757E-09
+49113.03c  2.4854E-09
+49115.03c  5.5314E-08
+64152.03c  2.7249E-11
+64154.03c  2.9701E-10
+64155.03c  2.0164E-09
+64156.03c  2.7889E-09
+64157.03c  2.1322E-09
+64158.03c  3.3843E-09
+64160.03c  2.9783E-09
+74182.03c  2.9901E-07
+74183.03c  1.6235E-07
+74184.03c  3.4903E-07
+74186.03c  3.2516E-07
+95241.03c  2.1922E-12
+93237.03c  3.6063E-08
+94238.03c  2.9097E-12
+94239.03c  8.2134E-10
+94240.03c  2.2375E-10
+92232.03c  7.5512E-12
+92233.03c  4.1429E-07
+92234.03c  4.1665E-04
+92235.03c  3.8242E-02
+92236.03c  1.6661E-04
+92238.03c  2.2238E-03
+6000.03c  2.34641e-04 
+mat fuel_144 4.95875e-02  tmp 300
+3006.03c  7.1710E-08
+3007.03c  8.8442E-07
+4009.03c  1.6235E-07
+5010.03c  1.5582E-07
+5011.03c  6.2721E-07
+11023.03c  1.7047E-06
+13027.03c  3.3925E-06
+14028.03c  2.0363E-05
+14029.03c  1.0311E-06
+14030.03c  6.8445E-07
+15031.03c  4.4989E-06
+19039.03c  2.6590E-06
+19040.03c  3.3359E-10
+19041.03c  1.9189E-07
+20040.03c  1.3208E-06
+20042.03c  8.8154E-09
+20043.03c  1.8394E-09
+20044.03c  2.8422E-08
+20046.03c  5.4500E-11
+20048.03c  2.5479E-09
+22046.03c  2.8910E-08
+22047.03c  2.6381E-08
+22048.03c  2.6670E-07
+22049.03c  1.9876E-08
+22050.03c  1.9515E-08
+24050.03c  1.4556E-07
+24052.03c  2.8069E-06
+24053.03c  3.1824E-07
+24054.03c  7.9226E-08
+25055.03c  1.0463E-06
+26054.03c  6.5514E-07
+26056.03c  1.0185E-05
+26057.03c  2.3319E-07
+26058.03c  3.1092E-08
+28058.03c  6.8892E-06
+28060.03c  2.6338E-06
+28061.03c  1.1403E-07
+28062.03c  3.6227E-07
+28064.03c  9.1829E-08
+29063.03c  1.1642E-06
+29065.03c  5.1888E-07
+38084.03c  4.2417E-10
+38086.03c  7.4683E-09
+38087.03c  5.3021E-09
+38088.03c  6.2549E-08
+40090.03c  4.5780E-07
+40091.03c  9.9834E-08
+40092.03c  1.5260E-07
+40094.03c  1.5465E-07
+40096.03c  2.4914E-08
+42092.03c  1.2222E-03
+42094.03c  7.6184E-04
+42095.03c  1.3112E-03
+42096.03c  1.3738E-03
+42097.03c  7.8655E-04
+42098.03c  1.9874E-03
+42100.03c  7.9314E-04
+44096.03c  3.6378E-09
+44098.03c  1.2214E-09
+44099.03c  8.3393E-09
+44100.03c  8.2737E-09
+44101.03c  1.1229E-08
+44102.03c  2.0750E-08
+44104.03c  1.2214E-08
+45103.03c  6.4490E-08
+48106.03c  2.9635E-10
+48108.03c  2.1100E-10
+48110.03c  2.9611E-09
+48111.03c  3.0346E-09
+48112.03c  5.7207E-09
+48113.03c  2.8971E-09
+48114.03c  6.8112E-09
+48116.03c  1.7757E-09
+49113.03c  2.4854E-09
+49115.03c  5.5314E-08
+64152.03c  2.7249E-11
+64154.03c  2.9701E-10
+64155.03c  2.0164E-09
+64156.03c  2.7889E-09
+64157.03c  2.1322E-09
+64158.03c  3.3843E-09
+64160.03c  2.9783E-09
+74182.03c  2.9901E-07
+74183.03c  1.6235E-07
+74184.03c  3.4903E-07
+74186.03c  3.2516E-07
+95241.03c  2.1922E-12
+93237.03c  3.6063E-08
+94238.03c  2.9097E-12
+94239.03c  8.2134E-10
+94240.03c  2.2375E-10
+92232.03c  7.5512E-12
+92233.03c  4.1429E-07
+92234.03c  4.1665E-04
+92235.03c  3.8242E-02
+92236.03c  1.6661E-04
+92238.03c  2.2238E-03
+6000.03c  2.34641e-04 
+mat fuel_145 4.95875e-02  tmp 300
+3006.03c  7.1710E-08
+3007.03c  8.8442E-07
+4009.03c  1.6235E-07
+5010.03c  1.5582E-07
+5011.03c  6.2721E-07
+11023.03c  1.7047E-06
+13027.03c  3.3925E-06
+14028.03c  2.0363E-05
+14029.03c  1.0311E-06
+14030.03c  6.8445E-07
+15031.03c  4.4989E-06
+19039.03c  2.6590E-06
+19040.03c  3.3359E-10
+19041.03c  1.9189E-07
+20040.03c  1.3208E-06
+20042.03c  8.8154E-09
+20043.03c  1.8394E-09
+20044.03c  2.8422E-08
+20046.03c  5.4500E-11
+20048.03c  2.5479E-09
+22046.03c  2.8910E-08
+22047.03c  2.6381E-08
+22048.03c  2.6670E-07
+22049.03c  1.9876E-08
+22050.03c  1.9515E-08
+24050.03c  1.4556E-07
+24052.03c  2.8069E-06
+24053.03c  3.1824E-07
+24054.03c  7.9226E-08
+25055.03c  1.0463E-06
+26054.03c  6.5514E-07
+26056.03c  1.0185E-05
+26057.03c  2.3319E-07
+26058.03c  3.1092E-08
+28058.03c  6.8892E-06
+28060.03c  2.6338E-06
+28061.03c  1.1403E-07
+28062.03c  3.6227E-07
+28064.03c  9.1829E-08
+29063.03c  1.1642E-06
+29065.03c  5.1888E-07
+38084.03c  4.2417E-10
+38086.03c  7.4683E-09
+38087.03c  5.3021E-09
+38088.03c  6.2549E-08
+40090.03c  4.5780E-07
+40091.03c  9.9834E-08
+40092.03c  1.5260E-07
+40094.03c  1.5465E-07
+40096.03c  2.4914E-08
+42092.03c  1.2222E-03
+42094.03c  7.6184E-04
+42095.03c  1.3112E-03
+42096.03c  1.3738E-03
+42097.03c  7.8655E-04
+42098.03c  1.9874E-03
+42100.03c  7.9314E-04
+44096.03c  3.6378E-09
+44098.03c  1.2214E-09
+44099.03c  8.3393E-09
+44100.03c  8.2737E-09
+44101.03c  1.1229E-08
+44102.03c  2.0750E-08
+44104.03c  1.2214E-08
+45103.03c  6.4490E-08
+48106.03c  2.9635E-10
+48108.03c  2.1100E-10
+48110.03c  2.9611E-09
+48111.03c  3.0346E-09
+48112.03c  5.7207E-09
+48113.03c  2.8971E-09
+48114.03c  6.8112E-09
+48116.03c  1.7757E-09
+49113.03c  2.4854E-09
+49115.03c  5.5314E-08
+64152.03c  2.7249E-11
+64154.03c  2.9701E-10
+64155.03c  2.0164E-09
+64156.03c  2.7889E-09
+64157.03c  2.1322E-09
+64158.03c  3.3843E-09
+64160.03c  2.9783E-09
+74182.03c  2.9901E-07
+74183.03c  1.6235E-07
+74184.03c  3.4903E-07
+74186.03c  3.2516E-07
+95241.03c  2.1922E-12
+93237.03c  3.6063E-08
+94238.03c  2.9097E-12
+94239.03c  8.2134E-10
+94240.03c  2.2375E-10
+92232.03c  7.5512E-12
+92233.03c  4.1429E-07
+92234.03c  4.1665E-04
+92235.03c  3.8242E-02
+92236.03c  1.6661E-04
+92238.03c  2.2238E-03
+6000.03c  2.34641e-04 
+mat fuel_154 4.95875e-02  tmp 300
+3006.03c  7.1710E-08
+3007.03c  8.8442E-07
+4009.03c  1.6235E-07
+5010.03c  1.5582E-07
+5011.03c  6.2721E-07
+11023.03c  1.7047E-06
+13027.03c  3.3925E-06
+14028.03c  2.0363E-05
+14029.03c  1.0311E-06
+14030.03c  6.8445E-07
+15031.03c  4.4989E-06
+19039.03c  2.6590E-06
+19040.03c  3.3359E-10
+19041.03c  1.9189E-07
+20040.03c  1.3208E-06
+20042.03c  8.8154E-09
+20043.03c  1.8394E-09
+20044.03c  2.8422E-08
+20046.03c  5.4500E-11
+20048.03c  2.5479E-09
+22046.03c  2.8910E-08
+22047.03c  2.6381E-08
+22048.03c  2.6670E-07
+22049.03c  1.9876E-08
+22050.03c  1.9515E-08
+24050.03c  1.4556E-07
+24052.03c  2.8069E-06
+24053.03c  3.1824E-07
+24054.03c  7.9226E-08
+25055.03c  1.0463E-06
+26054.03c  6.5514E-07
+26056.03c  1.0185E-05
+26057.03c  2.3319E-07
+26058.03c  3.1092E-08
+28058.03c  6.8892E-06
+28060.03c  2.6338E-06
+28061.03c  1.1403E-07
+28062.03c  3.6227E-07
+28064.03c  9.1829E-08
+29063.03c  1.1642E-06
+29065.03c  5.1888E-07
+38084.03c  4.2417E-10
+38086.03c  7.4683E-09
+38087.03c  5.3021E-09
+38088.03c  6.2549E-08
+40090.03c  4.5780E-07
+40091.03c  9.9834E-08
+40092.03c  1.5260E-07
+40094.03c  1.5465E-07
+40096.03c  2.4914E-08
+42092.03c  1.2222E-03
+42094.03c  7.6184E-04
+42095.03c  1.3112E-03
+42096.03c  1.3738E-03
+42097.03c  7.8655E-04
+42098.03c  1.9874E-03
+42100.03c  7.9314E-04
+44096.03c  3.6378E-09
+44098.03c  1.2214E-09
+44099.03c  8.3393E-09
+44100.03c  8.2737E-09
+44101.03c  1.1229E-08
+44102.03c  2.0750E-08
+44104.03c  1.2214E-08
+45103.03c  6.4490E-08
+48106.03c  2.9635E-10
+48108.03c  2.1100E-10
+48110.03c  2.9611E-09
+48111.03c  3.0346E-09
+48112.03c  5.7207E-09
+48113.03c  2.8971E-09
+48114.03c  6.8112E-09
+48116.03c  1.7757E-09
+49113.03c  2.4854E-09
+49115.03c  5.5314E-08
+64152.03c  2.7249E-11
+64154.03c  2.9701E-10
+64155.03c  2.0164E-09
+64156.03c  2.7889E-09
+64157.03c  2.1322E-09
+64158.03c  3.3843E-09
+64160.03c  2.9783E-09
+74182.03c  2.9901E-07
+74183.03c  1.6235E-07
+74184.03c  3.4903E-07
+74186.03c  3.2516E-07
+95241.03c  2.1922E-12
+93237.03c  3.6063E-08
+94238.03c  2.9097E-12
+94239.03c  8.2134E-10
+94240.03c  2.2375E-10
+92232.03c  7.5512E-12
+92233.03c  4.1429E-07
+92234.03c  4.1665E-04
+92235.03c  3.8242E-02
+92236.03c  1.6661E-04
+92238.03c  2.2238E-03
+6000.03c  2.34641e-04 
+mat fuel_155 4.95875e-02  tmp 300
+3006.03c  7.1710E-08
+3007.03c  8.8442E-07
+4009.03c  1.6235E-07
+5010.03c  1.5582E-07
+5011.03c  6.2721E-07
+11023.03c  1.7047E-06
+13027.03c  3.3925E-06
+14028.03c  2.0363E-05
+14029.03c  1.0311E-06
+14030.03c  6.8445E-07
+15031.03c  4.4989E-06
+19039.03c  2.6590E-06
+19040.03c  3.3359E-10
+19041.03c  1.9189E-07
+20040.03c  1.3208E-06
+20042.03c  8.8154E-09
+20043.03c  1.8394E-09
+20044.03c  2.8422E-08
+20046.03c  5.4500E-11
+20048.03c  2.5479E-09
+22046.03c  2.8910E-08
+22047.03c  2.6381E-08
+22048.03c  2.6670E-07
+22049.03c  1.9876E-08
+22050.03c  1.9515E-08
+24050.03c  1.4556E-07
+24052.03c  2.8069E-06
+24053.03c  3.1824E-07
+24054.03c  7.9226E-08
+25055.03c  1.0463E-06
+26054.03c  6.5514E-07
+26056.03c  1.0185E-05
+26057.03c  2.3319E-07
+26058.03c  3.1092E-08
+28058.03c  6.8892E-06
+28060.03c  2.6338E-06
+28061.03c  1.1403E-07
+28062.03c  3.6227E-07
+28064.03c  9.1829E-08
+29063.03c  1.1642E-06
+29065.03c  5.1888E-07
+38084.03c  4.2417E-10
+38086.03c  7.4683E-09
+38087.03c  5.3021E-09
+38088.03c  6.2549E-08
+40090.03c  4.5780E-07
+40091.03c  9.9834E-08
+40092.03c  1.5260E-07
+40094.03c  1.5465E-07
+40096.03c  2.4914E-08
+42092.03c  1.2222E-03
+42094.03c  7.6184E-04
+42095.03c  1.3112E-03
+42096.03c  1.3738E-03
+42097.03c  7.8655E-04
+42098.03c  1.9874E-03
+42100.03c  7.9314E-04
+44096.03c  3.6378E-09
+44098.03c  1.2214E-09
+44099.03c  8.3393E-09
+44100.03c  8.2737E-09
+44101.03c  1.1229E-08
+44102.03c  2.0750E-08
+44104.03c  1.2214E-08
+45103.03c  6.4490E-08
+48106.03c  2.9635E-10
+48108.03c  2.1100E-10
+48110.03c  2.9611E-09
+48111.03c  3.0346E-09
+48112.03c  5.7207E-09
+48113.03c  2.8971E-09
+48114.03c  6.8112E-09
+48116.03c  1.7757E-09
+49113.03c  2.4854E-09
+49115.03c  5.5314E-08
+64152.03c  2.7249E-11
+64154.03c  2.9701E-10
+64155.03c  2.0164E-09
+64156.03c  2.7889E-09
+64157.03c  2.1322E-09
+64158.03c  3.3843E-09
+64160.03c  2.9783E-09
+74182.03c  2.9901E-07
+74183.03c  1.6235E-07
+74184.03c  3.4903E-07
+74186.03c  3.2516E-07
+95241.03c  2.1922E-12
+93237.03c  3.6063E-08
+94238.03c  2.9097E-12
+94239.03c  8.2134E-10
+94240.03c  2.2375E-10
+92232.03c  7.5512E-12
+92233.03c  4.1429E-07
+92234.03c  4.1665E-04
+92235.03c  3.8242E-02
+92236.03c  1.6661E-04
+92238.03c  2.2238E-03
+6000.03c  2.34641e-04 
+mat fuel_164 4.95875e-02  tmp 300
+3006.03c  7.1710E-08
+3007.03c  8.8442E-07
+4009.03c  1.6235E-07
+5010.03c  1.5582E-07
+5011.03c  6.2721E-07
+11023.03c  1.7047E-06
+13027.03c  3.3925E-06
+14028.03c  2.0363E-05
+14029.03c  1.0311E-06
+14030.03c  6.8445E-07
+15031.03c  4.4989E-06
+19039.03c  2.6590E-06
+19040.03c  3.3359E-10
+19041.03c  1.9189E-07
+20040.03c  1.3208E-06
+20042.03c  8.8154E-09
+20043.03c  1.8394E-09
+20044.03c  2.8422E-08
+20046.03c  5.4500E-11
+20048.03c  2.5479E-09
+22046.03c  2.8910E-08
+22047.03c  2.6381E-08
+22048.03c  2.6670E-07
+22049.03c  1.9876E-08
+22050.03c  1.9515E-08
+24050.03c  1.4556E-07
+24052.03c  2.8069E-06
+24053.03c  3.1824E-07
+24054.03c  7.9226E-08
+25055.03c  1.0463E-06
+26054.03c  6.5514E-07
+26056.03c  1.0185E-05
+26057.03c  2.3319E-07
+26058.03c  3.1092E-08
+28058.03c  6.8892E-06
+28060.03c  2.6338E-06
+28061.03c  1.1403E-07
+28062.03c  3.6227E-07
+28064.03c  9.1829E-08
+29063.03c  1.1642E-06
+29065.03c  5.1888E-07
+38084.03c  4.2417E-10
+38086.03c  7.4683E-09
+38087.03c  5.3021E-09
+38088.03c  6.2549E-08
+40090.03c  4.5780E-07
+40091.03c  9.9834E-08
+40092.03c  1.5260E-07
+40094.03c  1.5465E-07
+40096.03c  2.4914E-08
+42092.03c  1.2222E-03
+42094.03c  7.6184E-04
+42095.03c  1.3112E-03
+42096.03c  1.3738E-03
+42097.03c  7.8655E-04
+42098.03c  1.9874E-03
+42100.03c  7.9314E-04
+44096.03c  3.6378E-09
+44098.03c  1.2214E-09
+44099.03c  8.3393E-09
+44100.03c  8.2737E-09
+44101.03c  1.1229E-08
+44102.03c  2.0750E-08
+44104.03c  1.2214E-08
+45103.03c  6.4490E-08
+48106.03c  2.9635E-10
+48108.03c  2.1100E-10
+48110.03c  2.9611E-09
+48111.03c  3.0346E-09
+48112.03c  5.7207E-09
+48113.03c  2.8971E-09
+48114.03c  6.8112E-09
+48116.03c  1.7757E-09
+49113.03c  2.4854E-09
+49115.03c  5.5314E-08
+64152.03c  2.7249E-11
+64154.03c  2.9701E-10
+64155.03c  2.0164E-09
+64156.03c  2.7889E-09
+64157.03c  2.1322E-09
+64158.03c  3.3843E-09
+64160.03c  2.9783E-09
+74182.03c  2.9901E-07
+74183.03c  1.6235E-07
+74184.03c  3.4903E-07
+74186.03c  3.2516E-07
+95241.03c  2.1922E-12
+93237.03c  3.6063E-08
+94238.03c  2.9097E-12
+94239.03c  8.2134E-10
+94240.03c  2.2375E-10
+92232.03c  7.5512E-12
+92233.03c  4.1429E-07
+92234.03c  4.1665E-04
+92235.03c  3.8242E-02
+92236.03c  1.6661E-04
+92238.03c  2.2238E-03
+6000.03c  2.34641e-04 
+mat fuel_165 4.95875e-02  tmp 300
+3006.03c  7.1710E-08
+3007.03c  8.8442E-07
+4009.03c  1.6235E-07
+5010.03c  1.5582E-07
+5011.03c  6.2721E-07
+11023.03c  1.7047E-06
+13027.03c  3.3925E-06
+14028.03c  2.0363E-05
+14029.03c  1.0311E-06
+14030.03c  6.8445E-07
+15031.03c  4.4989E-06
+19039.03c  2.6590E-06
+19040.03c  3.3359E-10
+19041.03c  1.9189E-07
+20040.03c  1.3208E-06
+20042.03c  8.8154E-09
+20043.03c  1.8394E-09
+20044.03c  2.8422E-08
+20046.03c  5.4500E-11
+20048.03c  2.5479E-09
+22046.03c  2.8910E-08
+22047.03c  2.6381E-08
+22048.03c  2.6670E-07
+22049.03c  1.9876E-08
+22050.03c  1.9515E-08
+24050.03c  1.4556E-07
+24052.03c  2.8069E-06
+24053.03c  3.1824E-07
+24054.03c  7.9226E-08
+25055.03c  1.0463E-06
+26054.03c  6.5514E-07
+26056.03c  1.0185E-05
+26057.03c  2.3319E-07
+26058.03c  3.1092E-08
+28058.03c  6.8892E-06
+28060.03c  2.6338E-06
+28061.03c  1.1403E-07
+28062.03c  3.6227E-07
+28064.03c  9.1829E-08
+29063.03c  1.1642E-06
+29065.03c  5.1888E-07
+38084.03c  4.2417E-10
+38086.03c  7.4683E-09
+38087.03c  5.3021E-09
+38088.03c  6.2549E-08
+40090.03c  4.5780E-07
+40091.03c  9.9834E-08
+40092.03c  1.5260E-07
+40094.03c  1.5465E-07
+40096.03c  2.4914E-08
+42092.03c  1.2222E-03
+42094.03c  7.6184E-04
+42095.03c  1.3112E-03
+42096.03c  1.3738E-03
+42097.03c  7.8655E-04
+42098.03c  1.9874E-03
+42100.03c  7.9314E-04
+44096.03c  3.6378E-09
+44098.03c  1.2214E-09
+44099.03c  8.3393E-09
+44100.03c  8.2737E-09
+44101.03c  1.1229E-08
+44102.03c  2.0750E-08
+44104.03c  1.2214E-08
+45103.03c  6.4490E-08
+48106.03c  2.9635E-10
+48108.03c  2.1100E-10
+48110.03c  2.9611E-09
+48111.03c  3.0346E-09
+48112.03c  5.7207E-09
+48113.03c  2.8971E-09
+48114.03c  6.8112E-09
+48116.03c  1.7757E-09
+49113.03c  2.4854E-09
+49115.03c  5.5314E-08
+64152.03c  2.7249E-11
+64154.03c  2.9701E-10
+64155.03c  2.0164E-09
+64156.03c  2.7889E-09
+64157.03c  2.1322E-09
+64158.03c  3.3843E-09
+64160.03c  2.9783E-09
+74182.03c  2.9901E-07
+74183.03c  1.6235E-07
+74184.03c  3.4903E-07
+74186.03c  3.2516E-07
+95241.03c  2.1922E-12
+93237.03c  3.6063E-08
+94238.03c  2.9097E-12
+94239.03c  8.2134E-10
+94240.03c  2.2375E-10
+92232.03c  7.5512E-12
+92233.03c  4.1429E-07
+92234.03c  4.1665E-04
+92235.03c  3.8242E-02
+92236.03c  1.6661E-04
+92238.03c  2.2238E-03
+6000.03c  2.34641e-04 
+mat fuel_300 4.96314e-02  tmp 300
+3006.03c  7.1710E-08
+3007.03c  8.8442E-07
+4009.03c  1.6235E-07
+5010.03c  1.7378E-07
+5011.03c  6.9948E-07
+11023.03c  1.9396E-06
+13027.03c  2.7824E-06
+14028.03c  2.4596E-05
+14029.03c  1.2454E-06
+14030.03c  8.2672E-07
+15031.03c  4.4989E-06
+19039.03c  2.6590E-06
+19040.03c  3.3359E-10
+19041.03c  1.9189E-07
+20040.03c  7.0149E-07
+20042.03c  4.6819E-09
+20043.03c  9.7690E-10
+20044.03c  1.5095E-08
+20046.03c  2.8945E-11
+20048.03c  1.3532E-09
+22046.03c  3.0657E-08
+22047.03c  2.7974E-08
+22048.03c  2.8281E-07
+22049.03c  2.1076E-08
+22050.03c  2.0693E-08
+24050.03c  1.5720E-07
+24052.03c  3.0315E-06
+24053.03c  3.4370E-07
+24054.03c  8.5564E-08
+25055.03c  1.1097E-06
+26054.03c  6.6250E-07
+26056.03c  1.0299E-05
+26057.03c  2.3581E-07
+26058.03c  3.1441E-08
+28058.03c  6.6866E-06
+28060.03c  2.5563E-06
+28061.03c  1.1068E-07
+28062.03c  3.5162E-07
+28064.03c  8.9128E-08
+29063.03c  9.8213E-07
+29065.03c  4.3775E-07
+38084.03c  4.2417E-10
+38086.03c  7.4683E-09
+38087.03c  5.3021E-09
+38088.03c  6.2549E-08
+40090.03c  4.2832E-07
+40091.03c  9.3407E-08
+40092.03c  1.4277E-07
+40094.03c  1.4469E-07
+40096.03c  2.3310E-08
+42092.03c  1.2287E-03
+42094.03c  7.6587E-04
+42095.03c  1.3181E-03
+42096.03c  1.3811E-03
+42097.03c  7.9071E-04
+42098.03c  1.9979E-03
+42100.03c  7.9733E-04
+44096.03c  4.3348E-09
+44098.03c  1.4554E-09
+44099.03c  9.9372E-09
+44100.03c  9.8589E-09
+44101.03c  1.3380E-08
+44102.03c  2.4726E-08
+44104.03c  1.4554E-08
+45103.03c  6.4490E-08
+48106.03c  2.9635E-10
+48108.03c  2.1100E-10
+48110.03c  2.9611E-09
+48111.03c  3.0346E-09
+48112.03c  5.7207E-09
+48113.03c  2.8971E-09
+48114.03c  6.8112E-09
+48116.03c  1.7757E-09
+49113.03c  2.4854E-09
+49115.03c  5.5314E-08
+64152.03c  2.7249E-11
+64154.03c  2.9701E-10
+64155.03c  2.0164E-09
+64156.03c  2.7889E-09
+64157.03c  2.1322E-09
+64158.03c  3.3843E-09
+64160.03c  2.9783E-09
+74182.03c  2.7907E-07
+74183.03c  1.5153E-07
+74184.03c  3.2576E-07
+74186.03c  3.0348E-07
+95241.03c  3.2462E-12
+93237.03c  3.5854E-08
+94238.03c  2.9953E-12
+94239.03c  9.9734E-10
+94240.03c  2.7170E-10
+92232.03c  8.9865E-12
+92233.03c  4.1410E-07
+92234.03c  4.1837E-04
+92235.03c  3.8222E-02
+92236.03c  1.7375E-04
+92238.03c  2.2160E-03
+6000.03c  2.50303e-04 
+mat fuel_301 4.96314e-02  tmp 300
+3006.03c  7.1710E-08
+3007.03c  8.8442E-07
+4009.03c  1.6235E-07
+5010.03c  1.7378E-07
+5011.03c  6.9948E-07
+11023.03c  1.9396E-06
+13027.03c  2.7824E-06
+14028.03c  2.4596E-05
+14029.03c  1.2454E-06
+14030.03c  8.2672E-07
+15031.03c  4.4989E-06
+19039.03c  2.6590E-06
+19040.03c  3.3359E-10
+19041.03c  1.9189E-07
+20040.03c  7.0149E-07
+20042.03c  4.6819E-09
+20043.03c  9.7690E-10
+20044.03c  1.5095E-08
+20046.03c  2.8945E-11
+20048.03c  1.3532E-09
+22046.03c  3.0657E-08
+22047.03c  2.7974E-08
+22048.03c  2.8281E-07
+22049.03c  2.1076E-08
+22050.03c  2.0693E-08
+24050.03c  1.5720E-07
+24052.03c  3.0315E-06
+24053.03c  3.4370E-07
+24054.03c  8.5564E-08
+25055.03c  1.1097E-06
+26054.03c  6.6250E-07
+26056.03c  1.0299E-05
+26057.03c  2.3581E-07
+26058.03c  3.1441E-08
+28058.03c  6.6866E-06
+28060.03c  2.5563E-06
+28061.03c  1.1068E-07
+28062.03c  3.5162E-07
+28064.03c  8.9128E-08
+29063.03c  9.8213E-07
+29065.03c  4.3775E-07
+38084.03c  4.2417E-10
+38086.03c  7.4683E-09
+38087.03c  5.3021E-09
+38088.03c  6.2549E-08
+40090.03c  4.2832E-07
+40091.03c  9.3407E-08
+40092.03c  1.4277E-07
+40094.03c  1.4469E-07
+40096.03c  2.3310E-08
+42092.03c  1.2287E-03
+42094.03c  7.6587E-04
+42095.03c  1.3181E-03
+42096.03c  1.3811E-03
+42097.03c  7.9071E-04
+42098.03c  1.9979E-03
+42100.03c  7.9733E-04
+44096.03c  4.3348E-09
+44098.03c  1.4554E-09
+44099.03c  9.9372E-09
+44100.03c  9.8589E-09
+44101.03c  1.3380E-08
+44102.03c  2.4726E-08
+44104.03c  1.4554E-08
+45103.03c  6.4490E-08
+48106.03c  2.9635E-10
+48108.03c  2.1100E-10
+48110.03c  2.9611E-09
+48111.03c  3.0346E-09
+48112.03c  5.7207E-09
+48113.03c  2.8971E-09
+48114.03c  6.8112E-09
+48116.03c  1.7757E-09
+49113.03c  2.4854E-09
+49115.03c  5.5314E-08
+64152.03c  2.7249E-11
+64154.03c  2.9701E-10
+64155.03c  2.0164E-09
+64156.03c  2.7889E-09
+64157.03c  2.1322E-09
+64158.03c  3.3843E-09
+64160.03c  2.9783E-09
+74182.03c  2.7907E-07
+74183.03c  1.5153E-07
+74184.03c  3.2576E-07
+74186.03c  3.0348E-07
+95241.03c  3.2462E-12
+93237.03c  3.5854E-08
+94238.03c  2.9953E-12
+94239.03c  9.9734E-10
+94240.03c  2.7170E-10
+92232.03c  8.9865E-12
+92233.03c  4.1410E-07
+92234.03c  4.1837E-04
+92235.03c  3.8222E-02
+92236.03c  1.7375E-04
+92238.03c  2.2160E-03
+6000.03c  2.50303e-04 
+mat fuel_310 4.96314e-02  tmp 300
+3006.03c  7.1710E-08
+3007.03c  8.8442E-07
+4009.03c  1.6235E-07
+5010.03c  1.7378E-07
+5011.03c  6.9948E-07
+11023.03c  1.9396E-06
+13027.03c  2.7824E-06
+14028.03c  2.4596E-05
+14029.03c  1.2454E-06
+14030.03c  8.2672E-07
+15031.03c  4.4989E-06
+19039.03c  2.6590E-06
+19040.03c  3.3359E-10
+19041.03c  1.9189E-07
+20040.03c  7.0149E-07
+20042.03c  4.6819E-09
+20043.03c  9.7690E-10
+20044.03c  1.5095E-08
+20046.03c  2.8945E-11
+20048.03c  1.3532E-09
+22046.03c  3.0657E-08
+22047.03c  2.7974E-08
+22048.03c  2.8281E-07
+22049.03c  2.1076E-08
+22050.03c  2.0693E-08
+24050.03c  1.5720E-07
+24052.03c  3.0315E-06
+24053.03c  3.4370E-07
+24054.03c  8.5564E-08
+25055.03c  1.1097E-06
+26054.03c  6.6250E-07
+26056.03c  1.0299E-05
+26057.03c  2.3581E-07
+26058.03c  3.1441E-08
+28058.03c  6.6866E-06
+28060.03c  2.5563E-06
+28061.03c  1.1068E-07
+28062.03c  3.5162E-07
+28064.03c  8.9128E-08
+29063.03c  9.8213E-07
+29065.03c  4.3775E-07
+38084.03c  4.2417E-10
+38086.03c  7.4683E-09
+38087.03c  5.3021E-09
+38088.03c  6.2549E-08
+40090.03c  4.2832E-07
+40091.03c  9.3407E-08
+40092.03c  1.4277E-07
+40094.03c  1.4469E-07
+40096.03c  2.3310E-08
+42092.03c  1.2287E-03
+42094.03c  7.6587E-04
+42095.03c  1.3181E-03
+42096.03c  1.3811E-03
+42097.03c  7.9071E-04
+42098.03c  1.9979E-03
+42100.03c  7.9733E-04
+44096.03c  4.3348E-09
+44098.03c  1.4554E-09
+44099.03c  9.9372E-09
+44100.03c  9.8589E-09
+44101.03c  1.3380E-08
+44102.03c  2.4726E-08
+44104.03c  1.4554E-08
+45103.03c  6.4490E-08
+48106.03c  2.9635E-10
+48108.03c  2.1100E-10
+48110.03c  2.9611E-09
+48111.03c  3.0346E-09
+48112.03c  5.7207E-09
+48113.03c  2.8971E-09
+48114.03c  6.8112E-09
+48116.03c  1.7757E-09
+49113.03c  2.4854E-09
+49115.03c  5.5314E-08
+64152.03c  2.7249E-11
+64154.03c  2.9701E-10
+64155.03c  2.0164E-09
+64156.03c  2.7889E-09
+64157.03c  2.1322E-09
+64158.03c  3.3843E-09
+64160.03c  2.9783E-09
+74182.03c  2.7907E-07
+74183.03c  1.5153E-07
+74184.03c  3.2576E-07
+74186.03c  3.0348E-07
+95241.03c  3.2462E-12
+93237.03c  3.5854E-08
+94238.03c  2.9953E-12
+94239.03c  9.9734E-10
+94240.03c  2.7170E-10
+92232.03c  8.9865E-12
+92233.03c  4.1410E-07
+92234.03c  4.1837E-04
+92235.03c  3.8222E-02
+92236.03c  1.7375E-04
+92238.03c  2.2160E-03
+6000.03c  2.50303e-04 
+mat fuel_311 4.96314e-02  tmp 300
+3006.03c  7.1710E-08
+3007.03c  8.8442E-07
+4009.03c  1.6235E-07
+5010.03c  1.7378E-07
+5011.03c  6.9948E-07
+11023.03c  1.9396E-06
+13027.03c  2.7824E-06
+14028.03c  2.4596E-05
+14029.03c  1.2454E-06
+14030.03c  8.2672E-07
+15031.03c  4.4989E-06
+19039.03c  2.6590E-06
+19040.03c  3.3359E-10
+19041.03c  1.9189E-07
+20040.03c  7.0149E-07
+20042.03c  4.6819E-09
+20043.03c  9.7690E-10
+20044.03c  1.5095E-08
+20046.03c  2.8945E-11
+20048.03c  1.3532E-09
+22046.03c  3.0657E-08
+22047.03c  2.7974E-08
+22048.03c  2.8281E-07
+22049.03c  2.1076E-08
+22050.03c  2.0693E-08
+24050.03c  1.5720E-07
+24052.03c  3.0315E-06
+24053.03c  3.4370E-07
+24054.03c  8.5564E-08
+25055.03c  1.1097E-06
+26054.03c  6.6250E-07
+26056.03c  1.0299E-05
+26057.03c  2.3581E-07
+26058.03c  3.1441E-08
+28058.03c  6.6866E-06
+28060.03c  2.5563E-06
+28061.03c  1.1068E-07
+28062.03c  3.5162E-07
+28064.03c  8.9128E-08
+29063.03c  9.8213E-07
+29065.03c  4.3775E-07
+38084.03c  4.2417E-10
+38086.03c  7.4683E-09
+38087.03c  5.3021E-09
+38088.03c  6.2549E-08
+40090.03c  4.2832E-07
+40091.03c  9.3407E-08
+40092.03c  1.4277E-07
+40094.03c  1.4469E-07
+40096.03c  2.3310E-08
+42092.03c  1.2287E-03
+42094.03c  7.6587E-04
+42095.03c  1.3181E-03
+42096.03c  1.3811E-03
+42097.03c  7.9071E-04
+42098.03c  1.9979E-03
+42100.03c  7.9733E-04
+44096.03c  4.3348E-09
+44098.03c  1.4554E-09
+44099.03c  9.9372E-09
+44100.03c  9.8589E-09
+44101.03c  1.3380E-08
+44102.03c  2.4726E-08
+44104.03c  1.4554E-08
+45103.03c  6.4490E-08
+48106.03c  2.9635E-10
+48108.03c  2.1100E-10
+48110.03c  2.9611E-09
+48111.03c  3.0346E-09
+48112.03c  5.7207E-09
+48113.03c  2.8971E-09
+48114.03c  6.8112E-09
+48116.03c  1.7757E-09
+49113.03c  2.4854E-09
+49115.03c  5.5314E-08
+64152.03c  2.7249E-11
+64154.03c  2.9701E-10
+64155.03c  2.0164E-09
+64156.03c  2.7889E-09
+64157.03c  2.1322E-09
+64158.03c  3.3843E-09
+64160.03c  2.9783E-09
+74182.03c  2.7907E-07
+74183.03c  1.5153E-07
+74184.03c  3.2576E-07
+74186.03c  3.0348E-07
+95241.03c  3.2462E-12
+93237.03c  3.5854E-08
+94238.03c  2.9953E-12
+94239.03c  9.9734E-10
+94240.03c  2.7170E-10
+92232.03c  8.9865E-12
+92233.03c  4.1410E-07
+92234.03c  4.1837E-04
+92235.03c  3.8222E-02
+92236.03c  1.7375E-04
+92238.03c  2.2160E-03
+6000.03c  2.50303e-04 
+mat fuel_320 4.96314e-02  tmp 300
+3006.03c  7.1710E-08
+3007.03c  8.8442E-07
+4009.03c  1.6235E-07
+5010.03c  1.7378E-07
+5011.03c  6.9948E-07
+11023.03c  1.9396E-06
+13027.03c  2.7824E-06
+14028.03c  2.4596E-05
+14029.03c  1.2454E-06
+14030.03c  8.2672E-07
+15031.03c  4.4989E-06
+19039.03c  2.6590E-06
+19040.03c  3.3359E-10
+19041.03c  1.9189E-07
+20040.03c  7.0149E-07
+20042.03c  4.6819E-09
+20043.03c  9.7690E-10
+20044.03c  1.5095E-08
+20046.03c  2.8945E-11
+20048.03c  1.3532E-09
+22046.03c  3.0657E-08
+22047.03c  2.7974E-08
+22048.03c  2.8281E-07
+22049.03c  2.1076E-08
+22050.03c  2.0693E-08
+24050.03c  1.5720E-07
+24052.03c  3.0315E-06
+24053.03c  3.4370E-07
+24054.03c  8.5564E-08
+25055.03c  1.1097E-06
+26054.03c  6.6250E-07
+26056.03c  1.0299E-05
+26057.03c  2.3581E-07
+26058.03c  3.1441E-08
+28058.03c  6.6866E-06
+28060.03c  2.5563E-06
+28061.03c  1.1068E-07
+28062.03c  3.5162E-07
+28064.03c  8.9128E-08
+29063.03c  9.8213E-07
+29065.03c  4.3775E-07
+38084.03c  4.2417E-10
+38086.03c  7.4683E-09
+38087.03c  5.3021E-09
+38088.03c  6.2549E-08
+40090.03c  4.2832E-07
+40091.03c  9.3407E-08
+40092.03c  1.4277E-07
+40094.03c  1.4469E-07
+40096.03c  2.3310E-08
+42092.03c  1.2287E-03
+42094.03c  7.6587E-04
+42095.03c  1.3181E-03
+42096.03c  1.3811E-03
+42097.03c  7.9071E-04
+42098.03c  1.9979E-03
+42100.03c  7.9733E-04
+44096.03c  4.3348E-09
+44098.03c  1.4554E-09
+44099.03c  9.9372E-09
+44100.03c  9.8589E-09
+44101.03c  1.3380E-08
+44102.03c  2.4726E-08
+44104.03c  1.4554E-08
+45103.03c  6.4490E-08
+48106.03c  2.9635E-10
+48108.03c  2.1100E-10
+48110.03c  2.9611E-09
+48111.03c  3.0346E-09
+48112.03c  5.7207E-09
+48113.03c  2.8971E-09
+48114.03c  6.8112E-09
+48116.03c  1.7757E-09
+49113.03c  2.4854E-09
+49115.03c  5.5314E-08
+64152.03c  2.7249E-11
+64154.03c  2.9701E-10
+64155.03c  2.0164E-09
+64156.03c  2.7889E-09
+64157.03c  2.1322E-09
+64158.03c  3.3843E-09
+64160.03c  2.9783E-09
+74182.03c  2.7907E-07
+74183.03c  1.5153E-07
+74184.03c  3.2576E-07
+74186.03c  3.0348E-07
+95241.03c  3.2462E-12
+93237.03c  3.5854E-08
+94238.03c  2.9953E-12
+94239.03c  9.9734E-10
+94240.03c  2.7170E-10
+92232.03c  8.9865E-12
+92233.03c  4.1410E-07
+92234.03c  4.1837E-04
+92235.03c  3.8222E-02
+92236.03c  1.7375E-04
+92238.03c  2.2160E-03
+6000.03c  2.50303e-04 
+mat fuel_321 4.96314e-02  tmp 300
+3006.03c  7.1710E-08
+3007.03c  8.8442E-07
+4009.03c  1.6235E-07
+5010.03c  1.7378E-07
+5011.03c  6.9948E-07
+11023.03c  1.9396E-06
+13027.03c  2.7824E-06
+14028.03c  2.4596E-05
+14029.03c  1.2454E-06
+14030.03c  8.2672E-07
+15031.03c  4.4989E-06
+19039.03c  2.6590E-06
+19040.03c  3.3359E-10
+19041.03c  1.9189E-07
+20040.03c  7.0149E-07
+20042.03c  4.6819E-09
+20043.03c  9.7690E-10
+20044.03c  1.5095E-08
+20046.03c  2.8945E-11
+20048.03c  1.3532E-09
+22046.03c  3.0657E-08
+22047.03c  2.7974E-08
+22048.03c  2.8281E-07
+22049.03c  2.1076E-08
+22050.03c  2.0693E-08
+24050.03c  1.5720E-07
+24052.03c  3.0315E-06
+24053.03c  3.4370E-07
+24054.03c  8.5564E-08
+25055.03c  1.1097E-06
+26054.03c  6.6250E-07
+26056.03c  1.0299E-05
+26057.03c  2.3581E-07
+26058.03c  3.1441E-08
+28058.03c  6.6866E-06
+28060.03c  2.5563E-06
+28061.03c  1.1068E-07
+28062.03c  3.5162E-07
+28064.03c  8.9128E-08
+29063.03c  9.8213E-07
+29065.03c  4.3775E-07
+38084.03c  4.2417E-10
+38086.03c  7.4683E-09
+38087.03c  5.3021E-09
+38088.03c  6.2549E-08
+40090.03c  4.2832E-07
+40091.03c  9.3407E-08
+40092.03c  1.4277E-07
+40094.03c  1.4469E-07
+40096.03c  2.3310E-08
+42092.03c  1.2287E-03
+42094.03c  7.6587E-04
+42095.03c  1.3181E-03
+42096.03c  1.3811E-03
+42097.03c  7.9071E-04
+42098.03c  1.9979E-03
+42100.03c  7.9733E-04
+44096.03c  4.3348E-09
+44098.03c  1.4554E-09
+44099.03c  9.9372E-09
+44100.03c  9.8589E-09
+44101.03c  1.3380E-08
+44102.03c  2.4726E-08
+44104.03c  1.4554E-08
+45103.03c  6.4490E-08
+48106.03c  2.9635E-10
+48108.03c  2.1100E-10
+48110.03c  2.9611E-09
+48111.03c  3.0346E-09
+48112.03c  5.7207E-09
+48113.03c  2.8971E-09
+48114.03c  6.8112E-09
+48116.03c  1.7757E-09
+49113.03c  2.4854E-09
+49115.03c  5.5314E-08
+64152.03c  2.7249E-11
+64154.03c  2.9701E-10
+64155.03c  2.0164E-09
+64156.03c  2.7889E-09
+64157.03c  2.1322E-09
+64158.03c  3.3843E-09
+64160.03c  2.9783E-09
+74182.03c  2.7907E-07
+74183.03c  1.5153E-07
+74184.03c  3.2576E-07
+74186.03c  3.0348E-07
+95241.03c  3.2462E-12
+93237.03c  3.5854E-08
+94238.03c  2.9953E-12
+94239.03c  9.9734E-10
+94240.03c  2.7170E-10
+92232.03c  8.9865E-12
+92233.03c  4.1410E-07
+92234.03c  4.1837E-04
+92235.03c  3.8222E-02
+92236.03c  1.7375E-04
+92238.03c  2.2160E-03
+6000.03c  2.50303e-04 
+mat fuel_330 4.96314e-02  tmp 300
+3006.03c  7.1710E-08
+3007.03c  8.8442E-07
+4009.03c  1.6235E-07
+5010.03c  1.7378E-07
+5011.03c  6.9948E-07
+11023.03c  1.9396E-06
+13027.03c  2.7824E-06
+14028.03c  2.4596E-05
+14029.03c  1.2454E-06
+14030.03c  8.2672E-07
+15031.03c  4.4989E-06
+19039.03c  2.6590E-06
+19040.03c  3.3359E-10
+19041.03c  1.9189E-07
+20040.03c  7.0149E-07
+20042.03c  4.6819E-09
+20043.03c  9.7690E-10
+20044.03c  1.5095E-08
+20046.03c  2.8945E-11
+20048.03c  1.3532E-09
+22046.03c  3.0657E-08
+22047.03c  2.7974E-08
+22048.03c  2.8281E-07
+22049.03c  2.1076E-08
+22050.03c  2.0693E-08
+24050.03c  1.5720E-07
+24052.03c  3.0315E-06
+24053.03c  3.4370E-07
+24054.03c  8.5564E-08
+25055.03c  1.1097E-06
+26054.03c  6.6250E-07
+26056.03c  1.0299E-05
+26057.03c  2.3581E-07
+26058.03c  3.1441E-08
+28058.03c  6.6866E-06
+28060.03c  2.5563E-06
+28061.03c  1.1068E-07
+28062.03c  3.5162E-07
+28064.03c  8.9128E-08
+29063.03c  9.8213E-07
+29065.03c  4.3775E-07
+38084.03c  4.2417E-10
+38086.03c  7.4683E-09
+38087.03c  5.3021E-09
+38088.03c  6.2549E-08
+40090.03c  4.2832E-07
+40091.03c  9.3407E-08
+40092.03c  1.4277E-07
+40094.03c  1.4469E-07
+40096.03c  2.3310E-08
+42092.03c  1.2287E-03
+42094.03c  7.6587E-04
+42095.03c  1.3181E-03
+42096.03c  1.3811E-03
+42097.03c  7.9071E-04
+42098.03c  1.9979E-03
+42100.03c  7.9733E-04
+44096.03c  4.3348E-09
+44098.03c  1.4554E-09
+44099.03c  9.9372E-09
+44100.03c  9.8589E-09
+44101.03c  1.3380E-08
+44102.03c  2.4726E-08
+44104.03c  1.4554E-08
+45103.03c  6.4490E-08
+48106.03c  2.9635E-10
+48108.03c  2.1100E-10
+48110.03c  2.9611E-09
+48111.03c  3.0346E-09
+48112.03c  5.7207E-09
+48113.03c  2.8971E-09
+48114.03c  6.8112E-09
+48116.03c  1.7757E-09
+49113.03c  2.4854E-09
+49115.03c  5.5314E-08
+64152.03c  2.7249E-11
+64154.03c  2.9701E-10
+64155.03c  2.0164E-09
+64156.03c  2.7889E-09
+64157.03c  2.1322E-09
+64158.03c  3.3843E-09
+64160.03c  2.9783E-09
+74182.03c  2.7907E-07
+74183.03c  1.5153E-07
+74184.03c  3.2576E-07
+74186.03c  3.0348E-07
+95241.03c  3.2462E-12
+93237.03c  3.5854E-08
+94238.03c  2.9953E-12
+94239.03c  9.9734E-10
+94240.03c  2.7170E-10
+92232.03c  8.9865E-12
+92233.03c  4.1410E-07
+92234.03c  4.1837E-04
+92235.03c  3.8222E-02
+92236.03c  1.7375E-04
+92238.03c  2.2160E-03
+6000.03c  2.50303e-04 
+mat fuel_331 4.96314e-02  tmp 300
+3006.03c  7.1710E-08
+3007.03c  8.8442E-07
+4009.03c  1.6235E-07
+5010.03c  1.7378E-07
+5011.03c  6.9948E-07
+11023.03c  1.9396E-06
+13027.03c  2.7824E-06
+14028.03c  2.4596E-05
+14029.03c  1.2454E-06
+14030.03c  8.2672E-07
+15031.03c  4.4989E-06
+19039.03c  2.6590E-06
+19040.03c  3.3359E-10
+19041.03c  1.9189E-07
+20040.03c  7.0149E-07
+20042.03c  4.6819E-09
+20043.03c  9.7690E-10
+20044.03c  1.5095E-08
+20046.03c  2.8945E-11
+20048.03c  1.3532E-09
+22046.03c  3.0657E-08
+22047.03c  2.7974E-08
+22048.03c  2.8281E-07
+22049.03c  2.1076E-08
+22050.03c  2.0693E-08
+24050.03c  1.5720E-07
+24052.03c  3.0315E-06
+24053.03c  3.4370E-07
+24054.03c  8.5564E-08
+25055.03c  1.1097E-06
+26054.03c  6.6250E-07
+26056.03c  1.0299E-05
+26057.03c  2.3581E-07
+26058.03c  3.1441E-08
+28058.03c  6.6866E-06
+28060.03c  2.5563E-06
+28061.03c  1.1068E-07
+28062.03c  3.5162E-07
+28064.03c  8.9128E-08
+29063.03c  9.8213E-07
+29065.03c  4.3775E-07
+38084.03c  4.2417E-10
+38086.03c  7.4683E-09
+38087.03c  5.3021E-09
+38088.03c  6.2549E-08
+40090.03c  4.2832E-07
+40091.03c  9.3407E-08
+40092.03c  1.4277E-07
+40094.03c  1.4469E-07
+40096.03c  2.3310E-08
+42092.03c  1.2287E-03
+42094.03c  7.6587E-04
+42095.03c  1.3181E-03
+42096.03c  1.3811E-03
+42097.03c  7.9071E-04
+42098.03c  1.9979E-03
+42100.03c  7.9733E-04
+44096.03c  4.3348E-09
+44098.03c  1.4554E-09
+44099.03c  9.9372E-09
+44100.03c  9.8589E-09
+44101.03c  1.3380E-08
+44102.03c  2.4726E-08
+44104.03c  1.4554E-08
+45103.03c  6.4490E-08
+48106.03c  2.9635E-10
+48108.03c  2.1100E-10
+48110.03c  2.9611E-09
+48111.03c  3.0346E-09
+48112.03c  5.7207E-09
+48113.03c  2.8971E-09
+48114.03c  6.8112E-09
+48116.03c  1.7757E-09
+49113.03c  2.4854E-09
+49115.03c  5.5314E-08
+64152.03c  2.7249E-11
+64154.03c  2.9701E-10
+64155.03c  2.0164E-09
+64156.03c  2.7889E-09
+64157.03c  2.1322E-09
+64158.03c  3.3843E-09
+64160.03c  2.9783E-09
+74182.03c  2.7907E-07
+74183.03c  1.5153E-07
+74184.03c  3.2576E-07
+74186.03c  3.0348E-07
+95241.03c  3.2462E-12
+93237.03c  3.5854E-08
+94238.03c  2.9953E-12
+94239.03c  9.9734E-10
+94240.03c  2.7170E-10
+92232.03c  8.9865E-12
+92233.03c  4.1410E-07
+92234.03c  4.1837E-04
+92235.03c  3.8222E-02
+92236.03c  1.7375E-04
+92238.03c  2.2160E-03
+6000.03c  2.50303e-04 
+mat fuel_340 4.96314e-02  tmp 300
+3006.03c  7.1710E-08
+3007.03c  8.8442E-07
+4009.03c  1.6235E-07
+5010.03c  1.7378E-07
+5011.03c  6.9948E-07
+11023.03c  1.9396E-06
+13027.03c  2.7824E-06
+14028.03c  2.4596E-05
+14029.03c  1.2454E-06
+14030.03c  8.2672E-07
+15031.03c  4.4989E-06
+19039.03c  2.6590E-06
+19040.03c  3.3359E-10
+19041.03c  1.9189E-07
+20040.03c  7.0149E-07
+20042.03c  4.6819E-09
+20043.03c  9.7690E-10
+20044.03c  1.5095E-08
+20046.03c  2.8945E-11
+20048.03c  1.3532E-09
+22046.03c  3.0657E-08
+22047.03c  2.7974E-08
+22048.03c  2.8281E-07
+22049.03c  2.1076E-08
+22050.03c  2.0693E-08
+24050.03c  1.5720E-07
+24052.03c  3.0315E-06
+24053.03c  3.4370E-07
+24054.03c  8.5564E-08
+25055.03c  1.1097E-06
+26054.03c  6.6250E-07
+26056.03c  1.0299E-05
+26057.03c  2.3581E-07
+26058.03c  3.1441E-08
+28058.03c  6.6866E-06
+28060.03c  2.5563E-06
+28061.03c  1.1068E-07
+28062.03c  3.5162E-07
+28064.03c  8.9128E-08
+29063.03c  9.8213E-07
+29065.03c  4.3775E-07
+38084.03c  4.2417E-10
+38086.03c  7.4683E-09
+38087.03c  5.3021E-09
+38088.03c  6.2549E-08
+40090.03c  4.2832E-07
+40091.03c  9.3407E-08
+40092.03c  1.4277E-07
+40094.03c  1.4469E-07
+40096.03c  2.3310E-08
+42092.03c  1.2287E-03
+42094.03c  7.6587E-04
+42095.03c  1.3181E-03
+42096.03c  1.3811E-03
+42097.03c  7.9071E-04
+42098.03c  1.9979E-03
+42100.03c  7.9733E-04
+44096.03c  4.3348E-09
+44098.03c  1.4554E-09
+44099.03c  9.9372E-09
+44100.03c  9.8589E-09
+44101.03c  1.3380E-08
+44102.03c  2.4726E-08
+44104.03c  1.4554E-08
+45103.03c  6.4490E-08
+48106.03c  2.9635E-10
+48108.03c  2.1100E-10
+48110.03c  2.9611E-09
+48111.03c  3.0346E-09
+48112.03c  5.7207E-09
+48113.03c  2.8971E-09
+48114.03c  6.8112E-09
+48116.03c  1.7757E-09
+49113.03c  2.4854E-09
+49115.03c  5.5314E-08
+64152.03c  2.7249E-11
+64154.03c  2.9701E-10
+64155.03c  2.0164E-09
+64156.03c  2.7889E-09
+64157.03c  2.1322E-09
+64158.03c  3.3843E-09
+64160.03c  2.9783E-09
+74182.03c  2.7907E-07
+74183.03c  1.5153E-07
+74184.03c  3.2576E-07
+74186.03c  3.0348E-07
+95241.03c  3.2462E-12
+93237.03c  3.5854E-08
+94238.03c  2.9953E-12
+94239.03c  9.9734E-10
+94240.03c  2.7170E-10
+92232.03c  8.9865E-12
+92233.03c  4.1410E-07
+92234.03c  4.1837E-04
+92235.03c  3.8222E-02
+92236.03c  1.7375E-04
+92238.03c  2.2160E-03
+6000.03c  2.50303e-04 
+mat fuel_341 4.96314e-02  tmp 300
+3006.03c  7.1710E-08
+3007.03c  8.8442E-07
+4009.03c  1.6235E-07
+5010.03c  1.7378E-07
+5011.03c  6.9948E-07
+11023.03c  1.9396E-06
+13027.03c  2.7824E-06
+14028.03c  2.4596E-05
+14029.03c  1.2454E-06
+14030.03c  8.2672E-07
+15031.03c  4.4989E-06
+19039.03c  2.6590E-06
+19040.03c  3.3359E-10
+19041.03c  1.9189E-07
+20040.03c  7.0149E-07
+20042.03c  4.6819E-09
+20043.03c  9.7690E-10
+20044.03c  1.5095E-08
+20046.03c  2.8945E-11
+20048.03c  1.3532E-09
+22046.03c  3.0657E-08
+22047.03c  2.7974E-08
+22048.03c  2.8281E-07
+22049.03c  2.1076E-08
+22050.03c  2.0693E-08
+24050.03c  1.5720E-07
+24052.03c  3.0315E-06
+24053.03c  3.4370E-07
+24054.03c  8.5564E-08
+25055.03c  1.1097E-06
+26054.03c  6.6250E-07
+26056.03c  1.0299E-05
+26057.03c  2.3581E-07
+26058.03c  3.1441E-08
+28058.03c  6.6866E-06
+28060.03c  2.5563E-06
+28061.03c  1.1068E-07
+28062.03c  3.5162E-07
+28064.03c  8.9128E-08
+29063.03c  9.8213E-07
+29065.03c  4.3775E-07
+38084.03c  4.2417E-10
+38086.03c  7.4683E-09
+38087.03c  5.3021E-09
+38088.03c  6.2549E-08
+40090.03c  4.2832E-07
+40091.03c  9.3407E-08
+40092.03c  1.4277E-07
+40094.03c  1.4469E-07
+40096.03c  2.3310E-08
+42092.03c  1.2287E-03
+42094.03c  7.6587E-04
+42095.03c  1.3181E-03
+42096.03c  1.3811E-03
+42097.03c  7.9071E-04
+42098.03c  1.9979E-03
+42100.03c  7.9733E-04
+44096.03c  4.3348E-09
+44098.03c  1.4554E-09
+44099.03c  9.9372E-09
+44100.03c  9.8589E-09
+44101.03c  1.3380E-08
+44102.03c  2.4726E-08
+44104.03c  1.4554E-08
+45103.03c  6.4490E-08
+48106.03c  2.9635E-10
+48108.03c  2.1100E-10
+48110.03c  2.9611E-09
+48111.03c  3.0346E-09
+48112.03c  5.7207E-09
+48113.03c  2.8971E-09
+48114.03c  6.8112E-09
+48116.03c  1.7757E-09
+49113.03c  2.4854E-09
+49115.03c  5.5314E-08
+64152.03c  2.7249E-11
+64154.03c  2.9701E-10
+64155.03c  2.0164E-09
+64156.03c  2.7889E-09
+64157.03c  2.1322E-09
+64158.03c  3.3843E-09
+64160.03c  2.9783E-09
+74182.03c  2.7907E-07
+74183.03c  1.5153E-07
+74184.03c  3.2576E-07
+74186.03c  3.0348E-07
+95241.03c  3.2462E-12
+93237.03c  3.5854E-08
+94238.03c  2.9953E-12
+94239.03c  9.9734E-10
+94240.03c  2.7170E-10
+92232.03c  8.9865E-12
+92233.03c  4.1410E-07
+92234.03c  4.1837E-04
+92235.03c  3.8222E-02
+92236.03c  1.7375E-04
+92238.03c  2.2160E-03
+6000.03c  2.50303e-04 
+mat fuel_350 4.96314e-02  tmp 300
+3006.03c  7.1710E-08
+3007.03c  8.8442E-07
+4009.03c  1.6235E-07
+5010.03c  1.7378E-07
+5011.03c  6.9948E-07
+11023.03c  1.9396E-06
+13027.03c  2.7824E-06
+14028.03c  2.4596E-05
+14029.03c  1.2454E-06
+14030.03c  8.2672E-07
+15031.03c  4.4989E-06
+19039.03c  2.6590E-06
+19040.03c  3.3359E-10
+19041.03c  1.9189E-07
+20040.03c  7.0149E-07
+20042.03c  4.6819E-09
+20043.03c  9.7690E-10
+20044.03c  1.5095E-08
+20046.03c  2.8945E-11
+20048.03c  1.3532E-09
+22046.03c  3.0657E-08
+22047.03c  2.7974E-08
+22048.03c  2.8281E-07
+22049.03c  2.1076E-08
+22050.03c  2.0693E-08
+24050.03c  1.5720E-07
+24052.03c  3.0315E-06
+24053.03c  3.4370E-07
+24054.03c  8.5564E-08
+25055.03c  1.1097E-06
+26054.03c  6.6250E-07
+26056.03c  1.0299E-05
+26057.03c  2.3581E-07
+26058.03c  3.1441E-08
+28058.03c  6.6866E-06
+28060.03c  2.5563E-06
+28061.03c  1.1068E-07
+28062.03c  3.5162E-07
+28064.03c  8.9128E-08
+29063.03c  9.8213E-07
+29065.03c  4.3775E-07
+38084.03c  4.2417E-10
+38086.03c  7.4683E-09
+38087.03c  5.3021E-09
+38088.03c  6.2549E-08
+40090.03c  4.2832E-07
+40091.03c  9.3407E-08
+40092.03c  1.4277E-07
+40094.03c  1.4469E-07
+40096.03c  2.3310E-08
+42092.03c  1.2287E-03
+42094.03c  7.6587E-04
+42095.03c  1.3181E-03
+42096.03c  1.3811E-03
+42097.03c  7.9071E-04
+42098.03c  1.9979E-03
+42100.03c  7.9733E-04
+44096.03c  4.3348E-09
+44098.03c  1.4554E-09
+44099.03c  9.9372E-09
+44100.03c  9.8589E-09
+44101.03c  1.3380E-08
+44102.03c  2.4726E-08
+44104.03c  1.4554E-08
+45103.03c  6.4490E-08
+48106.03c  2.9635E-10
+48108.03c  2.1100E-10
+48110.03c  2.9611E-09
+48111.03c  3.0346E-09
+48112.03c  5.7207E-09
+48113.03c  2.8971E-09
+48114.03c  6.8112E-09
+48116.03c  1.7757E-09
+49113.03c  2.4854E-09
+49115.03c  5.5314E-08
+64152.03c  2.7249E-11
+64154.03c  2.9701E-10
+64155.03c  2.0164E-09
+64156.03c  2.7889E-09
+64157.03c  2.1322E-09
+64158.03c  3.3843E-09
+64160.03c  2.9783E-09
+74182.03c  2.7907E-07
+74183.03c  1.5153E-07
+74184.03c  3.2576E-07
+74186.03c  3.0348E-07
+95241.03c  3.2462E-12
+93237.03c  3.5854E-08
+94238.03c  2.9953E-12
+94239.03c  9.9734E-10
+94240.03c  2.7170E-10
+92232.03c  8.9865E-12
+92233.03c  4.1410E-07
+92234.03c  4.1837E-04
+92235.03c  3.8222E-02
+92236.03c  1.7375E-04
+92238.03c  2.2160E-03
+6000.03c  2.50303e-04 
+mat fuel_351 4.96314e-02  tmp 300
+3006.03c  7.1710E-08
+3007.03c  8.8442E-07
+4009.03c  1.6235E-07
+5010.03c  1.7378E-07
+5011.03c  6.9948E-07
+11023.03c  1.9396E-06
+13027.03c  2.7824E-06
+14028.03c  2.4596E-05
+14029.03c  1.2454E-06
+14030.03c  8.2672E-07
+15031.03c  4.4989E-06
+19039.03c  2.6590E-06
+19040.03c  3.3359E-10
+19041.03c  1.9189E-07
+20040.03c  7.0149E-07
+20042.03c  4.6819E-09
+20043.03c  9.7690E-10
+20044.03c  1.5095E-08
+20046.03c  2.8945E-11
+20048.03c  1.3532E-09
+22046.03c  3.0657E-08
+22047.03c  2.7974E-08
+22048.03c  2.8281E-07
+22049.03c  2.1076E-08
+22050.03c  2.0693E-08
+24050.03c  1.5720E-07
+24052.03c  3.0315E-06
+24053.03c  3.4370E-07
+24054.03c  8.5564E-08
+25055.03c  1.1097E-06
+26054.03c  6.6250E-07
+26056.03c  1.0299E-05
+26057.03c  2.3581E-07
+26058.03c  3.1441E-08
+28058.03c  6.6866E-06
+28060.03c  2.5563E-06
+28061.03c  1.1068E-07
+28062.03c  3.5162E-07
+28064.03c  8.9128E-08
+29063.03c  9.8213E-07
+29065.03c  4.3775E-07
+38084.03c  4.2417E-10
+38086.03c  7.4683E-09
+38087.03c  5.3021E-09
+38088.03c  6.2549E-08
+40090.03c  4.2832E-07
+40091.03c  9.3407E-08
+40092.03c  1.4277E-07
+40094.03c  1.4469E-07
+40096.03c  2.3310E-08
+42092.03c  1.2287E-03
+42094.03c  7.6587E-04
+42095.03c  1.3181E-03
+42096.03c  1.3811E-03
+42097.03c  7.9071E-04
+42098.03c  1.9979E-03
+42100.03c  7.9733E-04
+44096.03c  4.3348E-09
+44098.03c  1.4554E-09
+44099.03c  9.9372E-09
+44100.03c  9.8589E-09
+44101.03c  1.3380E-08
+44102.03c  2.4726E-08
+44104.03c  1.4554E-08
+45103.03c  6.4490E-08
+48106.03c  2.9635E-10
+48108.03c  2.1100E-10
+48110.03c  2.9611E-09
+48111.03c  3.0346E-09
+48112.03c  5.7207E-09
+48113.03c  2.8971E-09
+48114.03c  6.8112E-09
+48116.03c  1.7757E-09
+49113.03c  2.4854E-09
+49115.03c  5.5314E-08
+64152.03c  2.7249E-11
+64154.03c  2.9701E-10
+64155.03c  2.0164E-09
+64156.03c  2.7889E-09
+64157.03c  2.1322E-09
+64158.03c  3.3843E-09
+64160.03c  2.9783E-09
+74182.03c  2.7907E-07
+74183.03c  1.5153E-07
+74184.03c  3.2576E-07
+74186.03c  3.0348E-07
+95241.03c  3.2462E-12
+93237.03c  3.5854E-08
+94238.03c  2.9953E-12
+94239.03c  9.9734E-10
+94240.03c  2.7170E-10
+92232.03c  8.9865E-12
+92233.03c  4.1410E-07
+92234.03c  4.1837E-04
+92235.03c  3.8222E-02
+92236.03c  1.7375E-04
+92238.03c  2.2160E-03
+6000.03c  2.50303e-04 
+mat fuel_360 4.96314e-02  tmp 300
+3006.03c  7.1710E-08
+3007.03c  8.8442E-07
+4009.03c  1.6235E-07
+5010.03c  1.7378E-07
+5011.03c  6.9948E-07
+11023.03c  1.9396E-06
+13027.03c  2.7824E-06
+14028.03c  2.4596E-05
+14029.03c  1.2454E-06
+14030.03c  8.2672E-07
+15031.03c  4.4989E-06
+19039.03c  2.6590E-06
+19040.03c  3.3359E-10
+19041.03c  1.9189E-07
+20040.03c  7.0149E-07
+20042.03c  4.6819E-09
+20043.03c  9.7690E-10
+20044.03c  1.5095E-08
+20046.03c  2.8945E-11
+20048.03c  1.3532E-09
+22046.03c  3.0657E-08
+22047.03c  2.7974E-08
+22048.03c  2.8281E-07
+22049.03c  2.1076E-08
+22050.03c  2.0693E-08
+24050.03c  1.5720E-07
+24052.03c  3.0315E-06
+24053.03c  3.4370E-07
+24054.03c  8.5564E-08
+25055.03c  1.1097E-06
+26054.03c  6.6250E-07
+26056.03c  1.0299E-05
+26057.03c  2.3581E-07
+26058.03c  3.1441E-08
+28058.03c  6.6866E-06
+28060.03c  2.5563E-06
+28061.03c  1.1068E-07
+28062.03c  3.5162E-07
+28064.03c  8.9128E-08
+29063.03c  9.8213E-07
+29065.03c  4.3775E-07
+38084.03c  4.2417E-10
+38086.03c  7.4683E-09
+38087.03c  5.3021E-09
+38088.03c  6.2549E-08
+40090.03c  4.2832E-07
+40091.03c  9.3407E-08
+40092.03c  1.4277E-07
+40094.03c  1.4469E-07
+40096.03c  2.3310E-08
+42092.03c  1.2287E-03
+42094.03c  7.6587E-04
+42095.03c  1.3181E-03
+42096.03c  1.3811E-03
+42097.03c  7.9071E-04
+42098.03c  1.9979E-03
+42100.03c  7.9733E-04
+44096.03c  4.3348E-09
+44098.03c  1.4554E-09
+44099.03c  9.9372E-09
+44100.03c  9.8589E-09
+44101.03c  1.3380E-08
+44102.03c  2.4726E-08
+44104.03c  1.4554E-08
+45103.03c  6.4490E-08
+48106.03c  2.9635E-10
+48108.03c  2.1100E-10
+48110.03c  2.9611E-09
+48111.03c  3.0346E-09
+48112.03c  5.7207E-09
+48113.03c  2.8971E-09
+48114.03c  6.8112E-09
+48116.03c  1.7757E-09
+49113.03c  2.4854E-09
+49115.03c  5.5314E-08
+64152.03c  2.7249E-11
+64154.03c  2.9701E-10
+64155.03c  2.0164E-09
+64156.03c  2.7889E-09
+64157.03c  2.1322E-09
+64158.03c  3.3843E-09
+64160.03c  2.9783E-09
+74182.03c  2.7907E-07
+74183.03c  1.5153E-07
+74184.03c  3.2576E-07
+74186.03c  3.0348E-07
+95241.03c  3.2462E-12
+93237.03c  3.5854E-08
+94238.03c  2.9953E-12
+94239.03c  9.9734E-10
+94240.03c  2.7170E-10
+92232.03c  8.9865E-12
+92233.03c  4.1410E-07
+92234.03c  4.1837E-04
+92235.03c  3.8222E-02
+92236.03c  1.7375E-04
+92238.03c  2.2160E-03
+6000.03c  2.50303e-04 
+mat fuel_361 4.96314e-02  tmp 300
+3006.03c  7.1710E-08
+3007.03c  8.8442E-07
+4009.03c  1.6235E-07
+5010.03c  1.7378E-07
+5011.03c  6.9948E-07
+11023.03c  1.9396E-06
+13027.03c  2.7824E-06
+14028.03c  2.4596E-05
+14029.03c  1.2454E-06
+14030.03c  8.2672E-07
+15031.03c  4.4989E-06
+19039.03c  2.6590E-06
+19040.03c  3.3359E-10
+19041.03c  1.9189E-07
+20040.03c  7.0149E-07
+20042.03c  4.6819E-09
+20043.03c  9.7690E-10
+20044.03c  1.5095E-08
+20046.03c  2.8945E-11
+20048.03c  1.3532E-09
+22046.03c  3.0657E-08
+22047.03c  2.7974E-08
+22048.03c  2.8281E-07
+22049.03c  2.1076E-08
+22050.03c  2.0693E-08
+24050.03c  1.5720E-07
+24052.03c  3.0315E-06
+24053.03c  3.4370E-07
+24054.03c  8.5564E-08
+25055.03c  1.1097E-06
+26054.03c  6.6250E-07
+26056.03c  1.0299E-05
+26057.03c  2.3581E-07
+26058.03c  3.1441E-08
+28058.03c  6.6866E-06
+28060.03c  2.5563E-06
+28061.03c  1.1068E-07
+28062.03c  3.5162E-07
+28064.03c  8.9128E-08
+29063.03c  9.8213E-07
+29065.03c  4.3775E-07
+38084.03c  4.2417E-10
+38086.03c  7.4683E-09
+38087.03c  5.3021E-09
+38088.03c  6.2549E-08
+40090.03c  4.2832E-07
+40091.03c  9.3407E-08
+40092.03c  1.4277E-07
+40094.03c  1.4469E-07
+40096.03c  2.3310E-08
+42092.03c  1.2287E-03
+42094.03c  7.6587E-04
+42095.03c  1.3181E-03
+42096.03c  1.3811E-03
+42097.03c  7.9071E-04
+42098.03c  1.9979E-03
+42100.03c  7.9733E-04
+44096.03c  4.3348E-09
+44098.03c  1.4554E-09
+44099.03c  9.9372E-09
+44100.03c  9.8589E-09
+44101.03c  1.3380E-08
+44102.03c  2.4726E-08
+44104.03c  1.4554E-08
+45103.03c  6.4490E-08
+48106.03c  2.9635E-10
+48108.03c  2.1100E-10
+48110.03c  2.9611E-09
+48111.03c  3.0346E-09
+48112.03c  5.7207E-09
+48113.03c  2.8971E-09
+48114.03c  6.8112E-09
+48116.03c  1.7757E-09
+49113.03c  2.4854E-09
+49115.03c  5.5314E-08
+64152.03c  2.7249E-11
+64154.03c  2.9701E-10
+64155.03c  2.0164E-09
+64156.03c  2.7889E-09
+64157.03c  2.1322E-09
+64158.03c  3.3843E-09
+64160.03c  2.9783E-09
+74182.03c  2.7907E-07
+74183.03c  1.5153E-07
+74184.03c  3.2576E-07
+74186.03c  3.0348E-07
+95241.03c  3.2462E-12
+93237.03c  3.5854E-08
+94238.03c  2.9953E-12
+94239.03c  9.9734E-10
+94240.03c  2.7170E-10
+92232.03c  8.9865E-12
+92233.03c  4.1410E-07
+92234.03c  4.1837E-04
+92235.03c  3.8222E-02
+92236.03c  1.7375E-04
+92238.03c  2.2160E-03
+6000.03c  2.50303e-04 
+mat fuel_202 4.98516e-02  tmp 300
+3006.03c  7.1556E-08
+3007.03c  8.8252E-07
+4009.03c  1.6200E-07
+5010.03c  2.0476E-07
+5011.03c  8.2418E-07
+11023.03c  2.0262E-06
+13027.03c  2.6476E-06
+14028.03c  4.2124E-05
+14029.03c  2.1329E-06
+14030.03c  1.4158E-06
+15031.03c  4.4892E-06
+19039.03c  3.1370E-06
+19040.03c  3.9356E-10
+19041.03c  2.2639E-07
+20040.03c  9.0389E-07
+20042.03c  6.0327E-09
+20043.03c  1.2588E-09
+20044.03c  1.9450E-08
+20046.03c  3.7297E-11
+20048.03c  1.7436E-09
+22046.03c  2.8268E-08
+22047.03c  2.5794E-08
+22048.03c  2.6077E-07
+22049.03c  1.9434E-08
+22050.03c  1.9081E-08
+24050.03c  2.0915E-07
+24052.03c  4.0333E-06
+24053.03c  4.5729E-07
+24054.03c  1.1384E-07
+25055.03c  1.0630E-06
+26054.03c  7.5290E-07
+26056.03c  1.1704E-05
+26057.03c  2.6798E-07
+26058.03c  3.5731E-08
+28058.03c  6.2679E-06
+28060.03c  2.3962E-06
+28061.03c  1.0375E-07
+28062.03c  3.2960E-07
+28064.03c  8.3547E-08
+29063.03c  7.1516E-07
+29065.03c  3.1876E-07
+38084.03c  4.2326E-10
+38086.03c  7.4523E-09
+38087.03c  5.2907E-09
+38088.03c  6.2415E-08
+40090.03c  3.8820E-07
+40091.03c  8.4656E-08
+40092.03c  1.2940E-07
+40094.03c  1.3113E-07
+40096.03c  2.1126E-08
+42092.03c  1.2562E-03
+42094.03c  7.8300E-04
+42095.03c  1.3476E-03
+42096.03c  1.4119E-03
+42097.03c  8.0840E-04
+42098.03c  2.0426E-03
+42100.03c  8.1517E-04
+44096.03c  4.3255E-09
+44098.03c  1.4522E-09
+44099.03c  9.9159E-09
+44100.03c  9.8378E-09
+44101.03c  1.3351E-08
+44102.03c  2.4673E-08
+44104.03c  1.4522E-08
+45103.03c  6.4352E-08
+48106.03c  2.9571E-10
+48108.03c  2.1055E-10
+48110.03c  2.9547E-09
+48111.03c  3.0281E-09
+48112.03c  5.7084E-09
+48113.03c  2.8909E-09
+48114.03c  6.7966E-09
+48116.03c  1.7719E-09
+49113.03c  2.4801E-09
+49115.03c  5.5196E-08
+64152.03c  2.7190E-11
+64154.03c  2.9638E-10
+64155.03c  2.0121E-09
+64156.03c  2.7829E-09
+64157.03c  2.1277E-09
+64158.03c  3.3771E-09
+64160.03c  2.9719E-09
+74182.03c  1.5913E-07
+74183.03c  8.6402E-08
+74184.03c  1.8575E-07
+74186.03c  1.7305E-07
+95241.03c  6.5625E-12
+93237.03c  9.1524E-08
+94238.03c  4.9530E-12
+94239.03c  2.1777E-09
+94240.03c  5.9328E-10
+92232.03c  1.4378E-11
+92233.03c  4.1226E-07
+92234.03c  4.2322E-04
+92235.03c  3.8025E-02
+92236.03c  2.2752E-04
+92238.03c  2.1712E-03
+6000.03c  4.47149e-04 
+mat fuel_203 4.98516e-02  tmp 300
+3006.03c  7.1556E-08
+3007.03c  8.8252E-07
+4009.03c  1.6200E-07
+5010.03c  2.0476E-07
+5011.03c  8.2418E-07
+11023.03c  2.0262E-06
+13027.03c  2.6476E-06
+14028.03c  4.2124E-05
+14029.03c  2.1329E-06
+14030.03c  1.4158E-06
+15031.03c  4.4892E-06
+19039.03c  3.1370E-06
+19040.03c  3.9356E-10
+19041.03c  2.2639E-07
+20040.03c  9.0389E-07
+20042.03c  6.0327E-09
+20043.03c  1.2588E-09
+20044.03c  1.9450E-08
+20046.03c  3.7297E-11
+20048.03c  1.7436E-09
+22046.03c  2.8268E-08
+22047.03c  2.5794E-08
+22048.03c  2.6077E-07
+22049.03c  1.9434E-08
+22050.03c  1.9081E-08
+24050.03c  2.0915E-07
+24052.03c  4.0333E-06
+24053.03c  4.5729E-07
+24054.03c  1.1384E-07
+25055.03c  1.0630E-06
+26054.03c  7.5290E-07
+26056.03c  1.1704E-05
+26057.03c  2.6798E-07
+26058.03c  3.5731E-08
+28058.03c  6.2679E-06
+28060.03c  2.3962E-06
+28061.03c  1.0375E-07
+28062.03c  3.2960E-07
+28064.03c  8.3547E-08
+29063.03c  7.1516E-07
+29065.03c  3.1876E-07
+38084.03c  4.2326E-10
+38086.03c  7.4523E-09
+38087.03c  5.2907E-09
+38088.03c  6.2415E-08
+40090.03c  3.8820E-07
+40091.03c  8.4656E-08
+40092.03c  1.2940E-07
+40094.03c  1.3113E-07
+40096.03c  2.1126E-08
+42092.03c  1.2562E-03
+42094.03c  7.8300E-04
+42095.03c  1.3476E-03
+42096.03c  1.4119E-03
+42097.03c  8.0840E-04
+42098.03c  2.0426E-03
+42100.03c  8.1517E-04
+44096.03c  4.3255E-09
+44098.03c  1.4522E-09
+44099.03c  9.9159E-09
+44100.03c  9.8378E-09
+44101.03c  1.3351E-08
+44102.03c  2.4673E-08
+44104.03c  1.4522E-08
+45103.03c  6.4352E-08
+48106.03c  2.9571E-10
+48108.03c  2.1055E-10
+48110.03c  2.9547E-09
+48111.03c  3.0281E-09
+48112.03c  5.7084E-09
+48113.03c  2.8909E-09
+48114.03c  6.7966E-09
+48116.03c  1.7719E-09
+49113.03c  2.4801E-09
+49115.03c  5.5196E-08
+64152.03c  2.7190E-11
+64154.03c  2.9638E-10
+64155.03c  2.0121E-09
+64156.03c  2.7829E-09
+64157.03c  2.1277E-09
+64158.03c  3.3771E-09
+64160.03c  2.9719E-09
+74182.03c  1.5913E-07
+74183.03c  8.6402E-08
+74184.03c  1.8575E-07
+74186.03c  1.7305E-07
+95241.03c  6.5625E-12
+93237.03c  9.1524E-08
+94238.03c  4.9530E-12
+94239.03c  2.1777E-09
+94240.03c  5.9328E-10
+92232.03c  1.4378E-11
+92233.03c  4.1226E-07
+92234.03c  4.2322E-04
+92235.03c  3.8025E-02
+92236.03c  2.2752E-04
+92238.03c  2.1712E-03
+6000.03c  4.47149e-04 
+mat fuel_212 4.98516e-02  tmp 300
+3006.03c  7.1556E-08
+3007.03c  8.8252E-07
+4009.03c  1.6200E-07
+5010.03c  2.0476E-07
+5011.03c  8.2418E-07
+11023.03c  2.0262E-06
+13027.03c  2.6476E-06
+14028.03c  4.2124E-05
+14029.03c  2.1329E-06
+14030.03c  1.4158E-06
+15031.03c  4.4892E-06
+19039.03c  3.1370E-06
+19040.03c  3.9356E-10
+19041.03c  2.2639E-07
+20040.03c  9.0389E-07
+20042.03c  6.0327E-09
+20043.03c  1.2588E-09
+20044.03c  1.9450E-08
+20046.03c  3.7297E-11
+20048.03c  1.7436E-09
+22046.03c  2.8268E-08
+22047.03c  2.5794E-08
+22048.03c  2.6077E-07
+22049.03c  1.9434E-08
+22050.03c  1.9081E-08
+24050.03c  2.0915E-07
+24052.03c  4.0333E-06
+24053.03c  4.5729E-07
+24054.03c  1.1384E-07
+25055.03c  1.0630E-06
+26054.03c  7.5290E-07
+26056.03c  1.1704E-05
+26057.03c  2.6798E-07
+26058.03c  3.5731E-08
+28058.03c  6.2679E-06
+28060.03c  2.3962E-06
+28061.03c  1.0375E-07
+28062.03c  3.2960E-07
+28064.03c  8.3547E-08
+29063.03c  7.1516E-07
+29065.03c  3.1876E-07
+38084.03c  4.2326E-10
+38086.03c  7.4523E-09
+38087.03c  5.2907E-09
+38088.03c  6.2415E-08
+40090.03c  3.8820E-07
+40091.03c  8.4656E-08
+40092.03c  1.2940E-07
+40094.03c  1.3113E-07
+40096.03c  2.1126E-08
+42092.03c  1.2562E-03
+42094.03c  7.8300E-04
+42095.03c  1.3476E-03
+42096.03c  1.4119E-03
+42097.03c  8.0840E-04
+42098.03c  2.0426E-03
+42100.03c  8.1517E-04
+44096.03c  4.3255E-09
+44098.03c  1.4522E-09
+44099.03c  9.9159E-09
+44100.03c  9.8378E-09
+44101.03c  1.3351E-08
+44102.03c  2.4673E-08
+44104.03c  1.4522E-08
+45103.03c  6.4352E-08
+48106.03c  2.9571E-10
+48108.03c  2.1055E-10
+48110.03c  2.9547E-09
+48111.03c  3.0281E-09
+48112.03c  5.7084E-09
+48113.03c  2.8909E-09
+48114.03c  6.7966E-09
+48116.03c  1.7719E-09
+49113.03c  2.4801E-09
+49115.03c  5.5196E-08
+64152.03c  2.7190E-11
+64154.03c  2.9638E-10
+64155.03c  2.0121E-09
+64156.03c  2.7829E-09
+64157.03c  2.1277E-09
+64158.03c  3.3771E-09
+64160.03c  2.9719E-09
+74182.03c  1.5913E-07
+74183.03c  8.6402E-08
+74184.03c  1.8575E-07
+74186.03c  1.7305E-07
+95241.03c  6.5625E-12
+93237.03c  9.1524E-08
+94238.03c  4.9530E-12
+94239.03c  2.1777E-09
+94240.03c  5.9328E-10
+92232.03c  1.4378E-11
+92233.03c  4.1226E-07
+92234.03c  4.2322E-04
+92235.03c  3.8025E-02
+92236.03c  2.2752E-04
+92238.03c  2.1712E-03
+6000.03c  4.47149e-04 
+mat fuel_213 4.98516e-02  tmp 300
+3006.03c  7.1556E-08
+3007.03c  8.8252E-07
+4009.03c  1.6200E-07
+5010.03c  2.0476E-07
+5011.03c  8.2418E-07
+11023.03c  2.0262E-06
+13027.03c  2.6476E-06
+14028.03c  4.2124E-05
+14029.03c  2.1329E-06
+14030.03c  1.4158E-06
+15031.03c  4.4892E-06
+19039.03c  3.1370E-06
+19040.03c  3.9356E-10
+19041.03c  2.2639E-07
+20040.03c  9.0389E-07
+20042.03c  6.0327E-09
+20043.03c  1.2588E-09
+20044.03c  1.9450E-08
+20046.03c  3.7297E-11
+20048.03c  1.7436E-09
+22046.03c  2.8268E-08
+22047.03c  2.5794E-08
+22048.03c  2.6077E-07
+22049.03c  1.9434E-08
+22050.03c  1.9081E-08
+24050.03c  2.0915E-07
+24052.03c  4.0333E-06
+24053.03c  4.5729E-07
+24054.03c  1.1384E-07
+25055.03c  1.0630E-06
+26054.03c  7.5290E-07
+26056.03c  1.1704E-05
+26057.03c  2.6798E-07
+26058.03c  3.5731E-08
+28058.03c  6.2679E-06
+28060.03c  2.3962E-06
+28061.03c  1.0375E-07
+28062.03c  3.2960E-07
+28064.03c  8.3547E-08
+29063.03c  7.1516E-07
+29065.03c  3.1876E-07
+38084.03c  4.2326E-10
+38086.03c  7.4523E-09
+38087.03c  5.2907E-09
+38088.03c  6.2415E-08
+40090.03c  3.8820E-07
+40091.03c  8.4656E-08
+40092.03c  1.2940E-07
+40094.03c  1.3113E-07
+40096.03c  2.1126E-08
+42092.03c  1.2562E-03
+42094.03c  7.8300E-04
+42095.03c  1.3476E-03
+42096.03c  1.4119E-03
+42097.03c  8.0840E-04
+42098.03c  2.0426E-03
+42100.03c  8.1517E-04
+44096.03c  4.3255E-09
+44098.03c  1.4522E-09
+44099.03c  9.9159E-09
+44100.03c  9.8378E-09
+44101.03c  1.3351E-08
+44102.03c  2.4673E-08
+44104.03c  1.4522E-08
+45103.03c  6.4352E-08
+48106.03c  2.9571E-10
+48108.03c  2.1055E-10
+48110.03c  2.9547E-09
+48111.03c  3.0281E-09
+48112.03c  5.7084E-09
+48113.03c  2.8909E-09
+48114.03c  6.7966E-09
+48116.03c  1.7719E-09
+49113.03c  2.4801E-09
+49115.03c  5.5196E-08
+64152.03c  2.7190E-11
+64154.03c  2.9638E-10
+64155.03c  2.0121E-09
+64156.03c  2.7829E-09
+64157.03c  2.1277E-09
+64158.03c  3.3771E-09
+64160.03c  2.9719E-09
+74182.03c  1.5913E-07
+74183.03c  8.6402E-08
+74184.03c  1.8575E-07
+74186.03c  1.7305E-07
+95241.03c  6.5625E-12
+93237.03c  9.1524E-08
+94238.03c  4.9530E-12
+94239.03c  2.1777E-09
+94240.03c  5.9328E-10
+92232.03c  1.4378E-11
+92233.03c  4.1226E-07
+92234.03c  4.2322E-04
+92235.03c  3.8025E-02
+92236.03c  2.2752E-04
+92238.03c  2.1712E-03
+6000.03c  4.47149e-04 
+mat fuel_222 4.98516e-02  tmp 300
+3006.03c  7.1556E-08
+3007.03c  8.8252E-07
+4009.03c  1.6200E-07
+5010.03c  2.0476E-07
+5011.03c  8.2418E-07
+11023.03c  2.0262E-06
+13027.03c  2.6476E-06
+14028.03c  4.2124E-05
+14029.03c  2.1329E-06
+14030.03c  1.4158E-06
+15031.03c  4.4892E-06
+19039.03c  3.1370E-06
+19040.03c  3.9356E-10
+19041.03c  2.2639E-07
+20040.03c  9.0389E-07
+20042.03c  6.0327E-09
+20043.03c  1.2588E-09
+20044.03c  1.9450E-08
+20046.03c  3.7297E-11
+20048.03c  1.7436E-09
+22046.03c  2.8268E-08
+22047.03c  2.5794E-08
+22048.03c  2.6077E-07
+22049.03c  1.9434E-08
+22050.03c  1.9081E-08
+24050.03c  2.0915E-07
+24052.03c  4.0333E-06
+24053.03c  4.5729E-07
+24054.03c  1.1384E-07
+25055.03c  1.0630E-06
+26054.03c  7.5290E-07
+26056.03c  1.1704E-05
+26057.03c  2.6798E-07
+26058.03c  3.5731E-08
+28058.03c  6.2679E-06
+28060.03c  2.3962E-06
+28061.03c  1.0375E-07
+28062.03c  3.2960E-07
+28064.03c  8.3547E-08
+29063.03c  7.1516E-07
+29065.03c  3.1876E-07
+38084.03c  4.2326E-10
+38086.03c  7.4523E-09
+38087.03c  5.2907E-09
+38088.03c  6.2415E-08
+40090.03c  3.8820E-07
+40091.03c  8.4656E-08
+40092.03c  1.2940E-07
+40094.03c  1.3113E-07
+40096.03c  2.1126E-08
+42092.03c  1.2562E-03
+42094.03c  7.8300E-04
+42095.03c  1.3476E-03
+42096.03c  1.4119E-03
+42097.03c  8.0840E-04
+42098.03c  2.0426E-03
+42100.03c  8.1517E-04
+44096.03c  4.3255E-09
+44098.03c  1.4522E-09
+44099.03c  9.9159E-09
+44100.03c  9.8378E-09
+44101.03c  1.3351E-08
+44102.03c  2.4673E-08
+44104.03c  1.4522E-08
+45103.03c  6.4352E-08
+48106.03c  2.9571E-10
+48108.03c  2.1055E-10
+48110.03c  2.9547E-09
+48111.03c  3.0281E-09
+48112.03c  5.7084E-09
+48113.03c  2.8909E-09
+48114.03c  6.7966E-09
+48116.03c  1.7719E-09
+49113.03c  2.4801E-09
+49115.03c  5.5196E-08
+64152.03c  2.7190E-11
+64154.03c  2.9638E-10
+64155.03c  2.0121E-09
+64156.03c  2.7829E-09
+64157.03c  2.1277E-09
+64158.03c  3.3771E-09
+64160.03c  2.9719E-09
+74182.03c  1.5913E-07
+74183.03c  8.6402E-08
+74184.03c  1.8575E-07
+74186.03c  1.7305E-07
+95241.03c  6.5625E-12
+93237.03c  9.1524E-08
+94238.03c  4.9530E-12
+94239.03c  2.1777E-09
+94240.03c  5.9328E-10
+92232.03c  1.4378E-11
+92233.03c  4.1226E-07
+92234.03c  4.2322E-04
+92235.03c  3.8025E-02
+92236.03c  2.2752E-04
+92238.03c  2.1712E-03
+6000.03c  4.47149e-04 
+mat fuel_223 4.98516e-02  tmp 300
+3006.03c  7.1556E-08
+3007.03c  8.8252E-07
+4009.03c  1.6200E-07
+5010.03c  2.0476E-07
+5011.03c  8.2418E-07
+11023.03c  2.0262E-06
+13027.03c  2.6476E-06
+14028.03c  4.2124E-05
+14029.03c  2.1329E-06
+14030.03c  1.4158E-06
+15031.03c  4.4892E-06
+19039.03c  3.1370E-06
+19040.03c  3.9356E-10
+19041.03c  2.2639E-07
+20040.03c  9.0389E-07
+20042.03c  6.0327E-09
+20043.03c  1.2588E-09
+20044.03c  1.9450E-08
+20046.03c  3.7297E-11
+20048.03c  1.7436E-09
+22046.03c  2.8268E-08
+22047.03c  2.5794E-08
+22048.03c  2.6077E-07
+22049.03c  1.9434E-08
+22050.03c  1.9081E-08
+24050.03c  2.0915E-07
+24052.03c  4.0333E-06
+24053.03c  4.5729E-07
+24054.03c  1.1384E-07
+25055.03c  1.0630E-06
+26054.03c  7.5290E-07
+26056.03c  1.1704E-05
+26057.03c  2.6798E-07
+26058.03c  3.5731E-08
+28058.03c  6.2679E-06
+28060.03c  2.3962E-06
+28061.03c  1.0375E-07
+28062.03c  3.2960E-07
+28064.03c  8.3547E-08
+29063.03c  7.1516E-07
+29065.03c  3.1876E-07
+38084.03c  4.2326E-10
+38086.03c  7.4523E-09
+38087.03c  5.2907E-09
+38088.03c  6.2415E-08
+40090.03c  3.8820E-07
+40091.03c  8.4656E-08
+40092.03c  1.2940E-07
+40094.03c  1.3113E-07
+40096.03c  2.1126E-08
+42092.03c  1.2562E-03
+42094.03c  7.8300E-04
+42095.03c  1.3476E-03
+42096.03c  1.4119E-03
+42097.03c  8.0840E-04
+42098.03c  2.0426E-03
+42100.03c  8.1517E-04
+44096.03c  4.3255E-09
+44098.03c  1.4522E-09
+44099.03c  9.9159E-09
+44100.03c  9.8378E-09
+44101.03c  1.3351E-08
+44102.03c  2.4673E-08
+44104.03c  1.4522E-08
+45103.03c  6.4352E-08
+48106.03c  2.9571E-10
+48108.03c  2.1055E-10
+48110.03c  2.9547E-09
+48111.03c  3.0281E-09
+48112.03c  5.7084E-09
+48113.03c  2.8909E-09
+48114.03c  6.7966E-09
+48116.03c  1.7719E-09
+49113.03c  2.4801E-09
+49115.03c  5.5196E-08
+64152.03c  2.7190E-11
+64154.03c  2.9638E-10
+64155.03c  2.0121E-09
+64156.03c  2.7829E-09
+64157.03c  2.1277E-09
+64158.03c  3.3771E-09
+64160.03c  2.9719E-09
+74182.03c  1.5913E-07
+74183.03c  8.6402E-08
+74184.03c  1.8575E-07
+74186.03c  1.7305E-07
+95241.03c  6.5625E-12
+93237.03c  9.1524E-08
+94238.03c  4.9530E-12
+94239.03c  2.1777E-09
+94240.03c  5.9328E-10
+92232.03c  1.4378E-11
+92233.03c  4.1226E-07
+92234.03c  4.2322E-04
+92235.03c  3.8025E-02
+92236.03c  2.2752E-04
+92238.03c  2.1712E-03
+6000.03c  4.47149e-04 
+mat fuel_232 4.98516e-02  tmp 300
+3006.03c  7.1556E-08
+3007.03c  8.8252E-07
+4009.03c  1.6200E-07
+5010.03c  2.0476E-07
+5011.03c  8.2418E-07
+11023.03c  2.0262E-06
+13027.03c  2.6476E-06
+14028.03c  4.2124E-05
+14029.03c  2.1329E-06
+14030.03c  1.4158E-06
+15031.03c  4.4892E-06
+19039.03c  3.1370E-06
+19040.03c  3.9356E-10
+19041.03c  2.2639E-07
+20040.03c  9.0389E-07
+20042.03c  6.0327E-09
+20043.03c  1.2588E-09
+20044.03c  1.9450E-08
+20046.03c  3.7297E-11
+20048.03c  1.7436E-09
+22046.03c  2.8268E-08
+22047.03c  2.5794E-08
+22048.03c  2.6077E-07
+22049.03c  1.9434E-08
+22050.03c  1.9081E-08
+24050.03c  2.0915E-07
+24052.03c  4.0333E-06
+24053.03c  4.5729E-07
+24054.03c  1.1384E-07
+25055.03c  1.0630E-06
+26054.03c  7.5290E-07
+26056.03c  1.1704E-05
+26057.03c  2.6798E-07
+26058.03c  3.5731E-08
+28058.03c  6.2679E-06
+28060.03c  2.3962E-06
+28061.03c  1.0375E-07
+28062.03c  3.2960E-07
+28064.03c  8.3547E-08
+29063.03c  7.1516E-07
+29065.03c  3.1876E-07
+38084.03c  4.2326E-10
+38086.03c  7.4523E-09
+38087.03c  5.2907E-09
+38088.03c  6.2415E-08
+40090.03c  3.8820E-07
+40091.03c  8.4656E-08
+40092.03c  1.2940E-07
+40094.03c  1.3113E-07
+40096.03c  2.1126E-08
+42092.03c  1.2562E-03
+42094.03c  7.8300E-04
+42095.03c  1.3476E-03
+42096.03c  1.4119E-03
+42097.03c  8.0840E-04
+42098.03c  2.0426E-03
+42100.03c  8.1517E-04
+44096.03c  4.3255E-09
+44098.03c  1.4522E-09
+44099.03c  9.9159E-09
+44100.03c  9.8378E-09
+44101.03c  1.3351E-08
+44102.03c  2.4673E-08
+44104.03c  1.4522E-08
+45103.03c  6.4352E-08
+48106.03c  2.9571E-10
+48108.03c  2.1055E-10
+48110.03c  2.9547E-09
+48111.03c  3.0281E-09
+48112.03c  5.7084E-09
+48113.03c  2.8909E-09
+48114.03c  6.7966E-09
+48116.03c  1.7719E-09
+49113.03c  2.4801E-09
+49115.03c  5.5196E-08
+64152.03c  2.7190E-11
+64154.03c  2.9638E-10
+64155.03c  2.0121E-09
+64156.03c  2.7829E-09
+64157.03c  2.1277E-09
+64158.03c  3.3771E-09
+64160.03c  2.9719E-09
+74182.03c  1.5913E-07
+74183.03c  8.6402E-08
+74184.03c  1.8575E-07
+74186.03c  1.7305E-07
+95241.03c  6.5625E-12
+93237.03c  9.1524E-08
+94238.03c  4.9530E-12
+94239.03c  2.1777E-09
+94240.03c  5.9328E-10
+92232.03c  1.4378E-11
+92233.03c  4.1226E-07
+92234.03c  4.2322E-04
+92235.03c  3.8025E-02
+92236.03c  2.2752E-04
+92238.03c  2.1712E-03
+6000.03c  4.47149e-04 
+mat fuel_233 4.98516e-02  tmp 300
+3006.03c  7.1556E-08
+3007.03c  8.8252E-07
+4009.03c  1.6200E-07
+5010.03c  2.0476E-07
+5011.03c  8.2418E-07
+11023.03c  2.0262E-06
+13027.03c  2.6476E-06
+14028.03c  4.2124E-05
+14029.03c  2.1329E-06
+14030.03c  1.4158E-06
+15031.03c  4.4892E-06
+19039.03c  3.1370E-06
+19040.03c  3.9356E-10
+19041.03c  2.2639E-07
+20040.03c  9.0389E-07
+20042.03c  6.0327E-09
+20043.03c  1.2588E-09
+20044.03c  1.9450E-08
+20046.03c  3.7297E-11
+20048.03c  1.7436E-09
+22046.03c  2.8268E-08
+22047.03c  2.5794E-08
+22048.03c  2.6077E-07
+22049.03c  1.9434E-08
+22050.03c  1.9081E-08
+24050.03c  2.0915E-07
+24052.03c  4.0333E-06
+24053.03c  4.5729E-07
+24054.03c  1.1384E-07
+25055.03c  1.0630E-06
+26054.03c  7.5290E-07
+26056.03c  1.1704E-05
+26057.03c  2.6798E-07
+26058.03c  3.5731E-08
+28058.03c  6.2679E-06
+28060.03c  2.3962E-06
+28061.03c  1.0375E-07
+28062.03c  3.2960E-07
+28064.03c  8.3547E-08
+29063.03c  7.1516E-07
+29065.03c  3.1876E-07
+38084.03c  4.2326E-10
+38086.03c  7.4523E-09
+38087.03c  5.2907E-09
+38088.03c  6.2415E-08
+40090.03c  3.8820E-07
+40091.03c  8.4656E-08
+40092.03c  1.2940E-07
+40094.03c  1.3113E-07
+40096.03c  2.1126E-08
+42092.03c  1.2562E-03
+42094.03c  7.8300E-04
+42095.03c  1.3476E-03
+42096.03c  1.4119E-03
+42097.03c  8.0840E-04
+42098.03c  2.0426E-03
+42100.03c  8.1517E-04
+44096.03c  4.3255E-09
+44098.03c  1.4522E-09
+44099.03c  9.9159E-09
+44100.03c  9.8378E-09
+44101.03c  1.3351E-08
+44102.03c  2.4673E-08
+44104.03c  1.4522E-08
+45103.03c  6.4352E-08
+48106.03c  2.9571E-10
+48108.03c  2.1055E-10
+48110.03c  2.9547E-09
+48111.03c  3.0281E-09
+48112.03c  5.7084E-09
+48113.03c  2.8909E-09
+48114.03c  6.7966E-09
+48116.03c  1.7719E-09
+49113.03c  2.4801E-09
+49115.03c  5.5196E-08
+64152.03c  2.7190E-11
+64154.03c  2.9638E-10
+64155.03c  2.0121E-09
+64156.03c  2.7829E-09
+64157.03c  2.1277E-09
+64158.03c  3.3771E-09
+64160.03c  2.9719E-09
+74182.03c  1.5913E-07
+74183.03c  8.6402E-08
+74184.03c  1.8575E-07
+74186.03c  1.7305E-07
+95241.03c  6.5625E-12
+93237.03c  9.1524E-08
+94238.03c  4.9530E-12
+94239.03c  2.1777E-09
+94240.03c  5.9328E-10
+92232.03c  1.4378E-11
+92233.03c  4.1226E-07
+92234.03c  4.2322E-04
+92235.03c  3.8025E-02
+92236.03c  2.2752E-04
+92238.03c  2.1712E-03
+6000.03c  4.47149e-04 
+mat fuel_242 4.98516e-02  tmp 300
+3006.03c  7.1556E-08
+3007.03c  8.8252E-07
+4009.03c  1.6200E-07
+5010.03c  2.0476E-07
+5011.03c  8.2418E-07
+11023.03c  2.0262E-06
+13027.03c  2.6476E-06
+14028.03c  4.2124E-05
+14029.03c  2.1329E-06
+14030.03c  1.4158E-06
+15031.03c  4.4892E-06
+19039.03c  3.1370E-06
+19040.03c  3.9356E-10
+19041.03c  2.2639E-07
+20040.03c  9.0389E-07
+20042.03c  6.0327E-09
+20043.03c  1.2588E-09
+20044.03c  1.9450E-08
+20046.03c  3.7297E-11
+20048.03c  1.7436E-09
+22046.03c  2.8268E-08
+22047.03c  2.5794E-08
+22048.03c  2.6077E-07
+22049.03c  1.9434E-08
+22050.03c  1.9081E-08
+24050.03c  2.0915E-07
+24052.03c  4.0333E-06
+24053.03c  4.5729E-07
+24054.03c  1.1384E-07
+25055.03c  1.0630E-06
+26054.03c  7.5290E-07
+26056.03c  1.1704E-05
+26057.03c  2.6798E-07
+26058.03c  3.5731E-08
+28058.03c  6.2679E-06
+28060.03c  2.3962E-06
+28061.03c  1.0375E-07
+28062.03c  3.2960E-07
+28064.03c  8.3547E-08
+29063.03c  7.1516E-07
+29065.03c  3.1876E-07
+38084.03c  4.2326E-10
+38086.03c  7.4523E-09
+38087.03c  5.2907E-09
+38088.03c  6.2415E-08
+40090.03c  3.8820E-07
+40091.03c  8.4656E-08
+40092.03c  1.2940E-07
+40094.03c  1.3113E-07
+40096.03c  2.1126E-08
+42092.03c  1.2562E-03
+42094.03c  7.8300E-04
+42095.03c  1.3476E-03
+42096.03c  1.4119E-03
+42097.03c  8.0840E-04
+42098.03c  2.0426E-03
+42100.03c  8.1517E-04
+44096.03c  4.3255E-09
+44098.03c  1.4522E-09
+44099.03c  9.9159E-09
+44100.03c  9.8378E-09
+44101.03c  1.3351E-08
+44102.03c  2.4673E-08
+44104.03c  1.4522E-08
+45103.03c  6.4352E-08
+48106.03c  2.9571E-10
+48108.03c  2.1055E-10
+48110.03c  2.9547E-09
+48111.03c  3.0281E-09
+48112.03c  5.7084E-09
+48113.03c  2.8909E-09
+48114.03c  6.7966E-09
+48116.03c  1.7719E-09
+49113.03c  2.4801E-09
+49115.03c  5.5196E-08
+64152.03c  2.7190E-11
+64154.03c  2.9638E-10
+64155.03c  2.0121E-09
+64156.03c  2.7829E-09
+64157.03c  2.1277E-09
+64158.03c  3.3771E-09
+64160.03c  2.9719E-09
+74182.03c  1.5913E-07
+74183.03c  8.6402E-08
+74184.03c  1.8575E-07
+74186.03c  1.7305E-07
+95241.03c  6.5625E-12
+93237.03c  9.1524E-08
+94238.03c  4.9530E-12
+94239.03c  2.1777E-09
+94240.03c  5.9328E-10
+92232.03c  1.4378E-11
+92233.03c  4.1226E-07
+92234.03c  4.2322E-04
+92235.03c  3.8025E-02
+92236.03c  2.2752E-04
+92238.03c  2.1712E-03
+6000.03c  4.47149e-04 
+mat fuel_243 4.98516e-02  tmp 300
+3006.03c  7.1556E-08
+3007.03c  8.8252E-07
+4009.03c  1.6200E-07
+5010.03c  2.0476E-07
+5011.03c  8.2418E-07
+11023.03c  2.0262E-06
+13027.03c  2.6476E-06
+14028.03c  4.2124E-05
+14029.03c  2.1329E-06
+14030.03c  1.4158E-06
+15031.03c  4.4892E-06
+19039.03c  3.1370E-06
+19040.03c  3.9356E-10
+19041.03c  2.2639E-07
+20040.03c  9.0389E-07
+20042.03c  6.0327E-09
+20043.03c  1.2588E-09
+20044.03c  1.9450E-08
+20046.03c  3.7297E-11
+20048.03c  1.7436E-09
+22046.03c  2.8268E-08
+22047.03c  2.5794E-08
+22048.03c  2.6077E-07
+22049.03c  1.9434E-08
+22050.03c  1.9081E-08
+24050.03c  2.0915E-07
+24052.03c  4.0333E-06
+24053.03c  4.5729E-07
+24054.03c  1.1384E-07
+25055.03c  1.0630E-06
+26054.03c  7.5290E-07
+26056.03c  1.1704E-05
+26057.03c  2.6798E-07
+26058.03c  3.5731E-08
+28058.03c  6.2679E-06
+28060.03c  2.3962E-06
+28061.03c  1.0375E-07
+28062.03c  3.2960E-07
+28064.03c  8.3547E-08
+29063.03c  7.1516E-07
+29065.03c  3.1876E-07
+38084.03c  4.2326E-10
+38086.03c  7.4523E-09
+38087.03c  5.2907E-09
+38088.03c  6.2415E-08
+40090.03c  3.8820E-07
+40091.03c  8.4656E-08
+40092.03c  1.2940E-07
+40094.03c  1.3113E-07
+40096.03c  2.1126E-08
+42092.03c  1.2562E-03
+42094.03c  7.8300E-04
+42095.03c  1.3476E-03
+42096.03c  1.4119E-03
+42097.03c  8.0840E-04
+42098.03c  2.0426E-03
+42100.03c  8.1517E-04
+44096.03c  4.3255E-09
+44098.03c  1.4522E-09
+44099.03c  9.9159E-09
+44100.03c  9.8378E-09
+44101.03c  1.3351E-08
+44102.03c  2.4673E-08
+44104.03c  1.4522E-08
+45103.03c  6.4352E-08
+48106.03c  2.9571E-10
+48108.03c  2.1055E-10
+48110.03c  2.9547E-09
+48111.03c  3.0281E-09
+48112.03c  5.7084E-09
+48113.03c  2.8909E-09
+48114.03c  6.7966E-09
+48116.03c  1.7719E-09
+49113.03c  2.4801E-09
+49115.03c  5.5196E-08
+64152.03c  2.7190E-11
+64154.03c  2.9638E-10
+64155.03c  2.0121E-09
+64156.03c  2.7829E-09
+64157.03c  2.1277E-09
+64158.03c  3.3771E-09
+64160.03c  2.9719E-09
+74182.03c  1.5913E-07
+74183.03c  8.6402E-08
+74184.03c  1.8575E-07
+74186.03c  1.7305E-07
+95241.03c  6.5625E-12
+93237.03c  9.1524E-08
+94238.03c  4.9530E-12
+94239.03c  2.1777E-09
+94240.03c  5.9328E-10
+92232.03c  1.4378E-11
+92233.03c  4.1226E-07
+92234.03c  4.2322E-04
+92235.03c  3.8025E-02
+92236.03c  2.2752E-04
+92238.03c  2.1712E-03
+6000.03c  4.47149e-04 
+mat fuel_252 4.98516e-02  tmp 300
+3006.03c  7.1556E-08
+3007.03c  8.8252E-07
+4009.03c  1.6200E-07
+5010.03c  2.0476E-07
+5011.03c  8.2418E-07
+11023.03c  2.0262E-06
+13027.03c  2.6476E-06
+14028.03c  4.2124E-05
+14029.03c  2.1329E-06
+14030.03c  1.4158E-06
+15031.03c  4.4892E-06
+19039.03c  3.1370E-06
+19040.03c  3.9356E-10
+19041.03c  2.2639E-07
+20040.03c  9.0389E-07
+20042.03c  6.0327E-09
+20043.03c  1.2588E-09
+20044.03c  1.9450E-08
+20046.03c  3.7297E-11
+20048.03c  1.7436E-09
+22046.03c  2.8268E-08
+22047.03c  2.5794E-08
+22048.03c  2.6077E-07
+22049.03c  1.9434E-08
+22050.03c  1.9081E-08
+24050.03c  2.0915E-07
+24052.03c  4.0333E-06
+24053.03c  4.5729E-07
+24054.03c  1.1384E-07
+25055.03c  1.0630E-06
+26054.03c  7.5290E-07
+26056.03c  1.1704E-05
+26057.03c  2.6798E-07
+26058.03c  3.5731E-08
+28058.03c  6.2679E-06
+28060.03c  2.3962E-06
+28061.03c  1.0375E-07
+28062.03c  3.2960E-07
+28064.03c  8.3547E-08
+29063.03c  7.1516E-07
+29065.03c  3.1876E-07
+38084.03c  4.2326E-10
+38086.03c  7.4523E-09
+38087.03c  5.2907E-09
+38088.03c  6.2415E-08
+40090.03c  3.8820E-07
+40091.03c  8.4656E-08
+40092.03c  1.2940E-07
+40094.03c  1.3113E-07
+40096.03c  2.1126E-08
+42092.03c  1.2562E-03
+42094.03c  7.8300E-04
+42095.03c  1.3476E-03
+42096.03c  1.4119E-03
+42097.03c  8.0840E-04
+42098.03c  2.0426E-03
+42100.03c  8.1517E-04
+44096.03c  4.3255E-09
+44098.03c  1.4522E-09
+44099.03c  9.9159E-09
+44100.03c  9.8378E-09
+44101.03c  1.3351E-08
+44102.03c  2.4673E-08
+44104.03c  1.4522E-08
+45103.03c  6.4352E-08
+48106.03c  2.9571E-10
+48108.03c  2.1055E-10
+48110.03c  2.9547E-09
+48111.03c  3.0281E-09
+48112.03c  5.7084E-09
+48113.03c  2.8909E-09
+48114.03c  6.7966E-09
+48116.03c  1.7719E-09
+49113.03c  2.4801E-09
+49115.03c  5.5196E-08
+64152.03c  2.7190E-11
+64154.03c  2.9638E-10
+64155.03c  2.0121E-09
+64156.03c  2.7829E-09
+64157.03c  2.1277E-09
+64158.03c  3.3771E-09
+64160.03c  2.9719E-09
+74182.03c  1.5913E-07
+74183.03c  8.6402E-08
+74184.03c  1.8575E-07
+74186.03c  1.7305E-07
+95241.03c  6.5625E-12
+93237.03c  9.1524E-08
+94238.03c  4.9530E-12
+94239.03c  2.1777E-09
+94240.03c  5.9328E-10
+92232.03c  1.4378E-11
+92233.03c  4.1226E-07
+92234.03c  4.2322E-04
+92235.03c  3.8025E-02
+92236.03c  2.2752E-04
+92238.03c  2.1712E-03
+6000.03c  4.47149e-04 
+mat fuel_253 4.98516e-02  tmp 300
+3006.03c  7.1556E-08
+3007.03c  8.8252E-07
+4009.03c  1.6200E-07
+5010.03c  2.0476E-07
+5011.03c  8.2418E-07
+11023.03c  2.0262E-06
+13027.03c  2.6476E-06
+14028.03c  4.2124E-05
+14029.03c  2.1329E-06
+14030.03c  1.4158E-06
+15031.03c  4.4892E-06
+19039.03c  3.1370E-06
+19040.03c  3.9356E-10
+19041.03c  2.2639E-07
+20040.03c  9.0389E-07
+20042.03c  6.0327E-09
+20043.03c  1.2588E-09
+20044.03c  1.9450E-08
+20046.03c  3.7297E-11
+20048.03c  1.7436E-09
+22046.03c  2.8268E-08
+22047.03c  2.5794E-08
+22048.03c  2.6077E-07
+22049.03c  1.9434E-08
+22050.03c  1.9081E-08
+24050.03c  2.0915E-07
+24052.03c  4.0333E-06
+24053.03c  4.5729E-07
+24054.03c  1.1384E-07
+25055.03c  1.0630E-06
+26054.03c  7.5290E-07
+26056.03c  1.1704E-05
+26057.03c  2.6798E-07
+26058.03c  3.5731E-08
+28058.03c  6.2679E-06
+28060.03c  2.3962E-06
+28061.03c  1.0375E-07
+28062.03c  3.2960E-07
+28064.03c  8.3547E-08
+29063.03c  7.1516E-07
+29065.03c  3.1876E-07
+38084.03c  4.2326E-10
+38086.03c  7.4523E-09
+38087.03c  5.2907E-09
+38088.03c  6.2415E-08
+40090.03c  3.8820E-07
+40091.03c  8.4656E-08
+40092.03c  1.2940E-07
+40094.03c  1.3113E-07
+40096.03c  2.1126E-08
+42092.03c  1.2562E-03
+42094.03c  7.8300E-04
+42095.03c  1.3476E-03
+42096.03c  1.4119E-03
+42097.03c  8.0840E-04
+42098.03c  2.0426E-03
+42100.03c  8.1517E-04
+44096.03c  4.3255E-09
+44098.03c  1.4522E-09
+44099.03c  9.9159E-09
+44100.03c  9.8378E-09
+44101.03c  1.3351E-08
+44102.03c  2.4673E-08
+44104.03c  1.4522E-08
+45103.03c  6.4352E-08
+48106.03c  2.9571E-10
+48108.03c  2.1055E-10
+48110.03c  2.9547E-09
+48111.03c  3.0281E-09
+48112.03c  5.7084E-09
+48113.03c  2.8909E-09
+48114.03c  6.7966E-09
+48116.03c  1.7719E-09
+49113.03c  2.4801E-09
+49115.03c  5.5196E-08
+64152.03c  2.7190E-11
+64154.03c  2.9638E-10
+64155.03c  2.0121E-09
+64156.03c  2.7829E-09
+64157.03c  2.1277E-09
+64158.03c  3.3771E-09
+64160.03c  2.9719E-09
+74182.03c  1.5913E-07
+74183.03c  8.6402E-08
+74184.03c  1.8575E-07
+74186.03c  1.7305E-07
+95241.03c  6.5625E-12
+93237.03c  9.1524E-08
+94238.03c  4.9530E-12
+94239.03c  2.1777E-09
+94240.03c  5.9328E-10
+92232.03c  1.4378E-11
+92233.03c  4.1226E-07
+92234.03c  4.2322E-04
+92235.03c  3.8025E-02
+92236.03c  2.2752E-04
+92238.03c  2.1712E-03
+6000.03c  4.47149e-04 
+mat fuel_262 4.98516e-02  tmp 300
+3006.03c  7.1556E-08
+3007.03c  8.8252E-07
+4009.03c  1.6200E-07
+5010.03c  2.0476E-07
+5011.03c  8.2418E-07
+11023.03c  2.0262E-06
+13027.03c  2.6476E-06
+14028.03c  4.2124E-05
+14029.03c  2.1329E-06
+14030.03c  1.4158E-06
+15031.03c  4.4892E-06
+19039.03c  3.1370E-06
+19040.03c  3.9356E-10
+19041.03c  2.2639E-07
+20040.03c  9.0389E-07
+20042.03c  6.0327E-09
+20043.03c  1.2588E-09
+20044.03c  1.9450E-08
+20046.03c  3.7297E-11
+20048.03c  1.7436E-09
+22046.03c  2.8268E-08
+22047.03c  2.5794E-08
+22048.03c  2.6077E-07
+22049.03c  1.9434E-08
+22050.03c  1.9081E-08
+24050.03c  2.0915E-07
+24052.03c  4.0333E-06
+24053.03c  4.5729E-07
+24054.03c  1.1384E-07
+25055.03c  1.0630E-06
+26054.03c  7.5290E-07
+26056.03c  1.1704E-05
+26057.03c  2.6798E-07
+26058.03c  3.5731E-08
+28058.03c  6.2679E-06
+28060.03c  2.3962E-06
+28061.03c  1.0375E-07
+28062.03c  3.2960E-07
+28064.03c  8.3547E-08
+29063.03c  7.1516E-07
+29065.03c  3.1876E-07
+38084.03c  4.2326E-10
+38086.03c  7.4523E-09
+38087.03c  5.2907E-09
+38088.03c  6.2415E-08
+40090.03c  3.8820E-07
+40091.03c  8.4656E-08
+40092.03c  1.2940E-07
+40094.03c  1.3113E-07
+40096.03c  2.1126E-08
+42092.03c  1.2562E-03
+42094.03c  7.8300E-04
+42095.03c  1.3476E-03
+42096.03c  1.4119E-03
+42097.03c  8.0840E-04
+42098.03c  2.0426E-03
+42100.03c  8.1517E-04
+44096.03c  4.3255E-09
+44098.03c  1.4522E-09
+44099.03c  9.9159E-09
+44100.03c  9.8378E-09
+44101.03c  1.3351E-08
+44102.03c  2.4673E-08
+44104.03c  1.4522E-08
+45103.03c  6.4352E-08
+48106.03c  2.9571E-10
+48108.03c  2.1055E-10
+48110.03c  2.9547E-09
+48111.03c  3.0281E-09
+48112.03c  5.7084E-09
+48113.03c  2.8909E-09
+48114.03c  6.7966E-09
+48116.03c  1.7719E-09
+49113.03c  2.4801E-09
+49115.03c  5.5196E-08
+64152.03c  2.7190E-11
+64154.03c  2.9638E-10
+64155.03c  2.0121E-09
+64156.03c  2.7829E-09
+64157.03c  2.1277E-09
+64158.03c  3.3771E-09
+64160.03c  2.9719E-09
+74182.03c  1.5913E-07
+74183.03c  8.6402E-08
+74184.03c  1.8575E-07
+74186.03c  1.7305E-07
+95241.03c  6.5625E-12
+93237.03c  9.1524E-08
+94238.03c  4.9530E-12
+94239.03c  2.1777E-09
+94240.03c  5.9328E-10
+92232.03c  1.4378E-11
+92233.03c  4.1226E-07
+92234.03c  4.2322E-04
+92235.03c  3.8025E-02
+92236.03c  2.2752E-04
+92238.03c  2.1712E-03
+6000.03c  4.47149e-04 
+mat fuel_263 4.98516e-02  tmp 300
+3006.03c  7.1556E-08
+3007.03c  8.8252E-07
+4009.03c  1.6200E-07
+5010.03c  2.0476E-07
+5011.03c  8.2418E-07
+11023.03c  2.0262E-06
+13027.03c  2.6476E-06
+14028.03c  4.2124E-05
+14029.03c  2.1329E-06
+14030.03c  1.4158E-06
+15031.03c  4.4892E-06
+19039.03c  3.1370E-06
+19040.03c  3.9356E-10
+19041.03c  2.2639E-07
+20040.03c  9.0389E-07
+20042.03c  6.0327E-09
+20043.03c  1.2588E-09
+20044.03c  1.9450E-08
+20046.03c  3.7297E-11
+20048.03c  1.7436E-09
+22046.03c  2.8268E-08
+22047.03c  2.5794E-08
+22048.03c  2.6077E-07
+22049.03c  1.9434E-08
+22050.03c  1.9081E-08
+24050.03c  2.0915E-07
+24052.03c  4.0333E-06
+24053.03c  4.5729E-07
+24054.03c  1.1384E-07
+25055.03c  1.0630E-06
+26054.03c  7.5290E-07
+26056.03c  1.1704E-05
+26057.03c  2.6798E-07
+26058.03c  3.5731E-08
+28058.03c  6.2679E-06
+28060.03c  2.3962E-06
+28061.03c  1.0375E-07
+28062.03c  3.2960E-07
+28064.03c  8.3547E-08
+29063.03c  7.1516E-07
+29065.03c  3.1876E-07
+38084.03c  4.2326E-10
+38086.03c  7.4523E-09
+38087.03c  5.2907E-09
+38088.03c  6.2415E-08
+40090.03c  3.8820E-07
+40091.03c  8.4656E-08
+40092.03c  1.2940E-07
+40094.03c  1.3113E-07
+40096.03c  2.1126E-08
+42092.03c  1.2562E-03
+42094.03c  7.8300E-04
+42095.03c  1.3476E-03
+42096.03c  1.4119E-03
+42097.03c  8.0840E-04
+42098.03c  2.0426E-03
+42100.03c  8.1517E-04
+44096.03c  4.3255E-09
+44098.03c  1.4522E-09
+44099.03c  9.9159E-09
+44100.03c  9.8378E-09
+44101.03c  1.3351E-08
+44102.03c  2.4673E-08
+44104.03c  1.4522E-08
+45103.03c  6.4352E-08
+48106.03c  2.9571E-10
+48108.03c  2.1055E-10
+48110.03c  2.9547E-09
+48111.03c  3.0281E-09
+48112.03c  5.7084E-09
+48113.03c  2.8909E-09
+48114.03c  6.7966E-09
+48116.03c  1.7719E-09
+49113.03c  2.4801E-09
+49115.03c  5.5196E-08
+64152.03c  2.7190E-11
+64154.03c  2.9638E-10
+64155.03c  2.0121E-09
+64156.03c  2.7829E-09
+64157.03c  2.1277E-09
+64158.03c  3.3771E-09
+64160.03c  2.9719E-09
+74182.03c  1.5913E-07
+74183.03c  8.6402E-08
+74184.03c  1.8575E-07
+74186.03c  1.7305E-07
+95241.03c  6.5625E-12
+93237.03c  9.1524E-08
+94238.03c  4.9530E-12
+94239.03c  2.1777E-09
+94240.03c  5.9328E-10
+92232.03c  1.4378E-11
+92233.03c  4.1226E-07
+92234.03c  4.2322E-04
+92235.03c  3.8025E-02
+92236.03c  2.2752E-04
+92238.03c  2.1712E-03
+6000.03c  4.47149e-04 
+mat Al 5.89180e-02  tmp 300
+12024.03c  4.7729E-04
+12025.03c  6.0425E-05
+12026.03c  6.6527E-05
+13027.03c  5.7655E-02
+14028.03c  3.8268E-04
+14029.03c  1.9377E-05
+14030.03c  1.2862E-05
+22046.03c  5.3346E-07
+22047.03c  4.8678E-07
+22048.03c  4.9212E-06
+22049.03c  3.6675E-07
+22050.03c  3.6009E-07
+24050.03c  1.4673E-06
+24052.03c  2.8297E-05
+24053.03c  3.2082E-06
+24054.03c  7.9868E-07
+25055.03c  2.6151E-05
+26054.03c  5.7343E-06
+26056.03c  8.9144E-05
+26057.03c  2.0410E-06
+26058.03c  2.7213E-07
+29063.03c  4.6916E-05
+29065.03c  2.0911E-05
+30000.03c  1.22049e-05 
+mat Al_AmBe_holder 6.00120e-02  tmp 300
+12024.03c  4.7729E-04
+12025.03c  6.0425E-05
+12026.03c  6.6527E-05
+13027.03c  5.7655E-02
+14028.03c  3.8268E-04
+14029.03c  1.9377E-05
+14030.03c  1.2862E-05
+22046.03c  5.3346E-07
+22047.03c  4.8678E-07
+22048.03c  4.9212E-06
+22049.03c  3.6675E-07
+22050.03c  3.6009E-07
+24050.03c  1.4673E-06
+24052.03c  2.8297E-05
+24053.03c  3.2082E-06
+24054.03c  7.9868E-07
+25055.03c  2.6151E-05
+26054.03c  5.7343E-06
+26056.03c  8.9144E-05
+26057.03c  2.0410E-06
+26058.03c  2.7213E-07
+29063.03c  4.6916E-05
+29065.03c  2.0911E-05
+30000.03c  1.22049e-05 
+mat beo_axial_plug_top 1.19673e-01 moder be-beo 4009 moder o-beo 8016 tmp 300 
+4009.03c  6.7442E-02
+5010.03c  1.5552E-08
+5011.03c  6.2597E-08
+8016.03c  6.7376E-02
+8017.03c  2.7015E-05
+11023.03c  1.1025E-06
+12024.03c  2.7458E-07
+12025.03c  3.4761E-08
+12026.03c  3.8272E-08
+13027.03c  2.1919E-06
+14028.03c  4.4392E-06
+14029.03c  2.2477E-07
+14030.03c  1.4921E-07
+16032.03c  3.0285E-05
+16033.03c  2.3904E-07
+16034.03c  1.3418E-06
+16036.03c  6.3744E-09
+20040.03c  6.1307E-07
+20042.03c  4.0918E-09
+20043.03c  8.5377E-10
+20044.03c  1.3192E-08
+20046.03c  2.5297E-11
+20048.03c  1.1826E-09
+25055.03c  3.0757E-08
+26054.03c  6.6947E-08
+26056.03c  1.0407E-06
+26057.03c  2.3828E-08
+26058.03c  3.1771E-09
+47107.03c  4.0603E-09
+47109.03c  3.7722E-09
+30000.03c  2.58379e-07 
+mat beo_axial_refl_top 1.21520e-01 moder be-beo 4009 moder o-beo 8016 tmp 300 
+4009.03c  6.7442E-02
+5010.03c  1.5552E-08
+5011.03c  6.2597E-08
+8016.03c  6.7376E-02
+8017.03c  2.7015E-05
+11023.03c  1.1025E-06
+12024.03c  2.7458E-07
+12025.03c  3.4761E-08
+12026.03c  3.8272E-08
+13027.03c  2.1919E-06
+14028.03c  4.4392E-06
+14029.03c  2.2477E-07
+14030.03c  1.4921E-07
+16032.03c  3.0285E-05
+16033.03c  2.3904E-07
+16034.03c  1.3418E-06
+16036.03c  6.3744E-09
+20040.03c  6.1307E-07
+20042.03c  4.0918E-09
+20043.03c  8.5377E-10
+20044.03c  1.3192E-08
+20046.03c  2.5297E-11
+20048.03c  1.1826E-09
+25055.03c  3.0757E-08
+26054.03c  6.6947E-08
+26056.03c  1.0407E-06
+26057.03c  2.3828E-08
+26058.03c  3.1771E-09
+47107.03c  4.0603E-09
+47109.03c  3.7722E-09
+30000.03c  2.58379e-07 
+mat beo_radial_refl_inner 1.33820e-01 moder be-beo 4009 moder o-beo 8016 tmp 300 
+4009.03c  6.7442E-02
+5010.03c  1.5552E-08
+5011.03c  6.2597E-08
+8016.03c  6.7376E-02
+8017.03c  2.7015E-05
+11023.03c  1.1025E-06
+12024.03c  2.7458E-07
+12025.03c  3.4761E-08
+12026.03c  3.8272E-08
+13027.03c  2.1919E-06
+14028.03c  4.4392E-06
+14029.03c  2.2477E-07
+14030.03c  1.4921E-07
+16032.03c  3.0285E-05
+16033.03c  2.3904E-07
+16034.03c  1.3418E-06
+16036.03c  6.3744E-09
+20040.03c  6.1307E-07
+20042.03c  4.0918E-09
+20043.03c  8.5377E-10
+20044.03c  1.3192E-08
+20046.03c  2.5297E-11
+20048.03c  1.1826E-09
+25055.03c  3.0757E-08
+26054.03c  6.6947E-08
+26056.03c  1.0407E-06
+26057.03c  2.3828E-08
+26058.03c  3.1771E-09
+47107.03c  4.0603E-09
+47109.03c  3.7722E-09
+30000.03c  2.58379e-07 
+mat beo_radial_refl_outer 1.34700e-01 moder be-beo 4009 moder o-beo 8016 tmp 300 
+4009.03c  6.7442E-02
+5010.03c  1.5552E-08
+5011.03c  6.2597E-08
+8016.03c  6.7376E-02
+8017.03c  2.7015E-05
+11023.03c  1.1025E-06
+12024.03c  2.7458E-07
+12025.03c  3.4761E-08
+12026.03c  3.8272E-08
+13027.03c  2.1919E-06
+14028.03c  4.4392E-06
+14029.03c  2.2477E-07
+14030.03c  1.4921E-07
+16032.03c  3.0285E-05
+16033.03c  2.3904E-07
+16034.03c  1.3418E-06
+16036.03c  6.3744E-09
+20040.03c  6.1307E-07
+20042.03c  4.0918E-09
+20043.03c  8.5377E-10
+20044.03c  1.3192E-08
+20046.03c  2.5297E-11
+20048.03c  1.1826E-09
+25055.03c  3.0757E-08
+26054.03c  6.6947E-08
+26056.03c  1.0407E-06
+26057.03c  2.3828E-08
+26058.03c  3.1771E-09
+47107.03c  4.0603E-09
+47109.03c  3.7722E-09
+30000.03c  2.58379e-07 
+mat bore_shield_axial_bottom_t 8.64603e-02  tmp 300
+7014.03c  3.0415E-04
+7015.03c  1.1295E-06
+14028.03c  8.4251E-04
+14029.03c  4.2660E-05
+14030.03c  2.8318E-05
+15031.03c  4.9085E-05
+16032.03c  3.5198E-05
+16033.03c  2.7782E-07
+16034.03c  1.5595E-06
+16036.03c  7.4086E-09
+24050.03c  7.2416E-04
+24052.03c  1.3965E-02
+24053.03c  1.5833E-03
+24054.03c  3.9416E-04
+25055.03c  1.6950E-03
+26054.03c  3.5015E-03
+26056.03c  5.4433E-02
+26057.03c  1.2463E-03
+26058.03c  1.6617E-04
+27059.03c  1.0480E-04
+28058.03c  4.5872E-03
+28060.03c  1.7537E-03
+28061.03c  7.5927E-05
+28062.03c  2.4122E-04
+28064.03c  6.1145E-05
+29063.03c  2.2238E-04
+29065.03c  9.9116E-05
+42092.03c  3.5278E-05
+42094.03c  2.1989E-05
+42095.03c  3.7845E-05
+42096.03c  3.9652E-05
+42097.03c  2.2702E-05
+42098.03c  5.7362E-05
+42100.03c  2.2893E-05
+6000.03c  6.32892e-05 
+mat bore_shield_axial_bottom_b 4.64603e-02  tmp 300
+7014.03c  3.0415E-04
+7015.03c  1.1295E-06
+14028.03c  8.4251E-04
+14029.03c  4.2660E-05
+14030.03c  2.8318E-05
+15031.03c  4.9085E-05
+16032.03c  3.5198E-05
+16033.03c  2.7782E-07
+16034.03c  1.5595E-06
+16036.03c  7.4086E-09
+24050.03c  7.2416E-04
+24052.03c  1.3965E-02
+24053.03c  1.5833E-03
+24054.03c  3.9416E-04
+25055.03c  1.6950E-03
+26054.03c  3.5015E-03
+26056.03c  5.4433E-02
+26057.03c  1.2463E-03
+26058.03c  1.6617E-04
+27059.03c  1.0480E-04
+28058.03c  4.5872E-03
+28060.03c  1.7537E-03
+28061.03c  7.5927E-05
+28062.03c  2.4122E-04
+28064.03c  6.1145E-05
+29063.03c  2.2238E-04
+29065.03c  9.9116E-05
+42092.03c  3.5278E-05
+42094.03c  2.1989E-05
+42095.03c  3.7845E-05
+42096.03c  3.9652E-05
+42097.03c  2.2702E-05
+42098.03c  5.7362E-05
+42100.03c  2.2893E-05
+6000.03c  6.32892e-05 
+mat b4c_shield 1.02484e-01  tmp 300
+5010.03c  1.6285E-02
+5011.03c  6.5551E-02
+6000.03c  2.06481e-02 
+mat b4c_platen 1.01473e-01  tmp 300
+5010.03c  1.6285E-02
+5011.03c  6.5551E-02
+6000.03c  2.06481e-02 
+mat dig_spacer_bottom 8.66869e-02  tmp 300
+7014.03c  2.3967E-04
+7015.03c  8.9007E-07
+14028.03c  3.5549E-04
+14029.03c  1.8000E-05
+14030.03c  1.1949E-05
+15031.03c  4.2433E-05
+16032.03c  4.2490E-05
+16033.03c  3.3537E-07
+16034.03c  1.8826E-06
+16036.03c  8.9433E-09
+24050.03c  7.2408E-04
+24052.03c  1.3963E-02
+24053.03c  1.5831E-03
+24054.03c  3.9412E-04
+25055.03c  1.2018E-03
+26054.03c  3.5688E-03
+26056.03c  5.5479E-02
+26057.03c  1.2702E-03
+26058.03c  1.6937E-04
+27059.03c  1.8693E-04
+28058.03c  4.7344E-03
+28060.03c  1.8100E-03
+28061.03c  7.8363E-05
+28062.03c  2.4896E-04
+28064.03c  6.3106E-05
+29063.03c  1.8338E-04
+29065.03c  8.1737E-05
+42092.03c  2.5433E-05
+42094.03c  1.5853E-05
+42095.03c  2.7284E-05
+42096.03c  2.8587E-05
+42097.03c  1.6367E-05
+42098.03c  4.1355E-05
+42100.03c  1.6504E-05
+6000.03c  6.12791e-05 
+mat hanger_top 8.63841e-02  tmp 300
+7014.03c  2.8895E-04
+7015.03c  1.0731E-06
+14028.03c  4.2567E-04
+14029.03c  2.1554E-05
+14030.03c  1.4308E-05
+15031.03c  4.3769E-05
+16032.03c  1.4096E-06
+16033.03c  1.1126E-08
+16034.03c  6.2457E-08
+16036.03c  2.9671E-10
+24050.03c  7.2037E-04
+24052.03c  1.3892E-02
+24053.03c  1.5750E-03
+24054.03c  3.9210E-04
+25055.03c  1.5209E-03
+26054.03c  3.5629E-03
+26056.03c  5.5388E-02
+26057.03c  1.2681E-03
+26058.03c  1.6909E-04
+28058.03c  4.4592E-03
+28060.03c  1.7048E-03
+28061.03c  7.3808E-05
+28062.03c  2.3449E-04
+28064.03c  5.9438E-05
+29063.03c  2.1100E-04
+29065.03c  9.4045E-05
+42092.03c  2.5902E-05
+42094.03c  1.6145E-05
+42095.03c  2.7787E-05
+42096.03c  2.9114E-05
+42097.03c  1.6669E-05
+42098.03c  4.2117E-05
+42100.03c  1.6808E-05
+6000.03c  8.79211e-05 
+mat support_rod 8.51987e-02  tmp 300
+7014.03c  2.4875E-04
+7015.03c  9.2378E-07
+14028.03c  3.9385E-04
+14029.03c  1.9942E-05
+14030.03c  1.3238E-05
+15031.03c  5.0011E-05
+16032.03c  3.8254E-05
+16033.03c  3.0194E-07
+16034.03c  1.6949E-06
+16036.03c  8.0517E-09
+24050.03c  7.1070E-04
+24052.03c  1.3705E-02
+24053.03c  1.5539E-03
+24054.03c  3.8684E-04
+25055.03c  1.2094E-03
+26054.03c  3.4982E-03
+26056.03c  5.4382E-02
+26057.03c  1.2451E-03
+26058.03c  1.6602E-04
+27059.03c  1.1748E-04
+28058.03c  4.6769E-03
+28060.03c  1.7880E-03
+28061.03c  7.7411E-05
+28062.03c  2.4594E-04
+28064.03c  6.2340E-05
+29063.03c  2.4040E-04
+29065.03c  1.0715E-04
+42092.03c  2.3963E-05
+42094.03c  1.4936E-05
+42095.03c  2.5707E-05
+42096.03c  2.6934E-05
+42097.03c  1.5421E-05
+42098.03c  3.8964E-05
+42100.03c  1.5550E-05
+6000.03c  9.65308e-05 
+mat ss_level_plate 8.57797e-02  tmp 300
+7014.03c  3.0507E-04
+7015.03c  1.1330E-06
+14028.03c  6.6554E-04
+14029.03c  3.3699E-05
+14030.03c  2.2370E-05
+15031.03c  4.5650E-05
+16032.03c  3.4918E-05
+16033.03c  2.7561E-07
+16034.03c  1.5471E-06
+16036.03c  7.3495E-09
+24050.03c  7.1681E-04
+24052.03c  1.3823E-02
+24053.03c  1.5672E-03
+24054.03c  3.9016E-04
+25055.03c  1.3898E-03
+26054.03c  3.5336E-03
+26056.03c  5.4932E-02
+26057.03c  1.2577E-03
+26058.03c  1.6770E-04
+27059.03c  8.3974E-05
+28058.03c  4.3862E-03
+28060.03c  1.6769E-03
+28061.03c  7.2599E-05
+28062.03c  2.3065E-04
+28064.03c  5.8465E-05
+29063.03c  1.2313E-04
+29065.03c  5.4880E-05
+42092.03c  2.0415E-05
+42094.03c  1.2725E-05
+42095.03c  2.1901E-05
+42096.03c  2.2946E-05
+42097.03c  1.3138E-05
+42098.03c  3.3195E-05
+42100.03c  1.3248E-05
+6000.03c  6.67088e-05 
+mat ss_low_level_plate 8.74651e-02  tmp 300
+7014.03c  2.4330E-04
+7015.03c  9.0357E-07
+14028.03c  3.7337E-04
+14029.03c  1.8905E-05
+14030.03c  1.2550E-05
+15031.03c  4.9773E-05
+16032.03c  2.8554E-06
+16033.03c  2.2538E-08
+16034.03c  1.2651E-07
+16036.03c  6.0100E-10
+24050.03c  7.5235E-04
+24052.03c  1.4508E-02
+24053.03c  1.6450E-03
+24054.03c  4.0951E-04
+25055.03c  1.5487E-03
+26054.03c  3.5728E-03
+26056.03c  5.5541E-02
+26057.03c  1.2717E-03
+26058.03c  1.6955E-04
+28058.03c  4.6056E-03
+28060.03c  1.7607E-03
+28061.03c  7.6231E-05
+28062.03c  2.4219E-04
+28064.03c  6.1390E-05
+29063.03c  2.3494E-04
+29065.03c  1.0471E-04
+42092.03c  2.4072E-05
+42094.03c  1.5005E-05
+42095.03c  2.5824E-05
+42096.03c  2.7057E-05
+42097.03c  1.5491E-05
+42098.03c  3.9142E-05
+42100.03c  1.5621E-05
+6000.03c  9.62649e-05 
+mat top_ring_shield_outer 8.74466e-02  tmp 300
+5010.03c  2.6604E-07
+5011.03c  1.0708E-06
+7014.03c  3.1527E-04
+7015.03c  1.1708E-06
+14028.03c  3.9552E-04
+14029.03c  2.0027E-05
+14030.03c  1.3294E-05
+15031.03c  4.8218E-05
+16032.03c  3.6120E-05
+16033.03c  2.8510E-07
+16034.03c  1.6004E-06
+16036.03c  7.6027E-09
+24050.03c  7.3713E-04
+24052.03c  1.4215E-02
+24053.03c  1.6117E-03
+24054.03c  4.0122E-04
+25055.03c  1.5785E-03
+26054.03c  3.5655E-03
+26056.03c  5.5428E-02
+26057.03c  1.2691E-03
+26058.03c  1.6921E-04
+27059.03c  1.2916E-04
+28058.03c  4.7300E-03
+28060.03c  1.8083E-03
+28061.03c  7.8291E-05
+28062.03c  2.4873E-04
+28064.03c  6.3048E-05
+29063.03c  1.9088E-04
+29065.03c  8.5080E-05
+42092.03c  2.4594E-05
+42094.03c  1.5330E-05
+42095.03c  2.6384E-05
+42096.03c  2.7643E-05
+42097.03c  1.5827E-05
+42098.03c  3.9990E-05
+42100.03c  1.5959E-05
+6000.03c  8.02204e-05 
+23000.03c  5.86356e-05 
+mat top_ring_shield_inner 8.74978e-02  tmp 300
+7014.03c  3.2349E-04
+7015.03c  1.2014E-06
+14028.03c  3.8603E-04
+14029.03c  1.9546E-05
+14030.03c  1.2975E-05
+15031.03c  4.9773E-05
+16032.03c  1.4277E-06
+16033.03c  1.1269E-08
+16034.03c  6.3255E-08
+16036.03c  3.0050E-10
+24050.03c  7.3540E-04
+24052.03c  1.4182E-02
+24053.03c  1.6079E-03
+24054.03c  4.0028E-04
+25055.03c  1.5723E-03
+26054.03c  3.5984E-03
+26056.03c  5.5940E-02
+26057.03c  1.2808E-03
+26058.03c  1.7077E-04
+28058.03c  4.5776E-03
+28060.03c  1.7500E-03
+28061.03c  7.5768E-05
+28062.03c  2.4071E-04
+28064.03c  6.1016E-05
+29063.03c  1.9298E-04
+29065.03c  8.6015E-05
+42092.03c  2.3774E-05
+42094.03c  1.4819E-05
+42095.03c  2.5504E-05
+42096.03c  2.6722E-05
+42097.03c  1.5299E-05
+42098.03c  3.8657E-05
+42100.03c  1.5427E-05
+6000.03c  7.17978e-05 
+mat rad_shield 8.75251e-02  tmp 300
+7014.03c  3.2486E-04
+7015.03c  1.2065E-06
+14028.03c  3.9552E-04
+14029.03c  2.0027E-05
+14030.03c  1.3294E-05
+15031.03c  5.2884E-05
+16032.03c  2.7126E-05
+16033.03c  2.1411E-07
+16034.03c  1.2019E-06
+16036.03c  5.7095E-09
+24050.03c  7.6370E-04
+24052.03c  1.4727E-02
+24053.03c  1.6698E-03
+24054.03c  4.1569E-04
+25055.03c  1.4031E-03
+26054.03c  3.5474E-03
+26056.03c  5.5146E-02
+26057.03c  1.2626E-03
+26058.03c  1.6835E-04
+27059.03c  1.3080E-04
+28058.03c  4.6740E-03
+28060.03c  1.7869E-03
+28061.03c  7.7363E-05
+28062.03c  2.4578E-04
+28064.03c  6.2301E-05
+29063.03c  2.0452E-04
+29065.03c  9.1157E-05
+42092.03c  2.5339E-05
+42094.03c  1.5794E-05
+42095.03c  2.7183E-05
+42096.03c  2.8481E-05
+42097.03c  1.6306E-05
+42098.03c  4.1202E-05
+42100.03c  1.6443E-05
+6000.03c  8.02204e-05 
+23000.03c  6.05263e-05 
+mat comet_plate 8.58057e-02  tmp 300
+7014.03c  2.9812E-05
+7015.03c  1.1072E-07
+13027.03c  4.3634E-05
+14028.03c  3.4023E-04
+14029.03c  1.7227E-05
+14030.03c  1.1436E-05
+15031.03c  1.2163E-05
+24050.03c  3.1876E-05
+24052.03c  6.1470E-04
+24053.03c  6.9694E-05
+24054.03c  1.7350E-05
+25055.03c  6.4290E-04
+26054.03c  4.8434E-03
+26056.03c  7.5294E-02
+26057.03c  1.7239E-03
+26058.03c  2.2986E-04
+28058.03c  3.2869E-05
+28060.03c  1.2566E-05
+28061.03c  5.4405E-07
+28062.03c  1.7284E-06
+28064.03c  4.3813E-07
+29063.03c  8.7144E-05
+29065.03c  3.8841E-05
+42092.03c  1.0927E-05
+42094.03c  6.8113E-06
+42095.03c  1.1723E-05
+42096.03c  1.2282E-05
+42097.03c  7.0322E-06
+42098.03c  1.7768E-05
+42100.03c  7.0911E-06
+6000.03c  1.60748e-03 
+23000.03c  2.77333e-05 
+% C ! Configs 1 and 2           !
+mat ss316 8.62294e-02  tmp 300
+7014.03c  3.3839E-05
+7015.03c  1.2567E-07
+14028.03c  9.5298E-04
+14029.03c  4.8253E-05
+14030.03c  3.2031E-05
+15031.03c  3.8398E-05
+16032.03c  3.5245E-07
+16033.03c  2.7819E-09
+16034.03c  1.5616E-08
+16036.03c  7.4184E-11
+24050.03c  6.8258E-04
+24052.03c  1.3163E-02
+24053.03c  1.4924E-03
+24054.03c  3.7153E-04
+25055.03c  1.5241E-03
+26054.03c  3.5347E-03
+26056.03c  5.4949E-02
+26057.03c  1.2581E-03
+26058.03c  1.6775E-04
+28058.03c  5.0830E-03
+28060.03c  1.9433E-03
+28061.03c  8.4134E-05
+28062.03c  2.6729E-04
+28064.03c  6.7754E-05
+29063.03c  1.8642E-04
+29065.03c  8.3091E-05
+42092.03c  2.7597E-05
+42094.03c  1.7202E-05
+42095.03c  2.9606E-05
+42096.03c  3.1019E-05
+42097.03c  1.7760E-05
+42098.03c  4.4874E-05
+42100.03c  1.7909E-05
+6000.03c  7.92164e-05 
+mat AmBe 2.31854e-03  tmp 300
+4009.03c  2.1262E-03
+8016.03c  1.2791E-04
+8017.03c  5.1288E-08
+95241.03c  6.4110E-05
+mat air 4.55529e-05  tmp 300
+1001.03c  6.4510E-06
+1002.03c  9.6780E-10
+7014.03c  2.8037E-05
+7015.03c  1.0412E-07
+8016.03c  1.0761E-05
+8017.03c  4.3148E-09
+18036.03c  5.6458E-10
+18038.03c  1.0554E-10
+18040.03c  1.6686E-07
+6000.03c  5.39141e-09 
+therm be-beo be_o.10t
+therm o-beo  o_be.10t
+
+plot  2  1000 1000 0.0
+% set mcvol 1000000000 
+set bc 1
+
+set acelib "/home/cluster1/talamo/XSLIB/serpent/xsdir_endfb7"
+set declib "/home/cluster1/talamo/XSLIB/serpent/dec_endfb7"
+set nfylib "/home/cluster1/talamo/XSLIB/serpent/nfy_endfb7"
+
+set power 5000.0
+set pop 1000000 4000 50 1.0 10
+
+set gcu 104 105 202 203 300 301 114 115 212 213 310 311 124 125 222 223 320 321 134 
+       135 232 233 330 331 144 145 242 243 340 341 154 155 252 253 350 351 164 165 
+       262 263 360 361 4 40 5 50 51 52 6 60 7 70 8 9 10 11 12 13 14 15 17 18 99 20 
+
+ene ANL70 1  1.0E-11
+       4.1746E-07  5.3158E-07  6.8256E-07  8.7642E-07  1.1254E-06  1.4450E-06
+       1.8554E-06  2.3824E-06  3.0590E-06  3.9279E-06  5.0435E-06  6.4759E-06  8.3153E-06  1.0677E-05
+       1.3710E-05  1.7603E-05  2.2603E-05  2.9023E-05  3.7267E-05  4.7851E-05  6.1442E-05  7.8893E-05
+       1.0130E-04  1.3007E-04  1.6702E-04  2.1445E-04  2.7536E-04  3.5357E-04  4.5400E-04  5.8295E-04
+       7.4852E-04  9.6112E-04  1.2341E-03  1.5846E-03  2.0347E-03  2.6126E-03  3.3546E-03  4.3074E-03
+       5.5308E-03  7.1017E-03  9.1188E-03  1.1709E-02  1.5034E-02  1.9305E-02  2.4787E-02  3.1828E-02
+       4.0868E-02  5.2475E-02  6.7379E-02  8.6517E-02  1.1109E-01  1.4264E-01  1.8316E-01  2.3518E-01
+       3.0197E-01  3.8774E-01  4.9787E-01  6.3928E-01  8.2085E-01  1.0540E+00  1.3534E+00  1.7377E+00
+       2.2313E+00  2.8650E+00  3.6788E+00  4.7237E+00  6.0653E+00  7.7880E+00  1.0000E+01  1.4191E+01
+ene ANL22 1 4.1746E-07
+        8.7642E-07 1.1254E-06 1.8554E-06
+        3.9279E-06 8.3153E-06 1.3710E-05
+        3.7267E-05 7.8893E-05 1.0130E-04
+       2.75364E-04 7.48518E-04 2.03468E-03
+       5.53084E-03 1.50344E-02 4.08677E-02
+       1.11090E-01 3.01974E-01 8.20850E-01
+       2.23130E+00 6.06531E+00 1.00000E+01 1.41907E+01
+set micro ANL70 
+set nfg ANL22
