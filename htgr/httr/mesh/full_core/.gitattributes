@@ -1,2 +1,0 @@
-full_core_HTTR.e filter=lfs diff=lfs merge=lfs -text
-thermal_mesh_in.e filter=lfs diff=lfs merge=lfs -text
