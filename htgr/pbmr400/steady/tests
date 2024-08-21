@@ -107,6 +107,8 @@
     method = 'opt' # too slow for devel
     # Checkpoint file must have been generated with same number of ranks
     prereq = 'steady_multiphysics'
+    # Inconsistency between gold on macbook and test machine
+    rel_err = 2e-5
     min_parallel = 8
 
     # B2 out of range for XS interpolation
