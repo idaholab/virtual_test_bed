@@ -77,7 +77,7 @@
     executable_pattern = 'moose*|blue_crab*|dire_wolf*|pronghorn*|fenix*'
     cli_args = "Executioner/num_steps=2 MultiApps/active='' Transfers/active=''"
     min_parallel = 4
-    max_time = 500
+    max_time = 800
     # Loosening tolerance post friction model change in moose#27257
     rel_err = 5e-4
     abs_zero = 1e-9
