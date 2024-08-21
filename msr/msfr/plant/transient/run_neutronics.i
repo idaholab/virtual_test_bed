@@ -194,11 +194,11 @@
   dt = 0.25
   solve_type = PJFNK
   petsc_options_iname = '-ksp_gmres_restart -pc_type  -pc_use_amat
-                         -pc_gamg_sym_graph -pc_mg_levels  -pc_gamg_use_parallel_coarse_grid_solver
+                         -pc_gamg_sym_graph -pc_gamg_use_parallel_coarse_grid_solver
                          -mg_levels_1_pc_type -mg_coarse_pc_type
                          -mg_coarse_sub_pc_factor_levels -mg_coarse_sub_pc_factor_mat_ordering_type'
   petsc_options_value = ' 100   gamg  false
-                          true   2      1
+                          true  1
                           asm   asm
                           1     rcm'
 
