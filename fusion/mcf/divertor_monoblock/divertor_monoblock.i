@@ -1,3 +1,9 @@
+## Tokamak divertor monoblock
+## Application: TMAP8
+## POC: Masashi Shimada (masashi.shimada at inl.gov)
+## If using or referring to this model, please cite as explained in
+## https://mooseframework.inl.gov/virtual_test_bed/citing.html
+
 ### Nomenclatures
 ### C_mobile_j      mobile H concentration in "j" material, where j = CuCrZr, Cu, W
 ### C_trapped_j     trapped H concentration in "j" material, where j = CuCrZr, Cu, W
