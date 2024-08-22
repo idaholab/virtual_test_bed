@@ -1,0 +1,15 @@
+[Tests]
+  [divertor_syntax]
+    type = RunApp
+    check_input = true
+    input = 'divertor_monoblock.i'
+    executable_pattern = 'tmap8*'
+  []
+  [divertor_alone]
+    type = 'CSVDiff'
+    input = 'divertor_monoblock.i'
+    csvdiff = 'divertor_monoblock.csv'
+    executable_pattern = 'tmap8*'
+    prereq = 'divertor_syntax'
+  []
+[]
