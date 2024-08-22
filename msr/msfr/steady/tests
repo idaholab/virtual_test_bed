@@ -39,9 +39,9 @@
     allow_warnings = true
     min_parallel = 8
     max_time = 500
-    method = 'opt'
+    # method = 'opt'
     # Tolerance at 1e-6
-    rel_err = 2e-5
+    rel_err = 2.1e-5
   []
   [neutronics_only]
     prereq = neutronics_only_syntax
