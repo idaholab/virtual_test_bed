@@ -26,8 +26,33 @@ The change in density is applied to the macroscopic cross section as
 
 $\Sigma_x(T) = \Sigma_x(T_0) \frac{\rho(T)}{\rho(T_0)}$
 
+To demonstrate the different physics solution in this problem, the modeling of the
+benchmark is performed in phases.
+Following is a brief presentation of the phases
+
+- Phase 0: Composed of three steps of steady state single physics problems
+
+  - Step 0.1: Solves the steady state velocity field of the salt with $U_\text{lid} = 0.5$ m/s
+  - Step 0.2: Solves the neutron criticality eigenvalue problem.
+  - Step 0.3: Using velocity field obtained from Step 0.1 and the power profile obtained from
+              Step 0.2, the temperature profile is calculated.
+
+- Phase 1: Composed of four steady state multiphysics coupling tests (steps)
+
+  - Step 1.1: Using the velocity field obtained in step 0.1, the drifting of delayed 
+              neutron precursors distribution is obtained
+  - Step 1.2: Using the velocity field obtained in step 0.1, the temperature feedback 
+              is introduced to assess its impact on the reactivity and fission rate
+  - Step 1.3: Perform fully coupled modeling of the system with a zero velocity 
+              boundary condition at the cavity lid
+  - Step 1.4: Using a combination of reactor powers and lid velocities, fully coupled 
+              simulations are performed
+
+- Phase 2: A single step multiphysics model of the CNRS.
+
 
 # References
+
 Aufiero, M. (2015). Serpent-OpenFOAM coupling for criticality accidents modelling--Definition of a benchamrk 
 for MSRs multiphysics modelling. SERPENT and Multiphysics Workshop.
 
