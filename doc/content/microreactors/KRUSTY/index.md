@@ -2,7 +2,7 @@
 
 *Contacts: Yan Cao (ycao.at.anl.gov), Yinbin Miao (ymiao.at.anl.gov), Kun Mo (kunmo.at.anl.gov), Nicolas Stauff (nstauff.at.anl.gov)*
 
-*Model link: [KRUSTY](https://github.com/idaholab/virtual_test_bed/microreactors/KRUSTY)*
+*Model link: [KRUSTY](https://github.com/idaholab/virtual_test_bed/tree/devel/microreactors/KRUSTY)*
 
 !tag name=Kilopower Reactor Using Stirling TechnologY (KRUSTY) pairs=reactor_type:microreactor
                        reactor:KRUSTY
