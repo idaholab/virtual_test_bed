@@ -48,7 +48,7 @@ Fuel Pin assemblies are then generated for each of the 5 fuel pin meshes.
 The fuel pin cell assembly is generated using the previous step's pin cell meshes. The fake pin cells are then deleted from the assembly mesh in order to create a void for the heat pipe meshes in future steps. The outer assembly boundary is generated. Boundary ids are renamed and meta data is added back to the assembly mesh. This process is repeated for the four other fuel assemblies.
 
 !alert note title=Metadata
-When the hexagonal meshes are modified, they lose the original metadata. Thus reapplying the metadata from before the modifications is necessary to generate the assemblies.
+When the hexagonal meshes are modified, they lose the original metadata. Thus reapplying the metadata from before the modifications is necessary to generate the assemblies. This will no longer be necessary in future versions.
 
 !listing microreactors/gHPMR/2D_gHPMR_Final.i start=[assembly1_R0] end=[assembly3]
 
@@ -86,11 +86,11 @@ The control drum mesh is rotated then translated multiple times to account for e
 
 !media media/gHPMR/control_drums.png
     style=width:75%;margin:auto;
-    caption=Figure 6: Six control rods with the different orientations.
+    caption=Figure 6: Six control rods with different orientations.
 
 ## Reflector Mesh
 
-The mesh for the reflector is generated using polygons in an effort to reduce areas meshed in future steps. The mesh is then translated several times to account for every position and placement of reflectors in the core.
+The mesh for the reflector is generated using a lattice of polygonal meshes to keep a more structured mesh, and avoid generating a 2D mesh in a large area. The mesh is then translated several times to account for every position and placement of reflectors in the core.
 
 !listing microreactors/gHPMR/2D_gHPMR_Final.i start=[reflector_polygon] end=[outer_core_mesh]
 

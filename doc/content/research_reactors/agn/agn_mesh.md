@@ -27,7 +27,7 @@ The cylindrical core mesh is created in several steps:
 
     - The UBP outer walls are meshed.
 
-5. The CIF wall sections and outer graphite, lead, air gap, reactor tank, and eater layers that are past the UBP channels are modeled.
+5. The CIF wall sections and outer graphite, lead, air gap, reactor tank, and water layers that are past the UBP channels are modeled.
 
 6. The top half 2D core mesh is reflected and stitched to create a 2D mesh of the full core.
 
@@ -83,7 +83,7 @@ The outer thickness of the core CIF hole is designed, the mesh is triangulated, 
 The top inner graphite core boundary mesh is constructed from the equations for its curve, then the inside region is triangulated, and lastly stitched to the top half core 2D mesh.
 
 !alert note
-These two regions would be meshed easier, and could be meshed with QUAD elements, using a FillBetweenCurvesGenerator
+These two regions could be meshed with QUAD elements, using a `FillBetweenCurvesGenerator`.
 
 !listing agn/3D_AGN-201_Final.i start=[top_half_ig_core_boundary] end=[top_half_right_ig_cif_wall]
 
@@ -95,7 +95,7 @@ The top right inner graphite CIF wall boundary mesh is again produced from the e
 
 !listing agn/3D_AGN-201_Final.i start=[top_half_right_ig_cif_wall] end=[xydg_mesh_left_ig_cif_wall]
 
-The mesh is then reflected about the Y-axis to model the top left inner graphite CIF wall boundary. The boundaries again are renamed and then stitched.
+The mesh is then reflected over the Y-axis to model the top left inner graphite CIF wall boundary. The boundaries again are renamed and then stitched.
 
 !listing agn/3D_AGN-201_Final.i start=[xydg_mesh_left_ig_cif_wall] end=[top_half_at_core_boundary]
 
@@ -114,7 +114,7 @@ These two regions would be meshed easier, and could be meshed with QUAD elements
 
 !listing agn/3D_AGN-201_Final.i start=[top_half_right_at_cif_wall] end=[xydg_mesh_left_at_cif_wall]
 
-Then the mesh is reflected about the Y-axis to model the top left CIF wall boundary. The boundaries are then renamed and stitched to the right side.
+Then the mesh is reflected over the Y-axis to model the top left CIF wall boundary. The boundaries are then renamed and stitched to the right side.
 
 !listing agn/3D_AGN-201_Final.i start=[xydg_mesh_left_at_cif_wall] end=[top_half_og_between_beam_ports]
 
@@ -180,7 +180,7 @@ The right boundary where the CIF wall intersects with the UBP wall is then gener
 
 !listing agn/3D_AGN-201_Final.i start=[top_half_right_ubp_cif_wall_1] end=[xydg_mesh_top_half_left_ubp_cif_wall_1]
 
-The mesh is then reflected about the Y-axis. The boundaries are renamed, the mesh is stitched to the right side, and the left mesh boundaries are renamed.
+The mesh is then reflected over the Y-axis. The boundaries are renamed, the mesh is stitched to the right side, and the left mesh boundaries are renamed.
 
 !listing agn/3D_AGN-201_Final.i start=[xydg_mesh_top_half_left_ubp_cif_wall_1] end=[top_half_right_ubp_inner_wall_in_og]
 
@@ -194,7 +194,7 @@ The UBP right inner wall bordering the outer graphite mesh is modeled and triang
 
 !listing agn/3D_AGN-201_Final.i start=[top_half_right_ubp_inner_wall_in_og] end=[xydg_mesh_top_half_left_ubp_inner_wall_in_og]
 
-The mesh is then reflected about the Y-axis. The boundaries are renamed, the mesh is stitched to the right side, and the left mesh boundaries are renamed.
+The mesh is then reflected over the Y-axis. The boundaries are renamed, the mesh is stitched to the right side, and the left mesh boundaries are renamed.
 
 !listing agn/3D_AGN-201_Final.i start=[xydg_mesh_top_half_left_ubp_inner_wall_in_og] end=[top_half_right_ubp_inner_wall_in_lead]
 
@@ -212,7 +212,7 @@ The right CIF outer wall that borders the UBP channel mesh is created and triang
 
 !listing agn/3D_AGN-201_Final.i start=[top_half_right_cif_wall_in_ubp_channel] end=[xydg_mesh_top_half_left_cif_wall_in_ubp_channel]
 
-The mesh is then reflected about the Y-axis. The boundaries are renamed, the mesh is stitched to the right side, and the left mesh boundaries are renamed.
+The mesh is then reflected over the Y-axis. The boundaries are renamed, the mesh is stitched to the right side, and the left mesh boundaries are renamed.
 
 !listing agn/3D_AGN-201_Final.i start=[xydg_mesh_top_half_left_cif_wall_in_ubp_channel] end=[op_half_right_og_in_ubp_channel]
 
@@ -226,7 +226,7 @@ The right half of the UBP channel that borders the outer graphite layer is creat
 
 !listing agn/3D_AGN-201_Final.i start=[top_half_right_og_in_ubp_channel] end=[xydg_mesh_top_half_left_og_in_ubp_channel]
 
-The mesh is then reflected about the Y-axis. The boundaries are renamed, the mesh is stitched to the right side, and the left mesh boundaries are renamed.
+The mesh is then reflected over the Y-axis. The boundaries are renamed, the mesh is stitched to the right side, and the left mesh boundaries are renamed.
 
 !listing agn/3D_AGN-201_Final.i start=[xydg_mesh_top_half_left_og_in_ubp_channel] end=[top_half_right_ubp_channel_in_lead]
 
@@ -244,7 +244,7 @@ The right half of the CIF outer wall that is inside the UBP outer wall is genera
 
 !listing agn/3D_AGN-201_Final.i start=[top_half_right_cif_wall_in_ubp_outer_wall] end=[xydg_mesh_top_half_left_cif_wall_in_ubp_outer_wall]
 
-The mesh is then reflected about the Y-axis. The boundaries are renamed, the mesh is stitched to the right side, and the left mesh boundaries are renamed.
+The mesh is then reflected over the Y-axis. The boundaries are renamed, the mesh is stitched to the right side, and the left mesh boundaries are renamed.
 
 !listing agn/3D_AGN-201_Final.i start=[xydg_mesh_top_half_left_cif_wall_in_ubp_outer_wall] end=[top_half_right_og_in_ubp_outer_wall]
 
@@ -258,7 +258,7 @@ The right half UBP outer wall that borders the outer graphite layer is modeled a
 
 !listing agn/3D_AGN-201_Final.i start=[top_half_right_og_in_ubp_outer_wall] end=[xydg_mesh_top_half_left_og_in_ubp_outer_wall]
 
-The mesh is then reflected about the Y-axis. The boundaries are renamed, the mesh is stitched to the right side, and the left mesh boundaries are renamed.
+The mesh is then reflected over the Y-axis. The boundaries are renamed, the mesh is stitched to the right side, and the left mesh boundaries are renamed.
 
 !listing agn/3D_AGN-201_Final.i start=[xydg_mesh_top_half_left_og_in_ubp_outer_wall] end=[top_half_right_ubp_outer_wall_in_lead]
 
@@ -276,7 +276,7 @@ The right half of the CIF outer wall that sits inside the outer graphite layer a
 
 !listing agn/3D_AGN-201_Final.i start=[top_half_right_cif_wall_in_og_after_ubp] end=[ydg_mesh_top_half_left_cif_wall_in_og_after_ubp]
 
-The mesh is then reflected about the Y-axis. The boundaries are renamed, the mesh is stitched to the right side, and the left mesh boundaries are renamed.
+The mesh is then reflected over the Y-axis. The boundaries are renamed, the mesh is stitched to the right side, and the left mesh boundaries are renamed.
 
 !listing agn/3D_AGN-201_Final.i start=[xydg_mesh_top_half_left_cif_wall_in_og_after_ubp] end=[top_half_right_og_after_ubp]
 
@@ -290,7 +290,7 @@ The previous two steps are repeated for the remainder of CIF wall sections, oute
 
 ## Bottom Half of Core
 
-The bottom half of the reactor mesh is modeled by reflecting the previous mesh about the X-axis and renaming the boundaries. Then blocks are deleted for meshing the FCR and the SR2. The deletion creates a void, so block ids are assigned to the deleted area and meshed to remove the void.
+The bottom half of the reactor mesh is modeled by reflecting the previous mesh over the X-axis and renaming the boundaries. Then blocks are deleted for meshing the FCR and the SR2. The deletion creates a void, so block ids are assigned to the deleted area and meshed to remove the void.
 
 !listing agn/3D_AGN-201_Final.i start=[bottom_half_reactor] end=[sr2_base]
 
