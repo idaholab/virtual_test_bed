@@ -409,31 +409,34 @@ Note the `external_dnp_variable = 'dnp'` parameter. This is a special option
 needed for liquid-fueled MSRs which signals that the conservation equations for
 DNP will be handled "externally" from the default
 Griffin implementation which assumes that the precursors do not have the turbulent treatment.
-This parameter is referencing the `dnp` auxiliary variable which is defined as,
-
-!listing msr/msfr/steady/run_neutronics.i block=AuxVariables/dnp
-
-Note that this is an array auxiliary variable with 6 components, corresponding
+This parameter is referencing the `dnp` array auxiliary variable defined by the
+`MSRNeutronicsFluidCoupling` class, which in this case is
+an array auxiliary variable with 6 components, corresponding
 to the 6 DNP groups used here.
-
 Support within the Framework for array variables is somewhat limited. For
 example, not all of the multiapp transfers work with array variables, and the
 Navier-Stokes module does not include the kernels that are needed to advect an
-array variable. For this reason, there is also a separate auxiliary variables for each
-of DNP. For example,
+array variable. For this reason, there is also a separate auxiliary variable for each
+DNP group, which are also created within `MSRNeutronicsFluidCoupling`.
 
-!listing msr/msfr/steady/run_neutronics.i block=AuxVariables/c1
+The `MSRNeutronicsFluidCoupling` block,
+
+!listing msr/msfr/steady/run_neutronics.i block=MSRNeutronicsFluidCoupling
+
+creates a variety of objects needed on the neutronics side of the neutronics-fluid coupling for MSRs:
+
+- aux variables for the aforementioned DNP concentration variables and additionally,
+  fluid temperature,
+- the aux kernel to form the DNP array from its components,
+- initial conditions for the fluid temperature if not restarting the simulation,
+- a `MultiApp` (`TransientMultiApp` for transients, `FullSolveMultiApp` otherwise)
+  to run the fluid application, and
+- transfers for the DNP concentrations, power density, fission source, and fluid temperature.
 
 The `run_ns.i` subapp is responsible for computing the precursor distributions,
-and the distributions are transferred from the subapp to the main app by blocks
-like this one,
-
-!listing msr/msfr/steady/run_neutronics.i block=Transfers/c1
-
-The values are then copied from the `c1`, `c2`, etc. variables into the `dnp`
-variable by this aux kernel:
-
-!listing msr/msfr/steady/run_neutronics.i block=AuxKernels/build_dnp
+and the distributions are transferred from the subapp to the main app by
+`MSRNeutronicsFluidCoupling` and then internally copied from the individual
+DNP group variables into the DNP array variable using an aux kernel.
 
 Also note that solving the neutronics problem requires a set of multigroup
 cross sections. Generating cross sections is a topic that is left outside the
@@ -449,8 +452,8 @@ on element quadrature points to bring in the feedback effect.
 It also has the capability of adjusting cross sections based on fluid density.
 In this model, the fluid density change is negligible.
 
-Neutronics solution is normalized to the rated power $3000$MW with the `PowerDensity`
-input block
+The neutronics solution is normalized to the rated power 3000 MW with the `PowerDensity`
+input block:
 
 !listing msr/msfr/steady/run_neutronics.i block=PowerDensity
 
@@ -459,19 +462,9 @@ It provides the source of the fluid energy equation.
 Because the fluid energy equation is discretized with FV, we evaluate the power
 density variable with constant monomial.
 
-Griffin input is the main-application and includes a sub-application with the
-fluid system input `run_ns.i`.
-
-!listing msr/msfr/steady/run_neutronics.i block=MultiApps
-
-Neutronics needs to to transfer fission source, power density to fluid system
-and needs to transfer back from fluid system temperature and DNP concentrations.
-
-!listing msr/msfr/steady/run_neutronics.i block=Transfers
-
-The caculation is driven by `Eigenvalue`, an executioner available in the MOOSE framework.
+The calculation is driven by `Eigenvalue`, an executioner available in the MOOSE framework.
 The PJFNKMO option for the `solve_type` parameter is able to
 drive the eigenvalue calculation with the contribution of DNP
 to the neutron transport equation as an external source scaled with $k$-effective.
 
-!listing msr/msfr/steady/run_neutronics.i block=Executioner
+!listing msr/msfr/steady/run_neutronics_base.i block=Executioner

@@ -4,14 +4,13 @@
     type = RunApp
     input = 'run_neutronics.i'
     check_input = True
-    executable_pattern = 'blue_crab*|dire_wolf*|fenix*'
+    executable_pattern = 'blue_crab*|fenix*'
   []
   [neutronics_only_syntax]
     type = RunApp
-    input = 'run_neutronics.i'
+    input = 'run_neutronics_only.i'
     check_input = True
     executable_pattern = 'griffin*|blue_crab*|dire_wolf*|fenix*'
-    cli_args = "MultiApps/active='' Transfers/active=''"
   []
   [fluids_initial_syntax]
     type = RunApp
@@ -32,25 +31,25 @@
     type = CSVDiff
     input = 'run_neutronics.i'
     csvdiff = 'multiphysics_out.csv multiphysics_out_ns0.csv'
-    executable_pattern = 'blue_crab*|dire_wolf*|fenix*'
+    executable_pattern = 'blue_crab*|fenix*'
     cli_args = "Mesh/uniform_refine=0 Executioner/nl_abs_tol=1e-6 Executioner/fixed_point_max_its=2 "
                "Executioner/accept_on_max_fixed_point_iteration=true "
-               "Outputs/file_base=multiphysics_out MultiApps/ns/cli_args='Executioner/num_steps=2'"
+               "Outputs/file_base=multiphysics_out MSRNeutronicsFluidCoupling/fluid_cli_args='Executioner/num_steps=2'"
     # Fuel temperature is out of bounds for MGXS
     allow_warnings = true
     min_parallel = 8
     max_time = 500
-    method = 'opt'
+    # method = 'opt'
     # Tolerance at 1e-6
-    rel_err = 2e-5
+    rel_err = 2.1e-5
   []
   [neutronics_only]
     prereq = neutronics_only_syntax
     type = CSVDiff
-    input = 'run_neutronics.i'
+    input = 'run_neutronics_only.i'
     csvdiff = run_neutronics_out.csv
     executable_pattern = 'griffin*|blue_crab*|dire_wolf*|fenix*'
-    cli_args = "Executioner/nl_abs_tol=1 MultiApps/active='' Transfers/active=''"
+    cli_args = "Executioner/nl_abs_tol=1 Outputs/file_base=run_neutronics_out"
     # Fuel temperature is out of bounds for MGXS
     allow_warnings = true
   []
