@@ -1,5 +1,20 @@
 # Heat-Pipe Micro Reactor (MR)
 
+!tag name=MRAD Micro-Reactor Multiphysics model
+     description=A core multiphysics model with steady state, three accidental transients, and uncertainty quantification of TRISO failures in transients.
+     image=https://mooseframework.inl.gov/virtual_test_bed/media/mrad/hpmr_proc_mesh.png
+     pairs=reactor_type:microreactor
+                       reactor:HPMR
+                       geometry:core
+                       simulation_type:multiphysics
+                       input_features:multiapps;reactor_meshing;mixed_restart
+                       transient:steady_state;overpower;load_follow;ULOC
+                       codes_used:BlueCrab;Griffin;BISON;Sockeye
+                       computing_needs:HPC
+                       fiscal_year:2023
+                       sponsor:NEAMS
+                       institution:ANL
+
 [Description of the reactor](mrad/reactor_description.md)
 
 ## Multiphysics Neutronics-Thermal-Heat Pipe Model

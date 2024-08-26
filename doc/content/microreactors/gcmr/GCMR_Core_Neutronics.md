@@ -2,7 +2,10 @@
 
 *Contacts: Ahmed Abdelhameed (aabdelhameed.at.anl.gov), Yinbin Miao (ymiao.at.anl.gov), Nicolas Stauff (nstauff.at.anl.gov)*
 
-!tag name=Gas-Cooled Microreactor Core pairs=reactor_type:microreactor
+!tag name=Gas-Cooled Microreactor Core
+     description=2D core model of a Gas Cooled Micro Reactor with heterogeneous transport
+     image=https://mooseframework.inl.gov/virtual_test_bed/media/gcmr/Fig12.jpg
+     pairs=reactor_type:microreactor
                        reactor:GCMR
                        geometry:core
                        simulation_type:neutronics
