@@ -4,7 +4,10 @@
 
 *Model link: [ABTR Cross Section Generation and Full-Core Model](https://github.com/idaholab/virtual_test_bed/tree/main/sfr/abtr_xsgen_workflow)*
 
-!tag name=Advanced Burner Test Reactor Cross Section Generation and Full-Core Eigenvalue Calculation pairs=reactor_type:SFR
+!tag name=Advanced Burner Test Reactor Cross Section Generation and Full-Core Eigenvalue Calculation
+     description=This model presents a workflow for generating group cross sections and performing homogenized neutronics core calculations of the Advanced Burner Test Reactor
+     image=https://mooseframework.inl.gov/virtual_test_bed/sfr/abtr_xsgen_workflow/plots/eqv_fullhomcore.png
+     pairs=reactor_type:SFR
                        reactor:ABTR
                        geometry:core
                        simulation_type:neutronics
@@ -23,7 +26,7 @@ This tutorial describes the methodology used for generating multigroup cross sec
 - Description of how to set up fast reactor cross section generation workflow in Griffin, found in [#sec:xsgen_input_description]
 - Description of how to set up fast reactor full-core eigenvalue calculation in Griffin, found in [#sec:fullcorecalc_input_description]
 
-Some familairity with setting up a basic Griffin input file is assumed.
+Some familiarity with setting up a basic Griffin input file is assumed.
 
 ## Overview of Cross Section Generation Methodology id=sec:xsgen_overview
 

@@ -4,7 +4,10 @@
 
 *Model link: [Toshiba 37-Pin Subchannel Model](https://github.com/idaholab/virtual_test_bed/tree/devel/sfr/subchannel/toshiba_37_pin)*
 
-!tag name=Subchannel Model for the Toshiba 37-Pin Benchmark pairs=reactor_type:SFR
+!tag name=Subchannel Model for the Toshiba 37-Pin Benchmark
+     description=Subchannel Model for the Toshiba 37-Pin Benchmark
+     image=https://mooseframework.inl.gov/virtual_test_bed/media/subchannel/toshiba_37_config.png
+     pairs=reactor_type:SFR
                        geometry:assembly
                        simulation_type:thermal_hydraulics
                        transient:steady_state

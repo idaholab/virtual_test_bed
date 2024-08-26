@@ -4,7 +4,10 @@
 
 *Model link: [ORNL 19-Pin Subchannel Model](https://github.com/idaholab/virtual_test_bed/tree/devel/sfr/subchannel/ornl_19_pin)*
 
-!tag name=Subchannel Model for the ORNL 19-Pin Benchmark pairs=reactor_type:SFR
+!tag name=Subchannel Model for the ORNL 19-Pin Benchmark
+     description=Subchannel Model for the ORNL 19-Pin Benchmark
+     image=https://mooseframework.inl.gov/virtual_test_bed/media/subchannel/ORNL_19_configuration.png
+     pairs=reactor_type:SFR
                        geometry:assembly
                        simulation_type:thermal_hydraulics
                        codes_used:Pronghorn_subchannel
