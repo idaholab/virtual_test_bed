@@ -4,7 +4,10 @@
 
 *Model link: [HTTF SAM 2D Ring Model](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/httf)*
 
-!tag name=2D Ring Model for the High Temperature Test Facility pairs=reactor_type:HTGR
+!tag name=2D Ring Model for the High Temperature Test Facility
+     description=2D ring-homogenized multiphysics model of HTTF using SAM
+     image=https://mooseframework.inl.gov/virtual_test_bed/media/httf/httf_sam_model/F2_RingModel.png
+     pairs=reactor_type:HTGR
                        reactor:HTTF
                        geometry:core
                        codes_used:SAM

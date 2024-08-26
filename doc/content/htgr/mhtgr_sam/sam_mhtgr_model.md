@@ -4,17 +4,6 @@
 
 *Model link: [MHTGR SAM Model](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/mhtgr/mhtgr_sam)*
 
-!tag name=MHTGR SAM Model pairs=reactor_type:HTGR
-                       reactor:MHTGR
-                       geometry:primary_loop
-                       simulation_type:balance_of_plant
-                       input_features:checkpoint_restart
-                       codes_used:SAM
-                       computing_needs:Workstation
-                       fiscal_year:2022
-                       sponsor:NEAMS
-                       institution:ANL
-
 The input file (MHTGR.i) is a model for the General Atomic’s 600-MWt Modular
 High Temperature Gas-Cooled Reactor. Interested readers are referred
 to the technical summary [!citep](Vollman2010) for more details about the

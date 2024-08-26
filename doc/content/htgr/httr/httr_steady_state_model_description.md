@@ -4,16 +4,6 @@
 
 *Model link: [HTTR Steady State Multiphysics](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/httr)*
 
-!tag name=High Temperature Engineering Test Reactor Steady State Model pairs=reactor_type:HTGR
-                       reactor:HTTR
-                       geometry:core
-                       simulation_type:multiphysics
-                       input_features:multiapps
-                       transient:steady_state;null
-                       codes_used:Sabertooth;Griffin;MOOSE_HeatTransfer;RELAP-7
-                       computing_needs:Workstation
-                       fiscal_year:2023
-
 Introduced below is the steady-state multiphysics HTTR model, which includes neutronics, homogenized full core heat transfer, heterogeneous single pin heat transfer, and thermal-hydraulics channel simulations.
 
 ## Neutronics id=neutronics
