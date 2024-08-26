@@ -4,7 +4,9 @@
 
 *Model link: [MSR Depletion Model](https://github.com/idaholab/virtual_test_bed/tree/devel/msr/generic_msr/depletion)*
 
-!tag name=MSR Depletion Model pairs=reactor_type:MSR
+!tag name=MSR Depletion Model
+     description=Spatial depletion of the molten fuel in a generic molten salt reactor with HALEU fuel
+     pairs=reactor_type:MSR
                        reactor:generic_msr
                        geometry:mini-core
                        simulation_type:depletion

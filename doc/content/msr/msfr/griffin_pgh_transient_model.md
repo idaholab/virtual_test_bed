@@ -4,7 +4,10 @@
 
 *Model link: [Griffin-Pronghorn Transient Model](https://github.com/idaholab/virtual_test_bed/tree/devel/msr/msfr/transient)*
 
-!tag name=MSFR Griffin-Pronghorn Transient Model pairs=reactor_type:MSR
+!tag name=MSFR Griffin-Pronghorn Transient Model
+     description=Multiphysics model of the Euratom EVOL MSFR core in 2DRZ geometry using Griffin and Pronghorn for core neutronics and fluid dynamics.
+     image=https://mooseframework.inl.gov/virtual_test_bed/media/msr/msfr/PH_Griffin_v_SS.png
+     pairs=reactor_type:MSR
                        reactor:MSFR
                        geometry:core
                        simulation_type:multiphysics
