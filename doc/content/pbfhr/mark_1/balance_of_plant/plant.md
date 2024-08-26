@@ -4,7 +4,10 @@
 
 *Model link: [FHR Plant Model](https://github.com/idaholab/virtual_test_bed/tree/devel/pbfhr/mark1/plant)*
 
-!tag name=FHR Plant Model pairs=reactor_type:PB-FHR
+!tag name=FHR Plant Model
+     description=Steady state multiphysics model of the Mk1-FHR using Griffin and Pronghorn in 2D-RZ geometry
+     image=https://mooseframework.inl.gov/virtual_test_bed/media/pbfhr/steady/thermal_flux.png
+     pairs=reactor_type:PB-FHR
                        reactor:Mk1-FHR
                        simulation_type:balance_of_plant
                        codes_used:BlueCrab;Griffin;Pronghorn

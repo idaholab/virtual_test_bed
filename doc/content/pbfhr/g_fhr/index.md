@@ -1,6 +1,9 @@
 # Generic fluoride-cooled high-temperature reactor (gFHR)
 
-!tag name=gFHR Griffin-Pronghorn Steady State Model pairs=reactor_type:PB-FHR
+!tag name=gFHR Griffin-Pronghorn Steady State Model
+     description=Multiphysics simulation of the generic FHR core, with 2D-cylindrical neutronics, thermal hydraulics, and distributed pebble heat transfer simulations
+     image=https://mooseframework.inl.gov/virtual_test_bed/media/pbfhr/gFHR/gFHR_neutronics_mesh.png
+     pairs=reactor_type:PB-FHR
                        reactor:gFHR
                        geometry:core
                        simulation_type:multiphysics
