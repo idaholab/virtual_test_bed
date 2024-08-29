@@ -4,7 +4,7 @@
 
 *Model summarized and documented by Khaldoon Al-Dawood
 
-*Model link: [Phase 0 models](/home/aldka/sawtooth/projects/virtual_test_bed/msr/cnrs/s01)*
+*Model link: [Griffin-Pronghorn Steady-State Model](https://github.com/idaholab/virtual_test_bed/tree/devel/msr/cnrs/s01)*
 
 !tag name=CNRS Griffin-Pronghorn Steady State Model pairs=reactor_type:MSR
                        reactor:MSRE
