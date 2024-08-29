@@ -22,13 +22,13 @@ The axial and radial core layouts of this simplified model are presented below i
 
 The axial core layout, show below in Figure 1, includes the Reactor Pressure Vessel (RPV), the Upper Plenum Thermal Protection Structure (UPTPS), coolant channels on the exterior of the core, fuel columns containing 10 fuel blocks surrounded by 2 upper reflector blocks and 2 bottom reflector blocks, replaceable reflector columns composed of 13 blocks, a bottom layer of flow distribution and central reflector support blocks, and a top layer of Alloy 800H blocks covering the core.
 
-!media media/htgr/3D_mhtgr/3D_mhtgr_axial_core_layout.png
+!media media/htgr/mhtgr/3D_mhtgr_axial_core_layout.png
     style=width:45%
     caption=Figure 1: Axial core layout, from [!cite](osti_1129932).
 
 The general radial layout of the MHTGR core, shown in Figure 2, follows a hexagonal lattice containing 54 fuel columns without a reserve shut-down control (RSC) channel, 12 fuel columns with a RSC channel, 12 coolant channels, 24 replaceable reflector columns with control rod channels, and 54 replaceable reflector columns, all surrounded by 24 permanent reflector columns composed of 2020 Graphite and the RPV.
 
-!media media/htgr/3D_mhtgr/3D_mhtgr_radial_core_layout.png
+!media media/htgr/mhtgr/3D_mhtgr_radial_core_layout.png
     style=width:45%
     caption=Figure 2: Radial core layout, from [!cite](osti_1129932).
 

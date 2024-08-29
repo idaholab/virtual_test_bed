@@ -24,7 +24,7 @@ Metadata propagation is now mostly automatically handled.
 
 The `[fuel_pin_mesh]` models the fuel pins; each pin has six sides, with two sectors per side. Each fuel pin has a radius of 0.6225cm. The pins form a hollow circle which has an interior gap radius of 0.635cm.
 
-!media media/htgr/mhtgr/3D_mesh/3d_mhtgr_meshes/fuel_pin.png
+!media media/htgr/mhtgr/3D_mesh/fuel_pin.png
     style=width:45%
     caption=Figure 1: Fuel Pin Mesh
 
@@ -42,7 +42,7 @@ Second, two hexagonal fuel assembly meshes are then generated, one without the R
 
 The assembly mesh without the RSC is composed of 4 burnable poison pin meshes, 143 fuel pin meshes, 121 large coolant channel meshes, 3 empty pin meshes, and 6 small coolant channel meshes.
 
-!media media/htgr/mhtgr/3D_mesh/3d_mhtgr_meshes/fuel_assembly.png
+!media media/htgr/mhtgr/3D_mesh/fuel_assembly.png
     style=width:45%
     caption=Figure 2: Fuel Assembly Mesh without RSC Channel
 
@@ -50,7 +50,7 @@ The assembly mesh without the RSC is composed of 4 burnable poison pin meshes, 1
 
 The assembly with the RSC is composed of 6 burnable poison pin meshes, 132 fuel pin mesh elements, 102 large coolant channel mesh elements, 7 empty pin mesh elements, 14 empty pin to delete (for the RSC) mesh elements, and 5 small coolant channel mesh elements.
 
-!media media/htgr/mhtgr/3D_mesh/3d_mhtgr_meshes/fuel_assembly_with_rsc.png
+!media media/htgr/mhtgr/3D_mesh/fuel_assembly_with_rsc.png
     style=width:45%
     caption=Figure 3: Fuel Assembly Mesh with RSC Channel
 
@@ -63,7 +63,7 @@ First, the pin cells are deleted. Then, a new block ID is assigned to the holes 
 
 The RSC is oriented in 6 different positions, so lastly all 6 variations are generated using transformations. Each transformation strips metadata from the input mesh, so the metadata must be re-added after each rotation.
 
-!media media/htgr/mhtgr/3D_mesh/3d_mhtgr_meshes/fuel_assembly_with_rsc_variations.png
+!media media/htgr/mhtgr/3D_mesh/fuel_assembly_with_rsc_variations.png
     style=width:85%
     caption=Figure 4: Fuel Assembly Mesh Variations
 
@@ -89,7 +89,7 @@ The following code is repeated for each transformation.
 
 The entire process of adapting the reflector assembly and generating the 6 different variations is then repeated for the reflector assemblies with border fuel assemblies on only 2 sides.
 
-!media media/htgr/mhtgr/3D_mesh/3d_mhtgr_meshes/reflector_assembly_0_1.png
+!media media/htgr/mhtgr/3D_mesh/reflector_assembly_0_1.png
     style=width:45%
     caption=Figure 5: Reflector Assembly Mesh that borders Fuel Assemblies on 2 sides.
 
@@ -97,7 +97,7 @@ The entire process of adapting the reflector assembly and generating the 6 diffe
 
 The process is repeated again for the reflector assemblies which have a control rod (CR) hole in them and border 2 fuel assemblies. These assemblies are also reflected, so we need 12 permutations, not 6.
 
-!media media/htgr/mhtgr/3D_mesh/3d_mhtgr_meshes/reflector_assembly_w_cr_hole_0_1.png
+!media media/htgr/mhtgr/3D_mesh/reflector_assembly_w_cr_hole_0_1.png
     style=width:45%
     caption=Figure 6: Reflector Assembly Mesh with CR hole that borders Fuel Assemblies on 2 sides.
 
@@ -111,7 +111,7 @@ The following code is repeated for each of the 12 permutations.
 
 Lastly, the process is repeated for the reflector assemblies which have a control rod (CR) hole in them and border only 1 fuel assembly.
 
-!media media/htgr/mhtgr/3D_mesh/3d_mhtgr_meshes/reflector_assembly_w_cr_hole_2.png
+!media media/htgr/mhtgr/3D_mesh/reflector_assembly_w_cr_hole_2.png
     style=width:45%
     caption=Figure 7: Reflector Assembly Mesh with CR hole that borders Fuel Assembly on 1 side.
 
@@ -149,7 +149,7 @@ The last step of generating the core mesh is to create an assembly with a unique
 
 All of the smaller, previously generated assembly meshes are used as inputs and are assembled into a patterned hexagonal lattice 2D mesh.
 
-!media media/htgr/mhtgr/3D_mesh/3d_mhtgr_meshes/hex_core.png
+!media media/htgr/mhtgr/3D_mesh/hex_core.png
     style=width:85%
     caption=Figure 8: Hexagonal core mesh featuring close up of core assembly meshes
 
@@ -157,7 +157,7 @@ All of the smaller, previously generated assembly meshes are used as inputs and 
 
 An additional ring boundary is added to the 2D mesh.
 
-!media media/htgr/mhtgr/3D_mesh/3d_mhtgr_meshes/ring_boundary.png
+!media media/htgr/mhtgr/3D_mesh/ring_boundary.png
     style=width:85%
     caption=Figure 9: Hexagonal core mesh with ring boundary featuring close ups of ring boundary mesh and core assembly meshes
 
@@ -181,7 +181,7 @@ The blocks are renamed for convenience, and then element and depletion ids are a
 
 Lastly the coarse mesh hexagon is generated with the same dimensions as the fine mesh.
 
-!media media/htgr/mhtgr/3D_mesh/3d_mhtgr_meshes/coarse_hex_core.png
+!media media/htgr/mhtgr/3D_mesh/coarse_hex_core.png
     style=width:45%
     caption=Figure 11: Coarse hexagonal core mesh
 
@@ -193,7 +193,7 @@ Lastly the coarse mesh hexagon is generated with the same dimensions as the fine
 
 The metadata is added to the coarse mesh, another ring boundary is created, and the 2D coarse mesh is then extruded.
 
-!media media/htgr/mhtgr/3D_mesh/3d_mhtgr_meshes/coarse_mesh_ring_extrude.png
+!media media/htgr/mhtgr/3D_mesh/coarse_mesh_ring_extrude.png
     style=width:75%
     caption=Figure 12: Left: Coarse hexagonal core mesh with ring boundary; Right: 3D, Extruded coarse hexagonal core mesh
 
@@ -207,7 +207,7 @@ Finally the coarse mesh is superimposed onto the fine mesh. The coarse mesh is u
 
 This method is used when solving full-core analysis in the Nuclear Energy Advanced Modeling and Simulation (NEAMS) code Griffin. More information regarding Griffin is available [here](https://mooseframework.inl.gov/moose/help/inl/applications.html).
 
-!media media/htgr/mhtgr/3D_mesh/3d_mhtgr_meshes/final_mesh.png
+!media media/htgr/mhtgr/3D_mesh/final_mesh.png
     style=width:85%
     caption=Figure 13: 3D MHTGR Hexagonal core mesh featuring close ups of core assembly meshes and ring barrier mesh
 
