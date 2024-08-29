@@ -1,11 +1,22 @@
 # CNRS Model
 
+*Contact: Mustafa Jaradat, Mustafa.Jaradat@inl.gov*
+
+*Model summarized and documented by Khaldoon Al-Dawood
+
 CNRS molten salt reactor (MSR) benchmark is a numerical benchmark created to establish a verification 
 problem for couple-physics (i.e. neutronics and thermal-hydraulics) simulation. It was originally 
-developed by French National Center for Scientific Research (CNRS) Aufiero 2015.
-The problem is a 2x2 lid-driven cavity filled with molten salt fuel with homogenous composition at 
-900 K flowing at the top at upper surface of the cavity as shown in the picture. Details for the fuel 
-composition and delayed neutron parameters can also be found in Jaradat et al. 2024.
+developed by French National Center for Scientific Research (CNRS) [!citep](aufiero2015serpent).
+The problem is a 2x2 lid-driven cavity filled with molten salt fuel with homogeneous composition at 
+900 K flowing at the top at upper surface of the cavity as shown in the picture. 
+A visual demonstration of the benchmark geometry is shown in the following figure
+
+!media media/msr/cnrs/cnrs-model.png
+  style=width:50%
+  caption=CNRS benchmark geometry.
+
+Details for the fuel composition and delayed neutron parameters can also be 
+found in [!citep](jaradat2024verification).
 No slip boundary conditions with a fluid velocity of zero are applied across the boundaries of the 
 geometry, except for the upper surface where the fluid moves with a determined velocity $U_\text{lid}$.
 The model implements adiabatic boundary conditions across the geometry walls.
@@ -58,3 +69,4 @@ for MSRs multiphysics modelling. SERPENT and Multiphysics Workshop.
 
 Jaradat, M. K., Choi, N., & Abou-Jaoude, A. (2024). Verification of Griffin-Pronghorn-Coupled Multiphysics 
 Code System Against CNRS Molten Salt Reactor Benchmark. Nuclear Science and Engineering, 1-34.
+
