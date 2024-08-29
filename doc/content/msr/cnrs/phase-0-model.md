@@ -1,12 +1,12 @@
 # Phase 0 Model: Steady State Single Physics
 
-*Contact: Mustafa Jaradat, email@email.gov*
+*Contact: Mustafa Jaradat, Mustafa.Jaradat@inl.gov*
 
 *Model summarized and documented by Khaldoon Al-Dawood
 
-*Model link: [Griffin-Pronghorn Steady-State Model](https://github.com/idaholab/virtual_test_bed/tree/devel/msr/cnrs)*
+*Model link: [Phase 0 models](/home/aldka/sawtooth/projects/virtual_test_bed/msr/cnrs/s01)*
 
-!tag name=MSRE Griffin-Pronghorn Steady State Model pairs=reactor_type:MSR
+!tag name=CNRS Griffin-Pronghorn Steady State Model pairs=reactor_type:MSR
                        reactor:MSRE
                        geometry:core
                        simulation_type:multiphysics
@@ -19,7 +19,10 @@
                        sponsor:NEAMS;NRIC
 
 This exercise is comprized of three stady state single physics steps.
-In the following is a description of each step and the input file used to run it.
+The inputs provided in this step will be gradually improved as the complexity of 
+the steps will improve.
+In the following is a description of each stepa of Phase 0 in addition to explanation
+of the input files.
 
 ## Step 0.1:
 
@@ -34,6 +37,8 @@ $\nabla.\vec{u} = 0$
 where $\vec{u}$ is the velocity vector.
 
 The mass conservation equation is automatically called in MOOSE upon calling 
+
+!listing msr/cnrs/s01/cnrs_s01_ns_flow.i block=Module
 
 ```
 [Module]
