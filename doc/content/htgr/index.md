@@ -30,6 +30,6 @@
 
 [SAM HTR-PM model](htr-pm/index.md)
 
-[3D-MHTGR 350MW model](3D_mhtgr/index.md)
+[3D-MHTGR mesh](3d_mhtgr/index.md)
 
 [Gas-Cooled High-Temperature Pebble-Bed Reactor Reference Plant Model (HTR-PB-PM)](htr_pb_pm/index.md)

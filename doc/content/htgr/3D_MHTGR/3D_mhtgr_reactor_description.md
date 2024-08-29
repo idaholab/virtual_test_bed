@@ -1,4 +1,4 @@
-# Modular High-Temperature Gas-Cooled Reactor (3D-MHTGR) 350MW Model Reactor Description
+# Modular High-Temperature Gas-Cooled Reactor (3D-MHTGR) Reactor Description
 
 The Modular High Temperature Gas-Cooled Reactor (MHTGR) is a Generation-IV reactor design. It was designed to allow coupling to industrial applications, such as "co-generation of electricity and steam supply or high temperature gas supply to petrochemical and refining plants, electricity and steam supply for oil recovery from oil sands, and high temperature steam or gas and electricity for hydrogen production" [!cite](osti_1149009). The modularity of the design, along with a relatively modest 350MW power rating, would allow for a reduction of construction costs. MHTGR technology presents an opportunity for process heat generation, thereby reducing greenhouse gas emissions.
 

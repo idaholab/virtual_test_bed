@@ -1,4 +1,4 @@
-# Modular High-Temperature Gas-Cooled Reactor (3D-MHTGR) 350MW Model Mesh
+# Modular High-Temperature Gas-Cooled Reactor (3D-MHTGR) Mesh
 
 !alert warning
 This meshing script is provided as is in a coarse form. Convergence studies for the physics of interest should be performed by the user.
@@ -201,7 +201,7 @@ The metadata is added to the coarse mesh, another ring boundary is created, and 
 
 !listing htgr/mhtgr/3D_mesh/3D_mhtgr_final.i block=Mesh/coarse_extrude
 
-Finally the coarse mesh is superimposed onto the fine mesh. The coarse mesh is used for Coarse Mesh Finite Difference, a transport acceleration technique. This results in the final 3D MHTGR hexagonal core mesh for the 350MW Model.
+Finally the coarse mesh is superimposed onto the fine mesh. The coarse mesh is used for Coarse Mesh Finite Difference, a transport acceleration technique. This results in the final 3D MHTGR hexagonal core mesh.
 
 !listing htgr/mhtgr/3D_mesh/3D_mhtgr_final.i block=Mesh/coarse_mesh_id
 
