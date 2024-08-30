@@ -1,13 +1,13 @@
 # Phase 0 Model: Steady State Single Physics
 
-*Contact: Mustafa Jaradat, Mustafa.Jaradat@inl.gov*
+*Contact: Mustafa Jaradat, Mustafa.Jaradat\@inl.gov*
 
-*Model summarized and documented by Khaldoon Al-Dawood
+*Model summarized and documented by Dr. Khaldoon Al-Dawood*
 
 *Model link: [Griffin-Pronghorn Steady-State Model](https://github.com/idaholab/virtual_test_bed/tree/devel/msr/cnrs/s01)*
 
 !tag name=CNRS Griffin-Pronghorn Steady State Model pairs=reactor_type:MSR
-                       reactor:MSRE
+                       reactor:CNRS
                        geometry:core
                        simulation_type:multiphysics
                        transient:steady_state
@@ -36,9 +36,11 @@ $\nabla.\vec{u} = 0$
 
 where $\vec{u}$ is the velocity vector.
 
-The mass conservation equation is automatically called in MOOSE upon calling 
+The mass conservation equation is automatically called in MOOSE upon calling:
 
 !listing msr/cnrs/s01/cnrs_s01_ns_flow.i block=Module
+
+test 
 
 ```
 [Module]
