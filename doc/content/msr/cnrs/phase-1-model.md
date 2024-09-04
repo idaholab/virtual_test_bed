@@ -63,6 +63,14 @@ that pronghorn will expect to receive from the Griffin Solve.
 
 !listing msr/cnrs/s11/cnrs_s11_griffin_neutronics.i block=AuxVariables
 
+### Step 1.1 Results
+
+The delayed neutron source distribution along AA` and BB` are collected from 
+the results of the Griffin run. 
+These are as follows
+
+!media media/msr/cnrs/step11-results.png
+  style=width:70%
 
 
 ## Step 1.2
@@ -120,6 +128,17 @@ These are specified in the main input file (i.e. Griffin solve), within the
 
 !listing msr/cnrs/s12/cnrs_s12_griffin_neutronics.i block=Executioner
 
+### Step 1.2 Results
+
+The fuel salt temperature distribution along AA` and BB` is collected and plotted as follows
+
+!media media/msr/cnrs/step12-results-a.png
+  style=width:70%
+
+The fission rate density is also reported along AA` and BB` in this exercise
+
+!media media/msr/cnrs/step12-results-b.png
+  style=width:70%
 
 ## Step 1.3:
 
@@ -161,8 +180,29 @@ managed through the ```Transfers``` block
 
 !listing msr/cnrs/s13/cnrs_s13_griffin_neutronics.i block=Transfers
 
+### Step 1.3 Results
 
-## Phase 1.4:
+The horizontal velocity component distributino along AA` is reported as follows
+
+!media media/msr/cnrs/step13-results-a.png
+  style=width:40%
+
+The vertical velocity component distribution along AA` and BB` is also reported
+
+!media media/msr/cnrs/step13-results-b.png
+  style=width:70%
+
+The fuel salt temperature distribution along AA` and BB` in this exercise is reported
+
+!media media/msr/cnrs/step13-results-c.png
+  style=width:70%
+
+Finally, the delayed neutron source distribution along AA` and BB` is reported
+
+!media media/msr/cnrs/step13-results-d.png
+  style=width:70%
+
+## Step 1.4:
 
 This phase performs a similar task to that of Step 1.3 for a combination of 
 reactor power and lid velocities.
@@ -199,3 +239,12 @@ The set of reactor powers and lid velocities are presented in the following tabl
 
 
 A shell script is used to run all these cases.
+
+
+### Step 1.4 Results
+
+In this exercise, the reported results are the delayed neutron precursor density
+distribution depending on the lid velocity
+
+!media media/msr/cnrs/step14-results.png
+  style=width:70%
