@@ -74,9 +74,28 @@ type are identified in the ```Executioner``` block of the input file as follows.
 !listing msr/cnrs/s01/cnrs_s01_ns_flow.i block=Executioner
 
 
-### Results
-The results for the velocity field are collected along the lines AA and BB
-shown in the problem description.
+### Step 0.1 Results
+
+The results for the first step of phase 0 are composed of the velocity field in 
+addition to a mesh refinemnet study to demonstrate the influence of the refinement
+on the vertical components of the velocity.
+The results are collected across the horizontal AA` line and the vertical BB` line 
+from the problem description.
+The horizontal velocity component distribution along AA` and BB` are
+
+!media media/msr/cnrs/step01-results-a.png
+  style=width:70%
+
+The vertical velocity component distribution along AA` and BB` are
+
+!media media/msr/cnrs/step01-results-b.png
+  style=width:70%
+
+The vertical velocity component distribution along BB` as the mesh is refined is
+as follows
+
+!media media/msr/cnrs/step01-results-c.png
+  style=width:70%
 
 ## Step 0.2:
 
@@ -109,10 +128,18 @@ Finally, the ```Executioner``` block is defined as follows
 !listing msr/cnrs/s02/cnrs_s02_griffin_neutronics.i block=Executioner
 
 
-### Results:
-Results are here 
+### Step 02 Results:
 
+The results for this step include observing the fission rate density distribution
+and examining the influence of mesh refinment. 
+Due to the length of the results, this documentation will only show the fission 
+rate distribution along AA` which is as follows
 
+!media media/msr/cnrs/step02-results.png
+  style=width:50%
+
+For results on the mesh refinement, the reader is referred to the publication 
+[!citep](jaradat2024verification).
 
 ## Step 0.3
 
@@ -162,3 +189,10 @@ Finally, characteristics of executing the problem are defined in the ```Executio
 block as follows
 
 !listing msr/cnrs/s03/cnrs_s03_ns_flow.i block=Executioner
+
+### Step 03 Results
+
+The fuel salt temperature distribution along AA` and BB` are as follows
+
+!media media/msr/cnrs/step03-results.png
+  style=width:70%
