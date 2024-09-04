@@ -4,6 +4,20 @@
 
 *Model summarized and documented by Khaldoon Al-Dawood
 
+*Model link: [CNRS Model](https://github.com/idaholab/virtual_test_bed/tree/devel/msr/cnrs)*
+
+!tag name=CNRS Griffin-Pronghorn Steady State Model pairs=reactor_type:MSR
+                       reactor:CNRS
+                       geometry:core
+                       simulation_type:multiphysics
+                       transient:steady_state
+                       input_features:multiapps
+                       codes_used:BlueCrab;Griffin;Pronghorn
+                       computing_needs:Workstation
+                       fiscal_year:2024
+                       institution:INL
+                       sponsor:NEAMS;NRIC
+
 CNRS molten salt reactor (MSR) benchmark is a numerical benchmark created to establish a verification 
 problem for couple-physics (i.e. neutronics and thermal-hydraulics) simulation. It was originally 
 developed by French National Center for Scientific Research (CNRS) [!citep](aufiero2015serpent).
