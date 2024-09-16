@@ -1,6 +1,6 @@
 # Divertor Monoblock During Pulsed Operation
 
-*Contact: Pierre Clement Simon (pierreclement.simon.at.inl.gov), Masashi Shimada (masashi.shimada.at.inl.gov)*
+*Contact: Pierre-Clement Simon (pierreclement.simon.at.inl.gov), Masashi Shimada (masashi.shimada.at.inl.gov)*
 
 *Model link: [Divertor Monoblock](https://github.com/idaholab/virtual_test_bed/tree/devel/fusion/mcf/divertor_monoblock)*
 
@@ -238,7 +238,7 @@ The diffusivity is defined as $D=D_0 \exp⁡(-E_D/k_B/T)$ and the solubility is 
 | Material | $D_0$ (m$^2$/s) | $E_D$ (eV) | $K_{s,0}$ (Pa$^{1/2}$) | $E_s$ (eV) | Detrapping energy: $E_{dt}$ (eV) | Trap density: $n_{trap}$ (at.fr.) |
 | --- | --- | --- | --- | --- | --- | --- |
 | W | 2.4$\times$10$^{-7}$ | 0.39 | 1.87$\times$10$^{24}$ | 1.04 | 0.85 | 1.0$\times$10$^{-4}$ |
-| W |   |   |  3.14$\times$10$^{20}$$^{**}$ | 0.57$^{**}$ |   |   |
+| W |   |   |  3.14$\times$10$^{20}$ | 0.57$^{**}$ |   |   |
 | Cu | 6.6$\times$10$^{-7}$ | 0.39 | 3.14$\times$10$^{24}$ | 0.57 | 0.50 | 5.0$\times$10$^{-5}$ |
 | CuCrZr | 3.9$\times$10$^{-7}$ | 0.42 | 4.28$\times$10$^{23}$ | 0.39 | 0.83 | 5.0$\times$10$^{-5}$ |
 
@@ -276,7 +276,7 @@ to avoid the convergence issue associated with calculating two significantly dif
 ### Numerical method
 
 !style halign=left
-We use a standard preconditioner: the [“single matrix preconditioner”](https://mooseframework.inl.gov/source/preconditioners/SingleMatrixPreconditioner.html).
+We use a standard preconditioner: the [“single matrix preconditioner.”](https://mooseframework.inl.gov/source/preconditioners/SingleMatrixPreconditioner.html)
 The Newton method is used to model the [transient](https://mooseframework.inl.gov/source/executioners/Transient.html) tritium and thermal transport in a 2D monoblock.
 It is important to note that MOOSE is equipped with the built-in Message Passing Interface (MPI) protocol,
 as tritium and thermal transport analysis of fifty 1,600-second cycle plasma discharges in the 2D monoblock is
