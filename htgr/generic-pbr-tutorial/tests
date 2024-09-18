@@ -84,6 +84,9 @@
     csvdiff = step5_out.csv
     cli_args = 'Outputs/csv=true'
     executable_pattern = 'pronghorn*|blue_crab*'
+    # Relaxing due to switch from MUMPS to SUPERLU_dist
+    abs_zero = 3e-5
+    rel_err = 3e-5
   []
   [step6]
     type = CSVDiff
