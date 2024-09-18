@@ -101,8 +101,8 @@ flow_vel = '${fparse mass_flow_rate / flow_area / density}'
   dtmax = 5
   line_search = l2
   solve_type = 'NEWTON'
-  petsc_options_iname = '-pc_type -pc_factor_shift_type'
-  petsc_options_value = 'lu NONZERO'
+  petsc_options_iname = '-pc_type -pc_factor_shift_type -pc_factor_mat_solver_package'
+  petsc_options_value = 'lu NONZERO superlu_dist'
   nl_rel_tol = 1e-6
   nl_abs_tol = 1e-6
 []
