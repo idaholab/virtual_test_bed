@@ -1,3 +1,10 @@
+################################################################################
+## Lead Fast Reactor 7-pin assembly
+## Solid heat transfer simulation
+## Documentation: https://mooseframework.inl.gov/virtual_test_bed/lfr/cardinal_7pincell/Cardinal_7pin_LFR_demo.html
+## Contact: hansol.park@anl.gov
+################################################################################
+
 fuel_r_o = 0.004318648          # m
 fuel_r_i = 0.00202042           # m
 num_layers_fuel = 40
@@ -38,6 +45,7 @@ powerdensity = ${fparse linearpower / (pi * (fuel_r_o * fuel_r_o - fuel_r_i * fu
 
 [Problem]
   type = FEProblem
+  # Fluid regions in mesh are only for transferring fields from NekRS to Griffin
   kernel_coverage_check = false
 []
 

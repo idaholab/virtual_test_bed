@@ -1,15 +1,18 @@
 [Tests]
   [generate_mesh]
     type = RunApp
-    executable_pattern = 'cardinal*'
+    executable_pattern = 'cardinal*|griffin*'
     input = 'NTmesh.i  HCmesh.i'
     cli_args = '--mesh-only'
   []
+
+  # Syntax tests
   [syntax_griffin]
     type = RunApp
     input = 'NT.i'
     check_input = true
-    executable_pattern = 'cardinal*'
+    executable_pattern = 'griffin*'
+    cli_args = "MultiApps/active='' Transfers/active=''"
     prereq = generate_mesh
     max_time = 400
   []
@@ -17,7 +20,8 @@
     type = RunApp
     input = 'HC.i'
     check_input = true
-    executable_pattern = 'cardinal*'
+    executable_pattern = 'cardinal*|moose*'
+    cli_args = "Transfers/active='' MultiApps/active=''"
     prereq = generate_mesh
   []
   [syntax_nekrs]
@@ -27,6 +31,8 @@
     executable_pattern = 'cardinal*'
   []
 
+
+  # Regression tests
   [run_multiphysics]
     type = CSVDiff
     input = 'NT.i'

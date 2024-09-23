@@ -27,7 +27,7 @@ The open-source MOOSE-wrapper for NekRS, Cardinal [!citep](Novak2022), is used t
 
 ## Problem Specification
 
-Due to the current lack of data on hot channel factors in lead-cooled fast reactors (LFR), a small 7-pin ducted LFR “mini-assembly” was developed as a proof-of-concept demonstration. The miniassembly
+Due to the current lack of data on hot channel factors in lead-cooled fast reactors (LFR), a small 7-pin ducted LFR “mini-assembly” was developed as a proof-of-concept demonstration. The mini-assembly
 is based on a 127-pin ducted LFR assembly prototype [!citep](HCFReport,WECLFR) and is shown in [setup]. 
 The fuel rod geometry was adopted from the full assembly except there is no helium gap between the annular fuel and the cladding. 
 Pin pitch, duct thickness, and height of the active fuel rod were
@@ -97,16 +97,18 @@ neutronics solution, and a fine coolant mesh in H.T. does not degrade computatio
        caption=Data transfer scheme among Griffin, H.T., and Cardinal.
 
 For the conjugate heat transfer, H.T. computes constant monomial heat flux per element at the cladding outer surfaces and the duct inner surface. 
-Note that the heat flux variable computed by H.T. is an elemental type, while the variable automatically added by Cardinal on the mirror mesh of the NekRS native mesh, is the nodal type. 
-If there are multiple nearest centroids near parallel process boundaries or the nearest-nodes to the currently-considered centroids are not detected within the process boundary, parallel resolution between nearly equi-distant points may be inaccurate unless extensive searches are done over every process or a bounding box larger than the mesh discretization is set in transfer.
+Note that the heat flux variable computed by H.T. is of an elemental type (monomial), while the variable automatically added by Cardinal on the mirror mesh of the NekRS native mesh, is using a nodal type (lagrange). 
+If there are multiple nearest centroids near parallel process boundaries or the nearest-nodes to the currently-considered centroids are not detected within the process boundary, parallel resolution between nearly equi-distant points may be inaccurate unless extensive searches are done over every process or a bounding box, for setting the search region in a heuristic, larger than the mesh discretization (the distance between the nodes and centroids that should be matched) is set in transfer.
 Due to this issue, a new nodal type heat flux is used for transfer by converting the elemental type variable to the nodal type using +ProjectionAux+ before transfer.
-For the transfer, +MultiAppGeneralFieldNearestNodeTransfer+ [!citep](Lindsay2022) is used separately for different interfaces (e.g. duct-coolant and clad-coolant) with spatial restrictions on source and target boundaries for the search. 
+For the transfer, +MultiAppGeneralFieldNearestLocationTransfer+ [!citep](Lindsay2022) is used separately for different interfaces (e.g. duct-coolant and clad-coolant) with spatial restrictions on source and target boundaries for the search. 
 To preserve the total energy, the total power produced in the fuel rods
-and in the duct are separately transferred to Cardinal for normalization of the transferred heat flux at each of interfaces by Cardinal.
+and in the duct are separately transferred to Cardinal for normalization of the transferred heat flux at each interface by Cardinal.
 The heat flux could have been preserved on a per-rod basis but we chose not to because heat flux distribution among different fuel pins was calculated fairly accurately.
 
-The solid-fluid wall temperature is transferred from Cardinal to H.T. in the same manner as the transfer of heat flux. 
-Since the wall temperature is a part of the +AuxiliarySystem+ in H.T. which is not restored during the Picard iteration even with +keep_solution_during_restore = true+ in
+The solid-fluid wall temperature is transferred from Cardinal to H.T. in the same manner as the transfer of the heat flux. 
+
+!alert note
+Since the wall temperature is a part of the +AuxiliarySystem+ in H.T. which is not restored during the Picard iteration even with +keep_solution_during_restore = true+ (until [this is issue in MOOSE is resolved](https://github.com/idaholab/moose/issues/19078)) in
 +FullSolveMultiApp+, it is backed up via Griffin using the same transfer from Cardinal to H.T.
 Otherwise, the boundary condition in H.T. would be re-set per Picard iteration. The fluid temperature is transferred from Cardinal to H.T. in the same manner as the transfer from H.T. to Griffin.
 
@@ -131,7 +133,7 @@ First, a NekRS standalone calculation was performed to provide reasonable initia
 condition was assigned uniformly to all regions. The dimensionless NekRS time step size of $10^{-3}$ (0.09106 ms, after dimensionalization) was used to keep the Courant number less than 0.3. The simulation was run for 9.106 s, which is 75% of the time required for the flow to pass through from inlet to outlet.
 
 As the flow is developed, the fully coupled simulation can freeze the velocity to speed up the development of the temperature. During the coupled simulation, the dimensionless NekRS time step size was increased by +10x+ (0.9106 ms) since the velocity was frozen. 
-The H.T. solve was called every 50 NekRS time steps. Insufficiently frequent calls of H.T. cause instability in the solution (discussed in Results section). One hundred time steps were taken in H.T. per Picard iteration, so Griffin was called every 4.553 s, leading to the 5000:100:1 ratio of NekRS, H.T., and Griffin
+The H.T. solve was called every 50 NekRS time steps. Insufficiently frequent calls of H.T. cause instability in the solution (discussed in Results section). One hundred time steps were taken in H.T. per Picard iteration, so Griffin was called every 4.553 s, leading to the 5000:100:1 ratio of the number of NekRS, H.T., and Griffin
 calculations. 
 
 ## Griffin Input Model
@@ -179,7 +181,7 @@ griffin-opt -i HCmesh.i --mesh-only
 ### Executioner style=font-size:125%
 
 The `SweepUpdate` executioner is used for the CMFD acceleration. `SweepUpdate` is a special Richardson executioner for performing source iteration with a transport sweeper. This source iteration can be accelerated by turning on `cmfd_acceleration` which invokes the CMFD solve where the low order diffusion equation is solved with a convection closure term to make the diffusion system and the transport system consistent. 
-`richardson_rel_tol` or `richardson_abs_tol` is the tolerance used to check the convergence of the Richardson iteration. `richardson_max_its` is the maximum number iterations allowed for Richardson iterations. These parameters are controlled by the corresponding variables given in +Input parameters+. 
+`richardson_rel_tol` or `richardson_abs_tol` is the tolerance used to check the convergence of the Richardson iteration. `richardson_max_its` is the maximum number of iterations allowed for Richardson iterations. These parameters are controlled by the corresponding variables given in +Input parameters+. 
 If `richardson_postprocessor` is specified, its `PostProcessor` value is used as the convergence metric. Otherwise Griffin uses the L2 norm difference of the angular flux solution between successive Richardson iterations, which is added to `richardson_postprocessor` with the name of `flux_error` internally. `richardson_rel_tol` is the tolerance for the ratio of the `richardson_postprocessor` value of the current iteration to that of the first iteration.
 `richardson_value` is for the console output purpose to show the history of `PostProcessor` values over Richardson iterations, and it is set to be `eigenvalue`. 
 `inner_solve_type` is about the way to perform the inner solve of the Richardson iteration. There are three options: `none`, `SI` and `GMRes`. `none` is just a direct transport operator inversion per residual evaluation, while scattering source is updated together for `SI` and `GMRes` per residual evaluation. The latter two options involve more number of transport sweeps per residual evaluation than `none`, leading to the reduction of the number of residual evaluations and possibly the total run time. For `GMRes`, the scattering source effect is accounted for at once by performing the GMRes iterations and `max_inner_its` is the maximum number of GMRes iterations. For `SI`, the scattering source effect is accounted for by performing source iterations and `max_inner_its` is the maximum number of source iterations.
@@ -258,7 +260,7 @@ Finally, the `[Outputs]` block sets the output files from the simulation. Two of
 
 ## MOOSE heat transfer Input Model
 
-The solid tempearture is solved by the MOOSE heat transfer Module here. We define a number of constants at the beginning of the file and set up the mesh from a file.
+The solid temperature is solved by the MOOSE heat transfer module here. We define a number of constants at the beginning of the file and set up the mesh from a file.
 
 !listing lfr/7pin_cardinal_demo/HC.i start=half_pinpitch end=[Executioner] include-end=False
 
@@ -290,13 +292,13 @@ The class +NekRSMesh+, specific to Cardinal, is employed to generate a "mirror" 
 
 !listing lfr/7pin_cardinal_demo/nek.i start=[Problem] end=[Executioner] include-end=False
 
-Following that, a +Transient+ executioner is defined. This executioner remains consistent with the one employed in the solid case, with the distinction that it now incorporates a Cardinal-specific time stepper called +NekTimeStepper+. This time stepper is designed to retrieve the time step from nekRS's .par file (to be introduced soon) and convert it to dimensional form if necessary. The specified output format is Exodus II. It's noteworthy that the output file captures only temperature and heat flux solutions on the surface mirror mesh. The overall solution across the entire nekRS domain is output in the conventional .fld field file format used in standalone nekRS calculations.
+Following that, a +Transient+ executioner is defined. This executioner remains consistent with the one employed in the solid case, with the distinction that it now incorporates a Cardinal-specific time stepper called +NekTimeStepper+. This time stepper is designed to retrieve the time step from nekRS's .par file (to be introduced soon) and convert it to dimensional form if necessary. The specified output format is Exodus II. It is noteworthy that the output file captures only temperature and heat flux solutions on the surface mirror mesh. The overall solution across the entire nekRS domain is output in the conventional .fld field file format used in standalone nekRS calculations.
 
 !listing lfr/7pin_cardinal_demo/nek.i block=Executioner
 
 !listing lfr/7pin_cardinal_demo/nek.i block=Outputs
 
-Similar to its application in the Griffin and heat transfer input files, the `[Postprocessors]` block in Cardinal serves to monitor crucial quantities of interest. These include the average temperature and heat fluxes on boundary faces, as well as the minimum and maximum temperatures. It is important to emphasize that specifying +field = unity+ is same as calculating the area in the context of +NekSideIntegral+, equivalent to determining volume in the case of +NekVolumeIntegral+, and corresponds to computing the mass flow rate for +NekMassFluxWeightedSideIntegral+.
+Similar to its application in the Griffin and heat transfer input files, the `[Postprocessors]` block in Cardinal serves to monitor crucial quantities of interest. These include the average temperature and heat fluxes on boundary faces, as well as the minimum and maximum temperatures. It is important to emphasize that specifying +field = unity+ is the same as calculating the area in the context of +NekSideIntegral+, equivalent to determining volume in the case of +NekVolumeIntegral+, and corresponds to computing the mass flow rate for +NekMassFluxWeightedSideIntegral+.
 
 !listing lfr/7pin_cardinal_demo/nek.i block=Postprocessors
 
@@ -314,7 +316,7 @@ for these input files is available on the
 The configuration file, +7pin.par+, contains several sections specifying settings for different aspects of simulations.
 In the `[OCCA]` section, the backend OCCA device settings are defined, currently set to use CPU for nekRS simulations.
 The `[GENERAL]` block outlines parameters such as time stepping, simulation end control, and polynomial order. Specifically, it sets a time step of 0.01 (non-dimensional) and specifies that a nekRS output file is written every 5000 time steps. However, the stopAt and numSteps fields are ignored because nekRS is run as a sub-application to MOOSE. Instead, the simulation termination is dictated by the steady state tolerance in the MOOSE main application.
-Sections like `[VELOCITY]` and `[PRESSURE]` describe the solution methodologies for the pressure Poisson equation and velocity Helmholtz equations respectively. It's worth noting that the velocity field isn't solved, as indicated by the setting `nrs->flow = 0` in the +7pin.udf+ file.
+Sections like `[VELOCITY]` and `[PRESSURE]` describe the solution methodologies for the pressure Poisson equation and velocity Helmholtz equations respectively. It is worth noting that the velocity field is not solved, as indicated by the setting `nrs->flow = 0` in the +7pin.udf+ file.
 The `[TEMPERATURE]` block describes the solution of the temperature passive scalar equation. Parameters like rhoCp are set to unity due to the non-dimensional form of the solve, while conductivity is defined as the inverse of the Peclet number.
 The +boundaryTypeMap+ is utilized to map boundary IDs to types of boundary conditions, enabling specification of boundary conditions for different parts of the simulation domain. And the specific boundary conditions involved here includes: 
 
@@ -342,7 +344,7 @@ is briefly introduced. The convergence history and other observations are also d
 
 ### Energy conservation style=font-size:125%
 
-As a basic confirmation, the energy conservation was checked. 
+As a basic verification step, the energy conservation was checked. 
 The coolant temperature rise should be consistent with the total power calculated by Griffin in the solid domain since the volumetric heat source in the coolant region is ignored. 
 [energy1] shows the comparison of the calculation value from a +Postprocessor+ in Cardinal to the reference value predicted by the energy equation. They agree very well within 0.01%, which means that the heating data is properly transferred and processed from Griffin to NekRS. 
 [energy2] supports the excellent agreement, in that the total heat flux integral on each of fuel rod outer surfaces and duct inner surface matches very well with the power in each region predicted by Griffin. This excellent agreement was achieved with the use of a very refined mesh and a zero-power entrance region for the fluid.

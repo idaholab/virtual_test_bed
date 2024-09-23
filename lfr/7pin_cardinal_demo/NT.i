@@ -1,3 +1,10 @@
+################################################################################
+## Lead Fast Reactor 7-pin assembly
+## Neutronics simulation
+## Documentation: https://mooseframework.inl.gov/virtual_test_bed/lfr/cardinal_7pincell/Cardinal_7pin_LFR_demo.html
+## Contact: hansol.park@anl.gov
+################################################################################
+
 #half_pinpitch = 0.0067123105    # m
 #fuel_r_o = 0.004318648          # m
 #fuel_r_i = 0.00202042           # m
@@ -131,7 +138,7 @@ richardsonmaxits=1000
     variable = fluid_density
     coupled_variables = 'nek_bulk_temp'
     expression = '10678-13174*(nek_bulk_temp-600.6)/10000'
-    execute_on = 'timestep_begin timestep_end'
+    execute_on = 'INITIAL timestep_end'
   []
 []
 
@@ -326,7 +333,7 @@ richardsonmaxits=1000
 [Materials]
   [Neutronics_fuel_gap]
     type = MicroNeutronicsMaterial
-    library_file = /projects/neams_ad_fr/cross_section/LFR9g_P5.xml
+    library_file = LFR9g_P5.xml
     library_name = ISOTXS-neutron
     library_id = 3
     block = 'HeliumHolePrism HeliumHole Fuel00 Fuel10 Fuel11 Fuel12 Fuel13 Fuel14 Fuel15'
@@ -334,7 +341,7 @@ richardsonmaxits=1000
   []
   [Neutronics_clad_duct]
     type = MicroNeutronicsMaterial
-    library_file = /projects/neams_ad_fr/cross_section/LFR9g_P5.xml
+    library_file = LFR9g_P5.xml
     library_name = ISOTXS-neutron
     library_id = 2
     block = 'Clad Duct LowerHeliumHolePrism LowerHeliumHole LowerClad LowerFuel00 LowerFuel10 LowerFuel11 LowerFuel12 LowerFuel13 LowerFuel14 LowerFuel15 UpperHeliumHolePrism UpperHeliumHole UpperClad UpperFuel00 UpperFuel10 UpperFuel11 UpperFuel12 UpperFuel13 UpperFuel14 UpperFuel15'
@@ -342,7 +349,7 @@ richardsonmaxits=1000
   []
   [Neutronics_cool]
     type = MicroNeutronicsMaterial
-    library_file = /projects/neams_ad_fr/cross_section/LFR9g_P5.xml
+    library_file = LFR9g_P5.xml
     library_name = ISOTXS-neutron
     library_id = 2
     block = 'Lead'

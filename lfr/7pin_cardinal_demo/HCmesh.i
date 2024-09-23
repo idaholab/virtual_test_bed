@@ -1,3 +1,9 @@
+################################################################################
+## Lead Fast Reactor 7-pin assembly
+## Solid heat transfer simulation meshing script
+## Documentation: https://mooseframework.inl.gov/virtual_test_bed/lfr/cardinal_7pincell/Cardinal_7pin_LFR_demo.html
+## Contact: hansol.park@anl.gov
+################################################################################
 half_pinpitch = 0.0067123105    # m
 fuel_r_o = 0.004318648          # m
 fuel_r_i = 0.00202042           # m

@@ -1,3 +1,10 @@
+################################################################################
+## Lead Fast Reactor 7-pin assembly
+## Cardinal input file to launch and coupled with NekRS CFD simulation
+## Documentation: https://mooseframework.inl.gov/virtual_test_bed/lfr/cardinal_7pincell/Cardinal_7pin_LFR_demo.html
+## Contact: hansol.park@anl.gov
+################################################################################
+
 [Problem]
   type = NekRSProblem
   conserve_flux_by_sideset = true
@@ -48,7 +55,7 @@
     type = Receiver
   []
 
-  # side integral
+  # side area integral
   [RodSurface]
     type = NekSideIntegral
     field = unity

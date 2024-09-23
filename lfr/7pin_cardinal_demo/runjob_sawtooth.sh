@@ -1,6 +1,6 @@
 #!/bin/bash
 #PBS -N <your_jobname>
-#PBS -l select=4:ncpus=36:mpiprocs=36:mem=128GB:ompthreads=1
+#PBS -l select=4:ncpus=48:mpiprocs=48:mem=190GB:ompthreads=1
 #PBS -l walltime=03:00:00
 #PBS -m ae
 #PBS -j oe
@@ -15,7 +15,7 @@ export CC=mpicc
 export CXX=mpicxx
 export FC=mpif90 
 
-export WORKING_DIR=/projects/neams_ad_fr/openmpi
+export WORKING_DIR=<your working directory, ideally on /scratch/ for optimized write latency>
 export CARDINAL_DIR=$WORKING_DIR/cardinal
 export GRIFFIN_DIR=$WORKING_DIR/griffin
 export NEKRS_HOME=$CARDINAL_DIR/install
