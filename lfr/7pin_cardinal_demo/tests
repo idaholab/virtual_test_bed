@@ -1,8 +1,14 @@
 [Tests]
-  [generate_mesh]
+  [generate_mesh_neutronics]
     type = RunApp
     executable_pattern = 'cardinal*|griffin*'
-    input = 'NTmesh.i  HCmesh.i'
+    input = 'NTmesh.i'
+    cli_args = '--mesh-only'
+  []
+  [generate_mesh_heat]
+    type = RunApp
+    executable_pattern = 'cardinal*|griffin*'
+    input = 'HCmesh.i'
     cli_args = '--mesh-only'
   []
 
@@ -13,7 +19,7 @@
     check_input = true
     executable_pattern = 'griffin*'
     cli_args = "MultiApps/active='' Transfers/active=''"
-    prereq = generate_mesh
+    prereq = generate_mesh_neutronics
     max_time = 400
   []
   [syntax_conduction]
@@ -22,7 +28,7 @@
     check_input = true
     executable_pattern = 'cardinal*|moose*'
     cli_args = "Transfers/active='' MultiApps/active=''"
-    prereq = generate_mesh
+    prereq = generate_mesh_heat
   []
   [syntax_nekrs]
     type = RunApp
@@ -48,7 +54,7 @@
     type = CSVDiff
     input = 'HC.i'
     csvdiff = HC_out.csv
-    cli_args = "Executioner/dt=0.0009106239460371001 Executioner/end_time=0.0009106239460371001 Outputs/time_step_interval=1"
+    cli_args = "Executioner/dt=0.01 Executioner/end_time=0.1 Outputs/time_step_interval=1"
     executable_pattern = 'cardinal*'
     prereq = 'syntax_conduction'
   []

@@ -29,10 +29,11 @@ powerdensity = ${fparse linearpower / (pi * (fuel_r_o * fuel_r_o - fuel_r_i * fu
 
 [Executioner]
   type = Transient
-  solve_type = 'PJFNK'
+  solve_type = 'Newton'
+  # Use PJFNK if running out of memory on a finer mesh
 
   l_max_its = 50
-  l_tol = 1e-9
+  l_tol = 1e-5
   nl_max_its = 50
   nl_rel_tol = 1e-6
   nl_abs_tol = 1e-8
