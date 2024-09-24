@@ -1,6 +1,6 @@
-<YakXs>
+<ISOXML>
   <Multigroup_Cross_Section_Libraries Name="msfr_xs" NGroup="6" Description="MSFR XS gen">
-    <Multigroup_Cross_Section_Library ID="1" Ver="1.0" Generator="INL" TimeCreated="Fri Mar 12 10:57:42 2021" Description="">
+    <Multigroup_Cross_Section_Library ID="1" Ver="1.0" Generator="INL" TimeCreated="Tue Sep 24 15:50:32 2024" Description="">
       <Tabulation>tfuel</Tabulation>
       <tfuel>600 973 1200 1800</tfuel>
       <ReferenceGridIndex>1</ReferenceGridIndex>
@@ -168,20 +168,20 @@
         </Isotope>
       </Table>
     </Multigroup_Cross_Section_Library>
-    <Multigroup_Cross_Section_Library ID="2" Ver="1.0" Generator="INL" TimeCreated="Fri Mar 12 10:57:42 2021" Description="">
+    <Multigroup_Cross_Section_Library ID="2" Ver="1.0" Generator="INL" TimeCreated="Tue Sep 24 15:50:32 2024" Description="">
       <Tabulation>tfuel</Tabulation>
       <tfuel>600 973 1200 1800</tfuel>
       <ReferenceGridIndex>1</ReferenceGridIndex>
-      <AllReactions>Flux Absorption Total NeutronVelocity Scattering Transport Removal nuFission kappaFission FissionSpectrum DNFraction DNSpectrum DNPlambda</AllReactions>
+      <AllReactions>Flux Absorption Total NeutronVelocity Scattering Transport Removal nuFission kappaFission FissionSpectrum DNFraction DNSpectrum DNPlambda EnergyDeposition</AllReactions>
       <TablewiseReactions/>
       <LibrarywiseReactions/>
       <Table gridIndex="1">
         <Isotope Name="pseudo" L="1" I="6">
           <DNPlambda>0.0133103 0.0305453 0.115181 0.301115 0.879493 2.91185</DNPlambda>
           <NeutronVelocity>2509158428 1333792158 434839326.9 188272505.6 102991703 40626955.17</NeutronVelocity>
-          <DNSpectrum index="g">0.00345561 0.395391 0.563813 0.0324885 0.00306719 0.00178516</DNSpectrum>
+          <DNSpectrum index="g">0.00345560841 0.3953908181 0.5638127406 0.03248848506 0.003067188589 0.001785159179</DNSpectrum>
           <DNFraction>8.52076e-05 0.000686821 0.000479122 0.00103923 0.000551395 0.000183489</DNFraction>
-          <FissionSpectrum>0.366531 0.512071 0.118142 0.00290997 0.000268653 7.68372e-05</FissionSpectrum>
+          <FissionSpectrum>0.3665311979 0.5120712764 0.1181420638 0.002909971571 0.000268653145 7.683724148e-05</FissionSpectrum>
           <kappaFission>1.174727162e-13 9.04147318e-14 5.681151513e-14 6.701619168e-14 9.365910848e-14 2.58246787e-13</kappaFission>
           <nuFission>0.011618 0.00815783 0.00495729 0.00583624 0.00815717 0.0224312</nuFission>
           <Scattering profile="1">
@@ -219,15 +219,16 @@
           <Total>0.268498 0.331011 0.464843 0.366624 0.350977 0.369186</Total>
           <Absorption>0.00607774 0.00336006 0.0033786 0.00601739 0.00926286 0.023105</Absorption>
           <Flux>9.76888e+20 3.89137e+21 7.17822e+21 6.93316e+21 3.76086e+21 5.06779e+21</Flux>
+          <EnergyDeposition>1.174727162e-13 9.04147318e-14 5.681151513e-14 6.701619168e-14 9.365910848e-14 2.58246787e-13</EnergyDeposition>
         </Isotope>
       </Table>
       <Table gridIndex="2">
         <Isotope Name="pseudo" L="1" I="6">
           <DNPlambda>0.0133085 0.0305458 0.115185 0.301118 0.879786 2.91213</DNPlambda>
           <NeutronVelocity>2509246574 1333813506 434924431.9 188306540.5 103006449.2 41189554.33</NeutronVelocity>
-          <DNSpectrum index="g">0.00353777 0.395068 0.563868 0.0326199 0.00308883 0.00181722</DNSpectrum>
+          <DNSpectrum index="g">0.003537770991 0.3950681106 0.5638681579 0.03261990913 0.003088830865 0.001817220509</DNSpectrum>
           <DNFraction>8.42874e-05 0.000685537 0.000480185 0.0010362 0.000552869 0.000183929</DNFraction>
-          <FissionSpectrum>0.366547 0.512079 0.118122 0.00290756 0.00026764 7.675e-05</FissionSpectrum>
+          <FissionSpectrum>0.3665470183 0.5120790256 0.1181220059 0.002907560145 0.0002676400134 7.675000384e-05</FissionSpectrum>
           <kappaFission>1.087958634e-13 8.373727255e-14 5.261445088e-14 6.207214956e-14 8.678993093e-14 2.373193013e-13</kappaFission>
           <nuFission>0.01076 0.00755536 0.00459106 0.00540567 0.0075589 0.0206155</nuFission>
           <Scattering profile="1">
@@ -265,15 +266,16 @@
           <Total>0.248661 0.306564 0.43059 0.339701 0.325477 0.343609</Total>
           <Absorption>0.00562969 0.00311188 0.00312906 0.00557985 0.00862274 0.0217293</Absorption>
           <Flux>1.0708e+21 4.26371e+21 7.85975e+21 7.56876e+21 4.09567e+21 5.42592e+21</Flux>
+          <EnergyDeposition>1.087958634e-13 8.373727255e-14 5.261445088e-14 6.207214956e-14 8.678993093e-14 2.373193013e-13</EnergyDeposition>
         </Isotope>
       </Table>
       <Table gridIndex="3">
         <Isotope Name="pseudo" L="1" I="6">
           <DNPlambda>0.0133097 0.0305481 0.115189 0.301117 0.879691 2.91216</DNPlambda>
           <NeutronVelocity>2509259166 1333813506 434986863.4 188332429.3 103016742.3 41438753.52</NeutronVelocity>
-          <DNSpectrum index="g">0.00343963 0.395588 0.563693 0.0323935 0.00309288 0.00179221</DNSpectrum>
+          <DNSpectrum index="g">0.003439632683 0.3955883086 0.5636934397 0.03239352527 0.003092882412 0.001792211398</DNSpectrum>
           <DNFraction>8.4351e-05 0.000682637 0.000477498 0.00103736 0.000550819 0.000182845</DNFraction>
-          <FissionSpectrum>0.366559 0.512083 0.118109 0.00290464 0.000267145 7.71939e-05</FissionSpectrum>
+          <FissionSpectrum>0.3665590077 0.5120830108 0.1181090025 0.002904640061 0.0002671450056 7.719390163e-05</FissionSpectrum>
           <kappaFission>1.035154535e-13 7.967312349e-14 5.006013728e-14 5.906239831e-14 8.260500999e-14 2.249964974e-13</kappaFission>
           <nuFission>0.0102378 0.00718866 0.00436819 0.00514356 0.00719441 0.019546</nuFission>
           <Scattering profile="1">
@@ -311,15 +313,16 @@
           <Total>0.236593 0.291684 0.409733 0.323307 0.309931 0.327654</Total>
           <Absorption>0.00535644 0.00296085 0.0029771 0.00531286 0.00822803 0.0208103</Absorption>
           <Flux>1.1341e+21 4.51509e+21 8.31991e+21 7.99434e+21 4.31876e+21 5.67773e+21</Flux>
+          <EnergyDeposition>1.035154535e-13 7.967312349e-14 5.006013728e-14 5.906239831e-14 8.260500999e-14 2.249964974e-13</EnergyDeposition>
         </Isotope>
       </Table>
       <Table gridIndex="4">
         <Isotope Name="pseudo" L="1" I="6">
           <DNPlambda>0.0133097 0.0305481 0.115189 0.301117 0.879691 2.91216</DNPlambda>
           <NeutronVelocity>2509259166 1333813506 434986863.4 188332429.3 103016742.3 41438753.52</NeutronVelocity>
-          <DNSpectrum index="g">0.00343963 0.395588 0.563693 0.0323935 0.00309288 0.00179221</DNSpectrum>
+          <DNSpectrum index="g">0.003439632683 0.3955883086 0.5636934397 0.03239352527 0.003092882412 0.001792211398</DNSpectrum>
           <DNFraction>8.4351e-05 0.000682637 0.000477498 0.00103736 0.000550819 0.000182845</DNFraction>
-          <FissionSpectrum>0.363614753 0.507969887 0.117160334 0.00288131 0.000264999 7.65739E-05</FissionSpectrum>
+          <FissionSpectrum>0.3665590074 0.512083011 0.1181090024 0.002904640488 0.0002671447448 7.719393271e-05</FissionSpectrum>
           <kappaFission>1.035154535e-13 7.967312349e-14 5.006013728e-14 5.906239831e-14 8.260500999e-14 2.249964974e-13</kappaFission>
           <nuFission>0.0102378 0.00718866 0.00436819 0.00514356 0.00719441 0.019546</nuFission>
           <Scattering profile="1">
@@ -357,10 +360,11 @@
           <Total>0.236593 0.291684 0.409733 0.323307 0.309931 0.327654</Total>
           <Absorption>0.00535644 0.00296085 0.0029771 0.00531286 0.00822803 0.0208103</Absorption>
           <Flux>1.1341e+21 4.51509e+21 8.31991e+21 7.99434e+21 4.31876e+21 5.67773e+21</Flux>
+          <EnergyDeposition>1.035154535e-13 7.967312349e-14 5.006013728e-14 5.906239831e-14 8.260500999e-14 2.249964974e-13</EnergyDeposition>
         </Isotope>
       </Table>
     </Multigroup_Cross_Section_Library>
-    <Multigroup_Cross_Section_Library ID="5" Ver="1.0" Generator="INL" TimeCreated="Fri Mar 12 10:57:42 2021" Description="">
+    <Multigroup_Cross_Section_Library ID="5" Ver="1.0" Generator="INL" TimeCreated="Tue Sep 24 15:50:32 2024" Description="">
       <Tabulation>tfuel</Tabulation>
       <tfuel>600 973 1200 1800</tfuel>
       <ReferenceGridIndex>1</ReferenceGridIndex>
@@ -529,4 +533,5 @@
       </Table>
     </Multigroup_Cross_Section_Library>
   </Multigroup_Cross_Section_Libraries>
-</YakXs>
+</ISOXML>
+
