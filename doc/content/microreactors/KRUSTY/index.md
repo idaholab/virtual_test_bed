@@ -4,7 +4,10 @@
 
 *Model link: [KRUSTY](https://github.com/idaholab/virtual_test_bed/tree/devel/microreactors/KRUSTY)*
 
-!tag name=Kilopower Reactor Using Stirling TechnologY (KRUSTY) pairs=reactor_type:microreactor
+!tag name=Kilopower Reactor Using Stirling TechnologY (KRUSTY)
+     description=Steady state multiphysics simulation of the core of the Kilopower Reactor Using Stirling TechnologY using NEAMS tools
+     image=https://mooseframework.inl.gov/virtual_test_bed/media/KRUSTY/krusty_quarter_mesh.png
+     pairs=reactor_type:microreactor
                        reactor:KRUSTY
                        geometry:core
                        simulation_type:neutronics;multiphysics

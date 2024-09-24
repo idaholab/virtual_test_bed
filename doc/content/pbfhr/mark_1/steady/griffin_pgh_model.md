@@ -4,7 +4,10 @@
 
 *Model link: [FHR Steady-State Multiphysics Model](https://github.com/idaholab/virtual_test_bed/tree/devel/pbfhr/mark1/steady)*
 
-!tag name=FHR Core Steady-State Model pairs=reactor_type:PB-FHR
+!tag name=FHR Core Steady-State Model
+       description=Steady state multiphysics model of the Mk1-FHR using Griffin and Pronghorn in 2D-RZ geometry
+       image=https://mooseframework.inl.gov/virtual_test_bed/media/pbfhr/steady/thermal_flux.png
+       pairs=reactor_type:PB-FHR
                        reactor:Mk1-FHR
                        geometry:core
                        simulation_type:multiphysics

@@ -4,7 +4,10 @@
 
 *Model link: [Standalone SAM Model](https://github.com/idaholab/virtual_test_bed/tree/main/msr/msfr/plant/standalone_sam_model)*
 
-!tag name=Molten Salt Fast Reactor SAM Model pairs=reactor_type:MSR
+!tag name=Molten Salt Fast Reactor SAM Model
+     description=Model of the Euratom EVOL MSFR using SAM with 1D thermal hydraulics and point kinetics
+     image=https://mooseframework.inl.gov/virtual_test_bed/media/msr/msfr/plant/MSFR_SAM_1D.png
+     pairs=reactor_type:MSR
                        reactor:MSFR
                        geometry:primary_loop
                        simulation_type:thermal_hydraulics

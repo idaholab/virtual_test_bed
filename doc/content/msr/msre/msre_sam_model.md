@@ -4,7 +4,10 @@
 
 *Model link: [Steady-State SAM Model](https://github.com/idaholab/virtual_test_bed/tree/devel/msr/msre/steady_state)*
 
-!tag name=Molten Salt Reactor Experiment SAM Model pairs=reactor_type:MSR
+!tag name=Molten Salt Reactor Experiment SAM Model
+     description=Steady state and reactivity insertion accident models of the MSRE primary loop
+     image=https://mooseframework.inl.gov/virtual_test_bed/media/msr/msre/SAM_MSRE_1D.png
+     pairs=reactor_type:MSR
                        reactor:MSRE
                        geometry:primary_loop
                        codes_used:SAM

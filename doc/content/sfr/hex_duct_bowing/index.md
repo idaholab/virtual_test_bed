@@ -1,6 +1,9 @@
 # Hexagonal Duct IAEA Benchmarks
 
-!tag name=Hexagonal Duct IAEA Benchmarks pairs=reactor_type:SFR
+!tag name=Hexagonal Duct IAEA Benchmarks
+    description=Thermomechanics simulation of a sodium fast reactor hexagonal assembly follow IAEA VP benchmarks
+    image=https://mooseframework.inl.gov/virtual_test_bed/media/hex_duct_bowing/vp3a_mesh.png
+    pairs=reactor_type:SFR
                        geometry:assembly_duct
                        simulation_type:component_analysis;thermo_mechanics
                        codes_used:MOOSE_TensorMechanics

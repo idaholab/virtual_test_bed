@@ -4,18 +4,6 @@
 
 *Model link: [Generic PBR SAM Model](https://github.com/idaholab/virtual_test_bed/tree/devel/htgr/generic-pbr)*
 
-!tag name=SAM Generic PBR Model pairs=reactor_type:HTGR
-                       reactor:generic_PBR
-                       geometry:core
-                       simulation_type:multiphysics
-                       transient:load_follow
-                       input_features:checkpoint_restart
-                       codes_used:SAM
-                       computing_needs:Workstation
-                       fiscal_year:2021
-                       sponsor:NEAMS
-                       institution:ANL
-
 The input file (pbr.i) is a model for the generic 200 MW pebble bed reactor
 developed using SAM [!citep](Hu2021). The model focuses only on the core of the
 reactor where the auxiliary components and power conversion system are not

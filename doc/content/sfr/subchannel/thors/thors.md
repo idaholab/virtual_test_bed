@@ -4,7 +4,10 @@
 
 *Model link: [THORS edge blockage Subchannel Model](https://github.com/idaholab/virtual_test_bed/tree/devel/sfr/subchannel/THORS)*
 
-!tag name=Effect of Partial Blockages in Simulated LMFBR Fuel Assemblies pairs=reactor_type:SFR
+!tag name=Effect of Partial Blockages in Simulated LMFBR Fuel Assemblies
+     description=Study of the partial blockage in sodium fast reactor assemblies using a subchannel discretization of the thermal hydraulics. The new flow distribution is computed and analyzed
+     image=https://mooseframework.inl.gov/virtual_test_bed/media/subchannel/hex-index.png
+     pairs=reactor_type:SFR
                        geometry:assembly
                        simulation_type:thermal_hydraulics
                        transient:steady_state

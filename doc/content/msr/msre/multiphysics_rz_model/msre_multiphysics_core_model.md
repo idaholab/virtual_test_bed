@@ -6,18 +6,6 @@
 
 *Model link: [Griffin-Pronghorn Steady-State Model](https://github.com/idaholab/virtual_test_bed/tree/devel/msr/msre/multiphysics_core_model/steady_state)*
 
-!tag name=MSRE Griffin-Pronghorn Steady State Model pairs=reactor_type:MSR
-                       reactor:MSRE
-                       geometry:core
-                       simulation_type:multiphysics
-                       transient:steady_state
-                       input_features:multiapps
-                       codes_used:BlueCrab;Griffin;Pronghorn
-                       computing_needs:Workstation
-                       fiscal_year:2023
-                       institution:INL
-                       sponsor:NEAMS;NRIC
-
 This model of the MSRE utilizes MOOSE to create a 2D, RZ (cylindrical coordinates) mesh of the MSRE.
 Griffin computes neutronics and resulting normalized power source [!citep](Javi23).
 Pronghorn performs medium-fidelity, coarse mesh thermal-hydraulics analysis of the core, upper plenum, pump, downcomer, and lower plenum [!citep](mau23).

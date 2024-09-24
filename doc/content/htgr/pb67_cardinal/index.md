@@ -4,7 +4,10 @@
 
 *Model link: [67-Pebble Core Model](https://github.com/idaholab/virtual_test_bed/tree/devel/htgr/pb67_cardinal)*
 
-!tag name=Conjugate Heat Transfer Simulation of a 67-Pebble Core pairs=reactor_type:HTGR
+!tag name=Conjugate Heat Transfer Simulation of a 67-Pebble Core
+     description=High fidelity simulations of conjugate heat transfer in a pebble bed using MOOSE and NekRS for heat conduction and CFD respectively.
+     image=https://mooseframework.inl.gov/virtual_test_bed/media/pb67_cardinal/pb67_3D_renderings.png
+     pairs=reactor_type:HTGR
                        geometry:pebble_bed
                        simulation_type:CFD
                        codes_used:Cardinal;NekRS;MOOSE_HeatTransfer

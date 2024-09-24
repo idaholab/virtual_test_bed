@@ -4,7 +4,10 @@
 
 *Model link: [FHR SAM Model](https://github.com/idaholab/virtual_test_bed/tree/devel/pbfhr/mark1/sam_model)*
 
-!tag name=FHR Core SAM Model pairs=reactor_type:PB-FHR
+!tag name=FHR Core SAM Model
+     description=Thermal hydraulics simulation of the Mk1-FHR reactor including the primary loop and passive heat exchanger systems. A normal operation and a loss of flow model are included
+     image=https://mooseframework.inl.gov/virtual_test_bed/media/pbfhr/pbfhr_system.png
+     pairs=reactor_type:PB-FHR
                        reactor:Mk1-FHR
                        simulation_type:thermal_hydraulics
                        transient:steady_state;PLOF
