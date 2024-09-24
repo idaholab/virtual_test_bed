@@ -1,12 +1,13 @@
 # Gas-cooled Microreactor Assembly Model Description
 
 The Gas-Cooled Microreactor (GC-MR) assembly model was developed at ANL as a modeling experiment that gathers several expected modeling challenges encountered by the U.S. industry. The GC-MR assembly uses a graphite structure, TRISO fuel blocks with 19.95 at% LEU fuel, YH2 moderator pins with FeCrAl envelope, and upper/lower BeO reflector regions. Additional modeling specificities were implemented in the GC-MR such as burnable poison blocks, helium coolant channels and a central control and shutdown rod.
-[Fig_1] illustrates the GC-MR assembly model. 
+[Fig_1] illustrates the GC-MR assembly model.
 
 !media media/gcmr/Fig_1.jpg
       style=display: block;margin-left:auto;margin-right:auto;width:80%;
       id=Fig_1
       caption= Description of the GC-MR assembly model
+
 * Blocks contain both triangular and hexahedron elements*
 
 The major technical parameters for the GC-MR assembly model are:
@@ -65,7 +66,7 @@ Either a specific value or a more detailed BISON model that computes thermal con
 | PyC2 | 4.0 |
 | B4C | 92 |
 | YH2 | 20 |
-| Cr coating | [ChromiumThermal](https://mooseframework.inl.gov/bison/source/materials/ChromiumThermal.html)| 
+| Cr coating | [ChromiumThermal](https://mooseframework.inl.gov/bison/source/materials/ChromiumThermal.html)|
 | FeCrAl envelope | [FeCrAlThermal](https://mooseframework.inl.gov/bison/source/materials/FeCrAlThermal.html) |
 | Graphite Matrix | [GraphiteMatrixThermal](https://mooseframework.inl.gov/bison/source/materials/GraphiteMatrixThermal.html) |
 | BeO | [BeOThermal](https://mooseframework.inl.gov/bison/source/materials/BeOThermal.html) |

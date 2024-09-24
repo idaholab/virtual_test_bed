@@ -6,7 +6,7 @@
 
 !tag name=Heat-Pipe Microreactor Assembly
      description=Model of an assembly with thermal coupling between the assembly and heat pipes
-     image=https://mooseframework.inl.gov/virtual_test_bed/media/hpmr_assembly/core.png
+     image=https://mooseframework.inl.gov/virtual_test_bed/media/hpmr_assembly/core.jpg
      pairs=reactor_type:microreactor
                        reactor:HPMR
                        geometry:assembly

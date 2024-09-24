@@ -2,7 +2,7 @@
 
 !tag name=HTR-10 Griffin Neutronics Model
      description=HTR-10 core neutronics eigenvalue simulation
-     image=https://mooseframework.inl.gov/virtual_test_bed/media/htgr/htr10/htr-10-with-vessel.png
+     image=https://mooseframework.inl.gov/virtual_test_bed/media/htr10/htr-10-with-vessel.png
      pairs=reactor_type:HTGR
                        reactor:HTR-10
                        geometry:core

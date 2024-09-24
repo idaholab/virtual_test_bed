@@ -1,18 +1,20 @@
-# Gas Cooled Micro Reactor Assembly Multiphysics
+# Gas-Cooled Microreactor Assembly
 
 *Contacts: Ahmed Abdelhameed (aabdelhameed.at.anl.gov), Yinbin Miao (ymiao.at.anl.gov), Nicolas Stauff (nstauff.at.anl.gov)*
 
-!tag name=Gas-Cooled Microreactor Assembly Multiphysics
-     description=3D model of an assembly of a Gas Cooled Micro Reactor with heterogeneous transport, fuel thermomechanics and coolant thermal-hydraulics
-     image=https://mooseframework.inl.gov/virtual_test_bed/media/gcmr/Fig2.jpg
+!tag name=Gas-Cooled Microreactor Assembly
+     image=https://mooseframework.inl.gov/virtual_test_bed/media/gcmr/Fig_1.jpg
      pairs=reactor_type:microreactor
                        reactor:GCMR
                        geometry:assembly
                        simulation_type:neutronics;multiphysics
-                       codes_used:Griffin;Bison;SAM;BlueCrab
-                       transient:steady_state;flow_blockage;RIA
+                       codes_used:BlueCrab;Griffin;SAM;BISON
+                       input_features:multiapps
+                       transient:steady_state;RIA;flow_blockage
                        computing_needs:HPC
                        fiscal_year:2023
+                       institution:ANL
+                       sponsor:NEAMS
 
 [Description of the assembly design](gcmr/GCMR_Assembly_Model_Description.md)
 
