@@ -4,7 +4,10 @@
 
 *Model link: [MSFR CFD Models](https://github.com/idaholab/virtual_test_bed/tree/devel/msr/msfr/core_cfd)*
 
-!tag name=MSFR Nek5000 CFD Modeling pairs=reactor_type:MSR
+!tag name=MSFR Nek5000 CFD Modeling
+     description=High fidelity computational fluid dynamics model of the MSFR core using several modeling approaches, from LES to RANS
+     image=https://mooseframework.inl.gov/virtual_test_bed/media/msr/msfr/Nek_Re1M_vfield.png
+     pairs=reactor_type:MSR
                        reactor:MSFR
                        geometry:core
                        simulation_type:CFD

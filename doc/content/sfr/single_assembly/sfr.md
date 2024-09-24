@@ -4,7 +4,10 @@
 
 *Model link: [SFR Single Assembly Model](https://github.com/idaholab/virtual_test_bed/tree/devel/sfr/single_assembly)*
 
-!tag name=Sodium Fast Reactor Single Assembly Model pairs=reactor_type:SFR
+!tag name=Sodium Fast Reactor Single Assembly Model
+     description=Coupled multiphysics simulation of a sodium fast reactor assembly, using homogenized diffusion neutronics, 1D thermal hydraulics and a homogeneous radial support plate expansion model
+     image=https://mooseframework.inl.gov/virtual_test_bed/media/sfr_minicore/griffin_mesh.png
+     pairs=reactor_type:SFR
                        geometry:assembly
                        simulation_type:multiphysics
                        input_features:multiapps

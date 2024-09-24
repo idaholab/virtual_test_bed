@@ -4,7 +4,10 @@
 
 *Model link: [HTTF Lower Plenum CFD Model](https://github.com/idaholab/virtual_test_bed/tree/devel/htgr/httf/lower_plenum_mixing)*
 
-!tag name=Nek5000 CFD Modeling of HTTF Lower Plenum Flow Mixing Phenomenon pairs=reactor_type:HTGR
+!tag name=Nek5000 CFD Modeling of HTTF Lower Plenum Flow Mixing Phenomenon
+     description=CFD simulation of the plenum using unsteady RANS
+     image=https://mooseframework.inl.gov/virtual_test_bed/media/httf/lower_plenum_cfd/httf_mesh.png
+     pairs=reactor_type:HTGR
                        reactor:HTTF
                        geometry:plenum
                        simulation_type:CFD

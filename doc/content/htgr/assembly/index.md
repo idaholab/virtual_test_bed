@@ -4,18 +4,21 @@
 
 *Model link: [Coupled HTGR Model](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/assembly)*
 
-!tag name=Multiphysics Coupling of OpenMC, MOOSE, and THM for a prismatic HTGR pairs=reactor_type:HTGR
-                       reactor:generic_prismatic_htgr
-                       geometry:assembly
-                       simulation_type:multiphysics
-                       codes_used:Cardinal;OpenMC;MOOSE_HeatTransfer;MOOSE_ThermalHydraulics
-                       open_source:true
-                       transient:steady_state
-                       input_features:multiapps;reactor_meshing
-                       computing_needs:HPC
-                       fiscal_year:2022
-                       sponsor:NEAMS
-                       institution:ANL
+!tag name=Multiphysics Coupling of OpenMC, MOOSE, and THM for a prismatic HTGR
+     description=Prismatic HTGR multiphysics steady state study
+     image=https://mooseframework.inl.gov/virtual_test_bed/media/htgr/assembly.png
+     pairs=reactor_type:HTGR
+          reactor:generic_prismatic_htgr
+          geometry:assembly
+          simulation_type:multiphysics
+          codes_used:Cardinal;OpenMC;MOOSE_HeatTransfer;MOOSE_ThermalHydraulics
+          open_source:true
+          transient:steady_state
+          input_features:multiapps;reactor_meshing
+          computing_needs:HPC
+          fiscal_year:2022
+          sponsor:NEAMS
+          institution:ANL
 
 In this tutorial, we couple OpenMC Monte Carlo transport to the MOOSE heat transfer module
 and the MOOSE [!ac](THM), a set of 1-D systems-level thermal-hydraulics kernels in MOOSE

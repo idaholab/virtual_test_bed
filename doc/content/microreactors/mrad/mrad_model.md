@@ -4,18 +4,6 @@
 
 *Model link: [HPMR Model](https://github.com/idaholab/virtual_test_bed/tree/devel/microreactors/mrad)*
 
-!tag name=Micro-Reactor Multiphysics model pairs=reactor_type:microreactor
-                       reactor:HPMR
-                       geometry:core
-                       simulation_type:multiphysics
-                       input_features:multiapps;reactor_meshing;mixed_restart
-                       transient:steady_state;overpower;load_follow;ULOC
-                       codes_used:BlueCrab;Griffin;BISON;Sockeye
-                       computing_needs:HPC
-                       fiscal_year:2023
-                       sponsor:NEAMS
-                       institution:ANL
-
 !alert note title=Acknowledgement
 This HP-MR model was built upon earlier work performed under ARPA-E MEITNER project and reported in the journal paper [!citep](matthews2021coupled), and some parts of the inputs are coming from these original models.
 
@@ -83,7 +71,7 @@ As the heat pipe behavior is simulated by Sockeye, the heat pipe blocks are remo
 
 For each heat pipe in the 1/6 HP-MR core, a Sockeye grandchild application is used to calculate its thermal performance.
 
-The effective thermal conductivity model, i.e., a 2D axisymmetric conduction model with a very high thermal conductivity of 2×10^5^ W/m•K is applied to the vapor core. A heat flux boundary condition is applied to the exterior of the casing in the evaporator section, which is provided by the bulk conduction model. A convective boundary condition is applied to the exterior of the envelope in the condenser section, with an external temperature of 800 K and a heat transfer coefficient (HTC) of 10^6^ W/m^2^•K (the value is intentially set high to achieve an effective Dirichlet boundary condition).
+The effective thermal conductivity model, i.e., a 2D axisymmetric conduction model with a very high thermal conductivity of 2×10^5^ W/m•K is applied to the vapor core. A heat flux boundary condition is applied to the exterior of the casing in the evaporator section, which is provided by the bulk conduction model. A convective boundary condition is applied to the exterior of the envelope in the condenser section, with an external temperature of 800 K and a heat transfer coefficient (HTC) of 10^6^ W/m^2^•K (the value is intentionally set high to achieve an effective Dirichlet boundary condition).
 
 !listing /mrad/steady/HPMR_sockeye_ss.i max-height = 10000
 

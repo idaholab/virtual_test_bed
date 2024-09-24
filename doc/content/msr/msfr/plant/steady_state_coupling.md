@@ -2,18 +2,6 @@
 
 *Model link: [Steady-State Coupling Model](https://github.com/idaholab/virtual_test_bed/tree/devel/msr/msfr/plant/steady)*
 
-!tag name=MSFR Steady-State Griffin-Pronghorn-SAM Coupling pairs=reactor_type:MSR
-                       reactor:MSFR
-                       geometry:primary_loop
-                       simulation_type:multiphysics
-                       codes_used:BlueCrab;Griffin;Pronghorn;SAM
-                       input_features:multiapps
-                       transient:steady_state
-                       computing_needs:HPC
-                       fiscal_year:2023
-                       institution:INL
-                       sponsor:NEAMS;NRIC
-
 Griffin, Pronghorn, and SAM are coupled with a domain overlapping approach.
 The steady-state Griffin-Pronghorn coupled model is described at [Griffin-Pronghorn model](msfr/griffin_pgh_model.md).
 The coupling scheme between the Griffin-Pronghorn and SAM models is shown in [msfr_coupling].

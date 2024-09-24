@@ -4,7 +4,10 @@
 
 *Model link: [Thermochimica Steady-State Model](https://github.com/idaholab/virtual_test_bed/tree/devel/msr/msfr/thermochemistry)*
 
-!tag name=MSFR Griffin-Pronghorn-Thermochimica Steady State Model pairs=reactor_type:MSR
+!tag name=MSFR Griffin-Pronghorn-Thermochimica Steady State Model
+     description=Coupled multiphysics model of the MSFR core with neutronics, fluid dynamics and salt thermochemistry using Thermochimica
+     image=https://mooseframework.inl.gov/virtual_test_bed/media/msr/msfr/thermochemistry/fuel_salt_temperature.png
+     pairs=reactor_type:MSR
                        reactor:MSFR
                        geometry:core
                        simulation_type:core_multiphysics

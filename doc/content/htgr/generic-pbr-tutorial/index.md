@@ -1,6 +1,9 @@
 # Step-by-Step Tutorial to Model a Generic Pebble-Bed High-Temperature Gas-Cooled Reactor Using Pronghorn
 
-!tag name=Generic Pebble Bed HTGR Pronghorn tutorial pairs=reactor_type:HTGR
+!tag name=Generic Pebble Bed HTGR Pronghorn tutorial
+     description=In this tutorial we build a pebble bed HTGR simulation step by step
+     image=https://mooseframework.inl.gov/virtual_test_bed/media/generic-pbr-tutorial/MeshP8.png
+     pairs=reactor_type:HTGR
                        reactor:generic_PBR
                        tutorials:PBR
                        geometry:core

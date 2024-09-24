@@ -4,7 +4,10 @@
 
 *Model link: [FHR Bypass Flow Reflector Model](https://github.com/idaholab/virtual_test_bed/tree/devel/pbfhr/mark1/reflector)*
 
-!tag name=FHR Bypass Flow Reflector Model pairs=reactor_type:PB-FHR
+!tag name=FHR Bypass Flow Reflector Model
+     description=High fidelity study of the reflector bypass flow in fluoride salt cooled reactor using computational fluid dynamics and thermo-mechanics
+     image=https://mooseframework.inl.gov/virtual_test_bed/media/pbfhr/reflector/top_down.png
+     pairs=reactor_type:PB-FHR
                        geometry:reflector
                        simulation_type:component_analysis;CFD
                        codes_used:Cardinal;NekRS;MOOSE_HeatTransfer

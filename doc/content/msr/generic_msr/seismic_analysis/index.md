@@ -4,7 +4,10 @@ This model demonstrates the seismic analysis of a nuclear power plant (NPP) buil
 
 This model was adopted from the list of examples on the [MASTODON](https://mooseframework.inl.gov/mastodon/examples/index.html) website. For further information regarding [MASTODON](https://mooseframework.inl.gov/mastodon/index.html) please contact Dr. Bolisetti at chandrakanth.bolisetti@inl.gov.
 
-!tag name=Seismic Analysis Model pairs=reactor_type:MSR
+!tag name=Seismic Analysis of a generic Molten Salt Reactor plant
+     description=Seismic Analysis of a generic Molten Salt Reactor plant
+     image=https://mooseframework.inl.gov/virtual_test_bed/media/seismic_analysis/building1.png
+     pairs=reactor_type:MSR
                        reactor:generic_msr
                        geometry:reactor_building
                        codes_used:MASTODON

@@ -5,18 +5,6 @@
 
 *Model link: [S8ER Model](https://github.com/idaholab/virtual_test_bed/tree/devel/microreactors/s8er)*
 
-!tag name=SNAP 8 Experimental Reactor Multiphysics model pairs=reactor_type:microreactor
-                       reactor:SNAP-8
-                       geometry:core
-                       input_features:multiapps
-                       simulation_type:multiphysics
-                       transient:steady_state
-                       codes_used:Griffin;BISON;Serpent
-                       computing_needs:Workstation
-                       fiscal_year:2023
-                       sponsor:NRIC;NEUP
-                       institution:INL
-
 !alert note
 For citing purposes, please cite [!citep](s8er_garcia2022) and [!citep](s8er_naupa2022).
 

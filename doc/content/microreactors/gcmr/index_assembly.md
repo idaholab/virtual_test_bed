@@ -2,11 +2,13 @@
 
 *Contacts: Ahmed Abdelhameed (aabdelhameed.at.anl.gov), Yinbin Miao (ymiao.at.anl.gov), Nicolas Stauff (nstauff.at.anl.gov)*
 
-!tag name=Gas-Cooled Microreactor Assembly pairs=reactor_type:microreactor
+!tag name=Gas-Cooled Microreactor Assembly
+     image=https://mooseframework.inl.gov/virtual_test_bed/media/gcmr/Fig_1.jpg
+     pairs=reactor_type:microreactor
                        reactor:GCMR
                        geometry:assembly
-                       simulation_type:multiphysics
-                       codes_used:BlueCrab;Griffin;BISON
+                       simulation_type:neutronics;multiphysics
+                       codes_used:BlueCrab;Griffin;SAM;BISON
                        input_features:multiapps
                        transient:steady_state;RIA;flow_blockage
                        computing_needs:HPC

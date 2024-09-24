@@ -4,7 +4,10 @@
 
 *Model link: [Micro Reactor Drum Rotation Model](https://github.com/idaholab/virtual_test_bed/tree/main/microreactors/drum_rotation)*
 
-!tag name=Micro Reactor Drum Rotation model pairs=reactor_type:microreactor
+!tag name=Micro Reactor Drum Rotation model
+     description=This 2D model of an Empire-like reactor core studies the insertion then removal of reactivity from a control drum rotation
+     image=https://mooseframework.inl.gov/virtual_test_bed/media/drum_rotation/empire_2d_CD_coarse_in.png
+     pairs=reactor_type:microreactor
                        reactor:Empire
                        geometry:core
                        simulation_type:neutronics;multiphysics

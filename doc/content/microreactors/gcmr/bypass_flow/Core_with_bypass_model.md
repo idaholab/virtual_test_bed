@@ -4,18 +4,6 @@
 
 *Model link: [GCMR Core Thermal Model](https://github.com/idaholab/virtual_test_bed/tree/devel/microreactors/gcmr/bypass_flow)*
 
-!tag name=GCMR Core Thermal Model pairs=reactor_type:microreactor
-                       reactor:GCMR
-                       geometry:core
-                       simulation_type:thermal_hydraulics
-                       input_features:multiapps
-                       codes_used:Pronghorn_subchannel;MOOSE_HeatTransfer;MOOSE_ThermalHydraulics
-                       computing_needs:Workstation
-                       open_source:partial
-                       fiscal_year:2023
-                       sponsor:NRIC
-                       institution:INL
-
 ## Mesh file
 
 A 3-D mesh for the core is generated using the MOOSE [`Reactor module`](https://mooseframework.inl.gov/modules/reactor/index.html). Details of the mesh for an assembly is shown in [assembly_mesh].

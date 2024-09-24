@@ -4,7 +4,10 @@
 
 *Model link: [MSRE Lower Plenum CFD Model](https://github.com/idaholab/virtual_test_bed/tree/devel/msr/msre/lp_cfd)*
 
-!tag name=Molten Salt Reactor Experiment nekRS Model pairs=reactor_type:MSR
+!tag name=Molten Salt Reactor Experiment nekRS Model
+     description=High fidelity computational fluid dynamics model of the MSRE lower plenum using NekRS using LES
+     image=https://mooseframework.inl.gov/virtual_test_bed/media/msr/msre/lp_cfd/lp_cad.png
+     pairs=reactor_type:MSR
                        reactor:MSRE
                        geometry:plenum
                        codes_used:NekRS

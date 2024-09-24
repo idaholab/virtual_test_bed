@@ -4,7 +4,10 @@
 
 *Model link: [TRISO Bison Model](https://github.com/idaholab/virtual_test_bed/tree/devel/htgr/triso_fuel)*
 
-!tag name=TRISO Bison Model pairs=reactor_type:HTGR
+!tag name=TRISO Bison Model
+     description=Fuel performance studies of 1D, 2D and 3D TRISO particles using BISON
+     image=https://mooseframework.inl.gov/virtual_test_bed/media/htgr/bison_sic_stress.png
+     pairs=reactor_type:HTGR
                        geometry:TRISO
                        simulation_type:fuel_performance
                        codes_used:BISON

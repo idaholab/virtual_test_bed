@@ -4,7 +4,10 @@
 
 *Model link: [Griffin-Pronghorn Steady-State Model](https://github.com/idaholab/virtual_test_bed/tree/devel/msr/msfr/steady)*
 
-!tag name=MSFR Griffin-Pronghorn Steady State Model pairs=reactor_type:MSR
+!tag name=MSFR Griffin-Pronghorn Steady State Model
+     description=Steady state multiphysics model of the MSFR core in 2D-RZ geometry
+     image=https://mooseframework.inl.gov/virtual_test_bed/media/msr/msfr/msfr_mesh.png
+     pairs=reactor_type:MSR
                        reactor:MSFR
                        geometry:core
                        simulation_type:multiphysics

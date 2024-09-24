@@ -4,16 +4,6 @@
 
 *Model link: [LEU Fuel Pulse Model](https://github.com/idaholab/virtual_test_bed/tree/devel/htgr/leu_pulse)*
 
-!tag name=LEU Fuel Pulse pairs=reactor_type:HTGR
-                       geometry:mini-core
-                       simulation_type:multiphysics
-                       transient:RIA
-                       codes_used:Griffin;MOOSE_HeatTransfer
-                       computing_needs:Workstation
-                       fiscal_year:2023
-                       sponsor:NRIC
-                       institution:INL
-
 ## Model Description
 
 This model represents a greatly simplified version of the Transient Reactor Test Facility (TREAT).
