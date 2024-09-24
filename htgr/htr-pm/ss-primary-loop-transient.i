@@ -14,7 +14,7 @@ p_outlet          = 7.0e+6 # Reactor outlet pressure (Pa)
   global_init_T = ${T_inlet}
   scaling_factor_var = '1 1e-3 1e-6'
   eos = helium
-  Tsolid_sf = 1e-5 
+  Tsolid_sf = 1e-5
 []
 
 [Problem]
@@ -61,16 +61,16 @@ p_outlet          = 7.0e+6 # Reactor outlet pressure (Pa)
     T_min   = 500
     T_max   = 1500
   []
-  [water]  # 13.25 MPa and 478.15 K 
+  [water]  # 13.25 MPa and 478.15 K
     type  = PTConstantEOS
-    p_0   = 13.25e6   
-    rho_0 = 867.54     
-    beta  = 0           
-    cp    = 4455.7      
-    h_0   = 879.44e3    
-    T_0   = 478.15      
-    mu    = 0.00013403  
-    k     = 0.66532    
+    p_0   = 13.25e6
+    rho_0 = 867.54
+    beta  = 0
+    cp    = 4455.7
+    h_0   = 879.44e3
+    T_0   = 478.15
+    mu    = 0.00013403
+    k     = 0.66532
   []
 []
 
@@ -96,20 +96,20 @@ p_outlet          = 7.0e+6 # Reactor outlet pressure (Pa)
     K = '0.0 0.0 0.0'
     width = 0.8 # display purposes
     height = 1.69 # display purposes
-    Area = 8.9727 
-    volume = 7.17816 
+    Area = 8.9727
+    volume = 7.17816
   []
   [hot_plenum]
     type = PBVolumeBranch
     eos = helium
-    center = '0.845 1.4 0' 
+    center = '0.845 1.4 0'
     inputs = 'hot_plenum_inlet_pipe(in) bypass(out)'
     outputs = 'outlet_pipe(in)'
     K = '0.0 0.0 0.0'
     width = 0.8 # display purposes
     height = 1.69 # display purposes
-    Area = 8.9727 
-    volume = 7.17816 
+    Area = 8.9727
+    volume = 7.17816
   []
 
   # Small artificial to connect 'coupled_outlet_top'
@@ -118,7 +118,7 @@ p_outlet          = 7.0e+6 # Reactor outlet pressure (Pa)
     type           = PBOneDFluidComponent
     A              = 7.068583471 # Based on pbed flow area in mainapp
     length         = 0.1
-    Dh             = 3 
+    Dh             = 3
     n_elems        = 1
     orientation    = '0 1 0'
     position       = '1.065 15.7 0' #'0.845 1.5 0'
@@ -126,17 +126,17 @@ p_outlet          = 7.0e+6 # Reactor outlet pressure (Pa)
     initial_V      = -2
   []
 
-  # # This is the 'exit' of the 1-D primary loop model. 
+  # # This is the 'exit' of the 1-D primary loop model.
   # It is located at the outlet of the cold plenum.
   [coupled_outlet_top]
     type = CoupledPPSTDV
     input = 'cold_plenum_outlet_pipe(in)'
     eos = helium
     postprocessor_pbc = p_core_pipe_outlet
-    postprocessor_Tbc = 1Dreceiver_temperature_in 
+    postprocessor_Tbc = 1Dreceiver_temperature_in
   []
 
-  # This is the 'entrance' of the 1-D primary loop model. 
+  # This is the 'entrance' of the 1-D primary loop model.
   # It is located at the inlet of the hot plenum.
   [coupled_inlet]
     type = CoupledPPSTDJ
@@ -154,7 +154,7 @@ p_outlet          = 7.0e+6 # Reactor outlet pressure (Pa)
     type           = PBOneDFluidComponent
     A              = 7.068583471 # Based on pbed flow area in mainapp
     length         = 0.5
-    Dh             = 3 
+    Dh             = 3
     n_elems        = 1
     orientation    = '0 1 0'
     position       = '0.845 1.3 0' #'1.065 15.85 0'
@@ -163,11 +163,11 @@ p_outlet          = 7.0e+6 # Reactor outlet pressure (Pa)
     type           = PBOneDFluidComponent
     A              = 0.42474
     length         = 13.9
-    Dh             = 0.13 
+    Dh             = 0.13
     n_elems        = 20
     orientation    = '0 -1 0'
     position       = '1.625 15.7 0'
-    HT_surface_area_density = 23.077 
+    HT_surface_area_density = 23.077
     f = 2000
     Hw = 0
   []
@@ -184,13 +184,13 @@ p_outlet          = 7.0e+6 # Reactor outlet pressure (Pa)
     T_bc = 523.15
   []
 
-  # Surrogate channel 
+  # Surrogate channel
   [core_pipe]
     type           = PBOneDFluidComponent
     eos            = helium
     A              = 7.068583471 # Based on pbed flow area in mainapp
     length         = 13.9 # 15.7-1.8
-    Dh             = 3 
+    Dh             = 3
     n_elems        = 1
     orientation    = '0 1 0'
     position       = '0.845 1.8 0' #'1.065 15.85 0'
@@ -210,9 +210,9 @@ p_outlet          = 7.0e+6 # Reactor outlet pressure (Pa)
 
   [riser]
     type           = PBOneDFluidComponent
-    A              = 0.81631 
-    Dh             = 0.2 
-    length         = 13.65281 # 
+    A              = 0.81631
+    Dh             = 0.2
+    length         = 13.65281 #
     n_elems        = 20
     orientation    = '0 1 0'
     position       = '2.03 2.04719 0'
@@ -233,7 +233,7 @@ p_outlet          = 7.0e+6 # Reactor outlet pressure (Pa)
     n_elems        = 20
     orientation    = '-1 0 0'
     position       = '7.164 2.04719 0'
-  []  
+  []
   [outlet_pipe]
     type           = PBOneDFluidComponent
     A              = 0.470026997
@@ -272,12 +272,12 @@ p_outlet          = 7.0e+6 # Reactor outlet pressure (Pa)
     initial_T_wall = ${T_inlet}
     T_wall_name = Twall_bypass_inner_from_main
   []
-  
+
 []
 
 
 [Postprocessors]
-  
+
  # inlet pressure hot_plenum_inlet_pipe
   [P_hot_plenum_inlet_pipe]
     type = ComponentBoundaryVariableValue
@@ -295,23 +295,23 @@ p_outlet          = 7.0e+6 # Reactor outlet pressure (Pa)
     variable = temperature
     input = 'cold_plenum_outlet_pipe(out)'
   []
-  
+
   [1Dsource_temperature_out]
     type = ComponentBoundaryVariableValue
     variable = temperature
     input = 'hot_plenum_inlet_pipe(in)'
   []
-      
+
   [1Dsource_velocity_in]
     type = ComponentBoundaryVariableValue
     variable = velocity
     input = 'cold_plenum_outlet_pipe(out)'
   []
-  
+
   [1Dreceiver_temperature_in]
     type = Receiver
   []
-  
+
   [1Dreceiver_temperature_out]
     type = Receiver
   []

@@ -1,22 +1,22 @@
 # ==============================================================================
 # Model description
 # ------------------------------------------------------------------------------
-# Steady-state HTR-PM SAM porous media model 
+# Steady-state HTR-PM SAM porous media model
 # Author(s): Zhiee Jhia Ooi, Gang Yang, Travis Mui, Ling Zou, Rui Hu or ANL
 # ==============================================================================
 # - This is a SAM reference plant model for the HTR-PM reactor.
 #
-# - The model consists of a porous-media core model, a 0-D/1-D primary loop model, 
+# - The model consists of a porous-media core model, a 0-D/1-D primary loop model,
 #   and a RCCS model.
 #
 # - The primary loop model is based on the design of the actual primary loop of the
 #   HTR-PM reactor. Dimensions and geometries of the primary loop were estimated
-#   graphically from publicly available figures and information. Some main updates 
+#   graphically from publicly available figures and information. Some main updates
 #   the primary loop model includes the addition of the co-axial inlet/outlet channel,
 #   the re-arrangement of components to more accurately reflect the actual system,
 #   and the use of best-estimate geometric info/dimensions for the components.
 #
-# - The RCCS is a water-cooled system. The dimensions of the riser channels are 
+# - The RCCS is a water-cooled system. The dimensions of the riser channels
 #   are based on the "Scaling Analysis of Reactor Cavity Cooling System in HTR" by
 #   Roberto et al. (2020). No cooling tower is included in the RCCS model. Instead,
 #   a heat exchanger is included in the model to remove heat from the RCCS.
@@ -72,14 +72,14 @@ pbed_d      = 3.0  # Pebble bed diameter (m)
 []
 
 [Functions]
-  # Axial distribution of power 
+  # Axial distribution of power
   [Q_axial]
     type = PiecewiseLinear
     axis = y
     x = '3.228  3.768 4.198 4.698 5.198 5.698 6.198 6.698 7.198 7.698 8.198 8.698 9.198 10.3  11.5  12  12.8  13.4  13.8  14.228'
     y = '0.5  0.56660312  0.70174359  0.84062718  0.97604136  0.95988015   1.05950249 1.0727253 1.1394942 1.19985528  1.24058574  1.24499334 1.26168557  1.26315477 1.20720129  1.14977861 1.0 0.8 0.56820578  0.5'
   []
-  # Radial distribution of power 
+  # Radial distribution of power
   [Q_radial]
     type = PiecewiseLinear
     axis = x
@@ -92,7 +92,7 @@ pbed_d      = 3.0  # Pebble bed diameter (m)
     x = '-1.00E+06  0 1.00E-06  0.5 1 2.5 5 10  20  50  100 200 500 1000  2000  4000  6000  10000 20000 40000 60000 100000  150000  200000  250000  300000  365000 430000 495000 560000 625000 690000 755000'
     y = '1        1 0.06426 0.06193 0.06008 0.05603 0.0518  0.04704 0.04216 0.03592 0.03137 0.02739 0.02287 0.01945 0.01599 0.01281 0.01127 0.00966 0.00795 0.00655 0.00582 0.00499 0.00438 0.00399 0.00369 0.00347 0.00323 2.99e-3 2.75e-3 2.51e-3 2.27e-3 2.03e-3 1.79e-3'
   []
-  # Combine time, axial distribution, and radial distribution 
+  # Combine time, axial distribution, and radial distribution
   [Q_fn]
     type = CompositeFunction
     functions = 'Q_axial Q_time Q_radial'
@@ -162,7 +162,7 @@ pbed_d      = 3.0  # Pebble bed diameter (m)
   []
   [he]
     type = HeatConductionMaterialProps
-    k = 4 
+    k = 4
     rho = 6.0
     Cp = 5000
   []
@@ -188,7 +188,7 @@ pbed_d      = 3.0  # Pebble bed diameter (m)
   # Velocity
   [vel_x]
     scaling = 1e-3
-    #initial_condition = 1.0E-08 
+    #initial_condition = 1.0E-08
     block = ${fluid_blocks}
   []
   [vel_y]
@@ -222,11 +222,11 @@ pbed_d      = 3.0  # Pebble bed diameter (m)
     #initial_condition = ${rho_in}
   []
   [porosity_aux]
-    order = CONSTANT    
+    order = CONSTANT
     family = MONOMIAL
   []
-  [power_density]    
-    order = CONSTANT    
+  [power_density]
+    order = CONSTANT
     family = MONOMIAL
     #initial_condition = 3.215251376e6
     block = '${active_core_blocks}'
@@ -258,7 +258,7 @@ pbed_d      = 3.0  # Pebble bed diameter (m)
     #initial_condition = 3.0e3
   []
 
-  # Aux variables for RCCS MultiApp transfer 
+  # Aux variables for RCCS MultiApp transfer
   [TRad]
     #initial_condition =  ${T_inlet}
     block = 'rpv'
@@ -396,7 +396,7 @@ pbed_d      = 3.0  # Pebble bed diameter (m)
     block = '${pebble_blocks} ${porous_blocks} ${cavity_blocks}'
     variable = Ts
     porosity = porosity_aux
-    solid = graphite 
+    solid = graphite
   []
   [solid_conduction]
     type = PMSolidTemperatureKernel
@@ -456,7 +456,7 @@ pbed_d      = 3.0  # Pebble bed diameter (m)
     type = ConstantAux
     variable = porosity_aux
     block = 'top_cavity'
-    value = 0.99 
+    value = 0.99
   []
   [power_density]
     type = FunctionAux
@@ -475,34 +475,34 @@ pbed_d      = 3.0  # Pebble bed diameter (m)
     primary = 'core_outlet'
     secondary = 'hot_plenum_wall_bottom'
     primary_variable = Ts
-    RZ_multiplier_1 = 1.0 
+    RZ_multiplier_1 = 1.0
     RZ_multiplier_2 = 1.0
   []
 []
 
 [BCs]
   # Inlet BCs
-  [BC_inlet_mass] 
-    type = MDFluidMassBC  
-    boundary = 'core_inlet'    
-    variable = p      
-    pressure = p      
-    u = vel_x           
-    v = vel_y            
-    temperature = T  
-    eos = helium     
+  [BC_inlet_mass]
+    type = MDFluidMassBC
+    boundary = 'core_inlet'
+    variable = p
+    pressure = p
+    u = vel_x
+    v = vel_y
+    temperature = T
+    eos = helium
   []
   [BC_inlet_x_mom]
-    type = DirichletBC          
-    boundary = 'core_inlet'         
-    variable = vel_x          
-    value = 0                    
+    type = DirichletBC
+    boundary = 'core_inlet'
+    variable = vel_x
+    value = 0
   []
   [BC_inlet_y_mom]
-    type = PostprocessorDirichletBC          
-    boundary = 'core_inlet'          
-    variable = vel_y         
-    postprocessor = 2Dreceiver_velocity_in                   
+    type = PostprocessorDirichletBC
+    boundary = 'core_inlet'
+    variable = vel_y
+    postprocessor = 2Dreceiver_velocity_in
   []
   [BC_inlet_T]
     type = INSFEFluidEnergyDirichletBC
@@ -515,8 +515,8 @@ pbed_d      = 3.0  # Pebble bed diameter (m)
   # Outlet BCs
   [BC_outlet_mass]
     type = DirichletBC
-    boundary = 'core_outlet'         
-    variable = p           
+    boundary = 'core_outlet'
+    variable = p
     value = 0
   []
   [BC_outlet_T]
@@ -529,10 +529,10 @@ pbed_d      = 3.0  # Pebble bed diameter (m)
 
   # Wall BCs
   [BC_fluidWall_x_mom]
-    type = DirichletBC          
-    boundary = '${slip_wall_vertical} ${slip_wall_vertical_outer}'               
-    variable = vel_x              
-    value = 0               
+    type = DirichletBC
+    boundary = '${slip_wall_vertical} ${slip_wall_vertical_outer}'
+    variable = vel_x
+    value = 0
   []
 
   # Heat transfer bypass and risers
@@ -568,31 +568,31 @@ pbed_d      = 3.0  # Pebble bed diameter (m)
     variable = p
     boundary = 'core_inlet'
   []
-  
+
   [2Dsource_pressure_out]
     type = SideAverageValue
     variable = p
     boundary = 'core_outlet'
   []
-  
+
   [2Dsource_temperature_in]
     type = SideAverageValue
     variable = T
     boundary = 'core_inlet'
   []
-  
+
   [2Dsource_temperature_out]
     type = SideAverageValue
     variable = T
     boundary = 'core_outlet'
   []
-      
+
   [2Dsource_velocity_in]
     type = SideAverageValue
     variable = vel_y
     boundary = 'core_inlet'
   []
-  
+
   [2Dsource_velocity_out]
     type = SideAverageValue
     variable = vel_y #vel_y
@@ -768,7 +768,7 @@ pbed_d      = 3.0  # Pebble bed diameter (m)
     to_postprocessor = 1Dreceiver_temperature_out
   []
 
-  # Send riser and bypass wall temperature to 
+  # Send riser and bypass wall temperature to
   # 1-D primary loop model
   [To_subApp_Twall_riser]
     type = MultiAppUserObjectTransfer
@@ -785,7 +785,7 @@ pbed_d      = 3.0  # Pebble bed diameter (m)
     multi_app = primary_loop
   []
 
-  # Send pebble-bed pressure drop to the 
+  # Send pebble-bed pressure drop to the
   # surrogate channel in the 1-D primary loop model
   [2Dto1D_core_dp]
     type = MultiAppPostprocessorTransfer
@@ -793,7 +793,7 @@ pbed_d      = 3.0  # Pebble bed diameter (m)
     from_postprocessor = dpdz_core
     to_postprocessor = dpdz_core_receive
   []
-  
+
   # from 1D to 2D
   # Inlet and outlet boundary conditions
   [1Dto2D_temperature_in_transfer]
@@ -803,7 +803,7 @@ pbed_d      = 3.0  # Pebble bed diameter (m)
     from_postprocessor = 1Dsource_temperature_in
     to_postprocessor = 2Dreceiver_temperature_in
   []
-  
+
   [1Dto2D_temperature_out_transfer]
     type = MultiAppPostprocessorTransfer
     from_multi_app = primary_loop
@@ -811,7 +811,7 @@ pbed_d      = 3.0  # Pebble bed diameter (m)
     from_postprocessor = 1Dsource_temperature_out
     to_postprocessor = 2Dreceiver_temperature_out
   []
-      
+
   [1Dto2D_velocity_in_transfer]
     type = MultiAppPostprocessorTransfer
     from_multi_app = primary_loop
@@ -820,7 +820,7 @@ pbed_d      = 3.0  # Pebble bed diameter (m)
     to_postprocessor = 2Dreceiver_velocity_in
   []
 
-  # Obtain fluid temperature and HTC of the 
+  # Obtain fluid temperature and HTC of the
   # riser and bypass from 1-D primary loop model
   # for the calculation of wall temperature in the
   # multi-D model
@@ -841,7 +841,7 @@ pbed_d      = 3.0  # Pebble bed diameter (m)
     source_variable = htc_external
     variable = htc_external_riser
     from_blocks = 'riser'
-    to_blocks = 'bypass_riser_reflector' 
+    to_blocks = 'bypass_riser_reflector'
     execute_on = 'TIMESTEP_END'
   []
 
@@ -852,7 +852,7 @@ pbed_d      = 3.0  # Pebble bed diameter (m)
     source_variable = temperature
     variable = T_fluid_external_bypass
     from_blocks = 'bypass'
-    to_blocks = 'bypass_pebble_reflector' 
+    to_blocks = 'bypass_pebble_reflector'
     execute_on = 'TIMESTEP_END'
   []
   [from_subApp_htc_bypass]
@@ -866,7 +866,7 @@ pbed_d      = 3.0  # Pebble bed diameter (m)
     execute_on = 'TIMESTEP_END'
   []
 
-  # Send radiation heat flux to the 
+  # Send radiation heat flux to the
   # 1-D RCCS model
   [QRad_to_subRCCS]
     type = MultiAppUserObjectTransfer
@@ -878,7 +878,7 @@ pbed_d      = 3.0  # Pebble bed diameter (m)
     displaced_target_mesh = true
   []
 
-  # Obtain RCCS panel temperature from the 
+  # Obtain RCCS panel temperature from the
   # 1-D RCCS model
   [TRad_from_RCCS_sub]
    type = MultiAppUserObjectTransfer
@@ -906,7 +906,7 @@ pbed_d      = 3.0  # Pebble bed diameter (m)
 
   [Twall_riser_inner]
     type = LayeredSideAverage
-    direction = y  
+    direction = y
     num_layers = 36
     sample_type = direct
     variable = Ts
@@ -915,7 +915,7 @@ pbed_d      = 3.0  # Pebble bed diameter (m)
 
   [Twall_bypass_inner]
     type = LayeredSideAverage
-    direction = y  
+    direction = y
     num_layers = 36
     sample_type = direct
     variable = Ts
@@ -943,15 +943,15 @@ pbed_d      = 3.0  # Pebble bed diameter (m)
     growth_factor = 1.25
     optimal_iterations = 10
     linear_iteration_ratio = 100
-    dt = 0.1 
+    dt = 0.1
     cutback_factor = 0.8
     cutback_factor_at_failure = 0.8
   []
 
-  nl_rel_tol = 1e-5 
-  nl_abs_tol = 1e-4 
+  nl_rel_tol = 1e-5
+  nl_abs_tol = 1e-4
   nl_max_its = 15
-  l_tol      = 1e-3  
+  l_tol      = 1e-3
   l_max_its  = 100
 
   start_time = 0

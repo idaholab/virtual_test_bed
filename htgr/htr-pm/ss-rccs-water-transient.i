@@ -109,7 +109,7 @@ Dh_pipe           = 2
 
   [rccs-heated-riser]
     type           = PBOneDFluidComponent
-    A              = 0.170588 #17.7574 
+    A              = 0.170588 #17.7574
     Dh             = 0.031655 # From Roberto et al (2020)'s paper using total flow area and pipe number
     length         = 16.8
     n_elems        = 50
@@ -118,8 +118,8 @@ Dh_pipe           = 2
   []
   [rccs-chimney]
     type           = PBOneDFluidComponent
-    A              = 0.170588 #17.7574 
-    Dh             = ${Dh_pipe} 
+    A              = 0.170588 #17.7574
+    Dh             = ${Dh_pipe}
     length         = 10
     n_elems        = 50
     orientation    = '0 1 0'
@@ -127,7 +127,7 @@ Dh_pipe           = 2
   []
   [rccs-downcomer]
     type           = PBOneDFluidComponent
-    A              = 0.170588 #17.7574 
+    A              = 0.170588 #17.7574
     Dh             = ${Dh_pipe}
     length         = 26.8
     n_elems        = 50
@@ -136,7 +136,7 @@ Dh_pipe           = 2
   []
   [rccs-downcomer-horizontal]
     type           = PBOneDFluidComponent
-    A              = 0.170588 #17.7574 
+    A              = 0.170588 #17.7574
     Dh             = ${Dh_pipe}
     length         = 1
     n_elems        = 5
@@ -149,7 +149,7 @@ Dh_pipe           = 2
     inputs = 'rccs-heated-riser(out)'
     outputs = 'rccs-chimney(in)'
     K = '0 0'
-    Area = 0.170588 #17.7574 
+    Area = 0.170588 #17.7574
     center = '4.31 16.8 0'
     volume = 0.01
   []
@@ -159,17 +159,17 @@ Dh_pipe           = 2
     inputs = 'rccs-downcomer-horizontal(out)'
     outputs = 'rccs-heated-riser(in)'
     K = '0 0'
-    Area = 0.170588 #17.7574 
+    Area = 0.170588 #17.7574
     center = '4.31 0 0'
     volume = 0.01
   []
   [junc-downcomer-horizontal]
     type = PBVolumeBranch
     eos = eos
-    inputs = 'rccs-downcomer(in)' 
+    inputs = 'rccs-downcomer(in)'
     outputs = 'rccs-downcomer-horizontal(in)'
     K = '0 0'
-    Area = 0.170588 #17.7574 
+    Area = 0.170588 #17.7574
     center = '5.31 0 0'
     volume = 0.01
   []
@@ -178,7 +178,7 @@ Dh_pipe           = 2
   # RCCS pool and HX
   [pool]
     type = PBLiquidVolume
-    center = '4.81 29.3 0'  
+    center = '4.81 29.3 0'
     outputs = 'rccs-chimney(out) rccs-downcomer(out) IHX-inlet-pipe(in) IHX-outlet-pipe(out)'
     K = '0 0 0 0'
     orientation = '0 1 0'
@@ -193,7 +193,7 @@ Dh_pipe           = 2
     height = 5
   []
 
-  # The actual RCCS has a cooling tower. Here we are 
+  # The actual RCCS has a cooling tower. Here we are
   # using a heat exchanger to remove heat from the RCCS.
   [IHX]
     type                              = PBHeatExchanger
@@ -221,7 +221,7 @@ Dh_pipe           = 2
     initial_T_secondary               = 303
     initial_P_secondary               = 1e5
     initial_V_secondary               = -100
-    SC_HTC                            = 2.5 
+    SC_HTC                            = 2.5
     SC_HTC_secondary                  = 2.5
     disp_mode                         = -1
     eos = eos
@@ -233,7 +233,7 @@ Dh_pipe           = 2
     orientation = '0 0 1'
     length = 1
     A = 0.170588481  # Assume 1 cm wide from r = 2.71 to 2.72
-    Dh = 2 
+    Dh = 2
     HTC_geometry_type = Pipe
     n_elems = 10
     eos = eos
@@ -247,7 +247,7 @@ Dh_pipe           = 2
     orientation = '0 0 -1'
     length = 1
     A = 0.170588481  # Assume 1 cm wide from r = 2.71 to 2.72
-    Dh = 2 
+    Dh = 2
     HTC_geometry_type = Pipe
     n_elems = 10
     eos = eos
@@ -381,22 +381,22 @@ Dh_pipe           = 2
     growth_factor = 1.25
     optimal_iterations = 10
     linear_iteration_ratio = 100
-    dt = 0.1 
+    dt = 0.1
     cutback_factor = 0.8
     cutback_factor_at_failure = 0.8
   []
 
-  nl_rel_tol = 1e-6 
-  nl_abs_tol = 1e-6 
+  nl_rel_tol = 1e-6
+  nl_abs_tol = 1e-6
   nl_max_its = 15
-  l_tol = 1e-6 
+  l_tol = 1e-6
   l_max_its = 100
 
   start_time = 0
   end_time = 500000
 
   [Quadrature]
-    type = TRAP 
+    type = TRAP
     order = FIRST
   []
 []
