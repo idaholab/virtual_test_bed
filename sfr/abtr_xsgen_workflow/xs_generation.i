@@ -363,7 +363,6 @@ mid_control_empty = 12
   map_het_grid_values = 'Tfuel 900
                          Tcool 700'
 
-  rz_meshgenerator = rz_core
   het_cross_sections = 'fuel1 fuel2 fuel3 control_b4c'
   max_het_mesh_size = 0.5
   target_core = full_hom
