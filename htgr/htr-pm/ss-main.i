@@ -58,12 +58,12 @@ rho_in            = 6.3306  # Helium density at 7 MPa and 523.15 K (from NIST)
 
 [Mesh]
     file = htr-pm-mesh-bypass-riser.e
+    coord_type = RZ
+    rz_coord_axis = Y
 []
 
 [Problem]
   type = FEProblem
-  coord_type = RZ
-  rz_coord_axis = Y
 []
 
 [Functions]

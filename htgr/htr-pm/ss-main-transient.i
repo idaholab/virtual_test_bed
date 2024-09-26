@@ -62,13 +62,14 @@ pbed_d      = 3.0  # Pebble bed diameter (m)
 
 [Mesh]
     file = htr-pm-mesh-bypass-riser.e
+    coord_type = RZ
+    rz_coord_axis = Y
 []
 
 [Problem]
   type = FEProblem
-  coord_type = RZ
-  rz_coord_axis = Y
-  restart_file_base = 'ss-main_checkpoint_cp/LATEST'
+  restart_file_base = 'ss-main_checkpoint_cp/450'
+  # restart_file_base = 'ss-main_checkpoint_cp/LATEST'
 []
 
 [Functions]

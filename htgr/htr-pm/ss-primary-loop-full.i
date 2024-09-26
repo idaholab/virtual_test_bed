@@ -191,7 +191,7 @@ pump_head         = 2.35e6 # Pump head during steady state
     Dh             = 3
     n_elems        = 1
     orientation    = '0 1 0'
-    position       = '0.845 1.8 0' #'1.065 15.85 0'
+    position       = '0.845 1.8 0'
     overlap_coupled = true
     overlap_pp = dpdz_core_receive
   []

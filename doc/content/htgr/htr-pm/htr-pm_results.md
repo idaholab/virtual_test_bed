@@ -4,7 +4,7 @@ There are three types of output files:
 
 1. `csv` files that write the user-specified scalar and vector variables to a comma-separated-values file. The data can be imported to Excel for further processing or in Python using the `csv` module, Pandas, or other methods.
 
-2. Check point folders where snapshots of the simulation data including all meshes, solutions are saved. Users can restart the run from where it ended using the file in the checkpoint folder.
+2. Checkpoint folders where snapshots of the simulation data including all meshes, solutions are saved. Users can restart the run from where it ended using the file in the checkpoint folder.
 
 3. `ExodusII` file that has all mesh and solution data. Users can use Paraview to open this .e file to visualize, plot, and analyze the data.
 
