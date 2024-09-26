@@ -6,6 +6,7 @@
 
 !tag name=SAM HTR-PM Model
   image=
+  description=...
   pairs=reactor_type:HTGR
                        reactor:HTR_PM
                        geometry:Core_and_primary_loop
