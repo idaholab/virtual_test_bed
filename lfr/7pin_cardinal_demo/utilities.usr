@@ -1,0 +1,2157 @@
+c-----------------------------------------------------------------------
+      real function planar_ave_m1(phi,norm,pt,eps)
+      implicit none
+C
+C     Compute area average of phi() on the
+C     plane defined by normal 'norm' and point 'pt'
+C
+      include 'SIZE'
+      include 'TOTAL'
+
+      real phi(1),norm(3),pt(3),eps
+      real aa,bb,cc,dd,w1,w2,x0,y0,z0,r0,rr,del,glsum
+
+      integer i,j,k,n
+
+      n=nx1*ny1*nz1*nelv
+
+      aa=norm(1)
+      bb=norm(2) 
+      cc=0.0
+      if(if3d) cc=norm(3)
+      dd=-1.0*(aa*pt(1)+bb*pt(2)+cc*pt(3))
+      w1=0.0
+      w2=0.0
+      do i=1,n
+        x0=xm1(i,1,1,1)
+        y0=ym1(i,1,1,1)
+        z0=zm1(i,1,1,1)
+        r0=(aa*x0+bb*y0+cc*z0+dd)/sqrt(aa**2+bb**2+cc**2)
+        rr=min(2.0,abs(r0)*2.0/eps)
+        if(rr.gt.1.0) then
+          del = 1.0/8.0*(5.0-2.0*rr-sqrt(-7.0+12.0*rr-4.0*rr**2))
+        else 
+          del = 1.0/8.0*(3.0-2.0*rr+sqrt( 1.0+ 4.0*rr-4.0*rr**2))
+        endif
+        w1=w1+phi(i)*bm1(i,1,1,1)*del
+        w2=w2+bm1(i,1,1,1)*del
+      enddo
+      planar_ave_m1 = glsum(w1,1)/max(glsum(w2,1),1.0e-8)
+
+      return
+      end
+C-----------------------------------------------------------------------
+      real function planar_ave_m2(phi,norm,pt,eps)
+      implicit none
+C
+C     Compute area average of phi() on the
+C     plane defined by normal 'norm' and point 'pt'
+C
+      include 'SIZE'
+      include 'TOTAL'
+
+      real phi(1),norm(3),pt(3),eps
+      real aa,bb,cc,dd,w1,w2,x0,y0,z0,r0,rr,del,glsum
+
+      integer i,j,k,n
+
+      n=lx2*ly2*lz2*nelv
+
+      aa=norm(1)
+      bb=norm(2) 
+      cc=0.0
+      if(if3d) cc=norm(3)
+      dd=-1.0*(aa*pt(1)+bb*pt(2)+cc*pt(3))
+      w1=0.0
+      w2=0.0
+      do i=1,n
+        x0=xm2(i,1,1,1)
+        y0=ym2(i,1,1,1)
+        z0=zm2(i,1,1,1)
+        r0=(aa*x0+bb*y0+cc*z0+dd)/sqrt(aa**2+bb**2+cc**2)
+        rr=min(2.0,abs(r0)*2.0/eps)
+        if(rr.gt.1.0) then
+          del = 1.0/8.0*(5.0-2.0*rr-sqrt(-7.0+12.0*rr-4.0*rr**2))
+        else 
+          del = 1.0/8.0*(3.0-2.0*rr+sqrt( 1.0+ 4.0*rr-4.0*rr**2))
+        endif
+        w1=w1+phi(i)*bm2(i,1,1,1)*del
+        w2=w2+bm2(i,1,1,1)*del
+      enddo
+      planar_ave_m2 = glsum(w1,1)/max(glsum(w2,1),1.0e-8)
+
+      return
+      end
+C-----------------------------------------------------------------------
+      subroutine count_boundaries
+      include 'SIZE'
+      include 'TOTAL'
+
+      integer lxyz,ielem,iside,n
+      parameter(lxyz=lx1*ly1*lz1)
+      character*3 uid(ldimt1)
+      integer wcnt(ldimt1),symcnt(ldimt1),ocnt(ldimt1)
+      integer tcnt(ldimt1),fcnt(ldimt1),axicnt(ldimt1)
+      integer inscnt(ldimt1),pcnt(ldimt1),othcnt(ldimt1)
+      integer vcnt(ldimt1),trcnt(ldimt1),ukncnt(ldimt1)
+      integer mtrcnt(ldimt1),prcnt(ldimt1),intcnt(ldimt1)
+      integer vreacnt(ldimt1),treacnt(ldimt1),convcnt(ldimt1)
+
+      call izero(wcnt,ldimt1)
+      call izero(trcnt,ldimt1)
+      call izero(mtrcnt,ldimt1)
+      call izero(vcnt,ldimt1)
+      call izero(vreacnt,ldimt1)
+      call izero(symcnt,ldimt1)
+      call izero(ocnt,ldimt1)
+      call izero(tcnt,ldimt1)
+      call izero(treacnt,ldimt1)
+      call izero(axicnt,ldimt1)
+      call izero(inscnt,ldimt1)
+      call izero(intcnt,ldimt1)
+      call izero(fcnt,ldimt1)
+      call izero(pcnt,ldimt1)
+      call izero(prcnt,ldimt1)
+      call izero(convcnt,ldimt1)
+      call izero(othcnt,ldimt1)
+      call izero(ukncnt,ldimt1)
+
+      do ifld=1,nfield
+        n=nelv
+        if(iftmsh(ifld)) n=nelt
+        do ielem=1,n
+        do iside=1,2*ldim
+          if(cbc(iside,ielem,ifld).eq.'W  ')then
+            wcnt(ifld)=wcnt(ifld)+1
+          elseif(cbc(iside,ielem,ifld).eq.'shl')then
+            trcnt(ifld)=trcnt(ifld)+1
+          elseif(cbc(iside,ielem,ifld).eq.'sml')then
+            mtrcnt(ifld)=mtrcnt(ifld)+1
+          elseif(cbc(iside,ielem,ifld).eq.'v  ')then
+            vcnt(ifld)=vcnt(ifld)+1
+          elseif(cbc(iside,ielem,ifld).eq.'V  ')then
+            vreacnt(ifld)=vreacnt(ifld)+1
+          elseif(cbc(iside,ielem,ifld).eq.'t  ')then
+            tcnt(ifld)=tcnt(ifld)+1
+          elseif(cbc(iside,ielem,ifld).eq.'T  ')then
+            treacnt(ifld)=treacnt(ifld)+1
+          elseif(cbc(iside,ielem,ifld).eq.'O  ')then
+            ocnt(ifld)=ocnt(ifld)+1
+          elseif(cbc(iside,ielem,ifld).eq.'o  ')then
+            prcnt(ifld)=prcnt(ifld)+1
+          elseif(cbc(iside,ielem,ifld).eq.'P  ')then
+            pcnt(ifld)=pcnt(ifld)+1
+          elseif(cbc(iside,ielem,ifld).eq.'f  ')then 
+            fcnt(ifld)=fcnt(ifld)+1
+          elseif(cbc(iside,ielem,ifld).eq.'c  ')then 
+            convcnt(ifld)=convcnt(ifld)+1
+          elseif(cbc(iside,ielem,ifld).eq.'I  ')then
+            inscnt(ifld)=inscnt(ifld)+1
+          elseif(cbc(iside,ielem,ifld).eq.'SYM')then
+            symcnt(ifld)=symcnt(ifld)+1
+          elseif(cbc(iside,ielem,ifld).eq.'A  ')then
+            axicnt(ifld)=axicnt(ifld)+1
+          elseif(cbc(iside,ielem,ifld).eq.'int')then
+            intcnt(ifld)=intcnt(ifld)+1
+          elseif(cbc(iside,ielem,ifld).ne.'E  ')then
+            if(ukncnt(ifld).eq.0) then  !handle one unknown BC
+              uid(ifld)=cbc(iside,ielem,ifld)
+              ukncnt(ifld)=1
+            elseif(cbc(iside,ielem,ifld).eq.uid(ifld)) then
+              ukncnt(ifld)=ukncnt(ifld)+1
+            else
+              othcnt(ifld)=othcnt(ifld)+1 !multiple unknown BCs 
+            endif
+          endif
+        enddo
+        enddo
+        wcnt(ifld)=iglsum(wcnt(ifld),1)
+        trcnt(ifld)=iglsum(trcnt(ifld),1)
+        mtrcnt(ifld)=iglsum(mtrcnt(ifld),1)
+        vcnt(ifld)=iglsum(vcnt(ifld),1)
+        vreacnt(ifld)=iglsum(vreacnt(ifld),1)
+        tcnt(ifld)=iglsum(tcnt(ifld),1)
+        treacnt(ifld)=iglsum(treacnt(ifld),1)
+        ocnt(ifld)=iglsum(ocnt(ifld),1)
+        prcnt(ifld)=iglsum(prcnt(ifld),1)
+        pcnt(ifld)=iglsum(pcnt(ifld),1)
+        fcnt(ifld)=iglsum(fcnt(ifld),1)
+        convcnt(ifld)=iglsum(convcnt(ifld),1)
+        inscnt(ifld)=iglsum(inscnt(ifld),1)
+        symcnt(ifld)=iglsum(symcnt(ifld),1)
+        axicnt(ifld)=iglsum(axicnt(ifld),1)
+        othcnt(ifld)=iglsum(othcnt(ifld),1)
+        ukncnt(ifld)=iglsum(ukncnt(ifld),1)
+      enddo
+
+      if(nid.eq.0) then
+        write(*,*)
+        write(*,255) 'Found the following Boundary Conditions'
+        write(*,*)
+        do ifld=1,nfield
+          write(*,254) 'for field',ifld,':'
+          if(wcnt(ifld).gt.0)write(*,256)'Wall',wcnt(ifld)
+          if(trcnt(ifld).gt.0)write(*,256)'Traction',trcnt(ifld)
+          if(mtrcnt(ifld).gt.0)write(*,256)'Mixed Traction'
+     &                                                   ,mtrcnt(ifld)
+          if(vcnt(ifld).gt.0)write(*,256)'Velocity',vcnt(ifld)
+          if(vreacnt(ifld).gt.0)write(*,256)'Velocity (REA)',
+     &                                                   vreacnt(ifld)
+          if(tcnt(ifld).gt.0)write(*,256)'Dirichlet',tcnt(ifld)
+          if(treacnt(ifld).gt.0)write(*,256)'Dirichlet (REA)',
+     &                                                   treacnt(ifld)
+          if(pcnt(ifld).gt.0)write(*,256)'Periodic',pcnt(ifld)
+          if(fcnt(ifld).gt.0)write(*,256)'Flux',fcnt(ifld)
+          if(convcnt(ifld).gt.0)write(*,256)'Convection',convcnt(ifld)
+          if(ocnt(ifld).gt.0)write(*,256)'Outlet',ocnt(ifld)
+          if(prcnt(ifld).gt.0)write(*,256)'Pressure',prcnt(ifld)
+          if(inscnt(ifld).gt.0)write(*,256)'Insulated',inscnt(ifld)
+          if(intcnt(ifld).gt.0)write(*,256)'Interpolated',intcnt(ifld)
+          if(symcnt(ifld).gt.0)write(*,256)'Symmetry',symcnt(ifld)
+          if(axicnt(ifld).gt.0)write(*,256)
+     &                                     'Axisymmetric',axicnt(ifld)
+          if(ukncnt(ifld).gt.0)write(*,257)uid(ifld),ukncnt(ifld)
+          if(othcnt(ifld).gt.0)write(*,256)'Other',othcnt(ifld)
+          write(*,*)
+        enddo
+      endif
+
+ 254  format(5x,a,i2,a)
+ 255  format(2x,a)
+ 256  format(2x,a16,1x,i12)
+ 257  format(2x,'Unknown boundary of type: "',a,'" ',i9)
+
+      return
+      end
+C-----------------------------------------------------------------------
+      subroutine div_check(phi)
+
+      real phi(1)
+
+      if(phi(1).ne.phi(1)) call exitt
+      return
+      end
+C-----------------------------------------------------------------------
+      subroutine get_wall_distance(wd,itype)
+      include 'SIZE'
+
+      real wd(*)
+      real w1(lx1*ly1*lz1*lelv)
+      real w2(lx1*ly1*lz1*lelv)
+      real w3(lx1*ly1*lz1*lelv)
+      real w4(lx1*ly1*lz1*lelv)
+      real w5(lx1*ly1*lz1*lelv)
+      common /SCRNS/ w1,w2,w3,w4,w5
+
+      if(itype.eq.1) then
+        call cheap_dist(wd,1,'W  ')
+      elseif(itype.eq.2) then
+        call distf(wd,1,'W  ',w1,w2,w3,w4,w5)
+      else
+        if(nio.eq.0) write(*,*) 
+     &           "Error in get_wall_distance, unsupported distance type"
+      endif
+
+      return
+      end
+C-----------------------------------------------------------------------
+      real function get_nearest(loc,coord)
+      include 'mpif.h'
+      include 'SIZE'
+      include 'TOTAL'
+
+      integer ipoint,ierr
+      real loc,coord(1),ds(2),dsg(2)
+
+      ds(1)=1.0d30
+      do ipoint=1,lx1*ly1*lz1*nelv
+        if(abs(coord(ipoint)-loc).lt.ds(1)) then
+          ds(1)=abs(coord(ipoint)-loc)
+          ds(2)=coord(ipoint)
+        endif
+      enddo
+      call MPI_ALLREDUCE(ds,dsg,1,MPI_2DOUBLE_PRECISION,MPI_MINLOC
+     &                                             ,MPI_COMM_WORLD,ierr)
+      get_nearest=dsg(2)
+      return
+      end
+c-----------------------------------------------------------------------
+      subroutine get_point3d(loc1,loc2,loc3,ix,iy,iz,eg)
+      include 'mpif.h'
+      include 'SIZE'
+      include 'TOTAL'
+
+      integer ipoint,ierr,dsi,ix,iy,iz,ie,eg,jx,jy,jz,je
+      real loc1,loc2,loc3,ds(2),dsg(2),dist(2)
+
+      dist(2)=1.0d30
+      do je=1,nelv
+      do jz=1,lz1
+      do jy=1,ly1
+      do jx=1,lx1
+        dist(1)=sqrt((loc1-xm1(jx,jy,jz,je))**2
+     &           +(loc2-ym1(jx,jy,jz,je))**2+(loc3-zm1(jx,jy,jz,je))**2)
+        if(dist(1).lt.dist(2)) then
+          dist(2)=dist(1)
+          ix=jx
+          iy=jy
+          iz=jz
+          ie=je
+        endif
+      enddo
+      enddo
+      enddo
+      enddo
+
+      eg=lglel(ie)
+
+      ds(1)=dist(2)
+
+      ds(2)=dble(ix)
+      call MPI_ALLREDUCE(ds,dsg,1,MPI_2DOUBLE_PRECISION,MPI_MINLOC
+     &                                             ,MPI_COMM_WORLD,ierr)
+      ix=int(dsg(2))
+
+      ds(2)=dble(iy)
+      call MPI_ALLREDUCE(ds,dsg,1,MPI_2DOUBLE_PRECISION,MPI_MINLOC
+     &                                             ,MPI_COMM_WORLD,ierr)
+      iy=int(dsg(2))
+
+      ds(2)=dble(iz)
+      call MPI_ALLREDUCE(ds,dsg,1,MPI_2DOUBLE_PRECISION,MPI_MINLOC
+     &                                             ,MPI_COMM_WORLD,ierr)
+      iz=int(dsg(2))
+
+      ds(2)=dble(eg)
+      call MPI_ALLREDUCE(ds,dsg,1,MPI_2DOUBLE_PRECISION,MPI_MINLOC
+     &                                             ,MPI_COMM_WORLD,ierr)
+      eg=int(dsg(2))
+
+      return
+      end
+c-----------------------------------------------------------------------
+      real function get_nearest_face(loc,coord,norm)
+      include 'mpif.h'
+      include 'SIZE'
+      include 'TOTAL'
+
+      integer ielem,iside,i0,i1,j0,j1,k0,k1,i,j,k,ierr
+      real loc,coord(1),ds(2),dsg(2),norm(3),fnorm(3),dp
+
+      ds(1)=1.0d30
+      do ielem=1,nelv
+        do iside=1,ldim*2
+          call facind(i0,i1,j0,j1,k0,k1,lx1,ly1,lz1,iside)
+          i=(i0+i1)/2
+          j=(j0+j1)/2
+          k=(k0+k1)/2
+          ipoint=i+(j-1)*lx1+(k-1)*lx1*ly1+lx1*ly1*lz1*(ielem-1)
+          call getSnormal(fnorm,i,j,k,iside,ielem)
+          dp=fnorm(1)*norm(1)+fnorm(2)*norm(2)
+          if(if3d) dp=dp+fnorm(3)*norm(3)
+          if((1.0d0-abs(dp)).lt.1.0d-8)then
+            if(abs(coord(ipoint)-loc).lt.ds(1)) then
+              ds(1)=abs(coord(ipoint)-loc)
+              ds(2)=coord(ipoint)
+            endif
+          endif
+        enddo
+      enddo
+      call MPI_ALLREDUCE(ds,dsg,1,MPI_2DOUBLE_PRECISION,MPI_MINLOC
+     &                                             ,MPI_COMM_WORLD,ierr)
+      get_nearest_face=dsg(2)
+      return
+      end
+C-----------------------------------------------------------------------
+      subroutine weighted_average(phi,wrt,loc,coord,norm,phia)
+C
+C     Compute planar averages of phi() weighted by wrt() on the
+C     plane normal to norm() with intercept coord = loc
+C
+      include 'SIZE'
+      include 'TOTAL'
+
+      integer ielem,iside,i,i0,i1,j,j0,j1,k,k0,k1
+      real phi(1),wrt(1),loc,coord(1),norm(3),phia
+      real fnorm(3),dp,a1,phia1
+
+      loc=get_nearest_face(loc,coord,norm)
+
+      phia=0.0
+      phia1=0.0
+      do ielem=1,nelv
+        do iside=1,ndim*2
+          call facind(i0,i1,j0,j1,k0,k1,lx1,ly1,lz1,iside)
+          i=(i0+i1)/2  !just use the point in the middle of the face
+          j=(j0+j1)/2
+          k=(k0+k1)/2
+          ipoint=i+(j-1)*lx1+(k-1)*lx1*ly1+(ielem-1)*lx1*ly1*lz1
+          if(abs(coord(ipoint)-loc).lt.1.0d-8)then 
+            call getSnormal(fnorm,i,j,k,iside,ielem)
+            dp=fnorm(1)*norm(1)+fnorm(2)*norm(2)
+            if(if3d) dp=dp+fnorm(3)*norm(3)
+            if(abs(1.0d0-dp).lt.1.0d-8) then
+              do i=i0,i1
+              do j=j0,j1
+              do k=k0,k1
+                ipoint=i+(j-1)*lx1+(k-1)*lx1*ly1+(ielem-1)*lx1*ly1*lz1
+                if    ((iside.eq.1).or.(iside.eq.3)) then
+                  a1=area(i,k,iside,ielem)
+                elseif((iside.eq.2).or.(iside.eq.4)) then
+                  a1=area(j,k,iside,ielem)
+                else
+                  a1=area(i,j,iside,ielem)
+                endif
+                phia=phia+phi(ipoint)*wrt(ipoint)*a1
+                phia1=phia1+wrt(ipoint)*a1
+              enddo
+              enddo
+              enddo
+            endif
+          endif
+        enddo
+      enddo
+
+      phia=glsum(phia,1)
+      phia1=glsum(phia1,1)
+      phia=phia/phia1
+
+      return
+      end
+C-----------------------------------------------------------------------
+      subroutine planar_average_weighted(phia,phi,wrt,w1,w2)
+      include 'SIZE'
+      include 'GEOM'
+      include 'PARALLEL'
+      include 'WZ'
+      include 'ZPER'
+
+      real phi(nx1*ny1,nz1,nelv),wrt(nx1*ny1,nz1,nelv),phia(nz1,nelz)
+      real w1(nz1,nelz),w2(nz1,nelz) !work arrays
+
+      integer e,eg,ez,melxy,nz,i,k
+      real zz,aa
+
+      melxy=nelx*nely !number of elements in the plane
+      nz=nz1*nelz !number of z-slices
+
+      if(melxy.lt.1)then
+        if(nio.eq.0)write(*,256)'nelx*nely'
+        return
+      elseif(nelz.lt.1) then
+        if(nio.eq.0)write(*,256)'nelz'
+        return
+      elseif(melxy.gt.lelx*lely) then
+        if(nio.eq.0)write(*,257)'nelx*nely','lelx*lely'
+        return
+      elseif(nelz.gt.lelz) then
+        if(nio.eq.0)write(*,257)'nelz','lelz'
+        return
+      endif
+
+ 256  format(5x,'ERROR: ',a,' must be at least 1!')
+ 257  format(5x,'ERROR: ',a,' must be less than ',a,'!')
+
+      call rzero(phia,nz)
+      call rzero(w1,nz)
+
+      do e=1,nelt
+        eg=lglel(e)
+        ez=1+(eg-1)/melxy !z-slice id
+        do k=1,nz1
+          do i=1,nx1*ny1
+            zz=(1.0-zgm1(k,3))/2.0
+            aa=zz*area(i,1,5,e)+(1.0-zz)*area(i,1,6,e)
+            w1(k,ez)=w1(k,ez)+aa*wrt(i,k,e)
+            phia(k,ez)=phia(k,ez)+aa*wrt(i,k,e)*phi(i,k,e)
+          enddo
+          if(abs(w1(k,ez)).lt.1.0d-10) w1(k,ez)=1.0d-10
+        enddo
+      enddo
+
+      call gop(phia,w2,'+  ',nz)
+      call gop(w1,w2,'+  ',nz)
+      call invcol2(phia,w1,nz)
+
+      return
+      end
+C-----------------------------------------------------------------------
+      subroutine x_planar_average(phia,phi,w1,w2)
+      include 'SIZE'
+      include 'GEOM'
+      include 'PARALLEL'
+      include 'WZ'
+      include 'ZPER'
+
+      real phi(nx1,ny1,nz1,nelv),wrt(nx1,ny1,nz1,nelv),phia(nx1,nelx)
+      real w1(nx1,nelx),w2(nx1,nelx) !work arrays
+
+      integer e,eg,ex,nx,i,j,estride
+      real xx,aa
+
+      if(ldim.gt.2) then
+        write(*,'(5x,a)')
+     &            "x-average routine only written for 2D genbox meshes!"
+        return
+      endif
+
+      nx=nx1*nelx !number of z-slices
+
+      call rzero(phia,nx)
+      call rzero(w1,nx)
+
+      do e=1,nelt
+        eg=lglel(e)
+        ex=mod(eg,nelx) !x-slice id
+        if(ex.eq.0)ex=nelx
+        do i=1,nx1
+          do j=1,ny1
+            xx=(1.0-zgm1(i,1))/2.0
+            aa=zz*area(j,1,4,e)+(1.0-zz)*area(j,1,2,e)
+            w1(i,ex)=w1(i,ex)+aa
+            phia(i,ex)=phia(i,ex)+aa*phi(i,j,1,e)
+          enddo
+        enddo
+      enddo
+
+      call gop(phia,w2,'+  ',nx)
+      call gop(w1,w2,'+  ',nx)
+      call invcol2(phia,w1,nx)
+
+      return
+      end
+C-----------------------------------------------------------------------
+      subroutine x_average_weighted(phia,phi,wrt,w1,w2)
+      include 'SIZE'
+      include 'GEOM'
+      include 'PARALLEL'
+      include 'WZ'
+      include 'ZPER'
+
+      real phi(nx1,ny1,nz1,nelv),wrt(nx1,ny1,nz1,nelv),phia(nx1,nelx)
+      real w1(nx1,nelx),w2(nx1,nelx) !work arrays
+
+      integer e,eg,ex,nx,i,j,estride
+      real xx,aa
+
+      if(lz1.gt.1) then
+        write(*,'(5x,a)')
+     &                   "x-average routine only written for 2D meshes!"
+        return
+      endif
+
+      nx=nx1*nelx !number of z-slices
+
+      call rzero(phia,nx)
+      call rzero(w1,nx)
+
+      do e=1,nelt
+        eg=lglel(e)
+        ex=mod(eg,nelx) !x-slice id
+        if(ex.eq.0)ex=nelx
+        do i=1,nx1
+          do j=1,ny1
+            xx=(1.0-zgm1(i,1))/2.0
+            aa=zz*area(j,1,4,e)+(1.0-zz)*area(j,1,2,e)
+            w1(i,ex)=w1(i,ex)+aa*wrt(i,j,1,e)
+            phia(i,ex)=phia(i,ex)+aa*wrt(i,j,1,e)*phi(i,j,1,e)
+          enddo
+          if(abs(w1(i,ex)).lt.1.0d-10) w1(i,ex)=1.0d-10
+        enddo
+      enddo
+
+      call gop(phia,w2,'+  ',nx)
+      call gop(w1,w2,'+  ',nx)
+      call invcol2(phia,w1,nx)
+
+      return
+      end
+C-----------------------------------------------------------------------
+      real function q_vol_periodic(ix,iy,iz,ie,ifld)
+      implicit none
+      include 'SIZE'
+      include 'TOTAL'
+ 
+      integer ix,iy,iz,ie,ifld,n,e,f,dir
+
+      logical ifdid(ldimt),ifprintNu(ldimt)
+      common /printNu/ ifprintNu
+
+      real dummy,sarea,tarea,time0(ldimt),tcorr
+      real f_gm(ldimt),vel_avg,glsum,glsc2,glsc3
+
+      data ifdid /ldimt*.false./
+      data time0 /ldimt*-1.0/
+
+      save ifdid,time0,vel_avg,f_gm,dir
+
+      n=nx1*ny1*nz1*nelv
+
+      if(.not.ifdid(ifld-1)) then
+        dir=nint(abs(param(54))) !make sure this is an int, for my own sanity
+        ifdid(ifld-1) = .true.
+        tarea = 0.0
+        do e=1,nelv
+          do f=1,2*ndim
+            if(cbc(f,e,ifld).eq.'f  ') then
+              call surface_int(dummy,sarea,xm1,e,f)
+              tarea=tarea+sarea
+            endif
+          enddo
+        enddo
+        tarea=glsum(tarea,1)
+        f_gm(ifld-1)=abs(tarea/volvm1) !probably wrong for CHT
+      endif
+
+      ifprintNu(ifld-1)=.true.
+
+      e=lglel(ie) !do nothing in solid region
+      if(e.gt.nelgv) then
+        q_vol_periodic = 0.0
+        return
+      endif
+
+      if(time.ne.time0(ifld-1)) then
+        time0(ifld-1)=time
+        if(dir.eq.1) then
+          vel_avg=glsc2(vx,bm1,n)/volvm1
+          tcorr = -1.0*glsc3(t(1,1,1,1,ifld-1),vx,bm1,n)
+        elseif(dir.eq.2) then
+          vel_avg=glsc2(vy,bm1,n)/volvm1
+          tcorr = -1.0*glsc3(t(1,1,1,1,ifld-1),vy,bm1,n)
+        elseif(dir.eq.3) then
+          vel_avg=glsc2(vz,bm1,n)/volvm1
+          tcorr = -1.0*glsc3(t(1,1,1,1,ifld-1),vz,bm1,n)
+        endif
+        tcorr=tcorr/(vel_avg*volvm1)
+        call cadd (t(1,1,1,1,ifld-1),tcorr,n)
+      endif
+
+      if(dir.eq.1) q_vol_periodic=-f_gm(ifld-1)*vx(ix,iy,iz,ie)/vel_avg
+      if(dir.eq.2) q_vol_periodic=-f_gm(ifld-1)*vy(ix,iy,iz,ie)/vel_avg
+      if(dir.eq.3) q_vol_periodic=-f_gm(ifld-1)*vz(ix,iy,iz,ie)/vel_avg
+
+      return
+      end
+c-----------------------------------------------------------------------
+      subroutine print_Nusselt
+      include 'SIZE'
+      include 'TOTAL'
+
+      logical ifdo,ifprintNu(ldimt)
+      real rNus(ldimt)
+
+      common /printNu/ ifprintNu
+
+      save ifdo
+      data ifdo /.true./
+
+      if(.not.ifdo) return
+      if(istep.eq.0) then
+        do i=1,ldimt
+          ifprintNu(i)=.false.
+        enddo 
+      endif
+      if(nsteps.eq.0) then
+        do i=1,ldimt
+          ifprintNu(i)=.true.
+        enddo
+      endif
+
+      if(abs(param(54)).lt.0.1) then
+        ifdo=.false.
+        if(nio.eq.0) then
+          write(*,'(a)') "******************************"
+          write(*,'(a)')
+     &       "print_Nusselt routine only compatible with forced flow"
+          write(*,'(a)') "******************************"
+        endif
+        return
+      endif
+
+      n=nx1*ny1*nz1*nelv
+
+      jfld=0
+      do ifld=2,ldimt1
+        if(ifprintNu(ifld-1)) then
+          jfld=jfld+1
+          tarea=0.0
+          twall=0.0
+          do ie=1,nelt
+            do ifa=1,2*ndim
+              if(cbc(ifa,ie,ifld).eq.'f  ') then
+                call surface_int(swall,sarea,t(1,1,1,1,ifld-1),ie,ifa)
+                twall=twall+swall
+                tarea=tarea+sarea
+              endif
+            enddo
+          enddo
+          tarea=glsum(tarea,1)
+          twall=glsum(twall,1)/tarea
+
+          if(nint(abs(param(54))).eq.1) 
+     &           tbulk=glsc3(t(1,1,1,1,ifld-1),vx,bm1,n)/glsc2(vx,bm1,n)
+          if(nint(abs(param(54))).eq.2) 
+     &           tbulk=glsc3(t(1,1,1,1,ifld-1),vy,bm1,n)/glsc2(vy,bm1,n)
+          if(nint(abs(param(54))).eq.3) 
+     &           tbulk=glsc3(t(1,1,1,1,ifld-1),vz,bm1,n)/glsc2(vz,bm1,n)
+          rNus(jfld)=1.0/((twall-tbulk)*cpfld(ifld,1))
+        endif
+      enddo
+
+      if(nio.eq.0) then
+        write(*,'(a24,es15.7,10es15.7)') 
+     &                           "time, Nusselt",time,(rNus(i),i=1,jfld)
+      endif
+
+      return
+      end
+c-----------------------------------------------------------------------
+      real function bc_average(phi,bca,ifld)
+      implicit none
+      include 'SIZE'
+      include 'INPUT'
+
+      character*3 bca
+      integer ifld
+      real phi(lx1*ly1*lz1*lelv)
+
+      integer f,e
+      real phibc,Abc,dphi,dA
+      real glsum
+
+      phibc=0.0
+      Abc=0.0
+
+      do e=1,nelt
+        do f=1,ndim*2
+          if(cbc(f,e,ifld).eq.bca) then
+            call surface_int(dphi,dA,phi,e,f)
+            phibc=phibc+dphi
+            Abc=Abc+dA
+          endif
+        enddo
+      enddo
+      Abc=glsum(Abc,1)
+      phibc=glsum(phibc,1)/Abc
+
+      bc_average = phibc
+
+      return
+      end
+c-----------------------------------------------------------------------
+      real function bc_area(bca,ifld)
+      implicit none
+      include 'SIZE'
+      include 'INPUT'
+
+      character*3 bca
+      integer ifld
+
+      integer f,e
+      real Abc,dA
+      real glsum
+
+      Abc=0.0
+
+      do 10 e=1,nelt
+      do 10 f=1,ndim*2
+        if(cbc(f,e,ifld).eq.bca) then
+          call surface_area(dA,e,f)
+          Abc=Abc+dA
+        endif
+ 10   continue
+      Abc=glsum(Abc,1)
+
+      bc_area = Abc
+
+      return
+      end
+c-----------------------------------------------------------------------
+      real function bc_flux_average(phi,bca,ifld)
+      implicit none
+      include 'SIZE'
+      include 'TOTAL'
+
+      character*3 bca
+      integer ifld
+      real phi(lx1*ly1*lz1,lelv)
+
+      integer f,e,lxyz
+      parameter (lxyz=lx1*ly1*lz1)
+      real phibc,AA,dphi,dAA,w(lxyz)
+      real glsum
+
+      phibc=0.0
+      AA=0.0
+
+      do e=1,nelt
+        do f=1,ndim*2
+          if(cbc(f,e,ifld).eq.bca) then
+            call surface_flux2(dphi,phi,e,f)
+            call surface_flux(dAA,vx,vy,vz,e,f,w)
+            phibc=phibc+dphi
+            AA=AA+dAA
+          endif
+        enddo
+      enddo
+      AA=glsum(AA,1)
+      phibc=glsum(phibc,1)/AA
+
+      bc_flux_average = phibc
+
+      return
+      end
+c-----------------------------------------------------------------------
+      real function bc_max(phi,bca,ifld)
+      implicit none
+      include 'SIZE'
+      include 'INPUT'
+
+      character*3 bca
+      integer ifld
+      real phi(lx1,ly1,lz1,1)
+
+      real glmax
+
+      integer f,e,i,i0,i1,j,j0,j1,k,k0,k1
+      real bcmx
+
+      do 10 e=1,nelt
+      do 10 f=1,ndim*2
+        if(cbc(f,e,ifld).eq.bca) then
+          call facind(i0,i1,j0,j1,k0,k1,lx1,ly1,lz1,f)
+          do 20 k=k0,k1
+          do 20 j=j0,j1
+          do 20 i=i0,i1
+            bcmx=max(bcmx,phi(i,j,k,e))
+ 20       continue
+        endif
+ 10   continue
+
+      bc_max = glmax(bcmx,1)
+
+      return
+      end
+c-----------------------------------------------------------------------
+      subroutine average_files(inbase,navg)
+      implicit none
+      include 'SIZE'
+      include 'TOTAL'
+      include 'AVG'
+
+      character*(*) inbase
+      character*8   ftail
+      integer lbase,navg,n,n2,i,j
+      logical ifxyo_s
+
+      n=nx1*ny1*nz1*nelv
+      n2=nx2*ny2*nz2*nelv
+
+      if(navg.eq.0.or.nsteps.gt.0) return
+
+      atime=0.0
+      call rzero(uavg,n)
+      call rzero(vavg,n)
+      call rzero(wavg,n)
+      call rzero(pavg,n2)
+      do j=1,ldimt
+        call rzero(tavg(1,1,1,1,j),n)
+      enddo
+      do i=1,navg
+        if(i.lt.10) then
+          write(ftail,'(a7,i1)')'0.f0000',i
+        elseif(i.lt.100) then
+          write(ftail,'(a6,i2)')'0.f000',i
+        elseif(i.lt.1000) then
+          write(ftail,'(a5,i3)')'0.f00',i
+        endif
+        call blank(initc(1),132)
+        initc(1)=trim(inbase)//ftail
+
+        call restart(1)
+
+        atime=atime+time
+        call add2s2(uavg,vx,time,n)
+        call add2s2(vavg,vy,time,n)
+        call add2s2(wavg,vz,time,n)
+        call add2s2(pavg,pr,time,n2)
+        do j=1,ldimt
+          call add2s2(tavg(1,1,1,1,j),t(1,1,1,1,j),time,n)
+        enddo
+      enddo
+      time=atime
+      call cmult(uavg,1.0/atime,n)
+      call cmult(vavg,1.0/atime,n)
+      call cmult(wavg,1.0/atime,n)
+      call cmult(pavg,1.0/atime,n2)
+      do j=1,ldimt
+        call cmult(tavg(1,1,1,1,j),1.0/atime,n)
+      enddo
+
+      call copy (vx,uavg,n)
+      call copy (vy,vavg,n)
+      call copy (vz,wavg,n)
+      call copy (pr,pavg,n2)
+      do j=1,ldimt
+        call copy(t(1,1,1,1,j),tavg(1,1,1,1,j),n)
+      enddo
+
+      if(nio.eq.0) write(*,*) "  average data:"
+      call print_limits !print out the average data
+
+      ifxyo_s = ifxyo
+      ifxyo=.true.
+
+      call prepost (.true.,'AVG')
+
+      ifxyo = ifxyo_s
+
+      return
+      end
+c-----------------------------------------------------------------------
+      subroutine get_face_m1centroid(xx,yy,zz,ie,iface)
+      implicit none
+      include 'SIZE'
+      include 'GEOM'
+      include 'MASS'
+
+      integer ie,iface
+      real xx,yy,zz
+
+      integer i,i0,i1,j,j0,j1,k,k0,k1
+      real bm0
+
+      bm0=0.0
+      xx=0.0
+      yy=0.0
+      zz=0.0
+      call facind(i0,i1,k0,k1,j0,j1,nx1,ny1,nz1,iface)
+      do 10 k=k0,k1
+      do 10 j=j0,j1
+      do 10 i=i0,i1
+        bm0=bm0+bm1(i,j,k,ie)
+        xx=xx+xm1(i,j,k,ie)*bm1(i,j,k,ie)
+        yy=yy+ym1(i,j,k,ie)*bm1(i,j,k,ie)
+        zz=zz+zm1(i,j,k,ie)*bm1(i,j,k,ie)
+ 10   continue
+
+      xx=xx/bm0
+      yy=yy/bm0
+      zz=zz/bm0
+
+      return
+      end
+c-----------------------------------------------------------------------
+      subroutine get_elem_m1centroid(xx,yy,zz,ie)
+      implicit none
+      include 'SIZE'
+      include 'GEOM'
+      include 'MASS'
+
+      integer ie
+      real xx,yy,zz
+
+      integer ipt
+      real bb
+
+      xx=0.0
+      yy=0.0
+      zz=0.0
+      bb=0.0
+      do ipt = 1,lx1*ly1*lz1
+        xx=xx+xm1(ipt,1,1,ie)*bm1(ipt,1,1,ie)
+        yy=yy+ym1(ipt,1,1,ie)*bm1(ipt,1,1,ie)
+        zz=zz+zm1(ipt,1,1,ie)*bm1(ipt,1,1,ie)
+        bb=bb+bm1(ipt,1,1,ie)
+      enddo
+      xx=xx/bb
+      yy=yy/bb
+      zz=zz/bb
+
+      return
+      end
+c-----------------------------------------------------------------------
+      subroutine rotate_point_2d(x1,y1,x0,y0,theta,xo,yo)
+      implicit none
+
+      real x1,y1,x0,y0,theta,xo,yo
+
+      xo=(x1-x0)*cos(theta)-(y1-y0)*sin(theta)+x0
+      yo=(x1-x0)*sin(theta)+(y1-y0)*cos(theta)+y0
+
+      return
+      end
+c-----------------------------------------------------------------------
+      subroutine flag_bndry(bcc,ifld,phi)
+      implicit none
+      include 'SIZE'
+      include 'INPUT'
+
+      character*3 bcc 
+      integer ifld
+      real phi(lx1,ly1,lz1,1)
+
+      integer ie,ifc,i,i0,i1,j,j0,j1,k,k0,k1,n
+ 
+      n=lx1*ly1*lz1*nelv
+      call rzero(phi,n)
+
+      do 10 ie=1,nelt
+      do 10 ifc=1,ndim*2
+        if(cbc(ifc,ie,ifld).eq.bcc) then
+          call facind(i0,i1,j0,j1,k0,k1,lx1,ly1,lz1,ifc)
+          do 20 k=k0,k1
+          do 20 j=j0,j1
+          do 20 i=i0,i1
+            phi(i,j,k,ie)=1.0
+ 20       continue
+        endif
+ 10   continue
+ 
+      return
+      end
+c-----------------------------------------------------------------------
+      subroutine walltime(tfin)
+      implicit none 
+C
+C     ends the run and dumps a restart file if the wall time is greater 
+C     than tfin (in seconds)
+C     CALL BEFORE AVG_ALL
+C
+      include 'SIZE'
+      include 'TOTAL'
+      include 'CTIMER'
+
+      real time0,timenow,tfin,glmax
+      save time0
+      data time0 /0.0/
+
+      if(istep.eq.0) then
+        time0=dnekclock()
+        return
+      elseif(istep.gt.0) then
+        if(nid.eq.0) then
+          timenow=dnekclock()-time0
+          if(tfin.lt.timenow) then
+            write(6,*)"at wall time limit, last time step..."
+            lastep=1
+          endif
+        endif
+        call bcast(lastep,isize)
+        if(lastep.eq.1) ifoutfld=.true.
+      endif
+
+      return
+      end
+c-----------------------------------------------------------------------
+      subroutine surface_flux2(dq,q,e,f)
+
+      include 'SIZE'
+      include 'TOTAL'
+      parameter (l=lx1*ly1*lz1)
+
+      real q(l,1),w(lx1,ly1,lz1)
+      integer e,f
+
+      call           faccl4  (w,vx(1,1,1,e),q(1,e),unx(1,1,f,e),f)
+      call           faddcl4 (w,vy(1,1,1,e),q(1,e),uny(1,1,f,e),f)
+      if (if3d) call faddcl4 (w,vz(1,1,1,e),q(1,e),unz(1,1,f,e),f)
+
+      call dsset(lx1,ly1,lz1)
+      iface  = eface1(f)
+      js1    = skpdat(1,iface)
+      jf1    = skpdat(2,iface)
+      jskip1 = skpdat(3,iface)
+      js2    = skpdat(4,iface)
+      jf2    = skpdat(5,iface)
+      jskip2 = skpdat(6,iface)
+
+      dq = 0
+      i  = 0
+      do 100 j2=js2,jf2,jskip2
+      do 100 j1=js1,jf1,jskip1
+         i = i+1
+         dq    = dq + area(i,1,f,e)*w(j1,j2,1)
+  100 continue
+
+      return
+      end
+c-----------------------------------------------------------------------
+      subroutine load_inlet(fname)
+      implicit none
+      include 'SIZE'
+      include 'TOTAL'
+
+      character*(*) fname
+
+      integer i,n
+
+      real uin,vin,win,tin
+      common /INLBCs/ uin(lx1*ly1*lz1*lelv)
+     &               ,vin(lx1*ly1*lz1*lelv)
+     &               ,win(lx1*ly1*lz1*lelv)
+     &               ,tin(lx1*ly1*lz1*lelv,ldimt)
+
+      n=lx1*ly1*lz1*nelv
+
+      if(nio.eq.0) write(*,*)
+     &                     'loading inlet data from file ','"',fname,'"'
+
+      call store_solution
+
+      call gfldr(fname)
+
+      call copy(uin,vx,n)
+      call copy(vin,vy,n)
+      if(if3d) call copy(win,vz,n)
+      do i=1,ldimt
+        call copy(tin(1,i),t(1,1,1,1,i),n)
+      enddo
+
+      call reload_solution
+
+      return
+      end
+c-----------------------------------------------------------------------
+      subroutine faccl4(a,b,c,d,iface1)
+C
+C     Collocate B with A on the surface IFACE1 of element IE.
+C
+C         A, B, and C are (NX,NY,NZ) data structures
+C         D is a (NX,NY,IFACE) data structure
+C         IFACE1 is in the preprocessor notation
+C         IFACE  is the dssum notation.
+C
+      include 'SIZE'
+      include 'TOPOL'
+      DIMENSION A(LX1,LY1,LZ1),B(LX1,LY1,LZ1),C(LX1,LY1,LZ1),D(LX1,LY1)
+C
+C     Set up counters
+C
+      CALL DSSET(lx1,ly1,lz1)
+      IFACE  = EFACE1(IFACE1)
+      JS1    = SKPDAT(1,IFACE)
+      JF1    = SKPDAT(2,IFACE)
+      JSKIP1 = SKPDAT(3,IFACE)
+      JS2    = SKPDAT(4,IFACE)
+      JF2    = SKPDAT(5,IFACE)
+      JSKIP2 = SKPDAT(6,IFACE)
+C
+      I = 0
+      DO 100 J2=JS2,JF2,JSKIP2
+      DO 100 J1=JS1,JF1,JSKIP1
+         I = I+1
+         A(J1,J2,1) = B(J1,J2,1)*C(J1,J2,1)*D(I,1)
+  100 CONTINUE
+C
+      return
+      end
+c-----------------------------------------------------------------------
+      subroutine faddcl4(a,b,c,d,iface1)
+C
+C     Collocate B with C and add to A on the surface IFACE1 of element
+C     IE.
+C
+C         A is a (NX,NY,NZ) data structure
+C         B is a (NX,NY,NZ) data structure
+C         C is a (NX,NY,NZ) data structure
+C         D is a (NX,NY,IFACE) data structure
+C         IFACE1 is in the preprocessor notation
+C         IFACE  is the dssum notation.
+C         29 Jan 1990 18:00 PST   PFF
+C
+      include 'SIZE'
+      include 'TOPOL'
+      DIMENSION A(LX1,LY1,LZ1),B(LX1,LY1,LZ1),C(LX1,LY1,LZ1),D(LX1,LY1)
+C
+C     Set up counters
+C
+      CALL DSSET(lx1,ly1,lz1)
+      IFACE  = EFACE1(IFACE1)
+      JS1    = SKPDAT(1,IFACE)
+      JF1    = SKPDAT(2,IFACE)
+      JSKIP1 = SKPDAT(3,IFACE)
+      JS2    = SKPDAT(4,IFACE)
+      JF2    = SKPDAT(5,IFACE)
+      JSKIP2 = SKPDAT(6,IFACE)
+C
+      I = 0
+      DO 100 J2=JS2,JF2,JSKIP2
+      DO 100 J1=JS1,JF1,JSKIP1
+         I = I+1
+         A(J1,J2,1) = A(J1,J2,1) + B(J1,J2,1)*C(J1,J2,1)*D(I,1)
+  100 CONTINUE
+C
+      return
+      end
+c-----------------------------------------------------------------------
+      subroutine loadmesh(string)
+      implicit none
+      include 'SIZE'
+      include 'INPUT'
+      include 'TSTEP'
+      include 'RESTART'
+    
+      integer l,ltrunc
+      real t_s
+      character string*(*)
+      character*132 initc_sav
+
+      l=ltrunc(string,len(string))
+      if(l.gt.130) call exitti('invalid string length$',l)
+
+      initc_sav=initc(1)
+      t_s=time
+      call blank(initc(1),132)
+      initc(1)=trim(string)//' X'
+      call restart(1)
+      initc(1)=initc_sav
+      time=t_s
+ 
+      return
+      end
+c-----------------------------------------------------------------------
+      subroutine loadfld2(string)
+      implicit none
+      include 'SIZE'
+      include 'INPUT'
+      include 'TSTEP'
+      include 'RESTART'
+    
+      integer l,ltrunc
+      real t_s
+      character string*(*)
+      character*132 initc_sav
+
+      l=ltrunc(string,len(string))
+      if(l.gt.132) call exitti('invalid string length$',l)
+
+      initc_sav=initc(1)
+      t_s=time
+      call blank(initc(1),132)
+      initc(1)=trim(string)
+      call restart(1)
+      initc(1)=initc_sav
+      time=t_s
+ 
+      return
+      end
+c-----------------------------------------------------------------------
+      subroutine dumpmesh
+
+      implicit none
+
+      include 'SIZE'
+      include 'TOTAL'
+
+      logical ifxyo_s,ifpo_s,ifvo_s,ifto_s,ifpsco_s(ldimt1)
+
+      integer i
+
+      ifxyo_s = ifxyo
+      ifpo_s = ifpo
+      ifvo_s = ifvo
+      ifto_s = ifto
+      do i=1,ldimt1
+        ifpsco_s(i)=ifpsco(i)
+      enddo
+
+      ifxyo=.true.
+      ifpo=.false.
+      ifvo=.false.
+      ifto=.false.
+      do i=1,ldimt1
+        ifpsco(i)=.false.
+      enddo
+
+      call prepost (.true.,'msh')
+
+      ifxyo = ifxyo_s
+      ifpo = ifpo_s
+      ifvo = ifvo_s
+      ifto = ifto_s
+      do i=1,ldimt1
+        ifpsco(i)=ifpsco_s(i)
+      enddo
+
+      return
+      end
+c-----------------------------------------------------------------------
+      subroutine dumpcfl
+
+      implicit none
+
+      include 'SIZE'
+      include 'TOTAL'
+
+      real DVC,DV1,DV2,DFC
+      COMMON /SCRNS/ DVC  (LX1,LY1,LZ1,LELV),
+     $               DV1  (LX1,LY1,LZ1,LELV),
+     $               DV2  (LX1,LY1,LZ1,LELV),
+     $               DFC  (LX1,LY1,LZ1,LELV)
+
+      logical ifxyo_s,ifpo_s,ifvo_s,ifto_s,ifpsco_s(ldimt1)
+
+      integer i,n
+      real tsv(lx1,ly1,lz1,lelv),cdum,psv(lx2,ly2,lz2,lelv)
+
+      n = lx1*ly1*lz1*nelv
+
+      ifxyo_s = ifxyo
+      ifpo_s = ifpo
+      ifvo_s = ifvo
+      ifto_s = ifto
+      do i=1,ldimt1
+        ifpsco_s(i)=ifpsco(i)
+      enddo
+
+      ifxyo=.true.
+      ifpo=.false.
+      ifvo=.false.
+      ifto=.true.
+      do i=1,ldimt1
+        ifpsco(i)=.false.
+      enddo
+
+      if(ifsplit) then
+        ifpo=.true.
+        call copy(psv,pr,n)
+
+c       call qthermal  !something wrong here
+c       call add2 (qtl,usrdiv,n)
+        call rzero(qtl,n)
+
+        CALL OPDIV   (DVC,VX,VY,VZ)
+        CALL DSSUM   (DVC,lx1,ly1,lz1)
+        CALL COL2    (DVC,BINVM1,n)
+
+        CALL SUB3    (DFC,DVC,QTL,n)
+        CALL COL3    (pr,DFC,DFC,n)
+      endif
+
+      call copy(tsv,t,n)
+      call compute_cfl(cdum,vx,vy,vz,dt)
+      call copy(t,cflf,n)
+      call prepost (.true.,'cfl')
+      call copy(t,tsv,n)
+      if(ifsplit) call copy(pr,psv,n)
+
+      ifxyo = ifxyo_s
+      ifpo = ifpo_s
+      ifvo = ifvo_s
+      ifto = ifto_s
+      do i=1,ldimt1
+        ifpsco(i)=ifpsco_s(i)
+      enddo
+
+      return
+      end
+c-----------------------------------------------------------------------
+      subroutine surface_area(sarea,e,f)
+
+      include 'SIZE'
+      include 'GEOM'
+      include 'PARALLEL'
+      include 'TOPOL'
+
+      integer e,f
+
+      call dsset(lx1,ly1,lz1)
+
+      iface  = eface1(f)
+      js1    = skpdat(1,iface)
+      jf1    = skpdat(2,iface)
+      jskip1 = skpdat(3,iface)
+      js2    = skpdat(4,iface)
+      jf2    = skpdat(5,iface)
+      jskip2 = skpdat(6,iface)
+
+      sarea = 0.
+      i     = 0
+
+      do 100 j2=js2,jf2,jskip2
+      do 100 j1=js1,jf1,jskip1
+         i = i+1
+         sarea = sarea+area(i,1,f,e)
+  100 continue
+
+      return
+      end
+c-----------------------------------------------------------------------
+      subroutine store_solution
+      include 'SIZE'
+      include 'INPUT'
+      include 'SOLN'
+
+      real w1,w2,w3,w4,w5
+      common /STORE/ w1(lx1*ly1*lz1*lelv)
+     &              ,w2(lx1*ly1*lz1*lelv)
+     &              ,w3(lx1*ly1*lz1*lelv)
+     &              ,w4(lx2*ly2*lz2*lelv)
+     &              ,w5(lx1*ly1*lz1*lelt,ldimt)
+
+      n1=lx1*ly1*lz1*nelv
+      n2=lx2*ly2*lz2*nelv
+      nt=lx1*ly1*lz1*nelt
+
+      call copy(w1,vx,n1)
+      call copy(w2,vy,n1)
+      if(if3d) call copy(w3,vz,n1)
+      call copy(w4,pr,n2)
+      do i=1,ldimt
+        call copy(w5(1,i),t(1,1,1,1,i),nt)
+      enddo
+
+      return
+      end
+c-----------------------------------------------------------------------
+      subroutine reload_solution
+      include 'SIZE'
+      include 'INPUT'
+      include 'SOLN'
+
+      real w1,w2,w3,w4,w5
+      common /STORE/ w1(lx1*ly1*lz1*lelv)
+     &              ,w2(lx1*ly1*lz1*lelv)
+     &              ,w3(lx1*ly1*lz1*lelv)
+     &              ,w4(lx2*ly2*lz2*lelv)
+     &              ,w5(lx1*ly1*lz1*lelt,ldimt)
+
+      n1=lx1*ly1*lz1*nelv
+      n2=lx2*ly2*lz2*nelv
+      nt=lx1*ly1*lz1*nelt
+
+      call copy(vx,w1,n1)
+      call copy(vy,w2,n1)
+      if(if3d) call copy(vz,w3,n1)
+      call copy(pr,w4,n2)
+      do i=1,ldimt
+        call copy(t(1,1,1,1,i),w5(1,i),nt)
+      enddo
+
+      return
+      end
+c-----------------------------------------------------------------------
+c-----------------------------------------------------------------------
+      subroutine print_limits
+      implicit none
+      include 'SIZE'
+      include 'TOTAL'
+
+      real vol,glsum,glmin,glmax,glsc2
+      real tmp(lx1*ly1*lz1*lelv)
+      integer i,n1,n2,nt,nf
+
+C     Primitive Variables
+      real uxmin,uxmax,uxave,uymin,uymax,uyave,uzmin,uzmax,uzave
+      real prmin,prmax,prave
+      real thmin(ldimt),thmax(ldimt),thave(ldimt)
+      real rmsux,rmsuy,rmsuz,rmspr,rmsth(ldimt),glrms
+      real dux,duy,duz,dpr,dth(ldimt)
+      character*15 tname
+
+      n1=nx1*ny1*nz1*nelv
+      n2=nx2*ny2*nz2*nelv
+      nt=nx1*ny1*nz1*nelt
+
+      if(.true.) then
+        call get_limits(vx,uxmin,uxmax,uxave,dux,vxlag,rmsux,n1)
+        call get_limits(vy,uymin,uymax,uyave,duy,vylag,rmsuy,n1)
+       if(if3d) call get_limits(vz,uzmin,uzmax,uzave,duz,vzlag,rmsuz,n1)
+        call get_limits(pr,prmin,prmax,prave,dpr,prlag,rmspr,n2)
+      endif
+      if(ifheat) then
+        do i=1,npscal+1
+          nf=n1
+          if(iftmsh(i+1))nf=nt
+          if(idpss(i).eq.0) call get_limits(t(1,1,1,1,i),thmin(i) !Helmholtz solver
+     &          ,thmax(i),thave(i),dth(i),tlag(1,1,1,1,1,i),rmsth(i),nf)
+          if(idpss(i).eq.1) call get_limits_nodt(t(1,1,1,1,i) !CVODE solver
+     &                                   ,thmin(i),thmax(i),thave(i),nf)
+        enddo
+      endif
+
+      if(nio.eq.0) then
+        write(*,*)
+        write(*,254) 'limits','min','max','ave','max d/dt','rms d/dt'
+        if(.true.) then
+          write(*,255) 'u velocity',uxmin,uxmax,uxave,dux,rmsux
+          write(*,255) 'v velocity',uymin,uymax,uyave,duy,rmsuy
+          if(if3d) write(*,255) 'w velocity',uzmin,uzmax,uzave,duz,rmsuz
+          write(*,255) 'pressure',prmin,prmax,prave,dpr,rmspr
+        endif
+        if(ifheat) then
+          do i=1,npscal+1
+            if(i.eq.1) write(tname,'(a15)') "temperature"
+            if(i.gt.1) write(tname,'(a14,i1)') "PS ",i-1
+            if(idpss(i).eq.0)write(*,255)
+     &               tname,thmin(i),thmax(i),thave(i),dth(i),rmsth(i)
+            if(idpss(i).eq.1)write(*,256)
+     &               tname,thmin(i),thmax(i),thave(i),'--','--'
+          enddo
+        endif
+        write(*,*)
+      endif
+
+      call copy(prlag,pr,n2) ! no longer necessary as of commit 6616c87a0f9ecd946701dc7e43b997350a2a57b9
+
+ 254  format(a15,5a13)
+ 255  format(a15,5es13.4)
+ 256  format(a15,3es13.4,2a13)
+
+      return
+      end
+c-----------------------------------------------------------------------
+C-----------------------------------------------------------------------
+      subroutine get_limits(phi,phimin,phimax,phiave,dphi,phip,rmsphi,n)
+      implicit none
+      include 'SIZE'
+      include 'TOTAL'
+
+      integer i,n,ntot,iglsum
+      real phi(1),phip(1),phimin,phimax,phiave,dphi,rmsphi
+      real glmin,glmax,glsc2,glsum
+
+      ntot=iglsum(n,1)
+
+      rmsphi=0.0
+      dphi=0.0
+      if(istep.ge.1) then
+        do i=1,n
+          dphi=max(dphi,abs(phip(i)-phi(i)))
+          rmsphi=rmsphi+(phip(i)-phi(i))**2
+        enddo
+        rmsphi=glsum(rmsphi,1)
+        rmsphi=sqrt(rmsphi/DBLE(ntot))/dt
+      endif
+      dphi=glmax(dphi,1)
+      dphi=dphi/dt
+
+      phimin=glmin(phi,n)
+      phimax=glmax(phi,n)
+      phiave=glsc2(phi,bm1,n)/volvm1
+
+      return
+      end
+C-----------------------------------------------------------------------
+      subroutine get_limits_nodt(phi,phimin,phimax,phiave,n)
+      implicit none
+      include 'SIZE'
+      include 'TOTAL'
+
+      integer n
+      real phi(1),phimin,phimax,phiave
+      real glmin,glmax,glsc2
+
+      phimin=glmin(phi,n)
+      phimax=glmax(phi,n)
+      phiave=glsc2(phi,bm1,n)/volvm1
+
+      return
+      end
+c-----------------------------------------------------------------------
+c-----------------------------------------------------------------------
+      subroutine max_y_p(wd)
+      implicit none
+      include 'SIZE'
+      include 'TOTAL'
+
+      real wd(nx1,ny1,nz1,nelv)
+      integer e,isd,i,i0,i1,j,j0,j1,k,k0,k1
+      integer n
+      real msk(lx1,ly1,lz1,lelv)
+      real dwmax,dwmin,glmin,glmax
+
+      n=nx1*ny1*nz1*nelv
+
+      dwmax=-1.0d30
+      dwmin=1.0d30
+
+      call rone(msk,nx1*ny1*nz1*nelv)
+      do e=1,nelv
+        do isd=1,2*ndim
+          if(cbc(isd,e,1).eq.'W  ') then
+            call backpts(i0,i1,j0,j1,k0,k1,isd)
+            do k=k0,k1
+            do j=j0,j1
+            do i=i0,i1
+              msk(i,j,k,e)=0.0
+            enddo
+            enddo
+            enddo
+          endif
+        enddo
+        do isd=1,2*ndim
+          if(cbc(isd,e,1).eq.'W  ') then
+            call facind(i0,i1,j0,j1,k0,k1,lx1,ly1,lz1,isd)
+            do k=k0,k1
+            do j=j0,j1
+            do i=i0,i1
+              msk(i,j,k,e)=1.0
+            enddo
+            enddo
+            enddo
+          endif
+        enddo
+      enddo
+      call dssum(msk,nx1,ny1,nz1) !for elements with edges but not faces along a wall
+
+      do i=1,n
+        if(msk(i,1,1,1).lt.0.5)then
+          dwmax=max(dwmax,wd(i,1,1,1))
+          dwmin=min(dwmin,wd(i,1,1,1))
+        endif
+      enddo
+
+      dwmax=glmax(dwmax,1)
+      dwmin=glmin(dwmin,1)
+      if(nid.eq.0) then
+        write(*,256) 'maximum y_p = ',dwmax
+        write(*,256) 'minimum y_p = ',dwmin
+        write(*,*)
+      endif
+ 256  format(2x,a,es15.5)
+
+      return
+      end
+C-----------------------------------------------------------------------
+      subroutine y_p_limits(wd,ypmin,ypmax,ypave,utmin,utmax,utave)
+      implicit none
+      include 'SIZE'
+      include 'TOTAL'
+C
+C     NOTE: min value should work if domain has internal corners
+C
+
+      integer e,i,i0,i1,j,j0,j1,k,k0,k1,iw,jw,kw,i2,j2
+      integer ipt,wpt,estrd,isd,jsd
+      real msk(lx1,ly1,lz1,lelv)
+      real gradu(lx1*ly1*lz1,3,3),wd(1)
+      real tau(3),norm(3),vsca,tauw,utau,rho,mu
+      real ypmin,ypmax,yp,ypave,vol,utmin,utmax,utave
+      real glmin,glmax,glsum
+      logical ifgrad, ifdid
+
+      data ifdid /.false./
+      save ifdid, msk
+
+      ypmin=1.0d30
+      ypmax=-1.0d30
+      ypave=0.0
+      utmin=1.0d30
+      utmax=-1.0d30
+      utave=0.0
+      vol=0.0
+
+C     first build the mask  (this mask ignores some points which maybe important... 
+      if(.not.ifdid)then    ! need to look at it more closely)
+        ifdid=.true.
+        call rone(msk,nx1*ny1*nz1*nelv)
+        do e=1,nelv
+          do isd=1,2*ndim
+            if(cbc(isd,e,1).eq.'W  ') then
+              call backpts(i0,i1,j0,j1,k0,k1,isd)
+              do k=k0,k1
+              do j=j0,j1
+              do i=i0,i1
+                msk(i,j,k,e)=0.0
+              enddo
+              enddo
+              enddo
+            endif
+          enddo
+          do isd=1,2*ndim
+            if(cbc(isd,e,1).eq.'W  ') then
+              call facind(i0,i1,j0,j1,k0,k1,lx1,ly1,lz1,isd)
+              do k=k0,k1
+              do j=j0,j1
+              do i=i0,i1
+                msk(i,j,k,e)=1.0
+              enddo
+              enddo
+              enddo
+            endif
+          enddo
+        enddo
+        call dssum(msk,nx1,ny1,nz1) !for elements with edges but not faces along a wall
+      endif
+
+      do e=1,nelv
+        ifgrad=.true.
+        do isd=1,2*ndim
+          if(cbc(isd,e,1).eq.'W  ')then
+            estrd=(e-1)*nx1*ny1*nz1
+            if(ifgrad)then
+              call gradm11(gradu(1,1,1),gradu(1,1,2),gradu(1,1,3),vx,e)
+              call gradm11(gradu(1,2,1),gradu(1,2,2),gradu(1,2,3),vy,e)
+              if(if3d)
+     &         call gradm11(gradu(1,3,1),gradu(1,3,2),gradu(1,3,3),vz,e)
+              ifgrad=.false.
+            endif
+            call backpts(i0,i1,j0,j1,k0,k1,isd)
+            do k=k0,k1
+            do j=j0,j1
+            do i=i0,i1
+              if(msk(i,j,k,e).lt.0.5) then
+                iw=i
+                jw=j
+                kw=k
+                if    (isd.eq.1) then
+                  jw=1
+                elseif(isd.eq.2) then
+                  iw=nx1
+                elseif(isd.eq.3) then
+                  jw=ny1
+                elseif(isd.eq.4) then
+                  iw=1
+                elseif(isd.eq.5) then
+                  kw=1
+                else
+                  kw=nx1
+                endif
+                call getSnormal(norm,iw,jw,kw,isd,e)
+                ipt=i +(j -1)*nx1+(k -1)*nx1*ny1
+                wpt=iw+(jw-1)*nx1+(kw-1)*nx1*ny1
+
+                mu=vdiff(iw,jw,kw,e,1)
+                rho=vtrans(iw,jw,kw,e,1)
+
+                do i2=1,ldim
+                tau(i2)=0.0
+                  do j2=1,ldim
+                    tau(i2)=tau(i2)+
+     &                   mu*(gradu(wpt,i2,j2)+gradu(wpt,j2,i2))*norm(j2)
+                  enddo
+                enddo
+
+                vsca=0.0
+                do i2=1,ldim
+                  vsca=vsca+tau(i2)*norm(i2)
+                enddo
+
+                tauw=0.0
+                do i2=1,ldim
+                  tauw=tauw+(tau(i2)-vsca*norm(i2))**2
+                enddo
+                tauw=sqrt(tauw)
+                utau=sqrt(tauw/rho)
+                yp=wd(ipt+estrd)*utau*rho/mu
+                ypmin=min(ypmin,yp)
+                ypmax=max(ypmax,yp)
+                ypave=ypave+yp*bm1(i,j,k,e)
+                utmin=min(utau,utmin)
+                utmax=max(utau,utmax)
+                utave=utave+utau*bm1(i,j,k,e)
+                vol=vol+bm1(i,j,k,e)
+              endif
+            enddo
+            enddo
+            enddo
+          endif
+        enddo
+      enddo
+
+      ypmin=glmin(ypmin,1)
+      ypmax=glmax(ypmax,1)
+      ypave=glsum(ypave,1)
+      utmin=glmin(utmin,1)
+      utmax=glmax(utmax,1)
+      utave=glsum(utave,1)
+      vol=glsum(vol,1)
+      ypave=ypave/vol
+      utave=utave/vol
+
+      return
+      end
+c-----------------------------------------------------------------------
+c-----------------------------------------------------------------------
+      subroutine backpts(i0,i1,j0,j1,k0,k1,isd)
+      implicit none
+      include 'SIZE'
+
+      integer i0,i1,j0,j1,k0,k1,isd
+
+      i0=1
+      j0=1
+      k0=1
+      i1=nx1
+      j1=ny1
+      k1=nz1
+      if(isd.eq.1) then
+        j0=2
+        j1=2
+      elseif(isd.eq.2) then
+        i0=nx1-1
+        i1=nx1-1
+      elseif(isd.eq.3) then
+        j0=ny1-1
+        j1=ny1-1
+      elseif(isd.eq.4) then
+        i0=2
+        i1=2
+      elseif(isd.eq.5) then
+        k0=2
+        k1=2
+      elseif(isd.eq.6) then
+        k0=nz1-1
+        k1=nz1-1
+      endif
+
+      return
+      end
+c-----------------------------------------------------------------------
+
+
+
+c---------------------------------------------------------
+c-----------------------------------------------------------------------
+      subroutine avg_fld (nmode)
+      include 'SIZE'
+      include 'TOTAL'
+
+      parameter        (lfiles = 99)
+      real          adt(lfiles + 1)		! real*4?
+      character*132 sfn(lfiles),sfname
+      character*6   s6
+
+      parameter (ltt=ax1*ay1*az1*lelt,lt2=ax2*ay2*az2*lelt)
+      common /chkavg/ avx(ltt),avy(ltt),avz(ltt),att(ltt,ldimt),apr(lt2) ! ~ AVG
+      logical  ifavgxyo
+
+      p66 = param(66)           ! file write format: overwrite w/ 4 for .fld
+      p67 = param(67)           ! file read  format: overwrite w/ 4 for .fld
+      s6  = 'a.list'		! file names
+      ifavgxyo = .true.		! dump coordinates w/ avg file/s
+
+      mode = iabs(nmode)
+
+      lld = (lx2 - lx1)**2 + (ly2 - ly1)**2 + (lz2 - lz1)**2
+     $    + (ax2 - lx1)**2 + (ay2 - ly1)**2 + (az2 - lz1)**2
+      if (lld.ne.0) call exitti(
+     $    " avg_fld -- check lx2=lx1 & az1=lx1, etc.: $",lld)
+
+      iname = 1				! for avg* filename dump
+      call avg_init(sfn,nfiles,nf2,nf4,nmode,s6,lfiles)
+      if (mode.eq.3) then
+         s6 = 't.list'			! file times
+         call avg_adt (adt,nmode,nfiles,s6)	! from t.list
+      endif
+
+      call avg_zero(avx,avy,avz,apr,att)
+
+      do i=1,nfiles			! avg
+         call chcopy(sfname,sfn(i),132)
+         call avg_done(avx,avy,avz,apr,att,adt,mode,i,p67,sfname)
+         call e2t_out			! stats
+         if (i.eq.nf4 .or. i.eq.nf2) call
+     $     avg_dump(avx,avy,avz,apr,att,p66,iname,ifavgxyo)
+      enddo
+
+      call avg_dump(avx,avy,avz,apr,att,p66,iname,ifavgxyo)	! if*o?
+
+      call exittr("  avg_fld exit: t_avg and # of files: $",time,nfiles)
+
+      return
+      end
+c-----------------------------------------------------------------------
+      subroutine avg_init (sfn,nfiles,nf2,nf4,nmode,sflist,lfiles)
+      include 'SIZE'
+      include 'TOTAL'
+
+      character*132 sfn(1),fname,fnam2
+      character*6   sflist
+
+
+      nfiles = 0
+      ierr   = 0
+      ierr2  = 0
+      if (nid.eq.0) then
+         open(112,file=sflist,status='old',form='formatted'
+     $                       ,iostat=ierr2,err=20)
+
+         do i=1,lfiles+1		! check for lfiles?
+            call blank(fname,132) 
+            read (112,10,end=20) fname	! check for non-empty line?
+   10       format(a132)
+            if (i.gt.lfiles) then
+               ierr = i
+               goto 20
+            endif
+c           sfn(i) = fname
+            call chcopy(sfn(i),fname,132)
+            nfiles = nfiles + 1
+         enddo
+   20    continue
+         close(112)
+      endif
+
+      ierr  = iglmax(ierr, 1)
+      if (ierr.ne.0)   call exitti("  avg_int: set lfiles >= $",ierr)
+      ierr2 = iglmax(ierr2,1)
+      if (ierr2.ne.0)  call exitti(
+     $            "Exit in avg_int: No sflist? IOSTAT error $",ierr2)
+
+      nfiles = iglmax(nfiles,1)
+      call bcast (sfn,nfiles*132)
+
+      nf4 = 0 
+      nf2 = 0 
+      if (nmode.lt.0) then	! to get avg over 'quarter' & 'half' too
+        nf4 = nfiles/4 
+        nf2 = nfiles/2 
+        if (nf4.eq.0) then
+           if (nid.eq.0) write(6,30) nf4,nf2
+           nf4 = nf2
+        endif
+   30   format("  avg_fld: adjusting nf4 from ",i5," to ",i5)
+
+        nfiles2 = nfiles/2		! reversing order of filenames
+        do i=1,nfiles2
+            j = nfiles - i
+            call chcopy(fname,sfn(i),132)
+            call chcopy(fnam2,sfn(j),132)
+            call chcopy(sfn(i),fnam2,132)
+	    call chcopy(sfn(j),fname,132)
+        enddo
+      endif
+      if (nid.eq.0)  write (6,40) nfiles,nf2,nf4
+   40 format("  Files to average ",3i5)
+
+      do iline=1,15			! for setics in avg_load_sum
+         call blank (initc(iline),132)
+      enddo
+
+      return
+      end
+c-----------------------------------------------------------------------
+      subroutine avg_adt (adt,nmode,nfiles,stlist) ! mode=3: t.list of avg t_0 & t_final columns
+      include 'SIZE'
+      include 'TOTAL'
+
+      character*6   stlist
+      real adt(1)
+
+
+      nlines = nfiles		! +1 for mode=1?
+      call rzero (adt,nlines)	! check for lfiles?
+      ierr   = 0
+      if (nid.eq.0) then
+         open(112,file=stlist,status='old',form='formatted')	! mode=2?
+         do i=1,nlines+1		! check for lfiles
+            read (112,*,end=20) time1,time2
+            if (i.gt.nlines) then
+               ierr = i
+               goto 20
+            endif
+            adt(i) = time2 - time1
+         enddo
+   20    continue
+         close(112)
+      endif
+      ierr = iglmax(ierr,1)						!?
+      if (ierr.ne.0)  call exitti("  avg_adt: time lines are >= $",ierr)
+
+      do i=1,nlines
+         adtc = adt(i)		! bcast adt instead?
+         adt(i)= glsum(adtc,1)
+      enddo
+      if (nmode.lt.0) then	! reversing weights for 'quarter' & 'half'
+      do i=1,nlines/2		! mode
+         j = nlines - i
+         adtc   = adt(i)
+         adt(i) = adt(j)
+         adt(j) = adtc
+      enddo
+      endif
+
+      adtmin = glmin(adt,nlines)
+      adtmax = glmax(adt,nlines)
+      if (nid.eq.0)  write (6,40) adtmin,adtmax
+   40 format(3x,'Averaging time interval range : ',1p2g15.7)
+
+      return
+      end
+c-----------------------------------------------------------------------
+      subroutine avg_zero (avx,avy,avz,apr,att)
+      include 'SIZE'
+      parameter (ltt=ax1*ay1*az1*lelt,lt2=ax2*ay2*az2*lelt)
+      dimension avx(1),avy(1),avz(1),apr(1),att(ltt,1)
+
+      ifield = 1
+      call opzero(avx,avy,avz)
+      call rzero (apr,lt2)
+      call rzero (att,ltt*ldimt)
+
+      return
+      end
+c-----------------------------------------------------------------------
+      subroutine avg_done (avx,avy,avz,apr,att,adt,mode,ifile,p67,fname)
+      include 'SIZE'
+      include 'TOTAL'
+
+      parameter (ltt=ax1*ay1*az1*lelt,lt2=ltt)	! better if lx2=lx1
+      dimension avx(1),avy(1),avz(1),apr(1),att(ltt,1)
+
+      character*132 fname
+      real adt(1)
+
+      real adtt
+      save adtt
+      data adtt /0./
+
+
+      param(67) = p67
+      call chcopy(initc(1),fname,132)			! initc(2)?
+      if (nid.eq.0) write(6,10) param(67),ifile,initc(1)
+   10 format('p67=',f2.0,3x,i5,' fname = ',a132)
+
+      ifvcor = .false.		! no mean correction to pr
+      call setics						! reading
+
+      call avg_wghts (awtp,awtc,adtt,mode,ifile,adt,time)	! weights
+
+      if (nid.eq.0) write(6,20) ifile,mode,adtt,adtp,adtc,time,awtp,awtc
+   20 format(i5,i2,1p6e15.7,'  avg_done')
+
+      ntott = nx1*ny1*nz1*nelt
+      ntot2 = nx2*ny2*nz2*nelt
+      ntotv = ntott
+      call add2sxy(avx,awtp,vx,awtc,ntotv)			! averaging
+      call add2sxy(avy,awtp,vy,awtc,ntotv)
+      if (if3d) call
+     $     add2sxy(avz,awtp,vz,awtc,ntotv)
+      call add2sxy(apr,awtp,pr,awtc,ntot2) ! ifpo? use lx2=lx1
+      do k=1,ldimt					  ! ifto?
+        call add2sxy(att(1,k),awtp,t(1,1,1,1,k),awtc,ntott)
+      enddo
+
+      time  = adtt					! for avg_dump
+      istep = ifile
+
+      return
+      end
+c-----------------------------------------------------------------------
+      subroutine avg_wghts (awtp,awtc,adtt,mode,ifile,adt,time)
+
+      real adt(1)		! for mode=3
+
+
+      if (mode.eq.3) then				! t.list
+
+         adtc = adt(ifile)	! t_i from adtc <- avg_adt <- t.list
+         adtp = adtt
+         if (ifile.eq.1)   adtp = 0.
+
+      else if (mode.eq.2) then				! ifile
+
+         adtc = ifile - 1.	! avg_i = a_i/i + avg_{i-1} * (i-1)/i
+         adtp = 1.		! which is mode=0 w/ t_i = i * dt
+
+      else   ! mode.eq.1				! time 
+
+         adtc = time	!    tt = t_i          + t_{i-1}
+         adtp = adtt	! avg_i = t_i/tt * a_i + t_{i-1}/tt * avg_{i-1}
+         if (ifile.eq.1)   adtp = 0.
+      endif
+
+      adtt = adtp + adtc	! previous and current time intervals t_{i-1} & t_i
+      awtp = adtp/adtt		! check for 0.?
+      awtc = adtc/adtt
+
+      return
+      end
+c-----------------------------------------------------------------------
+      subroutine avg_dump (avx,avy,avz,apr,att,p66,iname,ifavgxyo)
+      include 'SIZE'
+      include 'TOTAL'
+
+      parameter (ltt=ax1*ay1*az1*lelt,lt2=ax2*ay2*az2*lelt)
+      dimension avx(1),avy(1),avz(1),apr(1),att(ltt,1)
+
+      logical ifavgxyo
+      character*3 s3(3),sprefix		! argument?
+      save        s3
+      data        s3 /'avg','arm','ar2'/	! true avg,rms,re-tensor
+      real tmax(ldimt)
+
+      sprefix   = s3(iname)
+      param(66) = p66
+      ifxyo     = ifavgxyo
+
+      ntott = nx1*ny1*nz1*nelt
+      ntot2 = nx2*ny2*nz2*nelt
+      ntotv = ntott
+
+      vxmax = glmax(avx,ntotv)
+      vymax = glmax(avy,ntotv)
+      vzmax = glmax(avz,ntotv)		! ndim=2?
+      prmax = glmax(apr,ntotv)		! F ifpo or 'ar2'?
+      do k=1,ldimt
+         tmax(k) = glmax(att(1,k),ntott)
+      enddo
+      if (nid.eq.0) write(6,10) param(66),sprefix,vxmax,vymax,vzmax
+     $                         ,prmax,(tmax(k),k=1,ldimt)
+   10 format('p66=',f2.0,1x,a3,'_uvwpt_max',1p14g13.5)	! up to ldimt=10?
+
+      nfldt = 0
+      if (ifto) nfldt = nfldt + 1
+      do i=1,ldimt-1
+         if (ifpsco(i)) nfldt = nfldt + 1
+      enddo
+      call outpost2(avx,avy,avz,apr,att,nfldt,sprefix)	! F ifpo?
+
+      return
+      end
+c-----------------------------------------------------------------------
+      subroutine e2t_out
+      include 'SIZE'
+      include 'TOTAL'
+c
+c     prints out uvwpt abs max and volume average/rms
+ 
+
+      nt  = nx1*ny1*nz1*nelt
+      nv  = nx1*ny1*nz1*nelv
+      n2  = nx2*ny2*nz2*nelv
+      vxm = glamax(vx,nv)			! absolute value max
+      vym = glamax(vy,nv)
+      prm = glamax(pr,n2)
+      tem = glamax(t ,nt)
+      vxa = glsc2(vx,   bm1,nt) / volvm1	! volume-average
+      vya = glsc2(vy,   bm1,nt) / volvm1
+      pra = glsc2(pr,   bm2,n2) / volvm2
+      tea = glsc2(t ,   bm1,nt) / volvm1
+      vx2 = glsc3(vx,vx,bm1,nt) / volvm1
+      vy2 = glsc3(vy,vy,bm1,nt) / volvm1
+      pr2 = glsc3(pr,pr,bm2,n2) / volvm2
+      te2 = glsc3(t ,t ,bm1,nt) / volvm1
+      vx2 = vx2 - vxa*vxa
+      vy2 = vy2 - vya*vya
+      pr2 = pr2 - pra*pra
+      te2 = te2 - tea*tea
+      if (vx2.gt.0.) vx2 = sqrt(vx2)		! volume-rms
+      if (vy2.gt.0.) vy2 = sqrt(vy2)
+      if (pr2.gt.0.) pr2 = sqrt(pr2)
+      if (te2.gt.0.) te2 = sqrt(te2)
+
+      if (if3d) then				! 3D
+         vzm = glamax(vz,nv)
+         vza = glsc2(vz,   bm1,nt) / volvm1
+         vz2 = glsc3(vz,vz,bm1,nt) / volvm1
+         vz2 = vz2 - vza*vza
+         if (vz2.gt.0) vz2 = sqrt(vz2)
+
+         if (nid.eq.0) write(6,1) istep,time,vxa,vya,vza,pra,tea ! 1-2  3-7
+     $                  ,vx2,vy2,vz2,pr2,te2,vxm,vym,vzm,prm,tem ! 8-12 13-17
+      else
+         if (nid.eq.0) write(6,2) istep,time,vxa,vya,pra,tea     ! 1-2  3-6
+     $                      ,vx2,vy2,pr2,te2,vxm,vym,prm,tem     ! 7-10 11-14
+      endif
+!         tstep time       avgut   rmsut   amaxut
+    1 format(i7, 1pe14.7, 5e15.7, 5e11.3, 5e10.2, ' e2t')
+    2 format(i7, 1pe14.7, 4e15.7, 4e11.3, 4e10.2, ' e2t')
+
+      return
+      end
+c----------------------------------------------------------------------
