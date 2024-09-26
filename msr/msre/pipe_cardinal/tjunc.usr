@@ -1,0 +1,80 @@
+c-----------------------------------------------------------------------
+c
+c-----------------------------------------------------------------------
+      subroutine userchk
+      include 'SIZE'
+      include 'TOTAL'
+
+      return
+      end
+c-----------------------------------------------------------------------
+      subroutine useric (ix,iy,iz,ieg)
+
+C     Set initial conditions
+
+      include 'SIZE'
+      include 'TOTAL'
+      include 'NEKUSE'
+
+      ux   = 0.0
+      uy   = 0.0
+      uz   = 0.0
+      temp = 0.0
+
+      return
+      end
+c-----------------------------------------------------------------------
+      subroutine usrdat
+      include 'SIZE'
+      include 'TOTAL'
+
+      return
+      end
+c-----------------------------------------------------------------------
+      subroutine usrdat2
+      include 'SIZE'
+      include 'TOTAL'
+
+C Set up boundary conditions
+      do iel=1,nelt
+         ieg = lglel(iel)
+      do ifc=1,2*ndim
+         boundaryID(ifc,iel)  = 0
+         boundaryIDt(ifc,iel) = 0
+         if (bc(5,ifc,iel,1).eq.2) then      !vertical inlet
+            cbc(ifc,iel,1) = 'v  '
+            cbc(ifc,iel,2) = 't  '
+            boundaryID(ifc,iel)  = 1
+            boundaryIDt(ifc,iel) = 1
+         elseif (bc(5,ifc,iel,1).eq.5) then  !horizontal inlet
+            cbc(ifc,iel,1) = 'v  '
+            cbc(ifc,iel,2) = 't  '
+            boundaryID(ifc,iel)  = 2
+            boundaryIDt(ifc,iel) = 2
+         elseif (bc(5,ifc,iel,1).eq.3) then  !outlet
+            cbc(ifc,iel,1) = 'O  '
+            cbc(ifc,iel,2) = 'I  '
+            boundaryID(ifc,iel)  = 3
+            boundaryIDt(ifc,iel) = 3
+         elseif (bc(5,ifc,iel,1).eq.4) then  !walls
+            cbc(ifc,iel,1) = 'W  '
+            boundaryID(ifc,iel)  = 4         !temp BC on walls is not needed for CHT
+         endif
+
+         if (ieg.gt.nelgv) then              !solid
+         if (bc(5,ifc,iel,2).eq.2) then
+            cbc(ifc,iel,2) = 'I  '
+            boundaryIDt(ifc,iel) = 4
+         endif
+         endif
+      enddo
+      enddo
+
+      return
+      end
+c-----------------------------------------------------------------------
+      subroutine usrdat3
+      return
+
+      end
+c-----------------------------------------------------------------------
