@@ -2,14 +2,16 @@
 
 *Contact: Zhiee Jhia Ooi, zooi@anl.gov, Stephen Bajorek, stephen.bajorek@nrc.gov*
 
-*Model link: [HTR-PM SAM Model](https://github.com/idaholab/virtual_test_bed/tree/devel/htgr/htr-pm)*
+*Model link: [HTR-PM SAM Model](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/htr-pm)*
 
-!tag name=SAM HTR-PM Model pairs=reactor_type:HTGR
+!tag name=SAM HTR-PM Model
+  image=
+  pairs=reactor_type:HTGR
                        reactor:HTR_PM
                        geometry:Core_and_primary_loop
                        simulation_type:Thermal_hydraulic
                        transient:PLOFC
-                       input_features:checkpoint_restart
+                       input_features:checkpoint_restart;multiapps
                        codes_used:SAM
                        computing_needs:Workstation
                        fiscal_year:2024
@@ -23,7 +25,7 @@ This is a SAM [!citep](Hu2021) reference plant model for the 250 MWth HTR-PM rea
         id=htr-pm-loop-schematic
         caption=Schematic of the SAM HTR-PM reference plant model.
 
- The schematic of the 2-D RZ core model is shown in [htr-pm-core-schematic]. The pebble bed, top and bottom reflectors, and the top cavity are modeled as porous media with varying porosity while the side reflectors, graphite blocks, core barrel, reactor pressure vessel (RPV), and helium gaps are modeled as solid. The hot and cold plena are not meshed in the 2-D model. Instead, they are modeled as 0-D volume branches using the SAM component system in the primary loop. On the other hand, the riser and bypass channels are modeled using an approach that utilizes both the 2-D meshes and the 1-D component system. In the 2-D model, the bypass and riser channels are meshed. However, they are treated as solid components (rather than porous media) whose thermal physical properties are reduced by a factor of $1-porosity$. This means that in the 2-D mesh, there is no fluid flow in the riser and bypass channels. Instead, the fluid flow in these two channels are modeled as 1-D flow using `PBOneDFluidComponent` in the primary loop model. Conjugate heat transfer between these channels with the surrounding 2-D solid structures is also modeled. This combined approach avoids the need to mesh the two channels in the 2-D model while at the same time still captures the radial conduction of heat from the core to the surrounding reflectors.
+The schematic of the 2-D RZ core model is shown in [htr-pm-core-schematic]. The pebble bed, top and bottom reflectors, and the top cavity are modeled as porous media with varying porosity while the side reflectors, graphite blocks, core barrel, reactor pressure vessel (RPV), and helium gaps are modeled as solid. The hot and cold plena are not meshed in the 2-D model. Instead, they are modeled as 0-D volume branches using the SAM component system in the primary loop. On the other hand, the riser and bypass channels are modeled using an approach that utilizes both the 2-D meshes and the 1-D component system. In the 2-D model, the bypass and riser channels are meshed. However, they are treated as solid components (rather than porous media) whose thermal physical properties are reduced by a factor of $1-porosity$. This means that in the 2-D mesh, there is no fluid flow in the riser and bypass channels. Instead, the fluid flow in these two channels are modeled as 1-D flow using `PBOneDFluidComponent` in the primary loop model. Conjugate heat transfer between these channels with the surrounding 2-D solid structures is also modeled. This combined approach avoids the need to mesh the two channels in the 2-D model while at the same time still captures the radial conduction of heat from the core to the surrounding reflectors.
 
 !media htrpm_sam/htr_pm_schematics.png
         style=width:70%
@@ -50,7 +52,7 @@ The domain-overlapping approach [!citep](domain_overlap_huxford2023) is used to 
 
 ## Steady-state
 
-A steady-state normal operating condition is simulated with the SAM HTR-PM reference plant model. The operating conditions during steady-state are tabulated in [ss-condition]. The reactor has a power output of 250 MWth and operates at 7 MPa. It is helium cooled with a system mass flow rate of 96 kg/s where the helium enters and leaves the reactor at 523.15 K and 1023.15 K, respectively. The core contains about 420,000 fuel pebbles that are 6 cm in diameter with an average packing fraction of 0.61 [!citep](htrpm_jaradat2023). In this model, neutronics calculations are not powerformed. Instead, a power density distribution obtained from the work by Jaradat et. al. [!citep](htrpm_jaradat2023) is imposed to the 2-D core.
+A steady-state normal operating condition is simulated with the SAM HTR-PM reference plant model. The operating conditions during steady-state are tabulated in [ss-condition]. The reactor has a power output of 250 MWth and operates at 7 MPa. It is helium cooled with a system mass flow rate of 96 kg/s where the helium enters and leaves the reactor at 523.15 K and 1023.15 K, respectively. The core contains about 420,000 fuel pebbles that are 6 cm in diameter with an average packing fraction of 0.61 [!citep](htrpm_jaradat2023). In this model, neutronics calculations are not performed. Instead, a power density distribution obtained from the work by Jaradat et. al. [!citep](htrpm_jaradat2023) is imposed to the 2-D core.
 
 !media htrpm_sam/ss-condition.png
         style=width:70%
@@ -59,7 +61,7 @@ A steady-state normal operating condition is simulated with the SAM HTR-PM refer
 
 ## Pressurized Loss of Forced Cooling (PLOFC) Transient
 
-The Pressurized Loss of Forced Cooling (PLOFC) transient is simulated. The sequence of events of the simulated PLOFC is shown in [PLOFC_sequence]. The model is first simulated until steady-state is achieved. At the start of the transient, the reactor is SCRAM and a decay heat curve is used to determine the reactor power level throughout the accident. At the same time, the helium flow rate is reduced linearly from the nominal value to zero over 13 seconds. During the accident, the pressure boundary is assumed to be intact where the system pressure is able to maintain at 7 MPa. Given the absence of forced flow, decay heat from the core is transferred first to the surrounding reflector, and then the graphite blocks, core barrel, and RPV. Heat is ultimately radiated from the outer surface of the RPV to the RCCS panel where it is ultimately removed by the water flow in the RCCS. Simultaneously, natural circulation is also established within the core due to density differences of helium at different elevations.
+The Pressurized Loss of Forced Cooling (PLOFC) transient is simulated. The sequence of events of the simulated PLOFC is shown in [PLOFC_sequence]. The model is first simulated until steady-state is achieved. At the start of the transient, the reactor is SCRAM and a decay heat curve is used to determine the reactor power level throughout the accident. At the same time, the helium flow rate is reduced linearly from the nominal value to zero over 13 seconds. During the accident, the pressure boundary is assumed to be intact where the system pressure is maintained at 7 MPa. Given the absence of forced flow, decay heat from the core is transferred first to the surrounding reflector, and then the graphite blocks, core barrel, and RPV. Heat is ultimately radiated from the outer surface of the RPV to the RCCS panel where it is ultimately removed by the water flow in the RCCS. Simultaneously, natural circulation is also established within the core due to density differences of helium at different elevations.
 
 It should be pointed out that for PLOFC, a reduced primay loop model is used. Given that the pump and heat exchanger are essentially unused during the transient, they are removed to reduce the complexity of the model. Instead, an inlet boundary condition specifying the helium flow velocity and temperature is prescribed at the inlet of the riser while a pressure boundary condition is specified at the outlet of the hot plenum.
 
@@ -92,7 +94,7 @@ Parameters that are globally true are defined in this block. Some of these inclu
 
 ### Mesh
 
-The mash file is specified in this block. In this model, the mesh file is in Exodus (.e) format.
+The mesh file is specified in this block. In this model, the mesh file is in Exodus (.e) format.
 
 ```language=bash
   file = htr-pm-mesh-bypass-riser.e
@@ -108,7 +110,7 @@ This block specifies the type of problem being solved by SAM. The type of coordi
   rz_coord_axis = Y
 ```
 
-To restart a simulation, the location of the check point file is specified with the `restart_file_base` parameter. The keyword `LATEST` is used to restart the problem from the most recent check point.
+To restart a simulation, the location of the checkpoint file is specified with the `restart_file_base` parameter. The keyword `LATEST` is used to restart the problem from the most recent checkpoint.
 
 ```language=bash
   restart_file_base = '<location_of_checkpoint_file>/LATEST'
@@ -254,7 +256,7 @@ This block is used to input the variables in the model, namely velocities in the
 
 ### AuxVariables
 
-This block is used to input auxiliary variables, which are used to compute or store intermediate quantities that are not the main variables (the ones being solved for) of the equation system. Similar to `Variables`, initial condition and block can be specified for `AuxVariables`. Users can also set the order and family of the `AuxVariables` to fit their needs. For instance, porosity is defined as an `AuxVariable` with an order `CONSTANT` and a family `MONOMIAL`.
+This block is used to input auxiliary variables, which are used to compute or store intermediate quantities that are not the main variables (the ones being solved for) of the equation system. Similar to `Variables`, initial condition and block can be specified for `AuxVariables`. Users can also set the order and family of the `AuxVariables` to fit their needs. For instance, porosity is defined as an `AuxVariable` with a `CONSTANT` order and a `MONOMIAL` family.
 
 ```language=bash
   [porosity_aux]
@@ -763,7 +765,7 @@ This block is used to control the transfer of information between the `MainApp` 
   []
 ```
 
-In this example, temperature is transferred from the primary loop model (`SubApp`) to the 2-D model (`MainApp`), hence, the `direction` is set to `from_multiapp` with the `multi_app` being the primary loop model. `source_variable` is used to set the variable in the `SubApp` that is to be transferred to the `MainApp`. On the other hand, `variable` is the name of the variable in the `MainApp` to receive the transferred value. Since the transfer mechanism is based on the positions of the models, there is a possibility that the wrong field data maybe transferred. To avoid that, the `from_blocks` and `to_blocks` options are set to make sure that the data transfer only involves the correct blocks.
+In this example, temperature is transferred from the primary loop model (`SubApp`) to the 2-D model (`MainApp`), hence, the `direction` is set to `from_multiapp` with the `multi_app` being the primary loop model. `source_variable` is used to set the variable in the `SubApp` that is to be transferred to the `MainApp`. On the other hand, `variable` is the name of the variable in the `MainApp` to receive the transferred value. Since the transfer mechanism is based on the positions of the models, there is a possibility that the wrong field data may be transferred. To avoid that, the `from_blocks` and `to_blocks` options are set to make sure that the data transfer only involves the correct blocks.
 
 ### UserObjects
 
@@ -807,7 +809,7 @@ In this model, `LayeredSideAverage` is used to obtain the layered average field 
 
 This block describes the preconditioner to be used by the preconditioned JFNK
 solver (available through PETSc). Two options are currently available,
-the single matrix preconditioner (SMP) and the finite difference preconditioner (FDP).
+the single matrix preconditioner (SMP) and the finite difference preconditioner (FDP) (for debugging only).
 The theory behind the preconditioner can be found in the SAM Theory Manual [!citep](Hu2021).
 New users can leave this block unchanged.
 
@@ -921,7 +923,7 @@ The surrogate channel consists of a `PBOneDFluidComponent` with inlet and outlet
   []
 ```
 
-The geometric information such as the length, flow area, hydraulic diameter, position, etc. are the same as that in the porous media model. In the domain overlapping approach, frictional pressure drop in the porous media model is computed and then applied to the surrogate channel. The pressure drop is then used by the code to internally calculate a friction factor that is then applied to the surrogate channel. By doing so, the flow rate in the surrogate channel is ensured to tbe the same as that in the porous media model. This capability is enabled by setting `overlap_coupled` to `true`. The `overlap_pp` parameter sets the postprocessor name that receives the pressure drop information from the porous media model. Note that pressure drop is defined as the change of pressure per unit length, $dP/dZ$, with a unit of Pa/m, and NOT the total presure drop across the core.
+The geometric information such as the length, flow area, hydraulic diameter, position, etc. are the same as that in the porous media model. In the domain overlapping approach, frictional pressure drop in the porous media model is computed and then applied to the surrogate channel. The pressure drop is then used by the code to internally calculate a friction factor that is then applied to the surrogate channel. By doing so, the flow rate in the surrogate channel is ensured to be the same as that in the porous media model. This capability is enabled by setting `overlap_coupled` to `true`. The `overlap_pp` parameter sets the postprocessor name that receives the pressure drop information from the porous media model. Note that pressure drop is defined as the change of pressure per unit length, $dP/dZ$, with a unit of Pa/m, and NOT the total pressure drop across the core.
 
 The inlet and outlet boundary conditions are set using a coupled postprocessor time-dependent junction (CoupledPPSTDJ) and coupled postprocessor time-dependent volume (CoupledPPSTDV), respectively. At the inlet, the velocity and temperature boundary conditions are set to the mean values obtained from the inlet of the multi-D model using their respective postprocessors. On the other hand, at the outlet, using their respective postprocessors, the temperature is set to the mean temperature obtained at the outlet of the multi-D model while the pressure is set to the pressure of the hot plenum.
 
@@ -1312,7 +1314,7 @@ The `HeatTransferWithExternalHeatStructure` is used to model the heat transfer b
 
 ## 0-D/1-D RCCS Model
 
-The input file of the 0-D/1-D model is described here. Similarly, blocks that are repeated in other input files will not be discussed here. Note that the RCCS model is loosely based on the actual system whose informationa is obtained from multiple sources in the public domain and the geometry information is not representative of the actual system.
+The input file of the 0-D/1-D model is described here. Similarly, blocks that are repeated in other input files will not be discussed here. Note that the RCCS model is loosely based on the actual system whose information is obtained from multiple sources in the public domain and the geometry information is not representative of the actual system.
 
 The RCCS panel in the model receives heat flux from the outer surface of the RPV in the multi-D porous media model via thermal radiation. To do so, an `AuxVariable` named 'QRad' is defined to receive that flux. Note that the name of the `AuxVariable` ('QRad' in this case) must match the name provided in the `[QRad_to_subRCCS]` block in the multi-D model. At the same time, due to the difference in the surface area of the RPV and the RCCS panel, the heat flux needs to be properly scaled to ensure energy conservation. This is done through another `AuxVariable` named 'QRad_multiplied'.
 
