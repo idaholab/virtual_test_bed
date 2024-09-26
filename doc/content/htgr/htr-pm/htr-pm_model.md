@@ -116,9 +116,9 @@ A `CompositeFunction` is used to combine multiple functions, as shown below:
 
 !listing htgr/htr-pm/ss-main.i block=Q_fn language=cpp
 
-A `ParsedFunction` allows operation to be performed to an variable. The variable can be postprocessor outputs or other variables. The example below shows how the average temperature is calculated using the inlet and outlet temperatures obtained from two postprocessors named 'Tin_pps' and 'Tout_pps".
+A `ParsedFunction` allows operation to be performed to an variable. The variable can be postprocessor outputs or other variables. The example below shows how the average temperature is calculated using the inlet and outlet temperatures obtained from two postprocessors named `2Dreceiver_temperature_in` and `2Dreceiver_temperature_out`.
 
-!listing htgr/htr-pm/ss-main.i block=T_average language=cpp
+!listing htgr/htr-pm/ss-main.i block=T_reactor_in T_core_out language=cpp
 
 ### EOS
 
