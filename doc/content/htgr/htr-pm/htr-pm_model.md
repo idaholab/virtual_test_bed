@@ -5,8 +5,8 @@
 *Model link: [HTR-PM SAM Model](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/htr-pm)*
 
 !tag name=SAM HTR-PM Model
-  image=
-  description=...
+  image=https://mooseframework.inl.gov/virtual_test_bed/media/htrpm_sam/loop-schematics-VTB.png
+  description=This is a SAM HTR-PM reference plant model with steady-state and transient PLOFC simulations
   pairs=reactor_type:HTGR
                        reactor:HTR_PM
                        geometry:Core_and_primary_loop
