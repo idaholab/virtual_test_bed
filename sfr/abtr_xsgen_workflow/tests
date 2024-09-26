@@ -29,8 +29,8 @@
     check_input = true
     input = 'abtr_het_mesh.i core_hom_macro.i'
     executable_pattern = 'griffin*|blue_crab*'
-    cli_args = "Mesh/eqv_core/quad_center_elements=true
-                Mesh/eqv_core/max_axial_mesh_size=10
+    cli_args = "max_axial_mesh_size=10
+                Mesh/eqv_core/quad_center_elements=true
                 Mesh/eqv_core_coarse_mesh/type=CoarseMeshExtraElementIDGenerator
                 Mesh/eqv_core_coarse_mesh/input=block_numbering
                 Mesh/eqv_core_coarse_mesh/coarse_mesh=block_numbering
@@ -51,8 +51,8 @@
     type = 'CSVDiff'
     input = 'abtr_het_mesh.i core_hom_macro.i'
     executable_pattern = 'griffin*|blue_crab*'
-    cli_args = "Mesh/eqv_core/quad_center_elements=true
-                Mesh/eqv_core/max_axial_mesh_size=10
+    cli_args = "max_axial_mesh_size=10
+                Mesh/eqv_core/quad_center_elements=true
                 Mesh/eqv_core_coarse_mesh/type=CoarseMeshExtraElementIDGenerator
                 Mesh/eqv_core_coarse_mesh/input=block_numbering
                 Mesh/eqv_core_coarse_mesh/coarse_mesh=block_numbering
