@@ -2,7 +2,7 @@
 
 *Contact: Hansol Park, hansol.park@anl.gov*
 
-*Model link: [LFR Single Assembly Model](https://github.com/idaholab/virtual_test_bed/tree/devel/lfr/heterogeneous_single_assembly_3D)*
+*Model link: [LFR Single Assembly Griffin Model](https://github.com/idaholab/virtual_test_bed/tree/devel/lfr/heterogeneous_single_assembly_3D)*
 
 !tag name=High Fidelity Neutronics Model for Lead-cooled Fast Reactor
      description=High fidelity neutronics model for a representative example of a lead-cooled fast reactor with an annular MOX fuel
