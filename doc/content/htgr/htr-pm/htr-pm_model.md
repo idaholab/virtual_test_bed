@@ -10,8 +10,8 @@
   pairs=reactor_type:HTGR
                        reactor:HTR_PM
                        geometry:Core_and_primary_loop
-                       simulation_type:Thermal_hydraulic
-                       transient:PLOFC
+                       simulation_type:Thermal_hydraulics
+                       transient:steady_state;PLOFC
                        input_features:checkpoint_restart;multiapps
                        codes_used:SAM
                        computing_needs:Workstation
