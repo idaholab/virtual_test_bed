@@ -15,7 +15,6 @@
                        transient:steady_state
                        codes_used:Griffin;Bison;BlueCrab
                        computing_needs:Workstation
-                       open_source:no
                        fiscal_year:2024
                        sponsor:NEAMS
                        institution:ANL

@@ -1,5 +1,9 @@
 # LEU Fuel Pulse Model and Results
 
+*Contact: Adam Zabriskie, Adam.Zabriskie@inl.gov*
+
+*Model link: [LEU Fuel Pulse Model](https://github.com/idaholab/virtual_test_bed/tree/devel/htgr/leu_pulse)*
+
 !tag name=LEU Fuel Pulse
      description=Reactivity Insertion Transient in a simplified cubic reactor to demonstrate multiphysics coupling capabilities
      image=https://mooseframework.inl.gov/virtual_test_bed/media/htgr/pulse/refcube.png

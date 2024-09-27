@@ -17,6 +17,8 @@
                        computing_needs:HPC
                        cross_sections:MCC3
                        fiscal_year:2024
+                       institution:ANL
+                       sponsor:NEAMS
 
 ## Introduction
 
@@ -39,7 +41,7 @@ The cross section generation workflow comprises of several sequential steps. Thi
 
 [fig:xsgen_workflow] shows a schematic of the inputs and outputs related to the cross section generation workflow, as well as a blueprint for all of the steps taken as part of the cross section generation procedure. For the purposes of this tutorial, it is assumed that fast reactor cross sections are generated using a 2-step method in MC$^2$-3 with an intermediate R-Z flux calculation, as this method has been shown to generate the most accurate cross section datasets for use with downstream full-core eigenvalue calculations [!citep](pyarc_report).
 
-Griffin requires three pieces of information as inputs to the cross section generation workflow : 
+Griffin requires three pieces of information as inputs to the cross section generation workflow :
 
 - the input heterogeneous geometry, defined using the [!ac](RGMB) mesh generators
 - all parameters related to the execution of 2-step MC$^2$-3 cross section generation
@@ -254,7 +256,7 @@ Here, the coarse mesh is defined to be identical to the fine mesh, which in this
 ```
 # Run full-core eigenvalue calculation and override default parameters defined in core_hom_macro.i
 mpirun -np <N_PROC_TOTAL> /path/to/griffin/griffin-opt -i abtr_het_mesh.i core_hom_macro.i
-    Mesh/eqv_core/quad_center_elements=true Mesh/eqv_core/max_axial_mesh_size=10 Mesh/uniform_refine=1 
+    Mesh/eqv_core/quad_center_elements=true Mesh/eqv_core/max_axial_mesh_size=10 Mesh/uniform_refine=1
     TransportSystems/ReflectingBoundary='' TransportSystems/VacuumBoundary='outer_core top bottom'
     TransportSystems/dfem_sn/NAzmthl=4 TransportSystems/dfem_sn/NPolar=3
     Executioner/coarse_element_id=coarse_element_id Executioner/cmfd_eigen_solver_type=krylovshur
