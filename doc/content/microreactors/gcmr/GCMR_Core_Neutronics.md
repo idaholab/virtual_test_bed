@@ -2,17 +2,21 @@
 
 *Contacts: Ahmed Abdelhameed (aabdelhameed.at.anl.gov), Yinbin Miao (ymiao.at.anl.gov), Nicolas Stauff (nstauff.at.anl.gov)*
 
+*Model link: [GCMR Whole Core Neutronics](https://github.com/idaholab/virtual_test_bed/tree/main/microreactors/gcmr/core)*
+
 !tag name=Gas-Cooled Microreactor Core
      description=2D core model of a Gas Cooled Micro Reactor with heterogeneous transport
      image=https://mooseframework.inl.gov/virtual_test_bed/media/gcmr/Fig12.jpg
      pairs=reactor_type:microreactor
-                       reactor:GCMR
-                       geometry:core
-                       simulation_type:neutronics
-                       codes_used:Griffin
-                       transient:steady_state
-                       computing_needs:HPC
-                       fiscal_year:2024
+            reactor:GCMR
+            geometry:core
+            simulation_type:neutronics
+            codes_used:Griffin
+            transient:steady_state
+            computing_needs:HPC
+            institution:ANL
+            sponsor:NEAMS
+            fiscal_year:2024
 
 ## GCMR Core Description
 
@@ -111,13 +115,13 @@ The first step is to generate homogenized multi-group cross-sections using Serpe
 
 The mesh file can be generated using the --mesh-only option as such:
 
-!listing  
+!listing
 mpirun -np <number_of_cores> /path/to/griffin-opt -i mesh_input.i --mesh-only
 
 
 We can then execute the simulation as follows:
 
-!listing  
+!listing
 mpirun -np <number_of_cores> /path/to/griffin-opt -i Griffin_steady_state.i
 
 The Griffin code is a component of the blue_crab code package, so `griffin-opt` can be replaced with the
