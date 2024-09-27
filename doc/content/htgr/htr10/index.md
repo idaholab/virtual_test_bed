@@ -1,5 +1,9 @@
 # Griffin HTR-10 Model and Results
 
+*Contact: Javier Ortensi, Javier.Ortensi@inl.gov*
+
+*Model link: [HTR-10 Griffin Model](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/htr10)*
+
 !tag name=HTR-10 Griffin Neutronics Model
      description=HTR-10 core neutronics eigenvalue simulation
      image=https://mooseframework.inl.gov/virtual_test_bed/media/htr10/htr-10-with-vessel.png

@@ -12,6 +12,7 @@
                        codes_used:BlueCrab;Griffin;Pronghorn
                        computing_needs:Workstation
                        sponsor:NRC
+                       institution:INL
                        fiscal_year:2024
 
 [Description of the reactor](pbfhr/g_fhr/reactor_description.md)

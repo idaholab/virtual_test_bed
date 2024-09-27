@@ -1,5 +1,9 @@
 # Griffin MHTGR Benchmark Model, Model Inputs, and Results
 
+*Contact: Javier Ortensi, javier.ortensi.at.inl.gov
+
+*Model link: [MHTGR Griffin Model](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/mhtgr/mhtgr_griffin)*
+
 !tag name=MHTGR Griffin Benchmark
      description=Neutronics benchmark of the MHTGR using one-sixth assembly homogenization and 26-group diffusion
      image=https://mooseframework.inl.gov/virtual_test_bed/media/mhtgr/radial_core_layout.png

@@ -1,5 +1,9 @@
 # SAM MHTGR Model and Results
 
+*Contact: Thanh Hua, hua.at.anl.gov*
+
+*Model link: [MHTGR SAM Model](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/mhtgr/mhtgr_sam)*
+
 !tag name=MHTGR SAM Model
      description=Simulation of the MHTGR primary loop during steady-state operation
      image=https://mooseframework.inl.gov/virtual_test_bed/media/mhtgr/mhtgr_sam_model.png
