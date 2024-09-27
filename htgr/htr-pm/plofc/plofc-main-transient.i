@@ -68,8 +68,8 @@ pbed_d      = 3.0  # Pebble bed diameter (m)
 
 [Problem]
   type = FEProblem
-  restart_file_base = 'ss-main_checkpoint_cp/450'
-  # restart_file_base = 'ss-main_checkpoint_cp/LATEST'
+  restart_file_base = 'plofc-main-ss_checkpoint_cp/450'
+  # restart_file_base = 'plofc-main-ss_checkpoint_cp/LATEST'
 []
 
 [Functions]
@@ -737,7 +737,7 @@ pbed_d      = 3.0  # Pebble bed diameter (m)
 [MultiApps]
   [primary_loop]
     type = TransientMultiApp
-    input_files = 'ss-primary-loop-transient.i'
+    input_files = 'plofc-primary-loop-transient.i'
     catch_up = true
     execute_on = 'TIMESTEP_END'
   []
@@ -746,7 +746,7 @@ pbed_d      = 3.0  # Pebble bed diameter (m)
     type = TransientMultiApp
     execute_on = timestep_end
     app_type = SamApp
-    input_files = 'ss-rccs-water-transient.i'
+    input_files = 'plofc-rccs-water-transient.i'
     catch_up = true
   []
 []

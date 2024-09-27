@@ -4,11 +4,7 @@
 # Properties -------------------------------------------------------------------
 T_inlet           = 523.15 # Helium inlet temperature (K).
 p_outlet          = 7.0e+6 # Reactor outlet pressure (Pa)
-p_secondary       = 13.25e6 # Pressure for the secondary side of the heat exchanger
-m_secondary       = 300 # To keep the T_in of riser at 523.15K
-v_secondary       = ${fparse m_secondary/867.71/0.603437}
-T_in_secondary    = 523.15
-pump_head         = 2.35e6 # Pump head during steady state
+
 
 # Start model ------------------------------------------------------------------
 [GlobalParams]
@@ -42,11 +38,11 @@ pump_head         = 2.35e6 # Pump head during steady state
     x = '500  520 540 560 580 600 620 640 660 680 700 720 740 760 780 800 820 840 860 880 900 920 940 960 980 1000  1020  1040  1060  1080  1100  1120  1140  1160  1180  1200  1220  1240  1260  1280  1300  1320  1340  1360  1380  1400  1420  1440  1460  1480  1500'
     y = '0.22621  0.23233 0.23838 0.24437 0.2503  0.25616 0.26197 0.26773 0.27344 0.27909 0.2847  0.29026 0.29578 0.30126 0.30669 0.31208 0.31743 0.32275 0.32802 0.33327 0.33847 0.34365 0.34879 0.3539  0.35897 0.36402 0.36904 0.37403 0.37899 0.38392 0.38883 0.39371 0.39856 0.40339 0.4082  0.41298 0.41774 0.42248 0.42719 0.43188 0.43655 0.4412  0.44583 0.45043 0.45502 0.45959 0.46414 0.46867 0.47318 0.47767 0.48215'
   []
-  [f_pump_head]
+  [m_fn]
     type = PiecewiseLinear
-    x = ' -2e5   -1.9e5    1e6'
-    y = '  1.0      1.0    1.0'
-    scale_factor = ${pump_head}
+    x = ' -2e5        0     13'
+    y = '  1.0      1.0    0.00001'
+    scale_factor = 96
   []
 []
 
@@ -125,7 +121,7 @@ pump_head         = 2.35e6 # Pump head during steady state
     initial_V      = -2
   []
 
-  # This is the 'exit' of the 1-D primary loop model.
+  # # This is the 'exit' of the 1-D primary loop model.
   # It is located at the outlet of the cold plenum.
   [coupled_outlet_top]
     type = CoupledPPSTDV
@@ -168,6 +164,7 @@ pump_head         = 2.35e6 # Pump head during steady state
     position       = '1.625 15.7 0'
     HT_surface_area_density = 23.077
     f = 2000
+    Hw = 0
   []
 
   # Surrogate channel to represent the pebble bed
@@ -191,7 +188,7 @@ pump_head         = 2.35e6 # Pump head during steady state
     Dh             = 3
     n_elems        = 1
     orientation    = '0 1 0'
-    position       = '0.845 1.8 0'
+    position       = '0.845 1.8 0' #'1.065 15.85 0'
     overlap_coupled = true
     overlap_pp = dpdz_core_receive
   []
@@ -215,6 +212,7 @@ pump_head         = 2.35e6 # Pump head during steady state
     orientation    = '0 1 0'
     position       = '2.03 2.04719 0'
     HT_surface_area_density =  14.85532
+    Hw = 0
   []
   [joint_outlet_1]
     type = PBSingleJunction
@@ -240,169 +238,18 @@ pump_head         = 2.35e6 # Pump head during steady state
     orientation    = '1 0 0'
     position       = '2.03 1.4 0'
   []
-  [concentric-pipe-wall]
-    type = PBCoupledHeatStructure
-    position    = '7.164 0 0'
-    orientation = '-1 0 0'
-    hs_type = cylinder
-
-    length = 5.134
-    width_of_hs = '0.10951'
-    radius_i = 1.7873
-    elem_number_radial = 3
-    elem_number_axial = 20
-    dim_hs = 2
-    material_hs = 'ss-mat'
-    Ts_init = ${T_inlet}
-
-    HS_BC_type = 'Coupled Coupled'
-    name_comp_left = outlet_pipe
-    HT_surface_area_density_left = 5.177314
-    name_comp_right = inlet_pipe
-    HT_surface_area_density_right = 1.2413889  # PI * D / A(pipe1)
-  []
-  [SG_inlet_plenum]
-    type = PBVolumeBranch
-    eos = helium
-    center = '7.433 1.4 0'
-    inputs = 'outlet_pipe(out)'
-    outputs = 'IHX(primary_in)'
-    K = '0.0 0.0'
-    height = 2.598 # display purposes
-    width = 3.031 # display purposes
-    Area = 5.3011265
-    volume = 16.0677
-  []
-  [IHX]
-    type                              = PBHeatExchanger
-    HX_type                           = Countercurrent
-    eos_secondary                     = water
-    position                          = '7.433 1.4 0'
-    orientation                       = '0 -1 0'
-    A                                 = 7.618966942
-    Dh                                = 1
-    PoD                               = 1.5789 # 30 mm /19 mm
-    HTC_geometry_type                 = Bundle
-    length                            = 7.75
-    n_elems                           = 20
-    HT_surface_area_density           = 65.99339913 # back calculated from secondary flow area and Aw #3.32344752
-    A_secondary                       = 1.141431617
-    Dh_secondary                      = 1
-    length_secondary                  = 7.75
-    HT_surface_area_density_secondary = 421.0526316
-    hs_type                           = cylinder
-    radius_i                          = 0.009080574
-    wall_thickness                    = 0.000419426
-    n_wall_elems                      = 3
-    material_wall                     = ss-mat
-    Twall_init                        = ${T_inlet}
-    initial_T_secondary               = ${T_inlet}
-    initial_P_secondary               = ${p_secondary}
-    initial_V_secondary               = ${fparse -v_secondary}
-    SC_HTC                            = 2.5 # approximation for twisted tube effect
-    SC_HTC_secondary                  = 2.5
-    disp_mode                         = -1
-  []
-
-  [IHX2-in]
+  [inlet]
     type  = PBTDJ
-    v_bc  = ${fparse -v_secondary}
-    T_bc  = ${T_in_secondary}
-    eos   = water
-    input = 'IHX(secondary_in)'
+    m_fn  = m_fn
+    T_bc  = ${T_inlet}
+    eos   = helium
+    input = 'inlet_pipe(in)'
   []
-  [IHX2-out]
-    type  = PBTDV
-    eos   = water
-    p_bc  = ${p_secondary}
-    input = 'IHX(secondary_out)'
-  []
-  [SG_outlet_plenum]
-    type = PBVolumeBranch
-    eos = helium
-    center = '7.433 -6.35 0'
-    inputs = 'IHX(primary_out)'
-    outputs = 'SG_outlet_pipe(in)'
-    K = '0.0 0.0'
-    height = 1.732 # display purposes
-    width = 1.732 # display purposes
-    Area = 2.356056
-    volume = 10.881838
-  []
-  [SG_outlet_pipe]
-    type           = PBOneDFluidComponent
-    A              = 2.2242476
-    Dh             = 0.4
-    length         = 12.745
-    n_elems        = 20
-    orientation    = '0 1 0'
-    position       = '8.299 -6.35 0'
-  []
-  [pump_inlet_plenum]
-    type = PBVolumeBranch
-    eos = helium
-    center = '8.299 6.395 0'
-    inputs = 'SG_outlet_pipe(out)'
-    outputs = 'pump_inlet_pipe(in) ref_pressure_pipe(in)'
-    K = '0.0 0.0 0.0'
-    height = 0.7575 # display purposes
-    width = 3.928 # display purposes
-    Area = 12.118
-    volume = 18.3588
-  []
-  [ref_pressure_pipe]
-    type           = PBOneDFluidComponent
-    A              = 2.2242476
-    Dh             = 0.4
-    length         = 1
-    n_elems        = 5
-    orientation    = '1 0 0'
-    position       = '8.299 6.395 0'
-  []
-  [reference_pressure]
+  [outlet]
     type  = PBTDV
     eos   = helium
-    p_fn  = p_out_fn
-    input = 'ref_pressure_pipe(out)'
-  []
-  [pump_inlet_pipe]
-    type           = PBOneDFluidComponent
-    A              = 2.2242476
-    Dh             = 0.4
-    length         = 1.135
-    n_elems        = 20
-    orientation    = '-1 0 0'
-    position       = '8.299 6.395 0'
-  []
-  [blower]
-    type = PBPump
-    inputs = 'pump_inlet_pipe(out)'
-    outputs = 'pump_outlet_pipe(in)'
-    K = '7500 7500'
-    K_reverse = '7500 7500'
-    Area = 2.2242476
-    Head_fn   = f_pump_head
-  []
-  [pump_outlet_pipe]
-    type           = PBOneDFluidComponent
-    A              = 2.2242476
-    Dh             = 0.4
-    length         = 4.34781
-    n_elems        = 20
-    orientation    = '0 -1 0'
-    position       = '7.164 6.395 0'
-  []
-  [pump_outlet_branch]
-    type    = PBVolumeBranch
-    eos     = helium
-    center  = '7.164 2.04719 0'
-    inputs  = 'pump_outlet_pipe(out)'
-    outputs = 'inlet_pipe(in)'
-    K       = '0.0 0.0'
-    width   = 0.05 # display purposes
-    height  = 0.05 # display purposes
-    Area    = 2.2242476
-    volume  = 0.01
+    p_bc  = ${p_outlet}
+    input = 'outlet_pipe(out)'
   []
 
   ####################################
@@ -420,6 +267,7 @@ pump_head         = 2.35e6 # Pump head during steady state
     initial_T_wall = ${T_inlet}
     T_wall_name = Twall_bypass_inner_from_main
   []
+
 []
 
 
@@ -494,26 +342,6 @@ pump_head         = 2.35e6 # Pump head during steady state
     input = 'riser(in) outlet_pipe(in)'
     eos = helium
   []
-  [Tf_in_HX_primary]
-    type = ComponentBoundaryVariableValue
-    variable = temperature
-    input = IHX(primary_in)
-  []
-  [Tf_out_HX_primary]
-    type = ComponentBoundaryVariableValue
-    variable = temperature
-    input = IHX(primary_out)
-  []
-  [Tf_in_HX_secondary]
-    type = ComponentBoundaryVariableValue
-    variable = temperature
-    input = IHX(secondary_in)
-  []
-  [Tf_out_HX_secondary]
-    type = ComponentBoundaryVariableValue
-    variable = temperature
-    input = IHX(secondary_out)
-  []
 
   # mflow
   [mflow_in]
@@ -548,17 +376,6 @@ pump_head         = 2.35e6 # Pump head during steady state
     variable = pressure
     input = outlet_pipe(in)
   []
-  [P_pump_outlet]
-    type = ComponentBoundaryVariableValue
-    variable = pressure
-    input = pump_outlet_pipe(in)
-  []
-  [P_pump_inlet]
-    type = ComponentBoundaryVariableValue
-    variable = pressure
-    input = pump_inlet_pipe(in)
-  []
-
 
   [T_cold_plenum_inlet_pipe_inlet]
     type = ComponentBoundaryVariableValue
@@ -645,7 +462,7 @@ pump_head         = 2.35e6 # Pump head during steady state
 [Executioner]
   type = Transient
   dtmin = 1e-6
-  dtmax = 500
+  dtmax = 8
 
   [TimeStepper]
     type = IterationAdaptiveDT
@@ -663,8 +480,8 @@ pump_head         = 2.35e6 # Pump head during steady state
   l_tol = 1e-4 #1e-6
   l_max_its = 100
 
-  start_time = -200000
-  end_time = 0
+  start_time = 0
+  end_time = 500000
 
   [Quadrature]
     type = GAUSS
@@ -683,11 +500,10 @@ pump_head         = 2.35e6 # Pump head during steady state
   [csv]
     type = CSV
   []
-  ## Commented out for git purpose
-  # [checkpoint]
-  #   type = Checkpoint
-  #   execute_on = FINAL
-  # []
+  [checkpoint]
+    type = Checkpoint
+    execute_on = 'INITIAL TIMESTEP_END'
+  []
   [console]
     type = Console
     fit_mode = AUTO

@@ -408,11 +408,11 @@ Dh_pipe           = 2 #1
   [csv]
     type = CSV
   []
-  ## Commented out for git purpose
-  # [checkpoint]
-  #   type = Checkpoint
-  #   execute_on = FINAL
-  # []
+  # Commented out for git purpose
+  [checkpoint]
+    type = Checkpoint
+    execute_on = 'INITIAL TIMESTEP_END'
+  []
   [console]
     type = Console
     fit_mode = AUTO

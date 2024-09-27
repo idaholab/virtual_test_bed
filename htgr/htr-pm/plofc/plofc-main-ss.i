@@ -743,7 +743,7 @@ rho_in            = 6.3306  # Helium density at 7 MPa and 523.15 K (from NIST)
 [MultiApps]
   [primary_loop]
     type = TransientMultiApp
-    input_files = 'ss-primary-loop-full.i'
+    input_files = 'plofc-primary-loop-ss.i'
     catch_up = true
     execute_on = 'TIMESTEP_END'
   []
@@ -752,7 +752,7 @@ rho_in            = 6.3306  # Helium density at 7 MPa and 523.15 K (from NIST)
     type = TransientMultiApp
     execute_on = timestep_end
     app_type = SamApp
-    input_files = 'ss-rccs-water.i'
+    input_files = 'plofc-rccs-water-ss.i'
     catch_up = true
   []
 []
@@ -988,11 +988,11 @@ rho_in            = 6.3306  # Helium density at 7 MPa and 523.15 K (from NIST)
   [csv]
     type = CSV
   []
-  ## Commented out for git purpose
-  # [checkpoint]
-  #   type = Checkpoint
-  #   execute_on = FINAL
-  # []
+  # Commented out for git purpose
+  [checkpoint]
+    type = Checkpoint
+    execute_on = 'INITIAL TIMESTEP_END'
+  []
   [console]
     type = Console
     fit_mode = AUTO
