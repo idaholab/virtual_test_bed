@@ -19,6 +19,7 @@
                        fiscal_year:2024
                        institution:ANL
                        sponsor:NEAMS
+                       input_features:cross_section_generation
 
 ## Introduction
 
