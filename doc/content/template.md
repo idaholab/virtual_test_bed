@@ -5,7 +5,10 @@
 *Model link: [Model Name](hyperlink)*
 
 !devel! example caption=Example of a page tag for the automated model indexing (remove # before tag)
-#!tag name=model_name pairs=reactor_type:MSR/FHR/SFR/...
+#!tag name=model_name
+      description=<Short blurb describing the model>
+      image=<Link to the image on the online website. See other model documentation pages for examples>
+      pairs=reactor_type:MSR/FHR/SFR/...
                        reactor:<reactor name>
                        geometry:<reactor part being simulated>
                        simulation_type:<type of simulation>

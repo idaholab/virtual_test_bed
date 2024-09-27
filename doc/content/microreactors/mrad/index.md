@@ -31,6 +31,8 @@
 
 ## HP-MR Based TRISO Failure Model
 
+[Index page](mrad/hpmr_triso_failure/index_triso.md)
+
 [Problem Description](mrad/hpmr_triso_failure/problem_description.md)
 
 [Model Description](mrad/hpmr_triso_failure/problem_models.md)

@@ -11,7 +11,7 @@
                        reactor:MSFR
                        geometry:core
                        simulation_type:multiphysics
-                       input_features:multiapps
+                       input_features:multiapps;Physics_syntax
                        transient:steady_state;ULOF
                        codes_used:BlueCrab;Griffin;Pronghorn;MOOSE_NavierStokes
                        open_source:partial

@@ -11,11 +11,11 @@ This model was adopted from the list of examples on the [MASTODON](https://moose
                        reactor:generic_msr
                        geometry:reactor_building
                        codes_used:MASTODON
+                       simulation_type:seismic_analysis
                        computing_needs:HPC
                        fiscal_year:2021
                        sponsor:DOE_OTT
                        institution:INL
-                       simulation_type:seismic_analysis
 
 [Seismic Analysis Model - Part 1: Foundation Basemat Analysis](npp_building/npp_building_pt1.md)
 

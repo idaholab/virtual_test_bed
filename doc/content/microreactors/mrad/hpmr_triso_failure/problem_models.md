@@ -4,7 +4,7 @@
 
 *Primary Contributors: Nicholas Fassino, Yinbin Miao, Kun Mo, Nicolas Stauff*
 
-*Model link: [HPMR Model](https://github.com/idaholab/virtual_test_bed/tree/main/microreactors/mrad)*
+*Model link: [HPMR TRISO failure Model](https://github.com/idaholab/virtual_test_bed/tree/main/microreactors/mrad/triso_failure)*
 
 !alert note title=Acknowledgement
 This HP-MR model was built upon earlier work performed under ARPA-E MEITNER project and reported in the journal paper [!citep](matthews2021coupled), and some parts of the inputs are coming from these original models. The TRISO failure analysis BISON input files were adapted from inputs available in the BISON repository and reported in [!citep](bison_triso_model).
@@ -13,22 +13,22 @@ This HP-MR model was built upon earlier work performed under ARPA-E MEITNER proj
 
 The HP-MR TRISO fuel particle model used in this exercise is a one-dimensional simplification of the model detailed in [!citep](Stauff2021). The model is separated into two component inputs: (1) a main particle model and (2) a parent application input that employs the MOOSE MultiApp functionality and the Samplers system to sample a user-specified number of simulations of the particle model. Particle layer widths are provided in the parent input file, which converts them to normal distributions with user-provided standard deviations and bounds. Upon each execution of the particle simulation, these geometry distributions are sampled, and a set of layer coordinates is passed to the particle simulation with the Samplers system. Following the particle simulation, layer failure data are extracted from the particle simulation with the Transfers system. This information includes, for example, binary flags for multiple failure modes, the maximum neutron fluence in the particle, and fluence at failure (if applicable). The failure rate of the particle due to several mechanisms is then reported with VectorPostprocessors that track the stochastic results of the simulation.
 
-The  HP-MR TRISO model, documented in ANL/NEAMS-21/3 [!citep](Stauff2021), received a number of changes for this work. First, the fission rate, fuel exterior temperature, and hydrostatic pressure of the particle are time-dependent quantities retrieved from outputs of the HP-MR multiphysics simulation. Fission rate is calculated within each particle simulation with a volume integral of the power density, using a fuel kernel volume that varies for each simulation due to the statistical sampling of the fuel kernel radius. Second, in accordance with the modeling approach taken by [!citep](bison_triso_model), a Terminator UserObject is implemented to end the simulation early if the SiC layer is determined to have failed. This is because the TRISO fuel particle is considered to have undergone failure if the SiC layer fails, as fission gases can no longer be retained within the particle layers. Finally, also proposed by [!citep](bison_triso_model), several TRISOStressCorrelationFunction and ConstantFunction objects have been implemented to describe the effects of multi-dimensional particle phenomena on layers stresses in a one-dimensional simulation. 
+The  HP-MR TRISO model, documented in ANL/NEAMS-21/3 [!citep](Stauff2021), received a number of changes for this work. First, the fission rate, fuel exterior temperature, and hydrostatic pressure of the particle are time-dependent quantities retrieved from outputs of the HP-MR multiphysics simulation. Fission rate is calculated within each particle simulation with a volume integral of the power density, using a fuel kernel volume that varies for each simulation due to the statistical sampling of the fuel kernel radius. Second, in accordance with the modeling approach taken by [!citep](bison_triso_model), a Terminator UserObject is implemented to end the simulation early if the SiC layer is determined to have failed. This is because the TRISO fuel particle is considered to have undergone failure if the SiC layer fails, as fission gases can no longer be retained within the particle layers. Finally, also proposed by [!citep](bison_triso_model), several TRISOStressCorrelationFunction and ConstantFunction objects have been implemented to describe the effects of multi-dimensional particle phenomena on layers stresses in a one-dimensional simulation.
 
 ## HP-MR TRISO Multi-Dimensional Stress Correlation
 
 For computational efficiency, a one-dimensional TRISO particle model is used for the Monte Carlo sampling scheme. However, multi-dimensional TRISO phenomena, such as particle cracking and asphericity, must be described with higher-order modeling approaches. To account for these phenomena, a suite of preliminary one-dimensional (1D) and two-dimensional (2D) TRISO particle simulations were performed with statistical variations of the inner-pyrolytic carbon (IPyC), outer-pyrolytic carbon (OPyC), and silicon carbide (SiC) layer thicknesses in two 2D scenarios: (1) a prescribed radial crack in the IPyC layer generated with the extended finite element method and (2) an aspherical TRISO particle generated by applying an aspect ratio of 1.04 to the particle mesh.  The resulting maximum stresses observed in each particle layer in these 1D and 2D simulations are then used to construct correlation functions describing the effects of these phenomena on layer stresses. For the aspherical particle, the changes in stress in the 1D and 2D simulations are also used for the generation of these correlation functions. These values are applied to one-dimensional particle simulations with the TRISOStressCorrelationFunction Function object, which calls for polynomial stress correlation function coefficients, correlation factors, and changes in stress. The stress correlation function objects are shown below.
 The reader is encouraged to consult [!citep](bison_triso_model) for further detail on the generation of these multi-dimensional stress correlation functions used in 1-D TRISO simulations.
 
-!listing /mrad/triso_failure/TRISO/triso_particle.i block=Functions/high_fidelity_strength_crackedIPyC 
+!listing /mrad/triso_failure/TRISO/triso_particle.i block=Functions/high_fidelity_strength_crackedIPyC
 
-!listing /mrad/triso_failure/TRISO/triso_particle.i block=Functions/stress_correlation_crackedIPyC 
+!listing /mrad/triso_failure/TRISO/triso_particle.i block=Functions/stress_correlation_crackedIPyC
 
-!listing /mrad/triso_failure/TRISO/triso_particle.i block=Functions/high_fidelity_strength_asphericity 
+!listing /mrad/triso_failure/TRISO/triso_particle.i block=Functions/high_fidelity_strength_asphericity
 
-!listing /mrad/triso_failure/TRISO/triso_particle.i block=Functions/stress_correlation_asphericity 
+!listing /mrad/triso_failure/TRISO/triso_particle.i block=Functions/stress_correlation_asphericity
 
-!listing /mrad/triso_failure/TRISO/triso_particle.i block=Functions/stress_change_correlation_asphericity 
+!listing /mrad/triso_failure/TRISO/triso_particle.i block=Functions/stress_change_correlation_asphericity
 
 ## HP-MR TRISO MultiApps Model Setup
 
@@ -36,7 +36,7 @@ MOOSE-based TRISO failure analysis in this demonstration is conducted with two B
 
 ### TRISO Sampler
 
-As stated previously, a master input employs the MOOSE MultiApp functionality and the Samplers system to sample a user-specified number of simulations of the particle model. Particle layer widths are provided in this master input file in the form of normal distributions with mean values, standard deviations, and bounds. These quantities are listed in [table:triso_geom].
+As stated previously, a main input employs the MOOSE MultiApp functionality and the Samplers system to sample a user-specified number of simulations of the particle model. Particle layer widths are provided in this main input file in the form of normal distributions with mean values, standard deviations, and bounds. These quantities are listed in [table:triso_geom].
 
 !table id=table:triso_geom caption=HP-MR TRISO Geometries
 | Parameter                                       | Values |
@@ -51,9 +51,9 @@ As stated previously, a master input employs the MOOSE MultiApp functionality an
 | SiC thickness ($\mathrm{\mu}$m)                 | 35     |
 | SiC standard deviation ($\mathrm{\mu}$m)        | 1.2    |
 
-These distributions are sampled and passed to the TRISO particle simulation with MultiApps and Transfers objects. After the simulation, particle failure data are passed back to the master app with Transfers. Failure data for each particle simulation is calculated with Postprocessors in each simulation, and transferred to VectorPostprocessors defined in the master app.
+These distributions are sampled and passed to the TRISO particle simulation with MultiApps and Transfers objects. After the simulation, particle failure data are passed back to the main app with Transfers. Failure data for each particle simulation is calculated with Postprocessors in each simulation, and transferred to VectorPostprocessors defined in the main app.
 
-In previous work, the multiphysics unit-cell HP-MR model was discretized into 32 axial segments, serving as a a straightforward axial discretization of TRISO layer failure rates within the unit-cell. Therefore, the TRISO sampler master app is configured to instantiate and sample simulations of 32 TRISO particles, whose boundary conditions are retrieved from axially discretized data. Thus, the TRISO_sampler.i input contains 32 objects for every class required in the MultiApps setup, including MultiApps, Controls, Outputs, Transfers, and VectorPostprocessors objects. A Transfer and corresponding VectorPostprocessor object is required for the retrieval and subsequent storage of every requested output quantity from a single particle simulation. These quantites include the following:
+In previous work, the multiphysics unit-cell HP-MR model was discretized into 32 axial segments, serving as a a straightforward axial discretization of TRISO layer failure rates within the unit-cell. Therefore, the TRISO sampler main app is configured to instantiate and sample simulations of 32 TRISO particles, whose boundary conditions are retrieved from axially discretized data. Thus, the TRISO_sampler.i input contains 32 objects for every class required in the MultiApps setup, including MultiApps, Controls, Outputs, Transfers, and VectorPostprocessors objects. A Transfer and corresponding VectorPostprocessor object is required for the retrieval and subsequent storage of every requested output quantity from a single particle simulation. These quantites include the following:
 - Overall SiC failure (binary indicator)
 - Overall IPyC cracking (binary indicator)
 - Debonding (binary indicator)
@@ -66,7 +66,7 @@ In previous work, the multiphysics unit-cell HP-MR model was discretized into 32
 - Kernel migration distance
 - Failure due to kernel migration (binary indicator)
 
-Therefore, 352 VectorPostprocessor and Transfer objects are required in the TRISO_sampler.i master app: 32 for each of the 11 transferred quantities. However, though 32 particle simulations are instantiated and sampled in parallel, only one triso_particle.i input file is necessary, as these different simulations are distringuised through the use of the particle_number cli argument, which is used to select appropriate boundary condition .CSVs and produce TRISO simulation output files.
+Therefore, 352 VectorPostprocessor and Transfer objects are required in the TRISO_sampler.i main app: 32 for each of the 11 transferred quantities. However, though 32 particle simulations are instantiated and sampled in parallel, only one triso_particle.i input file is necessary, as these different simulations are distringuised through the use of the particle_number cli argument, which is used to select appropriate boundary condition .CSVs and produce TRISO simulation output files.
 
 The full triso_sampler.i input is listed below.
 
@@ -93,7 +93,7 @@ The TRISO particle input is largely repurposed from the work done in [!citep](bi
 | Initial OPyC BAF                       | 1.0429   |
 | Fast Flux  $\left(\frac{n}{m^2 s}\right)$    | $7.664 \times 10^{19}$ |
 
-where BAF is the [Bacon anisotropy factor](https://mooseframework.inl.gov/bison/source/materials/BaconAnisotropyFactor.html), which increases with fast fluence. 
+where BAF is the [Bacon anisotropy factor](https://mooseframework.inl.gov/bison/source/materials/BaconAnisotropyFactor.html), which increases with fast fluence.
 
 The major difference between this particle input and the reference file at `bison/examples/TRISO/failure_probability_monte_carlo/triso_1d_function.i` is the definition of the thermo-mechanical boundary conditions, namely the fuel temperature, power density, and hydrostatic stress, which are retrieved from CSV datafiles produced by the unit-cell HP-MR multiphysics simulation. Each time a triso_particle.i simulation is executed, the appropriate data is selected due to the particle_number cli_arg defined in the MultiApps object that instantiates the simulation. The power density function is used in conjunction with an InternalVolume Postprocessor in a ParsedFunction to compute fission rate.
 
@@ -114,13 +114,13 @@ The major difference between this particle input and the reference file at `biso
     type=PiecewiseLinear
     format=columns
     data_file=${raw '../UnitCell_with_TM/fuelsample/tempdata ${particle_number} .csv'}
-  []    
+  []
   [fission_rate]
     type=ParsedFunction
     expression = 'Pdens * PackingFraction * Vol / Jfiss'
     symbol_names = 'Pdens PackingFraction Vol Jfiss'
     symbol_values = 'pdens_function 0.4 kernel_volume 3.2e-11'
-  [] 
+  []
   ...
 []
 ```
@@ -142,7 +142,7 @@ Temperature and pressure are then applied as boundary conditions (BCs) with the 
     variable = disp_x
     boundary = exterior
     function = pressure_function
-  [] 
+  []
   ...
 []
 ```
@@ -178,7 +178,7 @@ For the central heat pipe in the HP-MR unit-cell model, a Sockeye grandchild app
 
 ### BISON Model -- Tensor Mechanics
 
-An original BISON grandchild application is used to calculate the tensor mechanics of the HP-MR unit-cell. This application receives temperature from the BISON thermal physics sub-app, uses it to compute block displacements, stresses, and strains of the fuel, moderator, monolith, stainless steel envelope, and axial reflector blocks. The displacement variables are then transferred back to the BISON app. Hydrostatic stresses are also transferred to the BISON sub-app so that hydrostatic stress, temperature, and power density are all reported by the BISON sub-app at the end of the simulation. Dirichlet boundary conditions are applied to the bottom surface of the unit-cell, fixing displacement in all directions. 
+An original BISON grandchild application is used to calculate the tensor mechanics of the HP-MR unit-cell. This application receives temperature from the BISON thermal physics sub-app, uses it to compute block displacements, stresses, and strains of the fuel, moderator, monolith, stainless steel envelope, and axial reflector blocks. The displacement variables are then transferred back to the BISON app. Hydrostatic stresses are also transferred to the BISON sub-app so that hydrostatic stress, temperature, and power density are all reported by the BISON sub-app at the end of the simulation. Dirichlet boundary conditions are applied to the bottom surface of the unit-cell, fixing displacement in all directions.
 
 !listing /mrad/triso_failure/UnitCell_with_TM/MP_ss_bison_TM.i max-height = 10000
 
@@ -207,9 +207,9 @@ For steady state simulation, the Griffin parent application performs an Eigenval
 
 ## Model Meshes
 
-### HP-MR Unit Cell 
+### HP-MR Unit Cell
 
-Mesh generation with MOOSE's intrinsic mesh generator set has been the subject of extensive development, and is demonstrated in the [HP-MR full core model](https://mooseframework.inl.gov/virtual_test_bed/microreactors/mrad/mrad_model.html). This work, however, is a streamlined continuation of work documented in ANL/NEAMS-21/3 [!citep](Stauff2021), which employed python scripts to generate the The HP-MR unit-cell mesh. The HP-MR unit-cell model and mesh are not the main focus of this demonstration. Thus, mesh generation of the unit-cell has not been updated to use MOOSE mesh generators. The reader is encouraged to peruse the [HP-MR full core model documentation](https://mooseframework.inl.gov/virtual_test_bed/microreactors/mrad/mrad_model.html) for a demonstration of the MOOSE mesh generators and Reactor module to generate HP-MR meshes. 
+Mesh generation with MOOSE's intrinsic mesh generator set has been the subject of extensive development, and is demonstrated in the [HP-MR full core model](https://mooseframework.inl.gov/virtual_test_bed/microreactors/mrad/mrad_model.html). This work, however, is a streamlined continuation of work documented in ANL/NEAMS-21/3 [!citep](Stauff2021), which employed python scripts to generate the The HP-MR unit-cell mesh. The HP-MR unit-cell model and mesh are not the main focus of this demonstration. Thus, mesh generation of the unit-cell has not been updated to use MOOSE mesh generators. The reader is encouraged to peruse the [HP-MR full core model documentation](https://mooseframework.inl.gov/virtual_test_bed/microreactors/mrad/mrad_model.html) for a demonstration of the MOOSE mesh generators and Reactor module to generate HP-MR meshes.
 
 ### HP-MR TRISO
 
@@ -217,7 +217,7 @@ The TRISO particle mesh is built with the [TRISO1DFiveLayerMeshGenerator](https:
 
 ## Guidance of Running Different Simulation Cases
 
-To completely run this model, the user only needs to execute two inputs: the Griffin input for the unit-cell multiphysics model, which is the master app that governs the entire simulation, then the sampler BISON input for the TRISO failure analysis calculation. As discussed previously, the multiphysics steady state HP-MR simulation uses Griffin, BISON and Sockeye objects. Therefore, users should use a super application that covers these three applications, such as DireWolf or BlueCRAB (compiled with Sockeye included). The example command to run the unit-cell HP-MR multiphyiscs simulation is shown as follows, considering an mpi run with 40 CPUs:
+To completely run this model, the user only needs to execute two inputs: the Griffin input for the unit-cell multiphysics model, which is the main app that governs the entire simulation, then the sampler BISON input for the TRISO failure analysis calculation. As discussed previously, the multiphysics steady state HP-MR simulation uses Griffin, BISON and Sockeye objects. Therefore, users should use a super application that covers these three applications, such as DireWolf or BlueCRAB (compiled with Sockeye included). The example command to run the unit-cell HP-MR multiphyiscs simulation is shown as follows, considering an MPI run with 40 CPUs:
 
 !listing language=bash
 cd /mrad/triso_failure/UnitCell_with_TM
@@ -229,6 +229,6 @@ This multiphysics simulation will produce the fuel temperature, power density, a
 cd /mrad/triso_failure/TRISO
 mpirun -n 40 bison-opt -i triso_sampler.i
 
-The TRISO failure analysis simulation will produce particle failure rate output in the /results subdirectory. All output will be written at the conclusion of the simulation. Each of the 32 axially-discretized particle simulations will receive its own output subdirectory in /results/particle(number). The provided plots.py will produce plots of axially discretized SiC and IPyC layer failure rates. 
+The TRISO failure analysis simulation will produce particle failure rate output in the /results subdirectory. All output will be written at the conclusion of the simulation. Each of the 32 axially-discretized particle simulations will receive its own output subdirectory in /results/particle(number). The provided plots.py will produce plots of axially discretized SiC and IPyC layer failure rates.
 
 The user may vary the integrated power or temperature in the multiphysics simulation, and the number of sampled particles in the TRISO sampler simulation, to explore how these quantities affect TRISO layer failure rates. The user may also modify these inputs to forego the calculation of tensor mechanics in the unit-cell to observe how the consideration of hydrostatic stresses affects results.

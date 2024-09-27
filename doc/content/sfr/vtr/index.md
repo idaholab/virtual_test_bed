@@ -1,5 +1,9 @@
 # VTR Core Model and Results
 
+*Contact: Nicolas Martin, nicolas.martin.at.inl.gov*
+
+*Model link: [VTR Model](https://github.com/idaholab/virtual_test_bed/tree/devel/sfr/vtr)*
+
 !tag name=Versatile Test Reactor Core model
      description=Coupled multiphysics model of the VTR  core using homogenized diffusion neutronics, a homogenized support plate thermal expansion model and distributed thermal-hydraulics channels
      image=https://mooseframework.inl.gov/virtual_test_bed/media/vtr/vtr_core.png

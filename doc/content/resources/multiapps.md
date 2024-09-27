@@ -7,6 +7,8 @@
                        input_features:multiapps
                        computing_needs:Workstation
                        fiscal_year:2022
+                       sponsor:NEAMS
+                       institution:ANL
 
 1. [Introduction to Multiphysics Coupling with MOOSE](multiapps_chps/chp_1_motives.md).
 
