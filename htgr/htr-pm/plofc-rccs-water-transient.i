@@ -25,8 +25,8 @@ Dh_pipe           = 2
 []
 
 [Problem]
-  restart_file_base = 'plofc-main-ss_out_rccs0_checkpoint_cp/450'
-  # restart_file_base = 'plofc-main-ss_out_rccs0_checkpoint_cp/LATEST'
+  restart_file_base = 'ss-main_out_rccs0_checkpoint_cp/450'
+  # restart_file_base = 'ss-main_out_rccs0_checkpoint_cp/LATEST'
 []
 
 [Functions]

@@ -18,8 +18,8 @@ p_outlet          = 7.0e+6 # Reactor outlet pressure (Pa)
 []
 
 [Problem]
-  restart_file_base = 'plofc-main-ss_out_primary_loop0_checkpoint_cp/450'
-  # restart_file_base = 'plofc-main-ss_out_primary_loop0_checkpoint_cp/LATEST'
+  restart_file_base = 'ss-main_out_primary_loop0_checkpoint_cp/450'
+  # restart_file_base = 'ss-main_out_primary_loop0_checkpoint_cp/LATEST'
 []
 
 [Functions]

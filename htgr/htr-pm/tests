@@ -1,21 +1,28 @@
 [Tests]
   [htr_pm_sam_main_syntax]
     type = RunApp
-    input = 'plofc-main-ss.i'
+    input = 'ss-main.i'
     check_input = True
     executable_pattern = 'sam*|blue_crab*'
     cli_args = '--app SamApp --allow-unused'
   []
   [htr_pm_sam_loop_syntax]
     type = RunApp
-    input = 'plofc-primary-loop-ss.i'
+    input = 'ss-primary-loop-full.i'
     check_input = True
     executable_pattern = 'sam*|blue_crab*'
     cli_args = '--app SamApp --allow-unused'
   []
   [htr_pm_sam_rccs_syntax]
     type = RunApp
-    input = 'plofc-rccs-water-ss.i'
+    input = 'ss-rccs-water.i'
+    check_input = True
+    executable_pattern = 'sam*|blue_crab*'
+    cli_args = '--app SamApp --allow-unused'
+  []
+  [htr_pm_sam_loop_plofc_ss_syntax]
+    type = RunApp
+    input = 'plofc-primary-loop-ss.i'
     check_input = True
     executable_pattern = 'sam*|blue_crab*'
     cli_args = '--app SamApp --allow-unused'
@@ -42,11 +49,11 @@
     cli_args = '--app SamApp --allow-unused'
   []
 
-  # Steady-state
+  # steady-state
   [htr_pm_sam_main]
     type = CSVDiff
-    input = 'plofc-main-ss.i'
-    csvdiff = 'plofc-main-ss_csv.csv'
+    input = 'ss-main.i'
+    csvdiff = 'ss-main_csv.csv'
     executable_pattern = 'sam*|blue_crab*'
     cli_args = '--app SamApp --allow-unused Executioner/dt=0.005 Executioner/num_steps=2 Executioner/nl_rel_tol=1e-8 Executioner/nl_abs_tol=1e-7'
     abs_zero = 1e-5
@@ -55,6 +62,28 @@
     method = 'opt'
   []
   [htr_pm_sam_primary_loop_full]
+    type = CSVDiff
+    input = 'ss-primary-loop-full.i'
+    csvdiff = 'ss-primary-loop-full_csv.csv'
+    executable_pattern = 'sam*|blue_crab*'
+    cli_args = '--app SamApp --allow-unused Executioner/dt=0.005 Executioner/num_steps=2 Executioner/nl_rel_tol=1e-8 Executioner/nl_abs_tol=1e-7'
+    abs_zero = 1e-5
+    rel_err = 1e-4
+    max_time = 1000
+    method = 'opt'
+  []
+  [htr_pm_sam_rccs]
+    type = CSVDiff
+    input = 'ss-rccs-water.i'
+    csvdiff = 'ss-rccs-water_csv.csv'
+    executable_pattern = 'sam*|blue_crab*'
+    cli_args = '--app SamApp --allow-unused Executioner/dt=0.005 Executioner/num_steps=2 Executioner/nl_rel_tol=1e-8 Executioner/nl_abs_tol=1e-7'
+    abs_zero = 1e-5
+    rel_err = 1e-4
+    max_time = 1000
+    method = 'opt'
+  []
+  [htr_pm_sam_primary_loop_simplified]
     type = CSVDiff
     input = 'plofc-primary-loop-ss.i'
     csvdiff = 'plofc-primary-loop-ss_csv.csv'
@@ -65,31 +94,45 @@
     max_time = 1000
     method = 'opt'
   []
-  [htr_pm_sam_rccs]
+
+
+
+  #plofc
+  [htr_pm_sam_main_simplified] # rerun with simplified primary loop
     type = CSVDiff
-    input = 'plofc-rccs-water-ss.i'
-    csvdiff = 'plofc-rccs-water-ss_csv.csv'
+    input = 'ss-main.i'
+    csvdiff = 'ss-main-simplified.csv'
     executable_pattern = 'sam*|blue_crab*'
-    cli_args = '--app SamApp --allow-unused Executioner/dt=0.005 Executioner/num_steps=2 Executioner/nl_rel_tol=1e-8 Executioner/nl_abs_tol=1e-7'
+    cli_args = '--app SamApp --allow-unused Executioner/dt=0.005 MultiApps/primary_loop/input_files=plofc-primary-loop-ss.i Outputs/csv/file_base=ss-main-simplified Executioner/num_steps=2 Executioner/nl_rel_tol=1e-8 Executioner/nl_abs_tol=1e-7'
     abs_zero = 1e-5
     rel_err = 1e-4
     max_time = 1000
     method = 'opt'
   []
 
-  # # PLOFC
   [htr_pm_sam_main_plofc_transient]
     type = CSVDiff
     input = 'plofc-main-transient.i'
     csvdiff = 'plofc-main-transient_csv.csv'
     executable_pattern = 'sam*|blue_crab*'
-    cli_args = '--app SamApp --allow-unused Executioner/dt=0.005 Problem/restart_file_base=plofc-main-ss_checkpoint_cp/0002 Executioner/num_steps=1 Executioner/nl_rel_tol=1e-8 Executioner/nl_abs_tol=1e-7'
+    cli_args = '--app SamApp --allow-unused Executioner/dt=0.005 Problem/restart_file_base=ss-main_checkpoint_cp/0002 Executioner/num_steps=1 Executioner/nl_rel_tol=1e-8 Executioner/nl_abs_tol=1e-7'
     abs_zero = 1e-5
     rel_err = 1e-4
     max_time = 1000
     method = 'opt'
   []
-  [htr_pm_sam_primary_loop_plofc]
+  [htr_pm_sam_rccs_transient]
+    type = CSVDiff
+    input = 'plofc-rccs-water-transient.i'
+    csvdiff = 'plofc-rccs-water-transient_csv.csv'
+    executable_pattern = 'sam*|blue_crab*'
+    cli_args = '--app SamApp --allow-unused Executioner/dt=0.005 Problem/restart_file_base=ss-rccs-water_checkpoint_cp/0002 Executioner/num_steps=2 Executioner/nl_rel_tol=1e-8 Executioner/nl_abs_tol=1e-7'
+    abs_zero = 1e-5
+    rel_err = 1e-4
+    max_time = 1000
+    method = 'opt'
+  []
+  [htr_pm_sam_loop_transient]
     type = CSVDiff
     input = 'plofc-primary-loop-transient.i'
     csvdiff = 'plofc-primary-loop-transient_csv.csv'
@@ -100,16 +143,6 @@
     max_time = 1000
     method = 'opt'
   []
-  [htr_pm_sam_primary_loop_rccs]
-    type = CSVDiff
-    input = 'plofc-rccs-water-transient.i'
-    csvdiff = 'plofc-rccs-water-transient_csv.csv'
-    executable_pattern = 'sam*|blue_crab*'
-    cli_args = '--app SamApp --allow-unused Executioner/dt=0.005 Problem/restart_file_base=plofc-rccs-water-ss_checkpoint_cp/0002 Executioner/num_steps=2 Executioner/nl_rel_tol=1e-8 Executioner/nl_abs_tol=1e-7'
-    abs_zero = 1e-5
-    rel_err = 1e-4
-    max_time = 1000
-    method = 'opt'
-  []
+
 
 []

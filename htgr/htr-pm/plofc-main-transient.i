@@ -68,8 +68,8 @@ pbed_d      = 3.0  # Pebble bed diameter (m)
 
 [Problem]
   type = FEProblem
-  restart_file_base = 'plofc-main-ss_checkpoint_cp/450'
-  # restart_file_base = 'plofc-main-ss_checkpoint_cp/LATEST'
+  restart_file_base = 'ss-main_checkpoint_cp/450'
+  # restart_file_base = 'ss-main_checkpoint_cp/LATEST'
 []
 
 [Functions]
