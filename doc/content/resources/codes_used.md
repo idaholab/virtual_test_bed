@@ -128,6 +128,8 @@ obtained through INL's [NCRC](https://inl.gov/ncrc/).
 
 - Generic Pebble Bed Reactor core model [documentation](htgr/generic-pbr/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/generic-pbr)
 
+- HTR-PM reference plant model [documentation](htgr/htr-pm/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/htr-pm)
+
 
 ### Thermal-hydraulics module (open-source)
 

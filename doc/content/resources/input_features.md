@@ -84,6 +84,8 @@ the input file, but generally reside in the same folder in the repository.
 
 - Thermochimica Steady-State Model of Molten Salt Fast Reactor Core [documentation](msr/msfr/thermo_model) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/devel/msr/msfr/thermochemistry)
 
+- HTR-PM reference plant model [documentation](htgr/htr-pm/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/htr-pm)
+
 ### Multiphysics and multiscale simulations
 
 - Pebble Bed Fluoride salt cooled High temperature Reactor [documentation](pbfhr/mark_1/steady/griffin_pgh_model.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/pbfhr/mark_1/steady)
@@ -111,6 +113,8 @@ Documentation for the [Checkpoint system](https://mooseframework.inl.gov/applica
 - Advanced Burner Test Reactor loss of flow transient [documentation](sfr/abtr/abtr.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/sfr/abtr)
 
 - HTTR Core multiphysics [documentation](httr/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/httr/steady_state_and_null_transient)
+
+- HTR-PM reference plant model [documentation](htgr/htr-pm/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/htr-pm)
 
 
 ### Binary restart
@@ -183,6 +187,8 @@ specified. The MRAD and PBMR-400 models listed below are an example of this.
 - Molten Salt Reactor Experiment RZ multiphysics core model [documentation](msr/msre/multiphysics_rz_model/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/msr/msre/multiphysics_core_model/steady_state)
 
 - Thermochimica Steady-State Model of Molten Salt Fast Reactor Core [documentation](msr/msfr/thermo_model) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/devel/msr/msfr/thermochemistry)
+
+- HTR-PM reference plant model [documentation](htgr/htr-pm/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/htr-pm)
 
 ### HPC required
 
