@@ -115,7 +115,8 @@
                 Executioner/richardson_max_its=1
                 TransportSystems/SN/NAzmthl=3 TransportSystems/SN/NPolar=1
                 Executioner/num_steps=1
-                Outputs/checkpoint=false"
+                Outputs/checkpoint=false
+                PowerDensity/terminate_on_negative_power=false"
     prereq = 'griffin_alone_transient_syntax'
     min_parallel = 16
     rel_err = 1e-3

@@ -28,11 +28,11 @@ dz_active_core_upper = '${fparse z_active_core_upper - z_active_core_lower}'
 dz_sodium_gp_upper = '${fparse z_sodium_gp_upper - z_active_core_upper}'
 dz_gp_upper = '${fparse z_gp_upper - z_sodium_gp_upper}'
 
-max_axial_mesh_size = 20
-naxial_active_core_lower = '${fparse dz_active_core_lower / max_axial_mesh_size}'
-naxial_active_core_upper = '${fparse dz_active_core_upper / max_axial_mesh_size}'
-naxial_sodium_gp_upper = '${fparse dz_sodium_gp_upper / max_axial_mesh_size}'
-naxial_gp_upper = '${fparse dz_gp_upper / max_axial_mesh_size}'
+max_axial_mesh_size = 8
+naxial_active_core_lower = '${fparse ceil(dz_active_core_lower / max_axial_mesh_size)}'
+naxial_active_core_upper = '${fparse ceil(dz_active_core_upper / max_axial_mesh_size)}'
+naxial_sodium_gp_upper = '${fparse ceil(dz_sodium_gp_upper / max_axial_mesh_size)}'
+naxial_gp_upper = '${fparse ceil(dz_gp_upper / max_axial_mesh_size)}'
 
 # ==============================================================================
 # Material IDs
@@ -66,6 +66,7 @@ mid_control_empty = 12
     top_boundary_id = 201
     bottom_boundary_id = 202
     radial_boundary_id = 203
+    flexible_assembly_stitching = true
   []
   # Define constituent pins of fuel assemblies
   [fuel_pin_1]
@@ -296,6 +297,5 @@ mid_control_empty = 12
               6 5 5 4 4 4 4 5 5 6;
                6 6 5 5 5 5 5 6 6'
     extrude = true
-    show_rgmb_metadata = true
   []
 []
