@@ -11,10 +11,14 @@
 # - The mesh file is stored using git lfs
 # ==============================================================================
 
-general_cli = 'Problem/solve=false'
-[Problem]
-  solve = false
+general_cli = '' #Problem/solve=false'
+# [Problem]
+#   solve = false
+# []
+[Executioner]
+  num_steps = 20
 []
+
 
 [GlobalParams]
   # Remove the search value conflicts from the transfers as it is too slow
@@ -724,8 +728,6 @@ heater_SA = '${fparse heater_P * 10 * core_block_height}' # m^2
     type = IterationAdaptiveDT
     dt = 1e-3
   []
-
-  num_steps = 2
 
   nl_rel_tol = 1e-6
   nl_abs_tol = 1e-6
@@ -1438,10 +1440,40 @@ heater_SA = '${fparse heater_P * 10 * core_block_height}' # m^2
 
 # Performance output
 [Postprocessors]
+  [setup_time]
+    type = PerfGraphData
+    data_type = 'Total'
+    section_name = 'MooseApp::setup'
+    execute_on = 'TIMESTEP_END'
+  []
+  [output_time]
+    type = PerfGraphData
+    data_type = 'Total'
+    section_name = 'FEProblem::outputStep'
+    execute_on = 'TIMESTEP_END'
+  []
+  [execution_time]
+    type = PerfGraphData
+    data_type = 'Total'
+    section_name = 'MooseApp::execute'
+    execute_on = 'TIMESTEP_END'
+  []
   [total_time]
     type = PerfGraphData
     data_type = 'Total'
     section_name = 'MooseApp::run'
+    execute_on = 'TIMESTEP_END'
+  []
+  [total_memory]
+    type = PerfGraphData
+    data_type =  'TOTAL_MEMORY'
+    section_name = 'MooseApp::run'
+    execute_on = 'TIMESTEP_END'
+  []
+  [transfer_time]
+    type = PerfGraphData
+    data_type = 'TOTAL'
+    section_name = 'FEProblem::execMultiAppTransfers'
     execute_on = 'TIMESTEP_END'
   []
   [transfer_memory]
@@ -1450,7 +1482,6 @@ heater_SA = '${fparse heater_P * 10 * core_block_height}' # m^2
     section_name = 'FEProblem::execMultiAppTransfers'
     execute_on = 'TIMESTEP_END'
   []
-
 
   [Twall_to_relap]
     type = PerfGraphData
