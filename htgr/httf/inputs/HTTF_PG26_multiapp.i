@@ -12,6 +12,9 @@
 # ==============================================================================
 
 general_cli = 'Problem/solve=false'
+[Problem]
+  solve = false
+[]
 
 [GlobalParams]
   # Remove the search value conflicts from the transfers as it is too slow
@@ -705,10 +708,6 @@ heater_SA = '${fparse heater_P * 10 * core_block_height}' # m^2
   []
 []
 
-[Problem]
-  solve = false
-[]
-
 [Executioner]
   type = Transient
   scheme = 'bdf2'
@@ -726,7 +725,7 @@ heater_SA = '${fparse heater_P * 10 * core_block_height}' # m^2
     dt = 1e-3
   []
 
-  num_steps = 1
+  num_steps = 2
 
   nl_rel_tol = 1e-6
   nl_abs_tol = 1e-6
@@ -739,7 +738,10 @@ heater_SA = '${fparse heater_P * 10 * core_block_height}' # m^2
 []
 [Outputs]
   exodus = true
-  csv = true
+  [csv]
+    type = CSV
+    execute_on = 'TIMESTEP_END FINAL'
+  []
   [perf]
     type = PerfGraphOutput
     level = 5
@@ -1436,69 +1438,109 @@ heater_SA = '${fparse heater_P * 10 * core_block_height}' # m^2
 
 # Performance output
 [Postprocessors]
+  [total_time]
+    type = PerfGraphData
+    data_type = 'Total'
+    section_name = 'MooseApp::run'
+    execute_on = 'TIMESTEP_END'
+  []
+  [transfer_memory]
+    type = PerfGraphData
+    data_type = 'TOTAL_MEMORY'
+    section_name = 'FEProblem::execMultiAppTransfers'
+    execute_on = 'TIMESTEP_END'
+  []
+
+
   [Twall_to_relap]
     type = PerfGraphData
     data_type = 'Total'
     section_name = 'Transfers::MultiAppGeneralFieldTransfer::Execute()_Twall_to_relap'
+    execute_on = 'TIMESTEP_END'
+    must_exist = false
   []
   [Twall_barrel_relap]
     type = PerfGraphData
     data_type = 'Total'
     section_name = 'Transfers::MultiAppGeneralFieldTransfer::Execute()_Twall_barrel_relap'
+    execute_on = 'TIMESTEP_END'
+    must_exist = false
   []
   [Twall_RPV_relap]
     type = PerfGraphData
     data_type = 'Total'
     section_name = 'Transfers::MultiAppGeneralFieldTransfer::Execute()_Twall_RPV_relap'
+    execute_on = 'TIMESTEP_END'
+    must_exist = false
   []
   [Twall_RCCS_inner]
     type = PerfGraphData
     data_type = 'Total'
     section_name = 'Transfers::MultiAppGeneralFieldTransfer::Execute()_Twall_RCCS_inner'
+    execute_on = 'TIMESTEP_END'
+    must_exist = false
   []
   [Twall_RCCS_outer]
     type = PerfGraphData
     data_type = 'Total'
     section_name = 'Transfers::MultiAppGeneralFieldTransfer::Execute()_Twall_RCCS_outer'
+    execute_on = 'TIMESTEP_END'
+    must_exist = false
   []
   [tfluid_from_relap]
     type = PerfGraphData
     data_type = 'Total'
     section_name = 'Transfers::MultiAppGeneralFieldTransfer::Execute()_tfluid_from_relap'
+    execute_on = 'TIMESTEP_END'
+    must_exist = false
   []
   [Hw_channel_from_relap]
     type = PerfGraphData
     data_type = 'Total'
     section_name = 'Transfers::MultiAppGeneralFieldTransfer::Execute()_Hw_channel_from_relap'
+    execute_on = 'TIMESTEP_END'
+    must_exist = false
   []
   [tfluid_upcomer_from_relap]
     type = PerfGraphData
     data_type = 'Total'
     section_name = 'Transfers::MultiAppGeneralFieldTransfer::Execute()_tfluid_upcomer_from_relap'
+    execute_on = 'TIMESTEP_END'
+    must_exist = false
   []
   [Hw_barrel_from_relap]
     type = PerfGraphData
     data_type = 'Total'
     section_name = 'Transfers::MultiAppGeneralFieldTransfer::Execute()_Hw_barrel_from_relap'
+    execute_on = 'TIMESTEP_END'
+    must_exist = false
   []
   [Hw_RPV_from_relap]
     type = PerfGraphData
     data_type = 'Total'
     section_name = 'Transfers::MultiAppGeneralFieldTransfer::Execute()_Hw_RPV_from_relap'
+    execute_on = 'TIMESTEP_END'
+    must_exist = false
   []
   [Hw_RCCS_inner]
     type = PerfGraphData
     data_type = 'Total'
     section_name = 'Transfers::MultiAppGeneralFieldTransfer::Execute()_Hw_RCCS_inner'
+    execute_on = 'TIMESTEP_END'
+    must_exist = false
   []
   [Hw_RCCS_outer]
     type = PerfGraphData
     data_type = 'Total'
     section_name = 'Transfers::MultiAppGeneralFieldTransfer::Execute()_Hw_RCCS_outer'
+    execute_on = 'TIMESTEP_END'
+    must_exist = false
   []
   [tfluid_RCCS_from_relap]
     type = PerfGraphData
     data_type = 'Total'
     section_name = 'Transfers::MultiAppGeneralFieldTransfer::Execute()_tfluid_RCCS_from_relap'
+    execute_on = 'TIMESTEP_END'
+    must_exist = false
   []
 []
