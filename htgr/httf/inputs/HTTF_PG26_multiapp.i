@@ -11,6 +11,14 @@
 # - The mesh file is stored using git lfs
 # ==============================================================================
 
+general_cli = 'Problem/solve=false'
+
+[GlobalParams]
+  # Remove the search value conflicts from the transfers as it is too slow
+  # and does not influence the results
+  search_value_conflicts = false
+[]
+
 # This imput file handles 3-D conduction and communicates back and forth with RELAP-7 sub apps
 T_in = 400 # K
 R_l = 0.009 # m
@@ -156,6 +164,7 @@ heater_SA = '${fparse heater_P * 10 * core_block_height}' # m^2
     type = TransientMultiApp
     input_files = 'upcomer.i'
     positions_file = '../positions/upcomer_positions.txt' # Overwrites Component position supplied in upcomer.i
+    cli_args = '${general_cli}'
     app_type = RELAP7App
     execute_on = 'TIMESTEP_END'
     max_procs_per_app = 24
@@ -172,6 +181,7 @@ heater_SA = '${fparse heater_P * 10 * core_block_height}' # m^2
     input_files = 'large_coolant.i medium_coolant.i small_coolant.i small_bypass.i large_bypass.i'
     # List of corresponding position files used to overwrite position supplied in relap input files
     positions_file = '../positions/large_coolant_positions.txt ../positions/medium_coolant_positions.txt ../positions/small_coolant_positions.txt ../positions/small_bypass_positions.txt ../positions/large_bypass_positions.txt'
+    cli_args = '${general_cli}'
     app_type = RELAP7App
     execute_on = 'TIMESTEP_END'
     max_procs_per_app = 24
@@ -186,6 +196,7 @@ heater_SA = '${fparse heater_P * 10 * core_block_height}' # m^2
     type = TransientMultiApp
     input_files = 'RCCS.i'
     positions_file = '../positions/RCCS_positions.txt' # Overwrites position supplied in RCCS.i
+    cli_args = '${general_cli}'
     app_type = RELAP7App
     execute_on = 'TIMESTEP_END'
     max_procs_per_app = 1
@@ -211,6 +222,7 @@ heater_SA = '${fparse heater_P * 10 * core_block_height}' # m^2
     from_multi_app = relap
     source_variable = T # variable name in relap-7
     variable = tfluid # AuxVariable name in main app
+    to_boundaries = 'large_coolant medium_coolant small_coolant small_bypass large_bypass'
   []
   # Convective heat transfer coefficient received from relap-7
   [Hw_channel_from_relap]
@@ -218,6 +230,7 @@ heater_SA = '${fparse heater_P * 10 * core_block_height}' # m^2
     from_multi_app = relap
     source_variable = Hw_chan # AuxVariable name in relap-7
     variable = Hw_channel # AuxVariable name in main app
+    to_boundaries = 'core_top reflector_top core_barrel_top core_bottom reflector_bottom core_barrel_bottom large_coolant medium_coolant small_coolant small_bypass large_bypass'
   []
   # Wall temperature of core barrel outer surface
   [Twall_barrel_relap]
@@ -447,26 +460,31 @@ heater_SA = '${fparse heater_P * 10 * core_block_height}' # m^2
     order = CONSTANT
     family = MONOMIAL
     initial_condition = 100
+    block = 'core core_barrel reflector'
   []
   # fluid temperature of the upcomer
   [tfluid_upcomer]
     initial_condition = 373.15
+    block = 'core_barrel RPV'
   []
   # Convective heat transfer coefficient between the upcomer and core barrel
   [Hw_cb]
     order = CONSTANT
     family = MONOMIAL
     initial_condition = 100
+    block = 'core_barrel'
   []
   # Convective heat transfer coefficient between the upcomer and RPV
   [Hw_vessel]
     order = CONSTANT
     family = MONOMIAL
     initial_condition = 100
+    block = 'RPV'
   []
   # Coolant temperature in the RCCS
   [tfluid_RCCS]
     initial_condition = 300
+    block = 'RCCS_inner_panel RCCS_insulation RCCS_outer_panel'
   []
   # Convective heat transfer coefficient between the RCCS and inner panel
   [Hw_in]
@@ -686,6 +704,11 @@ heater_SA = '${fparse heater_P * 10 * core_block_height}' # m^2
     full = true
   []
 []
+
+[Problem]
+  solve = false
+[]
+
 [Executioner]
   type = Transient
   scheme = 'bdf2'
@@ -702,19 +725,25 @@ heater_SA = '${fparse heater_P * 10 * core_block_height}' # m^2
     type = IterationAdaptiveDT
     dt = 1e-3
   []
+
+  num_steps = 1
+
   nl_rel_tol = 1e-6
   nl_abs_tol = 1e-6
   nl_max_its = 15
   # Allows for Picard Iterations
   fixed_point_rel_tol = 1e-6
   fixed_point_abs_tol = 1e-7
-  fixed_point_max_its = 5
+  fixed_point_max_its = 1
   accept_on_max_fixed_point_iteration = true
 []
 [Outputs]
   exodus = true
   csv = true
-  perf_graph = true
+  [perf]
+    type = PerfGraphOutput
+    level = 5
+  []
   file_base = 'HTTF_PG26_transient'
 []
 # Records desired data for comparison to experimental instrumentation
@@ -1402,5 +1431,74 @@ heater_SA = '${fparse heater_P * 10 * core_block_height}' # m^2
   [T_out_bulk]
     type = Receiver
     execute_on = 'TIMESTEP_END'
+  []
+[]
+
+# Performance output
+[Postprocessors]
+  [Twall_to_relap]
+    type = PerfGraphData
+    data_type = 'Total'
+    section_name = 'Transfers::MultiAppGeneralFieldTransfer::Execute()_Twall_to_relap'
+  []
+  [Twall_barrel_relap]
+    type = PerfGraphData
+    data_type = 'Total'
+    section_name = 'Transfers::MultiAppGeneralFieldTransfer::Execute()_Twall_barrel_relap'
+  []
+  [Twall_RPV_relap]
+    type = PerfGraphData
+    data_type = 'Total'
+    section_name = 'Transfers::MultiAppGeneralFieldTransfer::Execute()_Twall_RPV_relap'
+  []
+  [Twall_RCCS_inner]
+    type = PerfGraphData
+    data_type = 'Total'
+    section_name = 'Transfers::MultiAppGeneralFieldTransfer::Execute()_Twall_RCCS_inner'
+  []
+  [Twall_RCCS_outer]
+    type = PerfGraphData
+    data_type = 'Total'
+    section_name = 'Transfers::MultiAppGeneralFieldTransfer::Execute()_Twall_RCCS_outer'
+  []
+  [tfluid_from_relap]
+    type = PerfGraphData
+    data_type = 'Total'
+    section_name = 'Transfers::MultiAppGeneralFieldTransfer::Execute()_tfluid_from_relap'
+  []
+  [Hw_channel_from_relap]
+    type = PerfGraphData
+    data_type = 'Total'
+    section_name = 'Transfers::MultiAppGeneralFieldTransfer::Execute()_Hw_channel_from_relap'
+  []
+  [tfluid_upcomer_from_relap]
+    type = PerfGraphData
+    data_type = 'Total'
+    section_name = 'Transfers::MultiAppGeneralFieldTransfer::Execute()_tfluid_upcomer_from_relap'
+  []
+  [Hw_barrel_from_relap]
+    type = PerfGraphData
+    data_type = 'Total'
+    section_name = 'Transfers::MultiAppGeneralFieldTransfer::Execute()_Hw_barrel_from_relap'
+  []
+  [Hw_RPV_from_relap]
+    type = PerfGraphData
+    data_type = 'Total'
+    section_name = 'Transfers::MultiAppGeneralFieldTransfer::Execute()_Hw_RPV_from_relap'
+  []
+  [Hw_RCCS_inner]
+    type = PerfGraphData
+    data_type = 'Total'
+    section_name = 'Transfers::MultiAppGeneralFieldTransfer::Execute()_Hw_RCCS_inner'
+  []
+  [Hw_RCCS_outer]
+    type = PerfGraphData
+    data_type = 'Total'
+    section_name = 'Transfers::MultiAppGeneralFieldTransfer::Execute()_Hw_RCCS_outer'
+  []
+  [tfluid_RCCS_from_relap]
+    type = PerfGraphData
+    data_type = 'Total'
+    section_name = 'Transfers::MultiAppGeneralFieldTransfer::Execute()_tfluid_RCCS_from_relap'
   []
 []
