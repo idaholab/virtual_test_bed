@@ -1,0 +1,20 @@
+One has to unzip the mesh and checkpoint files to rerun this demo case
+The original files are compressed to save space.`
+
+nekRS simulation would require the following mesh files
+```
+tar -xvzf tjunc.re2.tgz
+tar -xvzf tjunc.co2.tgz
+```
+
+A nekRS checkpoint file is provided, and can be accessed after doing
+```
+tar -xvzf tjunc.old.tgz
+```
+
+The coupled Cardinal simulation would also require the solid region mesh
+in Exodus format, and it can be obtained by doing
+```
+tar -xvzf solid_hex8.exo.tgz
+```
+

@@ -1,0 +1,76 @@
+//
+// nekRS User Defined File
+//
+#include "udf.hpp"
+
+static int updateProperties = 1;
+static occa::kernel cliptKernel;
+
+#ifdef __okl__
+
+#include "tjunc.oudf"
+
+#endif
+
+void userq(nrs_t *nrs, double time, occa::memory o_S, occa::memory o_FS)
+{
+  cds_t *cds = nrs->cds;
+  mesh_t *mesh = cds->mesh[0];
+  const dfloat qvolFluid = 0.0;
+  const dfloat qvolSolid = 0.0;
+  cFill(mesh->Nelements, qvolFluid, qvolSolid, mesh->o_elementInfo, o_FS);
+}
+
+void uservp(nrs_t *nrs,
+            double time,
+            occa::memory o_U,
+            occa::memory o_S,
+            occa::memory o_UProp,
+            occa::memory o_SProp)
+{
+  cds_t *cds = nrs->cds;
+
+  if (updateProperties) {
+    if (platform->comm.mpiRank == 0) {
+      std::cout << "updating properties"
+                << "\n";
+    }
+    const dfloat rho = 1.0;
+    const dfloat mue = 1 / 2785.12;
+    const dfloat rhoCpFluid = rho * 1.0;
+    const dfloat conFluid = mue * (1 / 13.12);
+    const dfloat rhoCpSolid = rhoCpFluid * 1.27;
+    const dfloat conSolid = conFluid * 21.45;
+
+    // velocity
+    const occa::memory o_mue = o_UProp.slice(0 * nrs->fieldOffset);
+    const occa::memory o_rho = o_UProp.slice(1 * nrs->fieldOffset);
+    cFill(nrs->meshV->Nelements, mue, 0, nrs->meshV->o_elementInfo, o_mue);
+    cFill(nrs->meshV->Nelements, rho, 0, nrs->meshV->o_elementInfo, o_rho);
+    // temperature
+    const occa::memory o_con = o_SProp.slice(0 * cds->fieldOffset[0]);
+    const occa::memory o_rhoCp = o_SProp.slice(1 * cds->fieldOffset[0]);
+    cFill(cds->mesh[0]->Nelements, conFluid, conSolid, cds->mesh[0]->o_elementInfo, o_con);
+    cFill(cds->mesh[0]->Nelements, rhoCpFluid, rhoCpSolid, cds->mesh[0]->o_elementInfo, o_rhoCp);
+    updateProperties = 0;
+  }
+}
+
+void UDF_LoadKernels(occa::properties& kernelInfo)
+{
+  cliptKernel  = oudfBuildKernel(kernelInfo, "cliptOKL");
+}
+
+void UDF_Setup(nrs_t *nrs)
+{
+  udf.sEqnSource = &userq;
+  udf.properties = &uservp;
+}
+
+void UDF_ExecuteStep(nrs_t *nrs, double time, int tstep)
+{
+  mesh_t *mesh = nrs->meshV;
+  cds_t *cds = nrs->cds;
+
+  cliptKernel(mesh->Nelements, cds->o_S);
+}

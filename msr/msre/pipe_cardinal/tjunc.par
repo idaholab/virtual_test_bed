@@ -1,0 +1,24 @@
+[GENERAL] 
+startFrom = tjunc.old UP
+polynomialOrder = 5
+
+numSteps = 50000
+dt = 1e-04
+writeInterval = 5000
+
+timeStepper = tombo2
+regularization = hpfrt + nModes = 1 + scalingCoeff = 20
+
+[MESH]
+writeToFieldFile = yes
+
+[PRESSURE]
+residualTol = 1e-06
+
+[VELOCITY]
+boundaryTypeMap = v, v, O, W
+residualTol = 1e-08
+
+[TEMPERATURE]
+boundaryTypeMap = t, t, I, I
+residualTol = 1e-08
