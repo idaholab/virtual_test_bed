@@ -1,0 +1,28 @@
+[Tests]
+  [syntax_check_cardinal]
+    type = RunApp
+    input = cardinal.i
+    check_input = True
+    executable_pattern = 'cardinal*|combined*'
+    cli_args = "MultiApps/active='' Transfers/active=''"
+  []
+  [syntax_check_nek]
+    type = RunApp
+    input = nek.i
+    check_input = True
+    executable_pattern = 'cardinal*'
+    min_parallel = 64
+    skip = 'Not enough memory #438'
+  []
+
+  [solid_mechanics]
+    type = CSVDiff
+    input = cardinal.i
+    csvdiff = 'cardinal_out.csv'
+    executable_pattern = 'cardinal*|combined*'
+    cli_args = "MultiApps/active='' Transfers/active='' Executioner/num_steps=10"
+    prereq = 'syntax_check_cardinal'
+    # Exceedingly slow in devel mode
+    method = 'opt'
+  []
+[]

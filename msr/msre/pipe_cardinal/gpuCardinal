@@ -1,0 +1,52 @@
+#!/usr/bin/env bash
+
+[ $# -ne 4 ] && echo "gpuCardinal requires 4 arguments: %job_name% %number_of_gpus% %runtime_hours% %runtime_minutes%" && exit 0;
+
+# the paths have to be updated for specific cardinal build
+PATH+=:/beegfs/scratch/fangj/Cardinal/cardinal
+export NEKRS_HOME=/beegfs/scratch/fangj/Cardinal/cardinal/install
+
+# the compilers and modules have to be updated for specific HPC platforms
+export CC=mpicc
+export CXX=mpicxx
+export FC=mpif90
+module load openmpi/4.1.5/gcc/9.3.1-cuda cmake/cmake-3.24 anaconda3/anaconda3
+
+ngpus=$2
+[ $ngpus -gt 16 ] && echo "only 16 gpus available" && exit 0;
+
+if [[ $ngpus -gt 8 ]]; then
+  nnodes=2
+  res=$(( $ngpus % 2 ))
+  [ $res -ne 0 ] && ngpus=$(($ngpus+1))
+  ntpn=$(( $ngpus / 2 ))
+else
+  nnodes=1
+  ntpn=$ngpus
+fi
+
+cmd="cardinal-opt -i $1.i"
+
+printf -v tme "%0.2d:%0.2d" $3 $4
+echo "submitting Cardinal job \"$cmd\" on $(($nnodes * $ntpn)) gpus for $tme"
+
+echo   "#!/bin/bash"                              >  $1.batch
+echo   "#SBATCH --nodes=$nnodes"                  >> $1.batch
+echo   "#SBATCH --ntasks-per-node=$ntpn"          >> $1.batch
+echo   "#SBATCH --gres=gpu:$ntpn"                 >> $1.batch
+echo   "#SBATCH --time="$tme":00"                 >> $1.batch
+echo   "#SBATCH -p gpu"                           >> $1.batch
+echo   "#SBATCH -o $1.%A.log"                     >> $1.batch
+echo   "source $envfile"                          >> $1.batch
+echo   "export PSM2_CUDA=1"                       >> $1.batch
+echo   "export MPICH_GPU_SUPPORT_ENABLED=1"       >> $1.batch
+echo   rm -f  logfile                             >> $1.batch
+echo   touch $1.\$SLURM_JOBID.log                 >> $1.batch
+echo   ln -s $1.\$SLURM_JOBID.log logfile         >> $1.batch
+echo   "module list >> logfile"                   >> $1.batch
+echo   "echo \$SLURM_NODELIST >> logfile"         >> $1.batch
+echo   "mpirun -v $cmd"                           >> $1.batch
+echo   "exit 0;"                                  >> $1.batch
+sbatch $1.batch
+sleep 3
+squeue -u `whoami`

@@ -10,6 +10,7 @@
 - [Lead-cooled Fast Reactor (LFR)](lfr/index.md) \\
 - [Micro Reactors (MR)](microreactors/index.md)
 - [Seismic Analysis](seismic_analysis/index.md)
+- [Fusion Devices](fusion/index.md)
 
 
 !alert note
