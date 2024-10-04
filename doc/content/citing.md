@@ -495,6 +495,26 @@ Zachary Prince, Joshua Hanophy, Vincent Labouré, Yaqi Wang, Logan Harbour, and 
 Stefano Terlizzi and Vincent Labouré, "Asymptotic hydrogen redistribution analysis in yttrium-hydride-moderated heat-pipe-cooled microreactors using DireWolf", Annals of Nuclear Energy, Volume 186, 2023, 109735,	ISSN 0306-4549,	https://doi.org/10.1016/j.anucene.2023.109735
 ```
 
+### Magnetic confinement fusion
+
+- Divertor monoblock tritium
+
+```
+@article{Shimada2024114438,
+   author = {Masashi Shimada and Pierre-Clément A. Simon and Casey T. Icenhour and Gyanender Singh},
+   doi = {10.1016/J.FUSENGDES.2024.114438},
+   issn = {0920-3796},
+   journal = {Fusion Engineering and Design},
+   month = {6},
+   pages = {114438},
+   publisher = {North-Holland},
+   title = {Toward a high-fidelity tritium transport modeling for retention and permeation experiments},
+   volume = {203},
+   url = {https://linkinghub.elsevier.com/retrieve/pii/S0920379624002916},
+   year = {2024}
+}
+```
+
 ## Software / codes
 
 The references for various features of MOOSE may be found on this
