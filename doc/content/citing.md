@@ -68,6 +68,33 @@ Mauricio E. Tano, Jun Fang, Guillaume Giudicelli and Abdalla Abou-Jaoude, "Coupl
 Jun Fang, Dillon R Shaver and Bo Feng, "CFD Modeling of Molten Salt Fast Reactor Using Nek5000", Transactions of the American Nuclear Society (2021)
 ```
 
+- Molten Salt Reactor Experiment (MSRE Multiphysics Model)
+
+```
+@inproceedings{jaradat2024,
+          title = {{Verification and Validation Activities of Molten Salt Reactors Multiphysics Coupling Schemes at Idaho National Laboratory}},
+          author = {Jaradat, Mustafa and Choi, Namjae and Tano Retamales, Mauricio Eduardo and Schunert, Sebastian and Abou Jaoude, Abdalla and Ortensi, Javier},
+               booktitle = { International Conference on Physics of Reactors (PHYSOR 2024) },
+          place = {United States},
+          year = {2024},
+          month = {4},
+          url = {https://www.osti.gov/biblio/2341471}
+}
+Mustafa K.M. Jaradat, Namjae Choi, Mauricio E. Tano Retamales, Sebastian Schunert, Abdalla Abou Jaoude and Javier Ortensi, "Verification and Validation Activities of Molten Salt Reactors Multiphysics Coupling Schemes at Idaho National Laboratory", International Conference on Physics of Reactors (PHYSOR 2024), San Francisco, United States,
+(2024)
+```
+
+```
+@techreport{jaradat2023,
+            title = {{Thermal Spectrum Molten Salt-Fueled Reactor Reference Plant Model}},
+            author = {Mustafa Jaradat and Javier Ortensi},
+            institution = {Idaho National Laboratory},
+            number = {INL/RPT-23-72875},
+            year = 2023
+           }
+Mustafa K.M. Jaradat and Javier Ortensi, "Thermal Spectrum Molten Salt-Fueled Reactor Reference Plant Model", Idaho National Laboratory, INL/RPT-23-72875 (2023)
+```
+
 - Molten Salt Reactor Experiment (MSRE SAM model)
 
 ```
