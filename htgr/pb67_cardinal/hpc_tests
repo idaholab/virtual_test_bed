@@ -1,0 +1,9 @@
+[Tests]
+  [nek]
+    type = RunApp
+    input = nek.i
+    executable_pattern = 'cardinal*'
+    min_parallel = 96
+  []
+[]
+

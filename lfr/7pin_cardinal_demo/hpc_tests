@@ -1,0 +1,80 @@
+[Tests]
+  [generate_mesh_neutronics]
+    type = RunApp
+    executable_pattern = 'griffin*|cardinal*'
+    input = 'NTmesh.i'
+    cli_args = '--mesh-only'
+  []
+  [generate_mesh_pre_cfd]
+    type = RunApp
+    executable_pattern = 'cardinal*'
+    input = 'NTmesh.i'
+    cli_args = '--mesh-only'
+    # this additional test is only to make the dependency for unzip_cfd
+    prereq = 'generate_mesh_neutronics'
+  []
+  [generate_mesh_heat]
+    type = RunApp
+    executable_pattern = 'cardinal*|griffin*'
+    input = 'HCmesh.i'
+    cli_args = '--mesh-only'
+  []
+  [unzip_xs]
+    type = RunCommand
+    command = 'tar -xvf LFR9g_P5.xml.tgz'
+    prereq = 'generate_mesh_neutronics'
+  []
+  [unzip_cfd1]
+    type = RunCommand
+    command = 'tar -xvf 7pin_ic.fld.tgz'
+    prereq = 'generate_mesh_pre_cfd'
+  []
+  [unzip_cfd]
+    type = RunCommand
+    command = 'tar -xvf 7pin.re2.tgz'
+    prereq = 'unzip_cfd1'
+  []
+
+
+  # Regression tests
+  [run_multiphysics]
+    type = CSVDiff
+    input = 'NT.i'
+    csvdiff = NT_out.csv
+    cli_args = "Executioner/richardson_max_its=1 Executioner/fixed_point_max_its=2"
+    executable_pattern = 'cardinal*'
+    prereq = 'unzip_xs run_nekrs'
+    min_parallel = 144
+    max_time = 2000
+    mesh_mode = DISTRIBUTED
+  []
+  [run_neutronics]
+    type = CSVDiff
+    input = 'NT.i'
+    cli_args = "Outputs/file_base=neutronics_only_out Executioner/force_fixed_point_solve=false Transfers/active='' MultiApps/active=''"
+    csvdiff = neutronics_only_out.csv
+    min_parallel = 8
+    # for devel testing
+    max_time = 500
+    executable_pattern = 'griffin*'
+    prereq = 'unzip_xs'
+    abs_zero = 1e-4
+    rel_err = 1e-4
+  []
+  [run_conduction]
+    type = CSVDiff
+    input = 'HC.i'
+    csvdiff = HC_out.csv
+    cli_args = "Executioner/dt=0.01 Executioner/end_time=0.1 Outputs/time_step_interval=1 Transfers/active='' MultiApps/active=''"
+    executable_pattern = 'cardinal*|moose*'
+    prereq = 'generate_mesh_heat'
+    min_parallel = 8
+  []
+  [run_nekrs]
+    type = RunApp
+    input = 'nek.i'
+    executable_pattern = 'cardinal*'
+    min_parallel = 144
+    prereq = 'unzip_cfd'
+  []
+[]
