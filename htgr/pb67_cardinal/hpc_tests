@@ -4,6 +4,7 @@
     input = nek.i
     executable_pattern = 'cardinal*'
     min_parallel = 96
+    cli_args = "Outputs/exodus=false"
   []
 []
 

@@ -5,13 +5,13 @@
     check_input = True
     executable_pattern = 'cardinal*'
     min_parallel = 64
+    cli_args = 'Outputs/exodus=false'
   []
   [multiphysics]
     type = CSVDiff
     input = cardinal.i
     csvdiff = 'cardinal_out.csv'
     executable_pattern = 'cardinal*|combined*'
-    prereq = 'cfd'
     # Exceedingly slow in devel mode
     method = 'opt'
     cli_args = 'Outputs/exodus=false'
