@@ -1,11 +1,4 @@
 [Tests]
-  [2D_gHPMR_mesh]
-    type = JSONDiff
-    input = '2D_gHPMR_Final.i'
-    jsondiff = 'gHPMR_3d_core-10cm.json'
-    requirement = 'the system shall be able to create a mesh for the 2D gHPMR model'
-    executable_pattern = 'combined*'
-  []
   [2D_gHPMR_syntax]
     type = RunApp
     input = 2D_gHPMR_Final.i
@@ -13,6 +6,11 @@
     allow_warnings = True
     executable_pattern = 'combined*'
   []
+  [2D_gHPMR_mesh]
+    type = CSVDiff
+    input = '2D_gHPMR_Final.i'
+    jsondiff = 'gHPMR_2d_core.csv'
+    requirement = 'The system shall be able to create a mesh for a 2D gHPMR model.'
+    executable_pattern = 'combined*'
+  []
 []
-
-

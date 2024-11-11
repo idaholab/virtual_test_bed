@@ -1,0 +1,3 @@
+time,mesh_info/num_dofs,mesh_info/num_dofs_auxiliary,mesh_info/num_dofs_nonlinear,mesh_info/num_elements,mesh_info/num_local_dofs,mesh_info/num_local_elements,mesh_info/num_local_nodes,mesh_info/num_nodes
+0,0,0,0,0,0,0,0,0
+1,0,0,0,2297598,0,2297598,2919104,2919104

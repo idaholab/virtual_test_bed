@@ -1334,36 +1334,10 @@ fuel_assembly_boundary_name = fuel_assembly_boundary
 [Reporters]
   [mesh_info]
     type = MeshInfo
-
-  # Keep all these comments for Guillaume, in case he wants to change this
-    # needs to be under 80M - times out at 80M
-    # B < K < M
-    # 1K = 1024B
-    # 1M = 1024K
-
-    # num_elements - 909B
-    # num_local_elements - 927B
-    # num_local_nodes - 918B
-    # num_nodes - 900B
-    # sidesets - 2.2K or 2252.8B
-    # subdomains - 2.2K or 2252.8B
-    # local_sidesets - 2.2K or 2252.8B
-    # local_subdomains - 2.2K or 2252.8B
-    # .6K or 614.4B (together, .1K or 102.4B each):
-      # num_dofs, num_dofs_auxiliary, num_dofs_nonlinear, num_local_dofs_nonlinear, num_local_dofs_auxiliary, num_local_dofs
-
-    # too big to include in `items`:
-      # local_subdomain_elems - 80M
-      # subdomain_elems - 80M
-      # local_sideset_elems - 243M
-      # sideset_elems - 243M
-
-    # .json is 7.9K with this setup
     items = 'num_elements num_local_elements num_local_nodes num_nodes sidesets subdomains local_sidesets local_subdomains num_dofs num_dofs_auxiliary num_dofs_nonlinear num_local_dofs_nonlinear num_local_dofs_auxiliary num_local_dofs'
-
   []
 []
 
 [Outputs]
-  json = true
+  csv = true
 []

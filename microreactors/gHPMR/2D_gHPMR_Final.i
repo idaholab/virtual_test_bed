@@ -180,12 +180,13 @@ drum_boundary_id = 4003
 
 #
 # Axial mesh extrusion
+# NOTE: Not currently in use. Add an AdvancedExtruderGenerator for this
 #
-#heights = '20.0 20.0 120.0 20.0 20.0' - 'unused parameter'
-#subdivisions = ' 4     4   24    4    4  ' # 5 cm - 40 axial - 'unused parameter'
-#subdivisions = ' 2     2   12    2    2  ' # 10 cm - 20 axial - 'unused parameter'
-#layers = ' 0     1    2    3    4  ' - 'unused parameter'
-output_file_base = gHPMR_3d_core-10cm
+#heights = '20.0 20.0 120.0 20.0 20.0'
+#subdivisions = ' 4     4   24    4    4  ' # 5 cm - 40 axial
+#subdivisions = ' 2     2   12    2    2  ' # 10 cm - 20 axial
+#layers = ' 0     1    2    3    4  '
+output_file_base = gHPMR_2d_core
 
 # old_ids = '${fuel_R0_tri_block_id} ${fuel_R1_tri_block_id} ${fuel_R2_tri_block_id} ${fuel_R3_tri_block_id} ${fuel3_tri_block_id} ${heat_pipe_tri_block_id} ${monolith_tri_block_id} ${reflector_tri_block_id} ${rod_channel_block_id} ${monolith_quad_block_id} ${reflector_quad_block_id} ${drum_absorber_block_id} ${drum_vary_block_id}' - 'unused parameter'
 # new_ids_lv0 = '       2710                    2710                  2710                       2710              2710                    2710                       2710                        2710                    2710                    2711                         2801                      2802                    2802' - 'unused parameter'
@@ -951,7 +952,9 @@ output_file_base = gHPMR_3d_core-10cm
     combinatorial_geometry = 'x*x+y*y>146.5*146.5'
     new_sideset_name = 'radial_boundary'
   []
-  final_generator = outer_core_mesh
+  final_generator = sideset_gen
+
+  # Change final_generator to use this diagnostics
   [diag]
     type = MeshDiagnosticsGenerator
     input = outer_core_mesh
@@ -1012,20 +1015,6 @@ output_file_base = gHPMR_3d_core-10cm
     type = VolumePostprocessor
     block = '${monolith_tri_block_name} ${monolith_quad_block_name}'
   []
-  # ## I think Tref is referring to this: reflector_tri_block_id = 700
-  # [TReflector]
-  #   type = VolumePostprocessor
-  #   block = 'Tref Tref2'
-  #   ## this did not fix the issue: block = '${reflector_tri_block_id}'
-  # []
-  # [BReflector]
-  #   type = VolumePostprocessor
-  #   block = 'Bref Bref2'
-  # []
-  # [SReflector]
-  #   type = VolumePostprocessor
-  #   block = 'Sref'
-  # []
   [Drum_abs]
     type = VolumePostprocessor
     block = '${drum_absorber_block_name}'
@@ -1034,21 +1023,10 @@ output_file_base = gHPMR_3d_core-10cm
     type = VolumePostprocessor
     block = '${drum_vary_block_name}'
   []
-  # [Canister]
-  #   type = VolumePostprocessor
-  #   block = '${outer_cannister_block_name}'
-  # []
-[]
-
-[Reporters]
-  [mesh_info]
-    type = MeshInfo
-  []
 []
 
 [Outputs]
   file_base = ${output_file_base}
   exodus = true
   csv = true
-  json = true
 []

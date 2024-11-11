@@ -459,7 +459,7 @@ og_num_intervals_before_ubp = 1
 
 [GlobalParams]
   # For debugging
-  show_info = true
+  # show_info = true
 []
 
 [Mesh]
@@ -4134,7 +4134,7 @@ og_num_intervals_before_ubp = 1
 []
 
 [Outputs]
-  file_base = gHPMR_asm_mesh_2D
+  file_base = '3D_AGN_201'
   exodus = true
   csv = true
   json = true
