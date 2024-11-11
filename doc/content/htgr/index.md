@@ -30,4 +30,4 @@
 
 [SAM HTR-PM model](htr-pm/index.md)
 
-[3D-MHTGR mesh](3d_mhtgr/index.md)
+[3D-MHTGR mesh](3D_MHTGR/index.md)

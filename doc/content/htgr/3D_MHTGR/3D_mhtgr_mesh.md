@@ -18,7 +18,7 @@ A more detailed explanation of each step follows below.
 Throughout the steps, the metadata from the fine hexagonal core mesh is reapplied to the individual meshes. When the hexagonal meshes are modified, for example when adding the RSC channel to the model or modeling all the positional variations of the fuel and reflector blocks, they lose the metadata originally attached to the mesh. Thus, reapplying the metadata from before the modifications is necessary to generate the assembly of pin meshes and the whole core.
 
 !alert note
-Metadata propagation is now mostly automatically handled. 
+Metadata propagation is now mostly automatically handled.
 
 ## Fuel Pin
 
