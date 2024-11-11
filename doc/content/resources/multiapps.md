@@ -1,6 +1,9 @@
 # MOOSE MultiApps Tutorial for Reactor Applications
 
-!tag name=MOOSE MultiApps Tutorial for Reactor Applications pairs=tutorials:multiapps
+!tag name=MOOSE MultiApps Tutorial for Reactor Applications
+     description=Tutorial on the use of the MultiApps system to couple various NEAMS tools for multiphysics simulations
+     image=https://mooseframework.inl.gov/virtual_test_bed/media/resources/step_4_SFR.png
+     pairs=tutorials:multiapps
                        simulation_type:multiphysics
                        codes_used:Griffin
                        open_source:partial

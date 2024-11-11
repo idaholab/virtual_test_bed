@@ -4,7 +4,10 @@
 
 *Model link: [Divertor Monoblock](https://github.com/idaholab/virtual_test_bed/tree/devel/fusion/mcf/divertor_monoblock)*
 
-!tag name=SAM Generic PBR Model pairs=reactor_type:fusion_mcf
+!tag name=Divertor Monoblock
+     image=https://mooseframework.inl.gov/virtual_test_bed/media/fusion/mcf/divertor_monoblock/divertor_monoblock_mesh.png
+     description=Simulation of the Tritium migration in a divertor monoblock coupled with thermal transport
+     pairs=reactor_type:fusion_MCF
                        reactor:ITER_like
                        geometry:divertor
                        simulation_type:tritium_migration
