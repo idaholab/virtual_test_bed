@@ -2,7 +2,7 @@
 
 !tag name=gHPMR Model pairs=reactor_type:gHPMR
                        reactor:gHPMR
-                       geometry:annular
+                       geometry:core
                        codes_used:Griffin;SAM;Sockeye
                        computing_needs:HPC
                        fiscal_year:2024
