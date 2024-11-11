@@ -458,6 +458,7 @@ at_num_intervals = 1
 og_num_intervals_before_ubp = 1
 
 [GlobalParams]
+  # For debugging
   show_info = true
 []
 
@@ -3255,6 +3256,8 @@ og_num_intervals_before_ubp = 1
     holes = 'rename_boundaries_100'
     stitch_holes = 'true'
     refine_holes = 'false'
+    # one point of the CIF "hole" is not properly found inside the outer boundary
+    verify_holes = 'false'
     output_boundary = ${boundary_id_index_45}
     smooth_triangulation = true
     desired_area = ${xydg_area}
