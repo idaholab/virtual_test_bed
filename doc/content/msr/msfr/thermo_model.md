@@ -10,7 +10,7 @@
      pairs=reactor_type:MSR
                        reactor:MSFR
                        geometry:core
-                       simulation_type:core_multiphysics
+                       simulation_type:multiphysics
                        input_features:multiapps
                        code_used:BlueCrab
                        computing_needs:Workstation

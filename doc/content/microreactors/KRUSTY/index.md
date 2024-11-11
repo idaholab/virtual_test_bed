@@ -13,7 +13,7 @@
                        simulation_type:neutronics;multiphysics
                        input_features:reactor_meshing;cross_section_generation;multiapps
                        transient:steady_state
-                       codes_used:Griffin;Bison;BlueCrab
+                       codes_used:Griffin;BISON;BlueCrab
                        computing_needs:Workstation
                        fiscal_year:2024
                        sponsor:NEAMS
