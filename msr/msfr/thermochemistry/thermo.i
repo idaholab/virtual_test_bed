@@ -2095,70 +2095,60 @@
     #expression = '(U232 + U233 + U234 + U235 + U236 + U237 + U238)*TotVolume*1.6605e6'
     symbol_names = 'U230 U231 U232 U233 U234 U235 U235M U236 TotVolume NumNodes'
     symbol_values = 'U230 U231 U232 U233 U234 U235 U235M U236 TotVolume NumNodes'
-    execute_on = INITIAL
   []
   [ThSumSet]
     type = ParsedFunction
     expression = '(Th226 + Th227 + Th228 + Th229 + Th230 + Th231 + Th232 + Th233 + Th234)*TotVolume/NumNodes*1.6605e6'
     symbol_names = 'Th226 Th227 Th228 Th229 Th230 Th231 Th232 Th233 Th234 TotVolume NumNodes'
     symbol_values = 'Th226 Th227 Th228 Th229 Th230 Th231 Th232 Th233 Th234 TotVolume NumNodes'
-    execute_on = INITIAL
   []
   [NdSumSet]
     type = ParsedFunction
     expression = '(Nd140 + Nd141 + Nd142 + Nd143 + Nd144 + Nd145 + Nd146 + Nd147 + Nd148 + Nd149 + Nd150 + Nd151 + Nd152 + Nd153 + Nd154 + Nd155 + Nd156 + Nd157 + Nd158 + Nd159 + Nd160 + Nd161)*TotVolume/NumNodes*1.6605e6'
     symbol_names = 'Nd140 Nd141 Nd142 Nd143 Nd144 Nd145 Nd146 Nd147 Nd148 Nd149 Nd150 Nd151 Nd152 Nd153 Nd154 Nd155 Nd156 Nd157 Nd158 Nd159 Nd160 Nd161 TotVolume NumNodes'
     symbol_values = 'Nd140 Nd141 Nd142 Nd143 Nd144 Nd145 Nd146 Nd147 Nd148 Nd149 Nd150 Nd151 Nd152 Nd153 Nd154 Nd155 Nd156 Nd157 Nd158 Nd159 Nd160 Nd161 TotVolume NumNodes'
-    execute_on = INITIAL
   []
   [CeSumSet]
     type = ParsedFunction
     expression = '(Ce137 + Ce138 + Ce139 + Ce139M + Ce140 + Ce141 + Ce142 + Ce143 + Ce144 + Ce145 + Ce146 + Ce147 + Ce148 + Ce149 + Ce150 + Ce151 + Ce152 + Ce153 + Ce154 + Ce155 + Ce156 + Ce157)*TotVolume/NumNodes*1.6605e6'
     symbol_names = 'Ce137 Ce138 Ce139 Ce139M Ce140 Ce141 Ce142 Ce143 Ce144 Ce145 Ce146 Ce147 Ce148 Ce149 Ce150 Ce151 Ce152 Ce153 Ce154 Ce155 Ce156 Ce157 TotVolume NumNodes'
     symbol_values = 'Ce137 Ce138 Ce139 Ce139M Ce140 Ce141 Ce142 Ce143 Ce144 Ce145 Ce146 Ce147 Ce148 Ce149 Ce150 Ce151 Ce152 Ce153 Ce154 Ce155 Ce156 Ce157 TotVolume NumNodes'
-    execute_on = INITIAL
   []
   [LaSumSet]
     type = ParsedFunction
     expression = '(La133 + La135 + La137 + La138 + La139 + La140 + La141 + La142 + La143 + La144 + La145 + La146 + La146M + La147 + La148 + La149 + La150 + La151 + La152 + La153 + La154 + La155)*TotVolume/NumNodes*1.6605e6'
     symbol_names = 'La133 La135 La137 La138 La139 La140 La141 La142 La143 La144 La145 La146 La146M La147 La148 La149 La150 La151 La152 La153 La154 La155 TotVolume NumNodes'
     symbol_values = 'La133 La135 La137 La138 La139 La140 La141 La142 La143 La144 La145 La146 La146M La147 La148 La149 La150 La151 La152 La153 La154 La155 TotVolume NumNodes'
-    execute_on = INITIAL
   []
   [CsSumSet]
     type = ParsedFunction
     expression = '(Cs129 + Cs131 + Cs132 + Cs133 + Cs134 + Cs134M + Cs135 + Cs135M + Cs136 + Cs136M + Cs137 + Cs138 + Cs139 + Cs140 + Cs141 + Cs142 + Cs143 + Cs144 + Cs145 + Cs146 + Cs147 + Cs148 + Cs149 + Cs150 + Cs151)*TotVolume/NumNodes*1.6605e6'
     symbol_names = 'Cs129 Cs131 Cs132 Cs133 Cs134 Cs134M Cs135 Cs135M Cs136 Cs136M Cs137 Cs138 Cs139 Cs140 Cs141 Cs142 Cs143 Cs144 Cs145 Cs146 Cs147 Cs148 Cs149 Cs150 Cs151 TotVolume NumNodes'
     symbol_values = 'Cs129 Cs131 Cs132 Cs133 Cs134 Cs134M Cs135 Cs135M Cs136 Cs136M Cs137 Cs138 Cs139 Cs140 Cs141 Cs142 Cs143 Cs144 Cs145 Cs146 Cs147 Cs148 Cs149 Cs150 Cs151 TotVolume NumNodes'
-    execute_on = INITIAL
   []
   [ISumSet]
     type = ParsedFunction
     expression = '(I121 + I123 + I125 + I126 + I127 + I128 + I129 + I130 + I130M + I131 + I132 + I132M + I133 + I133M + I134 + I134M + I135 + I136 + I137 + I138 + I139 + I140 + I141 + I142 + I143 + I144 + I145)*TotVolume/NumNodes*1.6605e6'
     symbol_names = 'I121 I123 I125 I126 I127 I128 I129 I130 I130M I131 I132 I132M I133 I133M I134 I134M I135 I136 I137 I138 I139 I140 I141 I142 I143 I144 I145 TotVolume NumNodes'
     symbol_values = 'I121 I123 I125 I126 I127 I128 I129 I130 I130M I131 I132 I132M I133 I133M I134 I134M I135 I136 I137 I138 I139 I140 I141 I142 I143 I144 I145 TotVolume NumNodes'
-    execute_on = INITIAL
   []
   [RbSumSet]
     type = ParsedFunction
     expression = '(Rb81 + Rb83 + Rb84 + Rb85 + Rb86 + Rb86M + Rb87 + Rb88 + Rb89 + Rb90 + Rb91 + Rb92 + Rb93 + Rb94 + Rb95 + Rb96 + Rb97 + Rb98 + Rb99 + Rb100 + Rb101 + Rb102)*TotVolume/NumNodes*1.6605e6'
     symbol_names = 'Rb81 Rb83 Rb84 Rb85 Rb86 Rb86M Rb87 Rb88 Rb89 Rb90 Rb91 Rb92 Rb93 Rb94 Rb95 Rb96 Rb97 Rb98 Rb99 Rb100 Rb101 Rb102 TotVolume NumNodes'
     symbol_values = 'Rb81 Rb83 Rb84 Rb85 Rb86 Rb86M Rb87 Rb88 Rb89 Rb90 Rb91 Rb92 Rb93 Rb94 Rb95 Rb96 Rb97 Rb98 Rb99 Rb100 Rb101 Rb102 TotVolume NumNodes'
-    execute_on = INITIAL
   []
   [KrSumSet]
     type = ParsedFunction
     expression = '(Kr78 + Kr79 + Kr79M + Kr80 + Kr81 + Kr81M + Kr82 + Kr83 + Kr83M + Kr84 + Kr85 + Kr85M + Kr86 + Kr87 + Kr88 + Kr89 + Kr90 + Kr91 + Kr92 + Kr93 + Kr94 + Kr95 + Kr96 + Kr97 + Kr98 + Kr99 + Kr100)*TotVolume/NumNodes*1.6605e6'
     symbol_names = 'Kr78 Kr79 Kr79M Kr80 Kr81 Kr81M Kr82 Kr83 Kr83M Kr84 Kr85 Kr85M Kr86 Kr87 Kr88 Kr89 Kr90 Kr91 Kr92 Kr93 Kr94 Kr95 Kr96 Kr97 Kr98 Kr99 Kr100 TotVolume NumNodes'
     symbol_values = 'Kr78 Kr79 Kr79M Kr80 Kr81 Kr81M Kr82 Kr83 Kr83M Kr84 Kr85 Kr85M Kr86 Kr87 Kr88 Kr89 Kr90 Kr91 Kr92 Kr93 Kr94 Kr95 Kr96 Kr97 Kr98 Kr99 Kr100 TotVolume NumNodes'
-    execute_on = INITIAL
   []
   [NeSumSet]
     type = ParsedFunction
     expression = 'Ne20*TotVolume/NumNodes*1.6605e6'
     symbol_names = 'Ne20 TotVolume NumNodes'
     symbol_values = 'Ne20 TotVolume NumNodes'
-    execute_on = INITIAL
   []
   [FSumSet]
     type = ParsedFunction
@@ -2166,7 +2156,6 @@
     #expression = 'F19*TotVolume/NumNodes*1.6605e6*1.0001'
     symbol_names = 'F19 TotVolume NumNodes'
     symbol_values = 'F19 TotVolume NumNodes'
-    execute_on = INITIAL
   []
   [LiSumSet]
     type = ParsedFunction
@@ -2174,14 +2163,12 @@
     expression = '(Li6 + Li7 + Li8)*TotVolume/NumNodes*1.6605e6*1.0008'
     symbol_names = 'Li6 Li7 Li8 TotVolume NumNodes'
     symbol_values = 'Li6 Li7 Li8 TotVolume NumNodes'
-    execute_on = INITIAL
   []
   [XeSumSet]
     type = ParsedFunction
     expression = '(Xe126 + Xe128 + Xe129 + Xe129M + Xe130 + Xe131 + Xe131M + Xe132 + Xe133 + Xe133M + Xe134 + Xe134M +  Xe135 + Xe135M + Xe136 + Xe137 + Xe138 + Xe139 + Xe140 + Xe141 + Xe142 + Xe143 + Xe144 + Xe145 + Xe146 + Xe147)*TotVolume/NumNodes*1.6605e6*10'
     symbol_names = 'Xe126 Xe128 Xe129 Xe129M Xe130 Xe131 Xe131M Xe132 Xe133 Xe133M Xe134 Xe134M Xe135 Xe135M Xe136 Xe137 Xe138 Xe139 Xe140 Xe141 Xe142 Xe143 Xe144 Xe145 Xe146 Xe147 TotVolume NumNodes'
     symbol_values = 'Xe126 Xe128 Xe129 Xe129M Xe130 Xe131 Xe131M Xe132 Xe133 Xe133M Xe134 Xe134M Xe135 Xe135M Xe136 Xe137 Xe138 Xe139 Xe140 Xe141 Xe142 Xe143 Xe144 Xe145 Xe146 Xe147 TotVolume NumNodes'
-    execute_on = INITIAL
   []
 
 []

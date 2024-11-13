@@ -9,8 +9,8 @@
   description=This is a SAM HTR-PM reference plant model with steady-state and transient PLOFC simulations
   pairs=reactor_type:HTGR
                        reactor:HTR_PM
-                       geometry:Core;Primary_Loop
-                       simulation_type:Thermal_hydraulics
+                       geometry:core;primary_loop
+                       simulation_type:thermal_hydraulics
                        transient:steady_state;PLOFC
                        input_features:checkpoint_restart;multiapps
                        codes_used:SAM

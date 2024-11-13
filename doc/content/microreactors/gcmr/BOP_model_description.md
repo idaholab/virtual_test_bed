@@ -19,9 +19,9 @@ The friction factor and heat transfer coefficient in each loop are defined using
 
 ## Solid Materials
 
-The solid materials of the many heat structures are declared using a [HeatStructureMaterials](https://mooseframework.inl.gov/syntax/HeatStructureMaterials/index.html) block. It gives the properties of three materials: the H-451 graphite and the fuel, used in the core, and the steel, used in the heat exchanger and in the recuperator. Each solid material is defined using the [SolidMaterialProperties](https://mooseframework.inl.gov/source/userobjects/SolidMaterialProperties.html) type. Constant densities, thermal conductivities and specific heats are provided.
+The solid materials of the many heat structures are declared using a [SolidProperties](https://mooseframework.inl.gov/syntax/SolidProperties/index.html) block. It gives the properties of three materials: the H-451 graphite and the fuel, used in the core, and the steel, used in the heat exchanger and in the recuperator. Each solid material is defined using the [ThermalFunctionSolidProperties](https://mooseframework.inl.gov/source/solidproperties/ThermalFunctionSolidProperties.html) type. Constant densities, thermal conductivities and specific heats are provided.
 
-!listing microreactors/gcmr/balance_of_plant/htgr_startup_transient.i block=HeatStructureMaterials
+!listing microreactors/gcmr/balance_of_plant/htgr_startup_transient.i block=SolidProperties
 
 ## Components
 

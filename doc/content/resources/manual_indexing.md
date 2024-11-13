@@ -8,8 +8,9 @@
 - [Pebble Bed Fluoride-Salt-Cooled High-Temperature Reactor (PB-FHR)](pbfhr/index.md) \\
 - [Sodium Fast Reactor (SFR)](sfr/index.md) \\
 - [Lead-cooled Fast Reactor (LFR)](lfr/index.md) \\
-- [Micro Reactors (MR)](microreactors/index.md)
-- [Seismic Analysis](seismic_analysis/index.md)
+- [Micro Reactors (MR)](microreactors/index.md) \\
+- [Seismic Analysis](seismic_analysis/index.md)  \\
+- [Research Reactors](research_reactors/index.md) \\
 - [Fusion Devices](fusion/index.md)
 
 

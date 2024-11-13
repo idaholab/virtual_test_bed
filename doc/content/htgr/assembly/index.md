@@ -8,7 +8,7 @@
      description=Prismatic HTGR multiphysics steady state study
      image=https://mooseframework.inl.gov/virtual_test_bed/media/htgr/assembly.png
      pairs=reactor_type:HTGR
-          reactor:generic_prismatic_htgr
+          reactor:generic_prismatic_HTGR
           geometry:assembly
           simulation_type:multiphysics
           codes_used:Cardinal;OpenMC;MOOSE_HeatTransfer;MOOSE_ThermalHydraulics

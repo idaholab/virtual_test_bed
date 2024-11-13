@@ -29,3 +29,5 @@
 [Pronghorn Generic Pebble Bed HTGR Tutorial](generic-pbr-tutorial/index.md)
 
 [SAM HTR-PM model](htr-pm/index.md)
+
+[3D-MHTGR mesh](3D_MHTGR/index.md)

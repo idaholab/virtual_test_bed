@@ -1,0 +1,19 @@
+[Tests]
+  [3D_MHTGR_syntax]
+    type = RunApp
+    input = 3D_mhtgr_final.i
+    check_input = True
+    executable_pattern = 'combined*'
+  []
+  [3D_MHTGR_mesh]
+    type = CSVDiff
+    input = '3D_mhtgr_final.i'
+    csvdiff = '3D_mhtgr_final_out.csv'
+    requirement = 'The system shall be able to create a mesh for a 3D model of the modular HTGR.'
+    executable_pattern = 'combined*'
+    max_time = 400
+
+    # Triangulation output depends on platform
+    rel_err = 1e-3
+  []
+[]
