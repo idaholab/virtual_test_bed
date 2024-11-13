@@ -6,7 +6,7 @@
 
 !tag name=MSR Piping System Cardinal Model
      description=Cardinal multiphysics model of thermal striping phenomenon using nekRS and MOOSE Solid Mechanics Module
-     image=https://github.com/idaholab/virtual_test_bed/tree/main/doc/content/media/msr/msre/pipe_cardinal/CFD_T.png
+     image=https://mooseframework.inl.gov/virtual_test_bed/media/msr/msre/pipe_cardinal/CFD_T.png
      pairs=reactor_type:MSR
                        reactor:MSRE
                        geometry:pipe
