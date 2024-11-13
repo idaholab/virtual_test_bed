@@ -6,7 +6,7 @@
 
 !tag name=3D-MHTGR Mesh
      description=3D mesh of the mHTGR
-     image=https://mooseframework.inl.gov/virtual_test_bed/media/htgr/3D_mesh/ring_boundary.png
+     image=https://mooseframework.inl.gov/virtual_test_bed/media/htgr/mhtgr/3D_mesh/ring_boundary.png
      pairs=reactor_type:HTGR
             reactor:MHTGR
             geometry:core
