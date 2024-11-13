@@ -12,5 +12,8 @@
     requirement = 'The system shall be able to create a mesh for a 3D model of the modular HTGR.'
     executable_pattern = 'combined*'
     max_time = 400
+
+    # Triangulation output depends on platform
+    rel_err = 1e-3
   []
 []

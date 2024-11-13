@@ -4,6 +4,8 @@
     input = 3D_AGN-201_Final.i
     check_input = True
     executable_pattern = 'combined*'
+    # Some stitching warnings due to RenameBoundaryMG adding boundary names on top of IDs
+    allow_warnings = true
   []
   [3D_AGN-201_mesh]
     type = CSVDiff
@@ -14,5 +16,8 @@
     allow_warnings = true
     requirement = 'The system shall be able to create a mesh for the 3D AGN-201 model.'
     executable_pattern = 'combined*'
+
+    # Triangulation output depends on platform
+    rel_err = 5e-3
   []
 []

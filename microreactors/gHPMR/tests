@@ -11,5 +11,8 @@
     csvdiff = 'gHPMR_2d_core.csv'
     requirement = 'The system shall be able to create a mesh for a 2D gHPMR model.'
     executable_pattern = 'combined*'
+
+    # Triangulation output depends on platform
+    rel_err = 1e-3
   []
 []

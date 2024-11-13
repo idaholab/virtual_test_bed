@@ -1,2 +1,2 @@
-time,Drum_abs,Drum_graphite,Fuel1_R0,Fuel1_R1,Fuel1_R2,Fuel1_R3,Fuel3_R0,HP,Monolith,Rod_channel,mesh_info/num_dofs,mesh_info/num_dofs_auxiliary,mesh_info/num_dofs_constrained,mesh_info/num_dofs_local_auxiliary,mesh_info/num_dofs_local_nonlinear,mesh_info/num_dofs_nonlinear,mesh_info/num_elements,mesh_info/num_local_dofs,mesh_info/num_local_elements,mesh_info/num_local_nodes,mesh_info/num_nodes
-2,893.72027809323,1787.4405561864,3266.2510500851,2041.406906303,2041.406906303,408.28138126053,663.45724454833,3150.805059887,21188.597068484,416.55456873516,0,0,0,0,0,0,137388,0,137388,94505,94505
+time,Drum_abs,Drum_graphite,Fuel1_R0,Fuel1_R1,Fuel1_R2,Fuel1_R3,Fuel3_R0,HP,Monolith,Rod_channel
+2,893.72027809322,1787.4405561864,3266.2510500851,2041.406906303,2041.4069063029,408.28138126052,663.45724454833,3150.805059887,21188.597068484,416.55456873516
