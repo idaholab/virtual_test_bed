@@ -182,6 +182,7 @@ framework/contrib/asio/
 *.cpr
 *.cpa-*
 *.cpr-*
+*.cpa.gz*
 
 # phase_field/tests/solution_rasterizer
 out.xyz
