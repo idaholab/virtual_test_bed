@@ -64,9 +64,9 @@ roughness = 0.00004 # m
   # Creates a function of the PostProcessor value received from the main app solve named upcomer_outlet
   [upcomer_temp]
     type = ParsedFunction
-    value = 'upcomer_outlet'
-    vals = 'upcomer_outlet'
-    vars = 'upcomer_outlet'
+    expression = 'upcomer_outlet'
+    symbol_values = 'upcomer_outlet'
+    symbol_names = 'upcomer_outlet'
   []
   # Creates a function with respect to time for the system pressure based on a data file from the PG-26 Transient
   [system_pressure]
@@ -79,9 +79,9 @@ roughness = 0.00004 # m
   # Creates a function which calculates the inlet mass flowrate of a single small bypass channel
   [mdot_in_fn]
     type = ParsedFunction
-    value = '${fparse (m_dot_total*(A_sb/A_total))/n_small_bypass}'
-    vars = 'm_dot_total A_sb A_total n_small_bypass'
-    vals = '${m_dot_total} ${A_sb} ${A_total} ${n_small_bypass}'
+    expression = '${fparse (m_dot_total*(A_sb/A_total))/n_small_bypass}'
+    symbol_names = 'm_dot_total A_sb A_total n_small_bypass'
+    symbol_values = '${m_dot_total} ${A_sb} ${A_total} ${n_small_bypass}'
   []
 []
 # Creates necessary variables for multi-app execution
@@ -144,8 +144,8 @@ roughness = 0.00004 # m
   [inlet_temp_logic]
     type = ParsedFunctionControl
     function = 'if(t > 0, upcomer_temp, 300)'
-    vals = 'upcomer_temp'
-    vars = 'upcomer_temp'
+    symbol_values = 'upcomer_temp'
+    symbol_names = 'upcomer_temp'
   []
   # Applies the output of inlet_temp_logic to the channel_inlet T parameter
   [inlet_temp]
@@ -166,8 +166,8 @@ roughness = 0.00004 # m
   [mdot_control]
     type = ParsedFunctionControl
     function = 'if(t <= 180000, mdot_in_fn, 0)'
-    vals = 'mdot_in_fn'
-    vars = 'mdot_in_fn'
+    symbol_values = 'mdot_in_fn'
+    symbol_names = 'mdot_in_fn'
   []
   # Takes value produced by mdot_control, and applies it to the channel_inlet m_dot parameter
   [mdot_applied]
@@ -239,7 +239,7 @@ roughness = 0.00004 # m
   [T_out_weighted]
     type = ParsedPostprocessor
     pp_names = 'T_out'
-    function = '${fparse (m_dot_in/m_dot_total)} * T_out'
+    expression = '${fparse (m_dot_in/m_dot_total)} * T_out'
     execute_on = 'TIMESTEP_END'
   []
 []

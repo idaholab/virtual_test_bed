@@ -196,7 +196,11 @@ heater_SA = '${fparse heater_P * 10 * core_block_height}' # m^2
     max_failures = 10000
   []
 []
+
 # Variables, AuxVariables, and post-processors transferred between main app and sub apps
+# We removed the search value conflicts from the transfers as it is too slow
+# and does not influence the results
+
 [Transfers]
   # Wall temperature of coolant and bypass channels
   [Twall_to_relap]
@@ -204,6 +208,7 @@ heater_SA = '${fparse heater_P * 10 * core_block_height}' # m^2
     to_multi_app = relap
     variable = T_wall_channel # AuxVariable name in relap-7 input files
     source_user_object = Twall_for_relap_uo # Corresponding main app UserObject
+    search_value_conflicts = false
   []
   # Fluid temperature received from relap-7
   [tfluid_from_relap]
@@ -211,6 +216,7 @@ heater_SA = '${fparse heater_P * 10 * core_block_height}' # m^2
     from_multi_app = relap
     source_variable = T # variable name in relap-7
     variable = tfluid # AuxVariable name in main app
+    search_value_conflicts = false
   []
   # Convective heat transfer coefficient received from relap-7
   [Hw_channel_from_relap]
@@ -218,6 +224,7 @@ heater_SA = '${fparse heater_P * 10 * core_block_height}' # m^2
     from_multi_app = relap
     source_variable = Hw_chan # AuxVariable name in relap-7
     variable = Hw_channel # AuxVariable name in main app
+    search_value_conflicts = false
   []
   # Wall temperature of core barrel outer surface
   [Twall_barrel_relap]
@@ -225,6 +232,7 @@ heater_SA = '${fparse heater_P * 10 * core_block_height}' # m^2
     to_multi_app = upcomer
     variable = T_wall_barrel # AuxVariable name in relap-7
     source_user_object = Twall_barrel_relap_uo # Corresponding main app UserObject
+    search_value_conflicts = false
   []
   # Wall temperature of RPV inner surface
   [Twall_RPV_relap]
@@ -232,6 +240,7 @@ heater_SA = '${fparse heater_P * 10 * core_block_height}' # m^2
     to_multi_app = upcomer
     variable = T_wall_RPV # AuxVariable name in relap-7
     source_user_object = Twall_RPV_relap_uo # Corresponding main app UserObject
+    search_value_conflicts = false
   []
   # Fluid temperature received from relap-7
   [tfluid_upcomer_from_relap]
@@ -239,6 +248,7 @@ heater_SA = '${fparse heater_P * 10 * core_block_height}' # m^2
     from_multi_app = upcomer
     source_variable = T # variable name in relap-7
     variable = tfluid_upcomer # AuxVariable name in main app
+    search_value_conflicts = false
   []
   # Convective heat transfer coefficient for core barrel received from relap-7
   [Hw_barrel_from_relap]
@@ -246,6 +256,7 @@ heater_SA = '${fparse heater_P * 10 * core_block_height}' # m^2
     from_multi_app = upcomer
     source_variable = Hw_barrel # AuxVariable name in relap-7
     variable = Hw_cb # AuxVariable name in main app
+    search_value_conflicts = false
   []
   # Convective heat transfer coefficient for core barrel received from relap-7
   [Hw_RPV_from_relap]
@@ -253,6 +264,7 @@ heater_SA = '${fparse heater_P * 10 * core_block_height}' # m^2
     from_multi_app = upcomer
     source_variable = Hw_RPV # AuxVariable name in relap-7
     variable = Hw_vessel # AuxVariable name in main app
+    search_value_conflicts = false
   []
   # Wall temperature of RCCS inner panel surface
   [Twall_RCCS_inner]
@@ -260,6 +272,7 @@ heater_SA = '${fparse heater_P * 10 * core_block_height}' # m^2
     to_multi_app = RCCS
     variable = T_wall_inner # AuxVariable name in relap-7
     source_user_object = Twall_RCCS_inner_uo # Corresponding main app UserObject
+    search_value_conflicts = false
   []
   # Wall temperature of RCCS inner panel surface
   [Twall_RCCS_outer]
@@ -267,6 +280,7 @@ heater_SA = '${fparse heater_P * 10 * core_block_height}' # m^2
     to_multi_app = RCCS
     variable = T_wall_outer # AuxVariable name in relap-7
     source_user_object = Twall_RCCS_outer_uo # Corresponding main app UserObject
+    search_value_conflicts = false
   []
   # Convective heat transfer coefficient for RCCS inner panel received from relap-7
   [Hw_RCCS_inner]
@@ -274,6 +288,7 @@ heater_SA = '${fparse heater_P * 10 * core_block_height}' # m^2
     from_multi_app = RCCS
     source_variable = Hw_inner # AuxVariable name in relap-7
     variable = Hw_in # AuxVariable name in main app
+    search_value_conflicts = false
   []
   # Convective heat transfer coefficient for RCCS outer panel received from relap-7
   [Hw_RCCS_outer]
@@ -281,6 +296,7 @@ heater_SA = '${fparse heater_P * 10 * core_block_height}' # m^2
     from_multi_app = RCCS
     source_variable = Hw_outer # AuxVariable name in relap-7
     variable = Hw_out # AuxVariable name in main app
+    search_value_conflicts = false
   []
   # Fluid temperature received from relap-7
   [tfluid_RCCS_from_relap]
@@ -288,6 +304,7 @@ heater_SA = '${fparse heater_P * 10 * core_block_height}' # m^2
     from_multi_app = RCCS
     source_variable = T # variable name in relap-7
     variable = tfluid_RCCS # AuxVariable name in main app
+    search_value_conflicts = false
   []
   # Mass flow rate entering core from relap-7
   [mdot_in_transfer]

@@ -149,8 +149,8 @@ D_h = ${fparse (4 * A_channel)/((pi * D_RPV_inner) + (pi * D_barrel_outer))} # m
   [mdot_control]
     type = ParsedFunctionControl
     function = 'if(t <= 180000, mdot_in_fn, 0)'
-    vals = 'mdot_in_fn'
-    vars = 'mdot_in_fn'
+    symbol_values = 'mdot_in_fn'
+    symbol_names = 'mdot_in_fn'
   []
   # Takes value produced by mdot_control, and applies it to the channel_inlet m_dot parameter
   [mdot_applied]
