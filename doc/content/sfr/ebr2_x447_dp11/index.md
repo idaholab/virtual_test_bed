@@ -6,13 +6,15 @@
 
 *Model link: [X447_DP11](https://github.com/idaholab/virtual_test_bed/tree/devel/sfr/ebr2_x447_dp11)*
 
-!tag name=Metallic Fuel Performance pairs=reactor_type:SFR
+!tag name=Metallic Fuel Performance
+  image=https://mooseframework.inl.gov/virtual_test_bed/media/ebr2_x447_dp11/fcci_dp11.png
+  description=This BISON metallic fuel performance model is part of the SFR validation data from the FIPD database, and compares experimental measurements of the EBR2 X447-DP11 with simulation results.
+  pairs=reactor_type:SFR
                        geometry:fuel_pin
                        simulation_type:thermo_mechanics
                        codes_used:BISON
                        transient:steady_state
                        computing_needs:Workstation
-                       open_source:false
                        fiscal_year:2024
                        sponsor:NEAMS
                        institution:ANL

@@ -22,7 +22,7 @@ Unlike other metallic fuel pins irradiated during the [!ac](IFR) program, all th
 
 ## Pin Design Data 
 
-The fuel pin design data of for DP11 are provided as a CSV file with the same format as the pin design data file available in [!ac](FIPD). Note that the pin design data items that are not used by BISON or not openly available have been removed. This CSV file that contains the essential pin design data for Pin DP11 is read by BISON's [`FIPDRodletMeshGenerator`](https://mooseframework.inl.gov/bison/source/meshgenerators/FIPDRodletMeshGenerator.html) to generate the axisymmetric 2D mesh as well as the corresponding `MeshMetaData`.
+The fuel pin design data of DP11 are provided as a CSV file with the same format as the pin design data file available in [!ac](FIPD). Note that the pin design data items that are not used by BISON or not openly available have been removed. This CSV file that contains the essential pin design data for Pin DP11 is read by BISON's [`FIPDRodletMeshGenerator`](https://mooseframework.inl.gov/bison/source/meshgenerators/FIPDRodletMeshGenerator.html) to generate the axisymmetric 2D mesh as well as the corresponding `MeshMetaData`.
 
 ## Operating Conditions and Irradiation History
 
@@ -40,7 +40,7 @@ Both power and fast neutron flux data are provided in the form of two separate C
        caption=Time and axial dependent outer surface temperature profile for pin DP11.
        style=display: block;margin-left:auto;margin-right:auto;width:50%;
 
-Due to the existence of the dummy pins and pin reconstitution in the experiment X447, BISON's intrinsic coolant channel models (i.e., the generic [`CoolantChannelAction`](https://mooseframework.inl.gov/bison/source/actions/CoolantChannelAction.html) and the specific [`SodiumCoolantChannel`](https://mooseframework.inl.gov/bison/source/materials/SodiumCoolantChannelMaterial.html)) might not make best prediction, especially when the neighboring fuel pins have dissimilar power profiles. In that case, time-varying cladding outer surface temperature available in the FIPD database, which is calculated by thermal hydraulics code SuperEnergy2 [!citep](BASEHORE1980SE2), is used directly as the temperature boundary conditions (see [dp11_odtemp]).
+Due to the existence of the dummy pins and pin reconstitution in the experiment X447, BISON's intrinsic coolant channel models (i.e., the generic [`CoolantChannelAction`](https://mooseframework.inl.gov/bison/source/actions/CoolantChannelAction.html) and the specific [`SodiumCoolantChannel`](https://mooseframework.inl.gov/bison/source/materials/SodiumCoolantChannelMaterial.html)) might not make the best prediction, especially when the neighboring fuel pins have dissimilar power profiles. In that case, time-varying cladding outer surface temperature available in the FIPD database, which is calculated by thermal hydraulics code SuperEnergy2 [!citep](BASEHORE1980SE2), is used directly as the temperature boundary conditions (see [dp11_odtemp]).
 
 The time-varying cladding outer surface temperature is provided as a single CSV file for Pin DP11, which can also be read by [`FIPDAxialProfileFunction`](https://mooseframework.inl.gov/bison/source/functions/FIPDAxialProfileFunction.html).
 

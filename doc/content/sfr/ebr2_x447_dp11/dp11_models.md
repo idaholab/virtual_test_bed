@@ -30,8 +30,8 @@ The following material and behavioral models for the +HT9 cladding+ were used in
 | Cladding Performance Behavior | BISON Model | Description |
 | :- | - | :- |
 | Elasticity | [`ADHT9ElasticityTensor`](https://mooseframework.inl.gov/bison/source/materials/solid_mechanics/HT9ElasticityTensor.html) | Elastic mechanical properties for HT9 |
-| Creep Deformation | [`ADHT9CreepUpdate`](https://mooseframework.inl.gov/bison/source/materials/solid_mechanics/HT9CreepUpdate.html) | Irradiation creep and thermal creep (including primary, secondary and tertiary stages) correlation of HT9 |
-| Volumetric Swelling | Neglected | +Volumetric Swelling+ of HT9 is neglected. As a tempered martensitic steel, HT9 does not swell as prominent as its austenitic stainless steel counterparts (i.e., 316SS and D9). |
+| Creep Deformation | [`ADHT9CreepUpdate`](https://mooseframework.inl.gov/bison/source/materials/solid_mechanics/HT9CreepUpdate.html) | Irradiation creep and thermal creep (including primary, secondary and tertiary stages) correlations for HT9 |
+| Volumetric Swelling | Neglected | +Volumetric Swelling+ of HT9 is neglected. As a tempered martensitic steel, HT9 does not swell as prominently as its austenitic stainless steel counterparts (i.e., 316SS and D9). |
 | Thermal Expansion | [`ADComputeThermalExpansionEigenstrain`](https://mooseframework.inl.gov/bison/source/materials/ComputeThermalExpansionEigenstrain.html) | Thermal expansion model with constant instantaneous thermal expansion coefficient |
 | Specific Heat/Thermal Conductivity | [`ADHT9Thermal`](https://mooseframework.inl.gov/bison/source/materials/HT9Thermal.html) | Calculates the thermal conductivity and specific heat for HT9 cladding |
 | Cladding Damage | [`HT9FailureClad`](https://mooseframework.inl.gov/bison/source/materials/HT9FailureClad.html) | Cladding damage model for HT9 cladding based on the steady-state [!ac](CDF) model to facilitate failure determination |
