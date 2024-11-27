@@ -23,7 +23,9 @@
 
 [Simplified KRUSTY Monte Carlo Model](KRUSTY/Simplified_KRUSTY_Monte_Carlo_Model.md)
 
-[Griffin-BISON Multiphysics Model](KRUSTY/Griffin-BISON_Multiphysics_Model.md)
+[Griffin-BISON Multiphysics Steady State Model](KRUSTY/Griffin-BISON_Multiphysics_Steady_State_Model.md)
 
 [Neutronic and Multiphysics Steady State Results](KRUSTY/Neutronic_Multiphysics_Steady_State_Results.md)
+
+[Griffin-BISON Multiphysics 15 Ȼ Reactivity Insertion Test](KRUSTY/Griffin-BISON_Multiphysics_15C_Reactivity_Insertion_Test.md)
 

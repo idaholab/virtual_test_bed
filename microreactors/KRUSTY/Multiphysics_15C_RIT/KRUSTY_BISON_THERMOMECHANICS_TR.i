@@ -1,13 +1,14 @@
 ################################################################################
 ## NEAMS Micro-Reactor Application Driver                                     ##
-## KRUSTY Multiphysics Steady State                                           ##
+## KRUSTY Multiphysics 15-Cent Reactivity Insertion                           ##
 ## BISON thermomechanics main input file (Child App)                          ##
 ## Heat Conduction, Thermal Expansion, Thermal Stress                         ##
 ################################################################################
 
-!include KRUSTY_BISON_PARAMS.i
+!include ../Multiphysics_SS/KRUSTY_BISON_PARAMS.i
 
-reflector_disp = 0.0
+restart_cp_file = '../Multiphysics_SS/KRUSTY_Griffin_SN23_NA23_CMFD_out_bison0_checkpoint_cp/LATEST'
+reflector_disp = 1.48e-3 # Corresponding to 15 cents reactivity insertion
 
 [GlobalParams]
   temperature = temp
@@ -20,36 +21,25 @@ reflector_disp = 0.0
   reference_vector = 'ref'
   extra_tag_vectors = 'ref'
   group_variables = 'disp_x disp_y disp_z'
+
+  restart_file_base = ${restart_cp_file}
 []
 
 [Mesh]
-  [fmg]
-    # If you do not have a presplit mesh already, you should generate it first:
-    # 1. Uncomment all the mesh blocks
-    # 2. Use the exodus file in the fmg block
-    # 3. Comment the "parallel_type = distributed" line
-    # 4. Use moose executable to presplit the mesh
-    # Once you have the presplit mesh
-    # 1. Comment all the mesh blocks except the fmg block
-    # 2. Use the cpr file in the fmg block
-    # 3. Uncomment the "parallel_type = distributed" line
-    type = FileMeshGenerator
-    file = '../gold/MESH/BISON_mesh.e'
-    # file = 'bison_mesh.cpr'
-  []
+  file = ${restart_cp_file}
   parallel_type = distributed
 []
 
+# No initial value needed as this is restarting
+# For both Variables and AuxVariables
 [Variables]
   # We have two temperature variables, one for the fuel and one for the non-fuel
   # This is to allow discontinuity on the fuel surface so that the insulation
   # can be better simulated using `InterfaceKernels`
   [temp]
-    initial_condition = 300
     block = ${nonfuel_all}
   []
   [temp_f]
-    initial_condition = 300
     block = ${fuel_all}
   []
 []
@@ -59,7 +49,6 @@ reflector_disp = 0.0
     block = ${fuel_all}
     family = L2_LAGRANGE
     order = FIRST
-    initial_condition = 1.0
   []
   [Tfuel]
     order = CONSTANT
@@ -70,6 +59,8 @@ reflector_disp = 0.0
     family = MONOMIAL
   []
   [external_power]
+  []
+  [hp_temp_aux]
   []
 []
 
@@ -272,7 +263,7 @@ reflector_disp = 0.0
     temperature = temp_f
     eigenstrain_name = thermal_strain
     stress_free_temperature = 298
-    model_option = Saller
+    model_option = Rest
   []
   [fission_density]
     type = GenericConstantMaterial
@@ -378,11 +369,10 @@ reflector_disp = 0.0
     temperature = temp
   []
 
-  #Aluminium; Assuming all the stuctures are SS316
+  #Aluminium
   [Al6061Dens]
     type = Density
     block = ${Al_all}
-    # density = ${ss_dens} # will change later
     density = ${al_dens}
   []
   [Al6061Mech]
@@ -469,6 +459,15 @@ reflector_disp = 0.0
     type = ParsedFunction
     expression = '0.606+0.0351*t'
   []
+  # The function that controls the displacement of the reflector
+  # Used to control the reactivity insertion
+  [ref_mov]
+    type = ParsedFunction
+    symbol_names = 't0 d0'
+    symbol_values = '0.5 ${reflector_disp}'
+    # Linear insertion within the first 0.5 seconds
+    expression = 'if(t<0,0.0,if(t<t0,d0/t0*t,d0))'
+  []
 []
 
 [BCs]
@@ -485,11 +484,12 @@ reflector_disp = 0.0
     boundary = 'Core_bottom'
     value = 0.0
   []
+  # The BC that controls the displacement of the reflector
   [BottomSSFixZ]
-    type = DirichletBC
+    type = FunctionDirichletBC
     variable = disp_z
     boundary = 'ss_bot'
-    value = ${reflector_disp}
+    function = ref_mov
   []
   [TopFixZ]
     type = DirichletBC
@@ -533,10 +533,10 @@ reflector_disp = 0.0
   automatic_scaling = true
   compute_scaling_once = false
 
-  start_time = -1.0e6 #-1e-5 negative start time so we can start running from t = 0
-  end_time = 0
-  dt = 1e5
-  dtmin = 1
+  start_time = 0
+  end_time = 7200
+  # Let main app to control the time step
+  dt = 10
 []
 
 [Postprocessors]
@@ -601,7 +601,6 @@ reflector_disp = 0.0
     use_displaced_mesh = true
     execute_on = 'initial TIMESTEP_END'
   []
-
   [power_density_avg_everywhere]
     type = ElementAverageValue
     variable = power_density
@@ -629,12 +628,11 @@ reflector_disp = 0.0
   csv = true
   [exodus]
     type = Exodus
-    execute_on = 'final'
     enable = false
   []
   [checkpoint]
     type = Checkpoint
-    additional_execute_on = 'FINAL'
+    enable = false
   []
   perf_graph = true
   color = true

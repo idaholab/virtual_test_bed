@@ -10,7 +10,7 @@
       # Too slow
       method = 'opt'
     []
-    [multiapp_griffin_alone]
+    [multiapp_ss_griffin_alone]
       type = RunApp
       input = 'Multiphysics_SS/KRUSTY_Griffin_SN23_NA23_CMFD.i'
       check_input = True
@@ -19,7 +19,7 @@
       # Cross section warning
       allow_warnings = true
     []
-    [multiapp_bison_alone]
+    [multiapp_ss_bison_alone]
       type = RunApp
       input = 'Multiphysics_SS/KRUSTY_BISON_THERMOMECHANICS.i'
       check_input = True

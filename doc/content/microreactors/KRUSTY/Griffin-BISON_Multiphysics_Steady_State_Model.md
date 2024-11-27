@@ -1,4 +1,4 @@
-# Griffin-BISON Multiphysics Model
+# Griffin-BISON Multiphysics Steady State Model
 
 ## KRUSTY Mesh Model
 
