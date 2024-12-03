@@ -40,6 +40,8 @@
     csvdiff = 'oecd_pbmr400_ss1_phtn_flow_path.csv'
     executable_pattern = 'pronghorn*|blue_crab*|fenix*'
     cli_args = "MultiApps/active='' Transfers/active='' Executioner/num_steps=5"
+    # Warning from a global param being set to a material not using it
+    allow_warnings = true
   []
   [fuel_performance_only]
     type = CSVDiff
@@ -71,6 +73,8 @@
     executable_pattern = 'pronghorn*|blue_crab*|fenix*'
     cli_args = "MultiApps/active='' Transfers/active=''"
     prereq = 'fluid_flow_only'
+    # Warning from a global param being set to a material not using it
+    allow_warnings = true
   []
   [transient_fuel_performance_syntax_only]
     type = RunApp
@@ -91,6 +95,8 @@
     min_parallel = 8
     # require the others so the restart files dont get overwritten
     prereq = 'transient_neutronics_only transient_fluid_flow_only transient_fuel_performance_only'
+    # Warning from a global param being set to a material not using it
+    allow_warnings = true
   []
 
   [transient_multiphysics]
@@ -142,6 +148,9 @@
     executable_pattern = 'pronghorn*|blue_crab*|fenix*'
     cli_args = "MultiApps/active='' Transfers/active='' Executioner/num_steps=5"
     prereq = 'fluid_flow_only transient_fluid_flow_syntax_only'
+    # A global params is applied to an object parameter which returns a warning because
+    # it is not being used
+    allow_warnings = true
   []
   [transient_fuel_performance_only]
     type = CSVDiff

@@ -41,6 +41,8 @@
     # Expensive test
     max_time = 500
     method = 'opt'
+    # Missing group cross section for absorption
+    allow_warnings = true
     # To investigate later
     abs_zero = 5e-3
     rel_err = 5e-3
@@ -56,6 +58,8 @@
     executable_pattern = 'blue_crab*'
     min_parallel = 4
     prereq = 'syntax_neutronics'
+    # Missing group cross section for absorption
+    allow_warnings = true
     # To investigate later
     abs_zero = 5e-3
     rel_err = 5e-3
