@@ -13,7 +13,7 @@
     type = FileMeshGenerator
     # when changing restart file, adapt power_scaling postprocessor
     # if not exactly 3e9 -> initial was not completely converged
-    file = '../steady/restart/run_neutronics_restart.e'
+    file = '../steady/restart_multisys/multiphysics_out.e'
     use_for_exodus_restart = true
   []
 []
@@ -147,9 +147,9 @@
   l_max_its = 200
 
   # Fixed point iteration parameters
-  fixed_point_max_its = 3
-  accept_on_max_fixed_point_iteration = true
-  fixed_point_abs_tol = 1e-50
+  # fixed_point_max_its = 3
+  # accept_on_max_fixed_point_iteration = true
+  # fixed_point_abs_tol = 1e-50
 []
 
 ################################################################################
@@ -170,7 +170,7 @@
   [power_scaling]
     type = Receiver
     outputs = none
-    default = 4.1682608293957647e+18
+    default = ${fparse 8361815927168929000}
   []
   [power]
     type = ElementIntegralVariablePostprocessor

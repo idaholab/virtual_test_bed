@@ -75,13 +75,13 @@ beta6 = 0.000184087
     # Depending on the file chosen, the initialization of variables should be
     # adjusted. The following variables can be initalized:
     # - vel_x, vel_y, p from isothermal simulation
-    file = 'restart/run_ns_initial_restart.e'
+    # file = 'restart/run_ns_initial_restart.e'
     # Below are initialization points created from this input file
     # The variable IC should be set from_file_var for temperature and precursors
     # - vel_x, vel_y, p, T_fluid, c_i from cosine heated simulation
     # file = 'restart/run_ns_restart.e'
     # - vel_x, vel_y, p, T_fluid, c_i from coupled multiphysics simulation
-    # file = 'restart/run_ns_coupled_restart.e'
+    file = 'restart/run_ns_coupled_restart.e'
   []
   [hx_top]
     type = ParsedGenerateSideset
@@ -109,9 +109,12 @@ beta6 = 0.000184087
 # EQUATIONS: VARIABLES, KERNELS, BOUNDARY CONDITIONS
 ################################################################################
 
+scalar_systems = 'prec1 prec2 prec3 prec4 prec5 prec6'
+
 [Problem]
   # velocity, pressure restarted, precursors are not
   allow_initial_conditions_with_restart = true
+  nl_sys_names = 'nl0 ${scalar_systems}'
 []
 
 [Physics]
@@ -125,6 +128,7 @@ beta6 = 0.000184087
       # Variables, defined below for the Exodus restart
       velocity_variable = 'vel_x vel_y'
       pressure_variable = 'pressure'
+      solve_for_dynamic_pressure = true
 
       # Material properties
       density = ${rho}
@@ -143,9 +147,12 @@ beta6 = 0.000184087
       # Pressure pin for incompressible flow
       pin_pressure = true
       pinned_pressure_type = average
-      pinned_pressure_value = 1e5
+      # pressure pin for dynamic pressure: 0
+      # pressure pin for total pressure: 1e5
+      pinned_pressure_value = 0
 
       # Numerical scheme
+      time_derivative_contributes_to_RC_coefficients = false
       momentum_advection_interpolation = 'upwind'
       mass_advection_interpolation = 'upwind'
 
@@ -175,10 +182,12 @@ beta6 = 0.000184087
       ambient_convection_blocks = 'hx'
       ambient_convection_alpha = '${fparse 600 * 20e3}' # HX specifications
       ambient_temperature = ${T_HX}
+
+      # Numerical parameters
+      energy_scaling = 100
     []
     [ScalarTransport/salt]
       block = 'fuel pump hx'
-      passive_scalar_advection_interpolation = 'upwind'
 
       # Precursor advection, diffusion and source term
       passive_scalar_names = 'c1 c2 c3 c4 c5 c6'
@@ -187,6 +196,10 @@ beta6 = 0.000184087
       passive_scalar_coupled_source_coeff = '${beta1} ${lambda1_m}; ${beta2} ${lambda2_m};
                                              ${beta3} ${lambda3_m}; ${beta4} ${lambda4_m};
                                              ${beta5} ${lambda5_m}; ${beta6} ${lambda6_m}'
+
+      # Numerical parameters
+      passive_scalar_advection_interpolation = 'upwind'
+      system_names = '${scalar_systems}'
     []
     [Turbulence/salt]
       block = 'fuel pump hx'
@@ -197,7 +210,7 @@ beta6 = 0.000184087
       # Turbulence parameters
       turbulence_handling = 'mixing-length'
       turbulent_prandtl = ${Pr_t}
-      passive_scalar_schmidt_number = '${Sc_t} ${Sc_t} ${Sc_t} ${Sc_t} ${Sc_t} ${Sc_t}'
+      Sc_t = '${Sc_t} ${Sc_t} ${Sc_t} ${Sc_t} ${Sc_t} ${Sc_t}'
       von_karman_const = ${von_karman_const}
       mixing_length_delta = 0.1
       mixing_length_walls = 'shield_wall reflector_wall'
@@ -327,7 +340,7 @@ beta6 = 0.000184087
   [dts]
     type = PiecewiseConstant
     x = '0    100'
-    y = '0.75 2.5'
+    y = '4 5'
   []
 []
 
@@ -336,23 +349,23 @@ beta6 = 0.000184087
 
   # Time stepping parameters
   start_time = 0.0
-  end_time = 200
+  end_time = 20
   # end_time will depend on the restart file chosen
   # though steady state detection can also be used
   # from _initial/no heating : 150 - 200s enough
   # from _ns/_ns_coupled/heated: 10s enough
 
-  [TimeStepper]
-    # This time stepper makes the time step grow exponentially
-    # It can only be used with proper initialization
-    type = IterationAdaptiveDT
-    dt = 1 # chosen to obtain convergence with first coupled iteration
-    growth_factor = 2
-  []
   # [TimeStepper]
-  #   type = FunctionDT
-  #   function = dts
+  #   # This time stepper makes the time step grow exponentially
+  #   # It can only be used with proper initialization
+  #   type = IterationAdaptiveDT
+  #   dt = 1 # chosen to obtain convergence with first coupled iteration
+  #   growth_factor = 2
   # []
+  [TimeStepper]
+    type = FunctionDT
+    function = dts
+  []
   steady_state_detection = true
   steady_state_tolerance = 1e-8
   steady_state_start_time = 10
@@ -362,17 +375,77 @@ beta6 = 0.000184087
 
   # Solver parameters
   solve_type = 'NEWTON'
-  petsc_options_iname = '-pc_type -pc_factor_shift_type -ksp_gmres_restart'
-  petsc_options_value = 'lu NONZERO 50'
   line_search = 'none'
 
-  nl_rel_tol = 1e-9
+  # nonlinear solver parameters
+  nl_rel_tol = 2e-8
   nl_abs_tol = 2e-8
-  nl_max_its = 15
+  nl_abs_div_tol = 1e11
+  nl_max_its = 25
+
+  # linear solver parameters
   l_max_its = 50
 
   automatic_scaling = true
-  # resid_vs_jac_scaling_param = 1
+[]
+
+# Try a direct solve. The precursor advection problem should be linear
+petsc_options_iname_prec = '-pc_type -pc_factor_shift_type'
+petsc_options_value_prec = 'lu NONZERO'
+# petsc_options_iname_prec = '-pc_type -ksp_type'
+# petsc_options_value_prec = 'lu preonly'
+
+[Preconditioning]
+  [flow]
+    type = SMP
+    #  solve_type = NEWTON
+    trust_my_coupling = true
+    full = true
+    nl_sys = "nl0"
+    petsc_options_iname = '-pc_type -pc_factor_shift_type -pc_factor_mat_solver_package'
+    petsc_options_value = 'lu NONZERO superlu_dist'
+  []
+  [scalar1]
+    type = SMP
+    # solve_type = LINEAR
+    nl_sys = "prec1"
+    petsc_options_iname = ${petsc_options_iname_prec}
+    petsc_options_value = ${petsc_options_value_prec}
+  []
+  [scalar2]
+    type = SMP
+    # solve_type = LINEAR
+    nl_sys = "prec2"
+    petsc_options_iname = ${petsc_options_iname_prec}
+    petsc_options_value = ${petsc_options_value_prec}
+  []
+  [scalar3]
+    type = SMP
+    nl_sys = "prec3"
+    petsc_options_iname = ${petsc_options_iname_prec}
+    petsc_options_value = ${petsc_options_value_prec}
+  []
+  [scalar4]
+    type = SMP
+    # solve_type = LINEAR
+    nl_sys = "prec4"
+    petsc_options_iname = ${petsc_options_iname_prec}
+    petsc_options_value = ${petsc_options_value_prec}
+  []
+  [scalar5]
+    type = SMP
+    # solve_type = LINEAR
+    nl_sys = "prec5"
+    petsc_options_iname = ${petsc_options_iname_prec}
+    petsc_options_value = ${petsc_options_value_prec}
+  []
+  [scalar6]
+    type = SMP
+    # solve_type = LINEAR
+    nl_sys = "prec6"
+    petsc_options_iname = ${petsc_options_iname_prec}
+    petsc_options_value = ${petsc_options_value_prec}
+  []
 []
 
 ################################################################################
@@ -387,8 +460,8 @@ beta6 = 0.000184087
     overwrite = true
   []
   # Reduce base output
-  print_linear_converged_reason = false
-  print_linear_residuals = false
+  print_linear_converged_reason = true
+  print_linear_residuals = true
   print_nonlinear_converged_reason = false
 []
 
