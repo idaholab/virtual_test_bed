@@ -7,6 +7,7 @@
 
 max_power_increment = 10
 min_dt = 0.01
+mesh_file = '../gold/MESH/Griffin_mesh.e'
 
 [Mesh]
   [fmg]
@@ -14,8 +15,8 @@ min_dt = 0.01
     # with zero reflector insertion as the initial condition
     # Refer to the mesh setup in the steady state simulation
     type = FileMeshGenerator
-    file := '../gold/MESH/Griffin_mesh.e'
-    # file := 'griffin_mesh.cpr'
+    file = ${mesh_file}
+    # file = 'griffin_mesh.cpr'
   []
   [rot]
     type = TransformGenerator
@@ -191,7 +192,7 @@ min_dt = 0.01
          3082 3092 3102 3112 3122 3132 3142
          4081 4091 4101 4111 4121 4131 4141
          4082 4092 4102 4112 4122 4132 4142'
-    library_file ='Serp_hbrid_reflector_updated.xml'
+    library_file ='../Neutronics/Serp_hbrid_reflector_updated.xml'
     library_name ='krusty_serpent_ANL_endf70_g22'
     isotopes = 'pseudo'
     densities = '1.0'
@@ -274,6 +275,5 @@ min_dt = 0.01
     transport_system = sn
     writing = false
     execute_on = initial
-    folder = '../Multiphysics_SS'
   []
 []

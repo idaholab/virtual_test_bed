@@ -83,4 +83,52 @@
       allow_warnings = true
     []
   []
+  [transient_tests]
+    # First, we generate coarse meshes for testing purpose
+    [mesh_gen_griffin_coarse]
+      type = RunApp
+      input = 'MESH/KRUSTY_mesh_gen_griffin.i'
+      executable_pattern = 'blue_crab*|dire_wolf*'
+      cli_args = "--mesh-only MESH/Griffin_mesh_coarse.e
+                  Mesh/Extrude/num_layers='1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1'"
+    []
+    [mesh_gen_bison_coarse]
+      type = RunApp
+      input = 'MESH/KRUSTY_mesh_gen_bison.i'
+      executable_pattern = 'blue_crab*|dire_wolf*'
+      cli_args = "--mesh-only MESH/BISON_mesh_coarse.e
+                 Mesh/gen/file='Griffin_mesh_coarse.e'"
+      prereq = 'transient_tests/mesh_gen_griffin_coarse'
+    []
+    [multiapp_ss_coarse]
+      type = CSVDiff
+      input = 'Multiphysics_SS/KRUSTY_Griffin_SN23_NA23_CMFD_coarse.i'
+      csvdiff = 'Multiphysics_SS/KRUSTY_Griffin_SN23_NA23_CMFD_coarse_out.csv'
+      executable_pattern = 'blue_crab*|dire_wolf*'
+      min_parallel = 40
+      max_time = 10800
+      heavy = true
+      # Cross section warning
+      allow_warnings = true
+      prereq = 'transient_tests/mesh_gen_bison_coarse'
+    []
+    [multiapp_tr_coarse]
+      type = CSVDiff
+      input = 'Multiphysics_15C_RIT/KRUSTY_Griffin_SN23_NA23_CMFD_TR.i'
+      cli_args = "mesh_file='../MESH/Griffin_mesh_coarse.e'
+                  MultiApps/bison/cli_args='restart_cp_file=../Multiphysics_SS/KRUSTY_Griffin_SN23_NA23_CMFD_coarse_out_bison0_checkpoint_cp/LATEST'
+                  TransportSystems/sn/NPolar=1
+                  TransportSystems/sn/NAzmthl=3
+                  TransportSystems/sn/NA=1
+                  Executioner/end_time=${min_dt}"
+      csvdiff = 'Multiphysics_15C_RIT/KRUSTY_Griffin_SN23_NA23_CMFD_TR_out.csv'
+      executable_pattern = 'blue_crab*|dire_wolf*'
+      min_parallel = 40
+      max_time = 10800
+      heavy = true
+      # Cross section warning
+      allow_warnings = true
+      prereq = 'transient_tests/multiapp_ss_coarse'
+    []
+  []
 []

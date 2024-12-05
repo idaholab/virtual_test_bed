@@ -7,6 +7,8 @@
 
 !include KRUSTY_BISON_PARAMS.i
 
+bison_mesh_file = '../gold/MESH/BISON_mesh.e'
+
 reflector_disp = 0.0
 
 [GlobalParams]
@@ -34,7 +36,7 @@ reflector_disp = 0.0
     # 2. Use the cpr file in the fmg block
     # 3. Uncomment the "parallel_type = distributed" line
     type = FileMeshGenerator
-    file = '../gold/MESH/BISON_mesh.e'
+    file = ${bison_mesh_file}
     # file = 'bison_mesh.cpr'
   []
   parallel_type = distributed
