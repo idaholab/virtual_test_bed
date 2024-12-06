@@ -41,6 +41,12 @@
 [submodule "apps/ci/mstdb"]
 	path = apps/ci/mstdb
 	url = git@code.ornl.gov:neams/mstdb.git
+	ignore = dirty
 [submodule "apps/mastodon"]
 	path = apps/mastodon
 	url = https://github.com/idaholab/mastodon.git
+	ignore = dirty
+[submodule "apps/grizzly"]
+	path = apps/grizzly
+	url = git@github.inl.gov:ncrc/grizzly
+	ignore = dirty
