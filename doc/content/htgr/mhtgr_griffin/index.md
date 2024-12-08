@@ -12,7 +12,7 @@
                        geometry:core
                        simulation_type:neutronics
                        transient:steady_state
-                       V&V:benchmark
+                       V_and_V:verification
                        codes_used:Griffin
                        computing_needs:Workstation
                        fiscal_year:2023

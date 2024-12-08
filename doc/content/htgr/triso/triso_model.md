@@ -8,14 +8,15 @@
      description=Fuel performance studies of 1D, 2D and 3D TRISO particles using BISON
      image=https://mooseframework.inl.gov/virtual_test_bed/media/htgr/bison_sic_stress.png
      pairs=reactor_type:HTGR
-                       geometry:TRISO
-                       simulation_type:fuel_performance
-                       codes_used:BISON
-                       transient:depletion
-                       computing_needs:Workstation
-                       fiscal_year:2022
-                       sponsor:NEAMS
-                       institution:INL
+           geometry:TRISO
+           simulation_type:fuel_performance
+           codes_used:BISON
+           transient:depletion
+           V_and_V:demonstration
+           computing_needs:Workstation
+           fiscal_year:2022
+           sponsor:NEAMS
+           institution:INL
 
 The input file of `triso_1d.i` is a 1D TRISO model with perfectly spherical geometry. The input files of `triso_2d_aspherical.i` and `triso_2d_ipyc_cracking.i` are 2D RZ-symmetric TRISO models with spherical geometry and IPyC cracking, respectively. The input file of `triso_3d` is a one-eighth 3D TRISO model with perfectly spherical geometry. Interested readers are referred to [!citep](bison_triso_model) for more details about TRISO modeling capability in Bison.
 

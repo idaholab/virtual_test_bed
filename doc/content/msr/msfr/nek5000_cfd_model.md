@@ -13,6 +13,7 @@
                        simulation_type:CFD
                        codes_used:Nek5000
                        open_source:true
+                       V_and_V:demonstration
                        computing_needs:HPC
                        fiscal_year:2022
                        sponsor:NEAMS

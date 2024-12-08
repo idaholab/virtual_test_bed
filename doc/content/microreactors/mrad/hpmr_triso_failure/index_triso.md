@@ -1,6 +1,6 @@
 ## HP-MR Based TRISO Failure Model
 
-!tag name=MRAD Micro-Reactor Multiphysics model
+!tag name=MRAD Micro-Reactor Multiphysics TRISO Failure model
      description=A core multiphysics model with steady state and TRISO failures.
      image=https://mooseframework.inl.gov/virtual_test_bed/media/mrad/hpmr_mesh_proc.png
      pairs=reactor_type:microreactor

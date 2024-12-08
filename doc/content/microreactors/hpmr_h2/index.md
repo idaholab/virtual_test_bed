@@ -4,15 +4,16 @@
      description=Heat Pipe Microreactor core multiphysics model with neutronics, thermal physics and hydrogen redistribution
      image=https://mooseframework.inl.gov/virtual_test_bed/media/hpmr_h2/hpmr_h2_geometry.jpeg
      pairs=reactor_type:microreactor
-                       reactor:HPMR_H2
-                       geometry:core
-                       simulation_type:multiphysics
-                       input_features:multiapps;reactor_meshing
-                       codes_used:DireWolf;Griffin;BISON;Sockeye
-                       computing_needs:HPC
-                       fiscal_year:2024
-                       institution:INL
-                       sponsor:INL-LDRD
+           reactor:HPMR_H2
+           geometry:core
+           simulation_type:multiphysics
+           V_and_V:demonstration
+           input_features:multiapps;reactor_meshing
+           codes_used:DireWolf;Griffin;BISON;Sockeye
+           computing_needs:HPC
+           fiscal_year:2024
+           institution:INL
+           sponsor:INL-LDRD
 
 [Reactor Description](hpmr_h2/hpmr_h2_description.md)
 

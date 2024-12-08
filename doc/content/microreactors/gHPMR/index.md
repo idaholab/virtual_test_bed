@@ -1,4 +1,4 @@
-# 2D gHPMR Reactor Model
+# 2D gHPMR Reactor Mesh
 
 *Contact: Olin Calvin, olin.calvin.at.inl.gov
 

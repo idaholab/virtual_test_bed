@@ -12,6 +12,7 @@
                        geometry:plenum
                        simulation_type:CFD
                        transient:steady_state
+                       V_and_V:demonstration
                        codes_used:Nek5000
                        computing_needs:HPC
                        open_source:true

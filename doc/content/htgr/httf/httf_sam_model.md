@@ -11,6 +11,7 @@
                        reactor:HTTF
                        geometry:core
                        codes_used:SAM
+                       V_and_V:demonstration
                        computing_needs:Workstation
                        transient:steady_state
                        fiscal_year:2024

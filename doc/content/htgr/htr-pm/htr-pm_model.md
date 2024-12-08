@@ -4,21 +4,6 @@
 
 *Model link: [HTR-PM SAM Model](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/htr-pm/ss)*
 
-!tag name=SAM HTR-PM Model
-  image=https://mooseframework.inl.gov/virtual_test_bed/media/htrpm_sam/loop-schematics-VTB.png
-  description=This is a SAM HTR-PM reference plant model with steady-state and transient PLOFC simulations
-  pairs=reactor_type:HTGR
-                       reactor:HTR_PM
-                       geometry:core;primary_loop
-                       simulation_type:thermal_hydraulics
-                       transient:steady_state;PLOFC
-                       input_features:checkpoint_restart;multiapps
-                       codes_used:SAM
-                       computing_needs:Workstation
-                       fiscal_year:2024
-                       sponsor:NRC
-                       institution:ANL
-
 This is a SAM [!citep](Hu2021) reference plant model for the 250 MWth HTR-PM reactor. The model consists of three individual models namely the core, primary loop, and reactor cavity cooling system (RCCS). The schematic of the reference plant model is shown in [htr-pm/ss-loop-schematic]. The core is modeled using SAM's multi dimensional flow model in 2-D RZ geometry while the primary loop and RCCS are modeled with SAM's 0-D and 1-D components. The MOOSE MultiApp system [!citep](multiapp_gaston2015) is used to couple the three models.
 
 !media htrpm_sam/loop-schematics-VTB.png
