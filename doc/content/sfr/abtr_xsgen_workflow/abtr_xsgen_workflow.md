@@ -14,13 +14,12 @@
                        codes_used:Griffin
                        transient:steady_state
                        V_and_V:demonstration
-                       features:data_driven_mesh;reactor_meshing
+                       input_features:data_driven_mesh;reactor_meshing;cross_section_generation
                        computing_needs:HPC
                        cross_sections:MCC3
                        fiscal_year:2024
                        institution:ANL
                        sponsor:NEAMS
-                       input_features:cross_section_generation
 
 ## Introduction
 
