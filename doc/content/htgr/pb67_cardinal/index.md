@@ -8,16 +8,17 @@
      description=High fidelity simulations of conjugate heat transfer in a pebble bed using MOOSE and NekRS for heat conduction and CFD respectively.
      image=https://mooseframework.inl.gov/virtual_test_bed/media/pb67_cardinal/pb67_3D_renderings.png
      pairs=reactor_type:HTGR
-                       geometry:pebble_bed
-                       simulation_type:CFD
-                       codes_used:Cardinal;NekRS;MOOSE_HeatTransfer
-                       input_features:multiapps
-                       computing_needs:Workstation
-                       gpu_enabled:true
-                       open_source:true
-                       fiscal_year:2023
-                       institution:PSU;ANL
-                       sponsor:NEAMS
+           geometry:pebble_bed
+           simulation_type:CFD
+           codes_used:Cardinal;NekRS;MOOSE_HeatTransfer
+           input_features:multiapps
+           V_and_V:demonstration
+           computing_needs:Workstation
+           gpu_enabled:true
+           open_source:true
+           fiscal_year:2023
+           institution:PSU;ANL
+           sponsor:NEAMS
 
 In this tutorial we are going to set up and simulate a simple [!ac](CHT) case using a helium (Pr=0.71) cooled 67-pebble bed.
 This tutorial was developed from an example case provided with NekRS and couples to MOOSE's [!ac](CHT) module using Cardinal as a wrapper.

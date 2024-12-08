@@ -12,6 +12,7 @@
                        simulation_type:neutronics
                        codes_used:Griffin;MCC3
                        computing_needs:HPC
+                       V_and_V:verification
                        input_features:reactor_meshing;cross_section_generation
                        cross_sections:MC2
                        fiscal_year:2023

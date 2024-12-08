@@ -14,6 +14,7 @@
                        transient:load_follow
                        input_features:checkpoint_restart
                        codes_used:SAM
+                       V_and_V:verification
                        computing_needs:Workstation
                        fiscal_year:2021
                        sponsor:NEAMS

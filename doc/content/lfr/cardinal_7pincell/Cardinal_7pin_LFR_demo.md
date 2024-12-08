@@ -6,7 +6,7 @@
 
 *Model link: [7-Pin Cardinal Model](https://github.com/idaholab/virtual_test_bed/tree/main/lfr/7pin_cardinal_demo)*
 
-!tag name=High Fidelity Neutronics Model for Lead-cooled Fast Reactor
+!tag name=Cardinal Model of a 7-Pin Lead-cooled Fast Reactor Assembly
      description=High fidelity model of conjugate heat transfer in a reduced 7-pin lead fast reactor assembly
      image=https://mooseframework.inl.gov/virtual_test_bed/media/lfr/cardinal_7pin/mesh.png
      pairs=reactor_type:LFR
@@ -15,6 +15,7 @@
                        codes_used:Griffin;MCC3;NekRS
                        computing_needs:HPC
                        input_features:reactor_meshing;multiapps
+                       V_and_V:demonstration
                        cross_sections:MC2
                        open_source:partial
                        fiscal_year:2023

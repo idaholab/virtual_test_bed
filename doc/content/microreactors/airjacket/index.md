@@ -8,15 +8,16 @@
      description=CFD study of an air-jacket for passive cooling of a micro-reactor
      image=https://mooseframework.inl.gov/virtual_test_bed/media/airjacket/overview.png
      pairs=reactor_type:microreactor
-                       reactor:GCMR
-                       geometry:air_jacket
-                       simulation_type:CFD
-                       codes_used:Nek5000
-                       open_source:true
-                       computing_needs:HPC
-                       fiscal_year:2023
-                       institution:ANL
-                       sponsor:NRIC
+           reactor:GCMR
+           geometry:air_jacket
+           simulation_type:CFD
+           V_and_V:demonstration
+           codes_used:Nek5000
+           open_source:true
+           computing_needs:HPC
+           fiscal_year:2023
+           institution:ANL
+           sponsor:NRIC
 
 ## High Level Summary of Model
 

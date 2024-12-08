@@ -4,16 +4,16 @@
      description=In this tutorial we build a pebble bed HTGR simulation step by step
      image=https://mooseframework.inl.gov/virtual_test_bed/media/generic-pbr-tutorial/MeshP8.png
      pairs=reactor_type:HTGR
-                       reactor:generic_PBR
-                       tutorials:PBR
-                       geometry:core
-                       simulation_type:thermal_hydraulics
-                       transient:steady_state
-                       codes_used:Pronghorn
-                       computing_needs:Workstation
-                       fiscal_year:2024
-                       sponsor:ART;NRIC
-                       institution:INL
+           reactor:generic_PBR
+           tutorials:PBR
+           geometry:core
+           simulation_type:thermal_hydraulics
+           transient:steady_state
+           codes_used:Pronghorn
+           computing_needs:Workstation
+           fiscal_year:2024
+           sponsor:ART;NRIC
+           institution:INL
 
 ## Setting up your environment
 

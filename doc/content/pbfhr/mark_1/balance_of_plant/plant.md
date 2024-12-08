@@ -10,6 +10,7 @@
      pairs=reactor_type:PB-FHR
                        reactor:Mk1-FHR
                        simulation_type:balance_of_plant
+                       V_and_V:demonstration
                        codes_used:BlueCrab;Griffin;Pronghorn
                        computing_needs:Workstation
                        input_features:multiapps;mixed_restart

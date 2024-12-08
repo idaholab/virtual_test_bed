@@ -4,16 +4,17 @@
      description=Multiphysics model of the Euratom EVOL MSFR using Griffin, Pronghorn and SAM for core neutronics, fluid dynamics and the balance of plant thermal hydraulics respectively
      image=https://mooseframework.inl.gov/virtual_test_bed/media/msr/msfr/plant/MSFR_coupling_domain_overlap.png
      pairs=reactor_type:MSR
-                       reactor:MSFR
-                       geometry:primary_loop
-                       simulation_type:multiphysics
-                       codes_used:BlueCrab;Griffin;Pronghorn;SAM
-                       input_features:multiapps
-                       transient:steady_state
-                       computing_needs:HPC
-                       fiscal_year:2023
-                       institution:INL
-                       sponsor:NEAMS;NRIC
+           reactor:MSFR
+           geometry:primary_loop
+           simulation_type:multiphysics
+           V_and_V:demonstration
+           codes_used:BlueCrab;Griffin;Pronghorn;SAM
+           input_features:multiapps
+           transient:steady_state
+           computing_needs:HPC
+           fiscal_year:2023
+           institution:INL
+           sponsor:NEAMS;NRIC
 
 [Description of the reactor](msfr/reactor_description.md)
 

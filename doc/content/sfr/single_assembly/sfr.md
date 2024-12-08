@@ -12,6 +12,7 @@
                        simulation_type:multiphysics
                        input_features:multiapps
                        transient:steady_state
+                       V_and_V:demonstration
                        codes_used:BlueCrab;Griffin;BISON;SAM
                        computing_needs:Workstation
                        fiscal_year:2021
