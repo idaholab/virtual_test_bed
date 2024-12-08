@@ -8,14 +8,15 @@ This model was adopted from the list of examples on the [MASTODON](https://moose
      description=Seismic Analysis of a generic Molten Salt Reactor plant
      image=https://mooseframework.inl.gov/virtual_test_bed/media/seismic_analysis/building1.png
      pairs=reactor_type:MSR
-                       reactor:generic_MSR
-                       geometry:reactor_building
-                       codes_used:MASTODON
-                       simulation_type:seismic_analysis
-                       computing_needs:HPC
-                       fiscal_year:2021
-                       sponsor:DOE_OTT
-                       institution:INL
+           reactor:generic_MSR
+           geometry:reactor_building
+           v&v:demonstration
+           codes_used:MASTODON
+           simulation_type:seismic_analysis
+           computing_needs:HPC
+           fiscal_year:2021
+           sponsor:DOE_OTT
+           institution:INL
 
 [Seismic Analysis Model - Part 1: Foundation Basemat Analysis](npp_building/npp_building_pt1.md)
 

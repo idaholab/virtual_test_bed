@@ -14,6 +14,7 @@
                        codes_used:SAM
                        transient:steady_state;ULOF
                        input_features:checkpoint_restart
+                       v&v:demonstration
                        computing_needs:Workstation
                        fiscal_year:2021
                        institution:ANL
@@ -195,7 +196,7 @@ The Table below lists all the reactor components considered
 | Secondary Loop | HX2 Secondary Pipe | IHX2:secondary_pipe | Pipe on the secondary side of HX2 |
 
 
-As for the counterflow, primary-to-intermediate shell-and-tube heat exchanger, both sides are modeled with 1-D channel components.
+As for the counter-flow, primary-to-intermediate shell-and-tube heat exchanger, both sides are modeled with 1-D channel components.
 The heat is exchanged through the 1-D wall coupling the shell and tube sides.
 A similar model is used for the secondary heat exchanger, except that pressurized Helium is used in the secondary side instead of salt.
 

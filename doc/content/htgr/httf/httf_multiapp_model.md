@@ -8,16 +8,17 @@
      description=Multiphysics simulation of the HTTF core using a 3D homogenized approach
      image=https://mooseframework.inl.gov/virtual_test_bed/media/httf/httf_3D.png
      pairs=reactor_type:HTGR
-                       reactor:HTTF
-                       geometry:core
-                       simulation_type:thermal_hydraulics
-                       codes_used:RELAP-7;MOOSE_HeatTransfer
-                       input_features:multiapps;control_logic
-                       computing_needs:HPC
-                       open_source:partial
-                       fiscal_year:2023
-                       sponsor:NEAMS
-                       institution:INL
+           reactor:HTTF
+           geometry:core
+           simulation_type:thermal_hydraulics
+           v&v:validation
+           codes_used:RELAP-7;MOOSE_HeatTransfer
+           input_features:multiapps;control_logic
+           computing_needs:HPC
+           open_source:partial
+           fiscal_year:2023
+           sponsor:NEAMS
+           institution:INL
 
 The MOOSE MultiApp system was used to model the PG-26 transient utilizing 3-D heat conduction within the core and 1-D
 fluid flow for each coolant and bypass channel. Due to radial variations in the HTTF core, the 3-D model allowed for high fidelity

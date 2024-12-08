@@ -8,16 +8,17 @@
      description=Steady state multiphysics simulation of the core of the Kilopower Reactor Using Stirling TechnologY using NEAMS tools
      image=https://mooseframework.inl.gov/virtual_test_bed/media/KRUSTY/krusty_quarter_mesh.png
      pairs=reactor_type:microreactor
-                       reactor:KRUSTY
-                       geometry:core
-                       simulation_type:neutronics;multiphysics
-                       input_features:reactor_meshing;cross_section_generation;multiapps
-                       transient:steady_state
-                       codes_used:Griffin;BISON;BlueCrab
-                       computing_needs:Workstation
-                       fiscal_year:2024
-                       sponsor:NEAMS
-                       institution:ANL
+           reactor:KRUSTY
+           geometry:core
+           simulation_type:neutronics;multiphysics
+           input_features:reactor_meshing;cross_section_generation;multiapps
+           transient:steady_state
+           v&v:demonstration
+           codes_used:Griffin;BISON;BlueCrab
+           computing_needs:Workstation
+           fiscal_year:2024
+           sponsor:NEAMS
+           institution:ANL
 
 [Model Description](KRUSTY/Model_Description.md)
 

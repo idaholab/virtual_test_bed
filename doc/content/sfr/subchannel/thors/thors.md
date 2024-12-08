@@ -11,6 +11,7 @@
                        geometry:assembly
                        simulation_type:thermal_hydraulics
                        transient:steady_state
+                       v&v:validation
                        codes_used:Pronghorn_subchannel
                        computing_needs:Workstation
                        fiscal_year:2024

@@ -8,14 +8,15 @@
      description=This model of the HTTR core solves neutronics, heat conduction and thermal-hydraulics to perform a null-transient simulation, preliminary to transient analysis
      image=https://mooseframework.inl.gov/virtual_test_bed/media/htgr/httr/CoreLayout.png
      pairs=reactor_type:HTGR
-                       reactor:HTTR
-                       geometry:core
-                       simulation_type:multiphysics
-                       input_features:multiapps
-                       transient:steady_state;null
-                       codes_used:Sabertooth;Griffin;MOOSE_HeatTransfer;RELAP-7
-                       computing_needs:Workstation
-                       fiscal_year:2023
+           reactor:HTTR
+           geometry:core
+           v&v:demonstration
+           simulation_type:multiphysics
+           input_features:multiapps
+           transient:steady_state;null
+           codes_used:Sabertooth;Griffin;MOOSE_HeatTransfer;RELAP-7
+           computing_needs:Workstation
+           fiscal_year:2023
 
 [HTTR Reactor Description](httr/httr_reactor_description.md)
 

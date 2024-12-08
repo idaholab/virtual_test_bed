@@ -12,6 +12,7 @@
                        geometry:primary_loop
                        simulation_type:balance_of_plant
                        input_features:checkpoint_restart
+                       v&v:demonstration
                        codes_used:SAM
                        computing_needs:Workstation
                        fiscal_year:2022

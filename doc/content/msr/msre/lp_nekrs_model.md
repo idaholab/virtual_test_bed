@@ -12,6 +12,7 @@
                        geometry:plenum
                        codes_used:NekRS
                        computing_needs:HPC
+                       v&v:demonstration
                        fiscal_year:2023
                        sponsor:NEAMS
                        institution:ANL

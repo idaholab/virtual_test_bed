@@ -8,16 +8,17 @@
      description=Model of an assembly with thermal coupling between the assembly and heat pipes
      image=https://mooseframework.inl.gov/virtual_test_bed/media/hpmr_assembly/core.jpg
      pairs=reactor_type:microreactor
-                       reactor:HPMR
-                       geometry:assembly
-                       simulation_type:multiphysics
-                       input_features:multiapps;reactor_meshing
-                       transient:steady_state
-                       codes_used:DireWolf;BISON;Sockeye
-                       computing_needs:Workstation
-                       fiscal_year:2024
-                       sponsor:NEAMS
-                       institution:INL
+           reactor:HPMR
+           geometry:assembly
+           simulation_type:multiphysics
+           input_features:multiapps;reactor_meshing
+           transient:steady_state
+           v&v:demonstration
+           codes_used:DireWolf;BISON;Sockeye
+           computing_needs:Workstation
+           fiscal_year:2024
+           sponsor:NEAMS
+           institution:INL
 
 ## Problem Description
 

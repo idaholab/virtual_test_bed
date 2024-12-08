@@ -7,6 +7,7 @@
                        reactor:PBMR-400
                        geometry:core
                        simulation_type:multiphysics
+                       v&v:verification
                        input_features:multiapps;mixed_restart
                        transient:steady_state;PLOFC
                        codes_used:BlueCrab;Griffin;Pronghorn

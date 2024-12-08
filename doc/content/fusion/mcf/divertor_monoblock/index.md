@@ -12,6 +12,7 @@
                        geometry:divertor
                        simulation_type:tritium_migration
                        transient:pulse
+                       v&v:demonstration
                        codes_used:TMAP8
                        computing_needs:Workstation
                        fiscal_year:2024
