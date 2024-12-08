@@ -14,7 +14,7 @@
                        codes_used:SAM
                        transient:steady_state;ULOF
                        input_features:checkpoint_restart
-                       v&v:demonstration
+                       V_and_V:demonstration
                        computing_needs:Workstation
                        fiscal_year:2021
                        institution:ANL

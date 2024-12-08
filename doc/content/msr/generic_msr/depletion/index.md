@@ -7,7 +7,7 @@
            reactor:generic_MSR
            geometry:mini-core
            simulation_type:depletion
-           v&v:verification
+           V_and_V:verification
            codes_used:Griffin
            computing_needs:Workstation
            fiscal_year:2023

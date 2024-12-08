@@ -12,7 +12,7 @@
            geometry:core
            simulation_type:multiphysics
            transient:steady_state
-           v&v:verification
+           V_and_V:verification
            codes_used:BlueCrab;Griffin;BISON;SAM
            computing_needs:Workstation
            input_features:multiapps

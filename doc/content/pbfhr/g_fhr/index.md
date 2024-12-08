@@ -8,7 +8,7 @@
            geometry:core
            simulation_type:multiphysics
            transient:steady_state
-           v&v:demonstration
+           V_and_V:demonstration
            input_features:multiapps;physics_syntax
            codes_used:BlueCrab;Griffin;Pronghorn
            computing_needs:Workstation

@@ -13,7 +13,7 @@
            simulation_type:multiphysics
            input_features:multiapps;reactor_meshing
            transient:steady_state
-           v&v:demonstration
+           V_and_V:demonstration
            codes_used:DireWolf;BISON;Sockeye
            computing_needs:Workstation
            fiscal_year:2024

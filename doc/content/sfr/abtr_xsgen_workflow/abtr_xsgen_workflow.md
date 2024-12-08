@@ -13,7 +13,7 @@
                        simulation_type:neutronics
                        codes_used:Griffin
                        transient:steady_state
-                       v&v:demonstration
+                       V_and_V:demonstration
                        features:data_driven_mesh;reactor_meshing
                        computing_needs:HPC
                        cross_sections:MCC3

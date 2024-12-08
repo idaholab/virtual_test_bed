@@ -10,7 +10,7 @@
      pairs=reactor_type:HTGR
            reactor:HTTR
            geometry:core
-           v&v:demonstration
+           V_and_V:demonstration
            simulation_type:multiphysics
            input_features:multiapps
            transient:steady_state;null

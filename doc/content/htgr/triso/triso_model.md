@@ -12,7 +12,7 @@
            simulation_type:fuel_performance
            codes_used:BISON
            transient:depletion
-           v&v:demonstration
+           V_and_V:demonstration
            computing_needs:Workstation
            fiscal_year:2022
            sponsor:NEAMS

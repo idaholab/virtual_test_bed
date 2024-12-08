@@ -11,7 +11,7 @@
            reactor:GCMR
            geometry:air_jacket
            simulation_type:CFD
-           v&v:demonstration
+           V_and_V:demonstration
            codes_used:Nek5000
            open_source:true
            computing_needs:HPC

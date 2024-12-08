@@ -9,7 +9,7 @@
            input_features:multiapps
            simulation_type:multiphysics
            transient:steady_state
-           v&v:demonstration
+           V_and_V:demonstration
            codes_used:Griffin;BISON;Serpent
            computing_needs:Workstation
            fiscal_year:2023

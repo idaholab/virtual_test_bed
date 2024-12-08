@@ -11,7 +11,7 @@
            reactor:HTTF
            geometry:core
            simulation_type:thermal_hydraulics
-           v&v:validation
+           V_and_V:validation
            codes_used:RELAP-7;MOOSE_HeatTransfer
            input_features:multiapps;control_logic
            computing_needs:HPC

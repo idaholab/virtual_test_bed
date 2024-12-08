@@ -11,7 +11,7 @@
            reactor:generic_prismatic_HTGR
            geometry:assembly
            simulation_type:multiphysics
-           v&v:demonstration
+           V_and_V:demonstration
            codes_used:Cardinal;OpenMC;MOOSE_HeatTransfer;MOOSE_ThermalHydraulics
            open_source:true
            transient:steady_state

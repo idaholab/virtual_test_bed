@@ -15,7 +15,7 @@
                        codes_used:Griffin;MCC3;NekRS
                        computing_needs:HPC
                        input_features:reactor_meshing;multiapps
-                       v&v:demonstration
+                       V_and_V:demonstration
                        cross_sections:MC2
                        open_source:partial
                        fiscal_year:2023

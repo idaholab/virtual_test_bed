@@ -9,7 +9,7 @@
                        simulation_type:thermal_hydraulics
                        transient:steady_state;PLOFC
                        input_features:checkpoint_restart;multiapps
-                       v&v:verification
+                       V_and_V:verification
                        codes_used:SAM
                        computing_needs:Workstation
                        fiscal_year:2024

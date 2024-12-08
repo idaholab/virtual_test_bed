@@ -10,7 +10,7 @@ This model was adopted from the list of examples on the [MASTODON](https://moose
      pairs=reactor_type:MSR
            reactor:generic_MSR
            geometry:reactor_building
-           v&v:demonstration
+           V_and_V:demonstration
            codes_used:MASTODON
            simulation_type:seismic_analysis
            computing_needs:HPC

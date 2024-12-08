@@ -7,7 +7,7 @@
            reactor:HPMR
            geometry:core
            simulation_type:multiphysics
-           v&v:demonstration
+           V_and_V:demonstration
            input_features:multiapps;reactor_meshing;mixed_restart
            transient:steady_state;overpower;load_follow;ULOC
            codes_used:BlueCrab;Griffin;BISON;Sockeye

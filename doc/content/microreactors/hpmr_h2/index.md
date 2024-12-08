@@ -7,7 +7,7 @@
            reactor:HPMR_H2
            geometry:core
            simulation_type:multiphysics
-           v&v:demonstration
+           V_and_V:demonstration
            input_features:multiapps;reactor_meshing
            codes_used:DireWolf;Griffin;BISON;Sockeye
            computing_needs:HPC

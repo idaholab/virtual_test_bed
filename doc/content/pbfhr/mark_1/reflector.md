@@ -11,7 +11,7 @@
                        geometry:reflector
                        simulation_type:component_analysis;CFD
                        codes_used:Cardinal;NekRS;MOOSE_HeatTransfer
-                       v&v:demonstration
+                       V_and_V:demonstration
                        open_source:true
                        input_features:multiapps
                        computing_needs:HPC

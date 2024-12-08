@@ -13,7 +13,7 @@
                        simulation_type:multiphysics
                        input_features:multiapps
                        transient:steady_state
-                       v&v:demonstration
+                       V_and_V:demonstration
                        codes_used:BlueCrab;Griffin;Pronghorn
                        computing_needs:Workstation
                        fiscal_year:2020

@@ -12,7 +12,7 @@
            simulation_type:CFD
            codes_used:Cardinal;NekRS;MOOSE_HeatTransfer
            input_features:multiapps
-           v&v:demonstration
+           V_and_V:demonstration
            computing_needs:Workstation
            gpu_enabled:true
            open_source:true

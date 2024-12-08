@@ -13,7 +13,7 @@
         geometry:fuel_pin
         simulation_type:thermo_mechanics
         transient:steady_state
-        v&v:validation
+        V_and_V:validation
         codes_used:BISON
         computing_needs:Workstation
         fiscal_year:2024

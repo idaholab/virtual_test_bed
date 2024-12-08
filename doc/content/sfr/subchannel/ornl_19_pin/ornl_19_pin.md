@@ -10,7 +10,7 @@
      pairs=reactor_type:SFR
                        geometry:assembly
                        simulation_type:thermal_hydraulics
-                       v&v:validation
+                       V_and_V:validation
                        codes_used:Pronghorn_subchannel
                        computing_needs:Workstation
                        transient:steady_state

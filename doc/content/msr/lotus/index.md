@@ -9,7 +9,7 @@
            simulation_type:multiphysics
            input_features:multiapps
            transient:steady_state
-           v&v:demonstration
+           V_and_V:demonstration
            codes_used:BlueCrab;Griffin;Pronghorn;MOOSE_NavierStokes
            open_source:partial
            computing_needs:HPC

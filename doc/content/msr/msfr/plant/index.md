@@ -7,7 +7,7 @@
            reactor:MSFR
            geometry:primary_loop
            simulation_type:multiphysics
-           v&v:demonstration
+           V_and_V:demonstration
            codes_used:BlueCrab;Griffin;Pronghorn;SAM
            input_features:multiapps
            transient:steady_state

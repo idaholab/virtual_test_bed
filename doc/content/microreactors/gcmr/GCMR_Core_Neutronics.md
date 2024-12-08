@@ -11,7 +11,7 @@
             reactor:GCMR
             geometry:core
             simulation_type:neutronics
-            v&v:verification
+            V_and_V:verification
             codes_used:Griffin
             transient:steady_state
             computing_needs:HPC

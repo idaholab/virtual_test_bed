@@ -13,7 +13,7 @@
                        transient:steady_state;PLOF
                        input_features:checkpoint_restart
                        codes_used:SAM
-                       v&v:demonstration
+                       V_and_V:demonstration
                        computing_needs:Workstation
                        fiscal_year:2021
                        sponsor:NEAMS

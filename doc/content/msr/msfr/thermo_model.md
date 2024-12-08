@@ -13,7 +13,7 @@
                        simulation_type:multiphysics
                        input_features:multiapps
                        codes_used:BlueCrab
-                       v&v:demonstration
+                       V_and_V:demonstration
                        computing_needs:Workstation
                        fiscal_year:2023
 

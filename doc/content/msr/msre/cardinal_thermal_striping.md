@@ -14,7 +14,7 @@
                        computing_needs:HPC
                        gpu_enabled:true
                        input_features:multiapps
-                       v&v:demonstration
+                       V_and_V:demonstration
                        simulation_type:CFD;multiphysics
                        fiscal_year:2024
                        sponsor:NEAMS

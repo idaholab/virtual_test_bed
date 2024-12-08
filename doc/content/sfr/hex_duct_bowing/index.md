@@ -6,7 +6,7 @@
     pairs=reactor_type:SFR
           geometry:assembly_duct
           simulation_type:component_analysis;thermo_mechanics
-          v&v:verification
+          V_and_V:verification
           codes_used:MOOSE_Solid_Mechanics
           transient:steady_state
           computing_needs:Workstation
