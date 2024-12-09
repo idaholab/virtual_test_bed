@@ -40,7 +40,7 @@ total_power = 280.0e+6 # Total reactor Power (W)
 # Initial values  --------------------------------------------
 initial_temperature = 873.15 # (K)
 Rho = 1973.8 # kg/m^3 900.0 K
-# Rho_ref = 1973.8 # kg/m^3
+Rho_ref = 1973.8 # kg/m^3
 
 # ==============================================================================
 # GLOBAL PARAMETERS
@@ -279,11 +279,6 @@ Rho = 1973.8 # kg/m^3 900.0 K
   moderator_temperature_grid_name = 'Tmod'
   additional_grid_name_variable_mapping = 'Rho Rho'
 
-  # coolant settings
-  # coolant_composition_name = coolant
-  # coolant_density_variable = 'Rho'
-  # coolant_density_ref = ${Rho_ref}
-
   # transmutation data
   dataset = ISOXML
   isoxml_data_file = '../data/DRAGON5_DT.xml'
@@ -320,6 +315,12 @@ Rho = 1973.8 # kg/m^3 900.0 K
     pebble_flow_rate_distribution = ${streamline_flow_fraction}
     pebble_diameter = '${fparse pebble_radius * 2.0}'
     burnup_limit = '${burnup_limit}'
+
+
+    # coolant settings
+    coolant_composition_name = coolant
+    coolant_density_variable = 'Rho'
+    coolant_density_ref = ${Rho_ref}
 
     # Solver parameters
     sweep_tol = 1e-8
