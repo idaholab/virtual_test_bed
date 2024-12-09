@@ -366,6 +366,7 @@ Rho_ref = 1973.8 # kg/m^3
                          SI30 2.39580131E-05
                          pseudo_G 7.41205513E-02'
     density_type = atomic
+    isotope_molar_mass = 'pseudo_G 1'
   []
 []
 
@@ -521,10 +522,6 @@ Rho_ref = 1973.8 # kg/m^3
 [Debug]
   show_var_residual_norms = false
   show_rodded_materials_average_segment_in = rod_position
-[]
-
-[DefaultElementQuality]
-  aspect_ratio_upper_bound = 1e6
 []
 
 [Outputs]
