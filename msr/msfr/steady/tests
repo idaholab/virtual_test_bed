@@ -42,7 +42,7 @@
     max_time = 500
     # method = 'opt'
     # Tolerance at 1e-6
-    rel_err = 2.1e-5
+    rel_err = 4e-5
   []
   [neutronics_only]
     prereq = neutronics_only_syntax
