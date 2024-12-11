@@ -66,7 +66,7 @@ beta6 = 0.000184087
   [restart]
     type = FileMeshGenerator
     use_for_exodus_restart = true
-    file = '../steady/restart_multisys/multiphysics_out_ns0_restart.e'
+    file = '../steady/restart/run_neutronics_out_ns0_restart.e'
   []
   [add_pump_in]
     type = ParsedGenerateSideset

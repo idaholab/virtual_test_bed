@@ -13,8 +13,7 @@
     type = FileMeshGenerator
     # when changing restart file, adapt power_scaling postprocessor
     # if not exactly 3e9 -> initial was not completely converged
-    # file = '../steady/restart_multisys/multiphysics_out.e'
-    file = '../steady/run_neutronics_restart.e'
+    file = '../steady/restart/run_neutronics_restart.e'
     use_for_exodus_restart = true
   []
 []
