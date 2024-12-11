@@ -39,5 +39,7 @@
     cli_args = '--app BisonApp'
     executable_pattern = 'blue_crab*'
     rel_err = '1e-6'
+    # Calculation eventually gets out of a range of a correlation
+    allow_warnings = true
   []
 []

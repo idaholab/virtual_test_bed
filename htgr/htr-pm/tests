@@ -5,6 +5,8 @@
     check_input = True
     executable_pattern = 'sam*|blue_crab*'
     cli_args = '--app SamApp --allow-unused'
+    # BlueCrab errors on warnings on heated diameter pipe
+    allow_warnings = true
   []
   [htr_pm_sam_loop_syntax]
     type = RunApp
@@ -12,6 +14,8 @@
     check_input = True
     executable_pattern = 'sam*|blue_crab*'
     cli_args = '--app SamApp --allow-unused'
+    # BlueCrab errors on warnings on heated diameter pipe
+    allow_warnings = true
   []
   [htr_pm_sam_rccs_syntax]
     type = RunApp

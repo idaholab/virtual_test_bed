@@ -36,6 +36,8 @@
     executable_pattern = 'blue_crab*'
     cli_args = "MultiApps/active='' Transfers/active=''"
     #prereq = 'generate_mesh'
+    # Griffin overrode the material property output and is outputting warnings in BlueCrab
+    allow_warnings = true
   []
   [bison_alone]
     type = 'CSVDiff'
@@ -45,6 +47,9 @@
     cli_args = "MultiApps/active='' Transfers/active=''"
     prereq = 'bison_alone_syntax'
     min_parallel = 4
+    # Griffin overrode the material property output and is outputting warnings in BlueCrab
+    allow_warnings = true
+    max_time = 600.0 # Maximum time in seconds the test is allowed to run.
   []
 
   # SAM tests
@@ -90,6 +95,8 @@
     prereq = 'griffin_alone bison_alone sam_full_alone sam_alone'
     skip = 'Needs HPC #176'
     allow_unused = true
+    # Griffin overrode the material property output and is outputting warnings in BlueCrab
+    allow_warnings = true
   []
 
   # Flow blockage transient
@@ -138,6 +145,8 @@
                 Executioner/num_steps=4"
     prereq = 'bison_alone'
     min_parallel = 4
+    # Griffin overrode the material property output and is outputting warnings in BlueCrab
+    allow_warnings = true
   []
   [bison_alone_transient]
     type = 'CSVDiff'
@@ -151,6 +160,8 @@
                 Executioner/num_steps=4"
     prereq = 'bison_alone_transient_syntax'
     min_parallel = 4
+    # Griffin overrode the material property output and is outputting warnings in BlueCrab
+    allow_warnings = true
   []
 
   # SAM
@@ -203,6 +214,8 @@
               sam_full_alone_transient sam_alone_transient'
     skip = 'Needs HPC #176'
     allow_unused = true
+    # Griffin overrode the material property output and is outputting warnings in BlueCrab
+    allow_warnings = true
   []
 []
 

@@ -187,6 +187,8 @@ outlet_pressure_val = 2e5
 
 [Problem]
   kernel_coverage_check = false
+  # on the way to steady state, invalid states to get through
+  allow_invalid_solution = true
 []
 
 [Modules]

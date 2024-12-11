@@ -5,6 +5,9 @@
     input = 'griffin.i'
     check_input = True
     executable_pattern = 'blue_crab*'
+    # A global params is applied to an object parameter which returns a warning because
+    # it is not being used
+    allow_warnings = true
   []
   [bison_mecha_only_syntax]
     type = RunApp
@@ -54,6 +57,9 @@
 
     # See issue #265
     rel_err = 1e-3
+    # A global params is applied to an object parameter which returns a warning because
+    # it is not being used
+    allow_warnings = true
   []
   [bison_mecha_only]
     type = CSVDiff

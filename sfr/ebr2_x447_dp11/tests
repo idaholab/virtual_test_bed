@@ -4,6 +4,8 @@
     input = 'x447_dp11.i'
     check_input = True
     executable_pattern = 'bison*|blue_crab*'
+    # Missing wire wrap information
+    allow_warnings = true
   []
   [x447_dp11_short_run]
     type = CSVDiff
@@ -12,5 +14,8 @@
     csvdiff = 'x447_DP11_csv_general.csv'
     min_parallel = 8
     executable_pattern = 'bison*|blue_crab*'
+    prereq = 'x447_dp11_syntax'
+    # Missing wire wrap information
+    allow_warnings = true
   []
 []
