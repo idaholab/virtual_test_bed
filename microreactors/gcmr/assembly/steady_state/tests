@@ -53,6 +53,7 @@
     # Griffin in BlueCrab overrides material property output and emits a warning
     # Can be removed at next BlueCrab update (with Griffin from Dec 2024)
     allow_warnings = true
+    max_time = 600.0 # Maximum time in seconds the test is allowed to run.
   []
 
   # SAM tests

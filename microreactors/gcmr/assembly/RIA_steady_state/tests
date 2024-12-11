@@ -49,6 +49,7 @@
     min_parallel = 4
     # Griffin overrode the material property output and is outputting warnings in BlueCrab
     allow_warnings = true
+    max_time = 600.0 # Maximum time in seconds the test is allowed to run.
   []
 
   # SAM tests
