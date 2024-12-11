@@ -392,14 +392,10 @@ scalar_systems = 'prec1 prec2 prec3 prec4 prec5 prec6'
 # Try a direct solve. The precursor advection problem should be linear
 petsc_options_iname_prec = '-pc_type -pc_factor_shift_type'
 petsc_options_value_prec = 'lu NONZERO'
-# petsc_options_iname_prec = '-pc_type -ksp_type'
-# petsc_options_value_prec = 'lu preonly'
 
 [Preconditioning]
   [flow]
     type = SMP
-    #  solve_type = NEWTON
-    trust_my_coupling = true
     full = true
     nl_sys = "nl0"
     petsc_options_iname = '-pc_type -pc_factor_shift_type -pc_factor_mat_solver_package'
@@ -407,14 +403,12 @@ petsc_options_value_prec = 'lu NONZERO'
   []
   [scalar1]
     type = SMP
-    # solve_type = LINEAR
     nl_sys = "prec1"
     petsc_options_iname = ${petsc_options_iname_prec}
     petsc_options_value = ${petsc_options_value_prec}
   []
   [scalar2]
     type = SMP
-    # solve_type = LINEAR
     nl_sys = "prec2"
     petsc_options_iname = ${petsc_options_iname_prec}
     petsc_options_value = ${petsc_options_value_prec}
@@ -427,21 +421,18 @@ petsc_options_value_prec = 'lu NONZERO'
   []
   [scalar4]
     type = SMP
-    # solve_type = LINEAR
     nl_sys = "prec4"
     petsc_options_iname = ${petsc_options_iname_prec}
     petsc_options_value = ${petsc_options_value_prec}
   []
   [scalar5]
     type = SMP
-    # solve_type = LINEAR
     nl_sys = "prec5"
     petsc_options_iname = ${petsc_options_iname_prec}
     petsc_options_value = ${petsc_options_value_prec}
   []
   [scalar6]
     type = SMP
-    # solve_type = LINEAR
     nl_sys = "prec6"
     petsc_options_iname = ${petsc_options_iname_prec}
     petsc_options_value = ${petsc_options_value_prec}
@@ -460,8 +451,8 @@ petsc_options_value_prec = 'lu NONZERO'
     overwrite = true
   []
   # Reduce base output
-  print_linear_converged_reason = true
-  print_linear_residuals = true
+  print_linear_converged_reason = false
+  print_linear_residuals = false
   print_nonlinear_converged_reason = false
 []
 

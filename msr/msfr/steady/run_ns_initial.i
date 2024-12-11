@@ -29,7 +29,7 @@ pump_force = -20000. # [N / m^3]
 ################################################################################
 
 [Mesh]
-  # uniform_refine = 1
+  uniform_refine = 1
   coord_type = 'RZ'
   rz_coord_axis = Y
   [fmg]
