@@ -7,7 +7,8 @@
     rel_err = 1e-2
     min_parallel = 16
     max_time = 500
-    heavy = true
+    method = 'opt'
+    executable_pattern = "grizzly*"
   []
 #  [rpv_pfm_convergence_plot]
 #    prereq = rpv_pfm_plates_and_welds_1d

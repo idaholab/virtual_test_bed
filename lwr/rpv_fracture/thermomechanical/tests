@@ -7,7 +7,8 @@
     rel_err = 1e-2
     max_time = 500
     min_parallel = 16
-    heavy = true
+    method = 'opt'
+    executable_pattern = "grizzly*"
   []
 #  [rpv_thermomechanical_3d]
 #    type = 'CSVDiff'

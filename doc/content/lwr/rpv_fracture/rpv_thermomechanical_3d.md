@@ -24,7 +24,7 @@ The first stage of RPV simulations in Grizzly is an analysis of the global therm
 
 ## Computational Model Description
 
-This model uses quarter symmetry to represent the coupled thermal/mecahnical response of an RPV subjected to transient loading.  The geometry and loading conditions are representative of those that would be observed in an actual PWR RPV.  [rpv_mesh] shows the mesh of this quarter-symmetry model, which includes an inlet and outlet, and represents the entire RPV quadrant.
+This model uses quarter symmetry to represent the coupled thermal/mechanical response of an RPV subjected to transient loading.  The geometry and loading conditions are representative of those that would be observed in an actual PWR RPV.  [rpv_mesh] shows the mesh of this quarter-symmetry model, which includes an inlet and outlet, and represents the entire RPV quadrant.
 
 !media lwr/rpv_fracture/rpv_mesh.png
       id=rpv_mesh
@@ -60,7 +60,7 @@ This block defines the finite element mesh that will be used. In this case, the 
 
 ### `Problem`
 
-This block is used to defined parameters for the [ReferenceResidualProblem](https://mooseframework.inl.gov/source/problems/ReferenceResidualProblem), which is defined to override the standard MOOSE convergence checks and ensure that the individual variables are converged relative to meaningful values. All parameters in this block in this example are specifically related to controlling those convergence checks.
+This block is used to define parameters for the [ReferenceResidualProblem](https://mooseframework.inl.gov/source/problems/ReferenceResidualProblem), which is defined to override the standard MOOSE convergence checks and ensure that the individual variables are converged relative to meaningful values. All parameters in this block in this example are specifically related to controlling those convergence checks.
 
 !listing /lwr/rpv_fracture/thermomechanical/rpv_thermomechanical_3d.i block=Problem
 

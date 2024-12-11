@@ -56,7 +56,7 @@ This block also requires that the vessel geometry and its units be defined, and 
 
 ### `UserObjects`
 
-Grizzly uses a modular structure for its PFM calculations [!cite](spencer_modular_2019), and utilizes a set of code objects that are specializations of each of the objects shown in [PFM]. Each of these objects is defined in the UserObjects section of the input. The set of objects used here is typical of those that would be used in a PFM analysis, but in many cases, there are options to substitute in other types of objects to perform various parts of the computation in different ways.
+Grizzly uses a modular structure for its PFM calculations [!cite](spencer_modular_2019), and utilizes a set of code objects that are specializations of each of the objects shown in [PFM]. Each of these objects is defined in the `UserObjects` section of the input. The set of objects used here is typical of those that would be used in a PFM analysis, but in many cases, there are options to substitute in other types of objects to perform various parts of the computation in different ways.
 
 !media lwr/rpv_fracture/PFM.png
       id=PFM
@@ -78,7 +78,7 @@ The objects used here are summarized below:
 
 ### `Executioner`
 
-The Executioner block simply defines the time stepping in this case, because no equation solution is performed. The start and end times must fall within those for the global thermomechanical model. If the time steps do not match those in the global thermomechanical model, they will be interpolated, but it is generally recommended for the timestepping in the PFM analysis to match that of the thermo/mechanical solution.
+The Executioner block simply defines the time stepping in this case, because no equation solution is performed. The start and end times must fall within those for the global thermomechanical model. If the time steps do not match those in the global thermomechanical model, they will be interpolated, but it is generally recommended for the timestepping in the PFM analysis to match that of the thermomechanical solution.
 
 !listing /lwr/rpv_fracture/probabilistic_fracture/rpv_pfm_3d.i block=Executioner
 
@@ -109,7 +109,7 @@ The objects defined here provide scalar values of key model outcomes at each tim
 
 ### `Outputs`
 
-The blocks defined here are used to define outputs that are done at each time step, and at the initial and final times. The only quantities available for output from a PFM analysis are Postprocessors and VectorPostprocessors, both of which are commonly written to CSV files, so it is essential to define appropriate output blocks for this data. Some of the other blocks refer to these outputs with their `outputs` parameter.
+The blocks defined here are used to define outputs that are done at each time step, and at the initial and final times. The only quantities available for output from a PFM analysis are `Postprocessors` and `VectorPostprocessors`, both of which are commonly written to CSV files, so it is essential to define appropriate output blocks for this data. Some of the other blocks refer to these outputs with their `outputs` parameter.
 
 !listing /lwr/rpv_fracture/probabilistic_fracture/rpv_pfm_3d.i block=Outputs
 

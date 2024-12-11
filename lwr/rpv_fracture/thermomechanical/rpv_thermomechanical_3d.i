@@ -1,3 +1,13 @@
+# ==============================================================================
+# 3D Thermo-mechanical analysis of Light Water Reactor Pressure Vessel
+# Application : Grizzly
+# ------------------------------------------------------------------------------
+# Idaho Falls, INL, 2024
+# Author(s): Ben Spencer, Will Hoffman
+# If using or referring to this model, please cite as explained on
+# https://mooseframework.inl.gov/virtual_test_bed/citing.html
+# ==============================================================================
+
 [GlobalParams]
   order = FIRST
   family = LAGRANGE
