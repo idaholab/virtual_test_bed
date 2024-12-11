@@ -58,6 +58,7 @@
     rel_err = 8e-3
     # see idaholab/moose#25681
     method = 'opt'
+    max_time = 500
   []
   [neutronics_only]
     prereq = neutronics_only_syntax
