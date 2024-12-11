@@ -152,7 +152,7 @@ scalar_systems = 'prec1 prec2 prec3 prec4 prec5 prec6'
       pinned_pressure_value = 0
 
       # Numerical scheme
-      time_derivative_contributes_to_RC_coefficients = false
+      # time_derivative_contributes_to_RC_coefficients = false
       momentum_advection_interpolation = 'upwind'
       mass_advection_interpolation = 'upwind'
 
@@ -339,8 +339,8 @@ scalar_systems = 'prec1 prec2 prec3 prec4 prec5 prec6'
 [Functions]
   [dts]
     type = PiecewiseConstant
-    x = '0    100'
-    y = '4 5'
+    x = '0 10  100'
+    y = '2 4 5'
   []
 []
 
@@ -349,7 +349,7 @@ scalar_systems = 'prec1 prec2 prec3 prec4 prec5 prec6'
 
   # Time stepping parameters
   start_time = 0.0
-  end_time = 20
+  end_time = 50
   # end_time will depend on the restart file chosen
   # though steady state detection can also be used
   # from _initial/no heating : 150 - 200s enough
@@ -381,7 +381,7 @@ scalar_systems = 'prec1 prec2 prec3 prec4 prec5 prec6'
   nl_rel_tol = 2e-8
   nl_abs_tol = 2e-8
   nl_abs_div_tol = 1e11
-  nl_max_its = 25
+  nl_max_its = 15
 
   # linear solver parameters
   l_max_its = 50
