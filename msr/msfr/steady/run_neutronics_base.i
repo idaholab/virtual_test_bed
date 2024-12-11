@@ -1,6 +1,6 @@
 ################################################################################
 ## Molten Salt Fast Reactor - Euratom EVOL + Rosatom MARS Design              ##
-## Griffin Main Application input file base                                   ##
+## Griffin Main Application base input file                                   ##
 ## Steady state neutronics model                                              ##
 ## Neutron diffusion with delayed precursor source, no equivalence            ##
 ################################################################################
@@ -125,4 +125,5 @@
   print_linear_converged_reason = false
   print_linear_residuals = false
   print_nonlinear_converged_reason = false
+  hide = 'power_scaling'
 []
