@@ -2,8 +2,14 @@
   [rpv_pfm_3d]
     type = CSVDiff
     input = 'rpv_pfm_3d.i'
-    cli_args = 'Executioner/end_time=1.0 Samplers/sample/num_rpvs=1000 UserObjects/clad_axial_coefs/polynomial_coefficient_file=../thermomechanical/gold/rpv_thermomechanical_3d_out_coefs_axial_clad.csv UserObjects/clad_hoop_coefs/polynomial_coefficient_file=../thermomechanical/gold/rpv_thermomechanical_3d_out_coefs_hoop_clad.csv UserObjects/base_axial_coefs/polynomial_coefficient_file=../thermomechanical/gold/rpv_thermomechanical_3d_out_coefs_axial_base.csv UserObjects/base_hoop_coefs/polynomial_coefficient_file=../thermomechanical/gold/rpv_thermomechanical_3d_out_coefs_hoop_base.csv UserObjects/base_temp_coefs/polynomial_coefficient_file=../thermomechanical/gold/rpv_thermomechanical_3d_out_coefs_temp_base.csv Outputs/out/file_base=rpv_pfm_3d_out_abbrev Outputs/final/file_base=rpv_pfm_3d_final_abbrev Outputs/initial/file_base=rpv_pfm_3d_initial_abbrev'
-    csvdiff = 'rpv_pfm_3d_final_abbrev_cpi_running_statistics_0035.csv rpv_pfm_3d_final_abbrev_flaw_failure_data_0035.csv rpv_pfm_3d_out_abbrev.csv'
+    cli_args = "Executioner/end_time=1.0 Samplers/sample/num_rpvs=1000
+                UserObjects/clad_axial_coefs/polynomial_coefficient_file=../thermomechanical/gold/rpv_thermomechanical_3d_out_coefs_axial_clad.csv
+                UserObjects/clad_hoop_coefs/polynomial_coefficient_file=../thermomechanical/gold/rpv_thermomechanical_3d_out_coefs_hoop_clad.csv
+                UserObjects/base_axial_coefs/polynomial_coefficient_file=../thermomechanical/gold/rpv_thermomechanical_3d_out_coefs_axial_base.csv
+                UserObjects/base_hoop_coefs/polynomial_coefficient_file=../thermomechanical/gold/rpv_thermomechanical_3d_out_coefs_hoop_base.csv
+                UserObjects/base_temp_coefs/polynomial_coefficient_file=../thermomechanical/gold/rpv_thermomechanical_3d_out_coefs_temp_base.csv
+                Outputs/out/file_base=rpv_pfm_3d_out_abbrev Outputs/final/file_base=rpv_pfm_3d_initial_abbrev Outputs/initial/file_base=rpv_pfm_3d_final_abbrev"
+    csvdiff = 'rpv_pfm_3d_final_abbrev_cpi_running_statistics_0002.csv rpv_pfm_3d_final_abbrev_flaw_failure_data_0002.csv rpv_pfm_3d_final_abbrev.csv'
     rel_err = 1e-2
     min_parallel = 16
     max_time = 500
