@@ -18,7 +18,7 @@
   [restart]
     type = FileMeshGenerator
     use_for_exodus_restart = true
-    file = '../steady/restart/run_ns_coupled_restart.e'
+    file = '../steady/restart/run_neutronics_out_ns0_restart.e'
   []
   [extraction]
     type = ParsedGenerateSideset

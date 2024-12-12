@@ -81,7 +81,7 @@ beta6 = 0.000184087
     # - vel_x, vel_y, p, T_fluid, c_i from cosine heated simulation
     # file = 'restart/run_ns_restart.e'
     # - vel_x, vel_y, p, T_fluid, c_i from coupled multiphysics simulation
-    file = 'restart/run_ns_coupled_restart.e'
+    file = 'restart/run_neutronics_out_ns0_restart.e'
   []
   [hx_top]
     type = ParsedGenerateSideset
