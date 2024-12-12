@@ -133,7 +133,7 @@ assembly_apothem = '${fparse sqrt(3) / 2 * assembly_radius}'
     execute_on = 'INITIAL TIMESTEP_BEGIN'
   []
   [mdot_in_bc]
-    type = MassFlowRateAux
+    type = SCMMassFlowRateAux
     variable = mdot
     boundary = inlet
     area = S

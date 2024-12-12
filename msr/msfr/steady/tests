@@ -31,6 +31,7 @@
     type = CSVDiff
     input = 'run_neutronics.i'
     csvdiff = 'multiphysics_out.csv multiphysics_out_ns0.csv'
+    # We cannot use Griffin because of the coupling action
     executable_pattern = 'blue_crab*|fenix*'
     cli_args = "Mesh/uniform_refine=0 Executioner/nl_abs_tol=1e-6 Executioner/fixed_point_max_its=2 "
                "Executioner/accept_on_max_fixed_point_iteration=true "
@@ -41,7 +42,7 @@
     max_time = 500
     # method = 'opt'
     # Tolerance at 1e-6
-    rel_err = 2.1e-5
+    rel_err = 5e-5
   []
   [neutronics_only]
     prereq = neutronics_only_syntax

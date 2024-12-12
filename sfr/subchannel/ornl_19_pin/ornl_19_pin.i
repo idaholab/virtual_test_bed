@@ -95,7 +95,7 @@ P_out = 2.0e5 # Pa
 
 [ICs]
   [S_IC]
-    type = TriFlowAreaIC
+    type = SCMTriFlowAreaIC
     variable = S
   []
 
@@ -105,7 +105,7 @@ P_out = 2.0e5 # Pa
   []
 
   [q_prime_IC]
-    type = TriPowerIC
+    type = SCMTriPowerIC
     variable = q_prime
     power = 16975 # W
     filename = "pin_power_profile_19.txt"
@@ -175,7 +175,7 @@ P_out = 2.0e5 # Pa
     execute_on = 'timestep_begin'
   []
   [mdot_in_bc]
-    type = MassFlowRateAux
+    type = SCMMassFlowRateAux
     variable = mdot
     boundary = inlet
     area = S
@@ -206,7 +206,7 @@ P_out = 2.0e5 # Pa
 
 [Transfers]
   [xfer]
-    type = MultiAppDetailedSolutionTransfer
+    type = SCMSolutionTransfer
     to_multi_app = viz
     variable = 'mdot SumWij P DP h T rho mu q_prime S displacement w_perim'
   []
