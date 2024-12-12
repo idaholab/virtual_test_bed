@@ -13,7 +13,7 @@
   [tfuel]
     order = CONSTANT
     family = MONOMIAL
-    # initial_condition = 600
+    # initial_condition = 873.15 # in degree K
     initial_from_file_var = tfuel
     block = 'fuel pump hx'
   []
@@ -62,7 +62,7 @@
     order = CONSTANT
     family = MONOMIAL
     components = 6
-    # no need to initalize, initialized by auxkernels
+    # no need to initialize, initialized by auxkernels
     # initial_from_file_var = dnp
     block = 'fuel pump hx'
   []

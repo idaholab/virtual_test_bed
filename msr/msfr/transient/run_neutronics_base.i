@@ -1,6 +1,6 @@
 ################################################################################
 ## Molten Salt Fast Reactor - Euratom EVOL + Rosatom MARS Design              ##
-## Griffin Main Application base input file                                        ##
+## Griffin Main Application base input file                                   ##
 ## Transient neutronics model                                                 ##
 ## Neutron diffusion with delayed precursor source, no equivalence            ##
 ################################################################################
@@ -45,11 +45,19 @@
   allow_initial_conditions_with_restart = true
 []
 
+[PowerDensity]
+  power = 3e9
+  power_density_variable = power_density
+  power_scaling_postprocessor = power_scaling
+  family = MONOMIAL
+  order = CONSTANT
+[]
+
 [AuxVariables]
   [power_density]
     order = CONSTANT
     family = MONOMIAL
-    # no need to initalize, initialized by auxkernels
+    # no need to initialize, initialized by auxkernels
     # initial_from_file_var = 'power_density'
     block = 'fuel pump hx'
   []
@@ -163,20 +171,5 @@
   print_linear_converged_reason = false
   print_linear_residuals = false
   print_nonlinear_converged_reason = false
-  hide = 'dnp'
-[]
-
-[Postprocessors]
-  [power_scaling]
-    type = Receiver
-    outputs = none
-    default = 4.1682608293957647e+18
-  []
-  [power]
-    type = ElementIntegralVariablePostprocessor
-    variable = power_density
-    execute_on = 'initial timestep_begin timestep_end'
-    outputs = all
-    block = 'fuel pump hx'
-  []
+  hide = 'dnp power_scaling'
 []

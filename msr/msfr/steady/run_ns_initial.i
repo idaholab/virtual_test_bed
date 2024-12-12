@@ -170,8 +170,11 @@ pump_force = -20000. # [N / m^3]
 
   # Solver parameters
   solve_type = 'NEWTON'
-  petsc_options_iname = '-pc_type -pc_factor_shift_type -ksp_gmres_restart'
-  petsc_options_value = 'lu NONZERO 50'
+  # MUMPS default package is having issues in parallel
+  # petsc_options_iname = '-pc_type -pc_factor_shift_type -ksp_gmres_restart'
+  # petsc_options_value = 'lu NONZERO 50'
+  petsc_options_iname = '-pc_type -pc_factor_shift_type -pc_factor_mat_solver_package'
+  petsc_options_value = 'lu NONZERO superlu_dist'
   line_search = 'none'
   nl_rel_tol = 1e-12
   nl_abs_tol = 1e-6
