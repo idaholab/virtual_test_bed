@@ -1,6 +1,6 @@
 ################################################################################
 ## Molten Salt Fast Reactor - Euratom EVOL + Rosatom MARS Design              ##
-## Griffin-only input file                                                    ##
+## Griffin input file for decoupled calculations                              ##
 ## Steady state neutronics model                                              ##
 ## Neutron diffusion with delayed precursor source, no equivalence            ##
 ################################################################################

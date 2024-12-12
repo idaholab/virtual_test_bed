@@ -66,13 +66,28 @@ beta6 = 0.000184087
   [restart]
     type = FileMeshGenerator
     use_for_exodus_restart = true
-    file = '../steady/restart/run_ns_coupled_restart.e'
+    file = '../steady/restart/run_neutronics_out_ns0_restart.e'
+  []
+  [add_pump_in]
+    type = ParsedGenerateSideset
+    input = 'restart'
+    combinatorial_geometry = 'x>-1e6'
+    included_subdomains = 'pump'
+    included_neighbors = 'fuel'
+    normal = '0 1 0'
+    new_sideset_name = 'pump_in'
   []
 []
 
 ################################################################################
 # EQUATIONS: VARIABLES, KERNELS, BOUNDARY CONDITIONS
 ################################################################################
+
+scalar_systems = 'prec1 prec2 prec3 prec4 prec5 prec6'
+
+[Problem]
+  nl_sys_names = 'nl0 ${scalar_systems}'
+[]
 
 [Physics]
   [NavierStokes]
@@ -85,6 +100,7 @@ beta6 = 0.000184087
       # Variables, defined below for the Exodus restart
       velocity_variable = 'vel_x vel_y'
       pressure_variable = 'pressure'
+      solve_for_dynamic_pressure = true
 
       # Material properties
       density = ${rho}
@@ -103,7 +119,9 @@ beta6 = 0.000184087
       # Pressure pin for incompressible flow
       pin_pressure = true
       pinned_pressure_type = average
-      pinned_pressure_value = 1e5
+      # pressure pin for dynamic pressure: 0
+      # pressure pin for total pressure: 1e5
+      pinned_pressure_value = 0
 
       # Numerical scheme
       momentum_advection_interpolation = 'upwind'
@@ -140,6 +158,7 @@ beta6 = 0.000184087
       block = 'fuel pump hx'
       passive_scalar_advection_interpolation = 'upwind'
       initialize_variables_from_mesh_file = true
+      system_names = '${scalar_systems}'
 
       # Precursor advection, diffusion and source term
       passive_scalar_names = 'c1 c2 c3 c4 c5 c6'
@@ -228,8 +247,9 @@ beta6 = 0.000184087
 [Functions]
   [pump_fun]
     type = PiecewiseConstant
+    # Transient starts by pump percent reduction on second line
     xy_data = '0.0 1
-               4.0 0.5'
+               2.0 0.5'
     direction = 'left'
   []
 []
@@ -258,8 +278,8 @@ beta6 = 0.000184087
 
   # Solver parameters
   solve_type = 'NEWTON'
-  petsc_options_iname = '-pc_type -pc_factor_shift_type -ksp_gmres_restart'
-  petsc_options_value = 'lu NONZERO 50'
+  petsc_options_iname = '-pc_type -pc_factor_shift_type -ksp_gmres_restart -pc_factor_mat_solver_package'
+  petsc_options_value = 'lu NONZERO 50 superlu_dist'
   line_search = 'none'
 
   # Time integration scheme
@@ -294,6 +314,15 @@ beta6 = 0.000184087
     variable = vel_x
     value_type = max
     block = 'fuel pump hx'
+    execute_on = 'INITIAL TIMESTEP_END'
+  []
+  [p_drop]
+    type = PressureDrop
+    pressure = pressure
+    upstream_boundary = 'pump_in'
+    downstream_boundary = 'hx_out'
+    boundary = 'hx_out pump_in'
+    execute_on = 'INITIAL TIMESTEP_END'
   []
   [mdot]
     type = VolumetricFlowRate
@@ -340,14 +369,17 @@ beta6 = 0.000184087
     type = ElementIntegralVariablePostprocessor
     variable = power_density
     block = 'fuel pump hx'
+    execute_on = 'INITIAL TIMESTEP_END'
   []
   [total_fission_source]
     type = ElementIntegralVariablePostprocessor
     variable = fission_source
     block = 'fuel pump hx'
+    execute_on = 'INITIAL TIMESTEP_END'
   []
   [pump]
     type = FunctionValuePostprocessor
     function = 'pump_fun'
+    execute_on = 'INITIAL TIMESTEP_END'
   []
 []
