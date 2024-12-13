@@ -1,0 +1,14 @@
+[tests]
+  #This is an abbreviated test. Running through the full set of time steps would require on the order of 36 cores for 20000 s.
+  [rpv_thermomechanical_3d_abbrev]
+    type = 'CSVDiff'
+    input = 'rpv_thermomechanical_3d.i'
+    cli_args = 'Outputs/exodus=false Outputs/file_base=rpv_thermomechanical_3d_abbrev_out Executioner/num_steps=1'
+    csvdiff = 'rpv_thermomechanical_3d_abbrev_out_coefs_axial_base.csv rpv_thermomechanical_3d_abbrev_out_coefs_axial_clad.csv rpv_thermomechanical_3d_abbrev_out_coefs_hoop_base.csv rpv_thermomechanical_3d_abbrev_out_coefs_hoop_clad.csv rpv_thermomechanical_3d_abbrev_out_coefs_temp_base.csv rpv_thermomechanical_3d_abbrev_out_line_sampler_endpoints.csv'
+    rel_err = 1e-2
+    max_time = 500
+    min_parallel = 16
+    method = 'opt'
+    executable_pattern = "grizzly*"
+  []
+[]
