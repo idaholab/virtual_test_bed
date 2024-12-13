@@ -123,7 +123,7 @@ mid_control_empty = 12
     region_ids = '${mid_control_empty} ${mid_control_empty} ${mid_control_empty};
                   ${mid_control_empty} ${mid_control_empty} ${mid_control_empty};
                   ${mid_b4c}            ${mid_ht9}            ${mid_sodium};
-                  ${mid_b4c}            ${mid_ht9}            ${mid_sodium};' # Fuel, cladding, background
+                  ${mid_b4c}            ${mid_ht9}            ${mid_sodium}' # Fuel, cladding, background
     quad_center_elements = false
   []
   # Define fuel assemblies
