@@ -372,7 +372,7 @@ q_evap = '${fparse Q_hp / S_evap}'
     type = SideIntegralVariablePostprocessor
     variable = virtual_Text
     boundary = 'hp:evap:inner'
-    execute_on = 'INITIAL LINEAR'
+    execute_on = 'INITIAL TIMESTEP_END'
   []
   [A_avg_T_aux]
     type = AverageNodalVariableValue
