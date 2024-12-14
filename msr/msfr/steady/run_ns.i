@@ -192,7 +192,7 @@ scalar_systems = 'prec1 prec2 prec3 prec4 prec5 prec6'
       # Precursor advection, diffusion and source term
       passive_scalar_names = 'c1 c2 c3 c4 c5 c6'
       passive_scalar_coupled_source = 'fission_source c1; fission_source c2; fission_source c3;
-                                       fission_source c4; fission_source c5; fission_source c6;'
+                                       fission_source c4; fission_source c5; fission_source c6'
       passive_scalar_coupled_source_coeff = '${beta1} ${lambda1_m}; ${beta2} ${lambda2_m};
                                              ${beta3} ${lambda3_m}; ${beta4} ${lambda4_m};
                                              ${beta5} ${lambda5_m}; ${beta6} ${lambda6_m}'
