@@ -1,0 +1,3 @@
+time,_dt,integrated_power,power_increment,power_limited_dt,power_scaling
+0,0,0.01,0,0,434720320.3118
+0.01,0.01,0.010025934797834,2.5934797834071e-05,3855.8233860079,434720320.3118
