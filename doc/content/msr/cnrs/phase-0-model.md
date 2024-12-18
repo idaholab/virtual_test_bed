@@ -4,10 +4,10 @@
 
 *Model summarized and documented by Dr. Khaldoon Al-Dawood*
 
-This exercise is comprized of three stady state single physics steps.
+This exercise is comprised of three steady state single physics steps.
 The inputs provided in this step will be gradually improved as the complexity of 
 the steps will improve.
-In the following is a description of each stepa of Phase 0 in addition to explanation
+In the following is a description of each step of Phase 0 in addition to explanation
 of the input files.
 
 ## Step 0.1:
@@ -24,7 +24,7 @@ where $\vec{u}$ is the velocity vector.
 
 The conservation of momentum is expressed as
 
-$\frac{\partial \vec{u}}{\partial t} + \vec{u}.\nabla \vec{u} = -\frac{1}{\rho_\circ} \nabla p + \mu\nabla^2\vec{u} + \vec{g}\left(1-\alpha\left(T-T_\circ\right)\right)$
+$\frac{\partial \vec{u}}{\partial t} + \vec{u}\cdot \nabla \vec{u} = -\frac{1}{\rho_\circ} \nabla p + \mu\nabla^2\vec{u} + \vec{g}\left(1-\alpha\left(T-T_\circ\right)\right)$
 
 where $p$ is pressure, $\mu$ is the viscosity, $\vec{g}$ is the gravity vector, $T$ is the temperature, and $\alpha$ is the thermal expansion coefficient.
 
@@ -66,7 +66,7 @@ provided in the beginning of the input file as described above.
 !listing msr/cnrs/s01/cnrs_s01_ns_flow.i block=Materials
 
 The problem is solved as a transient that is allowed to converge by selecting a
-long time for the simulation in addition to setting up a tolerence for the detection 
+long time for the simulation in addition to setting up a tolerance for the detection 
 of achieving the steady state.
 These characteristics of the simulation in addition to others such as the solver 
 type are identified in the ```Executioner``` block of the input file as follows.
@@ -77,30 +77,34 @@ type are identified in the ```Executioner``` block of the input file as follows.
 ### Step 0.1 Results
 
 The results for the first step of phase 0 are composed of the velocity field in 
-addition to a mesh refinemnet study to demonstrate the influence of the refinement
+addition to a mesh refinement study to demonstrate the influence of the refinement
 on the vertical components of the velocity.
 The results are collected across the horizontal AA` line and the vertical BB` line 
 from the problem description.
-The horizontal velocity component distribution along AA` and BB` are
+The horizontal velocity component distribution along AA` and BB` are presented in 
+[step01-results-a].
 
 !media media/msr/cnrs/step01-results-a.png
-  style=width:70%
+  style=width:80%
+  id=step01-results-a
 
-The vertical velocity component distribution along AA` and BB` are
+The vertical velocity component distribution along AA` and BB` presented in [step01-results-b]
 
 !media media/msr/cnrs/step01-results-b.png
-  style=width:70%
+  style=width:80%
+  id=step01-results-b
 
-The vertical velocity component distribution along BB` as the mesh is refined is
-as follows
+The vertical velocity component distribution along BB` as the mesh is refined is presented
+in [step01-results-c].
 
 !media media/msr/cnrs/step01-results-c.png
-  style=width:70%
+  style=width:80%
+  id=step01-results-c
 
 ## Step 0.2:
 
-This exercise models a steady state neutronic solution using griffin.
-The problem gemetry remains the same as step 0.1.
+This exercise models a steady state neutronic solution using Griffin.
+The problem geometry remains the same as step 0.1.
 The mesh is defined in a similar fashion to the earlier presentation and it is
 presented in this subsection for completeness.
 
@@ -123,7 +127,7 @@ in the ```TransportSystems``` block as follows
 
 !listing msr/cnrs/s02/cnrs_s02_griffin_neutronics.i block=TransportSystems
 
-Finally, the ```Executioner``` block is defined as follows
+Finally, the ```Executioner``` block is defined as follows.
 
 !listing msr/cnrs/s02/cnrs_s02_griffin_neutronics.i block=Executioner
 
@@ -131,12 +135,13 @@ Finally, the ```Executioner``` block is defined as follows
 ### Step 02 Results:
 
 The results for this step include observing the fission rate density distribution
-and examining the influence of mesh refinment. 
-Due to the length of the results, this documentation will only show the fission 
-rate distribution along AA` which is as follows
+and examining the influence of mesh refinement.
+Due to the length of the results, this documentation will only show the fission
+rate distribution along AA` which is presented in [step02-results].
 
 !media media/msr/cnrs/step02-results.png
-  style=width:50%
+  style=width:60%
+  id=step02-results
 
 For results on the mesh refinement, the reader is referred to the publication 
 [!citep](jaradat2024verification).
@@ -146,15 +151,15 @@ For results on the mesh refinement, the reader is referred to the publication
 In this exercise, the temperature field is obtained based on the velocity field 
 and the power density profile.
 Thus, to solve this exercise, the solutions of steps 0.1 and 0.2 need to be obtained
-and provided to obtain the solution of this exercise.
+and provided in order to perform this step of the benchmark.
 Following is a description of the setup for this exercise input.
 
 
 This requires a Navier-Stokes solve to obtain the velocity field and a neutronic
 solve to obtain the power density distribution.
-The main input in this step is referred defines an input that performs the linking between 
+The main input in this step performs the linking between 
 the neutronic solve and the Navier-Stokes solve.
-The main file defines a set ov variables as follows
+The main file defines a set of variables as follows
 
 !listing msr/cnrs/s03/cnrs_s03_ns_flow.i block=Variables
 
@@ -192,7 +197,8 @@ block as follows
 
 ### Step 03 Results
 
-The fuel salt temperature distribution along AA` and BB` are as follows
+The fuel salt temperature distribution along AA` and BB` are in [step03-results]
 
 !media media/msr/cnrs/step03-results.png
-  style=width:70%
+  style=width:80%
+  id=step03-results
