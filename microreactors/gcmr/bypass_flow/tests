@@ -9,7 +9,7 @@
     type = 'CSVDiff'
     input = 'cooling_channel.i'
     csvdiff = 'cooling_channel_out.csv'
-    cli_args = "Executioner/num_steps=10 Outputs/csv=true"
+    cli_args = "Outputs/csv=true"
     executable_pattern = 'pronghorn*|thermal_hydraulics*'
   []
   [mesh]
