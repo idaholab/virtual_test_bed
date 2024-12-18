@@ -16,13 +16,13 @@
     type = RunApp
     input = 'run_ns_initial.i'
     check_input = True
-    executable_pattern = 'moose*|blue_crab*|dire_wolf*|pronghorn*|fenix*'
+    executable_pattern = 'combined*|blue_crab*|dire_wolf*|pronghorn*|fenix*'
   []
   [fluids_syntax]
     type = RunApp
     input = 'run_ns.i'
     check_input = True
-    executable_pattern = 'moose*|blue_crab*|dire_wolf*|pronghorn*|fenix*'
+    executable_pattern = 'combined*|blue_crab*|dire_wolf*|pronghorn*|fenix*'
   []
 
   # Regression tests with CSV output over a minimum amount of time steps/computation
@@ -60,7 +60,7 @@
     type = CSVDiff
     input = 'run_ns_initial.i'
     csvdiff = 'run_ns_initial_out.csv'
-    executable_pattern = 'moose*|blue_crab*|dire_wolf*|pronghorn*|fenix*'
+    executable_pattern = 'combined*|blue_crab*|dire_wolf*|pronghorn*|fenix*'
     cli_args = 'Executioner/num_steps=2'
     min_parallel = 4
   []

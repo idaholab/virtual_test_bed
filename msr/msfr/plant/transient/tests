@@ -26,7 +26,7 @@
     input = 'run_ns.i'
     check_input = True
     cli_args = "MultiApps/active='' Transfers/active=''"
-    executable_pattern = 'moose*|blue_crab*|dire_wolf*|pronghorn*|fenix*'
+    executable_pattern = 'combined*|blue_crab*|dire_wolf*|pronghorn*|fenix*'
   []
   [plant_syntax]
     type = RunApp

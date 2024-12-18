@@ -338,7 +338,7 @@ output_file_base = gHPMR_2d_core
                0 1 1 2 1 1 0;
                 1 2 1 1 2 1;
                  1 1 2 1 1;
-                  0 1 1 0;'
+                  0 1 1 0'
     id_name = 'pin_id'
   []
   # delete fake cell
@@ -395,7 +395,7 @@ output_file_base = gHPMR_2d_core
                0 1 1 2 1 1 0;
                 1 2 1 1 2 1;
                  1 1 2 1 1;
-                  0 1 1 0;'
+                  0 1 1 0'
     id_name = 'pin_id'
   []
   # delete fake cell
@@ -451,7 +451,7 @@ output_file_base = gHPMR_2d_core
                0 1 1 2 1 1 0;
                 1 2 1 1 2 1;
                  1 1 2 1 1;
-                  0 1 1 0;'
+                  0 1 1 0'
     id_name = 'pin_id'
     #external_boundary_id = '${assembly1_boundary_id}'
     #external_boundary_name = '${assembly1_boundary_name}'
@@ -510,7 +510,7 @@ output_file_base = gHPMR_2d_core
                0 1 1 2 1 1 0;
                 1 2 1 1 2 1;
                  1 1 2 1 1;
-                  0 1 1 0;'
+                  0 1 1 0'
     id_name = 'pin_id'
     #external_boundary_id = '${assembly1_boundary_id}'
     #external_boundary_name = '${assembly1_boundary_name}'
@@ -569,7 +569,7 @@ output_file_base = gHPMR_2d_core
             0 1 3 3 3 1 0;
              1 2 3 3 2 1;
               1 1 2 1 1;
-               0 1 1 0;'
+               0 1 1 0'
     id_name = 'pin_id'
     #external_boundary_id = '${assembly3_boundary_id}'
     #external_boundary_name = '${assembly3_boundary_name}'

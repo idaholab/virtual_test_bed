@@ -259,7 +259,7 @@ fuel_assembly_boundary_name = fuel_assembly_boundary
                1 1 2 1 1 2 1 1 2 1 1 2 1 1;
                 2 1 1 2 1 1 2 1 1 2 1 1 2;
                  1 2 1 1 2 1 1 2 1 1 2 1;
-                  0 1 2 1 1 2 1 1 2 1 0;'
+                  0 1 2 1 1 2 1 1 2 1 0'
     id_name = pin_id
     assign_type = cell
     pattern_boundary = hexagon
@@ -306,7 +306,7 @@ fuel_assembly_boundary_name = fuel_assembly_boundary
                1 1 2 1 1 2 1 1 2 1 1 2 1 1;
                 2 1 1 2 1 1 2 1 1 2 1 1 2;
                  1 2 1 1 2 1 1 2 1 1 2 1;
-                  0 1 2 1 1 2 1 1 2 1 0;'
+                  0 1 2 1 1 2 1 1 2 1 0'
     id_name = pin_id
     assign_type = cell
     pattern_boundary = hexagon
