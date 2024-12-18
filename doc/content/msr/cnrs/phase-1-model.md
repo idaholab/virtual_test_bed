@@ -1,4 +1,4 @@
-# Phase 1 Model: Steady State Multi Physics Coupling
+# Phase 1 Model: Steady State MultiPhysics Coupling
 
 This phase of the benchmark is concerned with the steady state multiphysics solution.
 It is comprised of four steps and following is a description of the four steps and 
@@ -6,11 +6,10 @@ their inputs.
 
 ## Step 1.1
 
-In this step, the influence of the delayed neutron precursors drift on the reactivity 
+In this step, the influence of the delayed neutron precursor drift on the reactivity 
 and delayed neutron source distribution is explored.
 This step comprises a neutronic and Navier-Stokes solves.
-The neutronic solve is performed as a diffusion with characteristics similar the 
-solution performed in step 0.2.
+The neutronics solve is performed as a diffusion problem as defined in step 0.2.
 The main input file contains instructions to perform a neutronic solution.
 The characteristics of the transport solve are defined ```TransportSystems```
 block as follows
@@ -22,24 +21,24 @@ defined in the ```PowerDensity``` block as follows
 
 !listing msr/cnrs/s11/cnrs_s11_griffin_neutronics.i block=PowerDensity
 
-auxiliary variables for the problem are defined in the ```AusVariables```  block
+auxiliary variables for the problem are defined in the ```AuxVariables```  block
 as follows
 
 !listing msr/cnrs/s11/cnrs_s11_griffin_neutronics.i block=AuxVariables
 
 where pronghorn will be used to obtain the temperature distributions and the 
-delayed neutron precursors distributions.
+delayed neutron precursor distributions.
 Operations to act on the auxiliary variables are defined in the ```AuxKernels```
 block
 
 !listing msr/cnrs/s11/cnrs_s11_griffin_neutronics.i block=AuxKernels
 
-The characteristics of executing the caluclations are provided in the 
+The characteristics of executing the calculations are provided in the 
 ```Executioner``` block as follows
 
 !listing msr/cnrs/s11/cnrs_s11_griffin_neutronics.i block=Executioner
 
-To obtain the temperature and delyaed neutron precursors distribution, pronghorn 
+To obtain the temperature and delayed neutron precursor distribution, pronghorn 
 is used to performed these thermo-fluid calculations.
 A ```MultiApps``` block is used to call the pronghorn solver as in the following 
 block of code
@@ -47,10 +46,10 @@ block of code
 !listing msr/cnrs/s11/cnrs_s11_griffin_neutronics.i block=MultiApps
 
 where ''cnrs_s01_ns_flow.i'' is the pronghorn input.
-The transfer of variables between Griffin and pronghorn is instructed throug the
+The transfer of variables between Griffin and pronghorn is instructed through the
 ```Transfers``` block, where the fission source is obtained using Griffin and sent
 to pronghorn. 
-Then pronghorn is used to calculate the distribution of the precursors
+Then pronghorn is used to calculate the distribution of the precursor
 
 !listing msr/cnrs/s11/cnrs_s11_griffin_neutronics.i block=Transfers
 
@@ -75,7 +74,7 @@ These are as follows
 
 ## Step 1.2
 
-This step resembles step 1.1 with the difference being in introducing the temperture
+This step resembles step 1.1 with the difference being in introducing the temperature
 feedback.
 The problem is treated as a transport solve coupled with two Navier-Stokes solves
 as will be described later.
@@ -92,7 +91,7 @@ in the ```PowerDensity``` as follows
 
 A set of auxiliary variables which will be obtained using other applications
 (i.e. pronghorn) are defined as follows.
-These variables include the temprature distributions in the fuel, flow field,
+These variables include the temperature distributions in the fuel, flow field,
 and delayed neutron precursor distribution which are obtained using Navier-Stokes
 solves as will be demonstrated later.
 
@@ -107,10 +106,10 @@ These are called in a ```MultiApps``` fashion as
 
 
 The first solve (i.e. ```ns_flow```)  will be used to solve for the flow field 
-(i.e. velocity field) and the delayed neutron prevuros distribution.
-The input for the first solve will be the ```fission_source``` ontained by the Griffin 
+(i.e. velocity field) and the delayed neutron precursor distribution.
+The input for the first solve will be the ```fission_source``` obtained by the Griffin 
 transport solve.
-The second solve (i.e. ```ns_temp```)  and the second one is used to solve for the 
+The second solve (i.e. ```ns_temp```) is used to solve for the 
 temperature distribution given the fission source solution obtained by the transport
 solve.
 The inputs for the second solve are velocity field obtained by the ```ns_flow``` 
@@ -121,8 +120,8 @@ solves are provided in the ```Transfers``` block as follows
 !listing msr/cnrs/s12/cnrs_s12_griffin_neutronics.i block=Transfers
 
 
-Te squence of ```TransportSystems``` solve, ```ns_flow``` solve, and ```ns_temp```
-solve is performed till the convergence cirteria is met.
+Te sequence of ```TransportSystems``` solve, ```ns_flow``` solve, and ```ns_temp```
+solve is performed till the convergence criteria is met.
 These are specified in the main input file (i.e. Griffin solve), within the 
 ```Executioner``` block as follows
 
@@ -163,7 +162,7 @@ are defined as follows
 !listing msr/cnrs/s13/cnrs_s13_griffin_neutronics.i block=AuxVariables
 
 
-The transport solve characteristics and the tolerences to converge the problem 
+The transport solve characteristics and the tolerances to converge the problem 
 are specified as follows
 
 !listing msr/cnrs/s13/cnrs_s13_griffin_neutronics.i block=Executioner
@@ -182,25 +181,32 @@ managed through the ```Transfers``` block
 
 ### Step 1.3 Results
 
-The horizontal velocity component distributino along AA` is reported as follows
+The horizontal velocity component distribution along AA` is reported in [step13-results-a].
 
 !media media/msr/cnrs/step13-results-a.png
-  style=width:40%
+  style=width:60%
+  id=step13-results-a
 
 The vertical velocity component distribution along AA` and BB` is also reported
+in [step13-results-b].
 
 !media media/msr/cnrs/step13-results-b.png
-  style=width:70%
+  style=width:80%
+  id=step13-results-b
 
 The fuel salt temperature distribution along AA` and BB` in this exercise is reported
+in [step13-results-c].
 
 !media media/msr/cnrs/step13-results-c.png
-  style=width:70%
+  style=width:80%
+  id=step13-results-c
 
 Finally, the delayed neutron source distribution along AA` and BB` is reported
+in [step13-results-d].
 
 !media media/msr/cnrs/step13-results-d.png
-  style=width:70%
+  style=width:80%
+  id=step13-results-d
 
 ## Step 1.4:
 
@@ -208,34 +214,34 @@ This phase performs a similar task to that of Step 1.3 for a combination of
 reactor power and lid velocities.
 The set of reactor powers and lid velocities are presented in the following table
 
-|  lid velocity   | Reactor Power |
+|  Lid Velocity   | Reactor Power |
 | --------------- | ------------- |
-|        0.0      |       1.0e9   |
-|        0.1      |       0.2e9   |
-|        0.1      |       0.4e9   |
-|        0.1      |       0.6e9   |
-|        0.1      |       0.8e9   |
-|        0.1      |       1.0e9   |
-|        0.2      |       0.2e9   |
-|        0.2      |       0.4e9   |
-|        0.2      |       0.6e9   |
-|        0.2      |       0.8e9   |
-|        0.2      |       1.0e9   |
-|        0.3      |       0.2e9   |
-|        0.3      |       0.4e9   |
-|        0.3      |       0.6e9   |
-|        0.3      |       0.8e9   |
-|        0.3      |       1.0e9   |
-|        0.4      |       0.2e9   |
-|        0.4      |       0.4e9   |
-|        0.4      |       0.6e9   |
-|        0.4      |       0.8e9   |
-|        0.4      |       1.0e9   |
-|        0.5      |       0.2e9   |
-|        0.5      |       0.4e9   |
-|        0.5      |       0.6e9   |
-|        0.5      |       0.8e9   |
-|        0.5      |       1.0e9   |
+|        0.0      |       1.0E9   |
+|        0.1      |       0.2E9   |
+|        0.1      |       0.4E9   |
+|        0.1      |       0.6E9   |
+|        0.1      |       0.8E9   |
+|        0.1      |       1.0E9   |
+|        0.2      |       0.2E9   |
+|        0.2      |       0.4E9   |
+|        0.2      |       0.6E9   |
+|        0.2      |       0.8E9   |
+|        0.2      |       1.0E9   |
+|        0.3      |       0.2E9   |
+|        0.3      |       0.4E9   |
+|        0.3      |       0.6E9   |
+|        0.3      |       0.8E9   |
+|        0.3      |       1.0E9   |
+|        0.4      |       0.2E9   |
+|        0.4      |       0.4E9   |
+|        0.4      |       0.6E9   |
+|        0.4      |       0.8E9   |
+|        0.4      |       1.0E9   |
+|        0.5      |       0.2E9   |
+|        0.5      |       0.4E9   |
+|        0.5      |       0.6E9   |
+|        0.5      |       0.8E9   |
+|        0.5      |       1.0E9   |
 
 
 A shell script is used to run all these cases.
