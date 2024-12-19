@@ -1,0 +1,11 @@
+lfs_include:
+  - microreactors/mrad
+  - microreactors/gcmr
+  - microreactors/hpmr_h2
+  - microreactors/drum_rotation
+  - microreactors/KRUSTY
+  - htgr/pbmr400
+  - htgr/htr10
+  - sfr/vtr
+  - msr/lotus/mesh
+  - pbfhr/gFHR/data

@@ -1,0 +1,7 @@
+lfs_include:
+  - microreactors/mrad
+  - microreactors/hpmr_h2
+  - microreactors/drum_rotation
+  - microreactors/KRUSTY
+  - htgr/pbmr400
+  - sfr/vtr

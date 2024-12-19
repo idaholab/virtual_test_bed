@@ -1,0 +1,4 @@
+lfs_include:
+  - msr/msre/pipe_cardinal/solid_hex8.exo
+  - msr/lotus/mesh/mcre_mesh.e
+  - htgr/httf/inputs/3D_HTTF_full_core.e

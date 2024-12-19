@@ -1,0 +1,5 @@
+lfs_include:
+  - microreactors/KRUSTY
+  - microreactors/mrad
+  - microreactors/gcmr
+  - sfr/vtr
