@@ -1,0 +1,15 @@
+lfs_include:
+  - msr/lotus
+  - msr/msfr
+  - pbfhr/gFHR/data
+  - htgr/pbmr400
+  - htgr/htr10
+  - htgr/httr
+  - sfr/vtr
+  - microreactors/gcmr/assembly/MESH
+  - microreactors/mrad/mesh/gold
+  - microreactors/drum_rotation/empire_core_modified_11G_CD.xml
+  - microreactors/mrad/triso_failure
+  - microreactors/hpmr_h2
+  - microreactors/KRUSTY
+  - lfr/7pin_cardinal_demo/LFR9g_P5.xml.tgz
