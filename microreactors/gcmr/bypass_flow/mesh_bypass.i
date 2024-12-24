@@ -151,7 +151,7 @@ radius_fuel = 0.00794 # m
             4 3 0 1 1 0 3 4;
              0 3 2 0 2 3 0;
               4 0 3 3 0 4;
-               4 4 0 4 4;'
+               4 4 0 4 4'
   []
 
   # ###  Create the core pattern
