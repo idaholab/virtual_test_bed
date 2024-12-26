@@ -43,3 +43,6 @@ sfr/vtr/xs/vtr_xs.xml filter=lfs diff=lfs merge=lfs -text
 sfr/vtr/xs/vtr_xs_verification.xml filter=lfs diff=lfs merge=lfs -text
 sfr/vtr/sph/vtr_sph.xml filter=lfs diff=lfs merge=lfs -text
 sfr/vtr/sph/vtr_sph_verification.xml filter=lfs diff=lfs merge=lfs -text
+lfr/7pin_cardinal_demo/LFR9g_P5.xml.tgz filter=lfs diff=lfs merge=lfs -text
+lfr/7pin_cardinal_demo/7pin_ic.fld.tgz filter=lfs diff=lfs merge=lfs -text
+lfr/7pin_cardinal_demo/7pin.re2.tgz filter=lfs diff=lfs merge=lfs -text
