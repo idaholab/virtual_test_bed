@@ -1,2 +1,4 @@
+hpc_copy_paths:
+  - microreactors
 lfs_include:
   - ignore # don't need anything for sockeye yet

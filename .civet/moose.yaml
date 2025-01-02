@@ -1,3 +1,8 @@
+hpc_copy_paths:
+  - htgr
+  - msr
+  - pbfhr
+  - sfr
 lfs_include:
   - msr/msre/pipe_cardinal/solid_hex8.exo
   - msr/lotus/mesh/mcre_mesh.e

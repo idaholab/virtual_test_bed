@@ -1,5 +1,9 @@
+hpc_copy_paths:
+  - microreactors
+  - sfr
 lfs_include:
   - microreactors/KRUSTY
   - microreactors/mrad
   - microreactors/gcmr
   - sfr/vtr
+
