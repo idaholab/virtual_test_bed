@@ -4,7 +4,7 @@
     type = 'CSVDiff'
     input = 'Griffin_steady_state.i'
     csvdiff = 'gcmr_steady_out.csv'
-    executable_pattern = 'griffin*|blue_crab*'
+    executable_pattern = 'blue_crab*'
     cli_args = "filebase=gcmr_steady_out
                 Executioner/set_sam_default_petsc_options=false"
     min_parallel = 32
@@ -20,7 +20,7 @@
     working_directory = '../Flow_blockage_transient'
     input = 'Griffin_transient.i'
     csvdiff = 'gcmr_transient_out.csv'
-    executable_pattern = 'griffin*|blue_crab*'
+    executable_pattern = 'blue_crab*'
     cli_args = "filebase=gcmr_transient_out"
     min_parallel = 32
     max_time = 1000
