@@ -22,7 +22,9 @@
       csvdiff = 'Multiphysics_SS/KRUSTY_Griffin_SN23_NA23_CMFD_coarse_out.csv'
       executable_pattern = 'blue_crab*|dire_wolf*'
       min_parallel = 196
-      max_time = 2000
+      # This is a very slow simulation
+      max_time = 3000
+      method = 'opt'
       # Cross section warning
       allow_warnings = true
       prereq = 'transient_tests/mesh_gen_bison_coarse'
@@ -39,7 +41,9 @@
       csvdiff = 'Multiphysics_15C_RIT/KRUSTY_Griffin_SN23_NA23_CMFD_TR_out.csv'
       executable_pattern = 'blue_crab*|dire_wolf*'
       min_parallel = 196
-      max_time = 2000
+      # This is a very slow simulation
+      max_time = 3000
+      method = 'opt'
       # Cross section warning
       allow_warnings = true
       prereq = 'transient_tests/multiapp_ss_coarse'
