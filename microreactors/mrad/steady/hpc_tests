@@ -6,6 +6,8 @@
     executable_pattern = 'dire_wolf*'
     cli_args = "Executioner/richardson_max_its=2 Executioner/richardson_abs_tol=1e-1 Outputs/csv=true "
                "Outputs/file_base=mrad_coupled_out Outputs/exodus=false MultiApps/bison/cli_args='Outputs/exodus=false'"
+    # To avoid running out of memory
+    mesh_mode = distributed
     min_parallel = 48
     max_time = 1080
     # Capillary limit for vertical heat pipes is not accurate; see https://hpcgitlab.hpc.inl.gov/idaholab/sockeye/-/issues/65
