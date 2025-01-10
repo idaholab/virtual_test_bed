@@ -5,7 +5,7 @@
     input = 'Griffin_steady_state.i'
     csvdiff = 'gcmr_steady_out.csv'
     executable_pattern = 'blue_crab*'
-    cli_args = "filebase=gcmr_steady_out
+    cli_args = "Outputs/file_base=gcmr_steady_out
                 Executioner/set_sam_default_petsc_options=false"
     min_parallel = 32
     max_time = 1000
@@ -21,8 +21,10 @@
     input = 'Griffin_transient.i'
     csvdiff = 'gcmr_transient_out.csv'
     executable_pattern = 'blue_crab*'
-    cli_args = "filebase=gcmr_transient_out"
-    min_parallel = 32
+    cli_args = "Outputs/file_base=gcmr_transient_out"
+    # Need enough memory
+    min_parallel = 48
+    mesh_mode = 'distributed'
     max_time = 1000
     # Griffin overrode the material property output and is outputting warnings in BlueCrab
     allow_warnings = true
