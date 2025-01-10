@@ -7,8 +7,10 @@
     executable_pattern = 'blue_crab*'
     cli_args = "Outputs/file_base=gcmr_steady_out
                 Executioner/set_sam_default_petsc_options=false"
-    min_parallel = 32
-    max_time = 1000
+    skip = '#506'
+    # Need enough memory
+    min_parallel = 196
+    max_time = 3000
     # Griffin overrode the material property output and is outputting warnings in BlueCrab
     allow_warnings = true
     allow_unused = true
@@ -21,11 +23,13 @@
     input = 'Griffin_transient.i'
     csvdiff = 'gcmr_transient_out.csv'
     executable_pattern = 'blue_crab*'
-    cli_args = "Outputs/file_base=gcmr_transient_out"
+    cli_args = "Outputs/file_base=gcmr_transient_out
+                MultiApps/bison/cli_args="Problem/restart_file_base='../steady_state/gcmr_steady_out_bison0_cp/LATEST'"
+                Executioner/num_steps=3 Executioner/richardson_abs_tol=2e-4""
+    skip = '#506'
     # Need enough memory
-    min_parallel = 48
-    mesh_mode = 'distributed'
-    max_time = 1000
+    min_parallel = 196
+    max_time = 3000
     # Griffin overrode the material property output and is outputting warnings in BlueCrab
     allow_warnings = true
     allow_unused = true

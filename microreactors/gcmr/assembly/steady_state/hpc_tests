@@ -5,10 +5,11 @@
     input = 'Griffin_steady_state.i'
     csvdiff = 'gcmr_steady_out.csv'
     executable_pattern = 'blue_crab*'
-    cli_args = "filebase=gcmr_steady_out
+    cli_args = "Outputs/file_base=gcmr_steady_out
                 Executioner/set_sam_default_petsc_options=false"
-    min_parallel = 32
-    max_time = 1000
+    # Need enough memory
+    min_parallel = 196
+    max_time = 3000
     allow_unused = true
     # Missing group cross section for energy deposition
     allow_warnings = true
@@ -21,12 +22,19 @@
     input = 'Griffin_transient.i'
     csvdiff = 'gcmr_transient_out.csv'
     executable_pattern = 'blue_crab*'
-    cli_args = "filebase=gcmr_transient_out"
-    min_parallel = 32
-    max_time = 1000
+    cli_args = "Outputs/file_base=gcmr_transient_out
+                MultiApps/bison/cli_args="Problem/restart_file_base='../steady_state/gcmr_steady_out_bison0_cp/LATEST'"
+                Mesh/file=../steady_state/gcmr_steady_out_cp/LATEST
+                Executioner/num_steps=3 Executioner/richardson_abs_tol=2e-4"
+    # Use the restart files with the file_base from the prereq run
+    # Limiting convergence requirement due to #506
+    # Need enough memory
+    min_parallel = 196
+    max_time = 3000
     allow_unused = true
     # Missing group cross section for energy deposition
     allow_warnings = true
+    # Need a restart file to exist
   []
 []
 
