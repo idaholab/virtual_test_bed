@@ -25,7 +25,7 @@ unheated_length_exit = '${fparse 26.9*scale_factor}'
 
 [TriSubChannelMesh]
   [subchannel]
-    type = TriSubChannelMeshGenerator
+    type = SCMTriSubChannelMeshGenerator
     nrings = ${n_rings}
     n_cells = 50
     flat_to_flat = ${inner_duct_in}
@@ -40,7 +40,7 @@ unheated_length_exit = '${fparse 26.9*scale_factor}'
   []
 
   [fuel_pins]
-    type = TriPinMeshGenerator
+    type = SCMTriPinMeshGenerator
     input = subchannel
     nrings = ${n_rings}
     n_cells = 50
@@ -116,8 +116,8 @@ unheated_length_exit = '${fparse 26.9*scale_factor}'
   compute_density = true
   compute_viscosity = true
   compute_power = true
-  P_tol = 1.0e-5
-  T_tol = 1.0e-5
+  P_tol = 1.0e-4
+  T_tol = 1.0e-4
   implicit = true
   segregated = false
   interpolation_scheme = 'upwind'
@@ -259,7 +259,6 @@ unheated_length_exit = '${fparse 26.9*scale_factor}'
 []
 
 [Outputs]
-  exodus = true
   csv = true
 []
 
@@ -307,7 +306,7 @@ unheated_length_exit = '${fparse 26.9*scale_factor}'
     dt = 0.1
     iteration_window = 5
     optimal_iterations = 6
-    growth_factor = 1.2
+    growth_factor = 1.1
     cutback_factor = 0.8
     timestep_limiting_function = 'time_step_limiting'
   []
