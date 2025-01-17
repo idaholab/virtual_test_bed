@@ -23,7 +23,7 @@
     csvdiff = 'gcmr_transient_out.csv'
     executable_pattern = 'blue_crab*'
     cli_args = "Outputs/file_base=gcmr_transient_out
-                MultiApps/bison/cli_args="Problem/restart_file_base='../steady_state/gcmr_steady_out_bison0_cp/LATEST'"
+                MultiApps/bison/cli_args="Problem/restart_file_base='../steady_state/gcmr_steady_out_bison0_cp/LATEST'
                 Mesh/file=../steady_state/gcmr_steady_out_cp/LATEST
                 Executioner/num_steps=3 Executioner/richardson_abs_tol=2e-4"
     # Use the restart files with the file_base from the prereq run
