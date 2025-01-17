@@ -19,7 +19,8 @@
     cli_args = "MultiApps/active='' Transfers/active=''
                 Executioner/richardson_max_its=1
                 TransportSystems/SN/NAzmthl=3 TransportSystems/SN/NPolar=1
-                Executioner/set_sam_default_petsc_options=false"
+                Executioner/set_sam_default_petsc_options=false
+                Outputs/checkpoint=true"
     prereq = 'griffin_alone_syntax'
     min_parallel = 16
     rel_err = 1e-3
@@ -127,7 +128,8 @@
                 TransportSystems/SN/NAzmthl=3 TransportSystems/SN/NPolar=1
                 Executioner/num_steps=1
                 Outputs/checkpoint=false
-                PowerDensity/terminate_on_negative_power=false"
+                PowerDensity/terminate_on_negative_power=false
+                AuxVariables/Tf/initial_condition=873.15"
     prereq = 'griffin_alone_transient_syntax'
     min_parallel = 16
     rel_err = 1e-3
