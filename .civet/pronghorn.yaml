@@ -1,2 +1,8 @@
+hpc_copy_paths:
+  - htgr
+  - microreactors
+  - msr
+  - pbfhr
+  - sfr
 lfs_include:
   - msr/lotus/mesh

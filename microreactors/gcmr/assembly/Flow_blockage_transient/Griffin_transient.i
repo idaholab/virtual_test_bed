@@ -5,37 +5,7 @@
 # https://mooseframework.inl.gov/virtual_test_bed/citing.html
 #####################################################################################################
 [Mesh]
-  [fmg]
-    type = FileMeshGenerator
-    file = '../MESH/Griffin_mesh.e'
-  []
-  [fmg_id]
-    type = SubdomainExtraElementIDGenerator
-    input = fmg
-    subdomains = '10 100 102 103 200 201 300 400 401 500 600 8000 8001'
-    extra_element_id_names = 'material_id equivalence_id'
-    extra_element_ids = '803 802 810 806 807 807 804 801 801 808 809 805 805;
-                         803 802 810 806 807 807 804 801 801 808 809 805 805'
-  []
-  [coarse_mesh]
-    type = GeneratedMeshGenerator
-    dim = 3
-    nx = 10
-    ny = 10
-    nz = 20
-    xmin = -0.1
-    xmax = 0.1
-    ymin = -0.1
-    ymax = 0.1
-    zmin = 0.
-    zmax = 2.
-  []
-  [assign_coarse_id]
-    type = CoarseMeshExtraElementIDGenerator
-    input = fmg_id
-    coarse_mesh = coarse_mesh
-    extra_element_id_name = coarse_element_id
-  []
+  file = '../steady_state/Griffin_steady_state_out_cp/LATEST'
 []
 
 [Executioner]
@@ -48,6 +18,8 @@
   inner_solve_type = GMRes
   max_inner_its = 20
 
+  # MultiApp fixed point iterations are handled by the
+  # Richardson iteration
   fixed_point_max_its = 1
   fixed_point_min_its = 1
 
@@ -56,7 +28,7 @@
   prolongation_type = multiplicative
   max_diffusion_coefficient = 1
 
-  end_time = 1e4 # 2e2
+  end_time = 2e2
   dt = 1
 []
 
@@ -68,10 +40,17 @@
 
 [AuxVariables]
   [Tf]
-    initial_condition = 873.15
+    # initial_condition = 873.15
     order = CONSTANT
     family = MONOMIAL
   []
+[]
+
+[Problem]
+  # The restart is performed with a TransportSolutionVectorFile
+  # which does not initialize Tf, so we may use an initial condition
+  # when the Bison multiapp is not used
+  # allow_initial_conditions_with_restart = true
 []
 
 [TransportSystems]
@@ -103,6 +82,8 @@
   power = 225e3 # Assembly Power from NS
   power_density_variable = power_density
   integrated_power_postprocessor = integrated_power
+  # Normalizes the initial condition
+  power_scaling_postprocessor = power_scaling
 []
 
 [Materials]
@@ -132,7 +113,7 @@
 
 [Transfers]
   [to_sub_power_density]
-    type = MultiAppProjectionTransfer
+    type = MultiAppGeneralFieldShapeEvaluationTransfer
     to_multi_app = bison
     variable = power_density
     source_variable = power_density
@@ -142,14 +123,12 @@
     use_displaced_mesh = false
   []
   [from_sub_temp]
-    type = MultiAppGeometricInterpolationTransfer
+    type = MultiAppGeneralFieldNearestLocationTransfer
     from_multi_app = bison
     variable = Tf
     source_variable = Tfuel
-    execute_on = 'timestep_end'
+    execute_on = 'initial timestep_end'
     use_displaced_mesh = false
-    num_points = 1 # interpolate with one point (~closest point)
-    power = 0 # interpolate with constant function
   []
 []
 

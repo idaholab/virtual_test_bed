@@ -1,2 +1,4 @@
+hpc_copy_paths:
+  - htgr
 lfs_include:
   - htgr/httf

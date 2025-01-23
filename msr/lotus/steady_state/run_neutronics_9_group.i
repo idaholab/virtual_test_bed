@@ -204,7 +204,7 @@
 
   # Parameters for fixed point iteration with MultiApps
   fixed_point_algorithm = picard
-  fixed_point_min_its = 4
+  fixed_point_min_its = 2
   fixed_point_max_its = 30
   fixed_point_abs_tol = 1e-3
   relaxation_factor = 0.7
@@ -510,6 +510,8 @@
     type = FullSolveMultiApp
     input_files = 'run_ns_initial.i'
     execute_on = 'timestep_end'
+    # Not restoring means the solution keeps marching in time
+    # with an updated power (heat source) distribution
     no_restore = true
     keep_solution_during_restore = true
   []
@@ -529,52 +531,12 @@
     variable = fission_source
   []
 
-  [c1]
+  [from_ns]
     type = MultiAppGeneralFieldNearestLocationTransfer
     from_multi_app = ns
-    source_variable = 'c1'
-    variable = 'c1'
-  []
-  [c2]
-    type = MultiAppGeneralFieldNearestLocationTransfer
-    from_multi_app = ns
-    source_variable = 'c2'
-    variable = 'c2'
-  []
-  [c3]
-    type = MultiAppGeneralFieldNearestLocationTransfer
-    from_multi_app = ns
-    source_variable = 'c3'
-    variable = 'c3'
-  []
-  [c4]
-    type = MultiAppGeneralFieldNearestLocationTransfer
-    from_multi_app = ns
-    source_variable = 'c4'
-    variable = 'c4'
-  []
-  [c5]
-    type = MultiAppGeneralFieldNearestLocationTransfer
-    from_multi_app = ns
-    source_variable = 'c5'
-    variable = 'c5'
-  []
-  [c6]
-    type = MultiAppGeneralFieldNearestLocationTransfer
-    from_multi_app = ns
-    source_variable = 'c6'
-    variable = 'c6'
-  []
-  [T]
-    type = MultiAppGeneralFieldNearestLocationTransfer
-    from_multi_app = ns
-    source_variable = 'T'
-    variable = 'tfuel'
-  []
-  [T_ref]
-    type = MultiAppGeneralFieldNearestLocationTransfer
-    from_multi_app = ns
-    source_variable = 'T_ref'
-    variable = 'trefl'
+    source_variable = 'c1 c2 c3 c4 c5 c6 T T_ref'
+    variable = 'c1 c2 c3 c4 c5 c6 tfuel trefl'
+    source_type = 'variable_default variable_default variable_default variable_default variable_default
+                   variable_default variable_default variable_default'
   []
 []

@@ -24,5 +24,6 @@
     prereq = 'syntax_check_cardinal'
     # Exceedingly slow in devel mode
     method = 'opt'
+    max_time = '600'
   []
 []

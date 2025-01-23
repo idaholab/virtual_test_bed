@@ -107,7 +107,8 @@
     working_directory = '../RIA_transient'
     input = 'Griffin_transient.i'
     executable_pattern = 'griffin*|blue_crab*'
-    cli_args = "MultiApps/active='' Transfers/active=''"
+    cli_args = "MultiApps/active='' Transfers/active=''
+                TransportSystems/SN/NAzmthl=3 TransportSystems/SN/NPolar=1"
     prereq = 'griffin_alone'
     allow_unused = true
     min_parallel = 16 # for checkpoint restart
