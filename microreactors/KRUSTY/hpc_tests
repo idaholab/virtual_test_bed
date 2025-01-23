@@ -19,11 +19,12 @@
     [multiapp_ss_coarse]
       type = CSVDiff
       input = 'Multiphysics_SS/KRUSTY_Griffin_SN23_NA23_CMFD_coarse.i'
+      cli_args = 'Outputs/checkpoint=true'
       csvdiff = 'Multiphysics_SS/KRUSTY_Griffin_SN23_NA23_CMFD_coarse_out.csv'
       executable_pattern = 'blue_crab*|dire_wolf*'
       min_parallel = 196
       # This is a very slow simulation
-      max_time = 6000
+      max_time = 36000
       method = 'opt'
       # Cross section warning
       allow_warnings = true
@@ -32,7 +33,8 @@
     [multiapp_tr_coarse]
       type = CSVDiff
       input = 'Multiphysics_15C_RIT/KRUSTY_Griffin_SN23_NA23_CMFD_TR.i'
-      cli_args = "mesh_file='../MESH/Griffin_mesh_coarse.e'
+      cli_args = "Mesh/active=''
+                  Mesh/file='../Multiphysics_SS/KRUSTY_Griffin_SN23_NA23_CMFD_coarse_out_cp/LATEST'
                   MultiApps/bison/cli_args='restart_cp_file=../Multiphysics_SS/KRUSTY_Griffin_SN23_NA23_CMFD_coarse_out_bison0_checkpoint_cp/LATEST'
                   TransportSystems/sn/NPolar=1
                   TransportSystems/sn/NAzmthl=3

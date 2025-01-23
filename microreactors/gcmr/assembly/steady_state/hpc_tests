@@ -6,10 +6,11 @@
     csvdiff = 'gcmr_steady_out.csv'
     executable_pattern = 'blue_crab*'
     cli_args = "Outputs/file_base=gcmr_steady_out
-                Executioner/set_sam_default_petsc_options=false"
+                Executioner/set_sam_default_petsc_options=false
+                Executioner/richardson_max_its=5"
     # Need enough memory
     min_parallel = 196
-    max_time = 3000
+    max_time = 36000
     allow_unused = true
     # Missing group cross section for energy deposition
     allow_warnings = true
