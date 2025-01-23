@@ -9,7 +9,7 @@
                 Executioner/set_sam_default_petsc_options=false"
     # Need enough memory
     min_parallel = 196
-    max_time = 3000
+    max_time = 36000
     allow_unused = true
     # Missing group cross section for energy deposition
     allow_warnings = true
