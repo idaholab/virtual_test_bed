@@ -7,7 +7,7 @@
     executable_pattern = 'blue_crab*'
     cli_args = "Outputs/file_base=gcmr_steady_out
                 Executioner/set_sam_default_petsc_options=false
-                Executioner/richardson_max_its=5"
+                Executioner/richardson_max_its=20"
     # Need enough memory
     min_parallel = 196
     max_time = 36000

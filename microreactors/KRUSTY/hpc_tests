@@ -19,7 +19,7 @@
     [multiapp_ss_coarse]
       type = CSVDiff
       input = 'Multiphysics_SS/KRUSTY_Griffin_SN23_NA23_CMFD_coarse.i'
-      cli_args = 'Outputs/checkpoint=true'
+      cli_args = "Outputs/checkpoint=true"
       csvdiff = 'Multiphysics_SS/KRUSTY_Griffin_SN23_NA23_CMFD_coarse_out.csv'
       executable_pattern = 'blue_crab*|dire_wolf*'
       min_parallel = 196
