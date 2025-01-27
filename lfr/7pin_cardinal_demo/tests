@@ -5,34 +5,11 @@
     input = 'NTmesh.i'
     cli_args = '--mesh-only'
   []
-  [generate_mesh_pre_cfd]
-    type = RunApp
-    executable_pattern = 'cardinal*'
-    input = 'NTmesh.i'
-    cli_args = '--mesh-only'
-    # this additional test is only to make the dependency for unzip_cfd
-    prereq = 'generate_mesh_neutronics'
-  []
   [generate_mesh_heat]
     type = RunApp
     executable_pattern = 'cardinal*|griffin*'
     input = 'HCmesh.i'
     cli_args = '--mesh-only'
-  []
-  [unzip_xs]
-    type = RunCommand
-    command = 'tar -xvf LFR9g_P5.xml.tgz'
-    prereq = 'generate_mesh_neutronics'
-  []
-  [unzip_cfd1]
-    type = RunCommand
-    command = 'tar -xvf 7pin_ic.fld.tgz'
-    prereq = 'generate_mesh_pre_cfd'
-  []
-  [unzip_cfd]
-    type = RunCommand
-    command = 'tar -xvf 7pin.re2.tgz'
-    prereq = 'unzip_cfd1'
   []
 
   # Syntax tests
@@ -42,7 +19,7 @@
     check_input = true
     executable_pattern = 'griffin*'
     cli_args = "MultiApps/active='' Transfers/active=''"
-    prereq = 'unzip_xs'
+    prereq = 'generate_mesh_neutronics'
     max_time = 400
   []
   [syntax_conduction]
@@ -58,7 +35,6 @@
     input = 'nek.i'
     check_input = true
     executable_pattern = 'cardinal*'
-    prereq = 'unzip_cfd'
     # need more memory
     min_parallel = 32
   []
@@ -71,7 +47,7 @@
     csvdiff = NT_out.csv
     cli_args = "Executioner/richardson_max_its=1 Executioner/fixed_point_max_its=2"
     executable_pattern = 'cardinal*'
-    prereq = 'unzip_xs syntax_nekrs'
+    prereq = 'syntax_nekrs'
     min_parallel = 144
     max_time = 2000
     mesh_mode = DISTRIBUTED
