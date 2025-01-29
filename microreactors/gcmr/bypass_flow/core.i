@@ -39,6 +39,11 @@ B = 0.5
 A = '${fparse (1 - B) * pi / 2}'
 norm = 1.09261675156
 
+[GlobalParams]
+  # Reduces transfers efficiency for now, can be removed once transferred fields are checked
+  bbox_factor = 10
+[]
+
 [Mesh]
   [file_mesh]
     type = FileMeshGenerator

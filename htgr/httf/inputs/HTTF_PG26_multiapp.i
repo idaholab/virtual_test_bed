@@ -17,6 +17,7 @@ R_l = 0.009 # m
 core_block_height = 0.198 # m
 heater_P = '${fparse 0.004877258 * 16}' # m
 heater_SA = '${fparse heater_P * 10 * core_block_height}' # m^2
+
 # Necessary functions for the PG-26 Transient
 [Functions]
   # Specific heat of core ceramic material
@@ -209,6 +210,9 @@ heater_SA = '${fparse heater_P * 10 * core_block_height}' # m^2
     variable = T_wall_channel # AuxVariable name in relap-7 input files
     source_user_object = Twall_for_relap_uo # Corresponding main app UserObject
     search_value_conflicts = false
+
+    # Reduces transfers efficiency for now, can be removed once transferred fields are checked
+    bbox_factor = 10
   []
   # Fluid temperature received from relap-7
   [tfluid_from_relap]
@@ -217,6 +221,9 @@ heater_SA = '${fparse heater_P * 10 * core_block_height}' # m^2
     source_variable = T # variable name in relap-7
     variable = tfluid # AuxVariable name in main app
     search_value_conflicts = false
+
+    # Reduces transfers efficiency for now, can be removed once transferred fields are checked
+    bbox_factor = 10
   []
   # Convective heat transfer coefficient received from relap-7
   [Hw_channel_from_relap]
@@ -225,6 +232,9 @@ heater_SA = '${fparse heater_P * 10 * core_block_height}' # m^2
     source_variable = Hw_chan # AuxVariable name in relap-7
     variable = Hw_channel # AuxVariable name in main app
     search_value_conflicts = false
+
+    # Reduces transfers efficiency for now, can be removed once transferred fields are checked
+    bbox_factor = 10
   []
   # Wall temperature of core barrel outer surface
   [Twall_barrel_relap]
@@ -233,6 +243,9 @@ heater_SA = '${fparse heater_P * 10 * core_block_height}' # m^2
     variable = T_wall_barrel # AuxVariable name in relap-7
     source_user_object = Twall_barrel_relap_uo # Corresponding main app UserObject
     search_value_conflicts = false
+
+    # Reduces transfers efficiency for now, can be removed once transferred fields are checked
+    bbox_factor = 10
   []
   # Wall temperature of RPV inner surface
   [Twall_RPV_relap]
@@ -241,6 +254,9 @@ heater_SA = '${fparse heater_P * 10 * core_block_height}' # m^2
     variable = T_wall_RPV # AuxVariable name in relap-7
     source_user_object = Twall_RPV_relap_uo # Corresponding main app UserObject
     search_value_conflicts = false
+
+    # Reduces transfers efficiency for now, can be removed once transferred fields are checked
+    bbox_factor = 10
   []
   # Fluid temperature received from relap-7
   [tfluid_upcomer_from_relap]
@@ -249,6 +265,9 @@ heater_SA = '${fparse heater_P * 10 * core_block_height}' # m^2
     source_variable = T # variable name in relap-7
     variable = tfluid_upcomer # AuxVariable name in main app
     search_value_conflicts = false
+
+    # Reduces transfers efficiency for now, can be removed once transferred fields are checked
+    bbox_factor = 10
   []
   # Convective heat transfer coefficient for core barrel received from relap-7
   [Hw_barrel_from_relap]
@@ -257,6 +276,9 @@ heater_SA = '${fparse heater_P * 10 * core_block_height}' # m^2
     source_variable = Hw_barrel # AuxVariable name in relap-7
     variable = Hw_cb # AuxVariable name in main app
     search_value_conflicts = false
+
+    # Reduces transfers efficiency for now, can be removed once transferred fields are checked
+    bbox_factor = 10
   []
   # Convective heat transfer coefficient for core barrel received from relap-7
   [Hw_RPV_from_relap]
@@ -265,6 +287,9 @@ heater_SA = '${fparse heater_P * 10 * core_block_height}' # m^2
     source_variable = Hw_RPV # AuxVariable name in relap-7
     variable = Hw_vessel # AuxVariable name in main app
     search_value_conflicts = false
+
+    # Reduces transfers efficiency for now, can be removed once transferred fields are checked
+    bbox_factor = 10
   []
   # Wall temperature of RCCS inner panel surface
   [Twall_RCCS_inner]
@@ -273,6 +298,9 @@ heater_SA = '${fparse heater_P * 10 * core_block_height}' # m^2
     variable = T_wall_inner # AuxVariable name in relap-7
     source_user_object = Twall_RCCS_inner_uo # Corresponding main app UserObject
     search_value_conflicts = false
+
+    # Reduces transfers efficiency for now, can be removed once transferred fields are checked
+    bbox_factor = 10
   []
   # Wall temperature of RCCS inner panel surface
   [Twall_RCCS_outer]
@@ -281,6 +309,9 @@ heater_SA = '${fparse heater_P * 10 * core_block_height}' # m^2
     variable = T_wall_outer # AuxVariable name in relap-7
     source_user_object = Twall_RCCS_outer_uo # Corresponding main app UserObject
     search_value_conflicts = false
+
+    # Reduces transfers efficiency for now, can be removed once transferred fields are checked
+    bbox_factor = 10
   []
   # Convective heat transfer coefficient for RCCS inner panel received from relap-7
   [Hw_RCCS_inner]
@@ -289,6 +320,9 @@ heater_SA = '${fparse heater_P * 10 * core_block_height}' # m^2
     source_variable = Hw_inner # AuxVariable name in relap-7
     variable = Hw_in # AuxVariable name in main app
     search_value_conflicts = false
+
+    # Reduces transfers efficiency for now, can be removed once transferred fields are checked
+    bbox_factor = 10
   []
   # Convective heat transfer coefficient for RCCS outer panel received from relap-7
   [Hw_RCCS_outer]
@@ -297,6 +331,9 @@ heater_SA = '${fparse heater_P * 10 * core_block_height}' # m^2
     source_variable = Hw_outer # AuxVariable name in relap-7
     variable = Hw_out # AuxVariable name in main app
     search_value_conflicts = false
+
+    # Reduces transfers efficiency for now, can be removed once transferred fields are checked
+    bbox_factor = 10
   []
   # Fluid temperature received from relap-7
   [tfluid_RCCS_from_relap]
@@ -305,6 +342,9 @@ heater_SA = '${fparse heater_P * 10 * core_block_height}' # m^2
     source_variable = T # variable name in relap-7
     variable = tfluid_RCCS # AuxVariable name in main app
     search_value_conflicts = false
+
+    # Reduces transfers efficiency for now, can be removed once transferred fields are checked
+    bbox_factor = 10
   []
   # Mass flow rate entering core from relap-7
   [mdot_in_transfer]

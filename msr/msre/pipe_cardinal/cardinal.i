@@ -71,6 +71,9 @@
     source_variable = temp
     variable = temperature
     from_multi_app = nek
+
+    # Reduces transfers efficiency for now, can be removed once transferred fields are checked
+    bbox_factor = 10
   []
 []
 

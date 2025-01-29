@@ -242,6 +242,8 @@
     source_variable = flux_uo
     variable = hp_flux_aux
     execute_on = 'timestep_begin'
+    # Reduces transfers efficiency for now, can be removed once transferred fields are checked
+    bbox_factor = 10
   []
   [to_sockeye_temp] # Transfer heat pipe surface temperature to Sockeye subapps
     type = MultiAppGeneralFieldNearestLocationTransfer
@@ -249,6 +251,8 @@
     source_variable = temp_uo
     variable = T_wall_var
     execute_on = 'timestep_begin'
+    # Reduces transfers efficiency for now, can be removed once transferred fields are checked
+    bbox_factor = 10
   []
 []
 

@@ -268,6 +268,8 @@ corr_factor = '${fparse R_hp_hole / R_clad_o * area_correction / perimeter_corre
     source_variable = hp_temp_aux
     variable = hp_temp_aux
     execute_on = 'initial timestep_begin'
+    # Reduces transfers efficiency for now, can be removed once transferred fields are checked
+    bbox_factor = 10
   []
   [to_sockeye_flux]
     type = MultiAppGeneralFieldUserObjectTransfer
@@ -275,6 +277,8 @@ corr_factor = '${fparse R_hp_hole / R_clad_o * area_correction / perimeter_corre
     to_multi_app = sockeye
     source_user_object = flux_uo
     execute_on = 'initial timestep_begin'
+    # Reduces transfers efficiency for now, can be removed once transferred fields are checked
+    bbox_factor = 10
   []
 []
 

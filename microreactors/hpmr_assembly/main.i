@@ -67,6 +67,11 @@ hp_positions = '
   ${x5} ${y5} ${hp_axial_offset}
   ${x6} ${y6} ${hp_axial_offset}'
 
+[GlobalParams]
+  # Reduces transfers efficiency for now, can be removed once transferred fields are checked
+  bbox_factor = 10
+[]
+
 [Mesh]
   [file]
     type = FileMeshGenerator

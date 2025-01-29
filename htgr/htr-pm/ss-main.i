@@ -54,6 +54,9 @@ rho_in            = 6.3306  # Helium density at 7 MPa and 523.15 K (from NIST)
   pressure = p
   temperature = T
   rho = density
+
+  # Reduces transfers efficiency for now, can be removed once transferred fields are checked
+  bbox_factor = 10
 []
 
 [Mesh]

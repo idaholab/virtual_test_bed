@@ -84,12 +84,18 @@
     source_variable = temp
     from_multi_app = nek
     variable = nek_temp
+
+    # Reduces transfers efficiency for now, can be removed once transferred fields are checked
+    bbox_factor = 10
   []
   [avg_flux]
     type = MultiAppGeneralFieldNearestLocationTransfer
     source_variable = avg_flux
     to_multi_app = nek
     variable = avg_flux
+
+    # Reduces transfers efficiency for now, can be removed once transferred fields are checked
+    bbox_factor = 10
   []
   [flux_integral_to_nek]
     type = MultiAppPostprocessorTransfer

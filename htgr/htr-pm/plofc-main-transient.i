@@ -58,6 +58,9 @@ pbed_d      = 3.0  # Pebble bed diameter (m)
   pressure = p
   temperature = T
   rho = density
+
+  # Reduces transfers efficiency for now, can be removed once transferred fields are checked
+  bbox_factor = 10
 []
 
 [Mesh]
