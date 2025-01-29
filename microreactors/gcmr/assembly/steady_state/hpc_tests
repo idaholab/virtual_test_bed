@@ -3,7 +3,7 @@
   [steady_multiphysics]
     type = 'CSVDiff'
     input = 'Griffin_steady_state.i'
-    csvdiff = 'gcmr_steady_out.csv'
+    csvdiff = 'gcmr_steady_out.csv gcmr_steady_out_bison0_csv.csv'
     executable_pattern = 'blue_crab*'
     cli_args = "Outputs/file_base=gcmr_steady_out
                 Executioner/set_sam_default_petsc_options=false
@@ -21,7 +21,7 @@
     type = 'CSVDiff'
     working_directory = '../Flow_blockage_transient'
     input = 'Griffin_transient.i'
-    csvdiff = 'gcmr_transient_out.csv'
+    csvdiff = 'gcmr_transient_out.csv gcmr_transient_out_bison0_csv.csv'
     executable_pattern = 'blue_crab*'
     cli_args = "Outputs/file_base=gcmr_transient_out
                 MultiApps/bison/cli_args="Problem/restart_file_base='../steady_state/gcmr_steady_out_bison0_cp/LATEST'
