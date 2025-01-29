@@ -5,7 +5,7 @@
     csvdiff = 'multiphysics_out.csv multiphysics_out_ns0.csv'
     executable_pattern = 'mcre*|blue_crab*'
     cli_args = "Outputs/file_base=multiphysics_out "
-               "MultiApps/ns/cli_args='Executioner/end_time=700'"
+               "MultiApps/ns/cli_args='Executioner/end_time=700;Outputs/out/execute_on=FINAL'"
     # Fuel temperature is out of bounds for MGXS
     allow_warnings = true
     min_parallel = 96

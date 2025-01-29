@@ -832,7 +832,9 @@ mixing_length_reactor_calibrated = '${fparse 0.07 * 0.1 * 2}'
 ################################################################################
 
 [Outputs]
-  csv = true
+  [out]
+    type = CSV
+  []
   [restart]
     type = Exodus
     execute_on = 'timestep_end final'
