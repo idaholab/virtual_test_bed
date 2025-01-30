@@ -61,6 +61,9 @@ y_center = ${fparse r}
   grid_names = 'Tfuel Tmod CD'
   grid_variables = 'Tfuel Tmod CD'
   is_meter = true
+
+  # Reduces transfers efficiency for now, can be removed once transferred fields are checked
+  bbox_factor = 10
 []
 
 [AuxVariables]

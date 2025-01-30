@@ -177,6 +177,8 @@ bison_ref_blocks = '${reflector_blocks} ${absorber_blocks}'
     variable = power_density
     from_blocks = '1 2'
     to_blocks = '${bison_fuel_blocks}'
+    # Reduces transfers efficiency for now, can be removed once transferred fields are checked
+    bbox_factor = 10
   []
   [tfuel_from_modules]
     type = MultiAppGeneralFieldNearestNodeTransfer
@@ -184,6 +186,8 @@ bison_ref_blocks = '${reflector_blocks} ${absorber_blocks}'
     source_variable = Tsolid
     variable = Tfuel
     from_blocks = '${bison_fuel_blocks}'
+    # Reduces transfers efficiency for now, can be removed once transferred fields are checked
+    bbox_factor = 10
   []
   [tmod_from_modules]
     type = MultiAppGeneralFieldNearestNodeTransfer
@@ -191,6 +195,8 @@ bison_ref_blocks = '${reflector_blocks} ${absorber_blocks}'
     source_variable = Tsolid
     variable = Tmod
     from_blocks = '${bison_mod_blocks}'
+    # Reduces transfers efficiency for now, can be removed once transferred fields are checked
+    bbox_factor = 10
   []
   [trefl_from_modules]
     type = MultiAppGeneralFieldNearestNodeTransfer
@@ -198,12 +204,16 @@ bison_ref_blocks = '${reflector_blocks} ${absorber_blocks}'
     source_variable = Tsolid
     variable = Trefl
     from_blocks = '${bison_ref_blocks}'
+    # Reduces transfers efficiency for now, can be removed once transferred fields are checked
+    bbox_factor = 10
   []
   [ch_from_modules]
     type = MultiAppGeneralFieldNearestNodeTransfer
     from_multi_app = bison
     source_variable = ch
     variable = ch
+    # Reduces transfers efficiency for now, can be removed once transferred fields are checked
+    bbox_factor = 10
   []
 []
 
