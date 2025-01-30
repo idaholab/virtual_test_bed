@@ -12,6 +12,8 @@
     min_parallel = 196
     max_time = 36000
     allow_unused = true
+    # Limiting the number of multiphysics iterations
+    rel_err = 5e-5
     # Missing group cross section for energy deposition
     allow_warnings = true
   []
