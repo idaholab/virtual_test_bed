@@ -7,6 +7,11 @@
 num_layers_for_THM = 50 # number of elements in the THM model; for the converged
 # case, we set this to 150
 
+[GlobalParams]
+  # Reduces transfers efficiency for now, can be removed once transferred fields are checked
+  bbox_factor = 10
+[]
+
 [Mesh]
   # mesh mirror for the solid regions
   [solid]

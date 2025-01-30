@@ -120,6 +120,9 @@ speed = 20 # Degrees per second
   grid_names = 'Tfuel Tmod CD'
   grid_variables = 'Tfuel Tmod CD'
   is_meter = true
+
+  # Reduces transfers efficiency for now, can be removed once transferred fields are checked
+  bbox_factor = 10
 []
 
 [Materials]

@@ -307,6 +307,8 @@ coolant_half_points_filename = ../channel_positions/coolant_half_points.txt # Fi
     variable = Tw # Exists in coolant.
     execute_on = 'TIMESTEP_END'
     displaced_target_mesh = true
+    # Reduces transfers efficiency for now, can be removed once transferred fields are checked
+    bbox_factor = 10
   []
   [Tfluid_from_coolant]
     # Fluid temperature from fluid domain is transferred to solid domain.
@@ -338,6 +340,8 @@ coolant_half_points_filename = ../channel_positions/coolant_half_points.txt # Fi
     variable = Tw # Exists in coolant.
     execute_on = 'TIMESTEP_END'
     displaced_target_mesh = true
+    # Reduces transfers efficiency for now, can be removed once transferred fields are checked
+    bbox_factor = 10
   []
   [Tfluid_from_coolant_half]
     # Fluid temperature from fluid domain is transferred to solid domain.

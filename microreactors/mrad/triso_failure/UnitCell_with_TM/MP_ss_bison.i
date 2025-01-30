@@ -281,6 +281,9 @@ hp_surfs = 'HP_surf'
     source_variable = hp_temp_aux
     variable = hp_temp_aux
     execute_on = 'timestep_begin'
+
+    # Reduces transfers efficiency for now, can be removed once transferred fields are checked
+    bbox_factor = 10
   []
   [to_sockeye_flux]
     type = MultiAppGeneralFieldNearestLocationTransfer
@@ -288,6 +291,8 @@ hp_surfs = 'HP_surf'
     source_variable = flux_uo
     variable = master_flux
     execute_on = 'timestep_begin'
+    # Reduces transfers efficiency for now, can be removed once transferred fields are checked
+    bbox_factor = 10
   []
   [from_bison_TM_dispx]
     type = MultiAppGeometricInterpolationTransfer

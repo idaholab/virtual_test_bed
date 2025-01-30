@@ -10,6 +10,11 @@
 # core average heat flux from the pebbles to the blocks
 core_heat_flux = 5e3
 
+[GlobalParams]
+  # Reduces transfers efficiency for now, can be removed once transferred fields are checked
+  bbox_factor = 10
+[]
+
 # Note: the mesh is stored using git large file system (LFS)
 [Mesh]
   type = FileMesh
