@@ -134,9 +134,8 @@
 
 [Transfers]
   [to_sub_power_density]
-    type = MultiAppProjectionTransfer
-    direction = to_multiapp
-    multi_app = bison
+    type = MultiAppGeneralFieldShapeEvaluationTransfer
+    to_multi_app = bison
     variable = power_density
     source_variable = power_density
     execute_on = 'timestep_end'
@@ -145,15 +144,12 @@
     use_displaced_mesh = false
   []
   [from_sub_temp]
-    type = MultiAppGeometricInterpolationTransfer
-    direction = from_multiapp
-    multi_app = bison
+    type = MultiAppGeneralFieldNearestLocationTransfer
+    from_multi_app = bison
     variable = Tf
     source_variable = Tfuel
     execute_on = 'timestep_end'
     use_displaced_mesh = false
-    num_points = 1 # interpolate with one point (~closest point)
-    power = 0 # interpolate with constant function
   []
 []
 

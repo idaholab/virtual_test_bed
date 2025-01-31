@@ -52,7 +52,6 @@ coolant_half_points_filename = ../channel_positions/coolant_half_points.txt # Fi
     order = FIRST
     family = LAGRANGE
     initial_condition = ${TsInit}
-    #scaling = 1.0e-2
   []
 []
 
@@ -83,7 +82,7 @@ coolant_half_points_filename = ../channel_positions/coolant_half_points.txt # Fi
     block = 'Fuel Fuel_tri'
   []
   [hfluid] # Heat Transfer coefficient
-    # Calculated by SAM and then transfered with the scaling factor.
+    # Calculated by SAM and then transferred with the scaling factor.
     order = CONSTANT
     family = MONOMIAL
     initial_condition = 2000.00
@@ -279,7 +278,7 @@ coolant_half_points_filename = ../channel_positions/coolant_half_points.txt # Fi
     max_procs_per_app = 1
     # keep_solution_during_restore = true
     output_in_position = true
-    cli_args = AuxKernels/scale_htc/function='0.997090723*htc'
+    cli_args = AuxKernels/scale_htc/expression='0.997090723*htc'
     # cli_args: this is a conversion to help with the energy balance.
   []
   [coolant_half_MA]
@@ -292,7 +291,7 @@ coolant_half_points_filename = ../channel_positions/coolant_half_points.txt # Fi
     max_procs_per_app = 1
     # keep_solution_during_restore = true
     output_in_position = true
-    cli_args = AuxKernels/scale_htc/function='0.997090723*htc'
+    cli_args = AuxKernels/scale_htc/expression='0.997090723*htc'
     # cli_args: this is a conversion to help with the energy balance.
   []
 []
@@ -397,54 +396,64 @@ coolant_half_points_filename = ../channel_positions/coolant_half_points.txt # Fi
     type = ElementAverageValue
     variable = temp
     block = 'Fuel Fuel_tri'
+    execute_on = 'initial timestep_end'
   []
   [fuel_temp_max]
     type = ElementExtremeValue
     variable = temp
     block = 'Fuel Fuel_tri'
+    execute_on = 'initial timestep_end'
   []
   [fuel_temp_min]
     type = ElementExtremeValue
     variable = temp
     block = 'Fuel Fuel_tri'
     value_type = min
+    execute_on = 'initial timestep_end'
   []
   [mod_temp_avg]
     type = ElementAverageValue
     variable = temp
     block = moderator
+    execute_on = 'initial timestep_end'
   []
   [mod_temp_max]
     type = ElementExtremeValue
     variable = temp
     block = moderator
+    execute_on = 'initial timestep_end'
   []
   [mod_temp_min]
     type = ElementExtremeValue
     variable = temp
     block = moderator
     value_type = min
+    execute_on = 'initial timestep_end'
   []
   [monolith_temp_avg]
     type = ElementAverageValue
     variable = temp
     block = monolith
+    execute_on = 'initial timestep_end'
   []
   [monolith_temp_max]
     type = ElementExtremeValue
     variable = temp
     block = monolith
+    execute_on = 'initial timestep_end'
   []
   [monolith_temp_min]
     type = ElementExtremeValue
     variable = temp
     block = monolith
     value_type = min
+    execute_on = 'initial timestep_end'
   []
   [heatpipe_surface_temp_avg]
     type = SideAverageValue
     variable = temp
     boundary = 'full_coolant_surf half_coolant_surf'
+    execute_on = 'initial timestep_end'
   []
   [power_density]
     type = ElementIntegralVariablePostprocessor
