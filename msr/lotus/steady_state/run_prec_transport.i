@@ -433,8 +433,8 @@ beta6 = 0.000680667
 
   # Solver parameters
   solve_type = 'NEWTON'
-  petsc_options_iname = '-pc_type -pc_factor_shift_type -ksp_gmres_restart'
-  petsc_options_value = 'lu NONZERO 20'
+  petsc_options_iname = '-pc_type -pc_factor_shift_type -ksp_gmres_restart -pc_factor_mat_solver_package'
+  petsc_options_value = 'lu NONZERO 20 superlu_dist'
   line_search = 'none'
   nl_rel_tol = 1e-8
   nl_abs_tol = 1e-6

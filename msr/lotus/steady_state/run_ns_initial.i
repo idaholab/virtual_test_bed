@@ -7,9 +7,9 @@
 ################################################################################
 
 # Notes:
-# - These inputs are not using the shorthand syntaxes to be consistent with inputs
+# - These inputs are not using the Physics syntax to be consistent with inputs
 #   from another project.
-#   Please consider using the shorthand syntaxes for setting up flow simulations for your own models
+#   Please consider using the Physics syntax for setting up flow simulations for your own models
 # - These inputs are deliberately not using later developments of the code.
 #   Please contact the model owner if you require an updated version.
 
@@ -213,13 +213,22 @@ mixing_length_reactor_calibrated = '${fparse 0.07 * 0.1 * 2}'
     type = INSFVEnergyVariable
     initial_condition = 900.0
     block = 'reactor pipe pump mixing-plate'
+    # Segregating T_fluid for performance
+    # This is only OK because we are marching to steady state
+    solver_sys = 'heat_transfer'
   []
   [T_ref]
     type = INSFVEnergyVariable
     initial_condition = 900.0
     block = 'reflector'
     scaling = 0.001
+    # Segregating T_ref for performance
+    solver_sys = 'heat_transfer'
   []
+[]
+
+[Problem]
+  nl_sys_names = 'nl0 heat_transfer'
 []
 
 [FVKernels]
@@ -773,9 +782,12 @@ mixing_length_reactor_calibrated = '${fparse 0.07 * 0.1 * 2}'
   type = Transient
 
   # Time-stepping parameters
-  start_time = 1e7
-  end_time = 2e7
+  start_time = 0
+  end_time = 1e7
   # dt = 1e6
+  steady_state_detection = true
+  steady_state_start_time = 5
+  steady_state_tolerance = 1e-5
 
   [TimeStepper]
     type = IterationAdaptiveDT
@@ -786,8 +798,8 @@ mixing_length_reactor_calibrated = '${fparse 0.07 * 0.1 * 2}'
 
   # Solver parameters
   solve_type = 'NEWTON'
-  petsc_options_iname = '-pc_type -pc_factor_shift_type -ksp_gmres_restart'
-  petsc_options_value = 'lu NONZERO 20'
+  petsc_options_iname = '-pc_type -pc_factor_shift_type -ksp_gmres_restart -pc_factor_mat_solver_package'
+  petsc_options_value = 'lu NONZERO 20 superlu_dist'
   line_search = 'none'
   nl_rel_tol = 1e-6
   nl_abs_tol = 1e-4
@@ -797,6 +809,18 @@ mixing_length_reactor_calibrated = '${fparse 0.07 * 0.1 * 2}'
 
   # MultiApp iteration parameters
   relaxation_factor = 1.0
+
+  # Multi-system parameter
+  system_names = 'nl0 heat_transfer'
+[]
+
+[Convergence]
+  [multisys]
+    type = IterationCountConvergence
+    min_iterations = 0
+    max_iterations = 10
+    converge_at_max_iterations = true
+  []
 []
 
 [Debug]
@@ -808,7 +832,9 @@ mixing_length_reactor_calibrated = '${fparse 0.07 * 0.1 * 2}'
 ################################################################################
 
 [Outputs]
-  csv = true
+  [out]
+    type = CSV
+  []
   [restart]
     type = Exodus
     execute_on = 'timestep_end final'

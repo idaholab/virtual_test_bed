@@ -18,11 +18,14 @@ coolant_half_points_filename = ../channel_positions/coolant_half_points.txt # Fi
   restart_file_base = '../steady_state/Griffin_steady_state_out_bison0_cp/LATEST'
   force_restart = true
   register_objects_from = 'BisonApp'
-  #library_path = '/beegfs1/software/NEAMS_microreactor/projects_super_mar22/bison/lib'
 []
 
 [Mesh]
-  file = '../steady_state/Griffin_steady_state_out_bison0_cp/LATEST'
+  [fmg]
+    type = FileMeshGenerator
+    file = '../MESH/BISON_mesh.e'
+    # alternatively use the restart file
+  []
 []
 
 [Variables]
@@ -30,7 +33,6 @@ coolant_half_points_filename = ../channel_positions/coolant_half_points.txt # Fi
     order = FIRST
     family = LAGRANGE
     # initial_condition = ${TsInit}
-    #scaling = 1.0e-2
   []
 []
 
@@ -61,7 +63,7 @@ coolant_half_points_filename = ../channel_positions/coolant_half_points.txt # Fi
     block = 'Fuel Fuel_tri'
   []
   [hfluid] # Heat Transfer coefficient
-    # Calculated by SAM and then transfered with the scaling factor.
+    # Calculated by SAM and then transferred with the scaling factor.
     order = CONSTANT
     family = MONOMIAL
     # initial_condition = 2000.00
@@ -257,24 +259,24 @@ coolant_half_points_filename = ../channel_positions/coolant_half_points.txt # Fi
     max_procs_per_app = 1
     # keep_solution_during_restore = true
     output_in_position = true
-    cli_args = 'Vin=15;Vint=15;AuxKernels/scale_htc/function="0.997090723*htc"
-              Vin=15;Vint=15;AuxKernels/scale_htc/function="0.997090723*htc"
-              Vin=15;Vint=15;AuxKernels/scale_htc/function="0.997090723*htc"
-              Vin=15;Vint=15;AuxKernels/scale_htc/function="0.997090723*htc"
-              Vin=15;Vint=15;AuxKernels/scale_htc/function="0.997090723*htc"
-              Vin=0;Vint=0;AuxKernels/scale_htc/function="0.997090723*htc"
-              Vin=15;Vint=15;AuxKernels/scale_htc/function="0.997090723*htc"
-              Vin=15;Vint=15;AuxKernels/scale_htc/function="0.997090723*htc"
-              Vin=15;Vint=15;AuxKernels/scale_htc/function="0.997090723*htc"
-              Vin=15;Vint=15;AuxKernels/scale_htc/function="0.997090723*htc"
-              Vin=15;Vint=15;AuxKernels/scale_htc/function="0.997090723*htc"
-              Vin=15;Vint=15;AuxKernels/scale_htc/function="0.997090723*htc"
-              Vin=15;Vint=15;AuxKernels/scale_htc/function="0.997090723*htc"
-              Vin=15;Vint=15;AuxKernels/scale_htc/function="0.997090723*htc"
-              Vin=15;Vint=15;AuxKernels/scale_htc/function="0.997090723*htc"
-              Vin=15;Vint=15;AuxKernels/scale_htc/function="0.997090723*htc"
-              Vin=15;Vint=15;AuxKernels/scale_htc/function="0.997090723*htc"
-              Vin=15;Vint=15;AuxKernels/scale_htc/function="0.997090723*htc"'
+    cli_args = 'Vin=15;Vint=15;AuxKernels/scale_htc/expression="0.997090723*htc"
+              Vin=15;Vint=15;AuxKernels/scale_htc/expression="0.997090723*htc"
+              Vin=15;Vint=15;AuxKernels/scale_htc/expression="0.997090723*htc"
+              Vin=15;Vint=15;AuxKernels/scale_htc/expression="0.997090723*htc"
+              Vin=15;Vint=15;AuxKernels/scale_htc/expression="0.997090723*htc"
+              Vin=0;Vint=0;AuxKernels/scale_htc/expression="0.997090723*htc"
+              Vin=15;Vint=15;AuxKernels/scale_htc/expression="0.997090723*htc"
+              Vin=15;Vint=15;AuxKernels/scale_htc/expression="0.997090723*htc"
+              Vin=15;Vint=15;AuxKernels/scale_htc/expression="0.997090723*htc"
+              Vin=15;Vint=15;AuxKernels/scale_htc/expression="0.997090723*htc"
+              Vin=15;Vint=15;AuxKernels/scale_htc/expression="0.997090723*htc"
+              Vin=15;Vint=15;AuxKernels/scale_htc/expression="0.997090723*htc"
+              Vin=15;Vint=15;AuxKernels/scale_htc/expression="0.997090723*htc"
+              Vin=15;Vint=15;AuxKernels/scale_htc/expression="0.997090723*htc"
+              Vin=15;Vint=15;AuxKernels/scale_htc/expression="0.997090723*htc"
+              Vin=15;Vint=15;AuxKernels/scale_htc/expression="0.997090723*htc"
+              Vin=15;Vint=15;AuxKernels/scale_htc/expression="0.997090723*htc"
+              Vin=15;Vint=15;AuxKernels/scale_htc/expression="0.997090723*htc"'
     # cli_args: this is a conversion to help with the energy balance.
   []
   [coolant_half_MA]
@@ -287,7 +289,7 @@ coolant_half_points_filename = ../channel_positions/coolant_half_points.txt # Fi
     max_procs_per_app = 1
     # keep_solution_during_restore = true
     output_in_position = true
-    cli_args = AuxKernels/scale_htc/function='0.997090723*htc'
+    cli_args = AuxKernels/scale_htc/expression='0.997090723*htc'
     # cli_args: this is a conversion to help with the energy balance.
   []
 []
@@ -380,11 +382,12 @@ coolant_half_points_filename = ../channel_positions/coolant_half_points.txt # Fi
   nl_abs_tol = 5e-9
   nl_rel_tol = 1e-8
 
-  # picard_rel_tol = 1.0e-8
-  # picard_abs_tol = 5.0e-9
-  # picard_max_its = 20
+  # MultiApps fixed point iteration
+  # fixed_point_rel_tol = 1.0e-8
+  # fixed_point_abs_tol = 5.0e-9
+  # fixed_point_max_its = 20
 
-  start_time = 0.0 # negative start time so we can start running from t = 0
+  start_time = 0.0
   end_time = 1e4
   dt = 1
 
@@ -396,54 +399,64 @@ coolant_half_points_filename = ../channel_positions/coolant_half_points.txt # Fi
     type = ElementAverageValue
     variable = temp
     block = 'Fuel Fuel_tri'
+    execute_on = 'initial timestep_end'
   []
   [fuel_temp_max]
     type = ElementExtremeValue
     variable = temp
     block = 'Fuel Fuel_tri'
+    execute_on = 'initial timestep_end'
   []
   [fuel_temp_min]
     type = ElementExtremeValue
     variable = temp
     block = 'Fuel Fuel_tri'
     value_type = min
+    execute_on = 'initial timestep_end'
   []
   [mod_temp_avg]
     type = ElementAverageValue
     variable = temp
     block = moderator
+    execute_on = 'initial timestep_end'
   []
   [mod_temp_max]
     type = ElementExtremeValue
     variable = temp
     block = moderator
+    execute_on = 'initial timestep_end'
   []
   [mod_temp_min]
     type = ElementExtremeValue
     variable = temp
     block = moderator
     value_type = min
+    execute_on = 'initial timestep_end'
   []
   [monolith_temp_avg]
     type = ElementAverageValue
     variable = temp
     block = monolith
+    execute_on = 'initial timestep_end'
   []
   [monolith_temp_max]
     type = ElementExtremeValue
     variable = temp
     block = monolith
+    execute_on = 'initial timestep_end'
   []
   [monolith_temp_min]
     type = ElementExtremeValue
     variable = temp
     block = monolith
     value_type = min
+    execute_on = 'initial timestep_end'
   []
   [heatpipe_surface_temp_avg]
     type = SideAverageValue
     variable = temp
     boundary = 'full_coolant_surf half_coolant_surf'
+    execute_on = 'initial timestep_end'
   []
   [power_density]
     type = ElementIntegralVariablePostprocessor
@@ -463,5 +476,5 @@ coolant_half_points_filename = ../channel_positions/coolant_half_points.txt # Fi
   []
   perf_graph = true
   color = true
-  checkpoint = false
+  checkpoint = true
 []

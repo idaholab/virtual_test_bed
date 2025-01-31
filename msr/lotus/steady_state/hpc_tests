@@ -1,0 +1,19 @@
+[Tests]
+  [coupled_mcre_multiphysics]
+    type = CSVDiff
+    input = 'run_neutronics_9_group.i'
+    # We only compare the neutronics results for now
+    # Fluids results contain too many time steps
+    csvdiff = 'multiphysics_out.csv'
+    executable_pattern = 'mcre*|blue_crab*'
+    cli_args = "Outputs/file_base=multiphysics_out "
+               "MultiApps/ns/cli_args='Executioner/end_time=700'"
+    # Fuel temperature is out of bounds for MGXS
+    allow_warnings = true
+    min_parallel = 96
+    max_time = 36000
+    method = 'opt'
+    # After 25,000 s on HPC (32 procs, 500s end time), at 4e-3
+    rel_err = 8e-3
+  []
+[]
