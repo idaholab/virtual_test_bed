@@ -54,6 +54,12 @@ reflector_disp = 0.0
     initial_condition = 300
     block = ${fuel_all}
   []
+  [disp_x]
+  []
+  [disp_y]
+  []
+  [disp_z]
+  []
 []
 
 [AuxVariables]
@@ -234,7 +240,6 @@ reflector_disp = 0.0
     block = '${fuel_all}'
     temperature = temp_f
     strain = SMALL # Small strain should work, but finite may have better performance
-    add_variables = true
     eigenstrain_names = 'thermal_strain'
     generate_output = 'vonmises_stress strain_xx strain_yy strain_zz stress_xx stress_yy stress_zz hydrostatic_stress'
     extra_vector_tags = 'ref'
@@ -243,7 +248,6 @@ reflector_disp = 0.0
   [mech_parts_non_fuel]
     block = '${nonfuel_mech}'
     strain = SMALL # Small strain should work, but finite may have better performance
-    add_variables = true
     eigenstrain_names = 'thermal_strain'
     generate_output = 'vonmises_stress strain_xx strain_yy strain_zz stress_xx stress_yy stress_zz hydrostatic_stress'
     extra_vector_tags = 'ref'
