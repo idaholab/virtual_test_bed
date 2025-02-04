@@ -1,6 +1,7 @@
 [Tests]
   [coupled_simulation_steady]
     type = CSVDiff
+    working_directory = 'steady_state'
     input = 'HPMR_dfem_griffin_ss.i'
     csvdiff = 'mrad_coupled_out.csv'
     executable_pattern = 'dire_wolf*'
@@ -17,7 +18,7 @@
   [coupled_simulation_null]
     type = CSVDiff
     prereq = 'coupled_simulation_steady'
-    working_directory = '../transient_null'
+    working_directory = 'transient_null'
     input = 'HPMR_dfem_griffin_trN.i'
     csvdiff = 'mrad_coupled_null.csv'
     executable_pattern = 'dire_wolf*'
@@ -35,7 +36,7 @@
   [coupled_simulation_load_follow]
     type = CSVDiff
     prereq = 'coupled_simulation_steady'
-    working_directory = '../load_following'
+    working_directory = 'load_following'
     input = 'HPMR_dfem_griffin_tr.i'
     csvdiff = 'mrad_coupled_load.csv'
     executable_pattern = 'dire_wolf*'
@@ -52,7 +53,7 @@
   [coupled_simulation_heat_pipe_failure]
     type = CSVDiff
     prereq = 'coupled_simulation_steady'
-    working_directory = '../heat_pipe_failure'
+    working_directory = 'heat_pipe_failure'
     input = 'HPMR_dfem_griffin_tr.i'
     csvdiff = 'mrad_coupled_fail.csv'
     executable_pattern = 'dire_wolf*'
