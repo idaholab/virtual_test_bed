@@ -1,14 +1,66 @@
 [Tests]
-  [coupled_simulation]
+  [coupled_simulation_steady]
     type = CSVDiff
     input = 'HPMR_dfem_griffin_ss.i'
     csvdiff = 'mrad_coupled_out.csv'
     executable_pattern = 'dire_wolf*'
-    cli_args = "Executioner/richardson_max_its=2 Executioner/richardson_abs_tol=1e-1 Outputs/csv=true "
+    cli_args = "Executioner/richardson_max_its=20 Outputs/csv=true "
                "Outputs/file_base=mrad_coupled_out Outputs/exodus=false MultiApps/bison/cli_args='Outputs/exodus=false' "
                "--distributed-mesh"
     min_parallel = 48
-    max_time = 1080
+    max_time = 3000
+    # Capillary limit for vertical heat pipes is not accurate; see https://hpcgitlab.hpc.inl.gov/idaholab/sockeye/-/issues/65
+    # Cross-section warning due to missing fission-only
+    allow_warnings = true
+  []
+
+  [coupled_simulation_null]
+    type = CSVDiff
+    prereq = 'coupled_simulation_steady'
+    working_directory = '../transient_null'
+    input = 'HPMR_dfem_griffin_trN.i'
+    csvdiff = 'mrad_coupled_null.csv'
+    executable_pattern = 'dire_wolf*'
+    cli_args = "Executioner/richardson_max_its=20 Executioner/end_time=5 "
+               "Outputs/csv=true Outputs/file_base=mrad_coupled_null Outputs/exodus=false "
+               "MultiApps/bison/cli_args='Outputs/exodus=false' "
+               "--distributed-mesh"
+    min_parallel = 48
+    max_time = 3000
+    # Capillary limit for vertical heat pipes is not accurate; see https://hpcgitlab.hpc.inl.gov/idaholab/sockeye/-/issues/65
+    # Cross-section warning due to missing fission-only
+    allow_warnings = true
+  []
+
+  [coupled_simulation_load_follow]
+    type = CSVDiff
+    prereq = 'coupled_simulation_steady'
+    working_directory = '../load_following'
+    input = 'HPMR_dfem_griffin_tr.i'
+    csvdiff = 'mrad_coupled_load.csv'
+    executable_pattern = 'dire_wolf*'
+    cli_args = "Executioner/richardson_max_its=20 Executioner/end_time=5 Outputs/csv=true "
+               "Outputs/file_base=mrad_coupled_load Outputs/exodus=false MultiApps/bison/cli_args='Outputs/exodus=false' "
+               "--distributed-mesh"
+    min_parallel = 48
+    max_time = 3000
+    # Capillary limit for vertical heat pipes is not accurate; see https://hpcgitlab.hpc.inl.gov/idaholab/sockeye/-/issues/65
+    # Cross-section warning due to missing fission-only
+    allow_warnings = true
+  []
+
+  [coupled_simulation_heat_pipe_failure]
+    type = CSVDiff
+    prereq = 'coupled_simulation_steady'
+    working_directory = '../heat_pipe_failure'
+    input = 'HPMR_dfem_griffin_tr.i'
+    csvdiff = 'mrad_coupled_fail.csv'
+    executable_pattern = 'dire_wolf*'
+    cli_args = "Executioner/richardson_max_its=20 Executioner/end_time=5 Outputs/csv=true "
+               "Outputs/file_base=mrad_coupled_fail Outputs/exodus=false MultiApps/bison/cli_args='Outputs/exodus=false' "
+               "--distributed-mesh"
+    min_parallel = 48
+    max_time = 3000
     # Capillary limit for vertical heat pipes is not accurate; see https://hpcgitlab.hpc.inl.gov/idaholab/sockeye/-/issues/65
     # Cross-section warning due to missing fission-only
     allow_warnings = true
