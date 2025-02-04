@@ -299,7 +299,8 @@ corr_factor = '${fparse R_hp_hole / R_clad_o * area_correction / perimeter_corre
     points_file = 'hp_centers.txt'
     variable = temp
     diffusivity = thermal_conductivity
-    execute_on = linear
+    # Must be executed before the transfer
+    execute_on = 'INITIAL TIMESTEP_END'
     boundary = 'heat_pipe_ht_surf'
   []
 []
