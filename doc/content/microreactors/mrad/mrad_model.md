@@ -55,6 +55,10 @@ Griffin is used to govern the neutronics of the HP-MR as the parent application 
 
 A Monte Carlo Serpent-2 model has been setup to simulate the double heterogeneity of the HP-MR full core explicitly with the most recent ENDF/B-8.0 cross section data sets. This Monte Carlo model is used not only to provide reference solutions to the Griffin neutronics model for multiphysics simulations, but also to generate condensed multigroup cross sections for Griffin. In particular, multigroup cross sections were generated for each material zone by tallying the average reaction rates and group fluxes within that material region in Serpent-2 criticality calculations. Different sets of cross sections were prepared with fuel and moderator temperatures ($T_f$ and $T_m$) assumed at 600 K, 700 K, 800 K, 1000 K and 1200 K respectively. These cross-section sets were then read by the ISOXML utility module in Griffin to create a bi-dimension cross section table which was used in the multiphysics coupled transient simulations.
 
+
+!listing /mrad/Serpent_Model/serpent_input.i max-height = 10000
+
+
 The DFEM-SN(1,3) neutronics solver with CMFD acceleration in Griffin is used in this model.
 
 !listing /mrad/steady/HPMR_dfem_griffin_ss.i max-height = 10000

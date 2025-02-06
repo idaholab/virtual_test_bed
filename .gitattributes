@@ -46,3 +46,8 @@ sfr/vtr/sph/vtr_sph_verification.xml filter=lfs diff=lfs merge=lfs -text
 lfr/7pin_cardinal_demo/LFR9g_P5.xml.tgz filter=lfs diff=lfs merge=lfs -text
 lfr/7pin_cardinal_demo/7pin_ic.fld.tgz filter=lfs diff=lfs merge=lfs -text
 lfr/7pin_cardinal_demo/7pin.re2.tgz filter=lfs diff=lfs merge=lfs -text
+microreactors/gcmr/core/Serpent_Model/PART_U901_PF40_R85.inp filter=lfs diff=lfs merge=lfs -text
+microreactors/gcmr/core/Serpent_Model/PART_U902_PF40_R85.inp filter=lfs diff=lfs merge=lfs -text
+microreactors/gcmr/core/Serpent_Model/PART_U954_PF25_R25.inp filter=lfs diff=lfs merge=lfs -text
+microreactors/gcmr/core/Serpent_Model/PART_U964_PF25_R25.inp filter=lfs diff=lfs merge=lfs -text
+microreactors/mrad/Serpent_Model/TRISO_U900_PF40_R100.inp filter=lfs diff=lfs merge=lfs -text
