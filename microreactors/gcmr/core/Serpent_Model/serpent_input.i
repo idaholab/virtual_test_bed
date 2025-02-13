@@ -1,5 +1,5 @@
 %------------------------------------------------------------------------------------------
-% ANL GCMR
+% ANL GCMR Serpent (Version 2.1.32) Model Input
 % If using or referring to this model, please cite as explained in
 % https://mooseframework.inl.gov/virtual_test_bed/citing.html
 % Contacts: Ahmed Abdelhameed (aabdelhameed.at.anl.gov), Nicolas Stauff (nstauff.at.anl.gov)
@@ -612,9 +612,11 @@ plot 2 10000 10000   0.2
 
 % --- Libraries:
 
-set acelib "/home/ycao/XSLIB/serpent/sss_endfb8_serpent_yan.xsdir"
-set declib "/home/talamo/XSLIB/serpent/sss_endfb7.dec"
-set nfylib "/home/talamo/XSLIB/serpent/sss_endfb7.nfy"
+% Add your own libraries here
+set acelib "sss_endfb8_serpent_yan.xsdir"  % ACE library for cross-sections
+set declib "sss_endfb7.dec" % Decay library
+set nfylib "sss_endfb7.nfy" % Neutron fission yield library
+
 
 
 % --- Boundary conditions:
