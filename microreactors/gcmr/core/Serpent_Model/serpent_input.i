@@ -2,7 +2,7 @@
 % ANL GCMR
 % If using or referring to this model, please cite as explained in
 % https://mooseframework.inl.gov/virtual_test_bed/citing.html
-%Contacts: Ahmed Abdelhameed (aabdelhameed.at.anl.gov), Nicolas Stauff (nstauff.at.anl.gov)
+% Contacts: Ahmed Abdelhameed (aabdelhameed.at.anl.gov), Nicolas Stauff (nstauff.at.anl.gov)
 % -----------------------------------------------------------------------------------------
 set title "ANL GC MicroReactor"
 

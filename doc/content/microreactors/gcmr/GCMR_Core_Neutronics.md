@@ -93,11 +93,30 @@ MOOSE's Reactor Module [!citep](shemon2023reactor) was used to create the mesh s
 
 !listing microreactors/gcmr/core/MESH/Griffin_mesh.i
 
+## Cross-Section Generation Using Serpent Code
+
+The first step is to generate homogenized multi-group cross-sections using Serpent-2. The specific version used for this work is **Serpent 2.1.32**. The generated cross-sections are then converted into an XML-format file for compatibility with Griffin.
+
+## Note on LFS files linked to Serpent Model
+
+**Large File Storage (LFS)** is used for the following files:
+```
+PART_U901_PF40_R85
+PART_U902_PF40_R85
+PART_U903_PF40_R85
+PART_U904_PF40_R85
+```
+These files define the distribution, and radius of the TRISO and burnable poison particles considering specific packing fraction. Make sure to enable and correctly use LFS when handling these files to avoid data loss.
+
+---
 
 
 ## Griffin Model
 
-The first step is to generate homogenized multi-group cross-sections using Serpent-2, which are then converted into XML-format cross-section file. Griffin utilizes the cross-sections in an XML-format file in conjunction with the mesh file. The 3D whole-core mesh was constructed utilizing MOOSE’s Reactor module, ensuring consistency between geometric representations in the mesh file and Serpent-2. Griffin solves the neutron transport equation employing discontinuous finite element (DFEM) with SN transport and CMFD acceleration, utilizing on-the-fly coarse mesh generation for CMFD. Efforts were dedicated to simplifying the 3D whole-core GC-MR mesh to alleviate computational demands, with careful consideration to avoid excessive mesh sizes, particularly in specific regions like the radial reflector and control drum areas, to ensure proper convergence of DFEM-SN with CMFD.
+
+Griffin utilizes the cross-sections in the XML-format file in conjunction with the mesh file. The 3D whole-core mesh is constructed using MOOSE's Reactor module, ensuring consistency between geometric representations in the mesh file and Serpent-2. Griffin solves the neutron transport equation using discontinuous finite element (DFEM) with SN transport and CMFD acceleration, employing on-the-fly coarse mesh generation for CMFD.
+
+> **Note:** Efforts were dedicated to simplifying the 3D whole-core GC-MR mesh to reduce computational demands. Special attention was given to avoid too coarse mesh sizes, particularly in critical regions such as the radial reflector and control drum areas, ensuring proper convergence of DFEM-SN with CMFD.
 
 
 
