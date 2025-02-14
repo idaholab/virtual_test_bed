@@ -53,29 +53,25 @@ The input file used to generate the fine BISON mesh is listed as follows. Note t
 
 The first step is to generate homogenized multi-group cross-sections using Serpent-2. The generated cross-sections are then converted into an XML-format file for compatibility with Griffin.
 
+!listing /mrad/Serpent_Model/serpent_input.i max-height = 10000
+
 
 ####  Note on LFS
 
-**Large File Storage (LFS)** is used for the following file:
-```
-TRISO_U900_PF40_R100
-```
-This file defines the distribution, and radius of the TRISO particles to achieve 40% packing fraction. Make sure to enable and correctly use LFS when handling this file to avoid data loss.
+**Large File Storage (LFS)** is used for the following file: `TRISO_U900_PF40_R100`
 
----
+This file defines the distribution, and radius of the TRISO particles to achieve 40% packing fraction.
+Make sure to install git lfs, then fetch and pull these files to be able to run the Serpent inputs.
 
-The Monte Carlo Serpent-2 model has been set up to simulate the double heterogeneity of the HP-MR full core explicitly with the most recent ENDF/B-8.0 cross section data sets. This Monte Carlo model is used not only to provide reference solutions to the Griffin neutronics model for multiphysics simulations, but also to generate condensed multigroup cross sections for Griffin. 
+The Monte Carlo Serpent-2 model has been set up to simulate the double heterogeneity of the HP-MR full core explicitly with the most recent ENDF/B-8.0 cross section data sets. This Monte Carlo model is used not only to provide reference solutions to the Griffin neutronics model for multiphysics simulations, but also to generate condensed multigroup cross sections for Griffin.
 
-In particular, multigroup cross sections were generated for each material zone by tallying the average reaction rates and group fluxes within that material region in Serpent-2 criticality calculations. Different sets of cross sections were prepared with fuel and moderator temperatures ($T_f$ and $T_m$) assumed at 600 K, 700 K, 800 K, 1000 K, and 1200 K respectively. 
+In particular, multigroup cross sections were generated for each material zone by tallying the average reaction rates and group fluxes within that material region in Serpent-2 criticality calculations. Different sets of cross sections were prepared with fuel and moderator temperatures ($T_f$ and $T_m$) assumed at 600 K, 700 K, 800 K, 1000 K, and 1200 K respectively.
 
 These cross-section sets were then read by the ISOXML utility module in Griffin to create a bi-dimensional cross-section table, which was used in the multiphysics coupled transient simulations.
 
 ### Griffin Model
 
 Griffin is used to govern the neutronics of the HP-MR as the parent application of the multiphysics simulation.
-
-
-!listing /mrad/Serpent_Model/serpent_input.i max-height = 10000
 
 
 The DFEM-SN(1,3) neutronics solver with CMFD acceleration in Griffin is used in this model.
