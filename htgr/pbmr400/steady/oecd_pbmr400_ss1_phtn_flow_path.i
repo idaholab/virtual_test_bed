@@ -920,8 +920,6 @@ riser_superficial_rho_v         = ${fparse reactor_total_mfr/riser_free_flow_are
 # EXECUTION PARAMETERS
 # ==============================================================================
 [Preconditioning]
-  active = FSP
-
   [SMP]
     type = SMP
     full = true
@@ -929,45 +927,6 @@ riser_superficial_rho_v         = ${fparse reactor_total_mfr/riser_free_flow_are
                             -ksp_gmres_restart '
     petsc_options_value = ' lu superlu_dist 50 '
   []
-
-  [FSP]
-    type = FSP
-    topsplit = ' ts '
-    petsc_options_iname = ' -pc_type -pc_factor_mat_solver_type
-                            -ksp_gmres_restart '
-    petsc_options_value = ' lu superlu_dist 50 '
-
-    [ts]
-      splitting = ' p v Tf Ts '
-      splitting_type = additive
-    []
-
-    [p]
-      vars = pressure
-      petsc_options_iname = ' -pc_type -ksp_type '
-      petsc_options_value = ' hypre preonly '
-    []
-
-    [Ts]
-      vars = T_solid
-      petsc_options_iname = ' -pc_type -ksp_type '
-      petsc_options_value = ' hypre preonly '
-    []
-
-    [v]
-      vars = ' superficial_rho_u superficial_rho_v '
-      petsc_options_iname = ' -pc_type -pc_factor_mat_solver_type -ksp_type '
-      petsc_options_value = ' lu superlu_dist preonly '
-    []
-
-    [Tf]
-      vars = T_fluid
-      petsc_options_iname = ' -pc_type -pc_factor_mat_solver_type -ksp_type '
-      petsc_options_value = ' lu superlu_dist preonly '
-    []
-
-  []
-
 []
 
 [Executioner]
