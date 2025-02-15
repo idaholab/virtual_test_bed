@@ -24,8 +24,6 @@
 The GCMR model, developed at ANL, serves as a modeling experiment to explore design options considered by microreactor vendors, encompassing features like control drums, hydride metal, and TRISO fuel. This horizontal gas-cooled microreactor system boasts a thermal power of 20 MW and an approximate lifespan of 9.5 years. Its power conversion cycle utilizes a Brayton cycle, circulating high-temperature (650°C-850°C) and high-pressure (7 MPa) helium coolant. Surrounding the core are BeO radial and axial neutron reflectors, with twelve control drums positioned in the reflector encircling the core. These control rods, containing 96%-enriched B4C, are inserted into holes within the middle core assemblies. Displayed in [Fig_1] and [Fig_2]  are radial and axial views of the core, which is relatively compact, measuring 2.42 m in diameter and 2.40 m in length.
 
 
-
-
 !media media/gcmr/Fig12.jpg
       id=Fig_1
       style=display: block;margin-left:auto;margin-right:auto;width:60%;
@@ -33,12 +31,10 @@ The GCMR model, developed at ANL, serves as a modeling experiment to explore des
 
 
 
-
 !media media/gcmr/Fig13.jpg
       id=Fig_2
       style=display: block;margin-left:auto;margin-right:auto;width:60%;
       caption= Axial view of the GCMR core
-
 
 
 
@@ -53,12 +49,9 @@ The core comprises three types of fuel assemblies: Assembly A in the inner regio
 
 
 
-
-
 !media media/gcmr/Fig15.jpg
       id=Fig_4
       caption= Design of the three types of fuel assemblies in the core
-
 
 
 
@@ -91,7 +84,6 @@ MOOSE's Reactor Module [!citep](shemon2023reactor) was used to create the mesh s
 
 
 
-
 !media media/gcmr/Fig16.jpg
       id=Fig_5
       style=display: block;margin-left:auto;margin-right:auto;width:60%;
@@ -101,11 +93,35 @@ MOOSE's Reactor Module [!citep](shemon2023reactor) was used to create the mesh s
 
 !listing microreactors/gcmr/core/MESH/Griffin_mesh.i
 
+## Cross-Section Generation Using Serpent Code
+
+The first step is to generate homogenized multi-group cross-sections using Serpent-2. The specific version used for this work is **Serpent 2.1.32**. The generated cross-sections are then converted into an XML-format file for compatibility with Griffin.
+
+
+!listing microreactors/gcmr/core/Serpent_Model/serpent_input.i  max-height = 10000
+
+
+## Note on LFS files linked to Serpent Model
+
+Git **Large File Storage (LFS)** is used for the following files:
+
+```
+PART_U901_PF40_R85
+PART_U902_PF40_R85
+PART_U903_PF40_R85
+PART_U904_PF40_R85
+```
+
+These files define the distribution, and radius of the TRISO and burnable poison particles considering specific packing fraction.
+Make sure to install git lfs, then fetch and pull these files to be able to run the Serpent inputs.
 
 
 ## Griffin Model
 
-The first step is to generate homogenized multi-group cross-sections using Serpent-2, which are then converted into XML-format cross-section file. Griffin utilizes the cross-sections in an XML-format file in conjunction with the mesh file. The 3D whole-core mesh was constructed utilizing MOOSE’s Reactor module, ensuring consistency between geometric representations in the mesh file and Serpent-2. Griffin solves the neutron transport equation employing discontinuous finite element (DFEM) with SN transport and CMFD acceleration, utilizing on-the-fly coarse mesh generation for CMFD. Efforts were dedicated to simplifying the 3D whole-core GC-MR mesh to alleviate computational demands, with careful consideration to avoid excessive mesh sizes, particularly in specific regions like the radial reflector and control drum areas, to ensure proper convergence of DFEM-SN with CMFD.
+
+Griffin utilizes the cross-sections in the XML-format file in conjunction with the mesh file. The 3D whole-core mesh is constructed using MOOSE's Reactor module, ensuring consistency between geometric representations in the mesh file and Serpent-2. Griffin solves the neutron transport equation using discontinuous finite element (DFEM) with SN transport and CMFD acceleration, employing on-the-fly coarse mesh generation for CMFD.
+
+> **Note:** Efforts were dedicated to simplifying the 3D whole-core GC-MR mesh to reduce computational demands. Special attention was given to avoid too coarse mesh sizes, particularly in critical regions such as the radial reflector and control drum areas, ensuring proper convergence of DFEM-SN with CMFD.
 
 
 
@@ -135,12 +151,10 @@ Segmentations of the whole-core GC-MR mesh utilized in the analyses, employing D
 
 
 
-
 !media media/gcmr/Fig17.jpg
       id=Fig_6
       style=display: block;margin-left:auto;margin-right:auto;width:60%;
       caption= 1/6 GCMR core with reflective boundary condition
-
 
 
 
