@@ -231,22 +231,22 @@ htc_ext_cond = 1.0e2
 
 [AuxVariables]
   [T_wall_var]
-    initial_condition = ${T_ext_cond}
+    # initial_condition = ${T_ext_cond}
   []
   [operational_aux]
-    initial_condition = 1
+    # initial_condition = 1
   []
   [master_flux]
-    #initial_condition = ${q_evap}
+    # initial_condition = ${q_evap}
   []
   [hp_temp_aux]
-    initial_condition = ${T_ext_cond}
+    # initial_condition = ${T_ext_cond}
   []
   [virtual_Text]
-    initial_condition = ${T_ext_cond}
+    # initial_condition = ${T_ext_cond}
   []
   [virtual_htc]
-    initial_condition = 1.0
+    # initial_condition = 1.0
   []
 []
 
