@@ -456,6 +456,7 @@ control_rod_Dh = 0.1
     speed = speed
     characteristic_length = characteristic_length
     block = 'pebble_bed cavity bottom_reflector upper_plenum bottom_plenum riser control_rods'
+    neglect_derivatives_of_density_time_derivative = false
   []
 
   [graphite_rho_and_cp_bed]

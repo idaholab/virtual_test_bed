@@ -80,6 +80,7 @@ flow_vel = '${fparse mass_flow_rate / flow_area / density}'
     T_fluid = ${T_fluid}
     speed = speed
     characteristic_length = ${pebble_diameter}
+    neglect_derivatives_of_density_time_derivative = false
   []
 
   [drag_pebble_bed]
