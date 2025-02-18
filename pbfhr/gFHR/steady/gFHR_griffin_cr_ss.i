@@ -307,7 +307,7 @@ Rho_ref = 1973.8 # kg/m^3
     streamline_points = '0.152  0.60 0  0.152  3.6947 0;
                          0.450  0.60 0  0.450  3.6947 0;
                          0.750  0.60 0  0.750  3.6947 0;
-                         1.050  0.60 0  1.050  3.6947 0;'
+                         1.050  0.60 0  1.050  3.6947 0'
     streamline_segment_subdivisions = '20; 20; 20; 20' # align with the neutronics mesh
 
     # Pebble options
