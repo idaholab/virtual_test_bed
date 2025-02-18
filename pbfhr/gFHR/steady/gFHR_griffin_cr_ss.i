@@ -303,6 +303,7 @@ Rho_ref = 1973.8 # kg/m^3
   coolant_composition_name = coolant
   coolant_density_variable = 'Rho'
   coolant_density_ref = ${Rho_ref}
+  # TODO: add material id 2 with coolant as well
   coolant_material_id = '1'
 
   [DepletionScheme]
