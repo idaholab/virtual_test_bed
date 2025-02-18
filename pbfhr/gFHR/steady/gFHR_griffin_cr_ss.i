@@ -299,6 +299,12 @@ Rho_ref = 1973.8 # kg/m^3
   initial_moderator_temperature = '${initial_temperature}'
   initial_fuel_temperature = '${initial_temperature}'
 
+  # coolant settings
+  coolant_composition_name = coolant
+  coolant_density_variable = 'Rho'
+  coolant_density_ref = ${Rho_ref}
+  coolant_material_id = '1'
+
   [DepletionScheme]
     type = ConstantStreamlineEquilibrium
 
@@ -315,12 +321,6 @@ Rho_ref = 1973.8 # kg/m^3
     pebble_flow_rate_distribution = ${streamline_flow_fraction}
     pebble_diameter = '${fparse pebble_radius * 2.0}'
     burnup_limit = '${burnup_limit}'
-
-
-    # coolant settings
-    coolant_composition_name = coolant
-    coolant_density_variable = 'Rho'
-    coolant_density_ref = ${Rho_ref}
 
     # Solver parameters
     sweep_tol = 1e-8
