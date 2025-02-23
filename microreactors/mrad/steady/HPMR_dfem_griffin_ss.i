@@ -142,6 +142,8 @@
     variable = power_density
     from_postprocessors_to_be_preserved = integrated_power
     to_postprocessors_to_be_preserved = power
+
+    search_value_conflicts = false
   []
   [from_sub_temp_fuel]
     type = MultiAppGeneralFieldNearestLocationTransfer
@@ -152,6 +154,8 @@
     displaced_source_mesh = false
     displaced_target_mesh = false
     use_displaced_mesh = false
+
+    search_value_conflicts = false
   []
   [from_sub_temp_mod]
     type = MultiAppGeneralFieldNearestLocationTransfer
@@ -162,6 +166,8 @@
     displaced_source_mesh = false
     displaced_target_mesh = false
     use_displaced_mesh = false
+
+    search_value_conflicts = false
   []
 []
 
