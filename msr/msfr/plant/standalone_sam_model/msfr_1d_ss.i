@@ -10,6 +10,11 @@
   global_init_T = 898.15
   Tsolid_sf     = 1e-3
   scaling_factor_var = '1 1e-3 1e-6'
+  species_system_name = 'species'
+[]
+
+[Problem]
+  nl_sys_names = 'nl0 species'
 []
 
 [Functions]
@@ -41,8 +46,8 @@
   []
   [TimeStepperFunc]
     type = PiecewiseLinear
-    x = '-1000   -998   -995   -990   -980    -950   0.0'
-    y = ' 0.05    0.1    0.2    0.5    1.0     5.0   5.0'
+    x = '-1000   -998   -995   -990   -980    -950   -500  0.0'
+    y = ' 0.05    0.1    0.2    0.5    1.0     5.0   25.0 25.0'
   []
 []
 
@@ -532,11 +537,21 @@
     solve_type          = 'PJFNK'
     petsc_options_iname = '-pc_type -ksp_gmres_restart'
     petsc_options_value = 'lu 101'
+    nl_sys              = 'nl0'
+  []
+  [SMP_species]
+    type                = SMP
+    full                = true
+    solve_type          = 'PJFNK'
+    petsc_options_iname = '-pc_type -ksp_gmres_restart'
+    petsc_options_value = 'lu 101'
+    nl_sys              = 'species'
   []
 []
 
 [Executioner]
-  type       = Transient
+  type       = SAMSegregatedTransient
+  nl_systems_to_solve = 'nl0 species'
   [TimeStepper]
     type     = FunctionDT
     function = TimeStepperFunc
