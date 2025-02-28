@@ -15,6 +15,9 @@
     prereq = 'steady_state_syntax'
     abs_zero = 1e-4
     rel_err = 1e-4
+    min_parallel = 2
+    max_time = 500
+    method = 'opt' # times out in devel
   []
 
   [insertion_syntax]
@@ -34,5 +37,6 @@
     prereq = 'insertion_syntax'
     abs_zero = 1e-4
     rel_err = 1e-4
+    min_parallel = 2
   []
 []

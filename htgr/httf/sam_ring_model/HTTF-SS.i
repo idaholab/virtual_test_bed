@@ -5675,8 +5675,8 @@ n_urlr = 4
 
   petsc_options_iname = '-pc_type -ksp_gmres_restart -mat_mffd_err'
   petsc_options_value = 'lu       101                1e-5'
-  nl_rel_tol = 1e-2
-  nl_abs_tol = 1e-3
+  nl_rel_tol = 1e-5
+  nl_abs_tol = 1e-6
   nl_max_its = 12
   l_tol = 1e-4 # Relative linear tolerance for each Krylov solve
   l_max_its = 100 # Number of linear iterations for each Krylov solve
@@ -5710,5 +5710,6 @@ n_urlr = 4
   [csv]
     type = CSV
     execute_on = 'timestep_end'
+    execute_scalars_on = 'none'
   []
 []

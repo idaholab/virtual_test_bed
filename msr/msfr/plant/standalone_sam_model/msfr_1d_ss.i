@@ -450,6 +450,10 @@
 []
 
 [Postprocessors]
+  [Power]
+    type = ScalarVariable
+    variable = reactor:power
+  []
   [Core_P_out]
     type     = ComponentBoundaryVariableValue
     variable = pressure
@@ -582,6 +586,7 @@
   []
   [csv]
     type = CSV
+    execute_scalars_on = 'none'
   []
   [checkpoint]
     type      = Checkpoint
