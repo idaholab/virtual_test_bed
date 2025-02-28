@@ -29,7 +29,7 @@
 []
 
 [Problem]
-  restart_file_base = msfr_1d_ss_checkpoint_cp/0153
+  restart_file_base = msfr_1d_ss_checkpoint_cp/LATEST
 []
 
 [Executioner]
