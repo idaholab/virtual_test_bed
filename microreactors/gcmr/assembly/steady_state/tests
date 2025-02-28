@@ -148,7 +148,7 @@
     executable_pattern = 'blue_crab*'
     cli_args = "MultiApps/active='' Transfers/active=''
                 Problem/restart_file_base='../steady_state/BISON_out_cp/LATEST'
-                Mesh/file='../steady_state/BISON_out_cp/LATEST'
+                Mesh/fmg/file='../steady_state/BISON_out_cp/LATEST'
                 Executioner/num_steps=4"
     prereq = 'bison_alone'
     min_parallel = 4
