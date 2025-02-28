@@ -2,6 +2,7 @@
 # High Temperature Transient Facility
 # HTTF benchmark PCC Exercise 1A
 # SAM input file
+# Model: Steady state (null)
 # ------------------------------------------------------------------------------
 # ANL, 09/2023
 # Author(s): Dr. Thanh Hua
@@ -9,12 +10,25 @@
 # https://mooseframework.inl.gov/virtual_test_bed/citing.html
 # ==============================================================================
 
+### Sensitivity coefficients for perturbation
+
+[GlobalParams]
+  SC_HTC = 1.0  # Heat transfer coefficient multiplier, applied to all fluid components
+  SC_WF = 1.0   # Wall friction factor multiplier, applied to all fluid components
+[]
+
+SC_Power = 1.0        # Initial power sensitivity coefficient
+SC_T_inlet = 1.0      # Inlet temperature sensitivity coefficient
+SC_v_inlet = 1.0     # Inlet velocity sensitivity coefficient
+SC_h_gap = 1.0        # Gap conductance sensitivity coefficient
+
+
+### Geometry and model parameters
+
 # SS 2.2 MW, 1 kg/s He, Tin = 500 K, 0.7 MPa; RCCS water 1 kg/s 313.2 K,
 # 0.25 kg/s air flow in cavity
 # 11 coolant rings and 10 heater rings in heated core, the heater rings are rearranged and rods redistributed in order to match heat received by coolant channels
 # includes gap heat transfer to account for heat conductance in gaps in R48, R50, and R52
-
-# Postprocessors and outputs defined in sub-input file: HTTF-output.i
 
 emissivity_GC94 = 0.581
 emissivity_SiC = 0.721
@@ -23,16 +37,16 @@ emissivity_barrel = 0.074
 emissivity_vessel = 0.25
 emissivity_rccs = 0.074
 
-power_R6 = 125714.3
-power_R10 = 104761.9
-power_R14 = 272381.0
-power_R18 = 167619.0
-power_R22 = 272381.0
-power_R26 = 230476.2
-power_R30 = 335238.1
-power_R34 = 209523.8
-power_R38 = 272381.0
-power_R42 = 209523.8
+power_R6 = ${fparse SC_Power * 125714.3}
+power_R10 = ${fparse SC_Power * 104761.9}
+power_R14 = ${fparse SC_Power * 272381.0}
+power_R18 = ${fparse SC_Power * 167619.0}
+power_R22 = ${fparse SC_Power * 272381.0}
+power_R26 = ${fparse SC_Power * 230476.2}
+power_R30 = ${fparse SC_Power * 335238.1}
+power_R34 = ${fparse SC_Power * 209523.8}
+power_R38 = ${fparse SC_Power * 272381.0}
+power_R42 = ${fparse SC_Power * 209523.8}
 
 aw_R2 = 104.987
 aw_R4 = 193.822
@@ -207,7 +221,7 @@ R44_area = 0.004275344
 R46_area = 0.007125574
 R56_area = 0.08475
 
-h_gap = 1.e5
+h_gap = ${fparse SC_h_gap * 1.e5}
 #h_gapR52 = 3.95   #k/d = 0.22 / 0.05715  k evaluated at 500 K
 #h_gapR50 = 39.32  #k/d = 0.25 / 0.006358 k evaluated at 600 K
 #h_gapR48 = 27.28  #k/d = 0.23 / 0.008431 k evaluated at 520 K
@@ -218,11 +232,13 @@ n_urlr = 4
   type = SamApp
 []
 
+### HTTF SAM model
+
 [GlobalParams]
   global_init_P = 7.e5
   global_init_V = 1.75
   global_init_T = 500
-  scaling_factor_var = '1. 1e-2 1e-5'
+  scaling_factor_var = '1. 1e-3 1e-6'
   use_nearest_node = true
 []
 
@@ -264,23 +280,25 @@ n_urlr = 4
 
 [Functions]
 
-  [time_stepper]
-    type = PiecewiseLinear
-    x = '-30000 -28000       0   '
-    y = '  1      200       200   '
+  [time_stepper] # Reset timestepper at start of transient
+    type = PiecewiseConstant
+    x = '-80000  0     0.05'
+    y = ' 1e6    0.05  1e6'
+    direction = left_inclusive
   []
 
   [T_in]
     type = PiecewiseLinear
     x = '0    1.e6'
     y = '500   500'
+    scale_factor = ${SC_T_inlet}
   []
 
-  [v_in]
+  [v_in]  # PCC event, ramp down from 100% to 0% flow over 2 seconds
     type = PiecewiseLinear
-    x = '-1.e6 0  60       1.e6'
+    x = '-1.e6  0  2       1.e6'
     y = '  1    1  0       0'
-    scale_factor = 21.905
+    scale_factor = ${fparse SC_v_inlet * 21.905}
   []
 
   [T_RCCS_in]
@@ -1433,7 +1451,7 @@ n_urlr = 4
     A = 3.4827
     Dh = 1.02
     initial_P = 1.E+05
-    initial_T = 313.15
+    initial_T = 300.
     initial_V = 0.01
     eos = air_eos
   []
@@ -1447,7 +1465,7 @@ n_urlr = 4
     length = 0.93185
     A = 0.00785
     initial_P = 1.E+05
-    initial_T = 313.15
+    initial_T = 300.
     initial_V = 3.
     n_elems = 10
     eos = air_eos
@@ -1462,7 +1480,7 @@ n_urlr = 4
     length = 1
     A = 0.007854
     initial_P = 1.E+05
-    initial_T = 313.15
+    initial_T = 300.
     initial_V = 3.
     n_elems = 10
     eos = air_eos
@@ -1476,7 +1494,6 @@ n_urlr = 4
     epsilon_1 = ${emissivity_vessel}
     epsilon_2 = ${emissivity_rccs}
     area_ratio = 0.61993
-    width = 0.2
     radius_1 = ${R54_rad}
     length = 1.981
     eos = air_eos
@@ -1497,7 +1514,7 @@ n_urlr = 4
     HS_BC_type = 'Coupled Coupled'
     HT_surface_area_density_right = ${aw_R56}
     name_comp_right = R56
-    Ts_init = 313.15
+    Ts_init = 300.
     name_comp_left = R54
     HT_surface_area_density_left = ${aw_R54_right}
   []
@@ -2376,7 +2393,7 @@ n_urlr = 4
     A = 3.4827
     Dh = 1.02
     initial_P = 1.E+05
-    initial_T = 313.15
+    initial_T = 300.
     initial_V = 0.01
     eos = air_eos
   []
@@ -2390,7 +2407,7 @@ n_urlr = 4
     Dh = 1.02
     length = 1.
     initial_P = 1.E+05
-    initial_T = 313.15
+    initial_T = 300.
     initial_V = 0.01
     eos = air_eos
   []
@@ -2404,7 +2421,6 @@ n_urlr = 4
     epsilon_1 = ${emissivity_vessel}
     epsilon_2 = ${emissivity_rccs}
     area_ratio = 0.61993
-    width = 0.2
     radius_1 = 0.83185
     length = 0.3962
     eos = air_eos
@@ -2419,7 +2435,6 @@ n_urlr = 4
     epsilon_1 = ${emissivity_vessel}
     epsilon_2 = ${emissivity_rccs}
     area_ratio = 0.61993
-    width = 0.2
     radius_1 = ${R54_rad}
     length = 1
     eos = air_eos
@@ -2440,7 +2455,7 @@ n_urlr = 4
     HS_BC_type = 'Coupled Coupled'
     HT_surface_area_density_right = ${aw_R56}
     name_comp_right = RU56
-    Ts_init = 313.15
+    Ts_init = 300.
     HT_surface_area_density_left = ${aw_R54_right}
     name_comp_left = RU54
   []
@@ -2460,7 +2475,7 @@ n_urlr = 4
     HS_BC_type = 'Coupled Coupled'
     HT_surface_area_density_right = ${aw_R56}
     name_comp_right = RT56
-    Ts_init = 313.15
+    Ts_init = 300.
     HT_surface_area_density_left = ${aw_R54_right}
     name_comp_left = RT54
   []
@@ -3450,7 +3465,7 @@ n_urlr = 4
     A = 3.4827
     Dh = 1.02
     initial_P = 1.E+05
-    initial_T = 313.15
+    initial_T = 300.
     initial_V = 0.01
     eos = air_eos
   []
@@ -3464,7 +3479,6 @@ n_urlr = 4
     epsilon_1 = ${emissivity_vessel}
     epsilon_2 = ${emissivity_rccs}
     area_ratio = 0.61993
-    width = 0.2
     radius_1 = ${R54_rad}
     length = 0.3962
     eos = air_eos
@@ -3479,7 +3493,6 @@ n_urlr = 4
     epsilon_1 = ${emissivity_vessel}
     epsilon_2 = ${emissivity_rccs}
     area_ratio = 0.61993
-    width = 0.2
     radius_1 = ${R54_rad}
     length = 1
     eos = air_eos
@@ -3502,7 +3515,7 @@ n_urlr = 4
     name_comp_left = RL54
     HT_surface_area_density_right = ${aw_R56}
     name_comp_right = RL56
-    Ts_init = 313.15
+    Ts_init = 300.
   []
 
   [RB55] # RCCS wall (use ss as a surrogate)
@@ -3520,7 +3533,7 @@ n_urlr = 4
     HS_BC_type = 'Adiabatic Coupled'
     HT_surface_area_density_right = ${aw_R56}
     name_comp_right = RB56
-    Ts_init = 313.15
+    Ts_init = 300.
   []
 
   [RL56] # RCCS water coolant
@@ -4749,8 +4762,8 @@ n_urlr = 4
   [inlet_cavity]
     type = PBTDJ
     eos = air_eos
-    T_bc = 313.15
-    v_bc = 3.
+    T_bc = 300.0
+    v_bc = 2.741
     input = 'pipe1(in)'
   []
 
@@ -4778,18 +4791,12 @@ n_urlr = 4
     type = PBTDV
     eos = water_eos
     p_bc = 1.E+05
-    T_bc = 303.15
+    T_bc = 300.
     input = 'RT56(out)'
   []
 []
 
 [Postprocessors]
-  [pseudo_dt]
-    type = PseudoTimestep
-    alpha = 1.5
-    initial_dt = 0.1
-    method = EXP
-  []
   [R2C_T_out]
     type = ComponentBoundaryVariableValue
     variable = temperature
@@ -5632,884 +5639,6 @@ n_urlr = 4
   []
 []
 
-[VectorPostprocessors]
-  [R1_temp]
-    type = NodalValueSampler
-    variable = T_solid
-    block = 'R1:hs0'
-    sort_by = z
-    outputs = 'R1_temp'
-  []
-  [R2_temp]
-    type = NodalValueSampler
-    variable = temperature
-    block = 'R2'
-    sort_by = z
-    outputs = 'R2_temp'
-  []
-  [R3_temp]
-    type = NodalValueSampler
-    variable = T_solid
-    block = 'R3:hs0'
-    sort_by = z
-    outputs = 'R3_temp'
-  []
-  [R4_temp]
-    type = NodalValueSampler
-    variable = temperature
-    block = 'R4'
-    sort_by = z
-    outputs = 'R4_temp'
-  []
-  [R5_temp]
-    type = NodalValueSampler
-    variable = T_solid
-    block = 'R5:hs0'
-    sort_by = z
-    outputs = 'R5_temp'
-  []
-  [R6_temp]
-    type = NodalValueSampler
-    variable = T_solid
-    block = 'R6:hs0'
-    sort_by = z
-    outputs = 'R6_temp'
-  []
-  [R7_temp]
-    type = NodalValueSampler
-    variable = T_solid
-    block = 'R7:hs0'
-    sort_by = z
-    outputs = 'R7_temp'
-  []
-  [R8_temp]
-    type = NodalValueSampler
-    variable = temperature
-    block = 'R8'
-    sort_by = z
-    outputs = 'R8_temp'
-  []
-  [R9_temp]
-    type = NodalValueSampler
-    variable = T_solid
-    block = 'R9:hs0'
-    sort_by = z
-    outputs = 'R9_temp'
-  []
-  [R10_temp]
-    type = NodalValueSampler
-    variable = T_solid
-    block = 'R10:hs0'
-    sort_by = z
-    outputs = 'R10_temp'
-  []
-  [R11_temp]
-    type = NodalValueSampler
-    variable = T_solid
-    block = 'R11:hs0'
-    sort_by = z
-    outputs = 'R11_temp'
-  []
-  [R12_temp]
-    type = NodalValueSampler
-    variable = temperature
-    block = 'R12'
-    sort_by = z
-    outputs = 'R12_temp'
-  []
-  [R13_temp]
-    type = NodalValueSampler
-    variable = T_solid
-    block = 'R13:hs0'
-    sort_by = z
-    outputs = 'R13_temp'
-  []
-  [R14_temp]
-    type = NodalValueSampler
-    variable = T_solid
-    block = 'R14:hs0'
-    sort_by = z
-    outputs = 'R14_temp'
-  []
-  [R15_temp]
-    type = NodalValueSampler
-    variable = T_solid
-    block = 'R15:hs0'
-    sort_by = z
-    outputs = 'R15_temp'
-  []
-  [R16_temp]
-    type = NodalValueSampler
-    variable = temperature
-    block = 'R16'
-    sort_by = z
-    outputs = 'R16_temp'
-  []
-  [R17_temp]
-    type = NodalValueSampler
-    variable = T_solid
-    block = 'R17:hs0'
-    sort_by = z
-    outputs = 'R17_temp'
-  []
-  [R18_temp]
-    type = NodalValueSampler
-    variable = T_solid
-    block = 'R18:hs0'
-    sort_by = z
-    outputs = 'R18_temp'
-  []
-  [R19_temp]
-    type = NodalValueSampler
-    variable = T_solid
-    block = 'R19:hs0'
-    sort_by = z
-    outputs = 'R19_temp'
-  []
-  [R20_temp]
-    type = NodalValueSampler
-    variable = temperature
-    block = 'R20'
-    sort_by = z
-    outputs = 'R20_temp'
-  []
-  [R21_temp]
-    type = NodalValueSampler
-    variable = T_solid
-    block = 'R21:hs0'
-    sort_by = z
-    outputs = 'R21_temp'
-  []
-  [R22_temp]
-    type = NodalValueSampler
-    variable = T_solid
-    block = 'R22:hs0'
-    sort_by = z
-    outputs = 'R22_temp'
-  []
-  [R23_temp]
-    type = NodalValueSampler
-    variable = T_solid
-    block = 'R23:hs0'
-    sort_by = z
-    outputs = 'R23_temp'
-  []
-  [RL23_temp]
-    type = NodalValueSampler
-    variable = T_solid
-    block = 'RL23:hs0'
-    sort_by = z
-    outputs = 'RL23_temp'
-  []
-  [RU23_temp]
-    type = NodalValueSampler
-    variable = T_solid
-    block = 'RU23:hs0'
-    sort_by = z
-    outputs = 'RU23_temp'
-  []
-  [R24_temp]
-    type = NodalValueSampler
-    variable = temperature
-    block = 'R24'
-    sort_by = z
-    outputs = 'R24_temp'
-  []
-  [R25_temp]
-    type = NodalValueSampler
-    variable = T_solid
-    block = 'R25:hs0'
-    sort_by = z
-    outputs = 'R25_temp'
-  []
-  [R26_temp]
-    type = NodalValueSampler
-    variable = T_solid
-    block = 'R26:hs0'
-    sort_by = z
-    outputs = 'R26_temp'
-  []
-  [R27_temp]
-    type = NodalValueSampler
-    variable = T_solid
-    block = 'R27:hs0'
-    sort_by = z
-    outputs = 'R27_temp'
-  []
-  [R28_temp]
-    type = NodalValueSampler
-    variable = temperature
-    block = 'R28'
-    sort_by = z
-    outputs = 'R28_temp'
-  []
-  [R29_temp]
-    type = NodalValueSampler
-    variable = T_solid
-    block = 'R29:hs0'
-    sort_by = z
-    outputs = 'R29_temp'
-  []
-  [R30_temp]
-    type = NodalValueSampler
-    variable = T_solid
-    block = 'R30:hs0'
-    sort_by = z
-    outputs = 'R30_temp'
-  []
-  [R31_temp]
-    type = NodalValueSampler
-    variable = T_solid
-    block = 'R31:hs0'
-    sort_by = z
-    outputs = 'R31_temp'
-  []
-  [R32_temp]
-    type = NodalValueSampler
-    variable = temperature
-    block = 'R32'
-    sort_by = z
-    outputs = 'R32_temp'
-  []
-  [R33_temp]
-    type = NodalValueSampler
-    variable = T_solid
-    block = 'R33:hs0'
-    sort_by = z
-    outputs = 'R33_temp'
-  []
-  [R34_temp]
-    type = NodalValueSampler
-    variable = T_solid
-    block = 'R34:hs0'
-    sort_by = z
-    outputs = 'R34_temp'
-  []
-  [R35_temp]
-    type = NodalValueSampler
-    variable = T_solid
-    block = 'R35:hs0'
-    sort_by = z
-    outputs = 'R35_temp'
-  []
-  [R36_temp]
-    type = NodalValueSampler
-    variable = temperature
-    block = 'R36'
-    sort_by = z
-    outputs = 'R36_temp'
-  []
-  [R37_temp]
-    type = NodalValueSampler
-    variable = T_solid
-    block = 'R37:hs0'
-    sort_by = z
-    outputs = 'R37_temp'
-  []
-  [R38_temp]
-    type = NodalValueSampler
-    variable = T_solid
-    block = 'R38:hs0'
-    sort_by = z
-    outputs = 'R38_temp'
-  []
-  [R39_temp]
-    type = NodalValueSampler
-    variable = T_solid
-    block = 'R39:hs0'
-    sort_by = z
-    outputs = 'R39_temp'
-  []
-  [R40_temp]
-    type = NodalValueSampler
-    variable = temperature
-    block = 'R40'
-    sort_by = z
-    outputs = 'R40_temp'
-  []
-  [R41_temp]
-    type = NodalValueSampler
-    variable = T_solid
-    block = 'R41:hs0'
-    sort_by = z
-    outputs = 'R41_temp'
-  []
-  [R42_temp]
-    type = NodalValueSampler
-    variable = T_solid
-    block = 'R42:hs0'
-    sort_by = z
-    outputs = 'R42_temp'
-  []
-  [R43_temp]
-    type = NodalValueSampler
-    variable = T_solid
-    block = 'R43:hs0'
-    sort_by = z
-    outputs = 'R43_temp'
-  []
-  [R44_temp]
-    type = NodalValueSampler
-    variable = temperature
-    block = 'R44'
-    sort_by = z
-    outputs = 'R44_temp'
-  []
-  [R45_temp]
-    type = NodalValueSampler
-    variable = T_solid
-    block = 'R45:hs0'
-    sort_by = z
-    outputs = 'R45_temp'
-  []
-  [R46_temp]
-    type = NodalValueSampler
-    variable = temperature
-    block = 'R46'
-    sort_by = z
-    outputs = 'R46_temp'
-  []
-  [R47_temp]
-    type = NodalValueSampler
-    variable = T_solid
-    block = 'R47:hs0'
-    sort_by = z
-    outputs = 'R47_temp'
-  []
-  [R49_temp]
-    type = NodalValueSampler
-    variable = T_solid
-    block = 'R49:hs0'
-    sort_by = z
-    outputs = 'R49_temp'
-  []
-  [R51_temp]
-    type = NodalValueSampler
-    variable = T_solid
-    block = 'R51:hs0'
-    sort_by = z
-    outputs = 'R51_temp'
-  []
-  [R53_temp]
-    type = NodalValueSampler
-    variable = T_solid
-    block = 'R53:hs0'
-    sort_by = z
-    outputs = 'R53_temp'
-  []
-  [RL53_temp]
-    type = NodalValueSampler
-    variable = T_solid
-    block = 'RL53:hs0'
-    sort_by = z
-    outputs = 'RL53_temp'
-  []
-  [RU53_temp]
-    type = NodalValueSampler
-    variable = T_solid
-    block = 'RU53:hs0'
-    sort_by = z
-    outputs = 'RU53_temp'
-  []
-  [RB53_temp]
-    type = NodalValueSampler
-    variable = T_solid
-    block = 'RB53:hs0'
-    sort_by = z
-    outputs = 'RB53_temp'
-  []
-  [RT53_temp]
-    type = NodalValueSampler
-    variable = T_solid
-    block = 'RT53:hs0'
-    sort_by = z
-    outputs = 'RT53_temp'
-  []
-  [R54_temp]
-    type = NodalValueSampler
-    variable = temperature
-    block = 'R54'
-    sort_by = z
-    outputs = 'R54_temp'
-  []
-  [R55_temp]
-    type = NodalValueSampler
-    variable = T_solid
-    block = 'R55:hs0'
-    sort_by = z
-    outputs = 'R55_temp'
-  []
-  [RL55_temp]
-    type = NodalValueSampler
-    variable = T_solid
-    block = 'RL55:hs0'
-    sort_by = z
-    outputs = 'RL55_temp'
-  []
-  [RU55_temp]
-    type = NodalValueSampler
-    variable = T_solid
-    block = 'RU55:hs0'
-    sort_by = z
-    outputs = 'RU55_temp'
-  []
-  [RB55_temp]
-    type = NodalValueSampler
-    variable = T_solid
-    block = 'RB55:hs0'
-    sort_by = z
-    outputs = 'RB55_temp'
-  []
-  [RT55_temp]
-    type = NodalValueSampler
-    variable = T_solid
-    block = 'RT55:hs0'
-    sort_by = z
-    outputs = 'RT55_temp'
-  []
-  [R56_temp]
-    type = NodalValueSampler
-    variable = temperature
-    block = 'R56'
-    sort_by = z
-    outputs = 'R56_temp'
-  []
-  [RL56_temp]
-    type = NodalValueSampler
-    variable = temperature
-    block = 'RL56'
-    sort_by = z
-    outputs = 'RL56_temp'
-  []
-  [RU56_temp]
-    type = NodalValueSampler
-    variable = temperature
-    block = 'RU56'
-    sort_by = z
-    outputs = 'RU56_temp'
-  []
-  [RB56_temp]
-    type = NodalValueSampler
-    variable = temperature
-    block = 'RB56'
-    sort_by = z
-    outputs = 'RB56_temp'
-  []
-  [RT56_temp]
-    type = NodalValueSampler
-    variable = temperature
-    block = 'RT56'
-    sort_by = z
-    outputs = 'RT56_temp'
-  []
-[]
-
-[Outputs]
-  [R1_temp]
-    type = CSV
-    file_base = ceramic/R1_temp
-    sync_times = '0.0'
-    sync_only = true
-  []
-  [R3_temp]
-    type = CSV
-    file_base = ceramic/R3_temp
-    sync_times = '0.0'
-    sync_only = true
-  []
-  [R5_temp]
-    type = CSV
-    file_base = ceramic/R5_temp
-    sync_times = '0.0'
-    sync_only = true
-  []
-  [R7_temp]
-    type = CSV
-    file_base = ceramic/R7_temp
-    sync_times = '0.0'
-    sync_only = true
-  []
-  [R9_temp]
-    type = CSV
-    file_base = ceramic/R9_temp
-    sync_times = '0.0'
-    sync_only = true
-  []
-  [R11_temp]
-    type = CSV
-    file_base = ceramic/R11_temp
-    sync_times = '0.0'
-    sync_only = true
-  []
-  [R13_temp]
-    type = CSV
-    file_base = ceramic/R13_temp
-    sync_times = '0.0'
-    sync_only = true
-  []
-  [R15_temp]
-    type = CSV
-    file_base = ceramic/R15_temp
-    sync_times = '0.0'
-    sync_only = true
-  []
-  [R17_temp]
-    type = CSV
-    file_base = ceramic/R17_temp
-    sync_times = '0.0'
-    sync_only = true
-  []
-  [R19_temp]
-    type = CSV
-    file_base = ceramic/R19_temp
-    sync_times = '0.0'
-    sync_only = true
-  []
-  [R21_temp]
-    type = CSV
-    file_base = ceramic/R21_temp
-    sync_times = '0.0'
-    sync_only = true
-  []
-  [R23_temp]
-    type = CSV
-    file_base = ceramic/R23_temp
-    sync_times = '0.0'
-    sync_only = true
-  []
-  [RL23_temp]
-    type = CSV
-    file_base = ceramic/RL23_temp
-    sync_times = '0.0'
-    sync_only = true
-  []
-  [RU23_temp]
-    type = CSV
-    file_base = ceramic/RU23_temp
-    sync_times = '0.0'
-    sync_only = true
-  []
-  [R25_temp]
-    type = CSV
-    file_base = ceramic/R25_temp
-    sync_times = '0.0'
-    sync_only = true
-  []
-  [R27_temp]
-    type = CSV
-    file_base = ceramic/R27_temp
-    sync_times = '0.0'
-    sync_only = true
-  []
-  [R29_temp]
-    type = CSV
-    file_base = ceramic/R29_temp
-    sync_times = '0.0'
-    sync_only = true
-  []
-  [R31_temp]
-    type = CSV
-    file_base = ceramic/R31_temp
-    sync_times = '0.0'
-    sync_only = true
-  []
-  [R33_temp]
-    type = CSV
-    file_base = ceramic/R33_temp
-    sync_times = '0.0'
-    sync_only = true
-  []
-  [R35_temp]
-    type = CSV
-    file_base = ceramic/R35_temp
-    sync_times = '0.0'
-    sync_only = true
-  []
-  [R37_temp]
-    type = CSV
-    file_base = ceramic/R37_temp
-    sync_times = '0.0'
-    sync_only = true
-  []
-  [R39_temp]
-    type = CSV
-    file_base = ceramic/R39_temp
-    sync_times = '0.0'
-    sync_only = true
-  []
-  [R41_temp]
-    type = CSV
-    file_base = ceramic/R41_temp
-    sync_times = '0.0'
-    sync_only = true
-  []
-  [R43_temp]
-    type = CSV
-    file_base = ceramic/R43_temp
-    sync_times = '0.0'
-    sync_only = true
-  []
-  [R45_temp]
-    type = CSV
-    file_base = ceramic/R45_temp
-    sync_times = '0.0'
-    sync_only = true
-  []
-  [R47_temp]
-    type = CSV
-    file_base = ceramic/R47_temp
-    sync_times = '0.0'
-    sync_only = true
-  []
-  [R49_temp]
-    type = CSV
-    file_base = ceramic/R49_temp
-    sync_times = '0.0'
-    sync_only = true
-  []
-  [R51_temp]
-    type = CSV
-    file_base = ceramic/R51_temp
-    sync_times = '0.0'
-    sync_only = true
-  []
-  [R53_temp]
-    type = CSV
-    file_base = ceramic/R53_temp
-    sync_times = '0.0'
-    sync_only = true
-  []
-  [RL53_temp]
-    type = CSV
-    file_base = ceramic/RL53_temp
-    sync_times = '0.0'
-    sync_only = true
-  []
-  [RU53_temp]
-    type = CSV
-    file_base = ceramic/RU53_temp
-    sync_times = '0.0'
-    sync_only = true
-  []
-  [RB53_temp]
-    type = CSV
-    file_base = ceramic/RB53_temp
-    sync_times = '0.0'
-    sync_only = true
-  []
-  [RT53_temp]
-    type = CSV
-    file_base = ceramic/RT53_temp
-    sync_times = '0.0'
-    sync_only = true
-  []
-  [R55_temp]
-    type = CSV
-    file_base = ceramic/R55_temp
-    #    execute_on = 'timestep_end'
-    sync_times = '0.0'
-    sync_only = true
-  []
-  [RL55_temp]
-    type = CSV
-    file_base = ceramic/RL55_temp
-    sync_times = '0.0'
-    sync_only = true
-  []
-  [RU55_temp]
-    type = CSV
-    file_base = ceramic/RU55_temp
-    sync_times = '0.0'
-    sync_only = true
-  []
-  [RB55_temp]
-    type = CSV
-    file_base = ceramic/RB55_temp
-    sync_times = '0.0'
-    sync_only = true
-  []
-  [RT55_temp]
-    type = CSV
-    file_base = ceramic/RT55_temp
-    sync_times = '0.0'
-    sync_only = true
-  []
-  [R2_temp]
-    type = CSV
-    file_base = cool/R2_temp
-    sync_times = '0.0'
-    sync_only = true
-  []
-  [R4_temp]
-    type = CSV
-    file_base = cool/R4_temp
-    sync_times = '0.0'
-    sync_only = true
-  []
-  [R8_temp]
-    type = CSV
-    file_base = cool/R8_temp
-    sync_times = '0.0'
-    sync_only = true
-  []
-  [R12_temp]
-    type = CSV
-    file_base = cool/R12_temp
-    sync_times = '0.0'
-    sync_only = true
-  []
-  [R16_temp]
-    type = CSV
-    file_base = cool/R16_temp
-    sync_times = '0.0'
-    sync_only = true
-  []
-  [R20_temp]
-    type = CSV
-    file_base = cool/R20_temp
-    sync_times = '0.0'
-    sync_only = true
-  []
-  [R24_temp]
-    type = CSV
-    file_base = cool/R24_temp
-    sync_times = '0.0'
-    sync_only = true
-  []
-  [R28_temp]
-    type = CSV
-    file_base = cool/R28_temp
-    sync_times = '0.0'
-    sync_only = true
-  []
-  [R32_temp]
-    type = CSV
-    file_base = cool/R32_temp
-    sync_times = '0.0'
-    sync_only = true
-  []
-  [R36_temp]
-    type = CSV
-    file_base = cool/R36_temp
-    sync_times = '0.0'
-    sync_only = true
-  []
-  [R40_temp]
-    type = CSV
-    file_base = cool/R40_temp
-    sync_times = '0.0'
-    sync_only = true
-  []
-  [R44_temp]
-    type = CSV
-    file_base = cool/R44_temp
-    sync_times = '0.0'
-    sync_only = true
-  []
-  [R46_temp]
-    type = CSV
-    file_base = cool/R46_temp
-    sync_times = '0.0'
-    sync_only = true
-  []
-  [R54_temp]
-    type = CSV
-    file_base = cool/R54_temp
-    sync_times = '0.0'
-    sync_only = true
-  []
-  [R56_temp]
-    type = CSV
-    file_base = cool/R56_temp
-    sync_times = '0.0'
-    sync_only = true
-  []
-  [RL56_temp]
-    type = CSV
-    file_base = cool/RL56_temp
-    sync_times = '0.0'
-    sync_only = true
-  []
-  [RU56_temp]
-    type = CSV
-    file_base = cool/RU56_temp
-    sync_times = '0.0'
-    sync_only = true
-  []
-  [RB56_temp]
-    type = CSV
-    file_base = cool/RB56_temp
-    sync_times = '0.0'
-    sync_only = true
-  []
-  [RT56_temp]
-    type = CSV
-    file_base = cool/RT56_temp
-    sync_times = '0.0'
-    sync_only = true
-  []
-  [R6_temp]
-    type = CSV
-    file_base = rods/R6_temp
-    sync_times = '0.0'
-    sync_only = true
-  []
-  [R10_temp]
-    type = CSV
-    file_base = rods/R10_temp
-    sync_times = '0.0'
-    sync_only = true
-  []
-  [R14_temp]
-    type = CSV
-    file_base = rods/R14_temp
-    sync_times = '0.0'
-    sync_only = true
-  []
-  [R18_temp]
-    type = CSV
-    file_base = rods/R18_temp
-    sync_times = '0.0'
-    sync_only = true
-  []
-  [R22_temp]
-    type = CSV
-    file_base = rods/R22_temp
-    sync_times = '0.0'
-    sync_only = true
-  []
-  [R26_temp]
-    type = CSV
-    file_base = rods/R26_temp
-    sync_times = '0.0'
-    sync_only = true
-  []
-  [R30_temp]
-    type = CSV
-    file_base = rods/R30_temp
-    sync_times = '0.0'
-    sync_only = true
-  []
-  [R34_temp]
-    type = CSV
-    file_base = rods/R34_temp
-    sync_times = '0.0'
-    sync_only = true
-  []
-  [R38_temp]
-    type = CSV
-    file_base = rods/R38_temp
-    sync_times = '0.0'
-    sync_only = true
-  []
-  [R42_temp]
-    type = CSV
-    file_base = rods/R42_temp
-    sync_times = '0.0'
-    sync_only = true
-  []
-[]
-
 [Preconditioning]
   [SMP_PJFNK]
     type = SMP
@@ -6520,41 +5649,36 @@ n_urlr = 4
 
 [Executioner]
   type = Transient
-  start_time = -50000
-  end_time = 0
+  start_time = -54000
+  end_time = 0.0 # 144000
   dt = 1.00
   dtmin = 1e-4
-  dtmax = 10000.0
+  dtmax = 3600.0
 
-  [TimeStepper]
-    type = PostprocessorDT
-    postprocessor = pseudo_dt
+  [TimeSteppers]
+    [IterationAdaptiveDT]
+      type = IterationAdaptiveDT
+      growth_factor = 1.5
+      optimal_iterations = 8
+      linear_iteration_ratio = 150
+      dt = 0.05
+      cutback_factor = 0.8
+      cutback_factor_at_failure = 0.5
+    []
+
+    [FunctionDT]
+      type = FunctionDT
+      function = time_stepper
+      min_dt = 1e-6
+    []
   []
 
-  # [TimeStepper]
-  #   type = IterationAdaptiveDT
-  #   growth_factor = 1.25
-  #   optimal_iterations = 8
-  #   linear_iteration_ratio = 150
-  #   dt = 0.1
-
-  #   cutback_factor = 0.8
-  #   cutback_factor_at_failure = 0.8
-  # []
-
-  #  [TimeStepper]
-  #    type = FunctionDT
-  #    function = time_stepper
-  #    min_dt = 1e-6
-  #  []
-
-  petsc_options_iname = '-ksp_gmres_restart -pc_type'
-  petsc_options_value = '300 lu '
-  nl_rel_tol = 1e-5
-  nl_abs_tol = 1e-5
-  nl_max_its = 30
-
-  l_tol = 1e-5 # Relative linear tolerance for each Krylov solve
+  petsc_options_iname = '-pc_type -ksp_gmres_restart -mat_mffd_err'
+  petsc_options_value = 'lu       101                1e-5'
+  nl_rel_tol = 1e-2
+  nl_abs_tol = 1e-3
+  nl_max_its = 12
+  l_tol = 1e-4 # Relative linear tolerance for each Krylov solve
   l_max_its = 100 # Number of linear iterations for each Krylov solve
 
   [Quadrature]
@@ -6564,6 +5688,7 @@ n_urlr = 4
 []
 
 [Outputs]
+  active = 'console csv'   # Restrict output to console and CSV for UQ study
   perf_graph = true
   print_linear_residuals = false
   [out_displaced]
@@ -6575,12 +5700,12 @@ n_urlr = 4
   [checkpoint]
     type = Checkpoint
     num_files = 1
-    execute_on = 'final'
   []
   [console]
     type = Console
     time_step_interval = 25
     execute_scalars_on = 'none'
+  #  time_format = dtime
   []
   [csv]
     type = CSV
