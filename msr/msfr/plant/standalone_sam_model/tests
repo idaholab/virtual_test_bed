@@ -28,30 +28,33 @@
     input = msfr_1d_ss.i
     csvdiff = 'msfr_1d_ss_csv.csv'
     executable_pattern = 'sam*|blue_crab*'
-    cli_args = '--app SamApp Executioner/num_steps=100'
+    cli_args = '--app SamApp Outputs/csv/sync_times=0.0 Outputs/csv/sync_only=true'
     prereq = 'syntax_steady'
     abs_zero = 1e-4
     rel_err = 1e-4
-    max_time = 400
+    min_parallel = 2
+    max_time = 500
   []
   [transient_1]
     type = CSVDiff
     input = msfr_1d_transient_01.i
     csvdiff = 'msfr_1d_transient_01_csv.csv'
     executable_pattern = 'sam*|blue_crab*'
-    cli_args = '--app SamApp Executioner/num_steps=10 Problem/restart_file_base=msfr_1d_ss_checkpoint_cp/LATEST'
+    cli_args = '--app SamApp Executioner/num_steps=120'
     prereq = 'syntax_transient_1 steady'
     abs_zero = 1e-4
     rel_err = 1e-4
+    min_parallel = 2
   []
   [transient_2]
     type = CSVDiff
     input = msfr_1d_transient_02.i
     csvdiff = 'msfr_1d_transient_02_csv.csv'
     executable_pattern = 'sam*|blue_crab*'
-    cli_args = '--app SamApp Executioner/num_steps=10 Problem/restart_file_base=msfr_1d_ss_checkpoint_cp/LATEST'
+    cli_args = '--app SamApp Executioner/num_steps=120'
     prereq = 'syntax_transient_2 steady transient_1'
     abs_zero = 1e-4
     rel_err = 1e-4
+    min_parallel = 2
   []
 []
