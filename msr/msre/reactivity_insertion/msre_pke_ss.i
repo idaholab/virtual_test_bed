@@ -15,10 +15,11 @@
   global_init_T = 905.4
   scaling_factor_var='1 1e-3 1e-6'
   p_order = 1
+  species_system_name = 'species'
+[]
 
-  [PBModelParams]
-    Courant_control = true
-  []
+[Problem]
+  nl_sys_names = 'nl0 species'
 []
 
 [EOS]
@@ -46,9 +47,10 @@
 
 [Functions]
   [time_stepper]
-    type = PiecewiseLinear
-    x = '-1000.0   0.0'
-    y = '    1.0  10.0'
+    type = PiecewiseConstant
+    x = '-2000.0    -1950.0  -1900.0 -1500.0  -1000  -500     0.0 '
+    y = '    1.0        2.0      5.0    10.0     50.  100.0   100.0'
+    direction = left_inclusive
   []
 
   [ext_rho]
@@ -392,48 +394,61 @@
     type = ComponentBoundaryFlow
     input = ch2(in)
   []
+  [Power]
+    type = ScalarVariable
+    variable = reactor:power
+  []
 []
 
 [Preconditioning]
-  active = 'SMP_PJFNK'
   [SMP_PJFNK]
     type = SMP
-    # type = FDP
     full = true
     solve_type = 'PJFNK'
-    petsc_options_iname = '-pc_type -pc_factor_shift_type'
-    petsc_options_value = 'lu       NONZERO'
+    petsc_options_iname = '-pc_type -ksp_gmres_restart'
+    petsc_options_value = 'lu       101'
+    nl_sys = 'nl0'
+  []
+  [SMP_species]
+    type = SMP
+    full = true
+    solve_type = 'PJFNK'
+    petsc_options_iname = '-pc_type -ksp_gmres_restart'
+    petsc_options_value = 'lu 101'
+    nl_sys = 'species'
   []
 []
 
 [Executioner]
-  type                = Transient
+  type                = SAMSegregatedTransient
   scheme              = implicit-euler
-  dtmin=1.0E-4
+  nl_systems_to_solve = 'nl0 species'
+  dtmin               = 1.0E-4
+
   [TimeStepper]
     type = FunctionDT
     function = time_stepper
     min_dt = 1e-3
   []
-  start_time          = -2000
-  end_time            = 0
-  petsc_options_iname = '-ksp_gmres_restart'
-  petsc_options_value = '100'
-  nl_rel_tol = 1e-11
-  nl_abs_tol = 3e-10
+
+  start_time = -2000
+  end_time   = 0
+  nl_rel_tol = 1e-8
+  nl_abs_tol = 1e-7
   nl_max_its = 30
-  l_tol      = 1e-6
+  l_tol      = 1e-4
   l_max_its  = 100
+
   [Quadrature]
-    # type  = TRAP
-    # order = FIRST
-    # type  = GAUSS
-    # order = SECOND
+    type  = TRAP
+    order = FIRST
   []
 []
 
 [Outputs]
   print_linear_residuals = false
+  perf_graph = true
+
   [out_displaced]
     type = Exodus
     use_displaced = true
@@ -446,9 +461,10 @@
   []
   [console]
     type = Console
+    execute_scalars_on = 'none'
   []
   [csv]
     type = CSV
+    execute_scalars_on = 'none'
   []
-  perf_graph = true
 []
