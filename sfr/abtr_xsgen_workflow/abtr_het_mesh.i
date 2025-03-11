@@ -249,13 +249,12 @@ mid_control_empty = 12
     reactor_params = rmp
     pin_type = 5
     pitch = ${assembly_pitch}
-    num_sectors = 2
-    mesh_intervals = '1'
     region_ids = '${mid_rad_refl};
                   ${mid_rad_refl};
                   ${mid_rad_refl};
                   ${mid_rad_refl}' # Background
     use_as_assembly = true
+    homogenized = true
     quad_center_elements = false
   []
   [shielding_assembly]
@@ -263,13 +262,12 @@ mid_control_empty = 12
     reactor_params = rmp
     pin_type = 6
     pitch = ${assembly_pitch}
-    num_sectors = 2
-    mesh_intervals = '1'
     region_ids = '${mid_rad_shld};
                   ${mid_rad_shld};
                   ${mid_rad_shld};
                   ${mid_rad_shld}' # Background
     use_as_assembly = true
+    homogenized = true
     quad_center_elements = false
   []
   # Define heterogeneous core
