@@ -459,6 +459,7 @@
              13  7  0  0  5 14;
                19 13  6 14 19'
     rotate_angle = 60
+    assign_control_drum_id = true
   []
   # Delete the dummy assemblies
   [del_dummy]
