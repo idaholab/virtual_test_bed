@@ -51,3 +51,4 @@ microreactors/gcmr/core/Serpent_Model/PART_U902_PF40_R85.inp filter=lfs diff=lfs
 microreactors/gcmr/core/Serpent_Model/PART_U954_PF25_R25.inp filter=lfs diff=lfs merge=lfs -text
 microreactors/gcmr/core/Serpent_Model/PART_U964_PF25_R25.inp filter=lfs diff=lfs merge=lfs -text
 microreactors/mrad/Serpent_Model/TRISO_U900_PF40_R100.inp filter=lfs diff=lfs merge=lfs -text
+microreactors/gcmr/core/Serpent_Model/PART_U900_PF40_R85.inp filter=lfs diff=lfs merge=lfs -text
