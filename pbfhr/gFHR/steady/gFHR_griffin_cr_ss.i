@@ -40,7 +40,7 @@ total_power = 280.0e+6 # Total reactor Power (W)
 # Initial values  --------------------------------------------
 initial_temperature = 873.15 # (K)
 Rho = 1973.8 # kg/m^3 900.0 K
-Rho_ref = 1973.8 # kg/m^3
+#Rho_ref = 1973.8 # kg/m^3
 
 # ==============================================================================
 # GLOBAL PARAMETERS
@@ -300,9 +300,9 @@ Rho_ref = 1973.8 # kg/m^3
   initial_fuel_temperature = '${initial_temperature}'
 
   # coolant settings
-  coolant_composition_name = coolant
-  coolant_density_variable = 'Rho'
-  coolant_density_ref = ${Rho_ref}
+  #coolant_composition_name = coolant
+  #coolant_density_variable = 'Rho'
+  #coolant_density_ref = ${Rho_ref}
   # TODO: add material id 2 with coolant as well
   coolant_material_id = '1'
 

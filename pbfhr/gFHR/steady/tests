@@ -6,12 +6,20 @@
     executable_pattern = 'blue_crab*'
     min_parallel = 8
   []
-  [syntax_neutronics]
+  [syntax_neutronics_blue_crab]
     type = RunApp
     input = 'gFHR_griffin_cr_ss.i'
     check_input = True
     cli_args = "MultiApps/active='' Transfers/active=''"
     executable_pattern = 'blue_crab*'
+    min_parallel = 4
+  []
+  [syntax_neutronics_griffin]
+    type = RunApp
+    input = 'gFHR_griffin_only_cr_ss.i'
+    check_input = True
+    cli_args = "MultiApps/active='' Transfers/active=''"
+    executable_pattern = 'griffin*'
     min_parallel = 4
   []
   [syntax_core_flow]
@@ -49,7 +57,7 @@
   []
 
   # Regression tests - single app inputs
-  [neutronics]
+  [neutronics_bluecrab]
     type = CSVDiff
     input = 'gFHR_griffin_cr_ss.i'
     csvdiff = 'gFHR_griffin_cr_ss_out.csv'
@@ -57,7 +65,22 @@
                "Executioner/accept_on_max_fixed_point_iteration=true"
     executable_pattern = 'blue_crab*'
     min_parallel = 4
-    prereq = 'syntax_neutronics'
+    prereq = 'syntax_neutronics_blue_crab'
+    # Missing group cross section for absorption
+    allow_warnings = true
+    # To investigate later
+    abs_zero = 5e-3
+    rel_err = 5e-3
+  []
+  [neutronics_griffin]
+    type = CSVDiff
+    input = 'gFHR_griffin_only_cr_ss.i'
+    csvdiff = 'gFHR_griffin_only_cr_ss_out.csv'
+    cli_args = "MultiApps/active='' Transfers/active='' Executioner/fixed_point_max_its=2 "
+               "Executioner/accept_on_max_fixed_point_iteration=true"
+    executable_pattern = 'griffin*'
+    min_parallel = 4
+    prereq = 'syntax_neutronics_griffin'
     # Missing group cross section for absorption
     allow_warnings = true
     # To investigate later
