@@ -8,7 +8,7 @@
     cli_args = "Executioner/richardson_max_its=20 Outputs/csv=true "
                "Outputs/file_base=mrad_coupled_out Outputs/exodus=false MultiApps/bison/cli_args='Outputs/exodus=false' "
                "--distributed-mesh"
-    min_parallel = 48
+    min_parallel = 96
     max_time = 10000
     # Capillary limit for vertical heat pipes is not accurate; see https://hpcgitlab.hpc.inl.gov/idaholab/sockeye/-/issues/65
     # Cross-section warning due to missing fission-only
@@ -29,7 +29,7 @@
                "Outputs/csv=true Outputs/file_base=mrad_coupled_null Outputs/exodus=false "
                "MultiApps/bison/cli_args='Outputs/exodus=false';Problem/restart_file_base=../steady/mrad_coupled_out_bison0_cp/LATEST';Mesh/file=../steady/mrad_coupled_out_bison0_cp/LATEST' "
                "--distributed-mesh"
-    min_parallel = 48
+    min_parallel = 96
     max_time = 10000
     # Capillary limit for vertical heat pipes is not accurate; see https://hpcgitlab.hpc.inl.gov/idaholab/sockeye/-/issues/65
     # Cross-section warning due to missing fission-only
@@ -47,7 +47,7 @@
                "Outputs/file_base=mrad_coupled_load Outputs/exodus=false "
                "MultiApps/bison/cli_args='Outputs/exodus=false;Problem/restart_file_base=../steady/mrad_coupled_out_bison0_cp/LATEST;Mesh/file=../steady/mrad_coupled_out_bison0_cp/LATEST' "
                "--distributed-mesh"
-    min_parallel = 48
+    min_parallel = 96
     max_time = 10000
     # Capillary limit for vertical heat pipes is not accurate; see https://hpcgitlab.hpc.inl.gov/idaholab/sockeye/-/issues/65
     # Cross-section warning due to missing fission-only
