@@ -13,6 +13,8 @@
 # k_0    = 1.09
 # Pr     = 15.005
 
+# polynomialOrder was reduced from 4 to 3 for testing / CI purposes
+
 [GENERAL]
   startFrom = conduction.fld+T
   stopAt = numSteps
@@ -21,7 +23,7 @@
   timeStepper = tombo2
   writeControl = steps
   writeInterval = 100
-  polynomialOrder = 4
+  polynomialOrder = 3
 
 [VELOCITY]
   viscosity = -100.0
