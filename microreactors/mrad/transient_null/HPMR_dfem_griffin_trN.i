@@ -131,17 +131,20 @@
   []
 []
 
+
 [Transfers]
   [to_sub_power_density]
-    type = MultiAppShapeEvaluationTransfer
+    type = MultiAppGeneralFieldShapeEvaluationTransfer
     to_multi_app = bison
     source_variable = power_density
     variable = power_density
     from_postprocessors_to_be_preserved = integrated_power
     to_postprocessors_to_be_preserved = power
+
+    search_value_conflicts = false
   []
   [from_sub_temp_fuel]
-    type = MultiAppGeometricInterpolationTransfer
+    type = MultiAppGeneralFieldNearestLocationTransfer
     from_multi_app = bison
     variable = Tf
     source_variable = Tfuel
@@ -149,11 +152,11 @@
     displaced_source_mesh = false
     displaced_target_mesh = false
     use_displaced_mesh = false
-    num_points = 1 # interpolate with one point (~closest point)
-    power = 0 # interpolate with constant function
+
+    search_value_conflicts = false
   []
   [from_sub_temp_mod]
-    type = MultiAppGeometricInterpolationTransfer
+    type = MultiAppGeneralFieldNearestLocationTransfer
     from_multi_app = bison
     variable = Tm
     source_variable = Tmod
@@ -161,8 +164,8 @@
     displaced_source_mesh = false
     displaced_target_mesh = false
     use_displaced_mesh = false
-    num_points = 1 # interpolate with one point (~closest point)
-    power = 0 # interpolate with constant function
+
+    search_value_conflicts = false
   []
 []
 
