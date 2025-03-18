@@ -20,13 +20,21 @@ fluid_solid_interface = '1 2 7'
   type = NekRSProblem
   casename = 'fluid'
 
-  nondimensional = true
-  U_ref = 0.0575
-  T_ref = 923.15
-  dT_ref = 10.0
-  L_ref = 0.006
-  rho_0 = 1962.13
-  Cp_0 = 2416.0
+  # U_ref = 0.0575
+  # T_ref = 923.15
+  # dT_ref = 10.0
+  # L_ref = 0.006
+  # rho_0 = 1962.13
+  # Cp_0 = 2416.0
+
+  [Dimensionalize]
+    L = 0.006
+    U = 0.0575
+    T = 923.15
+    dT = 100.0
+    rho = 1962.13
+    Cp = 2416.0
+  []
 []
 
 [Executioner]
