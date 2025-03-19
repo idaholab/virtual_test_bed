@@ -218,7 +218,21 @@ reflector_disp = 1.48e-3 # Corresponding to 15 cents reactivity insertion
   []
 []
 
+# We create variables separately because Air density requires displacement variables
+# but the solid mechanics equations would only create these variables on blocks we solve equations
+# for displacements on
+# Note: not creating the displacement variables on the air blocks would likely be more efficient
+[Variables]
+  [disp_x]
+  []
+  [disp_y]
+  []
+  [disp_z]
+  []
+[]
+
 [Physics/SolidMechanics/QuasiStatic]
+  add_variables = false
   [mech_parts_fuel]
     block = '${fuel_all}'
     temperature = temp_f
