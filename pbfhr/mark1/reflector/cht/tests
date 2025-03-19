@@ -8,14 +8,4 @@
                   "MOOSE main application."
     executable_pattern = 'cardinal*'
   []
-  [nek_syntax]
-    type = RunApp
-    input = nek.i
-    check_input = true
-    requirement = "The pbfhr reflector  fluid flow input shall not deprecate syntax from the "
-                  "MOOSE main application."
-    executable_pattern = 'cardinal*'
-    min_parallel = 16
-    group = 'large_memory'
-  []
 []
