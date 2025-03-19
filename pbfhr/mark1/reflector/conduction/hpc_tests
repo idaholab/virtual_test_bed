@@ -1,11 +1,21 @@
 [Tests]
+  [nek_syntax]
+    type = RunApp
+    input = solid.i
+    cli_args = 'Executioner/num_steps=10'
+    check_input = true
+    capabilities = cardinalapp
+    min_parallel = 32
+    max_time = 1000
+  []
   [nek]
     type = RunApp
     input = nek.i
     requirement = "Cardinal shall be able to simulate bypass flow in the reflector of the Mark1 reactor."
+    prereq = 'nek_syntax'
     capabilities = cardinalapp
-    min_parallel = 32
     cli_args = 'Outputs/exodus=false'
+    min_parallel = 32
     max_time = 1000
   []
   [full_sim]
