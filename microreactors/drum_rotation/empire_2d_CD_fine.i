@@ -3,8 +3,6 @@ d = ${fparse 4 / sqrt(3) * r} # Long diagonal
 x_center = ${fparse 9 / 4 * d}
 y_center = ${fparse r}
 
-angle_step = 0.2
-
 [Mesh]
   [FUEL_pin]
     type = PolygonConcentricCircleMeshGenerator
@@ -275,7 +273,6 @@ angle_step = 0.2
     input = drum_blocks
     block = 10
     new_boundary = 'drum_outer'
-    external_only = true
   []
   [drum_remove]
     type = BlockDeletionGenerator

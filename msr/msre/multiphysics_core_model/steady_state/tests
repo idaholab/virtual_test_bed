@@ -13,6 +13,7 @@
     check_input = True
     executable_pattern = 'griffin*'
     cli_args = "MultiApps/active='' Transfers/active=''"
+    prereq = generate_mesh
   []
   [th_msre_syntax]
     type = RunApp

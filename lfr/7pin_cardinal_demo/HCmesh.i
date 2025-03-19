@@ -21,12 +21,6 @@ num_layers_fuel = 40
 num_layers_refl = 8
 numside = 6
 
-linearpower = 27466.11572112955 # W/m
-inlet_T = 693.15                # K
-#fuelconductance = 1.882         # W/m/K
-cladconductance = 21.6          # W/m/K
-gapconductance = 0.251          # W/m/K
-
 bid_gapc = 9
 bid_gap = 1
 bid_fl  = 100
@@ -39,7 +33,6 @@ bid_lrflc = 7
 bid_urflc = 8
 
 half_asmpitch = ${fparse flat_to_flat / 2 + duct_thickness}
-powerdensity = ${fparse linearpower / (pi * (fuel_r_o * fuel_r_o - fuel_r_i * fuel_r_i))}
 
 [Mesh]
   # These make the 7 unique pins
