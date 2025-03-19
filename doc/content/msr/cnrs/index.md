@@ -1,4 +1,4 @@
-# CNRS multiphysics Modeling
+# CNRS Multiphysics Modeling
 
 [Benchmark Description](cnrs/model_description.md)
 

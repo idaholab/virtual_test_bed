@@ -1,6 +1,6 @@
 # CNRS Model
 
-*Contact: Dr. Mustafa Jaradat, Mustafa.Jaradat@inl.gov*
+*Contact: Mustafa Jaradat, (mustafa.jaradat@inl.gov), Namjae Choi (namjae.choi@inl.gov), Abdalla Abou-Jaoude (abdalla.aboujaoude@inl.gov)
 
 *Model summarized and documented by Dr. Khaldoon Al-Dawood
 
