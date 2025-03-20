@@ -1,7 +1,7 @@
 # SNAP 8 Experimental Reactor (S8ER) Multiphysics Model
 
-*Contact: Isaac Naupa, iaguirre6@gatech.edu*
-*Contact: Stefano Terlizzi, Stefano.Terlizzi@inl.gov*
+*Contact: Isaac Naupa, iaguirre6.at.gatech.edu*
+*Contact: Stefano Terlizzi, sbt5572.at.psu.edu*
 
 *Model link: [S8ER Model](https://github.com/idaholab/virtual_test_bed/tree/devel/microreactors/s8er)*
 

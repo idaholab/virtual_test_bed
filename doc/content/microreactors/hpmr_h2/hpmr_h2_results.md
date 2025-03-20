@@ -1,6 +1,6 @@
 # HPMR-H_2 Reactor Results
 
-*Contact: Stefano Terlizzi, Stefano.Terlizzi\@inl.gov , Vincent Labour&#233;, vincent.laboure\@inl.gov*
+*Contact: Stefano Terlizzi sbt5572.at.psu.edu, Javier Ortensi javier.ortensi.at.inl.gov*
 
 ## Neutronics Verification
 
