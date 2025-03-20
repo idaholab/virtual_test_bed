@@ -22,11 +22,6 @@ num_layers_fuel = 20
 num_layers_refl = 4
 numside=6
 
-linearpower = 27466.11572112955 # W/m
-inlet_T = 693.15                # K
-fuelconductance = 1.882        # W/m/K
-#cladconductance = 21.6         # W/m/K
-
 mid_gap = 1
 mid_ifl = 2
 mid_ofl = 3
@@ -76,13 +71,6 @@ bid_cladh = 2009
 
 # === derived
 half_asmpitch = ${fparse flat_to_flat / 2 + duct_thickness}
-coolantdensity_ref = ${fparse 10678-13174*(inlet_T-600.6)/10000} # kg/m^3
-
-richardsonreltol=1E-3
-richardsonabstol=1E+3
-maxinnerits=1
-maxfixptits=100000
-richardsonmaxits=1000
 
 #==============================================================
 
