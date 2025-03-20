@@ -1,6 +1,6 @@
 # Pebble Bed Modular Reactor (PBMR) Description
 
-*Contact: Paolo Balestra (paolo.balestra.at.inl.gov)*
+*Contact: Lise Charlot (lise.charlot.at.inl.gov)*
 
 *Model link: [PBMR Model](https://github.com/idaholab/virtual_test_bed/tree/devel/htgr/pbmr400)*
 
