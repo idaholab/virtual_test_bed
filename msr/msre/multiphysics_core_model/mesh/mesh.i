@@ -11,7 +11,6 @@ height_pump = '${fparse fuel_pipe_R / 1.5}'
 outer_R = '${fparse fuel_pipe_R +core_internal_R + core_outer_gap + core_barrel_thickness + downcomer_thickness}'
 top_disc_volume = '${fparse pi*outer_R^2*height_pump}'
 remaining_volume = '${fparse external_piping_volume-top_disc_volume}'
-core_riser_flow_area = '${fparse pi*fuel_pipe_R^2}'
 core_downcomer_flow_area = '${fparse pi*(outer_R^2 - (outer_R-downcomer_thickness)^2)}'
 piping_height = '${fparse remaining_volume/(core_downcomer_flow_area + core_downcomer_flow_area)}'
 
