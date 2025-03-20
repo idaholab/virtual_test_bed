@@ -1,6 +1,6 @@
 # HPMR-H$_2$ Reactor Model
 
-*Contact: Stefano Terlizzi, stefano.terlizzi\@inl.gov, Vincent Labour&#233;, vincent.laboure\@inl.gov*
+*Contact: Stefano Terlizzi sbt5572.at.psu.edu, Javier Ortensi javier.ortensi.at.inl.gov*
 
 *Model link: [Direwolf Steady State Model](https://github.com/idaholab/virtual_test_bed/tree/devel/microreactors/hpmr_h2/steady)*
 

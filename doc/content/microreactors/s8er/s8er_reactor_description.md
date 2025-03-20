@@ -1,7 +1,7 @@
 # SNAP 8 Experimental Reactor (S8ER) Description
 
-*Contact: Isaac Naupa, iaguirre6@gatech.edu*
-*Contact: Stefano Terlizzi, Stefano.Terlizzi@inl.gov*
+*Contact: Isaac Naupa, iaguirre6.at.gatech.edu*
+*Contact: Stefano Terlizzi, sbt5572.at.psu.edu*
 
 !alert note
 For citing purposes, please cite [!citep](s8er_garcia2022) and [!citep](s8er_naupa2022).

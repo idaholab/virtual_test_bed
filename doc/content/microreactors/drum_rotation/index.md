@@ -1,6 +1,6 @@
 # Micro Reactor Drum Rotation
 
-*Contact: Zachary Prince, zachmprince\@gmail.com, Vincent Labour&#233;, vincent.laboure\@inl.gov*
+*Contact: Zachary Prince, zachmprince.at.gmail.com, Javier Ortensi javier.ortensi.at.inl.gov*
 
 *Model link: [Micro Reactor Drum Rotation Model](https://github.com/idaholab/virtual_test_bed/tree/main/microreactors/drum_rotation)*
 
