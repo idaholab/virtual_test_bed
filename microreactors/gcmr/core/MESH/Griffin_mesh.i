@@ -111,8 +111,8 @@
 
   [centralFA]
     type = PatternedHexMeshGenerator
-    inputs = 'YH_pin Coolant_hole  TRISO_fuel_in Poison_LBP0  Control_hole  Poison_LBP1   TRISO_fuel_out  TRISO_fuel_mid'
-    #           0          1            2           3          4            5             6               7
+    inputs = 'YH_pin Coolant_hole  TRISO_fuel_in Poison_LBP0'
+    #           0          1            2           3
     hexagon_size = 10.4
     pattern =
                       '3  1  2  2  1  3;
@@ -133,8 +133,8 @@
 
   [Innercore]
     type = PatternedHexMeshGenerator
-    inputs = 'YH_pin Coolant_hole  TRISO_fuel_in Poison_LBP0  Control_hole  Poison_LBP1   TRISO_fuel_out  TRISO_fuel_mid'
-    #           0          1            2           3         4
+    inputs = 'YH_pin Coolant_hole  TRISO_fuel_in Poison_LBP0'
+    #           0          1            2           3
     hexagon_size = 10.4
     pattern =
                       '3  1  2  2  1  3;
@@ -164,21 +164,21 @@
 
   [Outercore]
     type = PatternedHexMeshGenerator
-    inputs = 'YH_pin Coolant_hole  TRISO_fuel_in Poison_LBP0  Control_hole  Poison_LBP1   TRISO_fuel_out  TRISO_fuel_mid'
-    #           0          1            2           3         4             5             6              7
+    inputs = 'YH_pin Coolant_hole  Control_hole  Poison_LBP1   TRISO_fuel_mid'
+    #           0          1            2             3            4
     hexagon_size = 10.4
     pattern =
-                      '7  1  7  7  1  7;
-                    1  0  7  1  7  0   1;
-                  7  7  1  7  7  1  7   7;
-                7  1  7  5  1  5  7  1   7;
-              1  7  7  1  7  7  1  7  7   1;
-             7  0  1  5  7  4  7  5  1  0  7;
-              1  7  7  1  7  7  1  7  7  1;
-               7  1  7  5  1  5  7  1  7;
-                7  7  1  7  7  1  7  7;
-                 1  0  7  1  7  0  1;
-                  7  1  7  7  1  7'
+                      '4  1  4  4  1  4;
+                    1  0  4  1  4  0   1;
+                  4  4  1  4  4  1  4   4;
+                4  1  4  3  1  3  4  1   4;
+              1  4  4  1  4  4  1  4  4   1;
+             4  0  1  3  4  2  4  3  1  0  4;
+              1  4  4  1  4  4  1  4  4  1;
+               4  1  4  3  1  3  4  1  4;
+                4  4  1  4  4  1  4  4;
+                 1  0  4  1  4  0  1;
+                  4  1  4  4  1  4'
 
     background_block_id = 10
     background_intervals = 1
@@ -186,21 +186,21 @@
 
   [Outercore2]
     type = PatternedHexMeshGenerator
-    inputs = 'YH_pin Coolant_hole  TRISO_fuel_in Poison_LBP0  Control_hole  Poison_LBP1   TRISO_fuel_out  TRISO_fuel_mid'
-    #           0          1            2           3         4             5             6
+    inputs = 'YH_pin Coolant_hole  Control_hole  Poison_LBP1   TRISO_fuel_mid'
+    #           0          1            2             3             4
     hexagon_size = 10.4
     pattern =
-                      '7  1  7  7  1  7;
-                    1  0  7  1  7  0  1;
-                  7  7  1  7  7  1  7  7;
-                7  1  7  5  1  5  7  1  7;
-              1  7  7  1  7  7  1  7  7  1;
-             7  0  1  5  7  4  7  5  1  0  7;
-              1  7  7  1  7  7  1  7  7  1;
-               7  1  7  5  1  5  7  1  7;
-                7  7  1  7  7  1  7  7;
-                 1  0  7  1  7  0  1;
-                  7  1  7  7  1  7'
+                      '4  1  4  4  1  4;
+                    1  0  4  1  4  0  1;
+                  4  4  1  4  4  1  4  4;
+                4  1  4  3  1  3  4  1  4;
+              1  4  4  1  4  4  1  4  4  1;
+             4  0  1  3  4  2  4  3  1  0  4;
+              1  4  4  1  4  4  1  4  4  1;
+               4  1  4  3  1  3  4  1  4;
+                4  4  1  4  4  1  4  4;
+                 1  0  4  1  4  0  1;
+                  4  1  4  4  1  4'
 
     background_block_id = 10
     background_intervals = 1
@@ -208,21 +208,21 @@
 
   [Innercore2]
     type = PatternedHexMeshGenerator
-    inputs = 'YH_pin Coolant_hole  TRISO_fuel_in Poison_LBP0  Control_hole  Poison_LBP1   TRISO_fuel_out  TRISO_fuel_mid'
-    #           0          1            2           3         4             5             6               7
+    inputs = 'YH_pin Coolant_hole  Poison_LBP1   TRISO_fuel_out'
+    #           0          1            2             3
     hexagon_size = 10.4
     pattern =
-                      '6  1  6  6  1  6;
-                    1  0  6  1  6  0   1;
-                  6  6  1  6  6  1  6   6;
-                6  1  6  5  1  5  6  1   6;
-              1  6  6  1  6  6  1  6  6   1;
-             6  0  1  5  6  1  6  5  1  0  6;
-              1  6  6  1  6  6  1  6  6  1;
-               6  1  6  5  1  5  6  1  6;
-                6  6  1  6  6  1  6  6;
-                 1  0  6  1  6  0  1;
-                  6  1  6  6  1  6'
+                      '3  1  3  3  1  3;
+                    1  0  3  1  3  0   1;
+                  3  3  1  3  3  1  3   3;
+                3  1  3  2  1  2  3  1   3;
+              1  3  3  1  3  3  1  3  3   1;
+             3  0  1  2  3  1  3  2  1  0  3;
+              1  3  3  1  3  3  1  3  3  1;
+               3  1  3  2  1  2  3  1  3;
+                3  3  1  3  3  1  3  3;
+                 1  0  3  1  3  0  1;
+                  3  1  3  3  1  3'
 
     background_block_id = 10
     background_intervals = 1
