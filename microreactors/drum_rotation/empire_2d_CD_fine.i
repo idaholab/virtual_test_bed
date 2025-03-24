@@ -273,6 +273,7 @@ y_center = ${fparse r}
     input = drum_blocks
     block = 10
     new_boundary = 'drum_outer'
+    include_only_external_sides = true
   []
   [drum_remove]
     type = BlockDeletionGenerator
