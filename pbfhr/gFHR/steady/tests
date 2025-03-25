@@ -27,13 +27,13 @@
     input = 'gFHR_pronghorn_ss.i'
     check_input = True
     cli_args = "MultiApps/active='' Transfers/active='' Mesh/uniform_refine=0"
-    executable_pattern = 'pronghorn*|blue_crab*'
+    executable_pattern = 'pronghorn*'
   []
   [syntax_pebbles]
     type = RunApp
     input = 'gFHR_pebble_triso_ss.i'
     check_input = True
-    executable_pattern = 'pronghorn*|blue_crab*'
+    executable_pattern = 'pronghorn*'
   []
 
   # Regression tests - coupled cases
@@ -91,7 +91,7 @@
     type = CSVDiff
     input = 'gFHR_pronghorn_ss.i'
     csvdiff = 'gFHR_pronghorn_ss_out.csv'
-    executable_pattern = 'pronghorn*|blue_crab*'
+    executable_pattern = 'pronghorn*'
     min_parallel = 8
     prereq = 'syntax_core_flow'
   []
@@ -99,7 +99,7 @@
     type = CSVDiff
     input = 'gFHR_pebble_triso_ss.i'
     csvdiff = 'gFHR_pebble_triso_ss_out.csv'
-    executable_pattern = 'pronghorn*|blue_crab*'
+    executable_pattern = 'pronghorn*'
     cli_args = 'Outputs/csv=true'
     prereq = 'syntax_pebbles'
   []
