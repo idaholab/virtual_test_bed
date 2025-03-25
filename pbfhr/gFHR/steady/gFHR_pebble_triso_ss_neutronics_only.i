@@ -8,10 +8,10 @@
 # gFHR Pebble temperature model for equilibrium core calculation
 # Currently using a Dirichlet BC for the pebble surface temperature
 # ------------------------------------------------------------------------------
-# THIS INPUT IS THE FULL-PHYSICS VERSION
+# THIS INPUT IS A NEUTRONICS-ONLY (GRIFFIN) VERSION
 # ------------------------------------------------------------------------------
 
 # Include input common to all physics
 !include gFHR_pebble_triso_ss_base.i
-# Include Pronghorn-specific Materials and UserObjects
-!include gFHR_pebble_triso_materials_and_user_objects_blocks_pronghorn.i
+# Include Materials (ADGenericConstantMaterials) recognized by Griffin
+!include gFHR_pebble_triso_materials_block_neutronics_only.i

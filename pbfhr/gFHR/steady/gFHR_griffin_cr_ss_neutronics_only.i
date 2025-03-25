@@ -7,21 +7,14 @@
 #   1.75647602E+01  2.33006096E+00
 #   2.33006096E+00  1.10002700E-04
 # ------------------------------------------------------------------------------
-# THIS INPUT IS THE FULL-PHYSICS VERSION
+# THIS INPUT IS A NEUTRONICS-ONLY (GRIFFIN) VERSION
 # ------------------------------------------------------------------------------
 
 # Specify the pebble fuel input file
-pebble_conduction_input_file = 'gFHR_pebble_triso_ss.i'
+pebble_conduction_input_file = 'gFHR_pebble_triso_ss_neutronics_only.i'
 
 # Specify the flow subapp input file
-flow_subapp_input_file = 'gFHR_pronghorn_ss.i'
+flow_subapp_input_file = 'gFHR_pronghorn_ss_neutronics_only.i'
 
 # Include input common to all physics
 !include gFHR_griffin_cr_ss_base.i
-
-# Add coolant settings to PebbleDepletion block from base file
-PebbleDepletion/coolant_composition_name = coolant
-PebbleDepletion/coolant_density_variable = 'Rho'
-PebbleDepletion/coolant_density_ref = 1973.8 # kg/m^3
-# TODO: add material id 2 with coolant as well
-PebbleDepletion/coolant_material_id = '1'
