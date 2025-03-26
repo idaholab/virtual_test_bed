@@ -185,6 +185,7 @@ hp_surfs = 'HP_surf'
     packing_fraction = 0.4
     specific_heat_scale_factor = 1.0
     thermal_conductivity_scale_factor = 1.0
+    graphite_grade = IG_110
     fast_neutron_fluence = 0 #6.75E+24 # this value is neutron fluence over 0.1MeV
     temperature = temp
   []
@@ -194,6 +195,7 @@ hp_surfs = 'HP_surf'
     packing_fraction = 0
     specific_heat_scale_factor = 1.0
     thermal_conductivity_scale_factor = 1.0
+    graphite_grade = IG_110
     fast_neutron_fluence = 0 #6.75E+24 # this value is neutron fluence over 0.1MeV
     temperature = temp
   []
