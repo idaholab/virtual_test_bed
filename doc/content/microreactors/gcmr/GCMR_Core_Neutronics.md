@@ -2,10 +2,8 @@
 
 *Contacts: Ahmed Abdelhameed (aabdelhameed.at.anl.gov), Yinbin Miao (ymiao.at.anl.gov), Nicolas Stauff (nstauff.at.anl.gov)*
 
-*Model link: [GCMR Whole Core Neutronics](https://github.com/idaholab/virtual_test_bed/tree/main/microreactors/gcmr/core)*
-
 !tag name=Gas-Cooled Microreactor Core
-     description=2D core model of a Gas Cooled Micro Reactor with heterogeneous transport
+     description=3D core model of a Gas Cooled Micro Reactor with heterogeneous transport
      image=https://mooseframework.inl.gov/virtual_test_bed/media/gcmr/Fig12.jpg
      pairs=reactor_type:microreactor
             reactor:GCMR
