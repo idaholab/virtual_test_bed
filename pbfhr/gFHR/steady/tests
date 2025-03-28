@@ -17,6 +17,7 @@
   [syntax_neutronics_griffin]
     type = RunApp
     input = 'gFHR_griffin_cr_ss_neutronics_only.i'
+    working_directory='testing'
     check_input = True
     cli_args = "MultiApps/active='' Transfers/active=''"
     executable_pattern = 'griffin*'
@@ -72,6 +73,7 @@
   [neutronics_griffin]
     type = CSVDiff
     input = 'gFHR_griffin_cr_ss_neutronics_only.i'
+    working_directory='testing'
     csvdiff = 'gFHR_griffin_cr_ss_neutronics_only_out.csv'
     cli_args = "MultiApps/active='' Transfers/active='' Executioner/fixed_point_max_its=2 "
                "Executioner/accept_on_max_fixed_point_iteration=true"

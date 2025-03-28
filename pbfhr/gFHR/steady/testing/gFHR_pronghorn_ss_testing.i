@@ -11,4 +11,4 @@
 pebble_bed_fluid_effective_conductivity_type=FunctorKappaFluid
 
 # Include common input shared between full simulation and testing version
-!include gFHR_pronghorn_ss_base.i
+!include ../gFHR_pronghorn_ss_base.i

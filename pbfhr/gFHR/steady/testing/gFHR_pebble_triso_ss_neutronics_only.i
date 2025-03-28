@@ -7,6 +7,6 @@
 # ------------------------------------------------------------------------------
 
 # Base input shared between the regular simulation and the simulation used for testing purposes
-!include gFHR_pebble_triso_ss_base.i
+!include ../gFHR_pebble_triso_ss_base.i
 # Include Materials (ADGenericConstantMaterials) recognized by Griffin
 !include gFHR_pebble_triso_materials_block_neutronics_only.i
