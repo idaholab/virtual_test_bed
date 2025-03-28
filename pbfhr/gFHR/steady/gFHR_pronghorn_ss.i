@@ -8,10 +8,10 @@
 # THIS INPUT IS THE FULL-PHYSICS VERSION
 # ------------------------------------------------------------------------------
 
-# Set the conductivity type to the full-physics version
+# Set the conductivity type using the Pronghorn model
 pebble_bed_fluid_effective_conductivity_type=FunctorLinearPecletKappaFluid
 
-# Include input common to all physics
+# Include common input shared between full simulation and testing version
 !include gFHR_pronghorn_ss_base.i
 
 # Set a parameter specifically required by the FunctorLinearPecletKappaFluid conductivity type

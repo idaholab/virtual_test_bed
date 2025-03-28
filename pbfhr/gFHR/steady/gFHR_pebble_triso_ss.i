@@ -11,7 +11,7 @@
 # THIS INPUT IS THE FULL-PHYSICS VERSION
 # ------------------------------------------------------------------------------
 
-# Include input common to all physics
+# Base input shared between the regular simulation and the simulation used for testing purposes
 !include gFHR_pebble_triso_ss_base.i
 # Include Pronghorn-specific Materials and UserObjects
 !include gFHR_pebble_triso_materials_and_user_objects_blocks_pronghorn.i

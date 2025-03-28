@@ -1,3 +1,6 @@
+# This input snippet is for testing purposes only
+# These material properties are not evaluated accurately in this snippet
+
 [Materials]
   [pebble_fuel]
     type = ADGenericConstantMaterial
