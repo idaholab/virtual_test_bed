@@ -127,7 +127,7 @@ coolant_half_points_filename = ../channel_positions/coolant_half_points.txt # Fi
   [fuel_matrix_thermal]
     type = GraphiteMatrixThermal
     block = 'Fuel Fuel_tri'
-    # unirradiated_type = 'A3_27_1800'
+    graphite_grade = IG_110
     packing_fraction = 0.4
     specific_heat_scale_factor = 1.0
     thermal_conductivity_scale_factor = 1.0
@@ -137,7 +137,7 @@ coolant_half_points_filename = ../channel_positions/coolant_half_points.txt # Fi
   [monolith_matrix_thermal]
     type = GraphiteMatrixThermal
     block = 'monolith '
-    # unirradiated_type = 'A3_27_1800'
+    graphite_grade = IG_110
     packing_fraction = 0
     specific_heat_scale_factor = 1.0
     thermal_conductivity_scale_factor = 1.0
