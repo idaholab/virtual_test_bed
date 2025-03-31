@@ -293,7 +293,8 @@ corr_factor = '${fparse R_hp_hole / R_clad_o * area_correction / perimeter_corre
     variable = temp
     diffusivity = thermal_conductivity
     # must be executed before the transfer
-    execute_on = 'INITIAL TIMESTEP_END'
+    # we could add 'INITIAL'
+    execute_on = 'NONLINEAR TIMESTEP_END'
     boundary = 'heat_pipe_ht_surf'
   []
 []
