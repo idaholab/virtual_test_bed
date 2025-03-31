@@ -299,7 +299,7 @@ htc_ext_cond = 1.0e2
     catastrophic_heat_removal_limit_pps = ''
     recoverable_heat_removal_limit_pps = 'hp_sonic_limit hp_viscous_limit'
     T = T_inner_avg
-    execute_on = 'INITIAL linear nonlinear TIMESTEP_END'
+    execute_on = 'INITIAL TIMESTEP_END'
   []
   [T_evap_inner]
     type = SideAverageValue
