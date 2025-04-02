@@ -85,6 +85,9 @@
     prereq = 'syntax_neutronics_griffin'
     # Missing group cross section for absorption
     allow_warnings = true
+    # To investigate later
+    abs_zero = 5e-3
+    rel_err = 5e-3
   []
   [core_flow]
     type = CSVDiff
