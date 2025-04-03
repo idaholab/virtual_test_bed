@@ -141,7 +141,6 @@
     packing_fraction = 0.4
     specific_heat_scale_factor = 1.0
     thermal_conductivity_scale_factor = 1.0
-    graphite_grade = IG_110
     fast_neutron_fluence = 0 # Fresh matrix (near BoC)
     temperature = temp
   []
@@ -152,7 +151,6 @@
     packing_fraction = 0
     specific_heat_scale_factor = 1.0
     thermal_conductivity_scale_factor = 1.0
-    graphite_grade = IG_110
     fast_neutron_fluence = 0 # Fresh matrix (near BoC)
     temperature = temp
   []
