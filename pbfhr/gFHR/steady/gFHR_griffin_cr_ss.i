@@ -15,6 +15,13 @@
 # Modified (July 2023 and after): Vincent Laboure
 # MODEL PARAMETERS
 # ==============================================================================
+
+# Specify the pebble fuel input file
+pebble_conduction_input_file = 'gFHR_pebble_triso_ss.i'
+
+# Specify the flow subapp input file
+flow_subapp_input_file = 'gFHR_pronghorn_ss.i'
+
 # parameters describing the reactor geometry --------------------------------------------
 core_height = 3.0947 # [m]
 active_core_radius = 1.2 # [m]
@@ -40,7 +47,6 @@ total_power = 280.0e+6 # Total reactor Power (W)
 # Initial values  --------------------------------------------
 initial_temperature = 873.15 # (K)
 Rho = 1973.8 # kg/m^3 900.0 K
-Rho_ref = 1973.8 # kg/m^3
 
 # ==============================================================================
 # GLOBAL PARAMETERS
@@ -299,13 +305,6 @@ Rho_ref = 1973.8 # kg/m^3
   initial_moderator_temperature = '${initial_temperature}'
   initial_fuel_temperature = '${initial_temperature}'
 
-  # coolant settings
-  coolant_composition_name = coolant
-  coolant_density_variable = 'Rho'
-  coolant_density_ref = ${Rho_ref}
-  # TODO: add material id 2 with coolant as well
-  coolant_material_id = '1'
-
   [DepletionScheme]
     type = ConstantStreamlineEquilibrium
 
@@ -332,13 +331,20 @@ Rho_ref = 1973.8 # kg/m^3
   []
 
   # pebble conduction
-  pebble_conduction_input_file = 'gFHR_pebble_triso_ss.i'
+  pebble_conduction_input_file = ${pebble_conduction_input_file}
   pebble_positions_file = '../data/pebble_heat_pos_8r_20z.txt'
   surface_temperature_sub_app_postprocessor = T_surface
   surface_temperature_main_app_variable = Tsolid
   power_sub_app_postprocessor = pebble_power_density_pp
   fuel_temperature_sub_app_postprocessor = T_fuel
   moderator_temperature_sub_app_postprocessor = T_mod
+
+  # coolant settings
+  coolant_composition_name = coolant
+  coolant_density_variable = 'Rho'
+  coolant_density_ref = 1973.8 # kg/m^3
+  # TODO: add material id 2 with coolant as well
+  coolant_material_id = '1'
 []
 
 # ==============================================================================
@@ -425,7 +431,7 @@ Rho_ref = 1973.8 # kg/m^3
 [MultiApps]
   [flow]
     type = FullSolveMultiApp
-    input_files = 'gFHR_pronghorn_ss.i'
+    input_files = ${flow_subapp_input_file}
     keep_solution_during_restore = true
     positions = '0 -0.09 0'
     execute_on = 'TIMESTEP_END FINAL'
