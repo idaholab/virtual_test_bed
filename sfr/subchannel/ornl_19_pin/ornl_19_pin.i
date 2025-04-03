@@ -1,6 +1,6 @@
 ################################################################################
 ## SFR 19 pin assembly benchmark                                              ##
-## Pronghorn Subchannel simulation                                            ##
+## SCM simulation                                                             ##
 ## POC : Mauricio Tano, mauricio.tanoretamales at inl.gov                     ##
 ################################################################################
 ## If using or referring to this model, please cite as explained in
@@ -13,7 +13,7 @@ mass_flux_in = '${fparse 55*3.78541/10/60/flow_area}'
 P_out = 2.0e5 # Pa
 [TriSubChannelMesh]
   [subchannel]
-    type = TriSubChannelMeshGenerator
+    type = SCMTriSubChannelMeshGenerator
     nrings = 3
     n_cells = 100
     flat_to_flat = 3.41e-2
