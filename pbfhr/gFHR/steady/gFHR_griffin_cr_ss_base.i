@@ -331,6 +331,13 @@ Rho = 1973.8 # kg/m^3 900.0 K
   power_sub_app_postprocessor = pebble_power_density_pp
   fuel_temperature_sub_app_postprocessor = T_fuel
   moderator_temperature_sub_app_postprocessor = T_mod
+
+  # coolant settings
+  coolant_composition_name = coolant
+  coolant_density_variable = 'Rho'
+  coolant_density_ref = 1973.8 # kg/m^3
+  # TODO: add material id 2 with coolant as well
+  coolant_material_id = '1'
 []
 
 # ==============================================================================

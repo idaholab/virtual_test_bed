@@ -16,10 +16,12 @@
   []
   [syntax_neutronics_griffin]
     type = RunApp
-    input = 'gFHR_griffin_cr_ss_neutronics_only.i'
+    input = '../gFHR_griffin_cr_ss.i'
+    cli_args = "pebble_conduction_input_file='testing/gFHR_pebble_triso_ss_neutronics_only.i' "
+               "flow_subapp_input_file='testing/gFHR_pronghorn_ss_testing.i' "
+               "MultiApps/active='' Transfers/active=''"
     working_directory='testing'
     check_input = True
-    cli_args = "MultiApps/active='' Transfers/active=''"
     executable_pattern = 'griffin*'
     min_parallel = 4
   []
@@ -75,11 +77,14 @@
   []
   [neutronics_griffin]
     type = CSVDiff
-    input = 'gFHR_griffin_cr_ss_neutronics_only.i'
+    input = '../gFHR_griffin_cr_ss.i'
+    cli_args = "pebble_conduction_input_file='testing/gFHR_pebble_triso_ss_neutronics_only.i' "
+               "flow_subapp_input_file='testing/gFHR_pronghorn_ss_testing.i' "
+               "MultiApps/active='' Transfers/active='' Executioner/fixed_point_max_its=2 "
+               "Executioner/accept_on_max_fixed_point_iteration=true "
+               "Outputs/file_base='gFHR_griffin_cr_ss_neutronics_only_out'"
     working_directory='testing'
     csvdiff = 'gFHR_griffin_cr_ss_neutronics_only_out.csv'
-    cli_args = "MultiApps/active='' Transfers/active='' Executioner/fixed_point_max_its=2 "
-               "Executioner/accept_on_max_fixed_point_iteration=true"
     executable_pattern = 'griffin*'
     min_parallel = 4
     prereq = 'syntax_neutronics_griffin'
