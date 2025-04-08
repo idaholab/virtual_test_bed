@@ -2,7 +2,7 @@
 
 *Point of Contact: Yinbin Miao (ymiao.at.anl.gov)*
 
-*Primary Contributors: Nicholas Fassino, Yinbin Miao, Kun Mo, Nicolas Stauff*
+*Primary Contributors: Nicholas Fassino, Soon Lee, Yinbin Miao, Kun Mo, Nicolas Stauff*
 
 *Model link: [HPMR TRISO failure Model](https://github.com/idaholab/virtual_test_bed/tree/main/microreactors/mrad/triso_failure)*
 
@@ -91,11 +91,11 @@ The TRISO particle input is largely repurposed from the work done in [!citep](bi
 | SiC density (g/cm$^3$)               | 3.171   |
 | Initial IPyC BAF                       | 1.0465   |
 | Initial OPyC BAF                       | 1.0429   |
-| Fast Flux  $\left(\frac{n}{m^2 s}\right)$    | $7.664 \times 10^{19}$ |
+| Fast Flux  $\left(\frac{n}{m^2 s}\right)$    | $3.4913 \times 10^{19}$ |
 
 where BAF is the [Bacon anisotropy factor](https://mooseframework.inl.gov/bison/source/materials/BaconAnisotropyFactor.html), which increases with fast fluence.
 
-The major difference between this particle input and the reference file at `bison/examples/TRISO/failure_probability_monte_carlo/triso_1d_function.i` is the definition of the thermo-mechanical boundary conditions, namely the fuel temperature, power density, and hydrostatic stress, which are retrieved from CSV datafiles produced by the unit-cell HP-MR multiphysics simulation. Each time a triso_particle.i simulation is executed, the appropriate data is selected due to the particle_number cli_arg defined in the MultiApps object that instantiates the simulation. The power density function is used in conjunction with an InternalVolume Postprocessor in a ParsedFunction to compute fission rate.
+The major difference between this particle input and the reference file at `bison/examples/TRISO/failure_probability_monte_carlo/triso_1d_function.i` is the definition of the thermo-mechanical boundary conditions, namely the fuel temperature, power density, and hydrostatic stress, which are retrieved from CSV datafiles produced by the unit-cell HP-MR multiphysics simulation. Each time a triso_particle.i simulation is executed, the appropriate data is selected due to the particle_number cli_arg defined in the MultiApps object that instantiates the simulation. The power density function is used in conjunction with an InternalVolume Postprocessor in a ParsedFunction to compute fission rate. Another key difference between this particle input and the reference file is the adoption of irradiation-induced deformation models in the SiC layer. The latest mechanical models are implemented to properly account irradiation-induced swelling and creep deformation behaviors in the SiC layer with the MonolithicSiCVolumetricSwellingEigenstrain and the MonolithicSiCCreepUpdate objects. The core-average fast neutron flux value was acquired from the Serpent-2 analysis at the beginning-of-cycle to improve stress analysis in TRISO particles. 
 
 
 ```
