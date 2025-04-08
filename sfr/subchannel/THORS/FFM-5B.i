@@ -1,6 +1,6 @@
 ################################################################################
 ## THORS bundle 5B partial edge blockage benchmark                            ##
-## Pronghorn Subchannel simulation                                            ##
+## SCM simulation, Low/High flow case                                         ##
 ## POC : Vasileios Kyriakopoulos, vasileios.kyriakopoulos@inl.gov             ##
 ################################################################################
 # Details on the experimental facility modeled can be found at:
@@ -21,7 +21,7 @@ mass_flux_in = '${fparse rho *  inlet_vel}'
 P_out = 2.0e5 # Pa
 [TriSubChannelMesh]
   [subchannel]
-    type = TriSubChannelMeshGenerator
+    type = SCMTriSubChannelMeshGenerator
     nrings = 3
     n_cells = 50
     flat_to_flat = 0.0324290
@@ -36,8 +36,8 @@ P_out = 2.0e5 # Pa
     spacer_k = '0.0'
     z_blockage = '0.49 0.52'
     index_blockage = '29 31 30 32 34 33 35 15 16 8 17 18 9 19'
-    reduction_blockage = '0.168 0.168 0.168 0.168 0.168 0.168 0.168 0.168 0.168 0.168 0.168 0.168 0.168 0.168'
-    k_blockage = '1.8 1.8 1.8 1.8 1.8 1.8 1.8 1.8 1.8 1.8 1.8 1.8 1.8 1.8 '
+    reduction_blockage = '0.2 0.2 0.2 0.2 0.2 0.2 0.2 0.2 0.2 0.2 0.2 0.2 0.2 0.2'
+    k_blockage = '1.2 1.2 1.2 1.2 1.2 1.2 1.2 1.2 1.2 1.2 1.2 1.2 1.2 1.2 '
   []
 []
 

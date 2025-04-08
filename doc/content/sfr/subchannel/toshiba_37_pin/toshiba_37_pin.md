@@ -6,13 +6,13 @@
 
 !tag name=Subchannel Model for the Toshiba 37-Pin Benchmark
      description=Subchannel Model for the Toshiba 37-Pin Benchmark
-     image=https://mooseframework.inl.gov/virtual_test_bed/media/subchannel/toshiba_37_config.png
+     image=https://mooseframework.inl.gov/virtual_test_bed/media/subchannel/toshiba/toshiba_37_config.png
      pairs=reactor_type:SFR
                        geometry:assembly
                        simulation_type:thermal_hydraulics
                        transient:steady_state
                        V_and_V:validation
-                       codes_used:Pronghorn_subchannel
+                       codes_used:SCM
                        computing_needs:Workstation
                        fiscal_year:2023
                        sponsor:NEAMS
@@ -31,7 +31,7 @@ Due to symmetry, it is enough to analyze the temperature distributions over a sy
 In this case, following experiment reported results, we take a south-to-north line in the fuel assembly.
 This one involves, in south to north ordering, subchannels 72, 49, 32, 20, 10, 4, 3, 2, 1, 7, 14, 26, 39, and 58.
 
-!media subchannel/toshiba_37_config.png
+!media subchannel/toshiba/toshiba_37_config.png
        style=width:80%
        id=configuration
        caption= Rod and subchannel positions and numbering adopted for the Toshiba 37-pin benchmark. (a) Position and numbering of the heated rods with the subchannel center indicated with red dots. (b) Center position and numbering of the suchannels.
@@ -163,7 +163,7 @@ Inlet velocity conditions were unclear in the experiment report [!citep](namekaw
 If the assumption of uniform inlet flow rates turns out to be incorrect, a small deterioration of accuracy of the predicted outlet temperature can be expected.
 However, we observe that the flow rates fully develop before the outlet of the assembly, which suggests that this initial condition will have little effect over the analyzed temperature distribution at the outlet of the fuel assembly.
 
-!media subchannel/toshiba_37_results_3D.png
+!media subchannel/toshiba/toshiba_37_results_3D.png
        style=width:85%
        id=3Dres
        caption=  Example of simulation results for the high-flow test case in the Toshiba 37-pin benchmark. (a) Distribution of axial mass flow. (b) Distribution of lateral mass flow. (c) Distribution of temperature. (d) Distribution of dynamic viscosity due to heating.
@@ -173,14 +173,14 @@ We compare the results obtained with the present code with the ones obtained in 
 We have selected SUBAC for the code-to-code comparison since it is to our knowledge the subchannel code for wire-wrapped SFRs, with openly available results, that presented the best agreements between the code predictions and the experiment measurements for the current benchmark.
 
 
-!media subchannel/toshiba_37_results_plots.png
+!media subchannel/toshiba/toshiba_37_results_plots.png
        style=width:65%
        id=plots
        caption=  Comparison of results obtained for Toshiba 37-pin case between experimental measurements, the SUBAC code, and the current code. (a) High mass flow case. (b) Medium mass flow case. (c) Low mass flow case.
 
 As observed in [plots], for the high mass flow rate case, the present model predicts results closer to the experimental results than SUBAC. This is expected, since the turbulent cross-flow calibration should still improve the prediction for the present case.
 However, when comparing the results predicted for the medium- and low-flow-rate cases in Figures 3b and 3c, respectively, we observe that our models over-predict the temperature distributions when compared to SUBAC.
-Further analysis determined that the more peaked distribution of temperatures predicted by `Pronghorn-subchannel` towards the center of the assembly may be
+Further analysis determined that the more peaked distribution of temperatures predicted by `SCM` towards the center of the assembly may be
 produced by an over-prediction of the mixing rates, which yields larger than expected flows in the outer channels.
 
 !alert note
