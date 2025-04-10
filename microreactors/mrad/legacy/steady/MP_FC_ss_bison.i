@@ -137,20 +137,20 @@
   [fuel_matrix_thermal]
     type = GraphiteMatrixThermal
     block = fuel
+    graphite_grade = IG_110
     packing_fraction = 0.4
     specific_heat_scale_factor = 1.0
     thermal_conductivity_scale_factor = 1.0
-    graphite_grade = IG_110
     fast_neutron_fluence = 0 # Fresh matrix (near BoC)
     temperature = temp
   []
   [monolith_matrix_thermal]
     type = GraphiteMatrixThermal
     block = 'monolith '
+    graphite_grade = IG_110
     packing_fraction = 0
     specific_heat_scale_factor = 1.0
     thermal_conductivity_scale_factor = 1.0
-    graphite_grade = IG_110
     fast_neutron_fluence = 0 # Fresh matrix (near BoC)
     temperature = temp
   []

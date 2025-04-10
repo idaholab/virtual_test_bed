@@ -182,20 +182,20 @@ hp_surfs = 'HP_surf'
   [fuel_matrix_thermal]
     type = GraphiteMatrixThermal
     block = ${fuel_blocks}
+    graphite_grade = IG_110
     packing_fraction = 0.4
     specific_heat_scale_factor = 1.0
     thermal_conductivity_scale_factor = 1.0
-    graphite_grade = IG_110
     fast_neutron_fluence = 0 #6.75E+24 # this value is neutron fluence over 0.1MeV
     temperature = temp
   []
   [monolith_matrix_thermal]
     type = GraphiteMatrixThermal
     block = ${mono_blocks}
+    graphite_grade = IG_110
     packing_fraction = 0
     specific_heat_scale_factor = 1.0
     thermal_conductivity_scale_factor = 1.0
-    graphite_grade = IG_110
     fast_neutron_fluence = 0 #6.75E+24 # this value is neutron fluence over 0.1MeV
     temperature = temp
   []
