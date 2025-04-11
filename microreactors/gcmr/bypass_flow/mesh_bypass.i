@@ -8,16 +8,6 @@
 # parameters of the coolant channels
 
 radius_coolant = 0.00635 # m
-length_channel = 2 # m
-channel_n_elems = 50
-
-assembly_height = 2.
-# numbers of channels and assemblies
-
-nb_assembly = 59
-nb_coolant_per_assembly = 18
-nb_fuel_per_assembly = 42
-nb_coolant_tot = '${fparse nb_assembly * nb_coolant_per_assembly}'
 
 # other parameters of the assembly
 
