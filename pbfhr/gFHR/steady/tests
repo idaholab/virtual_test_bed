@@ -6,7 +6,7 @@
     executable_pattern = 'blue_crab*'
     min_parallel = 8
   []
-  [syntax_neutronics]
+  [syntax_neutronics_blue_crab]
     type = RunApp
     input = 'gFHR_griffin_cr_ss.i'
     check_input = True
@@ -14,18 +14,29 @@
     executable_pattern = 'blue_crab*'
     min_parallel = 4
   []
+  [syntax_neutronics_griffin]
+    type = RunApp
+    input = '../gFHR_griffin_cr_ss.i'
+    cli_args = "pebble_conduction_input_file='testing/gFHR_pebble_triso_ss_neutronics_only.i' "
+               "flow_subapp_input_file='testing/gFHR_pronghorn_ss_testing.i' "
+               "MultiApps/active='' Transfers/active=''"
+    working_directory='testing'
+    check_input = True
+    executable_pattern = 'griffin*'
+    min_parallel = 4
+  []
   [syntax_core_flow]
     type = RunApp
     input = 'gFHR_pronghorn_ss.i'
     check_input = True
     cli_args = "MultiApps/active='' Transfers/active='' Mesh/uniform_refine=0"
-    executable_pattern = 'pronghorn*|blue_crab*'
+    executable_pattern = 'pronghorn*'
   []
   [syntax_pebbles]
     type = RunApp
     input = 'gFHR_pebble_triso_ss.i'
     check_input = True
-    executable_pattern = 'pronghorn*|blue_crab*'
+    executable_pattern = 'pronghorn*'
   []
 
   # Regression tests - coupled cases
@@ -49,7 +60,7 @@
   []
 
   # Regression tests - single app inputs
-  [neutronics]
+  [neutronics_bluecrab]
     type = CSVDiff
     input = 'gFHR_griffin_cr_ss.i'
     csvdiff = 'gFHR_griffin_cr_ss_out.csv'
@@ -57,7 +68,26 @@
                "Executioner/accept_on_max_fixed_point_iteration=true"
     executable_pattern = 'blue_crab*'
     min_parallel = 4
-    prereq = 'syntax_neutronics'
+    prereq = 'syntax_neutronics_blue_crab'
+    # Missing group cross section for absorption
+    allow_warnings = true
+    # To investigate later
+    abs_zero = 5e-3
+    rel_err = 5e-3
+  []
+  [neutronics_griffin]
+    type = CSVDiff
+    input = '../gFHR_griffin_cr_ss.i'
+    cli_args = "pebble_conduction_input_file='testing/gFHR_pebble_triso_ss_neutronics_only.i' "
+               "flow_subapp_input_file='testing/gFHR_pronghorn_ss_testing.i' "
+               "MultiApps/active='' Transfers/active='' Executioner/fixed_point_max_its=2 "
+               "Executioner/accept_on_max_fixed_point_iteration=true "
+               "Outputs/file_base='gFHR_griffin_cr_ss_neutronics_only_out'"
+    working_directory='testing'
+    csvdiff = 'gFHR_griffin_cr_ss_neutronics_only_out.csv'
+    executable_pattern = 'griffin*'
+    min_parallel = 4
+    prereq = 'syntax_neutronics_griffin'
     # Missing group cross section for absorption
     allow_warnings = true
     # To investigate later
@@ -68,7 +98,7 @@
     type = CSVDiff
     input = 'gFHR_pronghorn_ss.i'
     csvdiff = 'gFHR_pronghorn_ss_out.csv'
-    executable_pattern = 'pronghorn*|blue_crab*'
+    executable_pattern = 'pronghorn*'
     min_parallel = 8
     prereq = 'syntax_core_flow'
   []
@@ -76,7 +106,7 @@
     type = CSVDiff
     input = 'gFHR_pebble_triso_ss.i'
     csvdiff = 'gFHR_pebble_triso_ss_out.csv'
-    executable_pattern = 'pronghorn*|blue_crab*'
+    executable_pattern = 'pronghorn*'
     cli_args = 'Outputs/csv=true'
     prereq = 'syntax_pebbles'
   []
