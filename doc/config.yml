@@ -21,6 +21,8 @@ Extensions:
             Citing: citing.md
     MooseDocs.extensions.appsyntax:
         active: false
+    MooseDocs.extensions.ifelse:
+        active: false
     MooseDocs.extensions.acronym:
         acronyms:
             moose: !include ${MOOSE_DIR}/framework/doc/acronyms.yml
