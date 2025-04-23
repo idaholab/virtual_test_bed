@@ -10,13 +10,14 @@ import os
 import argparse
 import yaml
 import re
+import textwrap
 
 import git
 import gitlab # available through the 'python-gitlab' conda package
 import github # avialable through the 'pygithub' conda package
 
 def parse_args():
-    parser = argparse.ArgumentParser(prog = 'appupdate', description = 'Update submodules in an application')
+    parser = argparse.ArgumentParser(prog = 'appupdate', description = 'Update submodules in an application', formatter_class=argparse.RawTextHelpFormatter)
 
     parser.add_argument('--no-push', action='store_true', help='Do not push and open a PR/MR')
     parser.add_argument('--no-pr', action='store_true', help='Do not open a PR/MR')
@@ -31,6 +32,15 @@ def parse_args():
     parser.add_argument('repo', help='Path to the repository')
     parser.add_argument('submodule:sha1', nargs='?',
                         help='Submodule name and its version to update to. If not specified, `origin/master`.')
+
+    parser.add_argument('--config-file', default="./config.yaml",
+                        help=textwrap.dedent("""\
+                        Path to yaml file containing the personal access token to the repository being updated.
+                        The file should have the following format:
+                        tokens:
+                          your_personal_access_token_here
+                        """))
+
 
     return parser.parse_args()
 
@@ -70,9 +80,10 @@ if __name__ == "__main__":
     head_branch = args.head_branch
     base_remote = args.base_remote
     base_branch = args.base_branch
+    config_file = args.config_file
 
     # Load the config
-    with open(os.path.join(os.path.dirname(os.path.realpath(__file__)), 'config.yaml'), 'r') as f:
+    with open(os.path.join(os.path.dirname(os.path.realpath(__file__)), config_file), 'r') as f:
         config = yaml.safe_load(f)
 
     # Load the git repo
