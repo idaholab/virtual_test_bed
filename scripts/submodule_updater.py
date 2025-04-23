@@ -12,8 +12,8 @@ import yaml
 import re
 
 import git
-import gitlab
-import github
+import gitlab # available through the 'python-gitlab' conda package
+import github # avialable through the 'pygithub' conda package
 
 def parse_args():
     parser = argparse.ArgumentParser(prog = 'appupdate', description = 'Update submodules in an application')
