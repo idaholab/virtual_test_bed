@@ -219,7 +219,8 @@ num_layers_for_THM = 50 # number of elements in the THM model; for the converged
     type = KEigenvalue
   []
   [k_std_dev]
-    type = KStandardDeviation
+    type = KEigenvalue
+    output = 'std_dev'
   []
   [min_power]
     type = ElementExtremeValue
