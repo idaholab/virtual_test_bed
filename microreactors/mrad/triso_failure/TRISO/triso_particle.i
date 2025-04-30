@@ -89,6 +89,10 @@ end_time = 315576000
     order = CONSTANT
     family = MONOMIAL
   []
+  [creep_strain_mag]
+    order = CONSTANT
+    family = MONOMIAL
+  []
 []
 
 [Functions]
@@ -145,6 +149,11 @@ end_time = 315576000
     polynomial_coefficients_OPyC = '1.00000685e+00 3.28720653e+02 2.64270044e+07'
     correlation_factor = 1.2157139173624862
   []
+  [k_function]
+    type = PiecewiseLinear
+    x = '0     200e6'
+    y = '2e-37 2e-37'
+  []
 []
 
 [Physics/SolidMechanics/QuasiStatic]
@@ -169,7 +178,7 @@ end_time = 315576000
   []
   [SiC]
     block = SiC
-    eigenstrain_names = 'SiC_thermal_eigenstrain'
+    eigenstrain_names = 'SiC_thermal_eigenstrain SiC_volumetric_swelling'
     extra_vector_tags = 'ref'
   []
   [OPyC]
@@ -225,6 +234,12 @@ end_time = 315576000
     variable = fast_neutron_fluence
     property = fast_neutron_fluence
     execute_on = timestep_begin
+  []
+  [sic_creep_strain_mag]
+    type = MaterialRealAux
+    variable = creep_strain_mag
+    property = effective_creep_strain
+    block = SiC
   []
 []
 
@@ -305,7 +320,7 @@ end_time = 315576000
   [fast_neutron_flux]
     type = FastNeutronFlux
     calculate_fluence = true
-    factor = 7.664e15
+    factor = 3.4913e15
   []
   [UCO_burnup]
     type = TRISOBurnup
@@ -441,7 +456,9 @@ end_time = 315576000
     elastic_modulus_model = miller
   []
   [SiC_stress]
-    type = ComputeFiniteStrainElasticStress
+    type = ComputeMultipleInelasticStress
+    inelastic_models = 'SiC_creep'
+    tangent_operator = elastic
     block = SiC
   []
   [SiC_thermal]
@@ -456,11 +473,24 @@ end_time = 315576000
     density = 3171.0
   []
   [SiC_thermal_expansion]
-    type = ComputeThermalExpansionEigenstrain
+    type = MonolithicSiCThermalExpansionEigenstrain
     block = SiC
-    thermal_expansion_coeff = 4.9e-6
     temperature = temperature
+    stress_free_temperature = 298.0
     eigenstrain_name = SiC_thermal_eigenstrain
+  []
+  [SiC_creep]
+    type = MonolithicSiCCreepUpdate
+    block = SiC
+    temperature = temperature
+    k_function = k_function
+  []
+  [SiC_volumetric_swelling]
+    type = MonolithicSiCVolumetricSwellingEigenstrain
+    block = SiC
+    temperature = temperature
+    fast_neutron_fluence = fast_neutron_fluence
+    eigenstrain_name = SiC_volumetric_swelling
   []
   [OPyC_elasticity_tensor]
     type = PyCElasticityTensor

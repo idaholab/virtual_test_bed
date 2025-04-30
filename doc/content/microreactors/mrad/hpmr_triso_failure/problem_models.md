@@ -1,8 +1,8 @@
 # Multiphysics Models
 
-*Point of Contact: Yinbin Miao (ymiao.at.anl.gov)*
+*Point of Contact: Soon Lee (soon.lee.at.anl.gov)*
 
-*Primary Contributors: Nicholas Fassino, Yinbin Miao, Kun Mo, Nicolas Stauff*
+*Primary Contributors: Nicholas Fassino, Soon Lee, Yinbin Miao, Kun Mo, Nicolas Stauff*
 
 *Model link: [HPMR TRISO failure Model](https://github.com/idaholab/virtual_test_bed/tree/main/microreactors/mrad/triso_failure)*
 
@@ -91,11 +91,11 @@ The TRISO particle input is largely repurposed from the work done in [!citep](bi
 | SiC density (g/cm$^3$)               | 3.171   |
 | Initial IPyC BAF                       | 1.0465   |
 | Initial OPyC BAF                       | 1.0429   |
-| Fast Flux  $\left(\frac{n}{m^2 s}\right)$    | $7.664 \times 10^{19}$ |
+| Fast Flux  $\left(\frac{n}{m^2 s}\right)$    | $3.4913 \times 10^{19}$ |
 
 where BAF is the [Bacon anisotropy factor](https://mooseframework.inl.gov/bison/source/materials/BaconAnisotropyFactor.html), which increases with fast fluence.
 
-The major difference between this particle input and the reference file at `bison/examples/TRISO/failure_probability_monte_carlo/triso_1d_function.i` is the definition of the thermo-mechanical boundary conditions, namely the fuel temperature, power density, and hydrostatic stress, which are retrieved from CSV datafiles produced by the unit-cell HP-MR multiphysics simulation. Each time a triso_particle.i simulation is executed, the appropriate data is selected due to the particle_number cli_arg defined in the MultiApps object that instantiates the simulation. The power density function is used in conjunction with an InternalVolume Postprocessor in a ParsedFunction to compute fission rate.
+The major difference between this particle input and the reference file at `bison/examples/TRISO/failure_probability_monte_carlo/triso_1d_function.i` is the definition of the thermo-mechanical boundary conditions, namely the fuel temperature, power density, and hydrostatic stress, which are retrieved from CSV datafiles produced by the unit-cell HP-MR multiphysics simulation. Each time a triso_particle.i simulation is executed, the appropriate data is selected due to the particle_number cli_arg defined in the MultiApps object that instantiates the simulation. The power density function is used in conjunction with an InternalVolume Postprocessor in a ParsedFunction to compute fission rate. Another key difference between this particle input and the reference file is the adoption of irradiation-induced deformation models in the SiC layer. The latest mechanical models are implemented to properly account irradiation-induced swelling and creep deformation behaviors in the SiC layer with the MonolithicSiCVolumetricSwellingEigenstrain and the MonolithicSiCCreepUpdate objects. The core-average fast neutron flux value was acquired from the Serpent-2 analysis at the beginning-of-cycle to improve stress analysis in TRISO particles. 
 
 
 ```
@@ -176,17 +176,17 @@ For the central heat pipe in the HP-MR unit-cell model, a Sockeye grandchild app
 
 !listing /mrad/triso_failure/UnitCell_with_TM/MP_ss_bison.i max-height = 10000
 
-### BISON Model -- Tensor Mechanics
+### BISON Model -- Solid Mechanics
 
-An original BISON grandchild application is used to calculate the tensor mechanics of the HP-MR unit-cell. This application receives temperature from the BISON thermal physics sub-app, uses it to compute block displacements, stresses, and strains of the fuel, moderator, monolith, stainless steel envelope, and axial reflector blocks. The displacement variables are then transferred back to the BISON app. Hydrostatic stresses are also transferred to the BISON sub-app so that hydrostatic stress, temperature, and power density are all reported by the BISON sub-app at the end of the simulation. Dirichlet boundary conditions are applied to the bottom surface of the unit-cell, fixing displacement in all directions.
+An original BISON grandchild application is used to calculate the solid mechanics of the HP-MR unit-cell. This application receives temperature from the BISON thermal physics sub-app, uses it to compute block displacements, stresses, and strains of the fuel, moderator, monolith, stainless steel envelope, and axial reflector blocks. The displacement variables are then transferred back to the BISON app. Hydrostatic stresses are also transferred to the BISON sub-app so that hydrostatic stress, temperature, and power density are all reported by the BISON sub-app at the end of the simulation. Dirichlet boundary conditions are applied to the bottom surface of the unit-cell, fixing displacement in all directions.
 
 !listing /mrad/triso_failure/UnitCell_with_TM/MP_ss_bison_TM.i max-height = 10000
 
 ### MultiApps Hierarchy
 
-The four MOOSE applications that govern different physics respectively are coupled together leveraging the MOOSE MultiApps system. Each code has its own mesh and corresponding space and time scales. The MOOSE MultiApp system is used to tightly couple the different codes via fixed point iterations as illustrated below in [hpmr_multiapps]. This method is largely unchanged from that reported in the [full-core model multiphysics setup](https://mooseframework.inl.gov/virtual_test_bed/microreactors/mrad/mrad_model.html), with the major addition being the BISON tensor mechanics grandchild app.
+The four MOOSE applications that govern different physics respectively are coupled together leveraging the MOOSE MultiApps system. Each code has its own mesh and corresponding space and time scales. The MOOSE MultiApp system is used to tightly couple the different codes via fixed point iterations as illustrated below in [hpmr_multiapps]. This method is largely unchanged from that reported in the [full-core model multiphysics setup](https://mooseframework.inl.gov/virtual_test_bed/microreactors/mrad/mrad_model.html), with the major addition being the BISON solid mechanics grandchild app.
 
-At the top level, Griffin calculates the power density based on its neutronics results given the fuel and moderator temperatures taken from the BISON child application. The calculated power density is also provided to BISON to update the temperature calculation. On the other hand, for the surface of each heat pipe, the thermal-physics BISON sub-app calculates the layered average heat flux along the normal direction of the surface and transfers the 1D field values to the respective Sockeye sub-application so that Sockeye can use them as its boundary condition. Meanwhile, the thermal-physics BISON sub-app takes the heat pipe surface temperature calculated by Sockeye back for its own boundary condition on the heat pipe surface. Additionally, the thermal-physics BISON sub-app transfers the nodal temperature variable to the tensor mechanics BISON grandchild app, which calculates material stresses, strains, and displacements, and transfers the displacement variables and fuel hydrostatic stresses back to the thermal-physics BISON sub-app.
+At the top level, Griffin calculates the power density based on its neutronics results given the fuel and moderator temperatures taken from the BISON child application. The calculated power density is also provided to BISON to update the temperature calculation. On the other hand, for the surface of each heat pipe, the thermal-physics BISON sub-app calculates the layered average heat flux along the normal direction of the surface and transfers the 1D field values to the respective Sockeye sub-application so that Sockeye can use them as its boundary condition. Meanwhile, the thermal-physics BISON sub-app takes the heat pipe surface temperature calculated by Sockeye back for its own boundary condition on the heat pipe surface. Additionally, the thermal-physics BISON sub-app transfers the nodal temperature variable to the solid mechanics BISON grandchild app, which calculates material stresses, strains, and displacements, and transfers the displacement variables and fuel hydrostatic stresses back to the thermal-physics BISON sub-app.
 
 !media unitcell_multiapps.png
        style=display: block;margin-left:auto;margin-right:auto;width:70%;
@@ -209,7 +209,7 @@ For steady state simulation, the Griffin parent application performs an Eigenval
 
 ### HP-MR Unit Cell
 
-Mesh generation with MOOSE's intrinsic mesh generator set has been the subject of extensive development, and is demonstrated in the [HP-MR full core model](https://mooseframework.inl.gov/virtual_test_bed/microreactors/mrad/mrad_model.html). This work, however, is a streamlined continuation of work documented in ANL/NEAMS-21/3 [!citep](Stauff2021), which employed python scripts to generate the The HP-MR unit-cell mesh. The HP-MR unit-cell model and mesh are not the main focus of this demonstration. Thus, mesh generation of the unit-cell has not been updated to use MOOSE mesh generators. The reader is encouraged to peruse the [HP-MR full core model documentation](https://mooseframework.inl.gov/virtual_test_bed/microreactors/mrad/mrad_model.html) for a demonstration of the MOOSE mesh generators and Reactor module to generate HP-MR meshes.
+Mesh generation with MOOSE's intrinsic mesh generator set has been the subject of extensive development, and is demonstrated in the [HP-MR full core model](https://mooseframework.inl.gov/virtual_test_bed/microreactors/mrad/mrad_model.html). This work, however, is a streamlined continuation of work documented in ANL/NEAMS-21/3 [!citep](Stauff2021), which employed python scripts to generate the HP-MR unit-cell mesh. The HP-MR unit-cell model and mesh are not the main focus of this demonstration. Thus, mesh generation of the unit-cell has not been updated to use MOOSE mesh generators. The reader is encouraged to peruse the [HP-MR full core model documentation](https://mooseframework.inl.gov/virtual_test_bed/microreactors/mrad/mrad_model.html) for a demonstration of the MOOSE mesh generators and Reactor module to generate HP-MR meshes.
 
 ### HP-MR TRISO
 
@@ -231,4 +231,4 @@ mpirun -n 40 bison-opt -i triso_sampler.i
 
 The TRISO failure analysis simulation will produce particle failure rate output in the /results subdirectory. All output will be written at the conclusion of the simulation. Each of the 32 axially-discretized particle simulations will receive its own output subdirectory in /results/particle(number). The provided plots.py will produce plots of axially discretized SiC and IPyC layer failure rates.
 
-The user may vary the integrated power or temperature in the multiphysics simulation, and the number of sampled particles in the TRISO sampler simulation, to explore how these quantities affect TRISO layer failure rates. The user may also modify these inputs to forego the calculation of tensor mechanics in the unit-cell to observe how the consideration of hydrostatic stresses affects results.
+The user may vary the integrated power or temperature in the multiphysics simulation, and the number of sampled particles in the TRISO sampler simulation, to explore how these quantities affect TRISO layer failure rates. The user may also modify these inputs to forego the calculation of solid mechanics in the unit-cell to observe how the consideration of hydrostatic stresses affects results.
