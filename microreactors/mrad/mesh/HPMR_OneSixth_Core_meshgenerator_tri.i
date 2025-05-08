@@ -14,10 +14,14 @@
 
 [Mesh]
   [BatchMeshGeneratorAction]
-    [cd0]
+    # We generate each control drum in 2 steps (concentric circles generation and azimuthal absorber/reflector splitting),
+    # this syntax allows us to input the control drum (and reflector) generation in a very compact manner.
+    [control_drums_ccg]
       mesh_generator_type = 'HexagonConcentricCircleAdaptiveBoundaryMeshGenerator'
       mesh_name_prefix = 'cd0'
       multi_batch_params_method = 'corresponding'
+      # The main different parameters between the control drums are how the meshes are adapted to the reactor core
+      # The batch parameters here are used to account for these differences
       batch_vector_input_param_names = 'meshes_to_adapt_to sides_to_adapt'
       batch_vector_input_param_types = 'MGNAME UINT'
       batch_vector_input_param_values = 'Patterned Patterned Patterned;
@@ -34,6 +38,7 @@
                                          Patterned Patterned|
                                          2 3 4;2 3;1 2 3;1 2;0 1 2;0 1;
                                          0 1 5;0 5;0 4 5;4 5;3 4 5;3 4'
+      # The rest of the control drum parameters are the same for all control drums
       fixed_vector_input_param_names = 'num_sectors_per_side background_block_ids ring_radii ring_intervals ring_block_ids'
       fixed_vector_input_param_types = 'UINT USHORT REAL UINT USHORT'
       fixed_vector_input_param_values = '4 4 4 4 4 4;
@@ -45,10 +50,11 @@
       fixed_scalar_input_param_types = 'REAL UINT BOOL BOOL BOOL'
       fixed_scalar_input_param_values = '13.376 2 true true false'
     []
-    [cd]
+    [control_drums_split]
       mesh_generator_type = 'AzimuthalBlockSplitGenerator'
       mesh_name_prefix = 'cd'
       multi_batch_params_method = 'corresponding'
+      # Based on the locations of the control drums, we need to split the blocks in different ways
       batch_scalar_input_param_names = 'input start_angle'
       batch_scalar_input_param_types = 'MGNAME REAL'
       batch_scalar_input_param_values = 'cd0_0 cd0_1 cd0_2 cd0_3 cd0_4 cd0_5 cd0_6 cd0_7 cd0_8 cd0_9 cd0_10 cd0_11;
@@ -60,10 +66,11 @@
       fixed_scalar_input_param_types = 'REAL'
       fixed_scalar_input_param_values = '90'
     []
-    [ref]
+    [reflector_blocks]
       mesh_generator_type = 'HexagonConcentricCircleAdaptiveBoundaryMeshGenerator'
       mesh_name_prefix = 'ref'
       multi_batch_params_method = 'corresponding'
+      # Similar to the control drums, we need to adapt the reflector meshes to the reactor core based on the locations
       batch_vector_input_param_names = 'sides_to_adapt'
       batch_vector_input_param_types = 'UINT'
       batch_vector_input_param_values = '0;1;2;3;4;5'

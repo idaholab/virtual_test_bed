@@ -9,6 +9,7 @@
 # exodus file for further Multiphysics simulations.
 #####################################################################
 [GlobalParams]
+  # we use ':=' to override the values already defined in the !include file
   create_outward_interface_boundaries := false
 []
 
@@ -81,4 +82,5 @@
   []
 []
 
+# This input defines the mesh generation for the Griffin mesh
 !include HPMR_OneSixth_Core_meshgenerator_tri_batch.i
