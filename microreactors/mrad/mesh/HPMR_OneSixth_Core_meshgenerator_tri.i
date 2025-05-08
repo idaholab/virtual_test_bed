@@ -13,6 +13,70 @@
 []
 
 [Mesh]
+  [BatchMeshGeneratorAction]
+    [cd0]
+      mesh_generator_type = 'HexagonConcentricCircleAdaptiveBoundaryMeshGenerator'
+      mesh_name_prefix = 'cd0'
+      multi_batch_params_method = 'corresponding'
+      batch_vector_input_param_names = 'meshes_to_adapt_to sides_to_adapt'
+      batch_vector_input_param_types = 'MGNAME UINT'
+      batch_vector_input_param_values = 'Patterned Patterned Patterned;
+                                         Patterned Patterned;
+                                         Patterned Patterned Patterned;
+                                         Patterned Patterned;
+                                         Patterned Patterned Patterned;
+                                         Patterned Patterned;
+                                         Patterned Patterned Patterned;
+                                         Patterned Patterned;
+                                         Patterned Patterned Patterned;
+                                         Patterned Patterned;
+                                         Patterned Patterned Patterned;
+                                         Patterned Patterned|
+                                         2 3 4;2 3;1 2 3;1 2;0 1 2;0 1;
+                                         0 1 5;0 5;0 4 5;4 5;3 4 5;3 4'
+      fixed_vector_input_param_names = 'num_sectors_per_side background_block_ids ring_radii ring_intervals ring_block_ids'
+      fixed_vector_input_param_types = 'UINT USHORT REAL UINT USHORT'
+      fixed_vector_input_param_values = '4 4 4 4 4 4;
+                                         504;
+                                         12.25 13.25;
+                                         2 1;
+                                         500 501 502'
+      fixed_scalar_input_param_names = 'hexagon_size background_intervals preserve_volumes is_control_drum create_outward_interface_boundaries'
+      fixed_scalar_input_param_types = 'REAL UINT BOOL BOOL BOOL'
+      fixed_scalar_input_param_values = '13.376 2 true true false'
+    []
+    [cd]
+      mesh_generator_type = 'AzimuthalBlockSplitGenerator'
+      mesh_name_prefix = 'cd'
+      multi_batch_params_method = 'corresponding'
+      batch_scalar_input_param_names = 'input start_angle'
+      batch_scalar_input_param_types = 'MGNAME REAL'
+      batch_scalar_input_param_values = 'cd0_0 cd0_1 cd0_2 cd0_3 cd0_4 cd0_5 cd0_6 cd0_7 cd0_8 cd0_9 cd0_10 cd0_11;
+                                         15 345 315 285 255 225 195 165 135 105 75 45'
+      fixed_vector_input_param_names = 'old_blocks new_block_ids'
+      fixed_vector_input_param_types = 'SDNAME USHORT'
+      fixed_vector_input_param_values = '502;503'
+      fixed_scalar_input_param_names = 'angle_range'
+      fixed_scalar_input_param_types = 'REAL'
+      fixed_scalar_input_param_values = '90'
+    []
+    [ref]
+      mesh_generator_type = 'HexagonConcentricCircleAdaptiveBoundaryMeshGenerator'
+      mesh_name_prefix = 'ref'
+      multi_batch_params_method = 'corresponding'
+      batch_vector_input_param_names = 'sides_to_adapt'
+      batch_vector_input_param_types = 'UINT'
+      batch_vector_input_param_values = '0;1;2;3;4;5'
+      fixed_vector_input_param_names = 'meshes_to_adapt_to num_sectors_per_side background_block_ids'
+      fixed_vector_input_param_types = 'MGNAME UINT USHORT'
+      fixed_vector_input_param_values = 'Patterned;
+                                         4 4 4 4 4 4;
+                                         400 401'
+      fixed_scalar_input_param_names = 'hexagon_size background_intervals create_outward_interface_boundaries'
+      fixed_scalar_input_param_types = 'REAL UINT BOOL'
+      fixed_scalar_input_param_values = '13.376 2 false'
+    []
+  []
   # Moderator pins
   [Mod_hex]
     type = PolygonConcentricCircleMeshGenerator
@@ -79,349 +143,6 @@
               0 2 0 2 0 2 0 0;
                1 0 1 0 1 0 1'
   []
-  # Control drum at 12 o'clock
-  [cd0_12]
-    type = HexagonConcentricCircleAdaptiveBoundaryMeshGenerator
-    meshes_to_adapt_to = 'Patterned Patterned'
-    sides_to_adapt = '3 4'
-    num_sectors_per_side= '4 4 4 4 4 4'
-    hexagon_size = 13.376
-    background_intervals = 2
-    background_block_ids = 504
-    ring_radii = '12.25 13.25'
-    ring_intervals = '2 1'
-    ring_block_ids = '500 501 502'
-    preserve_volumes = true
-    is_control_drum = true
-  []
-  # Define the absorber section
-  [cd_12]
-    type = AzimuthalBlockSplitGenerator
-    input = cd0_12
-    start_angle = 45
-    angle_range = 90
-    old_blocks = 502
-    new_block_ids = 503
-  []
-  # Control drum at 6 o'clock
-  [cd0_6]
-    type = HexagonConcentricCircleAdaptiveBoundaryMeshGenerator
-    meshes_to_adapt_to = 'Patterned Patterned'
-    sides_to_adapt = '0 1'
-    num_sectors_per_side= '4 4 4 4 4 4'
-    hexagon_size = 13.376
-    background_intervals = 2
-    background_block_ids = 504
-    ring_radii = '12.25 13.25'
-    ring_intervals = '2 1'
-    ring_block_ids = '500 501 502'
-    preserve_volumes = true
-    is_control_drum = true
-  []
-  # Define the absorber section
-  [cd_6]
-    type = AzimuthalBlockSplitGenerator
-    input = cd0_6
-    start_angle = 225
-    angle_range = 90
-    old_blocks = 502
-    new_block_ids = 503
-  []
-  # Control drum at 9 o'clock
-  [cd0_9]
-    type = HexagonConcentricCircleAdaptiveBoundaryMeshGenerator
-    meshes_to_adapt_to = 'Patterned Patterned Patterned'
-    sides_to_adapt = '0 4 5'
-    num_sectors_per_side= '4 4 4 4 4 4'
-    hexagon_size = 13.376
-    background_intervals = 2
-    background_block_ids = 504
-    ring_radii = '12.25 13.25'
-    ring_intervals = '2 1'
-    ring_block_ids = '500 501 502'
-    preserve_volumes = true
-    is_control_drum = true
-  []
-  # Define the absorber section
-  [cd_9]
-    type = AzimuthalBlockSplitGenerator
-    input = cd0_9
-    start_angle = 135
-    angle_range = 90
-    old_blocks = 502
-    new_block_ids = 503
-  []
-  # Control drum at 3 o'clock
-  [cd0_3]
-    type = HexagonConcentricCircleAdaptiveBoundaryMeshGenerator
-    meshes_to_adapt_to = 'Patterned Patterned Patterned'
-    sides_to_adapt = '1 2 3'
-    num_sectors_per_side= '4 4 4 4 4 4'
-    hexagon_size = 13.376
-    background_intervals = 2
-    background_block_ids = 504
-    ring_radii = '12.25 13.25'
-    ring_intervals = '2 1'
-    ring_block_ids = '500 501 502'
-    preserve_volumes = true
-    is_control_drum = true
-  []
-  # Define the absorber section
-  [cd_3]
-    type = AzimuthalBlockSplitGenerator
-    input = cd0_3
-    start_angle = 315
-    angle_range = 90
-    old_blocks = 502
-    new_block_ids = 503
-  []
-  # Control drum at 1 o'clock
-  [cd0_1]
-    type = HexagonConcentricCircleAdaptiveBoundaryMeshGenerator
-    meshes_to_adapt_to = 'Patterned Patterned Patterned'
-    sides_to_adapt = '2 3 4'
-    num_sectors_per_side= '4 4 4 4 4 4'
-    hexagon_size = 13.376
-    background_intervals = 2
-    background_block_ids = 504
-    ring_radii = '12.25 13.25'
-    ring_intervals = '2 1'
-    ring_block_ids = '500 501 502'
-    preserve_volumes = true
-    is_control_drum = true
-  []
-  # Define the absorber section
-  [cd_1]
-    type = AzimuthalBlockSplitGenerator
-    input = cd0_1
-    start_angle = 15
-    angle_range = 90
-    old_blocks = 502
-    new_block_ids = 503
-  []
-  # Control drum at 2 o'clock
-  [cd0_2]
-    type = HexagonConcentricCircleAdaptiveBoundaryMeshGenerator
-    meshes_to_adapt_to = 'Patterned Patterned'
-    sides_to_adapt = '2 3'
-    num_sectors_per_side= '4 4 4 4 4 4'
-    hexagon_size = 13.376
-    background_intervals = 2
-    background_block_ids = 504
-    ring_radii = '12.25 13.25'
-    ring_intervals = '2 1'
-    ring_block_ids = '500 501 502'
-    preserve_volumes = true
-    is_control_drum = true
-  []
-  # Define the absorber section
-  [cd_2]
-    type = AzimuthalBlockSplitGenerator
-    input = cd0_2
-    start_angle = 345
-    angle_range = 90
-    old_blocks = 502
-    new_block_ids = 503
-  []
-  # Control drum at 4 o'clock
-  [cd0_4]
-    type = HexagonConcentricCircleAdaptiveBoundaryMeshGenerator
-    meshes_to_adapt_to = 'Patterned Patterned'
-    sides_to_adapt = '1 2'
-    num_sectors_per_side= '4 4 4 4 4 4'
-    hexagon_size = 13.376
-    background_intervals = 2
-    background_block_ids = 504
-    ring_radii = '12.25 13.25'
-    ring_intervals = '2 1'
-    ring_block_ids = '500 501 502'
-    preserve_volumes = true
-    is_control_drum = true
-  []
-  # Define the absorber section
-  [cd_4]
-    type = AzimuthalBlockSplitGenerator
-    input = cd0_4
-    start_angle = 285
-    angle_range = 90
-    old_blocks = 502
-    new_block_ids = 503
-  []
-  # Control drum at 5 o'clock
-  [cd0_5]
-    type = HexagonConcentricCircleAdaptiveBoundaryMeshGenerator
-    meshes_to_adapt_to = ' Patterned Patterned Patterned'
-    sides_to_adapt = '0 1 2'
-    num_sectors_per_side= '4 4 4 4 4 4'
-    hexagon_size = 13.376
-    background_intervals = 2
-    background_block_ids = 504
-    ring_radii = '12.25 13.25'
-    ring_intervals = '2 1'
-    ring_block_ids = '500 501 502'
-    preserve_volumes = true
-    is_control_drum = true
-  []
-  # Define the absorber section
-  [cd_5]
-    type = AzimuthalBlockSplitGenerator
-    input = cd0_5
-    start_angle = 255
-    angle_range = 90
-    old_blocks = 502
-    new_block_ids = 503
-  []
-  # Control drum at 7 o'clock
-  [cd0_7]
-    type = HexagonConcentricCircleAdaptiveBoundaryMeshGenerator
-    meshes_to_adapt_to = ' Patterned Patterned Patterned'
-    sides_to_adapt = '0 1 5'
-    num_sectors_per_side= '4 4 4 4 4 4'
-    hexagon_size = 13.376
-    background_intervals = 2
-    background_block_ids = 504
-    ring_radii = '12.25 13.25'
-    ring_intervals = '2 1'
-    ring_block_ids = '500 501 502'
-    preserve_volumes = true
-    is_control_drum = true
-  []
-  # Define the absorber section
-  [cd_7]
-    type = AzimuthalBlockSplitGenerator
-    input = cd0_7
-    start_angle = 195
-    angle_range = 90
-    old_blocks = 502
-    new_block_ids = 503
-  []
-  # Control drum at 8 o'clock
-  [cd0_8]
-    type = HexagonConcentricCircleAdaptiveBoundaryMeshGenerator
-    meshes_to_adapt_to = 'Patterned Patterned'
-    sides_to_adapt = '0 5'
-    num_sectors_per_side= '4 4 4 4 4 4'
-    hexagon_size = 13.376
-    background_intervals = 2
-    background_block_ids = 504
-    ring_radii = '12.25 13.25'
-    ring_intervals = '2 1'
-    ring_block_ids = '500 501 502'
-    preserve_volumes = true
-    is_control_drum = true
-  []
-  # Define the absorber section
-  [cd_8]
-    type = AzimuthalBlockSplitGenerator
-    input = cd0_8
-    start_angle = 165
-    angle_range = 90
-    old_blocks = 502
-    new_block_ids = 503
-  []
-  # Control drum at 10 o'clock
-  [cd0_10]
-    type =HexagonConcentricCircleAdaptiveBoundaryMeshGenerator
-    meshes_to_adapt_to = 'Patterned Patterned'
-    sides_to_adapt = '4 5'
-    num_sectors_per_side= '4 4 4 4 4 4'
-    hexagon_size = 13.376
-    background_intervals = 2
-    background_block_ids = 504
-    ring_radii = '12.25 13.25'
-    ring_intervals = '2 1'
-    ring_block_ids = '500 501 502'
-    preserve_volumes = true
-    is_control_drum = true
-  []
-  # Define the absorber section
-  [cd_10]
-    type = AzimuthalBlockSplitGenerator
-    input = cd0_10
-    start_angle = 105
-    angle_range = 90
-    old_blocks = 502
-    new_block_ids = 503
-  []
-  # Control drum at 11 o'clock
-  [cd0_11]
-    type = HexagonConcentricCircleAdaptiveBoundaryMeshGenerator
-    meshes_to_adapt_to = 'Patterned Patterned Patterned'
-    sides_to_adapt = '3 4 5'
-    num_sectors_per_side= '4 4 4 4 4 4'
-    hexagon_size = 13.376
-    background_intervals = 2
-    background_block_ids = 504
-    ring_radii = '12.25 13.25'
-    ring_intervals = '2 1'
-    ring_block_ids = '500 501 502'
-    preserve_volumes = true
-    is_control_drum = true
-  []
-  # Define the absorber section
-  [cd_11]
-    type = AzimuthalBlockSplitGenerator
-    input = cd0_11
-    start_angle = 75
-    angle_range = 90
-    old_blocks = 502
-    new_block_ids = 503
-  []
-  # Reflector blocks * 6
-  [ref_0]
-    type = HexagonConcentricCircleAdaptiveBoundaryMeshGenerator
-    meshes_to_adapt_to = 'Patterned'
-    sides_to_adapt = '0'
-    num_sectors_per_side= '4 4 4 4 4 4'
-    hexagon_size = 13.376
-    background_intervals = 2
-    background_block_ids = '400 401'
-  []
-  [ref_1]
-    type = HexagonConcentricCircleAdaptiveBoundaryMeshGenerator
-    meshes_to_adapt_to = 'Patterned'
-    sides_to_adapt = '1'
-    num_sectors_per_side= '4 4 4 4 4 4'
-    hexagon_size = 13.376
-    background_intervals = 2
-    background_block_ids = '400 401'
-  []
-  [ref_2]
-    type = HexagonConcentricCircleAdaptiveBoundaryMeshGenerator
-    meshes_to_adapt_to = 'Patterned'
-    sides_to_adapt = '2'
-    num_sectors_per_side= '4 4 4 4 4 4'
-    hexagon_size = 13.376
-    background_intervals = 2
-    background_block_ids = '400 401'
-  []
-  [ref_3]
-    type = HexagonConcentricCircleAdaptiveBoundaryMeshGenerator
-    meshes_to_adapt_to = 'Patterned'
-    sides_to_adapt = '3'
-    num_sectors_per_side= '4 4 4 4 4 4'
-    hexagon_size = 13.376
-    background_intervals = 2
-    background_block_ids = '400 401'
-  []
-  [ref_4]
-    type = HexagonConcentricCircleAdaptiveBoundaryMeshGenerator
-    meshes_to_adapt_to = 'Patterned'
-    sides_to_adapt = '4'
-    num_sectors_per_side= '4 4 4 4 4 4'
-    hexagon_size = 13.376
-    background_intervals = 2
-    background_block_ids = '400 401'
-  []
-  [ref_5]
-    type = HexagonConcentricCircleAdaptiveBoundaryMeshGenerator
-    meshes_to_adapt_to = 'Patterned'
-    sides_to_adapt = '5'
-    num_sectors_per_side= '4 4 4 4 4 4'
-    hexagon_size = 13.376
-    background_intervals = 2
-    background_block_ids = '400 401'
-  []
   # Central void region
   [air_center]
     type = HexagonConcentricCircleAdaptiveBoundaryMeshGenerator
@@ -445,7 +166,7 @@
   # Stitching assemblies together to form the core mesh
   [core]
     type = PatternedHexMeshGenerator
-    inputs = 'Patterned cd_1 cd_2 cd_3 cd_4 cd_5 cd_6 cd_7 cd_8 cd_9 cd_10 cd_11 cd_12 ref_0 ref_1 ref_2 ref_3 ref_4 ref_5 dummy air_center'
+    inputs = 'Patterned cd_0 cd_1 cd_2 cd_3 cd_4 cd_5 cd_6 cd_7 cd_8 cd_9 cd_10 cd_11 ref_0 ref_1 ref_2 ref_3 ref_4 ref_5 dummy air_center'
     # Pattern ID  0       1    2    3    4    5    6    7    8    9    10    11    12    13    14    15    16    17    18   19       20
     pattern_boundary = none
     generate_core_metadata = true
@@ -512,28 +233,28 @@
     input = extrude
     combinatorial_geometry = 'z<=20'
     block_id = 1000
-    excluded_subdomain_ids= '103 203 303 250 400 401 500 501 502 503 504 600 601'
+    excluded_subdomains = '103 203 303 250 400 401 500 501 502 503 504 600 601'
   []
   [reflector_bottom_tri]
     type = ParsedSubdomainMeshGenerator
     input = reflector_bottom_quad
     combinatorial_geometry = 'z<=20'
     block_id = 1003
-    excluded_subdomain_ids= '1000 250 400 401 500 501 502 503 504 600 601'
+    excluded_subdomains = '1000 250 400 401 500 501 502 503 504 600 601'
   []
   [reflector_top_quad]
     type = ParsedSubdomainMeshGenerator
     input = reflector_bottom_tri
     combinatorial_geometry = 'z>=180'
     block_id = 1000
-    excluded_subdomain_ids= '103 203 303 200 201 250 400 401 500 501 502 503 504 600 601'
+    excluded_subdomains = '103 203 303 200 201 250 400 401 500 501 502 503 504 600 601'
   []
   [reflector_top_tri]
     type = ParsedSubdomainMeshGenerator
     input = reflector_top_quad
     combinatorial_geometry = 'z>=180'
     block_id = 1003
-    excluded_subdomain_ids= '1000 200 201 203 250 400 401 500 501 502 503 504 600 601'
+    excluded_subdomains = '1000 200 201 203 250 400 401 500 501 502 503 504 600 601'
   []
   # Assgin block names
   [rename_blocks]
