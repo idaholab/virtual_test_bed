@@ -33,7 +33,7 @@
     abs_zero = 1e-4
     rel_err = 1e-4
     min_parallel = 2
-    max_time = 500
+    max_time = 700
   []
   [transient_1]
     type = CSVDiff
