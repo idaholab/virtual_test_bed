@@ -28,7 +28,8 @@
     input = msfr_1d_ss.i
     csvdiff = 'msfr_1d_ss_csv.csv'
     executable_pattern = 'sam*|blue_crab*'
-    cli_args = '--app SamApp Outputs/csv/sync_times=0.0 Outputs/csv/sync_only=true'
+    cli_args = "--app SamApp Outputs/csv/sync_times=0.0 Outputs/csv/sync_only=true
+                Executioner/set_sam_default_petsc_options=true"
     prereq = 'syntax_steady'
     abs_zero = 1e-4
     rel_err = 1e-4
@@ -40,7 +41,7 @@
     input = msfr_1d_transient_01.i
     csvdiff = 'msfr_1d_transient_01_csv.csv'
     executable_pattern = 'sam*|blue_crab*'
-    cli_args = '--app SamApp Executioner/num_steps=120'
+    cli_args = "--app SamApp Executioner/num_steps=120 Executioner/set_sam_default_petsc_options=true"
     prereq = 'syntax_transient_1 steady'
     abs_zero = 1e-4
     rel_err = 1e-4
@@ -51,7 +52,7 @@
     input = msfr_1d_transient_02.i
     csvdiff = 'msfr_1d_transient_02_csv.csv'
     executable_pattern = 'sam*|blue_crab*'
-    cli_args = '--app SamApp Executioner/num_steps=120'
+    cli_args = "--app SamApp Executioner/num_steps=120 Executioner/set_sam_default_petsc_options=true"
     prereq = 'syntax_transient_2 steady transient_1'
     abs_zero = 1e-4
     rel_err = 1e-4
