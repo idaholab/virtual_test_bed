@@ -44,7 +44,7 @@
       executable_pattern = 'blue_crab*|dire_wolf*'
       min_parallel = 196
       # This is a very slow simulation
-      max_time = 3600
+      max_time = 36000
       method = 'opt'
       # Cross section warning
       allow_warnings = true

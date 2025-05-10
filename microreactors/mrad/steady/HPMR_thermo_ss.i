@@ -161,7 +161,6 @@ corr_factor = '${fparse R_hp_hole / R_clad_o * area_correction / perimeter_corre
   [fuel_matrix_thermal]
     type = GraphiteMatrixThermal
     block = 'fuel_quad fuel_tri'
-    # unirradiated_type = 'A3_27_1800'
     graphite_grade = IG_110
     packing_fraction = 0.4
     specific_heat_scale_factor = 1.0
@@ -172,7 +171,6 @@ corr_factor = '${fparse R_hp_hole / R_clad_o * area_correction / perimeter_corre
   [monolith_matrix_thermal]
     type = GraphiteMatrixThermal
     block = 'monolith '
-    # unirradiated_type = 'A3_27_1800'
     graphite_grade = IG_110
     packing_fraction = 0
     specific_heat_scale_factor = 1.0
