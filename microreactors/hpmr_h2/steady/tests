@@ -61,6 +61,7 @@
     csvdiff = 'heatpipe_vapor_only_out.csv'
     executable_pattern = 'dire_wolf*|sockeye*'
     prereq = sockeye_only_syntax
+    rel_err = 5e-5
   []
 
   [thermal_only]
