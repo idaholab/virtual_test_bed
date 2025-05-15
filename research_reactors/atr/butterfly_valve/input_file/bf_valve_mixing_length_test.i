@@ -8,7 +8,7 @@ velocity_interp_method = 'rc'
 [Mesh]
   [fmg]
     type = FileMeshGenerator
-    file = '19degree_coarse_mesh.e'
+    file = '0deg_cubit_coarse_mesh.e'
   []
   # [diag]
   #   type = MeshDiagnosticsGenerator
@@ -37,7 +37,7 @@ velocity_interp_method = 'rc'
 [UserObjects]
   [rc]
     type = INSFVRhieChowInterpolator
-    u = vel_x
+    u = vel_x:q
     v = vel_y
     w = vel_z
     pressure = pressure
@@ -207,7 +207,7 @@ velocity_interp_method = 'rc'
     type = INSFVInletVelocityBC
     boundary = 1
     variable = vel_x
-    function = 4.195280204
+    function = 2.051481762
   []
   [inlet-v]
     type = INSFVInletVelocityBC
