@@ -33,7 +33,8 @@ flow-rate, three meshes of different refinement levels were used. A closeup of t
 
 Due to convergence constraints a direct solve method was used, greatly increasing the computational resources needed.
 Access to HPC resources will likely be necessary to run these simulations. It is also necessary to increase MOOSE's
-default AD container size. 
+default AD container size. More information on MOOSE's automatic differentiation system, and information on increases AD container size
+when building can be found [here](https://mooseframework.inl.gov/automatic_differentiation/index.html).
 
 !media atr/0deg_coarse_zoom_mesh.png
        style=width:50%;margin-left:auto;margin-right:auto
@@ -59,21 +60,21 @@ Because of the complex geometries involved, Cubit was used to generate meshes fo
 ### `Variables`
 
 
-!listing /research_reactors/atr/butterfly_valve/input_file/mixing_length_0deg_20k_gpm.i block=Variables language=cpp
+!listing /research_reactors/atr/butterfly_valve/input_file/bf_valve_mixing_length_test.i block=Variables language=cpp
 
 ### `AuxVariables`
 
-!listing /research_reactors/atr/butterfly_valve/input_file/mixing_length_0deg_20k_gpm.i block=AuxVariables language=cpp
+!listing /research_reactors/atr/butterfly_valve/input_file/bf_valve_mixing_length_test.i block=AuxVariables language=cpp
 
 ### `Aux Kernels`
 
-!listing /research_reactors/atr/butterfly_valve/input_file/mixing_length_0deg_20k_gpm.i block=AuxKernels language=cpp
+!listing /research_reactors/atr/butterfly_valve/input_file/bf_valve_mixing_length_test.i block=AuxKernels language=cpp
 
-# Executioner
+### Executioner
 
-!listing /research_reactors/atr/butterfly_valve/input_file/mixing_length_0deg_20k_gpm.i block=Executioner language=cpp
+!listing /research_reactors/atr/butterfly_valve/input_file/bf_valve_mixing_length_test.i block=Executioner language=cpp
 
-# Results
+### Results
 
 Shown below is a velocity streamline plot for a select inlet velocity for a select inlet velocity. Aside from general
 trends such as high velocities at the top an bottom of the valve, important details such as vortices forming downstream of the valve
