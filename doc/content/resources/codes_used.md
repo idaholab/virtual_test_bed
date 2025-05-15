@@ -99,9 +99,9 @@ obtained through INL's [NCRC](https://inl.gov/ncrc/).
 - Molten Salt Reactor Experiment RZ multiphysics core model [documentation](msr/msre/multiphysics_rz_model/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/msr/msre/multiphysics_core_model/steady_state)
 
 
-### Pronghorn subchannel
+### SCM
 
-- Subchannel ORNL 19 pins and Toshiba 37 pins benchmarks [documentation](sfr/subchannel/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/sfr/subchannel)
+- SCM validation found in [documentation](sfr/subchannel/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/sfr/subchannel)
 
 
 ## Systems analysis and 1D Thermal-hydraulics
