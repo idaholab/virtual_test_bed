@@ -2,13 +2,13 @@
 
 *Contact: Daniel Yankura, daniel.yankura@inl.gov
 
-*Model link: [ATR Butterfly-Valve Model](https://github.com/idaholab/virtual_test_bed/tree/devel/research_reactors/atr/butterfly_valve)*
+*Model link: [ATR Butterfly-Valve Model](https://github.com/idaholab/virtual_test_bed/tree/main/research_reactors/atr/butterfly_valve)*
 
 !tag name=ATR Butterfly-Valve Model
      description=3D Steady state CFD model of a butterfly-vale used at ATR, using the Navier-Stokes module
      pairs=reactor_type:LWR
                        geometry:valve
-                       simulation_type:fluid_flow
+                       simulation_type:CFD
                        codes_used:MOOSE_NavierStokes
                        open_source:full
                        computing_needs:HPC
@@ -21,16 +21,15 @@ Running this model will likely require HPC resources. The simulations setup will
 
 # Physics Models and Boundary Conditions Used
 
-All simulations used the finite volume incompressible Navier-Stokes formulas. The pipe inlet was set as a
+All simulations used the finite volume discretization of the incompressible Navier-Stokes equations. The pipe inlet was set as a
 constant inlet velocity that corresponded to the mass-flow rate from experimental data. The outlet pressure 
 was arbitrarily set to 0. All walls (including those belonging to the valve) were set as no-slip boundaries.
 
 # Simulation Setup
 
 The valve was simulated for 5 different angles (between 0 and 42.7 degrees) where fully open is 90 degrees.
-Due to the highly turbulent nature of the simulations, the mixing-length turbulence model with an lu
-preconditioner was used. For each valve configuration and flow-rate, three meshes of different refinement levels
-were used. A closeup of the coarse 0 degree mesh is show below.
+Due to the highly turbulent nature of the simulations, the mixing-length turbulence model was used. For each valve configuration and 
+flow-rate, three meshes of different refinement levels were used. A closeup of the coarse 0 degree mesh is show below.
 
 Due to convergence constraints a direct solve method was used, greatly increasing the computational resources needed.
 Access to HPC resources will likely be necessary to run these simulations. It is also necessary to increase MOOSE's
@@ -59,7 +58,6 @@ Because of the complex geometries involved, Cubit was used to generate meshes fo
 
 ### `Variables`
 
-test
 
 !listing /research_reactors/atr/butterfly_valve/input_file/mixing_length_0deg_20k_gpm.i block=Variables language=cpp
 
@@ -78,7 +76,7 @@ test
 # Results
 
 Shown below is a velocity streamline plot for a select inlet velocity for a select inlet velocity. Aside from general
-trends such as high velocities at the top an bottom of the valve, important details such as vorticies forming downstream of the valve
+trends such as high velocities at the top an bottom of the valve, important details such as vortices forming downstream of the valve
 are able to be simulated despite the relative coarseness of the meshes.
 
 !media atr/bf_valve_vel_and_pressure.png
