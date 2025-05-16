@@ -83,4 +83,4 @@
 []
 
 # This input defines the mesh generation for the Griffin mesh
-!include HPMR_OneSixth_Core_meshgenerator_tri_batch.i
+!include HPMR_OneSixth_Core_meshgenerator_tri.i
