@@ -23,7 +23,11 @@ Running this model will likely require HPC resources. The simulations setup will
 
 All simulations used the finite volume discretization of the incompressible Navier-Stokes equations. The pipe inlet was set as a
 constant inlet velocity that corresponded to the mass-flow rate from experimental data. The outlet pressure 
-was arbitrarily set to 0. All walls (including those belonging to the valve) were set as no-slip boundaries.
+was arbitrarily set to 0. All walls (including those belonging to the valve) were set as no-slip boundariesi.
+
+The following sections go into greater detail on how the simulations were carried out, including meshing, simulation parameters,
+and computational resources used. Detailed documentation on the MOOSE Navier-Stokes module, the mixing-length turbulence method, as
+well as the other parameters used, see the [Navier-Stokes module page](https://mooseframework.inl.gov/modules/navier_stokes/index.html)
 
 # Simulation Setup
 
@@ -45,6 +49,11 @@ when building can be found [here](https://mooseframework.inl.gov/automatic_diffe
 
 ## Parameters
 
+The viscosity and density match experimental values for water at the pressure levels measured in earlier experiments.
+The simulation begins with the viscosity at a higher number, but it gets ramped-down to this value with each successful timestep.
+The von-karman constant is a dimensionless constant used in turbulence modeling.
+
+
 ```language=bash
   
  mu = 0.001 # viscosity [Pa*s]
@@ -55,22 +64,44 @@ when building can be found [here](https://mooseframework.inl.gov/automatic_diffe
 # Mesh
 
  
-Because of the complex geometries involved, Cubit was used to generate meshes for all angles tested.
+Because of the complex geometries involved, Cubit was used to generate meshes for all angles tested. All meshes used are included with the input file provided.
+For each angle simulated three meshes (coarse, medium, and fine) were created. Each course mesh had between 50-100 thousand cells, medium meshes between 100-200
+thousand cells, and fine meshes over 200 thousand cells. With three levels of refinement the self convergence rate could be calculated using the method described in [!cite](Roache1998).
 
 ### `Variables`
 
+All simulations were done in three dimensions. Because of the turbulent nature of the simulations, a relatively slow initial velocity
+in the x-direction was chosen. This prevented the simulations from diverging early on.
 
 !listing /research_reactors/atr/butterfly_valve/input_file/bf_valve_mixing_length_test.i block=Variables language=cpp
 
 ### `AuxVariables`
 
+To implement the mixing-length turbulence model, a `mixing_length` auxillary variable needs to be included. 
+
 !listing /research_reactors/atr/butterfly_valve/input_file/bf_valve_mixing_length_test.i block=AuxVariables language=cpp
 
-### `Aux Kernels`
+### `AuxKernels`
+
+This kernel controls the behavior of the mixing-length model. `walls 2 and 4` correspond to the wall of the pipe and the valve as well.
+the delta parameter controls turbulent behavior near these walls.
 
 !listing /research_reactors/atr/butterfly_valve/input_file/bf_valve_mixing_length_test.i block=AuxKernels language=cpp
 
+
+### Boundary Conditions
+
+The `inlet-u` parameter controls the inlet velocity. Its function value can be changed to match the experimental inlet velocities. To reduce computational resources
+The entire assembly was split in half in the direction of flow. Since the pipe and valve is symmetric along this axis, a symmetry boundary condition was applied along this surface to approximate
+simulating the entire assembly.
+
+!listing /research_reactors/atr/butterfly_valve/input_file/bf_valve_mixing_length_test.i block=FVBCs language=cpp
+
 ### Executioner
+
+While these are steady-state simulations a transient solver must be used in order for the viscosity rampdown to work. This operates by having the viscosity ramp down over time 
+while every other paramter remains unchanged. With each successful timestep, the viscosity approaches the desired value. The simulation terminates once it ramps down all the way
+to the desired level.
 
 !listing /research_reactors/atr/butterfly_valve/input_file/bf_valve_mixing_length_test.i block=Executioner language=cpp
 
