@@ -10,18 +10,6 @@ velocity_interp_method = 'rc'
     type = FileMeshGenerator
     file = '0deg_cubit_coarse_mesh.e'
   []
-  # [diag]
-  #   type = MeshDiagnosticsGenerator
-  #   input = fmg
-  #   check_local_jacobian = INFO
-  #   examine_element_overlap = INFO
-  #   examine_element_types = INFO
-  #   examine_element_volumes = INFO
-  #   examine_non_conformality = INFO
-  #   examine_nonplanar_sides = INFO
-  #   examine_sidesets_orientation = INFO
-  #   search_for_adaptivity_nonconformality = INFO
-  # []
 []
 
 [Problem]
