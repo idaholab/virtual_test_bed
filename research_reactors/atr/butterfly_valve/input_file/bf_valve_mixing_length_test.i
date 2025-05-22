@@ -25,7 +25,7 @@ velocity_interp_method = 'rc'
 [UserObjects]
   [rc]
     type = INSFVRhieChowInterpolator
-    u = vel_x:q
+    u = vel_x
     v = vel_y
     w = vel_z
     pressure = pressure
@@ -182,7 +182,7 @@ velocity_interp_method = 'rc'
 [AuxKernels]
   [mixing_length]
     type = WallDistanceMixingLengthAux
-    walls = '2 4'
+    walls = 'Walls Valve'
     variable = mixing_length
     execute_on = 'initial'
     von_karman_const = ${von_karman_const}
@@ -193,69 +193,69 @@ velocity_interp_method = 'rc'
 [FVBCs]
   [inlet-u]
     type = INSFVInletVelocityBC
-    boundary = 1
+    boundary = Inlet
     variable = vel_x
-    function = 2.051481762
+    function = 2.051481762 #m/s
   []
   [inlet-v]
     type = INSFVInletVelocityBC
-    boundary = 1
+    boundary = Inlet
     variable = vel_y
     function = 0
   []
   [inlet-w]
     type = INSFVInletVelocityBC
-    boundary = 1
+    boundary = Inlet
     variable = vel_z
     function = 0
   []
 
   [walls-u]
     type = INSFVNoSlipWallBC
-    boundary = 2
+    boundary = Walls
     variable = vel_x
     function = 0
   []
   [walls-v]
     type = INSFVNoSlipWallBC
-    boundary = 2
+    boundary = Walls
     variable = vel_y
     function = 0
   []
   [walls-w]
     type = INSFVNoSlipWallBC
-    boundary = 2
+    boundary = Walls
     variable = vel_z
     function = 0
   []
   [outlet_p]
     type = INSFVOutletPressureBC
-    boundary = 3
+    boundary = Outlet
     variable = pressure
     function = '0'
   []
   [valve-u]
     type = INSFVNoSlipWallBC
-    boundary = 4
+    boundary = Valve
     variable = vel_x
     function = 0
   []
   [valve-v]
     type = INSFVNoSlipWallBC
-    boundary = 4
+    boundary = Valve
     variable = vel_y
     function = 0
   []
   [valve-w]
     type = INSFVNoSlipWallBC
-    boundary = 4
+    boundary = Valve
     variable = vel_z
     function = 0
   []
   [symmetry_u]
     type = INSFVSymmetryVelocityBC
     variable = vel_x
-    boundary = 5
+    boundary = Symmetry
     momentum_component = 'x'
     mu = ${mu}
     u = vel_x
@@ -265,7 +265,7 @@ velocity_interp_method = 'rc'
   [symmetry_v]
     type = INSFVSymmetryVelocityBC
     variable = vel_y
-    boundary = 5
+    boundary = Symmetry
     momentum_component = 'y'
     mu = ${mu}
     u = vel_x
@@ -275,7 +275,7 @@ velocity_interp_method = 'rc'
   [symmetry_w]
     type = INSFVSymmetryVelocityBC
     variable = vel_y
-    boundary = 5
+    boundary = Symmetry
     momentum_component = 'y'
     mu = ${mu}
     u = vel_x
@@ -284,20 +284,12 @@ velocity_interp_method = 'rc'
   []
   [symmetry_pressure]
     type = INSFVSymmetryPressureBC
-    boundary = 5
+    boundary = Symmetry
     variable = pressure
   []
 []
 
 [Functions]
-  [ad_rampdown_mu_func]
-    type = ParsedFunction
-    expression = 'if(t<= 5, mu*(100*exp(-3*t)+1), 0.000463*exp(-3*(t-5))+0.000537)'
-    symbol_names = 'mu'
-    symbol_values = ${mu}
-  []
-  # Duplicate definition to use in postprocessor,
-  # we will convert types more in the future and avoid duplicates
   [rampdown_mu_func]
     type = ParsedFunction
     expression = 'if(t<= 5, mu*(100*exp(-3*t)+1), 0.000463*exp(-3*(t-5))+0.000537)'
@@ -310,7 +302,7 @@ velocity_interp_method = 'rc'
   [mu]
     type = ADGenericFunctorMaterial      #defines mu artificially for numerical convergence
     prop_names = 'mu rho'                     #it converges to the real mu eventually.
-    prop_values = 'ad_rampdown_mu_func ${rho}'
+    prop_values = 'rampdown_mu_func ${rho}'
   []
   [total_viscosity]
     type = MixingLengthTurbulentViscosityMaterial

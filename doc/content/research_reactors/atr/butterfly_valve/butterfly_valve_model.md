@@ -5,7 +5,7 @@
 *Model link: [ATR Butterfly-Valve Model](https://github.com/idaholab/virtual_test_bed/tree/main/research_reactors/atr/butterfly_valve)*
 
 !tag name=ATR Butterfly-Valve Model
-     description=3D Steady state CFD model of a butterfly-vale used at ATR, using the Navier-Stokes module
+     description=3D Steady state coarse mesh CFD model of a butterfly-vale used at ATR, using the Navier-Stokes module
      pairs=reactor_type:LWR
                        geometry:valve
                        simulation_type:CFD
@@ -39,6 +39,9 @@ Due to convergence constraints a direct solve method was used, greatly increasin
 Access to HPC resources will likely be necessary to run these simulations. It is also necessary to increase MOOSE's
 default AD container size. More information on MOOSE's automatic differentiation system, and information on increases AD container size
 when building can be found [here](https://mooseframework.inl.gov/automatic_differentiation/index.html).
+
+!alert note
+A solver based on the SIMPLE method has been added to the Navier Stokes module after this study was conducted, and should be preferred for future 3D studies. 
 
 !media atr/0deg_coarse_zoom_mesh.png
        style=width:50%;margin-left:auto;margin-right:auto
