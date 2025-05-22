@@ -377,21 +377,21 @@ eff_turb = 0.843
   []
 []
 
-[HeatStructureMaterials]
+[SolidProperties]
   [graphite]
-    type = SolidMaterialProperties
+    type = ThermalFunctionSolidProperties
     rho = 2160 # kg/m3
     k = 40 # W/(m.K)
     cp = 2100 # J/(kg.K)     approximate mean specific heat of graphite between 800 C (coolant) and 1400 C (fuel)
   []
   [fuel]
-    type = SolidMaterialProperties
+    type = ThermalFunctionSolidProperties
     rho = 10970 # kg/m3
     k = 5 # W/(m.K)
     cp = 300 # J/(kg.K)
   []
   [steel]
-    type = SolidMaterialProperties
+    type = ThermalFunctionSolidProperties
     rho = 8050
     k = 45
     cp = 466
@@ -649,7 +649,8 @@ eff_turb = 0.843
 
       names = 'graphite_layer fuel_layer'
       widths = '${core_radius_equiv_mod} ${core_radius_equiv_complete_hs}'
-      materials = 'graphite fuel'
+      solid_properties = 'graphite fuel'
+      solid_properties_T_ref = '300 300'
       n_part_elems = '3 3'
       offset_mesh_by_inner_radius = true
     []
@@ -763,7 +764,8 @@ eff_turb = 0.843
       orientation = '1 0 0'
       position = '${pri_x_hx} ${pri_y_hx} 0.'
       widths = '${hx_wall_thickness}'
-      materials = 'steel'
+      solid_properties = 'steel'
+      solid_properties_T_ref = '300'
       inner_radius = '${fparse hx_dia_pri / 2}'
       num_rods = ${hx_nb_channels}
     []
@@ -970,7 +972,8 @@ eff_turb = 0.843
     n_elems = '${sec_n_elems3}'
     n_part_elems = 2
     names = recuperator
-    materials = steel
+    solid_properties = 'steel'
+    solid_properties_T_ref = '300'
     inner_radius = '${fparse SEC_D1 / 2}'
     offset_mesh_by_inner_radius = true
   []
@@ -1466,7 +1469,7 @@ eff_turb = 0.843
   [cycle_efficiency]
     type = ParsedPostprocessor
     pp_names = 'generator_power core_power_flux'
-    function = 'generator_power / core_power_flux'
+    expression = 'generator_power / core_power_flux'
     execute_on = 'INITIAL TIMESTEP_END'
   []
 
@@ -1484,7 +1487,7 @@ eff_turb = 0.843
   [shaft_RPM]
     type = ParsedPostprocessor
     pp_names = 'shaft_speed'
-    function = '(shaft_speed * 60) /( 2 * ${fparse pi})'
+    expression = '(shaft_speed * 60) /( 2 * ${fparse pi})'
     execute_on = 'INITIAL TIMESTEP_END'
   []
 
@@ -1514,7 +1517,7 @@ eff_turb = 0.843
   [compressor_torque]
     type = ParsedPostprocessor
     pp_names = 'comp_dissipation_torque comp_isentropic_torque comp_friction_torque'
-    function = 'comp_dissipation_torque + comp_isentropic_torque + comp_friction_torque'
+    expression = 'comp_dissipation_torque + comp_isentropic_torque + comp_friction_torque'
   []
 
   ###### Pressure
@@ -1533,7 +1536,7 @@ eff_turb = 0.843
   [comp_p_ratio]
     type = ParsedPostprocessor
     pp_names = 'comp_p_in comp_p_out'
-    function = 'comp_p_out / comp_p_in'
+    expression = 'comp_p_out / comp_p_in'
     execute_on = 'INITIAL TIMESTEP_END'
   []
 
@@ -1553,7 +1556,7 @@ eff_turb = 0.843
   [comp_T_ratio]
     type = ParsedPostprocessor
     pp_names = 'comp_T_in comp_T_out'
-    function = '(comp_T_out - comp_T_in) / comp_T_out'
+    expression = '(comp_T_out - comp_T_in) / comp_T_out'
     execute_on = 'INITIAL TIMESTEP_END'
   []
 
@@ -1681,7 +1684,7 @@ eff_turb = 0.843
   [turbine_torque]
     type = ParsedPostprocessor
     pp_names = 'turb_dissipation_torque turb_isentropic_torque turb_friction_torque'
-    function = 'turb_dissipation_torque + turb_isentropic_torque + turb_friction_torque'
+    expression = 'turb_dissipation_torque + turb_isentropic_torque + turb_friction_torque'
   []
 
   ###### Pressure
@@ -1700,7 +1703,7 @@ eff_turb = 0.843
   [turb_p_ratio]
     type = ParsedPostprocessor
     pp_names = 'turb_p_in turb_p_out'
-    function = 'turb_p_in / turb_p_out'
+    expression = 'turb_p_in / turb_p_out'
     execute_on = 'INITIAL TIMESTEP_END'
   []
 
