@@ -621,6 +621,7 @@ eff_turb = 0.843
     position = '${pri_x_core} ${pri_y_core} 0.'
     connections = 'pri_pipe1:out core/coolant_channel:in'
     volume = 1e-3
+    use_scalar_variables = false
   []
 
   [core]
@@ -674,6 +675,7 @@ eff_turb = 0.843
     position = '${pri_x_pipe2} ${pri_y_pipe2} 0.'
     connections = 'core/coolant_channel:out pri_pipe2:in'
     volume = 1e-3
+    use_scalar_variables = false
   []
 
   [pri_pipe2]
@@ -693,6 +695,7 @@ eff_turb = 0.843
       connections = 'pri_pipe2:out pri_pipe3:in pressu/pipe_prz:in'
       position = '${pri_x_pipe3} ${pri_y_pipe3} 0.'
       volume = 1e-3
+      use_scalar_variables = false
     []
     [pipe_prz]
       type = FlowChannel1Phase
@@ -728,6 +731,7 @@ eff_turb = 0.843
     position = '${pri_x_hx} ${pri_y_hx} 0.'
     connections = 'pri_pipe3:out hx/pri:in'
     volume = 1e-3
+    use_scalar_variables = false
   []
 
   [hx]
@@ -789,6 +793,7 @@ eff_turb = 0.843
     position = '${pri_x_pipe4} ${pri_y_pipe4} 0.'
     connections = 'hx/pri:out pri_pipe4:in'
     volume = 1e-3
+    use_scalar_variables = false
   []
 
   [pri_pipe4]
@@ -824,6 +829,7 @@ eff_turb = 0.843
       head = head_fcn
       torque_hydraulic = torque_fcn
       density_rated = ${pump_density_rated}
+      use_scalar_variables = false
     []
 
     [motor]
@@ -922,6 +928,8 @@ eff_turb = 0.843
     speed_cr_fr = 0
     tau_fr_const = 0
     tau_fr_coeff = '0 0 0 0'
+
+    use_scalar_variables = false
   []
 
   # Outlet pipe from the compressor
@@ -1071,6 +1079,8 @@ eff_turb = 0.843
     speed_cr_fr = 0
     tau_fr_const = 0
     tau_fr_coeff = '0 0 0 0'
+
+    use_scalar_variables = false
   []
 
   # Outlet pipe from turbine
@@ -1484,18 +1494,21 @@ eff_turb = 0.843
 
   ###### Torques
   [comp_dissipation_torque]
-    type = ScalarVariable
-    variable = 'compressor:dissipation_torque'
+    type = ElementAverageValue
+    block = 'compressor'
+    variable = 'dissipation_torque'
     execute_on = 'INITIAL TIMESTEP_END'
   []
   [comp_isentropic_torque]
-    type = ScalarVariable
-    variable = 'compressor:isentropic_torque'
+    type = ElementAverageValue
+    block = 'compressor'
+    variable = 'isentropic_torque'
     execute_on = 'INITIAL TIMESTEP_END'
   []
   [comp_friction_torque]
-    type = ScalarVariable
-    variable = 'compressor:friction_torque'
+    type = ElementAverageValue
+    block = 'compressor'
+    variable = 'friction_torque'
     execute_on = 'INITIAL TIMESTEP_END'
   []
   [compressor_torque]
@@ -1648,18 +1661,21 @@ eff_turb = 0.843
 
   ###### Torques
   [turb_dissipation_torque]
-    type = ScalarVariable
-    variable = 'turbine:dissipation_torque'
+    type = ElementAverageValue
+    block = 'turbine'
+    variable = 'dissipation_torque'
     execute_on = 'INITIAL TIMESTEP_END'
   []
   [turb_isentropic_torque]
-    type = ScalarVariable
-    variable = 'turbine:isentropic_torque'
+    type = ElementAverageValue
+    block = 'turbine'
+    variable = 'isentropic_torque'
     execute_on = 'INITIAL TIMESTEP_END'
   []
   [turb_friction_torque]
-    type = ScalarVariable
-    variable = 'turbine:friction_torque'
+    type = ElementAverageValue
+    block = 'turbine'
+    variable = 'friction_torque'
     execute_on = 'INITIAL TIMESTEP_END'
   []
   [turbine_torque]
