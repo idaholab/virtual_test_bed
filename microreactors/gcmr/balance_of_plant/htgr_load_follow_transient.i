@@ -377,21 +377,21 @@ eff_turb = 0.843
   []
 []
 
-[HeatStructureMaterials]
+[SolidProperties]
   [graphite]
-    type = SolidMaterialProperties
+    type = ThermalFunctionSolidProperties
     rho = 2160 # kg/m3
     k = 40 # W/(m.K)
     cp = 2100 # J/(kg.K)     approximate mean specific heat of graphite between 800 C (coolant) and 1400 C (fuel)
   []
   [fuel]
-    type = SolidMaterialProperties
+    type = ThermalFunctionSolidProperties
     rho = 10970 # kg/m3
     k = 5 # W/(m.K)
     cp = 300 # J/(kg.K)
   []
   [steel]
-    type = SolidMaterialProperties
+    type = ThermalFunctionSolidProperties
     rho = 8050
     k = 45
     cp = 466
@@ -621,6 +621,7 @@ eff_turb = 0.843
     position = '${pri_x_core} ${pri_y_core} 0.'
     connections = 'pri_pipe1:out core/coolant_channel:in'
     volume = 1e-3
+    use_scalar_variables = false
   []
 
   [core]
@@ -648,7 +649,8 @@ eff_turb = 0.843
 
       names = 'graphite_layer fuel_layer'
       widths = '${core_radius_equiv_mod} ${core_radius_equiv_complete_hs}'
-      materials = 'graphite fuel'
+      solid_properties = 'graphite fuel'
+      solid_properties_T_ref = '300 300'
       n_part_elems = '3 3'
       offset_mesh_by_inner_radius = true
     []
@@ -674,6 +676,7 @@ eff_turb = 0.843
     position = '${pri_x_pipe2} ${pri_y_pipe2} 0.'
     connections = 'core/coolant_channel:out pri_pipe2:in'
     volume = 1e-3
+    use_scalar_variables = false
   []
 
   [pri_pipe2]
@@ -693,6 +696,7 @@ eff_turb = 0.843
       connections = 'pri_pipe2:out pri_pipe3:in pressu/pipe_prz:in'
       position = '${pri_x_pipe3} ${pri_y_pipe3} 0.'
       volume = 1e-3
+      use_scalar_variables = false
     []
     [pipe_prz]
       type = FlowChannel1Phase
@@ -728,6 +732,7 @@ eff_turb = 0.843
     position = '${pri_x_hx} ${pri_y_hx} 0.'
     connections = 'pri_pipe3:out hx/pri:in'
     volume = 1e-3
+    use_scalar_variables = false
   []
 
   [hx]
@@ -759,7 +764,8 @@ eff_turb = 0.843
       orientation = '1 0 0'
       position = '${pri_x_hx} ${pri_y_hx} 0.'
       widths = '${hx_wall_thickness}'
-      materials = 'steel'
+      solid_properties = 'steel'
+      solid_properties_T_ref = '300'
       inner_radius = '${fparse hx_dia_pri / 2}'
       num_rods = ${hx_nb_channels}
     []
@@ -789,6 +795,7 @@ eff_turb = 0.843
     position = '${pri_x_pipe4} ${pri_y_pipe4} 0.'
     connections = 'hx/pri:out pri_pipe4:in'
     volume = 1e-3
+    use_scalar_variables = false
   []
 
   [pri_pipe4]
@@ -824,6 +831,7 @@ eff_turb = 0.843
       head = head_fcn
       torque_hydraulic = torque_fcn
       density_rated = ${pump_density_rated}
+      use_scalar_variables = false
     []
 
     [motor]
@@ -922,6 +930,8 @@ eff_turb = 0.843
     speed_cr_fr = 0
     tau_fr_const = 0
     tau_fr_coeff = '0 0 0 0'
+
+    use_scalar_variables = false
   []
 
   # Outlet pipe from the compressor
@@ -962,7 +972,8 @@ eff_turb = 0.843
     n_elems = '${sec_n_elems3}'
     n_part_elems = 2
     names = recuperator
-    materials = steel
+    solid_properties = 'steel'
+    solid_properties_T_ref = '300'
     inner_radius = '${fparse SEC_D1 / 2}'
     offset_mesh_by_inner_radius = true
   []
@@ -1071,6 +1082,8 @@ eff_turb = 0.843
     speed_cr_fr = 0
     tau_fr_const = 0
     tau_fr_coeff = '0 0 0 0'
+
+    use_scalar_variables = false
   []
 
   # Outlet pipe from turbine
@@ -1456,7 +1469,7 @@ eff_turb = 0.843
   [cycle_efficiency]
     type = ParsedPostprocessor
     pp_names = 'generator_power core_power_flux'
-    function = 'generator_power / core_power_flux'
+    expression = 'generator_power / core_power_flux'
     execute_on = 'INITIAL TIMESTEP_END'
   []
 
@@ -1474,7 +1487,7 @@ eff_turb = 0.843
   [shaft_RPM]
     type = ParsedPostprocessor
     pp_names = 'shaft_speed'
-    function = '(shaft_speed * 60) /( 2 * ${fparse pi})'
+    expression = '(shaft_speed * 60) /( 2 * ${fparse pi})'
     execute_on = 'INITIAL TIMESTEP_END'
   []
 
@@ -1484,24 +1497,27 @@ eff_turb = 0.843
 
   ###### Torques
   [comp_dissipation_torque]
-    type = ScalarVariable
-    variable = 'compressor:dissipation_torque'
+    type = ElementAverageValue
+    block = 'compressor'
+    variable = 'dissipation_torque'
     execute_on = 'INITIAL TIMESTEP_END'
   []
   [comp_isentropic_torque]
-    type = ScalarVariable
-    variable = 'compressor:isentropic_torque'
+    type = ElementAverageValue
+    block = 'compressor'
+    variable = 'isentropic_torque'
     execute_on = 'INITIAL TIMESTEP_END'
   []
   [comp_friction_torque]
-    type = ScalarVariable
-    variable = 'compressor:friction_torque'
+    type = ElementAverageValue
+    block = 'compressor'
+    variable = 'friction_torque'
     execute_on = 'INITIAL TIMESTEP_END'
   []
   [compressor_torque]
     type = ParsedPostprocessor
     pp_names = 'comp_dissipation_torque comp_isentropic_torque comp_friction_torque'
-    function = 'comp_dissipation_torque + comp_isentropic_torque + comp_friction_torque'
+    expression = 'comp_dissipation_torque + comp_isentropic_torque + comp_friction_torque'
   []
 
   ###### Pressure
@@ -1520,7 +1536,7 @@ eff_turb = 0.843
   [comp_p_ratio]
     type = ParsedPostprocessor
     pp_names = 'comp_p_in comp_p_out'
-    function = 'comp_p_out / comp_p_in'
+    expression = 'comp_p_out / comp_p_in'
     execute_on = 'INITIAL TIMESTEP_END'
   []
 
@@ -1540,7 +1556,7 @@ eff_turb = 0.843
   [comp_T_ratio]
     type = ParsedPostprocessor
     pp_names = 'comp_T_in comp_T_out'
-    function = '(comp_T_out - comp_T_in) / comp_T_out'
+    expression = '(comp_T_out - comp_T_in) / comp_T_out'
     execute_on = 'INITIAL TIMESTEP_END'
   []
 
@@ -1648,24 +1664,27 @@ eff_turb = 0.843
 
   ###### Torques
   [turb_dissipation_torque]
-    type = ScalarVariable
-    variable = 'turbine:dissipation_torque'
+    type = ElementAverageValue
+    block = 'turbine'
+    variable = 'dissipation_torque'
     execute_on = 'INITIAL TIMESTEP_END'
   []
   [turb_isentropic_torque]
-    type = ScalarVariable
-    variable = 'turbine:isentropic_torque'
+    type = ElementAverageValue
+    block = 'turbine'
+    variable = 'isentropic_torque'
     execute_on = 'INITIAL TIMESTEP_END'
   []
   [turb_friction_torque]
-    type = ScalarVariable
-    variable = 'turbine:friction_torque'
+    type = ElementAverageValue
+    block = 'turbine'
+    variable = 'friction_torque'
     execute_on = 'INITIAL TIMESTEP_END'
   []
   [turbine_torque]
     type = ParsedPostprocessor
     pp_names = 'turb_dissipation_torque turb_isentropic_torque turb_friction_torque'
-    function = 'turb_dissipation_torque + turb_isentropic_torque + turb_friction_torque'
+    expression = 'turb_dissipation_torque + turb_isentropic_torque + turb_friction_torque'
   []
 
   ###### Pressure
@@ -1684,7 +1703,7 @@ eff_turb = 0.843
   [turb_p_ratio]
     type = ParsedPostprocessor
     pp_names = 'turb_p_in turb_p_out'
-    function = 'turb_p_in / turb_p_out'
+    expression = 'turb_p_in / turb_p_out'
     execute_on = 'INITIAL TIMESTEP_END'
   []
 
