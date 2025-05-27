@@ -1,2 +1,6 @@
 *.png filter=lfs diff=lfs merge=lfs -text
 multiplot.png filter=lfs diff=lfs merge=lfs -text
+42deg_coarse_zoom_mesh.png filter=lfs diff=lfs merge=lfs -text
+bf_valve_vel_and_pressure.png filter=lfs diff=lfs merge=lfs -text
+bf_valve_velocity_streamline.png filter=lfs diff=lfs merge=lfs -text
+0deg_coarse_zoom_mesh.png filter=lfs diff=lfs merge=lfs -text
