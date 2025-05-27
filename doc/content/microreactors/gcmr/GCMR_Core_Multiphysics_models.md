@@ -9,7 +9,7 @@ The same mesh as described in [/GCMR_Core_Neutronics.md] is used for the neutron
       style=display: block;margin-left:auto;margin-right:auto;width:75%;
       caption=Mesh generation of the GCMR full core model
 
-For heat conduction simulation, a finer mesh is needed to capture the heat flux near key interfaces and surfaces, particularly around the coolant channel surfaces and the external surface of the reactor. This is crucial to keep the energy balance of the model. That is, the heat removed from all the surfaces in the model needs to be reasonably consistent with the reactor power (e.g., >95%) at steady state (see [energy_bal]). As the mesh is generated using MOOSE's intrinsic meshing capabilities enabled by the Reactor module, the finer mesh used for heat conduction is generated using the same mesh input file as the neutronics model, with some mesh density parameters adjusted.
+For heat conduction simulation, a finer mesh is needed to capture the heat flux near key interfaces and surfaces, particularly around the coolant channel surfaces and the external surface of the reactor. This is crucial to keep the energy balance of the model. That is, the heat removed from all the surfaces in the model needs to be reasonably consistent with the reactor power (e.g., >95%) at steady state (see [energy_bal]). As the mesh is generated using MOOSE's intrinsic meshing capabilities enabled by the Reactor module, the finer mesh used for heat conduction is generated using the same mesh input file as the neutronics model, with some mesh density parameters adjusted. To further minimize energy imbalance, quadratic elements should be employed to accurately capture heat flux near critical interfaces and surfaces, as illustrated in [energy_bal].
 
 !media media/gcmr/FCMP/gcmr_mesh_comp_cc.png
       id=gcmr_mesh_cc
@@ -21,17 +21,17 @@ For heat conduction simulation, a finer mesh is needed to capture the heat flux 
       style=display: block;margin-left:auto;margin-right:auto;width:65%;
       caption=Hierarchy of the GCMR Multiphysics Model
 
-The two major differences in the mesh are illustrated in the following figures. [gcmr_mesh_cc] shows the mesh comparison around a coolant channel. Two additional layers of radial elements with biased mesh density are added to the reactor matrix adjacent to each coolant channel. [gcmr_mesh_ext] shows the mesh comparison near the top and bottom external surfaces of the reactor. Additional axial layers with biased mesh density are added.
+The two major differences in the mesh are illustrated in the following figures. [gcmr_mesh_cc] shows the mesh comparison around a coolant channel. Two additional layers of radial elements with biased mesh density are added to the reactor matrix adjacent to each coolant channel. [gcmr_mesh_ext] shows the mesh comparison near the top and bottom external surfaces of the reactor. Additional axial layers with biased mesh density are added. To generate a mesh using quadratic elements, users can simply assign `tri_type` and `quad_type` as `TRI6` and `QUAD8`. respectively, in the mesh generation input file shown beneath.
 
 !listing microreactors/gcmr/core/MESH/BISON_mesh.i
 
 !table id=energy_bal caption=Energy balance of the GCMR multiphysics model using the refined BISON mesh
-| Power Type | Unit | Value | % |
-| - | - | - | - |
-| Reactor Power (1/6 core) | +W+ | 3330000 | 100.00 |
-| Heat Transfer to Coolant | +W+ | 3200658 | 96.11 |
-| Heat Transfer to Environment | +W+ | 692 | 0.002 |
-| Heat Loss on Symmetry Boundary | +W+ | 1501 | 0.005 |
+| Power Type | Unit | Value (Linear Elements/This Model) | % | Value (Quadratic Elements) | % |
+| - | - | - | - | - | - |
+| Reactor Power (1/6 core) | +W+ | 3330000 | 100.00% | 3330000 | 100.00% |
+| Heat Transfer to Coolant | +W+ | 3200658 | 96.11% | 3327530 | 99.93% |
+| Heat Transfer to Environment | +W+ | 692 | 0.02% | 450 | 0.01% |
+| Heat Loss on Symmetry Boundary | +W+ | 1501 | 0.05% | 578 | 0.02% |
 
 
 ## Neutronics Model
@@ -80,13 +80,13 @@ Determined by the inlet coolant temperature, the minimum fuel temperature of the
       caption=Steady state simulation results of the GCMR multiphysics model
 
 !table id=GCMR_ss_results caption=Key predicted parameters by the GCMR models 
-| Parameter | Unit | Value |
-| - | - | - |
-| Power (1/6 core) | +MW$_{th}$+ | 3.33 |
-| $T_{fuel, avg}$ | +K+ | 1095.69 |
-| $T_{fuel, max}$ | +K+ | 1225.75 |
-| $T_{fuel, min}$ | +K+ | 910.86 |
-| $T_{mod, avg}$ | +K+ | 1072.98 |
-| $T_{mod, max}$ | +K+ | 1180.53 |
-| $T_{mod, min}$ | +K+ | 912.44 |
-| $k_{eff}$ | n/a | 1.0290067 |
+| Parameter | Unit | Value (Linear Elements/This Model) | Value (Quadratic Elements) |
+| - | - | - | - |
+| Power (1/6 core) | +MW$_{th}$+ | 3.33 | 3.33 |
+| $T_{fuel, avg}$ | +K+ | 1095.69 | 1099.94 |
+| $T_{fuel, max}$ | +K+ | 1225.75 | 1230.93 |
+| $T_{fuel, min}$ | +K+ | 910.86 | 911.72 |
+| $T_{mod, avg}$ | +K+ | 1072.98 | 1075.94 |
+| $T_{mod, max}$ | +K+ | 1180.53 | 1185.48 |
+| $T_{mod, min}$ | +K+ | 912.44 | 912.40 |
+| $k_{eff}$ | n/a | 1.0290067 | 1.0288574 |
