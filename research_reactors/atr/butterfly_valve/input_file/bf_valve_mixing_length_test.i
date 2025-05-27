@@ -88,7 +88,8 @@ velocity_interp_method = 'rc'
   [TimeStepper]
     type = IterationAdaptiveDT
     optimal_iterations = 10
-    dt = 0.1
+    # Start small, or improve the initial condition
+    dt = 0.0125
     timestep_limiting_postprocessor = 'dt_limit'
   []
 
