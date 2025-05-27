@@ -103,7 +103,7 @@ velocity_interp_method = 'rc'
     momentum_component = 'x'
     pressure = pressure
   []
-  
+
   [v_time]
     type = INSFVMomentumTimeDerivative
     variable = vel_y
@@ -300,8 +300,8 @@ velocity_interp_method = 'rc'
 
 [Materials]
   [mu]
-    type = ADGenericFunctorMaterial      #defines mu artificially for numerical convergence
-    prop_names = 'mu rho'                     #it converges to the real mu eventually.
+    type = ADGenericFunctorMaterial #defines mu artificially for numerical convergence
+    prop_names = 'mu rho' #it converges to the real mu eventually.
     prop_values = 'rampdown_mu_func ${rho}'
   []
   [total_viscosity]
@@ -321,7 +321,7 @@ velocity_interp_method = 'rc'
   # Time-stepping parameters
   start_time = 0.0
   end_time = 8
-  
+
   [TimeStepper]
     type = IterationAdaptiveDT
     optimal_iterations = 10
@@ -335,7 +335,7 @@ velocity_interp_method = 'rc'
   # Solver Parameters
   solve_type = 'NEWTON'
   petsc_options_iname = '-pc_type -pc_factor_shift_type -snes_max_it -l_max_it -max_nl_its'
-  petsc_options_value = 'lu       NONZERO                25	      50       20        '
+  petsc_options_value = 'lu       NONZERO                25           50        20        '
   line_search = 'none'
   nl_rel_tol = 1e-6
   nl_abs_tol = 1e-10
@@ -346,10 +346,7 @@ velocity_interp_method = 'rc'
 [Outputs]
   exodus = true
   csv = true
-  [dof]
-    type = DOFMap
-    execute_on = 'initial'
-  []
+  hide = 'dt_limit'
 []
 
 [Postprocessors]
@@ -360,5 +357,38 @@ velocity_interp_method = 'rc'
   [dt_limit]
     type = Receiver
     default = 1
+  []
+  [pressure_drop]
+    type = PressureDrop
+    pressure = pressure
+    boundary = 'Inlet Outlet'
+    upstream_boundary = 'Outlet'
+    downstream_boundary = 'Inlet'
+  []
+  [pressure_drop_weighted]
+    type = PressureDrop
+    pressure = pressure
+    boundary = 'Inlet Outlet'
+    upstream_boundary = 'Outlet'
+    downstream_boundary = 'Inlet'
+    weighting_functor = 'vel'
+  []
+  [mdot_in]
+    type = VolumetricFlowRate
+    boundary = Inlet
+    vel_x = vel_x
+    vel_y = vel_y
+    rhie_chow_user_object = rc
+    advected_quantity = '${rho}'
+    subtract_mesh_velocity = false
+  []
+  [mdot_out]
+    type = VolumetricFlowRate
+    boundary = Outlet
+    vel_x = vel_x
+    vel_y = vel_y
+    rhie_chow_user_object = rc
+    advected_quantity = '${rho}'
+    subtract_mesh_velocity = false
   []
 []
