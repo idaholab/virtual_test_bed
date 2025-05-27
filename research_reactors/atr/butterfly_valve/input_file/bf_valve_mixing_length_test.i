@@ -195,19 +195,19 @@ velocity_interp_method = 'rc'
     type = INSFVInletVelocityBC
     boundary = Inlet
     variable = vel_x
-    function = 2.051481762 #m/s
+    functor = 2.051481762 #m/s
   []
   [inlet-v]
     type = INSFVInletVelocityBC
     boundary = Inlet
     variable = vel_y
-    function = 0
+    functor = 0
   []
   [inlet-w]
     type = INSFVInletVelocityBC
     boundary = Inlet
     variable = vel_z
-    function = 0
+    functor = 0
   []
 
   [walls-u]
@@ -298,20 +298,25 @@ velocity_interp_method = 'rc'
   []
 []
 
-[Materials]
+[FunctorMaterials]
   [mu]
     type = ADGenericFunctorMaterial #defines mu artificially for numerical convergence
     prop_names = 'mu rho' #it converges to the real mu eventually.
     prop_values = 'rampdown_mu_func ${rho}'
   []
   [total_viscosity]
-    type = MixingLengthTurbulentViscosityMaterial
+    type = MixingLengthTurbulentViscosityFunctorMaterial
     u = 'vel_x' #computes total viscosity = mu_t + mu
     v = 'vel_y' #property is called total_viscosity
     w = 'vel_z'
     mixing_length = mixing_length
     mu = ${mu}
     rho = ${rho}
+  []
+  [velocity_vector]
+    type = ADGenericVectorFunctorMaterial
+    prop_names = vel_vec
+    prop_values = 'vel_x vel_y vel_z'
   []
 []
 
@@ -371,7 +376,7 @@ velocity_interp_method = 'rc'
     boundary = 'Inlet Outlet'
     upstream_boundary = 'Outlet'
     downstream_boundary = 'Inlet'
-    weighting_functor = 'vel'
+    weighting_functor = 'vel_vec'
   []
   [mdot_in]
     type = VolumetricFlowRate
