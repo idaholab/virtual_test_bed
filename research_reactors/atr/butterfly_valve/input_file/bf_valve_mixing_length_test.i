@@ -8,7 +8,7 @@ velocity_interp_method = 'rc'
 [Mesh]
   [fmg]
     type = FileMeshGenerator
-    file = '0deg_cubit_coarse_mesh.e'
+    file = '../mesh/0deg_cubit_coarse_mesh.e'
   []
 []
 
