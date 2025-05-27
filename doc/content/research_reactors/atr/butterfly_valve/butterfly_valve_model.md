@@ -17,7 +17,9 @@
 
 The advanced test reactor (ATR) at INL employs a buttefly-valve to control pressure drop across the reactor core. 
 The simulations of this valve utilized the Navier-Stokes module in MOOSE for all simulations. 
-Running this model will require HPC resources, and the simulation's setup will be described below.
+Running this model will require HPC resources, and the simulation's setup will be described below. Simulations of this valve
+have been performed before using STAR-CCM+ [!cite](ECAR6453). The motivation for performing additional simulations in MOOSE, is its open-source nature
+as well as its ability to easily couple with other modules to create complex multiphysics simulations.
 
 # Physics Models and Boundary Conditions Used
 
@@ -141,3 +143,36 @@ are able to be simulated despite the relative coarseness of the meshes.
        id=0deg_bf_valve_stream
        caption=Velocity streamlines from each of the fine meshes. The inlet velocity is listed for each.
 
+Simulations were also performed on the fine mesh using STAR-CCM+. The pressure drop, resistance coefficient, and flow coefficient for all configurations is shown the figure below. The experimental data was taken from an interal study by [!cite](ECAR52). Also included is a table with the pressure drop error and convergence information for the different levels of mesh refinement.
+
+!media atr/multiplot.png
+       style=width:50%;margin-left:auto;margin-right:auto
+       id=multiplot
+       caption=Simulation results for each configuration. The pressure drop, resistance coefficient, and flow coefficient for each mesh and corresponding inlet velocity was compared to experimental data as well as results from STAR-CCM+       using the fine meshes.  
+
+| Angle | Flow-rate (m^3/s) | # Cells | % Error |   P   |
+| :---: | :---: | :---:   | :---:   | :---: |
+| 0$^\circ$ | 1.26 | 88950   | 23.0    | 1.92 |
+|           |      | 148770   | 10.4   |      |
+|           |      | 286216   | 6.33   |      |
+| 0$^\circ$ | 1.89 | 88950    | 39.9   | 0.53 |
+|           |      | 148770   | 24.7   |      |
+|           |      | 286216   | 13.5   |      |
+| 19.7$^\circ$ | 2.57 | 97585    | 0.77 | 3.09 |
+|           |         | 164566   | 0.55 |      |
+|           |         | 250125   | 0.50 |      |
+| 19.7$^\circ$ | 2.58 | 97585    | 1.28 | 0.13 |
+|           |         | 164566   | 1.08 |      |
+|           |         | 250125   | 0.88 |      |
+| 22.5$^\circ$ | 2.64 | 88561    | 9.31 | N/A  |
+|           |         | 142611   | 10.0 |      |
+|           |         | 276116   | 6.91 |      |
+| 22.5$^\circ$ | 2.66 | 88561    | 0.73 | N/A  |
+|           |         | 142611   | 0.95 |      |
+|           |         | 276116   | 2.03 |      |
+| 36.6$^\circ$ | 2.97 | 99184    | 13.7 | 1.93 |
+|           |         | 174730   | 7.52 |      |
+|           |         | 254610   | 5.07 |      |
+| 42.7$^\circ$ | 2.58 | 92668    | 27.3 | 1.72 |
+|           |         | 173348   | 19.1 |      |
+|           |         | 272450   | 15.9 |      |
