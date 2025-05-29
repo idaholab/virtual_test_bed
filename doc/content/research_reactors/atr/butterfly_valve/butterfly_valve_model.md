@@ -13,10 +13,10 @@
                        open_source:full
                        computing_needs:HPC
                        fiscal_year:2024
-                       institution:INL 
+                       institution:INL
 
-The advanced test reactor (ATR) at INL employs a buttefly-valve to control pressure drop across the reactor core. 
-The simulations of this valve utilized the Navier-Stokes module in MOOSE for all simulations. 
+The advanced test reactor (ATR) at INL employs a buttefly-valve to control pressure drop across the reactor core.
+The simulations of this valve utilized the Navier-Stokes module in MOOSE for all simulations.
 Running this model will require HPC resources, and the simulation's setup will be described below. Simulations of this valve
 have been performed before using STAR-CCM+ [!cite](ECAR6453). The motivation for performing additional simulations in MOOSE, is its open-source nature
 as well as its ability to easily couple with other modules to create complex multiphysics simulations.
@@ -24,7 +24,7 @@ as well as its ability to easily couple with other modules to create complex mul
 # Physics Models and Boundary Conditions Used
 
 All simulations used the finite volume discretization of the incompressible Navier-Stokes equations. The pipe inlet was set as a
-constant inlet velocity that corresponded to the mass-flow rate from experimental data. The outlet pressure 
+constant inlet velocity that corresponded to the mass-flow rate from experimental data. The outlet pressure
 was set to $0 Pa$. All walls (including those belonging to the valve) were set as no-slip boundaries.
 
 The following sections go into greater detail on how the simulations were carried out including meshing, simulation parameters,
@@ -34,7 +34,7 @@ well as the other parameters used, see the [Navier-Stokes module page](https://m
 # Simulation Setup
 
 The valve was simulated for 5 different angles (between 0$^\circ$ and 42.7$^\circ$) where fully open is 90$^\circ$.
-Due to the highly turbulent nature of the simulations, the mixing-length turbulence model was used. For each valve configuration and 
+Due to the highly turbulent nature of the simulations, the mixing-length turbulence model was used. For each valve configuration and
 flow-rate, three meshes of different refinement levels were used. A closeup of the coarse 0$^\circ$ mesh is show below.
 
 Due to convergence constraints a direct solve method was used, greatly increasing the computational resources needed.
@@ -43,7 +43,7 @@ default AD container size. More information on MOOSE's automatic differentiation
 when building can be found [here](https://mooseframework.inl.gov/automatic_differentiation/index.html).
 
 !alert note
-A solver based on the SIMPLE method has been added to the Navier Stokes module after this study was conducted, and should be preferred for future 3D studies. 
+A solver based on the SIMPLE method has been added to the Navier Stokes module after this study was conducted, and should be preferred for future 3D studies.
 
 !media atr/0deg_coarse_zoom_mesh.png
        style=width:50%;margin-left:auto;margin-right:auto
@@ -66,7 +66,7 @@ The von-karman constant is a dimensionless constant used in turbulence modeling.
 
 
 ```language=bash
-  
+
  mu = 0.001 # viscosity [Pa*s]
  rho = 986.737 # density [kg/m^3]
  von_karman_const = 0.41
@@ -74,31 +74,32 @@ The von-karman constant is a dimensionless constant used in turbulence modeling.
 
 ## Mesh
 
- 
+
 Because of the complex geometries involved, Cubit was used to generate meshes for all angles tested. All meshes used are included with the input file provided.
 For each angle simulated three meshes (coarse, medium, and fine) were created. Each course mesh had between 50-100 thousand cells, medium meshes between 100-200
-thousand cells, and fine meshes over 200 thousand cells. Three levels of refinement were used so that the self convergence rate could be calculated using 
+thousand cells, and fine meshes over 200 thousand cells. Three levels of refinement were used so that the self convergence rate could be calculated using
 the method described in [!cite](Roache1998).
 
 ### `Variables`
 
 All simulations were done in three dimensions. Because of the turbulent nature of the simulations, a relatively slow initial velocity
 in the x-direction was chosen. This prevented the simulations from diverging early on.
+The variables are created by the `Physics/NavierStokes/Flow/flow` syntax.
 
-!listing /research_reactors/atr/butterfly_valve/input_file/bf_valve_mixing_length_test.i block=Variables language=cpp
+!listing /research_reactors/atr/butterfly_valve/input_file/bf_valve_mixing_length_test.i block=Physics/NavierStokes/Flow language=cpp
 
 ### `AuxVariables`
 
-To implement the mixing-length turbulence model, a `mixing_length` auxillary variable needs to be included. 
+To implement the mixing-length turbulence model, a `mixing_length` auxillary variable needs to be included.
 
-!listing /research_reactors/atr/butterfly_valve/input_file/bf_valve_mixing_length_test.i block=AuxVariables language=cpp
+The mixing length variable is created by the `Physics/NavierStokes/Turbulence/mixing_length` syntax.
 
 ### `AuxKernels`
 
 This kernel controls the behavior of the mixing-length model. Walls 2 and 4 correspond to the wall of the pipe and the valve, while
 the delta parameter controls turbulent behavior near these walls.
 
-!listing /research_reactors/atr/butterfly_valve/input_file/bf_valve_mixing_length_test.i block=AuxKernels language=cpp
+!listing /research_reactors/atr/butterfly_valve/input_file/bf_valve_mixing_length_test.i block=Physics/NavierStokes/Turbulence language=cpp
 
 
 ### `Boundary Conditions`
@@ -106,14 +107,14 @@ the delta parameter controls turbulent behavior near these walls.
 The `inlet-u` parameter controls the inlet velocity. Its function value can be changed to match the experimental inlet velocities. To reduce computational resources
 The entire assembly was split in half in the direction of flow. Since the pipe and valve is symmetric along this axis, a symmetry boundary condition was applied along this surface to approximate
 simulating the entire assembly.
+The boundary conditions are created by the `Physics/NavierStokes/Flow/flow` syntax.
 
-!listing /research_reactors/atr/butterfly_valve/input_file/bf_valve_mixing_length_test.i block=FVBCs language=cpp
 
 ### `Executioner`
 
-While these are steady-state simulations, a transient solver must be used in order for the viscosity rampdown to function as intended. This operates by having the viscosity ramp down over time 
+While these are steady-state simulations, a transient solver must be used in order for the viscosity rampdown to function as intended. This operates by having the viscosity ramp down over time
 while every other paramter remains unchanged. With each successful timestep, the viscosity approaches the desired value. The simulation terminates once it ramps down all the way
-to the desired level. 
+to the desired level.
 
 !listing /research_reactors/atr/butterfly_valve/input_file/bf_valve_mixing_length_test.i block=Executioner language=cpp
 
@@ -148,7 +149,7 @@ Simulations were also performed on the fine mesh using STAR-CCM+. The pressure d
 !media atr/multiplot.png
        style=width:50%;margin-left:auto;margin-right:auto
        id=multiplot
-       caption=Simulation results for each configuration. The pressure drop, resistance coefficient, and flow coefficient for each mesh and corresponding inlet velocity was compared to experimental data as well as results from STAR-CCM+       using the fine meshes.  
+       caption=Simulation results for each configuration. The pressure drop, resistance coefficient, and flow coefficient for each mesh and corresponding inlet velocity was compared to experimental data as well as results from STAR-CCM+       using the fine meshes.
 
 | Angle | Flow-rate (m^3/s) | # Cells | % Error |   P   |
 | :---: | :---: | :---:   | :---:   | :---: |
