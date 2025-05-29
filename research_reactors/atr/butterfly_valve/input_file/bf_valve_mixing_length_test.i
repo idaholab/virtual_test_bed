@@ -10,6 +10,14 @@ velocity_interp_method = 'rc'
     type = FileMeshGenerator
     file = '../mesh/0deg_cubit_coarse_mesh.e'
   []
+  # if using 0deg_fine, have both generators be active
+  active = 'fmg'
+  [fix_typo]
+    type = RenameBoundaryGenerator
+    input = 'fmg'
+    old_boundary = 'Symmety'
+    new_boundary = 'Symmetry'
+  []
 []
 
 [GlobalParams]

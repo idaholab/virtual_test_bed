@@ -5,6 +5,8 @@
     working_directory = 'input_file/'
     input = 'bf_valve_mixing_length_test.i'
     csvdiff = '0deg.csv'
-    cli_args = 'Mesh/fmg/file=../mesh/0deg_cubit_fine_mesh.e Outputs/file_base=0deg'
+    cli_args = "Mesh/fmg/file=../mesh/0deg_cubit_fine_mesh.e
+                Mesh/active='fmg fix_typo'
+                Outputs/file_base=0deg"
   []
 []
