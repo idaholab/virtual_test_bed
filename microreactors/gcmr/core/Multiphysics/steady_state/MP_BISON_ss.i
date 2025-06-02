@@ -344,27 +344,26 @@ coolant_full_points_filename = '../component_positions/cc_positions_sixth.txt'
 [Transfers]
   [Tw_to_coolant]
     # Wall temperature from user object is transferred to fluid domain.
-    type = MultiAppNearestNodeTransfer
+    type = MultiAppGeneralFieldNearestLocationTransfer
     to_multi_app = coolant_channel
     source_variable = Tw_trans # Exists in solid.
     variable = T_wall # Exists in coolant.
-    fixed_meshes = true
   []
   [Tfluid_from_coolant]
     # Fluid temperature from fluid domain is transferred to solid domain.
-    type = MultiAppNearestNodeTransfer
+    type = MultiAppGeneralFieldNearestLocationTransfer
+    assume_nearest_app_holds_nearest_location = true
     from_multi_app = coolant_channel
     source_variable = Tfluid_trans
     variable = Tfluid # Exists in solid.
-    fixed_meshes = true
   []
   [hfluid_from_coolant]
     # Convective HTC from fluid domain is transferred to solid domain.
-    type = MultiAppNearestNodeTransfer
+    type = MultiAppGeneralFieldNearestLocationTransfer
+    assume_nearest_app_holds_nearest_location = true
     from_multi_app = coolant_channel
     source_variable = hfluid_trans
     variable = hfluid # Exists in solid.
-    fixed_meshes = true
   []
 []
 
