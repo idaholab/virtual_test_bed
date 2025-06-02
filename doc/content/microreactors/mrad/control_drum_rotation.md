@@ -87,7 +87,7 @@ The Richardson outer iteration was configured with an absolute tolerance of 1e-4
 
 ### Neutronics Material Models
 
-For all material regions except the control drums, the `CoupledFeedbackMatIDNeutronicsMaterial` was used. This material model performs on-the-fly interpolation of cross sections that are tabulated in the ISOXML XML format and uses coupled variables to update properties dynamically.
+For all material regions except the control drums, the `CoupledFeedbackMatIDNeutronicsMaterial` was used. This material model performs on-the-fly interpolation of cross sections that are tabulated in the ISOXML XML format. The tabulation is evaluated dynamically using the local values of coupled variables governing the feedback mechanisms, such as temperature.
 
 For control drum regions, the `CoupledFeedbackRoddedNeutronicsMaterial` was employed. This material type is specifically designed to handle control drum and control rod movements. Drum rotation is modeled using a set of Griffin input parameters including `rod_segment_length`, `front_position_function`, `rotation_center`, and `segment_material_ids`. These inputs define the poison and non-poison regions and their associated materials. The drum’s rotational position is governed by the `front_position_function`, which references a MOOSE Function that varies with simulation time.
 
