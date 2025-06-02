@@ -1,6 +1,6 @@
 ################################################################################
 ## NEAMS Micro-Reactor Application Driver                                     ##
-## Heat Pipe Microreactor Steady State                                        ##
+## Heat Pipe Microreactor Control Drum Rotation                               ##
 ## BISON Child Application input file                                         ##
 ## Thermal Only Physics                                                       ##
 ################################################################################
@@ -34,7 +34,6 @@ initial_transient_dt = 1
 
 [Problem]
   restart_file_base = 'HPMR_dfem_griffin_ss_out_bison0_cp_cp/LATEST'
-  # force_restart = true
 []
 
 [Mesh]

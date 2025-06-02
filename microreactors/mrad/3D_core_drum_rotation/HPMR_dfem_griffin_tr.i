@@ -34,7 +34,7 @@ speed = 5                        # Degrees per second
   # 1. Comment all the mesh blocks except the fmg block in the !include file
   # 2. Use the cpr file in the fmg block
   # 3. Uncomment the "parallel_type = distributed" line
-  
+
     type = FileMeshGenerator
     # file = '../mesh/HPMR_OneSixth_finercdrum_in.e'
     file = 'griffin_mesh.cpr'
@@ -87,7 +87,7 @@ speed = 5                        # Degrees per second
   coarse_element_id = coarse_element_id
   prolongation_type = multiplicative
   max_diffusion_coefficient = 1
-  
+
   end_time = 5000
   dt = ${fparse angle_step / speed * dstep}
   dtmin = 0.001
@@ -106,7 +106,7 @@ speed = 5                        # Degrees per second
     family = MONOMIAL
     order = first
     AQtype = Gauss-Chebyshev
-    NPolar = 1 
+    NPolar = 1
     NAzmthl = 3
     NA = 2
     sweep_type = asynchronous_parallel_sweeper
@@ -159,7 +159,7 @@ speed = 5                        # Degrees per second
     symbol_names =  'drum10_position   drum10_offset'
     symbol_values = 'drum10_position   drum10_offset'
   []
-  
+
   [drum11_offset]
     type = ConstantFunction
     value = 0
@@ -182,7 +182,7 @@ speed = 5                        # Degrees per second
     symbol_names = 'drum11_position  drum11_offset'
     symbol_values = 'drum11_position drum11_offset'
   []
-  
+
   [drum12_offset]
     type = ConstantFunction
     value = 45
@@ -207,14 +207,14 @@ speed = 5                        # Degrees per second
     function = drum10_position
     execute_on = 'initial timestep_end'
   []
-  
+
   [drum11_Rotation_aux]
     type = FunctionAux
     variable = Rotation
     function = drum11_position
     execute_on = 'initial timestep_end'
   []
-  
+
   [drum12_Rotation_aux]
     type = FunctionAux
     variable = Rotation
@@ -269,7 +269,7 @@ speed = 5                        # Degrees per second
     segment_material_ids = '805 811'
     isotopes = 'pseudo; pseudo'
     densities = '1.0 1.0'
-	mesh_alignment_tolerance=1E-4
+  mesh_alignment_tolerance=1E-4
   []
    [drum_11]
     type = CoupledFeedbackRoddedNeutronicsMaterial
@@ -280,7 +280,7 @@ speed = 5                        # Degrees per second
     segment_material_ids = '805 811'
     isotopes = 'pseudo; pseudo'
     densities = '1.0 1.0'
-	mesh_alignment_tolerance=1E-4
+  mesh_alignment_tolerance=1E-4
   []
     [drum_12]
     type = CoupledFeedbackRoddedNeutronicsMaterial
@@ -291,7 +291,7 @@ speed = 5                        # Degrees per second
     segment_material_ids = '805 811'
     isotopes = 'pseudo; pseudo'
     densities = '1.0 1.0'
-	mesh_alignment_tolerance=1E-4
+  mesh_alignment_tolerance=1E-4
   []
 []
 
