@@ -6,7 +6,7 @@
 
 ## Overview
 
-In microreactors, modeling events involving rotating control drums can present challenges due to mesh deformation, localized power peaking, and complex multiphysics feedback. These effects must be accurately captured through high-fidelity, three-dimensional multiphysics simulations.
+In microreactors, modeling events involving rotating control drums can present challenges due to geometry deformation, localized power peaking, and complex multiphysics feedback. These effects must be accurately captured in high-fidelity, three-dimensional multiphysics simulations.
 
 In this work, we investigate inadvertent drum rotation in HP-MR using a fully coupled 3D multiphysics model involving **Griffin**, **BISON**, and **Sockeye**. 
 
