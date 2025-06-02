@@ -32,6 +32,8 @@ non_he_channel_blocks = '${fuel_blocks} ${mod_blocks} ${poison_blocks} ${ref_blo
   # 1. Comment all the mesh blocks except the fmg block
   # 2. Use the cpr file in the fmg block
   # 3. Uncomment the "parallel_type = distributed" line
+  # The mesh used here is the same as the one used in the steady-state neutronics simulation.
+  # If you already generated the presplit mesh you can symbolically link it here.
   [fmg]
     type = FileMeshGenerator
     file = '../../MESH/Griffin_mesh_in.e'
