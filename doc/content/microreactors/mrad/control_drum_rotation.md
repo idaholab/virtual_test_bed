@@ -55,7 +55,7 @@ Assemblies (including those with control drums) were patterned with the `Pattern
 
 ### Multi-Group Cross Sections
 
-Multi-group cross sections with 11 energy groups were generated using the **Serpent 2 Monte Carlo code**, based on a parametric grid defined by **Control drum rotation angle** (4 points), **Fuel temperature** (5 points), and **Temperature of moderator, reflector, monolith, and heat pipe** (4 points) 
+Multi-group cross sections with 11 energy groups were generated using the **Serpent 2 Monte Carlo code**, based on a parametric grid defined by **Control drum rotation angle** (4 values), **Fuel temperature** (5 vaules), and **Temperature of moderator, reflector, monolith, and heat pipe** (4 values), using total of 80 Serpent-2 simulations.
 
 
 !listing /mrad/3D_core_drum_rotation/HPMR_dfem_griffin_tr.i max-height = 10000
