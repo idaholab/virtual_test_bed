@@ -63,7 +63,7 @@ Multi-group cross sections with 11 energy groups were generated using the **Serp
 
 ### Mesh Split 
 
-A split-mesh workflow in Griffin entails first generating the appropriate mesh split configuration before running simulations with MOOSE. This process is guided by the Mesh block in Griffin’s input files. If a presplit mesh is not already available, the user must first generate it by uncommenting all mesh blocks, using the Exodus mesh file in the fmg block, and commenting out the parallel_type = distributed. Then, the MOOSE executable is used to perform the mesh splitting. Once the presplit mesh is generated, the user switches to simulation mode by commenting all mesh blocks except the fmg block, replacing the Exodus file with the split .cpr file, and uncommenting the parallel_type = distributed line to enable distributed processing during simulation.
+A split-mesh workflow in Griffin entails first generating the appropriate mesh split configuration before running simulations with MOOSE. This process is guided by the Mesh block in Griffin’s input files. If a presplit mesh is not already available, the user must first generate it by uncommenting all mesh blocks, using the Exodus mesh file in the `[fmg]` block, and commenting out the `parallel_type = distributed`. Then, the MOOSE executable is used to perform the mesh splitting. Once the pre-split mesh is generated, the user switches to simulation mode by commenting all mesh blocks except the `[fmg]` block, replacing the Exodus file with the split .cpr file, and uncommenting the `parallel_type = distributed` line to enable distributed processing during simulation.
 
 ### Mesh Configuration and Element ID Assignment
 
