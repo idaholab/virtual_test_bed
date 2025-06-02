@@ -19,7 +19,7 @@ A MOOSE MultiApp system with Griffin as the parent application was used. The Mul
        caption=MultiApp hierarchy of the HP-MR model.
 
 	   
-In this coupling strategy, **Griffin** solves the high-fidelity neutronics problem to obtain the power density distribution at each time step of the dynamic transient.This power data is transferred to **BISON** using shape-function-preserving mapping to ensure integrated power conservation, allowing BISON to solve the heat conduction equations and compute solid temperatures.The resulting heat flux at the heat pipe surfaces is passed to **Sockeye**, which solves the thermal transport in the heat pipes and returns the updated surface temperatures to BISON for feedback.The simulation is tightly coupled using a **Picard fixed-point iteration** with defined convergence criteria to ensure stability and accuracy.
+In this coupling strategy, **Griffin** solves the high-fidelity neutronics problem to obtain the power density distribution at each time step of the dynamic transient. This power data is transferred to **BISON** using shape-function-preserving mapping to ensure integrated power conservation, allowing BISON to solve the heat conduction equations and compute solid temperatures. The resulting heat flux at the heat pipe surfaces is passed to **Sockeye**, which solves the thermal transport in the heat pipes and returns the updated surface temperatures to BISON for feedback. The simulation is tightly coupled using a **Picard fixed-point iteration** with defined convergence criteria to ensure stability and accuracy.
 
 ## Mesh File
 
