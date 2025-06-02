@@ -81,9 +81,6 @@ speed = 5                        # Degrees per second
   max_inner_its = 100
 
   cmfd_acceleration = true
-  # diffusion_eigen_solver_type = krylovshur
-  # diffusion_eigen_solver_type = newton
-  # diffusion_prec_type = lu
   coarse_element_id = coarse_element_id
   prolongation_type = multiplicative
   max_diffusion_coefficient = 1
