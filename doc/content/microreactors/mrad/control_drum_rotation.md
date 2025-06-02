@@ -24,7 +24,7 @@ In this coupling strategy, **Griffin** solves the high-fidelity neutronics probl
 ## Mesh File
 
 
-In this analysis, a 3D whole-core model with 1/6 symmetry was employed. The **MOOSE Reactor Module** provides several tools for generating finite element meshes, enabling rapid construction of detailed reactor geometry—including pins, assemblies, control drums, and peripheral zones—through operations such as extrusion and rotation.
+In this analysis, a 3D whole-core model with 1/6 symmetry was employed. The **MOOSE Reactor Module** provides several tools for generating finite element meshes, enabling rapid construction of detailed heterogeneous reactor geometry—including pins, assemblies, control drums, and peripheral zones—through operations such as extrusion and rotation.
 
 
 !listing /mrad/mesh/HPMR_OneSixth_finercdrum.i max-height = 10000
