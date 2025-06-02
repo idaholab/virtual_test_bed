@@ -431,7 +431,6 @@ initial_transient_dt = 1
   start_time = 0
   end_time = ${simulation_time}
   dtmin = 1
-  # dt = ${initial_transient_dt}
 
   [TimeStepper]
     type = IterationAdaptiveDT
