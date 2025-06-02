@@ -420,7 +420,6 @@ initial_transient_dt = 1
   scheme = bdf2
   line_search = none
 
-  # ensure nl_abs_tol >> nl_rel_tol
   nl_abs_tol = 1e-6
   nl_rel_tol = 1e-8
   nl_max_its = 100
@@ -431,7 +430,6 @@ initial_transient_dt = 1
   start_time = 0
   end_time = ${simulation_time}
   dtmin = 1
-  # dt = ${initial_transient_dt}
 
   [TimeStepper]
     type = IterationAdaptiveDT
