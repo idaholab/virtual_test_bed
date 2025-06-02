@@ -94,7 +94,7 @@ For control drum regions, the `CoupledFeedbackRoddedNeutronicsMaterial` was empl
 
 # Heat Transfer Modeling
 
-Heat conduction in solid components of the HP-MR system was modeled using BISON, which employed the HeatConduction object from MOOSE. This simulation included all solid materials except for the heat pipes.  Sockeye was used to model the heat pipes, employing a 2D R-Z axisymmetric conduction model to simulate transient temperature profiles.
+Heat conduction in solid components of the HP-MR system was modeled using BISON, which employed the `HeatConduction` object from MOOSE. This simulation included all solid materials except for the heat pipes.  Sockeye was used to model the heat pipes, employing a 2D R-Z axisymmetric conduction model to simulate transient temperature profiles.
 
 !listing /mrad/3D_core_drum_rotation/HPMR_thermo_tr.i max-height = 10000
 
