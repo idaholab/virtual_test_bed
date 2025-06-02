@@ -32,7 +32,7 @@ In this analysis, a 3D whole-core model with 1/6 symmetry was employed. The **MO
 
 ### Mesh Generation Workflow
 
-The meshing process begins by defining various pin types (moderator pins, heat pipe pins, and fuel pins) using the `PolygonConcentricCircleMeshGenerator`.These pins are then arranged within fuel assemblies using the `PatternedHexMeshGenerator`.To handle external boundaries of the hexagonal assemblies, the `PatternedHexPeripheralModifier` is applied. This class uses `FillBetweenPointVectorsTools` to replace the outermost layer of quadrilateral elements with a transitional layer of triangular elements. This ensures node placement at designated boundary positions, facilitating the stitching of adjacent hexagonal assemblies with differing boundary node counts due to interior pin variations or azimuthal discretization.
+The meshing process begins by defining various pin types (moderator pins, heat pipe pins, and fuel pins) using the `PolygonConcentricCircleMeshGenerator`. These pins are then arranged within fuel assemblies using the `PatternedHexMeshGenerator`. To handle external boundaries of the hexagonal assemblies, the `PatternedHexPeripheralModifier` is applied. This class uses `FillBetweenPointVectorsTools` to replace the outermost layer of quadrilateral elements with a transitional layer of triangular elements. This ensures node placement at designated boundary positions, facilitating the stitching of adjacent hexagonal assemblies with differing boundary node counts due to interior pin variations or azimuthal discretization.
 
 ### Control Drum Meshing
 
