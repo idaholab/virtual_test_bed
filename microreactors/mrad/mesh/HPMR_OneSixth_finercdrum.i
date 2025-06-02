@@ -13,7 +13,7 @@
   [Mod_hex]
     type = PolygonConcentricCircleMeshGenerator
     num_sides = 6 # must be six to use hex pattern
-    num_sectors_per_side = '2 2 2 2 2 2 '
+    num_sectors_per_side = '2 2 2 2 2 2'
     background_intervals = 1
     background_block_ids = '10'
     polygon_size = 1.15
@@ -28,7 +28,7 @@
   [HP_hex]
     type = PolygonConcentricCircleMeshGenerator
     num_sides = 6 # must be six to use hex pattern
-    num_sectors_per_side = '2 2 2 2 2 2 '
+    num_sectors_per_side = '2 2 2 2 2 2'
     background_intervals = 1
     background_block_ids = '10'
     # inner background boundary layer, only for BISON mesh
@@ -47,7 +47,7 @@
   [Fuel_hex]
     type = PolygonConcentricCircleMeshGenerator
     num_sides = 6 # must be six to use hex pattern
-    num_sectors_per_side = '2 2 2 2 2 2 '
+    num_sectors_per_side = '2 2 2 2 2 2'
     background_intervals = 1
     background_block_ids = '10'
     polygon_size = 1.15
@@ -59,9 +59,7 @@
     quad_center_elements = false
   []
   # Assembly mesh with all the three types of pins
-  
-   
- [Patterned_o]
+  [Patterned_o]
     type = PatternedHexMeshGenerator
     inputs = 'Fuel_hex HP_hex Mod_hex'
     hexagon_size = 13.376
@@ -84,11 +82,10 @@
   [Patterned]
     type = PatternedHexPeripheralModifier
     input = Patterned_o
-    input_mesh_external_boundary=10000
+    input_mesh_external_boundary = 10000
     new_num_sector = 120
     num_layers = 1
   []
-  
   # Control drum at 12 o'clock
   [cd_12]
     type = HexagonConcentricCircleAdaptiveBoundaryMeshGenerator
@@ -105,7 +102,6 @@
     is_control_drum = true
   []
   # Define the absorber section
-
   # Control drum at 6 o'clock
   [cd_6]
     type = HexagonConcentricCircleAdaptiveBoundaryMeshGenerator
@@ -122,7 +118,6 @@
     is_control_drum = true
   []
   # Define the absorber section
-
   # Control drum at 9 o'clock
   [cd_9]
     type = HexagonConcentricCircleAdaptiveBoundaryMeshGenerator
@@ -139,7 +134,6 @@
     is_control_drum = true
   []
   # Define the absorber section
-
   # Control drum at 3 o'clock
   [cd_3]
     type = HexagonConcentricCircleAdaptiveBoundaryMeshGenerator
@@ -156,7 +150,6 @@
     is_control_drum = true
   []
   # Define the absorber section
-
   # Control drum at 1 o'clock
   [cd_1]
     type = HexagonConcentricCircleAdaptiveBoundaryMeshGenerator
@@ -173,7 +166,6 @@
     is_control_drum = true
   []
   # Define the absorber section
-
   # Control drum at 2 o'clock
   [cd_2]
     type = HexagonConcentricCircleAdaptiveBoundaryMeshGenerator
@@ -190,7 +182,6 @@
     is_control_drum = true
   []
   # Define the absorber section
-
   # Control drum at 4 o'clock
   [cd_4]
     type = HexagonConcentricCircleAdaptiveBoundaryMeshGenerator
@@ -207,11 +198,10 @@
     is_control_drum = true
   []
   # Define the absorber section
-
   # Control drum at 5 o'clock
   [cd_5]
     type = HexagonConcentricCircleAdaptiveBoundaryMeshGenerator
-    inputs = ' Patterned Patterned Patterned'
+    inputs = 'Patterned Patterned Patterned'
     sides_to_adapt = '0 1 2'
     num_sectors_per_side = '120 120 120 120 120 120'
     hexagon_size = 13.376
@@ -224,11 +214,10 @@
     is_control_drum = true
   []
   # Define the absorber section
-
   # Control drum at 7 o'clock
   [cd_7]
     type = HexagonConcentricCircleAdaptiveBoundaryMeshGenerator
-    inputs = ' Patterned Patterned Patterned'
+    inputs = 'Patterned Patterned Patterned'
     sides_to_adapt = '0 1 5'
     num_sectors_per_side = '120 120 120 120 120 120'
     hexagon_size = 13.376
@@ -241,7 +230,6 @@
     is_control_drum = true
   []
   # Define the absorber section
-
   # Control drum at 8 o'clock
   [cd_8]
     type = HexagonConcentricCircleAdaptiveBoundaryMeshGenerator
@@ -258,7 +246,6 @@
     is_control_drum = true
   []
   # Define the absorber section
-
   # Control drum at 10 o'clock
   [cd_10]
     type = HexagonConcentricCircleAdaptiveBoundaryMeshGenerator
@@ -275,7 +262,6 @@
     is_control_drum = true
   []
   # Define the absorber section
-
   # Control drum at 11 o'clock
   [cd_11]
     type = HexagonConcentricCircleAdaptiveBoundaryMeshGenerator
@@ -291,7 +277,6 @@
     preserve_volumes = true
     is_control_drum = true
   []
-
   [ref_0]
     type = HexagonConcentricCircleAdaptiveBoundaryMeshGenerator
     inputs = 'Patterned'
@@ -384,8 +369,6 @@
                19 13  6 14 19'
     rotate_angle = 60
   []
-  
-  
   # Delete the dummy assemblies
   [del_dummy]
     type = BlockDeletionGenerator
@@ -430,9 +413,9 @@
      heights = '20 160 20'
      # Use `num_layers = '6 16 6'` for BISON mesh
      num_layers = '1 8 1'
-     subdomain_swaps = '101	1000	100	1000	103	1003  	201	201	    200	200 	203	203  	250  250  301	1000	 303	1003	400	   400  401     401    10	1000	503	   503	600	600	   601	 601  	504	    504	    500 	500 	501 	501  10000 1009  5001 	5001 5002 	5002 5003 	5003   5004 	5004   5005  5005   5006  5006   5007  5007   5008  5008   5009  5009   5010  5010    5011  5011    5012  5012;
+     subdomain_swaps = '101  1000  100  1000  103  1003    201  201      200  200   203  203    250  250  301  1000   303  1003  400     400  401     401    10  1000  503     503  600  600     601   601    504      504      500   500   501   501  10000 1009  5001   5001 5002   5002 5003   5003   5004   5004   5005  5005   5006  5006   5007  5007   5008  5008   5009  5009   5010  5010    5011  5011    5012  5012;
                         101 101     100 100     103 103     201 201     200 200     203 203     250  250  301   301      303    303     400    400  401     401    10   10      503    503  600 600    601   601    504     504     500     500     501     501  10000 10000 5001   5001 5002   5002 5003   5003   5004     5004   5005  5005   5006  5006   5007  5007   5008  5008   5009  5009   5010  5010    5011  5011    5012  5012;
-                        101	1000	100	1000	103	1003  	201	1000	200	1000	203	1003 	250  250  301	1000	 303	1003	400	   400  401	    401	   10	1000	503    503	600 600    601   601  	504  	504	    500 	500 	501 	501	 10000 1008  5001 	5001 5002 	5002 5003 	5003   5004 	5004   5005  5005   5006  5006   5007  5007   5008  5008   5009  5009   5010  5010    5011  5011    5012  5012'
+                        101  1000  100  1000  103  1003    201  1000  200  1000  203  1003   250  250  301  1000   303  1003  400     400  401      401     10  1000  503    503  600 600    601   601    504    504      500   500   501   501   10000 1008  5001   5001 5002   5002 5003   5003   5004   5004   5005  5005   5006  5006   5007  5007   5008  5008   5009  5009   5010  5010    5011  5011    5012  5012'
 
      # biased upper and lower reflector mesh, only for BISON mesh
      #biases = '1.6 1.0 0.625'
@@ -476,12 +459,12 @@
   #   new_block_name = ' mod_ss moderator_quad moderator_tri hp_ss  heat_pipes_quad heat_pipes_tri fuel_quad fuel_tri reflector_tri reflector_quad monolith  air_gap_tri air_gap_quad air_gap_quad reflector_tri  reflector_quad Drum_channel     reflector'
   #  input = extrude
   #[]
-  # Assign boundary names
+ # Assign boundary names
   [rename_boundaries]
     type = RenameBoundaryGenerator
     input = extrude
-    old_boundary = ' 10000 2000 3000 147'
-    new_boundary = ' side top bottom side_mirror'
+    old_boundary = '10000 2000 3000 147'
+    new_boundary = 'side top bottom side_mirror'
   []
   # Scale to m unit for general MOOSE application
   # Note that is_meter needs to be true in Griffin
