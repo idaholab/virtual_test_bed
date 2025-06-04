@@ -1,4 +1,4 @@
-# ATR Butterfly-Valve Model using MOOSE Navier-Stokes module
+# ATR Butterfly-Valve Model using coarse mesh thermal hydraulics
 
 *Contact: Daniel Yankura, daniel.yankura@inl.gov
 
@@ -23,10 +23,7 @@ as well as its ability to easily couple with other modules to create complex mul
 
 # Physics Models and Boundary Conditions Used
 
-All simulations used the finite volume discretization of the incompressible Navier-Stokes equations. The pipe inlet was set as a
-constant inlet velocity that corresponded to the mass-flow rate from experimental data. The outlet pressure
-was set to $0 Pa$. All walls (including those belonging to the valve) were set as no-slip boundaries.
-
+All simulations used the finite volume discretization of the incompressible Navier-Stokes equations.
 The following sections go into greater detail on how the simulations were carried out including meshing, simulation parameters,
 and computational resources used. Detailed documentation on the MOOSE Navier-Stokes module, the mixing-length turbulence method, as
 well as the other parameters used, see the [Navier-Stokes module page](https://mooseframework.inl.gov/modules/navier_stokes/index.html)
@@ -44,6 +41,10 @@ when building can be found [here](https://mooseframework.inl.gov/automatic_diffe
 
 !alert note
 A solver based on the SIMPLE method has been added to the Navier Stokes module after this study was conducted, and should be preferred for future 3D studies.
+
+!alert note
+Sample outputs for this model are hosted on LFS. Please refer to [LFS instructions](resources/how_to_use_vtb.md#lfs)
+to download them.
 
 !media atr/0deg_coarse_zoom_mesh.png
        style=width:50%;margin-left:auto;margin-right:auto
@@ -80,6 +81,13 @@ For each angle simulated three meshes (coarse, medium, and fine) were created. E
 thousand cells, and fine meshes over 200 thousand cells. Three levels of refinement were used so that the self convergence rate could be calculated using
 the method described in [!cite](Roache1998).
 
+### `Boundary Conditions`
+
+The `inlet-u` parameter controls the inlet velocity. Its function value can be changed to match the experimental inlet velocities. To reduce computational resources
+The entire assembly was split in half in the direction of flow. Since the pipe and valve is symmetric along this axis, a symmetry boundary condition was applied along this surface to approximate
+simulating the entire assembly. Additionally, the outlet was set as a constant pressure outlet of $0 Pa$, and all walls were set as no-slip boundary conditions.
+The boundary conditions are created by the `Physics/NavierStokes/Flow/flow` syntax.
+
 ### `Variables`
 
 All simulations were done in three dimensions. Because of the turbulent nature of the simulations, a relatively slow initial velocity
@@ -102,14 +110,6 @@ the delta parameter controls turbulent behavior near these walls.
 !listing /research_reactors/atr/butterfly_valve/input_file/bf_valve_mixing_length_test.i block=Physics/NavierStokes/Turbulence language=cpp
 
 
-### `Boundary Conditions`
-
-The `inlet-u` parameter controls the inlet velocity. Its function value can be changed to match the experimental inlet velocities. To reduce computational resources
-The entire assembly was split in half in the direction of flow. Since the pipe and valve is symmetric along this axis, a symmetry boundary condition was applied along this surface to approximate
-simulating the entire assembly.
-The boundary conditions are created by the `Physics/NavierStokes/Flow/flow` syntax.
-
-
 ### `Executioner`
 
 While these are steady-state simulations, a transient solver must be used in order for the viscosity rampdown to function as intended. This operates by having the viscosity ramp down over time
@@ -130,50 +130,46 @@ function was used to quickly bring the viscosity down to `5.4e-4 PaS`.
 
 # Results
 
-Shown below is a velocity streamline plot for a select inlet velocity. Aside from general
-trends such as high velocities at the top an bottom of the valve, important details like vortices forming downstream of the valve
-are able to be simulated despite the relative coarseness of the meshes.
+Shown below are velocity and pressure profiles for each angle and for select inlet velocities. These profiles were all taken from the finer mesh simulations. They display expected features
+such as pressure and velocity peaks in the correct regions.   
 
 !media atr/bf_valve_vel_and_pressure.png
        style=width:50%;margin-left:auto;margin-right:auto
        id=0deg_bf_valve_vel_and_pressure
        caption=Velocity and pressure profiles for each valve configuration.
 
-!media atr/bf_valve_velocity_streamline.png
-       style=width:50%;margin-left:auto;margin-right:auto
-       id=0deg_bf_valve_stream
-       caption=Velocity streamlines from each of the fine meshes. The inlet velocity is listed for each.
-
-Simulations were also performed on the fine mesh using STAR-CCM+. The pressure drop, resistance coefficient, and flow coefficient for all configurations is shown the figure below. The experimental data was taken from an interal study by [!cite](ECAR52). Also included is a table with the pressure drop error and convergence information for the different levels of mesh refinement.
+Simulations were also performed on the fine mesh using STAR-CCM+ as a point of comparison. The pressure drop, resistance coefficient, and flow coefficient for all configurations (and for STAR-CCM+ simulations) is shown in the figure below. The experimental data was taken from an interal study by [!cite](ECAR52). Also included is a table with the pressure drop error and convergence information for the different levels of mesh refinement.
+For most of the angles tested, simulations approached experimental value as finer meshes were used, with the only exception being the 22.5$^\circ$ configuration. However for that particular configuration simulation error relative to
+experamental values was already significantly smaller than other configurations.
 
 !media atr/multiplot.png
        style=width:50%;margin-left:auto;margin-right:auto
        id=multiplot
        caption=Simulation results for each configuration. The pressure drop, resistance coefficient, and flow coefficient for each mesh and corresponding inlet velocity was compared to experimental data as well as results from STAR-CCM+       using the fine meshes.
 
-| Angle | Flow-rate (m^3/s) | # Cells | % Error |   P   |
-| :---: | :---: | :---:   | :---:   | :---: |
-| 0$^\circ$ | 1.26 | 88950   | 23.0    | 1.92 |
-|           |      | 148770   | 10.4   |      |
-|           |      | 286216   | 6.33   |      |
-| 0$^\circ$ | 1.89 | 88950    | 39.9   | 0.53 |
-|           |      | 148770   | 24.7   |      |
-|           |      | 286216   | 13.5   |      |
-| 19.7$^\circ$ | 2.57 | 97585    | 0.77 | 3.09 |
-|           |         | 164566   | 0.55 |      |
-|           |         | 250125   | 0.50 |      |
-| 19.7$^\circ$ | 2.58 | 97585    | 1.28 | 0.13 |
-|           |         | 164566   | 1.08 |      |
-|           |         | 250125   | 0.88 |      |
-| 22.5$^\circ$ | 2.64 | 88561    | 9.31 | N/A  |
-|           |         | 142611   | 10.0 |      |
-|           |         | 276116   | 6.91 |      |
-| 22.5$^\circ$ | 2.66 | 88561    | 0.73 | N/A  |
-|           |         | 142611   | 0.95 |      |
-|           |         | 276116   | 2.03 |      |
-| 36.6$^\circ$ | 2.97 | 99184    | 13.7 | 1.93 |
-|           |         | 174730   | 7.52 |      |
-|           |         | 254610   | 5.07 |      |
-| 42.7$^\circ$ | 2.58 | 92668    | 27.3 | 1.72 |
-|           |         | 173348   | 19.1 |      |
-|           |         | 272450   | 15.9 |      |
+| Angle | Flow-rate (m^3/s) | # Cells | % Error to experimental pressure-drop across valve |
+| :----: | :----: | :----:   | :----:   |
+| 0$^\circ$ | 1.26 | 88950   | 23.0    |
+|           |      | 148770   | 10.4   |
+|           |      | 286216   | 6.33   |
+| 0$^\circ$ | 1.89 | 88950    | 39.9   |
+|           |      | 148770   | 24.7   |
+|           |      | 286216   | 13.5   |
+| 19.7$^\circ$ | 2.57 | 97585    | 0.77 |
+|           |         | 164566   | 0.55 |
+|           |         | 250125   | 0.50 |
+| 19.7$^\circ$ | 2.58 | 97585    | 1.28 |
+|           |         | 164566   | 1.08 |
+|           |         | 250125   | 0.88 |
+| 22.5$^\circ$ | 2.64 | 88561    | 9.31 |
+|           |         | 142611   | 10.0 |
+|           |         | 276116   | 6.91 |
+| 22.5$^\circ$ | 2.66 | 88561    | 0.73 |
+|           |         | 142611   | 0.95 |
+|           |         | 276116   | 2.03 |
+| 36.6$^\circ$ | 2.97 | 99184    | 13.7 |
+|           |         | 174730   | 7.52 |
+|           |         | 254610   | 5.07 |
+| 42.7$^\circ$ | 2.58 | 92668    | 27.3 |
+|           |         | 173348   | 19.1 |
+|           |         | 272450   | 15.9 |
