@@ -21,7 +21,7 @@ Running this model will require HPC resources, and the simulation's setup will b
 have been performed before using STAR-CCM+ [!cite](ECAR6453). The motivation for performing additional simulations in MOOSE, is its open-source nature
 as well as its ability to easily couple with other modules to create complex multiphysics simulations.
 
-# Physics Models and Boundary Conditions Used
+# Physics Models
 
 All simulations used the finite volume discretization of the incompressible Navier-Stokes equations.
 The following sections go into greater detail on how the simulations were carried out including meshing, simulation parameters,
