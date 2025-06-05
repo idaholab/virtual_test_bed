@@ -43,7 +43,7 @@ when building can be found [here](https://mooseframework.inl.gov/automatic_diffe
 A solver based on the SIMPLE method has been added to the Navier Stokes module after this study was conducted, and should be preferred for future 3D studies.
 
 !alert note
-Sample outputs for this model are hosted on LFS. Please refer to [LFS instructions](resources/how_to_use_vtb.md#lfs)
+Input and mesh files are hosted on LFS. Please refer to [LFS instructions](resources/how_to_use_vtb.md#lfs)
 to download them.
 
 !media atr/0deg_coarse_zoom_mesh.png
@@ -148,7 +148,7 @@ experamental values was already significantly smaller than other configurations.
        caption=Simulation results for each configuration. The pressure drop, resistance coefficient, and flow coefficient for each mesh and corresponding inlet velocity was compared to experimental data as well as results from STAR-CCM+       using the fine meshes.
 
 | Angle | Flow-rate (m^3/s) | # Cells | % Error to experimental pressure-drop across valve |
-| :----: | :----: | :----:   | :----:   |
+| :-: | :-: | :-:   | :-:   |
 | 0$^\circ$ | 1.26 | 88950   | 23.0    |
 |           |      | 148770   | 10.4   |
 |           |      | 286216   | 6.33   |
