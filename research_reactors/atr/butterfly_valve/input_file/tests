@@ -4,5 +4,6 @@
     type = RunApp
     input = 'bf_valve_mixing_length_test.i'
     check_input = True
+    executable_pattern = 'combined*'
   []
 []
