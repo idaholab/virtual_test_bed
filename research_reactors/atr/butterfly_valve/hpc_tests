@@ -5,10 +5,12 @@
     working_directory = 'input_file/'
     input = 'bf_valve_mixing_length_test.i'
     csvdiff = '0deg.csv'
-    cli_args = "Mesh/fmg/file=../mesh/0deg_cubit_fine_mesh.e
+    cli_args = "Mesh/fmg/file=../mesh/0deg_cubit_coarse_mesh.e
                 Mesh/active='fmg fix_typo'
+                Executioner/num_steps=1
                 Outputs/file_base=0deg"
     # 5 sawtooth nodes
-    min_parallel = 240
+    min_parallel = 480
+    max_time = 7200
   []
 []

@@ -15,7 +15,7 @@
                        fiscal_year:2024
                        institution:INL
 
-The advanced test reactor (ATR) at INL employs a buttefly-valve to control pressure drop across the reactor core.
+The advanced test reactor (ATR) at INL employs a butterfly-valve to control pressure drop across the reactor core.
 The simulations of this valve utilized the Navier-Stokes module in MOOSE for all simulations.
 Running this model will require HPC resources, and the simulation's setup will be described below. Simulations of this valve
 have been performed before using STAR-CCM+ [!cite](ECAR6453). The motivation for performing additional simulations in MOOSE, is its open-source nature
@@ -113,15 +113,15 @@ the delta parameter controls turbulent behavior near these walls.
 ### `Executioner`
 
 While these are steady-state simulations, a transient solver must be used in order for the viscosity rampdown to function as intended. This operates by having the viscosity ramp down over time
-while every other paramter remains unchanged. With each successful timestep, the viscosity approaches the desired value. The simulation terminates once it ramps down all the way
+while every other parameter remains unchanged. With each successful timestep, the viscosity approaches the desired value. The simulation terminates once it ramps down all the way
 to the desired level.
 
 !listing /research_reactors/atr/butterfly_valve/input_file/bf_valve_mixing_length_test.i block=Executioner language=cpp
 
 ### `Viscosity Rampdown`
 
-The viscosity rampdown is controled but two input blocks, the `Functions` and `Materials`. The functions block determines how quickly the rampdown occurs while the materials block is what defines the
-value of `mu` as show in the listing below. For these simlations, `mu` was first ramped down to a value of `1e-3 PaS`. Once it converged to that point, it was restarted and a new rampdown
+The viscosity rampdown is controlled but two input blocks, the `Functions` and `Materials`. The functions block determines how quickly the rampdown occurs while the materials block is what defines the
+value of `mu` as show in the listing below. For these simulations, `mu` was first ramped down to a value of `1e-3 PaS`. Once it converged to that point, it was restarted and a new rampdown
 function was used to quickly bring the viscosity down to `5.4e-4 PaS`.
 
 !listing /research_reactors/atr/butterfly_valve/input_file/bf_valve_mixing_length_test.i block=Functions language=cpp
@@ -138,9 +138,9 @@ such as pressure and velocity peaks in the correct regions.
        id=0deg_bf_valve_vel_and_pressure
        caption=Velocity and pressure profiles for each valve configuration.
 
-Simulations were also performed on the fine mesh using STAR-CCM+ as a point of comparison. The pressure drop, resistance coefficient, and flow coefficient for all configurations (and for STAR-CCM+ simulations) is shown in the figure below. The experimental data was taken from an interal study by [!cite](ECAR52). Also included is a table with the pressure drop error and convergence information for the different levels of mesh refinement.
+Simulations were also performed on the fine mesh using STAR-CCM+ as a point of comparison. The pressure drop, resistance coefficient, and flow coefficient for all configurations (and for STAR-CCM+ simulations) is shown in the figure below. The experimental data was taken from an internal study by [!cite](ECAR52). Also included is a table with the pressure drop error and convergence information for the different levels of mesh refinement.
 For most of the angles tested, simulations approached experimental value as finer meshes were used, with the only exception being the 22.5$^\circ$ configuration. However for that particular configuration simulation error relative to
-experamental values was already significantly smaller than other configurations.
+experimental values was already significantly smaller than other configurations.
 
 !media atr/multiplot.png
        style=width:50%;margin-left:auto;margin-right:auto
