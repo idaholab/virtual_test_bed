@@ -103,6 +103,7 @@ Tref   = 293.15 # reference temperature for the linear thermal expansion for SS3
 [Materials]
   [elasticity_tensor_ss316]
     type = SS316ElasticityTensor
+    elastic_constants_model = legacy_ifr
   []
   [stress]
     type = ComputeLinearElasticStress
