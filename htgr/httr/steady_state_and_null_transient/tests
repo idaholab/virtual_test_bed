@@ -124,7 +124,6 @@
     prereq = 'steady_fuel_channel_th'
     cli_args = 'GlobalParams/initial_p=3e6 GlobalParams/initial_T=500
                 GlobalParams/initial_vel=0.01 GlobalParams/initial_T_wall=510'
-    abs_zero = 1e-8
   []
 
   [null_core_homogeneous_hc]
@@ -177,5 +176,6 @@
                 GlobalParams/initial_vel=0.01 GlobalParams/initial_T_wall=510
                 Outputs/csv=true'
     prereq = 'syntax_null_fuel_channel_th'
+    abs_zero = 1e-8
   []
 []
