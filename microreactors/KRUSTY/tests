@@ -16,11 +16,11 @@
       check_input = True
       executable_pattern = 'griffin*|blue_crab*|dire_wolf*'
       # we need distributed mesh to have enough memory
-      cli_args = "MultiApps/active='' Transfers/active='' --distributed-mesh"
+      cli_args = "MultiApps/active='' Transfers/active='' TransportSystems/sn/NPolar=1 TransportSystems/sn/NAzmthl=2 --distributed-mesh"
       # Cross section warning
       allow_warnings = true
       # need more memory to pass in devel
-      min_parallel = 8
+      min_parallel = 16
     []
     [multiapp_ss_bison_alone]
       type = RunApp
