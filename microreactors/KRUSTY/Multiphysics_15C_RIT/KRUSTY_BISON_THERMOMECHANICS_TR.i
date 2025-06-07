@@ -366,6 +366,7 @@ reflector_disp = 1.48e-3 # Corresponding to 15 cents reactivity insertion
   []
   [SS316Mech]
     type = SS316ElasticityTensor
+    elastic_constants_model = legacy_ifr
     block = '${ss_all} ${hp_all}'
     temperature = temp
   []

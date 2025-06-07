@@ -382,6 +382,7 @@ reflector_disp = 0.0
   [SS316Mech]
     type = SS316ElasticityTensor
     block = '${ss_all} ${hp_all}'
+    elastic_constants_model = legacy_ifr
     temperature = temp
   []
   [SS316Exp]
