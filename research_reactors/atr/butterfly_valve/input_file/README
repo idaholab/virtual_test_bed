@@ -1,0 +1,17 @@
+The butterfly valve model was tested for a total of five different angles.
+For certain configurations  multiple inlet velocities were tested. For 
+each input file the only parameters that were changed were the mesh used, 
+and the inlet velocity. To use the appropriate inlet velocity boundary 
+condition replace the mesh file and u inlet velocity to match the 
+corresponding velocity from the table below.
+
+Angle | Flow-Rate (gpm) | Inlet Velocity (m/s)
+---------------------------------------------
+0     | 20000           | 2.051481762
+0     | 30000           | 3.077222643
+19.7  | 40800           | 4.185022795
+19.7  | 40900           | 4.195280204
+22.5  | 41900           | 4.297854292
+22.5  | 42100           | 4.31836911
+36.6  | 47150           | 4.836368255
+42.7  | 40850           | 4.190151499

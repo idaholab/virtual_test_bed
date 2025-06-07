@@ -1,0 +1,15 @@
+0deg_cubit_fine_mesh.e filter=lfs diff=lfs merge=lfs -text
+19degree_medium_mesh.e filter=lfs diff=lfs merge=lfs -text
+19degree_fine_mesh.e filter=lfs diff=lfs merge=lfs -text
+22_5_degree_medium_mesh.e filter=lfs diff=lfs merge=lfs -text
+36_6_degree_medium_mesh.e filter=lfs diff=lfs merge=lfs -text
+36_6_degree_fine_mesh.e filter=lfs diff=lfs merge=lfs -text
+0deg_cubit_medium_mesh.e filter=lfs diff=lfs merge=lfs -text
+42_7_degree_fine_mesh.e filter=lfs diff=lfs merge=lfs -text
+22_5_degree_coarse_mesh.e filter=lfs diff=lfs merge=lfs -text
+19degree_coarse_mesh.e filter=lfs diff=lfs merge=lfs -text
+42_7_degree_coarse_mesh.e filter=lfs diff=lfs merge=lfs -text
+0deg_cubit_coarse_mesh.e filter=lfs diff=lfs merge=lfs -text
+36_6_degree_coarse_mesh.e filter=lfs diff=lfs merge=lfs -text
+42_7_degree_medium_mesh.e filter=lfs diff=lfs merge=lfs -text
+22_5_degree_fine_mesh.e filter=lfs diff=lfs merge=lfs -text

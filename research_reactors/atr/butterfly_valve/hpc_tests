@@ -1,0 +1,16 @@
+[Tests]
+  # 0 degree case
+  [flow_0_degree]
+    type = CSVDiff
+    working_directory = 'input_file/'
+    input = 'bf_valve_mixing_length_test.i'
+    csvdiff = '0deg.csv'
+    cli_args = "Mesh/fmg/file=../mesh/0deg_cubit_coarse_mesh.e
+                Executioner/num_steps=1
+                Outputs/file_base=0deg"
+    # 10 sawtooth nodes
+    min_parallel = 480
+    max_time = 7200
+    executable_pattern = 'combined*'
+  []
+[]
