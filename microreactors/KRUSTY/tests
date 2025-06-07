@@ -20,7 +20,7 @@
       # Cross section warning
       allow_warnings = true
       # need more memory to pass in devel
-      min_parallel = 8
+      min_parallel = 16
     []
     [multiapp_ss_bison_alone]
       type = RunApp
