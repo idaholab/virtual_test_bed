@@ -187,6 +187,7 @@ mod_env_blocks = 'mod_envelope_01 mod_envelope_02 mod_envelope_03 mod_envelope_0
   []
   [elasticity_tensor_SS_envelop]
     type = SS316ElasticityTensor
+    elastic_constants_model = legacy_ifr
     temperature = temp
     block = ${mod_env_blocks}
   []
