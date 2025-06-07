@@ -185,7 +185,7 @@ num_layers_for_THM = 50 # number of elements in the THM model; for the converged
   [Tallies]
     [heat_source]
       type = CellTally
-      blocks = '2'
+      block = '2'
       name = heat_source
       score = heating
 
