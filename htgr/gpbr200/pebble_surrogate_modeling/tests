@@ -1,0 +1,60 @@
+[Tests]
+  # Run with 10 samples so a CSV can be checked in to compare results
+  [small_sample]
+    type = CSVDiff
+    input = stm_pebble_sampling.i
+    csvdiff = stm_pebble_sampling_csv_study_results_0001.csv
+    cli_args = 'ParameterStudy/num_samples=10'
+    executable_pattern = 'bison*|blue_crab*'
+    method = 'opt'
+    allow_warnings = true # Packing fraction and temperature bound warnings
+    prereq = medium_train # Do this test last so CSV files aren't crossed
+  []
+  # Run with 1,000 samples so we can generate a decent surrogate
+  [medium_sample]
+    type = CheckFiles
+    input = stm_pebble_sampling.i
+    cli_args = 'ParameterStudy/num_samples=1000'
+    check_files = 'stm_pebble_sampling_csv_study_results_0001.csv'
+    executable_pattern = 'bison*|blue_crab*'
+    method = 'opt'
+    min_parallel = 4
+    allow_warnings = true # Packing fraction and temperature bound warnings
+  []
+  [medium_train]
+    # This could be a JSONDiff, but HPC tests covers that,
+    # so this will just ensure that surrogate data is produced.
+    type = CheckFiles
+    input = stm_pebble_surrogate.i
+    cli_args = 'GlobalParams/cv_type=none Reporters/inactive="cv" Outputs/json=false'
+    check_files = 'stm_pebble_surrogate_model_pr1_Tfuel_train.rd/data
+                   stm_pebble_surrogate_model_pr1_Tmod_train.rd/data
+                   stm_pebble_surrogate_model_pr2_Tfuel_train.rd/data
+                   stm_pebble_surrogate_model_pr2_Tmod_train.rd/data
+                   stm_pebble_surrogate_model_pr4_Tfuel_train.rd/data
+                   stm_pebble_surrogate_model_pr4_Tmod_train.rd/data
+                   stm_pebble_surrogate_model_pr6_Tfuel_train.rd/data
+                   stm_pebble_surrogate_model_pr6_Tmod_train.rd/data'
+    executable_pattern = 'bison*|blue_crab*'
+    method = 'opt'
+    prereq = medium_sample
+  []
+  [medium_evaluate]
+    type = RunApp
+    input = gpbr200_ss_gfnk_reactor.i
+    # Reducing size of test by:
+    #    1. Doing only one fixed-point iteration
+    #    2. Only taking 3 timesteps in thermal hydraulics
+    #    3. Not doing any output
+    cli_args = "Executioner/fixed_point_min_its=1 Executioner/fixed_point_max_its=1
+                pronghorn_th:Executioner/num_steps=3
+                Outputs/exodus=false Outputs/csv=false
+                pronghorn_th:Outputs/exodus=false pronghorn_th:Outputs/csv=false"
+    executable_pattern = 'blue_crab*'
+    min_parallel = 4
+    max_parallel = 32
+    method = 'opt'
+    allow_warnings = true # Cross section warning
+    prereq = medium_train
+  []
+[]
