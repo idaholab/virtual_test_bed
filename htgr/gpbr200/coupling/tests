@@ -1,0 +1,25 @@
+[Tests]
+  [coupling]
+    type = RunApp
+    input = gpbr200_ss_gfnk_reactor.i
+    # Reducing size of test by:
+    #    1. Doing only one fixed-point iteration
+    #    2. Declaring a single postion for the pebble/TRISO multiapp
+    #    3. Only taking 3 timesteps in thermal hydraulics
+    #    4. Not doing any output
+    cli_args = "Executioner/fixed_point_min_its=1 Executioner/fixed_point_max_its=1
+                Positions/inactive='element'
+                Positions/single/type=InputPositions Positions/single/positions='0 6.5 0'
+                MultiApps/pebble_conduction/positions_objects='single single single single single
+                                                               single single single single single
+                                                               single single single'
+                pronghorn_th:Executioner/num_steps=3
+                Outputs/exodus=false Outputs/csv=false
+                pronghorn_th:Outputs/exodus=false pronghorn_th:Outputs/csv=false"
+    executable_pattern = 'blue_crab*'
+    min_parallel = 4
+    max_parallel = 32
+    method = 'opt'
+    allow_warnings = true # Cross section and packing fraction warnings
+  []
+[]
