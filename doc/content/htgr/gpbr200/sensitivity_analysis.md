@@ -2,10 +2,10 @@
 
 *Contact: Zachary M. Prince, zachary.prince@inl.gov*
 
-*Model link: [GPBR200 Sensitivity Analysis](https://github.com/idaholab/virtual_test_bed/tree/devel/htgr/gpbr200/sensitivity_analysis)*
+*Model link: [GPBR200 Sensitivity Analysis](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/gpbr200/sensitivity_analysis)*
 
 The MOOSE stochastic tools module (STM) contains utilities and capabilities
-useful for stochastic simulation of MOOSE-based models. In this exposition, a
+useful for stochastic simulation of MOOSE-based models [!citep](Slaughter2023). In this exposition, a
 sensitivity analysis is performed on the GPBR200 equilibrium core model using
 the STM. This is a analog to the sensitivity analysis performed in Section 3 of
 [!cite](prince2024Sensitivity). This analysis has four objectives:
@@ -66,7 +66,7 @@ marks the sample as "uncoverged".
 ## Base Sampling Input
 
 This input defines most of the objects necessary for sampling the GPBR200 model
-and gathering the QoIs. First, field values are specified defining the upper and
+and gathering the QoIs. First, input file variables are specified defining the upper and
 lower bounds of the design-space parameters.
 
 The parameter bounds and nominal values are defined in the relevant input files

@@ -2,9 +2,9 @@
 
 *Contact: Zachary M. Prince, zachary.prince@inl.gov*
 
-*Model link: [GPBR200 Pronghorn Model](https://github.com/idaholab/virtual_test_bed/tree/devel/htgr/gpbr200/core_thermal_hydraulics)*
+*Model link: [GPBR200 Pronghorn Model](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/gpbr200/core_thermal_hydraulics)*
 
-Here the input for the Pronghorn-related physics of the GPBR200 model is
+Here the input for the Pronghorn-related physics [!citep](novak2021Pronghorn) of the GPBR200 model is
 presented. These physics include the core-wide coolant flow, coolant heat
 transfer, and solid heat transfer. This stand-alone input will be modified later
 in [Multiphysics Coupling](gpbr200/coupling.md) to account for coupling with
@@ -12,17 +12,17 @@ neutronics and pebble thermomechanics. The details of this fluid model is
 presented in [!cite](prince2024Sensitivity); as such, this exposition will focus
 on explaining specific aspects of the input file.
 
-## Field Values and Global Parameters
+## Input File Variables and Global Parameters
 
-Due to the variety of block sets in the mesh, it is first useful to define field
-values so that object block restrictions are more interpretable.
+Due to the variety of block sets in the mesh, it is first useful to define input file
+variables so that object block restrictions are more interpretable.
 
 !listing gpbr200/core_thermal_hydraulics/gpbr200_ss_phth_reactor.i
     start=Blocks
     end=Geometry
 
-Geometry and various reactor property definitions are also specified as field
-values.
+Geometry and various reactor property definitions are also specified as input
+file variables.
 
 !listing gpbr200/core_thermal_hydraulics/gpbr200_ss_phth_reactor.i
     start=Geometry
@@ -66,7 +66,7 @@ of the problem: fluid flow, fluid heat transfer, and solid heat transfer.
 
 The input specifies a weakly-compressible finite-volume formulation, which is
 explained in more detail in the
-[MOOSE Navier-Stokes module documentation](https://mooseframework.inl.gov/modules/navier_stokes/wcnsfv.html).
+[MOOSE Navier-Stokes module documentation](https://mooseframework.inl.gov/modules/navier_stokes/wcnsfv.html) [!citep](lindsay2023moose).
 
 !listing gpbr200/core_thermal_hydraulics/gpbr200_ss_phth_reactor.i
     block=Physics/NavierStokes/Flow
@@ -89,16 +89,17 @@ implementing the fluid energy equations.
 ### Solid Heat Transfer
 
 Finally, the input specifies a finite-volume formulation for the heat conduction
-and radiative transfer in the solid structures of the model. This block couples
+and radiative transfer in the solid phase of the porous media the solid structures of the model. This block couples
 the fluid energy physics via ambient convection. Note that the material
-properties for include an "effective" thermal conductivity, which considers the
+properties include an "effective" thermal conductivity, which considers the
 porosity of the region. Additionally, the heat capacity is modified by scaling
-by a factor of $10^{-5}$, so that a steady-state is reached more quickly.
+by a factor of $10^{-5}$, so that a steady-state is reached more quickly. This does
+not affect steady-state results.
 
 !listing gpbr200/core_thermal_hydraulics/gpbr200_ss_phth_reactor.i
     block=Physics/NavierStokes/SolidHeatTransfer
 
-The necessary boundary conditions are not included in the `Physics` syntax, so
+The necessary boundary conditions are not included at this time in the `Physics` syntax, so
 they are added independently.
 
 !listing gpbr200/core_thermal_hydraulics/gpbr200_ss_phth_reactor.i
@@ -108,7 +109,7 @@ they are added independently.
 ## Auxiliary Variables and Kernels
 
 Three auxiliary variables are specified in the input: power density and the x
-and y components of the velocity. The power density will eventually come from
+and y components of the interstitial velocity. The power density will eventually come from
 the neutronics simulation, but for this stand-alone physics input, the total
 power is simply scaled by the volume of the pebble bed. The velocity variables
 represent the physical velocity of the system, used mainly for visualization,
@@ -117,7 +118,7 @@ which are converted from the superficial velocities computed by the solver.
 !listing gpbr200/core_thermal_hydraulics/gpbr200_ss_phth_reactor.i
     block=AuxVariables AuxKernels
 
-In order to prevent manual calculation of the pebble-bed volume, a
+In order to avoid manual calculation of the pebble-bed volume, a
 `VolumePostprocessor` is used. Note, in order to guarantee this postprocessor is
 executed before the `ParsedAux`, the `force_preaux` parameter is necessary.
 
@@ -129,7 +130,7 @@ executed before the `ParsedAux`, the `force_preaux` parameter is necessary.
 
 The input specifies various `FunctorMaterials` to define the material properties
 of the model. Most of the fluid properties are modifications considering
-geometry and porosity of the `HeliumFluidProperties`. The solid thermal
+geometry and porosity of the `HeliumFluidProperties` [!citep](giudicelli2025moose). The solid thermal
 properties are assumed temperature independent.
 
 !listing gpbr200/core_thermal_hydraulics/gpbr200_ss_phth_reactor.i
@@ -141,7 +142,7 @@ properties are assumed temperature independent.
 This steady-state model is solved using a pseudo-transient scheme, where a
 `Transient` executioner is used to progress in time until the solution does not
 change under a tolerance between timesteps. Since the fluid system is a saddle
-point problem, using iterative preconditioners is not recommended, thus the
+point problem, using iterative preconditioners requires great care, thus the
 input's specification of a `lu` preconditioner.
 
 !listing gpbr200/core_thermal_hydraulics/gpbr200_ss_phth_reactor.i

@@ -2,7 +2,7 @@
 
 *Contact: Zachary M. Prince, zachary.prince@inl.gov*
 
-*Model link: [GPBR200 Pebble Surrogate](https://github.com/idaholab/virtual_test_bed/tree/devel/htgr/gpbr200/pebble_surrogate_modeling)*
+*Model link: [GPBR200 Pebble Surrogate](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/gpbr200/pebble_surrogate_modeling)*
 
 ## Motivation
 
@@ -36,7 +36,7 @@ T_{\mathrm{mod}} &\approx \hat{f}_{\mathrm{mod}}(\text{kernel radius}, \text{fil
 where $\hat{f}$ is a generic functional form of the surrogate.
 
 The MOOSE stochastic tools module (STM) provides the `Surrogate` system, which
-allows training and evaluation of such surrogates. The remainder of this
+allows training and evaluation of such surrogates [!citep](Slaughter2023). The remainder of this
 exposition will detail how use the STM to produce training data from the pebble
 heat conduction model, train a simple (but effective) surrogate model, and how
 to utilize the surrogate in the multiphysics simulation.
@@ -73,7 +73,7 @@ First, the data is loaded from the CSV file into a `Sampler` and
 
 Next, `Trainers` and `Surrogates` are defined, which utilize the sampling and
 vector-postprocessor data to produce the metadata necessary for generating the
-surrogate. For `PolynomialRegression` this involves a ordinary least-squares
+surrogate. For `PolynomialRegression` this involves an ordinary least-squares
 solve to evaluate coefficients of a multi-variate monomial. The `max_degree`
 parameter specifies the degree of the monomial produced; a 4 dimensional basis
 with a degree of 4 results in 70 coefficients. The `cv_type` parameter triggers
