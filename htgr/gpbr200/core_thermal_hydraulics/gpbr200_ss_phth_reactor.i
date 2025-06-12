@@ -36,16 +36,16 @@ cavity_thickness = 1.340 # Cavity thickness from pbmr400 (m)
 pebble_diameter = 0.06 # Diameter of the pebbles (m).
 
 # Properties -------------------------------------------------------------------
-global_emissivity = 0.80 # All the materials has the same emissivity (//).
+global_emissivity = 0.80 # All the materials have the same emissivity (//).
 reactor_total_mfr = 64.3 # Total reactor He mass flow rate (kg/s).
 reactor_inlet_T_fluid = 533.25 # He temperature  at the inlet of the lower inlet plenum (K).
-reactor_inlet_rho = 5.364 # He temperature  at the inlet of the lower inlet plenum (K).
+reactor_inlet_rho = 5.364 # He density at the inlet of the lower inlet plenum (kg/m3).
 reactor_outlet_pressure = 5.84e+6 # Pressure at the at the outlet of the outlet plenum (Pa).
-top_bottom_cav_temperature = '${fparse 273.15 + 200.0}' # Top and Bottom cavities temeperatures (K).
-rccs_temperature = '${fparse 273.15 + 70.0}' # RCCS temeperatures (K).
+top_bottom_cav_temperature = '${fparse 273.15 + 200.0}' # Top and Bottom cavities temperatures (K).
+rccs_temperature = '${fparse 273.15 + 70.0}' # RCCS temperatures (K).
 htc_cavities = 10.0 # Heat Exchange coefficient for natural circulation (W/m2K)
 heat_capacity_multiplier = 1e-5
-db_cnst = 0.023 # Dittus Boelter constant for areal htc
+db_cnst = 0.023 # Dittus Boelter constant for area htc
 pbed_porosity = 0.39 # Pebble bed porosity (//).
 
 # Power ------------------------------------------------------------------------

@@ -3,9 +3,9 @@
 
 *Contact: Zachary M. Prince, zachary.prince@inl.gov*
 
-*Model link: [GPBR200 Bison Model](https://github.com/idaholab/virtual_test_bed/tree/devel/htgr/gpbr200/pebble_thermomechanics)*
+*Model link: [GPBR200 Bison Model](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/gpbr200/pebble_thermomechanics)*
 
-Here the input for the Bison-related physics of the GPBR200 model is presented.
+Here the input for the Bison-related physics [!citep](BISON) of the GPBR200 model is presented.
 These physics include the heat conduction within a representative TRISO particle
 and a representative pebble matrix. This stand-alone input will be utilized
 later in [Multiphysics Coupling](gpbr200/coupling.md) to account for coupling
@@ -13,9 +13,9 @@ with neutronics and thermal hydraulics. The details of this pebble model is
 presented in [!cite](prince2024Sensitivity); as such, this exposition will focus
 on explaining specific aspects of the input file.
 
-## Field Values
+## Input File Variables
 
-Most of the field values in this input are presented in the
+Most of the input file variables in this input are presented in the
 [neutronics model](gpbr200/core_neutronics.md). The two unique ones are the
 `initial_temperature` and `initial_power`, which are used to populate the heat
 source and BCs of the simulation. Eventually, these values will become

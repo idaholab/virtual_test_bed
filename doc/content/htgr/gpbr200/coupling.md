@@ -2,7 +2,7 @@
 
 *Contact: Zachary M. Prince, zachary.prince@inl.gov*
 
-*Model link: [GPBR200 Coupled Model](https://github.com/idaholab/virtual_test_bed/tree/devel/htgr/gpbr200/coupling)*
+*Model link: [GPBR200 Coupled Model](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/gpbr200/coupling)*
 
 Here the input for the fully coupled GPBR200 model is presented. This combines
 the physics presented in the [neutronics model](gpbr200/core_neutronics.md),
@@ -12,7 +12,7 @@ the physics presented in the [neutronics model](gpbr200/core_neutronics.md),
 ## MultiApp Structure
 
 [!ref](fig:gpbr200_multiapp_diagram) shows the `MultiApp` structure employed for
-the multiphysics, along with the transfers of coupled fields. The
+the multiphysics, along with the transfers of coupled fields [!citep](Gaston2015). The
 neutronics-depletion input serves as the main application, transferring power
 density to the thermal hydraulics and pebble heat conduction applications. The
 solid temperature is received from the TH application to evaluate cross sections
@@ -81,7 +81,7 @@ pebble composition, the kernel radius and filling factor are transferred at
 application creation via `cli_args`. The solid temperature is transferred to the
 postprocessor of the sub-applications, based on their position. The power
 density is similarly transferred, except the `partial_power_density` is an array
-variable where each component corresponds to a burnup group. Finally, the the
+variable where each component corresponds to a burnup group. Finally, the
 fuel and moderator temperature are transferred from the sub-applications, again
 based on their position and burnup group index.
 

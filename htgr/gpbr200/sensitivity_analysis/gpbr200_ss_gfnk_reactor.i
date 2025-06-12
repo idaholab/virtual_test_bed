@@ -177,7 +177,7 @@ ref_blocks = '${cns_disch_blocks} ${upref_blocks}
   # Function describing CR depth
   [cr_depth]
     type = ConstantFunction
-    value = 1.747 # -1.318 -> 8.93
+    value = 1.747 # Range of control rod insertion: -1.318 -> 8.93
   []
   # Offset from reactor reference frame
   [cr_front]
@@ -269,6 +269,8 @@ ref_blocks = '${cns_disch_blocks} ${upref_blocks}
   dataset = ISOXML
   isoxml_data_file = '../data/gpbr200_dtl.xml'
   isoxml_lib_name = 'gpbr200_dtl'
+  # Some of the branching ratios in the DTL are unphysical, which Griffin will
+  # throw a warning for unless this is specified.
   dtl_physicality = 'SILENT'
 
   # Isotopic options
@@ -334,7 +336,6 @@ ref_blocks = '${cns_disch_blocks} ${upref_blocks}
   petsc_options_iname = '-pc_type -pc_hypre_type -ksp_gmres_restart '
   petsc_options_value = 'hypre boomeramg 100'
   line_search = none
-  snesmf_reuse_base = false
 
   # Linear/nonlinear iterations.
   l_max_its = 100

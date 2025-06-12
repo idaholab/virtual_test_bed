@@ -2,11 +2,11 @@
 
 *Contact: Zachary M. Prince, zachary.prince@inl.gov*
 
-*Model link: [GPBR200 Model](https://github.com/idaholab/virtual_test_bed/tree/devel/htgr/gpbr200)*
+*Model link: [GPBR200 Model](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/gpbr200)*
 
 !tag name=General Pebble Bed Reactor with Stochastic Analyses
      description=This 2D model of a pebble-bed HTGR reactor core studies multiphysics coupling and stochastic analyses.
-     image=TODO
+     image=https://mooseframework.inl.gov/virtual_test_bed/media/gpbr200/gpbr200_geometry.png
      pairs=reactor_type:HTGR
            reactor:GPBR200
            geometry:core
@@ -24,10 +24,10 @@
 ## Purpose and Background
 
 This 200MWth General Pebble Bed Reactor (GPBR200) model is the latest iteration
-of a series of pebble-bed high-temperature gas reactor (HTGR) developed at Idaho
+of a series of pebble-bed high-temperature gas reactor (HTGR) models developed at Idaho
 National Laboratory (INL) using MOOSE-based applications. These models are
 primarily meant as a testing ground for multiphysics, optimization, and
-stochastic methods for PBRs, as well as serving as a verification benchmark. An
+stochastic methods for PBRs, some also serving as verification benchmarks. An
 in-depth description of the latest iteration can be found in
 [!cite](prince2024Sensitivity). It is recommended to read this paper before
 continuing in the exposition here.
@@ -37,13 +37,13 @@ simulations of PBRs and stochastic analyses of reactors, in general, with
 MOOSE-based applications. This is done by presenting and explaining the inputs
 that perform:
 
-- Equilibrium-core neutronics and depletion using Griffin
+- Equilibrium-core neutronics and depletion using Griffin [!cite](wang2025Griffin)
 - Thermal-hydraulics simulation using weakly-compressible finite-volume fluids
-  and finite-volume heat conduction with Pronghorn
-- Pebble and particle thermomechanics with Bison
-- Multi-scale physics coupling using MOOSE MultiApps
+  and finite-volume heat conduction with Pronghorn [!cite](novak2021Pronghorn)
+- Pebble and particle thermomechanics with Bison [!cite](BISON)
+- Multi-scale physics coupling using MOOSE MultiApps [!cite](giudicelli2024moose)
 - Surrogate modeling and sensitivity analysis using the MOOSE stochastic tools
-  module
+  module [!cite](Slaughter2023)
 
 ## Brief Geometry and Property Description
 

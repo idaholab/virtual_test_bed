@@ -2,9 +2,9 @@
 
 *Contact: Zachary M. Prince, zachary.prince@inl.gov*
 
-*Model link: [GPBR200 Griffin Model](https://github.com/idaholab/virtual_test_bed/tree/devel/htgr/gpbr200/core_neutronics)*
+*Model link: [GPBR200 Griffin Model](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/gpbr200/core_neutronics)*
 
-Here the input for the Griffin-related physics of the GPBR200 model is
+Here the input for the Griffin-related physics [!citep](wang2025Griffin) of the GPBR200 model is
 presented. These physics include the core-wide neutronics along with the
 equilibrium-core pebble depletion. This stand-alone input will be modified later
 in [Multiphysics Coupling](gpbr200/coupling.md) to account for coupling with TH
@@ -12,14 +12,14 @@ and pebble thermomechanics. The details of neutronics and depletion aspects of
 this model is presented in [!cite](prince2024Sensitivity); as such, this
 exposition will focus on explaining specific aspects of the input file.
 
-## Field Values and Global Parameters
+## Input File Variables and Global Parameters
 
-Convenient field variables are defined in the input for several reasons:
+Convenient input file variables are defined in the input for several reasons:
 defining a single input value to be used in multiple blocks, traceability in how
 certain values are computed, and defining "perturbable" values (which becomes
 evident in the [sensitivity analysis](gpbr200/sensitivity_analysis.md)).
 
-The first set of field values are pretty self-evident and utilized ubiquitously
+The first set of input file variables are pretty self-evident and utilized ubiquitously
 through all the physics of PBR models.
 
 !listing gpbr200/core_neutronics/gpbr200_ss_gfnk_reactor.i
@@ -51,8 +51,8 @@ defining the pebble cycling scheme.
     start=Parameters describing pebble cycling
     end=Blocks
 
-Finally, there are a relatively large number of blocks in the mesh, so field
-values are defined to promote clarity on where variables, kernels, etc. are
+Finally, there are a relatively large number of blocks in the mesh, so input file
+variables are defined to promote clarity on where variables, kernels, etc. are
 acting.
 
 !listing gpbr200/core_neutronics/gpbr200_ss_gfnk_reactor.i
@@ -91,7 +91,7 @@ one specific for the upper cavity (void region). The `pebble_streamline_id`s
 represent streamlines where pebbles flow down, but don't cross into other
 streamlines. The `pebble_streamline_layer_id`s are used to describe the
 direction of pebble flow within the streamline, flowing from the smallest ID
-(inlet) to larges (discharge).
+(inlet) to largest (discharge).
 
 ## Auxiliary Variables
 
@@ -114,7 +114,7 @@ There are four regions in the geometry that are treated uniquely by Griffin
 materials: the reflector, control rod, upper cavity, and core.
 
 The reflector region utilizes `CoupledFeedbackNeutronicsMaterial`, which has
-constant nuclide concentration and couples `T_solid` as its `tmod` grid
+constant nuclide concentrations and couples `T_solid` as its `tmod` grid
 variable.
 
 !listing gpbr200/core_neutronics/gpbr200_ss_gfnk_reactor.i
@@ -123,7 +123,7 @@ variable.
 The control rod region utilizes `CoupledFeedbackRoddedNeutronicsMaterial`, which
 is similar to the reflector region strategy, except the nuclide concentration is
 varied spatially according to a function defining the front of the control rod.
-The depth of the control rod in this example was chosen such that the
+The insertion depth of the control rod in this example was chosen such that the
 multiphysics simulation results in a $k_{\mathrm{eff}}$ close to unity.
 
 !listing gpbr200/core_neutronics/gpbr200_ss_gfnk_reactor.i
@@ -179,10 +179,10 @@ pebbles and burnup discretization for the pebble depletion, which here is 12
 bins, where the last bin starts at 196.8 MWd/kgHM (converted to J/cm^3^ using
 `fparse`).
 
-The `DepletionScheme` block primarily specifies that a equilibrium-core
+The `DepletionScheme` block primarily specifies that an equilibrium-core
 simulation is to be performed. The parameters in this block include
 specifications on how the pebbles spatially traverse the core. Where
-`pebble_unloading_rate` specifies the rate in which pebbles enter/exit the core,
+`pebble_unloading_rate` specifies the rate at which pebbles enter/exit the core,
 `pebble_flow_rate_distribution` is the fraction of this rate for each streamline
 (according to the `pebble_streamline_id` element ID), and `burnup_limit`
 specifies the minimum burnup a pebble must reach upon exiting the core to be
@@ -203,8 +203,8 @@ including: type of particle (neutron), equation type (eigenvalue/criticality),
 number of energy groups (9), spatial and angular discretization
 (CFEM-Diffusion), and number of delay neutron precursors (6). Additionally, the
 boundary conditions are defined here; note that even reflecting conditions need
-to be defined even with a diffusion system. Finally, which portions of the
-Jacobian are also specified; it is highly recommended to include all portions
+to be defined with a diffusion system. Finally, which portions of the
+Jacobian should be computed are also specified; it is highly recommended to include all portions
 (scattering and fission) for diffusion systems.
 
 !listing gpbr200/core_neutronics/gpbr200_ss_gfnk_reactor.i
