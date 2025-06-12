@@ -1,0 +1,11 @@
+[Tests]
+  [core_neutronics]
+    type = RunApp
+    input = gpbr200_ss_gfnk_reactor.i
+    # Run one fixed-point iteration and don't worry about outputs
+    cli_args = 'Executioner/fixed_point_min_its=1 Executioner/fixed_point_max_its=1 Outputs/exodus=false Outputs/csv=false'
+    executable_pattern = 'griffin*|blue_crab*'
+    method = 'opt'
+    allow_warnings = true # Cross section warning
+  []
+[]
