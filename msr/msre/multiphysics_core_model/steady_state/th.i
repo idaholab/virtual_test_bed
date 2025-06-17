@@ -106,16 +106,20 @@ solid_blocks = 'core core_barrel'
     type = PINSFVSuperficialVelocityVariable
     initial_condition = 1e-8
     block = ${fluid_blocks}
+    scaling = 1e-3
   []
   [superficial_vel_y]
     type = PINSFVSuperficialVelocityVariable
     initial_condition = 1e-8
     block = ${fluid_blocks}
+    scaling = 1e-3
   []
   [pressure]
     type = INSFVPressureVariable
     initial_condition = ${p_outlet}
     block = ${fluid_blocks}
+    face_interp_method = average
+    scaling = 10
   []
   [T_fluid]
     type = INSFVEnergyVariable
@@ -177,7 +181,6 @@ solid_blocks = 'core core_barrel'
     fluid_temperature_variable = 'T_fluid'
 
     # Numerical schemes
-    pressure_face_interpolation = average
     momentum_advection_interpolation = upwind
     mass_advection_interpolation = upwind
     energy_advection_interpolation = upwind
@@ -215,10 +218,6 @@ solid_blocks = 'core core_barrel'
 
     # Passive Scalar -- solved separetely to integrate porosity jumps
     add_scalar_equation = false
-
-    #Scaling -- used mainly for nonlinear solves
-    momentum_scaling = 1e-3
-    mass_scaling = 10
   []
 []
 
