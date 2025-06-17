@@ -10,7 +10,7 @@
   [subchannel]
     type = SCMDetailedTriSubChannelMeshGenerator
     nrings = 3
-    n_cells = 100
+    n_cells = 40
     flat_to_flat = 3.41e-2
     heated_length = 0.5334
     unheated_length_entry = 0.4064
@@ -22,40 +22,26 @@
 
 [AuxVariables]
   [mdot]
-    block = subchannel
   []
   [SumWij]
-    block = subchannel
   []
   [P]
-    block = subchannel
   []
   [DP]
-    block = subchannel
   []
   [h]
-    block = subchannel
   []
   [T]
-    block = subchannel
   []
   [rho]
-    block = subchannel
-  []
-  [S]
-    block = subchannel
-  []
-  [w_perim]
-    block = subchannel
   []
   [mu]
-    block = subchannel
+  []
+  [S]
+  []
+  [w_perim]
   []
   [q_prime]
-    block = subchannel
-  []
-  [displacement]
-    block = subchannel
   []
 []
 
