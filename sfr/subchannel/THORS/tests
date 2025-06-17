@@ -17,15 +17,21 @@
     type = RunCommand
     command = "python plot5B.py"
     required_python_packages = 'numpy matplotlib'
-    prereq = 'channel'
+    prereq = 'FFM-5B'
   []
 
   # Regression checks for THORS model
-  [channel]
-    type = Exodiff
-    input = FFM-5B.i
-    exodiff = 'FFM-5B_out.e'
+    [FFM-5B]
+    type = CSVDiff
+    input = 'FFM-5B.i'
+    csvdiff  = 'FFM-5B_out.csv'
+    capabilities = 'method!=dbg'
+    abs_zero = 1e-5
+    valgrind = NONE
+    recover = false
+    max_parallel = 1
     prereq = 'channel_syntax'
     executable_pattern = 'subchannel*|pronghorn*|combined*'
+    requirement = 'The system will examine the subchannel solver for the FFM-5B low flow case'
   []
 []

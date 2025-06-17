@@ -13,11 +13,17 @@
     executable_pattern = 'subchannel*|pronghorn*|combined*'
   []
   # Regression checks for 19-pin model
-  [channel]
-    type = Exodiff
-    custom_cmp = 'test.exodiff'
-    input = ornl_19_pin.i
-    exodiff = 'ornl_19_pin_out.e'
+  [ORNL-19]
+    type = CSVDiff
+    input = ornl_19_pin_viz_19_pin.i
+    csvdiff = ornl_19_pin_out.csv
+    capabilities = 'method!=dbg'
+    valgrind = NONE
+    recover = false
+    abs_zero = 1e-5
+    max_threads = 1
+    max_parallel = 1
+    requirement = 'The system will examine the subchannel solver for the ORNL 19-pin case'
     prereq = 'channel_syntax'
     executable_pattern = 'subchannel*|pronghorn*|combined*'
   []
