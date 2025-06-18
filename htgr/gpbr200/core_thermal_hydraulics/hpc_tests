@@ -1,0 +1,11 @@
+[Tests]
+  [core_thermal_hydraulics]
+    type = CSVDiff
+    input = gpbr200_ss_phth_reactor.i
+    csvdiff = gpbr200_ss_phth_reactor_out.csv
+    executable_pattern = 'pronghorn*|blue_crab*'
+    min_parallel = 4
+    max_parallel = 32
+    cli_args = 'Outputs/exodus=false' # Only need to look at CSV file
+  []
+[]
