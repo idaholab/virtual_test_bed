@@ -7,16 +7,16 @@
 # If using or referring to this model, please cite as explained in
 # https://mooseframework.inl.gov/virtual_test_bed/citing.html
 
-### For reactor trasients the following variables needs to change####
+### For reactor transients the following variables needs to change####
 ##1.  EHX coefficient
 ##2.  Pump Head =0, comment out desired mass flow rate
 ##3.  Power function (ppf_axial * power_history)
 ##4.  Restart from normal operating steady state results
 ##5.  Adjust Time steps for converging results
-### END for reactor trasients #####
+### END for reactor transients #####
 #The rings are named as follow
 #R1- inner reflector
-#R2,R3,R4: inner, miidle and outer fuel rings
+#R2,R3,R4: inner, middle and outer fuel rings
 #R5: permanent reflector
 #R6: core barrel
 #R7: RPV and RCCS
@@ -312,9 +312,10 @@ Dh_tot = 0.8096
 tot_massFlowRate = 289.12 #(kg/s)
 ##
 Ts_1 = 623.15
-v_1 = 2 #26.19
+v_1 = 10.0 #26.19
 p_out = 70e5
-T_out = 623.15 #1000
+T_out = 623.15
+core_init_v = -30.0 # Core is oriented in +z, flow is in -z direction
 ##
 [GlobalParams]
   global_init_P = ${p_out}
@@ -322,13 +323,9 @@ T_out = 623.15 #1000
   global_init_T = ${Ts_1}
   Tsolid_sf = 1e-4
   scaling_factor_var = '1 1e-3 1e-6'
-  pspg = false
-  p_order = 1
-  supg_max = true
 []
 
 [EOS]
-
   [eos]
     type = PTFunctionsEOS
     p_0 = 70e5 # Pa
@@ -339,7 +336,6 @@ T_out = 623.15 #1000
     k = kHe
     enthalpy = HHe
   []
-
   [eos_water]
     type = PTConstantEOS
     p_0 = 70e5 # Pa
@@ -351,17 +347,9 @@ T_out = 623.15 #1000
     mu = 0.00016
     k = 0.68
   []
-
-  [eos_air]
-    type = AirEquationOfState
-  []
-
 []
 
 [Functions]
-  active = 'power_dist kf cpf kclad cpclad rhoclad kgraphite cpgraphite rhographite kHe cpHe rhoHe muHe HHe beta_fn time_stepper
-            ppf_axial power_history pump_p_coastdown pump_s_coastdown flow_secondary flow_dhx vf_pipeU head_pumpU power_decay_fn'
-
   [time_stepper]
     type = PiecewiseLinear
     #    x = ' 0    0.1   1     60    120  200   600   3000 6000  1e5  1e6 '
@@ -716,6 +704,7 @@ T_out = 623.15 #1000
     HTC_geometry_type = Pipe # pipe model
     #    f = ${fric_coef}                            # User specified friction coefficient (Blausis f=(100 Re)^-0.25
     #    Hw = ${wallHeatTrans_coef}                  # User specified heat transfer coefficient (Dittus-Boelter)
+    initial_V = ${core_init_v}
   []
 
   [R3_channelParam]
@@ -729,6 +718,7 @@ T_out = 623.15 #1000
     HTC_geometry_type = Pipe # pipe model
     #    f = ${fric_coef}                            # User specified friction coefficient (Blausis f=(100 Re)^-0.25
     #    Hw = ${wallHeatTrans_coef}                  # User specified heat transfer coefficient (Dittus-Boelter)
+    initial_V = ${core_init_v}
   []
 
   [R4_channelParam]
@@ -742,6 +732,7 @@ T_out = 623.15 #1000
     HTC_geometry_type = Pipe # pipe model
     #    f = ${fric_coef}                            # User specified friction coefficient (Blausis f=(100 Re)^-0.25
     #    Hw = ${wallHeatTrans_coef}                  # User specified heat transfer coefficient (Dittus-Boelter)
+    initial_V = ${core_init_v}
   []
   ##################################
   ## Upper Structure
@@ -852,6 +843,7 @@ T_out = 623.15 #1000
     HTC_geometry_type = Pipe # pipe model
     #    f = ${fric_coef}                            # User specified friction coefficient (Blausis f=(100 Re)^-0.25
     #    Hw = ${wallHeatTrans_coef}                  # User specified heat transfer coefficient (Dittus-Boelter)
+    initial_V = ${core_init_v}
   []
 
   [R3UP_channelParam]
@@ -865,6 +857,7 @@ T_out = 623.15 #1000
     HTC_geometry_type = Pipe # pipe model
     #    f = ${fric_coef}                            # User specified friction coefficient (Blausis f=(100 Re)^-0.25
     #    Hw = ${wallHeatTrans_coef}                  # User specified heat transfer coefficient (Dittus-Boelter)
+    initial_V = ${core_init_v}
   []
 
   [R4UP_channelParam]
@@ -878,6 +871,7 @@ T_out = 623.15 #1000
     HTC_geometry_type = Pipe # pipe model
     #    f = ${fric_coef}                            # User specified friction coefficient (Blausis f=(100 Re)^-0.25
     #    Hw = ${wallHeatTrans_coef}                  # User specified heat transfer coefficient (Dittus-Boelter)
+    initial_V = ${core_init_v}
   []
   ##################################
   ## LOWER  CORE SUPPORT Structure
@@ -987,6 +981,7 @@ T_out = 623.15 #1000
     HTC_geometry_type = Pipe # pipe model
     #    f = ${fric_coef}                            # User specified friction coefficient (Blausis f=(100 Re)^-0.25
     #    Hw = ${wallHeatTrans_coef}                  # User specified heat transfer coefficient (Dittus-Boelter)
+    initial_V = ${core_init_v}
   []
 
   [R3LP_channelParam]
@@ -1000,6 +995,7 @@ T_out = 623.15 #1000
     HTC_geometry_type = Pipe # pipe model
     #    f = ${fric_coef}                            # User specified friction coefficient (Blausis f=(100 Re)^-0.25
     #    Hw = ${wallHeatTrans_coef}                  # User specified heat transfer coefficient (Dittus-Boelter)
+    initial_V = ${core_init_v}
   []
 
   [R4LP_channelParam]
@@ -1013,6 +1009,7 @@ T_out = 623.15 #1000
     HTC_geometry_type = Pipe # pipe model
     #    f = ${fric_coef}                            # User specified friction coefficient (Blausis f=(100 Re)^-0.25
     #    Hw = ${wallHeatTrans_coef}                  # User specified heat transfer coefficient (Dittus-Boelter)
+    initial_V = ${core_init_v}
   []
 
   #####
@@ -2319,7 +2316,7 @@ T_out = 623.15 #1000
     elem_number_axial = ${axial_nElem_1}
     dim_hs = 2
     material_hs = 'ss-mat'
-    Ts_init = ${Ts_1}
+    Ts_init = 450 # ${Ts_1}
     HS_BC_type = 'Adiabatic Coupled'
     name_comp_right = R6_C
     HT_surface_area_density_right = ${aw_R6}
@@ -2336,6 +2333,7 @@ T_out = 623.15 #1000
     Dh = ${Dh_tot}
     HTC_geometry_type = Pipe # pipe model
     n_elems = ${axial_nElem_1}
+    initial_T = 623.15
     #    f = ${fric_coef}                            # User specified friction coefficient (Blausis f=(100 Re)^-0.25
     #    Hw = ${wallHeatTrans_coef}                  # User specified heat transfer coefficient (Dittus-Boelter)
   []
@@ -2352,7 +2350,7 @@ T_out = 623.15 #1000
     elem_number_axial = ${axial_nElem_1}
     dim_hs = 2
     material_hs = 'ss-mat'
-    Ts_init = ${Ts_1}
+    Ts_init = 450 # ${Ts_1}
     HS_BC_type = 'Coupled Adiabatic'
     #    T_bc_right = 303
     name_comp_left = R6_C
@@ -2384,7 +2382,7 @@ T_out = 623.15 #1000
     elem_number_axial = ${axial_nElem_1}
     dim_hs = 2
     material_hs = 'ss-mat'
-    Ts_init = ${Ts_1}
+    Ts_init = 450 #${Ts_1}
     HS_BC_type = 'Adiabatic Convective'
     Hw_right = ${h_air_natural_conv}
     T_amb_right = 300
@@ -3761,7 +3759,7 @@ T_out = 623.15 #1000
     elem_number_axial = ${axial_nElem_2}
     dim_hs = 2
     material_hs = 'ss-mat'
-    Ts_init = ${Ts_1}
+    Ts_init = 450 #${Ts_1}
     HS_BC_type = 'Adiabatic Convective'
     Hw_right = ${h_air_natural_conv}
     T_amb_right = 300
@@ -5988,7 +5986,7 @@ T_out = 623.15 #1000
     elem_number_axial = ${axial_nElem_3}
     dim_hs = 2
     material_hs = 'ss-mat'
-    Ts_init = ${Ts_1}
+    Ts_init = 450 #${Ts_1}
     HS_BC_type = 'Adiabatic Convective'
     Hw_right = ${h_air_natural_conv}
     T_amb_right = 300
@@ -8168,7 +8166,6 @@ T_out = 623.15 #1000
     initial_T = ${T_out}
     #    initial_V = 1.30
     eos = eos
-    nodal_Tbc = true
   []
 
   [L_plenum]
@@ -8186,10 +8183,9 @@ T_out = 623.15 #1000
     Area = 40.43
     volume = 32.06
     initial_P = ${p_out}
-    initial_T = ${T_out}
+    initial_T = 900 #${T_out}
     #    initial_V = 1.30
     eos = eos
-    nodal_Tbc = true
   []
 
   #####  EHX ####
@@ -8206,7 +8202,7 @@ T_out = 623.15 #1000
     Dh_secondary = 0.014
     length = 8.0
     n_elems = 40
-    initial_V_secondary = -2
+    initial_V_secondary = -10
     Hw = ${EHX_hCoef}
     Hw_secondary = ${EHX_hCoef}
     HTC_geometry_type = Pipe # pipe model
@@ -8355,18 +8351,15 @@ T_out = 623.15 #1000
 
   [EHXLoop_in]
     type = PBTDJ
-    #    input = 'EHXsin_pipe1(in)'
     input = 'EHX(secondary_in)'
     #    v_fn = flow_secondary
     v_bc = -10.68 #0.05
     T_bc = ${Ts_1}
     eos = eos
-    weak_bc = true
   []
 
   [EHXLoop_out]
     type = PBTDV
-    #    input = 'EHXsout_pipe1(out)'
     input = 'EHX(secondary_out)'
     p_bc = '${p_out}'
     eos = eos
@@ -8464,6 +8457,7 @@ T_out = 623.15 #1000
     length = 1.0
     n_elems = 10
     Hw = 0
+    initial_V = 0.01
   []
 
   [tank_pU]
@@ -8473,23 +8467,6 @@ T_out = 623.15 #1000
     T_bc = ${Ts_1}
     eos = eos
   []
-
-  ######## INLET & OUTLET  #####
-  #  [./inlet1]
-  #   type = PBTDJ
-  # input = 'R6LP_C(in)'
-  #        eos = eos
-  # v_bc = 26.19
-  #   T_bc = 623.15
-  #  [../]
-
-  #  [./outlet1]
-  #   type = PBTDV
-  #   input = 'pump_discharge(out)'
-  #        eos = eos
-  #   p_bc = 70.0e5
-  #   T_bc = 900
-  #  [../]
 
 []
 
@@ -8662,172 +8639,154 @@ T_out = 623.15 #1000
     boundary = 'RCCS_UP:outer_wall'
   []
 
-  #  [./heat_removal_secondary]
-  #    type = HeatExchangerHeatRemovalRate
-  #    block = EHX:secondary_pipe
-  #    heated_perimeter = 5584.14
-  #  [../]
-
   ####
 
-  [R1_max] # Output maximum solid temperature of block CH1: solid:fuel
+  [R1_max]
     type = NodalExtremeValue
     block = 'R1:hs0'
     variable = T_solid
   []
 
-  [R2_1L_max] # Output maximum solid temperature of block CH1: solid:fuel
+  [R2_1L_max]
     type = NodalExtremeValue
     block = 'R2_1-L:hs0'
     variable = T_solid
   []
-  [R2_1R_max] # Output maximum solid temperature of block CH1: solid:fuel
+  [R2_1R_max]
     type = NodalExtremeValue
     block = 'R2_1-R:hs0'
     variable = T_solid
   []
 
-  [R2_11L_max] # Output maximum solid temperature of block CH1: solid:fuel
+  [R2_11L_max]
     type = NodalExtremeValue
     block = 'R2_11-L:hs0'
     variable = T_solid
   []
-  [R2_11R_max] # Output maximum solid temperature of block CH1: solid:fuel
+  [R2_11R_max]
     type = NodalExtremeValue
     block = 'R2_11-R:hs0'
     variable = T_solid
   []
 
-  [R3_1L_max] # Output maximum solid temperature of block CH1: solid:fuel
+  [R3_1L_max]
     type = NodalExtremeValue
     block = 'R3_1-L:hs0'
     variable = T_solid
   []
-  [R3_1R_max] # Output maximum solid temperature of block CH1: solid:fuel
+  [R3_1R_max]
     type = NodalExtremeValue
     block = 'R3_1-R:hs0'
     variable = T_solid
   []
 
-  [R3_11L_max] # Output maximum solid temperature of block CH1: solid:fuel
+  [R3_11L_max]
     type = NodalExtremeValue
     block = 'R3_11-L:hs0'
     variable = T_solid
   []
-  [R3_11R_max] # Output maximum solid temperature of block CH1: solid:fuel
+  [R3_11R_max]
     type = NodalExtremeValue
     block = 'R3_11-R:hs0'
     variable = T_solid
   []
 
   ##
-  [R4_1L_max] # Output maximum solid temperature of block CH1: solid:fuel
+  [R4_1L_max]
     type = NodalExtremeValue
     block = 'R4_1-L:hs0'
     variable = T_solid
   []
-  [R4_1R_max] # Output maximum solid temperature of block CH1: solid:fuel
+  [R4_1R_max]
     type = NodalExtremeValue
     block = 'R4_1-R:hs0'
     variable = T_solid
   []
 
-  [R4_11L_max] # Output maximum solid temperature of block CH1: solid:fuel
+  [R4_11L_max]
     type = NodalExtremeValue
     block = 'R4_11-L:hs0'
     variable = T_solid
   []
-  [R4_11R_max] # Output maximum solid temperature of block CH1: solid:fuel
+  [R4_11R_max]
     type = NodalExtremeValue
     block = 'R4_11-R:hs0'
     variable = T_solid
   []
 
   ##
-  [R5_max] # Output maximum solid temperature of block CH1: solid:fuel
+  [R5_max]
     type = NodalExtremeValue
     block = 'R5:hs0'
     variable = T_solid
   []
 
-  [R6_max] # Output maximum solid temperature of block CH1: solid:fuel
+  [R6_max]
     type = NodalExtremeValue
     block = 'R6:hs0'
     variable = T_solid
   []
 
-  [R7_max] # Output maximum solid temperature of block CH1: solid:fuel
+  [R7_max]
     type = NodalExtremeValue
     block = 'R7:hs0'
     variable = T_solid
   []
 
-  [RCCS_max] # Output maximum solid temperature of block CH1: solid:fuel
+  [RCCS_max]
     type = NodalExtremeValue
     block = 'RCCS_AC:hs0'
     variable = T_solid
   []
-
-  ###
-
 []
 
 [Preconditioning]
-  active = 'SMP_PJFNK'
   [SMP_PJFNK]
     type = SMP
     full = true
     solve_type = 'PJFNK'
-  [] # End preconditioning block
+  []
 []
 
 [Executioner]
-  type = Transient #Steady
+  type = Transient
   dt = 1.
   dtmin = 1e-3
+  dtmax = 7200
 
-  start_time = -0.5e6
+  start_time = ${fparse -6*86400}
   end_time = 0 #1e6
-  num_steps = 30000
+
+  # [TimeStepper]
+  #   type = FunctionDT
+  #   function = time_stepper
+  #   min_dt = 1e-6
+  # []
+
   [TimeStepper]
-    type = FunctionDT
-    function = time_stepper
-    min_dt = 1e-6
+    type = IterationAdaptiveDT
+    growth_factor = 1.25
+    optimal_iterations = 8
+    linear_iteration_ratio = 150
+    cutback_factor = 0.8
+    cutback_factor_at_failure = 0.5
+    dt = 0.1
   []
 
-  #  [./TimeStepper]
-  #    type = IterationAdaptiveDT
-  #    growth_factor = 1.5
-  #    optimal_iterations = 8
-  #    linear_iteration_ratio = 150
-  #    cutback_factor = 0.8
-  #    cutback_factor_at_failure = 0.8
-  #    dt = 1.0
-  #  [../]
-  # dtmax = 100.
+  petsc_options_iname = '-pc_type -ksp_gmres_restart -mat_mffd_err'
+  petsc_options_value = 'lu       101                1e-4'
+  nl_rel_tol = 1e-3
+  nl_abs_tol = 1e-4
+  nl_max_its = 15
 
-  petsc_options_iname = '-ksp_gmres_restart -pc_type'
-  petsc_options_value = '300 lu '
-  #  line_search = basic
-
-  nl_rel_tol = 1e-6
-  nl_abs_tol = 1e-5
-  nl_max_its = 40
-
-  l_tol = 1e-4 # Relative linear tolerance for each Krylov solve
-  l_max_its = 100 # Number of linear iterations for each Krylov solve
+  l_tol = 1e-4
+  l_max_its = 100
 
   [Quadrature]
     type = TRAP
     order = FIRST
-    #      type = GAUSS
-    #      order = SECOND
-  [] # close Executioner section
+  []
 []
-
-#  [Problem]
-#   restart_file_base = restart/1388
-#  []
 
 [Outputs]
   perf_graph = true
@@ -8847,10 +8806,14 @@ T_out = 623.15 #1000
 
   [console]
     type = Console
+    time_step_interval = 5
+    execute_scalars_on = 'none'
+    time_format = dtime
   []
 
   [csv]
     type = CSV
+    execute_scalars_on = 'none'
   []
 
 []
