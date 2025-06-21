@@ -312,7 +312,7 @@ Dh_tot = 0.8096
 tot_massFlowRate = 289.12 #(kg/s)
 ##
 Ts_1 = 623.15
-v_1 = 10.0 #26.19
+v_1 = 15.0 #26.19
 p_out = 70e5
 T_out = 623.15
 core_init_v = -30.0 # Core is oriented in +z, flow is in -z direction
@@ -346,6 +346,10 @@ core_init_v = -30.0 # Core is oriented in +z, flow is in -z direction
     T_0 = 439
     mu = 0.00016
     k = 0.68
+  []
+
+  [eos_air]
+    type = AirEquationOfState
   []
 []
 
@@ -2316,7 +2320,7 @@ core_init_v = -30.0 # Core is oriented in +z, flow is in -z direction
     elem_number_axial = ${axial_nElem_1}
     dim_hs = 2
     material_hs = 'ss-mat'
-    Ts_init = 450 # ${Ts_1}
+    Ts_init = ${Ts_1}
     HS_BC_type = 'Adiabatic Coupled'
     name_comp_right = R6_C
     HT_surface_area_density_right = ${aw_R6}
@@ -2350,7 +2354,7 @@ core_init_v = -30.0 # Core is oriented in +z, flow is in -z direction
     elem_number_axial = ${axial_nElem_1}
     dim_hs = 2
     material_hs = 'ss-mat'
-    Ts_init = 450 # ${Ts_1}
+    Ts_init = ${Ts_1}
     HS_BC_type = 'Coupled Adiabatic'
     #    T_bc_right = 303
     name_comp_left = R6_C
@@ -8752,9 +8756,9 @@ core_init_v = -30.0 # Core is oriented in +z, flow is in -z direction
   type = Transient
   dt = 1.
   dtmin = 1e-3
-  dtmax = 7200
+  dtmax = 14400
 
-  start_time = ${fparse -6*86400}
+  start_time = ${fparse -3*86400}
   end_time = 0 #1e6
 
   # [TimeStepper]
@@ -8765,18 +8769,17 @@ core_init_v = -30.0 # Core is oriented in +z, flow is in -z direction
 
   [TimeStepper]
     type = IterationAdaptiveDT
-    growth_factor = 1.25
+    growth_factor = 1.5
     optimal_iterations = 8
-    linear_iteration_ratio = 150
     cutback_factor = 0.8
     cutback_factor_at_failure = 0.5
-    dt = 0.1
+    dt = 1.0
   []
 
   petsc_options_iname = '-pc_type -ksp_gmres_restart -mat_mffd_err'
-  petsc_options_value = 'lu       101                1e-4'
-  nl_rel_tol = 1e-3
-  nl_abs_tol = 1e-4
+  petsc_options_value = 'lu       101                1e-6'
+  nl_rel_tol = 1e-6
+  nl_abs_tol = 1e-5
   nl_max_its = 15
 
   l_tol = 1e-4
