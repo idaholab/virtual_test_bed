@@ -1,11 +1,26 @@
 [Tests]
-  [mhtgr_sam]
+  # Syntax check
+  [mhgtr_sam_syntax]
     type = RunApp
     input = 'MHTGR.i'
     check_input = True
     executable_pattern = 'sam*|blue_crab*'
     cli_args = '--app SamApp'
-
     allow_unused = true
+  []
+
+  # Regression test
+  [mhtgr_sam]
+    type = CSVDiff
+    input = 'MHTGR.i'
+    csvdiff = MHTGR_csv.csv
+    prereq = mhgtr_sam_syntax
+    cli_args = "--app SamApp Executioner/num_steps=5
+                Outputs/csv/execute_on='initial final'
+                Outputs/console/time_step_interval=1"
+    executable_pattern = 'blue_crab*|sam*'
+    rel_err = 1e-4
+    min_threads = 4
+    max_time = 500
   []
 []
