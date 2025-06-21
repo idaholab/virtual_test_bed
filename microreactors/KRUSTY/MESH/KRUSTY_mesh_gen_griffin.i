@@ -497,6 +497,7 @@ hp_fuel_gap_all = '64'
     clear_stitched_boundary_ids = true
     prevent_boundary_ids_overlap =false
     stitch_boundaries_pairs = '9527 9527; 9527 9527; 9527 9527; 9527 9527; 9527 9527; 9527 9527; 9527 9527; 9527 9527; 9527 9527'
+    subdomain_remapping = false # see idaholab/moose#30802
   []
   [Region5]
     type = ParsedCurveGenerator
@@ -603,6 +604,7 @@ hp_fuel_gap_all = '64'
     clear_stitched_boundary_ids = true
     prevent_boundary_ids_overlap =false
     stitch_boundaries_pairs = '9527 9527; 9527 9527'
+    subdomain_remapping = false # see idaholab/moose#30802
   []
   [Region8]
     type = ParsedCurveGenerator
@@ -708,6 +710,7 @@ hp_fuel_gap_all = '64'
     clear_stitched_boundary_ids = true
     prevent_boundary_ids_overlap =false
     stitch_boundaries_pairs = '9527 9527; 9527 9527'
+    subdomain_remapping = false # see idaholab/moose#30802
   []
   [Region11]
     type = ParsedCurveGenerator
@@ -1085,6 +1088,7 @@ hp_fuel_gap_all = '64'
     clear_stitched_boundary_ids = true
     prevent_boundary_ids_overlap =false
     stitch_boundaries_pairs = '9527 9527; 9527 9527; 9527 9527; 9527 9527; 9527 9527; 9527 9527; 9527 9527; 9527 9527; 9527 9527'
+    subdomain_remapping = false # see idaholab/moose#30802
   []
   [Stitch_Region_1_to_26]
     type = StitchedMeshGenerator
@@ -1092,6 +1096,7 @@ hp_fuel_gap_all = '64'
     clear_stitched_boundary_ids = true
     prevent_boundary_ids_overlap =false
     stitch_boundaries_pairs = '9527 9527; 9527 9527 ; 9527 9527'
+    subdomain_remapping = false # see idaholab/moose#30802
   []
   [mirror_x]
     type = TransformGenerator
@@ -1105,6 +1110,7 @@ hp_fuel_gap_all = '64'
     clear_stitched_boundary_ids = true
     prevent_boundary_ids_overlap =false
     stitch_boundaries_pairs = '9527 9527'
+    subdomain_remapping = false # see idaholab/moose#30802
   []
 ################################################################################
 # 2D Circular Boundary Correction
@@ -1199,6 +1205,7 @@ hp_fuel_gap_all = '64'
     clear_stitched_boundary_ids = true
     prevent_boundary_ids_overlap =false
     stitch_boundaries_pairs = '9527 9527'
+    subdomain_remapping = false # see idaholab/moose#30802
   []
   [rotate_part_to_add_2]
     type = TransformGenerator
@@ -1212,6 +1219,7 @@ hp_fuel_gap_all = '64'
     clear_stitched_boundary_ids = true
     prevent_boundary_ids_overlap =false
     stitch_boundaries_pairs = '9527 9527'
+    subdomain_remapping = false # see idaholab/moose#30802
   []
   [rotate_part_to_add_3]
     type = TransformGenerator
@@ -1225,6 +1233,7 @@ hp_fuel_gap_all = '64'
     clear_stitched_boundary_ids = true
     prevent_boundary_ids_overlap =false
     stitch_boundaries_pairs = '9527 9527'
+    subdomain_remapping = false # see idaholab/moose#30802
   []
 #############################################################################################
 # 2D Inner and Outer Ring-Shaped Component Generation
@@ -1347,6 +1356,7 @@ hp_fuel_gap_all = '64'
     clear_stitched_boundary_ids = true
     prevent_boundary_ids_overlap =false
     stitch_boundaries_pairs = '9527 9527'
+    subdomain_remapping = false # see idaholab/moose#30802
   []
 ################################################################################
 # Complete the inner ring. Below is the outer ring part.
@@ -1550,6 +1560,7 @@ hp_fuel_gap_all = '64'
       clear_stitched_boundary_ids = true
       prevent_boundary_ids_overlap =false
       stitch_boundaries_pairs = '9527 9527; 9527 9527; 9527 9527; 9527 9527'
+      subdomain_remapping = false # see idaholab/moose#30802
     []
     [rotate_r22_ring_mesh_1]
         type = TransformGenerator
@@ -1563,6 +1574,7 @@ hp_fuel_gap_all = '64'
         clear_stitched_boundary_ids = true
         prevent_boundary_ids_overlap =false
         stitch_boundaries_pairs = '9527 9527'
+        subdomain_remapping = false # see idaholab/moose#30802
     []
 ####################################################################################
 # 2D Most Outer Shield Component Generation (Region 27-30)
@@ -1710,6 +1722,7 @@ hp_fuel_gap_all = '64'
       clear_stitched_boundary_ids = true
       prevent_boundary_ids_overlap =false
       stitch_boundaries_pairs = '9527 9527; 9527 9527; 9527 9527'
+      subdomain_remapping = false # see idaholab/moose#30802
     []
     [Stitch_r22_ring_27_to_30]
       type = StitchedMeshGenerator
@@ -1717,6 +1730,7 @@ hp_fuel_gap_all = '64'
       clear_stitched_boundary_ids = true
       prevent_boundary_ids_overlap =false
       stitch_boundaries_pairs = '9527 9527'
+      subdomain_remapping = false # see idaholab/moose#30802
     []
     [mirror_outer_zone_1]
       type = TransformGenerator
@@ -1730,6 +1744,7 @@ hp_fuel_gap_all = '64'
       clear_stitched_boundary_ids = true
       prevent_boundary_ids_overlap =false
       stitch_boundaries_pairs = '9527 9527'
+      subdomain_remapping = false # see idaholab/moose#30802
     []
     [mirror_outer_zone_2]
       type = TransformGenerator
@@ -1743,6 +1758,7 @@ hp_fuel_gap_all = '64'
       clear_stitched_boundary_ids = true
       prevent_boundary_ids_overlap =false
       stitch_boundaries_pairs = '9527 9527'
+      subdomain_remapping = false # see idaholab/moose#30802
     []
     [Stitch_inner_outer]
       type = StitchedMeshGenerator
@@ -1750,6 +1766,7 @@ hp_fuel_gap_all = '64'
       clear_stitched_boundary_ids = true
       prevent_boundary_ids_overlap =false
       stitch_boundaries_pairs = '9527 9527'
+      subdomain_remapping = false # see idaholab/moose#30802
     []
 ################################################################################
 # Generating interface boundary between blocks in order to use CCG
