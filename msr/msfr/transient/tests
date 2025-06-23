@@ -59,5 +59,7 @@
     executable_pattern = 'combined*|blue_crab*|dire_wolf*|pronghorn*|fenix*'
     cli_args = 'Executioner/num_steps=2 Executioner/dt=0.25'
     min_parallel = 4
+    # P drop calculation changed in idaholab/moose#29614
+    skip = '#609'
   []
 []
