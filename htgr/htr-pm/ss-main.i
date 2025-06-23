@@ -967,12 +967,12 @@ rho_in            = 6.3306  # Helium density at 7 MPa and 523.15 K (from NIST)
   start_time = -200000
   end_time = 0
 
-  picard_rel_tol                 = 1e-3
-  picard_abs_tol                 = 1e-3
+  fixed_point_rel_tol                 = 1e-3
+  fixed_point_abs_tol                 = 1e-3
   fixed_point_max_its            = 10
   relaxation_factor              = 0.8
   relaxed_variables              = 'p T vel_x vel_y'
-  accept_on_max_picard_iteration = true
+  accept_on_max_fixed_point_iteration = true
 
   [Quadrature]
     type = GAUSS

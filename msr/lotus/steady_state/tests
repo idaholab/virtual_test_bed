@@ -49,6 +49,8 @@
     method = 'opt'
     min_parallel = 16
     max_time = 400
+    # P drop calculation changed in idaholab/moose#29614
+    skip = '#609'
   []
   [coupled_mcre_multiphysics]
     prereq = coupled_mcre_multiphysics_syntax
