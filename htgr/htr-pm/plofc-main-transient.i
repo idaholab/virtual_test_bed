@@ -961,12 +961,12 @@ pbed_d      = 3.0  # Pebble bed diameter (m)
   start_time = 0
   end_time = 500000
 
-  picard_rel_tol                 = 1e-3
-  picard_abs_tol                 = 1e-3
+  fixed_point_rel_tol                 = 1e-3
+  fixed_point_abs_tol                 = 1e-3
   fixed_point_max_its            = 10
   relaxation_factor              = 0.8
   relaxed_variables              = 'p T vel_x vel_y'
-  accept_on_max_picard_iteration = true
+  accept_on_max_fixed_point_iteration = true
 
   [Quadrature]
     type = GAUSS
