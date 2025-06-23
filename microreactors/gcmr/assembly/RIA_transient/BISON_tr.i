@@ -356,10 +356,6 @@ coolant_half_points_filename = ../channel_positions/coolant_half_points.txt # Fi
   nl_abs_tol = 5e-9
   nl_rel_tol = 1e-8
 
-  # picard_rel_tol = 1.0e-8
-  # picard_abs_tol = 5.0e-9
-  # picard_max_its = 20
-
   start_time = 0.0 # negative start time so we can start running from t = 0
   end_time = 1e4
   dt = 1
