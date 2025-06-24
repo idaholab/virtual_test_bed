@@ -12,6 +12,7 @@ lfs_include:
   - htgr/pbmr400
   - htgr/htr10
   - htgr/httr
+  - htgr/gpbr200
   - sfr/vtr
   - microreactors/gcmr/assembly/MESH
   - microreactors/mrad/mesh/gold
