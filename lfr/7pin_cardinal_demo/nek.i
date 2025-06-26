@@ -29,7 +29,7 @@
       type = NekBoundaryFlux
       conserve_flux_by_sideset = true
       direction = to_nek
-      postprocessor_to_preserve = flux_integral
+      postprocessor_to_conserve = flux_integral
       usrwrk_slot = 0
     []
     [temp]
