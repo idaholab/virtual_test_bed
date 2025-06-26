@@ -36,8 +36,8 @@ P_out = 2.0e5 # Pa
     spacer_k = '0.0'
     z_blockage = '0.49 0.52'
     index_blockage = '29 31 30 32 34 33 35 15 16 8 17 18 9 19'
-    reduction_blockage = '0.2 0.2 0.2 0.2 0.2 0.2 0.2 0.2 0.2 0.2 0.2 0.2 0.2 0.2'
-    k_blockage = '1.2 1.2 1.2 1.2 1.2 1.2 1.2 1.2 1.2 1.2 1.2 1.2 1.2 1.2 '
+    reduction_blockage = '0.25 0.25 0.25 0.25 0.25 0.25 0.25 0.25 0.25 0.25 0.25 0.25 0.25 0.25'
+    k_blockage = '1.5 1.5 1.5 1.5 1.5 1.5 1.5 1.5 1.5 1.5 1.5 1.5 1.5 1.5 '
   []
 []
 
@@ -91,7 +91,7 @@ P_out = 2.0e5 # Pa
   fp = sodium
   n_blocks = 1
   P_out = 2.0e5
-  CT = 10
+  CT = 2.2
   compute_density = true
   compute_viscosity = true
   compute_power = true
@@ -100,6 +100,7 @@ P_out = 2.0e5 # Pa
   implicit = true
   segregated = false
   interpolation_scheme = 'upwind'
+  verbose_subchannel = true
 []
 
 [ICs]
