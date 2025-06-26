@@ -7,25 +7,39 @@
 
 [Problem]
   type = NekRSProblem
-  conserve_flux_by_sideset = true
   synchronization_interval = parent_app
 
   # This input is run in nondimensional form to verify that all the postprocessors
   # and data transfers in/out of nekRS are properly dimensionalized.
-  nondimensional = true
-  U_ref = 0.1186 #U0
-  T_ref = 693.15 #t0 K
-  dT_ref = 100 #deltaT
-  L_ref = 0.0108
-  rho_0 = 10401.75
-  Cp_0 = 144.19
+  [Dimensionalize]
+    U= 0.1186 #U0
+    T= 693.15 #t0 K
+    dT= 100 #deltaT
+    L= 0.0108
+    rho = 10401.75
+    Cp = 144.19
+  []
 
 # t* = L_ref/U_ref = 0.091062394603710
 # t_nondim = 1.0e-02
 # t_nekrs = 0.9106239460371001 ms
 
+  [FieldTransfers]
+    [avg_flux]
+      type = NekBoundaryFlux
+      conserve_flux_by_sideset = true
+      direction = to_nek
+      postprocessor_to_preserve = flux_integral
+      usrwrk_slot = 0
+    []
+    [temp]
+      type = NekFieldVariable
+      direction = from_nek
+      field = temperature
+    []
+  []
+
   casename = 7pin
-  has_heat_source = false
 []
 
 [Mesh]

@@ -292,7 +292,7 @@ The coolant/fluid region is solved using Cardinal, which internally utilizes nek
 
 The `[Problem]` block describes all objects necessary for the actual physics solve; for the solid input file, the default of +FEProblem+ was implicitly assumed. However, to replace MOOSE finite element calculations with nekRS spectral element calculations, a Cardinal-specific +NekRSProblem+ class is used.
 The nekRS computations were executed in a dimensionless manner, and a set of reference/characteristic scales is provided  in `[Problem]` for dimensional conversion. The variable +casename+ instructs Cardinal regarding the case setup files required by nekRS for conducting CFD simulations, such as +casename.udf+, +casename.usr+, and so on.
-In this model, the heat source was exclusively deposited in the fuel region, resulting in setting +has_heat_source+ to +false+ for the fluid.
+In this block, we also specify which transfers we want for NekRS, to send data between NekRS and MOOSE. The wall boundary heat flux will be sent into NekRS, while the temperature field will be extracted from NekRS. We specify `usrwrk_slot = 0` for the incoming heat flux, which means that it will be accessed on the device as `bc->usrwrk[bc->idM + 0 * bc->fieldOffset]`.
 
 The class +NekRSMesh+, specific to Cardinal, is employed to generate a "mirror" of the surfaces within the nekRS mesh. This mirror is utilized for coupling boundary conditions. The +boundary+ parameter is employed to define all the boundary IDs, enabling conjugate heat transfer coupling between nekRS and the MOOSE heat transfer module. To revert to dimensional units, the entire mesh must be scaled by a factor of $L_{ref}$.
 
