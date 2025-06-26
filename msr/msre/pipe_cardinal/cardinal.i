@@ -1,6 +1,6 @@
 [Mesh]
   type = FileMesh
-  file = ./solid_hex8.exo
+  file = solid_hex8.exo
 []
 
 [GlobalParams]

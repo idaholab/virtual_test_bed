@@ -106,7 +106,7 @@ The specific boundary condition values, such as inflow velocities and temperatur
 
 ## Cardinal Case Setups
 
-The demonstration model utilizes nekRS to perform conjugate heat transfer simulations and transfer the temperature solution in the solid region (specifically, the T-junction pipe wall) from +nekRS+ to the +MOOSE Solid Mechanics Module+ for thermal stress analysis. This multiphysics coupling approach involves two input files: `cardinal.i` and `nek.i`. In this setup, the MOOSE Solid Mechanics model defined in cardinal.i acts as the parent application, while the nekRS CFD model operates as the sub-application.
+The demonstration model utilizes nekRS to perform conjugate heat transfer simulations and transfer the temperature solution in the solid region (specifically, the T-junction pipe wall) from +nekRS+ to the +MOOSE Solid Mechanics Module+ for thermal stress analysis. This multiphysics coupling approach involves two input files: `cardinal.i` and `nek.i`. In this setup, the MOOSE Solid Mechanics model defined in `cardinal.i` acts as the parent application, while the nekRS CFD model operates as the sub-application.
 Let's first examine the input file `cardinal.i`. A solid region mesh has to be provided in Exodus format, with the mesh cells configured as Hex8 elements.
 In this case, the CFD meshing software ANSYS ICEM was used to generate the mesh.
 
@@ -130,7 +130,7 @@ The `[MultiApps]` block controls the coupling hierarchy, while the volume mappin
 
 !listing msr/msre/pipe_cardinal/cardinal.i block=Transfers
 
-The `nek.i` input file orchestrates the CFD simulation performed by nekRS. Its content is quite minimal, with the key settings being the reference values used for converting raw nekRS results into physical quantities of interest in dimensional units.
+The `nek.i` input file orchestrates the CFD simulation performed by nekRS. Its content is quite minimal, with the key settings being the reference values used for converting raw nekRS results into physical quantities of interest in dimensional units. We also specify that we will read the NekRS temperature into a variable named `temp` (which was referenced earlier in the `cardinal.i` `[Transfers]` block).
 
 !listing msr/msre/pipe_cardinal/nek.i block=Problem
 
