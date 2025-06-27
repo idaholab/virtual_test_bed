@@ -6,6 +6,20 @@
 [Problem]
   type = NekRSProblem
   casename = 'pb67'
+
+  [FieldTransfers]
+    [avg_flux]
+      type = NekBoundaryFlux
+      direction = to_nek
+      usrwrk_slot = 0
+      postprocessor_to_conserve = flux_integral
+    []
+    [temp]
+      type = NekFieldVariable
+      direction = from_nek
+      field = temperature
+    []
+  []
 []
 
 [Executioner]

@@ -2,12 +2,21 @@
   type = NekRSProblem
   casename = 'tjunc'
 
-  nondimensional = true
-  U_ref = 0.2
-  T_ref = 900
-  dT_ref = 100
-  rho_0 = 1682.32
-  Cp_0 = 2390
+  [Dimensionalize]
+    U= 0.2
+    T= 900
+    dT= 100
+    rho = 1682.32
+    Cp = 2390
+  []
+
+  [FieldTransfers]
+    [temp]
+      type = NekFieldVariable
+      direction = from_nek
+      field = temperature
+    []
+  []
 []
 
 [Mesh]
