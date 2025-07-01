@@ -33,7 +33,7 @@ non_he_channel_blocks = '${fuel_blocks} ${mod_blocks} ${poison_blocks} ${ref_blo
   # 3. Uncomment the "parallel_type = distributed" line
   [fmg]
     type = FileMeshGenerator
-    file = '../../MESH/Griffin_mesh_in.e'
+    file = '../mesh/Griffin_mesh_in.e'
     # file = 'griffin-mesh.cpr'
   []
   [fmg_id]

@@ -8,7 +8,7 @@
 [Mesh]
   [fmg]
     type = FileMeshGenerator
-    file = '../MESH/Griffin_mesh_in.e'
+    file = 'mesh/Griffin_mesh_in.e'
   []
 
   [fmg_id]

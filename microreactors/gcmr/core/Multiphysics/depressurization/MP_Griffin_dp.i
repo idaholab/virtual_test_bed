@@ -36,7 +36,7 @@ non_he_channel_blocks = '${fuel_blocks} ${mod_blocks} ${poison_blocks} ${ref_blo
   # If you already generated the presplit mesh you can symbolically link it here.
   [fmg]
     type = FileMeshGenerator
-    file = '../../MESH/Griffin_mesh_in.e'
+    file = '../mesh/Griffin_mesh_in.e'
     # file = 'griffin-mesh.cpr'
   []
   [fmg_id]

@@ -49,7 +49,7 @@ coolant_full_points_filename = '../component_positions/cc_positions_sixth.txt'
   parallel_type = DISTRIBUTED
   [fmg]
     type = FileMeshGenerator
-    file = '../../MESH/BISON_mesh_in.e'
+    file = '../mesh/BISON_mesh_in.e'
     # file = 'bison-mesh.cpr'
   []
   [bdg_full]
