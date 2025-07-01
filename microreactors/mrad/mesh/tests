@@ -9,7 +9,7 @@
         cli_args = "--mesh-only 'HPMR_OneSixth_Core_meshgenerator_tri_rotate_bdry.e'"
         recover = false
     []
-	[CDRmesh_generation]
+    [CDRmesh_generation]
         type = 'Exodiff'
         input = 'HPMR_OneSixth_finercdrum.i'
         exodiff = 'HPMR_OneSixth_finercdrum_tri.e'
@@ -27,4 +27,4 @@
         cli_args = "--mesh-only 'HPMR_OneSixth_Core_meshgenerator_tri_rotate_bdry_fine.e'"
         recover = false
     []
-[]    
+[]
