@@ -7,6 +7,7 @@
     capabilities = cardinalapp
     min_parallel = 32
     max_time = 1000
+    hpc_mem_per_cpu = 6G
   []
   [nek]
     type = RunApp
@@ -17,14 +18,16 @@
     cli_args = 'Outputs/exodus=false'
     min_parallel = 32
     max_time = 1000
+    hpc_mem_per_cpu = 6G
   []
   [full_sim]
     type = RunApp
     input = solid.i
+    cli_args = 'Outputs/exodus=false Executioner/num_steps=100'
     requirement = "Cardinal shall be able to run a conjugate heat transfer simnulation in the reflector of the Mark1 reactor."
     capabilities = cardinalapp
     min_parallel = 32
     max_time = '5400'
-    cli_args = 'Outputs/exodus=false Executioner/num_steps=100'
+    hpc_mem_per_cpu = 6G
   []
 []
