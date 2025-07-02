@@ -1,0 +1,95 @@
+{
+    "reporters": {
+        "cv": {
+            "type": "CrossValidationScores",
+            "values": {
+                "pr1_Tfuel": {
+                    "type": "std::vector<std::vector<double>>"
+                },
+                "pr1_Tmod": {
+                    "type": "std::vector<std::vector<double>>"
+                },
+                "pr2_Tfuel": {
+                    "type": "std::vector<std::vector<double>>"
+                },
+                "pr2_Tmod": {
+                    "type": "std::vector<std::vector<double>>"
+                },
+                "pr4_Tfuel": {
+                    "type": "std::vector<std::vector<double>>"
+                },
+                "pr4_Tmod": {
+                    "type": "std::vector<std::vector<double>>"
+                },
+                "pr6_Tfuel": {
+                    "type": "std::vector<std::vector<double>>"
+                },
+                "pr6_Tmod": {
+                    "type": "std::vector<std::vector<double>>"
+                }
+            }
+        }
+    },
+    "time_steps": [
+        {
+            "cv": {
+                "pr1_Tfuel": [],
+                "pr1_Tmod": [],
+                "pr2_Tfuel": [],
+                "pr2_Tmod": [],
+                "pr4_Tfuel": [],
+                "pr4_Tmod": [],
+                "pr6_Tfuel": [],
+                "pr6_Tmod": []
+            },
+            "time": 0.0,
+            "time_step": 0
+        },
+        {
+            "cv": {
+                "pr1_Tfuel": [
+                    [
+                        47.93778022457521
+                    ]
+                ],
+                "pr1_Tmod": [
+                    [
+                        32.9195508849906
+                    ]
+                ],
+                "pr2_Tfuel": [
+                    [
+                        17.7422000068469
+                    ]
+                ],
+                "pr2_Tmod": [
+                    [
+                        11.775508161596353
+                    ]
+                ],
+                "pr4_Tfuel": [
+                    [
+                        6.89988566743494
+                    ]
+                ],
+                "pr4_Tmod": [
+                    [
+                        4.675869470853429
+                    ]
+                ],
+                "pr6_Tfuel": [
+                    [
+                        3.4345997680514437
+                    ]
+                ],
+                "pr6_Tmod": [
+                    [
+                        2.323928864773492
+                    ]
+                ]
+            },
+            "time": 1.0,
+            "time_step": 1
+        }
+    ]
+}

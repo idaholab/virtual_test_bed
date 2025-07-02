@@ -1,0 +1,24 @@
+[Tests]
+  [grid_study]
+    type = CSVDiff
+    input = stm_grid_study.i
+    csvdiff = stm_grid_study_out_storage_0001.csv
+    # Doing 12 samples instead of 72 and removing dependence on pebble surrogate model
+    cli_args = "ngrid=2 sub:Surrogates/active='' sub:AuxKernels/inactive='Tfuel_aux Tmod_aux'"
+    executable_pattern = 'blue_crab*'
+    allow_warnings = true # Cross section warning
+    min_parallel = 24
+    max_time = 3600 # About 2x predicted run-time
+  []
+  [lhs_sampling]
+    type = CSVDiff
+    input = stm_lhs_sampling.i
+    csvdiff = stm_lhs_sampling_out_storage_0001.csv
+    # Doing 100 samples instead of 10k and removing dependence on pebble surrogate model
+    cli_args = "Samplers/sample/num_rows=100 sub:Surrogates/active='' sub:AuxKernels/inactive='Tfuel_aux Tmod_aux'"
+    executable_pattern = 'blue_crab*'
+    allow_warnings = true # Cross section warning
+    min_parallel = 100
+    max_time = 7200 # About 2x predicted run-time
+  []
+[]

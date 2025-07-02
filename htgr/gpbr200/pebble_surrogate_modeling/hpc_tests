@@ -1,0 +1,31 @@
+[Tests]
+  [sample]
+    type = CheckFiles
+    input = stm_pebble_sampling.i
+    check_files = 'stm_pebble_sampling_csv_study_results_0001.csv'
+    executable_pattern = 'bison*|blue_crab*'
+    min_parallel = 10
+    allow_warnings = true # Packing fraction and temperature bound warnings
+  []
+  [train]
+    type = JSONDiff
+    input = stm_pebble_surrogate.i
+    jsondiff = stm_pebble_surrogate_out.json
+    executable_pattern = 'bison*|blue_crab*'
+    prereq = sample
+  []
+  [evaluate]
+    type = CSVDiff
+    input = gpbr200_ss_gfnk_reactor.i
+    csvdiff = 'gpbr200_ss_gfnk_reactor_out.csv gpbr200_ss_gfnk_reactor_out_pronghorn_th0.csv'
+    ignore_columns = 'power_scaling'
+    executable_pattern = 'blue_crab*'
+    # Only need to look at CSV file
+    cli_args = 'Outputs/exodus=false pronghorn_th:Outputs/exodus=false'
+    min_parallel = 10
+    max_parallel = 32
+    allow_warnings = true # Cross section warning
+    prereq = train
+    max_time = 1000 # About 3x predited run-time
+  []
+[]
