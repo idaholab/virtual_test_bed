@@ -3,10 +3,10 @@
   # Griffin tests
   [generate_mesh]
     type = RunApp
-    input = '../MESH/Griffin_mesh.i'
+    input = 'Griffin_mesh.i'
     cli_args = '--mesh-only'
     executable_pattern = 'griffin*|blue_crab*'
-    working_directory = '../MESH'
+    working_directory = 'mesh'
   []
   [griffin_alone_syntax]
     type = RunApp
