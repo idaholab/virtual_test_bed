@@ -5,7 +5,8 @@
     cli_args = 'Executioner/num_steps=10'
     check_input = true
     executable_pattern = 'cardinal*'
-    min_parallel = 240
+    min_parallel = 120
     max_time = 20000
+    hpc_mem_per_cpu = 6G
   []
 []
