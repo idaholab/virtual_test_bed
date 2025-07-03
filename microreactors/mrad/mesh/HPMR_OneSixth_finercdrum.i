@@ -2,10 +2,11 @@
 # This is the MOOSE input file to generate the mesh that can be
 # used for the 1/6 core Heat-Pipe Microreactor Multiphysics
 # simulations (BISON thermal simulation).
-# Running this input requires the MOOSE Reactor Module in your application
-# Users should use this command line argument:
+# Running this input requires MOOSE Reactor Module Objects
+# Users should use
 # --mesh-only HPMR_OneSixth_Core_meshgenerator_tri_rotate_bdry_fine.e
-# to generate the exodus mesh file for further Multiphysics simulations.
+# command line argument to generate
+# exodus file for further Multiphysics simulations.
 #####################################################################
 [Mesh]
   # Moderator pins
@@ -406,22 +407,26 @@
     new_boundary = 147
   []
   # extrusion
-  [extrude]
-    type = AdvancedExtruderGenerator
-    input = del_2
-    heights = '20 160 20'
-    # Use `num_layers = '6 16 6'` for BISON mesh
-    num_layers = '1 8 1'
-    subdomain_swaps = '101  1000  100  1000  103  1003    201  201     200  200     203  203    250  250  301  1000   303  1003  400    400  401     401    10  1000  503    503  600  600    601   601    504    504     500   500   501   501  10000 1009  5001   5001  5002   5002  5003   5003   5004   5004   5005  5005   5006  5006   5007  5007   5008  5008   5009  5009   5010  5010    5011  5011    5012  5012;
-                       101  101   100  100   103  103     201  201     200  200     203  203    250  250  301  301    303  303   400    400  401     401    10  10    503    503  600  600    601   601    504    504     500   500   501   501  10000 10000 5001   5001  5002   5002  5003   5003   5004   5004   5005  5005   5006  5006   5007  5007   5008  5008   5009  5009   5010  5010    5011  5011    5012  5012;
-                       101  1000  100  1000  103  1003    201  1000    200  1000    203  1003   250  250  301  1000   303  1003  400    400  401     401    10  1000  503    503  600  600    601   601    504    504     500   500   501   501  10000 1008  5001   5001  5002   5002  5003   5003   5004   5004   5005  5005   5006  5006   5007  5007   5008  5008   5009  5009   5010  5010    5011  5011    5012  5012'
+   [extrude]
+     type = AdvancedExtruderGenerator
+     input = del_2
+     heights = '20 160 20'
+     # Use `num_layers = '6 16 6'` for BISON mesh
+     num_layers = '1 8 1'
+     subdomain_swaps = '101  1000  100  1000  103  1003    201  201     200  200     203  203    250  250  301  1000   303  1003  400    400  401     401    10  1000   600  600    601   601    504    504     500   500   501   501  10000 1009 ;
+                        101  101   100  100   103  103     201  201     200  200     203  203    250  250  301  301    303  303   400    400  401     401    10  10     600  600    601   601    504    504     500   500   501   501  10000 10000;
+                        101  1000  100  1000  103  1003    201  1000    200  1000    203  1003   250  250  301  1000   303  1003  400    400  401     401    10  1000   600  600    601   601    504    504     500   500   501   501  10000 1008 '
 
-    # biased upper and lower reflector mesh, only for BISON mesh
-    #biases = '1.6 1.0 0.625'
-    direction = '0 0 1'
-    top_boundary = 2000
-    bottom_boundary = 3000
-  []
+    #subdomain_swaps = '101  1000  100  1000  103  1003    201  201     200  200     203  203    250  250  301  1000   303  1003  400    400  401     401    10  1000  503    503  600  600    601   601    504    504     500   500   501   501  10000 1009  5001   5001  5002   5002  5003   5003   5004   5004   5005  5005   5006  5006   5007  5007   5008  5008   5009  5009   5010  5010    5011  5011    5012  5012;
+    #                   101  101   100  100   103  103     201  201     200  200     203  203    250  250  301  301    303  303   400    400  401     401    10  10    503    503  600  600    601   601    504    504     500   500   501   501  10000 10000 5001   5001  5002   5002  5003   5003   5004   5004   5005  5005   5006  5006   5007  5007   5008  5008   5009  5009   5010  5010    5011  5011    5012  5012;
+    #                   101  1000  100  1000  103  1003    201  1000    200  1000    203  1003   250  250  301  1000   303  1003  400    400  401     401    10  1000  503    503  600  600    601   601    504    504     500   500   501   501  10000 1008  5001   5001  5002   5002  5003   5003   5004   5004   5005  5005   5006  5006   5007  5007   5008  5008   5009  5009   5010  5010    5011  5011    5012  5012'
+
+     # biased upper and lower reflector mesh, only for BISON mesh
+     #biases = '1.6 1.0 0.625'
+     direction = '0 0 1'
+     top_boundary = 2000
+     bottom_boundary = 3000
+   []
   ## Define some special reflector blocks
   #[reflector_bottom_quad]
   #  type = ParsedSubdomainMeshGenerator
@@ -458,7 +463,7 @@
   #   new_block_name = ' mod_ss moderator_quad moderator_tri hp_ss  heat_pipes_quad heat_pipes_tri fuel_quad fuel_tri reflector_tri reflector_quad monolith  air_gap_tri air_gap_quad air_gap_quad reflector_tri  reflector_quad Drum_channel     reflector'
   #  input = extrude
   #[]
-  # Assign boundary names
+ # Assign boundary names
   [rename_boundaries]
     type = RenameBoundaryGenerator
     input = extrude
