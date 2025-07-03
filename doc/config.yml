@@ -17,6 +17,7 @@ Extensions:
         name: vtb
         repo: https://github.com/idaholab/virtual_test_bed
         menu:
+            Registration: https://ncrcaims.inl.gov/vtb/VTBRegistration
             Contributing: contributing.md
             Citing: citing.md
     MooseDocs.extensions.appsyntax:
