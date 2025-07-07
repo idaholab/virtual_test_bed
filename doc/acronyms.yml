@@ -14,6 +14,7 @@ HPC: High-Performance Computing
 HTGR: High Temperature Gas Reactor
 MPI: Message Passing Interface
 NEAMS: Nuclear Energy Advanced Modeling and Simulation
+NRIC: National Reactor Innovation Center
 OCCA: Open Concurrent Compute Abstraction
 PB-FHR: Pebble Bed Fluoride-Salt-Cooled High-Temperature Reactor
 PyC: Pyrolitic Carbon
@@ -32,5 +33,5 @@ FIPD: Fuels Irradiation and Physics Database
 IFR: Integral Fast Reactor
 PIE: Post-Irradiation Examination
 EFPD: Effective Full Power Days
-NRAD: Neutron Radiograph 
+NRAD: Neutron Radiograph
 CDF: Cumulative Damage Fraction
