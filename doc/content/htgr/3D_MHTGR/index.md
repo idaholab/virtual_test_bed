@@ -1,6 +1,8 @@
 # 3D mesh of the mHGTR
 
-*Contact: Olin Calvin, olin.calvin.at.inl.gov
+*Contact: Olin Calvin, olin.calvin.at.inl.gov*
+
+*Model summarized and documented by Kylee Swanson*
 
 *Model link: [3D Mesh of the modular HTGR](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/mhtgr/3D_mesh/)*
 
