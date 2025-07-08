@@ -1,6 +1,8 @@
 # 2D gHPMR Reactor Mesh
 
-*Contact: Olin Calvin, olin.calvin.at.inl.gov
+*Contact: Olin Calvin, olin.calvin.at.inl.gov*
+
+*Model summarized and documented by Kylee Swanson*
 
 *Model link: [Generic Heat Pipe Micro-Reactor 2D Mesh](https://github.com/idaholab/virtual_test_bed/tree/main/microreactors/gHPMR)*
 
