@@ -1,6 +1,8 @@
 # Aerojet General Nucleonics 201 (AGN-201) Research Reactor Mesh
 
-*Contact: Olin Calvin, olin.calvin.at.inl.gov
+*Contact: Olin Calvin, olin.calvin.at.inl.gov*
+
+*Model summarized and documented by Kylee Swanson*
 
 *Model link: [AGN-201 Mesh](https://github.com/idaholab/virtual_test_bed/tree/main/research_reactors/agn/)*
 
