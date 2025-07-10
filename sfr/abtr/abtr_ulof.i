@@ -794,7 +794,6 @@
   []
   [cover_gas]
     type = CoverGas
-    n_liquidvolume = 2
     name_of_liquidvolume = 'hot_pool cold_pool_low'
     initial_P = 1e5
     initial_Vol = 66.77

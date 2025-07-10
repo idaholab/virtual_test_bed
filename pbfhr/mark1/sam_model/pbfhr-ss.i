@@ -573,7 +573,6 @@
 
   [cover_gas2]
     type = CoverGas
-    n_liquidvolume = 1
     name_of_liquidvolume = 'pool2'
     initial_P = 9e4
     initial_Vol = 0.5
@@ -623,7 +622,6 @@
 
   [cover_gas1]
     type = CoverGas
-    n_liquidvolume = 1
     name_of_liquidvolume = 'pool1'
     initial_P = 2e5
     initial_Vol = 0.5
