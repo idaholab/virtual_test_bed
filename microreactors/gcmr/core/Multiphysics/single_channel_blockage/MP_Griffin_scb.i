@@ -179,6 +179,7 @@ non_he_channel_blocks = '${fuel_blocks} ${mod_blocks} ${poison_blocks} ${ref_blo
   exodus = false
   perf_graph = true
   checkpoint = true
+  wall_time_checkpoint = false
 []
 
 [MultiApps]
