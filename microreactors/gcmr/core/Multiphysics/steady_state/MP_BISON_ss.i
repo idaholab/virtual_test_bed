@@ -491,11 +491,12 @@ coolant_full_points_filename = '../component_positions/cc_positions_sixth.txt'
   csv = false
   [exodus]
     type = Exodus
-    execute_on = 'FINAL'
+    execute_on = 'TIMESTEP_END'
     enable = false
+    start_time = -1e-8 # Write Exodus on the last timestep
   []
   [cp]
     type = Checkpoint
-    additional_execute_on = 'FINAL'
+    wall_time_interval = '300' # Only write a checkpoint file every 5 minutes of wall time
   []
 []
