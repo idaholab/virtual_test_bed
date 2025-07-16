@@ -168,6 +168,7 @@ non_he_channel_blocks = '${fuel_blocks} ${mod_blocks} ${poison_blocks} ${ref_blo
 [Outputs]
   csv = true
   perf_graph = true
+  wall_time_checkpoint = false
   [exodus]
     type = Exodus
     execute_on = 'FINAL'
