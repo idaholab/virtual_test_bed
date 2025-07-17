@@ -15,7 +15,7 @@
   # Regression checks for 19-pin model
   [ORNL-19]
     type = CSVDiff
-    input = ornl_19_pin_viz_19_pin.i
+    input = ornl_19_pin.i
     csvdiff = ornl_19_pin_out.csv
     capabilities = 'method!=dbg'
     valgrind = NONE
