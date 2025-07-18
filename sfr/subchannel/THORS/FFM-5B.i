@@ -1,6 +1,6 @@
 ################################################################################
 ## THORS bundle 5B partial edge blockage benchmark                            ##
-## SCM simulation, Low/High flow case                                         ##
+## SCM simulation, low flow case                                              ##
 ## POC : Vasileios Kyriakopoulos, vasileios.kyriakopoulos@inl.gov             ##
 ################################################################################
 # Details on the experimental facility modeled can be found at:
@@ -9,13 +9,11 @@
 # 102 mm above the start of the heated section.
 
 # Boundary conditions
-# T_in = 596.75 # K, high flow case
 T_in = 541.55 #K, low flow case
 A12 = 1.00423e3
 A13 = -0.21390
 A14 = -1.1046e-5
 rho = '${fparse A12 + A13 * T_in + A14 * T_in * T_in}'
-# inlet_vel = 6.93 #m/sec, high flow case
 inlet_vel = 0.48 #m/sec, low flow case
 mass_flux_in = '${fparse rho *  inlet_vel}'
 P_out = 2.0e5 # Pa
@@ -32,12 +30,10 @@ P_out = 2.0e5 # Pa
     pitch = 7.2644e-3
     dwire = 0.0014224
     hwire = 0.3048
-    spacer_z = '0.0'
-    spacer_k = '0.0'
     z_blockage = '0.49 0.52'
     index_blockage = '29 31 30 32 34 33 35 15 16 8 17 18 9 19'
-    reduction_blockage = '0.2 0.2 0.2 0.2 0.2 0.2 0.2 0.2 0.2 0.2 0.2 0.2 0.2 0.2'
-    k_blockage = '1.2 1.2 1.2 1.2 1.2 1.2 1.2 1.2 1.2 1.2 1.2 1.2 1.2 1.2 '
+    reduction_blockage = '0.1 0.1 0.1 0.1 0.1 0.1 0.1 0.1 0.1 0.1 0.1 0.1 0.1 0.1'
+    k_blockage = '5 5 5 5 5 5 5 5 5 5 5 5 5 5 '
   []
 []
 
@@ -91,7 +87,7 @@ P_out = 2.0e5 # Pa
   fp = sodium
   n_blocks = 1
   P_out = 2.0e5
-  CT = 10
+  CT = 2
   compute_density = true
   compute_viscosity = true
   compute_power = true
@@ -99,7 +95,8 @@ P_out = 2.0e5 # Pa
   T_tol = 1.0e-4
   implicit = true
   segregated = false
-  interpolation_scheme = 'upwind'
+  verbose_subchannel = true
+  interpolation_scheme = exponential
 []
 
 [ICs]
@@ -111,14 +108,6 @@ P_out = 2.0e5 # Pa
   [w_perim_IC]
     type = SCMTriWettedPerimIC
     variable = w_perim
-  []
-
-  [q_prime_IC]
-    type = SCMTriPowerIC
-    variable = q_prime
-    # power = 145000  #W, high flow case
-    power = 52800 #W, low flow case
-    filename = "pin_power_profile_19.txt"
   []
 
   [T_ic]
@@ -185,6 +174,13 @@ P_out = 2.0e5 # Pa
     area = S
     mass_flux = ${mass_flux_in}
     execute_on = 'timestep_begin'
+  []
+  [q_prime_Aux]
+    type = SCMTriPowerAux
+    variable = q_prime
+    power = 52800 #W, low flow case
+    filename = "pin_power_profile_19.txt"
+    execute_on = 'initial timestep_begin'
   []
 []
 
@@ -257,21 +253,21 @@ P_out = 2.0e5 # Pa
 []
 
 ################################################################################
-# A multiapp that projects data to a detailed mesh
-################################################################################
-
 [MultiApps]
+################################################################################
+#### A multiapp that projects the solution to a detailed mesh for visualization purposes
+################################################################################
   [viz]
     type = FullSolveMultiApp
-    input_files = "FFM-5B_viz.i"
-    execute_on = "timestep_end"
+    input_files = 'FFM-5B_viz.i'
+    execute_on = 'FINAL'
   []
 []
 
 [Transfers]
-  [xfer]
+  [subchannel_transfer]
     type = SCMSolutionTransfer
     to_multi_app = viz
-    variable = 'mdot SumWij P DP h T rho mu q_prime S displacement w_perim'
+    variable = 'mdot SumWij P DP h T rho mu S w_perim'
   []
 []
