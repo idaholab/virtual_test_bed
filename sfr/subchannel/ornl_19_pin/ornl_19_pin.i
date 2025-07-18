@@ -83,7 +83,7 @@ P_out = 2.0e5 # Pa
   monolithic_thermal = false
   verbose_multiapps = true
   verbose_subchannel = true
-  # interpolation_scheme = upwind
+  interpolation_scheme = upwind
 []
 
 [ICs]
