@@ -67,7 +67,7 @@ The second case presented here is the low flow case (FFM Series 6, Test 12, Run 
 The thermocouples are located at the middle of the exit region, same as before.
 SCM calculation along with the experimental measurements is shown in Figure [fig:FFM-5B_low].
 The code calculations exhibits good agreement with the experimental measurements with the
-worst result being for the inner subchannels.
+worst result being for the outer subchannels.
 
 !media subchannel/thors/FFM-5B_low.png
     style=width:60%;margin-bottom:2%;margin:auto;
