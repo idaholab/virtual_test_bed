@@ -6,26 +6,16 @@ import matplotlib.pyplot as plt
 import random
 from scipy.stats import entropy
 
-# plt.rcParams.update({'font.size': 18})
-
-# cwd = '/Users/pritv/1_NRCProject_GraphiteModeling/Simulations/MSRE/MSRE_Refined_Simulations/SubsetSampling_2D/1P5X/'
-# cwd = '/Users/pritv/1_NRCProject_GraphiteModeling/Simulations/MSRE/MSRE_Refined_Simulations/WithHotSpot_SubsetSampling_2D/1X/'
-
-# bins1 = np.array([20, 20, 20, 20, 20, 20, 20, 20])  # Number of bins for Monte Carlo samples
-# bins2 = np.array([10, 20, 10, 10, 15, 15, 15, 10])  # Number of bins for failed samples
-
-cwd = '/Users/pritv/1_NRCProject_GraphiteModeling/Simulations/MSRE/MSRE_Refined_Simulations/SubsetSampling_2D/'
+cwd = 'Provide_path_to_JSON_file'
 
 # Define number of bins for the two histograms
 bins1 = np.array([20, 20, 20, 20, 20, 20, 20, 20])  # Number of bins for Monte Carlo samples
 bins2 = np.array([4, 10, 4, 5, 15, 15, 15, 6])  # Number of bins for failed samples
 
-
-
 os.chdir(cwd)
 
 # Define file path
-file_path = cwd + "pss_out.json"  # Replace with your JSON file path
+file_path = cwd + "pss_out.json"  
 
 Nsubsets_to_consider = 7000
 
@@ -52,14 +42,14 @@ for i in range(1, length_list):
     all_outputs.extend(output)
 
 # Convert to NumPy arrays
-inputs_array = np.array(all_inputs).reshape(-1, 8)  # Shape: (5000, 8)
-outputs_array = np.array(all_outputs)  # Shape: (5000, 1)
+inputs_array = np.array(all_inputs).reshape(-1, 8)  
+outputs_array = np.array(all_outputs)  
 inputs_array = inputs_array[:Nsubsets_to_consider,:]
 outputs_array = outputs_array[:Nsubsets_to_consider]
 
 # Check shapes
-print("Inputs shape:", inputs_array.shape)  # Should be (5000, 8)
-print("Outputs shape:", outputs_array.shape)  # Should be (5000, 1)
+print("Inputs shape:", inputs_array.shape)  
+print("Outputs shape:", outputs_array.shape)  
 
 # Failure probability
 last_1000_points = outputs_array[-1000:]
@@ -112,9 +102,7 @@ for idx0 in range(8):
     prob_dist1 = hist1 / np.sum(hist1)
     prob_dist2 = hist2 / np.sum(hist2)
     
-    # Compute KL divergence
-    kl_divergence[idx0] = entropy(prob_dist1, prob_dist2)
-    
+   
     if idx0 == 3:
         fact = 1 / (0.2 * 1e6)
     elif idx0 == 1:
@@ -135,12 +123,6 @@ for idx0 in range(8):
     plt.legend()
     plt.grid(False)
     plt.show()
-
-kl_divergence /= np.sum(kl_divergence)
-# Set print options to format floats to 2 decimal places
-np.set_printoptions(formatter={'float': '{:.2f}'.format})
-
-print(kl_divergence)
 
 # Extract the input and output data for the failed points
 failed_inputs = inputs_array[ind1]
