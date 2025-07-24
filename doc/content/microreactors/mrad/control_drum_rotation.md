@@ -2,7 +2,7 @@
 
 *Contact: Ahmed Amin Abdelhameed (aabdelhameed.at.anl.gov), Yinbin Miao (ymiao.at.anl.gov) ), Nicolas Stauff (nstauff.at.anl.gov)*
 
-*Model link: [HPMR Model](https://github.com/idaholab/virtual_test_bed/tree/devel/microreactors/mrad/3D_core_drum_rotation)*
+*Model link: [HPMR Model](https://github.com/idaholab/virtual_test_bed/tree/devel/microreactors/mrad/3D_core_drum_rotation_tr)*
 
 ## Overview
 
@@ -55,7 +55,7 @@ Assemblies (including those with control drums) were patterned with the `Pattern
 Multi-group cross sections with 11 energy groups were generated using the **Serpent 2 Monte Carlo code**, based on a parametric grid defined by **Control drum rotation angle** (4 values), **Fuel temperature** (5 values), and **Temperature of moderator, reflector, monolith, and heat pipe** (4 values), using a total of 80 Serpent-2 simulations.
 
 
-!listing /mrad/3D_core_drum_rotation/HPMR_dfem_griffin_tr.i max-height = 10000
+!listing /mrad/3D_core_drum_rotation_tr/HPMR_dfem_griffin_tr.i max-height = 10000
 
 
 ### Mesh Split
@@ -91,9 +91,9 @@ For control drum regions, the `CoupledFeedbackRoddedNeutronicsMaterial` was empl
 
 Heat conduction in solid components of the HP-MR system was modeled using BISON, which employed the `HeatConduction` object from MOOSE. This simulation included all solid materials except for the heat pipes. Sockeye was used to model the heat pipes, employing a 2D R-Z axisymmetric conduction model to simulate transient temperature profiles.
 
-!listing /mrad/3D_core_drum_rotation/HPMR_thermo_tr.i max-height = 10000
+!listing /mrad/3D_core_drum_rotation_tr/HPMR_thermo_tr.i max-height = 10000
 
-!listing /mrad/3D_core_drum_rotation/HPMR_sockeye_tr.i max-height = 10000
+!listing /mrad/3D_core_drum_rotation_tr/HPMR_sockeye_tr.i max-height = 10000
 
 ## Neutronic Results
 
