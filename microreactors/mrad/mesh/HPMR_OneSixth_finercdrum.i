@@ -8,6 +8,9 @@
 # command line argument to generate
 # exodus file for further Multiphysics simulations.
 #####################################################################
+
+fine_azi_sectors = 120
+
 [Mesh]
   # Moderator pins
   [Mod_hex]
@@ -83,7 +86,7 @@
     type = PatternedHexPeripheralModifier
     input = Patterned_o
     input_mesh_external_boundary = 10000
-    new_num_sector = 120
+    new_num_sector = ${fine_azi_sectors}
     num_layers = 1
   []
   # Control drum at 12 o'clock
@@ -91,7 +94,7 @@
     type = HexagonConcentricCircleAdaptiveBoundaryMeshGenerator
     inputs = 'Patterned Patterned'
     sides_to_adapt = '3 4'
-    num_sectors_per_side = '120 120 120 120 120 120'
+    num_sectors_per_side = '${fine_azi_sectors} ${fine_azi_sectors} ${fine_azi_sectors} ${fine_azi_sectors} ${fine_azi_sectors} ${fine_azi_sectors}'
     hexagon_size = 13.376
     background_intervals = 2
     background_block_ids = 504
@@ -107,7 +110,7 @@
     type = HexagonConcentricCircleAdaptiveBoundaryMeshGenerator
     inputs = 'Patterned Patterned'
     sides_to_adapt = '0 1'
-    num_sectors_per_side = '120 120 120 120 120 120'
+    num_sectors_per_side = '${fine_azi_sectors} ${fine_azi_sectors} ${fine_azi_sectors} ${fine_azi_sectors} ${fine_azi_sectors} ${fine_azi_sectors}'
     hexagon_size = 13.376
     background_intervals = 2
     background_block_ids = 504
@@ -123,7 +126,7 @@
     type = HexagonConcentricCircleAdaptiveBoundaryMeshGenerator
     inputs = 'Patterned Patterned Patterned'
     sides_to_adapt = '0 4 5'
-    num_sectors_per_side = '120 120 120 120 120 120'
+    num_sectors_per_side = '${fine_azi_sectors} ${fine_azi_sectors} ${fine_azi_sectors} ${fine_azi_sectors} ${fine_azi_sectors} ${fine_azi_sectors}'
     hexagon_size = 13.376
     background_intervals = 2
     background_block_ids = 504
@@ -139,7 +142,7 @@
     type = HexagonConcentricCircleAdaptiveBoundaryMeshGenerator
     inputs = 'Patterned Patterned Patterned'
     sides_to_adapt = '1 2 3'
-    num_sectors_per_side = '120 120 120 120 120 120'
+    num_sectors_per_side = '${fine_azi_sectors} ${fine_azi_sectors} ${fine_azi_sectors} ${fine_azi_sectors} ${fine_azi_sectors} ${fine_azi_sectors}'
     hexagon_size = 13.376
     background_intervals = 2
     background_block_ids = 504
@@ -155,7 +158,7 @@
     type = HexagonConcentricCircleAdaptiveBoundaryMeshGenerator
     inputs = 'Patterned Patterned Patterned'
     sides_to_adapt = '2 3 4'
-    num_sectors_per_side = '120 120 120 120 120 120'
+    num_sectors_per_side = '${fine_azi_sectors} ${fine_azi_sectors} ${fine_azi_sectors} ${fine_azi_sectors} ${fine_azi_sectors} ${fine_azi_sectors}'
     hexagon_size = 13.376
     background_intervals = 2
     background_block_ids = 504
@@ -171,7 +174,7 @@
     type = HexagonConcentricCircleAdaptiveBoundaryMeshGenerator
     inputs = 'Patterned Patterned'
     sides_to_adapt = '2 3'
-    num_sectors_per_side = '120 120 120 120 120 120'
+    num_sectors_per_side = '${fine_azi_sectors} ${fine_azi_sectors} ${fine_azi_sectors} ${fine_azi_sectors} ${fine_azi_sectors} ${fine_azi_sectors}'
     hexagon_size = 13.376
     background_intervals = 2
     background_block_ids = 504
@@ -187,7 +190,7 @@
     type = HexagonConcentricCircleAdaptiveBoundaryMeshGenerator
     inputs = 'Patterned Patterned'
     sides_to_adapt = '1 2'
-    num_sectors_per_side = '120 120 120 120 120 120'
+    num_sectors_per_side = '${fine_azi_sectors} ${fine_azi_sectors} ${fine_azi_sectors} ${fine_azi_sectors} ${fine_azi_sectors} ${fine_azi_sectors}'
     hexagon_size = 13.376
     background_intervals = 2
     background_block_ids = 504
@@ -203,7 +206,7 @@
     type = HexagonConcentricCircleAdaptiveBoundaryMeshGenerator
     inputs = 'Patterned Patterned Patterned'
     sides_to_adapt = '0 1 2'
-    num_sectors_per_side = '120 120 120 120 120 120'
+    num_sectors_per_side = '${fine_azi_sectors} ${fine_azi_sectors} ${fine_azi_sectors} ${fine_azi_sectors} ${fine_azi_sectors} ${fine_azi_sectors}'
     hexagon_size = 13.376
     background_intervals = 2
     background_block_ids = 504
@@ -219,7 +222,7 @@
     type = HexagonConcentricCircleAdaptiveBoundaryMeshGenerator
     inputs = 'Patterned Patterned Patterned'
     sides_to_adapt = '0 1 5'
-    num_sectors_per_side = '120 120 120 120 120 120'
+    num_sectors_per_side = '${fine_azi_sectors} ${fine_azi_sectors} ${fine_azi_sectors} ${fine_azi_sectors} ${fine_azi_sectors} ${fine_azi_sectors}'
     hexagon_size = 13.376
     background_intervals = 2
     background_block_ids = 504
@@ -235,7 +238,7 @@
     type = HexagonConcentricCircleAdaptiveBoundaryMeshGenerator
     inputs = 'Patterned Patterned'
     sides_to_adapt = '0 5'
-    num_sectors_per_side = '120 120 120 120 120 120'
+    num_sectors_per_side = '${fine_azi_sectors} ${fine_azi_sectors} ${fine_azi_sectors} ${fine_azi_sectors} ${fine_azi_sectors} ${fine_azi_sectors}'
     hexagon_size = 13.376
     background_intervals = 2
     background_block_ids = 504
@@ -251,7 +254,7 @@
     type = HexagonConcentricCircleAdaptiveBoundaryMeshGenerator
     inputs = 'Patterned Patterned'
     sides_to_adapt = '4 5'
-    num_sectors_per_side = '120 120 120 120 120 120'
+    num_sectors_per_side = '${fine_azi_sectors} ${fine_azi_sectors} ${fine_azi_sectors} ${fine_azi_sectors} ${fine_azi_sectors} ${fine_azi_sectors}'
     hexagon_size = 13.376
     background_intervals = 2
     background_block_ids = 504
@@ -267,7 +270,7 @@
     type = HexagonConcentricCircleAdaptiveBoundaryMeshGenerator
     inputs = 'Patterned Patterned Patterned'
     sides_to_adapt = '3 4 5'
-    num_sectors_per_side = '120 120 120 120 120 120'
+    num_sectors_per_side = '${fine_azi_sectors} ${fine_azi_sectors} ${fine_azi_sectors} ${fine_azi_sectors} ${fine_azi_sectors} ${fine_azi_sectors}'
     hexagon_size = 13.376
     background_intervals = 2
     background_block_ids = 504
@@ -281,7 +284,7 @@
     type = HexagonConcentricCircleAdaptiveBoundaryMeshGenerator
     inputs = 'Patterned'
     sides_to_adapt = '0'
-    num_sectors_per_side = '120 120 120 120 120 120'
+    num_sectors_per_side = '${fine_azi_sectors} ${fine_azi_sectors} ${fine_azi_sectors} ${fine_azi_sectors} ${fine_azi_sectors} ${fine_azi_sectors}'
     hexagon_size = 13.376
     background_intervals = 2
     background_block_ids = '400 401'
@@ -290,7 +293,7 @@
     type = HexagonConcentricCircleAdaptiveBoundaryMeshGenerator
     inputs = 'Patterned'
     sides_to_adapt = '1'
-    num_sectors_per_side = '120 120 120 120 120 120'
+    num_sectors_per_side = '${fine_azi_sectors} ${fine_azi_sectors} ${fine_azi_sectors} ${fine_azi_sectors} ${fine_azi_sectors} ${fine_azi_sectors}'
     hexagon_size = 13.376
     background_intervals = 2
     background_block_ids = '400 401'
@@ -299,7 +302,7 @@
     type = HexagonConcentricCircleAdaptiveBoundaryMeshGenerator
     inputs = 'Patterned'
     sides_to_adapt = '2'
-    num_sectors_per_side = '120 120 120 120 120 120'
+    num_sectors_per_side = '${fine_azi_sectors} ${fine_azi_sectors} ${fine_azi_sectors} ${fine_azi_sectors} ${fine_azi_sectors} ${fine_azi_sectors}'
     hexagon_size = 13.376
     background_intervals = 2
     background_block_ids = '400 401'
@@ -308,7 +311,7 @@
     type = HexagonConcentricCircleAdaptiveBoundaryMeshGenerator
     inputs = 'Patterned'
     sides_to_adapt = '3'
-    num_sectors_per_side = '120 120 120 120 120 120'
+    num_sectors_per_side = '${fine_azi_sectors} ${fine_azi_sectors} ${fine_azi_sectors} ${fine_azi_sectors} ${fine_azi_sectors} ${fine_azi_sectors}'
     hexagon_size = 13.376
     background_intervals = 2
     background_block_ids = '400 401'
@@ -317,7 +320,7 @@
     type = HexagonConcentricCircleAdaptiveBoundaryMeshGenerator
     inputs = 'Patterned'
     sides_to_adapt = '4'
-    num_sectors_per_side = '120 120 120 120 120 120'
+    num_sectors_per_side = '${fine_azi_sectors} ${fine_azi_sectors} ${fine_azi_sectors} ${fine_azi_sectors} ${fine_azi_sectors} ${fine_azi_sectors}'
     hexagon_size = 13.376
     background_intervals = 2
     background_block_ids = '400 401'
@@ -326,7 +329,7 @@
     type = HexagonConcentricCircleAdaptiveBoundaryMeshGenerator
     inputs = 'Patterned'
     sides_to_adapt = '5'
-    num_sectors_per_side = '120 120 120 120 120 120'
+    num_sectors_per_side = '${fine_azi_sectors} ${fine_azi_sectors} ${fine_azi_sectors} ${fine_azi_sectors} ${fine_azi_sectors} ${fine_azi_sectors}'
     hexagon_size = 13.376
     background_intervals = 2
     background_block_ids = '400 401'
@@ -334,7 +337,7 @@
   # Central void region
   [air_center]
     type = HexagonConcentricCircleAdaptiveBoundaryMeshGenerator
-    num_sectors_per_side = '120 120 120 120 120 120'
+    num_sectors_per_side = '${fine_azi_sectors} ${fine_azi_sectors} ${fine_azi_sectors} ${fine_azi_sectors} ${fine_azi_sectors} ${fine_azi_sectors}'
     inputs = 'Patterned Patterned Patterned Patterned Patterned Patterned'
     sides_to_adapt = '0 1 2 3 4 5'
     hexagon_size = 13.376
@@ -345,7 +348,7 @@
   # This will be deleted later
   [dummy]
     type = HexagonConcentricCircleAdaptiveBoundaryMeshGenerator
-    num_sectors_per_side = '120 120 120 120 120 120'
+    num_sectors_per_side = '${fine_azi_sectors} ${fine_azi_sectors} ${fine_azi_sectors} ${fine_azi_sectors} ${fine_azi_sectors} ${fine_azi_sectors}'
     hexagon_size = 13.376
     background_intervals = 2
     background_block_ids = '700 701'
