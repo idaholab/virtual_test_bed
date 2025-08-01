@@ -1,6 +1,6 @@
 ################################################################################
 ## NEAMS Micro-Reactor Application Driver                                     ##
-## Heat Pipe Microreactor Steady State                                        ##
+## Heat Pipe Microreactor Control Drum Rotation Steady State                  ##
 ## Griffin Main Application input file                                        ##
 ## DFEM-SN (1, 3) with CMFD acceleration                                      ##
 ################################################################################
@@ -294,7 +294,7 @@ non_hp_yh_blocks = '${fuel_blocks} ${air_blocks} ${ring_blocks} ${mono_blocks} $
     type = FullSolveMultiApp
     app_type = BisonApp
     input_files = HPMR_thermo_ss.i
-    execute_on = 'timestep_end'
+    execute_on = 'initial timestep_end'
     keep_solution_during_restore = true
   []
 []
@@ -307,21 +307,20 @@ non_hp_yh_blocks = '${fuel_blocks} ${air_blocks} ${ring_blocks} ${mono_blocks} $
     variable = power_density
     from_postprocessors_to_be_preserved = integrated_power
     to_postprocessors_to_be_preserved = power
+    execute_on = 'timestep_end'
   []
   [from_sub_temp_fuel]
-    type = MultiAppGeneralFieldShapeEvaluationTransfer
+    type = MultiAppGeneralFieldNearestLocationTransfer
     from_multi_app = bison
     variable = Tf
     source_variable = Tfuel
-    execute_on = 'initial timestep_end'
     to_blocks = ${non_hp_blocks}
   []
   [from_sub_temp_mod]
-    type = MultiAppGeneralFieldShapeEvaluationTransfer
+    type = MultiAppGeneralFieldNearestLocationTransfer
     from_multi_app = bison
     variable = Ts
     source_variable = Tmod
-    execute_on = 'initial timestep_end'
     to_blocks = ${non_hp_blocks}
   []
 []
@@ -388,4 +387,5 @@ non_hp_yh_blocks = '${fuel_blocks} ${air_blocks} ${ring_blocks} ${mono_blocks} $
   csv = true
   exodus = false
   perf_graph = true
+  checkpoint = false
 []

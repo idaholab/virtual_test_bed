@@ -33,11 +33,11 @@ initial_transient_dt = 1
 []
 
 [Problem]
-  restart_file_base = 'HPMR_dfem_griffin_ss_out_bison0_cp_cp/LATEST'
+  restart_file_base = '../3D_core_drum_rotation_ss/HPMR_dfem_griffin_ss_out_bison0_cp_cp/LATEST'
 []
 
 [Mesh]
-  file = 'HPMR_dfem_griffin_ss_out_bison0_cp_cp/LATEST'
+  file = '../3D_core_drum_rotation_ss/HPMR_dfem_griffin_ss_out_bison0_cp_cp/LATEST'
   parallel_type = distributed
 []
 
@@ -48,9 +48,10 @@ initial_transient_dt = 1
 []
 
 [Kernels]
-  # The time derivative kernel has been removed
-  # We are obtaining a steady-state solution and it's preferrable not to march in time
-  # to steady state as marching is expensive.
+  [heat_conduction_td]
+    type = HeatConductionTimeDerivative
+    variable = temp
+  []
   [heat_conduction]
     type = HeatConduction
     variable = temp
@@ -507,13 +508,15 @@ initial_transient_dt = 1
 [Outputs]
   perf_graph = true
   color = true
-  csv = true
+  csv = false
   [exodus]
     type = Exodus
     execute_on = 'FINAL'
+    enable = false
   []
-  # [cp]
-  #   type = Checkpoint
-  #   additional_execute_on = 'FINAL'
-  # []
+  [cp]
+    type = Checkpoint
+    additional_execute_on = 'FINAL'
+    enable = false
+  []
 []

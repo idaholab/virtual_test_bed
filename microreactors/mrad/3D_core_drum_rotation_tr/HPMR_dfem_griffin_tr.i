@@ -36,36 +36,36 @@ speed = 5                        # Degrees per second
   # 3. Uncomment the "parallel_type = distributed" line
 
     type = FileMeshGenerator
-    # file = '../mesh/HPMR_OneSixth_finercdrum_in.e'
-    file = 'griffin_mesh.cpr'
+    file = '../mesh/HPMR_OneSixth_finercdrum_in.e'
+    # file = 'griffin_mesh.cpr'
   []
-  # [fmg_id]
-  #   type = SubdomainExtraElementIDGenerator
-  #   input = fmg
-  #   subdomains ='         200 203 100 103 301 303 10  504 600 601 201 101 400 401 250 500 1003 501 1000 10000 1008 1009'
-  #   extra_element_id_names = 'material_id equivalence_id'
-  #   extra_element_ids = ' 815 815 802 802 801 801 803 820 820 820 817 816 805 805 820 805  805 805  805 803    805  805;
-  #                         815 815 802 802 801 801 803 820 820 820 817 816 805 805 820 805  805 805  805 803    805  805'
-  # []
-  # [coarse_mesh]
-  #   type = GeneratedMeshGenerator
-  #   dim = 3
-  #   nx = 10
-  #   ny = 10
-  #   nz = 10
-  #   xmin = -0.1
-  #   xmax = 1.1
-  #   ymin = -0.1
-  #   ymax = 1.2
-  #   zmin = -0.0
-  #   zmax = 2.1
-  # []
-  # [assign_coarse_id]
-  #   type = CoarseMeshExtraElementIDGenerator
-  #   input = fmg_id
-  #   coarse_mesh = coarse_mesh
-  #   extra_element_id_name = coarse_element_id
-  # []
+  [fmg_id]
+    type = SubdomainExtraElementIDGenerator
+    input = fmg
+    subdomains ='         200 203 100 103 301 303 10  504 600 601 201 101 400 401 250 500 1003 501 1000 10000 1008 1009'
+    extra_element_id_names = 'material_id equivalence_id'
+    extra_element_ids = ' 815 815 802 802 801 801 803 820 820 820 817 816 805 805 820 805  805 805  805 803    805  805;
+                          815 815 802 802 801 801 803 820 820 820 817 816 805 805 820 805  805 805  805 803    805  805'
+  []
+  [coarse_mesh]
+    type = GeneratedMeshGenerator
+    dim = 3
+    nx = 10
+    ny = 10
+    nz = 10
+    xmin = -0.1
+    xmax = 1.1
+    ymin = -0.1
+    ymax = 1.2
+    zmin = -0.0
+    zmax = 2.1
+  []
+  [assign_coarse_id]
+    type = CoarseMeshExtraElementIDGenerator
+    input = fmg_id
+    coarse_mesh = coarse_mesh
+    extra_element_id_name = coarse_element_id
+  []
   uniform_refine = 0
   parallel_type = distributed
 []
@@ -321,7 +321,7 @@ speed = 5                        # Degrees per second
     execute_on = 'timestep_end'
   []
   [from_sub_temp_fuel]
-    type = MultiAppGeneralFieldShapeEvaluationTransfer
+    type = MultiAppGeneralFieldNearestLocationTransfer
     from_multi_app = bison
     variable = Tf
     source_variable = Tfuel
@@ -329,7 +329,7 @@ speed = 5                        # Degrees per second
     to_blocks = ${non_hp_blocks}
   []
   [from_sub_temp_mod]
-    type = MultiAppGeneralFieldShapeEvaluationTransfer
+    type = MultiAppGeneralFieldNearestLocationTransfer
     from_multi_app = bison
     variable = Ts
     source_variable = Tmod
@@ -344,6 +344,7 @@ speed = 5                        # Degrees per second
     transport_system = sn
     writing = false
     execute_on = initial
+    folder = '../3D_core_drum_rotation_ss'
   []
 []
 
@@ -400,5 +401,5 @@ speed = 5                        # Degrees per second
   csv = true
   exodus = false
   perf_graph = true
-  checkpoint = true
+  checkpoint = false
 []

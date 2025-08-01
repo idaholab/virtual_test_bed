@@ -1,0 +1,57 @@
+[Tests]
+  [coarse_mesh_griffin]
+    type = RunApp
+    input = ../mesh/HPMR_OneSixth_finercdrum.i
+    executable_pattern = 'dire_wolf*'
+    cli_args = "--mesh-only 'HPMR_OneSixth_finercdrum_tri_coarse.e'
+                fine_azi_sectors=16"
+  []
+  [coarse_mesh_bison]
+    type = RunApp
+    input = ../mesh/HPMR_OneSixth_Core_meshgenerator_tri_fine.i
+    executable_pattern = 'dire_wolf*'
+    cli_args = "--mesh-only 'HPMR_OneSixth_Core_meshgenerator_tri_rotate_bdry_coarse.e'
+                Mesh/HP_hex/background_inner_boundary_layer_bias=1
+                Mesh/HP_hex/background_inner_boundary_layer_intervals=1
+                Mesh/HP_hex/background_inner_boundary_layer_width=0
+                Mesh/add_outer_shield/peripheral_outer_boundary_layer_bias=1
+                Mesh/add_outer_shield/peripheral_outer_boundary_layer_intervals=1
+                Mesh/add_outer_shield/peripheral_outer_boundary_layer_width=0
+                Mesh/add_outer_shield/peripheral_layer_num=1
+                Mesh/extrude/num_layers:='1 8 1'"
+    prereq = 'coarse_mesh_griffin'
+  []
+  [coarse_mesh_mp_ss]
+    type = CSVDiff
+    input = 'HPMR_dfem_griffin_ss.i'
+    csvdiff = 'HPMR_dfem_griffin_ss_out.csv'
+    executable_pattern = 'dire_wolf*'
+    # Setup outputs, reduce costs
+    cli_args = "TransportSystems/sn/order=CONSTANT
+                Mesh/fmg/file='HPMR_OneSixth_finercdrum_tri_coarse.e'
+                MultiApps/bison/cli_args='mesh_file=HPMR_OneSixth_Core_meshgenerator_tri_rotate_bdry_coarse.e'"
+    min_parallel = 16
+    method = 'opt'
+    max_time = 7200
+    # Cross-section warning due to missing fission-only
+    allow_warnings = true
+    prereq = 'coarse_mesh_bison'
+  []
+  [coarse_mesh_mp_tr]
+    type = CSVDiff
+    input = '../3D_core_drum_rotation_tr/HPMR_dfem_griffin_tr.i'
+    csvdiff = 'HPMR_dfem_griffin_tr_out.csv'
+    executable_pattern = 'dire_wolf*'
+    # Setup outputs, reduce costs
+    cli_args = "TransportSystems/sn/order=CONSTANT Executioner/richardson_max_its=1
+                Executioner/end_time=0.1
+                Mesh/fmg/file='../3D_core_drum_rotation_ss/HPMR_OneSixth_finercdrum_tri_coarse.e'
+                Outputs/file_base='../3D_core_drum_rotation_ss/HPMR_dfem_griffin_tr_out'"
+    min_parallel = 16
+    method = 'opt'
+    max_time = 3600
+    # Cross-section warning due to missing fission-only
+    allow_warnings = true
+    prereq = 'coarse_mesh_bison'
+  []
+[]

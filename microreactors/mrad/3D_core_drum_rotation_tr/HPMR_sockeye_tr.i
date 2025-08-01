@@ -158,7 +158,7 @@ initial_transient_dt = 1
     fp_2phase = fp_2phase
     evaporator_at_start_end = true
     # Initial temperature of block
-    initial_T = ${T_ext_cond}
+    # initial_T = ${T_ext_cond}
     T_ref = T_inner_avg
 
     # To evaluate the constant properties
@@ -173,7 +173,7 @@ initial_transient_dt = 1
     hs = hp
     T_ambient = ${T_ext_cond}
     htc_ambient = ${htc_ext_cond} #large value to approach an effective DirichletBC
-    scale_pp = bc_scale_pp
+    scale = bc_scale_pp
   []
   [evaporator_boundary]
     type = HSBoundaryExternalAppConvection
