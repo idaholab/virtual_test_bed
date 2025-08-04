@@ -94,9 +94,6 @@ The mesh for the reflector is generated using a lattice of polygonal meshes to k
 
 !listing microreactors/gHPMR/2D_gHPMR_Final.i start=[reflector_polygon] end=[outer_core_mesh]
 
-<!-- !media media/gHPMR/reflector_mesh.png
-    style=width:55%;margin:auto;
-    caption=Figure 7: The 2D reflector mesh. -->
 
 ## Outer Core Mesh
 

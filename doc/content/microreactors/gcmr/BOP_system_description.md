@@ -48,10 +48,10 @@ The core design taken from [!citep](Duchnowski2022). It is composed of 55 hexago
       id=core_pattern
       caption= Core pattern
 
-<!-- !media media/gcmr/balance_of_plant/description_assembly_pattern.png
+!media media/gcmr/balance_of_plant/description_assembly_pattern.png
       style=display: block;margin-left:auto;margin-right:auto;width:40%;
       id=assembly_pattern
-      caption= Assembly pattern -->
+      caption= Assembly pattern
 
 ## Secondary loop
 
