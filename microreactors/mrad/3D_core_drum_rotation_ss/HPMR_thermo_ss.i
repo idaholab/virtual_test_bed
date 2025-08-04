@@ -32,6 +32,8 @@ mesh_file = '../mesh/gold/HPMR_OneSixth_Core_meshgenerator_tri_rotate_bdry_fine.
 []
 
 [Mesh]
+  # Consider using a presplit mesh for this application too.
+  # Please refer to the related comments in HPMR_dfem_griffin_ss.i
   [fmg]
     type = FileMeshGenerator
     file = ${mesh_file}

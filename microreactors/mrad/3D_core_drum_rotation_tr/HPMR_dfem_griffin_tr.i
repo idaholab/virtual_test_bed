@@ -1,6 +1,8 @@
 ################################################################################
 ## NEAMS Micro-Reactor Application Driver                                     ##
-## Griffin Model Heat Pipe Microreactor                                       ##
+## Heat Pipe Microreactor Control Drum Rotation Transient                     ##
+## Griffin Main Application input file                                        ##
+## DFEM-SN (1, 3) with CMFD acceleration                                      ##
 ################################################################################
 
 fuel_blocks = '301 303'
@@ -81,9 +83,6 @@ speed = 5                        # Degrees per second
   max_inner_its = 100
 
   cmfd_acceleration = true
-  # diffusion_eigen_solver_type = krylovshur
-  # diffusion_eigen_solver_type = newton
-  # diffusion_prec_type = lu
   coarse_element_id = coarse_element_id
   prolongation_type = multiplicative
   max_diffusion_coefficient = 1
@@ -269,7 +268,7 @@ speed = 5                        # Degrees per second
     segment_material_ids = '805 811'
     isotopes = 'pseudo; pseudo'
     densities = '1.0 1.0'
-  mesh_alignment_tolerance=1E-4
+    mesh_alignment_tolerance=1E-4
   []
    [drum_11]
     type = CoupledFeedbackRoddedNeutronicsMaterial
@@ -280,7 +279,7 @@ speed = 5                        # Degrees per second
     segment_material_ids = '805 811'
     isotopes = 'pseudo; pseudo'
     densities = '1.0 1.0'
-  mesh_alignment_tolerance=1E-4
+    mesh_alignment_tolerance=1E-4
   []
     [drum_12]
     type = CoupledFeedbackRoddedNeutronicsMaterial
@@ -291,7 +290,7 @@ speed = 5                        # Degrees per second
     segment_material_ids = '805 811'
     isotopes = 'pseudo; pseudo'
     densities = '1.0 1.0'
-  mesh_alignment_tolerance=1E-4
+    mesh_alignment_tolerance=1E-4
   []
 []
 

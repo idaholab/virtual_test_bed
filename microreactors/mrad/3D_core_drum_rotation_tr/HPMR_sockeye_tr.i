@@ -1,6 +1,6 @@
 ################################################################################
 ## NEAMS Micro-Reactor Application Driver                                     ##
-## Heat Pipe Microreactor Steady State                                        ##
+## Heat Pipe Microreactor Control Drum Rotation Transient                     ##
 ## Sockeye Grandchild Application input file                                  ##
 ## Effective Heat Conduction Model with Operation Limits                      ##
 ################################################################################
