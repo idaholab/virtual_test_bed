@@ -1,6 +1,6 @@
 ################################################################################
 ## NEAMS Micro-Reactor Application Driver                                     ##
-## Heat Pipe Microreactor Control Drum Rotation                               ##
+## Heat Pipe Microreactor Control Drum Rotation Transient                     ##
 ## BISON Child Application input file                                         ##
 ## Thermal Only Physics                                                       ##
 ################################################################################
