@@ -246,7 +246,7 @@ coordinates5 = '${fparse coordinates4+OPyC_thickness}'
   [fast_neutron_flux]
     type = FastNeutronFlux
     calculate_fluence = true
-    flux_function = 1.16e18
+    flux_function = 1.16e17
   []
   [UCO_burnup]
     type = TRISOBurnup
