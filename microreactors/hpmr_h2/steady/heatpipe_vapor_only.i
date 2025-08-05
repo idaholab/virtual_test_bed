@@ -198,8 +198,11 @@ T_ref_fill_ratio = '${fparse T_sink - 50}'
 
   [TimeStepper]
     type = IterationAdaptiveDT
-    growth_factor = 1.5
-    dt = 1e-3
+    optimal_iterations = 5
+    iteration_window = 0
+    growth_factor = 1.2
+    cutback_factor = 0.8
+    dt = 0.1
   []
 
   steady_state_detection = true
@@ -225,6 +228,6 @@ T_ref_fill_ratio = '${fparse T_sink - 50}'
 
   [console]
     type = Console
-    max_rows = 2
+    execute_postprocessors_on = 'NONE'
   []
 []
