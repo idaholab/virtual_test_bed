@@ -122,10 +122,14 @@ beta6 = 0.000184087
     boussinesq_approximation = true
     block = 'fuel pump hx'
 
-    # Variables, defined below for the Exodus restart
+    # Variables
     velocity_variable = 'vel_x vel_y'
     pressure_variable = 'pressure'
     fluid_temperature_variable = 'T_fluid'
+
+    # Initialization
+    # Only the variables found in the mesh file are initialized
+    initialize_variables_from_mesh_file = true
 
     # Material properties
     density = ${rho}
@@ -142,7 +146,7 @@ beta6 = 0.000184087
     wall_boundaries = 'shield_wall reflector_wall fluid_symmetry'
     momentum_wall_types = 'wallfunction wallfunction symmetry'
     energy_wall_types = 'heatflux heatflux heatflux'
-    energy_wall_function = '0 0 0'
+    energy_wall_functors = '0 0 0'
 
     # Pressure pin for incompressible flow
     pin_pressure = true
@@ -168,7 +172,7 @@ beta6 = 0.000184087
 
     # Precursor advection, diffusion and source term
     passive_scalar_names = 'c1 c2 c3 c4 c5 c6'
-    passive_scalar_schmidt_number = '${Sc_t} ${Sc_t} ${Sc_t} ${Sc_t} ${Sc_t} ${Sc_t}'
+    Sc_t = '${Sc_t} ${Sc_t} ${Sc_t} ${Sc_t} ${Sc_t} ${Sc_t}'
     passive_scalar_coupled_source = 'fission_source c1; fission_source c2; fission_source c3;
                                      fission_source c4; fission_source c5; fission_source c6'
     passive_scalar_coupled_source_coeff = '${beta1} ${lambda1_m}; ${beta2} ${lambda2_m};
@@ -186,62 +190,12 @@ beta6 = 0.000184087
   []
 []
 
-[Variables]
-  [vel_x]
-    type = INSFVVelocityVariable
-    block = 'fuel pump hx'
-    initial_from_file_var = vel_x
-  []
-  [vel_y]
-    type = INSFVVelocityVariable
-    block = 'fuel pump hx'
-    initial_from_file_var = vel_y
-  []
-  [pressure]
-    type = INSFVPressureVariable
-    block = 'fuel pump hx'
-    initial_from_file_var = pressure
-  []
-  [T_fluid]
-    type = INSFVEnergyVariable
-    block = 'fuel pump hx'
-    initial_condition = ${T_HX}
-    # initial_from_file_var = T_fluid
-  []
-
-  [c1]
-    type = MooseVariableFVReal
-    block = 'fuel pump hx'
-    # initial_from_file_var = c1
-  []
-  [c2]
-    type = MooseVariableFVReal
-    block = 'fuel pump hx'
-    # initial_from_file_var = c2
-  []
-  [c3]
-    type = MooseVariableFVReal
-    block = 'fuel pump hx'
-    # initial_from_file_var = c3
-  []
-  [c4]
-    type = MooseVariableFVReal
-    block = 'fuel pump hx'
-    # initial_from_file_var = c4
-  []
-  [c5]
-    type = MooseVariableFVReal
-    block = 'fuel pump hx'
-    # initial_from_file_var = c5
-  []
-  [c6]
-    type = MooseVariableFVReal
-    block = 'fuel pump hx'
-    # initial_from_file_var = c6
-  []
-[]
-
 [FVICs]
+  [T_fluid]
+    type = FVFunctionIC
+    variable = T_fluid
+    function = ${T_HX}
+  []
   [c1]
     type = FVFunctionIC
     variable = c1
