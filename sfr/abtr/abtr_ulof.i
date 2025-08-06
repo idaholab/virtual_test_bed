@@ -1122,8 +1122,7 @@
   []
 
   [DHX_heatremoval]
-    type = HeatExchangerHeatRe
-    movalRate
+    type = HeatExchangerHeatRemovalRate
     block = 'DHX:primary_pipe'
     heated_perimeter = '${fparse 2.5944/250e6}'
   []
