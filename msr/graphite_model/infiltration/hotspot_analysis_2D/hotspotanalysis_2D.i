@@ -115,7 +115,7 @@ threshold = 0.8
   [heatsource_soln_func]
     type = SolutionFunction
     solution = heatsource_soln
-    from_variable = smooth
+    from_variable = diffuse
   []
   [mod_heatsource_soln_func]
     type = ParsedFunction
@@ -135,7 +135,7 @@ threshold = 0.8
     type = SolutionUserObject
     mesh = 'Ref_solution_file.e'
     time_transformation = ${INF}
-    system_variables = 'smooth'
+    system_variables = 'diffuse'
   []
 []
 

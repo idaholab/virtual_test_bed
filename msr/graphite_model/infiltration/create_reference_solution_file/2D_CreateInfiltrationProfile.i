@@ -1,21 +1,11 @@
-# The diffusion field profile is smooth and continuous, but for this problem
-# we need a binary field (infiltrated vs. no infiltration), mimicking the physical behavior.
-# The threshold value converts the continuous field to a binary field.
-
-threshold = 0.8 
-
-# vol_frac_threshold represents the infiltration volume fraction 
-vol_frac_threshold=0.30
-
-#Diffusivity constant
+threshold = 0.8
+vol_frac_threshold=0.33
 diffusivity = 1e-3
 
-# 2D msre mesh file
 [Mesh]
-  file = msre2D_coarse.e
+  file = msre2D_1X.e
 []
 
-#diffusion field variable, representing the salt infiltration
 [Variables]
   [diffused]
     order = FIRST
@@ -23,26 +13,11 @@ diffusivity = 1e-3
   []
 []
 
-#smooth is a binary variable, obtained by penalizing diffused variable
 [AuxVariables]
     [smooth]
         order = FIRST
         family = LAGRANGE        
     []
-[]
-
-# Governing equation for diffusion
-[Kernels]
-  [diff]
-    type = MatDiffusion
-    variable = diffused
-    diffusivity=${diffusivity}
-  []
-  [timederivative]
-    type = TimeDerivative
-    variable = diffused
-
-  []
 []
 
 [AuxKernels]
@@ -54,8 +29,21 @@ diffusivity = 1e-3
     []
 []
 
+[Kernels]
+  [diff]
+    type = MatDiffusion
+    variable = diffused
+    diffusivity=${diffusivity}
+  []
 
-# terminate stops the simulation when the desired volume fraction is reached
+  # Include our time derivative here
+  [timederivative]
+    type = TimeDerivative
+    variable = diffused
+
+  []
+[]
+
 [UserObjects]
     [terminate]
       type = Terminator
@@ -63,6 +51,8 @@ diffusivity = 1e-3
       fail_mode = HARD
     []
   []
+
+
 
 [Postprocessors]
     [elemavg]
@@ -72,7 +62,7 @@ diffusivity = 1e-3
     [] 
 []
 
-# Boundary condition
+
 [BCs]
   [conc]
     type = DirichletBC
@@ -83,7 +73,7 @@ diffusivity = 1e-3
 
 []
 
-# Solver settings
+# Transient (time-dependent) details for simulations go here:
 [Executioner]
     type = Transient
   
@@ -91,7 +81,7 @@ diffusivity = 1e-3
     petsc_options_iname = '-pc_type -pc_hypre_type -pc_hypre_boomeramg_strong_threshold'
     petsc_options_value = 'hypre    boomeramg      0.6'
 
-    dt = 0.005
+    dt = 0.0005
     end_time = 1
   []
   
@@ -100,8 +90,11 @@ diffusivity = 1e-3
 [Outputs]
   [exodus]
     type = Exodus
+
   []
+
   [csv]
     type = CSV
+
   []
 []

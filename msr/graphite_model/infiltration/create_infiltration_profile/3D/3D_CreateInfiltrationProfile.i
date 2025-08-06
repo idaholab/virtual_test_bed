@@ -1,18 +1,17 @@
 # The diffusion field profile is smooth and continuous, but for this problem
 # we need a binary field (infiltrated vs. no infiltration), mimicking the physical behavior.
 # The threshold value converts the continuous field to a binary field.
-
 threshold = 0.8 
 
 # vol_frac_threshold represents the infiltration volume fraction 
-vol_frac_threshold=0.30
+vol_frac_threshold=0.33
 
 #Diffusivity constant
 diffusivity = 1e-3
 
-# 2D msre mesh file
+# 3D msre mesh file
 [Mesh]
-  file = msre2D_coarse.e
+  file = 'msre3D_0PF_Fine.e'
 []
 
 #diffusion field variable, representing the salt infiltration
@@ -31,20 +30,6 @@ diffusivity = 1e-3
     []
 []
 
-# Governing equation for diffusion
-[Kernels]
-  [diff]
-    type = MatDiffusion
-    variable = diffused
-    diffusivity=${diffusivity}
-  []
-  [timederivative]
-    type = TimeDerivative
-    variable = diffused
-
-  []
-[]
-
 [AuxKernels]
     [smoothAux]
         type=ParsedAux
@@ -54,15 +39,31 @@ diffusivity = 1e-3
     []
 []
 
+# Governing equation for diffusion
+[Kernels]
+  [diff]
+    type = MatDiffusion
+    variable = diffused
+    diffusivity=${diffusivity}
+  []
+
+  [timederivative]
+    type = TimeDerivative
+    variable = diffused
+
+  []
+[]
 
 # terminate stops the simulation when the desired volume fraction is reached
 [UserObjects]
     [terminate]
       type = Terminator
-      expression = 'elemavg >= ${vol_frac_threshold}'
+      expression = 'elemavg > ${vol_frac_threshold}'
       fail_mode = HARD
     []
   []
+
+
 
 [Postprocessors]
     [elemavg]
@@ -77,7 +78,7 @@ diffusivity = 1e-3
   [conc]
     type = DirichletBC
     variable = diffused
-    boundary = 'right_channelboundary'
+    boundary = 'coolantchannelboundary'
     value = 1
   []
 
@@ -91,17 +92,12 @@ diffusivity = 1e-3
     petsc_options_iname = '-pc_type -pc_hypre_type -pc_hypre_boomeramg_strong_threshold'
     petsc_options_value = 'hypre    boomeramg      0.6'
 
-    dt = 0.005
+    dt = 0.0005
     end_time = 1
   []
   
-
 # Outputs
 [Outputs]
-  [exodus]
-    type = Exodus
-  []
-  [csv]
-    type = CSV
-  []
+  exodus = true
+  csv = true
 []
