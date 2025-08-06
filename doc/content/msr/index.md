@@ -7,3 +7,5 @@
 [Generic Molten Salt Fast Reactor](generic_msr/index.md)
 
 [LOTUS Molten Chloride Reactor](lotus/index.md)
+
+[Graphite Behavior in Molten Salt Environments](graphite_model/index.md)
