@@ -115,15 +115,15 @@ rho_in            = 6.3306  # Helium density at 7 MPa and 523.15 K (from NIST)
  #######
   [T_reactor_in]
     type = ParsedFunction
-    value = 'T_in'
-    vars = 'T_in'
-    vals = '2Dreceiver_temperature_in'
+    expression = 'T_in'
+    symbol_names = 'T_in'
+    symbol_values = '2Dreceiver_temperature_in'
   []
   [T_core_out]
     type = ParsedFunction
-    value = 'T_out'
-    vars = 'T_out'
-    vals = '2Dreceiver_temperature_out'
+    expression = 'T_out'
+    symbol_names = 'T_out'
+    symbol_values = '2Dreceiver_temperature_out'
   []
 []
 
@@ -327,13 +327,13 @@ rho_in            = 6.3306  # Helium density at 7 MPa and 523.15 K (from NIST)
 [Kernels]
   # mass eq
   [mass_time]
-    type = PMFluidPressureTimeDerivative
+    type = PINSFEFluidPressureTimeDerivative
     variable = p
     porosity = porosity_aux
     block = ${fluid_blocks}
   []
   [mass_space]
-    type = MDFluidMassKernel
+    type = INSFEFluidMassKernel
     variable = p
     porosity = porosity_aux
     block = ${fluid_blocks}
@@ -341,12 +341,12 @@ rho_in            = 6.3306  # Helium density at 7 MPa and 523.15 K (from NIST)
 
   # x-momentum
   [x_momentum_time]
-    type = PMFluidVelocityTimeDerivative
+    type = PINSFEFluidVelocityTimeDerivative
     variable = vel_x
     block = ${fluid_blocks}
   []
   [x_momentum_space]
-    type = MDFluidMomentumKernel
+    type = INSFEFluidMomentumKernel
     variable = vel_x
     porosity = porosity_aux
     component = 0
@@ -355,12 +355,12 @@ rho_in            = 6.3306  # Helium density at 7 MPa and 523.15 K (from NIST)
 
   # y-momentum
   [y_momentum_time]
-    type = PMFluidVelocityTimeDerivative
+    type = PINSFEFluidVelocityTimeDerivative
     variable = vel_y
     block = ${fluid_blocks}
   []
   [y_momentum_space]
-    type = MDFluidMomentumKernel
+    type = INSFEFluidMomentumKernel
     variable = vel_y
     porosity = porosity_aux
     component = 1
@@ -369,13 +369,13 @@ rho_in            = 6.3306  # Helium density at 7 MPa and 523.15 K (from NIST)
 
   # Fluid temperature
   [temperature_time]
-    type = PMFluidTemperatureTimeDerivative
+    type = PINSFEFluidTemperatureTimeDerivative
     variable = T
     porosity = porosity_aux
     block = ${fluid_blocks}
   []
   [temperature_space]
-    type = MDFluidEnergyKernel
+    type = INSFEFluidEnergyKernel
     variable = T
     porosity = porosity_aux
     block = ${fluid_blocks}
@@ -493,7 +493,7 @@ rho_in            = 6.3306  # Helium density at 7 MPa and 523.15 K (from NIST)
 [BCs]
   # Inlet BCs
   [BC_inlet_mass]
-    type = MDFluidMassBC
+    type = INSFEFluidMassBC
     boundary = 'core_inlet'
     variable = p
     pressure = p
@@ -734,7 +734,7 @@ rho_in            = 6.3306  # Helium density at 7 MPa and 523.15 K (from NIST)
   []
   [dpdz_core]
     type = ParsedPostprocessor
-    function = 'core_pressure_out / 13.9 - core_pressure_in / 13.9'
+    expression = 'core_pressure_out / 13.9 - core_pressure_in / 13.9'
     pp_names = 'core_pressure_out core_pressure_in'
     execute_on = 'INITIAL TIMESTEP_END'
   []

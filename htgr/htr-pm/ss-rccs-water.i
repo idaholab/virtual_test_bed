@@ -17,11 +17,7 @@ Dh_pipe           = 2 #1
   global_init_T = ${T_inlet_rccs}
   Tsolid_sf = 1e-5
   scaling_factor_var = '1 1e-3 1e-6'
-
-  [PBModelParams]
-    pbm_scaling_factors = '1 1e-3 1e-6'
-    p_order = 1
-  []
+  p_order = 1
 []
 
 [Functions]
@@ -64,8 +60,8 @@ Dh_pipe           = 2 #1
     type = ParsedAux
     block = 'rccs-panel:hs0'
     variable = QRad_multiplied
-    args = 'QRad'
-    function = 'QRad * 18.84955592 / 26.452210 ' #  Multiplier = (2 * PI * r_rpv_outer) / (2 * PI * r_rccs_panel_inner) --> Qrad_rpv * area_rpv = Qrad_rccs * area_rccs_inner
+    coupled_variables = 'QRad'
+    expression = 'QRad * 18.84955592 / 26.452210 ' #  Multiplier = (2 * PI * r_rpv_outer) / (2 * PI * r_rccs_panel_inner) --> Qrad_rpv * area_rpv = Qrad_rccs * area_rccs_inner
     execute_on = 'timestep_end'
   []
 []

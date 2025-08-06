@@ -219,7 +219,7 @@
     fuel_doppler_axial_weight = '6.00E-02  6.00E-02  6.00E-02  6.00E-02  5.50E-02  5.50E-02  5.50E-02  5.50E-02  5.70E-02  5.70E-02  5.70E-02  5.70E-02  4.70E-02  4.70E-02  4.70E-02  4.70E-02  3.10E-02  3.10E-02  3.10E-02  3.10E-02'
 
     # Fuel axial expansion reactivity feedback model
-    fuel_axial_expansion_reactivity_feedback = true
+    pke_axial_feedback = Constrained
     n_layers_axial_expansion = 20
     fuel_axial_expansion_reactivity_fn = CH1_fuel_axial_reactivity_fn
   []
@@ -325,7 +325,7 @@
     fuel_doppler_coef = -1.432E-03
     fuel_doppler_axial_weight = '6.00E-02  6.00E-02  6.00E-02  6.00E-02  5.50E-02  5.50E-02  5.50E-02  5.50E-02  5.70E-02  5.70E-02  5.70E-02  5.70E-02  4.70E-02  4.70E-02  4.70E-02  4.70E-02  3.10E-02  3.10E-02  3.10E-02  3.10E-02'
     # Fuel axial expansion reactivity feedback model
-    fuel_axial_expansion_reactivity_feedback = true
+    pke_axial_feedback = Constrained
     n_layers_axial_expansion = 20
     fuel_axial_expansion_reactivity_fn = CH2_fuel_axial_reactivity_fn
   []
@@ -429,7 +429,7 @@
     fuel_doppler_coef = -2.624E-04
     fuel_doppler_axial_weight = '5.80E-02  5.80E-02  5.80E-02  5.80E-02  5.40E-02  5.40E-02  5.40E-02  5.40E-02  5.70E-02  5.70E-02  5.70E-02  5.70E-02  4.70E-02  4.70E-02  4.70E-02  4.70E-02  3.40E-02  3.40E-02  3.40E-02  3.40E-02'
     # Fuel axial expansion reactivity feedback model
-    fuel_axial_expansion_reactivity_feedback = true
+    pke_axial_feedback = Constrained
     n_layers_axial_expansion = 20
     fuel_axial_expansion_reactivity_fn = CH3_fuel_axial_reactivity_fn
   []
@@ -533,7 +533,7 @@
     fuel_doppler_coef = -1.050E-03
     fuel_doppler_axial_weight = '5.20E-02  5.20E-02  5.20E-02  5.20E-02  5.60E-02  5.60E-02  5.60E-02  5.60E-02  5.90E-02  5.90E-02  5.90E-02  5.90E-02  4.90E-02  4.90E-02  4.90E-02  4.90E-02  3.40E-02  3.40E-02  3.40E-02  3.40E-02'
     # Fuel axial expansion feedback model
-    fuel_axial_expansion_reactivity_feedback = true
+    pke_axial_feedback = Constrained
     n_layers_axial_expansion = 20
     fuel_axial_expansion_reactivity_fn = CH4_fuel_axial_reactivity_fn
   []
@@ -1140,7 +1140,7 @@
   []
   [feedback-Axial]
     type = ParsedPostprocessor
-    function = 'CH1_Fuel_Axial_Expansion_Reactivity+CH2_Fuel_Axial_Expansion_Reactivity+CH3_Fuel_Axial_Expansion_Reactivity+CH4_Fuel_Axial_Expansion_Reactivity'
+    expression = 'CH1_Fuel_Axial_Expansion_Reactivity+CH2_Fuel_Axial_Expansion_Reactivity+CH3_Fuel_Axial_Expansion_Reactivity+CH4_Fuel_Axial_Expansion_Reactivity'
     pp_names = 'CH1_Fuel_Axial_Expansion_Reactivity CH2_Fuel_Axial_Expansion_Reactivity CH3_Fuel_Axial_Expansion_Reactivity CH4_Fuel_Axial_Expansion_Reactivity'
   []
   [feedback-doppler]
