@@ -9,3 +9,5 @@
 [LOTUS Molten Chloride Reactor](lotus/index.md)
 
 [CNRS multiphysics Modeling](cnrs/index.md)
+
+[Graphite Behavior in Molten Salt Environments](graphite_model/index.md)
