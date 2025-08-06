@@ -2,43 +2,43 @@
 []
 
 [Distributions] # Defines distributions for input paramters
-    [INF]
+    [INF] #Infiltration amount
       type = Uniform
       lower_bound = 0
       upper_bound = 1    
     []
 
-    [E]
+    [E] #Youngs modulus
         type = Uniform
         lower_bound = 9e9
         upper_bound = 15e9
     []
-    [K]
+    [K] #Thermal conductivity
         type = Uniform
         lower_bound = 25
         upper_bound = 100
     []
-    [PD]
+    [PD] #Power density
         type = Uniform
         lower_bound = 2e6
         upper_bound = 5e7
     []
-    [nu]
+    [nu] #Poisson ratio
         type = Uniform
         lower_bound = 0.13
         upper_bound = 0.21
     []
-    [Tinf]
+    [Tinf] #Salt temperature
         type = Uniform
         lower_bound = 823
         upper_bound = 1023
     []
-    [htc]
+    [htc] #Heat transfer coefficient
         type = Uniform
         lower_bound = 3500
         upper_bound = 5500
     []
-    [CTE]
+    [CTE] #Coefficient of thermal expansion
       type = Uniform
       lower_bound = 3.5e-6
       upper_bound = 6.0e-6

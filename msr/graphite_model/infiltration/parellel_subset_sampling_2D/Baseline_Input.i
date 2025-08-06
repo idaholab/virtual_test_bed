@@ -1,25 +1,36 @@
 
-# center of the hotspot
-x0 = 0.009
-y0 = 0.009
-R = 1e-4 #Hotspot radius
+### INPUTS ###
 
-max_PD = 1e7 # Maximum power density
-porosity = 0.2
-avg_PD = '${fparse max_PD*porosity}' #distributed power density
+INF = 1.0
+E = 9.3e9
+K = 37
+PD = 42e6
+nu = 0.16
+Tinf = 972
+htc = 5267
+CTE = 4.5e-6 
 
+
+
+threshold = 0.8
 
 [GlobalParams]
   displacements = 'disp_x disp_y'
+  scalar_out_of_plane_strain = scalar_strain_yy
 []
 
 [Mesh]
-  file = msre2D_Fine.e
+  file = msre2D_1X.e
 []
+  
 
 [Variables]
   [T]
     initial_condition = 300.0
+  []
+  [scalar_strain_yy]
+    order = FIRST
+    family = SCALAR
   []
 []
 
@@ -27,10 +38,6 @@ avg_PD = '${fparse max_PD*porosity}' #distributed power density
   [smooth_read]
       order = FIRST
       family = LAGRANGE        
-  []
-  [hotspot_var]
-    order = CONSTANT
-    family = MONOMIAL       
   []
 []
 
@@ -44,11 +51,6 @@ avg_PD = '${fparse max_PD*porosity}' #distributed power density
     variable = T
     function = mod_heatsource_soln_func
   []
-  [heat_source_hotspot]
-    type = HeatSource
-    variable = T
-    function = heatsource_hotspot_fn
-  []
 []
 
 [AuxKernels]
@@ -56,18 +58,16 @@ avg_PD = '${fparse max_PD*porosity}' #distributed power density
     type = FunctionAux
     variable = smooth_read
     function = mod_heatsource_soln_func
-  []
-  [hotspot]
-    type = FunctionAux
-    variable = hotspot_var
-    function = heatsource_hotspot_fn
+    execute_on = TIMESTEP_BEGIN
   []
 []
 
-[Physics/SolidMechanics/QuasiStatic]
+[Modules/TensorMechanics/Master]
   [all]
+    planar_formulation = GENERALIZED_PLANE_STRAIN
+    scalar_out_of_plane_strain = scalar_strain_yy    
     add_variables = true
-    strain = FINITE
+    strain = small
     automatic_eigenstrain_names = true
     generate_output = 'stress_xx stress_yy max_principal_stress vonmises_stress'
   []
@@ -77,35 +77,29 @@ avg_PD = '${fparse max_PD*porosity}' #distributed power density
   [heatsource_soln_func]
     type = SolutionFunction
     solution = heatsource_soln
-    from_variable = smooth
-    scale_factor = ${avg_PD}
+    from_variable = diffuse
   []
   [mod_heatsource_soln_func]
     type = ParsedFunction
     symbol_names = smooth_mod
     symbol_values = heatsource_soln_func
-    expression = 'max(smooth_mod,0)'
-  []
-  [heatsource_hotspot_fn]
-    type = ParsedFunction
-    expression = 'r := (sqrt((x-${x0})^2 + (y-${y0})^2) );
-                  if(r<=${R},${max_PD}-${avg_PD},0)'     
-  []
+    expression = 'if(smooth_mod>=${threshold},${PD},0)'
+  []  
 []
 
 [UserObjects]
   [heatsource_soln]
     type = SolutionUserObject
-    mesh = 'Ref_solution_file.e'
-    system_variables = 'smooth'
-    timestep = LATEST
+    mesh = 'CombinedExodus_AllResults_out.e'
+    time_transformation = ${INF}
+    system_variables = 'diffuse'
   []
 []
 
 [Materials]
   [thermal]
     type = HeatConductionMaterial
-    thermal_conductivity = 63
+    thermal_conductivity = ${K}
     specific_heat = 1400
   []
   [density]
@@ -115,18 +109,18 @@ avg_PD = '${fparse max_PD*porosity}' #distributed power density
   []
   [elasticity]
     type = ComputeIsotropicElasticityTensor
-    youngs_modulus = 9.8e9
-    poissons_ratio = 0.14
+    youngs_modulus = ${E}
+    poissons_ratio = ${nu}
   []
   [expansion1]
     type = ComputeThermalExpansionEigenstrain
     temperature = T
-    thermal_expansion_coeff = 4.5e-6
+    thermal_expansion_coeff = ${CTE}
     stress_free_temperature = 300
     eigenstrain_name = thermal_expansion
   []
   [stress]
-    type = ComputeFiniteStrainElasticStress
+    type = ComputeLinearElasticStress
   []
 []
 
@@ -148,24 +142,18 @@ avg_PD = '${fparse max_PD*porosity}' #distributed power density
     type = ConvectiveHeatFluxBC
     variable = T
     boundary = 'right_channelboundary'
-    T_infinity = 923
-    heat_transfer_coefficient = 4500
+    T_infinity = ${Tinf}
+    heat_transfer_coefficient = ${htc}
   []  
 
 []
 
-[VectorPostprocessors]
-  [point1]
-    type = LineValueSampler
-    use_displaced_mesh = false
-    start_point = '0 0.009 0.0'
-    end_point = '0.0196 0.009 0.0'
-    sort_by = z
-    num_points = 750
-    outputs = csv
-    variable = 'T'
-    execute_on = TIMESTEP_END
-  []
+[Postprocessors]
+    [maxstress]
+      type = ElementExtremeValue
+      variable = max_principal_stress
+      value_type = max
+    []
 []
 
 [Preconditioning]
@@ -189,5 +177,4 @@ avg_PD = '${fparse max_PD*porosity}' #distributed power density
 
 [Outputs]
   exodus = true
-  csv = true
 []
