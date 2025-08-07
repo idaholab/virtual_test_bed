@@ -146,15 +146,15 @@ Heat transfer in the pebble bed is a complex phenomenon that involves pebble-peb
 
 ### Kernels
 
-The block is used to define the physics of the model. In SAM, the governing equations are essentially divided into the time derivative and spatial terms. The mass equation is modeled using `PMFluidPressureTimeDerivative` and `MDFluidMassKernel` as below:
+The block is used to define the physics of the model. In SAM, the governing equations are essentially divided into the time derivative and spatial terms. The mass equation is modeled using `PINSFEFluidPressureTimeDerivative` and `MDFluidMassKernel` as below:
 
 !listing htgr/htr-pm/ss-main.i block=mass_time mass_space language=cpp
 
-The $x$ and $y$ momentum terms are modeled with `PMFluidVelocityTimeDerivative` and `MDFluidMomentumKernel`. Note that the `component` parameter in `MDFluidMomentumKernel` is defined as `0` and `1` for $x$ and $y$ momentum, respectively.
+The $x$ and $y$ momentum terms are modeled with `PINSFEFluidVelocityTimeDerivative` and `MDFluidMomentumKernel`. Note that the `component` parameter in `MDFluidMomentumKernel` is defined as `0` and `1` for $x$ and $y$ momentum, respectively.
 
 !listing htgr/htr-pm/ss-main.i block=mass_time x_momentum_time x_momentum_space y_momentum_time y_momentum_space language=cpp
 
-Fluid energy is modeled with `PMFluidTemperatureTimeDerivative`, `MDFluidEnergyKernel`, and `PorousMediumEnergyKernel`. The first two model the time derivative and spatial terms of the fluid heat transfer equation while the third models the heat transfer between fluid and solid.
+Fluid energy is modeled with `PINSFEFluidTemperatureTimeDerivative`, `MDFluidEnergyKernel`, and `PorousMediumEnergyKernel`. The first two model the time derivative and spatial terms of the fluid heat transfer equation while the third models the heat transfer between fluid and solid.
 
 !listing htgr/htr-pm/ss-main.i block=temperature_time temperature_space temperature_heat_transfer language=cpp
 

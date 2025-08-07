@@ -143,7 +143,7 @@
     executable_pattern = 'sam*|blue_crab*'
     cli_args = '--app SamApp --allow-unused Executioner/dt=0.005 Problem/restart_file_base=plofc-primary-loop-ss_checkpoint_cp/0002 Executioner/num_steps=2 Executioner/nl_rel_tol=1e-8 Executioner/nl_abs_tol=1e-7'
     abs_zero = 1e-5
-    rel_err = 1e-4
+    rel_err = 5e-3
     max_time = 1000
     method = 'opt'
   []

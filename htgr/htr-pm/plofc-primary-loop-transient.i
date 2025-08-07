@@ -398,7 +398,7 @@ p_outlet          = 7.0e+6 # Reactor outlet pressure (Pa)
   []
   [core_top_velocity_scaled]
     type = ParsedPostprocessor
-    function = 'cold_plenum_outlet_pipe_flow / rho_cold_plenum_inlet_pipe_inlet / 7.068583471'
+    expression = 'cold_plenum_outlet_pipe_flow / rho_cold_plenum_inlet_pipe_inlet / 7.068583471'
     pp_names = 'cold_plenum_outlet_pipe_flow rho_cold_plenum_inlet_pipe_inlet'
   []
 
@@ -444,7 +444,7 @@ p_outlet          = 7.0e+6 # Reactor outlet pressure (Pa)
   []
   [core_velocity_scaled]
     type = ParsedPostprocessor
-    function = 'core_flow / hot_plenum_inlet_pipe_rho / 7.068583471'
+    expression = 'core_flow / hot_plenum_inlet_pipe_rho / 7.068583471'
     pp_names = 'core_flow hot_plenum_inlet_pipe_rho'
   []
 
