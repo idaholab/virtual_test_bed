@@ -106,16 +106,16 @@ beta7   =  1.66016e-4
     passive_scalar_coupled_source       = 'fission_source dnp0; fission_source dnp1; 
                                            fission_source dnp2; fission_source dnp3; 
                                            fission_source dnp4; fission_source dnp5;
-                                           fission_source dnp6; fission_source dnp7;'
+                                           fission_source dnp6; fission_source dnp7'
     passive_scalar_coupled_source_coeff = '${beta0} ${fparse -lambda0}; ${beta1} ${fparse -lambda1};
                                            ${beta2} ${fparse -lambda2}; ${beta3} ${fparse -lambda3}; 
                                            ${beta4} ${fparse -lambda4}; ${beta5} ${fparse -lambda5};
-                                           ${beta6} ${fparse -lambda6}; ${beta7} ${fparse -lambda7};'
+                                           ${beta6} ${fparse -lambda6}; ${beta7} ${fparse -lambda7}'
     passive_scalar_advection_interpolation = 'upwind'
     passive_scalar_inlet_types          = 'fixed-value fixed-value fixed-value fixed-value
                                            fixed-value fixed-value fixed-value fixed-value'
-    passive_scalar_inlet_function       = '1.0; 1.0; 1.0; 1.0;
-                                           1.0; 1.0; 1.0; 1.0;'
+    passive_scalar_inlet_functors       = '1.0; 1.0; 1.0; 1.0;
+                                           1.0; 1.0; 1.0; 1.0'
   []
 []
 
@@ -133,8 +133,8 @@ beta7   =  1.66016e-4
   []
   [cp]
     type = ADGenericFunctorMaterial
-    prop_names = 'cp dcp_dt'
-    prop_values = '${cp} 0'
+    prop_names = 'cp'
+    prop_values = '${cp} '
   []
 []
 

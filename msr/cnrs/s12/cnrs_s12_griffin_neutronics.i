@@ -13,7 +13,7 @@
 [GlobalParams]
   isotopes = 'pseudo'
   densities = 'densityf'
-  library_file = '../../xs/msr_cavity_xslib.xml'
+  library_file = '../xs/msr_cavity_xslib.xml'
   library_name = 'CNRS-Benchmark'
   grid_names = 'Tfuel'
   grid_variables = 'tfuel'
