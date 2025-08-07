@@ -381,7 +381,7 @@ pump_head         = 2.35e6 # Pump head during steady state
     K = '7500 7500'
     K_reverse = '7500 7500'
     Area = 2.2242476
-    Head_fn   = f_pump_head
+    Head = f_pump_head
   []
   [pump_outlet_pipe]
     type           = PBOneDFluidComponent
@@ -576,7 +576,7 @@ pump_head         = 2.35e6 # Pump head during steady state
   []
   [core_top_velocity_scaled]
     type = ParsedPostprocessor
-    function = 'cold_plenum_outlet_pipe_flow / rho_cold_plenum_inlet_pipe_inlet / 7.068583471'
+    expression = 'cold_plenum_outlet_pipe_flow / rho_cold_plenum_inlet_pipe_inlet / 7.068583471'
     pp_names = 'cold_plenum_outlet_pipe_flow rho_cold_plenum_inlet_pipe_inlet'
   []
 
@@ -622,7 +622,7 @@ pump_head         = 2.35e6 # Pump head during steady state
   []
   [core_velocity_scaled]
     type = ParsedPostprocessor
-    function = 'core_flow / hot_plenum_inlet_pipe_rho / 7.068583471'
+    expression = 'core_flow / hot_plenum_inlet_pipe_rho / 7.068583471'
     pp_names = 'core_flow hot_plenum_inlet_pipe_rho'
   []
 

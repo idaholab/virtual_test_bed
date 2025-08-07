@@ -909,7 +909,7 @@ area_inlet = 0.33911699112746213
   []
   [Core_inlet_mdot]
     type = ParsedPostprocessor
-    function = 'Core_inlet_rho * Core_inlet_v * ${area_inlet}'
+    expression =  'Core_inlet_rho * Core_inlet_v * ${area_inlet}'
     pp_names = 'Core_inlet_rho Core_inlet_v'
     execute_on = 'INITIAL TIMESTEP_BEGIN TIMESTEP_END TRANSFER'
   []
@@ -940,7 +940,7 @@ area_inlet = 0.33911699112746213
   []
   [Core_outlet_v]
     type = ParsedPostprocessor
-    function = 'Core_outlet_mdot / Core_outlet_rho'
+    expression =  'Core_outlet_mdot / Core_outlet_rho'
     pp_names = 'Core_outlet_mdot Core_outlet_rho'
     execute_on = 'INITIAL TIMESTEP_BEGIN TIMESTEP_END TRANSFER'
   []

@@ -156,8 +156,8 @@ layers = 40 # Make sure the number of axial divisions in the fluid domain and so
   [scale_htc]
     type = ParsedAux
     variable = h_scaled
-    function = '1*htc' # 1 is replaced with the cli_args parameter in its parent app
-    args = htc
+    expression = '1*htc' # 1 is replaced with the cli_args parameter in its parent app
+    coupled_variables =  htc
   []
   [Tfluid_trans]
     type = SpatialUserObjectAux
