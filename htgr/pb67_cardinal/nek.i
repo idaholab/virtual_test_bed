@@ -6,6 +6,7 @@
 [Problem]
   type = NekRSProblem
   casename = 'pb67'
+  n_usrwrk_slots = 1
 
   [FieldTransfers]
     [avg_flux]
