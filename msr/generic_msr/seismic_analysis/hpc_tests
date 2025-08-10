@@ -4,7 +4,8 @@
   [seismic_analysis1]
     type = CSVDiff
     input = 'basemat_with_isolators_new.i'
-    csvdiff = 'basemat_with_isolators_new_out.csv'
+    cli_args = 'Outputs/exodus=false Outputs/file_base=hpc_basemat_with_isolators_new_out'
+    csvdiff = 'hpc_basemat_with_isolators_new_out.csv'
     executable_pattern = 'mastodon*'
     abs_zero = 1e-5
     # Tolerance set from p=4 and p=1 comparison
@@ -16,7 +17,8 @@
   [seismic_analysis2]
     type = CSVDiff
     input = 'basemat_with_isolators_new_3D.i'
-    csvdiff = 'basemat_with_isolators_new_3D_out.csv'
+    cli_args = 'Outputs/exodus=false Outputs/file_base=hpc_basemat_with_isolators_new_3D_out'
+    csvdiff = 'hpc_basemat_with_isolators_new_3D_out.csv'
     executable_pattern = 'mastodon*'
     abs_zero = 1e-5
     # Tolerance set from p=4 and p=1 comparison
@@ -28,7 +30,8 @@
   [seismic_analysis3]
     type = CSVDiff
     input = 'building_basemat_with_isolators_new.i'
-    csvdiff = 'building_basemat_with_isolators_new_out.csv'
+    cli_args = 'Outputs/exodus=false Outputs/file_base=hpc_building_basemat_with_isolators_new_out'
+    csvdiff = 'hpc_building_basemat_with_isolators_new_out.csv'
     executable_pattern = 'mastodon*'
     abs_zero = 1e-5
     rel_err = 1e-4
