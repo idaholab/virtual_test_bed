@@ -6,7 +6,7 @@
     input = 'xs_generation.i'
     xmldiff = 'mcc3xs.xml'
     executable_pattern = 'griffin*|blue_crab*'
-    min_parallel = 16
+    hpc_mem_per_cpu = 16G
     rel_err = 1e-3
     abs_zero = 1e-8
     method = 'opt'
