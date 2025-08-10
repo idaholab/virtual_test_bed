@@ -4,7 +4,7 @@
 
 !tag name=Gas-Cooled Microreactor Core
      description=3D core model of a Gas Cooled Micro Reactor with heterogeneous transport
-     image=https://mooseframework.inl.gov/virtual_test_bed/media/gcmr/gcmr_ss.png
+     image=https://mooseframework.inl.gov/virtual_test_bed/media/gcmr/FCMP/gcmr_ss.png
      pairs=reactor_type:microreactor
            reactor:GCMR
            geometry:core
