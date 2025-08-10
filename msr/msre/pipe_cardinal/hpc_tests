@@ -5,6 +5,7 @@
     check_input = True
     executable_pattern = 'cardinal*'
     min_parallel = 64
+    max_time = 2000
     cli_args = 'Outputs/exodus=false'
   []
   [multiphysics]
@@ -14,6 +15,8 @@
     executable_pattern = 'cardinal*'
     # Exceedingly slow in devel mode
     method = 'opt'
+    min_parallel = 64
+    max_time = 2000
     cli_args = 'Outputs/exodus=false'
   []
 []
