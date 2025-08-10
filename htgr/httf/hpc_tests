@@ -9,7 +9,8 @@
     cli_args = '--distributed-mesh Executioner/num_steps=50'
     allow_warnings = true
     min_parallel = 24
-    max_time = 3600
+    # 29 time steps, 16000s simtime in 1 hour
+    max_time = 7200
     method = 'opt'
   []
 []
