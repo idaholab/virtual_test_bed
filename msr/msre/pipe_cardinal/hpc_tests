@@ -11,7 +11,7 @@
     type = CSVDiff
     input = cardinal.i
     csvdiff = 'cardinal_out.csv'
-    executable_pattern = 'cardinal*|combined*'
+    executable_pattern = 'cardinal*'
     # Exceedingly slow in devel mode
     method = 'opt'
     cli_args = 'Outputs/exodus=false'
