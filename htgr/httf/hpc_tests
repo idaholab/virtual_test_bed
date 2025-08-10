@@ -1,0 +1,15 @@
+[Tests]
+  # Regression tests
+  [core_multiphysics]
+    type = CSVDiff
+    working_directory = 'inputs'
+    input = HTTF_PG26_multiapp.i
+    csvdiff = HTTF_PG26_transient.csv
+    executable_pattern = 'relap-7*'
+    cli_args = '--distributed-mesh Executioner/num_steps=50'
+    allow_warnings = true
+    min_parallel = 24
+    max_time = 3600
+    method = 'opt'
+  []
+[]
