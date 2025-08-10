@@ -1,7 +1,7 @@
 # Griffin-BISON Multiphysics 15 Ȼ Reactivity Insertion Test
 
 !tag name=Kilopower Reactor Using Stirling TechnologY (KRUSTY)
-     description=Steady state multiphysics simulation of the core of the Kilopower Reactor Using Stirling TechnologY using NEAMS tools
+     description=Multiphysics simulation of a reactivity insertion in the core of the Kilopower Reactor Using Stirling TechnologY using NEAMS tools
      image=https://mooseframework.inl.gov/virtual_test_bed/media/KRUSTY/krusty_quarter_mesh.png
      pairs=reactor_type:microreactor
            reactor:KRUSTY
