@@ -94,6 +94,8 @@ compile_commands.json
 tmp_*
 # WSL garbage
 *:Zone.Identifier
+# isoxml
+*_ref
 
 # Allow certain files in gold directories
 !**/gold/*.e
