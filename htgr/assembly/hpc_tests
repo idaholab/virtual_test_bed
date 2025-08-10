@@ -5,6 +5,7 @@
     input = 'common_input.i solid.i'
     cli_args = '--mesh-only'
     working_directory = 'meshes'
+    hpc_mem_per_cpu = 16G
   []
 
   [run_multiphysics]
