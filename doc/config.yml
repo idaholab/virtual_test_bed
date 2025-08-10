@@ -34,6 +34,7 @@ Extensions:
     MooseDocs.extensions.tagging:
         active: True
         js_file: index-6fae072b.js
+        csv_file: summary.csv
         allowed_keys:
             - tutorials
             - reactor_type
