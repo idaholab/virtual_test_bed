@@ -1,10 +1,26 @@
 # Griffin-BISON Multiphysics 15 Ȼ Reactivity Insertion Test
 
-This document outlines the approaches to model the 15Ȼ reactivity insertion test conducted in the KRUSTY project. The model is developed based on [the steady-state KRUSTY multiphysics model](/Griffin-BISON_Multiphysics_Steady_State_Model.md). 
+!tag name=Kilopower Reactor Using Stirling TechnologY (KRUSTY)
+     description=Steady state multiphysics simulation of the core of the Kilopower Reactor Using Stirling TechnologY using NEAMS tools
+     image=https://mooseframework.inl.gov/virtual_test_bed/media/KRUSTY/krusty_quarter_mesh.png
+     pairs=reactor_type:microreactor
+           reactor:KRUSTY
+           geometry:core
+           simulation_type:neutronics;multiphysics
+           input_features:reactor_meshing;cross_section_generation;multiapps
+           transient:reactivity_insertion
+           V_and_V:demonstration
+           codes_used:Griffin;BISON;BlueCrab
+           computing_needs:Workstation
+           fiscal_year:2025
+           sponsor:NEAMS
+           institution:ANL
+
+This document outlines the approaches to model the 15Ȼ reactivity insertion test conducted in the KRUSTY project. The model is developed based on [the steady-state KRUSTY multiphysics model](/Griffin-BISON_Multiphysics_Steady_State_Model.md).
 
 ## Overview
 
-Three reactivity insertion tests were conducted in the KRUSTY warm critical experiments [!citep](Poston2020_1). The 15 Ȼ test is the simplest and serves as the foundation for the subsequent two transient tests, which involve the insertion of 30 Ȼ and 60 Ȼ, respectively. This VTB model will concentrate on detailing the work related to the 15 Ȼ run only. 
+Three reactivity insertion tests were conducted in the KRUSTY warm critical experiments [!citep](Poston2020_1). The 15 Ȼ test is the simplest and serves as the foundation for the subsequent two transient tests, which involve the insertion of 30 Ȼ and 60 Ȼ, respectively. This VTB model will concentrate on detailing the work related to the 15 Ȼ run only.
 
 In all three reactivity insertion tests, KRUSTY began at a very low power level and at room temperatures. The fission heat generated in the UMo fuel region increased as the radial reflector of KRUSTY was lifted upwards, covering larger portion of the fuel disk. During the warm critical experiments, heat pipes were not in operation, and all heat was passively removed through the reactor’s external boundary. With very effective thermal insulation, the fuel region heated up and thermally expanded, creating negative reactivity feedback to reduce the power. For 15 Ȼ  run, the peak power measured was approximately 3.75 kW, and the excess reactivity inserted to the core was estimated to be about 15.7 Ȼ [!citep](Poston2020_1). This estimate was based on measured reactor period at the earlier stages, before the reactivity feedbacks began to take effect. The fuel temperatures during the transient were recorded by several thermal couples. However, due to the limitations with bounding thermal couples to the fuel disk, the recorded temperature all rise slower compared to the neutron detectors monitoring the fission power. As a result, in this VTB model, only the recorded fission power history (normalized detector readings) was used for evaluating the VTB multiphysics model developed.
 
@@ -54,7 +70,7 @@ On the other hand, a time dependent Function is used along with `FunctionDirichl
 
 ## Simulation Results
 
-[power_tr_15c] compares the total power calculated by Griffin with the measured total power from neutron detectors. Overall, the agreement between the multiphysics simulation and experimental data is very good.  At the beginning of the transient, the power increase rate matched the experimental data very closely, indicating that the initial reactivity insertion used in the simulation was appropriate. The multiphysics model also accurately predicted the time at which the power peaked. The calculated maximum fission power for a quarter of the core is 957.4 W, which is only about 2% higher than the experimental value of 937.5 W. This agreement suggests that the thermal model, coupled with the neutronics model, accurately represented the core thermal expansion. Given that the peak power was slightly overpredicted, the negative reactivity feedbacks of the system may have been slightly underestimated in the multiphysics model. 
+[power_tr_15c] compares the total power calculated by Griffin with the measured total power from neutron detectors. Overall, the agreement between the multiphysics simulation and experimental data is very good.  At the beginning of the transient, the power increase rate matched the experimental data very closely, indicating that the initial reactivity insertion used in the simulation was appropriate. The multiphysics model also accurately predicted the time at which the power peaked. The calculated maximum fission power for a quarter of the core is 957.4 W, which is only about 2% higher than the experimental value of 937.5 W. This agreement suggests that the thermal model, coupled with the neutronics model, accurately represented the core thermal expansion. Given that the peak power was slightly overpredicted, the negative reactivity feedbacks of the system may have been slightly underestimated in the multiphysics model.
 
 !media media/KRUSTY/power_15c_tr.png
       style=display: block;margin-left:auto;margin-right:auto;width:80%;

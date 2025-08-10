@@ -12,7 +12,7 @@
                        codes_used:MOOSE_NavierStokes
                        open_source:full
                        computing_needs:HPC
-                       fiscal_year:2024
+                       fiscal_year:2024;2025
                        institution:INL
 
 The advanced test reactor (ATR) at INL employs a butterfly-valve to control pressure drop across the reactor core.
@@ -131,7 +131,7 @@ function was used to quickly bring the viscosity down to `5.4e-4 PaS`.
 # Results
 
 Shown below are velocity and pressure profiles for each angle and for select inlet velocities. These profiles were all taken from the finer mesh simulations. They display expected features
-such as pressure and velocity peaks in the correct regions.   
+such as pressure and velocity peaks in the correct regions.
 
 !media atr/bf_valve_vel_and_pressure.png
        style=width:50%;margin-left:auto;margin-right:auto
