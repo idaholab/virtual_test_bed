@@ -6,6 +6,7 @@
     csvdiff = NT_out.csv
     cli_args = "Executioner/richardson_max_its=1 Executioner/fixed_point_max_its=2"
     executable_pattern = 'cardinal*'
+    # Not going to run because Cardinal is not built with Griffin
     prereq = 'run_neutronics run_nekrs'
     min_parallel = 144
     max_time = 2000
@@ -14,7 +15,10 @@
   [run_neutronics]
     type = CSVDiff
     input = 'NTmesh.i NT.i'
-    cli_args = "Outputs/file_base=neutronics_only_out Executioner/force_fixed_point_solve=false Transfers/active='' MultiApps/active='' Mesh/inactive='fmg'"
+    cli_args = "Outputs/file_base=neutronics_only_out
+                Executioner/force_fixed_point_solve=false
+                Transfers/active='' MultiApps/active=''
+                Mesh/inactive='fmg'"
     csvdiff = neutronics_only_out.csv
     # 16 processors to have enough memory
     min_parallel = 16
@@ -28,7 +32,11 @@
     type = CSVDiff
     input = 'HCmesh.i HC.i'
     csvdiff = HC_out.csv
-    cli_args = "Executioner/dt=0.01 Executioner/end_time=0.1 Outputs/time_step_interval=1 Transfers/active='' MultiApps/active='' Mesh/inactive='fmg'"
+    cli_args = "Executioner/dt=0.01
+                Executioner/end_time=0.1
+                Outputs/time_step_interval=1
+                Transfers/active='' MultiApps/active=''
+                Mesh/inactive='fmg'"
     executable_pattern = 'cardinal*|moose*'
     min_parallel = 8
   []

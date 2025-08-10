@@ -36,7 +36,7 @@ mid_duct = 6
 
 # === derived
 #half_asmpitch = ${fparse flat_to_flat / 2 + duct_thickness}
-coolantdensity_ref = ${fparse 10678-13174*(inlet_T-600.6)/10000} # kg/m^3
+coolantdensity_ref = ${fparse 10678 - 13174 * (inlet_T - 600.6) / 10000} # kg/m^3
 
 richardsonreltol=1E-1
 richardsonabstol=1E+5
