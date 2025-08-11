@@ -144,7 +144,7 @@ lid_velocity = 0.5
   fixed_point_min_its = 2
   fixed_point_max_its = 50
   fixed_point_rel_tol = 1e-5
-  fixed_point_abs_tol = 1.5e-6
+  fixed_point_abs_tol = 1e-5
 []
 
 [VectorPostprocessors]

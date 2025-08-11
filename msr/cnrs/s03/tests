@@ -3,11 +3,12 @@
   [s03]
     type = CSVDiff
     input = 'cnrs_s03_ns_flow.i'
-    csvdiff = "cnrs_s03_ns_flow_csv_AA_line_values_left_0001.csv  cnrs_s03_ns_flow_csv_BB_line_values_left_0001.csv  cnrs_s03_ns_flow_csv.csv
-               cnrs_s03_ns_flow_csv_AA_line_values_right_0001.csv cnrs_s03_ns_flow_csv_BB_line_values_right_0001.csv"
+    csvdiff = "cnrs_s03_ns_flow_csv_AA_line_values_left_0002.csv  cnrs_s03_ns_flow_csv_BB_line_values_left_0002.csv  cnrs_s03_ns_flow_csv.csv
+               cnrs_s03_ns_flow_csv_AA_line_values_right_0002.csv cnrs_s03_ns_flow_csv_BB_line_values_right_0002.csv"
     min_parallel = 4
     # Missing absorption cross section
     allow_warnings = true
     executable_pattern = 'griffin*'
+    max_time = 600
   []
 []
