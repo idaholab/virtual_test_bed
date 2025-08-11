@@ -34,9 +34,11 @@
                 Outputs/csv=true"
     prereq = 'xs_generation'
     csvdiff = 'core_hom_macro_out.csv'
-    min_parallel = 16
-    hpc_mem_per_cpu = 13G
+    min_parallel = 64
+    hpc_mem_per_cpu = 10G
     method = 'opt'
+    # 3000s ended after 6 iterations with 16 cpus
+    # 3000s ended after 11 iterations with 32 cpus
     max_time = 3000
   []
 []

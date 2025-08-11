@@ -6,6 +6,7 @@
     executable_pattern = 'cardinal*'
     min_parallel = 32
     cli_args = 'Outputs/exodus=false'
+    max_time = 1000
   []
   [full_sim]
     type = RunApp
