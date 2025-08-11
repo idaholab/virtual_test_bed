@@ -2,6 +2,8 @@
 
 *Contact: V Prithivirajan, veerappan.prithivirajan@inl.gov*
 
+*Model was co-developed by V Prithivirajan and Ben Spencer*
+
 *Model link: [Models for wear effects on graphite behavior](https://github.com/idaholab/virtual_test_bed/tree/main/msr/graphite_model/wear)*
 
 Wear of graphite components used in MSRs can occur due to abrasion and erosion mechanisms. In
