@@ -4,7 +4,7 @@
     input = nek.i
     check_input = True
     executable_pattern = 'cardinal*'
-    min_parallel = 64
+    min_parallel = 112
     max_time = 2000
     cli_args = 'Outputs/exodus=false'
   []
@@ -15,7 +15,7 @@
     executable_pattern = 'cardinal*'
     # Exceedingly slow in devel mode
     method = 'opt'
-    min_parallel = 64
+    min_parallel = 112
     max_time = 2000
     cli_args = 'Outputs/exodus=false'
   []
