@@ -6,7 +6,7 @@
 # Step 1.1: Circulating fuel
 # ==============================================================================
 #   Tiberga, et al., 2020. Results from a multi-physics numerical benchmark for codes
-#   dedicated to molten salt fast reactors. Ann. Nucl. Energy 142(2020)107428. 
+#   dedicated to molten salt fast reactors. Ann. Nucl. Energy 142(2020)107428.
 #   URL:http://www.sciencedirect.com/science/article/pii/S0306454920301262
 # ==============================================================================
 
@@ -73,12 +73,12 @@
   [tfuel]
     order = CONSTANT
     family = MONOMIAL
-    initial_condition = 900 
+    initial_condition = 900
   []
   [tfuel_avg]
     order = CONSTANT
     family = MONOMIAL
-    initial_condition = 900 
+    initial_condition = 900
   []
   [densityf]
     order = CONSTANT
@@ -170,8 +170,8 @@
 [Executioner]
   type = Eigenvalue
   solve_type = PJFNK
-  petsc_options_iname = '-pc_type -pc_factor_shift_type'
-  petsc_options_value = 'lu NONZERO'
+  petsc_options_iname = '-pc_type -pc_factor_shift_type -pc_factor_mat_solver_package'
+  petsc_options_value = 'lu NONZERO superlu_dist'
   free_power_iterations = 2
   line_search = none #l2
   l_max_its = 200
@@ -227,7 +227,7 @@
 [MultiApps]
   [ns_flow]
     type = FullSolveMultiApp
-    input_files = cnrs_s01_ns_flow.i
+    input_files = cnrs_s11_ns_flow.i
     execute_on = 'TIMESTEP_END'
   []
 []
