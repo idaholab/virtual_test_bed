@@ -2,6 +2,8 @@
 
 *Contact: V Prithivirajan, veerappan.prithivirajan@inl.gov*
 
+*Model was co-developed by V Prithivirajan and Ben Spencer*
+
 *Model link: [Models for Infiltration effects on graphite behavior](https://github.com/idaholab/virtual_test_bed/tree/main/msr/graphite_model/infiltration)*
 
 Molten salt infiltration into graphite occurs when the molten salt permeates the interconnected pore structure of the graphite. This phenomenon is driven by factors such as pressure differential, pore characteristics,
