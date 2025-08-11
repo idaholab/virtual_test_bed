@@ -4,6 +4,22 @@
 
 *Model link: [HPMR Model](https://github.com/idaholab/virtual_test_bed/tree/devel/microreactors/mrad)*
 
+!tag name=MRAD Micro-Reactor Multiphysics model
+     description=A core multiphysics model with steady state and three accidental transient simulations
+     image=https://mooseframework.inl.gov/virtual_test_bed/media/mrad/hpmr_mesh_proc.png
+     pairs=reactor_type:microreactor
+           reactor:HPMR
+           geometry:core
+           simulation_type:multiphysics
+           V_and_V:demonstration
+           input_features:multiapps;reactor_meshing;mixed_restart
+           transient:steady_state;overpower;load_follow;ULOC
+           codes_used:BlueCrab;Griffin;BISON;Sockeye
+           computing_needs:HPC
+           fiscal_year:2023
+           sponsor:NEAMS
+           institution:ANL
+
 !alert note title=Acknowledgement
 This HP-MR model was built upon earlier work performed under ARPA-E MEITNER project and reported in the journal paper [!citep](matthews2021coupled), and some parts of the inputs are coming from these original models.
 
@@ -176,3 +192,5 @@ The default power values in the input files in this repository are all set at th
 !listing /mrad/transient_null/HPMR_dfem_griffin_trN.i block=PowerDensity
 
 !listing /mrad/heat_pipe_failure/HPMR_dfem_griffin_tr.i block=PowerDensity
+
+[Link to results](mrad_results.md)
