@@ -23,7 +23,7 @@
     executable_pattern = 'mastodon*'
     abs_zero = 1e-5
     # Tolerance set from multiple runs at 112 cpus
-    rel_err = 1e-3
+    rel_err = 5e-3
     # in 3600s did 2391/2800 timesteps
     max_time = 5400
     method = 'opt'
@@ -37,7 +37,8 @@
     csvdiff = 'hpc_building_basemat_with_isolators_new_out.csv'
     executable_pattern = 'mastodon*'
     abs_zero = 1e-5
-    rel_err = 1e-4
+    # Tolerance set from multiple runs at 112 cpus
+    rel_err = 2e-3
     # in 3600s, 448 cpus, did 192/205 timesteps
     max_time = 5400
     method = 'opt'
