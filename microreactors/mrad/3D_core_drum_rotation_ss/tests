@@ -7,6 +7,8 @@
     check_input = True
     executable_pattern = 'griffin*|blue_crab*|dire_wolf*'
     cli_args = "MultiApps/active='' Transfers/active=''"
+    # For devel recipe
+    max_time = 500
   []
   [thermo_bison_syntax]
     type = RunApp
@@ -14,6 +16,8 @@
     check_input = True
     executable_pattern = 'bison*|blue_crab*|dire_wolf*'
     cli_args = "MultiApps/active='' Transfers/active=''"
+    # For devel recipe
+    max_time = 500
   []
   [hp_sockeye_syntax]
     type = RunApp
@@ -23,6 +27,6 @@
     # Capillary limit for vertical heat pipes is not accurate; see https://hpcgitlab.hpc.inl.gov/idaholab/sockeye/-/issues/65
     allow_warnings = true
   []
-    
+
   # We covered regression tests in `hpc_tests`
 []

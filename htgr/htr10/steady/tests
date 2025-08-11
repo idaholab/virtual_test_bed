@@ -21,6 +21,8 @@
     custom_cmp = custom_cmp_no_connected_region_id
     # Incomplete XS library
     allow_warnings = true
+    # For devel recipe
+    max_time = 500
   []
   [griffin_regression_2]
     type = Exodiff
