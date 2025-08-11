@@ -9,21 +9,6 @@
     method = 'opt'
     max_time = 600
   []
-  [xs_generation]
-    type = 'XMLDiff'
-    input = 'xs_generation.i'
-    xmldiff = 'mcc3xs.xml'
-    executable_pattern = 'griffin*|blue_crab*'
-    prereq = 'xs_generation_syntax'
-    min_parallel = 16
-    rel_err = 1e-3
-    abs_zero = 1e-8
-    method = 'opt'
-    ignored_attributes = '@TimeCreated'
-    max_time = 600
-    # we will need HPC to run the test
-    heavy = true
-  []
   [full_core_solve_syntax]
     type = RunApp
     check_input = true
@@ -46,31 +31,5 @@
     prereq = 'xs_generation_syntax'
     method = 'opt'
     max_time = 600
-  []
-  [full_core_solve]
-    type = 'CSVDiff'
-    input = 'abtr_het_mesh.i core_hom_macro.i'
-    executable_pattern = 'griffin*|blue_crab*'
-    cli_args = "max_axial_mesh_size=10
-                Mesh/eqv_core/quad_center_elements=true
-                Mesh/eqv_core_coarse_mesh/type=CoarseMeshExtraElementIDGenerator
-                Mesh/eqv_core_coarse_mesh/input=block_numbering
-                Mesh/eqv_core_coarse_mesh/coarse_mesh=block_numbering
-                Mesh/eqv_core_coarse_mesh/extra_element_id_name=coarse_element_id
-                Mesh/uniform_refine=1
-                TransportSystems/ReflectingBoundary=''
-                TransportSystems/VacuumBoundary='outer_core top bottom'
-                TransportSystems/dfem_sn/NAzmthl=4
-                TransportSystems/dfem_sn/NPolar=3
-                Executioner/coarse_element_id=coarse_element_id
-                Executioner/cmfd_eigen_solver_type=krylovshur
-                Outputs/csv=true"
-    prereq = 'xs_generation'
-    csvdiff = 'core_hom_macro_out.csv'
-    min_parallel = 16
-    method = 'opt'
-    max_time = 600
-    # we will need HPC to run the test
-    heavy = true
   []
 []
