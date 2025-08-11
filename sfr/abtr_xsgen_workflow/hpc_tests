@@ -12,7 +12,7 @@
     abs_zero = 1e-8
     method = 'opt'
     ignored_attributes = '@TimeCreated'
-    max_time = 4000
+    max_time = 2000
   []
   [full_core_solve]
     type = 'CSVDiff'
@@ -35,7 +35,8 @@
     prereq = 'xs_generation'
     csvdiff = 'core_hom_macro_out.csv'
     min_parallel = 16
+    hpc_mem_per_cpu = 13G
     method = 'opt'
-    max_time = 1000
+    max_time = 3000
   []
 []
