@@ -1,15 +1,17 @@
 ################################################################################
 ## NEAMS Micro-Reactor Application Driver                                     ##
-## KRUSTY Multiphysics Steady State                                           ##
+## KRUSTY Multiphysics 30-Cent Reactivity Insertion                           ##
 ## BISON thermomechanics main input file (Child App)                          ##
 ## Heat Conduction, Thermal Expansion, Thermal Stress                         ##
 ################################################################################
 
-!include KRUSTY_BISON_PARAMS.i
+!include ../Multiphysics_SS/KRUSTY_BISON_PARAMS.i
 
-bison_mesh_file = '../gold/MESH/BISON_mesh.e'
+restart_cp_file = '../Multiphysics_SS/KRUSTY_Griffin_SN23_NA23_CMFD_out_bison0_checkpoint_cp/LATEST'
 
-reflector_disp = 0.0
+reflector_disp_init = 0
+reflector_disp_increment_1 = 1.447e-3 # Corresponding to the first 15 cents reactivity insertion
+reflector_disp_increment_2 = 1.400e-3 # Corresponding to the nominal second 15 cents reactivity insertion
 
 [GlobalParams]
   temperature = temp
@@ -22,43 +24,26 @@ reflector_disp = 0.0
   reference_vector = 'ref'
   extra_tag_vectors = 'ref'
   group_variables = 'disp_x disp_y disp_z'
+
+  restart_file_base = ${restart_cp_file}
 []
 
 [Mesh]
-  [fmg]
-    # If you do not have a presplit mesh already, you should generate it first:
-    # 1. Uncomment all the mesh blocks
-    # 2. Use the exodus file in the fmg block
-    # 3. Comment the "parallel_type = distributed" line
-    # 4. Use moose executable to presplit the mesh
-    # Once you have the presplit mesh
-    # 1. Comment all the mesh blocks except the fmg block
-    # 2. Use the cpr file in the fmg block
-    # 3. Uncomment the "parallel_type = distributed" line
-    type = FileMeshGenerator
-    file = ${bison_mesh_file}
-    # file = 'bison_mesh.cpr'
-  []
+  file = ${restart_cp_file}
   parallel_type = distributed
 []
 
+# No initial value needed as this is restarting
+# For both Variables and AuxVariables
 [Variables]
   # We have two temperature variables, one for the fuel and one for the non-fuel
   # This is to allow discontinuity on the fuel surface so that the insulation
   # can be better simulated using `InterfaceKernels`
   [temp]
-    initial_condition = 300
     block = ${nonfuel_all}
   []
   [temp_f]
-    initial_condition = 300
     block = ${fuel_all}
-  []
-  [disp_x]
-  []
-  [disp_y]
-  []
-  [disp_z]
   []
 []
 
@@ -67,7 +52,6 @@ reflector_disp = 0.0
     block = ${fuel_all}
     family = L2_LAGRANGE
     order = FIRST
-    initial_condition = 1.0
   []
   [Tfuel]
     order = CONSTANT
@@ -78,6 +62,8 @@ reflector_disp = 0.0
     family = MONOMIAL
   []
   [external_power]
+  []
+  [hp_temp_aux]
   []
 []
 
@@ -254,6 +240,7 @@ reflector_disp = 0.0
     block = '${fuel_all}'
     temperature = temp_f
     strain = SMALL # Small strain should work, but finite may have better performance
+    add_variables = true
     eigenstrain_names = 'thermal_strain'
     generate_output = 'vonmises_stress strain_xx strain_yy strain_zz stress_xx stress_yy stress_zz hydrostatic_stress'
     extra_vector_tags = 'ref'
@@ -262,6 +249,7 @@ reflector_disp = 0.0
   [mech_parts_non_fuel]
     block = '${nonfuel_mech}'
     strain = SMALL # Small strain should work, but finite may have better performance
+    add_variables = true
     eigenstrain_names = 'thermal_strain'
     generate_output = 'vonmises_stress strain_xx strain_yy strain_zz stress_xx stress_yy stress_zz hydrostatic_stress'
     extra_vector_tags = 'ref'
@@ -381,8 +369,8 @@ reflector_disp = 0.0
   []
   [SS316Mech]
     type = SS316ElasticityTensor
-    block = '${ss_all} ${hp_all}'
     elastic_constants_model = legacy_ifr
+    block = '${ss_all} ${hp_all}'
     temperature = temp
   []
   [SS316Exp]
@@ -399,11 +387,10 @@ reflector_disp = 0.0
     temperature = temp
   []
 
-  #Aluminium; Assuming all the stuctures are SS316
+  #Aluminium
   [Al6061Dens]
     type = Density
     block = ${Al_all}
-    # density = ${ss_dens} # will change later
     density = ${al_dens}
   []
   [Al6061Mech]
@@ -490,6 +477,26 @@ reflector_disp = 0.0
     type = ParsedFunction
     expression = '0.606+0.0351*t'
   []
+  # The function that controls the displacement of the reflector
+  # Used to control the reactivity insertion
+  [ref_mov]
+    type = ParsedFunction
+    symbol_names = 't0 d0'
+    symbol_values = '0.5 ${reflector_disp}'
+    # Linear insertion within the first 0.5 seconds
+    expression = 'if(t<0,0.0,if(t<t0,d0/t0*t,d0))'
+  []
+  [ref_mov]
+      type = ParsedFunction
+      symbol_names =  'reflector_disp_0       reflector_disp_increment_1         reflector_disp_increment_2         rdi2_scale_factor t_first_15c_insertion  t_start_power_monitoring existing_reflector_disp unit_increment_fraction pw          pw_ref'
+      symbol_values = '${reflector_disp_init} ${reflector_disp_increment_1}      ${reflector_disp_increment_2}      1.1               0.5                    697                      disp_old_target         0.09                    total_power 750'
+      expression = 'reflector_disp_15c:=reflector_disp_0+reflector_disp_increment_1;
+                    if(t<0,reflector_disp_0,
+                          if(t<t_first_15c_insertion,reflector_disp_0+reflector_disp_increment_1/t_first_15c_insertion*t,
+                                                      if(t<t_start_power_monitoring,reflector_disp_15c,
+                                                                                    if(pw<pw_ref&existing_reflector_disp<reflector_disp_15c+reflector_disp_increment_2*rdi2_scale_factor,existing_reflector_disp+reflector_disp_increment_2*unit_increment_fraction,
+                                                                                                                                                                                        disp_old))))'
+  []
 []
 
 [BCs]
@@ -506,11 +513,12 @@ reflector_disp = 0.0
     boundary = 'Core_bottom'
     value = 0.0
   []
+  # The BC that controls the displacement of the reflector
   [BottomSSFixZ]
-    type = DirichletBC
+    type = FunctionDirichletBC
     variable = disp_z
     boundary = 'ss_bot'
-    value = ${reflector_disp}
+    function = ref_mov
   []
   [TopFixZ]
     type = DirichletBC
@@ -554,10 +562,10 @@ reflector_disp = 0.0
   automatic_scaling = true
   compute_scaling_once = false
 
-  start_time = -1.0e6 #-1e-5 negative start time so we can start running from t = 0
-  end_time = 0
-  dt = 1e5
-  dtmin = 1
+  start_time = 0
+  end_time = 7200
+  # Let main app to control the time step
+  dt = 10
 []
 
 [Postprocessors]
@@ -622,7 +630,6 @@ reflector_disp = 0.0
     use_displaced_mesh = true
     execute_on = 'initial TIMESTEP_END'
   []
-
   [power_density_avg_everywhere]
     type = ElementAverageValue
     variable = power_density
@@ -644,18 +651,26 @@ reflector_disp = 0.0
     block = ${fuel_all}
     value_type = min
   []
+  [disp_old_origin]
+    type = FunctionValuePostprocessor
+    function = ref_mov
+    execute_on = 'initial timestep_end'
+  []
+  [disp_old_target]
+    type = Receiver
+    default = ${fparse reflector_disp_init+reflector_disp_increment_1}
+  []
 []
 
 [Outputs]
   csv = true
   [exodus]
     type = Exodus
-    execute_on = 'final'
     enable = false
   []
   [checkpoint]
     type = Checkpoint
-    additional_execute_on = 'FINAL'
+    enable = false
   []
   perf_graph = true
   color = true
