@@ -6,15 +6,15 @@
 # Step 0.1: Velocity field
 # ==============================================================================
 #   Tiberga, et al., 2020. Results from a multi-physics numerical benchmark for codes
-#   dedicated to molten salt fast reactors. Ann. Nucl. Energy 142(2020)107428. 
+#   dedicated to molten salt fast reactors. Ann. Nucl. Energy 142(2020)107428.
 #   URL:http://www.sciencedirect.com/science/article/pii/S0306454920301262
 # ==============================================================================
 
 alpha = 2.0e-4
-rho   = 2.0e+3
-cp    = 3.075e+3
-k     = 1.0e-3
-mu    = 5.0e+1
+rho = 2.0e+3
+cp = 3.075e+3
+k = 1.0e-3
+mu = 5.0e+1
 
 [Mesh]
   type = MeshGeneratorMesh
@@ -32,54 +32,64 @@ mu    = 5.0e+1
   []
 []
 
-[Modules]
-  [NavierStokesFV]
-    compressibility = 'incompressible'
-    add_energy_equation = true
-    boussinesq_approximation = true
+[Physics]
+  [NavierStokes]
+    [Flow]
+      [flow]
+        compressibility = 'incompressible'
 
-    density = ${rho}
-    dynamic_viscosity = 'mu'
-    thermal_conductivity = 'k'
-    specific_heat = 'cp'
-    thermal_expansion = ${alpha}
+        density = ${rho}
+        dynamic_viscosity = 'mu'
 
-    # Boussinesq parameters
-    gravity = '0 -9.81 0'
+        # Boussinesq parameters
+        boussinesq_approximation = true
+        gravity = '0 -9.81 0'
+        thermal_expansion = ${alpha}
 
-    # Initial conditions
-    initial_velocity = '0.5 0 0'
-    initial_temperature = 900
-    initial_pressure = 1e5
-    ref_temperature = 900
-    
-    # Boundary conditions
-    inlet_boundaries = 'top'
-    momentum_inlet_types = 'fixed-velocity'
-    momentum_inlet_function = '0.5 0'
-    energy_inlet_types = 'fixed-temperature'
-    energy_inlet_function = 900
+        # Initial conditions
+        initial_velocity = '0.5 0 0'
+        initial_pressure = 1e5
+        ref_temperature = 900
 
-    wall_boundaries = 'left right bottom'
-    momentum_wall_types = 'noslip noslip noslip'
-    energy_wall_types = 'heatflux heatflux heatflux'
-    energy_wall_function = '0 0 0'
+        # Boundary conditions
+        inlet_boundaries = 'top'
+        momentum_inlet_types = 'fixed-velocity'
+        momentum_inlet_functors = '0.5 0'
 
-    pin_pressure = true
-    pinned_pressure_type = average
-    pinned_pressure_value = 1e5
+        wall_boundaries = 'left right bottom'
+        momentum_wall_types = 'noslip noslip noslip'
 
-    # Numerical Scheme
-    energy_advection_interpolation = 'upwind'
-    momentum_advection_interpolation = 'upwind'
-    mass_advection_interpolation = 'upwind'
-    
-    energy_two_term_bc_expansion = true
-    energy_scaling = 1e-3
+        pin_pressure = true
+        pinned_pressure_type = average
+        pinned_pressure_value = 1e5
+
+        # Numerical Scheme
+        momentum_advection_interpolation = 'upwind'
+        mass_advection_interpolation = 'upwind'
+      []
+    []
+    [FluidHeatTransfer]
+      [energy]
+        initial_temperature = 900
+        thermal_conductivity = 'k'
+        specific_heat = 'cp'
+
+        # Boundary conditions
+        energy_inlet_types = 'fixed-temperature'
+        energy_inlet_functors = 900
+        energy_wall_types = 'heatflux heatflux heatflux'
+        energy_wall_functors = '0 0 0'
+
+        # Numerical Scheme
+        energy_advection_interpolation = 'upwind'
+        energy_two_term_bc_expansion = true
+        energy_scaling = 1e-3
+      []
+    []
   []
 []
 
-[Materials]
+[FunctorMaterials]
   [functor_constants]
     type = ADGenericFunctorMaterial
     prop_names = 'k rho mu'
@@ -92,10 +102,6 @@ mu    = 5.0e+1
     prop_names = 'cp'
     prop_values = '${cp}'
   []
-[]
-
-[Debug]
-  show_var_residual_norms = True
 []
 
 [Postprocessors]
@@ -129,7 +135,7 @@ mu    = 5.0e+1
     start_point = '0.995 0 0'
     end_point = '0.995 2 0'
     variable = 'vel_x vel_y'
-	  num_points = 201
+    num_points = 201
     execute_on = 'FINAL'
     sort_by = y
   []
@@ -138,7 +144,7 @@ mu    = 5.0e+1
     start_point = '1.005 0 0'
     end_point = '1.005 2 0'
     variable = 'vel_x vel_y'
-	  num_points = 201
+    num_points = 201
     execute_on = 'FINAL'
     sort_by = y
   []
@@ -150,15 +156,15 @@ mu    = 5.0e+1
   end_time = 10000
   [TimeStepper]
     type = IterationAdaptiveDT
-    dt = 0.1  # chosen to obtain convergence with first coupled iteration
+    dt = 0.1 # chosen to obtain convergence with first coupled iteration
     growth_factor = 2
   []
-  steady_state_detection  = true
-  steady_state_tolerance  = 1e-8
+  steady_state_detection = true
+  steady_state_tolerance = 1e-8
   steady_state_start_time = 10
   solve_type = 'NEWTON'
-  petsc_options_iname = '-pc_type -pc_factor_shift_type'
-  petsc_options_value = 'lu NONZERO'
+  petsc_options_iname = '-pc_type -pc_factor_shift_type -pc_factor_mat_solver_package'
+  petsc_options_value = 'lu NONZERO superlu_dist'
   line_search = 'none'
   nl_rel_tol = 1e-7
   nl_abs_tol = 2e-7
