@@ -6,14 +6,15 @@
 
 !tag name=ATR Butterfly-Valve Model
      description=3D Steady state coarse mesh CFD model of a butterfly-vale used at ATR, using the Navier-Stokes module
+     image=https://mooseframework.inl.gov/virtual_test_bed/media/atr/42deg_coarse_zoom_mesh.png
      pairs=reactor_type:LWR
-                       geometry:valve
-                       simulation_type:CFD
-                       codes_used:MOOSE_NavierStokes
-                       open_source:full
-                       computing_needs:HPC
-                       fiscal_year:2024;2025
-                       institution:INL
+           geometry:valve
+           simulation_type:CFD
+           codes_used:MOOSE_NavierStokes
+           open_source:full
+           computing_needs:HPC
+           fiscal_year:2024;2025
+           institution:INL
 
 The advanced test reactor (ATR) at INL employs a butterfly-valve to control pressure drop across the reactor core.
 The simulations of this valve utilized the Navier-Stokes module in MOOSE for all simulations.
