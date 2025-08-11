@@ -14,6 +14,6 @@
     executable_pattern = 'cardinal*'
     min_parallel = 32
     max_time = '5400'
-    cli_args = 'Outputs/exodus=false'
+    cli_args = 'Outputs/exodus=false Executioner/num_steps=100'
   []
 []

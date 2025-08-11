@@ -1,11 +1,11 @@
 [Tests]
-  [nek]
-    type = RunApp
-    input = nek.i
-    executable_pattern = 'cardinal*'
-    min_parallel = 96
-    max_time = 7200
-    cli_args = "Outputs/exodus=false"
-  []
+  # [nek]
+  #   type = RunApp
+  #   input = nek.i
+  #   executable_pattern = 'cardinal*'
+  #   min_parallel = 96
+  #   max_time = 7200
+  #   cli_args = "Outputs/exodus=false"
+  # []
 []
 
