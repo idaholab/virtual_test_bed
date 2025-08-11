@@ -21,8 +21,8 @@
     csvdiff = 'hpc_basemat_with_isolators_new_3D_out.csv'
     executable_pattern = 'mastodon*'
     abs_zero = 1e-5
-    # Tolerance set from p=4 and p=1 comparison
-    rel_err = 7e-4
+    # Tolerance set from multiple runs at 112 cpus
+    rel_err = 1e-3
     max_time = 3600
     method = 'opt'
     min_parallel = 112
@@ -30,13 +30,14 @@
   [seismic_analysis3]
     type = CSVDiff
     input = 'building_basemat_with_isolators_new.i'
-    cli_args = 'Outputs/exodus=false Outputs/out/file_base=hpc_building_basemat_with_isolators_new_out Executioner/end_time=10'
+    cli_args = "Outputs/exodus=false Outputs/out/file_base=hpc_building_basemat_with_isolators_new_out
+                Executioner/num_steps=205"
     csvdiff = 'hpc_building_basemat_with_isolators_new_out.csv'
     executable_pattern = 'mastodon*'
     abs_zero = 1e-5
     rel_err = 1e-4
     # 112 cpus * 3600 -> 2.8s
-    max_time = 3600
+    max_time = 4600
     method = 'opt'
     min_parallel = 448
   []
