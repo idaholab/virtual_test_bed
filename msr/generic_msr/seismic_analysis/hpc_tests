@@ -10,7 +10,8 @@
     abs_zero = 1e-5
     # Tolerance set from p=4 and p=1 comparison
     rel_err = 2.5e-3
-    max_time = 3600
+    # in 3600s did 2272/2800 timesteps
+    max_time = 5400
     method = 'opt'
     min_parallel = 112
   []
@@ -23,7 +24,8 @@
     abs_zero = 1e-5
     # Tolerance set from multiple runs at 112 cpus
     rel_err = 1e-3
-    max_time = 3600
+    # in 3600s did 2391/2800 timesteps
+    max_time = 5400
     method = 'opt'
     min_parallel = 112
   []
@@ -36,9 +38,9 @@
     executable_pattern = 'mastodon*'
     abs_zero = 1e-5
     rel_err = 1e-4
-    # 112 cpus * 3600 -> 2.8s
-    max_time = 4600
+    # in 3600s, 448 cpus, did 192/205 timesteps
+    max_time = 5400
     method = 'opt'
-    min_parallel = 448
+    min_parallel = 224
   []
 []
