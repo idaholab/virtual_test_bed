@@ -45,11 +45,11 @@ mu = 5.0e+1
         boussinesq_approximation = true
         gravity = '0 -9.81 0'
         thermal_expansion = ${alpha}
+        ref_temperature = 900
 
         # Initial conditions
         initial_velocity = '0.5 0 0'
         initial_pressure = 1e5
-        ref_temperature = 900
 
         # Boundary conditions
         inlet_boundaries = 'top'
