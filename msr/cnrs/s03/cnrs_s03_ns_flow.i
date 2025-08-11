@@ -6,7 +6,7 @@
 # Step 0.3: Temperature field
 # ==============================================================================
 #   Tiberga, et al., 2020. Results from a multi-physics numerical benchmark for codes
-#   dedicated to molten salt fast reactors. Ann. Nucl. Energy 142(2020)107428. 
+#   dedicated to molten salt fast reactors. Ann. Nucl. Energy 142(2020)107428.
 #   URL:http://www.sciencedirect.com/science/article/pii/S0306454920301262
 # ==============================================================================
 
@@ -17,13 +17,6 @@ mu    = 5.0e+1
 geometric_tolerance = 1e-3
 cavity_l = 2.0
 lid_velocity = 0.5
-
-velocity_interp_method = 'rc'
-advected_interp_method = 'average'
-
-[GlobalParams]
-  rhie_chow_user_object = 'rc'
-[]
 
 [UserObjects]
   [rc]
@@ -50,23 +43,66 @@ advected_interp_method = 'average'
   []
 []
 
-[Variables]
-  [vel_x]
-    type = INSFVVelocityVariable
+[Physics]
+  [NavierStokes]
+    [Flow]
+      [flow]
+        compressibility = 'incompressible'
+
+        density = ${rho}
+        dynamic_viscosity = 'mu'
+
+        # Boussinesq parameters
+        boussinesq_approximation = false
+        gravity = '0 -9.81 0'
+
+        # Initial conditions
+        initial_velocity = '0.5 0 0'
+        initial_pressure = 1e5
+
+        # Boundary conditions
+        wall_boundaries = 'left right bottom top'
+        momentum_wall_types = 'noslip noslip noslip noslip'
+        momentum_wall_functors = '0 0; 0 0; 0 0; lid_function 0'
+
+        pin_pressure = true
+        pinned_pressure_type = average
+        pinned_pressure_value = 1e5
+
+        # Numerical Scheme
+        momentum_advection_interpolation = 'upwind'
+        mass_advection_interpolation = 'upwind'
+      []
+    []
+    [FluidHeatTransfer]
+      [energy]
+        initial_temperature = 900
+        thermal_conductivity = 'k'
+        specific_heat = 'cp'
+
+        # Boundary conditions
+        energy_wall_types = 'heatflux heatflux fixed-temperature fixed-temperature'
+        energy_wall_functors = '0 0 0 1'
+
+        # Volumetric heat sources and sinks
+        ambient_temperature = 900
+        ambient_convection_alpha = 1e6
+        external_heat_source = power_density
+
+        # Numerical Scheme
+        energy_advection_interpolation = 'upwind'
+        energy_two_term_bc_expansion = true
+        energy_scaling = 1e-3
+      []
+    []
   []
-  [vel_y]
-    type = INSFVVelocityVariable
-  []
-  [pressure]
-    type = INSFVPressureVariable
-  []
-  [T_fluid]
-    type = INSFVEnergyVariable
-    initial_condition = 900.0
-  []
-  [lambda]
-    family = SCALAR
-    order = FIRST
+[]
+
+[FunctorMaterials]
+  [functor_constants]
+    type = ADGenericFunctorMaterial
+    prop_names = 'cp k mu rho'
+    prop_values = '${cp} ${k} ${mu} ${rho}'
   []
 []
 
@@ -75,154 +111,14 @@ advected_interp_method = 'average'
     order = CONSTANT
     family = MONOMIAL
     fv = true
+    [AuxKernel]
+      type = VectorMagnitudeAux
+      x = vel_x
+      y = vel_y
+    []
   []
   [power_density]
     type = MooseVariableFVReal
-  []
-[]
-
-[AuxKernels]
-  [mag]
-    type = VectorMagnitudeAux
-    variable = U
-    x = vel_x
-    y = vel_y
-  []
-[]
-
-[FVKernels]
-  [mass]
-    type = INSFVMassAdvection
-    variable = pressure
-    advected_interp_method = ${advected_interp_method}
-    velocity_interp_method = ${velocity_interp_method}
-    rho = ${rho}
-  []
-  [mean_zero_pressure]
-    type = FVIntegralValueConstraint
-    variable = pressure
-    lambda = lambda
-  []
-
-  [u_advection]
-    type = INSFVMomentumAdvection
-    variable = vel_x
-    velocity_interp_method = ${velocity_interp_method}
-    advected_interp_method = ${advected_interp_method}
-    rho = ${rho}
-    momentum_component = 'x'
-  []
-
-  [u_viscosity]
-    type = INSFVMomentumDiffusion
-    variable = vel_x
-    mu = ${mu}
-    momentum_component = 'x'
-  []
-
-  [u_pressure]
-    type = INSFVMomentumPressure
-    variable = vel_x
-    momentum_component = 'x'
-    pressure = pressure
-  []
-
-  [v_advection]
-    type = INSFVMomentumAdvection
-    variable = vel_y
-    velocity_interp_method = ${velocity_interp_method}
-    advected_interp_method = ${advected_interp_method}
-    rho = ${rho}
-    momentum_component = 'y'
-  []
-
-  [v_viscosity]
-    type = INSFVMomentumDiffusion
-    variable = vel_y
-    mu = ${mu}
-    momentum_component = 'y'
-  []
-
-  [v_pressure]
-    type = INSFVMomentumPressure
-    variable = vel_y
-    momentum_component = 'y'
-    pressure = pressure
-  []
-
-  [temp_conduction]
-    type = FVDiffusion
-    coeff = 'k'
-    variable = T_fluid
-  []
-
-  [temp_advection]
-    type = INSFVEnergyAdvection
-    variable = T_fluid
-    velocity_interp_method = ${velocity_interp_method}
-    advected_interp_method = ${advected_interp_method}
-  []
-  [temp_sinksource]
-    type = NSFVEnergyAmbientConvection
-    variable = T_fluid
-    T_ambient = 900.
-    alpha = '1e6'
-  []
-  
-  [temp_fissionpower]
-    type = FVCoupledForce
-    variable = T_fluid
-    v = power_density
-  []
-[]
-
-[FVBCs]
-  [top_x]
-    type = INSFVNoSlipWallBC
-    variable = vel_x
-    boundary = 'top'
-    function = 'lid_function'
-  []
-
-  [no_slip_x]
-    type = INSFVNoSlipWallBC
-    variable = vel_x
-    boundary = 'left right bottom'
-    function = 0
-  []
-
-  [no_slip_y]
-    type = INSFVNoSlipWallBC
-    variable = vel_y
-    boundary = 'left right top bottom'
-    function = 0
-  []
-
-  [T_hot]
-    type = FVDirichletBC
-    variable = T_fluid
-    boundary = 'bottom'
-    value = 1
-  []
-
-  [T_cold]
-    type = FVDirichletBC
-    variable = T_fluid
-    boundary = 'top'
-    value = 0
-  []
-[]
-
-[Materials]
-  [functor_constants]
-    type = ADGenericFunctorMaterial
-    prop_names = 'cp k'
-    prop_values = '${cp} ${k}'
-  []
-  [ins_fv]
-    type = INSFVEnthalpyMaterial
-    temperature = 'T_fluid'
-    rho = ${rho}
   []
 []
 
@@ -234,17 +130,21 @@ advected_interp_method = 'average'
 []
 
 [Executioner]
-# Solving the steady-state versions of these equations
+  # Solving the steady-state versions of these equations
   type = Steady
   solve_type = 'NEWTON'
-  #line_search = 'none'
-  petsc_options_iname = '-pc_type -pc_factor_shift_type'
-  petsc_options_value = 'lu NONZERO'
+  petsc_options_iname = '-pc_type -pc_factor_shift_type -pc_factor_mat_solver_package'
+  petsc_options_value = 'lu NONZERO superlu_dist'
   nl_rel_tol = 1e-12
+  nl_abs_tol = 1.5e-8
+  nl_forced_its = 2
+  automatic_scaling = true
+
+  # MultiApps fixed point iteration parameters
   fixed_point_min_its = 2
   fixed_point_max_its = 50
   fixed_point_rel_tol = 1e-5
-  fixed_point_abs_tol = 1e-6
+  fixed_point_abs_tol = 1.5e-6
 []
 
 [VectorPostprocessors]
@@ -290,16 +190,19 @@ advected_interp_method = 'average'
   [ns_flow]
     type = FullSolveMultiApp
     input_files = cnrs_s01_ns_flow.i
+    cli_args = "Outputs/exodus=false;Outputs/active=''"
     execute_on = 'initial'
   []
   [griffin_neut]
     type = FullSolveMultiApp
     input_files = cnrs_s02_griffin_neutronics.i
+    cli_args = "PowerDensity/family=MONOMIAL;PowerDensity/order=CONSTANT"
     execute_on = 'timestep_end'
   []
 []
 
 [Transfers]
+  # Initialization
   [x_vel]
     type = MultiAppCopyTransfer
     from_multi_app = ns_flow
@@ -321,6 +224,8 @@ advected_interp_method = 'average'
     variable = 'pressure'
     execute_on = 'initial'
   []
+
+  # Multiphysics coupling
   [power_dens]
     type = MultiAppCopyTransfer
     from_multi_app = griffin_neut
