@@ -58,3 +58,4 @@ htgr/gpbr200/data/streamline_mesh_in.e filter=lfs diff=lfs merge=lfs -text
 htgr/gpbr200/data/gpbr200_dtl.xml filter=lfs diff=lfs merge=lfs -text
 htgr/gpbr200/data/gpbr200_microxs.xml filter=lfs diff=lfs merge=lfs -text
 htgr/gpbr200/data/gpbr200_void.xml filter=lfs diff=lfs merge=lfs -text
+microreactors/mrad/isoxml/HP-MR_XS.xml filter=lfs diff=lfs merge=lfs -text
