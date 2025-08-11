@@ -1,22 +1,23 @@
 [Tests]
-  [cfd]
-    type = RunApp
-    input = nek.i
-    check_input = True
-    executable_pattern = 'cardinal*'
-    min_parallel = 112
-    max_time = 2000
-    cli_args = 'Outputs/exodus=false'
-  []
-  [multiphysics]
-    type = CSVDiff
-    input = cardinal.i
-    csvdiff = 'cardinal_out.csv'
-    executable_pattern = 'cardinal*'
-    # Exceedingly slow in devel mode
-    method = 'opt'
-    min_parallel = 112
-    max_time = 2000
-    cli_args = 'Outputs/exodus=false'
-  []
+  # OOM at 112, and multi-node Nek broken
+  # [cfd]
+  #   type = RunApp
+  #   input = nek.i
+  #   check_input = True
+  #   executable_pattern = 'cardinal*'
+  #   min_parallel = 112
+  #   max_time = 2000
+  #   cli_args = 'Outputs/exodus=false'
+  # []
+  # [multiphysics]
+  #   type = CSVDiff
+  #   input = cardinal.i
+  #   csvdiff = 'cardinal_out.csv'
+  #   executable_pattern = 'cardinal*'
+  #   # Exceedingly slow in devel mode
+  #   method = 'opt'
+  #   min_parallel = 112
+  #   max_time = 2000
+  #   cli_args = 'Outputs/exodus=false'
+  # []
 []
