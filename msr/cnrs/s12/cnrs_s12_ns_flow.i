@@ -6,7 +6,7 @@
 # Step 1.2: Power coupling
 # ==============================================================================
 #   Tiberga, et al., 2020. Results from a multi-physics numerical benchmark for codes
-#   dedicated to molten salt fast reactors. Ann. Nucl. Energy 142(2020)107428. 
+#   dedicated to molten salt fast reactors. Ann. Nucl. Energy 142(2020)107428.
 #   URL:http://www.sciencedirect.com/science/article/pii/S0306454920301262
 # ==============================================================================
 
@@ -18,12 +18,26 @@ geometric_tolerance = 1e-3
 cavity_l = 2.0
 lid_velocity = 0.5
 
-velocity_interp_method = 'rc'
-advected_interp_method = 'average'
+# No turbulence model, hence unused
+# Sc_t =  2.0e8
 
-[GlobalParams]
-  rhie_chow_user_object = 'rc'
-[]
+lambda0 = 1.24667E-02
+lambda1 = 2.82917E-02
+lambda2 = 4.25244E-02
+lambda3 = 1.33042E-01
+lambda4 = 2.92467E-01
+lambda5 = 6.66488E-01
+lambda6 = 1.63478E+00
+lambda7 = 3.55460E+00
+
+beta0   =  2.33102e-4
+beta1   =  1.03262e-3
+beta2   =  6.81878e-4
+beta3   =  1.37726e-3
+beta4   =  2.14493e-3
+beta5   =  6.40917e-4
+beta6   =  6.05805e-4
+beta7   =  1.66016e-4
 
 [UserObjects]
   [rc]
@@ -50,179 +64,118 @@ advected_interp_method = 'average'
   []
 []
 
-[Variables]
-  [vel_x]
-    type = INSFVVelocityVariable
-  []
-  [vel_y]
-    type = INSFVVelocityVariable
-  []
-  [pressure]
-    type = INSFVPressureVariable
-  []
-  [T_fluid]
-    type = INSFVEnergyVariable
-    initial_condition = 900.0
-  []
-  [lambda]
-    family = SCALAR
-    order = FIRST
-  []
-[]
-
 [AuxVariables]
   [U]
     order = CONSTANT
     family = MONOMIAL
     fv = true
+    [AuxKernel]
+      type = VectorMagnitudeAux
+      x = vel_x
+      y = vel_y
+    []
   []
   [power_density]
     type = MooseVariableFVReal
   []
 []
 
-[AuxKernels]
-  [mag]
-    type = VectorMagnitudeAux
-    variable = U
-    x = vel_x
-    y = vel_y
+[Physics]
+  [NavierStokes]
+    [Flow]
+      [flow]
+        compressibility = 'incompressible'
+
+        density = ${rho}
+        dynamic_viscosity = 'mu'
+
+        # Boussinesq parameters
+        boussinesq_approximation = false
+        gravity = '0 -9.81 0'
+
+        # Initial conditions
+        initial_velocity = '0.5 0 0'
+        initial_pressure = 1e5
+
+        # Boundary conditions
+        wall_boundaries = 'left right bottom top'
+        momentum_wall_types = 'noslip noslip noslip noslip'
+        momentum_wall_functors = '0 0; 0 0; 0 0; lid_function 0'
+
+        pin_pressure = true
+        pinned_pressure_type = average
+        pinned_pressure_value = 1e5
+
+        # Numerical Scheme
+        momentum_advection_interpolation = 'upwind'
+        mass_advection_interpolation = 'upwind'
+      []
+    []
+    [FluidHeatTransfer]
+      [energy]
+        initial_temperature = 900
+        thermal_conductivity = 'k'
+        specific_heat = 'cp'
+
+        # Boundary conditions
+        energy_wall_types = 'heatflux heatflux fixed-temperature fixed-temperature'
+        energy_wall_functors = '0 0 0 1'
+
+        # Volumetric heat sources and sinks
+        ambient_temperature = 900
+        ambient_convection_alpha = 1e6
+        external_heat_source = power_density
+
+        # Numerical Scheme
+        energy_advection_interpolation = 'upwind'
+        energy_two_term_bc_expansion = true
+        energy_scaling = 1e-3
+      []
+    []
+    [ScalarTransport]
+      [all]
+        # passive scalar
+        passive_scalar_names                = 'dnp0 dnp1 dnp2 dnp3
+                                              dnp4 dnp5 dnp6 dnp7'
+        passive_scalar_coupled_source       = 'fission_source dnp0; fission_source dnp1;
+                                              fission_source dnp2; fission_source dnp3;
+                                              fission_source dnp4; fission_source dnp5;
+                                              fission_source dnp6; fission_source dnp7'
+        passive_scalar_coupled_source_coeff = '${beta0} ${fparse -lambda0}; ${beta1} ${fparse -lambda1};
+                                              ${beta2} ${fparse -lambda2}; ${beta3} ${fparse -lambda3};
+                                              ${beta4} ${fparse -lambda4}; ${beta5} ${fparse -lambda5};
+                                              ${beta6} ${fparse -lambda6}; ${beta7} ${fparse -lambda7}'
+
+        # Boundary conditions
+        passive_scalar_inlet_types          = 'fixed-value fixed-value fixed-value fixed-value
+                                              fixed-value fixed-value fixed-value fixed-value'
+        passive_scalar_inlet_functors       = '1.0; 1.0; 1.0; 1.0;
+                                              1.0; 1.0; 1.0; 1.0'
+
+        # Numerical scheme
+        passive_scalar_advection_interpolation = 'upwind'
+        system_names = 's1 s2 s3 s4 s5 s6 s7 s8'
+
+      []
+    []
   []
 []
 
-[FVKernels]
-  [mass]
-    type = INSFVMassAdvection
-    variable = pressure
-    advected_interp_method = ${advected_interp_method}
-    velocity_interp_method = ${velocity_interp_method}
-    rho = ${rho}
-  []
-  [mean_zero_pressure]
-    type = FVIntegralValueConstraint
-    variable = pressure
-    lambda = lambda
-  []
+[Problem]
+  nl_sys_names = 'nl0 s1 s2 s3 s4 s5 s6 s7 s8'
+[]
 
-  [u_advection]
-    type = INSFVMomentumAdvection
-    variable = vel_x
-    velocity_interp_method = ${velocity_interp_method}
-    advected_interp_method = ${advected_interp_method}
-    rho = ${rho}
-    momentum_component = 'x'
-  []
-
-  [u_viscosity]
-    type = INSFVMomentumDiffusion
-    variable = vel_x
-    mu = ${mu}
-    momentum_component = 'x'
-  []
-
-  [u_pressure]
-    type = INSFVMomentumPressure
-    variable = vel_x
-    momentum_component = 'x'
-    pressure = pressure
-  []
-
-  [v_advection]
-    type = INSFVMomentumAdvection
-    variable = vel_y
-    velocity_interp_method = ${velocity_interp_method}
-    advected_interp_method = ${advected_interp_method}
-    rho = ${rho}
-    momentum_component = 'y'
-  []
-
-  [v_viscosity]
-    type = INSFVMomentumDiffusion
-    variable = vel_y
-    mu = ${mu}
-    momentum_component = 'y'
-  []
-
-  [v_pressure]
-    type = INSFVMomentumPressure
-    variable = vel_y
-    momentum_component = 'y'
-    pressure = pressure
-  []
-
-  [temp_conduction]
-    type = FVDiffusion
-    coeff = 'k'
-    variable = T_fluid
-  []
-
-  [temp_advection]
-    type = INSFVEnergyAdvection
-    variable = T_fluid
-    velocity_interp_method = ${velocity_interp_method}
-    advected_interp_method = ${advected_interp_method}
-  []
-  [temp_sinksource]
-    type = NSFVEnergyAmbientConvection
-    variable = T_fluid
-    T_ambient = 900.
-    alpha = '1e6'
-  []
-  
-  [temp_fissionpower]
-    type = FVCoupledForce
-    variable = T_fluid
-    v = power_density
+[AuxVariables]
+  [fission_source]
+    type = MooseVariableFVReal
   []
 []
 
-[FVBCs]
-  [top_x]
-    type = INSFVNoSlipWallBC
-    variable = vel_x
-    boundary = 'top'
-    function = 'lid_function'
-  []
-
-  [no_slip_x]
-    type = INSFVNoSlipWallBC
-    variable = vel_x
-    boundary = 'left right bottom'
-    function = 0
-  []
-
-  [no_slip_y]
-    type = INSFVNoSlipWallBC
-    variable = vel_y
-    boundary = 'left right top bottom'
-    function = 0
-  []
-
-  [T_hot]
-    type = FVDirichletBC
-    variable = T_fluid
-    boundary = 'bottom'
-    value = 1
-  []
-
-  [T_cold]
-    type = FVDirichletBC
-    variable = T_fluid
-    boundary = 'top'
-    value = 0
-  []
-[]
-
-[Materials]
+[FunctorMaterials]
   [functor_constants]
     type = ADGenericFunctorMaterial
-    prop_names = 'cp k'
-    prop_values = '${cp} ${k}'
-  []
-  [ins_fv]
-    type = INSFVEnthalpyMaterial
-    temperature = 'T_fluid'
-    rho = ${rho}
+    prop_names = 'cp k mu rho'
+    prop_values = '${cp} ${k} ${mu} ${rho}'
   []
 []
 
@@ -238,11 +191,11 @@ advected_interp_method = 'average'
   type = Steady
   solve_type = 'NEWTON'
   #line_search = 'none'
-  petsc_options_iname = '-pc_type -pc_factor_shift_type'
-  petsc_options_value = 'lu NONZERO'
+  petsc_options_iname = '-pc_type -pc_factor_shift_type -pc_factor_mat_solver_package'
+  petsc_options_value = 'lu NONZERO superlu_dist'
   nl_rel_tol = 1e-12
 []
-  
+
 [Outputs]
   exodus = true
 []

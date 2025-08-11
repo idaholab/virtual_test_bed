@@ -6,7 +6,7 @@
 # Step 1.2: Power coupling
 # ==============================================================================
 #   Tiberga, et al., 2020. Results from a multi-physics numerical benchmark for codes
-#   dedicated to molten salt fast reactors. Ann. Nucl. Energy 142(2020)107428. 
+#   dedicated to molten salt fast reactors. Ann. Nucl. Energy 142(2020)107428.
 #   URL:http://www.sciencedirect.com/science/article/pii/S0306454920301262
 # ==============================================================================
 
@@ -73,12 +73,12 @@
   [tfuel]
     order = CONSTANT
     family = MONOMIAL
-    initial_condition = 900 
+    initial_condition = 900
   []
   [tfuel_avg]
     order = CONSTANT
     family = MONOMIAL
-    initial_condition = 900 
+    initial_condition = 900
   []
   [vel_x]
     order = CONSTANT
@@ -177,8 +177,8 @@
 [Executioner]
   type = Eigenvalue
   solve_type = PJFNK
-  petsc_options_iname = '-pc_type -pc_factor_shift_type'
-  petsc_options_value = 'lu NONZERO'
+  petsc_options_iname = '-pc_type -pc_factor_shift_type -pc_factor_mat_solver_package'
+  petsc_options_value = 'lu NONZERO superlu_dist'
   free_power_iterations = 2
   line_search = none #l2
   l_max_its = 200
@@ -195,38 +195,29 @@
 [MultiApps]
   [ns_flow]
     type = FullSolveMultiApp
-    input_files = cnrs_s01_ns_flow.i
-    execute_on = 'TIMESTEP_END'
-  []
-  [ns_temp]
-    type = FullSolveMultiApp
     input_files = cnrs_s12_ns_flow.i
     execute_on = 'TIMESTEP_END'
   []
 []
 
 [Transfers]
-  [vel_x_comp]
-    type = MultiAppCopyTransfer
-    from_multi_app = ns_flow
-    source_variable = 'vel_x'
-    variable = 'vel_x'
-    execute_on = 'TIMESTEP_END'
-  []
-  [vel_y_comp]
-    type = MultiAppCopyTransfer
-    from_multi_app = ns_flow
-    source_variable = 'vel_y'
-    variable = 'vel_y'
-    execute_on = 'TIMESTEP_END'
-  []
+  # MultiPhysics coupling
   [fission_source]
     type = MultiAppProjectionTransfer
     to_multi_app = ns_flow
     source_variable = fission_source
     variable = fission_source
+    execute_on = 'TIMESTEP_BEGIN'
+  []
+  [power_dens]
+    type = MultiAppProjectionTransfer
+    to_multi_app = ns_flow
+    source_variable = 'power_density'
+    variable = 'power_density'
     execute_on = 'TIMESTEP_END'
   []
+
+  # Computed in the flow simulation
   [c1]
     type = MultiAppCopyTransfer
     from_multi_app = ns_flow
@@ -283,30 +274,9 @@
     variable = 'dnp7'
     execute_on = 'TIMESTEP_END'
   []
-  [vel_x_send]
-    type = MultiAppCopyTransfer
-    to_multi_app = ns_temp
-    source_variable = 'vel_x'
-    variable = 'vel_x'
-    execute_on = 'TIMESTEP_END'
-  []
-  [vel_y_send]
-    type = MultiAppCopyTransfer
-    to_multi_app = ns_temp
-    source_variable = 'vel_y'
-    variable = 'vel_y'
-    execute_on = 'TIMESTEP_END'
-  []
-  [power_dens]
-    type = MultiAppProjectionTransfer
-    to_multi_app = ns_temp
-    source_variable = 'power_density'
-    variable = 'power_density'
-    execute_on = 'TIMESTEP_END'
-  []
   [fuel_temp]
     type = MultiAppCopyTransfer
-    from_multi_app = ns_temp
+    from_multi_app = ns_flow
     source_variable = 'T_fluid'
     variable = 'tfuel'
     execute_on = 'TIMESTEP_END'
