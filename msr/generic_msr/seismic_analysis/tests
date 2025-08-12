@@ -1,4 +1,5 @@
 [Tests]
+  issues = '#402'
   # Syntax tests
   [seismic_analysis_syntax1a]
     type = RunApp

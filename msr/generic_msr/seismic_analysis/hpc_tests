@@ -1,0 +1,47 @@
+[Tests]
+  issues = '#402'
+  # Regression tests
+  [seismic_analysis1]
+    type = CSVDiff
+    input = 'basemat_with_isolators_new.i'
+    cli_args = 'Outputs/exodus=false Outputs/out/file_base=hpc_basemat_with_isolators_new_out'
+    csvdiff = 'hpc_basemat_with_isolators_new_out.csv'
+    executable_pattern = 'mastodon*'
+    abs_zero = 1e-5
+    # Tolerance set from p=4 and p=1 comparison
+    rel_err = 2.5e-3
+    # in 3600s did 2272/2800 timesteps
+    max_time = 5400
+    method = 'opt'
+    min_parallel = 112
+  []
+  [seismic_analysis2]
+    type = CSVDiff
+    input = 'basemat_with_isolators_new_3D.i'
+    cli_args = 'Outputs/exodus=false Outputs/out/file_base=hpc_basemat_with_isolators_new_3D_out'
+    csvdiff = 'hpc_basemat_with_isolators_new_3D_out.csv'
+    executable_pattern = 'mastodon*'
+    abs_zero = 1e-5
+    # Tolerance set from multiple runs at 112 cpus
+    rel_err = 5e-3
+    # in 3600s did 2391/2800 timesteps
+    max_time = 5400
+    method = 'opt'
+    min_parallel = 112
+  []
+  [seismic_analysis3]
+    type = CSVDiff
+    input = 'building_basemat_with_isolators_new.i'
+    cli_args = "Outputs/exodus=false Outputs/out/file_base=hpc_building_basemat_with_isolators_new_out
+                Executioner/num_steps=205"
+    csvdiff = 'hpc_building_basemat_with_isolators_new_out.csv'
+    executable_pattern = 'mastodon*'
+    abs_zero = 1e-5
+    # Tolerance set from multiple runs at 112 cpus
+    rel_err = 2e-3
+    # in 3600s, 448 cpus, did 192/205 timesteps
+    max_time = 5400
+    method = 'opt'
+    min_parallel = 224
+  []
+[]
