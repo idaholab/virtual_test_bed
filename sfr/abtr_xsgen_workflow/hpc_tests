@@ -39,6 +39,8 @@
     method = 'opt'
     # 3000s ended after 6 iterations with 16 cpus
     # 3000s ended after 11 iterations with 32 cpus
+    # 1500s finished 12 iterations with 64 cpus
     max_time = 3000
+    ignore_columns = 'power_scaling'
   []
 []

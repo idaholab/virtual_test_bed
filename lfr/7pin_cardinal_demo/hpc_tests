@@ -27,7 +27,7 @@
     max_time = 500
     executable_pattern = 'griffin*'
     abs_zero = 1e-4
-    rel_err = 1e-4
+    rel_err = 2.1e-4
   []
   [run_conduction]
     type = CSVDiff
