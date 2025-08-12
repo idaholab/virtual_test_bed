@@ -119,8 +119,7 @@ The boundary conditions were already specified by the `TransportSystems` action 
 is specified.
 
 The [Executioner](https://mooseframework.inl.gov/source/executioners/Executioner.html) block specifies how to solve the equation system. We choose an eigenvalue executioner,
-`PicardEigen`, as a criticality calculation is
-an eigenvalue problem.
+`Eigenvalue`, as a criticality calculation is an eigenvalue problem.
 
 The number of non-linear iterations and the non-linear relative and absolute convergence criteria may be
 respectively reduced and loosened to reduce the computational cost of the solution at the expense of its
