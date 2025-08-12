@@ -1,5 +1,4 @@
 hpc_copy_paths:
-  - microreactors
-  - sfr
+  - msr
 lfs_include:
   - msr/generic_msr/seismic_analysis

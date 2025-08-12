@@ -663,7 +663,9 @@
 [Outputs]
   exodus = true
   perf_graph = true
-  csv = true
+  [out]
+    type = CSV
+  []
   [out1]
     type = CSV
     execute_on = 'final'
