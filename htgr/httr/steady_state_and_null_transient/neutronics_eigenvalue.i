@@ -85,6 +85,7 @@ extension = '_9MW'
   equation_type = eigenvalue
   G = 10
   VacuumBoundary = '1 2 3'
+  use_custom_bxnorm_for_eigenvalue = true
 
   [diff]
     scheme = CFEM-Diffusion
@@ -259,7 +260,7 @@ extension = '_9MW'
 []
 
 [Executioner]
-  type = PicardEigen
+  type = Eigenvalue
 
   petsc_options_iname = '-pc_type -pc_hypre_type -ksp_gmres_restart '
   petsc_options_value = 'hypre boomeramg 100'
