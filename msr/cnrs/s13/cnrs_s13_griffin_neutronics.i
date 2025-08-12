@@ -20,6 +20,7 @@
   is_meter = true
   plus = 1
 []
+
 [Mesh]
   type = MeshGeneratorMesh
   block_id = '1'
@@ -174,18 +175,23 @@
     full = true
   []
 []
+
 [Executioner]
   type = Eigenvalue
-  solve_type = PJFNK
-  petsc_options_iname = '-pc_type -pc_factor_shift_type -pc_mat_solver_package'
+  solve_type = PJFNKMO
+  petsc_options_iname = '-pc_type -pc_factor_shift_type -pc_factor_mat_solver_package'
   petsc_options_value = 'lu NONZERO superlu_dist'
   free_power_iterations = 2
-  line_search = none #l2
   l_max_its = 200
   l_tol = 1e-3
+
+  # Nonlinear solve
   nl_max_its = 200
   nl_rel_tol = 1e-5
   nl_abs_tol = 1e-6
+  line_search = none #l2
+
+  # MultiApps fixed point iterations
   fixed_point_min_its = 3
   fixed_point_max_its = 50
   fixed_point_rel_tol = 1e-5
@@ -326,8 +332,8 @@
   [Tfuel_avg]
     type = MultiAppVariableValueSamplePostprocessorTransfer
     from_multi_app = ns_flow
-    postprocessor = Tfuel_avg
     source_variable = 'tfuel_avg'
+    postprocessor = Tfuel_avg
     execute_on = 'timestep_end'
   []
   [vel_x_comp]
