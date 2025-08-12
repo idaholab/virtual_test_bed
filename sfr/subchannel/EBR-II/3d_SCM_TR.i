@@ -1,5 +1,5 @@
 # Following Advanced Burner Test Reactor Preconceptual Design Report
-# Vailable at: https://www.ne.anl.gov/eda/ABTR_1cv2_ws.
+# available at: https://www.ne.anl.gov/eda/ABTR_1cv2_ws.
 # This file creates the 3D mesh where subchannel projects to
 ###################################################
 # Geometric parameters

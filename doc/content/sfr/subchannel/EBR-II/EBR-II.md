@@ -1,4 +1,3 @@
-
 # EBR-II, SHRT-17 Subchannel model Validation
 
 *Contact: Vasileios Kyriakopoulos, vasileios.kyriakopoulos.at.inl.gov*
@@ -30,7 +29,7 @@
 
 ### Plant Overview
 
-Argonne National Laboratory’s (ANL) Experimental Breeder Reactor II (EBR-II) was a liquid metal reactor with a sodium-bonded metallic fuel core. EBR-II was rated for a thermal power of 62.5 MW with an electric output of approximately 20 MW. A schematic of the reactor and the primary sodium flow paths are shown in [fig:schematic]. All major primary system components were submerged in the primary tank, which contained approximately $340 m^3$ of liquid sodium at $371^o C$. Two primary pumps inside this pool provided sodium to the two inlet plena of the core. Sub-assemblies in the inner core received sodium from the high-pressure inlet plenum, accounting for approximately $85\%$ of the total primary flow. The blanket and reflector sub-assemblies in the outer blanket region received sodium from the low-pressure inlet plenum. Hot sodium exited the sub-assemblies into a common upper plenum, where it mixed before passing into the intermediate heat exchanger (IHX).
+Argonne National Laboratory-West’s (currently known as Idaho National Laboratory or INL) Experimental Breeder Reactor II (EBR-II) was a liquid metal reactor with a sodium-bonded metallic fuel core. EBR-II was rated for a thermal power of 62.5 MW with an electric output of approximately 20 MW. A schematic of the reactor and the primary sodium flow paths are shown in [fig:schematic]. All major primary system components were submerged in the primary tank, which contained approximately $340 m^3$ of liquid sodium at $371^o C$. Two primary pumps inside this pool provided sodium to the two inlet plena of the core. Sub-assemblies in the inner core received sodium from the high-pressure inlet plenum, accounting for approximately $85\%$ of the total primary flow. The blanket and reflector sub-assemblies in the outer blanket region received sodium from the low-pressure inlet plenum. Hot sodium exited the sub-assemblies into a common upper plenum, where it mixed before passing into the intermediate heat exchanger (IHX).
 
 !media subchannel/EBR-II/EBR-II_primary_tank.png
     style=width:60%;margin-bottom:2%;margin:auto;
@@ -90,8 +89,8 @@ The subchannel module SCM (formely known as Pronghorn-SC) results, were improved
 
 Three simulation results are compared against the experimental measurements of thermocouples at the outlet of the heated section (TTC):
 
-- item Results from the [DASSH](https://github.com/dassh-dev/examples/tree/master/Example-3) [!cite](atz2021ducted),subchannel code, which is used as a reference for subchannel agreement,
-- item Results from SCM with a uniform (axially and radially) pin power profile,
+- Results from the [DASSH](https://github.com/dassh-dev/examples/tree/master/Example-3) [!cite](atz2021ducted),subchannel code, which is used as a reference for verification.
+- Results from SCM with a uniform (axially and radially) pin power profile.
 - Results from SCM only with the corrected power profile computed via the Serpent-2 model.
 
 The DASSH subchannel code models the internal pin region of sub-assembly XX09 and the thimble region. The standalone SCM simulation only models the internal pin region. Both codes don't consider the neighboring sub-assemblies.
@@ -100,15 +99,14 @@ The DASSH subchannel code models the internal pin region of sub-assembly XX09 an
 
 For SHRT-17, in the uniform pin power case, both SCM and DASSH exhibit similar behavior. Since DASSH does not resolve the crossflows (contrary to SCM), similar results indicate that crossflows might not be instrumental, in determining the temperature profile for this problem. Additionally, DASSH predicts a slightly less skewed distribution than SCM, which is closer to the experimental results. This means that the crossflows may be underestimated by the lateral momentum balance equation solved by SCM, or that the thimble model incorporated in DASSH improves accuracy. Nonetheless, both the SCM and DASSH calculations, are close enough to suggest that those differences in modeling approach, do not produce large discrepancies in the results.
 
-!media subchannel/v&v/EBR-II/XX09_TTC.png
+!media subchannel/EBR-II/XX09_TTC.png
     style=width:60%;margin-bottom:2%;margin:auto;
     id=fig:TTC17
-    caption=Test SHRT-17
+    caption=Temperature profile at the start of Test SHRT-17
 
-!media subchannel/v&v/EBR-II/XX09_TTC45.png
-    style=width:60%;margin-bottom:2%;margin:auto;
+!media subchannel/EBR-II/XX09_TTC45.png
     id=fig:TTC45
-    caption=Test SHRT-45R
+    caption=Temperature profile at the start of Test SHRT-45R
 
 
 ## Transient Results
@@ -122,12 +120,12 @@ For both SHRT-17 and SHRT-45R, the stand-alone SCM calculated transient, underes
 !media subchannel/EBR-II/Transient_Temperature.png
     style=width:60%;margin-bottom:2%;margin:auto;
     id=fig:transient1
-    caption=Test SHRT-17
+    caption=Transient Test SHRT-17
 
 !media subchannel/EBR-II/Transient_Temperature45.png
     style=width:60%;margin-bottom:2%;margin:auto;
     id=fig:transient2
-    caption=Test SHRT-45R
+    caption=Transient Test SHRT-45R
 
 ## Input files
 
