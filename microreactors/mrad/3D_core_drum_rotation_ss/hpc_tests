@@ -50,6 +50,7 @@
     min_parallel = 16
     method = 'opt'
     max_time = 3600
+    hpc_mem_per_cpu = 10gb
     # Cross-section warning due to missing fission-only
     allow_warnings = true
     prereq = 'coarse_mesh_bison'
