@@ -480,13 +480,6 @@ reflector_disp_increment_2 = 1.400e-3 # Corresponding to the nominal second 15 c
   # The function that controls the displacement of the reflector
   # Used to control the reactivity insertion
   [ref_mov]
-    type = ParsedFunction
-    symbol_names = 't0 d0'
-    symbol_values = '0.5 ${reflector_disp}'
-    # Linear insertion within the first 0.5 seconds
-    expression = 'if(t<0,0.0,if(t<t0,d0/t0*t,d0))'
-  []
-  [ref_mov]
       type = ParsedFunction
       symbol_names =  'reflector_disp_0       reflector_disp_increment_1         reflector_disp_increment_2         rdi2_scale_factor t_first_15c_insertion  t_start_power_monitoring existing_reflector_disp unit_increment_fraction pw          pw_ref'
       symbol_values = '${reflector_disp_init} ${reflector_disp_increment_1}      ${reflector_disp_increment_2}      1.1               0.5                    697                      disp_old_target         0.09                    total_power 750'
@@ -495,7 +488,7 @@ reflector_disp_increment_2 = 1.400e-3 # Corresponding to the nominal second 15 c
                           if(t<t_first_15c_insertion,reflector_disp_0+reflector_disp_increment_1/t_first_15c_insertion*t,
                                                       if(t<t_start_power_monitoring,reflector_disp_15c,
                                                                                     if(pw<pw_ref&existing_reflector_disp<reflector_disp_15c+reflector_disp_increment_2*rdi2_scale_factor,existing_reflector_disp+reflector_disp_increment_2*unit_increment_fraction,
-                                                                                                                                                                                        disp_old))))'
+                                                                                                                                                                                         existing_reflector_disp))))'
   []
 []
 
