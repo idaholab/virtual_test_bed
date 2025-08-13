@@ -6,7 +6,7 @@
 # Step 2.1: Time dependent coupling
 # ==============================================================================
 #   Tiberga, et al., 2020. Results from a multi-physics numerical benchmark for codes
-#   dedicated to molten salt fast reactors. Ann. Nucl. Energy 142(2020)107428. 
+#   dedicated to molten salt fast reactors. Ann. Nucl. Energy 142(2020)107428.
 #   URL:http://www.sciencedirect.com/science/article/pii/S0306454920301262
 # ==============================================================================
 
@@ -148,6 +148,7 @@ frequency = 0.0125
     writing = false
     execute_on = 'INITIAL'
     scale_with_keff = false
+    folder = '../s14'
   []
   [TH_solution]
     type = SolutionVectorFile
@@ -155,6 +156,7 @@ frequency = 0.0125
 	  loading_var = 'tfuel densityf dnp0 dnp1 dnp2 dnp3 dnp4 dnp5 dnp6 dnp7'
     writing = false
     execute_on = 'INITIAL'
+    folder = '../s14'
   []
 []
 
@@ -174,7 +176,7 @@ frequency = 0.0125
 
 [Executioner]
   type = Transient
-  solve_type = PJFNK 
+  solve_type = PJFNK
   petsc_options_iname = '-pc_type -pc_factor_shift_type'
   petsc_options_value = 'lu NONZERO'
 
@@ -183,7 +185,7 @@ frequency = 0.0125
   end_time = ${fparse 10/frequency}
   #[TimeStepper]
   #  type = IterationAdaptiveDT
-  #  dt = 0.1  
+  #  dt = 0.1
   #  growth_factor = 2
   #[]
   line_search = l2 #none #l2
@@ -201,7 +203,7 @@ frequency = 0.0125
 [MultiApps]
   [ns_flow]
     type = TransientMultiApp
-    app_type = 'pronghornApp' 
+    app_type = 'pronghornApp'
     input_files = cnrs_s21_ns_flow.i
     execute_on = 'timestep_end'
     keep_solution_during_restore = true
@@ -211,6 +213,8 @@ frequency = 0.0125
 []
 
 [Transfers]
+  # Multiphysics coupling
+  # Send production terms
   [power_dens]
     type = MultiAppProjectionTransfer
     to_multi_app = ns_flow
@@ -225,7 +229,8 @@ frequency = 0.0125
     variable = fission_source
     execute_on = 'timestep_end'
   []
-  
+
+  # get quantities computed by the fluid flow caculation
   [fuel_temp]
     type = MultiAppProjectionTransfer
     from_multi_app = ns_flow

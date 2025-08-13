@@ -6,7 +6,7 @@
 # Step 2.1: Time dependent coupling
 # ==============================================================================
 #   Tiberga, et al., 2020. Results from a multi-physics numerical benchmark for codes
-#   dedicated to molten salt fast reactors. Ann. Nucl. Energy 142(2020)107428. 
+#   dedicated to molten salt fast reactors. Ann. Nucl. Energy 142(2020)107428.
 #   URL:http://www.sciencedirect.com/science/article/pii/S0306454920301262
 # ==============================================================================
 
@@ -41,144 +41,111 @@ frequency = 0.125
 [Mesh]
   [fmg]
     type = FileMeshGenerator
-    file = 'cnrs_s14_griffin_neutronics_out_ns_flow0.e'
+    file = '../s14/cnrs_s14_griffin_neutronics_out_ns_flow0.e'
 	  use_for_exodus_restart = true
   []
 []
 
-[Modules]
-  [NavierStokesFV]
-    compressibility = 'incompressible'
-    add_energy_equation = true
-    boussinesq_approximation = true
 
-    density = ${rho}
-    dynamic_viscosity = 'mu'
-    thermal_conductivity = 'k'
-    specific_heat = 'cp'
-    thermal_expansion = ${alpha}
+[Physics]
+  [NavierStokes]
+    [Flow]
+      [all]
+        compressibility = 'incompressible'
+        density = ${rho}
+        dynamic_viscosity = 'mu'
 
-    # Boussinesq parameters
-    gravity = '0 -9.81 0'
+        # Restart parameters
+        initialize_variables_from_mesh_file = true
 
-    velocity_variable = 'vel_x vel_y'
-    pressure_variable = 'pressure'
-    fluid_temperature_variable = 'T_fluid'
-    ref_temperature = 900
-    
-    # Boundary conditions
-    inlet_boundaries = 'top'
-    momentum_inlet_types = 'fixed-velocity'
-    momentum_inlet_function = '0.5 0'
-    energy_inlet_types = 'fixed-temperature'
-    energy_inlet_function = 900
+        # Boussinesq parameters
+        boussinesq_approximation = true
+        gravity = '0 -9.81 0'
+        thermal_expansion = ${alpha}
+        ref_temperature = 900
 
-    wall_boundaries = 'left right bottom'
-    momentum_wall_types = 'noslip noslip noslip'
-    energy_wall_types = 'heatflux heatflux heatflux'
-    energy_wall_function = '0 0 0'
+        # Initial conditions
+        initial_velocity = '${Ulid} 0 0'
+        initial_pressure = 1e5
 
-    pin_pressure = true
-    pinned_pressure_type = average
-    pinned_pressure_value = 1e5
+        # Boundary conditions
+        # Note: we could do a no-slip with a wall velocity, same
+        inlet_boundaries = 'top'
+        momentum_inlet_types = 'fixed-velocity'
+        momentum_inlet_functors = '${Ulid} 0'
 
-    # Heat source
-    external_heat_source = power_density
+        wall_boundaries = 'left right bottom'
+        momentum_wall_types = 'noslip noslip noslip'
 
-    # Numerical Scheme
-    energy_advection_interpolation = 'upwind'
-    momentum_advection_interpolation = 'upwind'
-    mass_advection_interpolation = 'upwind'
-    
-    energy_two_term_bc_expansion = true
-    energy_scaling = 1e-3
+        # Pressure pin
+        pin_pressure = true
+        pinned_pressure_type = average
+        pinned_pressure_value = 1e5
 
-    ambient_convection_alpha =alpha_t 
-    ambient_temperature = 900.0
-    
-    # passive scalar 
-    add_scalar_equation                 = true
-    passive_scalar_names                = 'dnp0 dnp1 dnp2 dnp3 
-                                           dnp4 dnp5 dnp6 dnp7'
-    passive_scalar_schmidt_number       = '${Sc_t} ${Sc_t} ${Sc_t} ${Sc_t} 
-                                          ${Sc_t} ${Sc_t} ${Sc_t} ${Sc_t}'
-    passive_scalar_coupled_source       = 'fission_source dnp0; fission_source dnp1; 
-                                           fission_source dnp2; fission_source dnp3; 
-                                           fission_source dnp4; fission_source dnp5;
-                                           fission_source dnp6; fission_source dnp7'
-    passive_scalar_coupled_source_coeff = '${beta0} ${fparse -lambda0}; ${beta1} ${fparse -lambda1};
-                                           ${beta2} ${fparse -lambda2}; ${beta3} ${fparse -lambda3}; 
-                                           ${beta4} ${fparse -lambda4}; ${beta5} ${fparse -lambda5};
-                                           ${beta6} ${fparse -lambda6}; ${beta7} ${fparse -lambda7}'
-    passive_scalar_advection_interpolation = 'upwind'
-    passive_scalar_inlet_types          = 'fixed-value fixed-value fixed-value fixed-value
-                                           fixed-value fixed-value fixed-value fixed-value'
-    passive_scalar_inlet_functors       = '1.0; 1.0; 1.0; 1.0;
-                                           1.0; 1.0; 1.0; 1.0'
+        # Numerical Scheme
+        momentum_advection_interpolation = 'upwind'
+        mass_advection_interpolation = 'upwind'
+      []
+    []
+    [FluidHeatTransfer]
+      [all]
+        initial_temperature = 900
+
+        # Restart parameters
+        initialize_variables_from_mesh_file = true
+
+        # Material properties
+        thermal_conductivity = 'k'
+        specific_heat = 'cp'
+
+        # Boundary conditions
+        energy_inlet_types = 'fixed-temperature'
+        energy_inlet_functors = 900
+        energy_wall_types = 'heatflux heatflux heatflux'
+        energy_wall_functors = '0 0 0'
+
+        # Heat source
+        external_heat_source = power_density
+
+        ambient_convection_alpha = 1.0e+6
+        ambient_temperature = 900.0
+
+        # Numerical Scheme
+        energy_advection_interpolation = 'upwind'
+        energy_two_term_bc_expansion = true
+        energy_scaling = 1e-3
+      []
+    []
+    [ScalarTransport]
+      [scalars]
+        # Restart parameters
+        initialize_variables_from_mesh_file = true
+
+        passive_scalar_names                = 'dnp0 dnp1 dnp2 dnp3
+                                              dnp4 dnp5 dnp6 dnp7'
+        passive_scalar_coupled_source       = 'fission_source dnp0; fission_source dnp1;
+                                              fission_source dnp2; fission_source dnp3;
+                                              fission_source dnp4; fission_source dnp5;
+                                              fission_source dnp6; fission_source dnp7'
+        passive_scalar_coupled_source_coeff = '${beta0} ${fparse -lambda0}; ${beta1} ${fparse -lambda1};
+                                              ${beta2} ${fparse -lambda2}; ${beta3} ${fparse -lambda3};
+                                              ${beta4} ${fparse -lambda4}; ${beta5} ${fparse -lambda5};
+                                              ${beta6} ${fparse -lambda6}; ${beta7} ${fparse -lambda7}'
+        passive_scalar_inlet_types          = 'fixed-value fixed-value fixed-value fixed-value
+                                              fixed-value fixed-value fixed-value fixed-value'
+        passive_scalar_inlet_functors       = '1.0; 1.0; 1.0; 1.0;
+                                              1.0; 1.0; 1.0; 1.0'
+
+        # Numerical parameters
+        system_names= 's1 s2 s3 s4 s5 s6 s7 s8'
+        passive_scalar_advection_interpolation = 'upwind'
+      []
+    []
   []
 []
 
-[Variables]
-  [T_fluid]
-    type = INSFVEnergyVariable
-    initial_from_file_var = T_fluid
-    initial_from_file_timestep = LATEST
-  []
-  [vel_x]
-    type = INSFVVelocityVariable
-    initial_from_file_var = vel_x
-    initial_from_file_timestep = LATEST
-  []
-  [vel_y]
-    type = INSFVVelocityVariable
-    initial_from_file_var = vel_y
-    initial_from_file_timestep = LATEST
-  []
-  [pressure]
-    type = INSFVPressureVariable
-    initial_from_file_var = pressure
-    initial_from_file_timestep = LATEST
-  []
-  [dnp0]
-    type = INSFVPressureVariable
-    initial_from_file_var = dnp0
-    initial_from_file_timestep = LATEST
-  []
-  [dnp1]
-    type = INSFVPressureVariable
-    initial_from_file_var = dnp1
-    initial_from_file_timestep = LATEST
-  []
-  [dnp2]
-    type = INSFVPressureVariable
-    initial_from_file_var = dnp2
-    initial_from_file_timestep = LATEST
-  []
-  [dnp3]
-    type = INSFVPressureVariable
-    initial_from_file_var = dnp3
-    initial_from_file_timestep = LATEST
-  []
-  [dnp4]
-    type = INSFVPressureVariable
-    initial_from_file_var = dnp4
-    initial_from_file_timestep = LATEST
-  []
-  [dnp5]
-    type = INSFVPressureVariable
-    initial_from_file_var = dnp5
-    initial_from_file_timestep = LATEST
-  []
-  [dnp6]
-    type = INSFVPressureVariable
-    initial_from_file_var = dnp6
-    initial_from_file_timestep = LATEST
-  []
-  [dnp7]
-    type = INSFVPressureVariable
-    initial_from_file_var = dnp7
-    initial_from_file_timestep = LATEST
-  []
+[Problem]
+  nl_sys_names = 'nl0 s1 s2 s3 s4 s5 s6 s7 s8'
 []
 
 [AuxVariables]
@@ -241,7 +208,7 @@ frequency = 0.125
   end_time = ${fparse 10/frequency}
   #[TimeStepper]
   #  type = IterationAdaptiveDT
-  #  dt = 0.1  
+  #  dt = 0.1
   #  growth_factor = 2
   #[]
   solve_type = 'NEWTON'
