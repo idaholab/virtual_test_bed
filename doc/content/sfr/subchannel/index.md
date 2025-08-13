@@ -5,3 +5,5 @@
 [Toshiba 37-pin benchmark](toshiba_37_pin/toshiba_37_pin.md)
 
 [ORNL Thermal-Hydraulic Out-of-Reactor Safety (THORS) Facility blockage, benchmark](thors/thors.md)
+
+[EBR-II shutdown heat removal tests (SHRT-17/SHRT-45R)](EBR-II/EBR-II.md)
