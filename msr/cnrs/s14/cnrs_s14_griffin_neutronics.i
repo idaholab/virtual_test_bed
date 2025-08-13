@@ -344,3 +344,19 @@
     additional_execute_on = 'final'
   []
 []
+
+# For step 21 restart from steady state
+[UserObjects]
+  [transport_solution]
+    type = TransportSolutionVectorFile
+    transport_system = diff
+    writing = true
+    execute_on = 'FINAL'
+  []
+  [TH_solution]
+    type = SolutionVectorFile
+    var = 'tfuel densityf dnp0 dnp1 dnp2 dnp3 dnp4 dnp5 dnp6 dnp7'
+    writing = true
+    execute_on = 'FINAL'
+  []
+[]
