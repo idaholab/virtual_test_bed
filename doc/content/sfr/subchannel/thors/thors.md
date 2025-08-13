@@ -2,7 +2,7 @@
 
 *Contact: Vasileios Kyriakopoulos, vasileios.kyriakopoulos.at.inl.gov*
 
-*Model link: [THORS edge blockage Subchannel Model](https://github.com/idaholab/virtual_test_bed/tree/devel/sfr/subchannel/THORS)*
+*Model link: [THORS edge blockage Subchannel Model](https://github.com/idaholab/virtual_test_bed/tree/devel/sfr/subchannel/thors)*
 
 !tag name=Effect of Partial Blockages in Simulated LMFBR Fuel Assemblies
      description=Study of the partial blockage in sodium fast reactor assemblies using a subchannel discretization of the thermal hydraulics. The new flow distribution is computed and analyzed
