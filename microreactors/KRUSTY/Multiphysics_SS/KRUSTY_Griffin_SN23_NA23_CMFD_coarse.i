@@ -30,7 +30,9 @@
     NPolar := 1
     NAzmthl := 3
     NA := 1
+    order := CONSTANT
     use_displaced_mesh = true
+    attempt_using_sweeper_for_dg_kernels = false
   []
 []
 
