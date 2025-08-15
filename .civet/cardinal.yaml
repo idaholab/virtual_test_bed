@@ -7,4 +7,5 @@ hpc_copy_paths:
 lfs_include:
   - pbfhr
   - lfr/7pin_cardinal_demo
-  - msr/msre/pipe_cardinal/solid_hex8.exo
+  - msr/msre/pipe_cardinal
+  - htgr/pb67_cardinal

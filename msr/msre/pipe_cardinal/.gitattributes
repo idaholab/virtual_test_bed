@@ -1,4 +1,4 @@
-tjunc.co2.tgz filter=lfs diff=lfs merge=lfs -text
-tjunc.old.tgz filter=lfs diff=lfs merge=lfs -text
-tjunc.re2.tgz filter=lfs diff=lfs merge=lfs -text
 solid_hex8.exo filter=lfs diff=lfs merge=lfs -text
+tjunc.co2 filter=lfs diff=lfs merge=lfs -text
+tjunc.old filter=lfs diff=lfs merge=lfs -text
+tjunc.re2 filter=lfs diff=lfs merge=lfs -text

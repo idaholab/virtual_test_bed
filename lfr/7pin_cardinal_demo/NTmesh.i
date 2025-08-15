@@ -293,21 +293,3 @@ half_asmpitch = ${fparse flat_to_flat / 2 + duct_thickness}
   []
   uniform_refine = 0
 []
-
-[Executioner]
-  type = Steady
-[]
-
-[AuxVariables]
-  [var]
-  []
-[]
-
-[Problem]
-  type = FEProblem
-  solve = false
-[]
-
-[Outputs]
-  exodus = true
-[]
