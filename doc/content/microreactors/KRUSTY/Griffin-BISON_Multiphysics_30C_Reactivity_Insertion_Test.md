@@ -8,7 +8,7 @@ Similar to the [15 Ȼ reactivity insertion transient](Griffin-BISON_Multiphysics
 
 ## Griffin-BISON Multiphysics Model
 
-The Multiphysics model to simulate the 30 Ȼ run are very similar to the model developed for the 15 Ȼ test [!citep](Poston2020_1). Specifically, a two-level MOOSE MultiApp hierarchy with Griffin for neutronics and BISON for thermos-mechanics was used to couple the two codes. Fission power was calculated using the DFEM-SN(2,3) solver accelerated with the CMFD technique. Anisotropic scattering of neutrons in the reflectors were modeled by setting NA=3 and adopting a hybrid cross section set. BISON read the fission power from Griffin to solve for core temperatures and displacement fields. Griffin neutronic calculations were then repeated with the updated temperature fields and displacement fields and provided updated fission power to BISON. 
+The Multiphysics model to simulate the 30 Ȼ run are very similar to the model developed for the 15 Ȼ test [!citep](Poston2020_1). Specifically, a two-level MOOSE `MultiApp` hierarchy with Griffin for neutronics and BISON for thermo-mechanics was used to couple the two codes. Fission power was calculated using the DFEM-SN(2,3) solver accelerated with the CMFD technique. Anisotropic scattering of neutrons in the reflectors were modeled by setting NA=3 and adopting a hybrid cross section set. BISON read the fission power from Griffin to solve for core temperatures and displacement fields. Griffin neutronic calculations were then repeated with the updated temperature fields and displacement fields and provided updated fission power to BISON. 
 
 The approach to model the first 15 Ȼ reactivity insertion for starting up the 30 Ȼ transient is the same as those in the 15 Ȼ model [!citep](Poston2020_1), except that the radial reflector displacement was slightly reduced (1.447 mm instead of the 1.48 mm) considering the measured peak power was 3.65 kW instead of 3.75 kW. To model the control mechanism used in KRUSTY for maintaining a constant power, an automatic reactivity insertion mechanism was implemented. The radial reflector was raised by about 0.126 mm whenever the quarter-core power passed below 750 W. With this mechanism, the reactor power was successfully maintained between 750 ∼760 W window for approximately 150 seconds in the simulation. The total displacement of the radial reflector during the second stage is 1.638 mm, resulting in a total of 3.085 mm reflector insertion throughout the simulation of the 30 Ȼ test. The total reactivity added in the numerical model was estimated to be about 29.7 Ȼ, which is close to the 29.9 Ȼ from experiments. 
 The displacements were created by applying a Dirichlet boundary condition to the bottom surface of the solid assembly in BISON. Figure 1 presents the calculated displacement fields before the transient, after the startup and after all 29.7 Ȼ inserted to the core. 
@@ -25,27 +25,27 @@ The steps of modeling the 30 Ȼ transient are like the steps for 15 Ȼ test. Gri
          id=input_tr_timestep
          caption=Input block in Griffin main application to control the time step based on the number of iterations and power evolution.
 
-The upper limit for the current time step length between 755 second and 900 s is determined by the postprocessor “power_driven_dt” which is defined in [power_driven_dt].
+The upper limit for the current time step length between 755 seconds and 900 s is determined by the `Postprocessor` “power_driven_dt” which is defined in [power_driven_dt].
 
 !listing microreactors/KRUSTY/Multiphysics_30C_RIT/KRUSTY_Griffin_SN23_NA23_CMFD_TR.i
          block=Postprocessors/power_driven_dt
          id=power_driven_dt
          caption=Input block which defines the postprocessor `power_driven_dt`, which is utilized to control the time step size.
 
-These postprocessors help make it possible to control the time step size during the insertion of the second 15 Ȼ.
+These `Postprocessors` help make it possible to control the time step size during the insertion of the second 15 Ȼ.
 
 !listing microreactors/KRUSTY/Multiphysics_30C_RIT/KRUSTY_Griffin_SN23_NA23_CMFD_TR.i
          block=Transfers/from_bison_disp Transfers/to_bison_disp
          id=transfers
          caption=Input blocks to transfer the displacement positions between BISON and Griffin for modeling the second step of the experiment.
 
-As an essential part of the control approach used for the second stage of reactivity insertion, the shift value of the radial reflector at the last time step must be accessible by the control algorithm. To prevent the confusion caused by fixed point iteration, this value is transferred to the main application and transferred back into another postprocessor.
+As an essential part of the control approach used for the second stage of reactivity insertion, the shift value of the radial reflector at the last time step must be accessible by the control algorithm. To simplify the setup which already includes fixed point iterations between multiple solves, this value is transferred to the main application and transferred back into another `Postprocessor`.
 The input blocks for the three postprocessor, in which the `disp_old_medium` is defined in the Griffin input and the other two defined in BISON input are included in the [bison_pp].
 
 !listing microreactors/KRUSTY/Multiphysics_30C_RIT/KRUSTY_BISON_THERMOMECHANICS_TR.i
          block=Postprocessors/disp_old_origin Postprocessors/disp_old_target
          id=bison_pp
-         caption=Input blocks for defining the postprocessors in transferring the displacements.
+         caption=Input blocks for defining the `Postprocessors` in transferring the displacements.
 
 !listing microreactors/KRUSTY/Multiphysics_30C_RIT/KRUSTY_BISON_THERMOMECHANICS_TR.i
          block=Functions/ref_mov
@@ -69,7 +69,7 @@ The definitions for each of the variables and symbols were listed in [ref_mov_de
 | `pw_ref` | reference power for power maintenance during the second 15 Ȼ insertion |
 
 
-The  function “Ref_mov” has also been used to prescribe the boundary condition for generating the displacement mesh as its input block is included in Listing 6. 
+The `Function` “Ref_mov” has also been used to prescribe the boundary condition for generating the displacement mesh as its input block is included in Listing 6. 
 
 !listing microreactors/KRUSTY/Multiphysics_30C_RIT/KRUSTY_BISON_THERMOMECHANICS_TR.i
          block=BCs/BottomSSFixZ
