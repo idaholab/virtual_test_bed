@@ -1,0 +1,48 @@
+[Tests]
+  # Generate the meshes
+  [neutronics_coarse_mesh]
+    type = CheckFiles
+    input = one_twelfth_simba_core_CM.i
+    cli_args = '--mesh-only'
+    executable_pattern = 'griffin*|blue_crab*|dire_wolf*'
+    check_files = one_twelfth_simba_core_CM_in.e
+  []
+  [neutronics_fine_mesh]
+    type = CheckFiles
+    input = one_twelfth_simba_core.i
+    cli_args = '--mesh-only'
+    check_files = one_twelfth_simba_core_in.e
+    executable_pattern = 'griffin*|blue_crab*|dire_wolf*'
+    prereq = neutronics_coarse_mesh
+  []
+
+  [thermal_only]
+    type = CSVDiff
+    input = 'thermal_ss.i'
+    csvdiff = 'thermal_ss_out.csv'
+    check_input = True
+    executable_pattern = 'blue_crab*|dire_wolf*|bison*'
+    cli_args = "MultiApps/active='' Transfers/active='' Outputs/file_base= thermal_ss_standalone"
+    min_parallel = 192 # won't be tested for now
+  []
+
+  [griffin_only]
+    type = CSVDiff
+    input = 'neutronics_eigenvalue.i'
+    csvdiff = 'neutronics_eigenvalue_standalone.csv'
+    executable_pattern = 'griffin*|blue_crab*|dire_wolf*'
+    cli_args = "MultiApps/active='' Transfers/active='' AuxVariables/Trefl/initial_condition=800 "
+               "Outputs/file_base=neutronics_eigenvalue_standalone"
+    min_parallel = 192 # won't be tested for now
+    prereq = neutronics_fine_mesh
+  []
+
+  [coupled_run]
+    type = CSVDiff
+    csvdiff = 'neutronics_eigenvalue_out.csv'
+    input = 'neutronics_eigenvalue.i'
+    executable_pattern = 'blue_crab*|dire_wolf*'
+    min_parallel = 192 # won't be tested for now
+    prereq = griffin_only
+  []
+[]
