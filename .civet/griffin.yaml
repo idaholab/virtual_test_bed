@@ -21,4 +21,4 @@ lfs_include:
   - microreactors/mrad/triso_failure
   - microreactors/hpmr_h2
   - microreactors/KRUSTY
-  - lfr/7pin_cardinal_demo/LFR9g_P5.xml.tgz
+  - lfr/7pin_cardinal_demo/LFR9g_P5.xml

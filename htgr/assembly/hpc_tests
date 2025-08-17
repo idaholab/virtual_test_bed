@@ -1,0 +1,21 @@
+[Tests]
+  [generate_mesh]
+    type = RunApp
+    executable_pattern = 'cardinal*'
+    input = 'common_input.i solid.i'
+    cli_args = '--mesh-only'
+    working_directory = 'meshes'
+    hpc_mem_per_cpu = 16G
+  []
+
+  [run_multiphysics]
+    type = RunApp
+    input = 'common_input.i openmc.i'
+    cli_args = "Executioner/num_steps=10"
+    executable_pattern = 'cardinal*'
+    prereq = 'generate_mesh'
+    min_parallel = 16
+    max_time = 2000
+    mesh_mode = DISTRIBUTED
+  []
+[]

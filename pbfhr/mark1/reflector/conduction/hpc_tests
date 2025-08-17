@@ -1,0 +1,20 @@
+[Tests]
+  [nek]
+    type = RunApp
+    input = nek.i
+    requirement = "Cardinal shall be able to simulate bypass flow in the reflector of the Mark1 reactor."
+    executable_pattern = 'cardinal*'
+    min_parallel = 32
+    cli_args = 'Outputs/exodus=false'
+    max_time = 1000
+  []
+  [full_sim]
+    type = RunApp
+    input = solid.i
+    requirement = "Cardinal shall be able to run a conjugate heat transfer simnulation in the reflector of the Mark1 reactor."
+    executable_pattern = 'cardinal*'
+    min_parallel = 32
+    max_time = '5400'
+    cli_args = 'Outputs/exodus=false Executioner/num_steps=100'
+  []
+[]
