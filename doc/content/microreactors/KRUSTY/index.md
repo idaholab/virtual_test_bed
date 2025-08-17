@@ -30,3 +30,4 @@
 
 [Griffin-BISON Multiphysics 15 Ȼ Reactivity Insertion Test](KRUSTY/Griffin-BISON_Multiphysics_15C_Reactivity_Insertion_Test.md)
 
+[Griffin-BISON Multiphysics 30 Ȼ Reactivity Insertion Test](KRUSTY/Griffin-BISON_Multiphysics_30C_Reactivity_Insertion_Test.md)
