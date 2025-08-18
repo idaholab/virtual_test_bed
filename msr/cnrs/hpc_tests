@@ -28,6 +28,8 @@
     type = CSVDiff
     working_directory = 's14'
     input = 'cnrs_s14_griffin_neutronics.i'
+    # Use same u_grid as s21 for testing
+    cli_args = "MultiApps/ns_flow/cli_args="Ulid=0.5"
     csvdiff = "cnrs_s14_griffin_neutronics_csv.csv"
     min_parallel = 24
     max_time = 1000
@@ -40,6 +42,7 @@
     prereq = 's14'
     working_directory = 's21'
     input = 'cnrs_s21_griffin_neutronics.i'
+    cli_args = "Executioner/end_time=1"
     csvdiff = "cnrs_s21_griffin_neutronics_csv.csv"
     min_parallel = 24
     max_time = 1000
