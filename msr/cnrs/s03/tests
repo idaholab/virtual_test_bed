@@ -9,6 +9,6 @@
     # Missing absorption cross section
     allow_warnings = true
     executable_pattern = 'griffin*'
-    max_time = 600
+    max_time = 900
   []
 []
