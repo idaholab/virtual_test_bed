@@ -160,12 +160,16 @@
   petsc_options_iname = '-pc_type -pc_factor_shift_type -pc_factor_mat_solver_package'
   petsc_options_value = 'lu NONZERO superlu_dist'
   free_power_iterations = 2
+
+  # Nonlinear solver parameters
   line_search = none #l2
   l_max_its = 200
   l_tol = 1e-3
   nl_max_its = 200
   nl_rel_tol = 1e-5
   nl_abs_tol = 1e-6
+
+  # MultiApp iteration parameters
   fixed_point_min_its = 3
   fixed_point_max_its = 50
   fixed_point_rel_tol = 1e-5
@@ -267,65 +271,6 @@
     source_variable = 'dnp7'
     variable = 'dnp7'
     execute_on = 'timestep_end'
-  []
-[]
-
-[AuxKernels]
-  [dnp0_scale]
-    type = ScaleAux
-    variable = dnp0
-    source_variable = dnp0
-    multiplying_pp = Normalization
-    execute_on = 'final'
-  []
-  [dnp1_scale]
-    type = ScaleAux
-    variable = dnp1
-    source_variable = dnp1
-    multiplying_pp = Normalization
-    execute_on = 'final'
-  []
-  [dnp2_scale]
-    type = ScaleAux
-    variable = dnp2
-    source_variable = dnp2
-    multiplying_pp = Normalization
-    execute_on = 'final'
-  []
-  [dnp3_scale]
-    type = ScaleAux
-    variable = dnp3
-    source_variable = dnp3
-    multiplying_pp = Normalization
-    execute_on = 'final'
-  []
-  [dnp4_scale]
-    type = ScaleAux
-    variable = dnp4
-    source_variable = dnp4
-    multiplying_pp = Normalization
-    execute_on = 'final'
-  []
-  [dnp5_scale]
-    type = ScaleAux
-    variable = dnp5
-    source_variable = dnp5
-    multiplying_pp = Normalization
-    execute_on = 'final'
-  []
-  [dnp6_scale]
-    type = ScaleAux
-    variable = dnp6
-    source_variable = dnp6
-    multiplying_pp = Normalization
-    execute_on = 'final'
-  []
-  [dnp7_scale]
-    type = ScaleAux
-    variable = dnp7
-    source_variable = dnp7
-    multiplying_pp = Normalization
-    execute_on = 'final'
   []
 []
 
