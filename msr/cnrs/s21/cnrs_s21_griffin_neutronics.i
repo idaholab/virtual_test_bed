@@ -154,7 +154,7 @@ frequency = 0.0125
   [TH_solution]
     type = SolutionVectorFile
     var = 'tfuel densityf dnp0 dnp1 dnp2 dnp3 dnp4 dnp5 dnp6 dnp7'
-	  loading_var = 'tfuel densityf dnp0 dnp1 dnp2 dnp3 dnp4 dnp5 dnp6 dnp7'
+    loading_var = 'tfuel densityf dnp0 dnp1 dnp2 dnp3 dnp4 dnp5 dnp6 dnp7'
     writing = false
     execute_on = 'INITIAL'
     folder = '../s14'

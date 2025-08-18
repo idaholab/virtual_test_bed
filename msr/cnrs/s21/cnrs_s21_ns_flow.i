@@ -43,7 +43,7 @@ frequency = 0.125
   [fmg]
     type = FileMeshGenerator
     file = '../s14/cnrs_s14_griffin_neutronics_out_ns_flow0.e'
-	  use_for_exodus_restart = true
+    use_for_exodus_restart = true
   []
 []
 

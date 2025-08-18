@@ -307,7 +307,7 @@
     start_point = '0.995 0 0'
     end_point = '0.995 2 0'
     variable = 'FRD tfuel'
-	  num_points = 201
+    num_points = 201
     execute_on = 'FINAL'
     sort_by = y
   []
@@ -316,7 +316,7 @@
     start_point = '1.005 0 0'
     end_point = '1.005 2 0'
     variable = 'FRD tfuel'
-	  num_points = 201
+    num_points = 201
     execute_on = 'FINAL'
     sort_by = y
   []
