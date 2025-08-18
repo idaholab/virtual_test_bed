@@ -16,7 +16,8 @@ cp    = 3.075e+3
 k     = 1.0e-3
 mu    = 5.0e+1
 
-Sc_t =  2.0e8
+# Sc_t =  2.0e8
+Ulid = 0.5
 
 lambda0 = 1.24667E-02
 lambda1 = 2.82917E-02
@@ -168,7 +169,7 @@ frequency = 0.125
   []
 []
 
-[Materials]
+[FunctorMaterials]
   [functor_constants]
     type = ADGenericFunctorMaterial
     prop_names = 'k rho mu'
@@ -212,8 +213,8 @@ frequency = 0.125
   #  growth_factor = 2
   #[]
   solve_type = 'NEWTON'
-  petsc_options_iname = '-pc_type -pc_factor_shift_type'
-  petsc_options_value = 'lu NONZERO'
+  petsc_options_iname = '-pc_type -pc_factor_shift_type -pc_factor_mat_solver_package'
+  petsc_options_value = 'lu NONZERO superlu_dist'
   line_search = l2#'none'
   nl_rel_tol = 1e-6
   nl_abs_tol = 1e-8

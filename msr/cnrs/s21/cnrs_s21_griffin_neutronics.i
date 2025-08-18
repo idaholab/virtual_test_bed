@@ -31,9 +31,9 @@ frequency = 0.0125
     type = CartesianMeshGenerator
     dim = 2
     dx = '1.0 1.0'
-    ix = '50 50'
+    ix = '100 100'
     dy = '1.0 1.0'
-    iy = '50 50'
+    iy = '100 100'
     subdomain_id = ' 1 1
                      1 1'
   []
@@ -51,7 +51,8 @@ frequency = 0.0125
   equation_type = transient
   G = 6
   VacuumBoundary = 'left bottom right top'
-  #restart_transport_system = true
+  # Only for exodus restart, not SolutionFile restart
+  # restart_transport_system = true
   [diff]
     scheme = CFEM-Diffusion
     n_delay_groups = 8
@@ -177,8 +178,8 @@ frequency = 0.0125
 [Executioner]
   type = Transient
   solve_type = PJFNK
-  petsc_options_iname = '-pc_type -pc_factor_shift_type'
-  petsc_options_value = 'lu NONZERO'
+  petsc_options_iname = '-pc_type -pc_factor_shift_type -pc_factor_mat_solver_package'
+  petsc_options_value = 'lu NONZERO superlu_dist'
 
   start_time = 0.0
   dt = ${fparse max(0.005, 0.05*0.0125/frequency)}
@@ -188,12 +189,14 @@ frequency = 0.0125
   #  dt = 0.1
   #  growth_factor = 2
   #[]
-  line_search = l2 #none #l2
+  line_search = none #l2
   l_max_its = 200
   l_tol = 1e-3
   nl_max_its = 200
   nl_rel_tol = 1e-6
   nl_abs_tol = 1e-8
+
+  # MultiApp iteration parameters
   fixed_point_min_its = 2
   fixed_point_max_its = 50
   fixed_point_rel_tol = 1e-6
@@ -203,7 +206,6 @@ frequency = 0.0125
 [MultiApps]
   [ns_flow]
     type = TransientMultiApp
-    app_type = 'pronghornApp'
     input_files = cnrs_s21_ns_flow.i
     execute_on = 'timestep_end'
     keep_solution_during_restore = true
@@ -232,7 +234,7 @@ frequency = 0.0125
 
   # get quantities computed by the fluid flow caculation
   [fuel_temp]
-    type = MultiAppProjectionTransfer
+    type = MultiAppCopyTransfer
     from_multi_app = ns_flow
     source_variable = 'T_fluid'
     variable = 'tfuel'
@@ -312,7 +314,7 @@ frequency = 0.0125
 []
 
 [Outputs]
-  exodus = false
+  exodus = true
   csv = true
   print_linear_converged_reason = false
   print_linear_residuals = false
