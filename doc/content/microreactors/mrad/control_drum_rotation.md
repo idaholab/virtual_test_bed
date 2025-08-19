@@ -31,7 +31,7 @@ The MOOSE `MultiApp` system is used to couple simulations. Here Griffin is the p
 
 
 !media media/mrad/MultiApp2.png
-       style=display: block;margin-left:auto;margin-right:auto;width:90%;
+       style=display: block;margin-left:auto;margin-right:auto;width:30%;
        id=MultiApp_Hierarchy_HP-MR Model
        caption=MultiApp hierarchy of the HP-MR model.
 
@@ -54,7 +54,7 @@ Control drums were meshed using the `HexagonConcentricCircleAdaptiveBoundaryMesh
 
 
 !media media/mrad/mesh_hpmr_drum.png
-       style=display: block;margin-left:auto;margin-right:auto;width:90%;
+       style=display: block;margin-left:auto;margin-right:auto;width:40%;
        id=hpmr_mesh_used
        caption=HP-MR mesh used in the analysis.
 
