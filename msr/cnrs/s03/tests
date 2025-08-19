@@ -10,5 +10,6 @@
     allow_warnings = true
     executable_pattern = 'griffin*'
     max_time = 900
+    method = 'opt'
   []
 []
