@@ -175,4 +175,4 @@ produced by an over-prediction of the mixing rates, which yields larger than exp
 
 !alert note
 Sample output for this model, in the gold folder, is hosted on LFS.
-Please refer to [LFS instructions](resources/how_to_use_vtb.md#lfs) to download it.
+Please refer to [LFS instructions](vtb_pages/getting_started.md#lfs) to download it.

@@ -162,7 +162,7 @@ is the sequential order of the named sub-blocks `[./*]`.
 ### Equivalence
 
 !alert note
-Equivalence factors for this model are hosted on LFS. Please refer to [LFS instructions](resources/how_to_use_vtb.md#lfs)
+Equivalence factors for this model are hosted on LFS. Please refer to [LFS instructions](vtb_pages/getting_started.md#lfs)
 to download them.
 
 The Equivalence theory block/action is used to compute or apply
@@ -214,7 +214,7 @@ Lastly, we tell it to
 ### Materials
 
 !alert note
-The cross sections for this model are hosted on LFS. Please refer to [LFS instructions](resources/how_to_use_vtb.md#lfs)
+The cross sections for this model are hosted on LFS. Please refer to [LFS instructions](vtb_pages/getting_started.md#lfs)
 to download them.
 
 Material cross sections are specified with the multi-group
