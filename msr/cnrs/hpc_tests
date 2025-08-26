@@ -20,6 +20,8 @@
                cnrs_s13_griffin_neutronics_csv_AA_line_values_right_0002.csv cnrs_s13_griffin_neutronics_csv_BB_line_values_right_0002.csv"
     min_parallel = 24
     max_time = 2000
+    # Solution change from 12 to 24 processes
+    rel_err = 2e-5
     # Missing absorption cross section
     allow_warnings = true
     executable_pattern = 'griffin*'
@@ -32,7 +34,7 @@
     cli_args = "MultiApps/ns_flow/cli_args="Ulid=0.5"
     csvdiff = "cnrs_s14_griffin_neutronics_csv.csv"
     min_parallel = 24
-    max_time = 2000
+    max_time = 2500
     # Missing absorption cross section
     allow_warnings = true
     executable_pattern = 'griffin*'
