@@ -33,8 +33,8 @@
     # Use same u_grid as s21 for testing
     cli_args = "MultiApps/ns_flow/cli_args='Ulid=0.5'"
     csvdiff = "cnrs_s14_griffin_neutronics_out.csv"
-    min_parallel = 24
-    max_time = 1500
+    min_parallel = 12
+    max_time = 1800
     # Missing absorption cross section
     allow_warnings = true
     executable_pattern = 'griffin*'
