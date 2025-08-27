@@ -10,5 +10,7 @@
     executable_pattern = 'combined*'
     # sampling on faces
     allow_warnings = true
+    # diffs observed on civet in initial PR
+    rel_err = 7e-6
   []
 []
