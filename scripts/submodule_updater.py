@@ -31,7 +31,7 @@ def parse_args():
     parser.add_argument('--base-remote', default='upstream', help='The base remote, default: \'upstream\'')
 
     parser.add_argument('repo', help='Path to the repository')
-    parser.add_argument('--use-hpc-submodules', action='store_true', help='Whether to update submodule to the latest hpc versions.')
+    parser.add_argument('--use-hpc-submodules', action='store_true', help='Whether to update submodule to the latest HPC versions. This should be run on HPC only.')
     parser.add_argument('submodule:sha1', nargs='?',
                         help='Submodule name and its version to update to. If not specified, `origin/master` or the latest hpc submodule if --use-hpc-submodules is specified.')
 
