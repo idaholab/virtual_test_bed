@@ -11,6 +11,7 @@ import argparse
 import yaml
 import re
 import textwrap
+import subprocess
 
 import git
 import gitlab # available through the 'python-gitlab' conda package
@@ -30,8 +31,9 @@ def parse_args():
     parser.add_argument('--base-remote', default='upstream', help='The base remote, default: \'upstream\'')
 
     parser.add_argument('repo', help='Path to the repository')
+    parser.add_argument('--use-hpc-submodules', action='store_true', help='Whether to update submodule to the latest HPC versions. This should be run on HPC only.')
     parser.add_argument('submodule:sha1', nargs='?',
-                        help='Submodule name and its version to update to. If not specified, `origin/master`.')
+                        help='Submodule name and its version to update to. If not specified, `origin/master` or the latest hpc submodule if --use-hpc-submodules is specified.')
 
     parser.add_argument('--config-file', default="./config.yaml",
                         help=textwrap.dedent("""\
@@ -102,19 +104,36 @@ if __name__ == "__main__":
        raise SystemExit(f'Host mismatch between remotes \'{head_remote}\' and \'{base_remote}\'')
     host = head_host
 
-    # Load the user-provided submodules
-    submodule_sha1_args = vars(args)['submodule:sha1']
-    submodule_sha1 = {}
-    if submodule_sha1_args is not None:
-        for ss1 in submodule_sha1_args:
-            (sm_name, sha1) = ss1.split(':')
-            submodule_sha1[sm_name] = sha1
-
     # Get list of active modules
     submodules = []
     for submodule in git_repo.submodules:
         if submodule.module_exists():
             submodules.append(submodule)
+
+    submodule_sha1 = {}
+    # Load the hpc submodules if requested
+    if args.use_hpc_submodules:
+        print('Looking for hpc submodule versions')
+        for submodule in submodules:
+            sm_name = submodule.name.split('apps/')[-1].replace('_', '')
+            # This regex assumes the latest date is the last line
+            cmd = rf"module spider {sm_name} |& grep -Po '^\s*{sm_name}-.*/\d{{4}}\.\d{{2}}\.\d{{2}}-\K[0-9a-f]{{7}}' | tail -n1"
+            try:
+                sha1 = subprocess.check_output(cmd, shell=True, text=True).strip()
+                if sha1 == '':
+                    raise ValueError
+                submodule_sha1[submodule.name] = sha1
+                print(f"  - Found hpc sha {sha1} for submodule {sm_name}")
+            except:
+                print(f"  - Could not determine hpc version for {sm_name}. Falling back to default behavior.")
+                continue
+
+    # Load the user-provided submodules
+    submodule_sha1_args = vars(args)['submodule:sha1']
+    if submodule_sha1_args is not None:
+        for ss1 in submodule_sha1_args:
+            (sm_name, sha1) = ss1.split(':')
+            submodule_sha1[sm_name] = sha1
 
     has_head_branch = head_branch in [branch.name for branch in git_repo.branches]
     if has_head_branch:
