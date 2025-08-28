@@ -12,5 +12,7 @@
     allow_warnings = true
     # diffs observed on civet in initial PR
     rel_err = 7e-6
+    # To pass in devel mode
+    max_time = 500
   []
 []
