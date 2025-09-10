@@ -138,7 +138,7 @@ duct_inside = '${fparse duct_outside - 2 * duct_thickness}'
   []
 []
 
-[Problem]
+[SubChannel]
   type = TriSubChannel1PhaseProblem
   fp = sodium
   n_blocks = 1
