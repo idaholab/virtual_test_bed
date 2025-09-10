@@ -15,7 +15,7 @@ mass_flux_in = '${fparse 1256*4/fuel_assemblies_per_power_unit/flow_area}' # kg/
 # units are cm - do not forget to convert to meter
 scale_factor = 0.01
 fuel_element_pitch = '${fparse 16.2471*scale_factor}'
-inter_assembly_gap = '${fparse 0.4348*scale_factor}' # check
+inter_assembly_gap = '${fparse 0.4348*scale_factor}'
 duct_thickness = '${fparse 0.3966*scale_factor}'
 fuel_pin_pitch = '${fparse 0.8966*scale_factor}'
 fuel_pin_diameter = '${fparse 0.7714*scale_factor}'
@@ -24,7 +24,7 @@ wire_diameter = '${fparse 0.1307*scale_factor}' #check
 n_rings = 10
 length_entry_fuel = '${fparse 160.92*scale_factor}'
 length_heated_fuel = '${fparse 85.82*scale_factor}'
-length_outlet_fuel = '${fparse 233.46*scale_factor}'
+length_outlet_fuel =  '${fparse 233.46*scale_factor}'
 orifice_plate_height = '${fparse 5*scale_factor}'
 duct_outside = '${fparse fuel_element_pitch - inter_assembly_gap}'
 duct_inside = '${fparse duct_outside - 2 * duct_thickness}'
@@ -169,7 +169,7 @@ duct_inside = '${fparse duct_outside - 2 * duct_thickness}'
   [q_prime_IC]
     type = SCMTriPowerIC
     variable = q_prime
-    power = 2000000.0 #W
+    power = 1000000.0 #W
     filename = "pin_power_profile_uni.txt"
     axial_heat_rate = axial_heat_rate
   []
@@ -258,6 +258,7 @@ duct_inside = '${fparse duct_outside - 2 * duct_thickness}'
 []
 
 [Outputs]
+  exodus = true
   csv = true
 []
 
@@ -281,14 +282,14 @@ duct_inside = '${fparse duct_outside - 2 * duct_thickness}'
 
 [Transfers]
   [subchannel_transfer]
-    type = SCMSolutionTransfer
-    to_multi_app = viz
-    variable = 'mdot SumWij P DP h T rho mu S w_perim'
+      type = SCMSolutionTransfer
+      to_multi_app = viz
+      variable = 'mdot SumWij P DP h T rho mu S w_perim'
   []
 
   [pin_transfer]
-    type = SCMPinSolutionTransfer
-    to_multi_app = viz
-    variable = 'Tpin Dpin q_prime'
+      type = SCMPinSolutionTransfer
+      to_multi_app = viz
+      variable = 'Tpin Dpin q_prime'
   []
 []

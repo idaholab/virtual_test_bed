@@ -39,16 +39,11 @@ A48 = 1.1045e2
 A49 = -6.5112e-2
 A50 = 1.5430e-5
 A51 = -2.4617e-9
-k = ${fparse A48 + A49 * inlet_temperature + A50 * inlet_temperature * inlet_temperature +
-        A51 * inlet_temperature * inlet_temperature * inlet_temperature}
-#### Molar mass
-# molar_mass = 22.989769e-3
+k_sodium = '${fparse A48 + A49 * inlet_temperature + A50 * inlet_temperature * inlet_temperature +
+        A51 * inlet_temperature * inlet_temperature * inlet_temperature}'
 
 # wrapper properties
 k_wrapper = 15
-
-# sodium properties
-k_sodium = ${fparse k}
 
 wrapper_blocks = 'wall'
 inter_wrapper_blocks = 'inter_wrapper'

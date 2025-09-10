@@ -33,7 +33,7 @@ The index of the fuel-pins/subchannels and their relative location for the SCM m
 
 ## Example Description
 
-One example models 7 subchannel assemblies with a heat conduction model of the wrapper/inter-wrapper and the other one models 19 subchannel assemblies with a heat conduction model of the wrapper/inter-wrapper. In both models subchannel simulations are run as a `MultiApp` and heat conduction as the main app. The wrapper material is steel and the inter-wrapper is liquid sodium. Both materials are treated as solids and only heat conduction is considered. In the 7 assembly case  the central assembly has twice the power of its neighbors. In the 19 assembly case or assemblies have the same power.
+One example models 7 subchannel assemblies with a heat conduction model of the wrapper/inter-wrapper and the other one models 19 subchannel assemblies with a heat conduction model of the wrapper/inter-wrapper. In both models subchannel simulations are run as a `MultiApp` and heat conduction as the main app. The wrapper material is steel and the inter-wrapper is liquid sodium. Both materials are treated as solids and only heat conduction is considered. In both cases the central assembly has twice the power of its neighbors.
 
 ## Coupling scheme
 
@@ -121,4 +121,4 @@ The temperature field for the coupled simulation is shown in [7SCM] and [19SCM]
     id=19SCM
     caption=Temperature field for the 19 assemblies example.
 
-In the 7 assembly example case the center assembly has twice the power of its neighbors. The wrapper/inter-wrapper region is hotter around the center assembly. In the 19 assembly case all the assemblies have the same power. The wrapper/inter-wrapper region has a uniform temperature profile.
+In both examples the center assembly has twice the power of its neighbors. The wrapper/inter-wrapper region is hotter around the center assembly. In the 19 assembly case all the assemblies have the same power. The wrapper/inter-wrapper region has a uniform temperature profile far away from the central duct.
