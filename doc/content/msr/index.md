@@ -7,3 +7,5 @@
 [Generic Molten Salt Fast Reactor](generic_msr/index.md)
 
 [LOTUS Molten Chloride Reactor](lotus/index.md)
+
+[CNRS multiphysics Modeling](cnrs/index.md)
