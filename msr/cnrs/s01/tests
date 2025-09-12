@@ -1,0 +1,18 @@
+[Tests]
+  issues = '#534'
+  [s01]
+    type = CSVDiff
+    input = 'cnrs_s01_ns_flow.i'
+    csvdiff = "cnrs_s01_ns_flow_csv_AA_line_values_left_0011.csv  cnrs_s01_ns_flow_csv_BB_line_values_left_0011.csv
+               cnrs_s01_ns_flow_csv.csv
+               cnrs_s01_ns_flow_csv_AA_line_values_right_0011.csv cnrs_s01_ns_flow_csv_BB_line_values_right_0011.csv"
+    min_parallel = 16
+    executable_pattern = 'combined*'
+    # sampling on faces
+    allow_warnings = true
+    # diffs observed on civet in initial PR
+    rel_err = 7e-6
+    # To pass in devel mode
+    max_time = 500
+  []
+[]

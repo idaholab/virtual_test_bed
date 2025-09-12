@@ -1,0 +1,15 @@
+[Tests]
+  issues = '#534'
+  [s11]
+    type = CSVDiff
+    input = 'cnrs_s11_griffin_neutronics.i'
+    csvdiff = "cnrs_s11_griffin_neutronics_csv_AA_line_values_left_0002.csv  cnrs_s11_griffin_neutronics_csv_BB_line_values_left_0002.csv  cnrs_s11_griffin_neutronics_csv.csv
+               cnrs_s11_griffin_neutronics_csv_AA_line_values_right_0002.csv cnrs_s11_griffin_neutronics_csv_BB_line_values_right_0002.csv"
+    min_parallel = 16
+    max_time = 1500
+    method = 'opt'
+    # Missing absorption cross section
+    allow_warnings = true
+    executable_pattern = 'griffin*'
+  []
+[]
