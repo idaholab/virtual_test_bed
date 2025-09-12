@@ -253,10 +253,14 @@ htc_ext_cond = 1.0e6
 []
 
 [Outputs]
-  csv = false
   exodus = false
   [console]
     type = Console
     execute_postprocessors_on = 'NONE'
+  []
+  [csv]
+    type = CSV
+    execute_on = 'INITIAL FINAL'
+    enable = false
   []
 []

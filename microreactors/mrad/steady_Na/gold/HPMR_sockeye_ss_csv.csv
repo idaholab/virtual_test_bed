@@ -1,0 +1,3 @@
+time,condenser_boundary_integral,evaporator_boundary_integral,heat_pipe:T_avg_wick_ann,heat_pipe:condenser_pool_length,heat_pipe:initial_T_avg_wick_ann,heat_pipe:mass_flow_rate,heat_pipe:mass_total,heat_pipe:mass_vapor,heat_pipe:power_evap,heat_pipe:refill,heat_pipe:rho_liquid_solid_avg,heat_pipe:startup_front,refill,heat_pipe:mass_evap
+-50000,0,0,900,0,900.00000000005,0,0.22634442283086,9.1510719462318e-06,0,1,801.7043439394,3,1,0.1132929461646
+0,0,0,900,0.23272645680752,900.00000000005,6.0668587059741e-16,0.22634442283086,9.1510719462318e-06,-4.2922180201092e-12,1,801.7043439394,3,1,0.11329294616461

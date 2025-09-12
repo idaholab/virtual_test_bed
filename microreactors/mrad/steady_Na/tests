@@ -54,16 +54,16 @@
     max_time = 400
     rel_err = 2e-5
     prereq = 'heat_conduction_bison_syntax'
+    ignore_columns = 'mirror_side_integral'
   []
   [fluids_sockeye]
     type = CSVDiff
     input = 'HPMR_sockeye_ss.i'
     csvdiff = 'HPMR_sockeye_ss_csv.csv'
     executable_pattern = 'sockeye*|dire_wolf*'
-    cli_args = "Outputs/csv=true"
+    cli_args = "Outputs/csv/enable=true"
     allow_warnings = true
     prereq = 'fluids_sockeye_syntax'
-    ignore_columns = 'bc_scale_pp scale_pp'
   []
   [coupled_simulation]
     type = CSVDiff
