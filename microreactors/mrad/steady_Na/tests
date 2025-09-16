@@ -1,0 +1,79 @@
+[Tests]
+  # Steady
+  # Syntax checks
+  [neutronics_griffin_syntax]
+    type = RunApp
+    input = 'HPMR_dfem_griffin_ss.i'
+    check_input = True
+    executable_pattern = 'griffin*|blue_crab*|dire_wolf*'
+    cli_args = "MultiApps/active='' Transfers/active=''"
+  []
+  [heat_conduction_bison_syntax]
+    type = RunApp
+    input = 'HPMR_thermo_ss.i'
+    check_input = True
+    executable_pattern = 'bison*|blue_crab*|dire_wolf*'
+    cli_args = "MultiApps/active='' Transfers/active=''"
+  []
+  [fluids_sockeye_syntax]
+    type = RunApp
+    input = 'HPMR_sockeye_ss.i'
+    check_input = True
+    executable_pattern = 'sockeye*|dire_wolf*'
+    allow_warnings = true
+  []
+
+  # Regression tests
+  [neutronics_griffin]
+    type = CSVDiff
+    input = 'HPMR_dfem_griffin_ss.i'
+    csvdiff = 'HPMR_dfem_griffin_ss_out.csv'
+    executable_pattern = 'griffin*|blue_crab*|dire_wolf*'
+    # Setup outputs, reduce costs
+    cli_args = "MultiApps/active='' Transfers/active=''
+                Outputs/csv=true Outputs/exodus=false
+                --distributed-mesh TransportSystems/sn/order=CONSTANT Executioner/richardson_max_its=1"
+    min_parallel = 16
+    method = 'opt'
+    max_time = 400
+    # Cross-section warning due to missing fission-only
+    allow_warnings = true
+    prereq = 'neutronics_griffin_syntax'
+  []
+  [heat_conduction_bison]
+    type = CSVDiff
+    input = 'HPMR_thermo_ss.i'
+    csvdiff = 'HPMR_thermo_ss_out.csv'
+    executable_pattern = 'bison*|blue_crab*|dire_wolf*'
+    cli_args = "MultiApps/active='' Transfers/active='' Executioner/num_steps=2 "
+               "Executioner/nl_abs_tol=1e-1 Outputs/csv=true --distributed-mesh Outputs/exodus=false"
+    min_parallel = 16
+    method = 'opt'
+    # Temperatures are out of range
+    allow_warnings = true
+    max_time = 400
+    rel_err = 2e-5
+    prereq = 'heat_conduction_bison_syntax'
+    ignore_columns = 'mirror_side_integral'
+  []
+  [fluids_sockeye]
+    type = CSVDiff
+    input = 'HPMR_sockeye_ss.i'
+    csvdiff = 'HPMR_sockeye_ss_csv.csv'
+    executable_pattern = 'sockeye*|dire_wolf*'
+    cli_args = "Outputs/csv/enable=true"
+    allow_warnings = true
+    prereq = 'fluids_sockeye_syntax'
+  []
+  [coupled_simulation]
+    type = CSVDiff
+    input = 'HPMR_dfem_griffin_ss.i'
+    csvdiff = 'mrad_coupled_out.csv'
+    executable_pattern = 'dire_wolf*'
+    cli_args = "Executioner/richardson_max_its=2 Executioner/richardson_abs_tol=1e-1 Outputs/csv=true "
+               "Outputs/file_base=mrad_coupled_out Outputs/exodus=false MultiApps/bison/cli_args='Outputs/exodus=false'"
+    min_parallel = 48
+    max_time = 1080
+    allow_warnings = true
+  []
+[]
