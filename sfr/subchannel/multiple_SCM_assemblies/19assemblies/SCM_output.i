@@ -71,7 +71,7 @@
   #### Duct contribution to total power that goes into/out of the fluid
   [Total_Net_Power_Through_Duct]
     type = SCMDuctHeatRatePostprocessor
-    execute_on ='transfer TIMESTEP_END'
+    execute_on ='transfer'
   []
   #### Total net power that goes into/out of the fluid
   [Total_coolant_power]

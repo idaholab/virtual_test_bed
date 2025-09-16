@@ -4,8 +4,8 @@
 
 *Model link: [Multiple SCM assemblies in a wrapper/inter-wrapper configuration](https://github.com/idaholab/virtual_test_bed/tree/devel/sfr/subchannel/multiple_SCM_assemblies)*
 
-!tag name=Multiple SCM assemblies
-     description=Multiple SCM assemblies in a wrapper/inter-wrapper configuration
+!tag name=Thermal coupling of SCM assemblies
+     description=Multiple SCM assemblies coupled thermally in a wrapper/inter-wrapper configuration
      image=<https://mooseframework.inl.gov/virtual_test_bed/media/subchannel/multiple_SCM_assemblies/19SCM.png>
      pairs=reactor_type:SFR
                        geometry:assembly
@@ -65,17 +65,31 @@ SCM calculates the duct temperature at the inner duct surface and that informati
     id=Tduct2
     caption=Duct temperature transfered to the wrapper/inter-wrapper model.
 
+## Energy conservation
+
+There is a postprocessor defined in the main app of type: "ADSideDiffusiveFluxIntegral" for each inner duct that calculates the total heat that flows through each duct.
+
+!listing sfr/subchannel/multiple_SCM_assemblies/7assemblies/HC_master.i block=Postprocessors language=moose
+
+There is also a postprocessor defined in the sub apps of type: "SCMDuctHeatRatePostprocessor" that calculates the total heat that flows through the SCM duct model.
+
+!listing sfr/subchannel/multiple_SCM_assemblies/7assemblies/SCM_output.i language=moose
+
+The "MultiAppGeneralFieldNearestLocationTransfer" uses these postprocessors as inputs to the parameters: "from_postprocessors_to_be_preserved, to_postprocessors_to_be_preserved" to ensure that energy is conserved during the transfer.
+
+!listing sfr/subchannel/multiple_SCM_assemblies/7assemblies/HC_master.i block=Transfers language=moose
+
 ## Input files
 
 The input files are the following:
 
 ### 7 assemblies
 
-- File that creates the wrapper/inter-wrapper model geometry.
+- Input file to creates the wrapper/interwrapper model geometry. This only needs to be run once to generate the mesh.
 
 !listing sfr/subchannel/multiple_SCM_assemblies/7assemblies/abr_7assemblies.i language=moose
 
-- File that runs the main App.
+- File that runs the main App, the heat conduction solve in the wrapper/interwrapper.
 
 !listing sfr/subchannel/multiple_SCM_assemblies/7assemblies/HC_master.i language=moose
 
@@ -85,17 +99,17 @@ The input files are the following:
 
 !listing sfr/subchannel/multiple_SCM_assemblies/7assemblies/fuel_assembly_center.i language=moose
 
-- File that creates a 3D visualization model of the SCM solution
+- File that creates a 3D visualization model of the SCM solution. This is executed by each SCM simulation (grandchild app).
 
 !listing sfr/subchannel/multiple_SCM_assemblies/7assemblies/3d.i language=moose
 
 ### 19 assemblies
 
-- File that creates the wrapper/intewrapper model geometry.
+- Input file to creates the wrapper/interwrapper model geometry. This only needs to be run once to generate the mesh.
 
 !listing sfr/subchannel/multiple_SCM_assemblies/19assemblies/abr_19assemblies.i language=moose
 
-- File that runs the main App.
+- File that runs the main App, the heat conduction solve in the wrapper/interwrapper.
 
 !listing sfr/subchannel/multiple_SCM_assemblies/19assemblies/HC_master.i language=moose
 
@@ -103,7 +117,7 @@ The input files are the following:
 
 !listing sfr/subchannel/multiple_SCM_assemblies/19assemblies/fuel_assembly_center.i language=moose
 
-- File that creates a 3D visualization model of the SCM solution
+- File that creates a 3D visualization model of the SCM solution. This is executed by each SCM simulation (grandchild app).
 
 !listing sfr/subchannel/multiple_SCM_assemblies/19assemblies/3d.i language=moose
 

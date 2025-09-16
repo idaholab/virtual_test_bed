@@ -149,42 +149,49 @@ inter_wrapper_blocks = 'inter_wrapper'
     variable    = T_wrapper
     boundary    = prsb_interface_00
     diffusivity = ${k_wrapper}
+    execute_on='transfer'
   []
   [center_duct_heat_loss_01]
     type        = ADSideDiffusiveFluxIntegral
     variable    = T_wrapper
     boundary    = prsb_interface_01
     diffusivity = ${k_wrapper}
+    execute_on='transfer'
   []
   [center_duct_heat_loss_02]
     type        = ADSideDiffusiveFluxIntegral
     variable    = T_wrapper
     boundary    = prsb_interface_02
     diffusivity = ${k_wrapper}
+    execute_on='transfer'
   []
   [center_duct_heat_loss_03]
     type        = ADSideDiffusiveFluxIntegral
     variable    = T_wrapper
     boundary    = prsb_interface_03
     diffusivity = ${k_wrapper}
+    execute_on='transfer'
   []
   [center_duct_heat_loss_04]
     type        = ADSideDiffusiveFluxIntegral
     variable    = T_wrapper
     boundary    = prsb_interface_04
     diffusivity = ${k_wrapper}
+    execute_on='transfer'
   []
   [center_duct_heat_loss_05]
     type        = ADSideDiffusiveFluxIntegral
     variable    = T_wrapper
     boundary    = prsb_interface_05
     diffusivity = ${k_wrapper}
+    execute_on='transfer'
   []
   [center_duct_heat_loss_06]
     type        = ADSideDiffusiveFluxIntegral
     variable    = T_wrapper
     boundary    = prsb_interface_06
     diffusivity = ${k_wrapper}
+    execute_on='transfer'
   []
 []
 

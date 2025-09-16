@@ -154,114 +154,133 @@ inter_wrapper_blocks = 'inter_wrapper'
     variable    = T_wrapper
     boundary    = prsb_interface_00
     diffusivity = ${k_wrapper}
+    execute_on='transfer'
   []
   [center_duct_heat_loss_01]
     type        = ADSideDiffusiveFluxIntegral
     variable    = T_wrapper
     boundary    = prsb_interface_01
     diffusivity = ${k_wrapper}
+    execute_on='transfer'
   []
   [center_duct_heat_loss_02]
     type        = ADSideDiffusiveFluxIntegral
     variable    = T_wrapper
     boundary    = prsb_interface_02
     diffusivity = ${k_wrapper}
+    execute_on='transfer'
   []
   [center_duct_heat_loss_03]
     type        = ADSideDiffusiveFluxIntegral
     variable    = T_wrapper
     boundary    = prsb_interface_03
     diffusivity = ${k_wrapper}
+    execute_on='transfer'
   []
   [center_duct_heat_loss_04]
     type        = ADSideDiffusiveFluxIntegral
     variable    = T_wrapper
     boundary    = prsb_interface_04
     diffusivity = ${k_wrapper}
+    execute_on='transfer'
   []
   [center_duct_heat_loss_05]
     type        = ADSideDiffusiveFluxIntegral
     variable    = T_wrapper
     boundary    = prsb_interface_05
     diffusivity = ${k_wrapper}
+    execute_on='transfer'
   []
   [center_duct_heat_loss_06]
     type        = ADSideDiffusiveFluxIntegral
     variable    = T_wrapper
     boundary    = prsb_interface_06
     diffusivity = ${k_wrapper}
+    execute_on='transfer'
   []
     [center_duct_heat_loss_07]
     type        = ADSideDiffusiveFluxIntegral
     variable    = T_wrapper
     boundary    = prsb_interface_07
     diffusivity = ${k_wrapper}
+    execute_on='transfer'
   []
   [center_duct_heat_loss_08]
     type        = ADSideDiffusiveFluxIntegral
     variable    = T_wrapper
     boundary    = prsb_interface_08
     diffusivity = ${k_wrapper}
+    execute_on='transfer'
   []
   [center_duct_heat_loss_09]
     type        = ADSideDiffusiveFluxIntegral
     variable    = T_wrapper
     boundary    = prsb_interface_09
     diffusivity = ${k_wrapper}
+    execute_on='transfer'
   []
   [center_duct_heat_loss_10]
     type        = ADSideDiffusiveFluxIntegral
     variable    = T_wrapper
     boundary    = prsb_interface_10
     diffusivity = ${k_wrapper}
+    execute_on='transfer'
   []
   [center_duct_heat_loss_11]
     type        = ADSideDiffusiveFluxIntegral
     variable    = T_wrapper
     boundary    = prsb_interface_11
     diffusivity = ${k_wrapper}
+    execute_on='transfer'
   []
   [center_duct_heat_loss_12]
     type        = ADSideDiffusiveFluxIntegral
     variable    = T_wrapper
     boundary    = prsb_interface_12
     diffusivity = ${k_wrapper}
+    execute_on='transfer'
   []
   [center_duct_heat_loss_13]
     type        = ADSideDiffusiveFluxIntegral
     variable    = T_wrapper
     boundary    = prsb_interface_13
     diffusivity = ${k_wrapper}
+    execute_on='transfer'
   []
     [center_duct_heat_loss_14]
     type        = ADSideDiffusiveFluxIntegral
     variable    = T_wrapper
     boundary    = prsb_interface_14
     diffusivity = ${k_wrapper}
+    execute_on='transfer'
   []
   [center_duct_heat_loss_15]
     type        = ADSideDiffusiveFluxIntegral
     variable    = T_wrapper
     boundary    = prsb_interface_15
     diffusivity = ${k_wrapper}
+    execute_on='transfer'
   []
   [center_duct_heat_loss_16]
     type        = ADSideDiffusiveFluxIntegral
     variable    = T_wrapper
     boundary    = prsb_interface_16
     diffusivity = ${k_wrapper}
+    execute_on='transfer'
   []
   [center_duct_heat_loss_17]
     type        = ADSideDiffusiveFluxIntegral
     variable    = T_wrapper
     boundary    = prsb_interface_17
     diffusivity = ${k_wrapper}
+    execute_on='transfer'
   []
   [center_duct_heat_loss_18]
     type        = ADSideDiffusiveFluxIntegral
     variable    = T_wrapper
     boundary    = prsb_interface_18
     diffusivity = ${k_wrapper}
+    execute_on='transfer'
   []
 []
 
@@ -322,11 +341,11 @@ inter_wrapper_blocks = 'inter_wrapper'
                 prsb_interface_12 prsb_interface_13 prsb_interface_14 prsb_interface_15
                 prsb_interface_16 prsb_interface_17 prsb_interface_18'
     execute_on = 'timestep_end'
-    # from_postprocessors_to_be_preserved = 'center_duct_heat_loss_00 center_duct_heat_loss_01 center_duct_heat_loss_02 center_duct_heat_loss_03 center_duct_heat_loss_04 center_duct_heat_loss_05 center_duct_heat_loss_06
-    # center_duct_heat_loss_07 center_duct_heat_loss_08 center_duct_heat_loss_09 center_duct_heat_loss_10 center_duct_heat_loss_11
-    # center_duct_heat_loss_12 center_duct_heat_loss_13 center_duct_heat_loss_14 center_duct_heat_loss_15 center_duct_heat_loss_16
-    # center_duct_heat_loss_17 center_duct_heat_loss_18'
-    # to_postprocessors_to_be_preserved = 'Total_Net_Power_Through_Duct'
+    from_postprocessors_to_be_preserved = 'center_duct_heat_loss_00 center_duct_heat_loss_01 center_duct_heat_loss_02 center_duct_heat_loss_03 center_duct_heat_loss_04 center_duct_heat_loss_05 center_duct_heat_loss_06
+    center_duct_heat_loss_07 center_duct_heat_loss_08 center_duct_heat_loss_09 center_duct_heat_loss_10 center_duct_heat_loss_11
+    center_duct_heat_loss_12 center_duct_heat_loss_13 center_duct_heat_loss_14 center_duct_heat_loss_15 center_duct_heat_loss_16
+    center_duct_heat_loss_17 center_duct_heat_loss_18'
+    to_postprocessors_to_be_preserved = 'Total_Net_Power_Through_Duct'
   []
 
   [T_duct] # retrieve Tduct from SCM solve

@@ -214,6 +214,7 @@ duct_inside = '${fparse duct_outside - 2 * duct_thickness}'
 
 [Outputs]
   exodus = true
+  csv = true
 []
 
 !include SCM_output.i
