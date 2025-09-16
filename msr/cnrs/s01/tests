@@ -12,6 +12,7 @@
     allow_warnings = true
     # diffs observed on civet in initial PR
 <<<<<<< HEAD
+<<<<<<< HEAD
     rel_err = 1e-4
 =======
 <<<<<<< HEAD
@@ -20,6 +21,9 @@
     rel_err = 7e-6
 >>>>>>> 2db9b999 (Increase timeout for devel mode s01)
 >>>>>>> 7940c9fb (Increase timeout for devel mode s01)
+=======
+    rel_err = 2e-5
+>>>>>>> 24127793 (resolve conflict Refs #000)
     # To pass in devel mode
     max_time = 500
   []
