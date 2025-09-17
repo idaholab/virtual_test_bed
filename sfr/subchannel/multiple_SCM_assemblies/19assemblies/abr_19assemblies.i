@@ -11,7 +11,6 @@ height = 480.2
 # discretization
 n_ax = 50
 ns = 10
-duct_intervals_center = '4 6 4 3'
 duct_intervals_perishperic = '4 4'
 
 [Mesh]
