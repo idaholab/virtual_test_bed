@@ -149,49 +149,49 @@ inter_wrapper_blocks = 'inter_wrapper'
     variable    = T_wrapper
     boundary    = prsb_interface_00
     diffusivity = ${k_wrapper}
-    execute_on='transfer'
+    execute_on='timestep_end'
   []
   [center_duct_heat_loss_01]
     type        = ADSideDiffusiveFluxIntegral
     variable    = T_wrapper
     boundary    = prsb_interface_01
     diffusivity = ${k_wrapper}
-    execute_on='transfer'
+    execute_on='timestep_end'
   []
   [center_duct_heat_loss_02]
     type        = ADSideDiffusiveFluxIntegral
     variable    = T_wrapper
     boundary    = prsb_interface_02
     diffusivity = ${k_wrapper}
-    execute_on='transfer'
+    execute_on='timestep_end'
   []
   [center_duct_heat_loss_03]
     type        = ADSideDiffusiveFluxIntegral
     variable    = T_wrapper
     boundary    = prsb_interface_03
     diffusivity = ${k_wrapper}
-    execute_on='transfer'
+    execute_on='timestep_end'
   []
   [center_duct_heat_loss_04]
     type        = ADSideDiffusiveFluxIntegral
     variable    = T_wrapper
     boundary    = prsb_interface_04
     diffusivity = ${k_wrapper}
-    execute_on='transfer'
+    execute_on='timestep_end'
   []
   [center_duct_heat_loss_05]
     type        = ADSideDiffusiveFluxIntegral
     variable    = T_wrapper
     boundary    = prsb_interface_05
     diffusivity = ${k_wrapper}
-    execute_on='transfer'
+    execute_on='timestep_end'
   []
   [center_duct_heat_loss_06]
     type        = ADSideDiffusiveFluxIntegral
     variable    = T_wrapper
     boundary    = prsb_interface_06
     diffusivity = ${k_wrapper}
-    execute_on='transfer'
+    execute_on='timestep_end'
   []
 []
 
@@ -234,6 +234,7 @@ inter_wrapper_blocks = 'inter_wrapper'
     execute_on = 'timestep_end'
     from_postprocessors_to_be_preserved = 'center_duct_heat_loss_00 center_duct_heat_loss_01 center_duct_heat_loss_02 center_duct_heat_loss_03 center_duct_heat_loss_04 center_duct_heat_loss_05 center_duct_heat_loss_06'
     to_postprocessors_to_be_preserved = 'Total_Net_Power_Through_Duct'
+    allow_skipped_adjustment = true
   []
 
   [T_duct] # retrieve Tduct from SCM solve

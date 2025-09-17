@@ -29,7 +29,7 @@
   [SCM7]
     type = CSVDiff
     input = HC_master.i
-    csvdiff = HC_master_out_subchannel0.csv
+    csvdiff = 'HC_master_out.csv HC_master_out_subchannel0.csv'
     capabilities = 'method!=dbg'
     valgrind = NONE
     recover = false

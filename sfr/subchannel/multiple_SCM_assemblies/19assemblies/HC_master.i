@@ -136,8 +136,8 @@ inter_wrapper_blocks = 'inter_wrapper'
   solve_type = 'PJFNK'
   petsc_options_iname = '-pc_type -pc_factor_mat_solver_package'
   petsc_options_value = 'lu superlu_dist'
-  fixed_point_max_its = 3
-  fixed_point_min_its = 2
+  fixed_point_max_its = 5
+  fixed_point_min_its = 4
   fixed_point_rel_tol = 1e-3
   fixed_point_abs_tol = 1e-3
 
@@ -154,133 +154,133 @@ inter_wrapper_blocks = 'inter_wrapper'
     variable    = T_wrapper
     boundary    = prsb_interface_00
     diffusivity = ${k_wrapper}
-    execute_on='transfer'
+    execute_on='timestep_end'
   []
   [center_duct_heat_loss_01]
     type        = ADSideDiffusiveFluxIntegral
     variable    = T_wrapper
     boundary    = prsb_interface_01
     diffusivity = ${k_wrapper}
-    execute_on='transfer'
+    execute_on='timestep_end'
   []
   [center_duct_heat_loss_02]
     type        = ADSideDiffusiveFluxIntegral
     variable    = T_wrapper
     boundary    = prsb_interface_02
     diffusivity = ${k_wrapper}
-    execute_on='transfer'
+    execute_on='timestep_end'
   []
   [center_duct_heat_loss_03]
     type        = ADSideDiffusiveFluxIntegral
     variable    = T_wrapper
     boundary    = prsb_interface_03
     diffusivity = ${k_wrapper}
-    execute_on='transfer'
+    execute_on='timestep_end'
   []
   [center_duct_heat_loss_04]
     type        = ADSideDiffusiveFluxIntegral
     variable    = T_wrapper
     boundary    = prsb_interface_04
     diffusivity = ${k_wrapper}
-    execute_on='transfer'
+    execute_on='timestep_end'
   []
   [center_duct_heat_loss_05]
     type        = ADSideDiffusiveFluxIntegral
     variable    = T_wrapper
     boundary    = prsb_interface_05
     diffusivity = ${k_wrapper}
-    execute_on='transfer'
+    execute_on='timestep_end'
   []
   [center_duct_heat_loss_06]
     type        = ADSideDiffusiveFluxIntegral
     variable    = T_wrapper
     boundary    = prsb_interface_06
     diffusivity = ${k_wrapper}
-    execute_on='transfer'
+    execute_on='timestep_end'
   []
     [center_duct_heat_loss_07]
     type        = ADSideDiffusiveFluxIntegral
     variable    = T_wrapper
     boundary    = prsb_interface_07
     diffusivity = ${k_wrapper}
-    execute_on='transfer'
+    execute_on='timestep_end'
   []
   [center_duct_heat_loss_08]
     type        = ADSideDiffusiveFluxIntegral
     variable    = T_wrapper
     boundary    = prsb_interface_08
     diffusivity = ${k_wrapper}
-    execute_on='transfer'
+    execute_on='timestep_end'
   []
   [center_duct_heat_loss_09]
     type        = ADSideDiffusiveFluxIntegral
     variable    = T_wrapper
     boundary    = prsb_interface_09
     diffusivity = ${k_wrapper}
-    execute_on='transfer'
+    execute_on='timestep_end'
   []
   [center_duct_heat_loss_10]
     type        = ADSideDiffusiveFluxIntegral
     variable    = T_wrapper
     boundary    = prsb_interface_10
     diffusivity = ${k_wrapper}
-    execute_on='transfer'
+    execute_on='timestep_end'
   []
   [center_duct_heat_loss_11]
     type        = ADSideDiffusiveFluxIntegral
     variable    = T_wrapper
     boundary    = prsb_interface_11
     diffusivity = ${k_wrapper}
-    execute_on='transfer'
+    execute_on='timestep_end'
   []
   [center_duct_heat_loss_12]
     type        = ADSideDiffusiveFluxIntegral
     variable    = T_wrapper
     boundary    = prsb_interface_12
     diffusivity = ${k_wrapper}
-    execute_on='transfer'
+    execute_on='timestep_end'
   []
   [center_duct_heat_loss_13]
     type        = ADSideDiffusiveFluxIntegral
     variable    = T_wrapper
     boundary    = prsb_interface_13
     diffusivity = ${k_wrapper}
-    execute_on='transfer'
+    execute_on='timestep_end'
   []
     [center_duct_heat_loss_14]
     type        = ADSideDiffusiveFluxIntegral
     variable    = T_wrapper
     boundary    = prsb_interface_14
     diffusivity = ${k_wrapper}
-    execute_on='transfer'
+    execute_on='timestep_end'
   []
   [center_duct_heat_loss_15]
     type        = ADSideDiffusiveFluxIntegral
     variable    = T_wrapper
     boundary    = prsb_interface_15
     diffusivity = ${k_wrapper}
-    execute_on='transfer'
+    execute_on='timestep_end'
   []
   [center_duct_heat_loss_16]
     type        = ADSideDiffusiveFluxIntegral
     variable    = T_wrapper
     boundary    = prsb_interface_16
     diffusivity = ${k_wrapper}
-    execute_on='transfer'
+    execute_on='timestep_end'
   []
   [center_duct_heat_loss_17]
     type        = ADSideDiffusiveFluxIntegral
     variable    = T_wrapper
     boundary    = prsb_interface_17
     diffusivity = ${k_wrapper}
-    execute_on='transfer'
+    execute_on='timestep_end'
   []
   [center_duct_heat_loss_18]
     type        = ADSideDiffusiveFluxIntegral
     variable    = T_wrapper
     boundary    = prsb_interface_18
     diffusivity = ${k_wrapper}
-    execute_on='transfer'
+    execute_on='timestep_end'
   []
 []
 
@@ -346,6 +346,7 @@ inter_wrapper_blocks = 'inter_wrapper'
     center_duct_heat_loss_12 center_duct_heat_loss_13 center_duct_heat_loss_14 center_duct_heat_loss_15 center_duct_heat_loss_16
     center_duct_heat_loss_17 center_duct_heat_loss_18'
     to_postprocessors_to_be_preserved = 'Total_Net_Power_Through_Duct'
+    allow_skipped_adjustment = true
   []
 
   [T_duct] # retrieve Tduct from SCM solve
