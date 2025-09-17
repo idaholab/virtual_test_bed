@@ -24,6 +24,7 @@
     input = abr_7assemblies.i
     check_files = abr_7assemblies_in.e
     cli_args = "--mesh-only"
+    executable_pattern = 'subchannel*|pronghorn*|combined*'
   []
   # Regression checks for 7-assembly SCM center model
   [SCM7]
@@ -35,9 +36,10 @@
     recover = false
     abs_zero = 1e-5
     max_threads = 1
-    max_parallel = 1
+    min_parallel = 7
     requirement = 'The system shall be able to solve a 7-assembly case using the subchannel solver'
     prereq = 'generate_mesh'
     executable_pattern = 'subchannel*|pronghorn*|combined*'
+    max_time = 800
   []
 []

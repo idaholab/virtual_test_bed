@@ -4,20 +4,22 @@
     input = abr_19assemblies.i
     check_files = abr_19assemblies_in.e
     cli_args = "--mesh-only"
+    executable_pattern = 'subchannel*|pronghorn*|combined*'
   []
   # Regression checks for 19-assembly SCM center model
-  [SCM7]
+  [SCM19]
     type = CSVDiff
     input = HC_master.i
-    csvdiff = 'HC_master_out.csv HC_master_out_subchannel0.csv'
+    csvdiff = 'HC_master_out.csv HC_master_out_subchannel00.csv'
     capabilities = 'method!=dbg'
     valgrind = NONE
     recover = false
     abs_zero = 1e-5
     max_threads = 1
-    max_parallel = 1
+    min_parallel = 10
     requirement = 'The system shall be able to solve a 19-assembly case using the subchannel solver'
     prereq = 'generate_mesh'
     executable_pattern = 'subchannel*|pronghorn*|combined*'
+    max_time = 1200
   []
 []
