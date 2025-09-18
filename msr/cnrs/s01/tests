@@ -10,8 +10,8 @@
     executable_pattern = 'combined*'
     # sampling on faces
     allow_warnings = true
-    # diffs observed on civet in initial PR
-    rel_err = 1e-4
+    # stochastic diffs observed on civet from testing after the model was merged
+    rel_err = 2e-4
     # To pass in devel mode
     max_time = 500
   []
