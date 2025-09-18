@@ -91,13 +91,6 @@ For more information about the mesh generator, please consult the website docume
 
 !listing sfr/subchannel/toshiba_37_pin/toshiba_37_pin.i block=TriSubChannelMesh language=cpp
 
-### Variables
-
-This block defines the subchannel variables for the subchannel solve.
-All variables must be present at every input for the subchannel solver to run.
-
-!listing sfr/subchannel/toshiba_37_pin/toshiba_37_pin.i block=AuxVariables language=cpp
-
 ### Fluid Properties
 
 The fluid properties block specifies the thermophysical properties used in the subchannel solve.
@@ -105,15 +98,12 @@ Sodium properties are used in this case.
 
 !listing sfr/subchannel/toshiba_37_pin/toshiba_37_pin.i block=FluidProperties language=cpp
 
-### Problem
+### SubChannel
 
-The problem type specifies the solver to be used in the subchannel solve.
-The type of problem used in this case is a liquid metal subchannel problem that uses sodium fluid properties.
-The parameters *beta* and *C_T* are used to model the crossflow and cross enthalpy-fluxes.
-Different solve procedures can be applied.
-In this case, we use an implicit, monolithic solve.
+The SubChannel block specifies the solver to be used in the subchannel solve.
+The type of problem used in this case is a liquid metal subchannel problem that uses sodium fluid properties. The parameters *beta* and *C_T* are used to model the crossflow and cross enthalpy-fluxes. Different solve procedures can be applied. In this case, we use an implicit, monolithic solve.
 
-!listing sfr/subchannel/toshiba_37_pin/toshiba_37_pin.i block=Problem language=cpp
+!listing sfr/subchannel/toshiba_37_pin/toshiba_37_pin.i block=SubChannel language=cpp
 
 ### Initial Conditions
 

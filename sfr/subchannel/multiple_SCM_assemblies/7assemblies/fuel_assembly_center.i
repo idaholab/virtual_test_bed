@@ -1,122 +1,89 @@
-# Following Benchmark Specifications and Data Requirements for EBR-II Shutdown Heat Removal Tests SHRT-17 and SHRT-45R
-# Available at: https://publications.anl.gov/anlpubs/2012/06/73647.pdf
 ###################################################
-# Steady state subchannel calculation
 # Thermal-hydraulics parameters
 ###################################################
-T_in = 624.70556 #Kelvin
-Total_Surface_Area = 0.000854322 #m2
-Mass_In = 2.45 #kg/sec
-mass_flux_in = '${fparse Mass_In / Total_Surface_Area}' #kg/m2
-P_out = 2.0e5 #Pa
-Power_initial = 486200 #W (Page 26,35 of ANL document)
+T_in = 653.15
+P_out = 758423 # Pa
+fuel_assemblies_per_power_unit = '${fparse 180}'
+flow_area = 0.00650277
+mass_flux_in = '${fparse 1256*4/fuel_assemblies_per_power_unit/flow_area}' # kg/(m2.s)
+
 ###################################################
 # Geometric parameters
 ###################################################
+#f = ${fparse sqrt(3) / 2}
+
+# units are cm - do not forget to convert to meter
 scale_factor = 0.01
-fuel_pin_pitch = '${fparse 0.5664*scale_factor}'
-fuel_pin_diameter = '${fparse 0.4419*scale_factor}'
-wire_z_spacing = '${fparse 15.24*scale_factor}'
-wire_diameter = '${fparse 0.1244*scale_factor}'
-inner_duct_in = '${fparse 4.64*scale_factor}'
-n_rings = 5
-heated_length = '${fparse 34.3*scale_factor}'
-unheated_length_exit = '${fparse 26.9*scale_factor}'
+fuel_element_pitch = '${fparse 16.2471*scale_factor}'
+inter_assembly_gap = '${fparse 0.4348*scale_factor}' # check
+duct_thickness = '${fparse 0.3966*scale_factor}'
+fuel_pin_pitch = '${fparse 0.8966*scale_factor}'
+fuel_pin_diameter = '${fparse 0.7714*scale_factor}'
+wire_z_spacing = '${fparse 20.43*scale_factor}' ###
+wire_diameter = '${fparse 0.1307*scale_factor}' #check
+n_rings = 10
+length_entry_fuel = '${fparse 160.92*scale_factor}'
+length_heated_fuel = '${fparse 85.82*scale_factor}'
+length_outlet_fuel = '${fparse 233.46*scale_factor}'
+orifice_plate_height = '${fparse 5*scale_factor}'
+duct_outside = '${fparse fuel_element_pitch - inter_assembly_gap}'
+duct_inside = '${fparse duct_outside - 2 * duct_thickness}'
 ###################################################
 
 [TriSubChannelMesh]
   [subchannel]
     type = SCMTriSubChannelMeshGenerator
-    nrings = ${n_rings}
+    nrings = '${fparse n_rings}'
     n_cells = 50
-    flat_to_flat = ${inner_duct_in}
-    unheated_length_exit = ${unheated_length_exit}
-    heated_length = ${heated_length}
-    pin_diameter = ${fuel_pin_diameter}
-    pitch = ${fuel_pin_pitch}
-    dwire = ${wire_diameter}
-    hwire = ${wire_z_spacing}
+    flat_to_flat = '${fparse duct_inside}'
+    unheated_length_entry = '${fparse length_entry_fuel}'
+    heated_length = '${fparse length_heated_fuel}'
+    unheated_length_exit = '${fparse length_outlet_fuel}'
+    pin_diameter = '${fparse fuel_pin_diameter}'
+    pitch = '${fparse fuel_pin_pitch}'
+    dwire = '${fparse wire_diameter}'
+    hwire = '${fparse wire_z_spacing}'
+    spacer_z = '${fparse orifice_plate_height} ${fparse length_entry_fuel}'
+    spacer_k = '0.5 0.5'
   []
 
   [fuel_pins]
     type = SCMTriPinMeshGenerator
     input = subchannel
-    nrings = ${n_rings}
+    nrings = '${fparse n_rings}'
     n_cells = 50
-    unheated_length_exit = ${unheated_length_exit}
-    heated_length = ${heated_length}
-    pitch = ${fuel_pin_pitch}
+    unheated_length_entry = '${fparse length_entry_fuel}'
+    heated_length = '${fparse length_heated_fuel}'
+    unheated_length_exit = '${fparse length_outlet_fuel}'
+    pitch = '${fparse fuel_pin_pitch}'
   []
 
   [duct]
     type = SCMTriDuctMeshGenerator
     input = fuel_pins
-    nrings = ${n_rings}
+    nrings = '${fparse n_rings}'
     n_cells = 50
-    flat_to_flat = ${inner_duct_in}
-    unheated_length_exit = ${unheated_length_exit}
-    heated_length = ${heated_length}
-    pitch = ${fuel_pin_pitch}
+    flat_to_flat = '${fparse duct_inside}'
+    unheated_length_entry = '${fparse length_entry_fuel}'
+    heated_length = '${fparse length_heated_fuel}'
+    unheated_length_exit = '${fparse length_outlet_fuel}'
+    pitch = '${fparse fuel_pin_pitch}'
   []
 []
 
 [Functions]
   [axial_heat_rate]
     type = ParsedFunction
-    value = '(pi/2)*sin(pi*z/L)*exp(-alpha*z)/(1.0/alpha*(1.0 - exp(-alpha*L)))*L'
-    vars = 'L alpha'
-    vals = '${heated_length} 1.8012'
+    expression = '(pi/2)*sin(pi*z/L)'
+    symbol_names = 'L'
+    symbol_values = '${length_heated_fuel}'
   []
 []
 
 [AuxVariables]
-  [mdot]
-    block = subchannel
-  []
-  [SumWij]
-    block = subchannel
-  []
-  [P]
-    block = subchannel
-  []
-  [DP]
-    block = subchannel
-  []
-  [h]
-    block = subchannel
-  []
-  [T]
-    block = subchannel
-  []
-  [rho]
-    block = subchannel
-  []
-  [S]
-    block = subchannel
-  []
-  [w_perim]
-    block = subchannel
-  []
-  [mu]
-    block = subchannel
-  []
-  [displacement]
-    block = subchannel
-  []
-  [q_prime]
-    block = fuel_pins
-  []
-  [Tpin]
-    block = fuel_pins
-  []
-  [Dpin]
-    block = fuel_pins
-  []
-  [q_prime_duct]
-    block = duct
-  []
   [Tduct]
     block = duct
+    initial_condition = 653.15
   []
 []
 
@@ -131,15 +98,15 @@ unheated_length_exit = '${fparse 26.9*scale_factor}'
   fp = sodium
   n_blocks = 1
   P_out = ${P_out}
-  CT = 2.6
+  CT = 1.0
   compute_density = true
   compute_viscosity = true
   compute_power = true
   P_tol = 1.0e-4
-  T_tol = 1.0e-5
+  T_tol = 1.0e-3
   implicit = true
   segregated = false
-  interpolation_scheme = 'upwind'
+  verbose_multiapps = true
   verbose_subchannel = true
 []
 
@@ -157,8 +124,8 @@ unheated_length_exit = '${fparse 26.9*scale_factor}'
   [q_prime_IC]
     type = SCMTriPowerIC
     variable = q_prime
-    power = ${Power_initial}
-    filename = "pin_power_profile61.txt"
+    power = 2000000.0 #W
+    filename = "pin_power_profile_uni.txt"
     axial_heat_rate = axial_heat_rate
   []
 
@@ -168,22 +135,22 @@ unheated_length_exit = '${fparse 26.9*scale_factor}'
     value = ${T_in}
   []
 
-  [Dpin_ic]
-    type = ConstantIC
-    variable = Dpin
-    value = ${fuel_pin_diameter}
-  []
-
   [P_ic]
     type = ConstantIC
     variable = P
-    value = 0.0
+    value = 0.0 #always set to zero
   []
 
   [DP_ic]
     type = ConstantIC
     variable = DP
     value = 0.0
+  []
+
+  [Dpin_ic]
+    type = ConstantIC
+    variable = Dpin
+    value = ${fuel_pin_diameter}
   []
 
   [Viscosity_ic]
@@ -218,6 +185,14 @@ unheated_length_exit = '${fparse 26.9*scale_factor}'
 []
 
 [AuxKernels]
+  [P_out_bc]
+    type = ConstantAux
+    variable = P
+    boundary = outlet
+    value = ${P_out}
+    execute_on = 'timestep_begin'
+    block = subchannel
+  []
   [T_in_bc]
     type = ConstantAux
     variable = T
@@ -233,14 +208,16 @@ unheated_length_exit = '${fparse 26.9*scale_factor}'
     area = S
     mass_flux = ${mass_flux_in}
     execute_on = 'timestep_begin'
+    block = subchannel
   []
 []
 
 [Outputs]
+  exodus = true
   csv = true
 []
 
-!include XX09_output.i
+!include SCM_output.i
 
 [Executioner]
   type = Steady
@@ -252,8 +229,9 @@ unheated_length_exit = '${fparse 26.9*scale_factor}'
 [MultiApps]
   [viz]
     type = FullSolveMultiApp
-    input_files = '3d_SCM_SS.i'
-    execute_on = 'FINAL'
+    input_files = "3d.i"
+    execute_on = "final"
+    output_in_position = true
   []
 []
 
@@ -261,11 +239,12 @@ unheated_length_exit = '${fparse 26.9*scale_factor}'
   [subchannel_transfer]
     type = SCMSolutionTransfer
     to_multi_app = viz
-    variable = 'mdot SumWij P DP h T rho mu S'
+    variable = 'mdot SumWij P DP h T rho mu S w_perim'
   []
+
   [pin_transfer]
     type = SCMPinSolutionTransfer
     to_multi_app = viz
-    variable = 'Tpin q_prime'
+    variable = 'Tpin Dpin q_prime'
   []
 []
