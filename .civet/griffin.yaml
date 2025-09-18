@@ -17,6 +17,7 @@ lfs_include:
   - microreactors/gcmr/assembly/MESH
   - microreactors/mrad/mesh/gold
   - microreactors/mrad/isoxml/HP-MR_XS.xml
+  - microreactors/mrad/isoxml/HP-MR_XS_Na_HPMR.xml
   - microreactors/drum_rotation/empire_core_modified_11G_CD.xml
   - microreactors/mrad/triso_failure
   - microreactors/hpmr_h2
