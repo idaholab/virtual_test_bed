@@ -56,7 +56,7 @@
   # Check input generation
   [run_python_generation]
     type = RunCommand
-    command = 'mkdir test_dir; cp assembly.py test_dir/assembly.py; cd test_dir; python assembly.py'
+    command = 'mkdir test_dir; cp assembly.py test_dir/assembly.py; cp common_input.py test_dir/common_input.py; cp materials.py test_dir/materials.py; cd test_dir; python assembly.py; ls geometry.xml; ls materials.xml'
     required_python_packages = 'matplotlib uncertainties h5py openmc'
     use_shell = true
   []
