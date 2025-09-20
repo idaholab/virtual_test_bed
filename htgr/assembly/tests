@@ -1,4 +1,5 @@
 [Tests]
+  issues = '#70'
   [generate_mesh]
     type = RunApp
     executable_pattern = 'cardinal*'
