@@ -131,10 +131,10 @@ inter_wrapper_blocks = 'inter_wrapper'
   solve_type = 'PJFNK'
   petsc_options_iname = '-pc_type -pc_factor_mat_solver_package'
   petsc_options_value = 'lu superlu_dist'
-  fixed_point_max_its = 3
-  fixed_point_min_its = 2
-  fixed_point_rel_tol   = 1e-3
-  fixed_point_abs_tol   = 1e-3
+  fixed_point_max_its = 5
+  fixed_point_min_its = 4
+  fixed_point_rel_tol = 1e-3
+  fixed_point_abs_tol = 1e-3
 
   [Quadrature]
     order = THIRD
