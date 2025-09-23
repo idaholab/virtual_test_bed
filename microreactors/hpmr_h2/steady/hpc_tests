@@ -22,7 +22,7 @@
     csvdiff = 'thermal_ss_out.csv'
     check_input = True
     executable_pattern = 'blue_crab*|dire_wolf*|bison*'
-    cli_args = "MultiApps/active='' Transfers/active='' Outputs/file_base= thermal_ss_standalone"
+    cli_args = "MultiApps/active='' Transfers/active='' Outputs/file_base=thermal_ss_standalone"
     min_parallel = 192 # won't be tested for now
   []
 
