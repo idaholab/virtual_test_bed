@@ -1,4 +1,2 @@
-hpc_copy_paths:
-  - ignore
 lfs_include:
   - ignore # don't need anything for sam yet
