@@ -61,4 +61,3 @@ htgr/gpbr200/data/gpbr200_void.xml filter=lfs diff=lfs merge=lfs -text
 microreactors/mrad/isoxml/HP-MR_XS.xml filter=lfs diff=lfs merge=lfs -text
 microreactors/mrad/isoxml/HP-MR_XS_Na_HPMR.xml filter=lfs diff=lfs merge=lfs -text
 htgr/open-xe100/xs/xe100_sp_sph_cavity.xml filter=lfs diff=lfs merge=lfs -text
-microreactors/hpmr_h2/steady/one_twelfth_simba_core_in.e filter=lfs diff=lfs merge=lfs -text
