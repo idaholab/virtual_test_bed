@@ -1,4 +1,4 @@
 hpc_copy_paths:
-  - incomplete
+  - lwr
 lfs_include:
   - lwr
