@@ -24,15 +24,14 @@ T_init = 950
 # Parameter to perform sensitivity analysis on Q, heat of transport
 qvalue_multiplier = 1.0
 
+# This provides the initial mesh before we modify it below
+!include one_twelfth_simba_core.i
+
 [Mesh]
-  [main]
-    type = FileMeshGenerator
-    file = 'one_twelfth_simba_core_in.e'
-  []
   # remove blocks and add sidesets to apply boundary conditions
   [add_sideset_hp]
     type = SideSetsBetweenSubdomainsGenerator
-    input = main
+    input = extruder
     primary_block = '8 17' # add 16 so the HP boundary extends into the upper axial reflector
     paired_block = '7'
     new_boundary = 'hp'
