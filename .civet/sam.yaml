@@ -1,2 +1,4 @@
+hpc_copy_paths:
+  - lwr # Use valid dummy path for now.
 lfs_include:
   - ignore # don't need anything for sam yet
