@@ -1,4 +1,3 @@
 hpc_copy_paths:
-  - incomplete
 lfs_include:
   - ignore # don't need anything for sam yet
