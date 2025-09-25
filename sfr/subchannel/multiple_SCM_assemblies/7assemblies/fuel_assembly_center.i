@@ -3,10 +3,10 @@
 ###################################################
 T_in = 653.15
 P_out = 758423 # Pa
-fuel_assemblies_per_power_unit = '${fparse 180}'
+mdot_core = 5024
+n_fuel_assemblies = 180
 flow_area = 0.00650277
-mass_flux_in = '${fparse 1256*4/fuel_assemblies_per_power_unit/flow_area}' # kg/(m2.s)
-
+mass_flux_in = '${fparse mdot_core/n_fuel_assemblies/flow_area}' # kg/(m2.s)
 ###################################################
 # Geometric parameters
 ###################################################
@@ -70,7 +70,7 @@ duct_inside = '${fparse duct_outside - 2 * duct_thickness}'
     pitch = '${fparse fuel_pin_pitch}'
   []
 []
-
+# The function is evaluated with the origin z at unheated_length_entry
 [Functions]
   [axial_heat_rate]
     type = ParsedFunction

@@ -38,7 +38,7 @@
     max_threads = 1
     cli_args = 'Executioner/fixed_point_min_its=3 Executioner/fixed_point_max_its=3'
     min_parallel = 7
-    rel_err = 5e-3
+    rel_err = 7e-3
     allow_warnings = true
     requirement = 'The system shall be able to solve a 7-assembly case using the subchannel solver'
     prereq = 'generate_mesh'

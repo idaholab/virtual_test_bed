@@ -1,7 +1,7 @@
 # This heat conduction model (main app) drives a multiapp setup where subchannel hexagonal ducts (solid wrappers)
 # and an interwrapper (liquid sodium interwrapper between the ducts) are modeled and the temperature field is retrieved.
 # This model treats the liquid sodium interwrapper as a solid and only heat conduction is considered.
-# The calculated inner duct wall axial heat flux [W/m] is transfered to 19 SCM models that run in parallel as multiapps.
+# The calculated inner duct_wall axial heat flux [W/m] is transfered to 19 SCM models that run in parallel as multiapps.
 # The method of coupling is domain decomposition:
 # As mentioned above the heat conduction solution sends linear heat rate calculated on the inner duct surfaces to SCM
 # and retrieves inner duct surface temperature from SCM. All other surfaces of the model has a Neuman BC.
@@ -45,7 +45,7 @@ k_sodium = '${fparse A48 + A49 * inlet_temperature + A50 * inlet_temperature * i
 # wrapper properties
 k_wrapper = 15
 
-wrapper_blocks = 'wall'
+wrapper_blocks = 'duct_wall'
 inter_wrapper_blocks = 'inter_wrapper'
 
 [Mesh]

@@ -6,4 +6,24 @@
     cli_args = "--mesh-only"
     executable_pattern = 'subchannel*|pronghorn*|combined*'
   []
+  # Regression checks for 19-assembly SCM models
+  [SCM19]
+    type = CSVDiff
+    input = HC_master.i
+    csvdiff = 'HC_master_out.csv HC_master_out_subchannel00.csv'
+    capabilities = 'method=opt'
+    valgrind = NONE
+    recover = false
+    abs_zero = 1e-5
+    max_threads = 1
+    cli_args = 'Executioner/fixed_point_min_its=3 Executioner/fixed_point_max_its=3'
+    min_parallel = 10
+    rel_err = 1e-2
+    allow_warnings = true
+    requirement = 'The system shall be able to solve a 19-assembly case using the subchannel solver'
+    ignore_columns = 'center_duct_heat_loss_07 center_duct_heat_loss_08 center_duct_heat_loss_09 center_duct_heat_loss_10 center_duct_heat_loss_11 center_duct_heat_loss_12 center_duct_heat_loss_13 center_duct_heat_loss_14 center_duct_heat_loss_15 center_duct_heat_loss_16 center_duct_heat_loss_17 center_duct_heat_loss_18'
+    prereq = 'generate_mesh'
+    executable_pattern = 'subchannel*|pronghorn*|combined*'
+    max_time = 1400
+  []
 []
