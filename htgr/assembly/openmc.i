@@ -209,6 +209,7 @@ num_layers_for_THM = 50 # number of elements in the THM model; for the converged
     type = ElementIntegralVariablePostprocessor
     variable = heat_source
     execute_on = 'transfer initial timestep_end'
+    block = '2'
   []
   [max_tally_rel_err]
     type = TallyRelativeError
