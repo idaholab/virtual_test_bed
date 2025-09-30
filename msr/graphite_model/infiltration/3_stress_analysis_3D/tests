@@ -1,0 +1,11 @@
+[tests]
+  [stress_analysis_3d]
+    type = CSVDiff
+    input = msre3D_100percent_INF.i
+    csvdiff = 'msre3D_100percent_INF_out_line_0001.csv'
+    executable_pattern = 'moose*|grizzly*'
+    allow_warnings = true
+    min_parallel = 8
+    max_time = 600
+  []
+[]
