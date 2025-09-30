@@ -1,7 +1,14 @@
+
+sector_angle = ${fparse 51*pi/180}
+
+radius_wear =  0.05
+interface_width = ${fparse radius_wear/5}
+
+delta_center_radius = 0.0 # how much do you want to move the center away from the surface
+
 # endtime = 1892160000
 dt_max = 5e6
 
-# Parameters for temperature distribution
 Tmax_A1 = -36.406902443685375
 Tmax_B1 = 899.4907346560636
 Tmax_z01 = 0.5788213284387279
@@ -11,13 +18,19 @@ Tmin_z02 = 0.591661495195294
 x0c = 1.2
 thickness = 0.6
 
-# Parameters for neutron flux distribution
 B_flux = -11.7708550271939
 x0v = 1.26
 Fmax_a = 1.264e+15
 Fmax_b = -1.260e+16
 Fmax_c = 3.202e+16
 Fmax_d = -1.887e+15
+
+
+#SpecifiedSmoothCircleIC Parameters
+R_i = 1.2 
+x_coord = ${fparse (R_i-delta_center_radius)*cos(0.5*sector_angle)}
+y_coord = ${fparse (R_i-delta_center_radius)*sin(0.5*sector_angle)}
+#z_coord = 1.76
 
 
 
@@ -29,7 +42,7 @@ Fmax_d = -1.887e+15
 
 [Mesh]
    type = FileMesh
-   file = baseline.e
+   file = 'FineMesh_Wear_Baseline.e'
 []
 
 [Physics/SolidMechanics/QuasiStatic]
@@ -54,13 +67,20 @@ Fmax_d = -1.887e+15
              Tmax - (Tmax-Tmin)*(r-${x0c})/${thickness}'
   []
 
-  # Fluence function (flux * time) 
+  # Fluence function (flux * time) using y
   [fluence_func]
     type = ParsedFunction
     expression = 'r := (x^2 + y^2)^0.5;
              Fmax := ${Fmax_a}*z^3 + ${Fmax_b}*z^2 + ${Fmax_c}*z + ${Fmax_d};
              Fmax*exp(${B_flux}*(r-${x0v}))*t'
   []
+  [groove]
+    type = ParsedFunction
+    expression = 'r := ((x-${x_coord})^2 + (y-${y_coord})^2)^0.5;  
+                  int_factor := exp(-8*(r-${radius_wear})/${interface_width});
+                  int_factor/(1 + int_factor)'
+  []
+
 []
 
 # AuxVariables for temperature and fluence
@@ -71,8 +91,9 @@ Fmax_d = -1.887e+15
     order = CONSTANT
     family = MONOMIAL
   []
+  [eta]
+  []
 []
-
 
 
 # AuxKernels to assign the temperature and fluence functions
@@ -89,8 +110,56 @@ Fmax_d = -1.887e+15
   []
 []
 
+[ICs]
+  [eta_ic]
+  type = FunctionIC
+  variable = eta
+  function = groove
+  []
+[]
+
 # Materials
 [Materials]
+
+  [h_void]
+    type = SwitchingFunctionMaterial
+    eta = eta
+    h_order = HIGH
+    function_name = h_void
+    output_properties = 'h_void'
+    # outputs = exodus
+[]
+
+[h_mat]
+  type = DerivativeParsedMaterial
+  expression = '1-h_void'
+  coupled_variables = 'eta'
+  property_name = h_mat
+  material_property_names = 'h_void'
+  # outputs = exodus
+[]
+
+[elastic_tensor_matrix]
+    type = ComputeIsotropicElasticityTensor
+    youngs_modulus = 10.3e9
+    poissons_ratio = 0.14
+    base_name = Cijkl_matrix
+  []
+
+  [elastic_tensor_void]
+    type = ComputeIsotropicElasticityTensor
+    youngs_modulus = 1e-3
+    poissons_ratio = 1e-3
+    base_name = Cijkl_void
+  []
+
+  [elasticity_tensor]
+    type = CompositeElasticityTensor
+    tensors = 'Cijkl_matrix Cijkl_void'
+    weights = 'h_mat            h_void'
+    coupled_variables = 'eta'
+  []
+
   [neutron_fluence]
     type = GenericFunctionMaterial
     prop_names = fast_neutron_fluence
@@ -108,11 +177,7 @@ Fmax_d = -1.887e+15
     prop_names = 'density'
     prop_values = 1774.0
   []
-  [elasticity]
-    type = ComputeIsotropicElasticityTensor
-    youngs_modulus = 10.3e9
-    poissons_ratio = 0.14
-  []
+
   [thermal_expansion]
     type = StructuralGraphiteThermalExpansionEigenstrain
     eigenstrain_name = thermal_expansion
@@ -130,19 +195,20 @@ Fmax_d = -1.887e+15
     creep_scale_factor = 1.0
     # outputs = exodus
   []
-  [graphite_irrad_strain]
-    type = StructuralGraphiteIrradiationEigenstrain
-    temperature = temperature
-    graphite_grade = IG_110
-    fluence_conversion_factor = 1.0
-    eigenstrain_name = irrad_strain
-    # outputs = exodus
-  []  
 
-  [stress]
-    type = ComputeMultipleInelasticStress
-    inelastic_models = 'GraphiteGrade_creep'
-  []
+  [graphite_irrad_strain]
+  type = StructuralGraphiteIrradiationEigenstrain
+  temperature = temperature
+  graphite_grade = IG_110
+  fluence_conversion_factor = 1.0
+  eigenstrain_name = irrad_strain
+  # outputs = exodus
+[]  
+
+[stress]
+  type = ComputeMultipleInelasticStress
+  inelastic_models = 'GraphiteGrade_creep'
+[]
 []
 
 # BCs
@@ -176,17 +242,17 @@ Fmax_d = -1.887e+15
     #   type = ElementValueSampler
     #   sort_by = id
     #   variable = 'volume max_principal_stress mid_principal_stress min_principal_stress'
-    #   execute_on = TIMESTEP_END
-    # []
+    #   execute_on = 'timestep_end'
+    # []      
     [line]
         type = LineValueSampler
         start_point = '1.0914 0.5215 1.76'
         end_point = '1.6146 0.7715 1.76'
         num_points = 100
         sort_by = 'x'
-        variable = 'disp_x disp_y disp_z temperature'
+        variable = 'disp_x disp_y disp_z temperature eta'
         execute_on = timestep_end
-    [] 
+    []     
 []
 
 # Executioner
@@ -197,15 +263,15 @@ Fmax_d = -1.887e+15
   petsc_options_value = 'hypre    boomeramg      0.6'
   line_search = 'none'
   # end_time = ${endtime}
-  num_steps = 10
+  num_steps = 1
   dtmax = ${dt_max}
   nl_abs_tol = 1.0e-08
-  nl_rel_tol = 1.0e-04
+  nl_rel_tol = 1.0e-4
   nl_max_its = 15
   l_max_its = 50
   [TimeStepper]
     type = IterationAdaptiveDT
-    dt = 100
+    dt = 1
     growth_factor = 3.0
     cutback_factor = 0.5
   []
@@ -221,7 +287,7 @@ Fmax_d = -1.887e+15
 
   # [exodus]
   #   type = Exodus
-  #   sync_only = true
+  #   #sync_only = true
   # []
 
   [csv]
@@ -231,3 +297,4 @@ Fmax_d = -1.887e+15
   []
   wall_time_checkpoint = false
 []
+
