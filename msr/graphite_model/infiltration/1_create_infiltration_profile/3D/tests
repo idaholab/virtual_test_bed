@@ -1,0 +1,10 @@
+[tests]
+  [create_infiltration_profile_3D]
+    type = CSVDiff
+    input = 3D_CreateInfiltrationProfile.i
+    csvdiff = '3D_CreateInfiltrationProfile_out_line_0002.csv 3D_CreateInfiltrationProfile_out_line_0005.csv'
+    executable_pattern = 'moose*|grizzly*'
+    allow_warnings = true
+    min_parallel = 8
+  []
+[]

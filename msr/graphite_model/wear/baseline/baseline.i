@@ -1,4 +1,4 @@
-endtime = 1892160000
+# endtime = 1892160000
 dt_max = 5e6
 
 # Parameters for temperature distribution
@@ -48,7 +48,7 @@ Fmax_d = -1.887e+15
   # Parsed function for temperature
   [T_func]
     type = ParsedFunction
-    value = 'r := (x^2 + y^2)^0.5;
+    expression = 'r := (x^2 + y^2)^0.5;
              Tmax := ${Tmax_A1}*cos(z-${Tmax_z01}) + ${Tmax_B1};
              Tmin := ${Tmin_A2}*cos(z-${Tmin_z02}) + ${Tmin_B2};
              Tmax - (Tmax-Tmin)*(r-${x0c})/${thickness}'
@@ -57,7 +57,7 @@ Fmax_d = -1.887e+15
   # Fluence function (flux * time) 
   [fluence_func]
     type = ParsedFunction
-    value = 'r := (x^2 + y^2)^0.5;
+    expression = 'r := (x^2 + y^2)^0.5;
              Fmax := ${Fmax_a}*z^3 + ${Fmax_b}*z^2 + ${Fmax_c}*z + ${Fmax_d};
              Fmax*exp(${B_flux}*(r-${x0v}))*t'
   []
@@ -95,7 +95,7 @@ Fmax_d = -1.887e+15
     type = GenericFunctionMaterial
     prop_names = fast_neutron_fluence
     prop_values = fluence_func
-    outputs = exodus
+    # outputs = exodus
   []         
 
   [thermal]
@@ -120,7 +120,7 @@ Fmax_d = -1.887e+15
     stress_free_temperature = 300.0
     fluence_conversion_factor = 1.0
     temperature = temperature
-    outputs = exodus
+    # outputs = exodus
   []
   [GraphiteGrade_creep]
     type = StructuralGraphiteCreepUpdate
@@ -128,7 +128,7 @@ Fmax_d = -1.887e+15
     graphite_grade = IG_110
     temperature = temperature
     creep_scale_factor = 1.0
-    outputs = exodus
+    # outputs = exodus
   []
   [graphite_irrad_strain]
     type = StructuralGraphiteIrradiationEigenstrain
@@ -136,7 +136,7 @@ Fmax_d = -1.887e+15
     graphite_grade = IG_110
     fluence_conversion_factor = 1.0
     eigenstrain_name = irrad_strain
-    outputs = exodus
+    # outputs = exodus
   []  
 
   [stress]
@@ -172,13 +172,21 @@ Fmax_d = -1.887e+15
 []
 
 [VectorPostprocessors]
-    [auxvars]
-      type = ElementValueSampler
-      sort_by = id
-      variable = 'volume max_principal_stress mid_principal_stress min_principal_stress'
-      execute_on = TIMESTEP_END
-    []
- 
+    # [auxvars]
+    #   type = ElementValueSampler
+    #   sort_by = id
+    #   variable = 'volume max_principal_stress mid_principal_stress min_principal_stress'
+    #   execute_on = TIMESTEP_END
+    # []
+    [line]
+        type = LineValueSampler
+        start_point = '1.0914 0.5215 1.76'
+        end_point = '1.6146 0.7715 1.76'
+        num_points = 100
+        sort_by = 'x'
+        variable = 'disp_x disp_y disp_z temperature'
+        execute_on = timestep_end
+    [] 
 []
 
 # Executioner
@@ -188,7 +196,8 @@ Fmax_d = -1.887e+15
   petsc_options_iname = '-pc_type -pc_hypre_type -pc_hypre_boomeramg_strong_threshold'
   petsc_options_value = 'hypre    boomeramg      0.6'
   line_search = 'none'
-  end_time = ${endtime}
+  # end_time = ${endtime}
+  num_steps = 10
   dtmax = ${dt_max}
   nl_abs_tol = 1.0e-08
   nl_rel_tol = 1.0e-04
@@ -210,14 +219,15 @@ Fmax_d = -1.887e+15
 [Outputs]
   sync_times = '0 315360000 630720000 946080000 1261440000 1576800000 1892160000'
 
-  [exodus]
-    type = Exodus
-    sync_only = true
-  []
+  # [exodus]
+  #   type = Exodus
+  #   sync_only = true
+  # []
 
   [csv]
     type = CSV
-    sync_only = true
+    execute_vector_postprocessors_on = FINAL
+    # sync_only = true
   []
   wall_time_checkpoint = false
 []
