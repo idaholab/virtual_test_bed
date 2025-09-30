@@ -1,0 +1,9 @@
+[tests]
+  [create_infiltration_profile_2D]
+    type = Exodiff
+    input = 2D_CreateInfiltrationProfile.i
+    exodiff = 2D_CreateInfiltrationProfile_out.e
+    executable_pattern = 'moose*|grizzly*'
+    allow_warnings = true
+  []
+[]
