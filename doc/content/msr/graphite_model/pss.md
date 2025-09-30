@@ -1,4 +1,4 @@
-# Parellel subset simulations
+# Failure analysis
 
 The [Parallel Subset Simulation (PSS)](https://mooseframework.inl.gov/source/samplers/ParallelSubsetSimulation.html) framework is employed to efficiently estimate the failure probabilities of graphite components in molten salt reactors (MSRs). Given the complexity and rarity of failure events, direct Monte Carlo methods would be computationally prohibitive. PSS breaks down the overall failure probability into intermediate steps, narrowing the sampling space towards rare-event regions. This approach allows for a targeted and efficient exploration of the failure domain, identifying critical input parameters that significantly affect stress values. Ultimately, PSS helps in understanding the conditions under which structural integrity could be compromised, facilitating more informed and risk-aware decision-making. In this study, eight input parameters are varied within user-specified bounds. The distribution of inputs corresponding to a user-defined failure metric, with the maximum principal stress set to 15 MPa, is obtained.
 
