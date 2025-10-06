@@ -1,4 +1,5 @@
 [tests]
+  issues = '#669'
   [parametric_study]
     type = CSVDiff
     input = parametric_study.i

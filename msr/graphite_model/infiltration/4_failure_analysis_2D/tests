@@ -1,4 +1,5 @@
 [tests]
+  issues = '#669'
   [generate_csv_files]
     type = RunCommand
     command = "python failure_analysis_to_csv.py"

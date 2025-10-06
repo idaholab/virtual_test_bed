@@ -1,4 +1,5 @@
 [tests]
+  issues = '#669'
   [hotspot_analysis_2D]
     type = Exodiff
     input = hotspotanalysis_2D.i

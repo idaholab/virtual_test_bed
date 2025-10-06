@@ -1,4 +1,5 @@
 [tests]
+  issues = '#669'
   #This is an abbreviated test to show how the pit profile is created. Running through the full simulation requires the use of HPC resources.
   [groove]
     type = 'CSVDiff'

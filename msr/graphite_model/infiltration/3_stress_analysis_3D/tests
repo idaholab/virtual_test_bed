@@ -1,4 +1,5 @@
 [tests]
+  issues = '#669'
   [stress_analysis_3d]
     type = CSVDiff
     input = msre3D_100percent_INF.i
