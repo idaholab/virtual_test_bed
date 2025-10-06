@@ -219,5 +219,6 @@ threshold = 0.8
 []
 
 [Outputs]
+  wall_time_checkpoint = false
   csv = true
 []

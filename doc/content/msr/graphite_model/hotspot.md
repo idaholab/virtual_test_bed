@@ -14,7 +14,7 @@ Files used by this model include:
 
 This document reviews the important elements of the input file, listed in full here:
 
-!listing msr/graphite_model/infiltration/hotspot_analysis_2D/hotspotanalysis_2D.i
+!listing msr/graphite_model/infiltration/5_hotspot_analysis_2D/hotspotanalysis_2D.i
 
 ### Setting up the hotspot
 
@@ -57,7 +57,7 @@ In structural analysis, a pore acts as a significant stress concentrator. It is 
 
 The following block defines a variable eta which is 1 within the pore/hotspot and 0 elsewhere, with a smooth transition between these regions.
 
-!listing msr/graphite_model/infiltration/hotspot_analysis_2D/hotspotanalysis_2D.i block=ICs
+!listing msr/graphite_model/infiltration/5_hotspot_analysis_2D/hotspotanalysis_2D.i block=ICs
 
 The following blocks define the material properties and elasticity tensors based on the variable `eta`.
 

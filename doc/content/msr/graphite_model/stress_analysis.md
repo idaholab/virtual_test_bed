@@ -21,7 +21,7 @@ Files used by this model include:
 
 This document reviews the inportant elements of the input file that were not covered in previous infiltration models ([creation of infiltration profiles](infiltration_profile.md) and [creation of a reference solution file](reference_solution_file.md)), listed in full here:
 
-!listing msr/graphite_model/infiltration/3D_stress_analysis/msre3D_0_SS.i
+!listing msr/graphite_model/infiltration/3_stress_analysis_3D/msre3D_100percent_INF.i
 
 ### `Initializing inputs from CSV file`
 
@@ -113,11 +113,11 @@ This block defines a MOOSE Action that automates the process of setting up the s
 To run this model using the MOOSE combined module executable, run the following command:
 
 ```
-mpiexec -n 100 /path/to/app/combined-opt -i msre3D_0_SS.i
+mpiexec -n 100 /path/to/app/combined-opt -i msre3D_100percent_INF.i
 ```
 
 *Note: HPC resources were used to perform this simulation*
 
-The following Exodus results file will be produced: `msre3D_0_SS_exodus.e`
+The following Exodus results file will be produced: `msre3D_100percent_INF_exodus.e`
 
 The Exodus output file can be visualized with Paraview.
