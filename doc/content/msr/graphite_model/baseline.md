@@ -20,13 +20,13 @@ Files used by this model include:
 
 This document reviews the inportant elements of the input file that were not covered in previous models [Infiltration effects on graphite](infiltration_graphite.md)
 
-!listing msr/graphite_model/wear/baseline/baseline.i
+!listing msr/graphite_model/wear/1_baseline/baseline.i
 
 ### Temperature and neutron flux distributions
 
 Steady-state temperature and neutron flux are critical inputs to these simulations, and these are genrally obtained from Neutronics simulations. Both of these functions are defined as a `ParsedFunction` object as shown below:
 
-!listing msr/graphite_model/wear/baseline/baseline.i block=Functions
+!listing msr/graphite_model/wear/1_baseline/baseline.i block=Functions
 
 ### Radiation effects
 

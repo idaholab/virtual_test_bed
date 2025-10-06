@@ -16,51 +16,51 @@ Files used by this model include:
 
 This document reviews the important elements of the input file (`pss.i`), listed in full here:
 
-!listing msr/graphite_model/infiltration/parellel_subset_sampling_2D/pss.i
+!listing msr/graphite_model/infiltration/4_failure_analysis_2D/pss.i
 
 
 ### `StochasticTools`
 
 This block configures the overall stochastic analysis and settings.
 
-!listing msr/graphite_model/infiltration/parellel_subset_sampling_2D/pss.i block=StochasticTools
+!listing msr/graphite_model/infiltration/4_failure_analysis_2D/pss.i block=StochasticTools
 
 
 ### `Distributions`
 
 This block defines the distributions for the input parameters. Each parameter is modeled using a uniform distribution within specified bounds. 
 
-!listing msr/graphite_model/infiltration/parellel_subset_sampling_2D/pss.i block=Distributions
+!listing msr/graphite_model/infiltration/4_failure_analysis_2D/pss.i block=Distributions
 
 ### `Samplers`
 
 This block defines the sampler methods used for the stochastic analysis. The `ParallelSubsetSimulation` method is employed to sample the defined distributions. This method allows for efficient sampling by dividing the simulations into subsets and running them in parallel, which enhances computational efficiency and ensures robust statistical analysis.
 
-!listing msr/graphite_model/infiltration/parellel_subset_sampling_2D/pss.i block=Samplers
+!listing msr/graphite_model/infiltration/4_failure_analysis_2D/pss.i block=Samplers
 
 ### `MultiApps`
 
 This block manages the execution of sub-applications within the main simulation. The `SamplerFullSolveMultiApp` type is used to run the sub-applications. This setup allows for the main application to control and coordinate the execution of multiple sub-applications, ensuring that the stochastic sampling is effectively integrated into the overall simulation process.
 
-!listing msr/graphite_model/infiltration/parellel_subset_sampling_2D/pss.i block=MultiApps
+!listing msr/graphite_model/infiltration/4_failure_analysis_2D/pss.i block=MultiApps
 
 ### `Transfers`
 
 This block facilitates the transfer of data between the main and sub-applications. 
 
-!listing msr/graphite_model/infiltration/parellel_subset_sampling_2D/pss.i block=Transfers
+!listing msr/graphite_model/infiltration/4_failure_analysis_2D/pss.i block=Transfers
 
 ### `Controls`
 
 This block passes inputs to the simulation based on the sampler output. 
 
-!listing msr/graphite_model/infiltration/parellel_subset_sampling_2D/pss.i block=Controls
+!listing msr/graphite_model/infiltration/4_failure_analysis_2D/pss.i block=Controls
 
 ### `Reporters`
 
 This block defines the reporters used in the simulation. The `StochasticReporter` collects the results, while the `AdaptiveMonteCarloDecision` guides the input selection towards rare events.
 
-!listing msr/graphite_model/infiltration/parellel_subset_sampling_2D/pss.i block=Reporters
+!listing msr/graphite_model/infiltration/4_failure_analysis_2D/pss.i block=Reporters
 
 ## Running the model
 
@@ -92,6 +92,6 @@ The following output files will be produced:
 
 This is analyzed using the following python file:
 
-!listing msr/graphite_model/infiltration/parellel_subset_sampling_2D/PSSPlots_Histograms.py
+!listing msr/graphite_model/infiltration/4_failure_analysis_2D/PSSPlots_Histograms.py
 
 This Python script reads a JSON output file and generates histograms of input variables corresponding to failure, defined by a maximum stress exceeding 15 MPa. It compares these histograms to those from random Monte Carlo samples for each input variable. Additionally, the script provides the minimum and maximum ranges of input values associated with this failure.

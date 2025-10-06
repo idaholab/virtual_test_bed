@@ -30,7 +30,7 @@ This study uses the graphite moderator geometry ([Geo]) from the Molten Salt Rea
 
 [3D stress analysis](stress_analysis.md)
 
-[Failure Analysis](pss.md)
+[Failure Analysis](failure_analysis.md)
 
 [Hotspot analysis](hotspot.md)
 

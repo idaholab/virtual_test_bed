@@ -16,7 +16,7 @@ Realistic surface wear profiles are inherently complex, and obtaining such data 
       style=width:40%
       caption= Refined mesh of a reflector block.
 
-!listing msr/graphite_model/wear/pit/Pit_R0P025.i
+!listing msr/graphite_model/wear/2_pit/pit_r0p05.i
 
 The model setup adheres closely to the input file description provided in the [Baseline simulation with combined thermal and radiation effects](baseline.md). The additional steps involve the initialization of the pit and the configuration of the elasticity tensor, which are detailed below.
 
@@ -26,7 +26,7 @@ In structural analysis, a pit acts as a stress concentrator. Assigning appropria
 
 The following block defines a variable `eta` which is 1 within the pit and 0 elsewhere, with a smooth transition between these regions.
 
-!listing msr/graphite_model/wear/pit/Pit_R0P025.i block=ICs
+!listing msr/graphite_model/wear/2_pit/pit_r0p05.i block=ICs
 
 ### Configuration of the elasticity tensor
 
@@ -81,11 +81,11 @@ The `h_void` block defines a switching function material for `eta`, producing th
 To run this model using the Grizzly executable, run the following command:
 
 ```
-mpiexec -n 300 /path/to/app/grizzly-opt -i Pit_R0P025.i
+mpiexec -n 300 /path/to/app/grizzly-opt -i pit_r0p05.i
 ```
 
 *Note: HPC resources were used to perform this simulation*
 
-The following Exodus results file will be produced: `Pit_R0P025_exodus.e`
+The following Exodus results file will be produced: `pit_r0p05_exodus.e`
 
 The Exodus output file can be visualized with Paraview.

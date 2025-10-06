@@ -8,14 +8,14 @@ To achieve this, two tasks are performed sequentially. First, ten infiltration p
 
 To complete the first task, the same input file as mentioned in [creation of infiltration profiles](infiltration_profile.md) is used. The ten simulations are run simultaneously using the Parametric Study Object within the [MOOSE Stochastic Tools](https://mooseframework.inl.gov/modules/stochastic_tools/examples/parameter_study.html). The input file is shown below.
 
-!listing msr/graphite_model/infiltration/create_reference_solution_file/Parametric_study.i
+!listing msr/graphite_model/infiltration/2_create_reference_solution_file/parametric_study.i
 
 In these simulations, the `2D_CreateInfiltrationProfile.i` file is run ten times, varying the `vol_frac_threshold` parameter.
 
 To run this model in parallel using the MOOSE combined module executable and start the ten simulations simultaneously, use the following command:
 
 ```
-mpiexec -n 100 /path/to/app/combined-opt -i Parametric_Study.i
+mpiexec -n 100 /path/to/app/combined-opt -i parametric_study.i
 ```
 
 The following output files will be produced:
@@ -29,7 +29,7 @@ The following output files will be produced:
 
 In this step, the simulation output files generated in the previous section are combined into a single output file to facilitate further analysis. The input file for this task is given below.
 
-!listing msr/graphite_model/infiltration/create_reference_solution_file/CombinedExodus_AllResults.i
+!listing msr/graphite_model/infiltration/2_create_reference_solution_file/CombinedExodus_AllResults.i
 
 This is accomplished using the `SolutionUserObject` and `SolutionFunction` MOOSE objects. The SolutionUserObject reads data from external solution files, capturing the variable `diffused` at the latest time step. The SolutionFunction then makes this data available as functions within the current simulation. The `ParsedFunction` effectively combines outputs from these solution functions and stores the infiltration profile at specific time steps. For example, a 10% infiltration corresponds to a time step of 0.1. This approach facilitates easy interpolation for any arbitrary user-defined infiltration amount.
 

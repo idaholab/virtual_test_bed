@@ -18,7 +18,7 @@ Files used by this model include:
 
 This document reviews the basic elements of the input file, listed in full here:
 
-!listing msr/graphite_model/infiltration/create_infiltration_profile/2D/2D_CreateInfiltrationProfile.i
+!listing msr/graphite_model/infiltration/1_create_infiltration_profile/2D/2D_CreateInfiltrationProfile.i
 
 
 ### `Global Variables`
@@ -43,62 +43,62 @@ diffusivity = 1e-3
 
 This block defines the finite element mesh that will be used. In this case, the mesh is read from a file in the Exodus (.e) format. The mesh for this particular problem was created using Cubit.
 
-!listing msr/graphite_model/infiltration/create_infiltration_profile/2D/2D_CreateInfiltrationProfile.i block=Mesh
+!listing msr/graphite_model/infiltration/1_create_infiltration_profile/2D/2D_CreateInfiltrationProfile.i block=Mesh
 
 ### `Variables`
 
 This block defines the field variables that will be solved for in the nonlinear equation system. In this model, the only variable defined in this step.
 
-!listing msr/graphite_model/infiltration/create_infiltration_profile/2D/2D_CreateInfiltrationProfile.i block=Variables
+!listing msr/graphite_model/infiltration/1_create_infiltration_profile/2D/2D_CreateInfiltrationProfile.i block=Variables
 
 ### `AuxVariables`
 
 This block defines AuxVariables (i.e., auxiliary variables), which are field variables that are not part of the system of equations being solved. In this case, it is a binary variable, obtained by penalizing the diffused variable
 
-!listing msr/graphite_model/infiltration/create_infiltration_profile/2D/2D_CreateInfiltrationProfile.i  block=AuxVariables
+!listing msr/graphite_model/infiltration/1_create_infiltration_profile/2D/2D_CreateInfiltrationProfile.i  block=AuxVariables
 
 
 ### `Kernels`
 
 This block defines the terms in the partial differential equations for the physics being modeled. In this case, the transient diffusion equation consisting of the time derivative term and the Laplacian terms are defined.
 
-!listing msr/graphite_model/infiltration/create_infiltration_profile/2D/2D_CreateInfiltrationProfile.i  block=Kernels
+!listing msr/graphite_model/infiltration/1_create_infiltration_profile/2D/2D_CreateInfiltrationProfile.i  block=Kernels
 
 ### `AuxKernels`
 
 This block defines the models that compute the values stored in the AuxVariables that were previously defined. In this case, these are objects that binarizes the diffused variable.
 
-!listing msr/graphite_model/infiltration/create_infiltration_profile/2D/2D_CreateInfiltrationProfile.i  block=AuxKernels
+!listing msr/graphite_model/infiltration/1_create_infiltration_profile/2D/2D_CreateInfiltrationProfile.i  block=AuxKernels
 
 ### `UserObjects`
 
 This block defines the custom objects that perform specific tasks within the MOOSE framework. In this case, we use the Terminator userobject to stop the simulation after the infiltration amount reaches the user input, vol_frac_threshold.
 
-!listing msr/graphite_model/infiltration/create_infiltration_profile/2D/2D_CreateInfiltrationProfile.i block=UserObjects
+!listing msr/graphite_model/infiltration/1_create_infiltration_profile/2D/2D_CreateInfiltrationProfile.i block=UserObjects
 
 ### `Postprocessors`
 
  This block is used to defined to calculate specific items of interest to the user. In this case, the infiltration amount is calculated and printed in the `Outputs` CSV file.
 
-!listing msr/graphite_model/infiltration/create_infiltration_profile/2D/2D_CreateInfiltrationProfile.i  block=Postprocessors
+!listing msr/graphite_model/infiltration/1_create_infiltration_profile/2D/2D_CreateInfiltrationProfile.i  block=Postprocessors
 
 ### `BCs`
 
 The boundary conditions are defined in this block. For this case, the salt-facing graphite channel is prescribed with a Dirichlet BC for the diffused variable to be unity. The rest of the surfaces will automatically be assigned as Neumann BCs, meaning the flux will be zero.
 
-!listing msr/graphite_model/infiltration/create_infiltration_profile/2D/2D_CreateInfiltrationProfile.i  block=BCs
+!listing msr/graphite_model/infiltration/1_create_infiltration_profile/2D/2D_CreateInfiltrationProfile.i  block=BCs
 
 ### `Executioner`
 
 The parameters in this block control the solution strategy used, convergence tolerances, time increment and end time, and other relevant settings.
 
-!listing msr/graphite_model/infiltration/create_infiltration_profile/2D/2D_CreateInfiltrationProfile.i block=Executioner
+!listing msr/graphite_model/infiltration/1_create_infiltration_profile/2D/2D_CreateInfiltrationProfile.i block=Executioner
 
 ### `Outputs`
 
 This block defines the types of output that are generated. The CSV output prints the amount of infiltration at various time steps. The Exodus output is primarily used for inspection of the results.
 
-!listing msr/graphite_model/infiltration/create_infiltration_profile/2D/2D_CreateInfiltrationProfile.i block=Outputs
+!listing msr/graphite_model/infiltration/1_create_infiltration_profile/2D/2D_CreateInfiltrationProfile.i block=Outputs
 
 ## Running the model
 
