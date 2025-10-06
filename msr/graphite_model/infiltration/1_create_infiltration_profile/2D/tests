@@ -1,4 +1,5 @@
 [tests]
+  issues = '#669'
   [create_infiltration_profile_2D]
     type = Exodiff
     input = 2D_CreateInfiltrationProfile.i

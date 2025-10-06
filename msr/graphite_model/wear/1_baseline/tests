@@ -1,4 +1,5 @@
 [tests]
+  issues = '#669'
   #This is an abbreviated test. Running through the full simulation requires the use of HPC resources.
   [baseline]
     type = 'CSVDiff'

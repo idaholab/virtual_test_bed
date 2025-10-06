@@ -1,4 +1,5 @@
 [tests]
+  issues = '#669'
   [create_infiltration_profile_3D]
     type = CSVDiff
     input = 3D_CreateInfiltrationProfile.i
