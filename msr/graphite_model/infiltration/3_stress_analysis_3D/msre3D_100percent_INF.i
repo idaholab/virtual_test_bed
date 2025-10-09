@@ -4,7 +4,7 @@ E = 9.8e9
 K = 63
 nu = 0.14
 htc = 4500
-CTE = 4.5e-6 
+CTE = 4.5e-6
 
 volume_fraction = 0.33
 threshold = 0.8
@@ -16,24 +16,22 @@ threshold = 0.8
 [Mesh]
 
   file = 'msre3D_0PF_Fine.e'
-
 []
-  
 
 [Variables]
   [T]
     initial_condition = 300.0
   []
- []
+[]
 
 [AuxVariables]
-    [T_inf]
-    []  
-    [smooth_read]
-        order = FIRST
-        family = LAGRANGE        
-    []
+  [T_inf]
   []
+  [smooth_read]
+    order = FIRST
+    family = LAGRANGE
+  []
+[]
 
 [Functions]
   [volumetric_heat] #Axial distribution of the power density
@@ -59,18 +57,18 @@ threshold = 0.8
     solution = heatsource_soln
     from_variable = diffuse
   []
-  [bin_heatsource_soln_func]#Binarize heatsource_soln_func
+  [bin_heatsource_soln_func] #Binarize heatsource_soln_func
     type = ParsedFunction
     symbol_names = smooth_mod
     symbol_values = heatsource_soln_func
     expression = 'if(smooth_mod>=${threshold},1,0)'
-  []   
-  [mod_heatsource_soln_func]#Obtain 3D distribution of the power density
+  []
+  [mod_heatsource_soln_func] #Obtain 3D distribution of the power density
     type = ParsedFunction
     symbol_names = 'bin_heatsource_soln_func volumetric_heat'
     symbol_values = 'bin_heatsource_soln_func volumetric_heat'
     expression = bin_heatsource_soln_func*volumetric_heat
-  []   
+  []
 []
 
 [Kernels]
@@ -100,17 +98,22 @@ threshold = 0.8
   []
 []
 
-[Physics/SolidMechanics/QuasiStatic]
-  [all]   
-    add_variables = true
-    strain = small
-    automatic_eigenstrain_names = true
-    generate_output = 'stress_xx stress_yy max_principal_stress vonmises_stress'
-    material_output_order = FIRST
-    material_output_family = LAGRANGE
+[Physics]
+
+  [SolidMechanics]
+
+    [QuasiStatic]
+      [all]
+        add_variables = true
+        strain = small
+        automatic_eigenstrain_names = true
+        generate_output = 'stress_xx stress_yy max_principal_stress vonmises_stress'
+        material_output_order = FIRST
+        material_output_family = LAGRANGE
+      []
+    []
   []
 []
-
 
 [UserObjects]
   [heatsource_soln]
@@ -177,29 +180,27 @@ threshold = 0.8
     boundary = 'coolantchannelboundary'
     T_infinity = T_inf
     htc = ${htc}
-  []  
-
+  []
 []
 
 [Postprocessors]
-    [maxstress]
-      type = ElementExtremeValue
-      variable = max_principal_stress
-      value_type = max
-    []
+  [maxstress]
+    type = ElementExtremeValue
+    variable = max_principal_stress
+    value_type = max
+  []
 []
 [VectorPostprocessors]
-    [line]
-        type = LineValueSampler
-        start_point = '0 0 1.6637'
-        end_point = '0.0148 0.0139 0'
-        num_points = 100
-        sort_by = 'z'
-        variable = 'disp_x disp_y disp_z T'
-        execute_on = timestep_end
-    []
+  [line]
+    type = LineValueSampler
+    start_point = '0 0 1.6637'
+    end_point = '0.0148 0.0139 0'
+    num_points = 100
+    sort_by = 'z'
+    variable = 'disp_x disp_y disp_z T'
+    execute_on = timestep_end
+  []
 []
-
 
 [Preconditioning]
   [smp]

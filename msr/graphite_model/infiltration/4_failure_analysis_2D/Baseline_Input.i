@@ -8,9 +8,7 @@ PD = 42e6
 nu = 0.16
 Tinf = 972
 htc = 5267
-CTE = 4.5e-6 
-
-
+CTE = 4.5e-6
 
 threshold = 0.8
 
@@ -22,7 +20,6 @@ threshold = 0.8
 [Mesh]
   file = msre2D_1X.e
 []
-  
 
 [Variables]
   [T]
@@ -36,8 +33,8 @@ threshold = 0.8
 
 [AuxVariables]
   [smooth_read]
-      order = FIRST
-      family = LAGRANGE        
+    order = FIRST
+    family = LAGRANGE
   []
 []
 
@@ -62,14 +59,20 @@ threshold = 0.8
   []
 []
 
-[Modules/TensorMechanics/Master]
-  [all]
-    planar_formulation = GENERALIZED_PLANE_STRAIN
-    scalar_out_of_plane_strain = scalar_strain_yy    
-    add_variables = true
-    strain = small
-    automatic_eigenstrain_names = true
-    generate_output = 'stress_xx stress_yy max_principal_stress vonmises_stress'
+[Modules]
+
+  [TensorMechanics]
+
+    [Master]
+      [all]
+        planar_formulation = GENERALIZED_PLANE_STRAIN
+        scalar_out_of_plane_strain = scalar_strain_yy
+        add_variables = true
+        strain = small
+        automatic_eigenstrain_names = true
+        generate_output = 'stress_xx stress_yy max_principal_stress vonmises_stress'
+      []
+    []
   []
 []
 
@@ -84,7 +87,7 @@ threshold = 0.8
     symbol_names = smooth_mod
     symbol_values = heatsource_soln_func
     expression = 'if(smooth_mod>=${threshold},${PD},0)'
-  []  
+  []
 []
 
 [UserObjects]
@@ -144,16 +147,15 @@ threshold = 0.8
     boundary = 'right_channelboundary'
     T_infinity = ${Tinf}
     heat_transfer_coefficient = ${htc}
-  []  
-
+  []
 []
 
 [Postprocessors]
-    [maxstress]
-      type = ElementExtremeValue
-      variable = max_principal_stress
-      value_type = max
-    []
+  [maxstress]
+    type = ElementExtremeValue
+    variable = max_principal_stress
+    value_type = max
+  []
 []
 
 [Preconditioning]
@@ -172,7 +174,6 @@ threshold = 0.8
   line_search = 'none'
   nl_abs_tol = 1.0e-10
   nl_rel_tol = 1.0e-08
-
 []
 
 [Outputs]
