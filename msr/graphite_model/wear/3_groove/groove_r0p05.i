@@ -1,8 +1,8 @@
 
-sector_angle = ${fparse 51*pi/180}
+sector_angle = '${fparse 51*pi/180}'
 
-radius_wear =  0.05
-interface_width = ${fparse radius_wear/5}
+radius_wear = 0.05
+interface_width = '${fparse radius_wear/5}'
 
 delta_center_radius = 0.0 # how much do you want to move the center away from the surface
 
@@ -25,34 +25,35 @@ Fmax_b = -1.260e+16
 Fmax_c = 3.202e+16
 Fmax_d = -1.887e+15
 
-
 #SpecifiedSmoothCircleIC Parameters
-R_i = 1.2 
-x_coord = ${fparse (R_i-delta_center_radius)*cos(0.5*sector_angle)}
-y_coord = ${fparse (R_i-delta_center_radius)*sin(0.5*sector_angle)}
+R_i = 1.2
+x_coord = '${fparse (R_i-delta_center_radius)*cos(0.5*sector_angle)}'
+y_coord = '${fparse (R_i-delta_center_radius)*sin(0.5*sector_angle)}'
 #z_coord = 1.76
 
-
-
 [GlobalParams]
-    displacements = 'disp_x disp_y disp_z'
+  displacements = 'disp_x disp_y disp_z'
 []
-
-
 
 [Mesh]
-   type = FileMesh
-   file = 'FineMesh_Wear_Baseline.e'
+  type = FileMesh
+  file = 'FineMesh_Wear_Baseline.e'
 []
 
-[Physics/SolidMechanics/QuasiStatic]
-  [all]
-    add_variables = true
-    strain = FINITE
-    automatic_eigenstrain_names = true
-    generate_output = 'stress_xx stress_xy stress_xz stress_yy stress_yx stress_yz stress_zz stress_zx stress_zy 
-                      vonmises_stress max_principal_stress mid_principal_stress min_principal_stress 
+[Physics]
+
+  [SolidMechanics]
+
+    [QuasiStatic]
+      [all]
+        add_variables = true
+        strain = FINITE
+        automatic_eigenstrain_names = true
+        generate_output = 'stress_xx stress_xy stress_xz stress_yy stress_yx stress_yz stress_zz stress_zx stress_zy
+                      vonmises_stress max_principal_stress mid_principal_stress min_principal_stress
                       strain_xx strain_yy strain_zz elastic_strain_xx elastic_strain_yy elastic_strain_zz'
+      []
+    []
   []
 []
 
@@ -76,11 +77,10 @@ y_coord = ${fparse (R_i-delta_center_radius)*sin(0.5*sector_angle)}
   []
   [groove]
     type = ParsedFunction
-    expression = 'r := ((x-${x_coord})^2 + (y-${y_coord})^2)^0.5;  
+    expression = 'r := ((x-${x_coord})^2 + (y-${y_coord})^2)^0.5;
                   int_factor := exp(-8*(r-${radius_wear})/${interface_width});
                   int_factor/(1 + int_factor)'
   []
-
 []
 
 # AuxVariables for temperature and fluence
@@ -94,7 +94,6 @@ y_coord = ${fparse (R_i-delta_center_radius)*sin(0.5*sector_angle)}
   [eta]
   []
 []
-
 
 # AuxKernels to assign the temperature and fluence functions
 [AuxKernels]
@@ -112,9 +111,9 @@ y_coord = ${fparse (R_i-delta_center_radius)*sin(0.5*sector_angle)}
 
 [ICs]
   [eta_ic]
-  type = FunctionIC
-  variable = eta
-  function = groove
+    type = FunctionIC
+    variable = eta
+    function = groove
   []
 []
 
@@ -128,18 +127,18 @@ y_coord = ${fparse (R_i-delta_center_radius)*sin(0.5*sector_angle)}
     function_name = h_void
     output_properties = 'h_void'
     # outputs = exodus
-[]
+  []
 
-[h_mat]
-  type = DerivativeParsedMaterial
-  expression = '1-h_void'
-  coupled_variables = 'eta'
-  property_name = h_mat
-  material_property_names = 'h_void'
-  # outputs = exodus
-[]
+  [h_mat]
+    type = DerivativeParsedMaterial
+    expression = '1-h_void'
+    coupled_variables = 'eta'
+    property_name = h_mat
+    material_property_names = 'h_void'
+    # outputs = exodus
+  []
 
-[elastic_tensor_matrix]
+  [elastic_tensor_matrix]
     type = ComputeIsotropicElasticityTensor
     youngs_modulus = 10.3e9
     poissons_ratio = 0.14
@@ -165,7 +164,7 @@ y_coord = ${fparse (R_i-delta_center_radius)*sin(0.5*sector_angle)}
     prop_names = fast_neutron_fluence
     prop_values = fluence_func
     # outputs = exodus
-  []         
+  []
 
   [thermal]
     type = HeatConductionMaterial
@@ -197,18 +196,18 @@ y_coord = ${fparse (R_i-delta_center_radius)*sin(0.5*sector_angle)}
   []
 
   [graphite_irrad_strain]
-  type = StructuralGraphiteIrradiationEigenstrain
-  temperature = temperature
-  graphite_grade = IG_110
-  fluence_conversion_factor = 1.0
-  eigenstrain_name = irrad_strain
-  # outputs = exodus
-[]  
+    type = StructuralGraphiteIrradiationEigenstrain
+    temperature = temperature
+    graphite_grade = IG_110
+    fluence_conversion_factor = 1.0
+    eigenstrain_name = irrad_strain
+    # outputs = exodus
+  []
 
-[stress]
-  type = ComputeMultipleInelasticStress
-  inelastic_models = 'GraphiteGrade_creep'
-[]
+  [stress]
+    type = ComputeMultipleInelasticStress
+    inelastic_models = 'GraphiteGrade_creep'
+  []
 []
 
 # BCs
@@ -226,33 +225,32 @@ y_coord = ${fparse (R_i-delta_center_radius)*sin(0.5*sector_angle)}
     variable = disp_y
     value = 0
     boundary = 'fixed y_z_roller y_roller'
-  []  
+  []
   [z_fixed]
     type = DirichletBC
     preset = true
     variable = disp_z
     value = 0
     boundary = 'fixed y_z_roller'
-  []  
-
+  []
 []
 
 [VectorPostprocessors]
-    # [auxvars]
-    #   type = ElementValueSampler
-    #   sort_by = id
-    #   variable = 'volume max_principal_stress mid_principal_stress min_principal_stress'
-    #   execute_on = 'timestep_end'
-    # []      
-    [line]
-        type = LineValueSampler
-        start_point = '1.0914 0.5215 1.76'
-        end_point = '1.6146 0.7715 1.76'
-        num_points = 100
-        sort_by = 'x'
-        variable = 'disp_x disp_y disp_z temperature eta'
-        execute_on = timestep_end
-    []     
+  # [auxvars]
+  #   type = ElementValueSampler
+  #   sort_by = id
+  #   variable = 'volume max_principal_stress mid_principal_stress min_principal_stress'
+  #   execute_on = 'timestep_end'
+  # []
+  [line]
+    type = LineValueSampler
+    start_point = '1.0914 0.5215 1.76'
+    end_point = '1.6146 0.7715 1.76'
+    num_points = 100
+    sort_by = 'x'
+    variable = 'disp_x disp_y disp_z temperature eta'
+    execute_on = timestep_end
+  []
 []
 
 # Executioner

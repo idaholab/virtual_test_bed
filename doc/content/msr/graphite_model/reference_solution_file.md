@@ -40,4 +40,3 @@ mpiexec -n 10 /path/to/app/combined-opt -i CombinedExodus_AllResults.i
 ```
 
 The following Exodus output file will be produced:`CombinedExodus_AllResults_out.e`.
-

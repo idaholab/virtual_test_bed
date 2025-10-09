@@ -19,27 +19,29 @@ Fmax_b = -1.260e+16
 Fmax_c = 3.202e+16
 Fmax_d = -1.887e+15
 
-
-
 [GlobalParams]
-    displacements = 'disp_x disp_y disp_z'
+  displacements = 'disp_x disp_y disp_z'
 []
-
-
 
 [Mesh]
-   type = FileMesh
-   file = baseline.e
+  type = FileMesh
+  file = baseline.e
 []
 
-[Physics/SolidMechanics/QuasiStatic]
-  [all]
-    add_variables = true
-    strain = FINITE
-    automatic_eigenstrain_names = true
-    generate_output = 'stress_xx stress_xy stress_xz stress_yy stress_yx stress_yz stress_zz stress_zx stress_zy 
-                      vonmises_stress max_principal_stress mid_principal_stress min_principal_stress 
+[Physics]
+
+  [SolidMechanics]
+
+    [QuasiStatic]
+      [all]
+        add_variables = true
+        strain = FINITE
+        automatic_eigenstrain_names = true
+        generate_output = 'stress_xx stress_xy stress_xz stress_yy stress_yx stress_yz stress_zz stress_zx stress_zy
+                      vonmises_stress max_principal_stress mid_principal_stress min_principal_stress
                       strain_xx strain_yy strain_zz elastic_strain_xx elastic_strain_yy elastic_strain_zz'
+      []
+    []
   []
 []
 
@@ -54,7 +56,7 @@ Fmax_d = -1.887e+15
              Tmax - (Tmax-Tmin)*(r-${x0c})/${thickness}'
   []
 
-  # Fluence function (flux * time) 
+  # Fluence function (flux * time)
   [fluence_func]
     type = ParsedFunction
     expression = 'r := (x^2 + y^2)^0.5;
@@ -72,8 +74,6 @@ Fmax_d = -1.887e+15
     family = MONOMIAL
   []
 []
-
-
 
 # AuxKernels to assign the temperature and fluence functions
 [AuxKernels]
@@ -96,7 +96,7 @@ Fmax_d = -1.887e+15
     prop_names = fast_neutron_fluence
     prop_values = fluence_func
     # outputs = exodus
-  []         
+  []
 
   [thermal]
     type = HeatConductionMaterial
@@ -137,7 +137,7 @@ Fmax_d = -1.887e+15
     fluence_conversion_factor = 1.0
     eigenstrain_name = irrad_strain
     # outputs = exodus
-  []  
+  []
 
   [stress]
     type = ComputeMultipleInelasticStress
@@ -160,33 +160,32 @@ Fmax_d = -1.887e+15
     variable = disp_y
     value = 0
     boundary = 'fixed y_z_roller y_roller'
-  []  
+  []
   [z_fixed]
     type = DirichletBC
     preset = true
     variable = disp_z
     value = 0
     boundary = 'fixed y_z_roller'
-  []  
-
+  []
 []
 
 [VectorPostprocessors]
-    # [auxvars]
-    #   type = ElementValueSampler
-    #   sort_by = id
-    #   variable = 'volume max_principal_stress mid_principal_stress min_principal_stress'
-    #   execute_on = TIMESTEP_END
-    # []
-    [line]
-        type = LineValueSampler
-        start_point = '1.0914 0.5215 1.76'
-        end_point = '1.6146 0.7715 1.76'
-        num_points = 100
-        sort_by = 'x'
-        variable = 'disp_x disp_y disp_z temperature'
-        execute_on = timestep_end
-    [] 
+  # [auxvars]
+  #   type = ElementValueSampler
+  #   sort_by = id
+  #   variable = 'volume max_principal_stress mid_principal_stress min_principal_stress'
+  #   execute_on = TIMESTEP_END
+  # []
+  [line]
+    type = LineValueSampler
+    start_point = '1.0914 0.5215 1.76'
+    end_point = '1.6146 0.7715 1.76'
+    num_points = 100
+    sort_by = 'x'
+    variable = 'disp_x disp_y disp_z temperature'
+    execute_on = timestep_end
+  []
 []
 
 # Executioner

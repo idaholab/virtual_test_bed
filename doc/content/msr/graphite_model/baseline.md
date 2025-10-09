@@ -4,7 +4,7 @@ This study analyzes the stress induced by temperature and radiation effects over
 
 ## Computational Model Description
 
-[Mesh] shows the mesh of the unit cell of the MSRE graphite stringer. 
+[Mesh] shows the mesh of the unit cell of the MSRE graphite stringer.
 
 !media msr/graphite_model/wear/5_mesh.png
       id=Mesh
@@ -15,8 +15,6 @@ Files used by this model include:
 
 - MOOSE input file
 - Exodus mesh file
-
-
 
 This document reviews the inportant elements of the input file that were not covered in previous models [Infiltration effects on graphite](infiltration_graphite.md)
 

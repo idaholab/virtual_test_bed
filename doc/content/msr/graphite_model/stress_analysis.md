@@ -4,7 +4,7 @@ This page discusses the model set-up for the stress analysis of a 3D MSRE graphi
 
 ## Computational Model Description
 
-[3DMesh] shows the mesh of the unit cell of the MSRE graphite stringer. 
+[3DMesh] shows the mesh of the unit cell of the MSRE graphite stringer.
 
 !media msr/graphite_model/infiltration/3_3Dmesh.png
       id=3DMesh
@@ -17,7 +17,6 @@ Files used by this model include:
 - Exodus mesh file
 - CSV file defining the variation of the coolant temperature and volumetric heat
 - Exodus reference solution file for initializing the infiltration amount
-
 
 This document reviews the inportant elements of the input file that were not covered in previous infiltration models ([creation of infiltration profiles](infiltration_profile.md) and [creation of a reference solution file](reference_solution_file.md)), listed in full here:
 
@@ -50,7 +49,7 @@ Two quantities, namely, the volumetric heat (`volumetric_heat`) and the coolant 
 
 ### `Initializing user-defined infiltration amount using the reference solution file`
 
-First, a `SolutionUserObject` is used to read the interpolated infiltration profile, specifically the `diffuse` variable, from the reference solution file named `CombinedExodus_AllResults_out.e`. This is done at the user-defined infiltration amount of 33%, as specfied by `volume_fraction = 0.33`. 
+First, a `SolutionUserObject` is used to read the interpolated infiltration profile, specifically the `diffuse` variable, from the reference solution file named `CombinedExodus_AllResults_out.e`. This is done at the user-defined infiltration amount of 33%, as specfied by `volume_fraction = 0.33`.
 
 ```
 [UserObjects]

@@ -4,7 +4,7 @@ Given that the pore sizes in nuclear graphite material are several orders of mag
 
 ## Computational Model Description
 
-[Mesh] shows the mesh of the unit cell of the MSRE graphite stringer. 
+[Mesh] shows the mesh of the unit cell of the MSRE graphite stringer.
 
 !media msr/graphite_model/infiltration/2_mesh.png
       id=Mesh
@@ -19,7 +19,6 @@ Files used by this model include:
 This document reviews the basic elements of the input file, listed in full here:
 
 !listing msr/graphite_model/infiltration/1_create_infiltration_profile/2D/2D_CreateInfiltrationProfile.i
-
 
 ### `Global Variables`
 
@@ -56,7 +55,6 @@ This block defines the field variables that will be solved for in the nonlinear 
 This block defines AuxVariables (i.e., auxiliary variables), which are field variables that are not part of the system of equations being solved. In this case, it is a binary variable, obtained by penalizing the diffused variable
 
 !listing msr/graphite_model/infiltration/1_create_infiltration_profile/2D/2D_CreateInfiltrationProfile.i  block=AuxVariables
-
 
 ### `Kernels`
 
@@ -114,4 +112,3 @@ The following output files will be produced:
 - The CSV results file: `2D_CreateInfiltrationProfile_csv.csv`
 
 The Exodus output file can be visualized with Paraview.
-
