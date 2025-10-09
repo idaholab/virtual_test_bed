@@ -1,0 +1,38 @@
+reset
+# Parameter definitions
+#{theta=51} # Angle in degrees
+#{L_R=0.6} # Cylinder height and outer radius modifier
+#{L_Z=0.305} # Z-axis movement distance
+#{R1 = 0.03}
+#{R2 = 0.01}
+#{output_filename="Baseline_Case_2"} # Only the filename for exporting the mesh
+
+#{Ri=1.2} # Fixed inner radius
+
+# Create geometry based on the parameters
+create cylinder height {L_Z} radius {Ri + L_R} # Outer cylinder with radius Ri + L_R
+create cylinder height {L_Z} radius {Ri} # Inner cylinder with radius Ri
+subtract volume 2 from volume 1
+webcut body 1 with plane yplane
+delete volume 1
+rotate body 3 about z angle {-theta}
+webcut volume 3 with plane yplane
+delete volume 4
+rotate body 3 about z angle {theta}
+Volume all size 0.01
+mesh volume all
+
+move body all x -1.083102 y-0.516613
+
+refine hex with (x * x + y * y) < {R1}
+refine hex with (x * x + y * y) < {R2} numsplit 2
+
+move body all x 1.083102 y 0.516613
+
+# Define nodesets
+nodeset 1 vertex 18 name "fixed"
+nodeset 2 vertex 15 name "y_z_roller"
+nodeset 3 vertex 17 name "y_roller"
+
+# Move the body along the z-axis based on L_Z
+move body all z 1.76

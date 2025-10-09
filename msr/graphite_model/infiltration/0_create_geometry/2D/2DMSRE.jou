@@ -1,0 +1,45 @@
+
+reset
+create surface rectangle width 1.4142135623730951 height 1.4142135623730951
+rotate body 1 about z angle -45
+webcut body 1 with plane yplane
+delete body 2
+move body 1 y 1
+create surface circle radius 0.02
+create surface circle radius 0.02
+body 3 move -0.68 0.82
+body 4 move 0.68 0.82
+subtract body 3 4 from body 1
+create surface rectangle width 1.4 height 0.2
+move body 5 y 0.92
+subtract body 5 from body 1
+create surface rectangle width 1.36 height 0.2
+move body 6 y 0.9
+subtract body 6 from body 1
+
+rotate body all about z angle -45
+
+Body all scale 1
+
+surface all size 0.01
+Curve 27 28 size 0.005
+mesh surface all
+
+block 1 surface all
+
+block all element type quad9
+
+sideset 1 curve 3
+sideset 1 name "left" 
+
+sideset 2 curve 4
+sideset 2 name "bottom"
+
+sideset 3 curve 17 26 27 20 28 
+sideset 3 name "right_channelboundary"
+
+Body all scale 0.0254
+
+#provide_your_path is a placeholder for your actual path
+
+export mesh "provide_your_path/msre2D_1X.e" overwrite 
