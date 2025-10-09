@@ -2,7 +2,7 @@
   file = msre2D_1X.e
 []
 
-#SolutionUserObjects below read the data corresponding 
+#SolutionUserObjects below read the data corresponding
 #to the diffused variable from the external solution files
 [UserObjects]
 
@@ -66,11 +66,10 @@
     system_variables = diffused
     timestep = LATEST
   []
-
 []
 
-#SolutionFunctions below obtatins the data from the SolutionUserObject and 
-#makes it available as a function for the current simulation 
+#SolutionFunctions below obtatins the data from the SolutionUserObject and
+#makes it available as a function for the current simulation
 
 [Functions]
   [func1]
@@ -130,7 +129,6 @@
     symbol_names = ' func1 func2 func3 func4 func5 func6 func7 func8 func9 func10 '
     symbol_values = ' func1 func2 func3 func4 func5 func6 func7 func8 func9 func10 '
   []
-
 []
 
 [AuxVariables]
@@ -163,6 +161,6 @@
 []
 
 [Outputs]
-    exodus = true
+  exodus = true
 []
   

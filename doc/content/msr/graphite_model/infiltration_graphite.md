@@ -1,6 +1,6 @@
 # Infiltration effects on graphite behavior
 
-*Contact: V Prithivirajan, veerappan.prithivirajan@inl.gov*
+*Contact: V Prithivirajan, <veerappan.prithivirajan@inl.gov>*
 
 *Model was co-developed by V Prithivirajan and Ben Spencer*
 
@@ -17,7 +17,7 @@ The primary objective of this analysis is to address the structural integrity ch
 
 In this section, the workflow and input files to perform the above-mentioned studies are provided. The first step involves setting up a diffusion equation-based computational model to obtain physically realistic infiltration profiles. Subsequently, a reference solution file is created, collating infiltration profiles at different steps to streamline the process. Following this, the methodology for performing 3D stress analysis using the reference input file is presented. This is followed by procedures for conducting hot spot analysis. Finally, the PSS framework is detailed. While hot spots and PSS are provided for 2D analysis, they are easily extendable to 3D.
 
-This study uses the graphite moderator geometry ([Geo]) from the Molten Salt Reactor Experiment (MSRE) due to the availability of comprehensive and publicly accessible data. 
+This study uses the graphite moderator geometry ([Geo]) from the Molten Salt Reactor Experiment (MSRE) due to the availability of comprehensive and publicly accessible data.
 
 !media msr/graphite_model/infiltration/1_geo.png
       id=Geo
@@ -33,7 +33,3 @@ This study uses the graphite moderator geometry ([Geo]) from the Molten Salt Rea
 [Failure Analysis](failure_analysis.md)
 
 [Hotspot analysis](hotspot.md)
-
-
-
-

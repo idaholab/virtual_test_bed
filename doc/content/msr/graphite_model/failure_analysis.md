@@ -4,7 +4,7 @@ The [Parallel Subset Simulation (PSS)](https://mooseframework.inl.gov/source/sam
 
 ## Computational Model Description
 
-This section outlines the setup and execution of a Parallel Subset Simulation (PSS) framework using a 2D MSRE (Molten Salt Reactor Experiment) geometry. The framework utilizes two input files: the main PSS input file and the finite element simulation input file. The PSS input file generates combinations of input parameters and passes them to the simulation file, which performs the finite element analysis to determine the maximum stress corresponding to a user-defined infiltration amount. The PSS input file then retrieves the simulation results, such as the maximum stress, for further analysis. It is important to note that the finite element simulation input file adheres to a setup analogous to the one described in the [3D stress analysis](stress_analysis.md), but is specifically configured for 2D simulations. Consequently, the detailed discussion of the finite element setup is omitted here for brevity. 
+This section outlines the setup and execution of a Parallel Subset Simulation (PSS) framework using a 2D MSRE (Molten Salt Reactor Experiment) geometry. The framework utilizes two input files: the main PSS input file and the finite element simulation input file. The PSS input file generates combinations of input parameters and passes them to the simulation file, which performs the finite element analysis to determine the maximum stress corresponding to a user-defined infiltration amount. The PSS input file then retrieves the simulation results, such as the maximum stress, for further analysis. It is important to note that the finite element simulation input file adheres to a setup analogous to the one described in the [3D stress analysis](stress_analysis.md), but is specifically configured for 2D simulations. Consequently, the detailed discussion of the finite element setup is omitted here for brevity.
 
 Files used by this model include:
 
@@ -18,17 +18,15 @@ This document reviews the important elements of the input file (`pss.i`), listed
 
 !listing msr/graphite_model/infiltration/4_failure_analysis_2D/pss.i
 
-
 ### `StochasticTools`
 
 This block configures the overall stochastic analysis and settings.
 
 !listing msr/graphite_model/infiltration/4_failure_analysis_2D/pss.i block=StochasticTools
 
-
 ### `Distributions`
 
-This block defines the distributions for the input parameters. Each parameter is modeled using a uniform distribution within specified bounds. 
+This block defines the distributions for the input parameters. Each parameter is modeled using a uniform distribution within specified bounds.
 
 !listing msr/graphite_model/infiltration/4_failure_analysis_2D/pss.i block=Distributions
 
@@ -46,13 +44,13 @@ This block manages the execution of sub-applications within the main simulation.
 
 ### `Transfers`
 
-This block facilitates the transfer of data between the main and sub-applications. 
+This block facilitates the transfer of data between the main and sub-applications.
 
 !listing msr/graphite_model/infiltration/4_failure_analysis_2D/pss.i block=Transfers
 
 ### `Controls`
 
-This block passes inputs to the simulation based on the sampler output. 
+This block passes inputs to the simulation based on the sampler output.
 
 !listing msr/graphite_model/infiltration/4_failure_analysis_2D/pss.i block=Controls
 
@@ -84,7 +82,6 @@ mpiexec -n 1000 path_to_combined-opt -i pss.i | tee progress_log.txt
 ```
 
 *Note: Please note that this HPC system utilizes a PBS scheduling system. Therefore, the job script is based on PBS commands. If you need to use SLURM, ensure to adjust the script accordingly.*
-
 
 The following output files will be produced:
 

@@ -1,6 +1,6 @@
 # Wear analysis
 
-*Contact: V Prithivirajan, veerappan.prithivirajan@inl.gov*
+*Contact: V Prithivirajan, <veerappan.prithivirajan@inl.gov>*
 
 *Model was co-developed by V Prithivirajan and Ben Spencer*
 
@@ -31,15 +31,3 @@ In pebble-bed MSRs, the graphite reflector is composed of numerous modular block
 [Simulation with a pit profile](pit_profile.md)
 
 [Simulation with a groove profile](groove_profile.md)
-
-
-
-
-
-
-
-
-
-
-
-

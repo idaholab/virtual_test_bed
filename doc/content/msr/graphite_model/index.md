@@ -5,16 +5,3 @@ Molten salt reactors (MSRs) represent an innovative reactor design that holds pr
 [Infiltration effects on graphite](infiltration_graphite.md)
 
 [Wear analysis of graphite](wear_graphite.md)
-
-
-
-
-
-
-
-
-
-
-
-
-

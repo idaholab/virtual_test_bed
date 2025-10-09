@@ -8,9 +8,8 @@ max_PD = 1e7
 nu = 0.14
 Tinf = 923
 htc = 4500
-CTE = 4.5e-6 
+CTE = 4.5e-6
 porosity = 0.2
-
 
 # Hot spot inputs
 x0 = 0.0072
@@ -33,18 +32,17 @@ threshold = 0.8
 
 [ICs]
   [eta_ic]
-  type = SpecifiedSmoothCircleIC
-  variable = eta
-  x_positions = ${x0}
-  y_positions = ${y0}
-  z_positions = 0
-  radii = ${R}
-  invalue = 1
-  outvalue = 0
-  int_width = ${interface_width}
- []
+    type = SpecifiedSmoothCircleIC
+    variable = eta
+    x_positions = ${x0}
+    y_positions = ${y0}
+    z_positions = 0
+    radii = ${R}
+    invalue = 1
+    outvalue = 0
+    int_width = ${interface_width}
+  []
 []
-
 
 [Variables]
   [T]
@@ -58,13 +56,13 @@ threshold = 0.8
 
 [AuxVariables]
   [smooth_read]
-      order = FIRST
-      family = LAGRANGE        
+    order = FIRST
+    family = LAGRANGE
   []
   [hotspot_var]
     order = CONSTANT
-    family = MONOMIAL       
-  []  
+    family = MONOMIAL
+  []
   [eta]
   []
 []
@@ -83,7 +81,7 @@ threshold = 0.8
     type = HeatSource
     variable = T
     function = heatsource_hotspot_fn
-  []  
+  []
 []
 
 [AuxKernels]
@@ -100,14 +98,20 @@ threshold = 0.8
   []
 []
 
-[Modules/TensorMechanics/Master]
-  [all]
-    planar_formulation = GENERALIZED_PLANE_STRAIN
-    scalar_out_of_plane_strain = scalar_strain_yy    
-    add_variables = true
-    strain = small
-    automatic_eigenstrain_names = true
-    generate_output = 'stress_xx stress_yy max_principal_stress vonmises_stress'
+[Modules]
+
+  [TensorMechanics]
+
+    [Master]
+      [all]
+        planar_formulation = GENERALIZED_PLANE_STRAIN
+        scalar_out_of_plane_strain = scalar_strain_yy
+        add_variables = true
+        strain = small
+        automatic_eigenstrain_names = true
+        generate_output = 'stress_xx stress_yy max_principal_stress vonmises_stress'
+      []
+    []
   []
 []
 
@@ -122,12 +126,12 @@ threshold = 0.8
     symbol_names = smooth_mod
     symbol_values = heatsource_soln_func
     expression = 'if(smooth_mod>=${threshold},${PD},0)'
-  [] 
+  []
   [heatsource_hotspot_fn]
     type = ParsedFunction
     expression = 'r := (sqrt((x-${x0})^2 + (y-${y0})^2) );
-                  if(r<=${R},${max_PD}-${PD},0)'     
-  [] 
+                  if(r<=${R},${max_PD}-${PD},0)'
+  []
 []
 
 [UserObjects]
@@ -140,23 +144,23 @@ threshold = 0.8
 []
 
 [Materials]
-[h_void]
+  [h_void]
     type = SwitchingFunctionMaterial
     eta = eta
     h_order = HIGH
     function_name = h_void
     output_properties = 'h_void'
     outputs = exodus
-[]
+  []
 
-[h_mat]
-  type = DerivativeParsedMaterial
-  expression = '1-h_void'
-  coupled_variables = 'eta'
-  property_name = h_mat
-  material_property_names = 'h_void'
-  outputs = exodus
-[]
+  [h_mat]
+    type = DerivativeParsedMaterial
+    expression = '1-h_void'
+    coupled_variables = 'eta'
+    property_name = h_mat
+    material_property_names = 'h_void'
+    outputs = exodus
+  []
   [thermal]
     type = HeatConductionMaterial
     thermal_conductivity = ${K}
@@ -220,16 +224,15 @@ threshold = 0.8
     boundary = 'right_channelboundary'
     T_infinity = ${Tinf}
     heat_transfer_coefficient = ${htc}
-  []  
-
+  []
 []
 
 [Postprocessors]
-    [maxstress]
-      type = ElementExtremeValue
-      variable = max_principal_stress
-      value_type = max
-    []
+  [maxstress]
+    type = ElementExtremeValue
+    variable = max_principal_stress
+    value_type = max
+  []
 []
 
 [Preconditioning]
@@ -248,7 +251,6 @@ threshold = 0.8
   line_search = 'none'
   nl_abs_tol = 1.0e-10
   nl_rel_tol = 1.0e-08
-
 []
 
 [Outputs]

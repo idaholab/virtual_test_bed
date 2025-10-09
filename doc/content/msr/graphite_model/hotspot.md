@@ -4,7 +4,7 @@ In the previous analysis, the effect of pores was accounted for in a homogenized
 
 ## Computational Model Description
 
-This section outlines the setup and execution of hotspot analysis using a 2D MSRE (Molten Salt Reactor Experiment) geometry. 
+This section outlines the setup and execution of hotspot analysis using a 2D MSRE (Molten Salt Reactor Experiment) geometry.
 
 Files used by this model include:
 
@@ -28,7 +28,6 @@ R = 1e-3
 ```
 
 The hotspot is initialized through an auxiliary variable using a parsed function. The auxiliary variable `hotspot_var` is defined with constant order and monomial family. The parsed function `heatsource_hotspot_fn` calculates the distance from the center of the hotspot and assigns a power density value if the distance is within the hotspot radius. This function is then applied to the auxiliary variable through the hotspot `AuxKernel`. This setup ensures that the hotspot is correctly initialized and applied within the simulation.
-
 
 ```
   [hotspot_var]
@@ -116,6 +115,5 @@ mpiexec -n 8 /path/to/app/combined-opt -i hotspotanalysis_2D.i
 The following output file will be produced:
 
 - The Exodus results file: `hotspotanalysis_2D_out.e`
-
 
 The Exodus output file can be visualized with Paraview.
