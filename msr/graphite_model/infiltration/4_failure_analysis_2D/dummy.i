@@ -5,11 +5,11 @@
   dim = 1
   nx = 1
 []
- 
+
 [Problem]
   solve = false
 []
- 
+
 [Executioner]
   type = Transient
   dt = 1.0

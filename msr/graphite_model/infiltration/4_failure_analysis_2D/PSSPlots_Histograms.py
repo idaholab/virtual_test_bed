@@ -15,7 +15,7 @@ bins2 = np.array([4, 10, 4, 5, 15, 15, 15, 6])  # Number of bins for failed samp
 os.chdir(cwd)
 
 # Define file path
-file_path = cwd + "/pss_out.json"  
+file_path = cwd + "/pss_out.json"
 
 Nsubsets_to_consider = 7000
 
@@ -42,14 +42,14 @@ for i in range(1, length_list):
     all_outputs.extend(output)
 
 # Convert to NumPy arrays
-inputs_array = np.array(all_inputs).reshape(-1, 8)  
-outputs_array = np.array(all_outputs)  
+inputs_array = np.array(all_inputs).reshape(-1, 8)
+outputs_array = np.array(all_outputs)
 inputs_array = inputs_array[:Nsubsets_to_consider,:]
 outputs_array = outputs_array[:Nsubsets_to_consider]
 
 # Check shapes
-print("Inputs shape:", inputs_array.shape)  
-print("Outputs shape:", outputs_array.shape)  
+print("Inputs shape:", inputs_array.shape)
+print("Outputs shape:", outputs_array.shape)
 
 # Failure probability
 last_1000_points = outputs_array[-1000:]
@@ -97,27 +97,27 @@ bounds = [
 for idx0 in range(8):
     hist1 = inputs_array[rndvals, idx0]
     hist2 = inputs_array[ind1, idx0]
-    
+
     # Normalize the histograms to create probability distributions
     prob_dist1 = hist1 / np.sum(hist1)
     prob_dist2 = hist2 / np.sum(hist2)
-    
-   
+
+
     if idx0 == 3:
         fact = 1 / (0.2 * 1e6)
     elif idx0 == 1:
         fact = 1e-9
     else:
         fact = 1
-    
+
     sns.set(style="whitegrid")
     plt.figure(figsize=(4, 4), dpi=300)
-        
 
-    
+
+
     plt.hist(inputs_array[0:1000, idx0] * fact, bins=bins1[idx0], density=True, alpha=0.5, color="b", label="Monte Carlo Samples")
     plt.hist(inputs_array[ind1, idx0] * fact, bins=bins2[idx0], density=True, alpha=0.5, color="r", label="Failed Samples")
-    
+
     plt.xlabel(labels[idx0])
     plt.ylabel("Density")
     plt.legend()

@@ -2,48 +2,47 @@
 []
 
 [Distributions] # Defines distributions for input paramters
-    [INF] #Infiltration amount
-      type = Uniform
-      lower_bound = 0
-      upper_bound = 1    
-    []
+  [INF] #Infiltration amount
+    type = Uniform
+    lower_bound = 0
+    upper_bound = 1
+  []
 
-    [E] #Youngs modulus
-        type = Uniform
-        lower_bound = 9e9
-        upper_bound = 15e9
-    []
-    [K] #Thermal conductivity
-        type = Uniform
-        lower_bound = 25
-        upper_bound = 100
-    []
-    [PD] #Power density
-        type = Uniform
-        lower_bound = 2e6
-        upper_bound = 5e7
-    []
-    [nu] #Poisson ratio
-        type = Uniform
-        lower_bound = 0.13
-        upper_bound = 0.21
-    []
-    [Tinf] #Salt temperature
-        type = Uniform
-        lower_bound = 823
-        upper_bound = 1023
-    []
-    [htc] #Heat transfer coefficient
-        type = Uniform
-        lower_bound = 3500
-        upper_bound = 5500
-    []
-    [CTE] #Coefficient of thermal expansion
-      type = Uniform
-      lower_bound = 3.5e-6
-      upper_bound = 6.0e-6
-    [] 
-
+  [E] #Youngs modulus
+    type = Uniform
+    lower_bound = 9e9
+    upper_bound = 15e9
+  []
+  [K] #Thermal conductivity
+    type = Uniform
+    lower_bound = 25
+    upper_bound = 100
+  []
+  [PD] #Power density
+    type = Uniform
+    lower_bound = 2e6
+    upper_bound = 5e7
+  []
+  [nu] #Poisson ratio
+    type = Uniform
+    lower_bound = 0.13
+    upper_bound = 0.21
+  []
+  [Tinf] #Salt temperature
+    type = Uniform
+    lower_bound = 823
+    upper_bound = 1023
+  []
+  [htc] #Heat transfer coefficient
+    type = Uniform
+    lower_bound = 3500
+    upper_bound = 5500
+  []
+  [CTE] #Coefficient of thermal expansion
+    type = Uniform
+    lower_bound = 3.5e-6
+    upper_bound = 6.0e-6
+  []
 []
 
 [Samplers] # Defines the sampler methods
@@ -79,12 +78,12 @@
 []
 
 [Controls]
-    [cmdline] #Passes inputs to simulation based on sampler output
-      type = MultiAppSamplerControl
-      multi_app = sub
-      sampler = sample
-      param_names = 'INF E K PD nu Tinf htc CTE'
-    []
+  [cmdline] #Passes inputs to simulation based on sampler output
+    type = MultiAppSamplerControl
+    multi_app = sub
+    sampler = sample
+    param_names = 'INF E K PD nu Tinf htc CTE'
+  []
 []
 
 [Reporters]
