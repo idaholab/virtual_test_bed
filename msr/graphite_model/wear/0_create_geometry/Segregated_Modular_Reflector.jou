@@ -1,0 +1,44 @@
+reset
+# Parameter definitions
+#{theta=51} # Angle in degrees
+#{L_R=0.6} # Cylinder height and outer radius modifier
+#{L_Z=0.305} # Z-axis movement distance
+#{output_filename="Baseline_Case_2"} # Only the filename for exporting the mesh
+
+#{Ri=1.2} # Fixed inner radius
+
+# Create geometry based on the parameters
+create cylinder height {L_Z} radius {Ri + L_R} # Outer cylinder with radius Ri + L_R
+create cylinder height {L_Z} radius {Ri} # Inner cylinder with radius Ri
+subtract volume 2 from volume 1
+webcut body 1 with plane yplane
+delete volume 1
+rotate body 3 about z angle {-theta}
+webcut volume 3 with plane yplane
+delete volume 4
+rotate body 3 about z angle {theta}
+
+# Define nodesets
+nodeset 1 vertex 18 name "fixed"
+nodeset 2 vertex 15 name "y_z_roller"
+nodeset 3 vertex 17 name "y_roller"
+
+# Segregate
+
+webcut volume all cylinder radius 1.3 axis z center 0 0 0
+webcut volume all cylinder radius 1.55 axis z center 0 0 0
+#webcut volume all cylinder radius 1.6 axis z center 0 0 0
+webcut volume all with yplane rotate 10.2 about z
+webcut volume all with yplane rotate 20.4 about z
+webcut volume all with yplane rotate 30.6 about z
+webcut volume all with yplane rotate 40.8 about z
+Merge all
+Surface 124 125 126 size 0.0005
+#Volume 21 17 13 9 5 size 0.001
+mesh volume all 
+
+# Move the body along the z-axis based on L_Z
+move body all z 1.76 include_merged
+
+# Export the mesh with the specified filename in the fixed directory
+export mesh "/Users/pritv/1_NRCProject_GraphiteModeling/Simulations/Wear/WorstCaseScenario_Pit_Groove_Analysis/{output_filename}.e" overwrite
