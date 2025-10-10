@@ -41,9 +41,9 @@ The equivalence factors were computed on the full core geometry to ensure perfec
 
 #### Poison Tracking
 
-The 'PoisonTracking' block specifies the microscopic cross sections library to use with respect to fuel and moderator temperatures. It is used to track the concentration of Xe-135 in the fuel regions.
+Poison tracking is activated by setting the 'poison_tracking_chains' parameter in the 'PowerDensity' block. It is used to track the concentration of Xe-135 in the fuel regions. The same cross section file and interpolation variables are used in poison tracking as specified in 'Materials' block for the 'fuel_sph' material covering the fueled regions.
 
-!listing httr/steady_state_and_null_transient/neutronics_eigenvalue.i block=PoisonTracking
+!listing httr/steady_state_and_null_transient/neutronics_eigenvalue.i block=PowerDensity
 
 ## Heat Transfer
 

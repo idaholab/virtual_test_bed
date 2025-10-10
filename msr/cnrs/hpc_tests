@@ -1,0 +1,57 @@
+[Tests]
+  issues = '#534'
+  [s12]
+    type = CSVDiff
+    working_directory = 's12'
+    input = 'cnrs_s12_griffin_neutronics.i'
+    csvdiff = "cnrs_s12_griffin_neutronics_csv_AA_line_values_left_0002.csv  cnrs_s12_griffin_neutronics_csv_BB_line_values_left_0002.csv  cnrs_s12_griffin_neutronics_csv.csv
+               cnrs_s12_griffin_neutronics_csv_AA_line_values_right_0002.csv cnrs_s12_griffin_neutronics_csv_BB_line_values_right_0002.csv"
+    min_parallel = 24
+    max_time = 3600
+    # Missing absorption cross section
+    allow_warnings = true
+    executable_pattern = 'griffin*'
+  []
+  [s13]
+    type = CSVDiff
+    working_directory = 's13'
+    input = 'cnrs_s13_griffin_neutronics.i'
+    csvdiff = "cnrs_s13_griffin_neutronics_csv_AA_line_values_left_0002.csv  cnrs_s13_griffin_neutronics_csv_BB_line_values_left_0002.csv  cnrs_s13_griffin_neutronics_csv.csv
+               cnrs_s13_griffin_neutronics_csv_AA_line_values_right_0002.csv cnrs_s13_griffin_neutronics_csv_BB_line_values_right_0002.csv"
+    min_parallel = 24
+    max_time = 2000
+    # Solution change from 12 to 24 processes
+    rel_err = 4e-5
+    # Missing absorption cross section
+    allow_warnings = true
+    executable_pattern = 'griffin*'
+  []
+  [s14]
+    type = CSVDiff
+    working_directory = 's14'
+    input = 'cnrs_s14_griffin_neutronics.i'
+    # Use same u_grid as s21 for testing
+    cli_args = "MultiApps/ns_flow/cli_args='Ulid=0.5'"
+    csvdiff = "cnrs_s14_griffin_neutronics_out.csv"
+    min_parallel = 24
+    max_time = 1200
+    # changing from 12 to 24 processors
+    rel_err = 2e-5
+    # Missing absorption cross section
+    allow_warnings = true
+    executable_pattern = 'griffin*'
+  []
+  [s21]
+    type = CSVDiff
+    prereq = 's14'
+    working_directory = 's21'
+    input = 'cnrs_s21_griffin_neutronics.i'
+    cli_args = "Executioner/end_time=1"
+    csvdiff = "cnrs_s21_griffin_neutronics_out.csv cnrs_s21_griffin_neutronics_out_ns_flow0.csv"
+    min_parallel = 24
+    max_time = 1500
+    # Missing absorption cross section
+    allow_warnings = true
+    executable_pattern = 'griffin*'
+  []
+[]

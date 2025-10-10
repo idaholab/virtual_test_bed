@@ -21,7 +21,7 @@
     executable_pattern = 'subchannel*|pronghorn*|combined*'
 
     # To get consistent results for testing
-    cli_args = "Problem/P_tol=1e-7 Problem/T_tol=1e-6 Problem/atol=1e-9 Problem/rtol=1e-9"
+    cli_args = "SubChannel/P_tol=1e-7 SubChannel/T_tol=1e-6 SubChannel/atol=1e-9 SubChannel/rtol=1e-9"
     custom_cmp = 'testing_tolerances.cmp'
   []
 []

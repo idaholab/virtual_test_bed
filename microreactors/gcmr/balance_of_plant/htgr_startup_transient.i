@@ -2109,6 +2109,7 @@ eff_turb = 0.843
   exodus = true
   [csv]
     type = CSV
+    hide = 'core/core_heating:power_shape_fn:integral'
   []
 
   [cp]

@@ -135,7 +135,7 @@ beta6 = 0.000184087
 
     # Precursor advection, diffusion and source term
     passive_scalar_names = 'c1 c2 c3 c4 c5 c6'
-    passive_scalar_schmidt_number = '${Sc_t} ${Sc_t} ${Sc_t} ${Sc_t} ${Sc_t} ${Sc_t}'
+    Sc_t = '${Sc_t} ${Sc_t} ${Sc_t} ${Sc_t} ${Sc_t} ${Sc_t}'
     passive_scalar_coupled_source = 'fission_source c1; fission_source c2; fission_source c3;
                                      fission_source c4; fission_source c5; fission_source c6'
     passive_scalar_coupled_source_coeff = '${beta1} ${lambda1_m}; ${beta2} ${lambda2_m};

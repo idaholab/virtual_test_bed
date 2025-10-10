@@ -255,7 +255,7 @@ def assembly(n_ax_zones, n_inactive, n_active, add_entropy_mesh=False):
     max_z = axial_planes[-1]
 
     # fill the unit cell with the hex lattice
-    hex_prism = openmc.hexagonal_prism(bundle_pitch / math.sqrt(3.0), 'x', boundary_type='periodic')
+    hex_prism = openmc.model.hexagonal_prism(bundle_pitch / math.sqrt(3.0), 'x', boundary_type='periodic')
     outer_cell = openmc.Cell(region=hex_prism & +min_z & -max_z, fill=hex_lattice)
 
     # add the top and bottom reflector

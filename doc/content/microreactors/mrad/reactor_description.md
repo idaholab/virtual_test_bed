@@ -14,3 +14,7 @@ To achieve an optimum level of moderation, yttrium-hydride (YH2) pins are employ
 This concept employs heat pipes with a stainless-steel envelope and potassium working fluid. The heat pipe is separated from the graphite monolith by a helium gap. The heat pipe is divided into three radial regions: the working fluid vapor, the working fluid liquid plus wick, and the envelope.
 
 The control system of the core includes 12 control drums located in the radial reflector that are capable of bringing the core to cold shutdown throughout the operation of the reactor. For redundancy purposes, a shutdown rod is located in the central core location.
+
+## Sodium Heat Pipe (Na-HPMR) Variant of the HPMR Design
+
+A variant of the above design was also developed using sodium as the working fluid in the heat pipes (Na-HPMR). The main motivation for this design is to better utilize the mechanistic heat pipe models (i.e., vapor-only model) in Sockeye to enable advanced modeling features such as start up transients. The Na-HP model in Sockeye has been validated against the heat pipe experiments supported by the DOE Microreactor Program (MRP). The Na-HPMR design is identical to the K-HPMR design except for the heat pipe working fluid. To better fit the operating temperature range of sodium, the design temperature is increased by 100 K.

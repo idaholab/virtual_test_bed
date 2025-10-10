@@ -177,7 +177,7 @@ scalar_systems = 'prec1 prec2 prec3 prec4 prec5 prec6'
       # Turbulence parameters
       turbulence_handling = 'mixing-length'
       turbulent_prandtl = ${Pr_t}
-      passive_scalar_schmidt_number = '${Sc_t} ${Sc_t} ${Sc_t} ${Sc_t} ${Sc_t} ${Sc_t}'
+      Sc_t = '${Sc_t} ${Sc_t} ${Sc_t} ${Sc_t} ${Sc_t} ${Sc_t}'
       von_karman_const = ${von_karman_const}
       mixing_length_delta = 0.1
       mixing_length_walls = 'shield_wall reflector_wall'

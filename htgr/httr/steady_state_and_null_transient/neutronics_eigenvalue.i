@@ -96,14 +96,6 @@ extension = '_9MW'
   []
 []
 
-[PoisonTracking]
-  decay_chains = 'XE135'
-  micro_library_file = '../cross_sections/HTTR_5x5${extension}_profiled_VR_kappa_adjusted.xml'
-  micro_library_name = 'HTTR_5x5${extension}'
-  grid_names = 'Tfuel Tmod'
-  grid_variables = 'Tfuel Tmod'
-[]
-
 [Equivalence]
   type = SPH
   transport_system = diff
@@ -120,6 +112,8 @@ extension = '_9MW'
   power = ${fission_power}
   power_density_variable = power_density
   integrated_power_postprocessor = integrated_power
+  # activates poison tracking
+  poison_tracking_chains = 'XE135'
 []
 
 [GlobalParams]
@@ -205,13 +199,15 @@ extension = '_9MW'
     execute_on = 'initial timestep_end'
   []
   [NI_avg]
-    type = ElementAverageValue
-    variable = NI
+    type = ElementIntegralArrayVariablePostprocessor
+    variable = poison_tracking
+    component = 0
     block = '${fuel_blocks}'
   []
   [NXe_avg]
-    type = ElementAverageValue
-    variable = NXe
+    type = ElementIntegralArrayVariablePostprocessor
+    variable = poison_tracking
+    component = 1
     block = '${fuel_blocks}'
   []
 []
@@ -225,7 +221,7 @@ extension = '_9MW'
   []
   [restart_poison_densities]
     type = SolutionVectorFile
-    var = 'NI NXe'
+    var = 'poison_tracking'
     writing = true
     execute_on = 'final'
   []
