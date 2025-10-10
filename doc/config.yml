@@ -14,12 +14,24 @@ Renderer:
 
 Extensions:
     MooseDocs.extensions.navigation:
-        name: vtb
+        name: VTB
         repo: https://github.com/idaholab/virtual_test_bed
         menu:
-            Registration: https://ncrcaims.inl.gov/vtb/VTBRegistration
-            Contributing: contributing.md
-            Citing: citing.md
+            Documentation:
+                Registration: registration.md
+                Getting Started: getting_started.md
+                Codes: codes.md
+                Running Models: running_models.md
+                Tutorials: tutorials/index.md
+                Updating the VTB: updating.md
+                Contributing: contributing.md
+                Citing: citing.md
+            Models:
+                By Filter: https://mooseframework.inl.gov/virtual_test_bed/resources/filter/index.html
+                By Index: resources/manual_indexing.md
+            Support:
+                FAQ and Forum: https://github.com/idaholab/virtual_test_bed/discussions
+                Contact Us: contact.md
     MooseDocs.extensions.appsyntax:
         active: false
     MooseDocs.extensions.ifelse:

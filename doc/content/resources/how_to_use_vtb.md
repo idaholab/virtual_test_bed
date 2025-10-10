@@ -89,21 +89,6 @@ gathered in combined applications such as `blue_crab`.
   ~/projects/blue_crab/blue_crab-opt -i run_ns.i         # to run only the fluid simulation
 ```
 
-### Using the Peacock GUI style=font-size:125%
-
-
-An alternative to running NEAMS tools from the command line is to use the Peacock GUI.
-Peacock should be provided an executable and an input file. Its interface contains five tabs:
-
-- Input file tab, an integrated text editor to modify the input file
-- Execute tab, to set execution parameters and view the log during the simulation
-- ExodusViewer, to view multidimensional results during the simulation, such as variable values
-- PostprocessorViewer, to view the time evolution of Postprocessors during the simulation
-- VectorPostprocessorViewer, to view the time evolution of vectors of Postprocessors during the simulation
-
-
-More information may be about about Peacock on [this page](https://mooseframework.inl.gov/moose/application_usage/peacock.html).
-
 ## Step 4: Adapt the model for your reactor or your simulation
 
 ### Changing the mesh file style=font-size:125%
