@@ -46,7 +46,9 @@ richardsonmaxits=1000
 
 #==============================================================
 
-# material_id 1: helium gap  | block_id 1
+#   material_id                  block_id
+#--------------------------------------------------------------
+#             1: helium gap             1
 #             2: inner fuel             100
 #             3: outer fuel             101 102 103 104 105 106
 #             4: clad                   2
@@ -327,6 +329,8 @@ richardsonmaxits=1000
                          pseudo_PB208FCO ${fparse 1.584046E-02*coolantdensity_ref/10401.99540132}'
     density_type = atomic
     composition_ids = ${mid_cool}
+    fluid_density = fluid_density
+    reference_fluid_density = ${coolantdensity_ref}
   []
 []
 
@@ -354,8 +358,6 @@ richardsonmaxits=1000
     library_id = 2
     block = 'Lead'
     grid_variables = nek_bulk_temp
-    fluid_density  = fluid_density
-    reference_fluid_density = ${coolantdensity_ref}
   []
 []
 
