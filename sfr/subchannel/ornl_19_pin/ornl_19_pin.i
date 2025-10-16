@@ -53,7 +53,6 @@ P_out = 2.0e5 # Pa
   P_tol = 1e-4
   T_tol = 1e-4
   staggered_pressure = false
-  monolithic_thermal = false
   verbose_multiapps = true
   verbose_subchannel = true
   interpolation_scheme = upwind
