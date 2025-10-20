@@ -1,0 +1,48 @@
+
+reset
+create surface rectangle width 1.4142135623730951 height 1.4142135623730951
+rotate body 1 about z angle -45
+webcut body 1 with plane yplane
+delete body 2
+move body 1 y 1
+create surface circle radius 0.02
+create surface circle radius 0.02
+body 3 move -0.68 0.82
+body 4 move 0.68 0.82
+subtract body 3 4 from body 1
+create surface rectangle width 1.4 height 0.2
+move body 5 y 0.92
+subtract body 5 from body 1
+create surface rectangle width 1.36 height 0.2
+move body 6 y 0.9
+subtract body 6 from body 1
+
+rotate body all about z angle -45
+
+sweep surface all direction z distance 65.5
+
+Merge all 
+volume 1 size 0.05
+
+mesh volume all
+
+block 1 volume 1
+
+
+
+sideset 1 surface 15
+sideset 1 name "left" 
+
+sideset 2 surface 14
+sideset 2 name "bottom"
+
+sideset 3 surface 11 12 17 18 19
+sideset 3 name "right_channelboundary"
+
+sideset 4 surface 20
+Sideset 4 name "zbottom"
+
+
+Body all scale 0.0254
+
+export mesh "Provide_Your_Path/msre3D_0PF_Coarse.e" overwrite
