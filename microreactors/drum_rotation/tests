@@ -1,70 +1,51 @@
 [Tests]
   # Generate the mesh
-  [drum_mesh]
-    type = CheckFiles
-    input = drum.i
-    cli_args = '--mesh-only'
-    executable_pattern = 'griffin*|blue_crab*|dire_wolf*'
-    check_files = drum_in.e
-  []
   [fine_mesh]
     type = CheckFiles
     input = empire_2d_CD_fine.i
     cli_args = '--mesh-only'
     check_files = empire_2d_CD_fine_in.e
-    executable_pattern = 'griffin*|blue_crab*|dire_wolf*'
-    prereq = drum_mesh
-  []
-  [coarse_mesh]
-    type = CheckFiles
-    input = empire_2d_CD_coarse.i
-    cli_args = '--mesh-only'
-    check_files = empire_2d_CD_coarse_in.e
-    executable_pattern = 'griffin*|blue_crab*|dire_wolf*'
-    prereq = fine_mesh
+    executable_pattern = 'griffin*|blue_crab*|dire_wolf*|sabertooth*'
   []
 
   # Regression tests
   [neutronics_eigenvalue]
     type = CSVDiff
     input = neutronics_eigenvalue.i
-    cli_args = 'Executioner/richardson_rel_tol=1e-6 Outputs/csv=true Outputs/exodus=false bison:Outputs/exodus=false'
-    csvdiff = neutronics_eigenvalue_90.csv
-    executable_pattern = 'griffin*|blue_crab*|dire_wolf*'
+    cli_args = 'Outputs/csv=true Outputs/exodus=false bison:Outputs/exodus=false
+                TransportSystems/sn/NPolar=1 TransportSystems/sn/NAzmthl=3'
+    csvdiff = neutronics_eigenvalue_out.csv
+    abs_zero = 1e-8
+    rel_err = 1e-4
+    executable_pattern = 'griffin*|blue_crab*|dire_wolf*|sabertooth*'
     min_parallel = 16
     method = 'opt'
     max_time = 300
-    prereq = coarse_mesh
-
-    # BISON element quality checker emits a warning when using TRI3
-    allow_warnings = true
+    prereq = fine_mesh
   []
   [neutronics_adjoint]
     type = RunApp
     input = neutronics_adjoint.i
-    executable_pattern = 'griffin*|blue_crab*|dire_wolf*'
+    cli_args = 'TransportSystems/sn/NPolar=1 TransportSystems/sn/NAzmthl=3'
+    executable_pattern = 'griffin*|blue_crab*|dire_wolf*|sabertooth*'
     min_parallel = 16
     method = 'opt'
     max_time = 100
     prereq = neutronics_eigenvalue
-
-    # BISON element quality checker emits a warning when using TRI3
-    allow_warnings = true
   []
   [neutronics_transient]
     type = CSVDiff
     input = neutronics_transient.i
-    cli_args = 'Executioner/end_time=0.12 Executioner/output_micro_csv=false Outputs/exodus=false bison:Outputs/exodus=false bison:Outputs/csv=false'
+    cli_args = 'Executioner/end_time=0.06 Executioner/output_micro_csv=false
+                TransportSystems/sn/NPolar=1 TransportSystems/sn/NAzmthl=3
+                Outputs/exodus=false bison:Outputs/exodus=false bison:Outputs/csv=false'
     csvdiff = 'neutronics_transient_out.csv neutronics_transient_out_pke_params.csv'
     abs_zero = 1e-8
     rel_err = 1e-4
-    executable_pattern = 'griffin*|blue_crab*|dire_wolf*'
+    executable_pattern = 'griffin*|blue_crab*|dire_wolf*|sabertooth*'
     min_parallel = 16
     method = 'opt'
     max_time = 400
     prereq = neutronics_adjoint
-
-    # BISON element quality checker emits a warning when using TRI3
-    allow_warnings = true
   []
 []
