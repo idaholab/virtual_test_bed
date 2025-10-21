@@ -6,7 +6,7 @@ y_center = ${fparse r}
 
 # Rotation specs
 angle_step = ${fparse 360 / 1800} # Angular distance between elements in drum
-dstep = 6 # Number of elements to pass each timestep
+dstep = 3 # Number of elements to pass each timestep
 pos_start = 90 # Starting position
 t_out = 2 # Time moving outward
 speed = 20 # Degrees per second
@@ -15,16 +15,7 @@ speed = 20 # Degrees per second
   [main]
     type = FileMeshGenerator
     file = empire_2d_CD_fine_in.e
-  []
-  [coarse_mesh]
-    type = FileMeshGenerator
-    file = empire_2d_CD_coarse_in.e
-  []
-  [mesh]
-    type = CoarseMeshExtraElementIDGenerator
-    input = main
-    coarse_mesh = coarse_mesh
-    extra_element_id_name = coarse_element_id
+    exodus_extra_element_integers = 'material_id coarse_element_id'
   []
 []
 
@@ -48,14 +39,10 @@ speed = 20 # Degrees per second
     family = MONOMIAL
     order = FIRST
     AQtype = Gauss-Chebyshev
-    NPolar = 1 # use >=2 for final runs (4 sawtooth nodes sufficient)
-    NAzmthl = 3 # use >=6 for final runs (4 sawtooth nodes sufficient)
+    NPolar = 2
+    NAzmthl = 6
     NA = 1
     dnp_amp_scheme = quadrature
-    sweep_type = asynchronous_parallel_sweeper
-    using_array_variable = true
-    collapse_scattering  = true
-    hide_angular_flux = true
     hide_higher_flux_moment = 0
   []
 []
@@ -120,37 +107,17 @@ speed = 20 # Degrees per second
   grid_names = 'Tfuel Tmod CD'
   grid_variables = 'Tfuel Tmod CD'
   is_meter = true
-
-  # Reduces transfers efficiency for now, can be removed once transferred fields are checked
-  bbox_factor = 10
 []
 
 [Materials]
   [fuel]
-    type = CoupledFeedbackNeutronicsMaterial
-    block = '1 2' # fuel pin with 1 cm outer radius, no gap
-    material_id = 1001
+    type = CoupledFeedbackMatIDNeutronicsMaterial
+    block = '1 2'
     plus = true
   []
-  [moderator]
-    type = CoupledFeedbackNeutronicsMaterial
-    block = '3 4 5' # moderator pin with 0.975 cm outer radius
-    material_id = 1002
-  []
-  [monolith]
-    type = CoupledFeedbackNeutronicsMaterial
-    block = '8'
-    material_id = 1003
-  []
-  [hpipe]
-    type = CoupledFeedbackNeutronicsMaterial
-    block = '6 7' # gap homogenized with HP
-    material_id = 1004
-  []
-  [be]
-    type = CoupledFeedbackNeutronicsMaterial
-    block = '10 11 14 15'
-    material_id = 1005
+  [non_fuel]
+    type = CoupledFeedbackMatIDNeutronicsMaterial
+    block = '3 4 5 6 7 8 10 11 14 15 20 21 22'
   []
   [drum]
     type = CoupledFeedbackRoddedNeutronicsMaterial
@@ -162,11 +129,11 @@ speed = 20 # Degrees per second
     isotopes = 'pseudo; pseudo'
     densities = '1.0 1.0'
   []
-  [air]
-    type = CoupledFeedbackNeutronicsMaterial
-    block = '20 21 22'
-    material_id = 1007
-  []
+[]
+
+[Decusping]
+  level = 1
+  switch_h_to_p_refinement = false
 []
 
 [Debug]
@@ -181,6 +148,12 @@ speed = 20 # Degrees per second
   end_time = 5
   dt = ${fparse angle_step / speed * dstep}
   dtmin = 0.001
+
+  fixed_point_solve_outer = true
+  fixed_point_max_its = 50
+  custom_pp = integrated_power
+  custom_abs_tol = 1 # W
+  custom_rel_tol = 1e-6
 
   richardson_rel_tol = 1e-4
   richardson_abs_tol = 5e-5
@@ -200,6 +173,7 @@ speed = 20 # Degrees per second
     type = TransientMultiApp
     input_files = thermal_transient.i
     execute_on = 'timestep_end'
+    clone_parent_mesh = true
   []
 []
 
@@ -223,6 +197,8 @@ speed = 20 # Degrees per second
     source_variable = Tsolid
     from_blocks = '1 2'
     search_value_conflicts = false
+    # Reduces transfers efficiency for now, can be removed once transferred fields are checked
+    bbox_factor = 10
   []
   [tmod_from_modules]
     type = MultiAppGeneralFieldNearestLocationTransfer
@@ -231,6 +207,8 @@ speed = 20 # Degrees per second
     source_variable = Tsolid
     from_blocks = '3 4 8 10 11 13 14 15 22'
     search_value_conflicts = false
+    # Reduces transfers efficiency for now, can be removed once transferred fields are checked
+    bbox_factor = 10
   []
 []
 
