@@ -16,6 +16,6 @@
                        sponsor:NRC
                        institution:ANL
 
-[SAM HTR-PM model](htr-pm/htr-pm_model.md)
+[SAM HTR-PM model](htr-pm/sam-model/htr-pm_model.md)
 
-[SAM HTR-PM results](htr-pm/htr-pm_results.md)
+[SAM HTR-PM results](htr-pm/sam-model/htr-pm_results.md)
