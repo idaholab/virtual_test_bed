@@ -116,7 +116,7 @@ help creating it.
 
 - Mk1 FHR Primary loop simulation [documentation](pbfhr/mark_1/pbfhr_sam/pbfhr_sam.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/pbfhr/mark_1/sam_model)
 
-- HTR-PM Core analysis [documentation](htgr/htr-pm/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/htr-pm)
+- HTR-PM Core analysis [documentation](htgr/htr-pm/sam-model/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/htr-pm/sam-htrpm)
 
 
 ### Unprotected loss of coolant flow (ULOF)
