@@ -67,6 +67,8 @@ obtained through INL's [NCRC](https://inl.gov/ncrc/).
 
 - Molten Salt Reactor Experiment RZ multiphysics core model [documentation](msr/msre/multiphysics_rz_model/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/msr/msre/multiphysics_core_model/steady_state)
 
+- HTR-PM multiphysics model [documentation](htgr/htr-pm/core-multiphysics/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/htr-pm/core-multiphysics)
+
 
 ### Cardinal / OpenMC (open-source)
 
@@ -128,8 +130,7 @@ obtained through INL's [NCRC](https://inl.gov/ncrc/).
 
 - Generic Pebble Bed Reactor core model [documentation](htgr/generic-pbr/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/generic-pbr)
 
-- HTR-PM reference plant model [documentation](htgr/htr-pm/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/htr-pm)
-
+- HTR-PM reference plant model [documentation](htgr/htr-pm/sam-model/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/htr-pm/sam-model)
 
 ### Thermal-hydraulics module (open-source)
 
