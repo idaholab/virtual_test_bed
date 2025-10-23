@@ -1,0 +1,74 @@
+[Tests]
+  [drum_mesh]
+    type = RunApp
+    input = drum.i
+    cli_args = '--mesh-only'
+    executable_pattern = 'griffin*'
+    group = griffin_performance
+  []
+  [fine_mesh]
+    type = RunApp
+    input = empire_2d_CD_fine.i
+    cli_args = '--mesh-only'
+    executable_pattern = 'griffin*'
+    prereq = drum_mesh
+    group = griffin_performance
+  []
+  [coarse_mesh]
+    type = RunApp
+    input = empire_2d_CD_coarse.i
+    cli_args = '--mesh-only'
+    executable_pattern = 'griffin*'
+    group = 'griffin_performance'
+  []
+  # this test is primarily meant to help keep track of Griffin run times
+  [neutronics_eigenvalue]
+    type = CSVDiff
+    input = neutronics_eigenvalue.i
+    cli_args = "Executioner/richardson_rel_tol=1e-6 Outputs/csv=true
+                Outputs/exodus=false
+                Outputs/file_base=neutronics_eigenvalue_heavy
+                TransportSystems/sn/NPolar=3
+                TransportSystems/sn/NAzmthl=9
+                MultiApps/active='' Transfers/active='' --allow-unused"
+    csvdiff = neutronics_eigenvalue_heavy.csv
+    executable_pattern = 'griffin*'
+    min_parallel = 36
+    method = 'opt'
+    max_time = 120
+    prereq = 'coarse_mesh fine_mesh'
+    group = griffin_performance
+  []
+  # this test is primarily meant to help keep track of Griffin run times
+  [neutronics_adjoint]
+    type = RunApp
+    input = neutronics_adjoint.i
+    executable_pattern = 'griffin*'
+    min_parallel = 36
+    cli_args = "TransportSystems/sn/NPolar=3
+                TransportSystems/sn/NAzmthl=9"
+    method = 'opt'
+    max_time = 90
+    prereq = 'neutronics_eigenvalue'
+    group = griffin_performance
+  []
+  # this test is primarily meant to help keep track of Griffin run times
+  [neutronics_transient]
+    type = CSVDiff
+    input = neutronics_transient.i
+    cli_args = "Executioner/end_time=0.18 Executioner/output_micro_csv=false Outputs/exodus=false
+                Outputs/file_base=neutronics_transient_heavy
+                TransportSystems/sn/NPolar=3
+                TransportSystems/sn/NAzmthl=9
+                MultiApps/active='' Transfers/active='' --allow-unused"
+    csvdiff = 'neutronics_transient_heavy.csv neutronics_transient_heavy_pke_params.csv'
+    abs_zero = 1e-8
+    rel_err = 1e-4
+    executable_pattern = 'griffin*'
+    min_parallel = 36
+    method = 'opt'
+    max_time = 400
+    prereq = neutronics_adjoint
+    group = griffin_performance
+  []
+[]
