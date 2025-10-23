@@ -77,7 +77,7 @@ test can only be run by executables that meet one of the patterns `bison*`, `blu
 or `dire_wolf*`; if running the test suite with an incompatible executable, this
 test will be skipped.
 
-Assuming you've already followed the [directions for getting started with the VTB](resources/how_to_use_vtb.md),
+Assuming you've already followed the instructions on [vtb_pages/getting_started.md],
 you can run tests as described below. The instructions differ depending on whether
 you have source vs. executable access to the desired application(s) to test.
 

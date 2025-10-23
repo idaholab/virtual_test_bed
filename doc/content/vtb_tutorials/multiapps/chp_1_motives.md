@@ -22,7 +22,7 @@ To illustrate the differences between full, tight, and loose coupling, we introd
   \begin{cases}
     A \vec{e} + \alpha \vec{T} = \vec{a}\\
     \beta \vec{e} + B \vec{T} = \vec{b}
-  \end{cases}     
+  \end{cases}
   \label{eq:PDEs}
 \end{equation}
 
@@ -85,4 +85,4 @@ Coupled physical phenomena may involve vastly different space scales (one variab
 When one physics does not make a large impact on another physics solution, we say the two phenomena are weakly coupled. For example, in reactor designs with small thermal reactivity coefficients, small changes in coolant temperature will cause very small changes in reactivity and power. However, changes in power may still lead to dramatic changes in coolant and fuel temperatures. The `MultiApp` approach provides a flexible way to solve each physics as often as needed (including potentially only once).
 
 !style halign=right
-[+Go to Chapter 2+](/chp_2_terminology.md)
+[+Go to Chapter 2+](vtb_tutorials/multiapps/chp_2_terminology.md)

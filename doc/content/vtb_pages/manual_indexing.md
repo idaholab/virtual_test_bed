@@ -1,8 +1,8 @@
 # Model indexes
 
-- [Models sorted by code used](resources/codes_used.md) \\
-- [Models sorted by type of simulation](resources/simulation_type.md) \\
-- [Models sorted by input file feature](resources/input_features.md) \\
+- [Models sorted by code used](vtb_pages/models_by_codes_used.md) \\
+- [Models sorted by type of simulation](vtb_pages/models_by_simulation_type.md) \\
+- [Models sorted by input file feature](vtb_pages/models_by_input_features.md) \\
 - [Light Water Reactor (LWR)](lwr/index.md) \\
 - [Molten Salt Reactor (MSR)](msr/index.md) \\
 - [High Temperature Gas-Cooled Reactor (HTGR)](htgr/index.md) \\

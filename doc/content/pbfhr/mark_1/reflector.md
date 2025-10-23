@@ -21,7 +21,7 @@
                        institution:ANL
 
 !alert note
-The meshes for this model are hosted on LFS. Please refer to [LFS instructions](resources/how_to_use_vtb.md#lfs)
+The meshes for this model are hosted on LFS. Please refer to [LFS instructions](vtb_pages/getting_started.md#lfs)
 to download them.
 
 The pebble region in the [!ac](PB-FHR) is enclosed by an outer graphite reflector

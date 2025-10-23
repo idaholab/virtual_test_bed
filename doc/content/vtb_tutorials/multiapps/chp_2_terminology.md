@@ -2,7 +2,7 @@
 
 ## Important Terminology
 
-In [Chapter 1](/chp_1_motives.md), we have described the basic purpose of the MOOSE MultiApp System, which is to enable flexible and computationally efficient multiphysics coupling among several physics solvers or applications. Now, how do we set up the coupling scheme? This chapter introduces basic terminology and recommendations for setting up coupled simulations. The flow of information and order of execution of individual applications is specified through a MultiApp hierarchy.
+In [Chapter 1](vtb_tutorials/multiapps/chp_1_motives.md), we have described the basic purpose of the MOOSE MultiApp System, which is to enable flexible and computationally efficient multiphysics coupling among several physics solvers or applications. Now, how do we set up the coupling scheme? This chapter introduces basic terminology and recommendations for setting up coupled simulations. The flow of information and order of execution of individual applications is specified through a MultiApp hierarchy.
 
 ### MultiApp Hierarchy
 
@@ -45,7 +45,7 @@ The MultiApp hierarchy has the following structure:
 - A MultiApp object can have any number of child applications.
 - A child application can create a multi-level solve by defining any number of MultiApp objects.
 - Creating thousands of MultiApps solves is possible in the MultiApp Hierarchy System, and these MultiApps may also have an arbitrary number of child apps
-- The applications in the hierarchy can be MOOSE-based or external (MOOSE-wrapped) applications.  
+- The applications in the hierarchy can be MOOSE-based or external (MOOSE-wrapped) applications.
 - Using multi-level solves can be advantageous for parallel execution and debugging.
 
 
@@ -77,4 +77,4 @@ Despite the possibility of using many different hierarchies to perform a Multiph
 Find more details about MOOSE applications in Chapter 3.
 
 !style halign=right
-[+Go to Chapter 3+](/chp_3_applications.md)
+[+Go to Chapter 3+](vtb_tutorials/multiapps/chp_3_applications.md)

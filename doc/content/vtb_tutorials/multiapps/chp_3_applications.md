@@ -119,4 +119,4 @@ MultiApps may also be used to handle dissimilar timings. For example, the parent
 The MOOSE [Stochastic Tools](https://mooseframework.inl.gov/modules/stochastic_tools/index.html) may be included as the parent application in MultiApp hierarchy to drive statistical analysis. In this case, the parent app samples some key parameters of the child application and spawns several simulations with these sampled parameters.
 
 !style halign=right
-[+Go to Chapter 4+](/chp_4_workflow.md)
+[+Go to Chapter 4+](vtb_tutorials/multiapps/chp_4_workflow.md)

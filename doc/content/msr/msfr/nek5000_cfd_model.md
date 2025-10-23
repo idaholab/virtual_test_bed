@@ -173,7 +173,7 @@ is selected as the reference geometry for our CFD simulations.
 | Estimated Peclet number ($Pe=Re\bullet Pr$)  | $1.73\times10^7$ | $[-]$  |
 
 !alert note
-The meshes for this model are hosted on LFS. Please refer to [LFS instructions](resources/how_to_use_vtb.md#lfs)
+The meshes for this model are hosted on LFS. Please refer to [LFS instructions](vtb_pages/getting_started.md#lfs)
 
 A 2-D axisymmetric core model is first created for Nek5000 RANS simulations.
 The geometric model /and mesh are generated using the open-source meshing software, [GMSH](https://gmsh.info/).

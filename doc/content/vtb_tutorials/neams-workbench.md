@@ -1,3 +1,5 @@
+# NEAMS Workbench
+
 ## Introduction
 
 The mission of the US Department of Energy's Nuclear Energy Advanced Modeling and Simulation ([NEAMS](https://neams.inl.gov/)) Program is to develop, apply, and deploy state-of-the-art predictive modeling and simulation tools for the design and analysis of current and future nuclear energy systems. NEAMS develops state-of-the-art [scalable tools](https://neams.inl.gov/code-descriptions/), such as the Bison fuel performance code, Griffin reactor physics code, System Analysis Module (SAM) code, and Nek5000 computational fluid dynamics code.
@@ -113,7 +115,7 @@ Once the session has started to run, the webpage is updated ([fig:hpc_on_demand_
 
 !media neams_workbench/hpc_on_demand_neams_workbench.png style=width:80% id=fig:hpc_on_demand_neams_workbench caption=NEAMS Workbench GUI on Sawtooth.
 
-### Step 2: enabling the BlueCrab executable and uploading an input file to edit 
+### Step 2: enabling the BlueCrab executable and uploading an input file to edit
 
 Once the NEAMS Workbench GUI (see step 1) has been initialized, the user should set the environment for the *Blue-Crab* application, which consists of loading modules and making the executable available in the path. This is achieved through the NEAMS Workbench GUI by clicking `File` and `Localhost`. A widget opens and lists all Moose applications available on Sawtooth. The widget should be enlarged with the mouse cursor. The *`Blue Crab`* application or any other MOOSE-based applications to activate is selected by (1) clicking on the number to the left of the application name and (2) `Activate`. The output of the process is shown in the tab below the list of all MOOSE-based application and is deemed successful once the content `{"Completed" : true}` is displayed as illustrated in [fig:hpc_on_demand_activate_blue_crab]. Note that activation process sets up the correct Linux environment for the MOOSE-based application and also loads various files needed by the NEAMS Workbench GUI for auto-completion and validations of the input files.
 

@@ -13,7 +13,7 @@ The complete input file for the Griffin neutronics model is shown below.
 
 !alert note
 The mesh for the Griffin model and the cross sections and equivalence factors are hosted on LFS.
-Please refer to [LFS instructions](resources/how_to_use_vtb.md#lfs) to download them.
+Please refer to [LFS instructions](vtb_pages/getting_started.md#lfs) to download them.
 
 !listing sfr/vtr/griffin_only.i
 

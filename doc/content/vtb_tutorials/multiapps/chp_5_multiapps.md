@@ -209,4 +209,4 @@ If the child application uses the same `mesh` as the parent application, the `cl
 It should be noticed that enabling the checkpoint for the parent application will store all the required information to restart the data from all child applications. If a simulation is terminated by mistake, the user can recover the simulation using `--recover` command-line flag if checkpoint files were enabled.
 
 !style halign=right
-[+Go to Chapter 6+](/chp_6_transfers.md)
+[+Go to Chapter 6+](vtb_tutorials/multiapps/chp_6_transfers.md)

@@ -113,7 +113,7 @@ use of non-orthogonal correctors for meshes with a degree of skewness.
 # MSFR Griffin-Pronghorn Results
 
 !alert note
-Sample outputs for this model are hosted on LFS. Please refer to [LFS instructions](resources/how_to_use_vtb.md#lfs)
+Sample outputs for this model are hosted on LFS. Please refer to [LFS instructions](vtb_pages/getting_started.md#lfs)
 to download them.
 
 ## Initialization
@@ -146,7 +146,7 @@ temperature fields in the MSFR:
 !media media/msr/msfr/PH_Griffin_T_SS.png
        style=width:30%
 
-The maximum temperature of the simulation is around 1280 K. Note that despite  
+The maximum temperature of the simulation is around 1280 K. Note that despite
 some momentum diffusion occurring in the reactor core, the flow at the center is
 low where the power density has a maximum. This leads to high temperatures in
 the center region, which in turn drives the flow vertically through buoyancy.
