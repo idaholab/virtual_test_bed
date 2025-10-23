@@ -8,16 +8,7 @@ y_center = ${fparse r}
   [main]
     type = FileMeshGenerator
     file = empire_2d_CD_fine_in.e
-  []
-  [coarse_mesh]
-    type = FileMeshGenerator
-    file = empire_2d_CD_coarse_in.e
-  []
-  [assign_coarse]
-    type = CoarseMeshExtraElementIDGenerator
-    input = main
-    coarse_mesh = coarse_mesh
-    extra_element_id_name = coarse_element_id
+    exodus_extra_element_integers = 'material_id coarse_element_id'
   []
 []
 
@@ -25,6 +16,7 @@ y_center = ${fparse r}
   power = ${fparse 2e6 / 12 / 2} # power: 2e6 W / 12 / 2 m (axial)
   power_density_variable = power_density
   integrated_power_postprocessor = integrated_power
+  evaluate_power_density_on = 'initial timestep_end'
 []
 
 [TransportSystems]
@@ -41,13 +33,9 @@ y_center = ${fparse r}
     family = MONOMIAL
     order = FIRST
     AQtype = Gauss-Chebyshev
-    NPolar = 1 # use >=2 for final runs (4 sawtooth nodes sufficient)
-    NAzmthl = 3 # use >=6 for final runs (4 sawtooth nodes sufficient)
+    NPolar = 2
+    NAzmthl = 6
     NA = 1
-    sweep_type = asynchronous_parallel_sweeper
-    using_array_variable = true
-    collapse_scattering  = true
-    hide_angular_flux = true
     hide_higher_flux_moment = 0
   []
 []
@@ -61,9 +49,6 @@ y_center = ${fparse r}
   grid_names = 'Tfuel Tmod CD'
   grid_variables = 'Tfuel Tmod CD'
   is_meter = true
-
-  # Reduces transfers efficiency for now, can be removed once transferred fields are checked
-  bbox_factor = 10
 []
 
 [AuxVariables]
@@ -105,30 +90,13 @@ y_center = ${fparse r}
 
 [Materials]
   [fuel]
-    type = CoupledFeedbackNeutronicsMaterial
-    block = '1 2' # fuel pin with 1 cm outer radius, no gap
-    material_id = 1001
+    type = CoupledFeedbackMatIDNeutronicsMaterial
+    block = '1 2'
     plus = true
   []
-  [moderator]
-    type = CoupledFeedbackNeutronicsMaterial
-    block = '3 4 5' # moderator pin with 0.975 cm outer radius
-    material_id = 1002
-  []
-  [monolith]
-    type = CoupledFeedbackNeutronicsMaterial
-    block = '8'
-    material_id = 1003
-  []
-  [hpipe]
-    type = CoupledFeedbackNeutronicsMaterial
-    block = '6 7' # gap homogenized with HP
-    material_id = 1004
-  []
-  [be]
-    type = CoupledFeedbackNeutronicsMaterial
-    block = '10 11 14 15'
-    material_id = 1005
+  [non_fuel]
+    type = CoupledFeedbackMatIDNeutronicsMaterial
+    block = '3 4 5 6 7 8 10 11 14 15 20 21 22'
   []
   [drum]
     type = CoupledFeedbackRoddedNeutronicsMaterial
@@ -140,11 +108,11 @@ y_center = ${fparse r}
     isotopes = 'pseudo; pseudo'
     densities = '1.0 1.0'
   []
-  [air]
-    type = CoupledFeedbackNeutronicsMaterial
-    block = '20 21 22'
-    material_id = 1007
-  []
+[]
+
+[Decusping]
+  level = 1
+  switch_h_to_p_refinement = false
 []
 
 [Debug]
@@ -154,8 +122,13 @@ y_center = ${fparse r}
 [Executioner]
   type = SweepUpdate
 
-  richardson_rel_tol = 1e-10
-  richardson_abs_tol = 1e-8
+  fixed_point_solve_outer = true
+  custom_pp = eigenvalue
+  fixed_point_max_its = 50
+  custom_rel_tol = 1e-6
+
+  richardson_rel_tol = 1e-1
+  richardson_abs_tol = 1e-4
   richardson_max_its = 100
   richardson_value = eigenvalue
   inner_solve_type = GMRes
@@ -165,6 +138,8 @@ y_center = ${fparse r}
   coarse_element_id = coarse_element_id
   prolongation_type = multiplicative
   max_diffusion_coefficient = 1
+  diffusion_n_free_power_its = 0
+  diffusion_newton_rel_tol = 1e-3
 []
 
 [Postprocessors]
@@ -181,6 +156,7 @@ y_center = ${fparse r}
     input_files = thermal_ss.i
     execute_on = 'timestep_end'
     no_restore = true
+    clone_parent_mesh = true
   []
 []
 
@@ -205,6 +181,8 @@ y_center = ${fparse r}
     from_blocks = '1 2'
     # Values are transferred outside the block restriction of Tfuel, leading to some indetermination
     search_value_conflicts = false
+    # Reduces transfers efficiency for now, can be removed once transferred fields are checked
+    bbox_factor = 10
   []
   [tmod_from_modules]
     type = MultiAppGeneralFieldNearestLocationTransfer
@@ -213,6 +191,8 @@ y_center = ${fparse r}
     source_variable = Tsolid
     from_blocks = '3 4 8 10 11 13 14 15 22'
     search_value_conflicts = false
+    # Reduces transfers efficiency for now, can be removed once transferred fields are checked
+    bbox_factor = 10
   []
 []
 
@@ -232,8 +212,8 @@ y_center = ${fparse r}
 []
 
 [Outputs]
-  file_base = 'neutronics_eigenvalue_90'
   exodus = true
+  perf_graph = true
   [console]
     type = Console
     outlier_variable_norms = false

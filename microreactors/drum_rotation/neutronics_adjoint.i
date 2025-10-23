@@ -8,16 +8,7 @@ y_center = ${fparse r}
   [main]
     type = FileMeshGenerator
     file = empire_2d_CD_fine_in.e
-  []
-  [coarse_mesh]
-    type = FileMeshGenerator
-    file = empire_2d_CD_coarse_in.e
-  []
-  [assign_coarse]
-    type = CoarseMeshExtraElementIDGenerator
-    input = main
-    coarse_mesh = coarse_mesh
-    extra_element_id_name = coarse_element_id
+    exodus_extra_element_integers = 'material_id coarse_element_id'
   []
 []
 
@@ -36,13 +27,9 @@ y_center = ${fparse r}
     family = MONOMIAL
     order = FIRST
     AQtype = Gauss-Chebyshev
-    NPolar = 1 # use >=2 for final runs (4 sawtooth nodes sufficient)
-    NAzmthl = 3 # use >=6 for final runs (4 sawtooth nodes sufficient)
+    NPolar = 2
+    NAzmthl = 6
     NA = 1
-    sweep_type = asynchronous_parallel_sweeper
-    using_array_variable = true
-    collapse_scattering  = true
-    hide_angular_flux = true
   []
 []
 
@@ -94,30 +81,13 @@ y_center = ${fparse r}
 
 [Materials]
   [fuel]
-    type = CoupledFeedbackNeutronicsMaterial
-    block = '1 2' # fuel pin with 1 cm outer radius, no gap
-    material_id = 1001
+    type = CoupledFeedbackMatIDNeutronicsMaterial
+    block = '1 2'
     plus = true
   []
-  [moderator]
-    type = CoupledFeedbackNeutronicsMaterial
-    block = '3 4 5' # moderator pin with 0.975 cm outer radius
-    material_id = 1002
-  []
-  [monolith]
-    type = CoupledFeedbackNeutronicsMaterial
-    block = '8'
-    material_id = 1003
-  []
-  [hpipe]
-    type = CoupledFeedbackNeutronicsMaterial
-    block = '6 7' # gap homogenized with HP
-    material_id = 1004
-  []
-  [be]
-    type = CoupledFeedbackNeutronicsMaterial
-    block = '10 11 14 15'
-    material_id = 1005
+  [non_fuel]
+    type = CoupledFeedbackMatIDNeutronicsMaterial
+    block = '3 4 5 6 7 8 10 11 14 15 20 21 22'
   []
   [drum]
     type = CoupledFeedbackRoddedNeutronicsMaterial
@@ -129,11 +99,11 @@ y_center = ${fparse r}
     isotopes = 'pseudo; pseudo'
     densities = '1.0 1.0'
   []
-  [air]
-    type = CoupledFeedbackNeutronicsMaterial
-    block = '20 21 22'
-    material_id = 1007
-  []
+[]
+
+[Decusping]
+  level = 1
+  switch_h_to_p_refinement = false
 []
 
 [Executioner]
@@ -150,6 +120,8 @@ y_center = ${fparse r}
   coarse_element_id = coarse_element_id
   prolongation_type = multiplicative
   max_diffusion_coefficient = 1
+  diffusion_n_free_power_its = 0
+  diffusion_newton_rel_tol = 1e-3
 []
 
 [Postprocessors]
@@ -157,31 +129,6 @@ y_center = ${fparse r}
     type = FunctionValuePostprocessor
     function = drum_position
     execute_on = 'initial timestep_end'
-  []
-
-  [fuel_temp_avg]
-    type = Receiver
-  []
-  [fuel_temp_max]
-    type = Receiver
-  []
-  [mod_temp_avg]
-    type = Receiver
-  []
-  [mod_temp_max]
-    type = Receiver
-  []
-  [monolith_temp_avg]
-    type = Receiver
-  []
-  [monolith_temp_max]
-    type = Receiver
-  []
-  [refl_temp_avg]
-    type = Receiver
-  []
-  [refl_temp_max]
-    type = Receiver
   []
 []
 
@@ -202,6 +149,7 @@ y_center = ${fparse r}
 []
 
 [Outputs]
+  perf_graph = true
   [console]
     type = Console
     outlier_variable_norms = false
