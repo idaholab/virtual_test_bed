@@ -33,3 +33,5 @@
 [3D-MHTGR mesh](3D_MHTGR/index.md)
 
 [General Pebble Bed Reactor with Stochastic Analyses](gpbr200/index.md)
+
+[Griffin Open Xe-100 model](open-xe100/index.md)
