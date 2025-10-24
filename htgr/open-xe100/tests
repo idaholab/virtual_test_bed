@@ -1,0 +1,24 @@
+[Tests]
+  [ss]
+    type = CSVDiff
+    input = 'xe100_ss.i'
+    csvdiff = 'ss.csv'
+  []
+  [null]
+    type = CSVDiff
+    input = 'xe100_null.i'
+    csvdiff = 'null.csv null_pke_params.csv'
+    abs_zero = 1e-8
+  []
+  [pke]
+    type = CSVDiff
+    input = 'xe100_pke.i'
+    csvdiff = 'pke_fuel_auto.csv'
+  []
+  [iqs]
+    type = CSVDiff
+    input = 'xe100_iqs.i'
+    csvdiff = 'iqs.csv iqs_pke_params.csv'
+    abs_zero = 1e-8
+  []
+[]
