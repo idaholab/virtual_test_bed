@@ -84,7 +84,7 @@ the input file, but generally reside in the same folder in the repository.
 
 - Thermochimica Steady-State Model of Molten Salt Fast Reactor Core [documentation](msr/msfr/thermo_model) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/devel/msr/msfr/thermochemistry)
 
-- HTR-PM reference plant model [documentation](htgr/htr-pm/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/htr-pm)
+- HTR-PM reference plant model [documentation](htgr/htr-pm/sam-model/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/htr-pm/sam-htrpm)
 
 ### Multiphysics and multiscale simulations
 
@@ -94,6 +94,7 @@ the input file, but generally reside in the same folder in the repository.
 
 - HTTR Core multiphysics [documentation](httr/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/httr/steady_state_and_null_transient)
 
+- HTR-PM multiphysics [documentation](htgr/htr-pm/core-multiphysics/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/htr-pm/core-multiphysics)
 
 ## Restarting from a previous simulation
 
@@ -114,7 +115,7 @@ Documentation for the [Checkpoint system](https://mooseframework.inl.gov/applica
 
 - HTTR Core multiphysics [documentation](httr/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/httr/steady_state_and_null_transient)
 
-- HTR-PM reference plant model [documentation](htgr/htr-pm/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/htr-pm)
+- HTR-PM reference plant model [documentation](htgr/htr-pm/sam-model/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/htr-pm/sam-htrpm)
 
 
 ### Binary restart
@@ -188,7 +189,7 @@ specified. The MRAD and PBMR-400 models listed below are an example of this.
 
 - Thermochimica Steady-State Model of Molten Salt Fast Reactor Core [documentation](msr/msfr/thermo_model) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/devel/msr/msfr/thermochemistry)
 
-- HTR-PM reference plant model [documentation](htgr/htr-pm/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/htr-pm)
+- HTR-PM reference plant model [documentation](htgr/htr-pm/sam-model/index.md) and [inputs](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/htr-pm/sam-htrpm)
 
 ### HPC required
 

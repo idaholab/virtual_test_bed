@@ -1,0 +1,977 @@
+# ==============================================================================
+# Model description
+# IQS neutronics model coupled with TH and pebble temperature models
+# ------------------------------------------------------------------------------
+# Idaho Falls, INL, April 11, 2022
+# Author(s): Dr. Sebastian Schunert, Dr. Javier Ortensi, Dr. Mustafa Jaradat
+# ==============================================================================
+# MODEL PARAMETERS
+# ==============================================================================
+INITIAL_temperature = 500.0 # (K)
+total_power = 250.0e+6  # Total reactor Power (W)
+burnup_group_boundaries = '5.35E+13 1.070E+14 1.604E+14 2.139E+14 2.674E+14 3.209E+14 3.743E+14 4.278E+14 4.818E+14' 
+DHF_1                   =  0.0099013
+DHF_2                   =  0.0132799
+DHF_3                   =  0.0146952
+DHF_4                   =  0.0136383
+DHF_5                   =  0.0067246
+DHF_6                   =  0.0060207
+DHF_tot                 =  0.06426
+DH_lamda_1              = 3.65752E-01
+DH_lamda_2              = 5.99835E-04
+DH_lamda_3              = 5.65974E-02
+DH_lamda_4              = 7.74312E-03
+DH_lamda_5              = 5.39475E-05
+DH_lamda_6              = 1.87351E-06
+# ==============================================================================
+# GLOBAL PARAMETERS
+# ==============================================================================
+[GlobalParams]
+  library_file ='../xsections/HTR-PM_9G-Tnew.xml'
+  library_name = 'HTR-PM'
+  is_meter = true
+[]
+[RestartVariables]
+  [adjoint]
+    exodus_filename = htr_pm_griffin_ss_adj_out.e
+    variable_names = 'sflux_g0 sflux_g1 sflux_g2 
+	                    sflux_g3 sflux_g4 sflux_g5
+                      sflux_g6 sflux_g7 sflux_g8'
+    target_variable_names = 'adjoint_flux_g0 adjoint_flux_g1 adjoint_flux_g2 
+	                           adjoint_flux_g3 adjoint_flux_g4 adjoint_flux_g5
+                             adjoint_flux_g6 adjoint_flux_g7 adjoint_flux_g8'
+    to_system = AUXILIARY
+  []
+[]
+[TransportSystems]
+  particle = neutron
+  equation_type = transient
+  G = 9
+  ReflectingBoundary = 'left'
+  VacuumBoundary = 'right top bottom'
+  [diff]
+    scheme = CFEM-Diffusion
+    family = LAGRANGE
+    order = FIRST
+    n_delay_groups = 6
+    fission_source_as_material = true
+    assemble_scattering_jacobian = true
+    assemble_fission_jacobian = true
+  []
+[]
+# ==============================================================================
+# GEOMETRY AND MESH
+# ==============================================================================
+[Mesh]
+  type = MeshGeneratorMesh
+  block_id = '      1            2           3         4       5          6 
+                    7            8          61         71'
+  block_name = 'pebble_bed    upper_ref lower_ref cavity hot_plenum cold_plenum
+                radial_ref carbon_brick	riser cr' 
+ [cartesian_mesh]
+    type = CartesianMeshGenerator
+    dim = 2
+    # Total height: 16.8 m
+    dx = ' 0.250 0.250 0.250 0.250 0.250 0.250
+           0.010 0.050 0.130
+           0.080 0.080 0.080 
+           0.200 0.120 0.125 0.125'
+    ix = ' 1 1 1 1 1 1
+           1 1 1
+           1 1 1
+           1 1 1 1'
+    dy = ' 0.400 0.400 0.100 0.100
+           0.800 0.300 0.200 0.300 0.216 0.412
+           0.550 0.550 0.550 0.550 0.550 0.550 0.550 0.550 0.550 0.550
+           0.550 0.550 0.550 0.550 0.550 0.550 0.550 0.550 0.550 0.550
+           0.760 0.712 0.300
+           0.400 0.400 '
+    # base: converges fine
+    iy = '1 1 1 1
+          2 1 1 1 1 1
+          1 1 1 1 1 1 1 1 1 1
+          1 1 1 1 1 1 1 1 1 1
+          2 2 1 1 1'
+    subdomain_id = ' 8  8  8  8  8  8  8  8   8  8  8  8   8  8  8  8
+                     8  8  8  8  8  8  8  8   8  8  8  8   8  8  8  8
+                     7  7  7  7  7  7  7  7   7  7  7  7   7  7  8  8
+                     7  7  7  7  7  7  7  7   7  7  7  7   7  7  8  8
+                     5  5  5  5  5  5  5  5   5  7  7  7  61  7  8  8  
+                     3  3  3  3  3  3  7  7  71  7  7  7  61  7  8  8
+                     3  3  3  3  3  3  7  7  71  7  7  7  61  7  8  8
+                     3  3  3  3  3  3  7  7  71  7  7  7  61  7  8  8
+                     3  3  3  3  3  3  7  7  71  7  7  7  61  7  8  8
+                     3  3  3  3  3  3  7  7  71  7  7  7  61  7  8  8
+                     1  1  1  1  1  1  7  7  71  7  7  7  61  7  8  8
+                     1  1  1  1  1  1  7  7  71  7  7  7  61  7  8  8
+                     1  1  1  1  1  1  7  7  71  7  7  7  61  7  8  8
+                     1  1  1  1  1  1  7  7  71  7  7  7  61  7  8  8
+                     1  1  1  1  1  1  7  7  71  7  7  7  61  7  8  8
+                     1  1  1  1  1  1  7  7  71  7  7  7  61  7  8  8
+                     1  1  1  1  1  1  7  7  71  7  7  7  61  7  8  8
+                     1  1  1  1  1  1  7  7  71  7  7  7  61  7  8  8
+                     1  1  1  1  1  1  7  7  71  7  7  7  61  7  8  8
+                     1  1  1  1  1  1  7  7  71  7  7  7  61  7  8  8
+                     1  1  1  1  1  1  7  7  71  7  7  7  61  7  8  8
+                     1  1  1  1  1  1  7  7  71  7  7  7  61  7  8  8
+                     1  1  1  1  1  1  7  7  71  7  7  7  61  7  8  8
+                     1  1  1  1  1  1  7  7  71  7  7  7  61  7  8  8
+                     1  1  1  1  1  1  7  7  71  7  7  7  61  7  8  8
+                     1  1  1  1  1  1  7  7  71  7  7  7  61  7  8  8
+                     1  1  1  1  1  1  7  7  71  7  7  7  61  7  8  8
+                     1  1  1  1  1  1  7  7  71  7  7  7  61  7  8  8
+                     1  1  1  1  1  1  7  7  71  7  7  7  61  7  8  8
+                     1  1  1  1  1  1  7  7  71  7  7  7  61  7  8  8
+                     4  4  4  4  4  4  7  7  71  7  7  7  61  7  8  8
+                     4  2  2  2  2  2  7  7  71  7  7  7  61  7  8  8
+                     6  6  6  6  6  6  6  6  71  6  6  6   6  7  8  8
+                     7  7  7  7  7  7  7  7  71  7  7  7   7  7  8  8
+                     8  8  8  8  8  8  8  8  71  8  8  8   8  8  8  8 '
+ []                                                        
+ [assign_material_id]
+   type = SubdomainExtraElementIDGenerator
+   input = cartesian_mesh
+   extra_element_id_names = 'material_id'
+   subdomains = '1 2 3 4 5 6 7 8 61 71'
+   extra_element_ids = '1 1 1 1 1 1 1 1 1 1'
+ []
+[]
+[Problem]
+  coord_type = RZ
+[]
+# ==============================================================================
+# AUXVARIABLES AND AUXKERNELS
+# ==============================================================================
+[Functions]
+  [CR_bott]
+    type = ConstantFunction
+    value = '13.678'
+  []
+  [dt_max_fn]
+    type = PiecewiseLinear
+    x = '-10.0    0   16  30   1000   5000  20000  500000'
+    y = '  1.0  1.0  1.0   2    50     500   3600   7200'
+  []
+  [del_t_function]
+    type  = ParsedFunction
+    vals  = 'dt'
+    vars  = 'dt'
+    value = 'dt'
+  []
+[]
+[AuxVariables]
+  [T_solid]
+    family = MONOMIAL
+    order = CONSTANT
+  []
+  [T_fluid]
+    family = MONOMIAL
+    order = CONSTANT
+  []
+  [Tfuel_avg]
+    order = CONSTANT
+    family = MONOMIAL
+  []
+  [Tfuel_max]
+    order = CONSTANT
+    family = MONOMIAL
+  []
+  [Tmod_avg]
+    order = CONSTANT
+    family = MONOMIAL
+  []
+  [Tmod_max]
+    order = CONSTANT
+    family = MONOMIAL
+  []
+  [init_prompt_power_density]
+    order = CONSTANT
+    family = MONOMIAL
+  []
+  [prompt_power_density]
+    order = CONSTANT
+    family = MONOMIAL
+  []
+  [del_t]
+    type = MooseVariableFVReal
+  []
+  [decay_PD_F1]
+    order = CONSTANT
+    family = MONOMIAL
+  []
+  [decay_PD_F2]
+    order = CONSTANT
+    family = MONOMIAL
+  []
+  [decay_PD_F3]
+    order = CONSTANT
+    family = MONOMIAL
+  []
+  [decay_PD_F4]
+    order = CONSTANT
+    family = MONOMIAL
+  []
+  [decay_PD_F5]
+    order = CONSTANT
+    family = MONOMIAL
+  []
+  [decay_PD_F6]
+    order = CONSTANT
+    family = MONOMIAL
+  []
+  [decay_power_density]
+    order = CONSTANT
+    family = MONOMIAL
+  []
+  [power_density]
+    order = CONSTANT
+    family = MONOMIAL
+  [] 
+  [power_peaking]
+    order = CONSTANT
+    family = MONOMIAL
+  []
+  [porosity]
+    family = MONOMIAL
+    order = CONSTANT
+    INITIAL_condition = 0.39
+    block = 'pebble_bed'
+  []
+[]
+[AuxKernels]
+  [Tfuel_avg]
+    type = PebbleAveragedAux
+    block = 1
+    variable = Tfuel_avg
+    array_variable = triso_temperature
+    pebble_volume_fraction = pebble_volume_fraction
+    n_fresh_pebble_types = 1
+    execute_on = 'INITIAL TIMESTEP_END'
+  []
+  [Tfuel_max]
+    type = ArrayVarExtremeValueAux
+    block = 1
+    variable = Tfuel_max
+    array_variable = triso_temperature
+    value_type = MAX
+    execute_on = 'INITIAL TIMESTEP_END'
+  []
+  [Tmod_avg]
+    type = PebbleAveragedAux
+    block = 1
+    variable = Tmod_avg
+    array_variable = graphite_temperature
+    pebble_volume_fraction = pebble_volume_fraction
+    n_fresh_pebble_types = 1
+    execute_on = 'INITIAL TIMESTEP_END'
+  []
+  [Tmod_max]
+    type = ArrayVarExtremeValueAux
+    block = 1
+    variable = Tmod_max
+    array_variable = graphite_temperature
+    value_type = MAX
+    execute_on = 'INITIAL TIMESTEP_END'
+  []
+  [prompt_power_density]
+    type = VectorReactionRate
+    block = 'pebble_bed'
+    scalar_flux = 'sflux_g0 sflux_g1 sflux_g2 sflux_g3 sflux_g4 
+                   sflux_g5 sflux_g6 sflux_g7 sflux_g8'
+    variable = prompt_power_density
+    cross_section = kappa_sigma_fission
+    scale_factor = power_scaling
+    dummies = UnscaledTotalPower
+    execute_on = 'INITIAL TIMESTEP_END'
+  []
+  [del_t_kernel]
+    type = FunctionAux
+    variable = del_t
+    function = del_t_function
+  []
+  [decay_PD_F1_aux]
+    type       = ParsedAux
+    block      = 'pebble_bed'
+    variable   = decay_PD_F1
+    args       = 'del_t  decay_PD_F1  prompt_power_density'
+    function   = 'decay_PD_F1*exp(-${DH_lamda_1}*del_t) + ${DHF_1}*prompt_power_density*(1.0-exp(-${DH_lamda_1}*del_t))/(1-${DHF_tot})'
+    execute_on = 'INITIAL TIMESTEP_END'
+  []
+  [decay_PD_F2_aux]
+    type       = ParsedAux
+    block      = 'pebble_bed'
+    variable   = decay_PD_F2
+    args       = 'del_t  decay_PD_F2  prompt_power_density'
+    function   = 'decay_PD_F2*exp(-${DH_lamda_2}*del_t) + ${DHF_2}*prompt_power_density*(1.0-exp(-${DH_lamda_2}*del_t))/(1-${DHF_tot})'
+    execute_on = 'INITIAL TIMESTEP_END'
+  []
+  [decay_PD_F3_aux]
+    type       = ParsedAux
+    block      = 'pebble_bed'
+    variable   = decay_PD_F3
+    args       = 'del_t  decay_PD_F3  prompt_power_density'
+    function   = 'decay_PD_F3*exp(-${DH_lamda_3}*del_t) + ${DHF_3}*prompt_power_density*(1.0-exp(-${DH_lamda_3}*del_t))/(1-${DHF_tot})'
+    execute_on = 'INITIAL TIMESTEP_END'
+  []
+  [decay_PD_F4_aux]
+    type       = ParsedAux
+    block      = 'pebble_bed'
+    variable   = decay_PD_F4
+    args       = 'del_t  decay_PD_F4  prompt_power_density'
+    function   = 'decay_PD_F4*exp(-${DH_lamda_4}*del_t) + ${DHF_4}*prompt_power_density*(1.0-exp(-${DH_lamda_4}*del_t))/(1-${DHF_tot})'
+    execute_on = 'INITIAL TIMESTEP_END'
+  []
+  [decay_PD_F5_aux]
+    type       = ParsedAux
+    block      = 'pebble_bed'
+    variable   = decay_PD_F5
+    args       = 'del_t  decay_PD_F5  prompt_power_density'
+    function   = 'decay_PD_F5*exp(-${DH_lamda_5}*del_t) + ${DHF_5}*prompt_power_density*(1.0-exp(-${DH_lamda_5}*del_t))/(1-${DHF_tot})'
+    execute_on = 'INITIAL TIMESTEP_END'
+  []
+  [decay_PD_F6_aux]
+    type       = ParsedAux
+    block      = 'pebble_bed'
+    variable   = decay_PD_F6
+    args       = 'del_t  decay_PD_F6  prompt_power_density'
+    function   = 'decay_PD_F6*exp(-${DH_lamda_6}*del_t) + ${DHF_6}*prompt_power_density*(1.0-exp(-${DH_lamda_6}*del_t))/(1-${DHF_tot})'
+    execute_on = 'INITIAL TIMESTEP_END'
+  []
+  [decay_power_density_aux]
+    type = ParsedAux
+    block = 'pebble_bed'
+    variable = decay_power_density
+    args = 'decay_PD_F1  decay_PD_F2  decay_PD_F3  decay_PD_F4  decay_PD_F5  decay_PD_F6'
+    function = 'decay_PD_F1 + decay_PD_F2 + decay_PD_F3 + decay_PD_F4 + decay_PD_F5 + decay_PD_F6'
+    execute_on = 'INITIAL TIMESTEP_END'
+  []
+  [power_density]
+    type = ParsedAux
+    block = 'pebble_bed'
+    variable = power_density
+    args = 'prompt_power_density decay_power_density'
+    function = 'prompt_power_density + decay_power_density'
+    execute_on = 'INITIAL TIMESTEP_END'
+  []
+  [power_peaking]
+    type = ParsedAux
+    block = 'pebble_bed'
+    variable = power_peaking
+    args = 'power_density'
+    function = 'power_density / 3.21525E+06'
+    execute_on = 'INITIAL TIMESTEP_END'
+  []
+[]
+[UserObjects]
+  [transport_solution]
+    type = TransportSolutionVectorFile
+    transport_system = diff
+    writing = false
+    execute_on = 'INITIAL'
+    scale_with_keff = false
+  []
+  [depletion_solution]
+    type = SolutionVectorFile
+    var = 'pebble_isotope_density pebble_volume_fraction graphite_temperature triso_temperature 
+	         power_density partial_power_density
+		       pebble_bed_depletion_sflux_g0 pebble_bed_depletion_sflux_g1
+           pebble_bed_depletion_sflux_g2 pebble_bed_depletion_sflux_g3
+           pebble_bed_depletion_sflux_g4 pebble_bed_depletion_sflux_g5
+           pebble_bed_depletion_sflux_g6 pebble_bed_depletion_sflux_g7
+           pebble_bed_depletion_sflux_g8 '
+    writing = false
+    execute_on = 'INITIAL'
+  []
+  [TH_solution]
+    type = SolutionVectorFile
+    var = 'T_solid T_fluid'
+    loading_var = 'T_solid T_fluid'
+    writing = false
+    execute_on = 'INITIAL'
+  []
+  [init_power_density]
+    type        = SolutionVectorFile
+    var         =  '    prompt_power_density  decay_power_density   decay_PD_F1   decay_PD_F2 
+                                 decay_PD_F3          decay_PD_F4   decay_PD_F5   decay_PD_F6' 
+    loading_var = 'init_prompt_power_density  decay_power_density   decay_PD_F1   decay_PD_F2 
+                                 decay_PD_F3          decay_PD_F4   decay_PD_F5   decay_PD_F6' 
+	  writing     = false
+    execute_on  = 'INITIAL'
+  []
+[]
+# ==============================================================================
+# MATERIALS
+# ==============================================================================
+[PebbleDepletion]
+  block = pebble_bed
+  scale_factor = power_scaling
+  burnup_grid_name = 'Burnup'
+  fuel_temperature_grid_name = 'Tfuel'
+  moderator_temperature_grid_name = 'Tmod'
+  # transmutation data
+  dataset = ISOXML
+  isoxml_data_file = '../xsections/DRAGON5_DT.xml'
+  isoxml_lib_name = 'DRAGON'
+  burnup_group_boundaries = ${burnup_group_boundaries}
+  n_fresh_pebble_types = 1
+  track_isotopes = 'U235 U236 U238 PU238 PU239 PU240 PU241 PU242 AM241 AM242M CS135 CS137 XE135 XE136 I131 I135 SR90'
+[]              
+[Materials]
+  [axial_reflector]
+    type = CoupledFeedbackNeutronicsMaterial
+    block = 'upper_ref lower_ref'
+    grid_names = 'Tmod'
+    grid_variables = 'T_solid'
+    plus = true
+    isotopes =   'Graphite    U235'
+    densities =  '6.25284E-02  0.0'
+    material_id = 1
+  []
+  [plenum]
+    type = CoupledFeedbackNeutronicsMaterial
+    block = 'hot_plenum cold_plenum'
+    grid_names = 'Tmod'
+    grid_variables = 'T_solid'
+    plus = true
+    isotopes =   'Graphite      U235'
+    densities =  '7.14611E-02   0.0'
+    material_id = 1
+  []
+  [reflector]
+    type = CoupledFeedbackNeutronicsMaterial
+    block = 'radial_ref carbon_brick'
+    grid_names = 'Tmod'
+    grid_variables = 'T_solid'
+    plus = true
+    isotopes =   'Graphite     U235'
+    densities =  '8.93263E-02  0.0'
+    material_id = 1
+  []
+  [control_rod]
+    type = CoupledFeedbackRoddedNeutronicsMaterial
+    block = 'cr'
+    grid_names = 'Tmod  Tmod  Tmod'
+    grid_variables = 'T_solid  T_solid  T_solid'
+    plus = true
+    isotopes  =  '   Graphite   U235 ;      Graphite            B10          B11            C12   U235;       Graphite            B10          B11            C12   U235'
+    densities =  ' 6.4277e-02     0.0     6.4277e-02     1.6373e-03   5.9938e-03     1.6004e-02    0.0      6.4277e-02     1.6373e-03   5.9938e-03     1.6004e-02    0.0'
+    segment_material_ids = '1   1   1'
+    rod_segment_length = 11.878
+    front_position_function = 'CR_bott'
+    rod_withdrawn_direction = 'y'
+  []
+  [riser]
+    type = CoupledFeedbackNeutronicsMaterial
+    block = 'riser'
+    grid_names = 'Tmod'
+    grid_variables = 'T_solid'
+    plus = true
+    isotopes  =  'Graphite     U235'
+    densities =  '6.07419E-02	0.0'
+    material_id = 1
+  []
+  [cavity]
+    type = ConstantNeutronicsMaterial
+    block = 'cavity'
+    fromFile = false
+    # computed from Serpent CMM
+    neutron_speed  = '1.164872386937E+09 1.225755729920E+08 1.358941921623E+07 3.924789509810E+06 2.395847846182E+06 1.814298529894E+06 1.399342656828E+06 7.200528593684E+05 2.911858619061E+05'
+    diffusion_coef = '4.68857E-01 1.52760E-01 1.21025E-01 1.08241E-01  1.72433E-01  1.65906E-01  1.96579E-01  1.79868E-01  2.14727E-01'
+    sigma_r = '0 0 0 0 0 0 0 0 0'
+    sigma_s = ' 7.10949E-01 0 0 0 0 0 0 0 0
+                0 2.18207E+00 0 0 0 0 0 0 0
+                0 0 2.75425E+00 0 0 0 0 0 0
+                0 0 0 3.07955E+00 0 0 0 0 0
+                0 0 0 0 1.93312E+00 0 0 0 0
+                0 0 0 0 0 2.00917E+00 0 0 0
+                0 0 0 0 0 0 1.69567E+00 0 0
+                0 0 0 0 0 0 0 1.85321E+00 0
+                0 0 0 0 0 0 0 0 1.55236E+00'
+
+    diffusion_coefficient_scheme = user_supplied
+  []
+[]
+# ==============================================================================
+# MultiApps & Transfers
+# ==============================================================================
+[MultiApps]
+  [pebble0]
+    type = FullSolveMultiApp
+    input_files = 'pebble_triso.i'
+    keep_solution_during_restore = true
+    positions_file = 'pebble_heat_pos.txt'
+    execute_on = 'INITIAL'
+  []
+  [pebble1]
+    type = FullSolveMultiApp
+    input_files = 'pebble_triso.i'
+    keep_solution_during_restore = true
+    positions_file = 'pebble_heat_pos.txt'
+    execute_on = 'INITIAL'
+  []
+  [pebble2]
+    type = FullSolveMultiApp
+    input_files = 'pebble_triso.i'
+    keep_solution_during_restore = true
+    positions_file = 'pebble_heat_pos.txt'
+    execute_on = 'INITIAL'
+  []
+  [pebble3]
+    type = FullSolveMultiApp
+    input_files = 'pebble_triso.i'
+    keep_solution_during_restore = true
+    positions_file = 'pebble_heat_pos.txt'
+    execute_on = 'INITIAL'
+  []
+  [pebble4]
+    type = FullSolveMultiApp
+    input_files = 'pebble_triso.i'
+    keep_solution_during_restore = true
+    positions_file = 'pebble_heat_pos.txt'
+    execute_on = 'INITIAL'
+  []
+  [pebble5]
+    type = FullSolveMultiApp
+    input_files = 'pebble_triso.i'
+    keep_solution_during_restore = true
+    positions_file = 'pebble_heat_pos.txt'
+    execute_on = 'INITIAL'
+  []
+  [pebble6]
+    type = FullSolveMultiApp
+    input_files = 'pebble_triso.i'
+    keep_solution_during_restore = true
+    positions_file = 'pebble_heat_pos.txt'
+    execute_on = 'INITIAL'
+  []
+  [pebble7]
+    type = FullSolveMultiApp
+    input_files = 'pebble_triso.i'
+    keep_solution_during_restore = true
+    positions_file = 'pebble_heat_pos.txt'
+    execute_on = 'INITIAL'
+  []
+  [pebble8]
+    type = FullSolveMultiApp
+    input_files = 'pebble_triso.i'
+    keep_solution_during_restore = true
+    positions_file = 'pebble_heat_pos.txt'
+    execute_on = 'INITIAL'
+  []
+  [pebble9]
+    type = FullSolveMultiApp
+    input_files = 'pebble_triso.i'
+    keep_solution_during_restore = true
+    positions_file = 'pebble_heat_pos.txt'
+    execute_on = 'INITIAL'
+  []
+[]
+[Transfers]
+  [pebble_send_Tsolid0]
+    type = MultiAppVariableValueSamplePostprocessorTransfer
+    to_multi_app = pebble0
+    postprocessor = T_surface
+    source_variable = T_solid
+  []
+  [pebble_send_Tsolid1]
+    type = MultiAppVariableValueSamplePostprocessorTransfer
+    to_multi_app = pebble1
+    postprocessor = T_surface
+    source_variable = T_solid
+  []
+  [pebble_send_Tsolid2]
+    type = MultiAppVariableValueSamplePostprocessorTransfer
+    to_multi_app = pebble2
+    postprocessor = T_surface
+    source_variable = T_solid
+  []
+  [pebble_send_Tsolid3]
+    type = MultiAppVariableValueSamplePostprocessorTransfer
+    to_multi_app = pebble3
+    postprocessor = T_surface
+    source_variable = T_solid
+  []
+  [pebble_send_Tsolid4]
+    type = MultiAppVariableValueSamplePostprocessorTransfer
+    to_multi_app = pebble4
+    postprocessor = T_surface
+    source_variable = T_solid
+  []
+  [pebble_send_Tsolid5]
+    type = MultiAppVariableValueSamplePostprocessorTransfer
+    to_multi_app = pebble5
+    postprocessor = T_surface
+    source_variable = T_solid
+  []
+  [pebble_send_Tsolid6]
+    type = MultiAppVariableValueSamplePostprocessorTransfer
+    to_multi_app = pebble6
+    postprocessor = T_surface
+    source_variable = T_solid
+  []
+  [pebble_send_Tsolid7]
+    type = MultiAppVariableValueSamplePostprocessorTransfer
+    to_multi_app = pebble7
+    postprocessor = T_surface
+    source_variable = T_solid
+  []
+  [pebble_send_Tsolid8]
+    type = MultiAppVariableValueSamplePostprocessorTransfer
+    to_multi_app = pebble8
+    postprocessor = T_surface
+    source_variable = T_solid
+  []
+  [pebble_send_Tsolid9]
+    type = MultiAppVariableValueSamplePostprocessorTransfer
+    to_multi_app = pebble9
+    postprocessor = T_surface
+    source_variable = T_solid
+  []
+  # TO Pebble Partial power density.
+  [pebble_send_ppd0]
+    type = MultiAppVariableValueSamplePostprocessorTransfer
+    to_multi_app = pebble0
+    postprocessor = pebble_power_density
+    source_variable = partial_power_density
+    source_variable_component = 0
+  []
+  [pebble_send_ppd1]
+    type = MultiAppVariableValueSamplePostprocessorTransfer
+    to_multi_app = pebble1
+    postprocessor = pebble_power_density
+    source_variable = partial_power_density
+    source_variable_component = 1
+  []
+  [pebble_send_ppd2]
+    type = MultiAppVariableValueSamplePostprocessorTransfer
+    to_multi_app = pebble2
+    postprocessor = pebble_power_density
+    source_variable = partial_power_density
+    source_variable_component = 2
+  []
+  [pebble_send_ppd3]
+    type = MultiAppVariableValueSamplePostprocessorTransfer
+    to_multi_app = pebble3
+    postprocessor = pebble_power_density
+    source_variable = partial_power_density
+    source_variable_component = 3
+  []
+  [pebble_send_ppd4]
+    type = MultiAppVariableValueSamplePostprocessorTransfer
+    to_multi_app = pebble4
+    postprocessor = pebble_power_density
+    source_variable = partial_power_density
+    source_variable_component = 4
+  []
+  [pebble_send_ppd5]
+    type = MultiAppVariableValueSamplePostprocessorTransfer
+    to_multi_app = pebble5
+    postprocessor = pebble_power_density
+    source_variable = partial_power_density
+    source_variable_component = 5
+  []
+  [pebble_send_ppd6]
+    type = MultiAppVariableValueSamplePostprocessorTransfer
+    to_multi_app = pebble6
+    postprocessor = pebble_power_density
+    source_variable = partial_power_density
+    source_variable_component = 6
+  []
+  [pebble_send_ppd7]
+    type = MultiAppVariableValueSamplePostprocessorTransfer
+    to_multi_app = pebble7
+    postprocessor = pebble_power_density
+    source_variable = partial_power_density
+    source_variable_component = 7
+  []
+  [pebble_send_ppd8]
+    type = MultiAppVariableValueSamplePostprocessorTransfer
+    to_multi_app = pebble8
+    postprocessor = pebble_power_density
+    source_variable = partial_power_density
+    source_variable_component = 8
+  []
+  [pebble_send_ppd9]
+    type = MultiAppVariableValueSamplePostprocessorTransfer
+    to_multi_app = pebble9
+    postprocessor = pebble_power_density
+    source_variable = partial_power_density
+    source_variable_component = 9
+  []
+  # FROM Pebble T_mod (Pebble average temperature)
+  [pebble_receive_T_mod_0]
+    type = MultiAppVariableValueSamplePostprocessorTransfer
+    from_multi_app = pebble0
+    postprocessor = T_mod
+    source_variable = graphite_temperature
+    source_variable_component = 0
+  []
+  [pebble_receive_T_mod_1]
+    type = MultiAppVariableValueSamplePostprocessorTransfer
+    from_multi_app = pebble1
+    postprocessor = T_mod
+    source_variable = graphite_temperature
+    source_variable_component = 1
+  []
+  [pebble_receive_T_mod_2]
+    type = MultiAppVariableValueSamplePostprocessorTransfer
+    from_multi_app = pebble2
+    postprocessor = T_mod
+    source_variable = graphite_temperature
+    source_variable_component = 2
+  []
+  [pebble_receive_T_mod_3]
+    type = MultiAppVariableValueSamplePostprocessorTransfer
+    from_multi_app = pebble3
+    postprocessor = T_mod
+    source_variable = graphite_temperature
+    source_variable_component = 3
+  []
+  [pebble_receive_T_mod_4]
+    type = MultiAppVariableValueSamplePostprocessorTransfer
+    from_multi_app = pebble4
+    postprocessor = T_mod
+    source_variable = graphite_temperature
+    source_variable_component = 4
+  []
+  [pebble_receive_T_mod_5]
+    type = MultiAppVariableValueSamplePostprocessorTransfer
+    from_multi_app = pebble5
+    postprocessor = T_mod
+    source_variable = graphite_temperature
+    source_variable_component = 5
+  []
+  [pebble_receive_T_mod_6]
+    type = MultiAppVariableValueSamplePostprocessorTransfer
+    from_multi_app = pebble6
+    postprocessor = T_mod
+    source_variable = graphite_temperature
+    source_variable_component = 6
+  []
+  [pebble_receive_T_mod_7]
+    type = MultiAppVariableValueSamplePostprocessorTransfer
+    from_multi_app = pebble7
+    postprocessor = T_mod
+    source_variable = graphite_temperature
+    source_variable_component = 7
+  []
+  [pebble_receive_T_mod_8]
+    type = MultiAppVariableValueSamplePostprocessorTransfer
+    from_multi_app = pebble8
+    postprocessor = T_mod
+    source_variable = graphite_temperature
+    source_variable_component = 8
+  []
+  [pebble_receive_T_mod_9]
+    type = MultiAppVariableValueSamplePostprocessorTransfer
+    from_multi_app = pebble9
+    postprocessor = T_mod
+    source_variable = graphite_temperature
+    source_variable_component = 9
+  []
+  # FROM Pebble T_fuel (TRISO average temperature)
+  [pebble_receive_T_fuel_0]
+    type = MultiAppVariableValueSamplePostprocessorTransfer
+    from_multi_app = pebble0
+    postprocessor = T_fuel
+    source_variable = triso_temperature
+    source_variable_component = 0
+  []
+  [pebble_receive_T_fuel_1]
+    type = MultiAppVariableValueSamplePostprocessorTransfer
+    from_multi_app = pebble1
+    postprocessor = T_fuel
+    source_variable = triso_temperature
+    source_variable_component = 1
+  []
+  [pebble_receive_T_fuel_2]
+    type = MultiAppVariableValueSamplePostprocessorTransfer
+    from_multi_app = pebble2
+    postprocessor = T_fuel
+    source_variable = triso_temperature
+    source_variable_component = 2
+  []
+  [pebble_receive_T_fuel_3]
+    type = MultiAppVariableValueSamplePostprocessorTransfer
+    from_multi_app = pebble3
+    postprocessor = T_fuel
+    source_variable = triso_temperature
+    source_variable_component = 3
+  []
+  [pebble_receive_T_fuel_4]
+    type = MultiAppVariableValueSamplePostprocessorTransfer
+    from_multi_app = pebble4
+    postprocessor = T_fuel
+    source_variable = triso_temperature
+    source_variable_component = 4
+  []
+  [pebble_receive_T_fuel_5]
+    type = MultiAppVariableValueSamplePostprocessorTransfer
+    from_multi_app = pebble5
+    postprocessor = T_fuel
+    source_variable = triso_temperature
+    source_variable_component = 5
+  []
+  [pebble_receive_T_fuel_6]
+    type = MultiAppVariableValueSamplePostprocessorTransfer
+    from_multi_app = pebble6
+    postprocessor = T_fuel
+    source_variable = triso_temperature
+    source_variable_component = 6
+  []
+  [pebble_receive_T_fuel_7]
+    type = MultiAppVariableValueSamplePostprocessorTransfer
+    from_multi_app = pebble7
+    postprocessor = T_fuel
+    source_variable = triso_temperature
+    source_variable_component = 7
+  []
+  [pebble_receive_T_fuel_8]
+    type = MultiAppVariableValueSamplePostprocessorTransfer
+    from_multi_app = pebble8
+    postprocessor = T_fuel
+    source_variable = triso_temperature
+    source_variable_component = 8
+  []
+  [pebble_receive_T_fuel_9]
+    type = MultiAppVariableValueSamplePostprocessorTransfer
+    from_multi_app = pebble9
+    postprocessor = T_fuel
+    source_variable = triso_temperature
+    source_variable_component = 9
+  []
+[]
+# ==============================================================================
+# EXECUTION PARAMETERS
+# ==============================================================================
+[Preconditioning]
+  [SMP]
+    type = SMP
+    full = true
+  []
+[]
+[Executioner]
+  type = IQS
+  do_iqs_transient = false
+  pke_param_csv = true
+  solve_type = NEWTON
+  petsc_options_iname = '-pc_type -pc_hypre_type -ksp_gmres_restart '
+  petsc_options_value = 'hypre boomeramg 100'
+  
+  start_time = 0
+  end_time = 10.0
+  dt = 0.1
+  
+  auto_advance = true
+  line_search = l2 #none
+  # Linear/nonlinear iterations.
+  l_max_its = 200
+  l_tol = 1e-3
+  nl_max_its = 50
+  nl_rel_tol = 1e-5
+  nl_abs_tol = 1e-6
+  fixed_point_max_its = 2
+  fixed_point_rel_tol = 1e-4
+  fixed_point_abs_tol = 1e-4
+[]
+# ==============================================================================
+# POSTPROCESSORS DEBUG AND OUTPUTS
+# ==============================================================================
+[Debug]
+  show_var_residual_norms = false
+[]
+[Postprocessors]
+  [dt]
+    type = TimestepSize
+  []
+  [dt_max_pp]
+    type = FunctionValuePostprocessor
+    function = dt_max_fn
+    execute_on = TIMESTEP_BEGIN
+  []
+  [max_T_solid]
+    type = ElementExtremeValue
+    variable = T_solid
+  []
+  [Tsolid_core]
+    type = ElementAverageValue
+    variable = T_solid
+  []
+  [Tfluid_core]
+    type = ElementAverageValue
+    variable = T_fluid
+  []
+  [Tfuel_avg]
+    type = ElementAverageValue
+    block = 'pebble_bed'
+    variable = Tfuel_avg
+  []
+  [Tfuel_max]
+    type = ElementExtremeValue
+    block = 'pebble_bed'
+    value_type = max
+    variable = Tfuel_avg
+  []
+  [Tmod_avg]
+    type = ElementAverageValue
+    block = 'pebble_bed'
+    variable = Tmod_avg
+  []
+  [Tmod_max]
+    type = ElementExtremeValue
+    block = 'pebble_bed'
+    variable = Tmod_max
+    value_type = max
+  []
+  [UnscaledTotalPower]
+    type = FluxRxnIntegral
+    block = 'pebble_bed'
+    cross_section  = kappa_sigma_fission
+    coupled_flux_groups = 'sflux_g0 sflux_g1 sflux_g2 sflux_g3 sflux_g4 
+                           sflux_g5 sflux_g6 sflux_g7 sflux_g8'
+    execute_on = 'INITIAL'
+  []
+  [power_scaling]
+    type = PowerModulateFactor
+    power_pp = UnscaledTotalPower
+    rated_power = 2.33935E+08 # Power * (1-DHF_tot)
+    execute_on = 'INITIAL'
+  []
+  [init_prompt_power]
+    type = ElementIntegralVariablePostprocessor
+    block =  'pebble_bed'
+    variable = init_prompt_power_density
+    execute_on = 'INITIAL TIMESTEP_END'
+  []
+
+  [prompt_power]
+    type = ElementIntegralVariablePostprocessor
+    block = 'pebble_bed'
+    variable = prompt_power_density
+    execute_on = 'INITIAL TIMESTEP_END'
+  []
+  [decay_power]
+    type = ElementIntegralVariablePostprocessor
+    block = 'pebble_bed'
+    variable = decay_power_density
+    execute_on = 'INITIAL TIMESTEP_END'
+  []
+  [total_power]
+    type = ElementIntegralVariablePostprocessor
+    block = 'pebble_bed'
+    variable = power_density
+	execute_on = 'INITIAL TIMESTEP_END'
+  []
+  [power_peak]
+    type = ElementExtremeValue
+    variable = power_peaking
+    value_type = max
+  []
+[]
+[Outputs]
+  file_base = htr_pm_griffin_tr_iqs_out
+  exodus = true
+  csv = true
+  perf_graph = true
+  execute_on = 'INITIAL FINAL TIMESTEP_END'
+[]

@@ -1,0 +1,73 @@
+[Tests]
+  # Individual steady syntax checks
+  [neutronics_syntax_SS]
+    type = RunApp
+    input = 'htr_pm_neutronics_ss.i'
+    check_input = True
+    executable_pattern = 'griffin*|blue_crab*|dire_wolf*|fenix*'
+    cli_args = "MultiApps/active='' Transfers/active=''"
+  []
+  [neutronics_syntax_null]
+    type = RunApp
+    input = 'htr_pm_neutronics_tr_null.i'
+    check_input = True
+    executable_pattern = 'griffin*|blue_crab*|dire_wolf*|fenix*'
+    cli_args = "MultiApps/active='' Transfers/active=''"
+  []
+  [neutronics_syntax_dlofc]
+    type = RunApp
+    input = 'htr_pm_neutronics_tr_dlofc.i'
+    check_input = True
+    executable_pattern = 'griffin*|blue_crab*|dire_wolf*|fenix*'
+    cli_args = "MultiApps/active='' Transfers/active=''"
+  []
+  [flow_syntax_fv_ss]
+    type = RunApp
+    input = 'htr-pm-flow-fv-ss.i'
+    check_input = True
+    executable_pattern = 'griffin*|blue_crab*|dire_wolf*|fenix*'
+  []
+  [flow_syntax_fv_null]
+    type = RunApp
+    input = 'htr-pm-flow-fv-tr-null.i'
+    check_input = True
+    executable_pattern = 'griffin*|blue_crab*|dire_wolf*|fenix*'
+  []
+  [flow_syntax_fv_dlofc]
+    type = RunApp
+    input = 'htr-pm-flow-fv-tr-dlofc.i'
+    check_input = True
+    executable_pattern = 'griffin*|blue_crab*|dire_wolf*|fenix*'
+  []
+  [pebble_heat_conduction]
+    type = RunApp
+    input = 'pebble_triso.i'
+    check_input = True
+    executable_pattern = 'griffin*|blue_crab*|dire_wolf*|fenix*'
+  []
+  [htr_pm_regression_1]
+    type = CSVDiff
+    input = htr_pm_neutronics_ss.i
+    csvdiff = 'htr_pm_griffin_ss_out.csv htr_pm_griffin_ss_out_flow0.csv'
+    prereq = 'neutronics_syntax_SS'
+    executable_pattern = 'griffin*|blue_crab*'
+    max_time = 400
+  []
+  [htr_pm_regression_2]
+    type = CSVDiff
+    input = htr_pm_neutronics_tr_null.i
+    csvdiff = 'htr_pm_neutronics_tr_null.csv  htr_pm_neutronics_tr_null_out_flow0.csv'
+    prereq = 'neutronics_syntax_null'
+    executable_pattern = 'griffin*|blue_crab*'
+    max_time = 400
+  []
+  [htr_pm_regression_3]
+    type = CSVDiff
+    input = htr_pm_neutronics_tr_dlofc.i
+    csvdiff = 'htr_pm_neutronics_tr_dlofc.csv  htr_pm_neutronics_tr_dlofc_out_flow0.csv'
+    prereq = 'neutronics_syntax_null'
+    executable_pattern = 'griffin*|blue_crab*'
+    max_time = 400
+  []
+ 
+  
