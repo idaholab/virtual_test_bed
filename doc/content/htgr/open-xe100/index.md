@@ -36,7 +36,7 @@ For a more detailed explanation of the geometry of the model, see Stewart et al.
 Griffin solves the neutron transport problem using the diffusion equation
 approximation. For transient problems, Griffin can use methods like
 point reactor kinetics (PRKs) or the improved quasi-static (IQS) method. Griffin
-supports homogenization equivalance with Superhomogenization (SPH) factors, which
+supports homogenization equivalence with Superhomogenization (SPH) factors, which
 this model uses.
 
 For this model, there are four input files: (1) a steady-state eigenvalue calculation,

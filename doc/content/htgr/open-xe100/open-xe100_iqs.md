@@ -5,9 +5,9 @@ by factorizing flux into space-dependent and time-dependent components. Both
 components include the flux amplitude and flux shape, but the amplitude is only
 dependent on time, while the shape is dependent on position and time. By assuming
 that the shape is weakly dependent on time, a "quasi-static" treatment can be done
-by not computing the shape at each time step. The shape is computationally
+by not computing the shape at each time step. The shape calculation is computationally
 expensive relative to the amplitude, so the IQS method can significantly reduce
-the cost of computation.
+the computational cost of a transient simulation.
 
 ## Input Description
 
