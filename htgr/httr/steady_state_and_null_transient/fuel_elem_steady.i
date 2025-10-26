@@ -419,7 +419,7 @@ cond = 0.2309 # He at 523K, 2.8MPa
   []
   [fuel_block_total_power]
     type = ParsedPostprocessor
-    function = '${npins} * TotalPower'
+    expression = '${npins} * TotalPower'
     pp_names = 'TotalPower'
     execute_on = 'initial timestep_end'
   []
@@ -431,7 +431,7 @@ cond = 0.2309 # He at 523K, 2.8MPa
   []
   [avg_gap_conductance]
     type = ParsedPostprocessor
-    function = 'avg_homo_gap_conductance / ${htc_homo_scaling}'
+    expression = 'avg_homo_gap_conductance / ${htc_homo_scaling}'
     pp_names = 'avg_homo_gap_conductance'
     execute_on = 'initial timestep_end'
   []
@@ -524,7 +524,7 @@ cond = 0.2309 # He at 523K, 2.8MPa
   []
   [bdy_heat_flux_tot]
     type = ParsedPostprocessor
-    function = '${npins} * bdy_heat_flux'
+    expression = '${npins} * bdy_heat_flux'
     pp_names = 'bdy_heat_flux'
   []
 []
