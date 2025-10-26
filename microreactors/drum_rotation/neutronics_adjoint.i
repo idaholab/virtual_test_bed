@@ -36,13 +36,11 @@ y_center = ${fparse r}
     family = MONOMIAL
     order = FIRST
     AQtype = Gauss-Chebyshev
-    NPolar = 1 # use >=2 for final runs (4 sawtooth nodes sufficient)
-    NAzmthl = 3 # use >=6 for final runs (4 sawtooth nodes sufficient)
+    # set here to 1 to minimize needed resources, also tested in hpc_tests with 3
+    NPolar = 1
+    # set here to 3 to minimize needed resources, also tested in hpc_tests with 9
+    NAzmthl = 3
     NA = 1
-    sweep_type = asynchronous_parallel_sweeper
-    using_array_variable = true
-    collapse_scattering  = true
-    hide_angular_flux = true
   []
 []
 
