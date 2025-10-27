@@ -4,18 +4,21 @@
     type = CSVDiff
     input = 'xe100_ss.i'
     csvdiff = 'ss.csv'
+    executable_pattern = 'griffin*|blue_crab*|dire_wolf*'
   []
   [null]
     type = CSVDiff
     input = 'xe100_null.i'
     csvdiff = 'null.csv null_pke_params.csv'
     abs_zero = 1e-8
+    executable_pattern = 'griffin*|blue_crab*|dire_wolf*'
   []
   [iqs]
     type = CSVDiff
     input = 'xe100_iqs.i'
     csvdiff = 'iqs.csv iqs_pke_params.csv'
     abs_zero = 1e-8
+    executable_pattern = 'griffin*|blue_crab*|dire_wolf*'
   []
   [pke]
     type = CSVDiff
@@ -23,5 +26,6 @@
     csvdiff = 'pke_fuel_auto.csv'
     # Need to generate the PKE parameters
     prereq = 'iqs'
+    executable_pattern = 'griffin*|blue_crab*|dire_wolf*'
   []
 []
