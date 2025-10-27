@@ -83,10 +83,11 @@ shows the steady-state case.
 
 The IQS and PKE transient parameters are plotted and compared:
 
-!media open-xe100/iqs_vs_pke_rho.png
+!media htgr/open-xe100/plots/plots.py
+        image_name=power_comparison.png
         style=width:70%
-        id=iqs_vs_pke_rho
-        caption=Comparison of reactivity ($\rho$) between the IQS and PKE transient results.
+        id=iqs_vs_pke_power
+        caption=Comparison of normalized power between the IQS and PKE methods with the same reactivity profile imposed.
 
 !media open-xe100/iqs_vs_pke_Lambda.png
         style=width:70%

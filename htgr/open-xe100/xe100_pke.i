@@ -47,26 +47,33 @@
 []
 
 # ==============================================================================
-# FUNCTIONS
+# FUNCTIONS & AUXKERNELS
 # ==============================================================================
 
+# Applies a fixed reactivity profile
+# [Functions]
+#   [rho_time]
+#     type = SlopeFunction
+#     timep = '0  1  4                 10'
+#     value = '0  0  4.43177878883e-5  4.43177878883e-5'
+#   []
+# []
+
+# Applies the same reactivity profile as the IQS transient
 [Functions]
   [rho_time]
-    type = SlopeFunction
-    timep = '0  1  4                 10'
-    value = '0  0  4.43177878883e-5  4.43177878883e-5'
+    type = PiecewiseLinear
+    data_file = iqs_pke_params.csv
+    format = 'columns'
+    y_title = 'rho'
   []
 []
-
-# ==============================================================================
-# AUXKERNELS
-# ==============================================================================
-
 [AuxScalarKernels]
   [temp_ramp]
     type = FunctionScalarAux
     variable = rho
     function = rho_time
+    execute_on = 'INITIAL TIMESTEP_BEGIN'
   []
 []
 
