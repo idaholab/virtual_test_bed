@@ -92,7 +92,7 @@ The infiltration amount specifies the region where the volumetric heat needs to 
 
 ### Solid Mechanics Action
 
-This block defines a MOOSE Action that automates the process of setting up the solid mechanics kernel using small strain kinematics. It simplifies the set up by automatically adding displacement variables, handling eigenstrain inputs, and generating auxillary variables for key stress components. This method reduces manual setup by leveraging [solid mechanics action](https://mooseframework.inl.gov/syntax/Physics/SolidMechanics/QuasiStatic/index.html).
+This block defines a MOOSE Action that automates the process of setting up the solid mechanics kernel using small strain kinematics. It simplifies the set up by automatically adding displacement variables, handling eigenstrain inputs, and generating auxillary variables for key stress components. This method reduces manual setup by leveraging the [solid mechanics action](https://mooseframework.inl.gov/syntax/Physics/SolidMechanics/QuasiStatic/index.html).
 
 ```
 [Physics/SolidMechanics/QuasiStatic]

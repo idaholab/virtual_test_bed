@@ -29,9 +29,9 @@ These are input parameters defined in the global scope, so they could be accesse
 # we need a binary field (infiltrated vs. no infiltration), mimicking the physical behavior.
 # The threshold value converts the continuous field to a binary field.
 
-threshold = 0.8 
+threshold = 0.8
 
-# vol_frac_threshold represents the infiltration volume fraction 
+# vol_frac_threshold represents the infiltration volume fraction
 vol_frac_threshold=0.30
 
 #Diffusivity constant
@@ -40,7 +40,7 @@ diffusivity = 1e-3
 
 ### `Mesh`
 
-This block defines the finite element mesh that will be used. In this case, the mesh is read from a file in the Exodus (.e) format. The mesh for this particular problem was created using Cubit.
+This block defines the finite element mesh that will be used. In this case, the mesh is read from a file in the Exodus (.e) format. The mesh for this problem was created using Cubit. The journal file to generate the mesh can be found in the following link: [Models for Infiltration effects on graphite behavior](https://github.com/idaholab/virtual_test_bed/tree/main/msr/graphite_model/infiltration).
 
 !listing msr/graphite_model/infiltration/1_create_infiltration_profile/2D/2D_CreateInfiltrationProfile.i block=Mesh
 
@@ -70,13 +70,13 @@ This block defines the models that compute the values stored in the AuxVariables
 
 ### `UserObjects`
 
-This block defines the custom objects that perform specific tasks within the MOOSE framework. In this case, we use the Terminator userobject to stop the simulation after the infiltration amount reaches the user input, vol_frac_threshold.
+This block defines the custom objects that perform specific tasks within the MOOSE framework. In this case, we use the `Terminator` user-object to stop the simulation after the infiltration amount reaches the user input, vol_frac_threshold.
 
 !listing msr/graphite_model/infiltration/1_create_infiltration_profile/2D/2D_CreateInfiltrationProfile.i block=UserObjects
 
 ### `Postprocessors`
 
- This block is used to defined to calculate specific items of interest to the user. In this case, the infiltration amount is calculated and printed in the `Outputs` CSV file.
+ This block is used to defined to calculate specific items of interest to the user. In this case, the infiltration amount is calculated and printed to the screen as well as output to a CSV file.
 
 !listing msr/graphite_model/infiltration/1_create_infiltration_profile/2D/2D_CreateInfiltrationProfile.i  block=Postprocessors
 
@@ -94,7 +94,7 @@ The parameters in this block control the solution strategy used, convergence tol
 
 ### `Outputs`
 
-This block defines the types of output that are generated. The CSV output prints the amount of infiltration at various time steps. The Exodus output is primarily used for inspection of the results.
+This block defines the types of output that are generated. The CSV outputs the amount of infiltration at various time steps to a file for postprocessing. The Exodus output is primarily used for inspection of the results.
 
 !listing msr/graphite_model/infiltration/1_create_infiltration_profile/2D/2D_CreateInfiltrationProfile.i block=Outputs
 

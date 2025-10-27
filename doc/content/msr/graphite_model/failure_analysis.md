@@ -20,7 +20,7 @@ This document reviews the important elements of the input file (`pss.i`), listed
 
 ### `StochasticTools`
 
-This block configures the overall stochastic analysis and settings.
+This syntax creates the `StochasticToolsAction` which configures the overall stochastic analysis and settings.
 
 !listing msr/graphite_model/infiltration/4_failure_analysis_2D/pss.i block=StochasticTools
 
@@ -50,7 +50,7 @@ This block facilitates the transfer of data between the main and sub-application
 
 ### `Controls`
 
-This block passes inputs to the simulation based on the sampler output.
+This system modifies the parameters of the simulation based on the sampler outputs.
 
 !listing msr/graphite_model/infiltration/4_failure_analysis_2D/pss.i block=Controls
 
@@ -78,10 +78,10 @@ cd $PBS_O_WORKDIR
 module purge
 module load use.moose moose-dev
 
-mpiexec -n 1000 path_to_combined-opt -i pss.i | tee progress_log.txt 
+mpiexec -n 1000 path_to_combined-opt -i pss.i | tee progress_log.txt
 ```
 
-*Note: Please note that this HPC system utilizes a PBS scheduling system. Therefore, the job script is based on PBS commands. If you need to use SLURM, ensure to adjust the script accordingly.*
+*Note: Please note that this script was written for a computing cluster using the PBS scheduling system. Therefore, the job script is based on PBS commands. If you need to use SLURM, ensure to adjust the script accordingly.*
 
 The following output files will be produced:
 
