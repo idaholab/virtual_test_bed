@@ -83,7 +83,7 @@ shows the steady-state case.
 
 The IQS and PKE transient parameters are plotted and compared:
 
-!media htgr/open-xe100/plots/plots.py
+!media htgr/open-xe100/plots.py
         image_name=power_comparison.png
         style=width:70%
         id=iqs_vs_pke_power

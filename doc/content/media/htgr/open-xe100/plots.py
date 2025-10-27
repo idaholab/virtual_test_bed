@@ -7,8 +7,9 @@ import os
 os.chdir(os.path.dirname(os.path.realpath(__file__)))
 
 # Load the CSV files
-iqs_output = pd.read_csv('../iqs.csv')
-pke_output = pd.read_csv('../pke_fuel_auto.csv')
+folder = '../../../../../htgr/open-xe100/gold/'
+iqs_output = pd.read_csv(folder + 'iqs.csv')
+pke_output = pd.read_csv(folder + 'pke_fuel_auto.csv')
 
 time_iqs = iqs_output['time']
 time_pke = pke_output['time']
