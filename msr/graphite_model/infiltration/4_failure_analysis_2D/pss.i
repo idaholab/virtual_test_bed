@@ -18,17 +18,17 @@
     upper_bound = 1
   []
 
-  [E] #Youngs modulus
+  [E] #Youngs modulus [Pa]
     type = Uniform
     lower_bound = 9e9
     upper_bound = 15e9
   []
-  [K] #Thermal conductivity
+  [K] #Thermal conductivity [W/mK]
     type = Uniform
     lower_bound = 25
     upper_bound = 100
   []
-  [PD] #Power density
+  [PD] #Power density [W/m^3]
     type = Uniform
     lower_bound = 2e6
     upper_bound = 5e7
@@ -38,17 +38,17 @@
     lower_bound = 0.13
     upper_bound = 0.21
   []
-  [Tinf] #Salt temperature
+  [Tinf] #Salt temperature [K]
     type = Uniform
     lower_bound = 823
     upper_bound = 1023
   []
-  [htc] #Heat transfer coefficient
+  [htc] #Heat transfer coefficient [W/m^2K]
     type = Uniform
     lower_bound = 3500
     upper_bound = 5500
   []
-  [CTE] #Coefficient of thermal expansion
+  [CTE] #Coefficient of thermal expansion [1/K]
     type = Uniform
     lower_bound = 3.5e-6
     upper_bound = 6.0e-6

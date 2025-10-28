@@ -167,7 +167,7 @@
 [Executioner]
   type = Transient
   num_steps = 10
-  dt = 0.1
+  dt = 0.1 #s
 []
 
 [Outputs]

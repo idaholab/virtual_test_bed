@@ -8,8 +8,8 @@
 # https://mooseframework.inl.gov/virtual_test_bed/citing.html
 # ==============================================================================
 
-# endtime = 1892160000
-dt_max = 5e6
+# endtime = 1892160000 #s
+dt_max = 5e6 #s
 
 # Parameters for temperature distribution
 Tmax_A1 = -36.406902443685375
@@ -18,8 +18,8 @@ Tmax_z01 = 0.5788213284387279
 Tmin_A2 = -30.744024831884484
 Tmin_B2 = 899.8512009151575
 Tmin_z02 = 0.591661495195294
-x0c = 1.2
-thickness = 0.6
+x0c = 1.2 #m
+thickness = 0.6 #m
 
 # Parameters for neutron flux distribution
 B_flux = -11.7708550271939
@@ -66,7 +66,7 @@ Fmax_d = -1.887e+15
              Tmax - (Tmax-Tmin)*(r-${x0c})/${thickness}'
   []
 
-  # Fluence function (flux * time)
+  # Fluence function (flux * time) #n/m^2
   [fluence_func]
     type = ParsedFunction
     expression = 'r := (x^2 + y^2)^0.5;
@@ -110,24 +110,24 @@ Fmax_d = -1.887e+15
 
   [thermal]
     type = HeatConductionMaterial
-    thermal_conductivity = 63
-    specific_heat = 1502
+    thermal_conductivity = 63 #W/mk
+    specific_heat = 1502      #J/KgK
   []
   [density]
     type = GenericConstantMaterial
     prop_names = 'density'
-    prop_values = 1774.0
+    prop_values = 1774.0 #Kg/m^3
   []
   [elasticity]
     type = ComputeIsotropicElasticityTensor
-    youngs_modulus = 10.3e9
+    youngs_modulus = 10.3e9 #Pa
     poissons_ratio = 0.14
   []
   [thermal_expansion]
     type = StructuralGraphiteThermalExpansionEigenstrain
     eigenstrain_name = thermal_expansion
     graphite_grade = IG_110
-    stress_free_temperature = 300.0
+    stress_free_temperature = 300.0 #K
     fluence_conversion_factor = 1.0
     temperature = temperature
     # outputs = exodus
@@ -214,7 +214,7 @@ Fmax_d = -1.887e+15
   l_max_its = 50
   [TimeStepper]
     type = IterationAdaptiveDT
-    dt = 100
+    dt = 100 #s
     growth_factor = 3.0
     cutback_factor = 0.5
   []

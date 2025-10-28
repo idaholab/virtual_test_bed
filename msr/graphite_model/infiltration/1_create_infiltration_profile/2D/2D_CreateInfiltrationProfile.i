@@ -8,6 +8,22 @@
 # https://mooseframework.inl.gov/virtual_test_bed/citing.html
 # ==============================================================================
 
+# The diffusion field profile is smooth and continuous, but for this problem
+# we need a binary field (infiltrated vs. no infiltration), mimicking the physical behavior.
+# The threshold value converts the continuous field to a binary field.
+
+threshold = 0.8
+
+# vol_frac_threshold represents the infiltration volume fraction
+vol_frac_threshold = 0.30
+
+#Diffusivity constant
+diffusivity = 1e-3 # m^2/s
+
+# 2D msre mesh file
+[Mesh]
+  file = msre2D_coarse.e
+[]
 
 #diffusion field variable, representing the salt infiltration
 [Variables]
@@ -82,8 +98,8 @@
   petsc_options_iname = '-pc_type -pc_hypre_type -pc_hypre_boomeramg_strong_threshold'
   petsc_options_value = 'hypre    boomeramg      0.6'
 
-  dt = 0.005
-  end_time = 1
+  dt = 0.005   #s
+  end_time = 1 #s
 []
 
 # Outputs

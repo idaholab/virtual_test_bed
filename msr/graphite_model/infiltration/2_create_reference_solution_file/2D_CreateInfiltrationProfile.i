@@ -9,7 +9,7 @@
 # ==============================================================================
 threshold = 0.8
 vol_frac_threshold = 0.33
-diffusivity = 2e-3
+diffusivity = 2e-3 #m^2/s
 
 [Mesh]
   file = msre2D_1X.e
@@ -97,8 +97,8 @@ diffusivity = 2e-3
   petsc_options_iname = '-pc_type -pc_hypre_type -pc_hypre_boomeramg_strong_threshold'
   petsc_options_value = 'hypre    boomeramg      0.6'
 
-  dt = 0.001
-  end_time = 1
+  dt = 0.001   #s
+  end_time = 1 #s
 []
 
 # Outputs

@@ -10,11 +10,11 @@
 
 ### INPUTS ###
 
-E = 9.8e9
-K = 63
+E = 9.8e9    #Pa
+K = 63.      #W/mK
 nu = 0.14
-htc = 4500
-CTE = 4.5e-6
+htc = 4500   #W/m^2K
+CTE = 4.5e-6 #1/K
 
 volume_fraction = 0.33
 threshold = 0.8
@@ -30,7 +30,7 @@ threshold = 0.8
 
 [Variables]
   [T]
-    initial_condition = 300.0
+    initial_condition = 300.0 #K
   []
 []
 
@@ -138,12 +138,12 @@ threshold = 0.8
   [thermal]
     type = HeatConductionMaterial
     thermal_conductivity = ${K}
-    specific_heat = 1400
+    specific_heat = 1400 #J/KgK
   []
   [density]
     type = GenericConstantMaterial
     prop_names = 'density'
-    prop_values = 1760.0
+    prop_values = 1760.0 #Kg/m^3
   []
   [elasticity]
     type = ComputeIsotropicElasticityTensor
@@ -154,7 +154,7 @@ threshold = 0.8
     type = ComputeThermalExpansionEigenstrain
     temperature = T
     thermal_expansion_coeff = ${CTE}
-    stress_free_temperature = 300
+    stress_free_temperature = 300 #K
     eigenstrain_name = thermal_expansion
   []
   [stress]

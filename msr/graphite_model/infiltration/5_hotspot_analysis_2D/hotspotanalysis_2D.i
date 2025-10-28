@@ -11,19 +11,19 @@
 ### INPUTS ###
 
 INF = 1.0
-E = 9.8e9
-K = 63
-max_PD = 1e7
+E = 9.8e9     #Pa
+K = 63        #W/mK
+max_PD = 1e7  #W/m^3
 nu = 0.14
-Tinf = 923
-htc = 4500
-CTE = 4.5e-6
+Tinf = 923    #K
+htc = 4500    #W/m^2K
+CTE = 4.5e-6  #1/K
 porosity = 0.2
 
 # Hot spot inputs
-x0 = 0.0072
-y0 = 0.0072
-R = 1e-3
+x0 = 0.0072 #m
+y0 = 0.0072 #m
+R = 1e-3    #m
 
 interface_width = '${fparse R/10}'
 PD = '${fparse max_PD*porosity}'
@@ -55,7 +55,7 @@ threshold = 0.8
 
 [Variables]
   [T]
-    initial_condition = 300.0
+    initial_condition = 300.0 #K
   []
   [scalar_strain_yy]
     order = FIRST
@@ -173,12 +173,12 @@ threshold = 0.8
   [thermal]
     type = HeatConductionMaterial
     thermal_conductivity = ${K}
-    specific_heat = 1400
+    specific_heat = 1400 #J/KgK
   []
   [density]
     type = GenericConstantMaterial
     prop_names = 'density'
-    prop_values = 1760.0
+    prop_values = 1760.0 #Kg/m^3
   []
 
   [elastic_tensor_matrix]
@@ -190,7 +190,7 @@ threshold = 0.8
 
   [elastic_tensor_void]
     type = ComputeIsotropicElasticityTensor
-    youngs_modulus = 1e-3
+    youngs_modulus = 1e-3 #Pa
     poissons_ratio = 1e-3
     base_name = Cijkl_void
   []
@@ -205,7 +205,7 @@ threshold = 0.8
     type = ComputeThermalExpansionEigenstrain
     temperature = T
     thermal_expansion_coeff = ${CTE}
-    stress_free_temperature = 300
+    stress_free_temperature = 300 #K
     eigenstrain_name = thermal_expansion
   []
   [stress]
