@@ -13,8 +13,8 @@ This study analyzes the stress induced by temperature and radiation effects over
 
 Files used by this model include:
 
-- MOOSE input file
-- Exodus mesh file
+- MOOSE input file: `baseline.i`
+- Exodus mesh file: `baseline.e`
 
 This document reviews the important elements of the input file that were not covered in previous models [Infiltration effects on graphite](infiltration_graphite.md)
 

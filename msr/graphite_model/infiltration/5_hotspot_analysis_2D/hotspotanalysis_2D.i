@@ -107,11 +107,11 @@ threshold = 0.8
   []
 []
 
-[Modules]
+[Physics]
 
-  [TensorMechanics]
+  [SolidMechanics]
 
-    [Master]
+    [QuasiStatic]
       [all]
         planar_formulation = GENERALIZED_PLANE_STRAIN
         scalar_out_of_plane_strain = scalar_strain_yy
