@@ -7,4 +7,5 @@ lfs_include:
   - microreactors/drum_rotation
   - microreactors/KRUSTY
   - htgr/pbmr400
+  - htgr/open-xe100
   - sfr/vtr

@@ -13,6 +13,7 @@ lfs_include:
   - htgr/pbmr400
   - htgr/htr10
   - htgr/gpbr200
+  - htgr/open-xe100
   - sfr/vtr
   - msr/lotus/mesh
   - pbfhr/gFHR/data
