@@ -29,24 +29,7 @@ R = 1e-3
 
 The hotspot is initialized through an auxiliary variable using a parsed function. The auxiliary variable `hotspot_var` is defined with constant order and monomial family. The parsed function `heatsource_hotspot_fn` calculates the distance from the center of the hotspot and assigns a power density value if the distance is within the hotspot radius. This function is then applied to the auxiliary variable through the hotspot `AuxKernel`. This setup ensures that the hotspot is correctly initialized and applied within the simulation.
 
-```
-  [hotspot_var]
-    order = CONSTANT
-    family = MONOMIAL       
-  []
-
-  [hotspot]
-    type = FunctionAux
-    variable = hotspot_var
-    function = heatsource_hotspot_fn
-  [] 
-
-  [heatsource_hotspot_fn]
-    type = ParsedFunction
-    expression = 'r := (sqrt((x-${x0})^2 + (y-${y0})^2) );
-                  if(r<=${R},${max_PD}-${avg_PD},0)'     
-  []
-```
+!listing msr/graphite_model/infiltration/5_hotspot_analysis_2D/hotspotanalysis_2D.i block=hotspot_var hotspot heatsource_hotspot_fn
 
 The heat generation from the hotspot is incorporated within the `Kernels` section using the `heat_source_hotspot` kernel. This kernel applies the parsed function `heatsource_hotspot_fn` to account for the localized heat generation due to the hotspot.
 
@@ -60,47 +43,7 @@ The following block defines a variable eta which is 1 within the pore/hotspot an
 
 The following blocks define the material properties and elasticity tensors based on the variable `eta`.
 
-```
-[h_void]
-    type = SwitchingFunctionMaterial
-    eta = eta
-    h_order = HIGH
-    function_name = h_void
-    output_properties = 'h_void'
-    outputs = exodus
-[]
-
-[h_mat]
-  type = DerivativeParsedMaterial
-  expression = '1-h_void'
-  coupled_variables = 'eta'
-  property_name = h_mat
-  material_property_names = 'h_void'
-  outputs = exodus
-[]
-
-  [elastic_tensor_matrix]
-    type = ComputeIsotropicElasticityTensor
-    youngs_modulus = ${E}
-    poissons_ratio = ${nu}
-    base_name = Cijkl_matrix
-  []
-
-  [elastic_tensor_void]
-    type = ComputeIsotropicElasticityTensor
-    youngs_modulus = 1e-3
-    poissons_ratio = 1e-3
-    base_name = Cijkl_void
-  []
-
-  [elasticity_tensor]
-    type = CompositeElasticityTensor
-    tensors = 'Cijkl_matrix Cijkl_void'
-    weights = 'h_mat            h_void'
-    coupled_variables = 'eta'
-  []
-
-```
+!listing msr/graphite_model/infiltration/5_hotspot_analysis_2D/hotspotanalysis_2D.i block=Materials
 
 The `h_void` block defines a switching function material for `eta`, producing the property `h_void`. The `h_mat` block calculates the complementary property `h_mat` as `1 - h_void`. The `elastic_tensor_matrix` block defines the elasticity tensor for the matrix material with a specified Young's modulus and Poisson's ratio. The `elastic_tensor_void` block defines the elasticity tensor for the void with very low elastic properties. Finally, the `elasticity_tensor` block creates a composite elasticity tensor by combining matrix and void properties, weighted by `h_mat` and `h_void`, respectively.
 

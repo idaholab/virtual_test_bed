@@ -30,24 +30,7 @@ Steady-state temperature and neutron flux are critical inputs to these simulatio
 
 Irradiation in graphite leads to irradiation-induced dimensional changes and irradiation creep. Built-in empirical models within Grizzly for IG110 is used as shown.
 
-```
-  [GraphiteGrade_creep]
-    type = StructuralGraphiteCreepUpdate
-    fluence_conversion_factor = 1.0
-    graphite_grade = IG_110
-    temperature = temperature
-    creep_scale_factor = 1.0
-    outputs = exodus
-  []
-  [graphite_irrad_strain]
-    type = StructuralGraphiteIrradiationEigenstrain
-    temperature = temperature
-    graphite_grade = IG_110
-    fluence_conversion_factor = 1.0
-    eigenstrain_name = irrad_strain
-    outputs = exodus
-  []
-```
+!listing msr/graphite_model/wear/1_baseline/baseline.i  block=GraphiteGrade_creep graphite_irrad_strain
 
 ## Running the model
 

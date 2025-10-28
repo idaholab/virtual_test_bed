@@ -64,22 +64,7 @@ This block defines the reporters used in the simulation. The `StochasticReporter
 
 This analysis requires HPC resources. To run this model using the MOOSE combined module executable, run the job file in a HPC system:
 
-```
-#!/bin/bash
-#PBS -N PSS
-#PBS -l select=25:ncpus=48:mpiprocs=40
-#PBS -l walltime=05:00:00
-#PBS -P nrc
-
-# Change to the directory from which the job was submitted
-cd $PBS_O_WORKDIR
-
-# Load the necessary modules
-module purge
-module load use.moose moose-dev
-
-mpiexec -n 1000 path_to_combined-opt -i pss.i | tee progress_log.txt
-```
+!listing msr/graphite_model/infiltration/4_failure_analysis_2D/RunScript.sh
 
 *Note: Please note that this script was written for a computing cluster using the PBS scheduling system. Therefore, the job script is based on PBS commands. If you need to use SLURM, ensure to adjust the script accordingly.*
 

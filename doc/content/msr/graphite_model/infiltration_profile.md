@@ -24,19 +24,7 @@ This document reviews the basic elements of the input file, listed in full here:
 
 These are input parameters defined in the global scope, so they could be accessed by any object within the MOOSE input file. These streamline the workflows.
 
-```
-# The diffusion field profile is smooth and continuous, but for this problem
-# we need a binary field (infiltrated vs. no infiltration), mimicking the physical behavior.
-# The threshold value converts the continuous field to a binary field.
-
-threshold = 0.8
-
-# vol_frac_threshold represents the infiltration volume fraction
-vol_frac_threshold=0.30
-
-#Diffusivity constant
-diffusivity = 1e-3
-```
+!listing msr/graphite_model/infiltration/1_create_infiltration_profile/2D/2D_CreateInfiltrationProfile.i start=# The diffusion end=# 2D msre mesh file
 
 ### `Mesh`
 
