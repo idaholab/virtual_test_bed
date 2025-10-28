@@ -1,3 +1,13 @@
+# ==============================================================================
+# Input file to predict stresses due to a specified infiltration amount
+# Application : MOOSE
+# ------------------------------------------------------------------------------
+# Idaho Falls, INL, 2025
+# Author(s): V Prithivirajan, Ben Spencer
+# If using or referring to this model, please cite as explained on
+# https://mooseframework.inl.gov/virtual_test_bed/citing.html
+# ==============================================================================
+
 ### INPUTS ###
 
 E = 9.8e9

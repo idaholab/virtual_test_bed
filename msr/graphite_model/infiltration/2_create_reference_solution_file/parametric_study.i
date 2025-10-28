@@ -1,4 +1,13 @@
-# Input file to be run to generate output files corresponding to different infiltration amounts
+# ==============================================================================
+# Parametric study input file to generate output files corresponding to different infiltration amounts
+# Application : MOOSE
+# ------------------------------------------------------------------------------
+# Idaho Falls, INL, 2025
+# Author(s): V Prithivirajan, Ben Spencer
+# If using or referring to this model, please cite as explained on
+# https://mooseframework.inl.gov/virtual_test_bed/citing.html
+# ==============================================================================
+
 [ParameterStudy]
   input = 2D_CreateInfiltrationProfile.i
   parameters = 'vol_frac_threshold'

@@ -1,3 +1,13 @@
+# ==============================================================================
+# Generation of 3D Molten Salt Infiltration Profiles in Graphite
+# Application : MOOSE
+# ------------------------------------------------------------------------------
+# Idaho Falls, INL, 2025
+# Author(s): V Prithivirajan, Ben Spencer
+# If using or referring to this model, please cite as explained on
+# https://mooseframework.inl.gov/virtual_test_bed/citing.html
+# ==============================================================================
+
 # The diffusion field profile is smooth and continuous, but for this problem
 # we need a binary field (infiltrated vs. no infiltration), mimicking the physical behavior.
 # The threshold value converts the continuous field to a binary field.

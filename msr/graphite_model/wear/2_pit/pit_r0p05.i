@@ -1,3 +1,12 @@
+# ==============================================================================
+# 3D stress analysis of a graphite reflector block with a pit
+# Application : Grizzly
+# ------------------------------------------------------------------------------
+# Idaho Falls, INL, 2024
+# Author(s): Ben Spencer, Will Hoffman
+# If using or referring to this model, please cite as explained on
+# https://mooseframework.inl.gov/virtual_test_bed/citing.html
+# ==============================================================================
 
 sector_angle = '${fparse 51*pi/180}'
 

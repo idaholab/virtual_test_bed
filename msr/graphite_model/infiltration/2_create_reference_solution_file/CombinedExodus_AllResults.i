@@ -1,3 +1,13 @@
+# ==============================================================================
+# Input file to create a reference solution output file
+# Application : MOOSE
+# ------------------------------------------------------------------------------
+# Idaho Falls, INL, 2025
+# Author(s): V Prithivirajan, Ben Spencer
+# If using or referring to this model, please cite as explained on
+# https://mooseframework.inl.gov/virtual_test_bed/citing.html
+# ==============================================================================
+
 [Mesh]
   file = msre2D_1X.e
 []

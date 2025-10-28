@@ -1,3 +1,13 @@
+# ==============================================================================
+# Parellel subset simulation setup to perform rare-event analysis
+# Application : MOOSE
+# ------------------------------------------------------------------------------
+# Idaho Falls, INL, 2025
+# Author(s): V Prithivirajan, Ben Spencer
+# If using or referring to this model, please cite as explained on
+# https://mooseframework.inl.gov/virtual_test_bed/citing.html
+# ==============================================================================
+
 [StochasticTools] #Configures the overall stochastic analysis and settings
 []
 

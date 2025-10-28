@@ -1,3 +1,12 @@
+# ==============================================================================
+# Baseline input file to generate 2D infiltration profiles
+# Application : MOOSE
+# ------------------------------------------------------------------------------
+# Idaho Falls, INL, 2025
+# Author(s): V Prithivirajan, Ben Spencer
+# If using or referring to this model, please cite as explained on
+# https://mooseframework.inl.gov/virtual_test_bed/citing.html
+# ==============================================================================
 threshold = 0.8
 vol_frac_threshold = 0.33
 diffusivity = 2e-3
