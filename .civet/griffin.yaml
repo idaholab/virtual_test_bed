@@ -13,6 +13,7 @@ lfs_include:
   - htgr/htr10
   - htgr/httr
   - htgr/gpbr200
+  - htgr/open-xe100
   - sfr/vtr
   - microreactors/gcmr/assembly/MESH
   - microreactors/mrad/mesh/gold
