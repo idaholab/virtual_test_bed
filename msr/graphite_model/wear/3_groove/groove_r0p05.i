@@ -178,12 +178,12 @@ y_coord = '${fparse (R_i-delta_center_radius)*sin(0.5*sector_angle)}'  #m
   [thermal]
     type = HeatConductionMaterial
     thermal_conductivity = 63 #W/mK
-    specific_heat = 1502 J/KgK
+    specific_heat = 1502 #J/KgK
   []
   [density]
     type = GenericConstantMaterial
     prop_names = 'density'
-    prop_values = 1774.0 Kg/m^3
+    prop_values = 1774.0 #Kg/m^3
   []
 
   [thermal_expansion]
