@@ -4,10 +4,7 @@
 
 !col! small=6 medium=6 large=6
 
-# VTB style=font-size:1000%;margin-bottom:-50px;text-align:center
-
-!style fontsize=300% halign=center
-Virtual Test Bed
+# Virtual Test Bed style=font-size:400%
 
 !col-end!
 
