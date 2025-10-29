@@ -41,7 +41,7 @@
     type = CSVDiff
     csvdiff = 'neutronics_eigenvalue_out.csv'
     input = 'neutronics_eigenvalue.i'
-    executable_pattern = 'blue_crab*|dire_wolf*'
+    executable_pattern = 'dire_wolf*'
     min_parallel = 192 # won't be tested for now
     prereq = griffin_only
   []
