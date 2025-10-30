@@ -107,7 +107,7 @@
     input = 'ss-main.i'
     csvdiff = 'ss-main-simplified.csv'
     executable_pattern = 'sam*|blue_crab*'
-    cli_args = '--app SamApp --allow-unused Executioner/dt=0.005 MultiApps/primary_loop/input_files=plofc-primary-loop-ss.i Outputs/csv/file_base=ss-main-simplified Executioner/num_steps=2 Executioner/nl_rel_tol=1e-8 Executioner/nl_abs_tol=1e-7'
+    cli_args = '--app SamApp --allow-unused Executioner/dt=0.005 MultiApps/primary_loop/input_files=plofc-primary-loop-ss.i Outputs/csv/file_base=ss-main-simplified Executioner/num_steps=20 Executioner/nl_rel_tol=1e-8 Executioner/nl_abs_tol=1e-7'
     abs_zero = 1e-5
     rel_err = 1e-4
     max_time = 1000
@@ -119,7 +119,7 @@
     input = 'plofc-main-transient.i'
     csvdiff = 'plofc-main-transient_csv.csv'
     executable_pattern = 'sam*|blue_crab*'
-    cli_args = '--app SamApp --allow-unused Executioner/dt=0.005 Problem/restart_file_base=ss-main_checkpoint_cp/0002 Executioner/num_steps=1 Executioner/nl_rel_tol=1e-8 Executioner/nl_abs_tol=1e-7'
+    cli_args = '--app SamApp --allow-unused Executioner/dt=0.005 Problem/restart_file_base=ss-main_checkpoint_cp/0020 Executioner/num_steps=1 Executioner/nl_rel_tol=1e-8 Executioner/nl_abs_tol=1e-7'
     abs_zero = 1e-5
     rel_err = 1e-4
     max_time = 1000
