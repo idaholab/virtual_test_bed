@@ -1,10 +1,11 @@
 #####################################################################
 # This is the MOOSE input file to generate the mesh that can be
 # used for the 1/6 core Heat-Pipe Microreactor Multiphysics
-# simulations (BISON thermal simulation).
+# simulations
+# (Griffin neutronics simulation for control drum rotation).
 # Running this input requires MOOSE Reactor Module Objects
 # Users should use
-# --mesh-only HPMR_OneSixth_Core_meshgenerator_tri_rotate_bdry_fine.e
+# --mesh-only HPMR_OneSixth_finercdrum_tri.e
 # command line argument to generate
 # exodus file for further Multiphysics simulations.
 #####################################################################
@@ -34,7 +35,6 @@ fine_azi_sectors = 120
     num_sectors_per_side = '2 2 2 2 2 2'
     background_intervals = 1
     background_block_ids = '10'
-    # inner background boundary layer, only for BISON mesh
     background_inner_boundary_layer_bias = 1.5
     background_inner_boundary_layer_intervals = 3
     background_inner_boundary_layer_width = 0.03
@@ -383,13 +383,11 @@ fine_azi_sectors = 120
   [add_outer_shield]
     type = PeripheralRingMeshGenerator
     input = del_dummy
-    # Use `peripheral_layer_num = 2` for BISON mesh
     peripheral_layer_num = 2
     peripheral_ring_radius = 115.0
     input_mesh_external_boundary = 10000
     peripheral_ring_block_id = 250
     peripheral_ring_block_name = outer_shield
-    # Peripheral boundary layer, only for BISON mesh
     peripheral_outer_boundary_layer_bias = 0.625
     peripheral_outer_boundary_layer_intervals = 3
     peripheral_outer_boundary_layer_width = 2
@@ -410,63 +408,20 @@ fine_azi_sectors = 120
     new_boundary = 147
   []
   # extrusion
-   [extrude]
-     type = AdvancedExtruderGenerator
-     input = del_2
-     heights = '20 160 20'
-     # Use `num_layers = '6 16 6'` for BISON mesh
-     num_layers = '1 8 1'
-     subdomain_swaps = '101  1000  100  1000  103  1003    201  201     200  200     203  203    250  250  301  1000   303  1003  400    400  401     401    10  1000   600  600    601   601    504    504     500   500   501   501  10000 1009 ;
-                        101  101   100  100   103  103     201  201     200  200     203  203    250  250  301  301    303  303   400    400  401     401    10  10     600  600    601   601    504    504     500   500   501   501  10000 10000;
-                        101  1000  100  1000  103  1003    201  1000    200  1000    203  1003   250  250  301  1000   303  1003  400    400  401     401    10  1000   600  600    601   601    504    504     500   500   501   501  10000 1008 '
+  [extrude]
+    type = AdvancedExtruderGenerator
+    input = del_2
+    heights = '20 160 20'
+    num_layers = '1 8 1'
+    subdomain_swaps = '101  1000  100  1000  103  1003    201  201     200  200     203  203    250  250  301  1000   303  1003  400    400  401     401    10  1000   600  600    601   601    504    504     500   500   501   501  10000 1009 ;
+                       101  101   100  100   103  103     201  201     200  200     203  203    250  250  301  301    303  303   400    400  401     401    10  10     600  600    601   601    504    504     500   500   501   501  10000 10000;
+                       101  1000  100  1000  103  1003    201  1000    200  1000    203  1003   250  250  301  1000   303  1003  400    400  401     401    10  1000   600  600    601   601    504    504     500   500   501   501  10000 1008 '
 
-    #subdomain_swaps = '101  1000  100  1000  103  1003    201  201     200  200     203  203    250  250  301  1000   303  1003  400    400  401     401    10  1000  503    503  600  600    601   601    504    504     500   500   501   501  10000 1009  5001   5001  5002   5002  5003   5003   5004   5004   5005  5005   5006  5006   5007  5007   5008  5008   5009  5009   5010  5010    5011  5011    5012  5012;
-    #                   101  101   100  100   103  103     201  201     200  200     203  203    250  250  301  301    303  303   400    400  401     401    10  10    503    503  600  600    601   601    504    504     500   500   501   501  10000 10000 5001   5001  5002   5002  5003   5003   5004   5004   5005  5005   5006  5006   5007  5007   5008  5008   5009  5009   5010  5010    5011  5011    5012  5012;
-    #                   101  1000  100  1000  103  1003    201  1000    200  1000    203  1003   250  250  301  1000   303  1003  400    400  401     401    10  1000  503    503  600  600    601   601    504    504     500   500   501   501  10000 1008  5001   5001  5002   5002  5003   5003   5004   5004   5005  5005   5006  5006   5007  5007   5008  5008   5009  5009   5010  5010    5011  5011    5012  5012'
-
-     # biased upper and lower reflector mesh, only for BISON mesh
-     #biases = '1.6 1.0 0.625'
-     direction = '0 0 1'
-     top_boundary = 2000
-     bottom_boundary = 3000
-   []
-  ## Define some special reflector blocks
-  #[reflector_bottom_quad]
-  #  type = ParsedSubdomainMeshGenerator
-  #  input = extrude
-  #  combinatorial_geometry = 'z<=20'
-  #  block_id = 1000
-  #  excluded_subdomain_ids = '103 203 303 250 400 401 500 501 502 503 504 600 601'
-  #[]
-  #[reflector_bottom_tri]
-  #  type = ParsedSubdomainMeshGenerator
-  #  input = reflector_bottom_quad
-  #  combinatorial_geometry = 'z<=20'
-  #  block_id = 1003
-  #  excluded_subdomain_ids = '1000 250 400 401 500 501 502 503 504 600 601'
-  #[]
-  #[reflector_top_quad]
-  #  type = ParsedSubdomainMeshGenerator
-  #  input = reflector_bottom_tri
-  #  combinatorial_geometry = 'z>=180'
-  #  block_id = 1000
-  #  excluded_subdomain_ids = '103 203 303 200 201 250 400 401 500 501 502 503 504 600 601'
-  #[]
-  #[reflector_top_tri]
-  #  type = ParsedSubdomainMeshGenerator
-  #  input = reflector_top_quad
-  #  combinatorial_geometry = 'z>=180'
-  #  block_id = 1003
-  #  excluded_subdomain_ids = '1000 200 201 203 250 400 401 500 501 502 503 504 600 601'
-  #[]
-  ## Assgin block names
-  #[rename_blocks]
-  #  type = RenameBlockGenerator
-  #   old_block_id = '     101       100         103          201        200           203            301       303        400            401         10     600         601        504          500                501          502                  1003'
-  #   new_block_name = ' mod_ss moderator_quad moderator_tri hp_ss  heat_pipes_quad heat_pipes_tri fuel_quad fuel_tri reflector_tri reflector_quad monolith  air_gap_tri air_gap_quad air_gap_quad reflector_tri  reflector_quad Drum_channel     reflector'
-  #  input = extrude
-  #[]
- # Assign boundary names
+    direction = '0 0 1'
+    top_boundary = 2000
+    bottom_boundary = 3000
+  []
+  # Assign boundary names
   [rename_boundaries]
     type = RenameBoundaryGenerator
     input = extrude
@@ -488,53 +443,4 @@ fine_azi_sectors = 120
     transform = ROTATE
     vector_value = '0 0 -120'
   []
-  ## A series of process to prepare the mesh for BISON simulation
-  #[split_hp_ss]
-  #  type = SubdomainBoundingBoxGenerator
-  #  input = rotate_end
-  #  block_id = 1201
-  #  block_name = 'hp_ss_up'
-  #  restricted_subdomains = 'hp_ss'
-  #  bottom_left = '-100 -100 1.8'
-  #  top_right = '100 100 3.0'
-  #[]
-  #[add_exterior_ht_low]
-  #  type = SideSetsBetweenSubdomainsGenerator
-  #  input = split_hp_ss
-  #  paired_block = 'hp_ss'
-  #  primary_block = 'monolith'
-  #  new_boundary = 'heat_pipe_ht_surf_low'
-  #[]
-  #[add_exterior_ht_up]
-  #  type = SideSetsBetweenSubdomainsGenerator
-  #  input = add_exterior_ht_low
-  #  paired_block = 'hp_ss_up'
-  #  primary_block = 'reflector_quad'
-  #  new_boundary = 'heat_pipe_ht_surf_up'
-  #[]
-  #[add_exterior_bot]
-  #  type = SideSetsBetweenSubdomainsGenerator
-  #  input = add_exterior_ht_up
-  #  paired_block = 'heat_pipes_quad heat_pipes_tri hp_ss'
-  #  primary_block = 'reflector_quad reflector_tri'
-  #  new_boundary = 'heat_pipe_ht_surf_bot'
-  #[]
-  #[merge_hp_surf]
-  #  type = RenameBoundaryGenerator
-  #  input = add_exterior_bot
-  #  old_boundary = 'heat_pipe_ht_surf_low heat_pipe_ht_surf_up'
-  #  new_boundary = 'heat_pipe_ht_surf heat_pipe_ht_surf'
-  #[]
-  #[remove_hp]
-  #  type = BlockDeletionGenerator
-  #  input = merge_hp_surf
-  #  block = 'hp_ss hp_ss_up heat_pipes_quad heat_pipes_tri'
-  #[]
-  #
-  ## remove extra nodesets to limit the size of the mesh
-  #[clean_up]
-  #  type = BoundaryDeletionGenerator
-  #  input = remove_hp
-  #  boundary_names = '1 3'
-  #[]
 []
