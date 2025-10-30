@@ -22,5 +22,5 @@ The Pebble/TRISO model is composed of two spherical heat conduction problems; on
 As shown in the figure above, the NK model uses the fuel temperature (Tfuel), the moderator temperature (Tmod), and the reflector temperature (Tref) to interpolate the cross-sections, calculate the flux, calculate the Xe concentration, and provide the power denisty (q''') to the TH model. The TH model calculated the pebble surface temperature (Tsurf) and passes it to the 110 Pebble/TRISO models (one for each core mesh) together with the power density to reconstruct the temperature within the pebbles and TRISO particles. Furthermore, the reflector temperature (Tref)is calculated and pass to the NK model. The modeled TRISO particle is a representative average particle, using the pebble core average temperature as the external temperature. Finally, the pebble core temperature is averaged and sent back to the NK model (Tmod) together with the average TRISO kernel temperature (Tfuel).
 
 !alert note
-The cross sections for this model are hosted on LFS. Please refer to [LFS instructions](resources/how_to_use_vtb.md#lfs)
+The cross sections for this model are hosted on LFS. Please refer to [LFS instructions](vtb_pages/getting_started.md#lfs)
 to download them.

@@ -2,7 +2,7 @@
 
 ## Principle & Syntax
 
-While the `MultiApp` system, discussed in [+Chapter 5+](/chp_5_multiapps.md) is in charge of establishing child applications within the parent application, the [`Transfer system`](https://mooseframework.inl.gov/syntax/Transfers/index.html) takes care of data interchange between the different applications. The Transfer system controls what type of information is transferred and how the transfer will occur. Various types of transfers are available; the user should take care to select the most appropriate type for their use case. Various types of data can be transferred between parent and child application through the `Transfer` system. This chapter discusses the main capabilities and required inputs to use the `Transfer` system.
+While the `MultiApp` system, discussed in [+Chapter 5+](vtb_tutorials/multiapps/chp_5_multiapps.md) is in charge of establishing child applications within the parent application, the [`Transfer system`](https://mooseframework.inl.gov/syntax/Transfers/index.html) takes care of data interchange between the different applications. The Transfer system controls what type of information is transferred and how the transfer will occur. Various types of transfers are available; the user should take care to select the most appropriate type for their use case. Various types of data can be transferred between parent and child application through the `Transfer` system. This chapter discusses the main capabilities and required inputs to use the `Transfer` system.
 
 ### Target and Direction of Transfer
 
@@ -10,13 +10,13 @@ Every MultiApp Transfer requires a direction parameter to specify the flow of th
 
 ### Timing of Transfer
 
-As both parent and child applications run, the data in both applications will keep evolving. Therefore, the timing of `Transfer` is crucial for accurate coupling. Meanwhile, each data transfer consumes computational resources and thus the frequency of data transfers should be optimized. The timing of data transfer is controlled by the `execute_on` parameter that was discussed in [+Chapter 5+](/chp_5_multiapps.md). By default, the timing of the data transfer is consistent with that for the target `MultiApp`. In this case, parent-to-child transfer occurs right before the execution of the child applications to provide updated data from parent application, while child-to-parent transfer occurs right after the execution of the child application to collect the data for the parent application to proceed. The consistence in `execute_on` between the `MultiApp` and `Transfer` blocks is checked by default. Users can disable this check by setting `check_multiapp_execute_on` as `false`. The `check_multiapp_execute_on` is an optional `MultiApp` parameter.
+As both parent and child applications run, the data in both applications will keep evolving. Therefore, the timing of `Transfer` is crucial for accurate coupling. Meanwhile, each data transfer consumes computational resources and thus the frequency of data transfers should be optimized. The timing of data transfer is controlled by the `execute_on` parameter that was discussed in [+Chapter 5+](vtb_tutorials/multiapps/chp_5_multiapps.md). By default, the timing of the data transfer is consistent with that for the target `MultiApp`. In this case, parent-to-child transfer occurs right before the execution of the child applications to provide updated data from parent application, while child-to-parent transfer occurs right after the execution of the child application to collect the data for the parent application to proceed. The consistence in `execute_on` between the `MultiApp` and `Transfer` blocks is checked by default. Users can disable this check by setting `check_multiapp_execute_on` as `false`. The `check_multiapp_execute_on` is an optional `MultiApp` parameter.
 
 In some special cases, the timing of the `Transfer` may need to be different than the timing of the `MultiApp` execution. One example is when the child application is restarted from a previous simulation. In this case, a child-to-parent transfer will be needed during the `INITIAL` stage to load the initial conditions from the restarted child application.
 
 ### Categories of Transfer
 
-Transfers are mainly categorized by the type of data to be transferred: field variable, array of scalar, scalar, etc. Some discussion on how to select appropriate `Transfer` can be found in the "Selection of Transfer Methods" subsection of [+Chapter 4+](/chp_4_workflow.md). Here, the focus is mainly on the syntax.
+Transfers are mainly categorized by the type of data to be transferred: field variable, array of scalar, scalar, etc. Some discussion on how to select appropriate `Transfer` can be found in the "Selection of Transfer Methods" subsection of [+Chapter 4+](vtb_tutorials/multiapps/chp_4_workflow.md). Here, the focus is mainly on the syntax.
 
 #### Field Data -- Field Data Transfers
 
@@ -69,4 +69,4 @@ Nevertheless, some position dependent-transfer algorithms, such as those involvi
 By default, for a `Transfer` involving a field variable, the variable values in the whole mesh domain participate in the data transfer. However, in some cases, only the variable values on some specific boundaries are needed. In that case, the data transfer can be limited to such boundaries through `source_boundary` and `target_boundary` parameters to minimize the resources needed to perform such `Transfer`.
 
 !style halign=right
-[+Go to Chapter 7+](/chp_7_adv_topics.md)
+[+Go to Chapter 7+](vtb_tutorials/multiapps/chp_7_adv_topics.md)

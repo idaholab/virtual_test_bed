@@ -44,7 +44,7 @@ when building can be found [here](https://mooseframework.inl.gov/automatic_diffe
 A solver based on the SIMPLE method has been added to the Navier Stokes module after this study was conducted, and should be preferred for future 3D studies.
 
 !alert note
-Input and mesh files are hosted on LFS. Please refer to [LFS instructions](resources/how_to_use_vtb.md#lfs)
+Input and mesh files are hosted on LFS. Please refer to [LFS instructions](vtb_pages/getting_started.md#lfs)
 to download them.
 
 !media atr/0deg_coarse_zoom_mesh.png
