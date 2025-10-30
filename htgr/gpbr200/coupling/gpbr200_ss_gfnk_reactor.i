@@ -227,7 +227,7 @@ ref_blocks = '${cns_disch_blocks} ${upref_blocks}
   [triso]
     type = Triso
     compositions = 'uco buffer PyC SiC PyC'
-    radii = '${kernel_radius} ${buffer_radius} ${ipyc_radius} ${sic_radius} ${opyc_radius}'
+    radii = '${fparse kernel_radius*100} ${fparse buffer_radius*100} ${fparse ipyc_radius*100} ${fparse sic_radius*100} ${fparse opyc_radius*100}'
   []
   [triso_fill]
     type = StochasticComposition
@@ -238,7 +238,7 @@ ref_blocks = '${cns_disch_blocks} ${upref_blocks}
   [pebble]
     type = Pebble
     compositions = 'triso_fill matrix'
-    radii = '${fparse pebble_radius - pebble_shell_thickness} ${pebble_radius}'
+    radii = '${fparse (pebble_radius - pebble_shell_thickness)*100} ${fparse pebble_radius*100}'
   []
 []
 

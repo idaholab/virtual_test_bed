@@ -39,7 +39,7 @@ system-level transient analysis of the entire HTTF while also obtaining high-fid
 
 !alert note
 The mesh for the heat conduction model is hosted on LFS.
-Please refer to [LFS instructions](resources/how_to_use_vtb.md#lfs) to download it.
+Please refer to [LFS instructions](vtb_pages/getting_started.md#lfs) to download it.
 
 The MOOSE `heat_conduction` module was used to solve heat conduction throughout the HTTF core, reflector, core barrel, RPV, and RCCS
 in 3-D. Shared surfaces between the core and reflector were merged within the mesh to allow for heat conduction across the boundary
