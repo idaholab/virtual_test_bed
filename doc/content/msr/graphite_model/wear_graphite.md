@@ -6,6 +6,20 @@
 
 *Model link: [Models for wear effects on graphite behavior](https://github.com/idaholab/virtual_test_bed/tree/main/msr/graphite_model/wear)*
 
+!tag name=Wear effects on graphite in MSR
+     description=Wear effects on graphite in MSR
+     image=<https://mooseframework.inl.gov/virtual_test_bed/media/msr/graphite_model/wear/4_block.png>
+     pairs=reactor_type:MSR
+           reactor:gFHR
+           geometry:reflector
+           simulation_type:multiphysics
+           transient:transient
+           codes_used:Griffin
+           computing_needs:HPC
+           fiscal_year:2025
+           sponsor:NRC
+           institution:INL
+
 Wear of graphite components used in MSRs can occur due to abrasion and erosion mechanisms. In
 the pebble-bed MSRs design, graphite fuel pebbles can rub against each other and reactor structures due to
 coolant circulation and pebble cycling, which can result in material loss and surface defects. Additionally,

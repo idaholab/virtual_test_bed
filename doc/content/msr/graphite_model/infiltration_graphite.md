@@ -6,6 +6,20 @@
 
 *Model link: [Models for Infiltration effects on graphite behavior](https://github.com/idaholab/virtual_test_bed/tree/main/msr/graphite_model/infiltration)*
 
+!tag name=Infiltration effects on graphite in MSRE
+     description=Infiltration effects on graphite in MSRE
+     image=<https://mooseframework.inl.gov/virtual_test_bed/media/msr/graphite_model/infiltration/1_geo.png>
+     pairs=reactor_type:MSR
+           reactor:MSRE
+           geometry:Stringer
+           simulation_type:multiphysics
+           transient:steady_state
+           codes_used:MOOSE_Combined;Griffin
+           computing_needs:Workstation;HPC
+           fiscal_year:2025
+           sponsor:NRC
+           institution:INL
+
 Molten salt infiltration into graphite occurs when the molten salt permeates the interconnected pore structure of the graphite. This phenomenon is driven by factors such as pressure differential, pore characteristics,
 and the physical properties of the salt, including viscosity and the interfacial energies between the graphite, salt, and the atmosphere within the graphite pore. A higher pressure differential is required for the molten salt
 to infiltrate into smaller pores. Using ultra-fine grades of graphite can significantly reduce the percentage of infiltration. However, the infiltration of molten salt into graphite can have significant implications for the
