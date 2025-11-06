@@ -49,3 +49,7 @@ mpiexec -n 300 /path/to/app/grizzly-opt -i pit_r0p05.i
 The following Exodus results file will be produced: `pit_r0p05_exodus.e`
 
 The Exodus output file can be visualized with Paraview.
+
+## Results
+
+Results for pit configurations can be found in [stress results](groove_profile.md).

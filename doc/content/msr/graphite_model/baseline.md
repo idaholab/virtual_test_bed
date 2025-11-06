@@ -45,3 +45,12 @@ mpiexec -n 300 /path/to/app/grizzly-opt -i baseline.i
 The following Exodus results file will be produced: `baseline_exodus.e`
 
 The Exodus output file can be visualized with Paraview.
+
+## Results
+
+[baseline] shows the distribution of maximum principal stress for a reflector block with dimensions 0.6 m (radial), 0.305 m (axial), and 1.55 m (azimuthal span at 51°), evaluated at 40 years. The stress distribution indicates that the highest stresses occur at the edges of the graphite reflector block, while stresses near the inner surface remain lower than the overall maximum. This baseline case, modeled under irradiation and thermal loading without surface wear, provides the reference condition for subsequent analyses that include pit and groove defect configurations.
+
+!media msr/graphite_model/wear/9_maxstress.png
+      id=baseline
+      style=width:40%
+      caption= Distribution of Maximum Principal Stress for a reflector block of dimensions 0.6 m (radial), 0.305 m (axial), and 1.55 m (azimuthal span at 51°), taken at 40 years.

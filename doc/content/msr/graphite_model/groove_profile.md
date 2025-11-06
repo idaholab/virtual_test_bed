@@ -49,3 +49,12 @@ mpiexec -n 300 /path/to/app/grizzly-opt -i groove_r0p05.i
 The following Exodus results file will be produced: `groove_r0p05_exodus.e`
 
 The Exodus output file can be visualized with Paraview.
+
+## Results
+
+[defects] presents the distribution of maximum principal stress (MPa) at 40 years for the reflector block with dimensions 0.6 m (radial), 0.305 m (axial), and 1.55 m (azimuthal span at 51°), evaluated at a cross-section corresponding to the location of maximum stress. The baseline configuration is compared with models containing pit and groove-type surface defects of radii 0.01 m and 0.05 m. The results show that groove defects cause noticeably higher stress concentrations than pit defects, with the largest groove producing a peak stress of about 18 MPa, approximately a 62 % increase over the baseline.
+
+!media msr/graphite_model/wear/10_defect_stresses.png
+      id=defects
+      style=width:50%
+      caption= Distribution of maximum principal stress (MPa) at 40 years for (a) the baseline case at a cross-section corresponding to the location of maximum stress, (b) baseline case with a pit of radius 0.05 m, (c) baseline case with a pit of radius 0.01 m, (d) baseline case with a groove of radius 0.05 m, and (e) baseline case with a groove of radius 0.01 m.
