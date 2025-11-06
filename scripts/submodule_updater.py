@@ -115,9 +115,9 @@ if __name__ == "__main__":
     if args.use_hpc_submodules:
         print('Looking for hpc submodule versions')
         for submodule in submodules:
-            sm_name = submodule.name.split('apps/')[-1].replace('_', '')
+            sm_name = submodule.name.split('apps/')[-1].replace('_', '').lower()
             # This regex assumes the latest date is the last line
-            cmd = rf"module spider {sm_name} |& grep -Po '^\s*{sm_name}-.*/\d{{4}}\.\d{{2}}\.\d{{2}}-\K[0-9a-f]{{7}}' | tail -n1"
+            cmd = rf"module spider {sm_name}-openmpi |& grep -Po '^\s*{sm_name}-.*/\d{{4}}\.\d{{2}}\.\d{{2}}-\K[0-9a-f]{{7}}' | tail -n1"
             try:
                 sha1 = subprocess.check_output(cmd, shell=True, text=True).strip()
                 if sha1 == '':
