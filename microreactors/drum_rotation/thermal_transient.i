@@ -18,27 +18,6 @@ y_center = ${fparse r}
     type = FileMeshGenerator
     file = empire_2d_CD_fine_in.e
   []
-  [add_sideset_hp]
-    type = SideSetsBetweenSubdomainsGenerator
-    input = main
-    primary_block = '8' # add 16 so the HP boundary extends into the upper axial reflector
-    paired_block =  '7'
-    new_boundary = 'hp'
-  []
-  [add_sideset_inner_mod_gap]
-    type = SideSetsBetweenSubdomainsGenerator
-    input = add_sideset_hp
-    primary_block = '4'
-    paired_block =  '5'
-    new_boundary = 'gap_mod_inner'
-  []
-  [add_sideset_outer_mod_gap]
-    type = SideSetsBetweenSubdomainsGenerator
-    input = add_sideset_inner_mod_gap
-    primary_block = '8'
-    paired_block =  '5'
-    new_boundary = 'gap_mod_outer'
-  []
 []
 
 [Problem]
@@ -149,24 +128,28 @@ y_center = ${fparse r}
   #### DENSITY #####
   # units of kg/m^3
   [fuel_density]
-    type = Density
+    type = GenericConstantMaterial
     block = '${fuel_blocks}'
-    density = 14.3e3 # same as in Serpent input
+    prop_names = 'density'
+    prop_values = 14.3e3 # same as in Serpent input
   []
   [moderator_density]
-    type = Density
+    type = GenericConstantMaterial
     block = '${moderator_blocks}'
-    density = 4.3e3 # same as in Serpent input
+    prop_names = 'density'
+    prop_values = 4.3e3 # same as in Serpent input
   []
   [monolith_density]
-    type = Density
+    type = GenericConstantMaterial
     block = '${monolith_blocks}'
-    density = 1.8e3 # same as in Serpent input
+    prop_names = 'density'
+    prop_values = 1.8e3 # same as in Serpent input
   []
   [reflector_density]
-    type = Density
+    type = GenericConstantMaterial
     block = '${reflector_blocks}'
-    density = 1.85376e3 # same as in Serpent input
+    prop_names = 'density'
+    prop_values = 1.85376e3 # same as in Serpent input
   []
 
   ### THERMAL CONDUCTIVITY ###
@@ -341,7 +324,7 @@ y_center = ${fparse r}
 []
 
 [Outputs]
-  console = false
+  print_linear_residuals = false
   csv = true
   exodus = true
 []
