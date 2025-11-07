@@ -1,6 +1,6 @@
 # Micro Reactor Drum Rotation
 
-*Contact: Zachary Prince, zachmprince.at.gmail.com, Javier Ortensi javier.ortensi.at.inl.gov*
+*Contact: Zachary Prince, zachary.prince.at.inl.gov, Javier Ortensi javier.ortensi.at.inl.gov, Yaqi Wang, yaqi.wang.at.inl.gov*
 
 *Model link: [Micro Reactor Drum Rotation Model](https://github.com/idaholab/virtual_test_bed/tree/main/microreactors/drum_rotation)*
 
@@ -33,86 +33,104 @@ The purpose of this exposition is to show how to perform a multiphysics transien
 
 ### Mesh
 
-Two different meshes were created for this model: a fine-mesh representing the exact geometry and a coarse-mesh for CMFD.
-
-#### Fine Mesh
-
 The following creates a mesh of the entire core:
 
 !listing microreactors/drum_rotation/empire_2d_CD_fine.i
-  block=FUEL_pin MOD_pin HPIPE_pin AIRHOLE_CELL REFL_CELL Assembly_1 AIRHOLE REFL cd_0 Core
-  caption=Mesh blocks for full-core fine mesh
+  block=FUEL_pin MOD_pin HPIPE_pin AIRHOLE_CELL REFL_CELL Assembly_1 AIRHOLE REFL CD Core
+  caption=Mesh blocks for full-core fine mesh.
   id=lst:fine_full_core
 
-Then the mesh is "sliced" to produce a 1/12th geometry and scaled to meters:
+Then the mesh is "sliced" to produce a 1/12th geometry:
 
 !listing microreactors/drum_rotation/empire_2d_CD_fine.i
-  block=half twelfth trim scale
-  caption=Mesh blocks trimming full-core fine mesh to 1/12th geometry and scaling to meters
+  block=half twelfth trim
+  caption=Mesh blocks trimming full-core fine mesh to 1/12th geometry.
   id=lst:fine_trim
 
-However, performing the transient with the mesh so far causes a significant cusping effect [!citep](Yamamoto2004Simple) in the calculated power and reactivity, even when using the cusping treatment described in [!cite](Schunert2019Control). Investigations indicate that the cusping effect is due to the discretization when the cross sections of the absorbing material and the non-absorbing material are significantly different. It is possible to mitigate the cusping effect by increasing the spatial expansion order in the drum region locally. However, for this model, the mesh in the drum region was refined such that drum's front would align with element edges at every time step. We plan on addressing this cusping issue in future work since this refinement limits the flexibility of time step sizes and unnecessarily increases the number of elements.
-
-The mesh for the drum is created separately with the following input:
-
-!listing microreactors/drum_rotation/drum.i
-  caption=Input file generating fine-mesh for control drum
-  id=lst:fine_drum
-
-This drum mesh is then loaded in by the main mesh input, stitched into the previous control drum assembly, and inserted into current 1/12th model (replacing the previous assembly):
+Then only three outer boundaries are kept by removing unnecessary boundaries added during the mesh generation:
 
 !listing microreactors/drum_rotation/empire_2d_CD_fine.i
-  block=drum drum_insert drum_scale drum_rotate drum_move drum_blocks drum_boundary drum_remove stitch
-  caption=Mesh blocks inserting pregenerated control drum in 1/12th fine mesh
-  id=lst:fine_drum_insert
+  block=boundary_clean_up
+  caption=Mesh blocks to keep only the three outer boundaries.
+  id=lst:fine_bdy_cleanup
 
-Finally, side sets are added to the mesh so that boundary conditions can be properly applied:
+We then add two extra element integers (EEID), one for assigning the multigroup cross section libraries named as "material_id", the other for performing diffusion acceleration with CMFD (coarse mesh finite difference) named as "coarse_element_id".
+The "material_id" EEID is added by simply mapping subdomain IDs to the multigroup cross section library ids as showed in [!ref](lst:xs_lib_id).
 
 !listing microreactors/drum_rotation/empire_2d_CD_fine.i
-  block=bottom_boundary topleft_boundary right_boundary
-  caption=Adding boundaries to the fine mesh
+  block=mglib_id
+  caption=Mesh block adding the material_id EEID.
+  id=lst:xs_lib_id
+
+To add the "coarse_element_id", we first create a coarse mesh and then let all elements, whose centroids fall into the same coarse element, get the coarse mesh element id.
+The coarse mesh does not resolve pins, instead it creates quad4 meshes for each hexagonal assembly:
+
+!listing microreactors/drum_rotation/empire_2d_CD_fine.i
+  block=F1_1 F1_2 Core_CM
+  caption=Mesh blocks for full-core coarse mesh.
+  id=lst:coarse_full_core
+
+Same as the fine mesh, this full core mesh is trimmed to a 1/12th geometry:
+
+!listing microreactors/drum_rotation/empire_2d_CD_fine.i
+  block=half_CM twelfth_CM trim_CM
+  caption=Mesh blocks trimming full-core coarse mesh to 1/12th geometry.
+  id=lst:coarse_trim
+
+The resulting coarse mesh is shown in [!ref](fig:coarse_mesh).
+
+!media drum_rotation/empire_2d_CD_coarse_in.png
+  caption=Coarse mesh used for assigning "coarse_element_id".
+  id=fig:coarse_mesh
+
+Finally, the mesh is scaled to meters and side sets are added to the mesh so that boundary conditions for thermal conduction can be properly applied:
+
+!listing microreactors/drum_rotation/empire_2d_CD_fine.i
+  block=scale add_sideset_hp add_sideset_inner_mod_gap add_sideset_outer_mod_gap
+  caption=Scaling the mesh and adding boundaries to the mesh.
   id=lst:fine_boundaries
 
 The resulting mesh is shown in [!ref](fig:fine_mesh).
 
 !media drum_rotation/empire_2d_CD_fine_in.png
-  caption=Fine mesh used for control drum rotation transient
+  caption=Fine mesh used for control drum rotation transient.
   id=fig:fine_mesh
+
+We also show the coarse element id in [!ref](fig:mesh_coarse_element_id).
+
+!media drum_rotation/empire_2d_coarse_elem_id.png
+  caption="coarse_element_id" on the mesh.
+  id=fig:mesh_coarse_element_id
 
 A list of all the blocks is shown in [!ref](tab:blocks).
 
 !table caption=Description of blocks in geometry id=tab:blocks
-| Region | Block IDs |
-| - | - |
-| Fuel | 1 2 |
-| Moderator | 3 4 5 |
-| Heat Pipes | 6 7 |
-| Monolith | 8 |
-| Reflector | 10 11 14 15 |
-| Control Drum | 13 |
-| Air | 20 21 22 |
+| Region | Block IDs | Multigroup cross section library ID | Solid |
+| - | - | - | - |
+| Fuel | 1 2 | 1001 | Yes |
+| Moderator | 3 4 | 1002 | Yes |
+| Moerator gap | 5$^a$ | 1002 | No |
+| Heat Pipes | 6 7 | 1004 | No |
+| Monolith | 8 | 1003 | Yes |
+| Reflector | 10 11 14 15 | 1005 | Yes |
+| Control Drum | 13 | 1005/1006 | Yes |
+| Air | 20 21 | 1007 | No |
+| Air | 22 | 1007 | Yes |
 
-#### Coarse Mesh
+$^a$ - Block 5 is the gap between the moderator and the monolith and filled with moderator for neutronics.
 
-The coarse mesh used for CMFD does not resolve pins, instead it creates quad4 meshes for each hexagonal assembly:
+A list of all the boundaries is shown in [!ref](tab:boundaries).
 
-!listing microreactors/drum_rotation/empire_2d_CD_coarse.i
-  block=F1_1 F1_2 Core_CM
-  caption=Mesh blocks for full-core coarse mesh
-  id=lst:coarse_full_core
+!table caption=Description of boundaries in geometry id=tab:boundaries
+| Boundary name | Boundary description | Boundary IDs |
+| - | - | - |
+| bottom | bottom core boundary | 30502 |
+| topleft | top-left core boundary | 30503 |
+| right | right core boundary | 30504 |
+| hp | Monolith-to-heat-pipe interface | 30505 |
+| gap_mod_inner | Interface between moderator and air gap | 30506 |
+| gap_mod_outer | Interface between monolith and air gap | 30507 |
 
-Same as the fine mesh, this full core mesh is trimmed to a 1/12th geometry and scaled to meters:
-
-!listing microreactors/drum_rotation/empire_2d_CD_coarse.i
-  block=half_CM twelfth_CM trim_CM scale_CM
-  caption=Mesh blocks trimming full-core coarse mesh to 1/12th geometry and scaling to meters
-  id=lst:coarse_trim
-
-The resulting coarse mesh is shown in [!ref](fig:coarse_mesh).
-
-!media drum_rotation/empire_2d_CD_fine_in.png
-  caption=Coarse mesh used for control drum rotation transient
-  id=fig:coarse_mesh
 
 ### Materials
 
@@ -135,13 +153,30 @@ The cross sections are then loaded and applied to neutronics materials, namely `
   caption=Neutronics materials
   id=lst:xs_mat
 
-Note the exception for the material type in the drum region. Here, we use `CoupledFeedbackRoddedNeutronicsMaterial`, which is material specifically for dealing with control drum and rod movement. The position of the drum is controlled by the `front_position_function` parameter, which accepts the name of a MOOSE `Function` dependent on time. Typically, three functions are defined: (1) the offset between what the actual position and what the user defines as the position, (2) a user-defined position as a function of time, and (3) combining the offset and position. For the steady-state input, is function is constant:
+Note the exception for the material type in the drum region.
+Here, we use `CoupledFeedbackRoddedNeutronicsMaterial`, which is material specifically for dealing with control drum and rod movement.
+The position of the drum is controlled by the `front_position_function` parameter, which accepts the name of a MOOSE `Function` dependent on time.
+Typically, three functions are defined: (1) the offset between what the actual position and what the user defines as the position, (2) a user-defined position as a function of time, and (3) combining the offset and position.
+For the steady-state input, these functions are constant:
 
 !listing microreactors/drum_rotation/neutronics_eigenvalue.i
   block=Functions AuxKernels
   caption=Defining control drum position
   id=lst:drum_fun
 
+This rodded material implements the cusping treatment described in [!cite](Schunert2019Control).
+However, a significant cusping effect can still be seen in the calculated power and reactivity.
+Investigations indicate that the cusping effect is due to the discretization when the cross sections of the absorbing material and the non-absorbing material are significantly different.
+To mitigate the cusping effect, we turned on the decusping syntax by increasing the spatial expansion order (p-refinement) or refining the local elements (h-refinement) in the drum regions (automatically detected by Griffin based on the types of materials).
+
+!listing microreactors/drum_rotation/neutronics_eigenvalue.i
+  block=Decusping
+  caption=Decusping for control drum rotation.
+  id=lst:drum_decusping
+
+The default value for the parameter `switch_h_to_p_refinement` is true, meaning Griffin will perform local p-refinement for decusping.
+We explicitly add it here to show the existence of this parameter and users can choose h-refinement by setting this parameter to false.
+When this parameter is true, libMesh requires the mesh in the same order of the maximum local p-refinement order, thus we must also set `second_order` in the Mesh input block to true.
 It is often useful debug the offset by creating a simplified input that has drum position outputted to exodus. This can be done using the following debug option:
 
 !listing microreactors/drum_rotation/neutronics_eigenvalue.i
@@ -162,7 +197,7 @@ The following lists the thermal properties used for this model:
 | Reflector | 1,853.76 | 200 | 1,825 |
 | Absorber | 2,520 | 20 | 1,000 |
 
-These properties are applied using `HeatConductionMaterial` and `Density`:
+These properties are applied using `HeatConductionMaterial` and `GenericConstantMaterial`:
 
 !listing microreactors/drum_rotation/thermal_ss.i
   block=Materials
@@ -180,14 +215,14 @@ Since the materials in the drum region change based on the position of the contr
 
 #### Neutronics Physics
 
-For this model, DFEM-SN discretization is used for the neutronics. The angular quadrature uses Gauss-Chebyshev collocation with one polar angle and three azimuthal. There are six delayed neutron precursors (evident from multigroup cross-section library) and first-order scattering. The physics for the neutronics is setup using the `TransportSystems` syntax in Griffin:
+For this model, DFEM-SN discretization is used for the neutronics. The angular quadrature uses Gauss-Chebyshev collocation with two polar angles and six azimuthal angles. There are six delayed neutron precursors (evident from multigroup cross-section library) and first-order scattering. The physics for the neutronics is setup using the `TransportSystems` syntax in Griffin:
 
 !listing microreactors/drum_rotation/neutronics_eigenvalue.i
   block=TransportSystems
   caption=Defining the physics in the neutronics input
   id=lst:transport_systems
 
-The initial power for this model is 2 MWth. Due to the 1/12th 2D geometry, this power equations to 83 kW/m in the simulation. The `PowerDensity` syntax in griffin adds an auxiliary variable for the computed power density field:
+The initial power for this model is 2 MWth. Due to the 1/12th 2D geometry, this power equations to 83.333 kW/m in the simulation. The `PowerDensity` syntax in griffin adds an auxiliary variable for the computed power density field:
 
 !listing microreactors/drum_rotation/neutronics_eigenvalue.i
   block=PowerDensity
@@ -209,13 +244,6 @@ The volumetric kernels are quite simple, including heat conduction in the solid 
   block=Kernels
   caption=Thermal input volumetric kernels
   id=lst:thermal_kernels
-
-In order to capture the heat transfer into the heat pipes and between the moderator gaps, a few side sets are added to the mesh:
-
-!listing microreactors/drum_rotation/thermal_ss.i
-  block=Mesh
-  caption=Side sets added to thermal mesh for boundary and gap heat transfer
-  id=lst:thermal_mesh
 
 The convective heat transfer into the heat pipes is applied as a boundary condition, while the moderator gaps use `GapHeatTransfer`:
 
@@ -246,7 +274,7 @@ Power density and drum position are transferred to the sub-application and tempe
 Griffin utilizes a customized executioner for DFEM-SN systems known as `SweepUpdate`. See this [Griffin tutorial](https://griffin-docs.hpc.inl.gov/latest/tutorials/C5G7_feedback.html) for more details on the methodology.
 
 !listing microreactors/drum_rotation/neutronics_eigenvalue.i
-  block=Mesh Executioner
+  block=Executioner
   caption=Griffin executioner for steady-state DFEM-SN with CMFD
   id=lst:sweep_update
 
@@ -261,7 +289,7 @@ The thermal application simply uses the traditional `Steady` executioner, which 
 
 #### Initial Conditions
 
-For this model, the initial condition comes from the steady-state solution. This solution is written to a file and loaded in the transient simulation using `SolutionVectorFile` and `TransportSolutionVectorFile`. The steady-state solution is written by adding the user-objects to the steady-state inputs, with the important parameter specification: `execute_on = FINAL`.
+For this model, the initial condition comes from the steady-state solution. This solution is written to a binary file and loaded in the transient simulation using `SolutionVectorFile` and `TransportSolutionVectorFile`. The steady-state solution is written by adding the user-objects to the steady-state inputs, with the important parameter specification: `execute_on = FINAL`.
 
 !listing microreactors/drum_rotation/neutronics_eigenvalue.i
   block=UserObjects
@@ -287,7 +315,11 @@ The files are loaded with the same objects (must also be the same name) with par
 
 #### Adjoint Problem
 
-In order to compute point-kinetics parameters, like dynamic reactivity and mean generation time, Griffin requires the computation of an adjoint solution. This is done by running the adjoint version of the steady-state neutronics input. There adjoint input is basically the same as the forward input, with a couple key difference. First, the problem is de-coupled, so there are `MultiApps` or `Transfers` and the thermal solution is loaded from forward solution file. Second, `TransportSystems` must have the parameter `for_adjoint = true` set.
+In order to compute point-kinetics parameters, like dynamic reactivity and mean generation time, Griffin requires the computation of an adjoint solution.
+This is done by running the adjoint version of the steady-state neutronics input.
+The adjoint input is basically the same as the forward input, with a couple key differences.
+First, the problem is de-coupled, so there are not `MultiApps` or `Transfers` and the thermal solution is loaded from forward solution file.
+Second, `TransportSystems` must have the parameter `for_adjoint = true` set.
 
 !listing microreactors/drum_rotation/neutronics_adjoint.i
   block=UserObjects TransportSystems
@@ -310,6 +342,10 @@ Finally, the executioner is changed to `IQSSweepUpdate`, which utilized the impr
   caption=Neutronics solver using IQS
   id=lst:iqs
 
+We use a simple constant time step size for this transient.
+Numerical results indicate that the time step size needs to be smaller than a threshold to avoid negative solutions close to the peak power.
+A better time-stepping scheme with time adaptation can possibly applied in the future.
+
 #### Thermal Transient
 
 Again, the transient input of the thermal model is largely the same as the steady-state input. First, the time derivative is added to the volumetric kernels. Second, the executioner type is changed to `Transient`. Note that the time stepping scheme is not included in this input, since it will be defined by the main neutronics application.
@@ -321,28 +357,50 @@ Again, the transient input of the thermal model is largely the same as the stead
 
 ### Running Model
 
-This model can be run using a Griffin executable, or any application built with Griffin (BlueCRAB, Direwolf, etc.). The simulations scale decently well, so either a workstation or HPC can be used. The following presents the commands used to run the model and produce results. They must be executed in this order and with the same number of processors. Run times are presented at various processor counts, which were obtained by running the simulations on the INL Sawtooth cluster.
+This model can be run using a Griffin executable, or any application built with Griffin (BlueCRAB, Direwolf, etc.). The simulations scale decently well, so either a workstation or HPC can be used. The following presents the commands used to run the model and produce results. They must be executed in this order and with the same number of processors. Run times are presented at various processor counts, which were obtained by running the simulations on the INL Bitterroot cluster with one computing node.
 
-First is building the meshes, which must be run in this order, which produces `drum_in.e`, `empire_2d_CD_fine_in.e`, and `empire_2d_CD_coarse_in.e`:
+First is building the meshes, which produces `empire_2d_CD_fine_in.e`:
 
 !listing
-griffin-opt -i drum.i --mesh-only
 griffin-opt -i empire_2d_CD_fine.i --mesh-only
-griffin-opt -i empire_2d_CD_coarse.i --mesh-only
 
 Second is the coupled steady-state calculation, which produces `neutronics_eigenvalue_out.e` and `neutronics_eigenvalue_out_bison0.e`:
 
 !listing
 mpiexec -n <n> griffin-opt -i neutronics_eigenvalue.i
 
+We can also run neutronics only without coupling the thermal conduction with command-line options:
+
+!listing
+mpiexec -n <n> griffin-opt -i neutronics_eigenvalue.i MultiApps/active='' Transfers/active=''
+
+`MultiApps/active='' Transfers/active=''` are for turning off the multiphysics coupling.
+Note that we still have the Picard iteration as the outer iteration.
+At the end of each Picard iteration, Griffin will perform some extra evaluations for auxiliary variables, postprocessors executed on timestep_end and outputs.
+But because inner Richardson iteration continues with the solution from the last Richardson iteration in the previous outer Picard iteration, the overall performance does not change much with only the Richardson iteration with the same number of iterations.
+
+We also gather the run times by turning outputs off, as the outputs used in this simulation are convenient to use, but not optimized for scalability:
+
+!listing
+mpiexec -n <n> griffin-opt -i neutronics_eigenvalue.i Outputs/exodus=false UserObjects/active='' bison:UserObjects/active=''
+
+for the coupled multiphysics simulation, and
+
+!listing
+mpiexec -n <n> griffin-opt -i neutronics_eigenvalue.i MultiApps/active='' Transfers/active='' Outputs/exodus=false UserObjects/active=''
+
+for the neutronics-only runs.
+Run times for all four calculations with different number of processors are presented in [!ref](tab:rt_eigenvalue).
+
 !table caption=Run times for steady-state simulation on various processors id=tab:rt_eigenvalue
-| Processors (`<n>`) | Run-time (s) |
-| - | - |
-| 4 | 572 |
-| 8 | 324 |
-| 16 | 184 |
-| 32 | 122 |
-| 48 | 94 |
+| Processors (`<n>`) | Neutronics-only (s) | Neutronics-only no-output (s) | Multiphysics (s) | Multiphysics no-output (s)
+| - | - | - | - | - |
+| 4 | 139 | 123 | 146 | 131 |
+| 8 | 81 | 69 | 87 | 74 |
+| 16 | 48 | 38 | 51 | 41 |
+| 32 | 27 | 20 | 29 | 23 |
+| 64 | 18 | 13 | 20 | 15 |
+| 96 | 14 | 10 | 17 | 12 |
 
 Third is the adjoint neutronics calculation:
 
@@ -352,11 +410,12 @@ mpiexec -n <n> griffin-opt -i neutronics_adjoint.i
 !table caption=Run times for adjoint simulation on various processors id=tab:rt_adjoint
 | Processors (`<n>`) | Run-time (s) |
 | - | - |
-| 4 | 96 |
-| 8 | 57 |
-| 16 | 34 |
-| 32 | 22 |
-| 48 | 17 |
+| 4 | 113 |
+| 8 | 63 |
+| 16 | 35 |
+| 32 | 19 |
+| 64 | 12 |
+| 96 | 9 |
 
 Finally, the coupled transient can be run, which produces several output files which can be postprocessed:
 
@@ -373,15 +432,44 @@ mpiexec -n <n> griffin-opt -i neutronics_transient.i
 !table caption=Run times for adjoint simulation on various processors id=tab:rt_transient
 | Processors (`<n>`) | Run-time (min) |
 | - | - |
-| 4 | 405 |
-| 8 | 216 |
-| 16 | 121 |
-| 32 | 75 |
-| 48 | 59 |
+| 4 | 743  |
+| 8 | 432 |
+| 16 | 250 |
+| 32 | 136 |
+| 64 | 84 |
+| 96 | 62 |
+
+A single transient simulation includes 167 time steps with a total of 4,381 Richardson iterations.
 
 ## Results
 
-The initial temperature and power profile are shown in [!ref](fig:power_temperature). The full transient profile of power, average and maximum temperatures, and reactivity are shown in [!ref](fig:CD_time_shape). These plots show that during the first second, the transient is purely kinetics driven as reactivity from rotating the control drum is inserted into the core. Maximum power is reached around 1.25 seconds. The core temperatures rise significantly at this point, causing the power to drop due to the negative temperature feedback in the fuel, even while the drum is still rotating outward. The power drops exponentially as the drums are rotated back inward, causing the temperatures to flatten and eventually drop due to heat removal. The spatial profile of the power density and temperature during the transient are shown in [!ref](fig:CD_all).
+The full transient profile of power, average and maximum temperatures, and reactivity are shown in [!ref](fig:power_profile), [!ref](fig:temperature_profile) and [!ref](fig:reactivity_profile) respectively.
+
+!media drum_rotation/power.svg
+  caption=Transient power profile.
+  id=fig:power_profile
+  style=width:50%;
+
+!media drum_rotation/temp.svg
+  caption=Transient temperature profile.
+  id=fig:temperature_profile
+  style=width:50%;
+
+!media drum_rotation/reactivity.svg
+  caption=Transient reactivity profile.
+  id=fig:reactivity_profile
+  style=width:50%;
+
+These plots show that during the first second, the transient is purely kinetics driven as reactivity from rotating the control drum outward into the core.
+Maximum power is reached around 1.41 seconds.
+The core temperatures rise significantly at this point, causing the power to drop due to the negative temperature feedback in the fuel, even while the drum is still rotating outward.
+The power drops exponentially as the drums are rotated back inward, causing the temperatures to flatten and eventually drop due to heat removal.
+
+!alert note
+The following results were produced before we updated the model with the latest drum rotation decusping treatment.
+The update mainly affects the performance and does not change the results significantly, thus the presented results are still representative.
+
+The initial temperature and power profile are shown in [!ref](fig:power_temperature). The full transient profile of power, average and maximum temperatures, and reactivity are shown in [!ref](fig:CD_time_shape). These plots show that during the first second, the transient is purely kinetics driven as reactivity from rotating the control drum outward into the core. Maximum power is reached around 1.25 seconds. The core temperatures rise significantly at this point, causing the power to drop due to the negative temperature feedback in the fuel, even while the drum is still rotating outward. The power drops exponentially as the drums are rotated back inward, causing the temperatures to flatten and eventually drop due to heat removal. The spatial profile of the power density and temperature during the transient are shown in [!ref](fig:CD_all).
 
 !media drum_rotation/eigenvalue.png
   caption=Initial power and temperature profile
