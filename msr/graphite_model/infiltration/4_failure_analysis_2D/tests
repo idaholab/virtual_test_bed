@@ -4,6 +4,7 @@
     type = RunCommand
     command = "python failure_analysis_to_csv.py"
     required_python_packages = 'numpy csv os json'
+    executable_pattern = 'moose*|grizzly*'
   []
   [csvdiff]
     type = CSVDiff
@@ -11,5 +12,6 @@
     input = 'dummy.i'
     prereq = 'generate_csv_files'
     delete_output_before_running = false
+    executable_pattern = 'moose*|grizzly*'
   []
 []
