@@ -12,7 +12,7 @@ vol_frac_threshold = 0.33
 diffusivity = 2e-3 #m^2/s
 
 [Mesh]
-  file = msre2D_1X.e
+  file = '../1_create_infiltration_profile/2D/msre2D_1X.e'
 []
 
 [Variables]

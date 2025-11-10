@@ -9,7 +9,7 @@
 # ==============================================================================
 
 [Mesh]
-  file = msre2D_1X.e
+  file = '../1_create_infiltration_profile/2D/msre2D_1X.e'
 []
 
 #SolutionUserObjects below read the data corresponding

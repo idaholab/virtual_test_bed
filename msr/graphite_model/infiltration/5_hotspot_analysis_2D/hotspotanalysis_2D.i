@@ -36,7 +36,7 @@ threshold = 0.8
 []
 
 [Mesh]
-  file = msre2D_1X.e
+  file = '../1_create_infiltration_profile/2D/msre2D_1X.e'
 []
 
 [ICs]
