@@ -4,7 +4,7 @@ In the previous analysis, the effect of pores was accounted for in a homogenized
 
 ## Computational Model Description
 
-This section outlines the setup and execution of hotspot analysis using a 2D MSRE (Molten Salt Reactor Experiment) geometry.
+This section outlines the setup and execution of hotspot analysis using a 2D MSRE (Molten Salt Reactor Experiment) stringer geometry.
 
 Files used by this model include:
 

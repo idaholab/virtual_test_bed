@@ -24,7 +24,7 @@ This document reviews the inportant elements of the input file that were not cov
 
 ### `Initializing inputs from CSV file`
 
-Two quantities, namely, the volumetric heat (`volumetric_heat`) and the coolant temperature (`T_infinity_fn`) are read from the CSV file. These values are then used to constructe piecewise linear functions for both quantities along the z-axis.
+Two quantities, namely, the volumetric heat (`volumetric_heat`) and the coolant temperature (`T_infinity_fn`) are read from the CSV file. These values are then used to construct piecewise linear functions for both quantities along the z-axis.
 
 !listing msr/graphite_model/infiltration/3_stress_analysis_3D/msre3D_100percent_INF.i block=volumetric_heat T_infinity_fn
 
