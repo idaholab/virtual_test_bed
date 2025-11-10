@@ -20,9 +20,9 @@ vol_frac_threshold = 0.30
 #Diffusivity constant
 diffusivity = 1e-3 # m^2/s
 
-# 2D msre mesh file
 [Mesh]
-  file = msre2D_coarse.e
+  # 2D msre mesh file (saved as a gold file for convenience)
+  file = 'gold/2D_CreateInfiltrationProfile_out.e'
 []
 
 #diffusion field variable, representing the salt infiltration

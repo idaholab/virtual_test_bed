@@ -146,7 +146,9 @@ threshold = 0.8
 [UserObjects]
   [heatsource_soln]
     type = SolutionUserObject
-    mesh = 'Ref_solution_file.e'
+    # mesh = 'Ref_solution_file.e'
+    # use a gold file for convenience
+    mesh = '../2_create_reference_solution_file/gold/CombinedExodus_AllResults_out.e'
     time_transformation = ${INF}
     system_variables = 'diffuse'
   []
