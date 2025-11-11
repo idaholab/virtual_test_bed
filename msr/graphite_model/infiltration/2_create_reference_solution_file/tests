@@ -1,0 +1,24 @@
+[tests]
+  issues = '#669'
+  [parametric_study]
+    type = CSVDiff
+    input = parametric_study.i
+    csvdiff = 'parametric_study_out_study_app0_csv_line_0006.csv parametric_study_out_study_app1_csv_line_0010.csv
+               parametric_study_out_study_app2_csv_line_0015.csv parametric_study_out_study_app3_csv_line_0027.csv
+               parametric_study_out_study_app4_csv_line_0040.csv parametric_study_out_study_app5_csv_line_0053.csv
+               parametric_study_out_study_app6_csv_line_0064.csv parametric_study_out_study_app7_csv_line_0074.csv
+               parametric_study_out_study_app8_csv_line_0082.csv parametric_study_out_study_app9_csv_line_0090.csv'
+    executable_pattern = 'combined*|grizzly*'
+    allow_warnings = true
+    min_parallel = 8
+  []
+  [combine_outputs]
+    type = Exodiff
+    input = CombinedExodus_AllResults.i
+    exodiff = CombinedExodus_AllResults_out.e
+    executable_pattern = 'combined*|grizzly*'
+    allow_warnings = true
+    min_parallel = 8
+    prereq = 'parametric_study'
+  []
+[]

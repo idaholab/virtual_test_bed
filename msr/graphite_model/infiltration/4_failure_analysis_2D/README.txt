@@ -1,0 +1,1 @@
+This model should be executed on HPC systems using the script file 'RunScript.sh'. After the simulations complete, the Python script 'PSSPlots_Histograms.py' can be used—with modified input parameters—to generate histograms and compute the failure probability.

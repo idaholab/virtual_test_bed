@@ -1,0 +1,11 @@
+[tests]
+  issues = '#669'
+  [hotspot_analysis_2D]
+    type = Exodiff
+    input = hotspotanalysis_2D.i
+    exodiff = hotspotanalysis_2D_out.e
+    executable_pattern = 'combined*|grizzly*'
+    allow_warnings = true
+    min_parallel = 8
+  []
+[]

@@ -9,3 +9,4 @@ lfs_include:
   - msr/lotus/mesh/mcre_mesh.e
   - htgr/httf/inputs/3D_HTTF_full_core.e
   - research_reactors/atr/butterfly_valve/mesh/0deg_cubit_coarse_mesh.e
+  - msr/graphite_model

@@ -1,0 +1,22 @@
+[tests]
+  issues = '#669'
+  [add_deps]
+    type = RunApp
+    input = 'dummy.i'
+    executable_pattern = 'combined*|grizzly*'
+  []
+  [generate_csv_files]
+    type = RunCommand
+    command = "python failure_analysis_to_csv.py"
+    required_python_packages = 'numpy csv os json'
+    prereq = 'add_deps'
+  []
+  [csvdiff]
+    type = CSVDiff
+    csvdiff = 'stress_output.csv min_max_values.csv'
+    input = 'dummy.i'
+    prereq = 'generate_csv_files'
+    delete_output_before_running = false
+    executable_pattern = 'combined*|grizzly*'
+  []
+[]
