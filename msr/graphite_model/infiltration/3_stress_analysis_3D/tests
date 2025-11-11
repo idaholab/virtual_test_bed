@@ -4,7 +4,7 @@
     type = CSVDiff
     input = msre3D_100percent_INF.i
     csvdiff = 'msre3D_100percent_INF_out_line_0001.csv'
-    executable_pattern = 'moose*|grizzly*'
+    executable_pattern = 'combined*|grizzly*'
     allow_warnings = true
     min_parallel = 16
     max_time = 600

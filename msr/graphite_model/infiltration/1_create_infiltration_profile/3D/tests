@@ -4,7 +4,7 @@
     type = CSVDiff
     input = 3D_CreateInfiltrationProfile.i
     csvdiff = '3D_CreateInfiltrationProfile_csv_line_0006.csv'
-    executable_pattern = 'moose*|grizzly*'
+    executable_pattern = 'combined*|grizzly*'
     allow_warnings = true
     min_parallel = 8
   []

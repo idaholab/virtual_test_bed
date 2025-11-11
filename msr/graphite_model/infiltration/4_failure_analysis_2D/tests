@@ -11,6 +11,6 @@
     input = 'dummy.i'
     prereq = 'generate_csv_files'
     delete_output_before_running = false
-    executable_pattern = 'moose*|grizzly*'
+    executable_pattern = 'combined*|grizzly*'
   []
 []
