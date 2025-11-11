@@ -24,8 +24,7 @@ threshold = 0.8
 []
 
 [Mesh]
-
-  file = 'msre3D_0PF_Fine.e'
+  file = '../1_create_infiltration_profile/3D/msre3D_0PF_Fine.e'
 []
 
 [Variables]
