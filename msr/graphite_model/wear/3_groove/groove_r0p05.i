@@ -46,7 +46,7 @@ y_coord = '${fparse (R_i-delta_center_radius)*sin(0.5*sector_angle)}'  #m
 
 [Mesh]
   type = FileMesh
-  file = 'FineMesh_Wear_Baseline.e'
+  file = '../2_pit/FineMesh_Wear_Baseline.e'
 []
 
 [Physics]
