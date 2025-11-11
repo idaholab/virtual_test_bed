@@ -1,0 +1,13 @@
+[tests]
+  issues = '#669'
+  #This is an abbreviated test to show how the groove profile is created. Running through the full simulation requires the use of HPC resources.
+  [groove]
+    type = 'CSVDiff'
+    input = 'groove_r0p05.i'
+    cli_args = 'Outputs/exodus=false'
+    csvdiff = 'groove_r0p05_csv_line_0002.csv'
+    min_parallel = 8
+    executable_pattern = "grizzly*"
+    max_time = 600
+  []
+[]

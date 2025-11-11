@@ -1,0 +1,12 @@
+[tests]
+  issues = '#669'
+  #This is an abbreviated test. Running through the full simulation requires the use of HPC resources.
+  [baseline]
+    type = 'CSVDiff'
+    input = 'baseline.i'
+    cli_args = 'Executioner/num_steps=10'
+    csvdiff = 'baseline_csv_line_0011.csv'
+    min_parallel = 8
+    executable_pattern = "grizzly*"
+  []
+[]
