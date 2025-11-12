@@ -9,5 +9,6 @@
     min_parallel = 8
     executable_pattern = "grizzly*"
     max_time = 600
+    rel_err = 1e-5
   []
 []

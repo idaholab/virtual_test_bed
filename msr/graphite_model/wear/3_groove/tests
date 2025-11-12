@@ -8,6 +8,7 @@
     csvdiff = 'groove_r0p05_csv_line_0002.csv'
     min_parallel = 8
     executable_pattern = "grizzly*"
+    rel_err = 1e-5
     max_time = 600
   []
 []
