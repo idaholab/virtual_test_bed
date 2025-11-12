@@ -130,6 +130,9 @@ threshold = 0.8
     mesh = '../2_create_reference_solution_file/gold/CombinedExodus_AllResults_out.e'
     time_transformation = ${volume_fraction}
     system_variables = 'diffuse'
+
+    # For testing only : turning 3D into 2D when mapping into the UO
+    scale_multiplier = '1 1 0'
   []
 []
 
