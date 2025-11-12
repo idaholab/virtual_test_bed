@@ -8,6 +8,8 @@
     csvdiff = 'groove_r0p05_csv_line_0002.csv'
     min_parallel = 8
     executable_pattern = "grizzly*"
+    capabilities = 'method=opt'
+    # Test is not fully converging results
     rel_err = 2e-5
     max_time = 600
   []

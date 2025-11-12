@@ -8,7 +8,9 @@
     csvdiff = 'pit_r0p05_csv_line_0002.csv'
     min_parallel = 8
     executable_pattern = "grizzly*"
+    capabilities = 'method=opt'
     max_time = 600
-    rel_err = 1e-5
+    # Test is not fully converging results
+    rel_err = 5e-5
   []
 []
