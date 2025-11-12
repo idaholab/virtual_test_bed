@@ -273,7 +273,7 @@ y_coord = '${fparse (R_i-delta_center_radius)*sin(0.5*sector_angle)}'  #m
   num_steps = 1
   dtmax = ${dt_max}
   nl_abs_tol = 1.0e-08
-  nl_rel_tol = 1.0e-4
+  nl_rel_tol = 1.0e-10
   nl_max_its = 15
   l_max_its = 50
   [TimeStepper]
