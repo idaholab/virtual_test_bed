@@ -133,6 +133,7 @@ threshold = 0.8
 
     # For testing only : turning 3D into 2D when mapping into the UO
     scale_multiplier = '1 1 0'
+    transformation_order = 'scale_multiplier'
   []
 []
 

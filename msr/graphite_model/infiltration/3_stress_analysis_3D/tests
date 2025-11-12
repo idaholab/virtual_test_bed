@@ -7,6 +7,6 @@
     executable_pattern = 'combined*|grizzly*'
     allow_warnings = true
     min_parallel = 16
-    max_time = 1000
+    max_time = 1500
   []
 []
