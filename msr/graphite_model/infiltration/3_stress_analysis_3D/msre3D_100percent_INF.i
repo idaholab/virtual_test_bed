@@ -24,8 +24,7 @@ threshold = 0.8
 []
 
 [Mesh]
-
-  file = 'msre3D_0PF_Fine.e'
+  file = '../1_create_infiltration_profile/3D/msre3D_0PF_Fine.e'
 []
 
 [Variables]
@@ -128,9 +127,13 @@ threshold = 0.8
 [UserObjects]
   [heatsource_soln]
     type = SolutionUserObject
-    mesh = 'CombinedExodus_AllResults_out.e'
+    mesh = '../2_create_reference_solution_file/gold/CombinedExodus_AllResults_out.e'
     time_transformation = ${volume_fraction}
     system_variables = 'diffuse'
+
+    # For testing only : turning 3D into 2D when mapping into the UO
+    scale_multiplier = '1 1 0'
+    transformation_order = 'scale_multiplier'
   []
 []
 

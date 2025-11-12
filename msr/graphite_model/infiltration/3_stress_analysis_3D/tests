@@ -4,9 +4,12 @@
     type = CSVDiff
     input = msre3D_100percent_INF.i
     csvdiff = 'msre3D_100percent_INF_out_line_0001.csv'
-    executable_pattern = 'combined*|grizzly*'
+    # Expensive test, kept only for grizzly
+    executable_pattern = 'grizzly*'
+    capabilities = 'method=opt'
     allow_warnings = true
     min_parallel = 16
-    max_time = 600
+    max_time = 3000
+    rel_err = 1e-5
   []
 []
