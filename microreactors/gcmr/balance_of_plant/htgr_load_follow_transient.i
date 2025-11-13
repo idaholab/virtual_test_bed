@@ -1440,9 +1440,9 @@ eff_turb = 0.843
   ##########################
 
   [sec_motor_torque]
-    type = RealComponentParameterValuePostprocessor
-    component = motor
-    parameter = torque
+    type = ShaftConnectedComponentPostprocessor
+    quantity = torque
+    shaft_connected_component_uo = motor:shaftconnected_uo
     execute_on = 'INITIAL TIMESTEP_END'
   []
   [sec_motor_power]
