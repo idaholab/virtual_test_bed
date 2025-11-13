@@ -64,7 +64,7 @@ def load_remote(repo, remote, config_tokens):
         raise SystemExit(f'API token for {host} not found')
 
     if 'github' in host:
-        github_kwargs = {'login_or_token': config_tokens[host]}
+        github_kwargs = {'auth': github.Auth.Token(config_tokens[host])}
         if host != 'github.com':
             github_kwargs['gh_url'] = 'https://' + host + '/api/v3'
         gh = github.Github(**github_kwargs)
