@@ -21,8 +21,8 @@
     input = 'thermal_ss.i'
     csvdiff = 'thermal_ss_out.csv'
     check_input = True
-    executable_pattern = 'blue_crab*|dire_wolf*|bison*'
-    cli_args = "MultiApps/active='' Transfers/active='' Outputs/file_base= thermal_ss_standalone"
+    executable_pattern = 'blue_crab*|dire_wolf*'
+    cli_args = "MultiApps/active='' Transfers/active='' Outputs/file_base=thermal_ss_standalone"
     min_parallel = 192 # won't be tested for now
   []
 
@@ -41,7 +41,7 @@
     type = CSVDiff
     csvdiff = 'neutronics_eigenvalue_out.csv'
     input = 'neutronics_eigenvalue.i'
-    executable_pattern = 'blue_crab*|dire_wolf*'
+    executable_pattern = 'dire_wolf*'
     min_parallel = 192 # won't be tested for now
     prereq = griffin_only
   []

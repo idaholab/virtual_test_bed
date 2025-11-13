@@ -36,8 +36,6 @@
     # Capillary limit for vertical heat pipes is not accurate; see https://hpcgitlab.hpc.inl.gov/idaholab/sockeye/-/issues/65
     # Cross-section warning due to missing fission-only
     allow_warnings = true
-    # Golded with 48 procs, now ran with 96
-    rel_err = 6e-4
   []
 
   [coupled_simulation_load_follow]
@@ -56,8 +54,6 @@
     # Capillary limit for vertical heat pipes is not accurate; see https://hpcgitlab.hpc.inl.gov/idaholab/sockeye/-/issues/65
     # Cross-section warning due to missing fission-only
     allow_warnings = true
-    # Golded with 48 procs, now ran with 96
-    rel_err = 7e-4
   []
 
   [coupled_simulation_heat_pipe_failure]
@@ -76,7 +72,5 @@
     # Capillary limit for vertical heat pipes is not accurate; see https://hpcgitlab.hpc.inl.gov/idaholab/sockeye/-/issues/65
     # Cross-section warning due to missing fission-only
     allow_warnings = true
-    # Golded with 48 procs, now ran with 96
-    rel_err = 6e-4
   []
 []
