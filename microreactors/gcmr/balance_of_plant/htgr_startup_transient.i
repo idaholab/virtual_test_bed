@@ -490,6 +490,10 @@ eff_turb = 0.843
     type = ParsedFunction
     expression = t
   []
+  [motor_torque_fn]
+    type = ConstantFunction
+    value = ${pri_motor_torque} # controlled
+  []
 
   # Shutdown function which ramps down the motor once told by the control logic
   [sec_motor_torque_fn_shutdown]
@@ -1280,7 +1284,7 @@ eff_turb = 0.843
   [motor]
     type = ShaftConnectedMotor
     inertia = ${I_motor}
-    torque = 0 # controlled
+    torque = motor_torque_fn
   []
 
   # Electric generator supplying power to the grid
@@ -1590,9 +1594,9 @@ eff_turb = 0.843
   ##########################
 
   [sec_motor_torque]
-    type = RealComponentParameterValuePostprocessor
-    component = motor
-    parameter = torque
+    type = ShaftConnectedComponentPostprocessor
+    quantity = torque
+    shaft_connected_component_uo = motor:shaftconnected_uo
     execute_on = 'INITIAL TIMESTEP_END'
   []
   [sec_motor_power]
@@ -2009,9 +2013,8 @@ eff_turb = 0.843
 
   # Takes the output generated in [logic] and applies it to the motor torque
   [motor_PID]
-    type = SetComponentRealValueControl
-    component = motor
-    parameter = torque
+    type = SetRealValueControl
+    parameter = Functions/motor_torque_fn/value
     value = logic:value
   []
 []
