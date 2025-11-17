@@ -64,7 +64,7 @@ def load_remote(repo, remote, config_tokens):
         raise SystemExit(f'API token for {host} not found')
 
     if 'github' in host:
-        github_kwargs = {'login_or_token': config_tokens[host]}
+        github_kwargs = {'auth': github.Auth.Token(config_tokens[host])}
         if host != 'github.com':
             github_kwargs['gh_url'] = 'https://' + host + '/api/v3'
         gh = github.Github(**github_kwargs)
@@ -110,10 +110,14 @@ if __name__ == "__main__":
         if submodule.module_exists():
             submodules.append(submodule)
 
+    pr_body_text = "Updates application submodules:\n"
+
     submodule_sha1 = {}
     # Load the hpc submodules if requested
     if args.use_hpc_submodules:
-        print('Looking for hpc submodule versions')
+        info = 'Looking for hpc submodule versions'
+        print(info)
+        pr_body_text += f"{info}\n"
         for submodule in submodules:
             sm_name = submodule.name.split('apps/')[-1].replace('_', '').lower()
             # This regex assumes the latest date is the last line
@@ -123,9 +127,13 @@ if __name__ == "__main__":
                 if sha1 == '':
                     raise ValueError
                 submodule_sha1[submodule.name] = sha1
-                print(f"  - Found hpc sha {sha1} for submodule {sm_name}")
+                info = f"  - Found hpc sha {sha1} for submodule {sm_name}"
+                print(info)
+                pr_body_text += f"{info}\n"
             except:
-                print(f"  - Could not determine hpc version for {sm_name}. Falling back to default behavior.")
+                info = f"  - Could not determine hpc version for {sm_name}. Falling back to default behavior."
+                print(info)
+                pr_body_text += f"{info}\n"
                 continue
 
     # Load the user-provided submodules
@@ -147,7 +155,9 @@ if __name__ == "__main__":
     git_repo.git.fetch(base_remote)
     git_repo.git.reset(f'{base_remote}/{base_branch}', hard=True)
 
-    print('Updating submodules')
+    info = 'Updating submodules'
+    print(info)
+    pr_body_text += f"{info}\n"
     submodules_left = list(submodule_sha1.keys())
     for submodule in submodules:
         if submodule.name in submodule_sha1:
@@ -156,16 +166,22 @@ if __name__ == "__main__":
         else:
             sha1 = 'origin/master'
         if args.skip_submodules is not None and submodule.name in args.skip_submodules:
-            print(f'  - {submodule} SKIPPED')
+            info = f'  - {submodule} SKIPPED'
+            print(info)
+            pr_body_text += f"{info}\n"
             continue
-        print(f'  - {submodule} to {sha1}')
+        info = f'  - {submodule} to {sha1}'
+        print(info)
+        pr_body_text += f"{info}\n"
         sm_git_repo = git.Repo(os.path.join(repo_path, submodule.path))
         sm_git_repo.git.fetch('origin')
         sm_git_repo.git.checkout(sha1)
         git_repo.git.add(submodule.name)
 
     for submodule_name in submodules_left:
-        print(f'  User-specified submodule {submodule_name} SKIPPED (not a valid submodule)')
+        info = f'  User-specified submodule {submodule_name} SKIPPED (not a valid submodule)'
+        print(info)
+        pr_body_text += f"{info}\n"
 
     # If there is a diff between HEAD and the index
     # i.e., if there is something to commit
@@ -196,7 +212,7 @@ if __name__ == "__main__":
 
                 if not has_pr:
                     pr = base_repo_api.create_pull(title='Submodule update',
-                                                    body='Updates application submodules',
+                                                    body=pr_body_text,
                                                     head=f'{head_namespace}:{head_branch}',
                                                     base=base_branch)
                     print(f'Created pull request {pr.html_url}')
