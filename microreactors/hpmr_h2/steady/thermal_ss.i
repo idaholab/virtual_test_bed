@@ -444,7 +444,7 @@ qvalue_multiplier = 1.0
   []
   [global_energy_balance] # balance performed globally (i.e. using the heat flux out of the condenser, much more difficult to bring to 0 than if using hp_bc_heat_flux)
     type = ParsedPostprocessor
-    function = '(total_power - total_condenser_power - rrefl_heat_flux) / total_power'
+    expression = '(total_power - total_condenser_power - rrefl_heat_flux) / total_power'
     pp_names = 'total_power total_condenser_power rrefl_heat_flux'
   []
   [ch_avg]
