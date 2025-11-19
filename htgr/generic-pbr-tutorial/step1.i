@@ -57,12 +57,12 @@ flow_vel = '${fparse mass_flow_rate / flow_area / density}'
     # boundary conditions
     inlet_boundaries = top
     momentum_inlet_types = fixed-velocity
-    momentum_inlet_function = '0 -${flow_vel}'
+    momentum_inlet_functors = '0 -${flow_vel}'
     wall_boundaries = 'left right'
     momentum_wall_types = 'slip slip'
     outlet_boundaries = bottom
     momentum_outlet_types = fixed-pressure
-    pressure_function = ${outlet_pressure}
+    pressure_functors = ${outlet_pressure}
   []
 []
 
