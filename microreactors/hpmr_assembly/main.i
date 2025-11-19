@@ -334,7 +334,7 @@ hp_positions = '
   [hp_holes_perimeter]
     type = ParsedPostprocessor
     pp_names = 'hp_holes_area'
-    function = 'hp_holes_area / ${fparse n_hp * length_hp_core}'
+    expression = 'hp_holes_area / ${fparse n_hp * length_hp_core}'
     execute_on = 'INITIAL'
   []
 []
