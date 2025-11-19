@@ -60,7 +60,6 @@ initial_temp = 900.0 # K
 [GlobalParams]
   pebble_diameter = ${pebble_diameter}
   acceleration = ' 0.00 -9.81 0.00 ' # Gravity acceleration (m/s2).
-  fp = fluid_properties_obj
 []
 
 # ==============================================================================
@@ -287,6 +286,7 @@ initial_temp = 900.0 # K
     porosity = porosity
     characteristic_length = characteristic_length
     block = ${fluid_blocks}
+    fp = fluid_properties_obj
   []
 
   # Porosity.
@@ -406,6 +406,7 @@ initial_temp = 900.0 # K
     T_solid = T_solid
     porosity = porosity
     block = '${pbed_blocks}'
+    fp = fluid_properties_obj
   []
   [risers_drag_coefficients]
     type = FunctorChurchillDragCoefficients
@@ -435,6 +436,7 @@ initial_temp = 900.0 # K
     porosity = porosity
     pressure = pressure
     block = '${pbed_blocks}'
+    fp = fluid_properties_obj
   []
   [risers_blocks_alpha]
     type = FunctorDittusBoelterWallHTC
