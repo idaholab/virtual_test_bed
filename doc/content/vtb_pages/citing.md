@@ -68,6 +68,18 @@ Mauricio E. Tano, Jun Fang, Guillaume Giudicelli and Abdalla Abou-Jaoude, "Coupl
 Jun Fang, Dillon R Shaver and Bo Feng, "CFD Modeling of Molten Salt Fast Reactor Using Nek5000", Transactions of the American Nuclear Society (2021)
 ```
 
+- MSFR Spatially-resolved thermochemistry model using Thermochimica
+
+```
+@techreport{FrameworkM3,
+    author = "Walker, Samuel and Tano, Mauricio and Abou-Jaoude, Abdalla",
+    title = "Application of NEAMS Multiphysics Framework for Species Tracking in Molten Salt Reactors",
+    institution = "Idaho National Laboratory",
+    number = "INL/RPT-23-74376",
+    year = "2023"
+}
+```
+
 - Molten Salt Reactor Experiment (MSRE Multiphysics Model)
 
 ```
@@ -108,6 +120,32 @@ Mustafa K.M. Jaradat and Javier Ortensi, "Thermal Spectrum Molten Salt-Fueled Re
 Hu R., Hu G., Gorman M., Fang J., Mui T., O’Grady D., Fei T. and Salko R., "FY21 SAM Developments for MSR Modeling.", Argonne National Laboratory, ANL/NSE-21/74 (2021)
 ```
 
+- Molten Salt Reactor Experiment Thermal Striping in Piping using Cardinal/Nek
+
+!alert note title=No official citation
+Please contact the [model POC](msr/msre/cardinal_thermal_striping) to obtain the item to cite.
+
+- Molten Salt Reactor Experiment Lower Plenum CFD
+
+```
+ANL/NSE-23/58
+Multiphysics Simulations of MSRE with NEAMS Thermal Hydraulics Tools
+Y. Cao, J. Fang, Y. Jeong, S. Shahbazi, and T. Fei
+Nuclear Science and Engineering Division
+```
+
+- LOTUS MCRE
+
+```
+@techreport{M3mcr2023,
+    author = "Tano, Mauricio and Freile, Ramiro and de Oliveira, Rodrigo and Walker, Samuel and Abou-Jaoude, Abdalla",
+    title = "Coupled steady-state precursor distribution, and transients studies for open-core flow MCFRs",
+    institution = "Idaho National Laboratory",
+    number = "INL/RPT-23-73982",
+    year = "2023"
+}
+```
+
 - Generic MSR depletion
 
 ```
@@ -121,6 +159,45 @@ Hu R., Hu G., Gorman M., Fang J., Mui T., O’Grady D., Fei T. and Salko R., "FY
 }
 Samuel Walker, Olin Calvin, Mauricio E. Tano and Abdalla Abou Jaoude, Implementation of Isotopic Removal Capability in Griffin for Multi-Region MSR Depletion Analysis,
 Transition of the American Nuclear Society, 2022
+```
+
+- Generic plant earhquake analysis with MASTODON
+
+```
+@techreport{inl-ext-20-59608,
+    author = "Bolisetti, C. and Hoffman, W. and Coleman, J. L. and Parsi, S. S. and Lal, K. and Whittaker, A. S. and Cohen, M. and Kramer, K. and Kirchman, P. and Bowers, H. and Redd, J.",
+    institution = "Idaho National Laboratory",
+    title = "Seismic Isolation of Major Advanced Reactor Systems for Economic Improvement and Safety Assurance",
+    year = "2020",
+    number = "INL/EXT-20-59608"
+}
+```
+
+- Graphite behavior in molten salt environments
+
+```
+@techreport{Prithivi2025,
+    author = "Prithivirajan, Veerappan",
+    title = "{Computational Modeling of Graphite Degradation due to Molten Salt Infiltration and Wear}",
+    number = "NL/RPT-25-86762",
+    institution = "Idaho National Laboratory (INL), Idaho Falls, ID (United States)",
+    place = "United States",
+    year = "2025",
+    month = "08"
+}
+```
+
+- CNRS Multiphysics Benchmark Modeling using NEAMS tools
+
+```
+@article{jaradat2024verification,
+  title={Verification of Griffin-Pronghorn-Coupled Multiphysics Code System Against CNRS Molten Salt Reactor Benchmark},
+  author={Jaradat, Mustafa K and Choi, Namjae and Abou-Jaoude, Abdalla},
+  journal={Nuclear Science and Engineering},
+  pages={1--34},
+  year={2024},
+  publisher={Taylor \& Francis}
+}
 ```
 
 ### Pebble bed fluoride-salt cooled high temperature reactor style=font-size:125%
@@ -180,6 +257,18 @@ April J. Novak, Dillon Shaver and Bo Feng, "Conjugate Heat Transfer Coupling of 
                year = {2017}
               }
 Ahmed K. K., Scarlat R. O. and Hu R., "Benchmark Simulation of Natural Circulation Cooling System with Salt Working Fluid Using SAM", Transactions of the  American Nuclear Society (2017)
+```
+
+- Generic FHR (gFHR) multiphysics core model
+
+```
+@techreport{gFHR_report,
+    author = "Ortensi, Javier and Mueller, Cole M. and Terlizzi, Stefano and Giudicelli, Guillaume and Schunert, Sebastian",
+    title = "Fluoride-Cooled High-Temperature Pebble-Bed Reactor Reference Plant Model",
+    institution = "Idaho National Laboratory",
+    number = "INL/RPT-23-72727",
+    year = "2023"
+}
 ```
 
 ### Sodium Fast Reactor style=font-size:125%
@@ -256,6 +345,26 @@ Technical Report ANL/NSE--21/30, 1808314, 169472, 2021
     }
 Mauricio Tano and Sebastian Schunert and Vasileios Kyriakopoulos and Aydin Karahan and April Novak, "Development of a Subchannel Capability for Liquid-Metal Fast Reactors in Pronghorn", Technical Report, 2022
 ```
+
+- Subchannel THORS
+
+!alert note title=No official citation
+Please contact the [model POC](sfr/subchannel/thors/thors.md) to obtain the item to cite.
+
+- Subchannel EBR-II validation
+
+```
+@article{tano2024validation,
+    author = "Tano, Mauricio and Kyriakopoulos, Vasileios and McCay, James and Arment, Tyrell",
+    title = "Validation of Pronghorn’s subchannel code using EBR-II shutdown heat removal tests: SHRT-17 and SHRT-45R",
+    journal = "Nuclear Engineering and Design",
+    volume = "416",
+    pages = "112783",
+    year = "2024",
+    publisher = "Elsevier"
+}
+```
+
 
 ### High Temperature Gas Cooled Reactor style=font-size:125%
 
@@ -334,11 +443,11 @@ A.J. Novak, D. Andrs, P. Shriwise, D. Shaver, P.K. Romano, E. Merzari and P. Keu
 
 ```
 @techreport{HTR-10Benchmark,
- author = {J.~Ortensi and S.~Schunert and Y.~Wang and V.~Laboure and F.~Gleicher and R.~Martineau},
- Title = {{Benchmark Analysis of the HTR-10 with the MAMMOTH Reactor Physics Application.}},
- Institution = {Idaho National Laboratory},
- Number = {INL/EXT-18-45453},
- Year = {2018},
+    author = {J.~Ortensi and S.~Schunert and Y.~Wang and V.~Laboure and F.~Gleicher and R.~Martineau},
+    Title = {{Benchmark Analysis of the HTR-10 with the MAMMOTH Reactor Physics Application.}},
+    Institution = {Idaho National Laboratory},
+    Number = {INL/EXT-18-45453},
+    Year = {2018},
 }
 J. Ortensi and S. Schunert and Y. Wang and V. Laboure and F. Gleicher and R. Martineau, "Benchmark Analysis of the HTR-10 with the MAMMOTH Reactor Physics Application", Idaho National Laboratory, Technical Report INL/EXT-18-45453, (2018)
 ```
@@ -380,57 +489,109 @@ Zabriskie, Adam and Schunert, Sebastian and Schwen, Daniel and Ortensi, Javier a
 
 ```
 @techreport{osti_1884970,
-title = {Modeling of a Generic Pebble Bed High-temperature Gas-cooled Reactor (PB-HTGR) with SAM},
-author = {Ooi, Zhiee Jhia and Zou, Ling and Hua, Thanh and Fang, Jun and Hu, Rui},
-doi = {10.2172/1884970},
-url = {https://www.osti.gov/biblio/1884970}, journal = {},
-place = {United States},
-year = {2022},
-number = {ANL/NSE-22/59177957},
-month = {9}
+    title = {Modeling of a Generic Pebble Bed High-temperature Gas-cooled Reactor (PB-HTGR) with SAM},
+    author = {Ooi, Zhiee Jhia and Zou, Ling and Hua, Thanh and Fang, Jun and Hu, Rui},
+    doi = {10.2172/1884970},
+    url = {https://www.osti.gov/biblio/1884970}, journal = {},
+    place = {United States},
+    year = {2022},
+    number = {ANL/NSE-22/59177957},
+    month = {9}
 }
 Ooi, Zhiee Jhia and Zou, Ling and Hua, Thanh and Fang, Jun and Hu, Rui, "Modeling of a Generic Pebble Bed High-temperature Gas-cooled Reactor (PB-HTGR) with SAM",
 Technical Report ANL/NSE-22/59177957, 2022
 ```
 
-- HTTF transient core model
+- 2D Ring Model for the High Temperature Test Facility (HTTF)
 
-!alert note title=No official citation
-Please contact the [model POC](httf/index.md) to obtain the item to cite.
+```
+@article{Ooi04052023,
+    author = {Zhiee Jhia Ooi and Thanh Hua and Ling Zou and Rui Hu},
+    title = {Simulation of the High Temperature Test Facility (HTTF) Core Using the 2D Ring Model with SAM},
+    journal = {Nuclear Science and Engineering},
+    volume = {197},
+    number = {5},
+    pages = {840--867},
+    year = {2023},
+    publisher = {Taylor \& Francis},
+    doi = {10.1080/00295639.2022.2106726},
+    URL = {https://doi.org/10.1080/00295639.2022.2106726}
+}
+```
+
+- HTTF transient core model - Porous media
+
+```
+Modeling the Oregon State University's High Temperature Test Facility via a Porous Media Approach
+Ismail Bouarich (INL), Lise Charlot (INL), Mauricio E. Tano Retamales (INL)
+Transactions | Volume 132 | Number 1 | June 2025 | Pages 1230-1233
+```
 
 - 67 pebbles conjugate heat transfer model
 
-!alert note title=No official citation
-Please contact the [model POC](pb67_cardinal/index.md) to obtain the item to cite.
+```
+Large Eddy Simulation of a 67-Pebble Bed Experiment
+David Reger (Penn State), Elia Merzari (Penn State), Haomin Yuan (ANL), Yassin Hassan (TAMU), Stephen King (TAMU), Khoi Ngo (TAMU), Sebastian Schunert (INL), Paolo Balestra (INL)
+Proceedings | Advances in Thermal Hydraulics (ATH 2022) | Anaheim, CA, June 12-16, 2022 | Pages 278-291
+```
 
 - HTTF Lower Plenum Nek5000 CFD
 
 ```
 @inproceedings{Fang2023nureth2,
-address = {Washington D.C.},
-author = {Fang, Jun and Hua, Thanh and Ooi, Zhiee Jhia and Zou, Ling},
-booktitle = {Proceedings of 20th International Topical Meeting on Nuclear Reactor Thermal Hydraulics (NURETH-20)},
-publisher = {American Nuclear Society},
-title = {{CFD Simulations of Flow Mixing Phenomenon in a Gas-Cooled Reactor Outlet Plenum}},
-year = {2023}
+    address = {Washington D.C.},
+    author = {Fang, Jun and Hua, Thanh and Ooi, Zhiee Jhia and Zou, Ling},
+    booktitle = {Proceedings of 20th International Topical Meeting on Nuclear Reactor Thermal Hydraulics (NURETH-20)},
+    publisher = {American Nuclear Society},
+    title = {{CFD Simulations of Flow Mixing Phenomenon in a Gas-Cooled Reactor Outlet Plenum}},
+    year = {2023}
 }
 Fang, Jun and Hua, Thanh and Ooi, Zhiee Jhia and Zou, Ling, "CFD Simulations of Flow Mixing Phenomenon in a Gas-Cooled Reactor Outlet Plenum",
 NURETH-2023
 ```
 
-- Natural Convection CFD Modeling of a Microreactor Air Jacket
+- HTTR Steady state model
 
 ```
-@inproceedings{jacket_chaube,
-    author = {Anshuman Chaube and April J. Novak and Dillon R. Shaver and Caleb S. Brooks},
-    title = {{Natural Convection CFD Modeling of a Microreactor Air Jacket}},
-    booktitle = {Transactions of the American Nuclear Society},
-    publisher = {American Nuclear Society},
-    address = {Washington D.C.},
-    year = {2023}
+INL/RPT-22-68891
+FY22 Status Report on the ART-GCR CMVB and CNWG International Collaborations
+September 2022
+M3AT-22IN0603011
+Vincent Laboure, Matilda Aberg Lindell, Javier Ortensi, Gerhard Strydom, and Paolo Balestra
+```
+
+- General Pebble Bed Reactor with Stochastic Analyses
+
+```
+@article{Prince2024,
+    title = {Sensitivity analysis, surrogate modeling, and optimization of pebble-bed reactors considering normal and accident conditions},
+    journal = {Nuclear Engineering and Design},
+    volume = {428},
+    pages = {113466},
+    year = {2024},
+    issn = {0029-5493},
+    doi = {https://doi.org/10.1016/j.nucengdes.2024.113466},
+    url = {https://www.sciencedirect.com/science/article/pii/S0029549324005661},
+    author = {Zachary M. Prince and Paolo Balestra and Javier Ortensi and Sebastian Schunert and Olin Calvin and Joshua T. Hanophy and Kun Mo and Gerhard Strydom},
+    keywords = {Pebble bed reactor, Equilibrium core, Depressurized loss of forced cooling, MOOSE, Sensitivity analysis, Surrogate modeling, Optimization}
 }
-Anshuman Chaube and April J. Novak and Dillon R. Shaver and Caleb S. Brooks, "Natural Convection CFD Modeling of a Microreactor Air Jacket",
-Transactions of the American Nuclear Society, 2023
+```
+
+- Griffin Open Xe-100 model
+
+```
+@article{Stewart2022,
+  title = {Generation of localized reactor point kinetics parameters using coupled neutronic and thermal fluid models for pebble-bed reactor transient analysis},
+  journal = {Annals of Nuclear Energy},
+  volume = {174},
+  pages = {109143},
+  year = {2022},
+  issn = {0306-4549},
+  doi = {https://doi.org/10.1016/j.anucene.2022.109143},
+  url = {https://www.sciencedirect.com/science/article/pii/S0306454922001785#s0065},
+  author = {R. Stewart and P. Balestra and D. Reger and E. Merzari},
+  keywords = {Pebble-bed reactor, Multiphysics transient, Local reactivity coefficients, Point kinetics parameters},
+}
 ```
 
 
@@ -451,9 +612,26 @@ Shemon, Emily and Yu, Yiqi and Park, Hansol and Brennan, Colin, "Assessment of F
 Technical Report ANL/NSE-21/42, 2021
 ```
 
+- 7-pin Cardinal model
+
+```
+@article{Novak03102023,
+    author = {A. J. Novak and P. Shriwise and P. K. Romano and R. Rahaman and E. Merzari and D. Gaston},
+    title = {Coupled Monte Carlo Transport and Conjugate Heat Transfer for Wire-Wrapped Bundles Within the MOOSE Framework},
+    journal = {Nuclear Science and Engineering},
+    volume = {197},
+    number = {10},
+    pages = {2561--2584},
+    year = {2023},
+    publisher = {Taylor \& Francis},
+    doi = {10.1080/00295639.2022.2158715},
+    URL = {https://doi.org/10.1080/00295639.2022.2158715}
+}
+```
+
 ### Micro Reactor style=font-size:125%
 
-- Heat Pipe Micro Reactor
+- Heat Pipe Micro Reactor (MRAD) Steady and Transient Multiphysics
 
 ```
 @article{Stauff2021,
@@ -464,6 +642,85 @@ Technical Report ANL/NSE-21/42, 2021
        }
 Nicolas E. Stauff, Kun Mo, Yan Cao, Justin W. Thomas, Yinbin Miao, Changho Lee, Christopher Matthews and Bo Feng, "Preliminary Applications of NEAMS Codes for Multiphysics Modeling of a Heat Pipe Microreactor", Transactions of the American Nuclear Society, (2021)
 ```
+
+- Heat Pipe Micro Reactor (MRAD) TRISO failure analysis
+
+```
+@techreport{stauff2024multiphysics,
+    author = "Stauff, N and Abdelhameed, A and Cao, Y and Ibarra, L and Lee, SK and Miao, Y and Mo, K",
+    title = "Assessment and validation of NEAMS tools for high-fidelity multiphysics transient modeling of microreactors",
+    number = "ANL/NEAMS-24/4",
+    year = "2024",
+    institution = "Argonne National Lab.(ANL), Argonne, IL (United States)"
+}
+```
+
+- Heat Pipe Micro Reactor (MRAD) Inadvertent control drum rotation
+
+!alert note title=No official citation
+Please contact the [model POC](microreactors/mrad/control_drum_rotation.md) to obtain the item to cite.
+
+- KRUSTY steady state multiphysics
+
+```
+@inproceedings{Cao2024,
+    author = "Cao, Yan and Miao, Yinbin and Mo, Kun and Stauff, Nicolas and Lee, Changho",
+    title = "Multiphysics Simulations of the KRUSTY Criticality Experiment Using BlueCrab",
+    address = "San Francisco, CA",
+    booktitle = "International Conference on Physics of Reactors (PHYSOR 2024)",
+    year = "2024"
+}
+```
+
+- KRUSTY load following and reactivity insertion accident simulations
+
+```
+@techreport{Stauff2023,
+    author = "Stauff, N and Abdelhameed, A and Cao, Y and Fassino, N and Ibarra, L and Miao, Y and Mo, K and Nunez, D",
+    title = "High-fidelity multiphysics load following and accidental transient modeling of microreactors using NEAMS tools: Application of NEAMS codes to perform multiphysics modeling analyses of micro-reactor concepts",
+    year = "2023",
+    institution = "Argonne National Laboratory (ANL), Argonne, IL (United States)"
+}
+```
+
+- Heat-Pipe Microreactor Assembly
+
+```
+@article{HANSEL2025111694,
+title = {Studies of the influence of heat pipe model and coupling strategy in heat pipe microreactor simulations using Sockeye},
+journal = {Annals of Nuclear Energy},
+volume = {224},
+pages = {111694},
+year = {2025},
+issn = {0306-4549},
+doi = {https://doi.org/10.1016/j.anucene.2025.111694},
+url = {https://www.sciencedirect.com/science/article/pii/S0306454925005110},
+author = {Joshua E. Hansel and Javier Ortensi and Mustafa K. Jaradat},
+keywords = {Microreactor, Heat pipe, Sockeye, Multiphysics, MOOSE}
+}
+```
+
+- Micro-reactor control drum rotation
+
+```
+@article{PRINCE2024110365,
+title = {Neutron transport methods for multiphysics heterogeneous reactor core simulation in Griffin},
+journal = {Annals of Nuclear Energy},
+volume = {200},
+pages = {110365},
+year = {2024},
+issn = {0306-4549},
+doi = {https://doi.org/10.1016/j.anucene.2024.110365},
+url = {https://www.sciencedirect.com/science/article/pii/S0306454924000276},
+author = {Zachary M. Prince and Joshua T. Hanophy and Vincent M. Labouré and Yaqi Wang and Logan H. Harbour and Namjae Choi},
+keywords = {Griffin, MOOSE, Radiation transport, Multiphysics, Reactor dynamics}
+}
+```
+
+- 2D gHPMR Reactor Mesh
+
+!alert note title=No official citation
+Please contact the [model POC](microreactors/gHPMR/index.md) to obtain the item to cite.
 
 - SNAP 8 NTP Reactor core model
 
@@ -481,7 +738,7 @@ Naupa, Isaac and Garcia, Samuel and Terlizzi, Stefano and Kotlyar, Dan and Lindl
 2022
 ```
 
-- Gas Cooled Micro Reactor
+- Gas Cooled Micro Reactor Assembly Multiphysics model
 
 ```
 @InProceedings{Ahmed_ANS_2022,
@@ -492,6 +749,41 @@ Naupa, Isaac and Garcia, Samuel and Terlizzi, Stefano and Kotlyar, Dan and Lindl
 }
 Abdelhameed, Ahmed Amin and Cao, Yan and Nunez, Daniel and Miao, Yinbin and Mo, Kun and Lee, Changho and Shemon, Emily and Stauff, Nicolas E., "High-Fidelity Multiphysics Modeling of Load Following for 3-D Gas-Cooled Microreactor Assembly using NEAMS Codes", Proceedings of the American Nuclear Society, November 2022
 ```
+
+- Gas Cooled Micro Reactor Core Neutronics model
+
+```
+@Article{shemon2023reactor,
+    author = "Shemon, Emily and Miao, Yinbin and Kumar, Shikhar and Mo, Kun and Jung, Yeon Sang and Oaks, Aaron and Richards, Scott and Giudicelli, Guillaume and Harbour, Logan and Stogner, Roy",
+    title = "MOOSE Reactor Module: An Open-Source Capability for Meshing Nuclear Reactor Geometries",
+    journal = "Nuclear Science and Engineering",
+    volume = "0",
+    number = "0",
+    pages = "1-25",
+    year = "2023",
+    doi = "10.1080/00295639.2022.2149231",
+    URL = "https://doi.org/10.1080/00295639.2022.2149231",
+    eprint = "https://doi.org/10.1080/00295639.2022.2149231"
+}
+```
+
+- Gas Cooled Micro Reactor Core Multiphysics model
+
+```
+@techreport{stauff2024assessment,
+    author = "Stauff, N and Abdelhameed, A and Cao, Y and Ibarra, L and Lee, SK and Miao, Y and Mo, K",
+    title = "Assessment and validation of NEAMS tools for high-fidelity multiphysics transient modeling of microreactors",
+    year = "2024",
+    number = "ANL/NEAMS-24/3",
+    institution = "Argonne National Laboratory"
+}
+```
+
+- Gas Cooled Micro Reactor balance of plant model
+
+!alert note title=No official citation
+Please contact the [model POC](microreactors/gcmr/index_bop.md) to obtain the item to cite.
+
 
 - Control drum rotation
 
@@ -521,6 +813,58 @@ Zachary Prince, Joshua Hanophy, Vincent Labouré, Yaqi Wang, Logan Harbour, and 
 }
 Stefano Terlizzi and Vincent Labouré, "Asymptotic hydrogen redistribution analysis in yttrium-hydride-moderated heat-pipe-cooled microreactors using DireWolf", Annals of Nuclear Energy, Volume 186, 2023, 109735,	ISSN 0306-4549,	https://doi.org/10.1016/j.anucene.2023.109735
 ```
+
+- Natural Convection CFD Modeling of a Microreactor Air Jacket
+
+```
+@inproceedings{jacket_chaube,
+    author = {Anshuman Chaube and April J. Novak and Dillon R. Shaver and Caleb S. Brooks},
+    title = {{Natural Convection CFD Modeling of a Microreactor Air Jacket}},
+    booktitle = {Transactions of the American Nuclear Society},
+    publisher = {American Nuclear Society},
+    address = {Washington D.C.},
+    year = {2023}
+}
+Anshuman Chaube and April J. Novak and Dillon R. Shaver and Caleb S. Brooks, "Natural Convection CFD Modeling of a Microreactor Air Jacket",
+Transactions of the American Nuclear Society, 2023
+```
+
+- GCMR Whole Core with inter-assembly bypass
+
+!alert note title=No official citation
+Please contact the [model POC](microreactors/gcmr/index_core_bypass.md) to obtain the item to cite.
+
+
+### Light Water Reactors
+
+!alert note title=No official citation
+Please contact the [model POC](rpv_fracture/index.md) to obtain the item to cite.
+
+
+### Research Reactors
+
+- ATR Butterfly Valve simulation
+
+```
+@article{YANKURA2025111671,
+title = {Butterfly valve performance factors using the multiphysics object oriented simulation environment},
+journal = {Annals of Nuclear Energy},
+volume = {224},
+pages = {111671},
+year = {2025},
+issn = {0306-4549},
+doi = {https://doi.org/10.1016/j.anucene.2025.111671},
+url = {https://www.sciencedirect.com/science/article/pii/S0306454925004888},
+author = {Daniel Yankura and Matthew Anderson},
+keywords = {Computational fluid dynamics, MOOSE framework}
+}
+```
+
+- AGN 3D mesh
+
+!alert note title=No official citation
+Please contact the [model POC](research_reactors/agn/index.md) to obtain the item to cite.
+
 
 ### Magnetic confinement fusion
 
@@ -620,6 +964,23 @@ Cardinal
          url = {https://www.tandfonline.com/doi/full/10.1080/00295450.2020.1824471}
 }
 E. Merzari, H. Yuan, M. Min, D. Shaver, R. Rahaman, P. Shriwise, P. Romano, A. Talamo, Y. Lan, D. Gaston, R. Martineau, P. Fischer and Y. Hassan, "Cardinal : A Lower Length-Scale Multiphysics Simulator for Pebble-Bed Reactors", Nuclear Technology (2021)
+```
+
+Grizzly / Blackbear
+
+```
+@article{spencer_grizzly_2021,
+	author = {Benjamin W. Spencer and William M. Hoffman and Sudipta Biswas and Wen Jiang and Alain Giorla and Marie A. Backman},
+	doi = {10.1080/00295450.2020.1868278},
+	journal = {Nuclear Technology},
+	month = apr,
+	number = {7},
+	pages = {981--1003},
+	publisher = {Informa {UK} Limited},
+	title = {Grizzly and {BlackBear}: Structural Component Aging Simulation Codes},
+	volume = {207},
+	year = {2021}
+}
 ```
 
 Pronghorn
