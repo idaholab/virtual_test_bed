@@ -68,6 +68,18 @@ Mauricio E. Tano, Jun Fang, Guillaume Giudicelli and Abdalla Abou-Jaoude, "Coupl
 Jun Fang, Dillon R Shaver and Bo Feng, "CFD Modeling of Molten Salt Fast Reactor Using Nek5000", Transactions of the American Nuclear Society (2021)
 ```
 
+- MSFR Spatially-resolved thermochemistry model using Thermochimica
+
+```
+@techreport{FrameworkM3,
+    author = "Walker, Samuel and Tano, Mauricio and Abou-Jaoude, Abdalla",
+    title = "Application of NEAMS Multiphysics Framework for Species Tracking in Molten Salt Reactors",
+    institution = "Idaho National Laboratory",
+    number = "INL/RPT-23-74376",
+    year = "2023"
+}
+```
+
 - Molten Salt Reactor Experiment (MSRE Multiphysics Model)
 
 ```
@@ -108,6 +120,32 @@ Mustafa K.M. Jaradat and Javier Ortensi, "Thermal Spectrum Molten Salt-Fueled Re
 Hu R., Hu G., Gorman M., Fang J., Mui T., O’Grady D., Fei T. and Salko R., "FY21 SAM Developments for MSR Modeling.", Argonne National Laboratory, ANL/NSE-21/74 (2021)
 ```
 
+- Molten Salt Reactor Experiment Thermal Striping in Piping using Cardinal/Nek
+
+!alert note title=No official citation
+Please contact the [model POC](msr/msre/cardinal_thermal_striping) to obtain the item to cite.
+
+- Molten Salt Reactor Experiment Lower Plenum CFD
+
+```
+ANL/NSE-23/58
+Multiphysics Simulations of MSRE with NEAMS Thermal Hydraulics Tools
+Y. Cao, J. Fang, Y. Jeong, S. Shahbazi, and T. Fei
+Nuclear Science and Engineering Division
+```
+
+- LOTUS MCRE
+
+```
+@techreport{M3mcr2023,
+    author = "Tano, Mauricio and Freile, Ramiro and de Oliveira, Rodrigo and Walker, Samuel and Abou-Jaoude, Abdalla",
+    title = "Coupled steady-state precursor distribution, and transients studies for open-core flow MCFRs",
+    institution = "Idaho National Laboratory",
+    number = "INL/RPT-23-73982",
+    year = "2023"
+}
+```
+
 - Generic MSR depletion
 
 ```
@@ -121,6 +159,32 @@ Hu R., Hu G., Gorman M., Fang J., Mui T., O’Grady D., Fei T. and Salko R., "FY
 }
 Samuel Walker, Olin Calvin, Mauricio E. Tano and Abdalla Abou Jaoude, Implementation of Isotopic Removal Capability in Griffin for Multi-Region MSR Depletion Analysis,
 Transition of the American Nuclear Society, 2022
+```
+
+- Generic plant earhquake analysis with MASTODON
+
+```
+@techreport{inl-ext-20-59608,
+    author = "Bolisetti, C. and Hoffman, W. and Coleman, J. L. and Parsi, S. S. and Lal, K. and Whittaker, A. S. and Cohen, M. and Kramer, K. and Kirchman, P. and Bowers, H. and Redd, J.",
+    institution = "Idaho National Laboratory",
+    title = "Seismic Isolation of Major Advanced Reactor Systems for Economic Improvement and Safety Assurance",
+    year = "2020",
+    number = "INL/EXT-20-59608"
+}
+```
+
+- Graphite behavior in molten salt environments
+
+```
+@techreport{Prithivi2025,
+    author = "Prithivirajan, Veerappan",
+    title = "{Computational Modeling of Graphite Degradation due to Molten Salt Infiltration and Wear}",
+    number = "NL/RPT-25-86762",
+    institution = "Idaho National Laboratory (INL), Idaho Falls, ID (United States)",
+    place = "United States",
+    year = "2025",
+    month = "08"
+}
 ```
 
 - CNRS Multiphysics Benchmark Modeling using NEAMS tools
