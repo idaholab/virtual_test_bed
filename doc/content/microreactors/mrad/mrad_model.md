@@ -74,7 +74,7 @@ The first step is to generate homogenized multi-group cross-sections using Serpe
 
 ####  Note on LFS
 
-**Large File Storage (LFS)** is used for the following file: `TRISO_U900_PF40_R100`
+`Large File Storage (LFS)` is used for the following file: `TRISO_U900_PF40_R100`
 
 This file defines the distribution, and radius of the TRISO particles to achieve 40% packing fraction.
 Make sure to install git lfs, then fetch and pull these files to be able to run the Serpent inputs.

@@ -93,7 +93,7 @@ MOOSE's Reactor Module [!citep](shemon2023reactor) was used to create the mesh s
 
 ## Cross-Section Generation Using Serpent Code
 
-The first step is to generate homogenized multi-group cross-sections using Serpent-2. The specific version used for this work is **Serpent 2.1.32**. The generated cross-sections are then converted into an XML-format file for compatibility with Griffin.
+The first step is to generate homogenized multi-group cross-sections using Serpent-2. The specific version used for this work is `Serpent 2.1.32`. The generated cross-sections are then converted into an XML-format file for compatibility with Griffin.
 
 
 !listing microreactors/gcmr/core/Serpent_Model/serpent_input.i  max-height = 10000
@@ -101,7 +101,7 @@ The first step is to generate homogenized multi-group cross-sections using Serpe
 
 ## Note on LFS files linked to Serpent Model
 
-Git **Large File Storage (LFS)** is used for the following files:
+Git `Large File Storage (LFS)` is used for the following files:
 
 ```
 PART_U901_PF40_R85
@@ -119,7 +119,7 @@ Make sure to install git lfs, then fetch and pull these files to be able to run 
 
 Griffin utilizes the cross-sections in the XML-format file in conjunction with the mesh file. The 3D whole-core mesh is constructed using MOOSE's Reactor module, ensuring consistency between geometric representations in the mesh file and Serpent-2. Griffin solves the neutron transport equation using discontinuous finite element (DFEM) with SN transport and CMFD acceleration, employing on-the-fly coarse mesh generation for CMFD.
 
-> **Note:** Efforts were dedicated to simplifying the 3D whole-core GC-MR mesh to reduce computational demands. Special attention was given to avoid too coarse mesh sizes, particularly in critical regions such as the radial reflector and control drum areas, ensuring proper convergence of DFEM-SN with CMFD.
+> `Note:` Efforts were dedicated to simplifying the 3D whole-core GC-MR mesh to reduce computational demands. Special attention was given to avoid too coarse mesh sizes, particularly in critical regions such as the radial reflector and control drum areas, ensuring proper convergence of DFEM-SN with CMFD.
 
 
 
