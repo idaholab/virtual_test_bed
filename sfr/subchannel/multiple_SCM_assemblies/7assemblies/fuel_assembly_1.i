@@ -109,6 +109,14 @@ duct_inside = '${fparse duct_outside - 2 * duct_thickness}'
   segregated = false
   verbose_multiapps = true
   verbose_subchannel = true
+  # friction model
+  friction_closure = 'cheng'
+[]
+
+[SCMClosures]
+  [cheng]
+    type = SCMFrictionUpdatedChengTodreas
+  []
 []
 
 [ICs]
