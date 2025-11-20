@@ -372,7 +372,7 @@ Toutlet = 593.15 # (expected) fluid outlet temperature
   []
   [delta_H]
     type = ParsedPostprocessor
-    function = '${npins} * ${mdot} * (H_out - H_in)'
+    expression = '${npins} * ${mdot} * (H_out - H_in)'
     pp_names = 'H_in H_out'
     execute_on = 'initial timestep_end'
   []
