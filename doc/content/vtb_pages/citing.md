@@ -567,7 +567,7 @@ Technical Report ANL/NSE-21/42, 2021
 
 ### Micro Reactor style=font-size:125%
 
-- Heat Pipe Micro Reactor (MRAD)
+- Heat Pipe Micro Reactor (MRAD) Steady and Transient Multiphysics
 
 ```
 @article{Stauff2021,
@@ -579,9 +579,84 @@ Technical Report ANL/NSE-21/42, 2021
 Nicolas E. Stauff, Kun Mo, Yan Cao, Justin W. Thomas, Yinbin Miao, Changho Lee, Christopher Matthews and Bo Feng, "Preliminary Applications of NEAMS Codes for Multiphysics Modeling of a Heat Pipe Microreactor", Transactions of the American Nuclear Society, (2021)
 ```
 
--
+- Heat Pipe Micro Reactor (MRAD) TRISO failure analysis
 
+```
+@techreport{stauff2024multiphysics,
+    author = "Stauff, N and Abdelhameed, A and Cao, Y and Ibarra, L and Lee, SK and Miao, Y and Mo, K",
+    title = "Assessment and validation of NEAMS tools for high-fidelity multiphysics transient modeling of microreactors",
+    number = "ANL/NEAMS-24/4",
+    year = "2024",
+    institution = "Argonne National Lab.(ANL), Argonne, IL (United States)"
+}
+```
 
+- Heat Pipe Micro Reactor (MRAD) Inadvertent control drum rotation
+
+!alert note title=No official citation
+Please contact the [model POC](microreactors/mrad/control_drum_rotation.md) to obtain the item to cite.
+
+- KRUSTY steady state multiphysics
+
+```
+@inproceedings{Cao2024,
+    author = "Cao, Yan and Miao, Yinbin and Mo, Kun and Stauff, Nicolas and Lee, Changho",
+    title = "Multiphysics Simulations of the KRUSTY Criticality Experiment Using BlueCrab",
+    address = "San Francisco, CA",
+    booktitle = "International Conference on Physics of Reactors (PHYSOR 2024)",
+    year = "2024"
+}
+```
+
+- KRUSTY load following and reactivity insertion accident simulations
+
+```
+@techreport{Stauff2023,
+    author = "Stauff, N and Abdelhameed, A and Cao, Y and Fassino, N and Ibarra, L and Miao, Y and Mo, K and Nunez, D",
+    title = "High-fidelity multiphysics load following and accidental transient modeling of microreactors using NEAMS tools: Application of NEAMS codes to perform multiphysics modeling analyses of micro-reactor concepts",
+    year = "2023",
+    institution = "Argonne National Laboratory (ANL), Argonne, IL (United States)"
+}
+```
+
+- Heat-Pipe Microreactor Assembly
+
+```
+@article{HANSEL2025111694,
+title = {Studies of the influence of heat pipe model and coupling strategy in heat pipe microreactor simulations using Sockeye},
+journal = {Annals of Nuclear Energy},
+volume = {224},
+pages = {111694},
+year = {2025},
+issn = {0306-4549},
+doi = {https://doi.org/10.1016/j.anucene.2025.111694},
+url = {https://www.sciencedirect.com/science/article/pii/S0306454925005110},
+author = {Joshua E. Hansel and Javier Ortensi and Mustafa K. Jaradat},
+keywords = {Microreactor, Heat pipe, Sockeye, Multiphysics, MOOSE}
+}
+```
+
+- Micro-reactor control drum rotation
+
+```
+@article{PRINCE2024110365,
+title = {Neutron transport methods for multiphysics heterogeneous reactor core simulation in Griffin},
+journal = {Annals of Nuclear Energy},
+volume = {200},
+pages = {110365},
+year = {2024},
+issn = {0306-4549},
+doi = {https://doi.org/10.1016/j.anucene.2024.110365},
+url = {https://www.sciencedirect.com/science/article/pii/S0306454924000276},
+author = {Zachary M. Prince and Joshua T. Hanophy and Vincent M. Labouré and Yaqi Wang and Logan H. Harbour and Namjae Choi},
+keywords = {Griffin, MOOSE, Radiation transport, Multiphysics, Reactor dynamics}
+}
+```
+
+- 2D gHPMR Reactor Mesh
+
+!alert note title=No official citation
+Please contact the [model POC](microreactors/gHPMR/index.md) to obtain the item to cite.
 
 - SNAP 8 NTP Reactor core model
 
@@ -599,7 +674,7 @@ Naupa, Isaac and Garcia, Samuel and Terlizzi, Stefano and Kotlyar, Dan and Lindl
 2022
 ```
 
-- Gas Cooled Micro Reactor
+- Gas Cooled Micro Reactor Assembly Multiphysics model
 
 ```
 @InProceedings{Ahmed_ANS_2022,
@@ -610,6 +685,41 @@ Naupa, Isaac and Garcia, Samuel and Terlizzi, Stefano and Kotlyar, Dan and Lindl
 }
 Abdelhameed, Ahmed Amin and Cao, Yan and Nunez, Daniel and Miao, Yinbin and Mo, Kun and Lee, Changho and Shemon, Emily and Stauff, Nicolas E., "High-Fidelity Multiphysics Modeling of Load Following for 3-D Gas-Cooled Microreactor Assembly using NEAMS Codes", Proceedings of the American Nuclear Society, November 2022
 ```
+
+- Gas Cooled Micro Reactor Core Neutronics model
+
+```
+@Article{shemon2023reactor,
+    author = "Shemon, Emily and Miao, Yinbin and Kumar, Shikhar and Mo, Kun and Jung, Yeon Sang and Oaks, Aaron and Richards, Scott and Giudicelli, Guillaume and Harbour, Logan and Stogner, Roy",
+    title = "MOOSE Reactor Module: An Open-Source Capability for Meshing Nuclear Reactor Geometries",
+    journal = "Nuclear Science and Engineering",
+    volume = "0",
+    number = "0",
+    pages = "1-25",
+    year = "2023",
+    doi = "10.1080/00295639.2022.2149231",
+    URL = "https://doi.org/10.1080/00295639.2022.2149231",
+    eprint = "https://doi.org/10.1080/00295639.2022.2149231"
+}
+```
+
+- Gas Cooled Micro Reactor Core Multiphysics model
+
+```
+@techreport{stauff2024assessment,
+    author = "Stauff, N and Abdelhameed, A and Cao, Y and Ibarra, L and Lee, SK and Miao, Y and Mo, K",
+    title = "Assessment and validation of NEAMS tools for high-fidelity multiphysics transient modeling of microreactors",
+    year = "2024",
+    number = "ANL/NEAMS-24/3",
+    institution = "Argonne National Laboratory"
+}
+```
+
+- Gas Cooled Micro Reactor balance of plant model
+
+!alert note title=No official citation
+Please contact the [model POC](microreactors/gcmr/index_bop.md) to obtain the item to cite.
+
 
 - Control drum rotation
 
@@ -654,6 +764,12 @@ Stefano Terlizzi and Vincent Labouré, "Asymptotic hydrogen redistribution analy
 Anshuman Chaube and April J. Novak and Dillon R. Shaver and Caleb S. Brooks, "Natural Convection CFD Modeling of a Microreactor Air Jacket",
 Transactions of the American Nuclear Society, 2023
 ```
+
+- GCMR Whole Core with inter-assembly bypass
+
+!alert note title=No official citation
+Please contact the [model POC](microreactors/gcmr/index_core_bypass.md) to obtain the item to cite.
+
 
 ### Light Water Reactors
 
