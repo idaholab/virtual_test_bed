@@ -121,6 +121,14 @@ unheated_length_exit = '${fparse 26.9*scale_factor}'
   implicit = true
   segregated = false
   interpolation_scheme = 'upwind'
+  # friction model
+  friction_closure = 'cheng'
+[]
+
+[SCMClosures]
+  [cheng]
+    type = SCMFrictionUpdatedChengTodreas
+  []
 []
 
 [ICs]
