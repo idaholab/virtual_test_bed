@@ -25,7 +25,7 @@
 
 In microreactors, modeling events involving rotating control drums can present challenges due to geometry deformation, localized power peaking, and complex multiphysics feedback. These effects must be accurately captured in high-fidelity, three-dimensional multiphysics simulations.
 
-In this work, we investigate inadvertent drum rotation in HP-MR using a fully coupled 3D multiphysics model involving **Griffin**, **BISON**, and **Sockeye**.
+In this work, we investigate inadvertent drum rotation in HP-MR using a fully coupled 3D multiphysics model involving `Griffin`, `BISON`, and `Sockeye`.
 
 The MOOSE `MultiApp` system is used to couple simulations. Here Griffin is the parent application. The `MultiApp` system enables seamless data exchange between Griffin, its child application (BISON), and its grandchild application (Sockeye).
 
@@ -36,11 +36,11 @@ The MOOSE `MultiApp` system is used to couple simulations. Here Griffin is the p
        caption=MultiApp hierarchy of the HP-MR model.
 
 
-In this coupling strategy, **Griffin** solves the high-fidelity neutronics problem to obtain the power density distribution at each time step of the dynamic transient. This power data is transferred to **BISON** using shape-function-preserving mapping to ensure integrated power conservation, allowing BISON to solve the heat conduction equations and compute solid temperatures. The resulting heat flux at the heat pipe surfaces is passed to **Sockeye**, which solves the thermal transport in the heat pipes and returns the updated surface temperatures to BISON for feedback. The simulation is tightly coupled using a **Picard fixed-point iteration** with defined convergence criteria to ensure stability and accuracy.
+In this coupling strategy, `Griffin` solves the high-fidelity neutronics problem to obtain the power density distribution at each time step of the dynamic transient. This power data is transferred to `BISON` using shape-function-preserving mapping to ensure integrated power conservation, allowing BISON to solve the heat conduction equations and compute solid temperatures. The resulting heat flux at the heat pipe surfaces is passed to `Sockeye`, which solves the thermal transport in the heat pipes and returns the updated surface temperatures to BISON for feedback. The simulation is tightly coupled using a `Picard fixed-point iteration` with defined convergence criteria to ensure stability and accuracy.
 
 ## Mesh File
 
-In this analysis, a 3D whole-core model with 1/6 symmetry was employed. The **MOOSE Reactor Module** provides several tools for generating finite element meshes, enabling rapid construction of detailed heterogeneous reactor geometry—including pins, assemblies, control drums, and peripheral zones—through operations such as extrusion and rotation.
+In this analysis, a 3D whole-core model with 1/6 symmetry was employed. The `MOOSE Reactor Module` provides several tools for generating finite element meshes, enabling rapid construction of detailed heterogeneous reactor geometry—including pins, assemblies, control drums, and peripheral zones—through operations such as extrusion and rotation.
 
 !listing /mrad/mesh/HPMR_OneSixth_finercdrum.i max-height=10000
 
@@ -69,7 +69,7 @@ Assemblies (including those with control drums) were patterned with the `Pattern
 
 ### Multi-Group Cross Sections
 
-Multi-group cross sections with 11 energy groups were generated using the **Serpent 2 Monte Carlo code**, based on a parametric grid defined by **Control drum rotation angle** (4 values), **Fuel temperature** (5 values), and **Temperature of moderator, reflector, monolith, and heat pipe** (4 values), using a total of 80 Serpent-2 simulations.
+Multi-group cross sections with 11 energy groups were generated using the `Serpent 2 Monte Carlo code`, based on a parametric grid defined by `Control drum rotation angle` (4 values), `Fuel temperature` (5 values), and `Temperature of moderator, reflector, monolith, and heat pipe` (4 values), using a total of 80 Serpent-2 simulations.
 
 
 !listing /mrad/3D_core_drum_rotation_tr/HPMR_dfem_griffin_tr.i max-height = 10000
@@ -87,7 +87,7 @@ A coarse mesh was generated using the `GeneratedMeshGenerator`, with the mesh di
 
 ### Griffin Solver
 
-The Griffin simulations used the **DFEM-SN transport solver** with **CMFD acceleration**. Angular discretization was performed using a Gauss-Chebyshev quadrature. In the multiphysics analysis, the angular quadrature was configured with one polar angle and three azimuthal angles, which produced a total of 24 discrete directions in the three-dimensional model. The finite element shape function family for the primal variables, i.e., the angular fluxes, was set to `MONOMIAL`, using first-order shape functions. The maximum order of scattering anisotropy was set to 2.
+The Griffin simulations used the `DFEM-SN transport solver` with `CMFD acceleration`. Angular discretization was performed using a Gauss-Chebyshev quadrature. In the multiphysics analysis, the angular quadrature was configured with one polar angle and three azimuthal angles, which produced a total of 24 discrete directions in the three-dimensional model. The finite element shape function family for the primal variables, i.e., the angular fluxes, was set to `MONOMIAL`, using first-order shape functions. The maximum order of scattering anisotropy was set to 2.
 
 To improve computational efficiency, the `using_array_variable` setting was enabled. This allowed angular fluxes for each group to be stored using MOOSE’s `ArrayVariable` system, which reduces the number of computational kernels and lowers the overall cost. In addition, the `collapse_scattering` option was enabled to allow in-group scattering sources to be formed directly within the scattering kernels, further decreasing simulation runtime.
 

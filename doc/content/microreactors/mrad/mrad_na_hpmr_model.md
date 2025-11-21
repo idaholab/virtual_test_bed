@@ -17,21 +17,21 @@ Aside from the increased design operating temperature, the main modifications ma
 
 ### Cross-Section Generation Using Serpent Code
 
-Similar to the K-HPMR model, the first step involves generating homogenized multi-group cross sections using **Serpent-2**. The Serpent-2 model for the Na-HPMR is similar to that of the K-HPMR, except that sodium is employed as the working fluid in the heat pipes instead of potassium (K). An **11-group energy structure** is employed, with parameters defined over grids of:
+Similar to the K-HPMR model, the first step involves generating homogenized multi-group cross sections using `Serpent-2`. The Serpent-2 model for the Na-HPMR is similar to that of the K-HPMR, except that sodium is employed as the working fluid in the heat pipes instead of potassium (K). An `11-group energy structure` is employed, with parameters defined over grids of:
 
-1. **Fuel temperature** (5 values)
-2. **Temperature of the moderator, reflector, monolith, and heat pipe** (5 values)
-3. **Hydrogen content** (7 values)
-4. **Control drum rotation**  (1 value: control drums out)
+1. `Fuel temperature` (5 values)
+2. `Temperature of the moderator, reflector, monolith, and heat pipe` (5 values)
+3. `Hydrogen content` (7 values)
+4. `Control drum rotation`  (1 value: control drums out)
 
-The results obtained from Serpent-2 are consistent with expected reactor physics:  
+The results obtained from Serpent-2 are consistent with expected reactor physics:
 
-- Increasing the hydrogen content within the tabulated range (from YH$_{0.5}$ to YH$_2$) yields a higher $k_{eff}$ value, due to enhanced moderation.  
-- Increasing the fuel temperature consistently reduces $k_{eff}$, reflecting the negative reactivity feedback from Doppler broadening.  
+- Increasing the hydrogen content within the tabulated range (from YH$_{0.5}$ to YH$_2$) yields a higher $k_{eff}$ value, due to enhanced moderation.
+- Increasing the fuel temperature consistently reduces $k_{eff}$, reflecting the negative reactivity feedback from Doppler broadening.
 
-This multi-grid cross-section library enables analysis of thermal reactivity feedback effects as well as the impacts of hydrogen redistribution within the moderator. At present, simulations are being carried out for the **control rod–out** configuration.  
+This multi-grid cross-section library enables analysis of thermal reactivity feedback effects as well as the impacts of hydrogen redistribution within the moderator. At present, simulations are being carried out for the `control rod–out` configuration.
 
-Finally, the generated cross sections are converted into an **XML-file format** for compatibility with **Griffin**.
+Finally, the generated cross sections are converted into an `XML-file format` for compatibility with `Griffin`.
 
 
 ### Sockeye Model
