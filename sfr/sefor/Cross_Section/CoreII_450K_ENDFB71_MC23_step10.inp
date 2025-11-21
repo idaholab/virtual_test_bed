@@ -1,0 +1,1734 @@
+#!/bin/bash
+# ***************************************************************************
+# by Y. Cao date 2024-08-14
+# ***************************************************************************
+lib1=/software/MCC3
+lib2=/software/MCC32x
+cat>input<<EOF
+\$library
+c_mcclibdir  ="$lib2/lib.mcc.e70" 
+c_pwlibdir   ="$lib2/lib.pw.200.e70","." 
+c_pendflibdir="$lib2/lib.pendf.e70" 
+c_chilibdir  ="$lib1/lib.chimatrix" 
+c_twodantexe ="$lib1/twodant.x" 
+/ 
+\$control 
+     c_group_structure       =ANL1041
+     c_geometry_type         =mixture
+     i_number_region         =1
+     i_scattering_order      =3
+     l_twodant               =F
+     l_pendf                 =T
+     l_buckling_search       =T
+/ 
+\$material 
+!
+! ============================================================
+!                        FA_6_Fuel_insul                         
+! ============================================================
+!
+t_composition(:,  1)=  BE9__7  BE9A  3.74919e-03  449.67      
+                       O16__7  O16A  2.23884e-02  449.67      
+                       CR50_7  CR50A  1.64165e-04  449.67      
+                       CR52_7  CR52A  3.16578e-03  449.67      
+                       CR53_7  CR53A  3.58977e-04  449.67      
+                       CR54_7  CR54A  8.93553e-05  449.67      
+                       FE54_7  FE54A  7.42716e-04  449.67      
+                       FE56_7  FE56A  1.16590e-02  449.67      
+                       FE57_7  FE57A  2.69249e-04  449.67      
+                       FE58_7  FE58A  3.58321e-05  449.67      
+                       MO1007  MO100A  1.13651e-05  449.67      
+                       MO92_7  MO92A  1.75145e-05  449.67      
+                       MO94_7  MO94A  1.09167e-05  449.67      
+                       MO95_7  MO95A  1.87893e-05  449.67      
+                       MO96_7  MO96A  1.96860e-05  449.67      
+                       MO97_7  MO97A  1.12708e-05  449.67      
+                       MO98_7  MO98A  2.84784e-05  449.67      
+                       NI58_7  NI58A  1.54051e-03  449.67      
+                       NI60_7  NI60A  5.93407e-04  449.67      
+                       NI61_7  NI61A  2.57941e-05  449.67      
+                       NI62_7  NI62A  8.22453e-05  449.67      
+                       NI64_7  NI64A  2.09458e-05  449.67      
+                       NA23_7  NA23A  7.06736e-03  449.67      
+                       U235_7  U235A  2.05030e-05  449.67      
+                       U238_7  U238A  9.29910e-03  449.67      
+/
+\$output
+l_edit_chi = T
+l_isotxs_macroxs = T
+l_isotxs_ascii = T
+/
+EOF
+$lib2/mcc3.x
+mv output    10.out
+mv output.chi_bg   10.out.chi_bg
+/software/ARC/ISOTXS_Modify.x in=ISOTXS.merged out=ISOTXS.1.merged i=REG_01 n=REG_10
+mv ISOTXS.1.merged    10.ISOTXS
+! ============================================================
+!
+cat>input<<EOF
+\$library
+c_mcclibdir  ="$lib2/lib.mcc.e70" 
+c_pwlibdir   ="$lib2/lib.pw.200.e70","." 
+c_pendflibdir="$lib2/lib.pendf.e70" 
+c_chilibdir  ="$lib1/lib.chimatrix" 
+c_twodantexe ="$lib1/twodant.x" 
+/ 
+\$control 
+     c_group_structure       =ANL1041
+     c_geometry_type         =mixture
+     i_number_region         =1
+     i_scattering_order      =3
+     l_twodant               =F
+     l_pendf                 =T
+     l_buckling_search       =T
+/ 
+\$material 
+!
+! ============================================================
+!                        FA_6_Fuel_St                         
+! ============================================================
+!
+t_composition(:,  1)=  BE9__7  BE9B  3.74919e-03  449.67      
+                       O16__7  O16B  2.19802e-02  449.67      
+                       CR50_7  CR50B  1.64165e-04  449.67      
+                       CR52_7  CR52B  3.16578e-03  449.67      
+                       CR53_7  CR53B  3.58977e-04  449.67      
+                       CR54_7  CR54B  8.93553e-05  449.67      
+                       FE54_7  FE54B  7.42716e-04  449.67      
+                       FE56_7  FE56B  1.16590e-02  449.67      
+                       FE57_7  FE57B  2.69249e-04  449.67      
+                       FE58_7  FE58B  3.58321e-05  449.67      
+                       MO1007  MO100B  1.13651e-05  449.67      
+                       MO92_7  MO92B  1.75145e-05  449.67      
+                       MO94_7  MO94B  1.09167e-05  449.67      
+                       MO95_7  MO95B  1.87893e-05  449.67      
+                       MO96_7  MO96B  1.96860e-05  449.67      
+                       MO97_7  MO97B  1.12708e-05  449.67      
+                       MO98_7  MO98B  2.84784e-05  449.67      
+                       NI58_7  NI58B  1.54051e-03  449.67      
+                       NI60_7  NI60B  5.93407e-04  449.67      
+                       NI61_7  NI61B  2.57941e-05  449.67      
+                       NI62_7  NI62B  8.22453e-05  449.67      
+                       NI64_7  NI64B  2.09458e-05  449.67      
+                       NA23_7  NA23B  7.06736e-03  449.67      
+                       PU2397  PU239B  1.70169e-03  449.67      
+                       PU2407  PU240B  1.52809e-04  449.67      
+                       U235_7  U235B  1.59947e-05  449.67      
+                       U238_7  U238B  7.25435e-03  449.67      
+/
+\$output
+l_edit_chi = T
+l_isotxs_macroxs = T
+l_isotxs_ascii = T
+/
+EOF
+$lib2/mcc3.x
+mv output    11.out
+mv output.chi_bg   11.out.chi_bg
+/software/ARC/ISOTXS_Modify.x in=ISOTXS.merged out=ISOTXS.1.merged i=REG_01 n=REG_11
+mv ISOTXS.1.merged    11.ISOTXS
+! ============================================================
+!
+cat>input<<EOF
+\$library
+c_mcclibdir  ="$lib2/lib.mcc.e70" 
+c_pwlibdir   ="$lib2/lib.pw.200.e70","." 
+c_pendflibdir="$lib2/lib.pendf.e70" 
+c_chilibdir  ="$lib1/lib.chimatrix" 
+c_twodantexe ="$lib1/twodant.x" 
+/ 
+\$control 
+     c_group_structure       =ANL1041
+     c_geometry_type         =mixture
+     i_number_region         =1
+     i_scattering_order      =3
+     l_twodant               =F
+     l_pendf                 =T
+     l_buckling_search       =T
+/ 
+\$material 
+!
+! ============================================================
+!                        AFA_6_1_Fuel_insul                         
+! ============================================================
+!
+t_composition(:,  1)=  CR50_7  CR50E  1.93405e-04  449.67      
+                       CR52_7  CR52E  3.72967e-03  449.67      
+                       CR53_7  CR53E  4.22916e-04  449.67      
+                       CR54_7  CR54E  1.05271e-04  449.67      
+                       FE54_7  FE54E  8.67237e-04  449.67      
+                       FE56_7  FE56E  1.36137e-02  449.67      
+                       FE57_7  FE57E  3.14390e-04  449.67      
+                       FE58_7  FE58E  4.18396e-05  449.67      
+                       NI58_7  NI58E  1.78402e-03  449.67      
+                       NI60_7  NI60E  6.87210e-04  449.67      
+                       NI61_7  NI61E  2.98714e-05  449.67      
+                       NI62_7  NI62E  9.52461e-05  449.67      
+                       NI64_7  NI64E  2.42567e-05  449.67      
+                       B10__7  B10E  4.78391e-04  449.67      
+                       B11__7  B11E  1.92560e-03  449.67      
+                       C____7  C12E  6.00988e-04  449.67      
+                       BE9__7  BE9E  3.74919e-03  449.67      
+                       O16__7  O16E  1.92819e-02  449.67      
+                       MO1007  MO100E  1.13651e-05  449.67      
+                       MO92_7  MO92E  1.75145e-05  449.67      
+                       MO94_7  MO94E  1.09167e-05  449.67      
+                       MO95_7  MO95E  1.87893e-05  449.67      
+                       MO96_7  MO96E  1.96860e-05  449.67      
+                       MO97_7  MO97E  1.12708e-05  449.67      
+                       MO98_7  MO98E  2.84784e-05  449.67      
+                       NA23_7  NA23E  7.06736e-03  449.67      
+                       U235_7  U235E  1.70859e-05  449.67      
+                       U238_7  U238E  7.74925e-03  449.67      
+/
+\$output
+l_edit_chi = T
+l_isotxs_macroxs = T
+l_isotxs_ascii = T
+/
+EOF
+$lib2/mcc3.x
+mv output    14.out
+mv output.chi_bg   14.out.chi_bg
+/software/ARC/ISOTXS_Modify.x in=ISOTXS.merged out=ISOTXS.1.merged i=REG_01 n=REG_14
+mv ISOTXS.1.merged    14.ISOTXS
+! ============================================================
+!
+cat>input<<EOF
+\$library
+c_mcclibdir  ="$lib2/lib.mcc.e70" 
+c_pwlibdir   ="$lib2/lib.pw.200.e70","." 
+c_pendflibdir="$lib2/lib.pendf.e70" 
+c_chilibdir  ="$lib1/lib.chimatrix" 
+c_twodantexe ="$lib1/twodant.x" 
+/ 
+\$control 
+     c_group_structure       =ANL1041
+     c_geometry_type         =mixture
+     i_number_region         =1
+     i_scattering_order      =3
+     l_twodant               =F
+     l_pendf                 =T
+     l_buckling_search       =T
+/ 
+\$material 
+!
+! ============================================================
+!                        AFA_6_1_Fuel_St                         
+! ============================================================
+!
+t_composition(:,  1)=  CR50_7  CR50F  1.93405e-04  449.67      
+                       CR52_7  CR52F  3.72967e-03  449.67      
+                       CR53_7  CR53F  4.22916e-04  449.67      
+                       CR54_7  CR54F  1.05271e-04  449.67      
+                       FE54_7  FE54F  8.67237e-04  449.67      
+                       FE56_7  FE56F  1.36137e-02  449.67      
+                       FE57_7  FE57F  3.14390e-04  449.67      
+                       FE58_7  FE58F  4.18396e-05  449.67      
+                       NI58_7  NI58F  1.78402e-03  449.67      
+                       NI60_7  NI60F  6.87210e-04  449.67      
+                       NI61_7  NI61F  2.98714e-05  449.67      
+                       NI62_7  NI62F  9.52461e-05  449.67      
+                       NI64_7  NI64F  2.42567e-05  449.67      
+                       B10__7  B10F  4.78391e-04  449.67      
+                       B11__7  B11F  1.92560e-03  449.67      
+                       C____7  C12F  6.00988e-04  449.67      
+                       BE9__7  BE9F  3.74919e-03  449.67      
+                       O16__7  O16F  1.89417e-02  449.67      
+                       MO1007  MO100F  1.13651e-05  449.67      
+                       MO92_7  MO92F  1.75145e-05  449.67      
+                       MO94_7  MO94F  1.09167e-05  449.67      
+                       MO95_7  MO95F  1.87893e-05  449.67      
+                       MO96_7  MO96F  1.96860e-05  449.67      
+                       MO97_7  MO97F  1.12708e-05  449.67      
+                       MO98_7  MO98F  2.84784e-05  449.67      
+                       NA23_7  NA23F  7.06736e-03  449.67      
+                       PU2397  PU239F  1.41808e-03  449.67      
+                       PU2407  PU240F  1.27341e-04  449.67      
+                       U235_7  U235F  1.33289e-05  449.67      
+                       U238_7  U238F  6.04529e-03  449.67      
+/
+\$output
+l_edit_chi = T
+l_isotxs_macroxs = T
+l_isotxs_ascii = T
+/
+EOF
+$lib2/mcc3.x
+mv output    15.out
+mv output.chi_bg   15.out.chi_bg
+/software/ARC/ISOTXS_Modify.x in=ISOTXS.merged out=ISOTXS.1.merged i=REG_01 n=REG_15
+mv ISOTXS.1.merged    15.ISOTXS
+! ============================================================
+!
+cat>input<<EOF
+\$library
+c_mcclibdir  ="$lib2/lib.mcc.e70" 
+c_pwlibdir   ="$lib2/lib.pw.200.e70","." 
+c_pendflibdir="$lib2/lib.pendf.e70" 
+c_chilibdir  ="$lib1/lib.chimatrix" 
+c_twodantexe ="$lib1/twodant.x" 
+/ 
+\$control 
+     c_group_structure       =ANL1041
+     c_geometry_type         =mixture
+     i_number_region         =1
+     i_scattering_order      =3
+     l_twodant               =F
+     l_pendf                 =T
+     l_buckling_search       =T
+/ 
+\$material 
+!
+! ============================================================
+!                        GA_6_1_Fuel_St                         
+! ============================================================
+!
+t_composition(:,  1)=  BE9__7  BE9H  3.74919e-03  449.67      
+                       O16__7  O16H  2.19785e-02  449.67      
+                       CR50_7  CR50H  1.64165e-04  449.67      
+                       CR52_7  CR52H  3.16578e-03  449.67      
+                       CR53_7  CR53H  3.58977e-04  449.67      
+                       CR54_7  CR54H  8.93553e-05  449.67      
+                       FE54_7  FE54H  7.42716e-04  449.67      
+                       FE56_7  FE56H  1.16590e-02  449.67      
+                       FE57_7  FE57H  2.69249e-04  449.67      
+                       FE58_7  FE58H  3.58321e-05  449.67      
+                       MO1007  MO100H  1.13651e-05  449.67      
+                       MO92_7  MO92H  1.75145e-05  449.67      
+                       MO94_7  MO94H  1.09167e-05  449.67      
+                       MO95_7  MO95H  1.87893e-05  449.67      
+                       MO96_7  MO96H  1.96860e-05  449.67      
+                       MO97_7  MO97H  1.12708e-05  449.67      
+                       MO98_7  MO98H  2.84784e-05  449.67      
+                       NI58_7  NI58H  1.54051e-03  449.67      
+                       NI60_7  NI60H  5.93407e-04  449.67      
+                       NI61_7  NI61H  2.57941e-05  449.67      
+                       NI62_7  NI62H  8.22453e-05  449.67      
+                       NI64_7  NI64H  2.09458e-05  449.67      
+                       NA23_7  NA23H  7.06736e-03  449.67      
+                       PU2397  PU239H  1.79724e-03  449.67      
+                       PU2407  PU240H  1.61390e-04  449.67      
+                       U235_7  U235H  1.57649e-05  449.67      
+                       U238_7  U238H  7.15010e-03  449.67      
+/
+\$output
+l_edit_chi = T
+l_isotxs_macroxs = T
+l_isotxs_ascii = T
+/
+EOF
+$lib2/mcc3.x
+mv output    17.out
+mv output.chi_bg   17.out.chi_bg
+/software/ARC/ISOTXS_Modify.x in=ISOTXS.merged out=ISOTXS.1.merged i=REG_01 n=REG_17
+mv ISOTXS.1.merged    17.ISOTXS
+! ============================================================
+!
+cat>input<<EOF
+\$library
+c_mcclibdir  ="$lib2/lib.mcc.e70" 
+c_pwlibdir   ="$lib2/lib.pw.200.e70","." 
+c_pendflibdir="$lib2/lib.pendf.e70" 
+c_chilibdir  ="$lib1/lib.chimatrix" 
+c_twodantexe ="$lib1/twodant.x" 
+/ 
+\$control 
+     c_group_structure       =ANL1041
+     c_geometry_type         =mixture
+     i_number_region         =1
+     i_scattering_order      =3
+     l_twodant               =F
+     l_pendf                 =T
+     l_buckling_search       =T
+/ 
+\$material 
+!
+! ============================================================
+!                        GA_AFA_6_1_1_Fuel_St                         
+! ============================================================
+!
+t_composition(:,  1)=  CR50_7  CR50I  1.93405e-04  449.67      
+                       CR52_7  CR52I  3.72967e-03  449.67      
+                       CR53_7  CR53I  4.22916e-04  449.67      
+                       CR54_7  CR54I  1.05271e-04  449.67      
+                       FE54_7  FE54I  8.67237e-04  449.67      
+                       FE56_7  FE56I  1.36137e-02  449.67      
+                       FE57_7  FE57I  3.14390e-04  449.67      
+                       FE58_7  FE58I  4.18396e-05  449.67      
+                       NI58_7  NI58I  1.78402e-03  449.67      
+                       NI60_7  NI60I  6.87210e-04  449.67      
+                       NI61_7  NI61I  2.98714e-05  449.67      
+                       NI62_7  NI62I  9.52461e-05  449.67      
+                       NI64_7  NI64I  2.42567e-05  449.67      
+                       B10__7  B10I  4.78391e-04  449.67      
+                       B11__7  B11I  1.92560e-03  449.67      
+                       C____7  C12I  6.00988e-04  449.67      
+                       BE9__7  BE9I  3.74919e-03  449.67      
+                       O16__7  O16I  1.89400e-02  449.67      
+                       MO1007  MO100I  1.13651e-05  449.67      
+                       MO92_7  MO92I  1.75145e-05  449.67      
+                       MO94_7  MO94I  1.09167e-05  449.67      
+                       MO95_7  MO95I  1.87893e-05  449.67      
+                       MO96_7  MO96I  1.96860e-05  449.67      
+                       MO97_7  MO97I  1.12708e-05  449.67      
+                       MO98_7  MO98I  2.84784e-05  449.67      
+                       NA23_7  NA23I  7.06736e-03  449.67      
+                       PU2397  PU239I  1.51362e-03  449.67      
+                       PU2407  PU240I  1.35922e-04  449.67      
+                       U235_7  U235I  1.30991e-05  449.67      
+                       U238_7  U238I  5.94104e-03  449.67      
+/
+\$output
+l_edit_chi = T
+l_isotxs_macroxs = T
+l_isotxs_ascii = T
+/
+EOF
+$lib2/mcc3.x
+mv output    18.out
+mv output.chi_bg   18.out.chi_bg
+/software/ARC/ISOTXS_Modify.x in=ISOTXS.merged out=ISOTXS.1.merged i=REG_01 n=REG_18
+mv ISOTXS.1.merged    18.ISOTXS
+! ============================================================
+!
+cat>input<<EOF
+\$library
+c_mcclibdir  ="$lib2/lib.mcc.e70" 
+c_pwlibdir   ="$lib2/lib.pw.200.e70","." 
+c_pendflibdir="$lib2/lib.pendf.e70" 
+c_chilibdir  ="$lib1/lib.chimatrix" 
+c_twodantexe ="$lib1/twodant.x" 
+/ 
+\$control 
+     c_group_structure       =ANL1041
+     c_geometry_type         =mixture
+     i_number_region         =1
+     i_scattering_order      =3
+     l_twodant               =F
+     l_pendf                 =T
+     l_buckling_search       =T
+/ 
+\$material 
+!
+! ============================================================
+!                        GA_AFA_6_1_2_Fuel_St                         
+! ============================================================
+!
+t_composition(:,  1)=  CR50_7  CR50J  1.93405e-04  449.67      
+                       CR52_7  CR52J  3.72967e-03  449.67      
+                       CR53_7  CR53J  4.22916e-04  449.67      
+                       CR54_7  CR54J  1.05271e-04  449.67      
+                       FE54_7  FE54J  8.67237e-04  449.67      
+                       FE56_7  FE56J  1.36137e-02  449.67      
+                       FE57_7  FE57J  3.14390e-04  449.67      
+                       FE58_7  FE58J  4.18396e-05  449.67      
+                       NI58_7  NI58J  1.78402e-03  449.67      
+                       NI60_7  NI60J  6.87210e-04  449.67      
+                       NI61_7  NI61J  2.98714e-05  449.67      
+                       NI62_7  NI62J  9.52461e-05  449.67      
+                       NI64_7  NI64J  2.42567e-05  449.67      
+                       B10__7  B10J  4.78391e-04  449.67      
+                       B11__7  B11J  1.92560e-03  449.67      
+                       C____7  C12J  6.00988e-04  449.67      
+                       BE9__7  BE9J  3.74919e-03  449.67      
+                       O16__7  O16J  1.89382e-02  449.67      
+                       MO1007  MO100J  1.13651e-05  449.67      
+                       MO92_7  MO92J  1.75145e-05  449.67      
+                       MO94_7  MO94J  1.09167e-05  449.67      
+                       MO95_7  MO95J  1.87893e-05  449.67      
+                       MO96_7  MO96J  1.96860e-05  449.67      
+                       MO97_7  MO97J  1.12708e-05  449.67      
+                       MO98_7  MO98J  2.84784e-05  449.67      
+                       NA23_7  NA23J  7.06736e-03  449.67      
+                       PU2397  PU239J  1.60917e-03  449.67      
+                       PU2407  PU240J  1.44502e-04  449.67      
+                       U235_7  U235J  1.28692e-05  449.67      
+                       U238_7  U238J  5.83679e-03  449.67      
+/
+\$output
+l_edit_chi = T
+l_isotxs_macroxs = T
+l_isotxs_ascii = T
+/
+EOF
+$lib2/mcc3.x
+mv output    19.out
+mv output.chi_bg   19.out.chi_bg
+/software/ARC/ISOTXS_Modify.x in=ISOTXS.merged out=ISOTXS.1.merged i=REG_01 n=REG_19
+mv ISOTXS.1.merged    19.ISOTXS
+! ============================================================
+!
+cat>input<<EOF
+\$library
+c_mcclibdir  ="$lib2/lib.mcc.e70" 
+c_pwlibdir   ="$lib2/lib.pw.200.e70","." 
+c_pendflibdir="$lib2/lib.pendf.e70" 
+c_chilibdir  ="$lib1/lib.chimatrix" 
+c_twodantexe ="$lib1/twodant.x" 
+/ 
+\$control 
+     c_group_structure       =ANL1041
+     c_geometry_type         =mixture
+     i_number_region         =1
+     i_scattering_order      =3
+     l_twodant               =F
+     l_pendf                 =T
+     l_buckling_search       =T
+/ 
+\$material 
+!
+! ============================================================
+!                        SFA_6_1_Fuel_insul                         
+! ============================================================
+!
+t_composition(:,  1)=  CR50_7  CR50L  2.22889e-04  449.67      
+                       CR52_7  CR52L  4.29825e-03  449.67      
+                       CR53_7  CR53L  4.87387e-04  449.67      
+                       CR54_7  CR54L  1.21319e-04  449.67      
+                       FE54_7  FE54L  9.92797e-04  449.67      
+                       FE56_7  FE56L  1.55847e-02  449.67      
+                       FE57_7  FE57L  3.59908e-04  449.67      
+                       FE58_7  FE58L  4.78971e-05  449.67      
+                       NI58_7  NI58L  2.02957e-03  449.67      
+                       NI60_7  NI60L  7.81793e-04  449.67      
+                       NI61_7  NI61L  3.39827e-05  449.67      
+                       NI62_7  NI62L  1.08355e-04  449.67      
+                       NI64_7  NI64L  2.75952e-05  449.67      
+                       BE9__7  BE9L  3.74919e-03  449.67      
+                       O16__7  O16L  1.92819e-02  449.67      
+                       MO1007  MO100L  1.13651e-05  449.67      
+                       MO92_7  MO92L  1.75145e-05  449.67      
+                       MO94_7  MO94L  1.09167e-05  449.67      
+                       MO95_7  MO95L  1.87893e-05  449.67      
+                       MO96_7  MO96L  1.96860e-05  449.67      
+                       MO97_7  MO97L  1.12708e-05  449.67      
+                       MO98_7  MO98L  2.84784e-05  449.67      
+                       NA23_7  NA23L  7.06736e-03  449.67      
+                       U235_7  U235L  1.70859e-05  449.67      
+                       U238_7  U238L  7.74925e-03  449.67      
+/
+\$output
+l_edit_chi = T
+l_isotxs_macroxs = T
+l_isotxs_ascii = T
+/
+EOF
+$lib2/mcc3.x
+mv output    21.out
+mv output.chi_bg   21.out.chi_bg
+/software/ARC/ISOTXS_Modify.x in=ISOTXS.merged out=ISOTXS.1.merged i=REG_01 n=REG_21
+mv ISOTXS.1.merged    21.ISOTXS
+! ============================================================
+!
+cat>input<<EOF
+\$library
+c_mcclibdir  ="$lib2/lib.mcc.e70" 
+c_pwlibdir   ="$lib2/lib.pw.200.e70","." 
+c_pendflibdir="$lib2/lib.pendf.e70" 
+c_chilibdir  ="$lib1/lib.chimatrix" 
+c_twodantexe ="$lib1/twodant.x" 
+/ 
+\$control 
+     c_group_structure       =ANL1041
+     c_geometry_type         =mixture
+     i_number_region         =1
+     i_scattering_order      =3
+     l_twodant               =F
+     l_pendf                 =T
+     l_buckling_search       =T
+/ 
+\$material 
+!
+! ============================================================
+!                        GA_SFA_6_1_1_Fuel_St                         
+! ============================================================
+!
+t_composition(:,  1)=  CR50_7  CR50N  2.22889e-04  449.67      
+                       CR52_7  CR52N  4.29825e-03  449.67      
+                       CR53_7  CR53N  4.87387e-04  449.67      
+                       CR54_7  CR54N  1.21319e-04  449.67      
+                       FE54_7  FE54N  9.92797e-04  449.67      
+                       FE56_7  FE56N  1.55847e-02  449.67      
+                       FE57_7  FE57N  3.59908e-04  449.67      
+                       FE58_7  FE58N  4.78971e-05  449.67      
+                       NI58_7  NI58N  2.02957e-03  449.67      
+                       NI60_7  NI60N  7.81793e-04  449.67      
+                       NI61_7  NI61N  3.39827e-05  449.67      
+                       NI62_7  NI62N  1.08355e-04  449.67      
+                       NI64_7  NI64N  2.75952e-05  449.67      
+                       BE9__7  BE9N  3.74919e-03  449.67      
+                       O16__7  O16N  1.89400e-02  449.67      
+                       MO1007  MO100N  1.13651e-05  449.67      
+                       MO92_7  MO92N  1.75145e-05  449.67      
+                       MO94_7  MO94N  1.09167e-05  449.67      
+                       MO95_7  MO95N  1.87893e-05  449.67      
+                       MO96_7  MO96N  1.96860e-05  449.67      
+                       MO97_7  MO97N  1.12708e-05  449.67      
+                       MO98_7  MO98N  2.84784e-05  449.67      
+                       NA23_7  NA23N  7.06736e-03  449.67      
+                       PU2397  PU239N  1.51362e-03  449.67      
+                       PU2407  PU240N  1.35922e-04  449.67      
+                       U235_7  U235N  1.30991e-05  449.67      
+                       U238_7  U238N  5.94104e-03  449.67      
+/
+\$output
+l_edit_chi = T
+l_isotxs_macroxs = T
+l_isotxs_ascii = T
+/
+EOF
+$lib2/mcc3.x
+mv output    23.out
+mv output.chi_bg   23.out.chi_bg
+/software/ARC/ISOTXS_Modify.x in=ISOTXS.merged out=ISOTXS.1.merged i=REG_01 n=REG_23
+mv ISOTXS.1.merged    23.ISOTXS
+! ============================================================
+!
+cat>input<<EOF
+\$library
+c_mcclibdir  ="$lib2/lib.mcc.e70" 
+c_pwlibdir   ="$lib2/lib.pw.200.e70","." 
+c_pendflibdir="$lib2/lib.pendf.e70" 
+c_chilibdir  ="$lib1/lib.chimatrix" 
+c_twodantexe ="$lib1/twodant.x" 
+/ 
+\$control 
+     c_group_structure       =ANL1041
+     c_geometry_type         =mixture
+     i_number_region         =1
+     i_scattering_order      =3
+     l_twodant               =F
+     l_pendf                 =T
+     l_buckling_search       =T
+/ 
+\$material 
+!
+! ============================================================
+!                        IFA_6_2_1                         
+! ============================================================
+!
+t_composition(:,  1)=  NI58_7  NI58O  2.12980e-02  449.67      
+                       NI60_7  NI60O  8.20408e-03  449.67      
+                       NI61_7  NI61O  3.56604e-04  449.67      
+                       NI62_7  NI62O  1.13707e-03  449.67      
+                       NI64_7  NI64O  2.89577e-04  449.67      
+                       CR50_7  CR50O  1.64165e-04  449.67      
+                       CR52_7  CR52O  3.16578e-03  449.67      
+                       CR53_7  CR53O  3.58977e-04  449.67      
+                       CR54_7  CR54O  8.93553e-05  449.67      
+                       FE54_7  FE54O  7.42716e-04  449.67      
+                       FE56_7  FE56O  1.16590e-02  449.67      
+                       FE57_7  FE57O  2.69249e-04  449.67      
+                       FE58_7  FE58O  3.58321e-05  449.67      
+                       MO1007  MO100O  1.13651e-05  449.67      
+                       MO92_7  MO92O  1.75145e-05  449.67      
+                       MO94_7  MO94O  1.09167e-05  449.67      
+                       MO95_7  MO95O  1.87893e-05  449.67      
+                       MO96_7  MO96O  1.96860e-05  449.67      
+                       MO97_7  MO97O  1.12708e-05  449.67      
+                       MO98_7  MO98O  2.84784e-05  449.67      
+                       NA23_7  NA23O  7.06736e-03  449.67      
+                       U235_7  U235O  6.83434e-06  449.67      
+                       U238_7  U238O  3.09970e-03  449.67      
+                       O16__7  O16O  6.21308e-03  449.67      
+/
+\$output
+l_edit_chi = T
+l_isotxs_macroxs = T
+l_isotxs_ascii = T
+/
+EOF
+$lib2/mcc3.x
+mv output    24.out
+mv output.chi_bg   24.out.chi_bg
+/software/ARC/ISOTXS_Modify.x in=ISOTXS.merged out=ISOTXS.1.merged i=REG_01 n=REG_24
+mv ISOTXS.1.merged    24.ISOTXS
+! ============================================================
+!
+cat>input<<EOF
+\$library
+c_mcclibdir  ="$lib2/lib.mcc.e70" 
+c_pwlibdir   ="$lib2/lib.pw.200.e70","." 
+c_pendflibdir="$lib2/lib.pendf.e70" 
+c_chilibdir  ="$lib1/lib.chimatrix" 
+c_twodantexe ="$lib1/twodant.x" 
+/ 
+\$control 
+     c_group_structure       =ANL1041
+     c_geometry_type         =mixture
+     i_number_region         =1
+     i_scattering_order      =3
+     l_twodant               =F
+     l_pendf                 =T
+     l_buckling_search       =T
+/ 
+\$material 
+!
+! ============================================================
+!                        IFA_6_2_2                         
+! ============================================================
+!
+t_composition(:,  1)=  NI58_7  NI58P  2.12980e-02  449.67      
+                       NI60_7  NI60P  8.20408e-03  449.67      
+                       NI61_7  NI61P  3.56604e-04  449.67      
+                       NI62_7  NI62P  1.13707e-03  449.67      
+                       NI64_7  NI64P  2.89577e-04  449.67      
+                       CR50_7  CR50P  1.64165e-04  449.67      
+                       CR52_7  CR52P  3.16578e-03  449.67      
+                       CR53_7  CR53P  3.58977e-04  449.67      
+                       CR54_7  CR54P  8.93553e-05  449.67      
+                       FE54_7  FE54P  7.42716e-04  449.67      
+                       FE56_7  FE56P  1.16590e-02  449.67      
+                       FE57_7  FE57P  2.69249e-04  449.67      
+                       FE58_7  FE58P  3.58321e-05  449.67      
+                       MO1007  MO100P  1.13651e-05  449.67      
+                       MO92_7  MO92P  1.75145e-05  449.67      
+                       MO94_7  MO94P  1.09167e-05  449.67      
+                       MO95_7  MO95P  1.87893e-05  449.67      
+                       MO96_7  MO96P  1.96860e-05  449.67      
+                       MO97_7  MO97P  1.12708e-05  449.67      
+                       MO98_7  MO98P  2.84784e-05  449.67      
+                       NA23_7  NA23P  7.06736e-03  449.67      
+                       PU2397  PU239P  5.67230e-04  449.67      
+                       PU2407  PU240P  5.09365e-05  449.67      
+                       U235_7  U235P  5.33157e-06  449.67      
+                       U238_7  U238P  2.41812e-03  449.67      
+                       O16__7  O16P  6.07700e-03  449.67      
+/
+\$output
+l_edit_chi = T
+l_isotxs_macroxs = T
+l_isotxs_ascii = T
+/
+EOF
+$lib2/mcc3.x
+mv output    25.out
+mv output.chi_bg   25.out.chi_bg
+/software/ARC/ISOTXS_Modify.x in=ISOTXS.merged out=ISOTXS.1.merged i=REG_01 n=REG_25
+mv ISOTXS.1.merged    25.ISOTXS
+! ============================================================
+!
+cat>input<<EOF
+\$library
+c_mcclibdir  ="$lib2/lib.mcc.e70" 
+c_pwlibdir   ="$lib2/lib.pw.200.e70","." 
+c_pendflibdir="$lib2/lib.pendf.e70" 
+c_chilibdir  ="$lib1/lib.chimatrix" 
+c_twodantexe ="$lib1/twodant.x" 
+/ 
+\$control 
+     c_group_structure       =ANL1041
+     c_geometry_type         =mixture
+     i_number_region         =1
+     i_scattering_order      =3
+     l_twodant               =F
+     l_pendf                 =T
+     l_buckling_search       =T
+/ 
+\$material 
+!
+! ============================================================
+!                        IFA_6_2_3                         
+! ============================================================
+!
+t_composition(:,  1)=  BE9__7  BE9Q  3.74919e-03  449.67      
+                       O16__7  O16Q  2.22523e-02  449.67      
+                       CR50_7  CR50Q  1.64165e-04  449.67      
+                       CR52_7  CR52Q  3.16578e-03  449.67      
+                       CR53_7  CR53Q  3.58977e-04  449.67      
+                       CR54_7  CR54Q  8.93553e-05  449.67      
+                       FE54_7  FE54Q  7.42716e-04  449.67      
+                       FE56_7  FE56Q  1.16590e-02  449.67      
+                       FE57_7  FE57Q  2.69249e-04  449.67      
+                       FE58_7  FE58Q  3.58321e-05  449.67      
+                       MO1007  MO100Q  1.13651e-05  449.67      
+                       MO92_7  MO92Q  1.75145e-05  449.67      
+                       MO94_7  MO94Q  1.09167e-05  449.67      
+                       MO95_7  MO95Q  1.87893e-05  449.67      
+                       MO96_7  MO96Q  1.96860e-05  449.67      
+                       MO97_7  MO97Q  1.12708e-05  449.67      
+                       MO98_7  MO98Q  2.84784e-05  449.67      
+                       NI58_7  NI58Q  1.54051e-03  449.67      
+                       NI60_7  NI60Q  5.93407e-04  449.67      
+                       NI61_7  NI61Q  2.57941e-05  449.67      
+                       NI62_7  NI62Q  8.22453e-05  449.67      
+                       NI64_7  NI64Q  2.09458e-05  449.67      
+                       NA23_7  NA23Q  7.06736e-03  449.67      
+                       PU2397  PU239Q  5.67230e-04  449.67      
+                       PU2407  PU240Q  5.09365e-05  449.67      
+                       U235_7  U235Q  1.90003e-05  449.67      
+                       U238_7  U238Q  8.61752e-03  449.67      
+/
+\$output
+l_edit_chi = T
+l_isotxs_macroxs = T
+l_isotxs_ascii = T
+/
+EOF
+$lib2/mcc3.x
+mv output    26.out
+mv output.chi_bg   26.out.chi_bg
+/software/ARC/ISOTXS_Modify.x in=ISOTXS.merged out=ISOTXS.1.merged i=REG_01 n=REG_26
+mv ISOTXS.1.merged    26.ISOTXS
+! ============================================================
+!
+cat>input<<EOF
+\$library
+c_mcclibdir  ="$lib2/lib.mcc.e70" 
+c_pwlibdir   ="$lib2/lib.pw.200.e70","." 
+c_pendflibdir="$lib2/lib.pendf.e70" 
+c_chilibdir  ="$lib1/lib.chimatrix" 
+c_twodantexe ="$lib1/twodant.x" 
+/ 
+\$control 
+     c_group_structure       =ANL1041
+     c_geometry_type         =mixture
+     i_number_region         =1
+     i_scattering_order      =3
+     l_twodant               =F
+     l_pendf                 =T
+     l_buckling_search       =T
+/ 
+\$material 
+!
+! ============================================================
+!                        IFA_6_2_5                         
+! ============================================================
+!
+t_composition(:,  1)=  BE9__7  BE9R  3.74919e-03  449.67      
+                       O16__7  O16R  2.21163e-02  449.67      
+                       CR50_7  CR50R  1.64165e-04  449.67      
+                       CR52_7  CR52R  3.16578e-03  449.67      
+                       CR53_7  CR53R  3.58977e-04  449.67      
+                       CR54_7  CR54R  8.93553e-05  449.67      
+                       FE54_7  FE54R  7.42716e-04  449.67      
+                       FE56_7  FE56R  1.16590e-02  449.67      
+                       FE57_7  FE57R  2.69249e-04  449.67      
+                       FE58_7  FE58R  3.58321e-05  449.67      
+                       MO1007  MO100R  1.13651e-05  449.67      
+                       MO92_7  MO92R  1.75145e-05  449.67      
+                       MO94_7  MO94R  1.09167e-05  449.67      
+                       MO95_7  MO95R  1.87893e-05  449.67      
+                       MO96_7  MO96R  1.96860e-05  449.67      
+                       MO97_7  MO97R  1.12708e-05  449.67      
+                       MO98_7  MO98R  2.84784e-05  449.67      
+                       NI58_7  NI58R  1.54051e-03  449.67      
+                       NI60_7  NI60R  5.93407e-04  449.67      
+                       NI61_7  NI61R  2.57941e-05  449.67      
+                       NI62_7  NI62R  8.22453e-05  449.67      
+                       NI64_7  NI64R  2.09458e-05  449.67      
+                       NA23_7  NA23R  7.06736e-03  449.67      
+                       U235_7  U235R  1.74975e-05  449.67      
+                       U238_7  U238R  7.93593e-03  449.67      
+                       PU2397  PU239R  1.13446e-03  449.67      
+                       PU2407  PU240R  1.01873e-04  449.67      
+/
+\$output
+l_edit_chi = T
+l_isotxs_macroxs = T
+l_isotxs_ascii = T
+/
+EOF
+$lib2/mcc3.x
+mv output    27.out
+mv output.chi_bg   27.out.chi_bg
+/software/ARC/ISOTXS_Modify.x in=ISOTXS.merged out=ISOTXS.1.merged i=REG_01 n=REG_27
+mv ISOTXS.1.merged    27.ISOTXS
+! ============================================================
+!
+cat>input<<EOF
+\$library
+c_mcclibdir  ="$lib2/lib.mcc.e70" 
+c_pwlibdir   ="$lib2/lib.pw.200.e70","." 
+c_pendflibdir="$lib2/lib.pendf.e70" 
+c_chilibdir  ="$lib1/lib.chimatrix" 
+c_twodantexe ="$lib1/twodant.x" 
+/ 
+\$control 
+     c_group_structure       =ANL1041
+     c_geometry_type         =mixture
+     i_number_region         =1
+     i_scattering_order      =3
+     l_twodant               =F
+     l_pendf                 =T
+     l_buckling_search       =T
+/ 
+\$material 
+!
+! ============================================================
+!                        IFA_6_2_6                         
+! ============================================================
+!
+t_composition(:,  1)=  BE9__7  BE9S  3.74919e-03  449.67      
+                       O16__7  O16S  1.59032e-02  449.67      
+                       CR50_7  CR50S  1.64165e-04  449.67      
+                       CR52_7  CR52S  3.16578e-03  449.67      
+                       CR53_7  CR53S  3.58977e-04  449.67      
+                       CR54_7  CR54S  8.93553e-05  449.67      
+                       FE54_7  FE54S  7.42716e-04  449.67      
+                       FE56_7  FE56S  1.16590e-02  449.67      
+                       FE57_7  FE57S  2.69249e-04  449.67      
+                       FE58_7  FE58S  3.58321e-05  449.67      
+                       MO1007  MO100S  1.13651e-05  449.67      
+                       MO92_7  MO92S  1.75145e-05  449.67      
+                       MO94_7  MO94S  1.09167e-05  449.67      
+                       MO95_7  MO95S  1.87893e-05  449.67      
+                       MO96_7  MO96S  1.96860e-05  449.67      
+                       MO97_7  MO97S  1.12708e-05  449.67      
+                       MO98_7  MO98S  2.84784e-05  449.67      
+                       NI58_7  NI58S  1.54051e-03  449.67      
+                       NI60_7  NI60S  5.93407e-04  449.67      
+                       NI61_7  NI61S  2.57941e-05  449.67      
+                       NI62_7  NI62S  8.22453e-05  449.67      
+                       NI64_7  NI64S  2.09458e-05  449.67      
+                       NA23_7  NA23S  7.06736e-03  449.67      
+                       PU2397  PU239S  1.13446e-03  449.67      
+                       PU2407  PU240S  1.01873e-04  449.67      
+                       U235_7  U235S  1.06631e-05  449.67      
+                       U238_7  U238S  4.83623e-03  449.67      
+/
+\$output
+l_edit_chi = T
+l_isotxs_macroxs = T
+l_isotxs_ascii = T
+/
+EOF
+$lib2/mcc3.x
+mv output    28.out
+mv output.chi_bg   28.out.chi_bg
+/software/ARC/ISOTXS_Modify.x in=ISOTXS.merged out=ISOTXS.1.merged i=REG_01 n=REG_28
+mv ISOTXS.1.merged    28.ISOTXS
+! ============================================================
+!
+cat>input<<EOF
+\$library
+c_mcclibdir  ="$lib2/lib.mcc.e70" 
+c_pwlibdir   ="$lib2/lib.pw.200.e70","." 
+c_pendflibdir="$lib2/lib.pendf.e70" 
+c_chilibdir  ="$lib1/lib.chimatrix" 
+c_twodantexe ="$lib1/twodant.x" 
+/ 
+\$control 
+     c_group_structure       =ANL1041
+     c_geometry_type         =mixture
+     i_number_region         =1
+     i_scattering_order      =3
+     l_twodant               =F
+     l_pendf                 =T
+     l_buckling_search       =T
+/ 
+\$material 
+!
+! ============================================================
+!                        IFA_6_2_7                         
+! ============================================================
+!
+t_composition(:,  1)=  BE9__7  BE9T  3.74919e-03  449.67      
+                       O16__7  O16T  2.21163e-02  449.67      
+                       CR50_7  CR50T  1.64165e-04  449.67      
+                       CR52_7  CR52T  3.16578e-03  449.67      
+                       CR53_7  CR53T  3.58977e-04  449.67      
+                       CR54_7  CR54T  8.93553e-05  449.67      
+                       FE54_7  FE54T  7.42716e-04  449.67      
+                       FE56_7  FE56T  1.16590e-02  449.67      
+                       FE57_7  FE57T  2.69249e-04  449.67      
+                       FE58_7  FE58T  3.58321e-05  449.67      
+                       MO1007  MO100T  1.13651e-05  449.67      
+                       MO92_7  MO92T  1.75145e-05  449.67      
+                       MO94_7  MO94T  1.09167e-05  449.67      
+                       MO95_7  MO95T  1.87893e-05  449.67      
+                       MO96_7  MO96T  1.96860e-05  449.67      
+                       MO97_7  MO97T  1.12708e-05  449.67      
+                       MO98_7  MO98T  2.84784e-05  449.67      
+                       NI58_7  NI58T  1.54051e-03  449.67      
+                       NI60_7  NI60T  5.93407e-04  449.67      
+                       NI61_7  NI61T  2.57941e-05  449.67      
+                       NI62_7  NI62T  8.22453e-05  449.67      
+                       NI64_7  NI64T  2.09458e-05  449.67      
+                       NA23_7  NA23T  7.06736e-03  449.67      
+                       U235_7  U235T  1.74975e-05  449.67      
+                       U238_7  U238T  7.93593e-03  449.67      
+                       PU2397  PU239T  1.13446e-03  449.67      
+                       PU2407  PU240T  1.01873e-04  449.67      
+/
+\$output
+l_edit_chi = T
+l_isotxs_macroxs = T
+l_isotxs_ascii = T
+/
+EOF
+$lib2/mcc3.x
+mv output    29.out
+mv output.chi_bg   29.out.chi_bg
+/software/ARC/ISOTXS_Modify.x in=ISOTXS.merged out=ISOTXS.1.merged i=REG_01 n=REG_29
+mv ISOTXS.1.merged    29.ISOTXS
+! ============================================================
+!
+cat>input<<EOF
+\$library
+c_mcclibdir  ="$lib2/lib.mcc.e70" 
+c_pwlibdir   ="$lib2/lib.pw.200.e70","." 
+c_pendflibdir="$lib2/lib.pendf.e70" 
+c_chilibdir  ="$lib1/lib.chimatrix" 
+c_twodantexe ="$lib1/twodant.x" 
+/ 
+\$control 
+     c_group_structure       =ANL1041
+     c_geometry_type         =mixture
+     i_number_region         =1
+     i_scattering_order      =3
+     l_twodant               =F
+     l_pendf                 =T
+     l_buckling_search       =T
+/ 
+\$material 
+!
+! ============================================================
+!                        IFA_6_2_9                         
+! ============================================================
+!
+t_composition(:,  1)=  BE9__7  BE9U  3.74919e-03  449.67      
+                       O16__7  O16U  2.18132e-02  449.67      
+                       CR50_7  CR50U  1.64165e-04  449.67      
+                       CR52_7  CR52U  3.16578e-03  449.67      
+                       CR53_7  CR53U  3.58977e-04  449.67      
+                       CR54_7  CR54U  8.93553e-05  449.67      
+                       FE54_7  FE54U  7.42716e-04  449.67      
+                       FE56_7  FE56U  1.16590e-02  449.67      
+                       FE57_7  FE57U  2.69249e-04  449.67      
+                       FE58_7  FE58U  3.58321e-05  449.67      
+                       MO1007  MO100U  1.13651e-05  449.67      
+                       MO92_7  MO92U  1.75145e-05  449.67      
+                       MO94_7  MO94U  1.09167e-05  449.67      
+                       MO95_7  MO95U  1.87893e-05  449.67      
+                       MO96_7  MO96U  1.96860e-05  449.67      
+                       MO97_7  MO97U  1.12708e-05  449.67      
+                       MO98_7  MO98U  2.84784e-05  449.67      
+                       NI58_7  NI58U  1.54051e-03  449.67      
+                       NI60_7  NI60U  5.93407e-04  449.67      
+                       NI61_7  NI61U  2.57941e-05  449.67      
+                       NI62_7  NI62U  8.22453e-05  449.67      
+                       NI64_7  NI64U  2.09458e-05  449.67      
+                       NA23_7  NA23U  7.06736e-03  449.67      
+                       PU2397  PU239U  1.68611e-03  449.67      
+                       PU2407  PU240U  1.51410e-04  449.67      
+                       U235_7  U235U  1.58482e-05  449.67      
+                       U238_7  U238U  7.18792e-03  449.67      
+/
+\$output
+l_edit_chi = T
+l_isotxs_macroxs = T
+l_isotxs_ascii = T
+/
+EOF
+$lib2/mcc3.x
+mv output    30.out
+mv output.chi_bg   30.out.chi_bg
+/software/ARC/ISOTXS_Modify.x in=ISOTXS.merged out=ISOTXS.1.merged i=REG_01 n=REG_30
+mv ISOTXS.1.merged    30.ISOTXS
+! ============================================================
+!
+cat>input<<EOF
+\$library
+c_mcclibdir  ="$lib2/lib.mcc.e70" 
+c_pwlibdir   ="$lib2/lib.pw.200.e70","." 
+c_pendflibdir="$lib2/lib.pendf.e70" 
+c_chilibdir  ="$lib1/lib.chimatrix" 
+c_twodantexe ="$lib1/twodant.x" 
+/ 
+\$control 
+     c_group_structure       =ANL1041
+     c_geometry_type         =mixture
+     i_number_region         =1
+     i_scattering_order      =3
+     l_twodant               =F
+     l_pendf                 =T
+     l_buckling_search       =T
+/ 
+\$material 
+!
+! ============================================================
+!                        IFA_6_2_10                         
+! ============================================================
+!
+t_composition(:,  1)=  BE9__7  BE9V  3.74919e-03  449.67      
+                       O16__7  O16V  2.20854e-02  449.67      
+                       CR50_7  CR50V  1.64165e-04  449.67      
+                       CR52_7  CR52V  3.16578e-03  449.67      
+                       CR53_7  CR53V  3.58977e-04  449.67      
+                       CR54_7  CR54V  8.93553e-05  449.67      
+                       FE54_7  FE54V  7.42716e-04  449.67      
+                       FE56_7  FE56V  1.16590e-02  449.67      
+                       FE57_7  FE57V  2.69249e-04  449.67      
+                       FE58_7  FE58V  3.58321e-05  449.67      
+                       MO1007  MO100V  1.13651e-05  449.67      
+                       MO92_7  MO92V  1.75145e-05  449.67      
+                       MO94_7  MO94V  1.09167e-05  449.67      
+                       MO95_7  MO95V  1.87893e-05  449.67      
+                       MO96_7  MO96V  1.96860e-05  449.67      
+                       MO97_7  MO97V  1.12708e-05  449.67      
+                       MO98_7  MO98V  2.84784e-05  449.67      
+                       NI58_7  NI58V  1.54051e-03  449.67      
+                       NI60_7  NI60V  5.93407e-04  449.67      
+                       NI61_7  NI61V  2.57941e-05  449.67      
+                       NI62_7  NI62V  8.22453e-05  449.67      
+                       NI64_7  NI64V  2.09458e-05  449.67      
+                       NA23_7  NA23V  7.06736e-03  449.67      
+                       PU2397  PU239V  5.51646e-04  449.67      
+                       PU2407  PU240V  4.95370e-05  449.67      
+                       U235_7  U235V  1.88538e-05  449.67      
+                       U238_7  U238V  8.55108e-03  449.67      
+/
+\$output
+l_edit_chi = T
+l_isotxs_macroxs = T
+l_isotxs_ascii = T
+/
+EOF
+$lib2/mcc3.x
+mv output    31.out
+mv output.chi_bg   31.out.chi_bg
+/software/ARC/ISOTXS_Modify.x in=ISOTXS.merged out=ISOTXS.1.merged i=REG_01 n=REG_31
+mv ISOTXS.1.merged    31.ISOTXS
+! ============================================================
+!
+cat>input<<EOF
+\$library
+c_mcclibdir  ="$lib2/lib.mcc.e70" 
+c_pwlibdir   ="$lib2/lib.pw.200.e70","." 
+c_pendflibdir="$lib2/lib.pendf.e70" 
+c_chilibdir  ="$lib1/lib.chimatrix" 
+c_twodantexe ="$lib1/twodant.x" 
+/ 
+\$control 
+     c_group_structure       =ANL1041
+     c_geometry_type         =mixture
+     i_number_region         =1
+     i_scattering_order      =3
+     l_twodant               =F
+     l_pendf                 =T
+     l_buckling_search       =T
+/ 
+\$material 
+!
+! ============================================================
+!                        IFA_6_2_11                         
+! ============================================================
+!
+t_composition(:,  1)=  BE9__7  BE9W  3.74919e-03  449.67      
+                       O16__7  O16W  9.65923e-03  449.67      
+                       CR50_7  CR50W  1.64165e-04  449.67      
+                       CR52_7  CR52W  3.16578e-03  449.67      
+                       CR53_7  CR53W  3.58977e-04  449.67      
+                       CR54_7  CR54W  8.93553e-05  449.67      
+                       FE54_7  FE54W  7.42716e-04  449.67      
+                       FE56_7  FE56W  1.16590e-02  449.67      
+                       FE57_7  FE57W  2.69249e-04  449.67      
+                       FE58_7  FE58W  3.58321e-05  449.67      
+                       MO1007  MO100W  1.13651e-05  449.67      
+                       MO92_7  MO92W  1.75145e-05  449.67      
+                       MO94_7  MO94W  1.09167e-05  449.67      
+                       MO95_7  MO95W  1.87893e-05  449.67      
+                       MO96_7  MO96W  1.96860e-05  449.67      
+                       MO97_7  MO97W  1.12708e-05  449.67      
+                       MO98_7  MO98W  2.84784e-05  449.67      
+                       NI58_7  NI58W  1.54051e-03  449.67      
+                       NI60_7  NI60W  5.93407e-04  449.67      
+                       NI61_7  NI61W  2.57941e-05  449.67      
+                       NI62_7  NI62W  8.22453e-05  449.67      
+                       NI64_7  NI64W  2.09458e-05  449.67      
+                       NA23_7  NA23W  7.06736e-03  449.67      
+                       PU2397  PU239W  5.51646e-04  449.67      
+                       PU2407  PU240W  4.95370e-05  449.67      
+                       U235_7  U235W  5.18510e-06  449.67      
+                       U238_7  U238W  2.35168e-03  449.67      
+/
+\$output
+l_edit_chi = T
+l_isotxs_macroxs = T
+l_isotxs_ascii = T
+/
+EOF
+$lib2/mcc3.x
+mv output    32.out
+mv output.chi_bg   32.out.chi_bg
+/software/ARC/ISOTXS_Modify.x in=ISOTXS.merged out=ISOTXS.1.merged i=REG_01 n=REG_32
+mv ISOTXS.1.merged    32.ISOTXS
+! ============================================================
+!
+cat>input<<EOF
+\$library
+c_mcclibdir  ="$lib2/lib.mcc.e70" 
+c_pwlibdir   ="$lib2/lib.pw.200.e70","." 
+c_pendflibdir="$lib2/lib.pendf.e70" 
+c_chilibdir  ="$lib1/lib.chimatrix" 
+c_twodantexe ="$lib1/twodant.x" 
+/ 
+\$control 
+     c_group_structure       =ANL1041
+     c_geometry_type         =mixture
+     i_number_region         =1
+     i_scattering_order      =3
+     l_twodant               =F
+     l_pendf                 =T
+     l_buckling_search       =T
+/ 
+\$material 
+!
+! ============================================================
+!                        IFA_6_2_12                         
+! ============================================================
+!
+t_composition(:,  1)=  BE9__7  BE9X  3.74919e-03  449.67      
+                       O16__7  O16X  2.20854e-02  449.67      
+                       CR50_7  CR50X  1.64165e-04  449.67      
+                       CR52_7  CR52X  3.16578e-03  449.67      
+                       CR53_7  CR53X  3.58977e-04  449.67      
+                       CR54_7  CR54X  8.93553e-05  449.67      
+                       FE54_7  FE54X  7.42716e-04  449.67      
+                       FE56_7  FE56X  1.16590e-02  449.67      
+                       FE57_7  FE57X  2.69249e-04  449.67      
+                       FE58_7  FE58X  3.58321e-05  449.67      
+                       MO1007  MO100X  1.13651e-05  449.67      
+                       MO92_7  MO92X  1.75145e-05  449.67      
+                       MO94_7  MO94X  1.09167e-05  449.67      
+                       MO95_7  MO95X  1.87893e-05  449.67      
+                       MO96_7  MO96X  1.96860e-05  449.67      
+                       MO97_7  MO97X  1.12708e-05  449.67      
+                       MO98_7  MO98X  2.84784e-05  449.67      
+                       NI58_7  NI58X  1.54051e-03  449.67      
+                       NI60_7  NI60X  5.93407e-04  449.67      
+                       NI61_7  NI61X  2.57941e-05  449.67      
+                       NI62_7  NI62X  8.22453e-05  449.67      
+                       NI64_7  NI64X  2.09458e-05  449.67      
+                       NA23_7  NA23X  7.06736e-03  449.67      
+                       PU2397  PU239X  5.51646e-04  449.67      
+                       PU2407  PU240X  4.95370e-05  449.67      
+                       U235_7  U235X  1.88538e-05  449.67      
+                       U238_7  U238X  8.55108e-03  449.67      
+/
+\$output
+l_edit_chi = T
+l_isotxs_macroxs = T
+l_isotxs_ascii = T
+/
+EOF
+$lib2/mcc3.x
+mv output    33.out
+mv output.chi_bg   33.out.chi_bg
+/software/ARC/ISOTXS_Modify.x in=ISOTXS.merged out=ISOTXS.1.merged i=REG_01 n=REG_33
+mv ISOTXS.1.merged    33.ISOTXS
+! ============================================================
+!
+cat>input<<EOF
+\$library
+c_mcclibdir  ="$lib2/lib.mcc.e70" 
+c_pwlibdir   ="$lib2/lib.pw.200.e70","." 
+c_pendflibdir="$lib2/lib.pendf.e70" 
+c_chilibdir  ="$lib1/lib.chimatrix" 
+c_twodantexe ="$lib1/twodant.x" 
+/ 
+\$control 
+     c_group_structure       =ANL1041
+     c_geometry_type         =mixture
+     i_number_region         =1
+     i_scattering_order      =3
+     l_twodant               =F
+     l_pendf                 =T
+     l_buckling_search       =T
+/ 
+\$material 
+!
+! ============================================================
+!                        IFA_6_2_13                         
+! ============================================================
+!
+t_composition(:,  1)=  BE9__7  BE9Y  3.74919e-03  449.67      
+                       O16__7  O16Y  2.18132e-02  449.67      
+                       CR50_7  CR50Y  1.64165e-04  449.67      
+                       CR52_7  CR52Y  3.16578e-03  449.67      
+                       CR53_7  CR53Y  3.58977e-04  449.67      
+                       CR54_7  CR54Y  8.93553e-05  449.67      
+                       FE54_7  FE54Y  7.42716e-04  449.67      
+                       FE56_7  FE56Y  1.16590e-02  449.67      
+                       FE57_7  FE57Y  2.69249e-04  449.67      
+                       FE58_7  FE58Y  3.58321e-05  449.67      
+                       MO1007  MO100Y  1.13651e-05  449.67      
+                       MO92_7  MO92Y  1.75145e-05  449.67      
+                       MO94_7  MO94Y  1.09167e-05  449.67      
+                       MO95_7  MO95Y  1.87893e-05  449.67      
+                       MO96_7  MO96Y  1.96860e-05  449.67      
+                       MO97_7  MO97Y  1.12708e-05  449.67      
+                       MO98_7  MO98Y  2.84784e-05  449.67      
+                       NI58_7  NI58Y  1.54051e-03  449.67      
+                       NI60_7  NI60Y  5.93407e-04  449.67      
+                       NI61_7  NI61Y  2.57941e-05  449.67      
+                       NI62_7  NI62Y  8.22453e-05  449.67      
+                       NI64_7  NI64Y  2.09458e-05  449.67      
+                       NA23_7  NA23Y  7.06736e-03  449.67      
+                       PU2397  PU239Y  1.68611e-03  449.67      
+                       PU2407  PU240Y  1.51410e-04  449.67      
+                       U235_7  U235Y  1.58482e-05  449.67      
+                       U238_7  U238Y  7.18792e-03  449.67      
+/
+\$output
+l_edit_chi = T
+l_isotxs_macroxs = T
+l_isotxs_ascii = T
+/
+EOF
+$lib2/mcc3.x
+mv output    34.out
+mv output.chi_bg   34.out.chi_bg
+/software/ARC/ISOTXS_Modify.x in=ISOTXS.merged out=ISOTXS.1.merged i=REG_01 n=REG_34
+mv ISOTXS.1.merged    34.ISOTXS
+! ============================================================
+!
+cat>input<<EOF
+\$library
+c_mcclibdir  ="$lib2/lib.mcc.e70" 
+c_pwlibdir   ="$lib2/lib.pw.200.e70","." 
+c_pendflibdir="$lib2/lib.pendf.e70" 
+c_chilibdir  ="$lib1/lib.chimatrix" 
+c_twodantexe ="$lib1/twodant.x" 
+/ 
+\$control 
+     c_group_structure       =ANL1041
+     c_geometry_type         =mixture
+     i_number_region         =1
+     i_scattering_order      =3
+     l_twodant               =F
+     l_pendf                 =T
+     l_buckling_search       =T
+/ 
+\$material 
+!
+! ============================================================
+!                        IFA_6_2_14                         
+! ============================================================
+!
+t_composition(:,  1)=  BE9__7  BE9Z  3.74919e-03  449.67      
+                       O16__7  O16Z  2.18132e-02  449.67      
+                       CR50_7  CR50Z  1.64165e-04  449.67      
+                       CR52_7  CR52Z  3.16578e-03  449.67      
+                       CR53_7  CR53Z  3.58977e-04  449.67      
+                       CR54_7  CR54Z  8.93553e-05  449.67      
+                       FE54_7  FE54Z  7.42716e-04  449.67      
+                       FE56_7  FE56Z  1.16590e-02  449.67      
+                       FE57_7  FE57Z  2.69249e-04  449.67      
+                       FE58_7  FE58Z  3.58321e-05  449.67      
+                       MO1007  MO100Z  1.13651e-05  449.67      
+                       MO92_7  MO92Z  1.75145e-05  449.67      
+                       MO94_7  MO94Z  1.09167e-05  449.67      
+                       MO95_7  MO95Z  1.87893e-05  449.67      
+                       MO96_7  MO96Z  1.96860e-05  449.67      
+                       MO97_7  MO97Z  1.12708e-05  449.67      
+                       MO98_7  MO98Z  2.84784e-05  449.67      
+                       NI58_7  NI58Z  1.54051e-03  449.67      
+                       NI60_7  NI60Z  5.93407e-04  449.67      
+                       NI61_7  NI61Z  2.57941e-05  449.67      
+                       NI62_7  NI62Z  8.22453e-05  449.67      
+                       NI64_7  NI64Z  2.09458e-05  449.67      
+                       NA23_7  NA23Z  7.06736e-03  449.67      
+                       PU2397  PU239Z  1.68611e-03  449.67      
+                       PU2407  PU240Z  1.51410e-04  449.67      
+                       U235_7  U235Z  1.58482e-05  449.67      
+                       U238_7  U238Z  7.18792e-03  449.67      
+/
+\$output
+l_edit_chi = T
+l_isotxs_macroxs = T
+l_isotxs_ascii = T
+/
+EOF
+$lib2/mcc3.x
+mv output    35.out
+mv output.chi_bg   35.out.chi_bg
+/software/ARC/ISOTXS_Modify.x in=ISOTXS.merged out=ISOTXS.1.merged i=REG_01 n=REG_35
+mv ISOTXS.1.merged    35.ISOTXS
+! ============================================================
+!
+cat>input<<EOF
+\$library
+c_mcclibdir  ="$lib2/lib.mcc.e70" 
+c_pwlibdir   ="$lib2/lib.pw.200.e70","." 
+c_pendflibdir="$lib2/lib.pendf.e70" 
+c_chilibdir  ="$lib1/lib.chimatrix" 
+c_twodantexe ="$lib1/twodant.x" 
+/ 
+\$control 
+     c_group_structure       =ANL1041
+     c_geometry_type         =mixture
+     i_number_region         =1
+     i_scattering_order      =3
+     l_twodant               =F
+     l_pendf                 =T
+     l_buckling_search       =T
+/ 
+\$material 
+!
+! ============================================================
+!                        IFA_6_2_15                         
+! ============================================================
+!
+t_composition(:,  1)=  BE9__7  BE9[  3.74919e-03  449.67      
+                       O16__7  O16[  1.59032e-02  449.67      
+                       CR50_7  CR50[  1.64165e-04  449.67      
+                       CR52_7  CR52[  3.16578e-03  449.67      
+                       CR53_7  CR53[  3.58977e-04  449.67      
+                       CR54_7  CR54[  8.93553e-05  449.67      
+                       FE54_7  FE54[  7.42716e-04  449.67      
+                       FE56_7  FE56[  1.16590e-02  449.67      
+                       FE57_7  FE57[  2.69249e-04  449.67      
+                       FE58_7  FE58[  3.58321e-05  449.67      
+                       MO1007  MO100[  1.13651e-05  449.67      
+                       MO92_7  MO92[  1.75145e-05  449.67      
+                       MO94_7  MO94[  1.09167e-05  449.67      
+                       MO95_7  MO95[  1.87893e-05  449.67      
+                       MO96_7  MO96[  1.96860e-05  449.67      
+                       MO97_7  MO97[  1.12708e-05  449.67      
+                       MO98_7  MO98[  2.84784e-05  449.67      
+                       NI58_7  NI58[  1.54051e-03  449.67      
+                       NI60_7  NI60[  5.93407e-04  449.67      
+                       NI61_7  NI61[  2.57941e-05  449.67      
+                       NI62_7  NI62[  8.22453e-05  449.67      
+                       NI64_7  NI64[  2.09458e-05  449.67      
+                       NA23_7  NA23[  7.06736e-03  449.67      
+                       PU2397  PU239[  1.13446e-03  449.67      
+                       PU2407  PU240[  1.01873e-04  449.67      
+                       U235_7  U235[  1.06631e-05  449.67      
+                       U238_7  U238[  4.83623e-03  449.67      
+/
+\$output
+l_edit_chi = T
+l_isotxs_macroxs = T
+l_isotxs_ascii = T
+/
+EOF
+$lib2/mcc3.x
+mv output    36.out
+mv output.chi_bg   36.out.chi_bg
+/software/ARC/ISOTXS_Modify.x in=ISOTXS.merged out=ISOTXS.1.merged i=REG_01 n=REG_36
+mv ISOTXS.1.merged    36.ISOTXS
+! ============================================================
+!
+cat>input<<EOF
+\$library
+c_mcclibdir  ="$lib2/lib.mcc.e70" 
+c_pwlibdir   ="$lib2/lib.pw.200.e70","." 
+c_pendflibdir="$lib2/lib.pendf.e70" 
+c_chilibdir  ="$lib1/lib.chimatrix" 
+c_twodantexe ="$lib1/twodant.x" 
+/ 
+\$control 
+     c_group_structure       =ANL1041
+     c_geometry_type         =mixture
+     i_number_region         =1
+     i_scattering_order      =3
+     l_twodant               =F
+     l_pendf                 =T
+     l_buckling_search       =T
+/ 
+\$material 
+!
+! ============================================================
+!                        IFA_6_2_16                         
+! ============================================================
+!
+t_composition(:,  1)=  BE9__7  BE9\  3.74919e-03  449.67      
+                       O16__7  O16\  2.21163e-02  449.67      
+                       CR50_7  CR50\  1.64165e-04  449.67      
+                       CR52_7  CR52\  3.16578e-03  449.67      
+                       CR53_7  CR53\  3.58977e-04  449.67      
+                       CR54_7  CR54\  8.93553e-05  449.67      
+                       FE54_7  FE54\  7.42716e-04  449.67      
+                       FE56_7  FE56\  1.16590e-02  449.67      
+                       FE57_7  FE57\  2.69249e-04  449.67      
+                       FE58_7  FE58\  3.58321e-05  449.67      
+                       MO1007  MO100\  1.13651e-05  449.67      
+                       MO92_7  MO92\  1.75145e-05  449.67      
+                       MO94_7  MO94\  1.09167e-05  449.67      
+                       MO95_7  MO95\  1.87893e-05  449.67      
+                       MO96_7  MO96\  1.96860e-05  449.67      
+                       MO97_7  MO97\  1.12708e-05  449.67      
+                       MO98_7  MO98\  2.84784e-05  449.67      
+                       NI58_7  NI58\  1.54051e-03  449.67      
+                       NI60_7  NI60\  5.93407e-04  449.67      
+                       NI61_7  NI61\  2.57941e-05  449.67      
+                       NI62_7  NI62\  8.22453e-05  449.67      
+                       NI64_7  NI64\  2.09458e-05  449.67      
+                       NA23_7  NA23\  7.06736e-03  449.67      
+                       U235_7  U235\  1.74975e-05  449.67      
+                       U238_7  U238\  7.93593e-03  449.67      
+                       PU2397  PU239\  1.13446e-03  449.67      
+                       PU2407  PU240\  1.01873e-04  449.67      
+/
+\$output
+l_edit_chi = T
+l_isotxs_macroxs = T
+l_isotxs_ascii = T
+/
+EOF
+$lib2/mcc3.x
+mv output    37.out
+mv output.chi_bg   37.out.chi_bg
+/software/ARC/ISOTXS_Modify.x in=ISOTXS.merged out=ISOTXS.1.merged i=REG_01 n=REG_37
+mv ISOTXS.1.merged    37.ISOTXS
+! ============================================================
+!
+cat>input<<EOF
+\$library
+c_mcclibdir  ="$lib2/lib.mcc.e70" 
+c_pwlibdir   ="$lib2/lib.pw.200.e70","." 
+c_pendflibdir="$lib2/lib.pendf.e70" 
+c_chilibdir  ="$lib1/lib.chimatrix" 
+c_twodantexe ="$lib1/twodant.x" 
+/ 
+\$control 
+     c_group_structure       =ANL1041
+     c_geometry_type         =mixture
+     i_number_region         =1
+     i_scattering_order      =3
+     l_twodant               =F
+     l_pendf                 =T
+     l_buckling_search       =T
+/ 
+\$material 
+!
+! ============================================================
+!                        IFA_6_2_18                         
+! ============================================================
+!
+t_composition(:,  1)=  BE9__7  BE9]  3.74919e-03  449.67      
+                       O16__7  O16]  2.18132e-02  449.67      
+                       CR50_7  CR50]  1.64165e-04  449.67      
+                       CR52_7  CR52]  3.16578e-03  449.67      
+                       CR53_7  CR53]  3.58977e-04  449.67      
+                       CR54_7  CR54]  8.93553e-05  449.67      
+                       FE54_7  FE54]  7.42716e-04  449.67      
+                       FE56_7  FE56]  1.16590e-02  449.67      
+                       FE57_7  FE57]  2.69249e-04  449.67      
+                       FE58_7  FE58]  3.58321e-05  449.67      
+                       MO1007  MO100]  1.13651e-05  449.67      
+                       MO92_7  MO92]  1.75145e-05  449.67      
+                       MO94_7  MO94]  1.09167e-05  449.67      
+                       MO95_7  MO95]  1.87893e-05  449.67      
+                       MO96_7  MO96]  1.96860e-05  449.67      
+                       MO97_7  MO97]  1.12708e-05  449.67      
+                       MO98_7  MO98]  2.84784e-05  449.67      
+                       NI58_7  NI58]  1.54051e-03  449.67      
+                       NI60_7  NI60]  5.93407e-04  449.67      
+                       NI61_7  NI61]  2.57941e-05  449.67      
+                       NI62_7  NI62]  8.22453e-05  449.67      
+                       NI64_7  NI64]  2.09458e-05  449.67      
+                       NA23_7  NA23]  7.06736e-03  449.67      
+                       PU2397  PU239]  1.68611e-03  449.67      
+                       PU2407  PU240]  1.51410e-04  449.67      
+                       U235_7  U235]  1.58482e-05  449.67      
+                       U238_7  U238]  7.18792e-03  449.67      
+/
+\$output
+l_edit_chi = T
+l_isotxs_macroxs = T
+l_isotxs_ascii = T
+/
+EOF
+$lib2/mcc3.x
+mv output    38.out
+mv output.chi_bg   38.out.chi_bg
+/software/ARC/ISOTXS_Modify.x in=ISOTXS.merged out=ISOTXS.1.merged i=REG_01 n=REG_38
+mv ISOTXS.1.merged    38.ISOTXS
+! ============================================================
+!
+cat>input<<EOF
+\$library
+c_mcclibdir  ="$lib2/lib.mcc.e70" 
+c_pwlibdir   ="$lib2/lib.pw.200.e70","." 
+c_pendflibdir="$lib2/lib.pendf.e70" 
+c_chilibdir  ="$lib1/lib.chimatrix" 
+c_twodantexe ="$lib1/twodant.x" 
+/ 
+\$control 
+     c_group_structure       =ANL1041
+     c_geometry_type         =mixture
+     i_number_region         =1
+     i_scattering_order      =3
+     l_twodant               =F
+     l_pendf                 =T
+     l_buckling_search       =T
+/ 
+\$material 
+!
+! ============================================================
+!                        IFA_6_2_19                         
+! ============================================================
+!
+t_composition(:,  1)=  BE9__7  BE9^  3.74919e-03  449.67      
+                       O16__7  O16^  2.20854e-02  449.67      
+                       CR50_7  CR50^  1.64165e-04  449.67      
+                       CR52_7  CR52^  3.16578e-03  449.67      
+                       CR53_7  CR53^  3.58977e-04  449.67      
+                       CR54_7  CR54^  8.93553e-05  449.67      
+                       FE54_7  FE54^  7.42716e-04  449.67      
+                       FE56_7  FE56^  1.16590e-02  449.67      
+                       FE57_7  FE57^  2.69249e-04  449.67      
+                       FE58_7  FE58^  3.58321e-05  449.67      
+                       MO1007  MO100^  1.13651e-05  449.67      
+                       MO92_7  MO92^  1.75145e-05  449.67      
+                       MO94_7  MO94^  1.09167e-05  449.67      
+                       MO95_7  MO95^  1.87893e-05  449.67      
+                       MO96_7  MO96^  1.96860e-05  449.67      
+                       MO97_7  MO97^  1.12708e-05  449.67      
+                       MO98_7  MO98^  2.84784e-05  449.67      
+                       NI58_7  NI58^  1.54051e-03  449.67      
+                       NI60_7  NI60^  5.93407e-04  449.67      
+                       NI61_7  NI61^  2.57941e-05  449.67      
+                       NI62_7  NI62^  8.22453e-05  449.67      
+                       NI64_7  NI64^  2.09458e-05  449.67      
+                       NA23_7  NA23^  7.06736e-03  449.67      
+                       PU2397  PU239^  5.51646e-04  449.67      
+                       PU2407  PU240^  4.95370e-05  449.67      
+                       U235_7  U235^  1.88538e-05  449.67      
+                       U238_7  U238^  8.55108e-03  449.67      
+/
+\$output
+l_edit_chi = T
+l_isotxs_macroxs = T
+l_isotxs_ascii = T
+/
+EOF
+$lib2/mcc3.x
+mv output    39.out
+mv output.chi_bg   39.out.chi_bg
+/software/ARC/ISOTXS_Modify.x in=ISOTXS.merged out=ISOTXS.1.merged i=REG_01 n=REG_39
+mv ISOTXS.1.merged    39.ISOTXS
+! ============================================================
+!
+cat>input<<EOF
+\$library
+c_mcclibdir  ="$lib2/lib.mcc.e70" 
+c_pwlibdir   ="$lib2/lib.pw.200.e70","." 
+c_pendflibdir="$lib2/lib.pendf.e70" 
+c_chilibdir  ="$lib1/lib.chimatrix" 
+c_twodantexe ="$lib1/twodant.x" 
+/ 
+\$control 
+     c_group_structure       =ANL1041
+     c_geometry_type         =mixture
+     i_number_region         =1
+     i_scattering_order      =3
+     l_twodant               =F
+     l_pendf                 =T
+     l_buckling_search       =T
+/ 
+\$material 
+!
+! ============================================================
+!                        IFA_6_2_20                         
+! ============================================================
+!
+t_composition(:,  1)=  NI58_7  NI58_  2.12980e-02  449.67      
+                       NI60_7  NI60_  8.20408e-03  449.67      
+                       NI61_7  NI61_  3.56604e-04  449.67      
+                       NI62_7  NI62_  1.13707e-03  449.67      
+                       NI64_7  NI64_  2.89577e-04  449.67      
+                       CR50_7  CR50_  1.64165e-04  449.67      
+                       CR52_7  CR52_  3.16578e-03  449.67      
+                       CR53_7  CR53_  3.58977e-04  449.67      
+                       CR54_7  CR54_  8.93553e-05  449.67      
+                       FE54_7  FE54_  7.42716e-04  449.67      
+                       FE56_7  FE56_  1.16590e-02  449.67      
+                       FE57_7  FE57_  2.69249e-04  449.67      
+                       FE58_7  FE58_  3.58321e-05  449.67      
+                       MO1007  MO100_  1.13651e-05  449.67      
+                       MO92_7  MO92_  1.75145e-05  449.67      
+                       MO94_7  MO94_  1.09167e-05  449.67      
+                       MO95_7  MO95_  1.87893e-05  449.67      
+                       MO96_7  MO96_  1.96860e-05  449.67      
+                       MO97_7  MO97_  1.12708e-05  449.67      
+                       MO98_7  MO98_  2.84784e-05  449.67      
+                       NA23_7  NA23_  7.06736e-03  449.67      
+                       PU2397  PU239_  5.51646e-04  449.67      
+                       PU2407  PU240_  4.95370e-05  449.67      
+                       U235_7  U235_  5.18510e-06  449.67      
+                       U238_7  U238_  2.35168e-03  449.67      
+                       O16__7  O16_  5.91005e-03  449.67      
+/
+\$output
+l_edit_chi = T
+l_isotxs_macroxs = T
+l_isotxs_ascii = T
+/
+EOF
+$lib2/mcc3.x
+mv output    40.out
+mv output.chi_bg   40.out.chi_bg
+/software/ARC/ISOTXS_Modify.x in=ISOTXS.merged out=ISOTXS.1.merged i=REG_01 n=REG_40
+mv ISOTXS.1.merged    40.ISOTXS
+! ============================================================
+!
+cat>input<<EOF
+\$library
+c_mcclibdir  ="$lib2/lib.mcc.e70" 
+c_pwlibdir   ="$lib2/lib.pw.200.e70","." 
+c_pendflibdir="$lib2/lib.pendf.e70" 
+c_chilibdir  ="$lib1/lib.chimatrix" 
+c_twodantexe ="$lib1/twodant.x" 
+/ 
+\$control 
+     c_group_structure       =ANL1041
+     c_geometry_type         =mixture
+     i_number_region         =1
+     i_scattering_order      =3
+     l_twodant               =F
+     l_pendf                 =T
+     l_buckling_search       =T
+/ 
+\$material 
+!
+! ============================================================
+!                        IFA_6_2_21                         
+! ============================================================
+!
+t_composition(:,  1)=  NI58_7  NI58`  2.12980e-02  449.67      
+                       NI60_7  NI60`  8.20408e-03  449.67      
+                       NI61_7  NI61`  3.56604e-04  449.67      
+                       NI62_7  NI62`  1.13707e-03  449.67      
+                       NI64_7  NI64`  2.89577e-04  449.67      
+                       CR50_7  CR50`  1.64165e-04  449.67      
+                       CR52_7  CR52`  3.16578e-03  449.67      
+                       CR53_7  CR53`  3.58977e-04  449.67      
+                       CR54_7  CR54`  8.93553e-05  449.67      
+                       FE54_7  FE54`  7.42716e-04  449.67      
+                       FE56_7  FE56`  1.16590e-02  449.67      
+                       FE57_7  FE57`  2.69249e-04  449.67      
+                       FE58_7  FE58`  3.58321e-05  449.67      
+                       MO1007  MO100`  1.13651e-05  449.67      
+                       MO92_7  MO92`  1.75145e-05  449.67      
+                       MO94_7  MO94`  1.09167e-05  449.67      
+                       MO95_7  MO95`  1.87893e-05  449.67      
+                       MO96_7  MO96`  1.96860e-05  449.67      
+                       MO97_7  MO97`  1.12708e-05  449.67      
+                       MO98_7  MO98`  2.84784e-05  449.67      
+                       NA23_7  NA23`  7.06736e-03  449.67      
+                       PU2397  PU239`  5.51646e-04  449.67      
+                       PU2407  PU240`  4.95370e-05  449.67      
+                       U235_7  U235`  5.18510e-06  449.67      
+                       U238_7  U238`  2.35168e-03  449.67      
+                       O16__7  O16`  5.91005e-03  449.67      
+/
+\$output
+l_edit_chi = T
+l_isotxs_macroxs = T
+l_isotxs_ascii = T
+/
+EOF
+$lib2/mcc3.x
+mv output    41.out
+mv output.chi_bg   41.out.chi_bg
+/software/ARC/ISOTXS_Modify.x in=ISOTXS.merged out=ISOTXS.1.merged i=REG_01 n=REG_41
+mv ISOTXS.1.merged    41.ISOTXS
+! ============================================================
+!
