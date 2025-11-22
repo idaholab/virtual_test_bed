@@ -424,7 +424,7 @@ control_rod_Dh = 0.1
     # outlet boundary conditions
     outlet_boundaries = outlet
     momentum_outlet_types = fixed-pressure
-    pressure_function = ${outlet_pressure}
+    pressure_functors = ${outlet_pressure}
 
     # friction control parameters
     friction_types = 'darcy forchheimer'

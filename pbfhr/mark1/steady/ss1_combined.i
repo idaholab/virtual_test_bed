@@ -221,7 +221,7 @@ power_density = '${fparse total_power / model_vol / 258 * 236}' # adjusted using
     # Outlet boundary conditions
     outlet_boundaries = 'bed_horizontal_top plenum_top OR_horizontal_top'
     momentum_outlet_types = 'fixed-pressure fixed-pressure fixed-pressure'
-    pressure_function = '2e5 2e5 2e5'
+    pressure_functors = '2e5 2e5 2e5'
 
     # Porous flow parameters
     ambient_convection_blocks = ${blocks_pebbles}

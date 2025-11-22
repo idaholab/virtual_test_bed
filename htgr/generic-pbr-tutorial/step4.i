@@ -145,7 +145,7 @@ offset = 0.56331
     # outlet boundary conditions
     outlet_boundaries = bottom
     momentum_outlet_types = fixed-pressure
-    pressure_function = ${outlet_pressure}
+    pressure_functors = ${outlet_pressure}
 
     # friction control parameters
     friction_types = 'darcy forchheimer'

@@ -234,7 +234,7 @@ outlet_pressure_val = 2e5
     # Outlet boundary conditions
     outlet_boundaries = 'bed_horizontal_top plenum_top OR_horizontal_top'
     momentum_outlet_types = 'fixed-pressure fixed-pressure fixed-pressure'
-    pressure_function = 'pressure_out_fun pressure_out_fun pressure_out_fun'
+    pressure_functors = 'pressure_out_fun pressure_out_fun pressure_out_fun'
 
     # Porous flow parameters
     ambient_convection_blocks = ${blocks_pebbles}
