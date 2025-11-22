@@ -500,6 +500,7 @@ Forch_open = 1.25
 [FluidProperties]
   [fluid_properties]
     type = FlibeFluidProperties
+    allow_imperfect_jacobians = true
   []
 []
 

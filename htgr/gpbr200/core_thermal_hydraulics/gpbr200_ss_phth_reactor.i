@@ -284,6 +284,7 @@ initial_temp = 900.0 # K
 [FluidProperties]
   [fluid_properties_obj]
     type = HeliumFluidProperties
+    allow_imperfect_jacobians = true
   []
 []
 
