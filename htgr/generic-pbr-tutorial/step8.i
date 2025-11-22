@@ -411,7 +411,7 @@ control_rod_Dh = 0.1
     # inlet boundary conditions
     inlet_boundaries = inlet
     momentum_inlet_types = fixed-velocity
-    momentum_inlet_function = '0 ${flow_vel}'
+    momentum_inlet_functors = '0 ${flow_vel}'
     energy_inlet_types = fixed-temperature
     energy_inlet_function = '${T_inlet}'
 
