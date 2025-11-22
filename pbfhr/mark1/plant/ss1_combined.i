@@ -225,7 +225,7 @@ inlet_T_fluid = 873.15 # K, from [2]
     momentum_inlet_types = 'fixed-velocity fixed-velocity'
     momentum_inlet_functors = '0 inlet_vel_y_fun; 0 0'
     energy_inlet_types = 'fixed-temperature heatflux'
-    energy_inlet_function = 'T_inlet_fun 0'
+    energy_inlet_functors = 'T_inlet_fun 0'
     # so the flux BCs have to be used consistently across all equations
 
     # Outlet boundary conditions

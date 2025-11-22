@@ -215,7 +215,7 @@ power_density = '${fparse total_power / model_vol / 258 * 236}' # adjusted using
     momentum_inlet_types = 'fixed-velocity fixed-velocity'
     momentum_inlet_functors = '0 ${inlet_vel_y}; 0 0'
     energy_inlet_types = 'fixed-temperature heatflux'
-    energy_inlet_function = '${inlet_T_fluid} 0'
+    energy_inlet_functors = '${inlet_T_fluid} 0'
     # so the flux BCs have to be used consistently across all equations
 
     # Outlet boundary conditions

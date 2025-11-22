@@ -134,7 +134,7 @@ offset = 0.56331
     momentum_inlet_types = fixed-velocity
     momentum_inlet_functors = '0 -${flow_vel}'
     energy_inlet_types = fixed-temperature
-    energy_inlet_function = '${T_inlet}'
+    energy_inlet_functors = '${T_inlet}'
 
     # wall boundary conditions
     wall_boundaries = 'left right'
