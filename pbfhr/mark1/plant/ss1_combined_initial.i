@@ -221,7 +221,7 @@ outlet_pressure_val = 2e5
     wall_boundaries = 'bed_left barrel_wall'
     momentum_wall_types = 'slip slip'
     energy_wall_types = 'heatflux heatflux'
-    energy_wall_function = '0 0'
+    energy_wall_functors = '0 0'
 
     # Inlet boundary conditions
     inlet_boundaries = 'bed_horizontal_bottom OR_horizontal_bottom'

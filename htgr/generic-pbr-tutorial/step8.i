@@ -419,7 +419,7 @@ control_rod_Dh = 0.1
     wall_boundaries = 'ex in'
     momentum_wall_types = 'slip slip'
     energy_wall_types = 'heatflux heatflux'
-    energy_wall_function = '0 0'
+    energy_wall_functors = '0 0'
 
     # outlet boundary conditions
     outlet_boundaries = outlet
