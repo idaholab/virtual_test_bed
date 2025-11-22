@@ -213,6 +213,11 @@ outlet_pressure_val = 2e5
     thermal_expansion = 'alpha_b'
     porosity = 'porosity'
 
+    # initial conditions
+    initial_velocity = '1e-12 ${inlet_vel_y_ini}'
+    initial_pressure = 2e5
+    initial_temperature = 873.15
+
     # Boussinesq parameters
     gravity = '0 -9.81 0'
     ref_temperature = ${inlet_T_fluid}
@@ -253,26 +258,6 @@ outlet_pressure_val = 2e5
 []
 
 [Variables]
-  [superficial_vel_x]
-    type = PINSFVSuperficialVelocityVariable
-    block = ${blocks_fluid}
-    initial_condition = 1e-12
-  []
-  [superficial_vel_y]
-    type = PINSFVSuperficialVelocityVariable
-    block = ${blocks_fluid}
-    initial_condition = ${inlet_vel_y_ini}
-  []
-  [pressure]
-    type = INSFVPressureVariable
-    block = ${blocks_fluid}
-    initial_condition = 2e5
-  []
-  [T_fluid]
-    type = INSFVEnergyVariable
-    block = ${blocks_fluid}
-    initial_condition = 873.15
-  []
   [T_solid]
     type = INSFVEnergyVariable
     block = '${blocks_solid} ${blocks_fluid}'
@@ -426,6 +411,7 @@ outlet_pressure_val = 2e5
 [FluidProperties]
   [fp]
     type = FlibeFluidProperties
+    allow_imperfect_jacobians = true
   []
 []
 
@@ -828,7 +814,7 @@ outlet_pressure_val = 2e5
   [e_flow_in_m]
     type = VolumetricFlowRate
     boundary = 'bed_horizontal_bottom OR_horizontal_bottom'
-    advected_quantity = 'rho_cp_temp'
+    advected_quantity = 'rho_h'
   []
   # [diffusion_in]
   #   type = ADSideVectorDiffusivityFluxIntegral
@@ -840,7 +826,7 @@ outlet_pressure_val = 2e5
   [e_flow_out]
     type = VolumetricFlowRate
     boundary = 'bed_horizontal_top plenum_top OR_horizontal_top'
-    advected_quantity = 'rho_cp_temp'
+    advected_quantity = 'rho_h'
     execute_on = 'INITIAL TIMESTEP_END TRANSFER'
   []
   [core_balance]
