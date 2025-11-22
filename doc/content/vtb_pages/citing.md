@@ -829,11 +829,6 @@ Anshuman Chaube and April J. Novak and Dillon R. Shaver and Caleb S. Brooks, "Na
 Transactions of the American Nuclear Society, 2023
 ```
 
-- GCMR Whole Core with inter-assembly bypass
-
-!alert note title=No official citation
-Please contact the [model POC](microreactors/gcmr/index_core_bypass.md) to obtain the item to cite.
-
 
 ### Light Water Reactors
 
