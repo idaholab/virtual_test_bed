@@ -4,13 +4,13 @@
     type = RunApp
     input = toshiba_37_pin.i
     check_input = True
-    executable_pattern = 'subchannel*|pronghorn*|combined*'
+    executable_pattern = 'subchannel*|combined*'
   []
   [viz_syntax]
     type = RunApp
     input = toshiba_37_pin_viz.i
     check_input = True
-    executable_pattern = 'subchannel*|pronghorn*|combined*'
+    executable_pattern = 'subchannel*|combined*'
   []
   # Regression checks for 37-pin model
   [subchannel]
@@ -18,7 +18,7 @@
     input = toshiba_37_pin.i
     exodiff = 'toshiba_37_pin_out.e'
     prereq = 'subchannel_syntax'
-    executable_pattern = 'subchannel*|pronghorn*|combined*'
+    executable_pattern = 'subchannel*|combined*'
 
     # To get consistent results for testing
     cli_args = "SubChannel/P_tol=1e-7 SubChannel/T_tol=1e-6 SubChannel/atol=1e-9 SubChannel/rtol=1e-9"

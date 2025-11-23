@@ -4,7 +4,7 @@
     input = abr_19assemblies.i
     check_files = abr_19assemblies_in.e
     cli_args = "--mesh-only"
-    executable_pattern = 'subchannel*|pronghorn*|combined*'
+    executable_pattern = 'subchannel*|combined*'
   []
   # Regression checks for 19-assembly SCM models
   [SCM19]
@@ -23,7 +23,7 @@
     requirement = 'The system shall be able to solve a 19-assembly case using the subchannel solver'
     ignore_columns = 'center_duct_heat_loss_07 center_duct_heat_loss_08 center_duct_heat_loss_09 center_duct_heat_loss_10 center_duct_heat_loss_11 center_duct_heat_loss_12 center_duct_heat_loss_13 center_duct_heat_loss_14 center_duct_heat_loss_15 center_duct_heat_loss_16 center_duct_heat_loss_17 center_duct_heat_loss_18'
     prereq = 'generate_mesh'
-    executable_pattern = 'subchannel*|pronghorn*|combined*'
+    executable_pattern = 'subchannel*|combined*'
     max_time = 1400
   []
 []
