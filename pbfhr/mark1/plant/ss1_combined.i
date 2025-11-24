@@ -407,6 +407,7 @@ inlet_T_fluid = 873.15 # K, from [2]
 [FluidProperties]
   [fp]
     type = FlibeFluidProperties
+    allow_imperfect_jacobians = true
   []
 []
 
