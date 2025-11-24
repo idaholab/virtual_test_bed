@@ -102,30 +102,6 @@ solid_blocks = 'core core_barrel'
 # FV VARIABLES
 # ==============================================================================
 [Variables]
-  [superficial_vel_x]
-    type = PINSFVSuperficialVelocityVariable
-    initial_condition = 1e-8
-    block = ${fluid_blocks}
-    scaling = 1e-3
-  []
-  [superficial_vel_y]
-    type = PINSFVSuperficialVelocityVariable
-    initial_condition = 1e-8
-    block = ${fluid_blocks}
-    scaling = 1e-3
-  []
-  [pressure]
-    type = INSFVPressureVariable
-    initial_condition = ${p_outlet}
-    block = ${fluid_blocks}
-    face_interp_method = average
-    scaling = 10
-  []
-  [T_fluid]
-    type = INSFVEnergyVariable
-    initial_condition = ${T_Salt_initial}
-    block = ${fluid_blocks}
-  []
   [T_solid]
     type = INSFVEnergyVariable
     initial_condition = ${T_Salt_initial}
@@ -163,6 +139,7 @@ solid_blocks = 'core core_barrel'
 [FluidProperties]
   [fluid_properties_obj]
     type = FlibeFluidProperties
+    allow_imperfect_jacobians = true
   []
 []
 
@@ -179,6 +156,11 @@ solid_blocks = 'core core_barrel'
     velocity_variable = 'superficial_vel_x superficial_vel_y'
     pressure_variable = 'pressure'
     fluid_temperature_variable = 'T_fluid'
+
+    # ICs
+    initial_velocity = '1e-8 1e-8'
+    initial_pressure = ${p_outlet}
+    initial_temperature = ${T_Salt_initial}
 
     # Numerical schemes
     momentum_advection_interpolation = upwind
