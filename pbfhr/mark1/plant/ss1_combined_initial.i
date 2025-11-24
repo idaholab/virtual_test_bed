@@ -169,7 +169,6 @@ outlet_pressure_val = 2e5
   pebble_diameter = ${pebble_diameter}
   speed = 'speed'
 
-  fp = fp
   T_solid = T_solid
   T_fluid = T_fluid
   pressure = pressure
@@ -240,6 +239,9 @@ outlet_pressure_val = 2e5
     outlet_boundaries = 'bed_horizontal_top plenum_top OR_horizontal_top'
     momentum_outlet_types = 'fixed-pressure fixed-pressure fixed-pressure'
     pressure_functors = 'pressure_out_fun pressure_out_fun pressure_out_fun'
+
+    # Initial conditions
+    initial_temperature = ${inlet_T_fluid}
 
     # Porous flow parameters
     ambient_convection_blocks = ${blocks_pebbles}
@@ -461,6 +463,7 @@ outlet_pressure_val = 2e5
     type = GeneralFunctorFluidProps
     block = ${blocks_fluid}
     mu_rampdown = 1
+    fp = fp
   []
 
   # closures in the pebble bed
@@ -471,6 +474,7 @@ outlet_pressure_val = 2e5
   [drag]
     type = FunctorKTADragCoefficients
     block = ${blocks_pebbles}
+    fp = fp
   []
   [kappa]
     type = FunctorLinearPecletKappaFluid
