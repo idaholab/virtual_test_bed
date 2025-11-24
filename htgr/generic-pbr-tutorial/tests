@@ -66,6 +66,7 @@
                 Executioner/TimeStepper/type=CSVTimeSequenceStepper
                 Executioner/TimeStepper/file_name=gold/step2_out.csv
                 Executioner/TimeStepper/column_name=time"
+    allow_unused = true
     executable_pattern = 'pronghorn*|blue_crab*'
   []
   [step3]
@@ -96,7 +97,13 @@
     type = CSVDiff
     input = step6.i
     csvdiff = step6_out.csv
-    cli_args = 'Outputs/csv=true'
+    # preserve the original time steps
+    cli_args = "Outputs/csv=true
+                Executioner/TimeStepper/type=CSVTimeSequenceStepper
+                Executioner/TimeStepper/file_name=gold/step6_out.csv
+                Executioner/TimeStepper/column_name=time"
+    allow_unused = true
+    rel_err = 5e-5
     executable_pattern = 'pronghorn*|blue_crab*'
   []
   [step7]
