@@ -208,7 +208,7 @@ solid_blocks = 'core core_barrel'
     wall_boundaries = 'left      top      bottom   right    loop_boundary '
     momentum_wall_types = 'symmetry  slip     noslip   noslip   noslip'
     energy_wall_types = 'heatflux  heatflux heatflux heatflux heatflux'
-    energy_wall_function = '0        0        0        0        0'
+    energy_wall_functors = '0        0        0        0        0'
 
     # Constrain Pressure
     pin_pressure = true

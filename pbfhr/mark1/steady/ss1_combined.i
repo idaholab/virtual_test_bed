@@ -208,20 +208,20 @@ power_density = '${fparse total_power / model_vol / 258 * 236}' # adjusted using
     wall_boundaries = 'bed_left barrel_wall'
     momentum_wall_types = 'slip slip'
     energy_wall_types = 'heatflux heatflux'
-    energy_wall_function = '0 0'
+    energy_wall_functors = '0 0'
 
     # Inlet boundary conditions
     inlet_boundaries = 'bed_horizontal_bottom OR_horizontal_bottom'
     momentum_inlet_types = 'fixed-velocity fixed-velocity'
-    momentum_inlet_function = '0 ${inlet_vel_y}; 0 0'
+    momentum_inlet_functors = '0 ${inlet_vel_y}; 0 0'
     energy_inlet_types = 'fixed-temperature heatflux'
-    energy_inlet_function = '${inlet_T_fluid} 0'
+    energy_inlet_functors = '${inlet_T_fluid} 0'
     # so the flux BCs have to be used consistently across all equations
 
     # Outlet boundary conditions
     outlet_boundaries = 'bed_horizontal_top plenum_top OR_horizontal_top'
     momentum_outlet_types = 'fixed-pressure fixed-pressure fixed-pressure'
-    pressure_function = '2e5 2e5 2e5'
+    pressure_functors = '2e5 2e5 2e5'
 
     # Porous flow parameters
     ambient_convection_blocks = ${blocks_pebbles}
