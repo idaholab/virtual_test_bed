@@ -819,7 +819,7 @@ inlet_T_fluid = 873.15 # K, from [2]
   [e_flow_in_m]
     type = VolumetricFlowRate
     boundary = 'bed_horizontal_bottom OR_horizontal_bottom'
-    advected_quantity = 'rho_cp_temp'
+    advected_quantity = 'rho_h'
   []
   # [diffusion_in]
   #   type = ADSideVectorDiffusivityFluxIntegral
@@ -831,7 +831,7 @@ inlet_T_fluid = 873.15 # K, from [2]
   [e_flow_out]
     type = VolumetricFlowRate
     boundary = 'bed_horizontal_top plenum_top OR_horizontal_top'
-    advected_quantity = 'rho_cp_temp'
+    advected_quantity = 'rho_h'
   []
   [core_balance]
     type = ParsedPostprocessor
