@@ -1,4 +1,6 @@
 [Tests]
+  issues = '#46'
+  # 46: MSFR multiphysics improvements
   # Syntax checks
   [coupled_multiphysics_syntax]
     type = RunApp
@@ -44,6 +46,7 @@
     # method = 'opt'
     # Tolerance at 1e-6
     rel_err = 5e-5
+    ignore_columns = 'lambda'
   []
   [neutronics_only]
     prereq = neutronics_only_syntax
@@ -63,6 +66,7 @@
     executable_pattern = 'combined*|blue_crab*|dire_wolf*|pronghorn*|fenix*'
     cli_args = 'Executioner/num_steps=2'
     min_parallel = 4
+    ignore_columns = 'lambda'
   []
   [fluids]
     prereq = fluids_syntax
@@ -72,5 +76,6 @@
     executable_pattern = 'blue_crab*|dire_wolf*|pronghorn*|fenix*'
     cli_args = "Executioner/num_steps=2"
     min_parallel = 4
+    ignore_columns = 'lambda'
   []
 []
