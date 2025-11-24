@@ -411,20 +411,20 @@ control_rod_Dh = 0.1
     # inlet boundary conditions
     inlet_boundaries = inlet
     momentum_inlet_types = fixed-velocity
-    momentum_inlet_function = '0 ${flow_vel}'
+    momentum_inlet_functors = '0 ${flow_vel}'
     energy_inlet_types = fixed-temperature
-    energy_inlet_function = '${T_inlet}'
+    energy_inlet_functors = '${T_inlet}'
 
     # wall boundary conditions
     wall_boundaries = 'ex in'
     momentum_wall_types = 'slip slip'
     energy_wall_types = 'heatflux heatflux'
-    energy_wall_function = '0 0'
+    energy_wall_functors = '0 0'
 
     # outlet boundary conditions
     outlet_boundaries = outlet
     momentum_outlet_types = fixed-pressure
-    pressure_function = ${outlet_pressure}
+    pressure_functors = ${outlet_pressure}
 
     # friction control parameters
     friction_types = 'darcy forchheimer'
