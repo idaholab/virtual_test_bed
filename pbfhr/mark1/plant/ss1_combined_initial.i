@@ -214,8 +214,8 @@ outlet_pressure_val = 2e5
 
     # initial conditions
     initial_velocity = '1e-12 ${inlet_vel_y_ini}'
-    initial_pressure = 2e5
-    initial_temperature = 873.15
+    initial_pressure = ${outlet_pressure_val}
+    initial_temperature = ${inlet_T_fluid}
 
     # Boussinesq parameters
     gravity = '0 -9.81 0'
@@ -239,9 +239,6 @@ outlet_pressure_val = 2e5
     outlet_boundaries = 'bed_horizontal_top plenum_top OR_horizontal_top'
     momentum_outlet_types = 'fixed-pressure fixed-pressure fixed-pressure'
     pressure_functors = 'pressure_out_fun pressure_out_fun pressure_out_fun'
-
-    # Initial conditions
-    initial_temperature = ${inlet_T_fluid}
 
     # Porous flow parameters
     ambient_convection_blocks = ${blocks_pebbles}
