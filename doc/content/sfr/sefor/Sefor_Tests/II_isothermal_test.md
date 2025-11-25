@@ -10,7 +10,7 @@ The table below compares the calculated total reactivity feedback with the exper
 obtained from isothermal tests performed in Core I-I, where the core temperature was increased 
 from 360 F to 760 F. The calculated results were obtained using Griffin with the ENDF/B-VII.0 
 nuclear data library, while the experimental data serve as reference values. For comparison, the 
-table also includes a previously reported value from Serpent2 calculations using the ENDF/B-VII.1 
+table also includes K-eff value from Serpent2 calculations using the ENDF/B-VII.1 
 library
 
 
