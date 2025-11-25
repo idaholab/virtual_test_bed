@@ -12,5 +12,5 @@ Griffin eigenvalue calculations for Core I-I employed the DFEM-SN (3,4) method w
 Simulations ran on INL’s Windriver1 HPC system using 6,048 cores and approximately 47 TB of aggregate memory. However, enabling `flux_moment_primal_variable` parameter in the transport solver input can substantially reduce memory usage by storing flux moments rather than the full angular flux.
 
 
-!listing sfr/sefor/Mesh/Griffin_SEFOR_CoreII_450K.i
+!listing sfr/sefor/Core_II/Griffin_SEFOR_CoreII_450K.i
 
