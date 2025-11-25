@@ -169,7 +169,6 @@ outlet_pressure_val = 2e5
   pebble_diameter = ${pebble_diameter}
   speed = 'speed'
 
-  fp = fp
   T_solid = T_solid
   T_fluid = T_fluid
   pressure = pressure
@@ -215,8 +214,8 @@ outlet_pressure_val = 2e5
 
     # initial conditions
     initial_velocity = '1e-12 ${inlet_vel_y_ini}'
-    initial_pressure = 2e5
-    initial_temperature = 873.15
+    initial_pressure = ${outlet_pressure_val}
+    initial_temperature = ${inlet_T_fluid}
 
     # Boussinesq parameters
     gravity = '0 -9.81 0'
@@ -461,6 +460,7 @@ outlet_pressure_val = 2e5
     type = GeneralFunctorFluidProps
     block = ${blocks_fluid}
     mu_rampdown = 1
+    fp = fp
   []
 
   # closures in the pebble bed
@@ -471,6 +471,7 @@ outlet_pressure_val = 2e5
   [drag]
     type = FunctorKTADragCoefficients
     block = ${blocks_pebbles}
+    fp = fp
   []
   [kappa]
     type = FunctorLinearPecletKappaFluid
