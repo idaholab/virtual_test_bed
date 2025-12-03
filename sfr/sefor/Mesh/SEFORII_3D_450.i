@@ -130,7 +130,7 @@
     []
         [Tightener_Rod_15]
         type = PolygonConcentricCircleMeshGenerator
-        num_sides = 6  
+        num_sides = 6
         num_sectors_per_side = '6 6 6 6 6 6'
         background_intervals = 1
         # Na
@@ -219,7 +219,7 @@
         ring_intervals = '1 1 1 '
         ring_block_ids = '211      213     214'
         preserve_volumes = on
-    [] 
+    []
     [gp1_GP_rod]
         type = AdvancedConcentricCircleGenerator
         num_sectors = 36
@@ -230,7 +230,7 @@
     []
     [gp1_Tightener_Rod]
         type = PolygonConcentricCircleMeshGenerator
-        num_sides = 6  
+        num_sides = 6
         num_sectors_per_side = '6 6 6 6 6 6'
         background_intervals = 1
         background_block_ids = '218'
@@ -408,7 +408,7 @@
     []
     [abs1_Tightener_Rod]
         type = PolygonConcentricCircleMeshGenerator
-        num_sides = 6  
+        num_sides = 6
         num_sectors_per_side = '6 6 6 6 6 6'
         background_intervals = 1
         background_block_ids = '320'
@@ -684,7 +684,7 @@
     []
     [abs1gp1_Tightener_Rod]
         type = PolygonConcentricCircleMeshGenerator
-        num_sides = 6  
+        num_sides = 6
         num_sectors_per_side = '6 6 6 6 6 6'
         background_intervals = 1
         background_block_ids = '421'
@@ -698,7 +698,7 @@
         duct_sizes_style = 'apothem'
         preserve_volumes = on
         quad_center_elements = false
-    
+
     []
     [abs1gp1_Tightener_Rod_tr]
         type = TransformGenerator
@@ -846,7 +846,7 @@
         background_subdomain_id = '515'
         verify_holes = false
     []
-    
+
 ###############################################################################
 #   Fuel Assembly with 2 Guinea Pig and 1 B4C Pin
 ###############################################################################
@@ -857,7 +857,7 @@
         ring_intervals = '1 1 1 '
         ring_block_ids = '811      813     814'
         preserve_volumes = on
-    
+
     []
     [gp2abs1_GP_rod]
         type = AdvancedConcentricCircleGenerator
@@ -971,7 +971,7 @@
     []
     [IFA_Tightener_Rod]
         type = PolygonConcentricCircleMeshGenerator
-        num_sides = 6  
+        num_sides = 6
         num_sectors_per_side = '6 6 6 6 6 6'
         background_intervals = 1
          background_block_ids   = '921'
@@ -1084,7 +1084,7 @@
                 2   2  14  14  14  14  14  14   2   2;
                   2   2   2  14  14  14   2   2   2;
                     2   2   2   2   2   2   2   2'
-                    
+
     rotate_angle = 90
 []
 
