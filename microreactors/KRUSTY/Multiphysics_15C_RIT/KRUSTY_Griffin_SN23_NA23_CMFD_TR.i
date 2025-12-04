@@ -144,7 +144,7 @@ mesh_file = '../gold/MESH/Griffin_mesh.e'
     pp_names = 'power_increment _dt'
     constant_names = 'max_increment min_dt'
     constant_expressions = '${max_power_increment} ${min_dt}'
-    function = 't_lim:=_dt*max_increment/power_increment;
+    expression = 't_lim:=_dt*max_increment/power_increment;
                 max(min_dt,t_lim)'
   []
 []

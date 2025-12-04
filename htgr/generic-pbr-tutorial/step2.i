@@ -107,7 +107,7 @@ flow_vel = '${fparse mass_flow_rate / flow_area / density}'
   end_time = 100
   [TimeStepper]
     type = IterationAdaptiveDT
-    iteration_window = 2
+    iteration_window = 4
     optimal_iterations = 8
     cutback_factor = 0.8
     growth_factor = 2
@@ -118,8 +118,8 @@ flow_vel = '${fparse mass_flow_rate / flow_area / density}'
   solve_type = 'NEWTON'
   petsc_options_iname = '-pc_type -pc_factor_shift_type -pc_factor_mat_solver_package'
   petsc_options_value = 'lu NONZERO superlu_dist'
-  nl_rel_tol = 1e-6
-  nl_abs_tol = 1e-6
+  nl_rel_tol = 1e-8
+  nl_abs_tol = 1e-8
 []
 
 [Postprocessors]

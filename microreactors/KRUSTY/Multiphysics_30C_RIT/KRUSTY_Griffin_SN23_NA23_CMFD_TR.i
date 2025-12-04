@@ -144,7 +144,7 @@ mesh_file = '../gold/MESH/Griffin_mesh.e'
     pp_names = 'power_increment _dt'
     constant_names = 'max_increment min_dt'
     constant_expressions = '${max_power_increment} ${min_dt}'
-    function = 't_lim:=_dt*max_increment/power_increment;
+    expression = 't_lim:=_dt*max_increment/power_increment;
                 max(min_dt,t_lim)'
   []
   [power_driven_dt]
@@ -152,7 +152,7 @@ mesh_file = '../gold/MESH/Griffin_mesh.e'
     pp_names = 'integrated_power power_limited_dt'
     constant_names = 'low_pw hi_pw ldt hdt'
     constant_expressions = '754 760 1 1'
-    function = 'pddt:=if(integrated_power<low_pw,ldt,if(integrated_power>hi_pw,hdt,ldt+(hdt-ldt)*(integrated_power-low_pw)/(hi_pw-low_pw)));
+    expression = 'pddt:=if(integrated_power<low_pw,ldt,if(integrated_power>hi_pw,hdt,ldt+(hdt-ldt)*(integrated_power-low_pw)/(hi_pw-low_pw)));
                 min(power_limited_dt,pddt)'
   []
   [disp_old_medium]
