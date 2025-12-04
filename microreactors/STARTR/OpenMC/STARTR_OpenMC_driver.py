@@ -2,10 +2,10 @@
 Introduction to INL and STARTR
 
 This model constructs each element of the STARTR reactor component-by-component, with all materials
-used defined at the top of the code. This model is designed to run on one core within one hour 
-with a standard deviation less than 30 pcm. 
+used defined at the top of the code. This model is designed to run on one core within one hour
+with a standard deviation less than 30 pcm.
 
-Modified versions of this code for various reactor analysis tasks can be found in the 
+Modified versions of this code for various reactor analysis tasks can be found in the
 subdirectories herein. The test suite includes control drum worth calculations, radial and axial
 power peaking analysis, isothermal reactivity calculations, and more.
 
@@ -23,7 +23,7 @@ NUM_PELLETS = 5 # Number of uzrh pellets in fuel rod, 5 in STARTR, 3 in typical 
 CLADD_OVERLAP = 1.2695 # cm of cladding past top and bottom of fuel rod components
 
 # Isothermal temperature applied to all materials in model
-""" 
+"""
 Thermal scattering data in ENDFB 8.0 does not exist at 900 K.
 899K corresponds to 800 K thermal scattering with x-section data at 900 K.
 901 K corresponds to 1000 K thermal scattering with x-section data at 900 K.
@@ -33,7 +33,7 @@ TEMP = 899 # K
 # Drum rotations: (+) -> ccw, (-) -> cw
 """
 All control drums rotate counter-clockwise when withdrawn from the core
-and their movement is linked. i.e. if the north drum is withdrawn 30 degrees, all 
+and their movement is linked. i.e. if the north drum is withdrawn 30 degrees, all
 drums are withdrawn 30 degrees.
 
 An angle of 0 corresponds to the b4c poison plates pointing northward. The below
@@ -92,7 +92,7 @@ void.add_element('C', 0.000124)
 void.temperature = TEMP
 
 """
-Trace material amounts permitted in 304 Stainless Steel by ASTM A269/A269M-15a, 
+Trace material amounts permitted in 304 Stainless Steel by ASTM A269/A269M-15a,
 such as C, P, S, and Si are ommitted here to improve model runtime.
 
 The STARTR design uses 316H Stainless Steel for the vessel wall under ASTM A312/A312M-25,
@@ -167,7 +167,7 @@ The first component we will build is the TRIGA fuel rod. Dimensions for all incl
 J. A. Evans et al., "Uranium-zirconium Hydride Nuclear Fuel Performance in the NaK-cooled MARVEL microreactor,"
 Journal of Nuclear Materials, 598, 1 (2024); https://doi.org/10.1016/j.jnucmat.2024.155145.
 
-These measurements were used to define the cladding overlap defined at the top of this file as well. All 
+These measurements were used to define the cladding overlap defined at the top of this file as well. All
 measurements are in units of centimeters.
 
 The general format for creating a component or "universe" in openmc in this code is as follows:
@@ -285,8 +285,8 @@ fuel_rod_univ = openmc.Universe(name="TRIGA Fuel Rod Universe")
 
 """
 Every cell needs a region that it occupies and a material to fill that region. This is why we
-aliased the planes above, so every surface and plane used by the cell shares the same name as 
-the cell itself. 
+aliased the planes above, so every surface and plane used by the cell shares the same name as
+the cell itself.
 
 Regions are defined in half-spaces which is clearly explained in the openmc documentation. As a brief
 overview, the negative half-space of a cylinder is everything within the cylinder, and the negative half space of a
@@ -335,8 +335,8 @@ top_refl_cell.fill = graphite
 fuel_rod_univ.add_cell(top_refl_cell)
 
 """
-None of the components are exactly flush with the inner wall of the cladding, so there is a 
-small air gap between them. These are all defined as individual cells rather than one large cell 
+None of the components are exactly flush with the inner wall of the cladding, so there is a
+small air gap between them. These are all defined as individual cells rather than one large cell
 because the air sections are not contiguous with each other.
 """
 # Void Gap
@@ -388,15 +388,15 @@ na_inf_cell.region = (
 na_inf_cell.fill = na
 fuel_rod_univ.add_cell(na_inf_cell)
 
-""" 
-Fuel Rod Visualization Plots 
+"""
+Fuel Rod Visualization Plots
 
 Every time we finish a component/universe, it's a good idea to plot the geometry that was made to ensure
 everything was built correctly. The colors of each material are defined at the top of this file so every
-plot has the same coloring. Each plot in this code takes the xy and yz cross sections at the center 
+plot has the same coloring. Each plot in this code takes the xy and yz cross sections at the center
 of the component.
 
-If you find that the plot generation slows the code significantly, comment out the plot_geometry 
+If you find that the plot generation slows the code significantly, comment out the plot_geometry
 command at the bottom, or reduce the number of pixels.
 
 NOTE: Always be sure to export the geometry you want to see and your plot settings to xml before you
@@ -428,8 +428,8 @@ plots.export_to_xml()
 openmc.plot_geometry()
 
 """
-At the center of STARTR is a void rod, which has the same cladding and fittings dimensions as the 
-TRIGA fuel rods, but with air instead of fuel meat, reflectors, etc. 
+At the center of STARTR is a void rod, which has the same cladding and fittings dimensions as the
+TRIGA fuel rods, but with air instead of fuel meat, reflectors, etc.
 
 Again, surfaces that would be redundant to create are instead aliased to avoid slowing down the Monte
 Carlo simulation.
@@ -537,8 +537,8 @@ which houses the void rod, fuel rods, sodium coolant, metallic beryllium reflect
 """
 The hexagonal lattice needs surrounding sodium coolant for a similar reason to the fuel and void rods. When
 placing the hexagonal lattice into the core universe, we need to define a region with simple planes. Most simply,
-we can create a large hexagonal region to contain everything. However, there will be an undefined section 
-between the edge lattice elements and the hexagon the lattice is placed in unless we surround the lattice with 
+we can create a large hexagonal region to contain everything. However, there will be an undefined section
+between the edge lattice elements and the hexagon the lattice is placed in unless we surround the lattice with
 a universe of infinite coolant. This is achieved by assigning the universe one cell with one material and no
 specified region. The universe is then applied to the hexagonal lattice with the .outer property.
 
@@ -557,7 +557,7 @@ T. L. Lange et al., "MARVEL Core Design and Neutronic Characteristics," ANS Wint
 vol. 127, 1078-2081, Phoenix, AZ, November 13-17, American Nuclear Society (2022);
 https://doi.org/10.13182/T127-39465.
 
-Numpy is used to shorten the syntax for specifying the position of fuel elements. Details on defining 
+Numpy is used to shorten the syntax for specifying the position of fuel elements. Details on defining
 universes in a hex lattice can be found in the openmc documentation.
 """
 ## Hexagonal Lattice
@@ -803,7 +803,7 @@ openmc.plot_geometry()
 
 ### Final Universe
 """
-OpenMC requires a "root" universe, the home universe that all other geometries are placed into. In this model, 
+OpenMC requires a "root" universe, the home universe that all other geometries are placed into. In this model,
 that is the core, stationary reflector, control drum, and surrounding air.
 """
 root_univ = openmc.Universe(name="Root Universe")
@@ -820,7 +820,7 @@ root_stat_refl_OD = stat_refl_OD
 
 # Bounding cylinder with boundary conditions
 """
-The vessel_min and vessel_max planes already have a vacuum condition applied. It is important 
+The vessel_min and vessel_max planes already have a vacuum condition applied. It is important
 that the model be surrounded by vacuum boundary conditions, otherwise OpenMC will error as it thinks
 there are undefined regions remaining. We want those particles to count as leakage, which is how the vacuum
 condition is used.
@@ -856,7 +856,7 @@ root_void_inf_cell = openmc.Cell(name="Root Surrounding Air Cell")
 root_void_inf_cell.region = (
         +stat_refl_max & -bound_max & +vessel_OD & -bound_OD | # Top circular region
         +bound_min & -stat_refl_min & +vessel_OD & -bound_OD | # Bottom circular region
-        +stat_refl_min & -stat_refl_max & 
+        +stat_refl_min & -stat_refl_max &
         (+stat_refl_OD & +root_n_drum & +root_e_drum & +root_s_drum & +root_w_drum) & -bound_OD # Middle section
         )
 root_void_inf_cell.fill = void
@@ -920,7 +920,7 @@ tallies.export_to_xml()
 #### Run the simulation
 """
 The last step is to define our simulation settings and run the Monte Carlo code. We must have a geometry, materials,
-and settings .xml file for the code to run. It's important to check that we are exporting the root geometry to 
+and settings .xml file for the code to run. It's important to check that we are exporting the root geometry to
 .xml given the many times we created .xmls for plotting above.
 """
 ### Simulation Settings
