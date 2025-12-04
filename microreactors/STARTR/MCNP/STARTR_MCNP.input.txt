@@ -1,0 +1,424 @@
+c MCNP input for the Sodium-cooled Thermal-spectrum Advanced Research Test Reactor (STARTR)
+c to be added to the Virtual Test Bed (VTB) and Idaho National Laboratory under
+c the Nation Reactor Innovation Center (NRIC)
+c
+c Cell and surface numbers are starting at 100
+c Fuel cells and surfaces range in 100's
+c Reflector cells and surfaces are in 200's
+c Control drum cells and surfaces are 700's
+c Outside Universe cell and surfaces are 900's
+c
+c --- CELLS ---
+c
+c Zirconium filler rod cells
+100 900 -0.001205 -100      210 -211  imp:n=1
+101 100 -6.51 -101      210 -211  imp:n=1 trcl = ( 0.0000    3.7916  0)
+102 like 101 but trcl = ( 3.2836    1.8958  0)
+103 like 101 but trcl = ( 3.2836   -1.8958  0)
+104 like 101 but trcl = ( 0.0000   -3.7916  0)
+105 like 101 but trcl = (-3.2836   -1.8958  0)
+106 like 101 but trcl = (-3.2836    1.8958  0)
+107 like 101 but trcl = ( 0.0000    7.5831  0)
+108 like 101 but trcl = ( 3.2836    5.6873  0)
+109 like 101 but trcl = ( 6.5672    3.7916  0)
+110 like 101 but trcl = ( 6.5672    0.0000  0)
+111 like 101 but trcl = ( 6.5672   -3.7916  0)
+112 like 101 but trcl = ( 3.2836   -5.6873  0)
+113 like 101 but trcl = ( 0.0000   -7.5831  0)
+114 like 101 but trcl = (-3.2836   -5.6873  0)
+115 like 101 but trcl = (-6.5672   -3.7916  0)
+116 like 101 but trcl = (-6.5672    0.0000  0)
+117 like 101 but trcl = (-6.5672    3.7916  0)
+118 like 101 but trcl = (-3.2836    5.6873  0)
+119 like 101 but trcl = ( 0.0000   11.3747  0)
+120 like 101 but trcl = ( 3.2836    9.4789  0)
+121 like 101 but trcl = ( 6.5672    7.5831  0)
+122 like 101 but trcl = ( 9.8508    5.6873  0)
+123 like 101 but trcl = ( 9.8508    1.8958  0)
+124 like 101 but trcl = ( 9.8508   -1.8958  0)
+125 like 101 but trcl = ( 9.8508   -5.6873  0)
+126 like 101 but trcl = ( 6.5672   -7.5831  0)
+127 like 101 but trcl = ( 3.2836   -9.4789  0)
+128 like 101 but trcl = ( 0.0000  -11.3747  0)
+129 like 101 but trcl = (-3.2836   -9.4789  0)
+130 like 101 but trcl = (-6.5672   -7.5831  0)
+131 like 101 but trcl = (-9.8508   -5.6873  0)
+132 like 101 but trcl = (-9.8508   -1.8958  0)
+133 like 101 but trcl = (-9.8508    1.8958  0)
+134 like 101 but trcl = (-9.8508    5.6873  0)
+135 like 101 but trcl = (-6.5672    7.5831  0)
+136 like 101 but trcl = (-3.2836    9.4789  0)
+c
+c UZrH fuel meat cells         
+200 900 -0.001205 -111 100 210 -211  imp:n=1
+201 110 -7.135 -110 100 210 -211  imp:n=1 trcl = ( 0.0000    3.7916  0)
+202 like 201 but trcl = ( 3.2836    1.8958  0)
+203 like 201 but trcl = ( 3.2836   -1.8958  0)
+204 like 201 but trcl = ( 0.0000   -3.7916  0)
+205 like 201 but trcl = (-3.2836   -1.8958  0)
+206 like 201 but trcl = (-3.2836    1.8958  0)
+207 like 201 but trcl = ( 0.0000    7.5831  0)
+208 like 201 but trcl = ( 3.2836    5.6873  0)
+209 like 201 but trcl = ( 6.5672    3.7916  0)
+210 like 201 but trcl = ( 6.5672    0.0000  0)
+211 like 201 but trcl = ( 6.5672   -3.7916  0)
+212 like 201 but trcl = ( 3.2836   -5.6873  0)
+213 like 201 but trcl = ( 0.0000   -7.5831  0)
+214 like 201 but trcl = (-3.2836   -5.6873  0)
+215 like 201 but trcl = (-6.5672   -3.7916  0)
+216 like 201 but trcl = (-6.5672    0.0000  0)
+217 like 201 but trcl = (-6.5672    3.7916  0)
+218 like 201 but trcl = (-3.2836    5.6873  0)
+219 like 201 but trcl = ( 0.0000   11.3747  0)
+220 like 201 but trcl = ( 3.2836    9.4789  0)
+221 like 201 but trcl = ( 6.5672    7.5831  0)
+222 like 201 but trcl = ( 9.8508    5.6873  0)
+223 like 201 but trcl = ( 9.8508    1.8958  0)
+224 like 201 but trcl = ( 9.8508   -1.8958  0)
+225 like 201 but trcl = ( 9.8508   -5.6873  0)
+226 like 201 but trcl = ( 6.5672   -7.5831  0)
+227 like 201 but trcl = ( 3.2836   -9.4789  0)
+228 like 201 but trcl = ( 0.0000  -11.3747  0)
+229 like 201 but trcl = (-3.2836   -9.4789  0)
+230 like 201 but trcl = (-6.5672   -7.5831  0)
+231 like 201 but trcl = (-9.8508   -5.6873  0)
+232 like 201 but trcl = (-9.8508   -1.8958  0)
+233 like 201 but trcl = (-9.8508    1.8958  0)
+234 like 201 but trcl = (-9.8508    5.6873  0)
+235 like 201 but trcl = (-6.5672    7.5831  0)
+236 like 201 but trcl = (-3.2836    9.4789  0)
+c
+c Top and bottm graphite axial reflectors
+249 900 -0.001205 (-111 -215 211):(-111 214 -210)  imp:n=1 
+251 800 -1.7 (-222 -220 211):(-222 221 -210) imp:n=1  trcl = ( 0.0000    3.7916  0) 
+252 like 251 but trcl = ( 3.2836    1.8958  0)
+253 like 251 but trcl = ( 3.2836   -1.8958  0)
+254 like 251 but trcl = ( 0.0000   -3.7916  0)
+255 like 251 but trcl = (-3.2836   -1.8958  0)
+256 like 251 but trcl = (-3.2836    1.8958  0)
+257 like 251 but trcl = ( 0.0000    7.5831  0)
+258 like 251 but trcl = ( 3.2836    5.6873  0)
+259 like 251 but trcl = ( 6.5672    3.7916  0)
+260 like 251 but trcl = ( 6.5672    0.0000  0)
+261 like 251 but trcl = ( 6.5672   -3.7916  0)
+262 like 251 but trcl = ( 3.2836   -5.6873  0)
+263 like 251 but trcl = ( 0.0000   -7.5831  0)
+264 like 251 but trcl = (-3.2836   -5.6873  0)
+265 like 251 but trcl = (-6.5672   -3.7916  0)
+266 like 251 but trcl = (-6.5672    0.0000  0)
+267 like 251 but trcl = (-6.5672    3.7916  0)
+268 like 251 but trcl = (-3.2836    5.6873  0)
+269 like 251 but trcl = ( 0.0000   11.3747  0)
+270 like 251 but trcl = ( 3.2836    9.4789  0)
+271 like 251 but trcl = ( 6.5672    7.5831  0)
+272 like 251 but trcl = ( 9.8508    5.6873  0)
+273 like 251 but trcl = ( 9.8508    1.8958  0)
+274 like 251 but trcl = ( 9.8508   -1.8958  0)
+275 like 251 but trcl = ( 9.8508   -5.6873  0)
+276 like 251 but trcl = ( 6.5672   -7.5831  0)
+277 like 251 but trcl = ( 3.2836   -9.4789  0)
+278 like 251 but trcl = ( 0.0000  -11.3747  0)
+279 like 251 but trcl = (-3.2836   -9.4789  0)
+280 like 251 but trcl = (-6.5672   -7.5831  0)
+281 like 251 but trcl = (-9.8508   -5.6873  0)
+282 like 251 but trcl = (-9.8508   -1.8958  0)
+283 like 251 but trcl = (-9.8508    1.8958  0)
+284 like 251 but trcl = (-9.8508    5.6873  0)
+285 like 251 but trcl = (-6.5672    7.5831  0)
+286 like 251 but trcl = (-3.2836    9.4789  0)
+c
+c Stainless Steel endcaps cells
+351 250 -7.93 (-111 -221 214):(-111 -215 216)   imp:n=1   trcl = ( 0.0000    3.7916  0)
+352 like 351 but trcl = ( 3.2836    1.8958  0)
+353 like 351 but trcl = ( 3.2836   -1.8958  0)
+354 like 351 but trcl = ( 0.0000   -3.7916  0)
+355 like 351 but trcl = (-3.2836   -1.8958  0)
+356 like 351 but trcl = (-3.2836    1.8958  0)
+357 like 351 but trcl = ( 0.0000    7.5831  0)
+358 like 351 but trcl = ( 3.2836    5.6873  0)
+359 like 351 but trcl = ( 6.5672    3.7916  0)
+360 like 351 but trcl = ( 6.5672    0.0000  0)
+361 like 351 but trcl = ( 6.5672   -3.7916  0)
+362 like 351 but trcl = ( 3.2836   -5.6873  0)
+363 like 351 but trcl = ( 0.0000   -7.5831  0)
+364 like 351 but trcl = (-3.2836   -5.6873  0)
+365 like 351 but trcl = (-6.5672   -3.7916  0)
+366 like 351 but trcl = (-6.5672    0.0000  0)
+367 like 351 but trcl = (-6.5672    3.7916  0)
+368 like 351 but trcl = (-3.2836    5.6873  0)
+369 like 351 but trcl = ( 0.0000   11.3747  0)
+370 like 351 but trcl = ( 3.2836    9.4789  0)
+371 like 351 but trcl = ( 6.5672    7.5831  0)
+372 like 351 but trcl = ( 9.8508    5.6873  0)
+373 like 351 but trcl = ( 9.8508    1.8958  0)
+374 like 351 but trcl = ( 9.8508   -1.8958  0)
+375 like 351 but trcl = ( 9.8508   -5.6873  0)
+376 like 351 but trcl = ( 6.5672   -7.5831  0)
+377 like 351 but trcl = ( 3.2836   -9.4789  0)
+378 like 351 but trcl = ( 0.0000  -11.3747  0)
+379 like 351 but trcl = (-3.2836   -9.4789  0)
+380 like 351 but trcl = (-6.5672   -7.5831  0)
+381 like 351 but trcl = (-9.8508   -5.6873  0)
+382 like 351 but trcl = (-9.8508   -1.8958  0)
+383 like 351 but trcl = (-9.8508    1.8958  0)
+384 like 351 but trcl = (-9.8508    5.6873  0)
+385 like 351 but trcl = (-6.5672    7.5831  0)
+386 like 351 but trcl = (-3.2836    9.4789  0)
+c
+c Fuel plenums and gaps cells
+451 900 -0.001205 (-111 222 -220 211):(-111 -216 220):(-111 222 -210 221):
+                  (-100 101 210 -211):(-111 110 210 -211)
+                  imp:n=1   trcl = ( 0.0000    3.7916  0)
+452 like 451 but trcl = ( 3.2836    1.8958  0)
+453 like 451 but trcl = ( 3.2836   -1.8958  0)
+454 like 451 but trcl = ( 0.0000   -3.7916  0)
+455 like 451 but trcl = (-3.2836   -1.8958  0)
+456 like 451 but trcl = (-3.2836    1.8958  0)
+457 like 451 but trcl = ( 0.0000    7.5831  0)
+458 like 451 but trcl = ( 3.2836    5.6873  0)
+459 like 451 but trcl = ( 6.5672    3.7916  0)
+460 like 451 but trcl = ( 6.5672    0.0000  0)
+461 like 451 but trcl = ( 6.5672   -3.7916  0)
+462 like 451 but trcl = ( 3.2836   -5.6873  0)
+463 like 451 but trcl = ( 0.0000   -7.5831  0)
+464 like 451 but trcl = (-3.2836   -5.6873  0)
+465 like 451 but trcl = (-6.5672   -3.7916  0)
+466 like 451 but trcl = (-6.5672    0.0000  0)
+467 like 451 but trcl = (-6.5672    3.7916  0)
+468 like 451 but trcl = (-3.2836    5.6873  0)
+469 like 451 but trcl = ( 0.0000   11.3747  0)
+470 like 451 but trcl = ( 3.2836    9.4789  0)
+471 like 451 but trcl = ( 6.5672    7.5831  0)
+472 like 451 but trcl = ( 9.8508    5.6873  0)
+473 like 451 but trcl = ( 9.8508    1.8958  0)
+474 like 451 but trcl = ( 9.8508   -1.8958  0)
+475 like 451 but trcl = ( 9.8508   -5.6873  0)
+476 like 451 but trcl = ( 6.5672   -7.5831  0)
+477 like 451 but trcl = ( 3.2836   -9.4789  0)
+478 like 451 but trcl = ( 0.0000  -11.3747  0)
+479 like 451 but trcl = (-3.2836   -9.4789  0)
+480 like 451 but trcl = (-6.5672   -7.5831  0)
+481 like 451 but trcl = (-9.8508   -5.6873  0)
+482 like 451 but trcl = (-9.8508   -1.8958  0)
+483 like 451 but trcl = (-9.8508    1.8958  0)
+484 like 451 but trcl = (-9.8508    5.6873  0)
+485 like 451 but trcl = (-6.5672    7.5831  0)
+486 like 451 but trcl = (-3.2836    9.4789  0)
+c
+c Fuel cladding cells
+300 250 -7.93 -120 111 214 -215  imp:n=1 
+301 like 300 but trcl = ( 0.0000    3.7916  0)
+302 like 300 but trcl = ( 3.2836    1.8958  0)
+303 like 300 but trcl = ( 3.2836   -1.8958  0)
+304 like 300 but trcl = ( 0.0000   -3.7916  0)
+305 like 300 but trcl = (-3.2836   -1.8958  0)
+306 like 300 but trcl = (-3.2836    1.8958  0)
+307 like 300 but trcl = ( 0.0000    7.5831  0)
+308 like 300 but trcl = ( 3.2836    5.6873  0)
+309 like 300 but trcl = ( 6.5672    3.7916  0)
+310 like 300 but trcl = ( 6.5672    0.0000  0)
+311 like 300 but trcl = ( 6.5672   -3.7916  0)
+312 like 300 but trcl = ( 3.2836   -5.6873  0)
+313 like 300 but trcl = ( 0.0000   -7.5831  0)
+314 like 300 but trcl = (-3.2836   -5.6873  0)
+315 like 300 but trcl = (-6.5672   -3.7916  0)
+316 like 300 but trcl = (-6.5672    0.0000  0)
+317 like 300 but trcl = (-6.5672    3.7916  0)
+318 like 300 but trcl = (-3.2836    5.6873  0)
+319 like 300 but trcl = ( 0.0000   11.3747  0)
+320 like 300 but trcl = ( 3.2836    9.4789  0)
+321 like 300 but trcl = ( 6.5672    7.5831  0)
+322 like 300 but trcl = ( 9.8508    5.6873  0)
+323 like 300 but trcl = ( 9.8508    1.8958  0)
+324 like 300 but trcl = ( 9.8508   -1.8958  0)
+325 like 300 but trcl = ( 9.8508   -5.6873  0)
+326 like 300 but trcl = ( 6.5672   -7.5831  0)
+327 like 300 but trcl = ( 3.2836   -9.4789  0)
+328 like 300 but trcl = ( 0.0000  -11.3747  0)
+329 like 300 but trcl = (-3.2836   -9.4789  0)
+330 like 300 but trcl = (-6.5672   -7.5831  0)
+331 like 300 but trcl = (-9.8508   -5.6873  0)
+332 like 300 but trcl = (-9.8508   -1.8958  0)
+333 like 300 but trcl = (-9.8508    1.8958  0)
+334 like 300 but trcl = (-9.8508    5.6873  0)
+335 like 300 but trcl = (-6.5672    7.5831  0)
+336 like 300 but trcl = (-3.2836    9.4789  0)
+c
+c Reactor vessel
+250 250 -7.93 -250 251 214 -215  imp:n=1
+c
+c External Reflectors
+600 210 -3.01 -200 212 -213 250 700  702700 703700 704700 imp:n=1 $BeO for external reflector
+c
+c Internal reflectors
+501 200 -1.85 -251 214 -215 201 imp:n=1
+c
+c Control drums
+701 700 -2.52 -700 212 -213 701  702 -703   imp:n=1 $ trcl=1  
+c                        [ x'     y'  z'] [ xx'     yx'   zx' ]   [ xy'      yy'   zy' ]  
+702 like 701 but *trcl = (    0     0   0    -90      180   90         0      -90    90  )
+703 like 701 but *trcl = (    0     0   0    180      -90   90        90      180    90  )
+704 like 701 but *trcl = (    0     0   0     90        0   90       180       90    90  )
+711 210 -3.01 (-701 212 -213):(-700 -702 212 -213):(-700  703 212 -213) imp:n=1 $ trcl=1 
+712 like 711 but *trcl = ( 0    0   0    -90      180   90         0      -90    90  )  
+713 like 711 but *trcl = ( 0    0   0    180      -90   90        90      180    90  )
+714 like 711 but *trcl = ( 0    0   0     90        0   90       180       90    90  )
+c
+c Sodium Coolant
+400 400 -0.815 -201 120 
+     301120 302120 303120 304120 305120 306120 307120 308120 309120 310120 
+     311120 312120 313120 314120 315120 316120 317120 318120 319120 320120 
+     321120 322120 323120 324120 325120 326120 327120 328120 329120 330120 
+     331120 332120 333120 334120 335120 336120              
+     imp:n=1
+c
+c Outside Universe
+900 0 (-900 200 700 702700 703700 704700):(-900 -214):(-900 215):
+                  (-215 220 -200 250):(-221 214 -200 250):
+                  (-215 220 -700):(-215 220 -702700):(-215 220 -703700):(-215 220 -704700):
+                  (-221 214 -700):(-221 214 -702700):(-221 214 -703700):(-221 214 -704700) $:
+                   imp:n=1
+999 0 900 imp:n=0
+
+c --- SURFACES ---
+c Zirconium filler rod
+100 cz 0.3175
+101 cz 0.286 
+c
+c UZrH fuel meat
+110 cz 1.741
+111 cz 1.746
+c
+c Fuel cladding
+120 cz 1.797
+c
+c Graphite axial reflectors
+220 PZ    38.354
+221 PZ   -40.516
+222 CZ     1.637
+c
+c Reactor vessel
+250 CZ    14.12875
+251 CZ    13.81125
+c
+c External Reflectors
+200 CZ    27.2575  
+210 PZ   -31.75 
+211 PZ    31.75 
+212 PZ   -40.516
+213 PZ    38.354
+214 PZ   -42.926
+215 PZ    42.111
+216 PZ    39.571  $ Top of plenum space in fuel rod
+c
+c Internal reflectors
+c         x y    z     h-vector   axis-to-facet
+201 HEX   0 0 -42.926  0 0 85.037   11.96089 
+c
+c Control drums
+700 1 cz      7.064375
+701 1 cz      5.564375
+702 1 p   0 0 0   0 0 1   1  1.732  0 $ plane to define +60deg for 1/2 of poison arc  
+703 1 p   0 0 0   0 0 1   1 -1.732  0 $ plane to define -60deg for 1/2 of poison arc  
+c
+c Outside Universe
+900 SPH 0 0 0 70
+
+c MATERIALS
+c ------
+c Zirconium filler rod
+c Density = 6.51 g/cc
+m100 nlib=00c
+      40090  51.45 
+      40091  11.32
+      40092  17.19
+      40094  17.28
+      40096   2.76
+c ------
+c UZrH Fuel
+c density = 7.145 g/cc
+m110  nlib=00c   $ENDF8.0 Neutron cross section libraries at 293K used as default  
+       1001  -1.2
+      92235  -5.925
+      92238  -24.075
+      40090  -34.8858
+      40091  -7.6925
+      40092  -11.8873
+      40094  -12.3091
+      40096  -2.0253 
+mt110 h-zrh.40t zr-zrh.40t  $S(a,b) thermal scattering treatment of ZrH at 293K
+c ------
+c Beryllium Metal
+c Density = 1.85 g/cc (100% TD)
+m200   nlib=00c   $ENDF8.0 Neutron cross section libraries at 293K used as default
+        4009  1.0
+mt200 be-met.40t 
+c ------
+c Beryllium Oxide
+c Density = 3.01 g/cc (100% TD)
+m210   nlib=00c   $ENDF8.0 Neutron cross section libraries at 293K used as default
+        4009  1.0
+        8016  1.0
+mt210 be-beo.40t o-beo.40t
+c ------
+c Air for outside universe
+m900  nlib=00c   $ENDF8.0 Neutron cross section libraries at 293K used as default
+       7014  80
+       8016  20
+c ------
+c SS304 for fuel rod cladding
+c density = 8.0 g/cc
+m250 nlib=00c   $ENDF8.0 Neutron cross section libraries at 293K used as default
+      26054 -0.04031
+      26056 -0.637315
+      26057 -0.01529
+      26058 -0.002085
+      25055 -0.02
+      28058 -0.0648565 
+      28060 -0.024795
+      28061 -0.0010735
+      28062 -0.0034105
+      28064 -0.0008645
+      24050 -0.008265  
+      24052 -0.159201
+      24053 -0.01805
+      24054 -0.004484
+mt250 fe-56.40t
+c ------
+c Sodium Coolant
+m400 nlib=00c
+      11023  1.0
+c ------
+c B4C Neutron Absorber
+c Density = 2.52 g/cc
+c Natural isotopics for Boron
+m700  nlib=00c
+      5010      0.8
+      5011      3.2
+      6012      1.0
+c ------
+c Grapite axial reflectors
+m800   nlib=00c
+       6012  1.0
+mt800 grph30.40t
+c
+c Options CARDS
+mode n
+c ----- K-eigenvalue simulaiton cards ------
+c ------npg----k----nsk---gen----  
+kcode  25000   1.0   50   550  
+rand  gen=2  seed=123456789
+ksrc    2.66    1.51  -10.0
+        2.66    1.51  -15.0
+        0.00    3.24  -10.0
+        0.00    3.24  -15.0
+        0.00   -3.24  -10.0
+        0.00   -3.24  -15.0
+KOPTS   BLOCKSIZE=10    KINETICS=YES   PRECURSOR=YES
+c --------- Control drum rotation transformations -----------
+c All control drums will be set to the same angle withdrawn from the core with the transformation card TR1
+c Control drum angle is currently set to critical for room temperature conditions at 58 degrees withdrawn
+c   [ x'        y'       z'] [ xx'     yx'   zx' ]   [ xy'      yy'   zy' ]  
+*TR1  21.19327      0    0    58.0   32.0    90     -148.5    58.0    90     $ All CD coordinate transformation
+c
+
