@@ -90,7 +90,8 @@ frequency = 0.125
     []
     [FluidHeatTransfer]
       [all]
-        initial_temperature = 900
+        # The initial temperature is taken from the mesh file
+        #initial_temperature = 900
 
         # Restart parameters
         initialize_variables_from_mesh_file = true
