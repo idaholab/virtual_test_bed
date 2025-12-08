@@ -1,14 +1,19 @@
-#MCNP 6.2 STARTR Model
-The MCNP model for STARTR was made using version 6.2. The input is commented and describes the geometry, materials, and movement of the control drums for the model. The input is configured for k-eigenvalue calculations. 
+# MCNP 6.2 STARTR Model
+
+The MCNP model for STARTR was made using MCNP version 6.2. The input is commented and describes the geometry, materials, and movement of the control drums for the model. The input is configured for k-eigenvalue calculations. 
+
 
 !media MCNP_STARTR_xy_radial.png id=mcnpxy caption=STARTR MCNP radial reactor geometry with control drums at cold critical position style=width:80%;margin-left:auto;margin-right:auto
 
 !media MCNP_STARTR_yz_axial.png id=root caption=STARTR MCNP axial reactor geometry style=width:80%;margin-left:auto;margin-right:auto
 
 ## Adding Tallies
+
 There are no tallies used in this base model. Tallies may be added by the user to investigate specific parameters of interest in the model (e.g. flux, flux spectrum, fission densities, reaction rates, etc.) See the MCNP 6.2 User's Manual [!citep](MCNP62UserManual) for more information. 
 
+
 ## Customizing Runtime Settings
+
 The runtime settings are defined in the execution of MCNP in serial or in parallel mode. The installation of MCNP must support parallel calculations to run in parallel mode. 
 
 ## Running the Model

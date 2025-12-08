@@ -3,7 +3,7 @@
 *Contacts: Travis Lange (Travis.Lange.at.inl.gov), Daniel Grammer (grammer_daniel.at.berkeley.edu)*
 
 <!-- Update link when model is actually uploaded to make sure it's correct -->
-*Model link: [STARTR](https://github.com/idaholab/virtual_test_bed/tree/devel/str/STARTR)*
+*Model link: [STARTR](https://github.com/idaholab/virtual_test_bed/tree/devel/sfr/STARTR)*
 
 <!-- TODO: ADD image to website and put correct link here -->
 !tag name=STARTR

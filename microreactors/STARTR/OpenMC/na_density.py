@@ -5,8 +5,8 @@ def calc_na_density(temperature=294):
     """
     avail_temps = [250, 294, 600, 900, 1200, 2500] # cross-section temps in endfb 8.0 library
     t = min(avail_temps, key=lambda x: abs(x - temperature))
-    print(t)
-    # Convert temp to celcius
+    print("Sodium density evaluated at temperature: ", t, "Kelvin")
+    # Convert temp to celsius
     t = t - 293.15
     density = (0.9501 - 2.2976e-04*t - 1.46e-08*t**2 + 5.638e-12*t**3)
     return density
