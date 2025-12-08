@@ -1,13 +1,9 @@
 """
-Introduction to INL and STARTR
+Introduction to STARTR
 
 This model constructs each element of the STARTR reactor component-by-component, with all materials
 used defined at the top of the code. This model is designed to run on one core within one hour
 with a standard deviation less than 30 pcm.
-
-Modified versions of this code for various reactor analysis tasks can be found in the
-subdirectories herein. The test suite includes control drum worth calculations, radial and axial
-power peaking analysis, isothermal reactivity calculations, and more.
 
 The ENDF/B-VIII.0 library was used for cross section and thermal scattering data under
 D.A. Brown et al., "ENDF/B-VIII.0: The 8th Major Release of the Nuclear Reaction Data Library
