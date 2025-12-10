@@ -770,9 +770,6 @@
 
 [Outputs]
   csv = true
-  perf_graph = true
   exodus = false
-  checkpoint = false
   wall_time_checkpoint = false
-  nemesis = false
 []

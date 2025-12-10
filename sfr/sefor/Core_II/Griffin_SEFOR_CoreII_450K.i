@@ -2069,6 +2069,4 @@
   csv = true
   perf_graph = true
   exodus = false
-  checkpoint = false
-  nemesis = false
 []

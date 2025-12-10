@@ -1,3 +1,10 @@
+################################################################################
+## NEAMS Fast Reactor Application Driver                                      ##
+## SEFOR TWODANT Model of SEFOR Core I-E FOR MCC3 MODEL                       ##
+## Input File for generating cross sections                                   ##
+## Please contact the authors for issues:                                     ##
+## - Dr. Donny Hartanto (hartantod.at.ornl.gov)                               ##
+################################################################################
      1
 
  ngroup=        1041

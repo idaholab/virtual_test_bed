@@ -5,16 +5,17 @@
 *Model link: [SEFOR](https://github.com/idaholab/virtual_test_bed/tree/devel/sfr/sefor)*
 
 !tag name=Southwest Experimental Fast Oxide Reactor (SEFOR)
-     description=Simulation a series of SEFOR Core using the NEAMS tools pairs=reactor_type:sfr
+     description=Simulation of SEFOR core I-E and core I-I isothermal experiments using the NEAMS tools
+     pairs=reactor_type:sfr
            reactor:SEFOR
            geometry:core
            simulation_type:neutronics
-           input_features:reactor_meshing;shift_reference;cross_section_generation;Griffin_neutronics
+           input_features:reactor_meshing;cross_section_generation
            transient:steady_state
            V_and_V:verification
-           codes_used:reactor_module;Griffin;
+           codes_used:MOOSE_Reactor;Griffin;Shift;MCC3
            computing_needs:HPC
-           fiscal_year:2025 
+           fiscal_year:2025
            sponsor:NEAMS
            institution:ORNL;ANL
 

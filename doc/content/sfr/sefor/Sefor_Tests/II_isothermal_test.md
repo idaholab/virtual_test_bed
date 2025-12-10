@@ -1,16 +1,16 @@
-# SEFOR Core I-I Isothermal Test 
+# SEFOR Core I-I Isothermal Test
 
-Reactivity feedback in SEFOR Core I-I during isothermal tests was computed using Griffin’s deterministic model. 
+Reactivity feedback in SEFOR Core I-I during isothermal tests was computed using Griffin’s deterministic model.
 
-The total reactivity feedback was obtained by interpolating temperature-dependent cross-section 
-libraries and updating the active core geometry according to the thermal expansion coefficients 
-specified in the benchmark. 
+The total reactivity feedback was obtained by interpolating temperature-dependent cross-section
+libraries and updating the active core geometry according to the thermal expansion coefficients
+specified in the benchmark.
 
-The table below compares the calculated total reactivity feedback with the experimental values 
-obtained from isothermal tests performed in Core I-I, where the core temperature was increased 
-from 360 F to 760 F. The calculated results were obtained using Griffin with the ENDF/B-VII.0 
-nuclear data library, while the experimental data serve as reference values. For comparison, the 
-table also includes K-eff value from Serpent2 calculations using the ENDF/B-VII.1 
+The table below compares the calculated total reactivity feedback with the experimental values
+obtained from isothermal tests performed in Core I-I, where the core temperature was increased
+from 360 F to 760 F. The calculated results were obtained using Griffin with the ENDF/B-VII.0
+nuclear data library, while the experimental data serve as reference values. For comparison, the
+table also includes K-eff value from Serpent2 calculations using the ENDF/B-VII.1
 library
 
 
