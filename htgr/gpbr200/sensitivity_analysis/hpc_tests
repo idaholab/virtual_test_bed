@@ -9,6 +9,7 @@
     allow_warnings = true # Cross section warning
     min_parallel = 24
     max_time = 3600 # About 2x predicted run-time
+    hpc_mem_per_cpu = 10gb
   []
   [lhs_sampling]
     type = CSVDiff
@@ -20,5 +21,6 @@
     allow_warnings = true # Cross section warning
     min_parallel = 100
     max_time = 7200 # About 2x predicted run-time
+    hpc_mem_per_cpu = 10gb
   []
 []
