@@ -15,6 +15,8 @@
 # - Optionally, a coarse mesh can be defined at the end of this Mesh block by the user to run Griffin with CMFD
 # See online documentation or 'tests' file for the command line arguments to pass to do this
 # Adding command line arguments from the input is coming in MOOSE FY24
+# TODO User should define heterogeneous RGMB core mesh in [Mesh] block or as separate input file
+# TODO User should set Mesh/eqv_core/input to name of heterogeneous RGMB CoreMeshGenerator mesh
 
 [Mesh]
   [eqv_core]
@@ -41,7 +43,7 @@
   particle = neutron
   equation_type = eigenvalue
   G = 33
-  # ReflectingBoundary = 'outer_core top bottom'
+  ReflectingBoundary = 'outer_core top bottom'
   VacuumBoundary = 'outer_core top bottom'
   [dfem_sn]
     scheme = DFEM-SN
@@ -51,9 +53,9 @@
     NPolar = 2
     NAzmthl = 3
     NA = 1
-    using_array_variable = true
     using_averaged_xs = true
     direction_major_ordering = true
+    flux_moment_primal_variable = true
   []
 []
 
@@ -70,6 +72,14 @@
 []
 
 [Materials]
+  # Mapping of homogeneous subassembly ID to associated (heterogeneous assembly, axial ID) pairs:
+  # 100: (fuel_assembly_1, 0), (fuel_assembly_2, 0), (fuel_assembly_3, 0)
+  # 300: (fuel_assembly_1, 2), (fuel_assembly_2, 2), (fuel_assembly_3, 2)
+  # 400: (fuel_assembly_1, 3), (fuel_assembly_2, 3), (fuel_assembly_3, 3)
+  # 700: (control_assembly, 0), (control_assembly, 1)
+  # 800: (control_assembly, 2), (control_assembly, 3)
+  # 900: (reflector_assembly, 0), (reflector_assembly, 1), (reflector_assembly, 2), (reflector_assembly, 3)
+  # 1000: (shielding_assembly, 0), (shielding_assembly, 1), (shielding_assembly, 2), (shielding_assembly, 3)
   [material_core_grid1]
     type = MixedMatIDNeutronicsMaterial
     isotopes = 'pseudo_REG'
@@ -78,6 +88,10 @@
     grid_names = 'Tcool'
     grid = '1'
   []
+  # Mapping of homogeneous subassembly ID to associated (heterogeneous assembly, axial ID) pairs:
+  # 200: (fuel_assembly_1, 1)
+  # 500: (fuel_assembly_2, 1)
+  # 600: (fuel_assembly_3, 1)
   [material_core_grid2]
     type = MixedMatIDNeutronicsMaterial
     isotopes = 'pseudo_REG'
