@@ -18,15 +18,6 @@ geometric_tolerance = 1e-3
 cavity_l = 2.0
 lid_velocity = 0.5
 
-[UserObjects]
-  [rc]
-    type = INSFVRhieChowInterpolator
-    u = vel_x
-    v = vel_y
-    pressure = pressure
-  []
-[]
-
 [Mesh]
   type = MeshGeneratorMesh
   block_id = '1'
