@@ -20,10 +20,9 @@
     type = CSVDiff
     input = 'thermal_ss.i'
     csvdiff = 'thermal_ss_out.csv'
-    check_input = True
     executable_pattern = 'blue_crab*|dire_wolf*'
-    cli_args = "MultiApps/active='' Transfers/active='' Outputs/file_base=thermal_ss_standalone"
-    min_parallel = 192 # won't be tested for now
+    cli_args = "MultiApps/active='' Transfers/active=''"
+    min_parallel = 192
   []
 
   [griffin_only]
@@ -33,16 +32,19 @@
     executable_pattern = 'griffin*|blue_crab*|dire_wolf*'
     cli_args = "MultiApps/active='' Transfers/active='' AuxVariables/Trefl/initial_condition=800 "
                "Outputs/file_base=neutronics_eigenvalue_standalone"
-    min_parallel = 192 # won't be tested for now
+    min_parallel = 192
     prereq = neutronics_fine_mesh
   []
 
   [coupled_run]
     type = CSVDiff
-    csvdiff = 'neutronics_eigenvalue_out.csv'
+    csvdiff = 'neutronics_eigenvalue.csv'
+    # file base is coded into the input
     input = 'neutronics_eigenvalue.i'
     executable_pattern = 'dire_wolf*'
-    min_parallel = 192 # won't be tested for now
+    min_parallel = 192
     prereq = griffin_only
+    # Timed out at 600s
+    max_time = 1500
   []
 []
