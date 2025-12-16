@@ -554,7 +554,7 @@ riser_Dh = 0.17
   end_time = 5e5
   [TimeStepper]
     type = IterationAdaptiveDT
-    iteration_window = 2
+    iteration_window = 4
     optimal_iterations = 8
     cutback_factor = 0.8
     growth_factor = 1.6
