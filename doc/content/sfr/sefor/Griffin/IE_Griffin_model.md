@@ -1,6 +1,7 @@
 # SEFOR Griffin Neutronic Model for Core I-E
 
 ## Loading a parallel distributed mesh
+
 For Griffin calculations, a split-mesh configuration was used to optimize parallel computational performance, especially with respect to the memory requirement. The workflow involves configuring the mesh split setup prior to running simulations using Griffin. The Griffin executable is utilized to execute the mesh splitting [Griffin_mesh_split]:
 
 !listing id=Griffin_mesh_split caption=Griffin command for splitting the mesh
@@ -14,6 +15,7 @@ Once the pre-split mesh is created, the workflow transitions to simulation mode 
          caption=Griffin mesh block for using distributed mesh
 
 ## Group cross sections
+
 Microscopic cross sections generated from MC$^2$-3 were used to describe the homogenized zones including the bottom grid plate, core top (Na_steel), Downcomers (inside or outside the vessel DC_IV/DC_OV), radial reflectors and radial shields. For various fuel assemblies, the materials for each region within the fuel assembly was redefined by specifying the atom density for each isotope and using the microscopic cross sections from the MC$^2$-3 homogenized zone. [load_material] shows the Griffin input to define the materail regions for regions within a standard fuel assembly.
 
 !listing sfr/sefor/Core_IE/Core-I-E_ENDF71V2_450K_NA-3_NP-3_NAZ-6_CMFD_1440Tasks_30Nodes_48Cores.i
@@ -23,6 +25,7 @@ Microscopic cross sections generated from MC$^2$-3 were used to describe the hom
          caption=Griffin material block for defining materials in axial segments of the standard fuel assembly with UO2 layers.
 
 ## Solver options
+
 In this VTB model, Griffin simulations utilized the DFEM-SN transport solver. Angular discretization was achieved using Gauss-Chebyshev quadrature with three polar angles and six azimuthal angles. The finite element shape functions for the angular fluxes (primal variables) were first-order MONOMIAL and the maximum scattering anisotropy order was set to NA=3 as illustrated in [Griffin_tr]:
 
 !listing sfr/sefor/Core_IE/Core-I-E_ENDF71V2_450K_NA-3_NP-3_NAZ-6_CMFD_1440Tasks_30Nodes_48Cores.i
