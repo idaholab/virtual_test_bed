@@ -14,7 +14,7 @@
 []
 
 [GlobalParams]
-  library_file   = '../xml/Core-I-E_450K_ENDF71.33gV2.xml'
+  library_file   = '../Cross_Section/Core-I-E_450K_ENDF71.33gV2.xml'
   library_name   = ISOTXS-neutron
   plus           = true
   dbgmat         = false
