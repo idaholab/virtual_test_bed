@@ -15,6 +15,7 @@ lfs_include:
   - htgr/gpbr200
   - htgr/open-xe100
   - sfr/vtr
+  - sfr/sefor
   - microreactors/gcmr/assembly/MESH
   - microreactors/mrad/mesh/gold
   - microreactors/mrad/isoxml/HP-MR_XS.xml

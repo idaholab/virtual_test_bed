@@ -11,6 +11,25 @@
     type = FileMeshGenerator
     file ='Core-I-E_3D_450K_mesh_split_with_cmfd.cpa.gz'
   []
+  [coarse_mesh]
+    type = GeneratedMeshGenerator
+    dim= 3
+    nx = 35
+    ny = 35
+    nz = 34
+    xmin = -87.0340
+    xmax =  87.0340
+    ymin = -87.0340
+    ymax =  87.0340
+    zmin =   0.0000
+    zmax = 165.6018
+  []
+  [assign_coarse_id]
+    type = CoarseMeshExtraElementIDGenerator
+    input = 'loader'
+    coarse_mesh = 'coarse_mesh'
+    extra_element_id_name = coarse_element_id
+  []
 []
 
 [GlobalParams]
