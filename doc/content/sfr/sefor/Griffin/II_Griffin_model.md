@@ -7,7 +7,8 @@ After generating the pre-split mesh, the workflow switches to simulation mode by
 Griffin transport calculations used the DFEM-SN solver with Gauss–Chebyshev angular quadrature.
 While MC2-3 was used to generate microscopic cross-sections in 33 energy groups structure. The discretization and 3D mesh statistics reflect the differing problem sizes of the two cores.
 
-For Core I-I, the problem was solved is larger than Core I-E, with 1.128×10^11 DOFs and 5.81×10^7 local DOFs; the mesh contained 6.17×10^6 total nodes (3.82×10^3 local) and 8.90×10^6 total elements (4.58×10^3 local).
+For Core I-I, the problem was solved is larger than Core I-E, with $1.128×10^11$ DOFs and $5.81×10^7$ local DOFs; the mesh contained $6.17×10^6$ total nodes ($3.82×10^3$ local) and $8.90×10^6$ total elements ($4.58×10^3$ local).
+Local DOFs are DOFs on each split, loaded individually by each parallel process.
 Griffin eigenvalue calculations for Core I-I employed the DFEM-SN (3,4) method with NA=3.
 Simulations ran on INL’s Windriver1 HPC system using 6,048 cores and approximately 47 TB of aggregate memory. However, enabling `flux_moment_primal_variable` parameter in the transport solver input can substantially reduce memory usage by storing flux moments rather than the full angular flux.
 

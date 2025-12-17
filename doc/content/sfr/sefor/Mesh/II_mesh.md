@@ -1,6 +1,4 @@
-# SEFOR Core I-I Griffin Model
-
-## SEFOR Mesh Model
+# SEFOR Mesh Model for Core I-I
 
 The Core I-I mesh encompasses configurations absent in Core I-E, most notably the  Instrumentation Fuel Assembly (IFA) and fuel assemblies containing two GP rods and one B₄C rod. The mesh represents a fully heterogeneous 3D reactor core, capturing the various fuel assembly types and structural components. The Standard Fuel Assembly (FA) comprises multiple components, including the MOX fuel pin, void gap, SS316 cladding, BeO central pin, and several stainless-steel and sodium regions representing ducts, coolant, and inter-assembly gaps.
 
