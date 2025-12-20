@@ -39,15 +39,6 @@ beta5   =  6.40917e-4
 beta6   =  6.05805e-4
 beta7   =  1.66016e-4
 
-[UserObjects]
-  [rc]
-    type = INSFVRhieChowInterpolator
-    u = vel_x
-    v = vel_y
-    pressure = pressure
-  []
-[]
-
 [Mesh]
   type = MeshGeneratorMesh
   block_id = '1'
