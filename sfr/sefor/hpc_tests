@@ -10,6 +10,7 @@
     executable_pattern = 'combined*|reactor*|griffin*'
     capabilities = 'method=opt'
     max_time = 800
+    hpc_mem_per_cpu = 15gb
   []
   [mesh_II]
     type = CSVDiff
@@ -19,9 +20,9 @@
     csvdiff = 'SEFORII_3D_integral_0001.csv'
     requirement = 'The system shall be able to generate the SEFOR II core mesh'
     executable_pattern = 'combined*|reactor*|griffin*'
-    # To go on HPC
-    max_time = 2000
+    max_time = 1600
     capabilities = 'method=opt'
+    hpc_mem_per_cpu = 15gb
   []
 
   [syntax_IE]
@@ -32,8 +33,9 @@
     check_input = true
     prereq = 'mesh_IE'
     executable_pattern = 'griffin*'
-    max_time = 2000
-    min_parallel = 2
+    max_time = 400
+    min_parallel = 10
+    hpc_mem_per_cpu = 90gb
   []
   [syntax_II]
     type = RunApp
@@ -44,6 +46,11 @@
     prereq = 'mesh_II'
     executable_pattern = 'griffin*'
     max_time = 4000
-    min_parallel = 2
+    # Replicated mesh:
+    # at 10 procs, fails a 100GB allocation
+    # fails at 20 and 40 procs with a memory code from Apptainer
+    # passes at 80 procs
+    min_parallel = 60
+    hpc_mem_per_cpu = 180gb
   []
 []
