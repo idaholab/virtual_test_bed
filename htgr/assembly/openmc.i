@@ -160,8 +160,6 @@ num_layers_for_THM = 50 # number of elements in the THM model; for the converged
 
   # optimizations to increase tracking rate by assuring that the tallies
   # are spatially independent
-  check_tally_sum = false
-  normalize_by_global_tally = false
   assume_separate_tallies = true
 
   power = '${fparse power / n_bundles}'
@@ -194,6 +192,9 @@ num_layers_for_THM = 50 # number of elements in the THM model; for the converged
 
       check_equal_mapped_tally_volumes = true
       output = 'unrelaxed_tally_std_dev'
+
+      check_tally_sum = false
+      normalize_by_global_tally = false
     []
   []
 []
