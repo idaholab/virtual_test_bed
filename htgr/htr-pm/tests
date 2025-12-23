@@ -39,10 +39,11 @@
     input = 'ss-main.i'
     csvdiff = 'ss-main_csv.csv'
     executable_pattern = 'sam*|blue_crab*'
-    cli_args = "--app SamApp Outputs/csv/execute_on='initial final' Outputs/inactive='out' Outputs/inactive='out' --n-threads=4"
+    cli_args = "--app SamApp Outputs/csv/execute_on='initial final' Outputs/inactive='out' --n-threads=4"
     abs_zero = 1e-5
     rel_err = 1e-4
     max_time = 1000
+    min_threads = 4
     method = 'opt'
     prereq = 'htr_pm_sam_rccs_syntax'
   []
