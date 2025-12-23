@@ -71,8 +71,8 @@ pbed_d      = 3.0  # Pebble bed diameter (m)
 
 [Problem]
   type = FEProblem
-  restart_file_base = 'ss-main_checkpoint_cp/450'
-  # restart_file_base = 'ss-main_checkpoint_cp/LATEST'
+  # restart_file_base = 'ss-main_checkpoint_cp/0202'
+  restart_file_base = 'ss-main_checkpoint_cp/LATEST'
 []
 
 [Functions]
@@ -940,7 +940,7 @@ pbed_d      = 3.0  # Pebble bed diameter (m)
 [Executioner]
   type = Transient
   dtmin = 1e-6
-  dtmax = 8
+  dtmax = 3600
 
   [TimeStepper]
     type = IterationAdaptiveDT
@@ -955,7 +955,7 @@ pbed_d      = 3.0  # Pebble bed diameter (m)
   nl_rel_tol = 1e-5
   nl_abs_tol = 1e-4
   nl_max_its = 15
-  l_tol      = 1e-3
+  l_tol      = 1e-4
   l_max_its  = 100
 
   start_time = 0

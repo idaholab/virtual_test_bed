@@ -19,6 +19,7 @@ pump_head         = 2.35e6 # Pump head during steady state
   scaling_factor_var = '1 1e-3 1e-6'
   eos = helium
   Tsolid_sf = 1e-5
+  p_order = 1
 []
 
 [Functions]
@@ -194,6 +195,7 @@ pump_head         = 2.35e6 # Pump head during steady state
     position       = '0.845 1.8 0'
     overlap_coupled = true
     overlap_pp = dpdz_core_receive
+    initial_V = -2
   []
 
   # Inlet of the surrogate channel
@@ -637,19 +639,19 @@ pump_head         = 2.35e6 # Pump head during steady state
     type = SMP
     full = true
     solve_type = 'PJFNK'
-    petsc_options_iname = '-pc_type -ksp_gmres_restart'
-    petsc_options_value = 'lu 101'
+    petsc_options_iname = '-pc_type -ksp_gmres_restart -mat_mffd_err'
+    petsc_options_value = 'lu 101 1e-6'
   []
 []
 
 [Executioner]
   type = Transient
   dtmin = 1e-6
-  dtmax = 500
+  dtmax = 3600
 
   [TimeStepper]
     type = IterationAdaptiveDT
-    growth_factor = 1.25
+    growth_factor = 1.1
     optimal_iterations = 10
     linear_iteration_ratio = 100
     dt = 0.005 #0.0064 #0.01
@@ -658,7 +660,7 @@ pump_head         = 2.35e6 # Pump head during steady state
   []
 
   nl_rel_tol = 1e-6 #1e-5
-  nl_abs_tol = 1e-6 #1e-4
+  nl_abs_tol = 1e-5 #1e-4
   nl_max_its = 15
   l_tol = 1e-4 #1e-6
   l_max_its = 100
@@ -667,8 +669,8 @@ pump_head         = 2.35e6 # Pump head during steady state
   end_time = 0
 
   [Quadrature]
-    type = GAUSS
-    order = SECOND
+    type = TRAP
+    order = FIRST
   []
 []
 

@@ -15,11 +15,12 @@ p_outlet          = 7.0e+6 # Reactor outlet pressure (Pa)
   scaling_factor_var = '1 1e-3 1e-6'
   eos = helium
   Tsolid_sf = 1e-5
+  p_order = 1
 []
 
 [Problem]
-  restart_file_base = 'ss-main_out_primary_loop0_checkpoint_cp/450'
-  # restart_file_base = 'ss-main_out_primary_loop0_checkpoint_cp/LATEST'
+  # restart_file_base = 'ss-main_out_primary_loop0_checkpoint_cp/0202'
+  restart_file_base = 'ss-main_out_primary_loop0_checkpoint_cp/LATEST'
 []
 
 [Functions]
@@ -459,19 +460,19 @@ p_outlet          = 7.0e+6 # Reactor outlet pressure (Pa)
     type = SMP
     full = true
     solve_type = 'PJFNK'
-    petsc_options_iname = '-pc_type -ksp_gmres_restart'
-    petsc_options_value = 'lu 101'
+    petsc_options_iname = '-pc_type -ksp_gmres_restart -mat_mffd_err'
+    petsc_options_value = 'lu 101 1e-6'
   []
 []
 
 [Executioner]
   type = Transient
   dtmin = 1e-6
-  dtmax = 8
+  dtmax = 3600
 
   [TimeStepper]
     type = IterationAdaptiveDT
-    growth_factor = 1.25
+    growth_factor = 1.1
     optimal_iterations = 10
     linear_iteration_ratio = 100
     dt = 0.005 #0.0064 #0.01
