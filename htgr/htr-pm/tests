@@ -56,6 +56,7 @@
     abs_zero = 1e-5
     rel_err = 1e-4
     max_time = 1000
+    min_threads = 2
     method = 'opt'
     prereq = 'htr_pm_sam_loop_syntax'
   []
@@ -79,6 +80,7 @@
     cli_args = "--app SamApp Outputs/csv/execute_on='initial final' --n-threads=2 Executioner/Quadrature/type=TRAP Executioner/Quadrature/order=FIRST"
     abs_zero = 1e-5
     rel_err = 1e-4
+    min_threads = 2
     max_time = 1000
     method = 'opt'
     prereq = 'htr_pm_sam_loop_plofc_ss_syntax'
@@ -94,6 +96,7 @@
     cli_args = "--app SamApp MultiApps/primary_loop/input_files=plofc-primary-loop-ss.i Outputs/csv/file_base=ss-main-simplified Outputs/csv/execute_on='initial final' Outputs/inactive='out' --n-threads=4"
     abs_zero = 1e-5
     rel_err = 1e-4
+    min_threads = 4
     max_time = 1000
     method = 'opt'
     prereq = 'htr_pm_sam_loop_plofc_ss_syntax'
@@ -130,6 +133,7 @@
     cli_args = "--app SamApp Executioner/num_steps=5 Outputs/inactive='out' --n-threads=4"
     abs_zero = 1e-5
     rel_err = 1e-4
+    min_threads = 4
     max_time = 1000
     method = 'opt'
     prereq = 'htr_pm_sam_main_simplified'
