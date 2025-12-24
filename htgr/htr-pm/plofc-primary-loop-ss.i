@@ -207,7 +207,7 @@ p_outlet          = 7.0e+6 # Reactor outlet pressure (Pa)
     type           = PBOneDFluidComponent
     A              = 0.81631
     Dh             = 0.2
-    length         = 13.65281 #
+    length         = 13.65281
     n_elems        = 20
     orientation    = '0 1 0'
     position       = '2.03 2.04719 0'
@@ -454,19 +454,19 @@ p_outlet          = 7.0e+6 # Reactor outlet pressure (Pa)
     type = SMP
     full = true
     solve_type = 'PJFNK'
-    petsc_options_iname = '-pc_type -ksp_gmres_restart'
-    petsc_options_value = 'lu 101'
+    petsc_options_iname = '-pc_type -ksp_gmres_restart -mat_mffd_err'
+    petsc_options_value = 'lu 101 1e-6'
   []
 []
 
 [Executioner]
   type = Transient
   dtmin = 1e-6
-  dtmax = 8
+  dtmax = 3600 #8
 
   [TimeStepper]
     type = IterationAdaptiveDT
-    growth_factor = 1.25
+    growth_factor = 1.1
     optimal_iterations = 10
     linear_iteration_ratio = 100
     dt = 0.005 #0.0064 #0.01
@@ -480,8 +480,8 @@ p_outlet          = 7.0e+6 # Reactor outlet pressure (Pa)
   l_tol = 1e-4 #1e-6
   l_max_its = 100
 
-  start_time = 0
-  end_time = 500000
+  start_time = -200000
+  end_time = 0
 
   [Quadrature]
     type = GAUSS

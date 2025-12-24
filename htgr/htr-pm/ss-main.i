@@ -186,12 +186,12 @@ rho_in            = 6.3306  # Helium density at 7 MPa and 523.15 K (from NIST)
   # Velocity
   [vel_x]
     scaling = 1e-3
-    initial_condition = 1 # 1.0E-08
+    initial_condition = 1.0E-08
     block = ${fluid_blocks}
   []
   [vel_y]
     scaling = 1e-3
-    initial_condition = 1 # 1.0E-08
+    initial_condition = -2 # 1.0E-08
     block = ${fluid_blocks}
   []
   # Pressure
@@ -946,7 +946,7 @@ rho_in            = 6.3306  # Helium density at 7 MPa and 523.15 K (from NIST)
 [Executioner]
   type = Transient
   dtmin = 1e-6
-  dtmax = 500
+  dtmax = 3600
 
   [TimeStepper]
     type = IterationAdaptiveDT
