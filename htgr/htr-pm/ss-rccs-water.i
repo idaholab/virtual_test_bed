@@ -366,7 +366,7 @@ Dh_pipe           = 2 #1
 [Executioner]
   type = Transient
   dtmin = 1e-6
-  dtmax = 500
+  dtmax = 3600
 
   [TimeStepper]
     type = IterationAdaptiveDT
