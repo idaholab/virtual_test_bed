@@ -13,3 +13,5 @@
 [Hexagonal Assembly Thermal Bowing](hex_duct_bowing/index.md)
 
 [Fuel Performance: Pin DP11 of IFR X447/A Experiment](ebr2_x447_dp11/index.md)
+
+[Southwest Experimental Fast Oxide Reactor (SEFOR)](sefor/index.md)
