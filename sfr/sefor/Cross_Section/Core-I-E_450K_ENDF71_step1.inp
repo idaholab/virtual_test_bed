@@ -1,0 +1,1635 @@
+################################################################################
+## NEAMS Fast Reactor Application Driver                                      ##
+## SEFOR MCC3 Model of SEFOR Core I-E at 450 K                                ##
+## Input File for generating cross sections                                   ##
+## Please contact the authors for issues:                                     ##
+## - Dr. Donny Hartanto (hartantod.at.ornl.gov)                               ##
+################################################################################
+#!/bin/bash
+
+lib_mcclibdir=../lib.mcc.e71
+lib_pwlibdir=../lib.pw.200.e71
+exe_twodant=../twodant.x
+exe_mcc3=../mcc3.x
+exe_isotxs_modify=../ISOTXS_Modify.x
+!
+! ============================================================
+!
+cat > input << EOF
+\$library
+     c_mcclibdir  ="$lib_mcclibdir"
+     c_pwlibdir   ="$lib_pwlibdir"
+     c_twodantexe ="$exe_twodant"
+/
+\$control
+     c_group_structure       = "ANL1041"
+     c_geometry_type         = "mixture"
+     i_number_region         = 1
+     i_scattering_order      = 3
+     l_twodant               = F
+     l_pendf                 = T
+/
+\$material
+!
+! ============================================================
+!                        Na_GP_b (A)
+! ============================================================
+!
+     t_composition(:,  1)=  NA23_7  NA23_A  1.68850E-02  450.00
+                            CR50_7  CR50_A  1.99835E-04  450.00
+                            CR52_7  CR52_A  3.85357E-03  450.00
+                            CR53_7  CR53_A  4.36962E-04  450.00
+                            CR54_7  CR54_A  1.08771E-04  450.00
+                            FE54_7  FE54_A  8.50997E-04  450.00
+                            FE56_7  FE56_A  1.33588E-02  450.00
+                            FE57_7  FE57_A  3.08517E-04  450.00
+                            FE58_7  FE58_A  4.10573E-05  450.00
+                            NI58_7  NI58_A  1.66423E-03  450.00
+                            NI60_7  NI60_A  6.41055E-04  450.00
+                            NI61_7  NI61_A  2.78666E-05  450.00
+                            NI62_7  NI62_A  8.88497E-05  450.00
+                            NI64_7  NI64_A  2.26275E-05  450.00
+                            B10__7  B10__A  6.60243E-04  450.00
+                            B11__7  B11__A  2.65754E-03  450.00
+                            C____7  C12__A  8.29451E-04  450.00
+/
+\$output
+     l_isotxs_macroxs    = T
+/
+EOF
+$exe_mcc3
+$exe_isotxs_modify in=ISOTXS.merged out=ISOTXS.REG01.merged i=REG_01 n=REG_01
+mv ISOTXS.REG01.merged ISOTXS.REG01
+!
+! ============================================================
+!
+cat > input << EOF
+\$library
+     c_mcclibdir  ="$lib_mcclibdir"
+     c_pwlibdir   ="$lib_pwlibdir"
+     c_twodantexe ="$exe_twodant"
+/
+\$control
+     c_group_structure       = "ANL1041"
+     c_geometry_type         = "mixture"
+     i_number_region         = 1
+     i_scattering_order      = 3
+     l_twodant               = F
+     l_pendf                 = T
+/
+\$material
+!
+! ============================================================
+!                        FRED (B)
+! ============================================================
+!
+     t_composition(:,  1)=  NA23_7  NA23_B  1.51201E-04  450.00
+                            CR50_7  CR50_B  1.14143E-04  450.00
+                            CR52_7  CR52_B  2.20114E-03  450.00
+                            CR53_7  CR53_B  2.49595E-04  450.00
+                            CR54_7  CR54_B  6.21283E-05  450.00
+                            FE54_7  FE54_B  5.22298E-04  450.00
+                            FE56_7  FE56_B  8.19891E-03  450.00
+                            FE57_7  FE57_B  1.89344E-04  450.00
+                            FE58_7  FE58_B  2.51981E-05  450.00
+                            MO1007  MO100B  9.43776E-06  450.00
+                            MO92_7  MO92_B  1.45443E-05  450.00
+                            MO94_7  MO94_B  9.06544E-06  450.00
+                            MO95_7  MO95_B  1.56029E-05  450.00
+                            MO96_7  MO96_B  1.63476E-05  450.00
+                            MO97_7  MO97_B  9.35944E-06  450.00
+                            MO98_7  MO98_B  2.36489E-05  450.00
+                            NI58_7  NI58_B  1.09453E-03  450.00
+                            NI60_7  NI60_B  4.21614E-04  450.00
+                            NI61_7  NI61_B  1.83266E-05  450.00
+                            NI62_7  NI62_B  5.84351E-05  450.00
+                            NI64_7  NI64_B  1.48820E-05  450.00
+/
+\$output
+     l_isotxs_macroxs    = T
+/
+EOF
+$exe_mcc3
+$exe_isotxs_modify in=ISOTXS.merged out=ISOTXS.REG02.merged i=REG_01 n=REG_02
+mv ISOTXS.REG02.merged ISOTXS.REG02
+!
+! ============================================================
+!
+cat > input << EOF
+\$library
+     c_mcclibdir  ="$lib_mcclibdir"
+     c_pwlibdir   ="$lib_pwlibdir"
+     c_twodantexe ="$exe_twodant"
+/
+\$control
+     c_group_structure       = "ANL1041"
+     c_geometry_type         = "mixture"
+     i_number_region         = 1
+     i_scattering_order      = 3
+     l_twodant               = F
+     l_pendf                 = T
+/
+\$material
+!
+! ============================================================
+!                        DC_IV (C)
+! ============================================================
+!
+     t_composition(:,  1)=  NA23_7  NA23_C  1.48350E-02  450.00
+                            CR50_7  CR50_C  2.34745E-04  450.00
+                            CR52_7  CR52_C  4.52673E-03  450.00
+                            CR53_7  CR53_C  5.13299E-04  450.00
+                            CR54_7  CR54_C  1.27773E-04  450.00
+                            FE54_7  FE54_C  9.99616E-04  450.00
+                            FE56_7  FE56_C  1.56923E-02  450.00
+                            FE57_7  FE57_C  3.62408E-04  450.00
+                            FE58_7  FE58_C  4.82292E-05  450.00
+                            NI58_7  NI58_C  1.95489E-03  450.00
+                            NI60_7  NI60_C  7.53037E-04  450.00
+                            NI61_7  NI61_C  3.27337E-05  450.00
+                            NI62_7  NI62_C  1.04375E-04  450.00
+                            NI64_7  NI64_C  2.65802E-05  450.00
+/
+\$output
+     l_isotxs_macroxs    = T
+/
+EOF
+$exe_mcc3
+$exe_isotxs_modify in=ISOTXS.merged out=ISOTXS.REG03.merged i=REG_01 n=REG_03
+mv ISOTXS.REG03.merged ISOTXS.REG03
+!
+! ============================================================
+!
+cat > input << EOF
+\$library
+     c_mcclibdir  ="$lib_mcclibdir"
+     c_pwlibdir   ="$lib_pwlibdir"
+     c_twodantexe ="$exe_twodant"
+/
+\$control
+     c_group_structure       = "ANL1041"
+     c_geometry_type         = "mixture"
+     i_number_region         = 1
+     i_scattering_order      = 3
+     l_twodant               = F
+     l_pendf                 = T
+/
+\$material
+!
+! ============================================================
+!                        DC_OV (D)
+! ============================================================
+!
+     t_composition(:,  1)=  MG24_7  MG24_D  4.12309E-04  450.00
+                            MG25_7  MG25_D  5.21977E-05  450.00
+                            MG26_7  MG26_D  5.74694E-05  450.00
+                            AL27_7  AL27_D  1.12844E-02  450.00
+                            CR50_7  CR50_D  1.28512E-04  450.00
+                            CR52_7  CR52_D  2.47827E-03  450.00
+                            CR53_7  CR53_D  2.81011E-04  450.00
+                            CR54_7  CR54_D  6.99491E-05  450.00
+                            FE54_7  FE54_D  5.47272E-04  450.00
+                            FE56_7  FE56_D  8.59100E-03  450.00
+                            FE57_7  FE57_D  1.98405E-04  450.00
+                            FE58_7  FE58_D  2.64034E-05  450.00
+                            NI58_7  NI58_D  1.07022E-03  450.00
+                            NI60_7  NI60_D  4.12259E-04  450.00
+                            NI61_7  NI61_D  1.79202E-05  450.00
+                            NI62_7  NI62_D  5.71389E-05  450.00
+                            NI64_7  NI64_D  1.45518E-05  450.00
+/
+\$output
+     l_isotxs_macroxs    = T
+/
+EOF
+$exe_mcc3
+$exe_isotxs_modify in=ISOTXS.merged out=ISOTXS.REG04.merged i=REG_01 n=REG_04
+mv ISOTXS.REG04.merged ISOTXS.REG04
+!
+! ============================================================
+!
+cat > input << EOF
+\$library
+     c_mcclibdir  ="$lib_mcclibdir"
+     c_pwlibdir   ="$lib_pwlibdir"
+     c_twodantexe ="$exe_twodant"
+/
+\$control
+     c_group_structure       = "ANL1041"
+     c_geometry_type         = "mixture"
+     i_number_region         = 1
+     i_scattering_order      = 3
+     l_twodant               = F
+     l_pendf                 = T
+/
+\$material
+!
+! ============================================================
+!                        Reflector_Steel_Void (E)
+! ============================================================
+!
+     t_composition(:,  1)=  CR50_7  CR50_E  1.23500E-04  450.00
+                            CR52_7  CR52_E  2.38160E-03  450.00
+                            CR53_7  CR53_E  2.70060E-04  450.00
+                            CR54_7  CR54_E  6.72230E-05  450.00
+                            FE54_7  FE54_E  5.25940E-04  450.00
+                            FE56_7  FE56_E  8.25610E-03  450.00
+                            FE57_7  FE57_E  1.90670E-04  450.00
+                            FE58_7  FE58_E  2.53750E-05  450.00
+                            NI58_7  NI58_E  1.02850E-03  450.00
+                            NI60_7  NI60_E  3.96190E-04  450.00
+                            NI61_7  NI61_E  1.72220E-05  450.00
+                            NI62_7  NI62_E  5.49120E-05  450.00
+                            NI64_7  NI64_E  1.39840E-05  450.00
+/
+\$output
+     l_isotxs_macroxs    = T
+/
+EOF
+$exe_mcc3
+$exe_isotxs_modify in=ISOTXS.merged out=ISOTXS.REG05.merged i=REG_01 n=REG_05
+mv ISOTXS.REG05.merged ISOTXS.REG05
+!
+! ============================================================
+!
+cat > input << EOF
+\$library
+     c_mcclibdir  ="$lib_mcclibdir"
+     c_pwlibdir   ="$lib_pwlibdir"
+     c_twodantexe ="$exe_twodant"
+/
+\$control
+     c_group_structure       = "ANL1041"
+     c_geometry_type         = "mixture"
+     i_number_region         = 1
+     i_scattering_order      = 3
+     l_twodant               = F
+     l_pendf                 = T
+/
+\$material
+!
+! ============================================================
+!                        Reflector_Refl (F)
+! ============================================================
+!
+     t_composition(:,  1)=  MG24_7  MG24_F  7.44450E-05  450.00
+                            MG25_7  MG25_F  9.42463E-06  450.00
+                            MG26_7  MG26_F  1.03762E-05  450.00
+                            AL27_7  AL27_F  2.03752E-03  450.00
+                            CR50_7  CR50_F  2.77734E-05  450.00
+                            CR52_7  CR52_F  5.35588E-04  450.00
+                            CR53_7  CR53_F  6.07314E-05  450.00
+                            CR54_7  CR54_F  1.51177E-05  450.00
+                            FE54_7  FE54_F  1.18273E-04  450.00
+                            FE56_7  FE56_F  1.85668E-03  450.00
+                            FE57_7  FE57_F  4.28782E-05  450.00
+                            FE58_7  FE58_F  5.70638E-06  450.00
+                            NI58_7  NI58_F  4.99710E-02  450.00
+                            NI60_7  NI60_F  1.92485E-02  450.00
+                            NI61_7  NI61_F  8.36735E-04  450.00
+                            NI62_7  NI62_F  2.66786E-03  450.00
+                            NI64_7  NI64_F  6.79430E-04  450.00
+/
+\$output
+     l_isotxs_macroxs    = T
+/
+EOF
+$exe_mcc3
+$exe_isotxs_modify in=ISOTXS.merged out=ISOTXS.REG06.merged i=REG_01 n=REG_06
+mv ISOTXS.REG06.merged ISOTXS.REG06
+!
+! ============================================================
+!
+cat > input << EOF
+\$library
+     c_mcclibdir  ="$lib_mcclibdir"
+     c_pwlibdir   ="$lib_pwlibdir"
+     c_twodantexe ="$exe_twodant"
+/
+\$control
+     c_group_structure       = "ANL1041"
+     c_geometry_type         = "mixture"
+     i_number_region         = 1
+     i_scattering_order      = 3
+     l_twodant               = F
+     l_pendf                 = T
+/
+\$material
+!
+! ============================================================
+!                        Rad_Shld (G)
+! ============================================================
+!
+     t_composition(:,  1)=  MG24_7  MG24_G  2.71254E-04  450.00
+                            MG25_7  MG25_G  3.43404E-05  450.00
+                            MG26_7  MG26_G  3.78086E-05  450.00
+                            CR50_7  CR50_G  9.86654E-05  450.00
+                            CR52_7  CR52_G  1.90267E-03  450.00
+                            CR53_7  CR53_G  2.15751E-04  450.00
+                            CR54_7  CR54_G  5.37036E-05  450.00
+                            FE54_7  FE54_G  4.20168E-04  450.00
+                            FE56_7  FE56_G  6.59577E-03  450.00
+                            FE57_7  FE57_G  1.52329E-04  450.00
+                            FE58_7  FE58_G  2.02719E-05  450.00
+                            NI58_7  NI58_G  8.21692E-04  450.00
+                            NI60_7  NI60_G  3.16512E-04  450.00
+                            NI61_7  NI61_G  1.37589E-05  450.00
+                            NI62_7  NI62_G  4.38683E-05  450.00
+                            NI64_7  NI64_G  1.11725E-05  450.00
+                            B10__7  B10__G  5.40601E-03  450.00
+                            B11__7  B11__G  2.17599E-02  450.00
+                            C____7  C12__G  6.79150E-03  450.00
+/
+\$output
+     l_isotxs_macroxs    = T
+/
+EOF
+$exe_mcc3
+$exe_isotxs_modify in=ISOTXS.merged out=ISOTXS.REG07.merged i=REG_01 n=REG_07
+mv ISOTXS.REG07.merged ISOTXS.REG07
+!
+! ============================================================
+!
+cat > input << EOF
+\$library
+     c_mcclibdir  ="$lib_mcclibdir"
+     c_pwlibdir   ="$lib_pwlibdir"
+     c_twodantexe ="$exe_twodant"
+/
+\$control
+     c_group_structure       = "ANL1041"
+     c_geometry_type         = "mixture"
+     i_number_region         = 1
+     i_scattering_order      = 3
+     l_twodant               = F
+     l_pendf                 = T
+/
+\$material
+!
+! ============================================================
+!                        Na_steel_t (H)
+! ============================================================
+!
+     t_composition(:,  1)=  NA23_7  NA23_H  1.35120E-02  450.00
+                            CR50_7  CR50_H  2.66172E-04  450.00
+                            CR52_7  CR52_H  5.13286E-03  450.00
+                            CR53_7  CR53_H  5.82020E-04  450.00
+                            CR54_7  CR54_H  1.44878E-04  450.00
+                            FE54_7  FE54_H  1.13346E-03  450.00
+                            FE56_7  FE56_H  1.77932E-02  450.00
+                            FE57_7  FE57_H  4.10931E-04  450.00
+                            FE58_7  FE58_H  5.46867E-05  450.00
+                            NI58_7  NI58_H  2.21669E-03  450.00
+                            NI60_7  NI60_H  8.53861E-04  450.00
+                            NI61_7  NI61_H  3.71173E-05  450.00
+                            NI62_7  NI62_H  1.18350E-04  450.00
+                            NI64_7  NI64_H  3.01385E-05  450.00
+                            B10__7  B10__H  6.60243E-04  450.00
+                            B11__7  B11__H  2.65754E-03  450.00
+                            C____7  C12__H  8.29451E-04  450.00
+/
+\$output
+     l_isotxs_macroxs    = T
+/
+EOF
+$exe_mcc3
+$exe_isotxs_modify in=ISOTXS.merged out=ISOTXS.REG08.merged i=REG_01 n=REG_08
+mv ISOTXS.REG08.merged ISOTXS.REG08
+!
+! ============================================================
+!
+cat > input << EOF
+\$library
+     c_mcclibdir  ="$lib_mcclibdir"
+     c_pwlibdir   ="$lib_pwlibdir"
+     c_twodantexe ="$exe_twodant"
+/
+\$control
+     c_group_structure       = "ANL1041"
+     c_geometry_type         = "mixture"
+     i_number_region         = 1
+     i_scattering_order      = 3
+     l_twodant               = F
+     l_pendf                 = T
+/
+\$material
+!
+! ============================================================
+!                        FA_6_Ni_Axial (I)
+! ============================================================
+!
+     t_composition(:,  1)=  NA23_7  NA23_I  7.06638E-03  450.00
+                            CR50_7  CR50_I  1.64340E-04  450.00
+                            CR52_7  CR52_I  3.16916E-03  450.00
+                            CR53_7  CR53_I  3.59360E-04  450.00
+                            CR54_7  CR54_I  8.94507E-05  450.00
+                            FE54_7  FE54_I  7.43507E-04  450.00
+                            FE56_7  FE56_I  1.16714E-02  450.00
+                            FE57_7  FE57_I  2.69536E-04  450.00
+                            FE58_7  FE58_I  3.58702E-05  450.00
+                            MO1007  MO100I  1.13768E-05  450.00
+                            MO92_7  MO92_I  1.75326E-05  450.00
+                            MO94_7  MO94_I  1.09280E-05  450.00
+                            MO95_7  MO95_I  1.88087E-05  450.00
+                            MO96_7  MO96_I  1.97063E-05  450.00
+                            MO97_7  MO97_I  1.12825E-05  450.00
+                            MO98_7  MO98_I  2.85077E-05  450.00
+                            NI58_7  NI58_I  2.95620E-02  450.00
+                            NI60_7  NI60_I  1.13874E-02  450.00
+                            NI61_7  NI61_I  4.94973E-04  450.00
+                            NI62_7  NI62_I  1.57827E-03  450.00
+                            NI64_7  NI64_I  4.01938E-04  450.00
+/
+\$output
+     l_isotxs_macroxs    = T
+/
+EOF
+$exe_mcc3
+$exe_isotxs_modify in=ISOTXS.merged out=ISOTXS.REG09.merged i=REG_01 n=REG_09
+mv ISOTXS.REG09.merged ISOTXS.REG09
+!
+! ============================================================
+!
+cat > input << EOF
+\$library
+     c_mcclibdir  ="$lib_mcclibdir"
+     c_pwlibdir   ="$lib_pwlibdir"
+     c_twodantexe ="$exe_twodant"
+/
+\$control
+     c_group_structure       = "ANL1041"
+     c_geometry_type         = "cylinder"
+     i_number_region         = 8
+     i_scattering_order      = 3
+     l_twodant               = F
+     l_pendf                 = T
+/
+\$material
+!
+! ============================================================
+!                        FA_6_Fuel_insul (J)
+! ============================================================
+!
+     t_composition(:,  1)=  BE9__7  BE9__J  5.39439E-02  450.00
+                            O16__7  O16__J  5.39439E-02  450.00
+                            CR50_7  CR50_J  1.20548E-04  450.00
+                            CR52_7  CR52_J  2.32460E-03  450.00
+                            CR53_7  CR53_J  2.63605E-04  450.00
+                            CR54_7  CR54_J  6.56154E-05  450.00
+                            FE54_7  FE54_J  5.95077E-04  450.00
+                            FE56_7  FE56_J  9.34136E-03  450.00
+                            FE57_7  FE57_J  2.15727E-04  450.00
+                            FE58_7  FE58_J  2.87093E-05  450.00
+                            MO1007  MO100J  2.12956E-05  450.00
+                            MO92_7  MO92_J  3.28181E-05  450.00
+                            MO94_7  MO94_J  2.04554E-05  450.00
+                            MO95_7  MO95_J  3.52068E-05  450.00
+                            MO96_7  MO96_J  3.68870E-05  450.00
+                            MO97_7  MO97_J  2.11189E-05  450.00
+                            MO98_7  MO98_J  5.33619E-05  450.00
+                            NI58_7  NI58_J  1.32873E-03  450.00
+                            NI60_7  NI60_J  5.11828E-04  450.00
+                            NI61_7  NI61_J  2.22483E-05  450.00
+                            NI62_7  NI62_J  7.09384E-05  450.00
+                            NI64_7  NI64_J  1.80668E-05  450.00
+
+     t_composition(:,  2)=  NA23_7  NA23_J  2.39160E-02  450.00
+
+     t_composition(:,  3)=  CR50_7  CR50_J  8.17351E-04  450.00
+                            CR52_7  CR52_J  1.57623E-02  450.00
+                            CR53_7  CR53_J  1.78728E-03  450.00
+                            CR54_7  CR54_J  4.44885E-04  450.00
+                            FE54_7  FE54_J  3.48075E-03  450.00
+                            FE56_7  FE56_J  5.46400E-02  450.00
+                            FE57_7  FE57_J  1.26184E-03  450.00
+                            FE58_7  FE58_J  1.67927E-04  450.00
+                            NI58_7  NI58_J  6.80694E-03  450.00
+                            NI60_7  NI60_J  2.62205E-03  450.00
+                            NI61_7  NI61_J  1.13973E-04  450.00
+                            NI62_7  NI62_J  3.63413E-04  450.00
+                            NI64_7  NI64_J  9.25497E-05  450.00
+
+     t_composition(:,  4)=  U235_7  U235_J  4.00448E-05  450.00
+                            U238_7  U238_J  1.81622E-02  450.00
+                            O16__7  O16__J  3.64046E-02  450.00
+                            CR50_7  CR50_J  1.09257E-04  450.00
+                            CR52_7  CR52_J  2.10686E-03  450.00
+                            CR53_7  CR53_J  2.38914E-04  450.00
+                            CR54_7  CR54_J  5.94694E-05  450.00
+                            FE54_7  FE54_J  5.39338E-04  450.00
+                            FE56_7  FE56_J  8.46638E-03  450.00
+                            FE57_7  FE57_J  1.95521E-04  450.00
+                            FE58_7  FE58_J  2.60202E-05  450.00
+                            MO1007  MO100J  1.93009E-05  450.00
+                            MO92_7  MO92_J  2.97441E-05  450.00
+                            MO94_7  MO94_J  1.85394E-05  450.00
+                            MO95_7  MO95_J  3.19091E-05  450.00
+                            MO96_7  MO96_J  3.34319E-05  450.00
+                            MO97_7  MO97_J  1.91407E-05  450.00
+                            MO98_7  MO98_J  4.83636E-05  450.00
+                            NI58_7  NI58_J  1.20427E-03  450.00
+                            NI60_7  NI60_J  4.63886E-04  450.00
+                            NI61_7  NI61_J  2.01643E-05  450.00
+                            NI62_7  NI62_J  6.42938E-05  450.00
+                            NI64_7  NI64_J  1.63745E-05  450.00
+
+     t_composition(:,  5)=  CR50_7  CR50_J  8.17351E-04  450.00
+                            CR52_7  CR52_J  1.57623E-02  450.00
+                            CR53_7  CR53_J  1.78728E-03  450.00
+                            CR54_7  CR54_J  4.44885E-04  450.00
+                            FE54_7  FE54_J  3.48075E-03  450.00
+                            FE56_7  FE56_J  5.46400E-02  450.00
+                            FE57_7  FE57_J  1.26184E-03  450.00
+                            FE58_7  FE58_J  1.67927E-04  450.00
+                            NI58_7  NI58_J  6.80694E-03  450.00
+                            NI60_7  NI60_J  2.62205E-03  450.00
+                            NI61_7  NI61_J  1.13973E-04  450.00
+                            NI62_7  NI62_J  3.63413E-04  450.00
+                            NI64_7  NI64_J  9.25497E-05  450.00
+
+     t_composition(:,  6)=  NA23_7  NA23_J  2.39160E-02  450.00
+
+     t_composition(:,  7)=  CR50_7  CR50_J  8.17351E-04  450.00
+                            CR52_7  CR52_J  1.57623E-02  450.00
+                            CR53_7  CR53_J  1.78728E-03  450.00
+                            CR54_7  CR54_J  4.44885E-04  450.00
+                            FE54_7  FE54_J  3.48075E-03  450.00
+                            FE56_7  FE56_J  5.46400E-02  450.00
+                            FE57_7  FE57_J  1.26184E-03  450.00
+                            FE58_7  FE58_J  1.67927E-04  450.00
+                            NI58_7  NI58_J  6.80694E-03  450.00
+                            NI60_7  NI60_J  2.62205E-03  450.00
+                            NI61_7  NI61_J  1.13973E-04  450.00
+                            NI62_7  NI62_J  3.63413E-04  450.00
+                            NI64_7  NI64_J  9.25497E-05  450.00
+
+     t_composition(:,  8)=  NA23_7  NA23_J  2.39160E-02  450.00
+/
+\$geometry
+     c_boundary_condition = reflective
+     i_mesh =           1       1       1       3       1
+                        3       1       1
+     r_location = 1.11426 1.28366 1.37726 3.32428 3.41451
+                  4.05154 4.21200 4.22537
+     i_composition =    1       2       3       4       5
+                        6       7       8
+/
+\$output
+     l_isotxs_macroxs    = T
+/
+EOF
+$exe_mcc3
+$exe_isotxs_modify in=ISOTXS.merged out=ISOTXS.REG10.merged i=REG_01 n=REG_10
+mv ISOTXS.REG10.merged ISOTXS.REG10
+!
+! ============================================================
+!
+cat > input << EOF
+\$library
+     c_mcclibdir  ="$lib_mcclibdir"
+     c_pwlibdir   ="$lib_pwlibdir"
+     c_twodantexe ="$exe_twodant"
+/
+\$control
+     c_group_structure       = "ANL1041"
+     c_geometry_type         = "cylinder"
+     i_number_region         = 8
+     i_scattering_order      = 3
+     l_twodant               = F
+     l_pendf                 = T
+/
+\$material
+!
+! ============================================================
+!                        FA_6_Fuel_St (K)
+! ============================================================
+!
+     t_composition(:,  1)=  BE9__7  BE9__K  5.39439E-02  450.00
+                            O16__7  O16__K  5.39439E-02  450.00
+                            CR50_7  CR50_K  1.20548E-04  450.00
+                            CR52_7  CR52_K  2.32460E-03  450.00
+                            CR53_7  CR53_K  2.63605E-04  450.00
+                            CR54_7  CR54_K  6.56154E-05  450.00
+                            FE54_7  FE54_K  5.95077E-04  450.00
+                            FE56_7  FE56_K  9.34136E-03  450.00
+                            FE57_7  FE57_K  2.15727E-04  450.00
+                            FE58_7  FE58_K  2.87093E-05  450.00
+                            MO1007  MO100K  2.12956E-05  450.00
+                            MO92_7  MO92_K  3.28181E-05  450.00
+                            MO94_7  MO94_K  2.04554E-05  450.00
+                            MO95_7  MO95_K  3.52068E-05  450.00
+                            MO96_7  MO96_K  3.68870E-05  450.00
+                            MO97_7  MO97_K  2.11189E-05  450.00
+                            MO98_7  MO98_K  5.33619E-05  450.00
+                            NI58_7  NI58_K  1.32873E-03  450.00
+                            NI60_7  NI60_K  5.11828E-04  450.00
+                            NI61_7  NI61_K  2.22483E-05  450.00
+                            NI62_7  NI62_K  7.09384E-05  450.00
+                            NI64_7  NI64_K  1.80668E-05  450.00
+
+     t_composition(:,  2)=  NA23_7  NA23_K  2.39160E-02  450.00
+
+     t_composition(:,  3)=  CR50_7  CR50_K  8.17351E-04  450.00
+                            CR52_7  CR52_K  1.57623E-02  450.00
+                            CR53_7  CR53_K  1.78728E-03  450.00
+                            CR54_7  CR54_K  4.44885E-04  450.00
+                            FE54_7  FE54_K  3.48075E-03  450.00
+                            FE56_7  FE56_K  5.46400E-02  450.00
+                            FE57_7  FE57_K  1.26184E-03  450.00
+                            FE58_7  FE58_K  1.67927E-04  450.00
+                            NI58_7  NI58_K  6.80694E-03  450.00
+                            NI60_7  NI60_K  2.62205E-03  450.00
+                            NI61_7  NI61_K  1.13973E-04  450.00
+                            NI62_7  NI62_K  3.63413E-04  450.00
+                            NI64_7  NI64_K  9.25497E-05  450.00
+
+     t_composition(:,  4)=  PU2397  PU239K  3.32051E-03  450.00
+                            PU2407  PU240K  2.98177E-04  450.00
+                            U235_7  U235_K  3.12105E-05  450.00
+                            U238_7  U238_K  1.41554E-02  450.00
+                            O16__7  O16__K  3.55742E-02  450.00
+                            CR50_7  CR50_K  1.09257E-04  450.00
+                            CR52_7  CR52_K  2.10686E-03  450.00
+                            CR53_7  CR53_K  2.38914E-04  450.00
+                            CR54_7  CR54_K  5.94694E-05  450.00
+                            FE54_7  FE54_K  5.39338E-04  450.00
+                            FE56_7  FE56_K  8.46638E-03  450.00
+                            FE57_7  FE57_K  1.95521E-04  450.00
+                            FE58_7  FE58_K  2.60202E-05  450.00
+                            MO1007  MO100K  1.93009E-05  450.00
+                            MO92_7  MO92_K  2.97441E-05  450.00
+                            MO94_7  MO94_K  1.85394E-05  450.00
+                            MO95_7  MO95_K  3.19091E-05  450.00
+                            MO96_7  MO96_K  3.34319E-05  450.00
+                            MO97_7  MO97_K  1.91407E-05  450.00
+                            MO98_7  MO98_K  4.83636E-05  450.00
+                            NI58_7  NI58_K  1.20427E-03  450.00
+                            NI60_7  NI60_K  4.63886E-04  450.00
+                            NI61_7  NI61_K  2.01643E-05  450.00
+                            NI62_7  NI62_K  6.42938E-05  450.00
+                            NI64_7  NI64_K  1.63745E-05  450.00
+
+     t_composition(:,  5)=  CR50_7  CR50_K  8.17351E-04  450.00
+                            CR52_7  CR52_K  1.57623E-02  450.00
+                            CR53_7  CR53_K  1.78728E-03  450.00
+                            CR54_7  CR54_K  4.44885E-04  450.00
+                            FE54_7  FE54_K  3.48075E-03  450.00
+                            FE56_7  FE56_K  5.46400E-02  450.00
+                            FE57_7  FE57_K  1.26184E-03  450.00
+                            FE58_7  FE58_K  1.67927E-04  450.00
+                            NI58_7  NI58_K  6.80694E-03  450.00
+                            NI60_7  NI60_K  2.62205E-03  450.00
+                            NI61_7  NI61_K  1.13973E-04  450.00
+                            NI62_7  NI62_K  3.63413E-04  450.00
+                            NI64_7  NI64_K  9.25497E-05  450.00
+
+     t_composition(:,  6)=  NA23_7  NA23_K  2.39160E-02  450.00
+
+     t_composition(:,  7)=  CR50_7  CR50_K  8.17351E-04  450.00
+                            CR52_7  CR52_K  1.57623E-02  450.00
+                            CR53_7  CR53_K  1.78728E-03  450.00
+                            CR54_7  CR54_K  4.44885E-04  450.00
+                            FE54_7  FE54_K  3.48075E-03  450.00
+                            FE56_7  FE56_K  5.46400E-02  450.00
+                            FE57_7  FE57_K  1.26184E-03  450.00
+                            FE58_7  FE58_K  1.67927E-04  450.00
+                            NI58_7  NI58_K  6.80694E-03  450.00
+                            NI60_7  NI60_K  2.62205E-03  450.00
+                            NI61_7  NI61_K  1.13973E-04  450.00
+                            NI62_7  NI62_K  3.63413E-04  450.00
+                            NI64_7  NI64_K  9.25497E-05  450.00
+
+     t_composition(:,  8)=  NA23_7  NA23_K  2.39160E-02  450.00
+/
+\$geometry
+     c_boundary_condition = reflective
+     i_mesh =           1       1       1       3       1
+                        3       1       1
+     r_location = 1.11426 1.28366 1.37726 3.32428 3.41451
+                  4.05154 4.21200 4.22537
+     i_composition =    1       2       3       4       5
+                        6       7       8
+/
+\$output
+     l_isotxs_macroxs    = T
+/
+EOF
+$exe_mcc3
+$exe_isotxs_modify in=ISOTXS.merged out=ISOTXS.REG11.merged i=REG_01 n=REG_11
+mv ISOTXS.REG11.merged ISOTXS.REG11
+!
+! ============================================================
+!
+cat > input << EOF
+\$library
+     c_mcclibdir  ="$lib_mcclibdir"
+     c_pwlibdir   ="$lib_pwlibdir"
+     c_twodantexe ="$exe_twodant"
+/
+\$control
+     c_group_structure       = "ANL1041"
+     c_geometry_type         = "mixture"
+     i_number_region         = 1
+     i_scattering_order      = 3
+     l_twodant               = F
+     l_pendf                 = T
+/
+\$material
+!
+! ============================================================
+!                        FA_6_Spring_Void (L)
+! ============================================================
+!
+     t_composition(:,  1)=  O16__7  O16__L  3.75126E-03  450.00
+                            NA23_7  NA23_L  7.06638E-03  450.00
+                            CR50_7  CR50_L  1.64340E-04  450.00
+                            CR52_7  CR52_L  3.16916E-03  450.00
+                            CR53_7  CR53_L  3.59360E-04  450.00
+                            CR54_7  CR54_L  8.94507E-05  450.00
+                            FE54_7  FE54_L  7.43507E-04  450.00
+                            FE56_7  FE56_L  1.16714E-02  450.00
+                            FE57_7  FE57_L  2.69536E-04  450.00
+                            FE58_7  FE58_L  3.58702E-05  450.00
+                            MO1007  MO100L  1.13768E-05  450.00
+                            MO92_7  MO92_L  1.75326E-05  450.00
+                            MO94_7  MO94_L  1.09280E-05  450.00
+                            MO95_7  MO95_L  1.88087E-05  450.00
+                            MO96_7  MO96_L  1.97063E-05  450.00
+                            MO97_7  MO97_L  1.12825E-05  450.00
+                            MO98_7  MO98_L  2.85077E-05  450.00
+                            NI58_7  NI58_L  1.54215E-03  450.00
+                            NI60_7  NI60_L  5.94038E-04  450.00
+                            NI61_7  NI61_L  2.58214E-05  450.00
+                            NI62_7  NI62_L  8.23328E-05  450.00
+                            NI64_7  NI64_L  2.09681E-05  450.00
+                            BE9__7  BE9__L  3.75126E-03  450.00
+/
+\$output
+     l_isotxs_macroxs    = T
+/
+EOF
+$exe_mcc3
+$exe_isotxs_modify in=ISOTXS.merged out=ISOTXS.REG12.merged i=REG_01 n=REG_12
+mv ISOTXS.REG12.merged ISOTXS.REG12
+!
+! ============================================================
+!
+cat > input << EOF
+\$library
+     c_mcclibdir  ="$lib_mcclibdir"
+     c_pwlibdir   ="$lib_pwlibdir"
+     c_twodantexe ="$exe_twodant"
+/
+\$control
+     c_group_structure       = "ANL1041"
+     c_geometry_type         = "mixture"
+     i_number_region         = 1
+     i_scattering_order      = 3
+     l_twodant               = F
+     l_pendf                 = T
+/
+\$material
+!
+! ============================================================
+!                        AFA_6_1_Ni_Axial (M)
+! ============================================================
+!
+     t_composition(:,  1)=  NA23_7  NA23_M  7.06638E-03  450.00
+                            CR50_7  CR50_M  1.64340E-04  450.00
+                            CR52_7  CR52_M  3.16916E-03  450.00
+                            CR53_7  CR53_M  3.59360E-04  450.00
+                            CR54_7  CR54_M  8.94507E-05  450.00
+                            FE54_7  FE54_M  7.43507E-04  450.00
+                            FE56_7  FE56_M  1.16714E-02  450.00
+                            FE57_7  FE57_M  2.69536E-04  450.00
+                            FE58_7  FE58_M  3.58702E-05  450.00
+                            MO1007  MO100M  1.13768E-05  450.00
+                            MO92_7  MO92_M  1.75326E-05  450.00
+                            MO94_7  MO94_M  1.09280E-05  450.00
+                            MO95_7  MO95_M  1.88087E-05  450.00
+                            MO96_7  MO96_M  1.97063E-05  450.00
+                            MO97_7  MO97_M  1.12825E-05  450.00
+                            MO98_7  MO98_M  2.85077E-05  450.00
+                            NI58_7  NI58_M  2.95620E-02  450.00
+                            NI60_7  NI60_M  1.13874E-02  450.00
+                            NI61_7  NI61_M  4.94973E-04  450.00
+                            NI62_7  NI62_M  1.57827E-03  450.00
+                            NI64_7  NI64_M  4.01938E-04  450.00
+/
+\$output
+     l_isotxs_macroxs    = T
+/
+EOF
+$exe_mcc3
+$exe_isotxs_modify in=ISOTXS.merged out=ISOTXS.REG13.merged i=REG_01 n=REG_13
+mv ISOTXS.REG13.merged ISOTXS.REG13
+!
+! ============================================================
+!
+cat > input << EOF
+\$library
+     c_mcclibdir  ="$lib_mcclibdir"
+     c_pwlibdir   ="$lib_pwlibdir"
+     c_twodantexe ="$exe_twodant"
+/
+\$control
+     c_group_structure       = "ANL1041"
+     c_geometry_type         = "cylinder"
+     i_number_region         = 11
+     i_scattering_order      = 3
+     l_twodant               = F
+     l_pendf                 = T
+/
+\$material
+!
+! ============================================================
+!                        AFA_6_1_Fuel_insul (N)                     
+! ============================================================
+!
+     t_composition(:,  1)=  CR50_7  CR50_N  8.17447E-04  450.00
+                            CR52_7  CR52_N  1.57642E-02  450.00
+                            CR53_7  CR53_N  1.78749E-03  450.00
+                            CR54_7  CR54_N  4.44937E-04  450.00
+                            FE54_7  FE54_N  3.48116E-03  450.00
+                            FE56_7  FE56_N  5.46464E-02  450.00
+                            FE57_7  FE57_N  1.26199E-03  450.00
+                            FE58_7  FE58_N  1.67947E-04  450.00
+                            NI58_7  NI58_N  6.80774E-03  450.00
+                            NI60_7  NI60_N  2.62236E-03  450.00
+                            NI61_7  NI61_N  1.13987E-04  450.00
+                            NI62_7  NI62_N  3.63455E-04  450.00
+                            NI64_7  NI64_N  9.25606E-05  450.00
+
+     t_composition(:,  2)=  B10__7  B10__N  1.32047E-02  450.00
+                            B11__7  B11__N  5.31509E-02  450.00
+                            C____7  C12__N  1.65886E-02  450.00
+
+     t_composition(:,  3)=  CR50_7  CR50_N  6.90859E-04  450.00
+                            CR52_7  CR52_N  1.33222E-02  450.00
+                            CR53_7  CR53_N  1.51071E-03  450.00
+                            CR54_7  CR54_N  3.76040E-04  450.00
+                            FE54_7  FE54_N  3.41037E-03  450.00
+                            FE56_7  FE56_N  5.35351E-02  450.00
+                            FE57_7  FE57_N  1.23633E-03  450.00
+                            FE58_7  FE58_N  1.64532E-04  450.00
+                            MO1007  MO100N  1.22044E-04  450.00
+                            MO92_7  MO92_N  1.88080E-04  450.00
+                            MO94_7  MO94_N  1.17230E-04  450.00
+                            MO95_7  MO95_N  2.01769E-04  450.00
+                            MO96_7  MO96_N  2.11398E-04  450.00
+                            MO97_7  MO97_N  1.21032E-04  450.00
+                            MO98_7  MO98_N  3.05815E-04  450.00
+                            NI58_7  NI58_N  7.61491E-03  450.00
+                            NI60_7  NI60_N  2.93327E-03  450.00
+                            NI61_7  NI61_N  1.27504E-04  450.00
+                            NI62_7  NI62_N  4.06546E-04  450.00
+                            NI64_7  NI64_N  1.03540E-04  450.00
+
+     t_composition(:,  4)=  BE9__7  BE9__N  5.39439E-02  450.00
+                            O16__7  O16__N  5.39439E-02  450.00
+                            CR50_7  CR50_N  1.20548E-04  450.00
+                            CR52_7  CR52_N  2.32460E-03  450.00
+                            CR53_7  CR53_N  2.63605E-04  450.00
+                            CR54_7  CR54_N  6.56154E-05  450.00
+                            FE54_7  FE54_N  5.95077E-04  450.00
+                            FE56_7  FE56_N  9.34136E-03  450.00
+                            FE57_7  FE57_N  2.15727E-04  450.00
+                            FE58_7  FE58_N  2.87093E-05  450.00
+                            MO1007  MO100N  2.12956E-05  450.00
+                            MO92_7  MO92_N  3.28181E-05  450.00
+                            MO94_7  MO94_N  2.04554E-05  450.00
+                            MO95_7  MO95_N  3.52068E-05  450.00
+                            MO96_7  MO96_N  3.68870E-05  450.00
+                            MO97_7  MO97_N  2.11189E-05  450.00
+                            MO98_7  MO98_N  5.33619E-05  450.00
+                            NI58_7  NI58_N  1.32873E-03  450.00
+                            NI60_7  NI60_N  5.11828E-04  450.00
+                            NI61_7  NI61_N  2.22483E-05  450.00
+                            NI62_7  NI62_N  7.09384E-05  450.00
+                            NI64_7  NI64_N  1.80668E-05  450.00
+
+     t_composition(:,  5)=  NA23_7  NA23_N  2.39160E-02  450.00
+
+     t_composition(:,  6)=  CR50_7  CR50_N  8.17351E-04  450.00
+                            CR52_7  CR52_N  1.57623E-02  450.00
+                            CR53_7  CR53_N  1.78728E-03  450.00
+                            CR54_7  CR54_N  4.44885E-04  450.00
+                            FE54_7  FE54_N  3.48075E-03  450.00
+                            FE56_7  FE56_N  5.46400E-02  450.00
+                            FE57_7  FE57_N  1.26184E-03  450.00
+                            FE58_7  FE58_N  1.67927E-04  450.00
+                            NI58_7  NI58_N  6.80694E-03  450.00
+                            NI60_7  NI60_N  2.62205E-03  450.00
+                            NI61_7  NI61_N  1.13973E-04  450.00
+                            NI62_7  NI62_N  3.63413E-04  450.00
+                            NI64_7  NI64_N  9.25497E-05  450.00
+
+     t_composition(:,  7)=  U235_7  U235_N  4.00448E-05  450.00
+                            U238_7  U238_N  1.81622E-02  450.00
+                            O16__7  O16__N  3.64046E-02  450.00
+                            CR50_7  CR50_N  1.09257E-04  450.00
+                            CR52_7  CR52_N  2.10686E-03  450.00
+                            CR53_7  CR53_N  2.38914E-04  450.00
+                            CR54_7  CR54_N  5.94694E-05  450.00
+                            FE54_7  FE54_N  5.39338E-04  450.00
+                            FE56_7  FE56_N  8.46638E-03  450.00
+                            FE57_7  FE57_N  1.95521E-04  450.00
+                            FE58_7  FE58_N  2.60202E-05  450.00
+                            MO1007  MO100N  1.93009E-05  450.00
+                            MO92_7  MO92_N  2.97441E-05  450.00
+                            MO94_7  MO94_N  1.85394E-05  450.00
+                            MO95_7  MO95_N  3.19091E-05  450.00
+                            MO96_7  MO96_N  3.34319E-05  450.00
+                            MO97_7  MO97_N  1.91407E-05  450.00
+                            MO98_7  MO98_N  4.83636E-05  450.00
+                            NI58_7  NI58_N  1.20427E-03  450.00
+                            NI60_7  NI60_N  4.63886E-04  450.00
+                            NI61_7  NI61_N  2.01643E-05  450.00
+                            NI62_7  NI62_N  6.42938E-05  450.00
+                            NI64_7  NI64_N  1.63745E-05  450.00
+
+     t_composition(:,  8)=  CR50_7  CR50_N  8.17351E-04  450.00
+                            CR52_7  CR52_N  1.57623E-02  450.00
+                            CR53_7  CR53_N  1.78728E-03  450.00
+                            CR54_7  CR54_N  4.44885E-04  450.00
+                            FE54_7  FE54_N  3.48075E-03  450.00
+                            FE56_7  FE56_N  5.46400E-02  450.00
+                            FE57_7  FE57_N  1.26184E-03  450.00
+                            FE58_7  FE58_N  1.67927E-04  450.00
+                            NI58_7  NI58_N  6.80694E-03  450.00
+                            NI60_7  NI60_N  2.62205E-03  450.00
+                            NI61_7  NI61_N  1.13973E-04  450.00
+                            NI62_7  NI62_N  3.63413E-04  450.00
+                            NI64_7  NI64_N  9.25497E-05  450.00
+
+     t_composition(:,  9)=  NA23_7  NA23_N  2.39160E-02  450.00
+
+     t_composition(:, 10)=  CR50_7  CR50_N  8.17351E-04  450.00
+                            CR52_7  CR52_N  1.57623E-02  450.00
+                            CR53_7  CR53_N  1.78728E-03  450.00
+                            CR54_7  CR54_N  4.44885E-04  450.00
+                            FE54_7  FE54_N  3.48075E-03  450.00
+                            FE56_7  FE56_N  5.46400E-02  450.00
+                            FE57_7  FE57_N  1.26184E-03  450.00
+                            FE58_7  FE58_N  1.67927E-04  450.00
+                            NI58_7  NI58_N  6.80694E-03  450.00
+                            NI60_7  NI60_N  2.62205E-03  450.00
+                            NI61_7  NI61_N  1.13973E-04  450.00
+                            NI62_7  NI62_N  3.63413E-04  450.00
+                            NI64_7  NI64_N  9.25497E-05  450.00
+
+     t_composition(:, 11)=  NA23_7  NA23_N  2.39160E-02  450.00
+/
+\$geometry
+     c_boundary_condition = reflective
+     i_mesh =           1       1       1       1       1
+                        1       3       1       3       1
+                        1
+     r_location = 0.80133 1.13331 1.23518 1.66350 1.78141
+                  1.85000 3.32428 3.41451 4.05154 4.21200
+                  4.22537
+     i_composition =    1       2       3       4       5
+                        6       7       8       9      10
+                       11
+/
+\$output
+     l_isotxs_macroxs    = T
+/
+EOF
+$exe_mcc3
+$exe_isotxs_modify in=ISOTXS.merged out=ISOTXS.REG14.merged i=REG_01 n=REG_14
+mv ISOTXS.REG14.merged ISOTXS.REG14
+!
+! ============================================================
+!
+cat > input << EOF
+\$library
+     c_mcclibdir  ="$lib_mcclibdir"
+     c_pwlibdir   ="$lib_pwlibdir"
+     c_twodantexe ="$exe_twodant"
+/
+\$control
+     c_group_structure       = "ANL1041"
+     c_geometry_type         = "cylinder"
+     i_number_region         = 11
+     i_scattering_order      = 3
+     l_twodant               = F
+     l_pendf                 = T
+/
+\$material
+!
+! ============================================================
+!                        AFA_6_1_Fuel_St (O)
+! ============================================================
+!
+     t_composition(:,  1)=  CR50_7  CR50_O  8.17447E-04  450.00
+                            CR52_7  CR52_O  1.57642E-02  450.00
+                            CR53_7  CR53_O  1.78749E-03  450.00
+                            CR54_7  CR54_O  4.44937E-04  450.00
+                            FE54_7  FE54_O  3.48116E-03  450.00
+                            FE56_7  FE56_O  5.46464E-02  450.00
+                            FE57_7  FE57_O  1.26199E-03  450.00
+                            FE58_7  FE58_O  1.67947E-04  450.00
+                            NI58_7  NI58_O  6.80774E-03  450.00
+                            NI60_7  NI60_O  2.62236E-03  450.00
+                            NI61_7  NI61_O  1.13987E-04  450.00
+                            NI62_7  NI62_O  3.63455E-04  450.00
+                            NI64_7  NI64_O  9.25606E-05  450.00
+
+     t_composition(:,  2)=  B10__7  B10__O  1.32047E-02  450.00
+                            B11__7  B11__O  5.31509E-02  450.00
+                            C____7  C12__O  1.65886E-02  450.00
+
+     t_composition(:,  3)=  CR50_7  CR50_O  6.90859E-04  450.00
+                            CR52_7  CR52_O  1.33222E-02  450.00
+                            CR53_7  CR53_O  1.51071E-03  450.00
+                            CR54_7  CR54_O  3.76040E-04  450.00
+                            FE54_7  FE54_O  3.41037E-03  450.00
+                            FE56_7  FE56_O  5.35351E-02  450.00
+                            FE57_7  FE57_O  1.23633E-03  450.00
+                            FE58_7  FE58_O  1.64532E-04  450.00
+                            MO1007  MO100O  1.22044E-04  450.00
+                            MO92_7  MO92_O  1.88080E-04  450.00
+                            MO94_7  MO94_O  1.17230E-04  450.00
+                            MO95_7  MO95_O  2.01769E-04  450.00
+                            MO96_7  MO96_O  2.11398E-04  450.00
+                            MO97_7  MO97_O  1.21032E-04  450.00
+                            MO98_7  MO98_O  3.05815E-04  450.00
+                            NI58_7  NI58_O  7.61491E-03  450.00
+                            NI60_7  NI60_O  2.93327E-03  450.00
+                            NI61_7  NI61_O  1.27504E-04  450.00
+                            NI62_7  NI62_O  4.06546E-04  450.00
+                            NI64_7  NI64_O  1.03540E-04  450.00
+
+     t_composition(:,  4)=  BE9__7  BE9__O  5.39439E-02  450.00
+                            O16__7  O16__O  5.39439E-02  450.00
+                            CR50_7  CR50_O  1.20548E-04  450.00
+                            CR52_7  CR52_O  2.32460E-03  450.00
+                            CR53_7  CR53_O  2.63605E-04  450.00
+                            CR54_7  CR54_O  6.56154E-05  450.00
+                            FE54_7  FE54_O  5.95077E-04  450.00
+                            FE56_7  FE56_O  9.34136E-03  450.00
+                            FE57_7  FE57_O  2.15727E-04  450.00
+                            FE58_7  FE58_O  2.87093E-05  450.00
+                            MO1007  MO100O  2.12956E-05  450.00
+                            MO92_7  MO92_O  3.28181E-05  450.00
+                            MO94_7  MO94_O  2.04554E-05  450.00
+                            MO95_7  MO95_O  3.52068E-05  450.00
+                            MO96_7  MO96_O  3.68870E-05  450.00
+                            MO97_7  MO97_O  2.11189E-05  450.00
+                            MO98_7  MO98_O  5.33619E-05  450.00
+                            NI58_7  NI58_O  1.32873E-03  450.00
+                            NI60_7  NI60_O  5.11828E-04  450.00
+                            NI61_7  NI61_O  2.22483E-05  450.00
+                            NI62_7  NI62_O  7.09384E-05  450.00
+                            NI64_7  NI64_O  1.80668E-05  450.00
+
+     t_composition(:,  5)=  NA23_7  NA23_O  2.39160E-02  450.00
+
+     t_composition(:,  6)=  CR50_7  CR50_O  8.17351E-04  450.00
+                            CR52_7  CR52_O  1.57623E-02  450.00
+                            CR53_7  CR53_O  1.78728E-03  450.00
+                            CR54_7  CR54_O  4.44885E-04  450.00
+                            FE54_7  FE54_O  3.48075E-03  450.00
+                            FE56_7  FE56_O  5.46400E-02  450.00
+                            FE57_7  FE57_O  1.26184E-03  450.00
+                            FE58_7  FE58_O  1.67927E-04  450.00
+                            NI58_7  NI58_O  6.80694E-03  450.00
+                            NI60_7  NI60_O  2.62205E-03  450.00
+                            NI61_7  NI61_O  1.13973E-04  450.00
+                            NI62_7  NI62_O  3.63413E-04  450.00
+                            NI64_7  NI64_O  9.25497E-05  450.00
+
+     t_composition(:,  7)=  PU2397  PU239O  3.32051E-03  450.00
+                            PU2407  PU240O  2.98177E-04  450.00
+                            U235_7  U235_O  3.12105E-05  450.00
+                            U238_7  U238_O  1.41554E-02  450.00
+                            O16__7  O16__O  3.55742E-02  450.00
+                            CR50_7  CR50_O  1.09257E-04  450.00
+                            CR52_7  CR52_O  2.10686E-03  450.00
+                            CR53_7  CR53_O  2.38914E-04  450.00
+                            CR54_7  CR54_O  5.94694E-05  450.00
+                            FE54_7  FE54_O  5.39338E-04  450.00
+                            FE56_7  FE56_O  8.46638E-03  450.00
+                            FE57_7  FE57_O  1.95521E-04  450.00
+                            FE58_7  FE58_O  2.60202E-05  450.00
+                            MO1007  MO100O  1.93009E-05  450.00
+                            MO92_7  MO92_O  2.97441E-05  450.00
+                            MO94_7  MO94_O  1.85394E-05  450.00
+                            MO95_7  MO95_O  3.19091E-05  450.00
+                            MO96_7  MO96_O  3.34319E-05  450.00
+                            MO97_7  MO97_O  1.91407E-05  450.00
+                            MO98_7  MO98_O  4.83636E-05  450.00
+                            NI58_7  NI58_O  1.20427E-03  450.00
+                            NI60_7  NI60_O  4.63886E-04  450.00
+                            NI61_7  NI61_O  2.01643E-05  450.00
+                            NI62_7  NI62_O  6.42938E-05  450.00
+                            NI64_7  NI64_O  1.63745E-05  450.00
+
+     t_composition(:,  8)=  CR50_7  CR50_O  8.17351E-04  450.00
+                            CR52_7  CR52_O  1.57623E-02  450.00
+                            CR53_7  CR53_O  1.78728E-03  450.00
+                            CR54_7  CR54_O  4.44885E-04  450.00
+                            FE54_7  FE54_O  3.48075E-03  450.00
+                            FE56_7  FE56_O  5.46400E-02  450.00
+                            FE57_7  FE57_O  1.26184E-03  450.00
+                            FE58_7  FE58_O  1.67927E-04  450.00
+                            NI58_7  NI58_O  6.80694E-03  450.00
+                            NI60_7  NI60_O  2.62205E-03  450.00
+                            NI61_7  NI61_O  1.13973E-04  450.00
+                            NI62_7  NI62_O  3.63413E-04  450.00
+                            NI64_7  NI64_O  9.25497E-05  450.00
+
+     t_composition(:,  9)=  NA23_7  NA23_O  2.39160E-02  450.00
+
+     t_composition(:, 10)=  CR50_7  CR50_O  8.17351E-04  450.00
+                            CR52_7  CR52_O  1.57623E-02  450.00
+                            CR53_7  CR53_O  1.78728E-03  450.00
+                            CR54_7  CR54_O  4.44885E-04  450.00
+                            FE54_7  FE54_O  3.48075E-03  450.00
+                            FE56_7  FE56_O  5.46400E-02  450.00
+                            FE57_7  FE57_O  1.26184E-03  450.00
+                            FE58_7  FE58_O  1.67927E-04  450.00
+                            NI58_7  NI58_O  6.80694E-03  450.00
+                            NI60_7  NI60_O  2.62205E-03  450.00
+                            NI61_7  NI61_O  1.13973E-04  450.00
+                            NI62_7  NI62_O  3.63413E-04  450.00
+                            NI64_7  NI64_O  9.25497E-05  450.00
+
+     t_composition(:, 11)=  NA23_7  NA23_O  2.39160E-02  450.00
+/
+\$geometry
+     c_boundary_condition = reflective
+     i_mesh =           1       1       1       1       1
+                        1       3       1       3       1
+                        1
+     r_location = 0.80133 1.13331 1.23518 1.66350 1.78141
+                  1.85000 3.32428 3.41451 4.05154 4.21200
+                  4.22537
+     i_composition =    1       2       3       4       5
+                        6       7       8       9      10
+                       11
+/
+\$output
+     l_isotxs_macroxs    = T
+/
+EOF
+$exe_mcc3
+$exe_isotxs_modify in=ISOTXS.merged out=ISOTXS.REG15.merged i=REG_01 n=REG_15
+mv ISOTXS.REG15.merged ISOTXS.REG15
+!
+! ============================================================
+!
+cat > input << EOF
+\$library
+     c_mcclibdir  ="$lib_mcclibdir"
+     c_pwlibdir   ="$lib_pwlibdir"
+     c_twodantexe ="$exe_twodant"
+/
+\$control
+     c_group_structure       = "ANL1041"
+     c_geometry_type         = "mixture"
+     i_number_region         = 1
+     i_scattering_order      = 3
+     l_twodant               = F
+     l_pendf                 = T
+/
+\$material
+!
+! ============================================================
+!                        AFA_6_1_Spring_Void (P)
+! ============================================================
+!
+     t_composition(:,  1)=  O16__7  O16__P  3.75126E-03  450.00
+                            NA23_7  NA23_P  7.06638E-03  450.00
+                            CR50_7  CR50_P  1.93740E-04  450.00
+                            CR52_7  CR52_P  3.73613E-03  450.00
+                            CR53_7  CR53_P  4.23649E-04  450.00
+                            CR54_7  CR54_P  1.05453E-04  450.00
+                            FE54_7  FE54_P  8.68710E-04  450.00
+                            FE56_7  FE56_P  1.36368E-02  450.00
+                            FE57_7  FE57_P  3.14925E-04  450.00
+                            FE58_7  FE58_P  4.19105E-05  450.00
+                            MO1007  MO100P  1.13768E-05  450.00
+                            MO92_7  MO92_P  1.75326E-05  450.00
+                            MO94_7  MO94_P  1.09280E-05  450.00
+                            MO95_7  MO95_P  1.88087E-05  450.00
+                            MO96_7  MO96_P  1.97063E-05  450.00
+                            MO97_7  MO97_P  1.12825E-05  450.00
+                            MO98_7  MO98_P  2.85077E-05  450.00
+                            NI58_7  NI58_P  1.78699E-03  450.00
+                            NI60_7  NI60_P  6.88354E-04  450.00
+                            NI61_7  NI61_P  2.99211E-05  450.00
+                            NI62_7  NI62_P  9.54048E-05  450.00
+                            NI64_7  NI64_P  2.42971E-05  450.00
+                            BE9__7  BE9__P  3.75126E-03  450.00
+                            B10__7  B10__P  4.75018E-04  450.00
+                            B11__7  B11__P  1.91202E-03  450.00
+                            C____7  C12__P  5.96748E-04  450.00
+/
+\$output
+     l_isotxs_macroxs    = T
+/
+EOF
+$exe_mcc3
+$exe_isotxs_modify in=ISOTXS.merged out=ISOTXS.REG16.merged i=REG_01 n=REG_16
+mv ISOTXS.REG16.merged ISOTXS.REG16
+!
+! ============================================================
+!
+cat > input << EOF
+\$library
+     c_mcclibdir  ="$lib_mcclibdir"
+     c_pwlibdir   ="$lib_pwlibdir"
+     c_twodantexe ="$exe_twodant"
+/
+\$control
+     c_group_structure       = "ANL1041"
+     c_geometry_type         = "cylinder"
+     i_number_region         = 9
+     i_scattering_order      = 3
+     l_twodant               = F
+     l_pendf                 = T
+/
+\$material
+!
+! ============================================================
+!                        GA_6_2_Fuel_St (Q)
+! ============================================================
+!
+     t_composition(:,  1)=  BE9__7  BE9__Q  5.39439E-02  450.00
+                            O16__7  O16__Q  5.39439E-02  450.00
+                            CR50_7  CR50_Q  1.20548E-04  450.00
+                            CR52_7  CR52_Q  2.32460E-03  450.00
+                            CR53_7  CR53_Q  2.63605E-04  450.00
+                            CR54_7  CR54_Q  6.56154E-05  450.00
+                            FE54_7  FE54_Q  5.95077E-04  450.00
+                            FE56_7  FE56_Q  9.34136E-03  450.00
+                            FE57_7  FE57_Q  2.15727E-04  450.00
+                            FE58_7  FE58_Q  2.87093E-05  450.00
+                            MO1007  MO100Q  2.12956E-05  450.00
+                            MO92_7  MO92_Q  3.28181E-05  450.00
+                            MO94_7  MO94_Q  2.04554E-05  450.00
+                            MO95_7  MO95_Q  3.52068E-05  450.00
+                            MO96_7  MO96_Q  3.68870E-05  450.00
+                            MO97_7  MO97_Q  2.11189E-05  450.00
+                            MO98_7  MO98_Q  5.33619E-05  450.00
+                            NI58_7  NI58_Q  1.32873E-03  450.00
+                            NI60_7  NI60_Q  5.11828E-04  450.00
+                            NI61_7  NI61_Q  2.22483E-05  450.00
+                            NI62_7  NI62_Q  7.09384E-05  450.00
+                            NI64_7  NI64_Q  1.80668E-05  450.00
+
+     t_composition(:,  2)=  NA23_7  NA23_Q  2.39160E-02  450.00
+
+     t_composition(:,  3)=  CR50_7  CR50_Q  8.17351E-04  450.00
+                            CR52_7  CR52_Q  1.57623E-02  450.00
+                            CR53_7  CR53_Q  1.78728E-03  450.00
+                            CR54_7  CR54_Q  4.44885E-04  450.00
+                            FE54_7  FE54_Q  3.48075E-03  450.00
+                            FE56_7  FE56_Q  5.46400E-02  450.00
+                            FE57_7  FE57_Q  1.26184E-03  450.00
+                            FE58_7  FE58_Q  1.67927E-04  450.00
+                            NI58_7  NI58_Q  6.80694E-03  450.00
+                            NI60_7  NI60_Q  2.62205E-03  450.00
+                            NI61_7  NI61_Q  1.13973E-04  450.00
+                            NI62_7  NI62_Q  3.63413E-04  450.00
+                            NI64_7  NI64_Q  9.25497E-05  450.00
+
+     t_composition(:,  4)=  PU2397  PU239Q  3.32051E-03  450.00
+                            PU2407  PU240Q  2.98177E-04  450.00
+                            U235_7  U235_Q  3.12105E-05  450.00
+                            U238_7  U238_Q  1.41554E-02  450.00
+                            O16__7  O16__Q  3.55742E-02  450.00
+                            CR50_7  CR50_Q  1.09257E-04  450.00
+                            CR52_7  CR52_Q  2.10686E-03  450.00
+                            CR53_7  CR53_Q  2.38914E-04  450.00
+                            CR54_7  CR54_Q  5.94694E-05  450.00
+                            FE54_7  FE54_Q  5.39338E-04  450.00
+                            FE56_7  FE56_Q  8.46638E-03  450.00
+                            FE57_7  FE57_Q  1.95521E-04  450.00
+                            FE58_7  FE58_Q  2.60202E-05  450.00
+                            MO1007  MO100Q  1.93009E-05  450.00
+                            MO92_7  MO92_Q  2.97441E-05  450.00
+                            MO94_7  MO94_Q  1.85394E-05  450.00
+                            MO95_7  MO95_Q  3.19091E-05  450.00
+                            MO96_7  MO96_Q  3.34319E-05  450.00
+                            MO97_7  MO97_Q  1.91407E-05  450.00
+                            MO98_7  MO98_Q  4.83636E-05  450.00
+                            NI58_7  NI58_Q  1.20427E-03  450.00
+                            NI60_7  NI60_Q  4.63886E-04  450.00
+                            NI61_7  NI61_Q  2.01643E-05  450.00
+                            NI62_7  NI62_Q  6.42938E-05  450.00
+                            NI64_7  NI64_Q  1.63745E-05  450.00
+
+     t_composition(:,  5)=  PU2397  PU239Q  4.43913E-03  450.00
+                            PU2407  PU240Q  3.98634E-04  450.00
+                            U235_7  U235_Q  2.85195E-05  450.00
+                            U238_7  U238_Q  1.29349E-02  450.00
+                            O16__7  O16__Q  3.55539E-02  450.00
+                            CR50_7  CR50_Q  1.09257E-04  450.00
+                            CR52_7  CR52_Q  2.10686E-03  450.00
+                            CR53_7  CR53_Q  2.38914E-04  450.00
+                            CR54_7  CR54_Q  5.94694E-05  450.00
+                            FE54_7  FE54_Q  5.39338E-04  450.00
+                            FE56_7  FE56_Q  8.46638E-03  450.00
+                            FE57_7  FE57_Q  1.95521E-04  450.00
+                            FE58_7  FE58_Q  2.60202E-05  450.00
+                            MO1007  MO100Q  1.93009E-05  450.00
+                            MO92_7  MO92_Q  2.97441E-05  450.00
+                            MO94_7  MO94_Q  1.85394E-05  450.00
+                            MO95_7  MO95_Q  3.19091E-05  450.00
+                            MO96_7  MO96_Q  3.34319E-05  450.00
+                            MO97_7  MO97_Q  1.91407E-05  450.00
+                            MO98_7  MO98_Q  4.83636E-05  450.00
+                            NI58_7  NI58_Q  1.20427E-03  450.00
+                            NI60_7  NI60_Q  4.63886E-04  450.00
+                            NI61_7  NI61_Q  2.01643E-05  450.00
+                            NI62_7  NI62_Q  6.42938E-05  450.00
+                            NI64_7  NI64_Q  1.63745E-05  450.00
+
+     t_composition(:,  6)=  CR50_7  CR50_Q  8.17351E-04  450.00
+                            CR52_7  CR52_Q  1.57623E-02  450.00
+                            CR53_7  CR53_Q  1.78728E-03  450.00
+                            CR54_7  CR54_Q  4.44885E-04  450.00
+                            FE54_7  FE54_Q  3.48075E-03  450.00
+                            FE56_7  FE56_Q  5.46400E-02  450.00
+                            FE57_7  FE57_Q  1.26184E-03  450.00
+                            FE58_7  FE58_Q  1.67927E-04  450.00
+                            NI58_7  NI58_Q  6.80694E-03  450.00
+                            NI60_7  NI60_Q  2.62205E-03  450.00
+                            NI61_7  NI61_Q  1.13973E-04  450.00
+                            NI62_7  NI62_Q  3.63413E-04  450.00
+                            NI64_7  NI64_Q  9.25497E-05  450.00
+
+     t_composition(:,  7)=  NA23_7  NA23_Q  2.39160E-02  450.00
+
+     t_composition(:,  8)=  CR50_7  CR50_Q  8.17351E-04  450.00
+                            CR52_7  CR52_Q  1.57623E-02  450.00
+                            CR53_7  CR53_Q  1.78728E-03  450.00
+                            CR54_7  CR54_Q  4.44885E-04  450.00
+                            FE54_7  FE54_Q  3.48075E-03  450.00
+                            FE56_7  FE56_Q  5.46400E-02  450.00
+                            FE57_7  FE57_Q  1.26184E-03  450.00
+                            FE58_7  FE58_Q  1.67927E-04  450.00
+                            NI58_7  NI58_Q  6.80694E-03  450.00
+                            NI60_7  NI60_Q  2.62205E-03  450.00
+                            NI61_7  NI61_Q  1.13973E-04  450.00
+                            NI62_7  NI62_Q  3.63413E-04  450.00
+                            NI64_7  NI64_Q  9.25497E-05  450.00
+
+     t_composition(:,  9)=  NA23_7  NA23_Q  2.39160E-02  450.00
+/
+\$geometry
+     c_boundary_condition = reflective
+     i_mesh =           1       1       1       3       2
+                        1       3       1       1
+     r_location = 1.11426 1.28366 1.37726 2.82834 3.32428
+                  3.41451 4.05154 4.21200 4.22537
+     i_composition =    1       2       3       4       5
+                        6       7       8       9
+/
+\$output
+     l_isotxs_macroxs    = T
+/
+EOF
+$exe_mcc3
+$exe_isotxs_modify in=ISOTXS.merged out=ISOTXS.REG17.merged i=REG_01 n=REG_17
+mv ISOTXS.REG17.merged ISOTXS.REG17
+!
+! ============================================================
+!
+cat > input << EOF
+\$library
+     c_mcclibdir  ="$lib_mcclibdir"
+     c_pwlibdir   ="$lib_pwlibdir"
+     c_twodantexe ="$exe_twodant"
+/
+\$control
+     c_group_structure       = "ANL1041"
+     c_geometry_type         = "cylinder"
+     i_number_region         = 12
+     i_scattering_order      = 3
+     l_twodant               = F
+     l_pendf                 = T
+/
+\$material
+!
+! ============================================================
+!                        GA_AFA_6_1_1_Fuel_St (R)
+! ============================================================
+!
+     t_composition(:,  1)=  CR50_7  CR50_R  8.17447E-04  450.00
+                            CR52_7  CR52_R  1.57642E-02  450.00
+                            CR53_7  CR53_R  1.78749E-03  450.00
+                            CR54_7  CR54_R  4.44937E-04  450.00
+                            FE54_7  FE54_R  3.48116E-03  450.00
+                            FE56_7  FE56_R  5.46464E-02  450.00
+                            FE57_7  FE57_R  1.26199E-03  450.00
+                            FE58_7  FE58_R  1.67947E-04  450.00
+                            NI58_7  NI58_R  6.80774E-03  450.00
+                            NI60_7  NI60_R  2.62236E-03  450.00
+                            NI61_7  NI61_R  1.13987E-04  450.00
+                            NI62_7  NI62_R  3.63455E-04  450.00
+                            NI64_7  NI64_R  9.25606E-05  450.00
+
+     t_composition(:,  2)=  B10__7  B10__R  1.32047E-02  450.00
+                            B11__7  B11__R  5.31509E-02  450.00
+                            C____7  C12__R  1.65886E-02  450.00
+
+     t_composition(:,  3)=  CR50_7  CR50_R  6.90859E-04  450.00
+                            CR52_7  CR52_R  1.33222E-02  450.00
+                            CR53_7  CR53_R  1.51071E-03  450.00
+                            CR54_7  CR54_R  3.76040E-04  450.00
+                            FE54_7  FE54_R  3.41037E-03  450.00
+                            FE56_7  FE56_R  5.35351E-02  450.00
+                            FE57_7  FE57_R  1.23633E-03  450.00
+                            FE58_7  FE58_R  1.64532E-04  450.00
+                            MO1007  MO100R  1.22044E-04  450.00
+                            MO92_7  MO92_R  1.88080E-04  450.00
+                            MO94_7  MO94_R  1.17230E-04  450.00
+                            MO95_7  MO95_R  2.01769E-04  450.00
+                            MO96_7  MO96_R  2.11398E-04  450.00
+                            MO97_7  MO97_R  1.21032E-04  450.00
+                            MO98_7  MO98_R  3.05815E-04  450.00
+                            NI58_7  NI58_R  7.61491E-03  450.00
+                            NI60_7  NI60_R  2.93327E-03  450.00
+                            NI61_7  NI61_R  1.27504E-04  450.00
+                            NI62_7  NI62_R  4.06546E-04  450.00
+                            NI64_7  NI64_R  1.03540E-04  450.00
+
+     t_composition(:,  4)=  BE9__7  BE9__R  5.39439E-02  450.00
+                            O16__7  O16__R  5.39439E-02  450.00
+                            CR50_7  CR50_R  1.20548E-04  450.00
+                            CR52_7  CR52_R  2.32460E-03  450.00
+                            CR53_7  CR53_R  2.63605E-04  450.00
+                            CR54_7  CR54_R  6.56154E-05  450.00
+                            FE54_7  FE54_R  5.95077E-04  450.00
+                            FE56_7  FE56_R  9.34136E-03  450.00
+                            FE57_7  FE57_R  2.15727E-04  450.00
+                            FE58_7  FE58_R  2.87093E-05  450.00
+                            MO1007  MO100R  2.12956E-05  450.00
+                            MO92_7  MO92_R  3.28181E-05  450.00
+                            MO94_7  MO94_R  2.04554E-05  450.00
+                            MO95_7  MO95_R  3.52068E-05  450.00
+                            MO96_7  MO96_R  3.68870E-05  450.00
+                            MO97_7  MO97_R  2.11189E-05  450.00
+                            MO98_7  MO98_R  5.33619E-05  450.00
+                            NI58_7  NI58_R  1.32873E-03  450.00
+                            NI60_7  NI60_R  5.11828E-04  450.00
+                            NI61_7  NI61_R  2.22483E-05  450.00
+                            NI62_7  NI62_R  7.09384E-05  450.00
+                            NI64_7  NI64_R  1.80668E-05  450.00
+
+     t_composition(:,  5)=  NA23_7  NA23_R  2.39160E-02  450.00
+
+     t_composition(:,  6)=  CR50_7  CR50_R  8.17351E-04  450.00
+                            CR52_7  CR52_R  1.57623E-02  450.00
+                            CR53_7  CR53_R  1.78728E-03  450.00
+                            CR54_7  CR54_R  4.44885E-04  450.00
+                            FE54_7  FE54_R  3.48075E-03  450.00
+                            FE56_7  FE56_R  5.46400E-02  450.00
+                            FE57_7  FE57_R  1.26184E-03  450.00
+                            FE58_7  FE58_R  1.67927E-04  450.00
+                            NI58_7  NI58_R  6.80694E-03  450.00
+                            NI60_7  NI60_R  2.62205E-03  450.00
+                            NI61_7  NI61_R  1.13973E-04  450.00
+                            NI62_7  NI62_R  3.63413E-04  450.00
+                            NI64_7  NI64_R  9.25497E-05  450.00
+
+     t_composition(:,  7)=  PU2397  PU239R  3.32051E-03  450.00
+                            PU2407  PU240R  2.98177E-04  450.00
+                            U235_7  U235_R  3.12105E-05  450.00
+                            U238_7  U238_R  1.41554E-02  450.00
+                            O16__7  O16__R  3.55742E-02  450.00
+                            CR50_7  CR50_R  1.09257E-04  450.00
+                            CR52_7  CR52_R  2.10686E-03  450.00
+                            CR53_7  CR53_R  2.38914E-04  450.00
+                            CR54_7  CR54_R  5.94694E-05  450.00
+                            FE54_7  FE54_R  5.39338E-04  450.00
+                            FE56_7  FE56_R  8.46638E-03  450.00
+                            FE57_7  FE57_R  1.95521E-04  450.00
+                            FE58_7  FE58_R  2.60202E-05  450.00
+                            MO1007  MO100R  1.93009E-05  450.00
+                            MO92_7  MO92_R  2.97441E-05  450.00
+                            MO94_7  MO94_R  1.85394E-05  450.00
+                            MO95_7  MO95_R  3.19091E-05  450.00
+                            MO96_7  MO96_R  3.34319E-05  450.00
+                            MO97_7  MO97_R  1.91407E-05  450.00
+                            MO98_7  MO98_R  4.83636E-05  450.00
+                            NI58_7  NI58_R  1.20427E-03  450.00
+                            NI60_7  NI60_R  4.63886E-04  450.00
+                            NI61_7  NI61_R  2.01643E-05  450.00
+                            NI62_7  NI62_R  6.42938E-05  450.00
+                            NI64_7  NI64_R  1.63745E-05  450.00
+
+     t_composition(:,  8)=  PU2397  PU239R  4.43913E-03  450.00
+                            PU2407  PU240R  3.98634E-04  450.00
+                            U235_7  U235_R  2.85195E-05  450.00
+                            U238_7  U238_R  1.29349E-02  450.00
+                            O16__7  O16__R  3.55539E-02  450.00
+                            CR50_7  CR50_R  1.09257E-04  450.00
+                            CR52_7  CR52_R  2.10686E-03  450.00
+                            CR53_7  CR53_R  2.38914E-04  450.00
+                            CR54_7  CR54_R  5.94694E-05  450.00
+                            FE54_7  FE54_R  5.39338E-04  450.00
+                            FE56_7  FE56_R  8.46638E-03  450.00
+                            FE57_7  FE57_R  1.95521E-04  450.00
+                            FE58_7  FE58_R  2.60202E-05  450.00
+                            MO1007  MO100R  1.93009E-05  450.00
+                            MO92_7  MO92_R  2.97441E-05  450.00
+                            MO94_7  MO94_R  1.85394E-05  450.00
+                            MO95_7  MO95_R  3.19091E-05  450.00
+                            MO96_7  MO96_R  3.34319E-05  450.00
+                            MO97_7  MO97_R  1.91407E-05  450.00
+                            MO98_7  MO98_R  4.83636E-05  450.00
+                            NI58_7  NI58_R  1.20427E-03  450.00
+                            NI60_7  NI60_R  4.63886E-04  450.00
+                            NI61_7  NI61_R  2.01643E-05  450.00
+                            NI62_7  NI62_R  6.42938E-05  450.00
+                            NI64_7  NI64_R  1.63745E-05  450.00
+
+     t_composition(:,  9)=  CR50_7  CR50_R  8.17351E-04  450.00
+                            CR52_7  CR52_R  1.57623E-02  450.00
+                            CR53_7  CR53_R  1.78728E-03  450.00
+                            CR54_7  CR54_R  4.44885E-04  450.00
+                            FE54_7  FE54_R  3.48075E-03  450.00
+                            FE56_7  FE56_R  5.46400E-02  450.00
+                            FE57_7  FE57_R  1.26184E-03  450.00
+                            FE58_7  FE58_R  1.67927E-04  450.00
+                            NI58_7  NI58_R  6.80694E-03  450.00
+                            NI60_7  NI60_R  2.62205E-03  450.00
+                            NI61_7  NI61_R  1.13973E-04  450.00
+                            NI62_7  NI62_R  3.63413E-04  450.00
+                            NI64_7  NI64_R  9.25497E-05  450.00
+
+     t_composition(:, 10)=  NA23_7  NA23_R  2.39160E-02  450.00
+
+     t_composition(:, 11)=  CR50_7  CR50_R  8.17351E-04  450.00
+                            CR52_7  CR52_R  1.57623E-02  450.00
+                            CR53_7  CR53_R  1.78728E-03  450.00
+                            CR54_7  CR54_R  4.44885E-04  450.00
+                            FE54_7  FE54_R  3.48075E-03  450.00
+                            FE56_7  FE56_R  5.46400E-02  450.00
+                            FE57_7  FE57_R  1.26184E-03  450.00
+                            FE58_7  FE58_R  1.67927E-04  450.00
+                            NI58_7  NI58_R  6.80694E-03  450.00
+                            NI60_7  NI60_R  2.62205E-03  450.00
+                            NI61_7  NI61_R  1.13973E-04  450.00
+                            NI62_7  NI62_R  3.63413E-04  450.00
+                            NI64_7  NI64_R  9.25497E-05  450.00
+
+     t_composition(:, 12)=  NA23_7  NA23_R  2.39160E-02  450.00
+/
+\$geometry
+     c_boundary_condition = reflective
+     i_mesh =           1       1       1       1       1
+                        1       3       1       1       3
+                        1       1
+     r_location = 0.80133 1.13331 1.23518 1.66350 1.78141
+                  1.85000 3.08628 3.32428 3.41451 4.05154
+                  4.21200 4.22537
+     i_composition =    1       2       3       4       5
+                        6       7       8       9      10
+                       11      12
+/
+\$output
+     l_isotxs_macroxs    = T
+/
+EOF
+$exe_mcc3
+$exe_isotxs_modify in=ISOTXS.merged out=ISOTXS.REG18.merged i=REG_01 n=REG_18
+mv ISOTXS.REG18.merged ISOTXS.REG18
+!
+! ============================================================
+!
+cat > input << EOF
+\$control
+c_isotxs_conversion = bin2asc
+/
+\$output
+c_isotxs_file = ISOTXS.REG01
+                ISOTXS.REG02
+                ISOTXS.REG03
+                ISOTXS.REG04
+                ISOTXS.REG05
+                ISOTXS.REG06
+                ISOTXS.REG07
+                ISOTXS.REG08
+                ISOTXS.REG09
+                ISOTXS.REG10
+                ISOTXS.REG11
+                ISOTXS.REG12
+                ISOTXS.REG13
+                ISOTXS.REG14
+                ISOTXS.REG15
+                ISOTXS.REG16
+                ISOTXS.REG17
+                ISOTXS.REG18
+/
+EOF
+$exe_mcc3
+mv ISOTXS.merged       $0.ISOTXS.1041g.bin
+mv ISOTXS.merged.ascii $0.ISOTXS.1041g.ascii
+rm ISOTXS.* input* output.* pw* out.*
+
