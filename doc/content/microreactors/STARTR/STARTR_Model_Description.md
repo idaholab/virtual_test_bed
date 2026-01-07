@@ -6,10 +6,10 @@ STARTR is a "starter" Sodium-cooled Thermal Spectrum (STR) reactor, modeled usin
 
 STARTR utilizes uranium-zirconium hydride (UZrH) as the fuel meat, where uranium comprises 30 wt% and is enriched to 19.75% U-235, standard in Training, Research, Isotopes, General Atomics (TRIGA) fuel rods. STARTR modifies a standard TRIGA fuel rod slightly by including five pellets of UZrH instead of the standard three. STARTR houses 36 fuel rods arranged in a hexagonal lattice, with one empty fuel rod located at the center of the reactor. Surrounding the fuel rods in a hexagon is sodium coolant, and the gap between this hexagon and the vessel wall is surrounded by metallic beryllium. Finally, outside the vessel is a stationary reflector made of beryllium oxide and four control drums that contain 120 degree sections of boron carbide poison. The control drums are withdrawn synchronously counter-clockwise to control the reactivity. 
 
-!media xy-root-universe.png
-	id=root
-	caption=STARTR reactor geometry
-	style=width:80%;margin-left:auto;margin-right:auto
+!media media/STARTR/xy-root-universe.png
+      style=display: block;margin-left:auto;margin-right:auto;width:60%;
+      id=startr_openmc_radial
+      caption= STARTR radial reactor geometry 
 
 Both the OpenMC and MCNP models are coded for k-eigenvalue problems as posted on the VTB, but tallies can easily be applied for more detailed analysis as performed on the results page.
 
@@ -18,7 +18,7 @@ Both the OpenMC and MCNP models are coded for k-eigenvalue problems as posted on
 The summary of all materials used in the model are listed below. The complex materials table includes materials with percent compositions of elements that can vary based on the specifics of manufacturing. The materials in the simple table have defined integer chemical compositions.
 
 !table id=table1 caption=Complex STARTR Materials
-| Material | Element | wt%  | Density [g/cc] |
+| Material | Element | wt%  | Density `[`g/cm^3^`]` |
 | :- | :- | :- | :- |
 | UZrH     | Zr      | 68.8 | 7.135          |
 |          | U-238   | 24.1 |                |
@@ -30,7 +30,7 @@ The summary of all materials used in the model are listed below. The complex mat
 |          | Mn      | 2.00 |                |
 
 !table id=table2 caption=Simple STARTR Materials
-| Material        | Density [g/cc] |
+| Material        | Density `[`g/cm^3^`]` |
 | :- | :- |
 | Zirconium       | 6.51           |
 | Graphite        | 1.70           |
@@ -43,7 +43,7 @@ The summary of all materials used in the model are listed below. The complex mat
 The density of sodium is calculated as
 \begin{equation}
 \label{eq:na-density}
-\rho\ [g/cc] = 0.9501 - 2.297t\times10^{-4} - 1.46t^2\times10^{-8} + 5.638t^3\times10^{-12}
+\rho\ [g/cm^3] = 0.9501 - 2.297t\times10^{-4} - 1.46t^2\times10^{-8} + 5.638t^3\times10^{-12}
 \end{equation}
 
 where $t$ is the temperature in degrees celsius [!citep](NaK1972). It is the only liquid material in the model, and thus experiences a density change significant enough to warrant inclusion of its temperature dependence.
