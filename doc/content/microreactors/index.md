@@ -17,3 +17,5 @@
 [Kilopower Reactor Using Stirling TechnologY (KRUSTY)](KRUSTY/index.md)
 
 [2D Generic Heat Pipe Microreactor (gHPMR)](gHPMR/index.md)
+
+[Sodium-cooled Thermal-spectrum Advanced Research Test Reactor (STARTR)](STARTR/index.md)
