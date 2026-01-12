@@ -10,11 +10,11 @@
      pairs=reactor_type:HTGR
            reactor:GPBR200
            geometry:core
-           simulation_type:neutronics;thermal_hydraulics;thermo_mechanics;surrogate_modeling;sensitivity_analysis;
+           simulation_type:neutronics;thermal_hydraulics;thermo_mechanics;surrogate_modeling;sensitivity_analysis
            input_features:multiapps;stochastic_tools
            transient:steady_state
            V_and_V:demonstration
-           codes_used:BlueCRAB;Griffin;Pronghorn;Bison;MOOSE_StochasticTools
+           codes_used:BlueCrab;Griffin;Pronghorn;BISON;MOOSE_StochasticTools
            computing_needs:Workstation;HPC
            open_source:partial
            fiscal_year:2024;2025

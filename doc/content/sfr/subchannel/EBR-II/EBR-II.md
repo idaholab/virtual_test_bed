@@ -13,7 +13,7 @@
                        simulation_type:thermal_hydraulics
                        transient:steady_state;PLOF;ULOF
                        V_and_V:validation
-                       codes_used:SCM
+                       codes_used:MOOSE_Subchannel
                        computing_needs:Workstation
                        fiscal_year:2024
                        sponsor:NEAMS
