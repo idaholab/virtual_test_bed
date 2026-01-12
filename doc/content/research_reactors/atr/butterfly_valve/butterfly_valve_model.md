@@ -11,7 +11,7 @@
            geometry:valve
            simulation_type:CFD
            codes_used:MOOSE_NavierStokes
-           open_source:true
+           open_source:fully
            computing_needs:HPC
            fiscal_year:2024;2025
            institution:INL

@@ -15,7 +15,7 @@
            V_and_V:demonstration
            computing_needs:Workstation
            gpu_enabled:true
-           open_source:true
+           open_source:fully
            fiscal_year:2023
            institution:PSU;ANL
            sponsor:NEAMS

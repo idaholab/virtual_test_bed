@@ -8,7 +8,7 @@
                        simulation_type:component_analysis;thermo_mechanics
                        codes_used:Grizzly;MOOSE_StochasticTools
                        computing_needs:Workstation;HPC
-                       open_source:partial
+                       open_source:partially
                        fiscal_year:2024;2025
                        institution:INL
                        sponsor:NEAMS;LWRS

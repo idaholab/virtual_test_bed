@@ -15,7 +15,7 @@
                        V_and_V:demonstration
                        codes_used:Nek5000
                        computing_needs:HPC
-                       open_source:true
+                       open_source:fully
                        fiscal_year:2023
                        sponsor:NEAMS
                        institution:ANL

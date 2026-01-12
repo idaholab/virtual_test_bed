@@ -12,7 +12,7 @@
                        codes_used:BlueCrab;Griffin;MOOSE_ThermalHydraulics
                        input_features:control_logic
                        transient:startup;load_follow
-                       open_source:partial
+                       open_source:partially
                        computing_needs:Workstation
                        fiscal_year:2023
                        institution:INL
