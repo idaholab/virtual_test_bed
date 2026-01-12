@@ -10,7 +10,7 @@
           codes_used:MOOSE_Solid_Mechanics
           transient:steady_state
           computing_needs:Workstation
-          open_source:true
+          open_source:fully
           fiscal_year:2022
           sponsor:NEAMS
           institution:ANL

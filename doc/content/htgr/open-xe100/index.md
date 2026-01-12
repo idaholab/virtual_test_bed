@@ -11,9 +11,9 @@
                        reactor:open-xe100
                        geometry:core
                        simulation_type:neutronics
-                       transient:steady;null;transient
+                       transient:steady_state;null;reactivity_maneuver
                        codes_used:Griffin
-                       computing_needs:workstation
+                       computing_needs:Workstation
                        fiscal_year:2021
                        institution:INL
                        sponsor:NEAMS

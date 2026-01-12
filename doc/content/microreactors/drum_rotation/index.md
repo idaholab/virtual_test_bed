@@ -16,7 +16,7 @@
                        V_and_V:demonstration
                        codes_used:Griffin;MOOSE_HeatTransfer
                        computing_needs:Workstation
-                       open_source:partial
+                       open_source:partially
                        fiscal_year:2024
                        sponsor:NEAMS
                        institution:INL
