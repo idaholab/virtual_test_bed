@@ -99,7 +99,6 @@ duct_inside = '${fparse duct_outside - 2 * duct_thickness}'
   fp = sodium
   n_blocks = 1
   P_out = ${P_out}
-  CT = 1.0
   compute_density = true
   compute_viscosity = true
   compute_power = true
@@ -114,6 +113,8 @@ duct_inside = '${fparse duct_outside - 2 * duct_thickness}'
   duct_HTC_closure = 'gnielinski'
   # friction model
   friction_closure = 'cheng'
+  # mixing model
+  mixing_closure = 'cheng_todreas'
 []
 
 [SCMClosures]
@@ -122,6 +123,9 @@ duct_inside = '${fparse duct_outside - 2 * duct_thickness}'
   []
   [gnielinski]
     type = SCMHTCGnielinski
+  []
+  [cheng_todreas]
+    type = SCMMixingChengTodreas
   []
 []
 
