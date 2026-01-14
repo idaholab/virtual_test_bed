@@ -15,7 +15,7 @@
            codes_used:RELAP-7;MOOSE_HeatTransfer
            input_features:multiapps;control_logic
            computing_needs:HPC
-           open_source:partial
+           open_source:partially
            fiscal_year:2023
            sponsor:NEAMS
            institution:INL

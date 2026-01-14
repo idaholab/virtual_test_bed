@@ -15,7 +15,7 @@
                        transient:steady_state;ULOF
                        V_and_V:demonstration
                        codes_used:BlueCrab;Griffin;Pronghorn;MOOSE_NavierStokes
-                       open_source:partial
+                       open_source:partially
                        computing_needs:Workstation
                        fiscal_year:2021
                        sponsor:NRIC

@@ -6,7 +6,7 @@
 
 !tag name=Southwest Experimental Fast Oxide Reactor (SEFOR)
      description=Simulation of SEFOR core I-E and core I-I isothermal experiments using the NEAMS tools
-     pairs=reactor_type:sfr
+     pairs=reactor_type:SFR
            reactor:SEFOR
            geometry:core
            simulation_type:neutronics

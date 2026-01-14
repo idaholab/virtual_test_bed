@@ -6,7 +6,7 @@
      pairs=tutorials:multiapps
                        simulation_type:multiphysics
                        codes_used:Griffin
-                       open_source:partial
+                       open_source:partially
                        input_features:multiapps
                        computing_needs:Workstation
                        fiscal_year:2022

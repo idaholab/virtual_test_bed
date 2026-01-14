@@ -13,7 +13,7 @@
            simulation_type:CFD
            V_and_V:demonstration
            codes_used:Nek5000
-           open_source:true
+           open_source:fully
            computing_needs:HPC
            fiscal_year:2023
            institution:ANL
