@@ -56,11 +56,16 @@ P_out = 2.0e5 # Pa
   # friction model
   friction_closure = 'cheng'
   full_output = true
+  # mixing model
+  mixing_closure = 'cheng_todreas'
 []
 
 [SCMClosures]
   [cheng]
     type = SCMFrictionUpdatedChengTodreas
+  []
+  [cheng_todreas]
+    type = SCMMixingChengTodreas
   []
 []
 
