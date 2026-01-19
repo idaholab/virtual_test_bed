@@ -962,4 +962,4 @@ openmc.run() will use one thread, while the above line will run openmc in parall
 Change this value to the number of cores if you wish to run the model in parallel for faster simulation times.
 """
 #openmc.run(mpi_args=['mpiexec', '-n', '48'])
-openmc.run()
+# openmc.run()
