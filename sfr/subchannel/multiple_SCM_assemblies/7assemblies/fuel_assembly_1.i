@@ -110,8 +110,8 @@ duct_inside = '${fparse duct_outside - 2 * duct_thickness}'
   verbose_multiapps = true
   verbose_subchannel = true
   # Heat Transfer Correlations
-  pin_htc_correlation = 'gnielinski'
-  duct_htc_correlation = 'gnielinski'
+  pin_HTC_closure = 'gnielinski'
+  duct_HTC_closure = 'gnielinski'
   # friction model
   friction_closure = 'cheng'
 []
@@ -119,6 +119,9 @@ duct_inside = '${fparse duct_outside - 2 * duct_thickness}'
 [SCMClosures]
   [cheng]
     type = SCMFrictionUpdatedChengTodreas
+  []
+  [gnielinski]
+    type = SCMHTCGnielinski
   []
 []
 
