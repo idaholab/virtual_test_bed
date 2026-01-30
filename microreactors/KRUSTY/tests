@@ -9,7 +9,7 @@
       # Cross section warning
       allow_warnings = true
       # Too slow
-      method = 'opt'
+      capabilities = 'method=opt'
     []
     [multiapp_ss_griffin_alone]
       type = RunApp

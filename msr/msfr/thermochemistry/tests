@@ -19,6 +19,6 @@
     allow_warnings = true
     min_parallel = 8
     max_time = 300
-    method = 'opt'
+    capabilities = 'method=opt'
   []
 []

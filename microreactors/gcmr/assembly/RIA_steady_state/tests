@@ -23,7 +23,7 @@
     prereq = 'griffin_alone_syntax'
     min_parallel = 16
     rel_err = 1e-3
-    method = 'opt'
+    capabilities = 'method=opt'
     max_time = 400
     allow_unused = true
   []
@@ -128,7 +128,7 @@
     prereq = 'griffin_alone_transient_syntax'
     min_parallel = 16
     rel_err = 1e-3
-    method = 'opt'
+    capabilities = 'method=opt'
     max_time = 800
     allow_unused = true
   []
@@ -219,4 +219,3 @@
     allow_warnings = true
   []
 []
-

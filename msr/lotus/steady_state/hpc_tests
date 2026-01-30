@@ -12,7 +12,7 @@
     allow_warnings = true
     min_parallel = 96
     max_time = 36000
-    method = 'opt'
+    capabilities = 'method=opt'
     # After 25,000 s on HPC (32 procs, 500s end time), at 4e-3
     rel_err = 8e-3
   []

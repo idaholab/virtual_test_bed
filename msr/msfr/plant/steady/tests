@@ -57,7 +57,7 @@
     # Increased tolerance from Mac / CIVET differences post moose#27257
     rel_err = 8e-3
     # see idaholab/moose#25681
-    method = 'opt'
+    capabilities = 'method=opt'
     max_time = 500
   []
   [neutronics_only]

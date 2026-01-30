@@ -63,7 +63,7 @@
     allow_warnings = true
     min_parallel = 16
     max_time = 800
-    method = 'opt'
+    capabilities = 'method=opt'
   []
   [small_bypass]
     type = CSVDiff

@@ -22,7 +22,7 @@
     input = 'MP_Griffin_ss.i'
     cli_args = "MultiApps/active='' Transfers/active=''"
     executable_pattern = 'griffin*|blue_crab*'
-    method = 'opt'
+    capabilities = 'method=opt'
     max_time = 600
     # Griffin does not have the sam petsc option parameter
     allow_unused = true
@@ -35,7 +35,7 @@
     input = 'MP_BISON_ss.i'
     cli_args = "MultiApps/active='' Transfers/active=''"
     executable_pattern = 'bison*|blue_crab*'
-    method = 'opt'
+    capabilities = 'method=opt'
     max_time = 600
     working_directory = 'steady_state'
     prereq = 'generate_bison_mesh'
@@ -46,7 +46,7 @@
     input = 'MP_SAM_ss.i'
     cli_args = "--app ThermalHydraulicsApp"
     executable_pattern = 'sam*|blue_crab*'
-    method = 'opt'
+    capabilities = 'method=opt'
     max_time = 600
     working_directory = 'steady_state'
   []
@@ -69,7 +69,7 @@
                 Executioner/richardson_max_its=1
                 MultiApps/bison/cli_args="Mesh/fmg/file=../mesh/Mesh_coarse_in.e"'
     executable_pattern = 'blue_crab*'
-    method = 'opt'
+    capabilities = 'method=opt'
     max_time = 18000
     # Griffin does not have the sam petsc option parameter
     allow_unused = true
@@ -88,7 +88,7 @@
                 Mesh/fmg/file="../mesh/Mesh_coarse_in.e"
                 TransportSystems/SN/NA=1'
     executable_pattern = 'griffin*|blue_crab*'
-    method = 'opt'
+    capabilities = 'method=opt'
     max_time = 600
     # Griffin does not have the sam petsc option parameter
     allow_unused = true
@@ -102,7 +102,7 @@
     input = 'MP_BISON_trN.i'
     cli_args = "MultiApps/active='' Transfers/active=''"
     executable_pattern = 'bison*|blue_crab*'
-    method = 'opt'
+    capabilities = 'method=opt'
     max_time = 600
     working_directory = 'null_transient'
     prereq = 'generate_mesh_coarse'
@@ -117,7 +117,7 @@
                 GlobalParams/initial_vel=${Vin}
                 GlobalParams/initial_T=${Tin}"
     executable_pattern = 'sam*|blue_crab*'
-    method = 'opt'
+    capabilities = 'method=opt'
     max_time = 600
     working_directory = 'null_transient'
   []
@@ -129,7 +129,7 @@
                 Mesh/fmg/file="../mesh/Mesh_coarse_in.e"
                 TransportSystems/SN/NA=1'
     executable_pattern = 'griffin*|blue_crab*'
-    method = 'opt'
+    capabilities = 'method=opt'
     max_time = 600
     # Griffin does not have the sam petsc option parameter
     allow_unused = true
@@ -143,7 +143,7 @@
     input = 'MP_BISON_scb.i'
     cli_args = "MultiApps/active='' Transfers/active=''"
     executable_pattern = 'bison*|blue_crab*'
-    method = 'opt'
+    capabilities = 'method=opt'
     max_time = 600
     working_directory = 'single_channel_blockage'
     prereq = 'generate_mesh_coarse'
@@ -158,7 +158,7 @@
                 GlobalParams/initial_vel=${Vin}
                 GlobalParams/initial_T=${Tin}"
     executable_pattern = 'sam*|blue_crab*'
-    method = 'opt'
+    capabilities = 'method=opt'
     max_time = 600
     working_directory = 'single_channel_blockage'
   []
@@ -170,7 +170,7 @@
                 Mesh/fmg/file="../mesh/Mesh_coarse_in.e"
                 TransportSystems/SN/NA=1'
     executable_pattern = 'griffin*|blue_crab*'
-    method = 'opt'
+    capabilities = 'method=opt'
     max_time = 600
     # Griffin does not have the sam petsc option parameter
     allow_unused = true
@@ -184,7 +184,7 @@
     input = 'MP_BISON_dp.i'
     cli_args = "MultiApps/active='' Transfers/active=''"
     executable_pattern = 'bison*|blue_crab*'
-    method = 'opt'
+    capabilities = 'method=opt'
     max_time = 600
     working_directory = 'depressurization'
     prereq = 'generate_mesh_coarse'
@@ -199,7 +199,7 @@
                 GlobalParams/initial_vel=${Vin}
                 GlobalParams/initial_T=${Tin}"
     executable_pattern = 'sam*|blue_crab*'
-    method = 'opt'
+    capabilities = 'method=opt'
     max_time = 600
     working_directory = 'depressurization'
   []

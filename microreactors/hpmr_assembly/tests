@@ -20,7 +20,7 @@
     input = 'main.i'
     cli_args = 'Executioner/num_steps=1'
     csvdiff = 'main.csv'
-    method = 'opt'
+    capabilities = 'method=opt'
     executable_pattern = 'dire_wolf*'
     allow_warnings = true
   []

@@ -12,6 +12,6 @@
     # 24 cores, 29 time steps in 1 hour
     # 24 cores, 50 time steps in 5680s
     max_time = 7200
-    method = 'opt'
+    capabilities = 'method=opt'
   []
 []

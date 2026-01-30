@@ -18,7 +18,7 @@
     csvdiff = neutronics_eigenvalue_heavy.csv
     executable_pattern = 'griffin*'
     min_parallel = 32
-    method = 'opt'
+    capabilities = 'method=opt'
     max_time = 120
     prereq = 'fine_mesh'
     group = griffin_performance
@@ -30,7 +30,7 @@
     cli_args = "TransportSystems/sn/NPolar=1 TransportSystems/sn/NAzmthl=3"
     executable_pattern = 'griffin*'
     min_parallel = 32
-    method = 'opt'
+    capabilities = 'method=opt'
     max_time = 90
     prereq = 'neutronics_eigenvalue'
     group = griffin_performance
@@ -48,7 +48,7 @@
     rel_err = 1e-4
     executable_pattern = 'griffin*'
     min_parallel = 32
-    method = 'opt'
+    capabilities = 'method=opt'
     max_time = 400
     prereq = neutronics_adjoint
     group = griffin_performance
