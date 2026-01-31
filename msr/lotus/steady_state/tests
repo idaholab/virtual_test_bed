@@ -35,7 +35,7 @@
     csvdiff = 'run_neutronics_9_group_out.csv'
     executable_pattern = 'griffin*'
     # Model is fairly expensive to run
-    method = 'opt'
+    capabilities = 'method=opt'
     min_parallel = 8
     max_time = 400
   []
@@ -46,7 +46,7 @@
     csvdiff = 'run_ns_initial_out.csv'
     executable_pattern = 'pronghorn*|combined*'
     # Model is fairly expensive to run
-    method = 'opt'
+    capabilities = 'method=opt'
     min_parallel = 16
     max_time = 400
     # P drop calculation changed in idaholab/moose#29614
@@ -63,7 +63,7 @@
     allow_warnings = true
     min_parallel = 32
     max_time = 2000
-    method = 'opt'
+    capabilities = 'method=opt'
     skip = '#403'
   []
 []

@@ -51,7 +51,7 @@
                "Executioner/accept_on_max_fixed_point_iteration=true DefaultElementQuality/aspect_ratio_upper_bound=1e6"
     # Expensive test
     max_time = 500
-    method = 'opt'
+    capabilities = 'method=opt'
     # Missing group cross section for absorption
     allow_warnings = true
     # To investigate later

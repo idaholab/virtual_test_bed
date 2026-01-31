@@ -17,7 +17,7 @@
                 TransportSystems/SN/NAzmthl=3 TransportSystems/SN/NPolar=1
                 Executioner/set_sam_default_petsc_options=false"
     min_parallel = 16
-    method = 'opt'
+    capabilities = 'method=opt'
     max_time = 600
     # Griffin does not have the sam petsc option parameter
     allow_unused = true
@@ -35,7 +35,7 @@
     prereq = 'griffin_alone_syntax'
     min_parallel = 16
     rel_err = 1e-3
-    method = 'opt'
+    capabilities = 'method=opt'
     max_time = 600
     # Griffin does not have the sam petsc option parameter
     allow_unused = true

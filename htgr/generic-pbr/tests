@@ -15,6 +15,6 @@
     abs_zero = 1e-5
     rel_err = 1e-4
     max_time = 1000
-    method = 'opt'
+    capabilities = 'method=opt'
   []
 []

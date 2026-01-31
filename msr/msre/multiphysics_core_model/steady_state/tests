@@ -21,7 +21,7 @@
     check_input = True
     executable_pattern = 'pronghorn*'
     # TODO: remove this one https://github.com/idaholab/moose/pull/27614 is merged
-    method = 'opt'
+    capabilities = 'method=opt'
   []
   # Regression tests with CSV output over a minimum amount of time steps/computation
   [neu_msre]
@@ -33,7 +33,7 @@
     executable_pattern = 'griffin*'
     allow_warnings = true
     cli_args = "MultiApps/active='' Transfers/active=''"
-    method = 'opt'
+    capabilities = 'method=opt'
   []
   [th_msre]
     prereq = th_msre_syntax
@@ -43,7 +43,7 @@
     csvdiff = 'th_out.csv'
     executable_pattern = 'pronghorn*'
     allow_warnings = true
-    method = 'opt'
+    capabilities = 'method=opt'
     min_parallel = 8
   []
 []

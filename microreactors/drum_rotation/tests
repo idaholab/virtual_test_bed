@@ -19,7 +19,7 @@
     rel_err = 1e-4
     executable_pattern = 'griffin*|blue_crab*|dire_wolf*|sabertooth*'
     min_parallel = 16
-    method = 'opt'
+    capabilities = 'method=opt'
     max_time = 300
     prereq = fine_mesh
   []
@@ -29,7 +29,7 @@
     cli_args = 'TransportSystems/sn/NPolar=1 TransportSystems/sn/NAzmthl=3'
     executable_pattern = 'griffin*|blue_crab*|dire_wolf*|sabertooth*'
     min_parallel = 16
-    method = 'opt'
+    capabilities = 'method=opt'
     max_time = 100
     prereq = neutronics_eigenvalue
   []
@@ -44,7 +44,7 @@
     rel_err = 1e-4
     executable_pattern = 'griffin*|blue_crab*|dire_wolf*|sabertooth*'
     min_parallel = 16
-    method = 'opt'
+    capabilities = 'method=opt'
     max_time = 400
     prereq = neutronics_adjoint
   []
