@@ -31,7 +31,7 @@
                 Mesh/fmg/file='HPMR_OneSixth_finercdrum_tri_coarse.e'
                 MultiApps/bison/cli_args='mesh_file=HPMR_OneSixth_Core_meshgenerator_tri_rotate_bdry_coarse.e'"
     min_parallel = 16
-    method = 'opt'
+    capabilities = 'method=opt'
     max_time = 7200
     # Cross-section warning due to missing fission-only
     allow_warnings = true
@@ -48,7 +48,7 @@
                 Mesh/fmg/file='../3D_core_drum_rotation_ss/HPMR_OneSixth_finercdrum_tri_coarse.e'
                 Outputs/file_base='../3D_core_drum_rotation_ss/HPMR_dfem_griffin_tr_out'"
     min_parallel = 16
-    method = 'opt'
+    capabilities = 'method=opt'
     max_time = 3600
     hpc_mem_per_cpu = 10gb
     # Cross-section warning due to missing fission-only

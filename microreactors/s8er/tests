@@ -36,7 +36,7 @@
     allow_unused = true
     # Missing cross section for energy deposition
     allow_warnings = true
-    method = 'opt'
+    capabilities = 'method=opt'
 
     min_parallel = 8
   []
@@ -45,7 +45,7 @@
     input = 'core_2D_griffin_coupled.i'
     csvdiff = 'core_2D_out.csv core_2D_out_bison_coupled0_csv.csv'
     executable_pattern = 'blue_crab*|dire_wolf*'
-    method = 'opt'
+    capabilities = 'method=opt'
     prereq = 'neutronics_griffin_syntax mechanics_bison_syntax'
     cli_args = "Outputs/file_base=core_2D_out
                 Executioner/set_sam_default_petsc_options=false"

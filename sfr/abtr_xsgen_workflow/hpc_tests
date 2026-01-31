@@ -10,7 +10,7 @@
     hpc_mem_per_cpu = 48G
     rel_err = 1e-3
     abs_zero = 1e-8
-    method = 'opt'
+    capabilities = 'method=opt'
     ignored_attributes = '@TimeCreated'
     max_time = 2000
   []
@@ -36,7 +36,7 @@
     csvdiff = 'core_hom_macro_out.csv'
     min_parallel = 64
     hpc_mem_per_cpu = 10G
-    method = 'opt'
+    capabilities = 'method=opt'
     # 3000s ended after 6 iterations with 16 cpus
     # 3000s ended after 11 iterations with 32 cpus
     # 1500s finished 12 iterations with 64 cpus

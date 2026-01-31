@@ -23,7 +23,7 @@
     cli_args = "MultiApps/active='' Transfers/active='' Executioner/num_steps=10"
     prereq = 'syntax_check_cardinal'
     # Exceedingly slow in devel mode
-    method = 'opt'
+    capabilities = 'method=opt'
     max_time = '600'
   []
 []

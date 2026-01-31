@@ -6,7 +6,7 @@
     check_input = True
     executable_pattern = 'griffin*|blue_crab*|dire_wolf*|fenix*'
     cli_args = "MultiApps/active='' Transfers/active=''"
-    method = 'opt' # see Griffin #230
+    capabilities = 'method=opt' # see Griffin #230
   []
   [fluid_flow_syntax_only]
     type = RunApp
@@ -60,7 +60,7 @@
     executable_pattern = 'griffin*|blue_crab*|dire_wolf*|fenix*'
     cli_args = "MultiApps/active='' Transfers/active=''"
     prereq = 'neutronics_only'
-    method = 'opt' # see Griffin #230
+    capabilities = 'method=opt' # see Griffin #230
 
     # Temporary until BC update (Added May 14 2024)
     allow_unused = true
@@ -91,7 +91,7 @@
     input = 'oecd_pbmr400_ss0_rsnk_eigen_value_ix_dep.i'
     executable_pattern = 'dire_wolf*|blue_crab*|fenix*'
     cli_args = 'Executioner/fixed_point_max_its=1 MultiApps/th_sub/cli_args=Executioner/end_time=5 MultiApps/th_sub/max_procs_per_app=1'
-    method = 'opt' # too slow for devel
+    capabilities = 'method=opt' # too slow for devel
     min_parallel = 8
     # require the others so the restart files dont get overwritten
     prereq = 'transient_neutronics_only transient_fluid_flow_only transient_fuel_performance_only'
@@ -110,7 +110,7 @@
     cli_args = "Executioner/fixed_point_max_its=1 Executioner/num_steps=1 "
                "MultiApps/th_sub/cli_args='Executioner/num_steps=12' "
                "MultiApps/th_sub/max_procs_per_app=1 Outputs/file_base=core"
-    method = 'opt' # too slow for devel
+    capabilities = 'method=opt' # too slow for devel
     # Checkpoint file must have been generated with same number of ranks
     prereq = 'steady_multiphysics'
     # Inconsistency between gold on macbook and test machine
@@ -132,7 +132,7 @@
     executable_pattern = 'griffin*|blue_crab*|dire_wolf*|fenix*'
     cli_args = "MultiApps/active='' Transfers/active='' Executioner/num_steps=2 "
                "Executioner/nl_rel_tol=1e-9 Executioner/nl_abs_tol=1e-10"
-    method = 'opt' # see Griffin #230
+    capabilities = 'method=opt' # see Griffin #230
     prereq = 'neutronics_only transient_neutronics_syntax_only'
 
     # B2 out of range for XS interpolation

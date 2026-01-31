@@ -17,7 +17,7 @@
     rel_err = 5e-3
     min_parallel = 2
     max_time = 500
-    method = 'opt' # times out in devel
+    capabilities = 'method=opt' # times out in devel
   []
 
   [insertion_syntax]
