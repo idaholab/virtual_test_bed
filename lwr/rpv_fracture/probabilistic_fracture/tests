@@ -16,7 +16,7 @@
     rel_err = 1e-2
     min_parallel = 16
     max_time = 500
-    method = 'opt'
+    capabilities = 'method=opt'
     executable_pattern = "grizzly*"
   []
 []
