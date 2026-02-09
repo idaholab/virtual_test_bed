@@ -235,20 +235,21 @@ if __name__ == "__main__":
             hpc_sha = submodule_sha1[submodule.name]
             if hpc_sha != current_sha:
                 try:
-                    # This next line will trigger an exception if hpc_sha is NOT an ancestor of current_sha
-                    sm_git_repo.git.merge_base('--is-ancestor', hpc_sha, current_sha)
-                    info = (f'  - WARNING: {submodule} current ({current_sha}) '
-                            f'is newer than HPC ({hpc_sha}); skipping update')
-                    print(info)
-                    pr_body_text += f"{info}\n"
-                    continue
-                except git.exc.GitCommandError as e:
-                    if e.status != 1:
-                        info = (f'  - WARNING: Could not compare {submodule} current ({current_sha}) '
-                                f'with HPC ({hpc_sha}); proceeding with update')
+                    current_dt = sm_git_repo.head.commit.committed_datetime
+                    hpc_dt = sm_git_repo.commit(hpc_sha).committed_datetime
+                    if current_dt > hpc_dt:
+                        current_dt_str = current_dt.isoformat()
+                        hpc_dt_str = hpc_dt.isoformat()
+                        info = (f'  - WARNING: {submodule} current ({current_sha}, {current_dt_str}) '
+                                f'is newer than HPC ({hpc_sha}, {hpc_dt_str}); skipping update')
                         print(info)
                         pr_body_text += f"{info}\n"
-                    # else e.status == 1, hpc_sha is not ancestor of current_sha, so hpc_sha is newer than current_sha
+                        continue
+                except git.exc.GitCommandError:
+                    info = (f'  - WARNING: Could not compare {submodule} current ({current_sha}) '
+                            f'with HPC ({hpc_sha}); proceeding with update')
+                    print(info)
+                    pr_body_text += f"{info}\n"
         sm_git_repo.git.checkout(sha1)
         git_repo.git.add(submodule.name)
 
