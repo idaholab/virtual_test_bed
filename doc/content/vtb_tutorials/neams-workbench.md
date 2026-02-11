@@ -1,5 +1,15 @@
 # NEAMS Workbench
 
+!tag name=NEAMS Workbench tutorial
+     description=Describes how to use the NEAMS workbench as a smart GUI and input file editor
+     image=https://mooseframework.inl.gov/virtual_test_bed/media/neams_workbench/neams_workbench_sfr_vis.png
+     pairs=tutorials:Workbench
+           computing_needs:Workstation;HPC
+           fiscal_year:2024
+           sponsor:NEAMS
+           institution:ORNL
+
+
 ## Introduction
 
 The mission of the US Department of Energy's Nuclear Energy Advanced Modeling and Simulation ([NEAMS](https://neams.inl.gov/)) Program is to develop, apply, and deploy state-of-the-art predictive modeling and simulation tools for the design and analysis of current and future nuclear energy systems. NEAMS develops state-of-the-art [scalable tools](https://neams.inl.gov/code-descriptions/), such as the Bison fuel performance code, Griffin reactor physics code, System Analysis Module (SAM) code, and Nek5000 computational fluid dynamics code.
