@@ -8,7 +8,7 @@
 
 !tag name=Wear effects on graphite in MSR
      description=Wear effects on graphite in MSR
-     image=<https://mooseframework.inl.gov/virtual_test_bed/media/msr/graphite_model/wear/4_block.png>
+     image=https://mooseframework.inl.gov/virtual_test_bed/media/msr/graphite_model/wear/4_block.png
      pairs=reactor_type:MSR
            reactor:gFHR
            geometry:reflector
