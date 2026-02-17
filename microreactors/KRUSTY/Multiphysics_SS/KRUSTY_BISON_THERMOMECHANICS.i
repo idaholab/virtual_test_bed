@@ -303,7 +303,7 @@ reflector_disp = 0.0
   [UMo_thermal]
     type = HeatConductionMaterial
     block = ${fuel_all}
-    temp = temp_f
+    temperature = temp_f
     specific_heat_temperature_function = umo_heat_cap
     thermal_conductivity_temperature_function = umo_tc
   []
