@@ -35,7 +35,7 @@
     rel_err = 1e-4
     min_parallel = 2
     max_time = 700
-    method = 'opt' # times out in devel
+    capabilities = 'method=opt' # times out in devel
   []
   [transient_1]
     type = CSVDiff

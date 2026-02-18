@@ -8,7 +8,7 @@
     # PTFunctionEOS warning: A user input enthalpy function is provided. Suggest providing valid temperature range to calculate enthalpy internally based on Cp.
     allow_warnings = True
     # See Griffin #2020
-    method = 'opt'
+    capabilities = 'method=opt'
   []
   [neutronics_only_syntax]
     type = RunApp
@@ -19,7 +19,7 @@
     # Cross section chi spectrum does not sum to 1
     allow_warnings = true
     # See Griffin #2020
-    method = 'opt'
+    capabilities = 'method=opt'
   []
   [core_fluids_syntax]
     type = RunApp

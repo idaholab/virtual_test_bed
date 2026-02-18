@@ -1,15 +1,24 @@
 <?xml version='1.0' encoding='utf-8' standalone='yes'?>
-<YakXsS>
+<ISOXML>
   <Multigroup_Cross_Section_Libraries NGroup="1" Name="MSR_XS" Description="XS for Depletion">
     <Multigroup_Cross_Section_Library ID="1" Ver="1.0" Generator="INL" TimeCreated="20/06/2022 09:18:23" Description="core">
       <Tabulation>Burnup</Tabulation>
       <Burnup>100.0</Burnup>
       <ReferenceGridIndex>1</ReferenceGridIndex>
-      <AllReactions>N2N N3N Fission NNProton N2Alpha N4N Absorption NGamma NProton NDeuteron NTriton NAlpha</AllReactions>
+      <AllReactions>Total Removal Transport Scattering N2N N3N Fission NNProton N2Alpha N4N Absorption NGamma NProton NDeuteron NTriton NAlpha</AllReactions>
       <TablewiseReactions/>
-      <LibrarywiseReactions/>
+      <LibrarywiseReactions>Total Removal Transport Scattering</LibrarywiseReactions>
+      <Librarywise L="1">
+        <Total>3.7508656E+01</Total>
+        <Removal>2.8206598E+01</Removal>
+        <Transport>2.6177692E+01</Transport>
+        <Scattering>
+          9.3020573E+00
+          1.2557451E+00
+        </Scattering>
+      </Librarywise>
       <Table gridIndex="1">
-        <Isotope Name="NA23" L="3">
+        <Isotope Name="NA23">
           <N2N>2.247190E-07</N2N>
           <N3N>0.000000E+00</N3N>
           <NNProton>6.649970E-06</NNProton>
@@ -22,7 +31,7 @@
           <NTriton>0.000000E+00</NTriton>
           <NAlpha>4.179260E-05</NAlpha>
         </Isotope>
-        <Isotope Name="CL35" L="3">
+        <Isotope Name="CL35">
           <N2N>5.172050E-08</N2N>
           <N3N>0.000000E+00</N3N>
           <NNProton>8.284700E-05</NNProton>
@@ -35,7 +44,7 @@
           <NTriton>1.410630E-08</NTriton>
           <NAlpha>1.474610E-03</NAlpha>
         </Isotope>
-        <Isotope Name="CL37" L="3">
+        <Isotope Name="CL37">
           <N2N>8.815700E-06</N2N>
           <N3N>4.144970E-12</N3N>
           <NNProton>1.042510E-05</NNProton>
@@ -48,7 +57,7 @@
           <NTriton>6.007430E-09</NTriton>
           <NAlpha>2.625400E-05</NAlpha>
         </Isotope>
-        <Isotope Name="U232" L="3">
+        <Isotope Name="U232">
           <N2N>5.420260E-04</N2N>
           <N3N>2.165040E-06</N3N>
           <Fission>1.987400E+00</Fission>
@@ -62,7 +71,7 @@
           <NTriton>0.000000E+00</NTriton>
           <NAlpha>0.000000E+00</NAlpha>
         </Isotope>
-        <Isotope Name="U234" L="3">
+        <Isotope Name="U234">
           <N2N>1.782620E-04</N2N>
           <N3N>1.782620E-04</N3N>
           <Fission>8.632890E-08</Fission>
@@ -76,7 +85,7 @@
           <NTriton>0.000000E+00</NTriton>
           <NAlpha>0.000000E+00</NAlpha>
         </Isotope>
-        <Isotope Name="U235" L="3">
+        <Isotope Name="U235">
           <N2N>7.943640E-04</N2N>
           <N3N>6.804250E-07</N3N>
           <Fission>1.666000E+00</Fission>
@@ -90,7 +99,7 @@
           <NTriton>0.000000E+00</NTriton>
           <NAlpha>0.000000E+00</NAlpha>
         </Isotope>
-        <Isotope Name="U236" L="3">
+        <Isotope Name="U236">
           <N2N>5.065720E-04</N2N>
           <N3N>1.819550E-06</N3N>
           <Fission>9.053360E-02</Fission>
@@ -104,7 +113,7 @@
           <NTriton>0.000000E+00</NTriton>
           <NAlpha>0.000000E+00</NAlpha>
         </Isotope>
-        <Isotope Name="U238" L="3">
+        <Isotope Name="U238">
           <N2N>9.973650E-04</N2N>
           <N3N>5.817460E-06</N3N>
           <Fission>3.544170E-02</Fission>
@@ -118,7 +127,7 @@
           <NTriton>0.000000E+00</NTriton>
           <NAlpha>0.000000E+00</NAlpha>
         </Isotope>
-        <Isotope Name="TH232" L="3">
+        <Isotope Name="TH232">
           <N2N>0.000000E+00</N2N>
           <N3N>0.000000E+00</N3N>
           <Fission>0.000000E+00</Fission>
@@ -132,7 +141,7 @@
           <NTriton>0.000000E+00</NTriton>
           <NAlpha>0.000000E+00</NAlpha>
         </Isotope>
-        <Isotope Name="PA231" L="3">
+        <Isotope Name="PA231">
           <N2N>7.480150E-04</N2N>
           <N3N>1.030560E-06</N3N>
           <Fission>2.359580E-01</Fission>
@@ -146,7 +155,7 @@
           <NTriton>0.000000E+00</NTriton>
           <NAlpha>0.000000E+00</NAlpha>
         </Isotope>
-        <Isotope Name="U233" L="3">
+        <Isotope Name="U233">
           <N2N>2.757670E-04</N2N>
           <N3N>1.188890E-07</N3N>
           <Fission>2.433110E+00</Fission>
@@ -160,7 +169,7 @@
           <NTriton>0.000000E+00</NTriton>
           <NAlpha>0.000000E+00</NAlpha>
         </Isotope>
-        <Isotope Name="U237" L="3">
+        <Isotope Name="U237">
           <N2N>2.527610E-03</N2N>
           <N3N>3.822500E-06</N3N>
           <Fission>8.988170E-01</Fission>
@@ -174,7 +183,7 @@
           <NTriton>0.000000E+00</NTriton>
           <NAlpha>0.000000E+00</NAlpha>
         </Isotope>
-        <Isotope Name="NP236" L="3">
+        <Isotope Name="NP236">
           <N2N>5.265630E-04</N2N>
           <N3N>8.499780E-07</N3N>
           <Fission>2.393610E+00</Fission>
@@ -188,7 +197,7 @@
           <NTriton>0.000000E+00</NTriton>
           <NAlpha>0.000000E+00</NAlpha>
         </Isotope>
-        <Isotope Name="NP238" L="3">
+        <Isotope Name="NP238">
           <N2N>1.008690E-03</N2N>
           <N3N>4.140350E-06</N3N>
           <Fission>3.249050E+00</Fission>
@@ -202,7 +211,7 @@
           <NTriton>0.000000E+00</NTriton>
           <NAlpha>0.000000E+00</NAlpha>
         </Isotope>
-        <Isotope Name="PU238" L="3">
+        <Isotope Name="PU238">
           <N2N>2.524720E-04</N2N>
           <N3N>1.214150E-06</N3N>
           <Fission>1.136890E+00</Fission>
@@ -216,7 +225,7 @@
           <NTriton>0.000000E+00</NTriton>
           <NAlpha>0.000000E+00</NAlpha>
         </Isotope>
-        <Isotope Name="PU239" L="3">
+        <Isotope Name="PU239">
           <N2N>3.143400E-04</N2N>
           <N3N>2.264180E-07</N3N>
           <Fission>1.656540E+00</Fission>
@@ -230,7 +239,7 @@
           <NTriton>0.000000E+00</NTriton>
           <NAlpha>0.000000E+00</NAlpha>
         </Isotope>
-        <Isotope Name="PU240" L="3">
+        <Isotope Name="PU240">
           <N2N>2.214710E-04</N2N>
           <N3N>5.009950E-07</N3N>
           <Fission>3.614210E-01</Fission>
@@ -244,7 +253,7 @@
           <NTriton>0.000000E+00</NTriton>
           <NAlpha>0.000000E+00</NAlpha>
         </Isotope>
-        <Isotope Name="PU241" L="3">
+        <Isotope Name="PU241">
           <N2N>1.428080E-03</N2N>
           <N3N>1.542280E-06</N3N>
           <Fission>2.231030E+00</Fission>
@@ -258,7 +267,7 @@
           <NTriton>0.000000E+00</NTriton>
           <NAlpha>0.000000E+00</NAlpha>
         </Isotope>
-        <Isotope Name="PU242" L="3">
+        <Isotope Name="PU242">
           <N2N>4.759710E-04</N2N>
           <N3N>2.208580E-06</N3N>
           <Fission>2.551880E-01</Fission>
@@ -272,7 +281,7 @@
           <NTriton>0.000000E+00</NTriton>
           <NAlpha>0.000000E+00</NAlpha>
         </Isotope>
-        <Isotope Name="AM241" L="3">
+        <Isotope Name="AM241">
           <N2N>9.286580E-05</N2N>
           <N3N>4.122320E-08</N3N>
           <Fission>2.499200E-01</Fission>
@@ -286,7 +295,7 @@
           <NTriton>0.000000E+00</NTriton>
           <NAlpha>0.000000E+00</NAlpha>
         </Isotope>
-        <Isotope Name="AM242M" L="3">
+        <Isotope Name="AM242M">
           <N2N>3.649650E-04</N2N>
           <N3N>1.405720E-07</N3N>
           <Fission>2.758400E+00</Fission>
@@ -300,7 +309,7 @@
           <NTriton>0.000000E+00</NTriton>
           <NAlpha>0.000000E+00</NAlpha>
         </Isotope>
-        <Isotope Name="AM243" L="3">
+        <Isotope Name="AM243">
           <N2N>2.579700E-04</N2N>
           <N3N>3.517370E-07</N3N>
           <Fission>1.826750E-01</Fission>
@@ -314,7 +323,7 @@
           <NTriton>0.000000E+00</NTriton>
           <NAlpha>0.000000E+00</NAlpha>
         </Isotope>
-        <Isotope Name="CM242" L="3">
+        <Isotope Name="CM242">
           <N2N>7.499080E-05</N2N>
           <N3N>4.133300E-07</N3N>
           <Fission>5.927360E-01</Fission>
@@ -328,7 +337,7 @@
           <NTriton>0.000000E+00</NTriton>
           <NAlpha>0.000000E+00</NAlpha>
         </Isotope>
-        <Isotope Name="CM243" L="3">
+        <Isotope Name="CM243">
           <N2N>2.522920E-04</N2N>
           <N3N>1.323110E-06</N3N>
           <Fission>2.896930E+00</Fission>
@@ -342,7 +351,7 @@
           <NTriton>0.000000E+00</NTriton>
           <NAlpha>0.000000E+00</NAlpha>
         </Isotope>
-        <Isotope Name="CM244" L="3">
+        <Isotope Name="CM244">
           <N2N>2.595520E-04</N2N>
           <N3N>4.364050E-06</N3N>
           <Fission>3.922090E-01</Fission>
@@ -356,7 +365,7 @@
           <NTriton>0.000000E+00</NTriton>
           <NAlpha>0.000000E+00</NAlpha>
         </Isotope>
-        <Isotope Name="CM245" L="3">
+        <Isotope Name="CM245">
           <N2N>3.505720E-04</N2N>
           <N3N>1.393710E-07</N3N>
           <Fission>2.398860E+00</Fission>
@@ -370,7 +379,7 @@
           <NTriton>0.000000E+00</NTriton>
           <NAlpha>0.000000E+00</NAlpha>
         </Isotope>
-        <Isotope Name="CM247" L="3">
+        <Isotope Name="CM247">
           <N2N>8.880810E-04</N2N>
           <N3N>3.279380E-06</N3N>
           <Fission>2.121280E+00</Fission>
@@ -384,7 +393,7 @@
           <NTriton>0.000000E+00</NTriton>
           <NAlpha>0.000000E+00</NAlpha>
         </Isotope>
-        <Isotope Name="CF249" L="3">
+        <Isotope Name="CF249">
           <N2N>0.000000E+00</N2N>
           <N3N>0.000000E+00</N3N>
           <Fission>0.000000E+00</Fission>
@@ -398,7 +407,7 @@
           <NTriton>0.000000E+00</NTriton>
           <NAlpha>0.000000E+00</NAlpha>
         </Isotope>
-        <Isotope Name="CF251" L="3">
+        <Isotope Name="CF251">
           <N2N>0.000000E+00</N2N>
           <N3N>0.000000E+00</N3N>
           <Fission>0.000000E+00</Fission>
@@ -412,7 +421,7 @@
           <NTriton>0.000000E+00</NTriton>
           <NAlpha>0.000000E+00</NAlpha>
         </Isotope>
-        <Isotope Name="SN113" L="3">
+        <Isotope Name="SN113">
           <N2N>9.631780E-05</N2N>
           <N3N>3.182860E-10</N3N>
           <NNProton>2.736180E-07</NNProton>
@@ -425,7 +434,7 @@
           <NTriton>0.000000E+00</NTriton>
           <NAlpha>1.504870E-04</NAlpha>
         </Isotope>
-        <Isotope Name="SN114" L="3">
+        <Isotope Name="SN114">
           <N2N>2.930750E-05</N2N>
           <N3N>7.993980E-09</N3N>
           <NNProton>2.727350E-08</NNProton>
@@ -438,7 +447,7 @@
           <NTriton>3.496200E-10</NTriton>
           <NAlpha>1.254030E-06</NAlpha>
         </Isotope>
-        <Isotope Name="SN115" L="3">
+        <Isotope Name="SN115">
           <N2N>2.428640E-04</N2N>
           <N3N>9.384550E-09</N3N>
           <NNProton>8.313490E-09</NNProton>
@@ -451,7 +460,7 @@
           <NTriton>9.111100E-10</NTriton>
           <NAlpha>2.358260E-06</NAlpha>
         </Isotope>
-        <Isotope Name="SN116" L="3">
+        <Isotope Name="SN116">
           <N2N>5.656940E-05</N2N>
           <N3N>2.924730E-08</N3N>
           <NNProton>7.118310E-09</NNProton>
@@ -464,7 +473,7 @@
           <NTriton>2.083110E-10</NTriton>
           <NAlpha>1.972620E-07</NAlpha>
         </Isotope>
-        <Isotope Name="SN117" L="3">
+        <Isotope Name="SN117">
           <N2N>5.089180E-04</N2N>
           <N3N>4.657330E-08</N3N>
           <NNProton>3.153260E-09</NNProton>
@@ -477,7 +486,7 @@
           <NTriton>3.752150E-10</NTriton>
           <NAlpha>2.619890E-07</NAlpha>
         </Isotope>
-        <Isotope Name="SN118" L="3">
+        <Isotope Name="SN118">
           <N2N>6.857830E-05</N2N>
           <N3N>6.476220E-08</N3N>
           <NNProton>1.380780E-09</NNProton>
@@ -490,7 +499,7 @@
           <NTriton>1.271430E-10</NTriton>
           <NAlpha>1.737810E-08</NAlpha>
         </Isotope>
-        <Isotope Name="SN119" L="3">
+        <Isotope Name="SN119">
           <N2N>7.696890E-04</N2N>
           <N3N>9.556500E-08</N3N>
           <NNProton>2.412560E-09</NNProton>
@@ -503,7 +512,7 @@
           <NTriton>3.985830E-10</NTriton>
           <NAlpha>3.938980E-08</NAlpha>
         </Isotope>
-        <Isotope Name="SN120" L="3">
+        <Isotope Name="SN120">
           <N2N>9.842370E-05</N2N>
           <N3N>1.330070E-07</N3N>
           <NNProton>4.762720E-10</NNProton>
@@ -516,7 +525,7 @@
           <NTriton>1.101620E-10</NTriton>
           <NAlpha>5.910800E-09</NAlpha>
         </Isotope>
-        <Isotope Name="SN122" L="3">
+        <Isotope Name="SN122">
           <N2N>1.340390E-04</N2N>
           <N3N>2.401580E-07</N3N>
           <NNProton>2.481370E-10</NNProton>
@@ -529,7 +538,7 @@
           <NTriton>6.540320E-11</NTriton>
           <NAlpha>1.248230E-09</NAlpha>
         </Isotope>
-        <Isotope Name="SN123" L="3">
+        <Isotope Name="SN123">
           <N2N>0.000000E+00</N2N>
           <N3N>0.000000E+00</N3N>
           <NNProton>0.000000E+00</NNProton>
@@ -542,7 +551,7 @@
           <NTriton>2.423890E-09</NTriton>
           <NAlpha>7.411990E-08</NAlpha>
         </Isotope>
-        <Isotope Name="SN124" L="3">
+        <Isotope Name="SN124">
           <N2N>1.712590E-04</N2N>
           <N3N>3.863790E-07</N3N>
           <NNProton>5.896360E-11</NNProton>
@@ -555,7 +564,7 @@
           <NTriton>3.220010E-11</NTriton>
           <NAlpha>2.393010E-10</NAlpha>
         </Isotope>
-        <Isotope Name="SN125" L="3">
+        <Isotope Name="SN125">
           <N2N>0.000000E+00</N2N>
           <N3N>0.000000E+00</N3N>
           <NNProton>0.000000E+00</NNProton>
@@ -568,7 +577,7 @@
           <NTriton>1.722190E-09</NTriton>
           <NAlpha>4.892220E-08</NAlpha>
         </Isotope>
-        <Isotope Name="SN126" L="3">
+        <Isotope Name="SN126">
           <N2N>0.000000E+00</N2N>
           <N3N>0.000000E+00</N3N>
           <NNProton>0.000000E+00</NNProton>
@@ -581,7 +590,7 @@
           <NTriton>1.135600E-10</NTriton>
           <NAlpha>3.324440E-08</NAlpha>
         </Isotope>
-        <Isotope Name="SB121" L="3">
+        <Isotope Name="SB121">
           <N2N>6.728050E-05</N2N>
           <N3N>1.646700E-08</N3N>
           <NNProton>3.075190E-08</NNProton>
@@ -594,7 +603,7 @@
           <NTriton>1.604190E-09</NTriton>
           <NAlpha>1.319460E-07</NAlpha>
         </Isotope>
-        <Isotope Name="SB123" L="3">
+        <Isotope Name="SB123">
           <N2N>1.078940E-04</N2N>
           <N3N>3.842370E-08</N3N>
           <NNProton>8.372680E-09</NNProton>
@@ -607,7 +616,7 @@
           <NTriton>1.122090E-09</NTriton>
           <NAlpha>3.253940E-08</NAlpha>
         </Isotope>
-        <Isotope Name="SB124" L="3">
+        <Isotope Name="SB124">
           <N2N>0.000000E+00</N2N>
           <N3N>0.000000E+00</N3N>
           <NNProton>0.000000E+00</NNProton>
@@ -620,7 +629,7 @@
           <NTriton>6.183140E-10</NTriton>
           <NAlpha>5.167360E-07</NAlpha>
         </Isotope>
-        <Isotope Name="SB125" L="3">
+        <Isotope Name="SB125">
           <N2N>0.000000E+00</N2N>
           <N3N>0.000000E+00</N3N>
           <NNProton>0.000000E+00</NNProton>
@@ -633,7 +642,7 @@
           <NTriton>2.875500E-09</NTriton>
           <NAlpha>1.903590E-07</NAlpha>
         </Isotope>
-        <Isotope Name="SB126" L="3">
+        <Isotope Name="SB126">
           <N2N>0.000000E+00</N2N>
           <N3N>0.000000E+00</N3N>
           <NNProton>0.000000E+00</NNProton>
@@ -646,7 +655,7 @@
           <NTriton>4.226090E-10</NTriton>
           <NAlpha>2.231120E-07</NAlpha>
         </Isotope>
-        <Isotope Name="TE122" L="3">
+        <Isotope Name="TE122">
           <N2N>0.000000E+00</N2N>
           <N3N>0.000000E+00</N3N>
           <NNProton>0.000000E+00</NNProton>
@@ -659,7 +668,7 @@
           <NTriton>7.327070E-10</NTriton>
           <NAlpha>3.558660E-06</NAlpha>
         </Isotope>
-        <Isotope Name="TE123" L="3">
+        <Isotope Name="TE123">
           <N2N>0.000000E+00</N2N>
           <N3N>0.000000E+00</N3N>
           <NNProton>0.000000E+00</NNProton>
@@ -672,7 +681,7 @@
           <NTriton>5.769670E-09</NTriton>
           <NAlpha>9.885680E-06</NAlpha>
         </Isotope>
-        <Isotope Name="TE124" L="3">
+        <Isotope Name="TE124">
           <N2N>0.000000E+00</N2N>
           <N3N>0.000000E+00</N3N>
           <NNProton>0.000000E+00</NNProton>
@@ -685,7 +694,7 @@
           <NTriton>5.082380E-10</NTriton>
           <NAlpha>1.413290E-06</NAlpha>
         </Isotope>
-        <Isotope Name="TE125" L="3">
+        <Isotope Name="TE125">
           <N2N>0.000000E+00</N2N>
           <N3N>0.000000E+00</N3N>
           <NNProton>0.000000E+00</NNProton>
@@ -698,7 +707,7 @@
           <NTriton>4.310130E-09</NTriton>
           <NAlpha>2.655420E-06</NAlpha>
         </Isotope>
-        <Isotope Name="TE126" L="3">
+        <Isotope Name="TE126">
           <N2N>0.000000E+00</N2N>
           <N3N>0.000000E+00</N3N>
           <NNProton>0.000000E+00</NNProton>
@@ -711,7 +720,7 @@
           <NTriton>3.743060E-10</NTriton>
           <NAlpha>7.018890E-07</NAlpha>
         </Isotope>
-        <Isotope Name="TE127" L="3">
+        <Isotope Name="TE127">
           <N2N>0.000000E+00</N2N>
           <N3N>0.000000E+00</N3N>
           <NNProton>0.000000E+00</NNProton>
@@ -724,7 +733,7 @@
           <NTriton>0.000000E+00</NTriton>
           <NAlpha>0.000000E+00</NAlpha>
         </Isotope>
-        <Isotope Name="TE128" L="3">
+        <Isotope Name="TE128">
           <N2N>0.000000E+00</N2N>
           <N3N>0.000000E+00</N3N>
           <NNProton>0.000000E+00</NNProton>
@@ -737,7 +746,7 @@
           <NTriton>2.670920E-10</NTriton>
           <NAlpha>3.558920E-07</NAlpha>
         </Isotope>
-        <Isotope Name="TE129" L="3">
+        <Isotope Name="TE129">
           <N2N>0.000000E+00</N2N>
           <N3N>0.000000E+00</N3N>
           <NNProton>0.000000E+00</NNProton>
@@ -750,7 +759,7 @@
           <NTriton>0.000000E+00</NTriton>
           <NAlpha>0.000000E+00</NAlpha>
         </Isotope>
-        <Isotope Name="TE130" L="3">
+        <Isotope Name="TE130">
           <N2N>0.000000E+00</N2N>
           <N3N>0.000000E+00</N3N>
           <NNProton>0.000000E+00</NNProton>
@@ -763,7 +772,7 @@
           <NTriton>2.028190E-10</NTriton>
           <NAlpha>2.169700E-07</NAlpha>
         </Isotope>
-        <Isotope Name="TE131" L="3">
+        <Isotope Name="TE131">
           <N2N>0.000000E+00</N2N>
           <N3N>0.000000E+00</N3N>
           <NNProton>0.000000E+00</NNProton>
@@ -776,7 +785,7 @@
           <NTriton>0.000000E+00</NTriton>
           <NAlpha>0.000000E+00</NAlpha>
         </Isotope>
-        <Isotope Name="TE132" L="3">
+        <Isotope Name="TE132">
           <N2N>0.000000E+00</N2N>
           <N3N>0.000000E+00</N3N>
           <NNProton>0.000000E+00</NNProton>
@@ -789,7 +798,7 @@
           <NTriton>1.538040E-10</NTriton>
           <NAlpha>1.454600E-07</NAlpha>
         </Isotope>
-        <Isotope Name="I127" L="3">
+        <Isotope Name="I127">
           <N2N>8.954980E-05</N2N>
           <N3N>2.401490E-08</N3N>
           <NNProton>4.279580E-08</NNProton>
@@ -802,7 +811,7 @@
           <NTriton>6.424600E-09</NTriton>
           <NAlpha>4.933370E-07</NAlpha>
         </Isotope>
-        <Isotope Name="I129" L="3">
+        <Isotope Name="I129">
           <N2N>1.251800E-04</N2N>
           <N3N>5.315430E-08</N3N>
           <NNProton>1.684400E-08</NNProton>
@@ -815,7 +824,7 @@
           <NTriton>5.612100E-09</NTriton>
           <NAlpha>8.667160E-08</NAlpha>
         </Isotope>
-        <Isotope Name="I130" L="3">
+        <Isotope Name="I130">
           <N2N>0.000000E+00</N2N>
           <N3N>0.000000E+00</N3N>
           <NNProton>0.000000E+00</NNProton>
@@ -828,7 +837,7 @@
           <NTriton>5.389360E-10</NTriton>
           <NAlpha>7.725330E-07</NAlpha>
         </Isotope>
-        <Isotope Name="I131" L="3">
+        <Isotope Name="I131">
           <N2N>0.000000E+00</N2N>
           <N3N>0.000000E+00</N3N>
           <NNProton>0.000000E+00</NNProton>
@@ -841,7 +850,7 @@
           <NTriton>2.501080E-09</NTriton>
           <NAlpha>4.288350E-07</NAlpha>
         </Isotope>
-        <Isotope Name="I135" L="3">
+        <Isotope Name="I135">
           <N2N>0.000000E+00</N2N>
           <N3N>0.000000E+00</N3N>
           <NNProton>0.000000E+00</NNProton>
@@ -857,4 +866,4 @@
       </Table>
     </Multigroup_Cross_Section_Library>
   </Multigroup_Cross_Section_Libraries>
-</YakXsS>
+</ISOXML>

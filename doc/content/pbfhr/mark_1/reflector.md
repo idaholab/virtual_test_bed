@@ -12,7 +12,7 @@
                        simulation_type:component_analysis;CFD
                        codes_used:Cardinal;NekRS;MOOSE_HeatTransfer
                        V_and_V:demonstration
-                       open_source:true
+                       open_source:fully
                        input_features:multiapps
                        computing_needs:HPC
                        gpu_enabled:true

@@ -5,6 +5,6 @@
     # Run a few timesteps and don't worry about outputs
     cli_args = 'Executioner/num_steps=10 Outputs/exodus=false Outputs/csv=false'
     executable_pattern = 'pronghorn*|blue_crab*'
-    method = 'opt'
+    capabilities = 'method=opt'
   []
 []

@@ -11,7 +11,7 @@
            transient:steady_state
            V_and_V:demonstration
            codes_used:BlueCrab;Griffin;Pronghorn;MOOSE_NavierStokes
-           open_source:partial
+           open_source:partially
            computing_needs:HPC
            fiscal_year:2024
            institution:INL

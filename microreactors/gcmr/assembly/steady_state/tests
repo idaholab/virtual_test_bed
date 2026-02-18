@@ -24,7 +24,7 @@
     prereq = 'griffin_alone_syntax'
     min_parallel = 16
     rel_err = 1e-3
-    method = 'opt'
+    capabilities = 'method=opt'
     max_time = 400
     allow_unused = true
     # Missing group cross section for energy deposition
@@ -132,7 +132,7 @@
     prereq = 'griffin_alone_transient_syntax'
     min_parallel = 16
     rel_err = 1e-3
-    method = 'opt'
+    capabilities = 'method=opt'
     max_time = 800
     allow_unused = true
     # Missing group cross section for energy deposition
@@ -227,4 +227,3 @@
     allow_warnings = true
   []
 []
-

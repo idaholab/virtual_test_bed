@@ -10,7 +10,7 @@
            simulation_type:multiphysics
            transient:steady_state
            V_and_V:demonstration
-           codes_used:Griffin;BISON;Serpent
+           codes_used:Griffin;BISON;Serpent_2
            computing_needs:Workstation
            fiscal_year:2023
            sponsor:NRIC;NEUP

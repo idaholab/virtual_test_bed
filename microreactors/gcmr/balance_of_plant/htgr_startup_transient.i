@@ -703,7 +703,6 @@ eff_turb = 0.843
     volume = 1e-3
     initial_p = ${pri_press}
     initial_vel_x = ${vel_ini_pri}
-    use_scalar_variables=false
   []
 
   [core]
@@ -764,7 +763,6 @@ eff_turb = 0.843
     volume = 1e-3
     initial_p = ${pri_press}
     initial_vel_x = ${vel_ini_pri}
-    use_scalar_variables=false
   []
 
   [pri_pipe2]
@@ -789,7 +787,6 @@ eff_turb = 0.843
       volume = 1e-3
       initial_p = ${pri_press}
       initial_vel_x = ${vel_ini_pri}
-      use_scalar_variables=false
     []
     [pipe_prz]
       type = FlowChannel1Phase
@@ -833,7 +830,6 @@ eff_turb = 0.843
     volume = 1e-3
     initial_p = ${pri_press}
     initial_vel_x = ${vel_ini_pri}
-    use_scalar_variables=false
   []
 
   [hx]
@@ -904,7 +900,6 @@ eff_turb = 0.843
     volume = 1e-3
     initial_p = ${pri_press}
     initial_vel_x = ${vel_ini_pri}
-    use_scalar_variables=false
   []
 
   [pri_pipe4]
@@ -945,7 +940,6 @@ eff_turb = 0.843
       density_rated = ${pump_density_rated}
       initial_p = ${pri_press}
       initial_vel_x = ${vel_ini_pri}
-      use_scalar_variables=false
     []
 
     [motor]
@@ -1058,8 +1052,6 @@ eff_turb = 0.843
 
     initial_p = ${p_sec}
     initial_vel_x = ${vel_ini_sec}
-
-    use_scalar_variables=false
   []
 
   # Outlet pipe from the compressor
@@ -1228,7 +1220,6 @@ eff_turb = 0.843
 
     initial_p = ${p_sec}
     initial_vel_x = ${vel_ini_sec}
-    use_scalar_variables=false
   []
 
   # Outlet pipe from turbine

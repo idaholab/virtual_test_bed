@@ -11,7 +11,7 @@
                        geometry:assembly
                        simulation_type:thermal_hydraulics
                        V_and_V:validation
-                       codes_used:SCM
+                       codes_used:MOOSE_Subchannel
                        computing_needs:Workstation
                        transient:steady_state
                        fiscal_year:2023

@@ -34,7 +34,7 @@
                 Outputs/csv=true Outputs/exodus=false
                 --distributed-mesh TransportSystems/sn/order=CONSTANT Executioner/richardson_max_its=1"
     min_parallel = 16
-    method = 'opt'
+    capabilities = 'method=opt'
     max_time = 400
     # Cross-section warning due to missing fission-only
     allow_warnings = true
@@ -48,7 +48,7 @@
     cli_args = "MultiApps/active='' Transfers/active='' Executioner/num_steps=2 "
                "Executioner/nl_abs_tol=1e-1 Outputs/csv=true --distributed-mesh Outputs/exodus=false"
     min_parallel = 16
-    method = 'opt'
+    capabilities = 'method=opt'
     # Temperatures are out of range
     allow_warnings = true
     max_time = 400

@@ -6,14 +6,14 @@
 
 !tag name=Griffin Open Xe-100 Model
      description=Generation of local reactivity coefficients using IQS method in Griffin.
-     image=https://mooseframework.inl.gov/virtual_test_bed/media/open-xe100/ss_flux_distribution.png
+     image=https://mooseframework.inl.gov/virtual_test_bed/media/htgr/open-xe100/ss_flux_distributions.png
      pairs=reactor_type:HTGR
                        reactor:open-xe100
                        geometry:core
                        simulation_type:neutronics
-                       transient:steady;null;transient
+                       transient:steady_state;null;reactivity_maneuver
                        codes_used:Griffin
-                       computing_needs:workstation
+                       computing_needs:Workstation
                        fiscal_year:2021
                        institution:INL
                        sponsor:NEAMS

@@ -6,14 +6,14 @@
 
 !tag name=Subchannel Model for the EBR-II SHRT-17/SHRT-45R
      description=Subchannel Model for the EBR-II Shutdown Heat Removal Tests
-     image=https://mooseframework.inl.gov/virtual_test_bed/media/subchannel/EBR-II_primary_tank.png
+     image=https://mooseframework.inl.gov/virtual_test_bed/media/subchannel/EBR-II/EBR-II_primary_tank.png
      pairs=reactor_type:SFR
                        reactor:EBR-II
                        geometry:assembly
                        simulation_type:thermal_hydraulics
                        transient:steady_state;PLOF;ULOF
                        V_and_V:validation
-                       codes_used:SCM
+                       codes_used:MOOSE_Subchannel
                        computing_needs:Workstation
                        fiscal_year:2024
                        sponsor:NEAMS

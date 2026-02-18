@@ -61,7 +61,7 @@
     executable_pattern = 'blue_crab*'
     prereq = 'full_simulation_syntax'
     min_parallel = 8
-    method = 'opt'
+    capabilities = 'method=opt'
     # See #363
     rel_err = 4e-4
   []

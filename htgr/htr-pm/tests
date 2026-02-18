@@ -44,7 +44,7 @@
     rel_err = 1e-4
     max_time = 1000
     min_threads = 4
-    method = 'opt'
+    capabilities = 'method=opt'
     prereq = 'htr_pm_sam_rccs_syntax'
   []
   [htr_pm_sam_primary_loop_full]
@@ -57,7 +57,7 @@
     rel_err = 1e-4
     max_time = 1000
     min_threads = 2
-    method = 'opt'
+    capabilities = 'method=opt'
     prereq = 'htr_pm_sam_loop_syntax'
   []
   [htr_pm_sam_rccs]
@@ -69,7 +69,7 @@
     abs_zero = 1e-5
     rel_err = 1e-4
     max_time = 1000
-    method = 'opt'
+    capabilities = 'method=opt'
     prereq = 'htr_pm_sam_rccs_syntax'
   []
   [htr_pm_sam_primary_loop_simplified]
@@ -82,13 +82,13 @@
     rel_err = 1e-4
     min_threads = 2
     max_time = 1000
-    method = 'opt'
+    capabilities = 'method=opt'
     prereq = 'htr_pm_sam_loop_plofc_ss_syntax'
   []
 
-
   #plofc
-  [htr_pm_sam_main_simplified] # rerun with simplified primary loop
+  # rerun with simplified primary loop
+  [htr_pm_sam_main_simplified]
     type = CSVDiff
     input = 'ss-main.i'
     csvdiff = 'ss-main-simplified.csv'
@@ -98,7 +98,7 @@
     rel_err = 1e-4
     min_threads = 4
     max_time = 1000
-    method = 'opt'
+    capabilities = 'method=opt'
     prereq = 'htr_pm_sam_loop_plofc_ss_syntax'
   []
   [htr_pm_sam_main_plofc_syntax]
@@ -135,7 +135,7 @@
     rel_err = 1e-4
     min_threads = 4
     max_time = 1000
-    method = 'opt'
+    capabilities = 'method=opt'
     prereq = 'htr_pm_sam_main_simplified'
   []
 []

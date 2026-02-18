@@ -6,7 +6,7 @@
     check_input = true
     input = 'xs_generation.i'
     executable_pattern = 'griffin*|blue_crab*'
-    method = 'opt'
+    capabilities = 'method=opt'
     max_time = 600
   []
   [full_core_solve_syntax]
@@ -29,7 +29,7 @@
                 Executioner/cmfd_eigen_solver_type=krylovshur
                 GlobalParams/library_file=gold/mcc3xs.xml"
     prereq = 'xs_generation_syntax'
-    method = 'opt'
+    capabilities = 'method=opt'
     max_time = 600
   []
 []

@@ -8,7 +8,7 @@
 
 !tag name=Infiltration effects on graphite in MSRE
      description=Infiltration effects on graphite in MSRE
-     image=<https://mooseframework.inl.gov/virtual_test_bed/media/msr/graphite_model/infiltration/1_geo.png>
+     image=https://mooseframework.inl.gov/virtual_test_bed/media/msr/graphite_model/infiltration/1_geo.png
      pairs=reactor_type:MSR
            reactor:MSRE
            geometry:Stringer

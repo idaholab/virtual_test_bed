@@ -6,11 +6,11 @@
 
 !tag name=Thermal coupling of SCM assemblies
      description=Multiple SCM assemblies coupled thermally in a wrapper/inter-wrapper configuration
-     image=<https://mooseframework.inl.gov/virtual_test_bed/media/subchannel/multiple_SCM_assemblies/19SCM.png>
+     image=https://mooseframework.inl.gov/virtual_test_bed/media/subchannel/multiple_SCM_assemblies/19SCM.png
      pairs=reactor_type:SFR
                        geometry:assembly
                        simulation_type:thermal_hydraulics
-                       codes_used:SCM
+                       codes_used:MOOSE_Subchannel
                        computing_needs:Workstation
                        transient:steady_state
                        fiscal_year:2025

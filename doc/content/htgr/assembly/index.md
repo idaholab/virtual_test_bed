@@ -13,7 +13,7 @@
            simulation_type:multiphysics
            V_and_V:demonstration
            codes_used:Cardinal;OpenMC;MOOSE_HeatTransfer;MOOSE_ThermalHydraulics
-           open_source:true
+           open_source:fully
            transient:steady_state
            input_features:multiapps;reactor_meshing
            computing_needs:HPC

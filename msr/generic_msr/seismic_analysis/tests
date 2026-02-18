@@ -33,7 +33,7 @@
     # Tolerance set from p=4 and p=1 comparison
     rel_err = 2.5e-3
     max_time = 600
-    method = 'opt'
+    capabilities = 'method=opt'
     min_parallel = 4
     cli_args = 'Executioner/num_steps=70'
   []
@@ -46,7 +46,7 @@
     # Tolerance set from p=4 and p=1 comparison
     rel_err = 7e-4
     max_time = 600
-    method = 'opt'
+    capabilities = 'method=opt'
     min_parallel = 4
     cli_args = 'Executioner/num_steps=58'
   []
@@ -58,7 +58,7 @@
     abs_zero = 1e-5
     rel_err = 1e-4
     max_time = 600
-    method = 'opt'
+    capabilities = 'method=opt'
     min_parallel = 4
     cli_args = 'Executioner/num_steps=2'
   []

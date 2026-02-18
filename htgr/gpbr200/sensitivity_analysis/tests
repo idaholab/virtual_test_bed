@@ -4,7 +4,7 @@
     input = stm_grid_study.i
     check_input = true
     executable_pattern = 'blue_crab*'
-    method = 'opt'
+    capabilities = 'method=opt'
     allow_warnings = true # Cross section warning
   []
   [lhs_sampling]
@@ -12,7 +12,7 @@
     input = stm_lhs_sampling.i
     check_input = true
     executable_pattern = 'blue_crab*'
-    method = 'opt'
+    capabilities = 'method=opt'
     allow_warnings = true # Cross section warning
   []
   [sobol]
@@ -24,6 +24,6 @@
                 VectorPostprocessors/qois/csv_file=gold/stm_lhs_sampling_out_storage_0001.csv
                 GlobalParams/order=3'
     executable_pattern = 'blue_crab*'
-    method = 'opt'
+    capabilities = 'method=opt'
   []
 []
