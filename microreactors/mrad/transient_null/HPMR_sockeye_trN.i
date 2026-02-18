@@ -375,7 +375,7 @@ htc_ext_cond = 1.0e6
     type = SideIntegralVariablePostprocessor
     variable = virtual_Text
     boundary  = 'hp:evap:inner'
-    execute_on = 'INITIAL LINEAR'
+    execute_on = 'INITIAL TIMESTEP_END'
   []
   [A_avg_T_aux]
     type = AverageNodalVariableValue
