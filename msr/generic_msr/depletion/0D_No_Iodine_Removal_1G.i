@@ -1,7 +1,7 @@
 # Generic Molten Salt Reactor Depletion
-# Griffin input : only with experimental branch (12/16/22)
+# Griffin input
 # Depletion with isotopic removal
-# POC: Samuel Walker (samuel.walker at inl.gov)
+# POC: Olin Calvin (olin.calvin at inl.gov)
 # If using or referring to this model, please cite as explained in
 # https://mooseframework.inl.gov/virtual_test_bed/citing.html
 
@@ -56,22 +56,56 @@
   []
 []
 
+[Compositions]
+  [fuel_salt]
+    type = IsotopeComposition
+    isotope_densities = 'CL35 1.55753e-02
+                         CL37 4.98332e-03
+                         NA23 8.23094e-03
+                         U232 7.49749e-10
+                         U234 4.05961e-05
+                         U235 8.12118e-04
+                         U236 1.11782e-05
+                         U238 3.20723e-03'
+    density_type = atomic
+    composition_ids = '1'
+  []
+[]
+
 [Materials]
   [Mat_1]
-    type = CoupledFeedbackNeutronicsMaterial
+    type = MSRDepletionNeutronicsMaterial
     block = 0
-    library_file = '../data/Macro_XS_Artifact.xml'
-    library_name = 'Macro_XS_Artifact'
-    material_id = 1
+    library_file = '../data/MSR_XS.xml'
+    library_name = 'MSR_XS'
 
     # multiphysics variables
     grid_names = 'Burnup'
     grid_variables = 'Burnup'
     scalar_fluxes = 'flux'
 
-    # initial isotopes
-    isotopes = 'pseudo'
-    densities = '1.0'
+    # decay & transmutation data
+    dataset = 'ISOXML'
+    isoxml_data_file = '../data/MSR_DT.xml'
+    isoxml_lib_name = 'MSR_DT'
+
+    # Bateman solve settings
+    bateman_solver = 'CRAMIPF'
+    bateman_solver_tolerance = 1e-100
+    cram_ipf_order = 48
+    cram_matrix_inversion_scheme = sparse_gaussian_elimination
+
+    track_secondary_particle_production = true
+    print_number_densities = 'ALL'
+
+    number_of_external_regions = 1
+    multi_region_isotope_list = 'I127 I129'
+    multi_region_isotope_densities = '0 0'
+    multi_region_volumes = 1.0
+    multi_region_names = 'Out_Of_Core'
+    multi_region_transfer_paths = '0 1'
+    multi_region_transfer_isotopes = 'I127 I129'
+    multi_region_transfer_isotope_rates = '0 0'
   []
 []
 
@@ -87,36 +121,4 @@
 
 [Outputs]
   csv = false
-[]
-
-[VectorPostprocessors]
-  [bateman]
-    type = BatemanVPP
-
-    # multiphysics variables
-    grid_names = 'Burnup'
-    grid_variables = 'Burnup'
-    scalar_fluxes = 'flux'
-    use_power = false
-
-    # loading databases
-    isoxml_mglib_file = '../data/MSR_XS.xml'
-    isoxml_mglib_name = 'MSR_XS'
-    library_id = 1
-    isoxml_dtlib_file = '../data/MSR_DT.xml'
-    isoxml_dtlib_name = 'MSR_DT'
-
-    # setting initial conditions
-    isotope_atomic_densities = 'CL35 1.55753e-02 CL37 4.98332e-03 NA23 8.23094e-3 U232 7.49749e-10 U234 4.05961e-05 U235 8.12118e-04 U236 1.11782e-05 U238 3.20723e-03'
-    isotope_fixed_removal_rates = 'I127 0.0 I129 0.0'
-
-    # Bateman solver settings
-    bateman_solver = 'CRAMIPF'
-    bateman_solver_tolerance = 1e-100
-    cram_ipf_order = 48
-    use_sparse_gaussian_elimination = false
-    track_secondary_particle_production = true
-    debug = true
-    execute_on = 'initial timestep_begin'
-  []
 []
