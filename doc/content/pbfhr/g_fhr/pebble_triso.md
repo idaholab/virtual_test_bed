@@ -12,7 +12,7 @@ and therefore cannot directly inform us on local effects such as temperature gra
 These are important to lead fuel performance studies, to verify that the pebbled-fuel remains within
 design limitations in terms of temperature and burnup.
 
-We use a multiscale approach to resolve the pebble conditions within the reactor. Using the [PebbleDepletion](https://griffin-docs.hpc.inl.gov/latest/syntax/PebbleDepletion/index.html) action with [ConstantStreamLineEquilibrium](https://griffin-docs.hpc.inl.gov/latest/source/pebbledepletion/pebbledepletionschemes/ConstantStreamlineEquilibrium.html) allows us to track the depletion and fuel performance of the cycling pebbles.
+We use a multiscale approach to resolve the pebble conditions within the reactor. Using the [PebbleBed](https://griffin-docs.hpc.inl.gov/latest/syntax/PebbleBed/index.html) action with [ConstantStreamLineEquilibrium](https://griffin-docs.hpc.inl.gov/latest/source/pebbledepletion/pebbledepletionschemes/ConstantStreamlineEquilibrium.html) allows us to track the depletion and fuel performance of the cycling pebbles.
 
 This pebble-triso model is run for each time step in the depletion action so that the heat and decay heat from the pebbles can be accurately predicted. For more information on the specifics of the 1-D heat conduction equation that is implemented please see the [Mark 1 pebble model](pbfhr/mark_1/steady/pebble.md) and the corresponding [Mark 1 triso model](pbfhr/mark_1/steady/triso.md).
 
