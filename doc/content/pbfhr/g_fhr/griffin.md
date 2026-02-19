@@ -91,21 +91,21 @@ a `ConstantFunction`.
 
 ### Pebble Depletion
 
-Now we introduce a new capability developed in Griffin for this specific model to do PBFHR depletion with streamlines for pebble shuffling and achieve an equilibrium core. This [PebbleDepletion](https://griffin-docs.hpc.inl.gov/latest/syntax/PebbleDepletion/index.html) action is quite extensive and the theory can be found [here](https://griffin-docs.hpc.inl.gov/latest/memoranda/pebble_depletion_theory.html).
+Now we introduce a new capability developed in Griffin for this specific model to do PBFHR depletion with streamlines for pebble shuffling and achieve an equilibrium core. This [PebbleBed](https://griffin-docs.hpc.inl.gov/latest/syntax/PebbleBed/index.html) action is quite extensive and the theory can be found [here](https://griffin-docs.hpc.inl.gov/latest/memoranda/pebble_depletion_theory.html).
 
 Therefore, we will very briefly cover this block at a high level. First the Pebble Depletion action reads in variables and Auxiliary variables such as the `power`, `burnup`, `Tfuel`, `Tmod`, and `Rho`. The coolant and pebble compositions are read in from the `Compositions` block which will be covered shortly. Transmutation data in the ISOXML format is read in for this problem from the file `DRAGON5_DT.xml`. Specific Pebble and Tabulation options are also specified.
 
-!listing /pbfhr/gFHR/steady/gFHR_griffin_cr_ss.i block=PebbleDepletion
+!listing /pbfhr/gFHR/steady/gFHR_griffin_cr_ss.i block=PebbleBed
 
 More specifically, the specific `DepletionScheme` that is used here is the [ConstantStreamLineEquilibrium](https://griffin-docs.hpc.inl.gov/latest/source/pebbledepletion/pebbledepletionschemes/ConstantStreamlineEquilibrium.html) option. Here the streamlines of the shuffling pebbles are used to correctly determine the equilibrium depletion.
 
-!listing /pbfhr/gFHR/steady/gFHR_griffin_cr_ss.i block=PebbleDepletion/DepletionScheme
+!listing /pbfhr/gFHR/steady/gFHR_griffin_cr_ss.i block=PebbleBed/DepletionScheme
 
-Lastly, the pebble conduction problem is solved through a sub-app `gFHR_pebble_triso_ss.i` where the positions are loaded in from the text data file `pebble_heat_pos_16r_40z.txt`. Specific postprocessors from that sub-app are then read in and used in the `PebbleDepletion` action. See [this page](pebble_triso.md) for more information on the multiscale pebble - triso fuel performance model.
+Lastly, the pebble conduction problem is solved through a sub-app `gFHR_pebble_triso_ss.i` where the positions are loaded in from the text data file `pebble_heat_pos_16r_40z.txt`. Specific postprocessors from that sub-app are then read in and used in the `PebbleBed` action. See [this page](pebble_triso.md) for more information on the multiscale pebble - triso fuel performance model.
 
 ### Compositions
 
-Next, specific `Compositions` are defined that will be read in by the `PebbleDepletion` actions. Here [IsotopeComposition](https://griffin-docs.hpc.inl.gov/latest/source/compositions/IsotopeComposition.html) is used to define the `coolant` and `pebble` isotopic compositions. These compositions are then loaded into the `PebbleDepletion` action previously described.
+Next, specific `Compositions` are defined that will be read in by the `PebbleBed` actions. Here [IsotopeComposition](https://griffin-docs.hpc.inl.gov/latest/source/compositions/IsotopeComposition.html) is used to define the `coolant` and `pebble` isotopic compositions. These compositions are then loaded into the `PebbleBed` action previously described.
 
 ### Materials
 
