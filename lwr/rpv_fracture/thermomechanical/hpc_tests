@@ -10,5 +10,6 @@
     min_parallel = 16
     capabilities = 'method=opt'
     executable_pattern = "grizzly*"
+    hpc_mem_per_cpu = 16G
   []
 []
