@@ -23,6 +23,8 @@
     executable_pattern = 'blue_crab*|dire_wolf*'
     cli_args = "MultiApps/active='' Transfers/active=''"
     min_parallel = 192
+    # Observed variability on H postprocessing
+    rel_err = 1e-5
   []
 
   [griffin_only]
@@ -46,5 +48,7 @@
     prereq = griffin_only
     # Timed out at 600s
     max_time = 1500
+    # Observed variability on HPC runs
+    rel_err = 7e-5
   []
 []

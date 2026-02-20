@@ -131,6 +131,8 @@
     input_files = HPMR_thermo_ss.i
     execute_on = 'timestep_end'
     keep_solution_during_restore = true
+    # no need for steady state neutronics
+    update_old_solution_when_keeping_solution_during_restore = false
   []
 []
 

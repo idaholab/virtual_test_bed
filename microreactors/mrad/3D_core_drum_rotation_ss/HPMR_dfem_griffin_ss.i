@@ -296,6 +296,8 @@ non_hp_yh_blocks = '${fuel_blocks} ${air_blocks} ${ring_blocks} ${mono_blocks} $
     input_files = HPMR_thermo_ss.i
     execute_on = 'initial timestep_end'
     keep_solution_during_restore = true
+    # no need for steady state neutronics
+    update_old_solution_when_keeping_solution_during_restore = false
   []
 []
 

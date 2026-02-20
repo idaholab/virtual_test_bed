@@ -65,6 +65,8 @@
     input_files = KRUSTY_BISON_THERMOMECHANICS.i
     execute_on = 'timestep_end'
     keep_solution_during_restore = true
+    # no need for steady state neutronics
+    update_old_solution_when_keeping_solution_during_restore = false
     cli_args = "bison_mesh_file='../MESH/BISON_mesh_coarse.e'"
   []
 []
