@@ -169,7 +169,7 @@ measurements are in units of centimeters.
 The general format for creating a component or "universe" in openmc in this code is as follows:
     1. define surfaces
     2. define planes
-    3. define cells (contiguous regions of a certain material type
+    3. define cells (contiguous regions of a certain material type)
 
 For all cylinders, I use the naming ID or OD, short for inner diameter and outer diameter respectively.
 Note that openmc defines cylinders using the radius, which is why the dimensions from the cited paper are halved.
@@ -378,8 +378,8 @@ a small hollow cylinder shape that is undefined if not for the two additional re
 na_inf_cell = openmc.Cell(name="Fuel Rod Infinite Na Cell")
 na_inf_cell.region = (
         +cladd_OD | +top_fitt_max | -bot_fitt_min | # Overall surroundings
-        +cladd_max & -top_fitt_max & +top_fitt_OD & -cladd_OD | # Top undefined region
-        +bot_fitt_min & -cladd_min & +bot_fitt_OD & -cladd_OD # Bottom undefined region
+        (+cladd_max & -top_fitt_max & +top_fitt_OD & -cladd_OD) | # Top undefined region
+        (+bot_fitt_min & -cladd_min & +bot_fitt_OD & -cladd_OD) # Bottom undefined region
         )
 na_inf_cell.fill = na
 fuel_rod_univ.add_cell(na_inf_cell)
@@ -493,8 +493,8 @@ vr_univ.add_cell(vr_top_fitt_cell)
 vr_na_inf_cell = openmc.Cell(name="Void Rod Infinite Na Cell")
 vr_na_inf_cell.region = (
         +vr_cladd_OD | +vr_top_fitt_max | -vr_bot_fitt_min | # Overall surroundings
-        +vr_cladd_max & -vr_top_fitt_max & +vr_top_fitt_OD & -vr_cladd_OD | # Top undefined region
-        +vr_bot_fitt_min & -vr_cladd_min & +vr_bot_fitt_OD & -vr_cladd_OD # Bottom undefined region
+        (+vr_cladd_max & -vr_top_fitt_max & +vr_top_fitt_OD & -vr_cladd_OD) | # Top undefined region
+        (+vr_bot_fitt_min & -vr_cladd_min & +vr_bot_fitt_OD & -vr_cladd_OD) # Bottom undefined region
         )
 vr_na_inf_cell.fill = na
 vr_univ.add_cell(vr_na_inf_cell)
@@ -536,9 +536,9 @@ placing the hexagonal lattice into the core universe, we need to define a region
 we can create a large hexagonal region to contain everything. However, there will be an undefined section
 between the edge lattice elements and the hexagon the lattice is placed in unless we surround the lattice with
 a universe of infinite coolant. This is achieved by assigning the universe one cell with one material and no
-specified region. The universe is then applied to the hexagonal lattice with the .outer property.
+specified region. The universe is then assigned to be the hexagonal lattice's outer universe.
 
-To visualize what occurs without a proper .outer universe, one can replace the fill for lattice_inf_na_cell
+To visualize what occurs without a lattice .outer universe, one can replace the fill for lattice_inf_na_cell
 with a material other than na, then plot the geometry.
 
 Note that the .outer property is REQUIRED to define a lattice in openmc.
@@ -676,8 +676,8 @@ control_drum_angled = openmc.Plane(a=0.5, b=0.87, c=0, d=0) # 30 degrees clockwi
 ## Rotational Reflector Cells
 control_drum_cell = openmc.Cell(name="Rotational Reflector BeO Cell")
 control_drum_cell.region = (
-        +control_drum_min & -control_drum_max & (+control_drum_vertical | +control_drum_angled) & -control_drum_ID | # Sunken-in Section
-        +control_drum_min & -control_drum_max & (-control_drum_vertical | -control_drum_angled) & -control_drum_OD # Remaining Cylinder
+        (+control_drum_min & -control_drum_max & (+control_drum_vertical | +control_drum_angled) & -control_drum_ID) | # Sunken-in Section
+        (+control_drum_min & -control_drum_max & (-control_drum_vertical | -control_drum_angled) & -control_drum_OD) # Remaining Cylinder
         )
 control_drum_cell.fill = beo
 control_drum_univ.add_cell(control_drum_cell)
@@ -850,8 +850,8 @@ root_univ.add_cell(root_refl_cell)
 
 root_void_inf_cell = openmc.Cell(name="Root Surrounding Air Cell")
 root_void_inf_cell.region = (
-        +stat_refl_max & -bound_max & +vessel_OD & -bound_OD | # Top circular region
-        +bound_min & -stat_refl_min & +vessel_OD & -bound_OD | # Bottom circular region
+        (+stat_refl_max & -bound_max & +vessel_OD & -bound_OD) | # Top circular region
+        (+bound_min & -stat_refl_min & +vessel_OD & -bound_OD) | # Bottom circular region
         +stat_refl_min & -stat_refl_max &
         (+stat_refl_OD & +root_n_drum & +root_e_drum & +root_s_drum & +root_w_drum) & -bound_OD # Middle section
         )
@@ -944,7 +944,7 @@ settings.temperature = {
 
 """
 The source provides the initial distribution of neutrons for the simulation. Inactive batches prevent
-calculating k_eff before this distribution has converged to the reactivity of the actual reactor.
+calculating k_eff before the fission source distribution has converged to the fundamental mode of the actual reactor.
 """
 ## Source
 source = openmc.IndependentSource()

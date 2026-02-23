@@ -404,7 +404,7 @@ mt800 grph30.40t
 c
 c Options CARDS
 mode n
-c ----- K-eigenvalue simulaiton cards ------
+c ----- K-eigenvalue simulation cards ------
 c ------npg----k----nsk---gen----  
 kcode  25000   1.0   50   550  
 rand  gen=2  seed=123456789

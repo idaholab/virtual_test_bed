@@ -1,6 +1,6 @@
 # MCNP 6.2 STARTR Model
 
-The MCNP model for STARTR was made using version . The input is commented and describes the geometry, materials, and movement of the control drums for the model. The input is configured for k-eigenvalue calculations. 
+The MCNP model for STARTR was made using MCNP version 6.2. The input is commented and describes the geometry, materials, and movement of the control drums for the model. The input is configured for k-eigenvalue calculations. 
 
 !media media/STARTR/MCNP_STARTR_xy_radial.png
       style=display: block;margin-left:auto;margin-right:auto;width:60%;
