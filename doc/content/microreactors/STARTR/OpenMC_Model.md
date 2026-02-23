@@ -1,7 +1,7 @@
 # OpenMC 0.13.3 STARTR Model
 
 The OpenMC model for STARTR was made using OpenMC version 0.13.3. 
-The code is also heavily commented, and explains each section as a walkthrough within the monolithic python file. The sole helper file, na\_density.py calculates the density of sodium under [!citep](NaK1972). Currently, the code is only configured for k-eigenvalue calculations, with no tallies included.
+The code is also heavily commented, and explains each section as a walkthrough within the monolithic python file. The sole helper file, `na_density.py` calculates the density of sodium under [!citep](NaK1972). Currently, the code is only configured for k-eigenvalue calculations, with no tallies included.
 
 ## Adding Tallies
 
