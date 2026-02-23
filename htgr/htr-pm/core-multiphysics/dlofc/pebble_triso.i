@@ -64,13 +64,6 @@ initial_temperature        = 500.0 # (K)
     input = pebble_surface
     new_boundary = triso_surface
   []
-[]
-
-[Debug]
-  show_material_props = true
-[]
-
-[Problem]
   coord_type = 'RSPHERICAL'
 []
 

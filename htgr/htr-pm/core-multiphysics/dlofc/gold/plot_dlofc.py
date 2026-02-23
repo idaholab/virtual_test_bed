@@ -28,14 +28,14 @@ avg_T_grif_nxs  = df['Tfuel_avg']-273.15
 Max_T_grif_nxs  = df['Tfuel_max']-273.15
 P_griffin_nxs   = df['total_power']*1.0e-6
 
-plt.plot(time_ref,avg_T_ref, color =  'black', linestyle='dashed', label='ref. Fuel Avg. Temp.')     
-plt.plot(time_ref,Max_T_ref, color =  'red',   linestyle='dashed', label='ref. Fuel Max. Temp.')  
+plt.plot(time_ref,avg_T_ref, color =  'black', linestyle='dashed', label='ref. Fuel Avg. Temp.')
+plt.plot(time_ref,Max_T_ref, color =  'red',   linestyle='dashed', label='ref. Fuel Max. Temp.')
 
-plt.plot(time_grif,avg_T_grif, color =  'black', label='Griffin. Fuel Avg. Temp.')     
-plt.plot(time_grif,Max_T_grif, color =  'red',   label='Griffin. Fuel Max. Temp.')   
-   
-plt.plot(time_grif_nxs,avg_T_grif_nxs, color =  'orange', label='new XS Griffin. Fuel Avg. Temp.')     
-plt.plot(time_grif_nxs,Max_T_grif_nxs, color =  'lime',   label='new XS Griffin. Fuel Max. Temp.')   
+plt.plot(time_grif,avg_T_grif, color =  'black', label='Griffin. Fuel Avg. Temp.')
+plt.plot(time_grif,Max_T_grif, color =  'red',   label='Griffin. Fuel Max. Temp.')
+
+plt.plot(time_grif_nxs,avg_T_grif_nxs, color =  'orange', label='new XS Griffin. Fuel Avg. Temp.')
+plt.plot(time_grif_nxs,Max_T_grif_nxs, color =  'lime',   label='new XS Griffin. Fuel Max. Temp.')
 #plt.legend(loc='upper left')
 #plt.legend(loc='lower center', bbox_to_anchor=(0.5, -1.35))
 plt.legend(loc='center right', bbox_to_anchor=(1., 0.5))

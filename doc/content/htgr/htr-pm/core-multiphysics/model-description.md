@@ -10,7 +10,7 @@
 # Design Description
 
 The HTR-PM design is based on the combined experience from the German pebble-bed reactor program from the 1960s through the 1990s and the HTR-10 experience in China [!citep](zhang2016shandong).
-The HTR-PM is 250 MWth reactor with the main characteristics include a cylindrical pebble-bed region surrounded by radial, lower, and upper reflectors made of graphite and it is gas cooled reactor. 
+The HTR-PM is 250 MWth reactor with the main characteristics include a cylindrical pebble-bed region surrounded by radial, lower, and upper reflectors made of graphite, and it is cooled through gas forced convection.
 The radial reflector includes various orifices for the control rod channels, Kleine Absorber Kugel Systeme (KLAK) channels (shutdown system), and fluid riser channels.
 This benchmark studies the HTR-PM core in equilibrium conditions and in depressurized loss of forced cooling (DLOFC) transient.
 The benchmark problem uses information available on the open literature to develop an equilibrium model of the HTR-PM by depleting fresh core and considering Pebble loading and unloading from the core [!citep](reitsma2013pbmr).
@@ -43,13 +43,13 @@ The HTR-PM pebble specifications are as follows:
 
 | Parameter | Value |
 | :-------- | :----:|
-| Fueled region radius cm          | 2.5|
-| Shell layer thickness cm         | 0.5|
-| Pebble diameter cm               | 6.0|
-| Heavy metal loading per pebble g | 6.95|
-| Number of particles per pebble     | 11,668|
-| Particle packing $\%$               | 7.034|
-| Discharge burnup MWd/kg, J/m3    | 90, 4.82 $\times 10^{14}$|
+| Fueled region radius cm          | 2.5 |
+| Shell layer thickness cm         | 0.5 |
+| Pebble diameter cm               | 6.0 |
+| Heavy metal loading per pebble g | 6.95 |
+| Number of particles per pebble     | 11,668 |
+| Particle packing $\%$               | 7.034 |
+| Discharge burnup MWd/kg, J/m3    | 90, 4.82 $\times 10^{14}$ |
 
 
 The HTR-PM TRISO particle specifications are as follows
@@ -71,9 +71,10 @@ The HTR-PM TRISO particle specifications are as follows
 
 
 The benchmark model is composed of four elements. These are:
-* Griffin neutronics model
-* Griffin depletion model
-* Pronghorn thermal-hydraulics model
-* Pebble and TRISO temperature model
+
+- Griffin neutronics model
+- Griffin depletion model
+- Pronghorn thermal-hydraulics model
+- Pebble and TRISO temperature model
 
 

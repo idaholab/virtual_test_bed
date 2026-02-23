@@ -32,7 +32,7 @@ p_outlet                         = 7.0e+6    # Reactor outlet pressure (Pa)
 D_H_bypass = 0.15                            # Hydraulic diameter of bypass
 D_H_riser  = 0.1875                          # Hydraulic diameter of riser
 D_H_top_reflector = 0.2                      # Hydraulic diameter of the top reflector
-D_H_bottom_reflector = 0.2                   # Hydraulic diameter of the top reflector
+D_H_bottom_reflector = 0.2                   # Hydraulic diameter of the bottom reflector
 D_H_top_cavity = 0.67                        # Hydraulic diameter of the top cavity
 
 # Heat transfer area per volume ------------------------------------------------
