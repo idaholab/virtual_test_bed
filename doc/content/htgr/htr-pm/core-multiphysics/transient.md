@@ -1,14 +1,16 @@
 # Depressurized Loss of Forced Cooling Transient (DLOFC)
 
 The DLOFC transient simulation was initiated by [!citep](reitsma2013pbmr):
-1. Reducing the mass flow rate of the coolant linearly from its nominal value to zero over thirteen seconds. 
+
+1. Reducing the mass flow rate of the coolant linearly from its nominal value to zero over thirteen seconds.
 2. The system pressure was reduced linearly from 7.0 MPa to atmospheric pressure (0.101 MPa).
-3.  the control rods were fully inserted (SCRAM) to shutdown the reactor after completing the flow rate and pressure ramps. 
-4. Beyond that, there were no changes to the system's  main parameters, and the simulation was performed for up to 140 hours. 
+3.  the control rods were fully inserted (SCRAM) to shutdown the reactor after completing the flow rate and pressure ramps.
+4. Beyond that, there were no changes to the system's  main parameters, and the simulation was performed for up to 140 hours.
 
 During the DLOFC transient simulation, coupled neutronics and thermal-hydraulics calculations were performed and the following progression of the reactor parameters was observed during the transient:
+
 1. The reactor power starts decreasing at the beginning of the transient due to the negative thermal feedback.
-2. The prompt power goes to zero while the remaining reactor power is just the decay heat component of the fuel. 
+2. The prompt power goes to zero while the remaining reactor power is just the decay heat component of the fuel.
 3. The maximum fluid and solid temperatures start moving axially and toward the top of the core.
 4. Temperature distributions change mainly in the radial direction, and there is a significant change in the solid temperature of the reflector and RPV regions.
 5. The maximum fuel temperature reaches 1503.26 °C (1776.41 K) during DLOFC transient compared to the reference results which is around 1500 °C [!citep](zheng2018study) and [!citep](strydom2008tinte).
@@ -35,11 +37,11 @@ The ```Modules``` block, variables are imported from the Exodus file. Notice ```
 
 !listing htgr/htr-pm/core-multiphysics/updated_equilibrium_core/htr-pm-flow-fv-tr-dlofc.i block=Modules
 
-Additional initial initial conditions are imported from previous run as in the ```Variables``` block.
+Additional initial conditions are imported from previous run as in the ```Variables``` block.
 
 !listing htgr/htr-pm/core-multiphysics/updated_equilibrium_core/htr-pm-flow-fv-tr-dlofc.i block=Variables
 
-The most important difference between the steady state and the transient case calculation is the fact that the transient case (i.e. DLOFC) changes the boundary conditions to mimic the of DLOFC, while the steady state case is ran in "transient" mode till the calculation is converged to the steady state solution.
+The most important difference between the steady state and the transient case calculation is the fact that the transient case (i.e. DLOFC) changes the boundary conditions to mimic the DLOFC, while the steady state case is run with eigenvalue for neutronics and in "transient" mode for other physics until the calculation is converged to the steady state solution.
 The pressure, temperature, mass flow variations are defined in the ```Functions``` block as follows
 
 !listing htgr/htr-pm/core-multiphysics/updated_equilibrium_core/htr-pm-flow-fv-tr-dlofc.i block=Functions
@@ -60,3 +62,14 @@ The pebble surface temperature distribution as a function of time is shown in
   style=width:50%
   id=solid-temperature-dist
   caption=Pebble surface temperature distribution as a function of time in DLOFC accident condition
+
+
+# Input Execution
+
+The execution lines for the equilibrium core calculations, null transient, and DLOFC transient
+
+1. mpirun -np 48 blue_crab-opt -i  htr_pm_neutronics_ss.i
+2. mpirun -np 48 blue_crab-opt -i  htr_pm_neutronics_tr_null.i
+3. mpirun -np 48 blue_crab-opt -i  htr_pm_neutronics_tr_dlofc.i
+
+Note that the steady state solution should be provided before running any transient calculations to setup initial conditions.

@@ -45,6 +45,8 @@
     check_input = True
     executable_pattern = 'griffin*|blue_crab*|dire_wolf*|fenix*'
   []
+
+# Regression tests
   [htr_pm_regression_1]
     type = CSVDiff
     input = htr_pm_neutronics_ss.i
@@ -69,5 +71,5 @@
     executable_pattern = 'griffin*|blue_crab*'
     max_time = 400
   []
- 
+ []
   
