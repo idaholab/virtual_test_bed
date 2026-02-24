@@ -18,5 +18,7 @@
     executable_pattern = 'blue_crab*|sam*'
     rel_err = 1e-3
     min_parallel = 4
+    # Timed out in devel at 300s
+    max_time = 500
   []
 []

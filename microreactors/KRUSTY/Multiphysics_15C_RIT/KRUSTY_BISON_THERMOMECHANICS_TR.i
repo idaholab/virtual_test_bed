@@ -288,7 +288,7 @@ reflector_disp = 1.48e-3 # Corresponding to 15 cents reactivity insertion
   [UMo_thermal]
     type = HeatConductionMaterial
     block = ${fuel_all}
-    temp = temp_f
+    temperature = temp_f
     specific_heat_temperature_function = umo_heat_cap
     thermal_conductivity_temperature_function = umo_tc
   []

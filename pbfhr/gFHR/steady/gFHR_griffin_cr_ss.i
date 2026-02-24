@@ -432,10 +432,13 @@ Rho = 1973.8 # kg/m^3 900.0 K
   [flow]
     type = FullSolveMultiApp
     input_files = ${flow_subapp_input_file}
-    keep_solution_during_restore = true
     positions = '0 -0.09 0'
     execute_on = 'TIMESTEP_END FINAL'
     max_procs_per_app = 12
+
+    # MultiApp is running a transient to steady state
+    keep_solution_during_restore = true
+    update_old_solution_when_keeping_solution_during_restore = true
   []
 []
 

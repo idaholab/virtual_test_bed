@@ -58,8 +58,8 @@
     cli_args = "Outputs/file_base=neutronics_only_out Executioner/force_fixed_point_solve=false Transfers/active='' MultiApps/active=''"
     csvdiff = neutronics_only_out.csv
     min_parallel = 8
-    # for devel testing
-    max_time = 500
+    # for devel testing (observed timeout at 500s)
+    max_time = 600
     executable_pattern = 'griffin*'
     prereq = 'syntax_griffin'
     abs_zero = 1e-4

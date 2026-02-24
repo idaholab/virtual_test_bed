@@ -515,6 +515,8 @@
     # with an updated power (heat source) distribution
     no_restore = true
     keep_solution_during_restore = true
+    # MultiApp is running a transient to steady state
+    update_old_solution_when_keeping_solution_during_restore = true
   []
 []
 
