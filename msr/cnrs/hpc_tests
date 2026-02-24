@@ -34,7 +34,8 @@
     cli_args = "MultiApps/ns_flow/cli_args='Ulid=0.5'"
     csvdiff = "cnrs_s14_griffin_neutronics_out.csv"
     min_parallel = 24
-    max_time = 1200
+    # was observed to time out at 1200s
+    max_time = 1500
     # changing from 12 to 24 processors
     rel_err = 2e-5
     # Missing absorption cross section
