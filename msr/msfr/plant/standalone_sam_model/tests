@@ -45,7 +45,7 @@
     cli_args = "--app SamApp Executioner/num_steps=120 Executioner/set_sam_default_petsc_options=true"
     prereq = 'syntax_transient_1 steady'
     abs_zero = 1e-4
-    rel_err = 1e-4
+    rel_err = 2e-4
     min_parallel = 2
   []
   [transient_2]

@@ -694,6 +694,8 @@ fis_fract            = ${fparse 1 - dh_fract} # Fission power fraction at t = 0.
     input_files = 'oecd_pbmr400_ss1_phtn_flow_path.i'
     positions = '0.0 -2.8500 0.0' # Vertical offset between the two meshes.
     keep_solution_during_restore = true
+    # sub-app is running a transient
+    update_old_solution_when_keeping_solution_during_restore = true
   []
 []
 
