@@ -207,7 +207,8 @@
   fixed_point_min_its = 2
   fixed_point_max_its = 30
   fixed_point_abs_tol = 1e-3
-  relaxation_factor = 0.7
+  # Relaxation is not used
+  # relaxation_factor = 0.7
 []
 
 [Debug]
