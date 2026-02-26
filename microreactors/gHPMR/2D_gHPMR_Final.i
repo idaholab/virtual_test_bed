@@ -636,7 +636,7 @@ output_file_base = gHPMR_2d_core
   []
   # Next we can stitch the area meshed by XYDG, which is the deleted pin cell area OUTSIDE of the hole, to the hex assembly mesh
   [assembly3_center_w_hole_void]
-    type = StitchedMeshGenerator
+    type = StitchMeshGenerator
     inputs = 'assembly3_del_center assembly3_center_area_with_hole'
     stitch_boundaries_pairs = '76 10010'
     prevent_boundary_ids_overlap = true
@@ -655,7 +655,7 @@ output_file_base = gHPMR_2d_core
   []
   # Now we must stitch the meshed hole to the center area with the hole void
   [assembly3_center_stitched]
-    type = StitchedMeshGenerator
+    type = StitchMeshGenerator
     inputs = 'assembly3_center_w_hole_void assembly3_mesh_center_hole'
     stitch_boundaries_pairs = 'center_hole_boundary to_be_stitched'
     prevent_boundary_ids_overlap = true
