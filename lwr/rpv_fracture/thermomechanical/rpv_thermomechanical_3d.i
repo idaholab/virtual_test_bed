@@ -277,15 +277,15 @@
   []
 
   [density_base]
-    type = Density
+    type = StrainAdjustedDensity
     block = '1'
-    density = 7750.4
+    strain_free_density = 7750.4
   []
 
   [density_clad]
-    type = Density
+    type = StrainAdjustedDensity
     block = '2'
-    density = 8027.2
+    strain_free_density = 8027.2
   []
 
   [axial_stress_clad]

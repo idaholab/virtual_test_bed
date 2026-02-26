@@ -276,9 +276,9 @@ reflector_disp = 0.0
   []
 
   [UMoDens]
-    type = Density
+    type = StrainAdjustedDensity
     block = ${fuel_all}
-    density = ${umo_dens}
+    strain_free_density = ${umo_dens}
   []
   [UMoMech]
     type = ComputeIsotropicElasticityTensor
@@ -308,9 +308,9 @@ reflector_disp = 0.0
     thermal_conductivity_temperature_function = umo_tc
   []
   [BeODens]
-    type = Density
+    type = StrainAdjustedDensity
     block = ${beo_all}
-    density = ${beo_dens}
+    strain_free_density = ${beo_dens}
   []
   [BeOMech]
     type = BeOElasticityTensor
@@ -336,9 +336,9 @@ reflector_disp = 0.0
     fast_neutron_fluence = 0
   []
   [AirDens]
-    type = Density
+    type = StrainAdjustedDensity
     block = ${air_all}
-    density = ${air_dens}
+    strain_free_density = ${air_dens}
   []
   [AirTherm]
     type = HeatConductionMaterial
@@ -350,9 +350,9 @@ reflector_disp = 0.0
   # HP Fuel Coupling Material
   # Note HP was replaced with steel rods
   [HPFDens]
-    type = Density
+    type = StrainAdjustedDensity
     block = ${hp_fuel_gap_names}
-    density = ${hp_fuel_couple_dens}
+    strain_free_density = ${hp_fuel_couple_dens}
   []
   [HPFTherm]
     type = HeatConductionMaterial
@@ -362,9 +362,9 @@ reflector_disp = 0.0
   []
 
   [HPMLIDens]
-    type = Density
+    type = StrainAdjustedDensity
     block = ${hp_mli_names}
-    density = ${hp_mli_dens}
+    strain_free_density = ${hp_mli_dens}
   []
   [HPMLIherm]
     type = HeatConductionMaterial
@@ -375,9 +375,9 @@ reflector_disp = 0.0
 
   #Stainless Steel; Assuming all the stuctures are SS316
   [SS316Dens]
-    type = Density
+    type = StrainAdjustedDensity
     block = '${ss_all} ${hp_all}'
-    density = ${ss_dens}
+    strain_free_density = ${ss_dens}
   []
   [SS316Mech]
     type = SS316ElasticityTensor
@@ -401,10 +401,10 @@ reflector_disp = 0.0
 
   #Aluminium; Assuming all the stuctures are SS316
   [Al6061Dens]
-    type = Density
+    type = StrainAdjustedDensity
     block = ${Al_all}
     # density = ${ss_dens} # will change later
-    density = ${al_dens}
+    strain_free_density = ${al_dens}
   []
   [Al6061Mech]
     type = Al6061ElasticityTensor
@@ -428,9 +428,9 @@ reflector_disp = 0.0
 
   #Natural Boron Carbide (Not enriched boron)
   [B4CDens]
-    type = Density
+    type = StrainAdjustedDensity
     block = ${b4c_all}
-    density = ${b4c_dens}
+    strain_free_density = ${b4c_dens}
   []
   [B4CMech]
     type = ComputeIsotropicElasticityTensor
@@ -453,9 +453,9 @@ reflector_disp = 0.0
 
   #Pure Beryllium
   [BeDens]
-    type = Density
+    type = StrainAdjustedDensity
     block = ${Be_all}
-    density = ${Be_dens}
+    strain_free_density = ${Be_dens}
   []
   [BeMech]
     type = ComputeIsotropicElasticityTensor

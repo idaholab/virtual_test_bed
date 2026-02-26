@@ -696,14 +696,16 @@ heater_SA = '${fparse heater_P * 10 * core_block_height}' # m^2
     specific_heat_temperature_function = cp_greencast_fn
   []
   [greencast_rho]
-    type = Density
+    type = ParsedMaterial
     block = 'core'
-    density = 2912
+    property_name = density
+    expression = 2912
   []
   [steel_rho]
-    type = Density
+    type = ParsedMaterial
     block = 'core_barrel RPV RCCS_inner_panel RCCS_outer_panel'
-    density = 8050
+    property_name = density
+    expression = 8050
   []
   [SiC_k_cp]
     type = HeatConductionMaterial
@@ -713,9 +715,10 @@ heater_SA = '${fparse heater_P * 10 * core_block_height}' # m^2
     specific_heat_temperature_function = cp_SiC_fn
   []
   [SiC_rho]
-    type = Density
+    type = ParsedMaterial
     block = 'reflector'
-    density = 2370
+    property_name = density
+    expression = 2370
   []
   [steel_k_cp]
     type = HeatConductionMaterial
@@ -725,9 +728,10 @@ heater_SA = '${fparse heater_P * 10 * core_block_height}' # m^2
     specific_heat_temperature_function = cp_ss304_fn
   []
   [insulation_rho]
-    type = Density
+    type = ParsedMaterial
     block = 'RCCS_insulation'
-    density = 91
+    property_name = density
+    expression = 91
   []
   [insulation_k_cp]
     type = HeatConductionMaterial

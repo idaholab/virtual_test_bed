@@ -233,44 +233,52 @@ coolant_full_points_filename = '../component_positions/cc_positions_sixth.txt'
   []
 
   [fuel_density]
-    type = Density
+    type = StrainAdjustedDensity
     block = ${fuel_blocks}
-    density = 2276.5
+    displacements = '0 0 0'
+    strain_free_density = 2276.5
   []
   [moderator_density]
-    type = Density
+    type = StrainAdjustedDensity
     block = ${mod_blocks}
-    density = 4.3e3
+    displacements = '0 0 0'
+    strain_free_density = 4.3e3
   []
   [monolith_density]
-    type = Density
+    type = StrainAdjustedDensity
     block = 10
-    density = 1806
+    displacements = '0 0 0'
+    strain_free_density = 1806
   []
   [YH_Liner_Cr_density]
-    type = Density
+    type = StrainAdjustedDensity
     block = 102
-    density = 7190
+    displacements = '0 0 0'
+    strain_free_density = 7190
   []
   [YH_Cladding_density]
-    type = Density
+    type = StrainAdjustedDensity
     block = 103
-    density = 7250
+    displacements = '0 0 0'
+    strain_free_density = 7250
   []
   [Poison_blocks_density]
-    type = Density
+    type = StrainAdjustedDensity
     block = ${poison_blocks}
-    density = 2510
+    displacements = '0 0 0'
+    strain_free_density = 2510
   []
   [control_rod_density]
-    type = Density
+    type = StrainAdjustedDensity
     block = 603 #B4C
-    density = 2510
+    displacements = '0 0 0'
+    strain_free_density = 2510
   []
   [airgap_density]
-    type = Density
+    type = StrainAdjustedDensity
     block = ${he_void_blocks} #helium
-    density = 180
+    displacements = '0 0 0'
+    strain_free_density = 180
   []
 
   [reflector_density]

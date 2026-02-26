@@ -27,7 +27,6 @@ plenum_height        = 1.
    # the following are needed in multiple UPuZr Materials
    X_Zr = 0.225
    X_Pu = 0.171
-   density = 11120.0 # kg/m3 at hot operating condition
 []
 
 [Mesh]
@@ -277,8 +276,10 @@ plenum_height        = 1.
    outputs  = all
  []
   [fuel_density]
-     type = Density
-     block = pellet
+    type = StrainAdjustedDensity
+    block = pellet
+    displacements = '0 0 0'
+    strain_free_density =  11120.0 # kg/m3 at hot operating condition
   []
   # cladding
   #mechanics materials
@@ -304,9 +305,10 @@ plenum_height        = 1.
     block = 'clad 4'
   []
   [clad_density]
-    type = Density
+    type = StrainAdjustedDensity
     block = 'clad 4'
-    density = 7800
+    displacements = '0 0 0'
+    strain_free_density = 7800
   []
 []
 

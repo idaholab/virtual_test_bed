@@ -195,45 +195,53 @@ coolant_half_points_filename = ../channel_positions/coolant_half_points.txt # Fi
   []
 
   [fuel_density]
-    type = Density
+    type = StrainAdjustedDensity
     block = 'Fuel Fuel_tri'
-    density = 2276.5
+    displacements = '0 0 0'
+    strain_free_density = 2276.5
   []
   [moderator_density]
-    type = Density
+    type = StrainAdjustedDensity
     block = moderator
-    density = 4.3e3
+    displacements = '0 0 0'
+    strain_free_density = 4.3e3
   []
   [monolith_density]
-    type = Density
+    type = StrainAdjustedDensity
     block = monolith
-    density = 1806
+    displacements = '0 0 0'
+    strain_free_density = 1806
   []
   [YH_Liner_Cr_density]
-    type = Density
+    type = StrainAdjustedDensity
     block = Cr
-    density = 7190
+    displacements = '0 0 0'
+    strain_free_density = 7190
   []
   [YH_Cladding_density]
-    type = Density
+    type = StrainAdjustedDensity
     block = FECRAL
-    density = 7250
+    displacements = '0 0 0'
+    strain_free_density = 7250
   []
   [Poison_blocks_density]
-    type = Density
+    type = StrainAdjustedDensity
     block = B4C
-    density = 2510
+    displacements = '0 0 0'
+    strain_free_density = 2510
   []
   [control_rod_density]
-    type = Density
+    type = StrainAdjustedDensity
     block = control #B4C
-    density = 2510
+    displacements = '0 0 0'
+    strain_free_density = 2510
   []
 
   [airgap_density]
-    type = Density
+    type = StrainAdjustedDensity
     block = 'Air' #helium
-    density = 180
+    displacements = '0 0 0'
+    strain_free_density = 180
   []
 
   [reflector_density]
