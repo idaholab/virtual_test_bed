@@ -199,7 +199,7 @@ coolant_full_points_filename = '../component_positions/cc_positions_sixth.txt'
   [moderator_thermal]
     type = HeatConductionMaterial
     block = ${mod_blocks}
-    temp = temp
+    temperature = temp
     thermal_conductivity = 20 # W/m/K
     specific_heat = 500 # random value
   []
@@ -218,7 +218,7 @@ coolant_full_points_filename = '../component_positions/cc_positions_sixth.txt'
   [Poison_blocks_thermal]
     type = HeatConductionMaterial
     block = ${poison_blocks}
-    temp = temp
+    temperature = temp
     thermal_conductivity = 92 # W/m/K
     specific_heat = 960 # random value
   []
@@ -226,7 +226,7 @@ coolant_full_points_filename = '../component_positions/cc_positions_sixth.txt'
   [control_rod_thermal]
     type = HeatConductionMaterial
     block = 603 #B4C
-    temp = temp
+    temperature = temp
     thermal_conductivity = 92 # W/m/K
     specific_heat = 960 # random value
   []
@@ -242,7 +242,7 @@ coolant_full_points_filename = '../component_positions/cc_positions_sixth.txt'
   [airgap_thermal]
     type = HeatConductionMaterial
     block = ${he_void_blocks} # Helium filled in the control rod hole
-    temp = temp
+    temperature = temp
     thermal_conductivity = 0.15 # W/m/K
     specific_heat = 5197 # random value
   []

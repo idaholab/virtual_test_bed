@@ -181,28 +181,28 @@ corr_factor = '${fparse R_hp_hole / R_clad_o * area_correction / perimeter_corre
   [moderator_thermal]
     type = HeatConductionMaterial
     block = 'moderator_quad moderator_tri'
-    temp = temp
+    temperature = temp
     thermal_conductivity = 20 # W/m/K
     specific_heat = 500 # random value
   []
   [airgap_thermal]
     type = HeatConductionMaterial
     block = 'air_gap_tri air_gap_quad outer_shield' # Helium gap
-    temp = temp
+    temperature = temp
     thermal_conductivity = 0.15 # W/m/K
     specific_heat = 5197 # random value
   []
   [axial_reflector_thermal]
     type = HeatConductionMaterial
     block = 'reflector_tri reflector_quad'
-    temp = temp
+    temperature = temp
     thermal_conductivity = 199 # W/m/K
     specific_heat = 1867 # random value
   []
   [B4C_thermal]
     type = HeatConductionMaterial
     block = 'B4C'
-    temp = temp
+    temperature = temp
     thermal_conductivity = 92 # W/m/K
     specific_heat = 960 # random value
   []

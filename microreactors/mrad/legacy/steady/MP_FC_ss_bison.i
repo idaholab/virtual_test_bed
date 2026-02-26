@@ -157,35 +157,35 @@
   [moderator_thermal]
     type = HeatConductionMaterial
     block = moderator
-    temp = temp
+    temperature = temp
     thermal_conductivity = 20 # W/m/K
     specific_heat = 500 # arbitrary value
   []
   [heat_pipes_thermal]
     type = HeatConductionMaterial
     block = 'heat_pipes' # Vapor with high thermal conductivity
-    temp = temp
+    temperature = temp
     thermal_conductivity = 1e4 # W/m/K
     specific_heat = 5 # arbitrary value
   []
   [airgap_thermal]
     type = HeatConductionMaterial
     block = 'air_gap' # Helium gap
-    temp = temp
+    temperature = temp
     thermal_conductivity = 0.15 # W/m/K
     specific_heat = 5197 # arbitrary value
   []
   [axial_reflector_thermal]
     type = HeatConductionMaterial
     block = 'reflector'
-    temp = temp
+    temperature = temp
     thermal_conductivity = 199 # W/m/K
     specific_heat = 1867 # arbitrary value
   []
   [B4C_thermal]
     type = HeatConductionMaterial
     block = 'B4C'
-    temp = temp
+    temperature = temp
     thermal_conductivity = 92 # W/m/K
     specific_heat = 960 # arbitrary value
   []

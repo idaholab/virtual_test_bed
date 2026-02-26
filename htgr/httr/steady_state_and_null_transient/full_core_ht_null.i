@@ -563,7 +563,7 @@ extension = '_9MW'
     block = '${rpv_blocks}'
     thermal_conductivity_temperature_function = ssteel_304_k
     specific_heat = 500 # J/kg/K
-    temp = Tsolid
+    temperature = Tsolid
   []
   [ss304_density]
     type = StrainAdjustedDensity

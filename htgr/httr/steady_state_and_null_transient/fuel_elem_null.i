@@ -279,14 +279,14 @@ cond = 0.2309 # He at 523K, 2.8MPa
   [Fuel_compact]
     type = HeatConductionMaterial
     block = '${fuel_blocks}'
-    temp = temp
+    temperature = temp
     thermal_conductivity_temperature_function = compact_k
     specific_heat_temperature_function = compact_cp
   []
   [Fuel_sleeve]
     type = HeatConductionMaterial
     block = '${sleeve_blocks} ${mod_blocks}'
-    temp = temp
+    temperature = temp
     thermal_conductivity_temperature_function = IG110_k
     specific_heat_temperature_function = IG110_cp
   []

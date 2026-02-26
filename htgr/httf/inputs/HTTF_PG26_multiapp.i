@@ -691,7 +691,7 @@ heater_SA = '${fparse heater_P * 10 * core_block_height}' # m^2
   [greencast_k_cp]
     type = HeatConductionMaterial
     block = 'core'
-    temp = temperature
+    temperature = temperature
     thermal_conductivity_temperature_function = k_greencast_half_fn
     specific_heat_temperature_function = cp_greencast_fn
   []
@@ -710,7 +710,7 @@ heater_SA = '${fparse heater_P * 10 * core_block_height}' # m^2
   [SiC_k_cp]
     type = HeatConductionMaterial
     block = 'reflector'
-    temp = temperature
+    temperature = temperature
     thermal_conductivity_temperature_function = k_SiC_fn
     specific_heat_temperature_function = cp_SiC_fn
   []
@@ -723,7 +723,7 @@ heater_SA = '${fparse heater_P * 10 * core_block_height}' # m^2
   [steel_k_cp]
     type = HeatConductionMaterial
     block = 'core_barrel RPV RCCS_inner_panel RCCS_outer_panel'
-    temp = temperature
+    temperature = temperature
     thermal_conductivity_temperature_function = k_ss304_fn
     specific_heat_temperature_function = cp_ss304_fn
   []
@@ -736,7 +736,7 @@ heater_SA = '${fparse heater_P * 10 * core_block_height}' # m^2
   [insulation_k_cp]
     type = HeatConductionMaterial
     block = 'RCCS_insulation'
-    temp = temperature
+    temperature = temperature
     thermal_conductivity_temperature_function = k_insulation_fn
     specific_heat = 700
   []

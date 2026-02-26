@@ -220,28 +220,28 @@ mesh_file = '../mesh/gold/HPMR_OneSixth_Core_meshgenerator_tri_rotate_bdry_fine.
   [moderator_thermal]
     type = HeatConductionMaterial
     block = ${yh_blocks}
-    temp = temp
+    temperature = temp
     thermal_conductivity = 20 # W/m/K
     specific_heat = 500 # random value
   []
   [airgap_thermal]
     type = HeatConductionMaterial
     block = ${air_blocks} # Helium gap
-    temp = temp
+    temperature = temp
     thermal_conductivity = 0.15 # W/m/K
     specific_heat = 5197 # random value
   []
   [axial_reflector_thermal]
     type = HeatConductionMaterial
     block = ${ref_blocks}
-    temp = temp
+    temperature = temp
     thermal_conductivity = 199 # W/m/K
     specific_heat = 1867 # random value
   []
   [B4C_thermal]
     type = HeatConductionMaterial
     block = ${b4c_blocks}
-    temp = temp
+    temperature = temp
     thermal_conductivity = 92 # W/m/K
     specific_heat = 960 # random value
   []

@@ -205,7 +205,7 @@
     block = '1'
     thermal_conductivity_temperature_function = k_func_base
     specific_heat_temperature_function = c_func_base
-    temp = temp
+    temperature = temp
   []
 
   [thermal_clad]
@@ -213,7 +213,7 @@
     block = '2'
     thermal_conductivity_temperature_function = k_func_clad
     specific_heat_temperature_function = c_func_clad
-    temp = temp
+    temperature = temp
   []
 
   [youngs_modulus_base]
