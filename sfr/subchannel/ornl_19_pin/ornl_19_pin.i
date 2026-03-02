@@ -6,13 +6,13 @@
 ## If using or referring to this model, please cite as explained in
 ## https://mooseframework.inl.gov/virtual_test_bed/citing.html
 
-T_in = 588.71 #600F
+T_in = 588.5
 A12 = 1.00423e3
 A13 = -0.21390
 A14 = -1.1046e-5
 rho = '${fparse A12 + A13 * T_in + A14 * T_in * T_in}'
 flow_area = 0.000467906 #m2
-vol_flow = 3.47E-03 #m^3/sec
+vol_flow = 4.67E-05 #low flow case
 mass_flux_in = '${fparse rho *  vol_flow / flow_area}'
 P_out = 2.0e5 # Pa
 [TriSubChannelMesh]
@@ -28,8 +28,6 @@ P_out = 2.0e5 # Pa
     pitch = 7.26e-3
     dwire = 1.42e-3
     hwire = 0.3048
-    spacer_z = '0'
-    spacer_k = '0'
   []
 []
 
@@ -48,10 +46,10 @@ P_out = 2.0e5 # Pa
   compute_density = true
   compute_viscosity = true
   compute_power = true
+  P_tol = 1.0e-5
+  T_tol = 1.0e-4
   implicit = true
   segregated = false
-  P_tol = 1e-4
-  T_tol = 1e-4
   staggered_pressure = false
   verbose_multiapps = true
   verbose_subchannel = true
@@ -80,7 +78,7 @@ P_out = 2.0e5 # Pa
   [q_prime_IC]
     type = SCMTriPowerIC
     variable = q_prime
-    power = 322525.0 #W
+    power = 4966 #W
     filename = "pin_power_profile_19.txt"
   []
 
@@ -228,11 +226,6 @@ P_out = 2.0e5 # Pa
     type = SCMPlanarMean
     variable = T
     height = 2
-  []
-
-  [Total_power]
-    type = ElementIntegralVariablePostprocessor
-    variable = q_prime
   []
 []
 ################################################################################
