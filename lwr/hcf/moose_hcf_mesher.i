@@ -21,15 +21,16 @@ R_clad = 0.00320
 # rod_pitch = 0.0126
 # l2v_fuel = 0.00025
 # l2v_clad = 0.00050
-c_lobe_clad = 0.0050  # rod_pitch/2 - r_clad 
+c_lobe_clad = 0.0050  # rod_pitch/2 - r_clad
 c_lobe_fuel = 0.00475 # c_lobe_clad - (l2v_clad-l2v_fuel)
-c_valley = 0.0045     # rod_pitch/2 - r_clad - l2v_clad 
+c_valley = 0.0045     # rod_pitch/2 - r_clad - l2v_clad
 
 L_disp = 4.25e-4  # half of the side length of the displacer (0.85mm)
 square_region_radius = '${fparse 4 * L_disp}'
 
 [Outputs]
   exodus = true
+  csv = true
   file_base = 'mesh'
 []
 
@@ -286,7 +287,7 @@ square_region_radius = '${fparse 4 * L_disp}'
     type = CombinerGenerator
     inputs = 'make_sides_fuel make_sides_clad'
   []
-  
+
   # Mesh displacer
   [center]
     type = GeneratedMeshGenerator
@@ -359,6 +360,7 @@ square_region_radius = '${fparse 4 * L_disp}'
     type = SmoothMeshGenerator
     input = separate_blocks
     iterations = 2
+    algorithm = laplace
   []
   [check_for_issues]
     type = MeshDiagnosticsGenerator
@@ -397,13 +399,13 @@ square_region_radius = '${fparse 4 * L_disp}'
     top_right = '1e-5 1e-5 1e-5'
     new_boundary = 'bcenter'
   []
-  [bottom_center_neigh] 
+  [bottom_center_neigh]
     type = BoundingBoxNodeSetGenerator
     input = bottom_center
     bottom_left = '0.00018 -1e-5 -1e-5'
     top_right = '0.00022 1e-5 1e-5'
     new_boundary = 'bcenter_nx'
-  [] 
+  []
   [sideset_top_bottom]
     type = SideSetsFromNormalsGenerator
     input = bottom_center_neigh
@@ -442,5 +444,20 @@ square_region_radius = '${fparse 4 * L_disp}'
 
 [AuxVariables]
   [placeholder]
+  []
+[]
+
+[Postprocessors]
+  [vol_fuel]
+    type = VolumePostprocessor
+    block = 'fuel'
+  []
+  [vol_clad]
+    type = VolumePostprocessor
+    block = 'cladding'
+  []
+  [vol_disp]
+    type = VolumePostprocessor
+    block = 'displacer'
   []
 []
