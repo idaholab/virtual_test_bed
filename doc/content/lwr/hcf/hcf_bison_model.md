@@ -2,7 +2,7 @@
 
 *Contact: Youyeon Choi (MIT), yychoi@mit.edu*
 
-*This model includes contributions by Guillaume Giudicelli (INL), Daniel Levario (UNM), Kyle Gamble (INL) and Koroush Shirvan (MIT)*
+*This model also includes contributions by Guillaume Giudicelli (INL), Daniel Levario (UNM), Kyle Gamble (INL) and Koroush Shirvan (MIT)*
 
 *Model link: [Metallic HCF BISON Model](https://github.com/idaholab/virtual_test_bed/tree/devel/lwr/hcf)*
 
