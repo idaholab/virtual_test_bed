@@ -399,7 +399,7 @@
     block = 'cladding'
   []
   [clad_density]
-    type = StrainAdjustedDensity  
+    type = StrainAdjustedDensity
     block = 'cladding'
     strain_free_density = 6551.0
   []
@@ -507,7 +507,7 @@
   nl_max_its = 40
   nl_rel_tol = 1e-4
   nl_abs_tol = 1e-8
-  
+
   start_time = 0
   end_time = 136235520
 
