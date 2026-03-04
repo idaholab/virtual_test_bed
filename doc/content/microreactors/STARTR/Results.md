@@ -1,6 +1,6 @@
 # Results
 
-To fully characterize the underlying physics for STARTR, a comprehensive test suite was performed in both OpenMC and MCNP. Details on testing configurations and plots can be found in the STARTR companion milestone report for NRIC.
+To fully characterize the underlying physics for STARTR, a comprehensive test suite was performed in both OpenMC and MCNP. Details on testing configurations and plots can be found in the STARTR companion milestone report for NRIC. [!citep](LangeGrammar2025)
 
 ## Testing Suite
 
