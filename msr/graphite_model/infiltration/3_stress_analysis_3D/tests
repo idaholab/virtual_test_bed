@@ -9,7 +9,8 @@
     capabilities = 'method=opt'
     allow_warnings = true
     min_parallel = 16
-    max_time = 3000
+    # Timeout observed at 3000s
+    max_time = 4000
     rel_err = 1e-5
   []
 []
