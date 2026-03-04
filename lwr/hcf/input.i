@@ -342,7 +342,7 @@
    block = 'fuel'
    thermal_conductivity_temperature_function = u50zr_thermal_conductivity
    specific_heat_temperature_function = u50zr_heat_capacity
-   temp = temp
+   temperature = temp
  []
   [fuel_density]
     type = StrainAdjustedDensity
