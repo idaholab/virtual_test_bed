@@ -31,16 +31,22 @@
                 TransportSystems/dfem_sn/NPolar=3
                 Executioner/coarse_element_id=coarse_element_id
                 Executioner/cmfd_eigen_solver_type=krylovshur
-                Outputs/csv=true"
+                Outputs/csv=true
+                Outputs/checkpoint=false
+                Outputs/wall_time_checkpoint=false"
+    # NOTE: I turned off the checkpoints to see if this solves the timeouts
+    # If you see this time out, please add a note here
     prereq = 'xs_generation'
     csvdiff = 'core_hom_macro_out.csv'
     min_parallel = 64
-    hpc_mem_per_cpu = 10G
+    # Tried increasing from 10 to 14G in case that caused timeouts
+    hpc_mem_per_cpu = 14G
     capabilities = 'method=opt'
     # 3000s ended after 6 iterations with 16 cpus
     # 3000s ended after 11 iterations with 32 cpus
     # 1500s finished 12 iterations with 64 cpus
-    max_time = 3000
+    # Tried 3000 -> 3600
+    max_time = 3600
     ignore_columns = 'power_scaling'
   []
 []

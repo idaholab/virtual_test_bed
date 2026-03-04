@@ -207,7 +207,8 @@
   fixed_point_min_its = 2
   fixed_point_max_its = 30
   fixed_point_abs_tol = 1e-3
-  relaxation_factor = 0.7
+  # Relaxation is not used
+  # relaxation_factor = 0.7
 []
 
 [Debug]
@@ -514,6 +515,8 @@
     # with an updated power (heat source) distribution
     no_restore = true
     keep_solution_during_restore = true
+    # MultiApp is running a transient to steady state
+    update_old_solution_when_keeping_solution_during_restore = true
   []
 []
 

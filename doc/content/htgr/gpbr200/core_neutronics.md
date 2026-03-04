@@ -147,7 +147,7 @@ the "depletable" materials for the core region.
 
 ## Pebble Depletion
 
-The `PebbleDepletion` syntax in Griffin enables the multiscale approach Griffin
+The `PebbleBed` syntax in Griffin enables the multiscale approach Griffin
 utilizes to perform pebble advection and cycling in the core. This syntax
 triggers a MOOSE action that builds postprocessors, auxiliary variables/kernels,
 materials, and user objects that:
@@ -192,7 +192,7 @@ set to `true` if a full profile of isotopic concentrations throughout the core
 is desired at output.
 
 !listing gpbr200/core_neutronics/gpbr200_ss_gfnk_reactor.i
-    block=PebbleDepletion
+    block=PebbleBed
 
 
 ## Transport Systems

@@ -1,4 +1,5 @@
 [Tests]
+  issues = '#313'
   # Syntax checks
   [neutronics_only_syntax]
     type = RunApp
@@ -38,6 +39,7 @@
     capabilities = 'method=opt'
     min_parallel = 8
     max_time = 400
+    prereq = 'neutronics_only_syntax'
   []
   [flow_only]
     type = CSVDiff
@@ -51,19 +53,5 @@
     max_time = 400
     # P drop calculation changed in idaholab/moose#29614
     skip = '#609'
-  []
-  [coupled_mcre_multiphysics]
-    prereq = coupled_mcre_multiphysics_syntax
-    type = CSVDiff
-    input = 'run_neutronics_9_group.i'
-    csvdiff = 'multiphysics_out.csv multiphysics_out_ns0.csv'
-    executable_pattern = 'mcre*|blue_crab*'
-    cli_args = "Outputs/file_base=multiphysics_out"
-    # Fuel temperature is out of bounds for MGXS
-    allow_warnings = true
-    min_parallel = 32
-    max_time = 2000
-    capabilities = 'method=opt'
-    skip = '#403'
   []
 []

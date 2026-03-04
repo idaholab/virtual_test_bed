@@ -245,7 +245,7 @@ ref_blocks = '${cns_disch_blocks} ${upref_blocks}
 # ==============================================================================
 # PEBBLE DEPLETION
 # ==============================================================================
-[PebbleDepletion]
+[PebbleBed]
   block = '${fuel_blocks}'
 
   # Power.

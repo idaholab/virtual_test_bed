@@ -166,6 +166,8 @@ bison_ref_blocks = '${reflector_blocks} ${absorber_blocks}'
     input_files = thermal_ss.i
     execute_on = 'timestep_end'
     keep_solution_during_restore = true # to restart from the latest solve of the multiapp (for pseudo-transient)
+    # No need in steady state neutronics
+    update_old_solution_when_keeping_solution_during_restore = false
   []
 []
 

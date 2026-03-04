@@ -245,7 +245,7 @@ ref_blocks = '${cns_disch_blocks} ${upref_blocks}
 # ==============================================================================
 # PEBBLE DEPLETION
 # ==============================================================================
-[PebbleDepletion]
+[PebbleBed]
   block = '${fuel_blocks}'
 
   # Power.
@@ -368,6 +368,8 @@ ref_blocks = '${cns_disch_blocks} ${upref_blocks}
     input_files = gpbr200_ss_phth_reactor.i
     keep_solution_during_restore = true
     execute_on = 'TIMESTEP_END'
+    # sub-app is running a transient
+    update_old_solution_when_keeping_solution_during_restore = true
   []
 []
 

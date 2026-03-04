@@ -53,6 +53,6 @@
     hpc_mem_per_cpu = 10gb
     # Cross-section warning due to missing fission-only
     allow_warnings = true
-    prereq = 'coarse_mesh_bison'
+    prereq = 'coarse_mesh_mp_ss'
   []
 []
