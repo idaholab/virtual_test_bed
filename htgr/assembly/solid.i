@@ -71,9 +71,9 @@ opyc_fraction = ${fparse (oPyC_radius^3 - SiC_radius^3) / oPyC_radius^3}
   []
   [k_compacts]
     type = ParsedFunction
-    value = '${triso_pf} * k_TRISO + ${fparse 1.0 - triso_pf} * k_graphite'
-    vars = 'k_TRISO k_graphite'
-    vals = 'k_TRISO k_graphite'
+    expression = '${triso_pf} * k_TRISO + ${fparse 1.0 - triso_pf} * k_graphite'
+    symbol_values = 'k_TRISO k_graphite'
+    symbol_names = 'k_TRISO k_graphite'
   []
   [k_b4c]
     type = ParsedFunction
@@ -85,19 +85,19 @@ opyc_fraction = ${fparse (oPyC_radius^3 - SiC_radius^3) / oPyC_radius^3}
   [graphite]
     type = HeatConductionMaterial
     thermal_conductivity_temperature_function = k_graphite
-    temperature = T
+    temp = T
     block = 'graphite'
   []
   [compacts]
     type = HeatConductionMaterial
     thermal_conductivity_temperature_function = k_compacts
-    temperature = T
+    temp = T
     block = 'compacts'
   []
   [poison]
     type = HeatConductionMaterial
     thermal_conductivity_temperature_function = k_b4c
-    temperature = T
+    temp = T
     block = 'poison'
   []
 []
