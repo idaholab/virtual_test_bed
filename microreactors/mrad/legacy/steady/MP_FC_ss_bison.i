@@ -157,72 +157,79 @@
   [moderator_thermal]
     type = HeatConductionMaterial
     block = moderator
-    temp = temp
+    temperature = temp
     thermal_conductivity = 20 # W/m/K
     specific_heat = 500 # arbitrary value
   []
   [heat_pipes_thermal]
     type = HeatConductionMaterial
     block = 'heat_pipes' # Vapor with high thermal conductivity
-    temp = temp
+    temperature = temp
     thermal_conductivity = 1e4 # W/m/K
     specific_heat = 5 # arbitrary value
   []
   [airgap_thermal]
     type = HeatConductionMaterial
     block = 'air_gap' # Helium gap
-    temp = temp
+    temperature = temp
     thermal_conductivity = 0.15 # W/m/K
     specific_heat = 5197 # arbitrary value
   []
   [axial_reflector_thermal]
     type = HeatConductionMaterial
     block = 'reflector'
-    temp = temp
+    temperature = temp
     thermal_conductivity = 199 # W/m/K
     specific_heat = 1867 # arbitrary value
   []
   [B4C_thermal]
     type = HeatConductionMaterial
     block = 'B4C'
-    temp = temp
+    temperature = temp
     thermal_conductivity = 92 # W/m/K
     specific_heat = 960 # arbitrary value
   []
   [fuel_density]
-    type = Density
+    type = StrainAdjustedDensity
     block = fuel
-    density = 2276.5
+    displacements = '0 0 0'
+    strain_free_density = 2276.5
   []
   [moderator_density]
-    type = Density
+    type = StrainAdjustedDensity
     block = moderator
-    density = 4.3e3
+    displacements = '0 0 0'
+    strain_free_density = 4.3e3
   []
   [monolith_density]
-    type = Density
+    type = StrainAdjustedDensity
     block = 'monolith'
-    density = 1806
+    displacements = '0 0 0'
+    strain_free_density = 1806
   []
   [heat_pipes_density]
-    type = Density
+    type = StrainAdjustedDensity
     block = 'heat_pipes'
-    density = 180 #random number for vapor
+    displacements = '0 0 0'
+    strain_free_density = 180 #random number for vapor
   []
   [airgap_density]
-    type = Density
+    type = StrainAdjustedDensity
     block = air_gap #helium
-    density = 180
+    displacements = '0 0 0'
+    strain_free_density = 180
   []
   [axial_reflector_density]
-    type = Density
+    type = StrainAdjustedDensity
     block = reflector
-    density = 1848
+    displacements = '0 0 0'
+    strain_free_density = 1848
   []
   [B4C_density]
-    type = Density
+    type = StrainAdjustedDensity
     block = B4C
-    density = 2510
+    displacements = '0 0 0'
+    strain_free_density = 2510
   []
 []
 

@@ -211,7 +211,7 @@ hp_surfs = 'HP_surf'
   [moderator_thermal]
     type = HeatConductionMaterial
     block = ${moderator_blocks}
-    temp = temp
+    temperature = temp
     thermal_conductivity = 20 # W/m/K
     specific_heat = 500 # random value
   []
@@ -225,35 +225,40 @@ hp_surfs = 'HP_surf'
     type = HeatConductionMaterial
     block = 'top_reflector_1 top_reflector_2 top_reflector_3 top_reflector_4
              bottom_reflector_1 bottom_reflector_2 bottom_reflector_3 bottom_reflector_4'
-    temp = temp
+    temperature = temp
     thermal_conductivity = 199 # W/m/K
     specific_heat = 1867 # random value
   []
   [fuel_density]
-    type = Density
+    type = StrainAdjustedDensity
     block = ${fuel_blocks}
-    density = 2276.5
+    displacements = '0 0 0'
+    strain_free_density = 2276.5
   []
   [moderator_density]
-    type = Density
+    type = StrainAdjustedDensity
     block = ${moderator_blocks}
-    density = 4.3e3
+    displacements = '0 0 0'
+    strain_free_density = 4.3e3
   []
   [monolith_density]
-    type = Density
+    type = StrainAdjustedDensity
     block = ${mono_blocks}
-    density = 1806
+    displacements = '0 0 0'
+    strain_free_density = 1806
   []
   [SS_Envelop_density]
-    type = Density
+    type = StrainAdjustedDensity
     block = ${mod_env_blocks}
-    density = 7950
+    displacements = '0 0 0'
+    strain_free_density = 7950
   []
   [axial_reflector_density]
-    type = Density
+    type = StrainAdjustedDensity
     block = 'top_reflector_1 top_reflector_2 top_reflector_3 top_reflector_4
              bottom_reflector_1 bottom_reflector_2 bottom_reflector_3 bottom_reflector_4'
-    density = 1848
+    displacements = '0 0 0'
+    strain_free_density = 1848
   []
 []
 
