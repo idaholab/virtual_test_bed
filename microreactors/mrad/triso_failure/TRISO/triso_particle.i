@@ -354,9 +354,9 @@ end_time = 315576000
     eigenstrain_name = UCO_TE_strain
   []
   [UCO_density]
-    type = Density
+    type = StrainAdjustedDensity
     block = fuel
-    density = 10966
+    strain_free_density = 10966
   []
   [fission_gas_release]
     type = UCOFGR
@@ -392,9 +392,9 @@ end_time = 315576000
     initial_density = 1050.0
   []
   [buffer_density]
-    type = Density
+    type = StrainAdjustedDensity
     block = buffer
-    density = 1050.0
+    strain_free_density = 1050.0
   []
   [buffer_TE]
     type = BufferThermalExpansionEigenstrain
@@ -468,9 +468,9 @@ end_time = 315576000
     thermal_conductivity_model = miller
   []
   [SiC_density]
-    type = Density
+    type = StrainAdjustedDensity
     block = SiC
-    density = 3171.0
+    strain_free_density = 3171.0
   []
   [SiC_thermal_expansion]
     type = MonolithicSiCThermalExpansionEigenstrain

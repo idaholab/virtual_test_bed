@@ -205,7 +205,7 @@
     block = '1'
     thermal_conductivity_temperature_function = k_func_base
     specific_heat_temperature_function = c_func_base
-    temp = temp
+    temperature = temp
   []
 
   [thermal_clad]
@@ -213,7 +213,7 @@
     block = '2'
     thermal_conductivity_temperature_function = k_func_clad
     specific_heat_temperature_function = c_func_clad
-    temp = temp
+    temperature = temp
   []
 
   [youngs_modulus_base]
@@ -277,15 +277,15 @@
   []
 
   [density_base]
-    type = Density
+    type = StrainAdjustedDensity
     block = '1'
-    density = 7750.4
+    strain_free_density = 7750.4
   []
 
   [density_clad]
-    type = Density
+    type = StrainAdjustedDensity
     block = '2'
-    density = 8027.2
+    strain_free_density = 8027.2
   []
 
   [axial_stress_clad]

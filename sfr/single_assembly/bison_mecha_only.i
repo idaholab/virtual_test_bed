@@ -198,8 +198,9 @@ active = 'fuel_elasticity_tensor fuel_elastic_stress fuel_thermal_expansion
      porosity = porosity
   []
   [fuel_density]
-     type = Density
+     type = StrainAdjustedDensity
      block = pellet
+     strain_free_density = 15770.0
   []
   # cladding
   # mechanics materials
@@ -223,9 +224,9 @@ active = 'fuel_elasticity_tensor fuel_elastic_stress fuel_thermal_expansion
     block = 'clad 4'
   []
   [clad_density]
-    type = Density
+    type = StrainAdjustedDensity
     block = 'clad 4'
-    density = 7800 # ECAR-4647
+    strain_free_density = 7800 # ECAR-4647
   []
 []
 

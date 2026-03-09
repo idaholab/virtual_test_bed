@@ -128,7 +128,7 @@ coolant_half_points_filename = ../channel_positions/coolant_half_points.txt # Fi
   [moderator_thermal]
     type = HeatConductionMaterial
     block = moderator
-    temp = temp
+    temperature = temp
     thermal_conductivity = 20 # W/m/K
     specific_heat = 500 # random value
   []
@@ -147,7 +147,7 @@ coolant_half_points_filename = ../channel_positions/coolant_half_points.txt # Fi
   [Poison_blocks_thermal]
     type = HeatConductionMaterial
     block = B4C
-    temp = temp
+    temperature = temp
     thermal_conductivity = 92 # W/m/K
     specific_heat = 960 # random value
   []
@@ -155,7 +155,7 @@ coolant_half_points_filename = ../channel_positions/coolant_half_points.txt # Fi
   [control_rod_thermal]
     type = HeatConductionMaterial
     block = control #B4C
-    temp = temp
+    temperature = temp
     thermal_conductivity = 92 # W/m/K
     specific_heat = 960 # random value
   []
@@ -170,51 +170,59 @@ coolant_half_points_filename = ../channel_positions/coolant_half_points.txt # Fi
   [airgap_thermal]
     type = HeatConductionMaterial
     block = 'Air' # Helium filled in the control rod hole
-    temp = temp
+    temperature = temp
     thermal_conductivity = 0.15 # W/m/K
     specific_heat = 5197 # random value
   []
 
   [fuel_density]
-    type = Density
+    type = StrainAdjustedDensity
     block = 'Fuel Fuel_tri'
-    density = 2276.5
+    displacements = '0 0 0'
+    strain_free_density = 2276.5
   []
   [moderator_density]
-    type = Density
+    type = StrainAdjustedDensity
     block = moderator
-    density = 4.3e3
+    displacements = '0 0 0'
+    strain_free_density = 4.3e3
   []
   [monolith_density]
-    type = Density
+    type = StrainAdjustedDensity
     block = monolith
-    density = 1806
+    displacements = '0 0 0'
+    strain_free_density = 1806
   []
   [YH_Liner_Cr_density]
-    type = Density
+    type = StrainAdjustedDensity
     block = Cr
-    density = 7190
+    displacements = '0 0 0'
+    strain_free_density = 7190
   []
   [YH_Cladding_density]
-    type = Density
+    type = StrainAdjustedDensity
     block = FECRAL
-    density = 7250
+    displacements = '0 0 0'
+    strain_free_density = 7250
   []
   [Poison_blocks_density]
-    type = Density
+    type = StrainAdjustedDensity
     block = B4C
-    density = 2510
+    displacements = '0 0 0'
+    strain_free_density = 2510
   []
   [control_rod_density]
-    type = Density
+    type = StrainAdjustedDensity
     block = control #B4C
-    density = 2510
+    displacements = '0 0 0'
+    strain_free_density = 2510
   []
 
   [airgap_density]
-    type = Density
+    type = StrainAdjustedDensity
     block = 'Air' #helium
-    density = 180
+    displacements = '0 0 0'
+    strain_free_density = 180
   []
 
   [reflector_density]
