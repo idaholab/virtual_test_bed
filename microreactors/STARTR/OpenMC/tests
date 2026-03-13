@@ -1,0 +1,25 @@
+[Tests]
+  design = 'microreactors/STARTR/index.md'
+  issues = '#721'
+  [filter]
+    # use to impose an executable pattern on the rest of the tests
+    type = RunApp
+    input = ''
+    cli_args = '--help'
+    # executable_pattern = 'cardinal*'
+    required_python_packages = 'openmc numpy'
+  []
+  [generate_xml]
+    type = RunCommand
+    command = 'python STARTR_OpenMC_driver.py'
+    prereq = 'filter'
+  []
+  [xml_diff]
+    type = XMLDiff
+    input = ''
+    cli_args = '--help'
+    xmldiff = 'geometry.xml materials.xml settings.xml'
+    prereq = 'generate_xml'
+    delete_output_before_running = false
+  []
+[]
