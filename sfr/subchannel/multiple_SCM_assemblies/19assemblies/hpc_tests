@@ -1,4 +1,5 @@
 [Tests]
+  issues = '#649'
   [generate_mesh]
     type = CheckFiles
     input = abr_19assemblies.i
