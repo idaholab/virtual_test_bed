@@ -372,7 +372,7 @@ fuel_assembly_boundary_name = fuel_assembly_boundary
   # which the pin cell area was deleted from.
   # Note that the RSC hole carved is currently unmeshed (i.e. void)
   [fuel_assembly_with_rsc_hole_void]
-    type = StitchedMeshGenerator
+    type = StitchMeshGenerator
     inputs = 'delete_pins_for_rsc rsc_area_with_hole'
     stitch_boundaries_pairs = 'rsc_area_assembly_boundary 10010'
   []
@@ -390,7 +390,7 @@ fuel_assembly_boundary_name = fuel_assembly_boundary
   []
   # Now we must stitch the meshed RSC hole to the fuel assembly with the RSC void
   [fuel_assembly_w_rsc_stitched]
-    type = StitchedMeshGenerator
+    type = StitchMeshGenerator
     inputs = 'fuel_assembly_with_rsc_hole_void mesh_rsc_hole_for_fuel_assembly'
     stitch_boundaries_pairs = 'heterogeneous_hole_boundary to_stitch_third'
   []
@@ -513,7 +513,7 @@ fuel_assembly_boundary_name = fuel_assembly_boundary
   []
   # Stitches the reflector assembly duct back together with the now triangulated reflector assembly interior
   [stitch_reflector_assembly]
-    type = StitchedMeshGenerator
+    type = StitchMeshGenerator
     inputs = 'delete_reflector_assembly_interior triangulate_reflector_assembly_interior'
     stitch_boundaries_pairs = 'deleted_reflector_boundary_no_adapt 11000'
   []
@@ -570,7 +570,7 @@ fuel_assembly_boundary_name = fuel_assembly_boundary
     output_subdomain_name = ${graphite_tri_block_id}
   []
   [stitch_reflector_assembly_0_1_2]
-    type = StitchedMeshGenerator
+    type = StitchMeshGenerator
     inputs = 'delete_reflector_assembly_interior_0_1_2 triangulate_reflector_assembly_interior_0_1_2'
     stitch_boundaries_pairs = 'deleted_reflector_boundary_adapt_0_1_2 11001'
   []
@@ -674,7 +674,7 @@ fuel_assembly_boundary_name = fuel_assembly_boundary
     output_subdomain_name = ${graphite_tri_block_id}
   []
   [stitch_reflector_assembly_0_1]
-    type = StitchedMeshGenerator
+    type = StitchMeshGenerator
     inputs = 'delete_reflector_assembly_interior_0_1 triangulate_reflector_assembly_interior_0_1'
     stitch_boundaries_pairs = 'deleted_reflector_boundary_adapt_0_1 11002'
   []
@@ -812,7 +812,7 @@ fuel_assembly_boundary_name = fuel_assembly_boundary
   []
   # Stitch the reflector assembly interior with the reflector assembly duct
   [stitch_reflector_assembly_cr_hole_filled_0_1]
-    type = StitchedMeshGenerator
+    type = StitchMeshGenerator
     inputs = 'delete_reflector_assembly_interior_w_cr_0_1 triangulate_reflector_assembly_w_cr_hole_0_1'
     stitch_boundaries_pairs = '870 10000'
   []
@@ -983,7 +983,7 @@ fuel_assembly_boundary_name = fuel_assembly_boundary
     output_subdomain_name = ${graphite_tri_block_id}
   []
   [stitch_reflector_assembly_w_cr_hole_0]
-    type = StitchedMeshGenerator
+    type = StitchMeshGenerator
     inputs = 'delete_reflector_assembly_interior_w_cr_0 triangulate_reflector_assembly_w_cr_hole_0'
     stitch_boundaries_pairs = 'deleted_hole_mesh_0_boundary 10001'
   []
@@ -999,7 +999,7 @@ fuel_assembly_boundary_name = fuel_assembly_boundary
     desired_area = ${xydg_cr_hole_desired_area}
   []
   [stitch_reflector_assembly_cr_hole_filled_0]
-    type = StitchedMeshGenerator
+    type = StitchMeshGenerator
     inputs = 'stitch_reflector_assembly_w_cr_hole_0 fill_reflector_assembly_cr_hole_0'
     stitch_boundaries_pairs = 'homogeneous_hole_boundary_second to_stitch_second'
   []

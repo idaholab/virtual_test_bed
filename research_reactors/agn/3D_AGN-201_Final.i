@@ -591,7 +591,7 @@ og_num_intervals_before_ubp = 1
     desired_area = ${xydg_area}
   []
   [stitch_core_and_cif_outer]
-    type = StitchedMeshGenerator
+    type = StitchMeshGenerator
     inputs = 'xydg_mesh_top_half_core xydg_mesh_top_half_cif_core_outer'
     clear_stitched_boundary_ids = false
     prevent_boundary_ids_overlap = false
@@ -630,7 +630,7 @@ og_num_intervals_before_ubp = 1
     desired_area = ${xydg_area}
   []
   [stitch_ig_and_core]
-    type = StitchedMeshGenerator
+    type = StitchMeshGenerator
     inputs = 'xydg_mesh_top_half_ig stitch_core_and_cif_outer'
     clear_stitched_boundary_ids = false
     prevent_boundary_ids_overlap = false
@@ -675,7 +675,7 @@ og_num_intervals_before_ubp = 1
     new_boundary = '${boundary_id_index_09} ${boundary_id_index_09}'
   []
   [stitch_right_ig_cif_wall]
-    type = StitchedMeshGenerator
+    type = StitchMeshGenerator
     inputs = 'xydg_mesh_right_ig_cif_wall rename_boundaries_1'
     clear_stitched_boundary_ids = false
     prevent_boundary_ids_overlap = false
@@ -695,7 +695,7 @@ og_num_intervals_before_ubp = 1
     new_boundary = '${boundary_id_index_10}'
   []
   [stitch_left_ig_cif_wall]
-    type = StitchedMeshGenerator
+    type = StitchMeshGenerator
     inputs = 'rename_boundaries_2 stitch_right_ig_cif_wall'
     clear_stitched_boundary_ids = false
     prevent_boundary_ids_overlap = false
@@ -734,7 +734,7 @@ og_num_intervals_before_ubp = 1
     desired_area = ${xydg_area}
   []
   [stitch_at_and_ig]
-    type = StitchedMeshGenerator
+    type = StitchMeshGenerator
     inputs = 'xydg_mesh_top_half_at stitch_left_ig_cif_wall'
     clear_stitched_boundary_ids = false
     prevent_boundary_ids_overlap = false
@@ -779,7 +779,7 @@ og_num_intervals_before_ubp = 1
     desired_area = ${xydg_area}
   []
   [stitch_right_at_cif_wall]
-    type = StitchedMeshGenerator
+    type = StitchMeshGenerator
     inputs = 'xydg_mesh_right_at_cif_wall rename_boundaries_3'
     clear_stitched_boundary_ids = false
     prevent_boundary_ids_overlap = false
@@ -799,7 +799,7 @@ og_num_intervals_before_ubp = 1
     new_boundary = '${boundary_id_index_14}'
   []
   [stitch_left_at_cif_wall]
-    type = StitchedMeshGenerator
+    type = StitchMeshGenerator
     inputs = 'rename_boundaries_4 stitch_right_at_cif_wall'
     clear_stitched_boundary_ids = false
     prevent_boundary_ids_overlap = false
@@ -853,7 +853,7 @@ og_num_intervals_before_ubp = 1
     desired_area = ${xydg_area}
   []
   [stitch_top_half_og_between_beam_ports]
-    type = StitchedMeshGenerator
+    type = StitchMeshGenerator
     inputs = 'xydg_mesh_top_half_og_between_beam_ports stitch_left_at_cif_wall'
     clear_stitched_boundary_ids = false
     prevent_boundary_ids_overlap = false
@@ -894,7 +894,7 @@ og_num_intervals_before_ubp = 1
     desired_area = ${xydg_area}
   []
   [stitch_top_half_lead_between_beam_ports]
-    type = StitchedMeshGenerator
+    type = StitchMeshGenerator
     inputs = 'xydg_mesh_top_half_lead_between_beam_ports stitch_top_half_og_between_beam_ports'
     clear_stitched_boundary_ids = false
     prevent_boundary_ids_overlap = false
@@ -935,7 +935,7 @@ og_num_intervals_before_ubp = 1
     desired_area = ${xydg_area}
   []
   [stitch_top_half_ag_between_beam_ports]
-    type = StitchedMeshGenerator
+    type = StitchMeshGenerator
     inputs = 'xydg_mesh_top_half_ag_between_beam_ports stitch_top_half_lead_between_beam_ports'
     clear_stitched_boundary_ids = false
     prevent_boundary_ids_overlap = false
@@ -976,7 +976,7 @@ og_num_intervals_before_ubp = 1
     desired_area = ${xydg_area}
   []
   [stitch_top_half_rt_between_beam_ports]
-    type = StitchedMeshGenerator
+    type = StitchMeshGenerator
     inputs = 'xydg_mesh_top_half_rt_between_beam_ports stitch_top_half_ag_between_beam_ports'
     clear_stitched_boundary_ids = false
     prevent_boundary_ids_overlap = false
@@ -1017,7 +1017,7 @@ og_num_intervals_before_ubp = 1
     desired_area = ${xydg_area}
   []
   [stitch_top_half_water_between_beam_ports]
-    type = StitchedMeshGenerator
+    type = StitchMeshGenerator
     inputs = 'xydg_mesh_top_half_water_between_beam_ports stitch_top_half_rt_between_beam_ports'
     clear_stitched_boundary_ids = false
     prevent_boundary_ids_overlap = false
@@ -1072,7 +1072,7 @@ og_num_intervals_before_ubp = 1
     desired_area = ${xydg_area}
   []
   [stitch_top_half_right_og_before_ubp_cif_wall]
-    type = StitchedMeshGenerator
+    type = StitchMeshGenerator
     inputs = 'xydg_mesh_top_half_right_og_before_ubp_cif_wall rename_boundaries_5'
     clear_stitched_boundary_ids = false
     prevent_boundary_ids_overlap = false
@@ -1092,7 +1092,7 @@ og_num_intervals_before_ubp = 1
     new_boundary = '${boundary_id_index_22}'
   []
   [stitch_top_half_left_og_before_ubp_cif_wall]
-    type = StitchedMeshGenerator
+    type = StitchMeshGenerator
     inputs = 'rename_boundaries_6 stitch_top_half_right_og_before_ubp_cif_wall'
     clear_stitched_boundary_ids = false
     prevent_boundary_ids_overlap = false
@@ -1136,7 +1136,7 @@ og_num_intervals_before_ubp = 1
     new_boundary = '${boundary_id_index_24} ${boundary_id_index_24} ${boundary_id_index_24}'
   []
   [stitch_top_half_right_ubp_cif_wall_1]
-    type = StitchedMeshGenerator
+    type = StitchMeshGenerator
     inputs = 'xydg_mesh_top_half_right_ubp_cif_wall_1 rename_boundaries_7'
     clear_stitched_boundary_ids = false
     prevent_boundary_ids_overlap = false
@@ -1156,7 +1156,7 @@ og_num_intervals_before_ubp = 1
     new_boundary = '${boundary_id_index_25}'
   []
   [stitch_top_half_left_ubp_cif_wall_1]
-    type = StitchedMeshGenerator
+    type = StitchMeshGenerator
     inputs = 'rename_boundaries_8 stitch_top_half_right_ubp_cif_wall_1'
     clear_stitched_boundary_ids = false
     prevent_boundary_ids_overlap = false
@@ -1205,7 +1205,7 @@ og_num_intervals_before_ubp = 1
     desired_area = ${xydg_area}
   []
   [stitch_top_half_right_ubp_inner_wall_in_og]
-    type = StitchedMeshGenerator
+    type = StitchMeshGenerator
     inputs = 'rename_boundaries_9 xydg_mesh_top_half_right_ubp_inner_wall_in_og'
     clear_stitched_boundary_ids = false
     prevent_boundary_ids_overlap = false
@@ -1225,7 +1225,7 @@ og_num_intervals_before_ubp = 1
     new_boundary = '${boundary_id_index_28}'
   []
   [stitch_top_half_left_ubp_inner_wall_in_og]
-    type = StitchedMeshGenerator
+    type = StitchMeshGenerator
     inputs = 'rename_boundaries_10 stitch_top_half_right_ubp_inner_wall_in_og'
     clear_stitched_boundary_ids = false
     prevent_boundary_ids_overlap = false
@@ -1276,7 +1276,7 @@ og_num_intervals_before_ubp = 1
     desired_area = ${xydg_area}
   []
   [stitch_top_half_right_ubp_inner_wall_in_lead]
-    type = StitchedMeshGenerator
+    type = StitchMeshGenerator
     inputs = 'rename_boundaries_11 xydg_mesh_top_half_right_ubp_inner_wall_in_lead'
     clear_stitched_boundary_ids = false
     prevent_boundary_ids_overlap = false
@@ -1296,7 +1296,7 @@ og_num_intervals_before_ubp = 1
     new_boundary = '${boundary_id_index_12}'
   []
   [stitch_top_half_left_ubp_inner_wall_in_lead]
-    type = StitchedMeshGenerator
+    type = StitchMeshGenerator
     inputs = 'rename_boundaries_12 stitch_top_half_right_ubp_inner_wall_in_lead'
     clear_stitched_boundary_ids = false
     prevent_boundary_ids_overlap = false
@@ -1346,7 +1346,7 @@ og_num_intervals_before_ubp = 1
     desired_area = ${xydg_area}
   []
   [stitch_top_half_right_ubp_inner_wall_in_ag]
-    type = StitchedMeshGenerator
+    type = StitchMeshGenerator
     inputs = 'xydg_mesh_top_half_right_ubp_inner_wall_in_ag rename_boundaries_13'
     clear_stitched_boundary_ids = false
     prevent_boundary_ids_overlap = false
@@ -1366,7 +1366,7 @@ og_num_intervals_before_ubp = 1
     new_boundary = '${boundary_id_index_15}'
   []
   [stitch_top_half_left_ubp_inner_wall_in_ag]
-    type = StitchedMeshGenerator
+    type = StitchMeshGenerator
     inputs = 'rename_boundaries_14 stitch_top_half_right_ubp_inner_wall_in_ag'
     clear_stitched_boundary_ids = false
     prevent_boundary_ids_overlap = false
@@ -1416,7 +1416,7 @@ og_num_intervals_before_ubp = 1
     desired_area = ${xydg_area}
   []
   [stitch_top_half_right_ubp_inner_wall_in_rt]
-    type = StitchedMeshGenerator
+    type = StitchMeshGenerator
     inputs = 'xydg_mesh_top_half_right_ubp_inner_wall_in_rt rename_boundaries_15'
     clear_stitched_boundary_ids = false
     prevent_boundary_ids_overlap = false
@@ -1436,7 +1436,7 @@ og_num_intervals_before_ubp = 1
     new_boundary = '${boundary_id_index_18}'
   []
   [stitch_top_half_left_ubp_inner_wall_in_rt]
-    type = StitchedMeshGenerator
+    type = StitchMeshGenerator
     inputs = 'rename_boundaries_16 stitch_top_half_right_ubp_inner_wall_in_rt'
     clear_stitched_boundary_ids = false
     prevent_boundary_ids_overlap = false
@@ -1486,7 +1486,7 @@ og_num_intervals_before_ubp = 1
     desired_area = ${xydg_area}
   []
   [stitch_top_half_right_ubp_inner_wall_in_water]
-    type = StitchedMeshGenerator
+    type = StitchMeshGenerator
     inputs = 'xydg_mesh_top_half_right_ubp_inner_wall_in_water rename_boundaries_17'
     clear_stitched_boundary_ids = false
     prevent_boundary_ids_overlap = false
@@ -1506,7 +1506,7 @@ og_num_intervals_before_ubp = 1
     new_boundary = '${boundary_id_index_21}'
   []
   [stitch_top_half_left_ubp_inner_wall_in_water]
-    type = StitchedMeshGenerator
+    type = StitchMeshGenerator
     inputs = 'rename_boundaries_18 stitch_top_half_right_ubp_inner_wall_in_water'
     clear_stitched_boundary_ids = false
     prevent_boundary_ids_overlap = false
@@ -1554,7 +1554,7 @@ og_num_intervals_before_ubp = 1
     desired_area = ${xydg_area}
   []
   [stitch_top_half_right_cif_wall_in_ubp_channel]
-    type = StitchedMeshGenerator
+    type = StitchMeshGenerator
     inputs = 'xydg_mesh_top_half_right_cif_wall_in_ubp_channel rename_boundaries_19'
     clear_stitched_boundary_ids = false
     prevent_boundary_ids_overlap = false
@@ -1574,7 +1574,7 @@ og_num_intervals_before_ubp = 1
     new_boundary = '${boundary_id_index_24}'
   []
   [stitch_top_half_left_cif_wall_in_ubp_channel]
-    type = StitchedMeshGenerator
+    type = StitchMeshGenerator
     inputs = 'rename_boundaries_20 stitch_top_half_right_cif_wall_in_ubp_channel'
     clear_stitched_boundary_ids = false
     prevent_boundary_ids_overlap = false
@@ -1623,7 +1623,7 @@ og_num_intervals_before_ubp = 1
     desired_area = ${xydg_area}
   []
   [stitch_top_half_right_og_in_ubp_channel]
-    type = StitchedMeshGenerator
+    type = StitchMeshGenerator
     inputs = 'xydg_mesh_top_half_right_og_in_ubp_channel rename_boundaries_21'
     clear_stitched_boundary_ids = false
     prevent_boundary_ids_overlap = false
@@ -1643,7 +1643,7 @@ og_num_intervals_before_ubp = 1
     new_boundary = '${boundary_id_index_27}'
   []
   [stitch_top_half_left_og_in_ubp_channel]
-    type = StitchedMeshGenerator
+    type = StitchMeshGenerator
     inputs = 'rename_boundaries_22 stitch_top_half_right_og_in_ubp_channel'
     clear_stitched_boundary_ids = false
     prevent_boundary_ids_overlap = false
@@ -1693,7 +1693,7 @@ og_num_intervals_before_ubp = 1
     desired_area = ${xydg_area}
   []
   [stitch_top_half_right_ubp_channel_in_lead]
-    type = StitchedMeshGenerator
+    type = StitchMeshGenerator
     inputs = 'xydg_mesh_top_half_right_ubp_channel_in_lead rename_boundaries_23'
     clear_stitched_boundary_ids = false
     prevent_boundary_ids_overlap = false
@@ -1713,7 +1713,7 @@ og_num_intervals_before_ubp = 1
     new_boundary = '${boundary_id_index_12}'
   []
   [stitch_top_half_left_ubp_channel_in_lead]
-    type = StitchedMeshGenerator
+    type = StitchMeshGenerator
     inputs = 'rename_boundaries_24 stitch_top_half_right_ubp_channel_in_lead'
     clear_stitched_boundary_ids = false
     prevent_boundary_ids_overlap = false
@@ -1763,7 +1763,7 @@ og_num_intervals_before_ubp = 1
     desired_area = ${xydg_area}
   []
   [stitch_top_half_right_ubp_channel_in_ag]
-    type = StitchedMeshGenerator
+    type = StitchMeshGenerator
     inputs = 'xydg_mesh_top_half_right_ubp_channel_in_ag rename_boundaries_25'
     clear_stitched_boundary_ids = false
     prevent_boundary_ids_overlap = false
@@ -1783,7 +1783,7 @@ og_num_intervals_before_ubp = 1
     new_boundary = '${boundary_id_index_12}'
   []
   [stitch_top_half_left_ubp_channel_in_ag]
-    type = StitchedMeshGenerator
+    type = StitchMeshGenerator
     inputs = 'rename_boundaries_26 stitch_top_half_right_ubp_channel_in_ag'
     clear_stitched_boundary_ids = false
     prevent_boundary_ids_overlap = false
@@ -1833,7 +1833,7 @@ og_num_intervals_before_ubp = 1
     desired_area = ${xydg_area}
   []
   [stitch_top_half_right_ubp_channel_in_rt]
-    type = StitchedMeshGenerator
+    type = StitchMeshGenerator
     inputs = 'xydg_mesh_top_half_right_ubp_channel_in_rt rename_boundaries_27'
     clear_stitched_boundary_ids = false
     prevent_boundary_ids_overlap = false
@@ -1853,7 +1853,7 @@ og_num_intervals_before_ubp = 1
     new_boundary = '${boundary_id_index_12}'
   []
   [stitch_top_half_left_ubp_channel_in_rt]
-    type = StitchedMeshGenerator
+    type = StitchMeshGenerator
     inputs = 'rename_boundaries_28 stitch_top_half_right_ubp_channel_in_rt'
     clear_stitched_boundary_ids = false
     prevent_boundary_ids_overlap = false
@@ -1903,7 +1903,7 @@ og_num_intervals_before_ubp = 1
     desired_area = ${xydg_area}
   []
   [stitch_top_half_right_ubp_channel_in_water]
-    type = StitchedMeshGenerator
+    type = StitchMeshGenerator
     inputs = 'xydg_mesh_top_half_right_ubp_channel_in_water rename_boundaries_29'
     clear_stitched_boundary_ids = false
     prevent_boundary_ids_overlap = false
@@ -1923,7 +1923,7 @@ og_num_intervals_before_ubp = 1
     new_boundary = '${boundary_id_index_12}'
   []
   [stitch_top_half_left_ubp_channel_in_water]
-    type = StitchedMeshGenerator
+    type = StitchMeshGenerator
     inputs = 'rename_boundaries_30 stitch_top_half_right_ubp_channel_in_water'
     clear_stitched_boundary_ids = false
     prevent_boundary_ids_overlap = false
@@ -1971,7 +1971,7 @@ og_num_intervals_before_ubp = 1
     desired_area = ${xydg_area}
   []
   [stitch_top_half_right_cif_wall_in_ubp_outer_wall]
-    type = StitchedMeshGenerator
+    type = StitchMeshGenerator
     inputs = 'xydg_mesh_top_half_right_cif_wall_in_ubp_outer_wall rename_boundaries_31'
     clear_stitched_boundary_ids = false
     prevent_boundary_ids_overlap = false
@@ -1991,7 +1991,7 @@ og_num_intervals_before_ubp = 1
     new_boundary = '${boundary_id_index_12}'
   []
   [stitch_top_half_left_cif_wall_in_ubp_outer_wall]
-    type = StitchedMeshGenerator
+    type = StitchMeshGenerator
     inputs = 'rename_boundaries_32 stitch_top_half_right_cif_wall_in_ubp_outer_wall'
     clear_stitched_boundary_ids = false
     prevent_boundary_ids_overlap = false
@@ -2040,7 +2040,7 @@ og_num_intervals_before_ubp = 1
     desired_area = ${xydg_area}
   []
   [stitch_top_half_right_og_in_ubp_outer_wall]
-    type = StitchedMeshGenerator
+    type = StitchMeshGenerator
     inputs = 'xydg_mesh_top_half_right_og_in_ubp_outer_wall rename_boundaries_33'
     clear_stitched_boundary_ids = false
     prevent_boundary_ids_overlap = false
@@ -2060,7 +2060,7 @@ og_num_intervals_before_ubp = 1
     new_boundary = '${boundary_id_index_12}'
   []
   [stitch_top_half_left_og_in_ubp_outer_wall]
-    type = StitchedMeshGenerator
+    type = StitchMeshGenerator
     inputs = 'rename_boundaries_34 stitch_top_half_right_og_in_ubp_outer_wall'
     clear_stitched_boundary_ids = false
     prevent_boundary_ids_overlap = false
@@ -2110,7 +2110,7 @@ og_num_intervals_before_ubp = 1
     desired_area = ${xydg_area}
   []
   [stitch_top_half_right_ubp_outer_wall_in_lead]
-    type = StitchedMeshGenerator
+    type = StitchMeshGenerator
     inputs = 'xydg_mesh_top_half_right_ubp_outer_wall_in_lead rename_boundaries_35'
     clear_stitched_boundary_ids = false
     prevent_boundary_ids_overlap = false
@@ -2130,7 +2130,7 @@ og_num_intervals_before_ubp = 1
     new_boundary = '${boundary_id_index_12}'
   []
   [stitch_top_half_left_ubp_outer_wall_in_lead]
-    type = StitchedMeshGenerator
+    type = StitchMeshGenerator
     inputs = 'rename_boundaries_36 stitch_top_half_right_ubp_outer_wall_in_lead'
     clear_stitched_boundary_ids = false
     prevent_boundary_ids_overlap = false
@@ -2180,7 +2180,7 @@ og_num_intervals_before_ubp = 1
     desired_area = ${xydg_area}
   []
   [stitch_top_half_right_ubp_outer_wall_in_ag]
-    type = StitchedMeshGenerator
+    type = StitchMeshGenerator
     inputs = 'xydg_mesh_top_half_right_ubp_outer_wall_in_ag rename_boundaries_37'
     clear_stitched_boundary_ids = false
     prevent_boundary_ids_overlap = false
@@ -2200,7 +2200,7 @@ og_num_intervals_before_ubp = 1
     new_boundary = '${boundary_id_index_12}'
   []
   [stitch_top_half_left_ubp_outer_wall_in_ag]
-    type = StitchedMeshGenerator
+    type = StitchMeshGenerator
     inputs = 'rename_boundaries_38 stitch_top_half_right_ubp_outer_wall_in_ag'
     clear_stitched_boundary_ids = false
     prevent_boundary_ids_overlap = false
@@ -2250,7 +2250,7 @@ og_num_intervals_before_ubp = 1
     desired_area = ${xydg_area}
   []
   [stitch_top_half_right_ubp_outer_wall_in_rt]
-    type = StitchedMeshGenerator
+    type = StitchMeshGenerator
     inputs = 'xydg_mesh_top_half_right_ubp_outer_wall_in_rt rename_boundaries_39'
     clear_stitched_boundary_ids = false
     prevent_boundary_ids_overlap = false
@@ -2270,7 +2270,7 @@ og_num_intervals_before_ubp = 1
     new_boundary = '${boundary_id_index_12}'
   []
   [stitch_top_half_left_ubp_outer_wall_in_rt]
-    type = StitchedMeshGenerator
+    type = StitchMeshGenerator
     inputs = 'rename_boundaries_40 stitch_top_half_right_ubp_outer_wall_in_rt'
     clear_stitched_boundary_ids = false
     prevent_boundary_ids_overlap = false
@@ -2320,7 +2320,7 @@ og_num_intervals_before_ubp = 1
     desired_area = ${xydg_area}
   []
   [stitch_top_half_right_ubp_outer_wall_in_water]
-    type = StitchedMeshGenerator
+    type = StitchMeshGenerator
     inputs = 'xydg_mesh_top_half_right_ubp_outer_wall_in_water rename_boundaries_41'
     clear_stitched_boundary_ids = false
     prevent_boundary_ids_overlap = false
@@ -2340,7 +2340,7 @@ og_num_intervals_before_ubp = 1
     new_boundary = '${boundary_id_index_12}'
   []
   [stitch_top_half_left_ubp_outer_wall_in_water]
-    type = StitchedMeshGenerator
+    type = StitchMeshGenerator
     inputs = 'rename_boundaries_42 stitch_top_half_right_ubp_outer_wall_in_water'
     clear_stitched_boundary_ids = false
     prevent_boundary_ids_overlap = false
@@ -2388,7 +2388,7 @@ og_num_intervals_before_ubp = 1
     desired_area = ${xydg_area}
   []
   [stitch_top_half_right_cif_wall_in_og_after_ubp]
-    type = StitchedMeshGenerator
+    type = StitchMeshGenerator
     inputs = 'xydg_mesh_top_half_right_cif_wall_in_og_after_ubp rename_boundaries_43'
     clear_stitched_boundary_ids = false
     prevent_boundary_ids_overlap = false
@@ -2408,7 +2408,7 @@ og_num_intervals_before_ubp = 1
     new_boundary = '${boundary_id_index_12}'
   []
   [stitch_top_half_left_cif_wall_in_og_after_ubp]
-    type = StitchedMeshGenerator
+    type = StitchMeshGenerator
     inputs = 'rename_boundaries_44 stitch_top_half_right_cif_wall_in_og_after_ubp'
     clear_stitched_boundary_ids = false
     prevent_boundary_ids_overlap = false
@@ -2453,7 +2453,7 @@ og_num_intervals_before_ubp = 1
     desired_area = ${xydg_area}
   []
   [stitch_top_half_right_og_after_ubp]
-    type = StitchedMeshGenerator
+    type = StitchMeshGenerator
     inputs = 'xydg_mesh_top_half_right_og_after_ubp rename_boundaries_45'
     clear_stitched_boundary_ids = false
     prevent_boundary_ids_overlap = false
@@ -2473,7 +2473,7 @@ og_num_intervals_before_ubp = 1
     new_boundary = '${boundary_id_index_12}'
   []
   [stitch_top_half_left_og_after_ubp]
-    type = StitchedMeshGenerator
+    type = StitchMeshGenerator
     inputs = 'rename_boundaries_46 stitch_top_half_right_og_after_ubp'
     clear_stitched_boundary_ids = false
     prevent_boundary_ids_overlap = false
@@ -2521,7 +2521,7 @@ og_num_intervals_before_ubp = 1
     desired_area = ${xydg_area}
   []
   [stitch_top_half_right_cif_wall_in_lead_after_ubp]
-    type = StitchedMeshGenerator
+    type = StitchMeshGenerator
     inputs = 'xydg_mesh_top_half_right_cif_wall_in_lead_after_ubp rename_boundaries_47'
     clear_stitched_boundary_ids = false
     prevent_boundary_ids_overlap = false
@@ -2541,7 +2541,7 @@ og_num_intervals_before_ubp = 1
     new_boundary = '${boundary_id_index_12}'
   []
   [stitch_top_half_left_cif_wall_in_lead_after_ubp]
-    type = StitchedMeshGenerator
+    type = StitchMeshGenerator
     inputs = 'rename_boundaries_48 stitch_top_half_right_cif_wall_in_lead_after_ubp'
     clear_stitched_boundary_ids = false
     prevent_boundary_ids_overlap = false
@@ -2591,7 +2591,7 @@ og_num_intervals_before_ubp = 1
     desired_area = ${xydg_area}
   []
   [stitch_top_half_right_lead_after_ubp]
-    type = StitchedMeshGenerator
+    type = StitchMeshGenerator
     inputs = 'xydg_mesh_top_half_right_lead_after_ubp rename_boundaries_49'
     clear_stitched_boundary_ids = false
     prevent_boundary_ids_overlap = false
@@ -2611,7 +2611,7 @@ og_num_intervals_before_ubp = 1
     new_boundary = '${boundary_id_index_12}'
   []
   [stitch_top_half_left_lead_after_ubp]
-    type = StitchedMeshGenerator
+    type = StitchMeshGenerator
     inputs = 'rename_boundaries_50 stitch_top_half_right_lead_after_ubp'
     clear_stitched_boundary_ids = false
     prevent_boundary_ids_overlap = false
@@ -2659,7 +2659,7 @@ og_num_intervals_before_ubp = 1
     desired_area = ${xydg_area}
   []
   [stitch_top_half_right_cif_wall_in_ag_after_ubp]
-    type = StitchedMeshGenerator
+    type = StitchMeshGenerator
     inputs = 'xydg_mesh_top_half_right_cif_wall_in_ag_after_ubp rename_boundaries_51'
     clear_stitched_boundary_ids = false
     prevent_boundary_ids_overlap = false
@@ -2679,7 +2679,7 @@ og_num_intervals_before_ubp = 1
     new_boundary = '${boundary_id_index_12}'
   []
   [stitch_top_half_left_cif_wall_in_ag_after_ubp]
-    type = StitchedMeshGenerator
+    type = StitchMeshGenerator
     inputs = 'rename_boundaries_52 stitch_top_half_right_cif_wall_in_ag_after_ubp'
     clear_stitched_boundary_ids = false
     prevent_boundary_ids_overlap = false
@@ -2729,7 +2729,7 @@ og_num_intervals_before_ubp = 1
     desired_area = ${xydg_area}
   []
   [stitch_top_half_right_ag_after_ubp]
-    type = StitchedMeshGenerator
+    type = StitchMeshGenerator
     inputs = 'xydg_mesh_top_half_right_ag_after_ubp rename_boundaries_53'
     clear_stitched_boundary_ids = false
     prevent_boundary_ids_overlap = false
@@ -2749,7 +2749,7 @@ og_num_intervals_before_ubp = 1
     new_boundary = '${boundary_id_index_12}'
   []
   [stitch_top_half_left_ag_after_ubp]
-    type = StitchedMeshGenerator
+    type = StitchMeshGenerator
     inputs = 'rename_boundaries_54 stitch_top_half_right_ag_after_ubp'
     clear_stitched_boundary_ids = false
     prevent_boundary_ids_overlap = false
@@ -2797,7 +2797,7 @@ og_num_intervals_before_ubp = 1
     desired_area = ${xydg_area}
   []
   [stitch_top_half_right_cif_wall_in_rt_after_ubp]
-    type = StitchedMeshGenerator
+    type = StitchMeshGenerator
     inputs = 'xydg_mesh_top_half_right_cif_wall_in_rt_after_ubp rename_boundaries_55'
     clear_stitched_boundary_ids = false
     prevent_boundary_ids_overlap = false
@@ -2817,7 +2817,7 @@ og_num_intervals_before_ubp = 1
     new_boundary = '${boundary_id_index_12}'
   []
   [stitch_top_half_left_cif_wall_in_rt_after_ubp]
-    type = StitchedMeshGenerator
+    type = StitchMeshGenerator
     inputs = 'rename_boundaries_56 stitch_top_half_right_cif_wall_in_rt_after_ubp'
     clear_stitched_boundary_ids = false
     prevent_boundary_ids_overlap = false
@@ -2867,7 +2867,7 @@ og_num_intervals_before_ubp = 1
     desired_area = ${xydg_area}
   []
   [stitch_top_half_right_rt_after_ubp]
-    type = StitchedMeshGenerator
+    type = StitchMeshGenerator
     inputs = 'xydg_mesh_top_half_right_rt_after_ubp rename_boundaries_57'
     clear_stitched_boundary_ids = false
     prevent_boundary_ids_overlap = false
@@ -2887,7 +2887,7 @@ og_num_intervals_before_ubp = 1
     new_boundary = '${boundary_id_index_12}'
   []
   [stitch_top_half_left_rt_after_ubp]
-    type = StitchedMeshGenerator
+    type = StitchMeshGenerator
     inputs = 'rename_boundaries_58 stitch_top_half_right_rt_after_ubp'
     clear_stitched_boundary_ids = false
     prevent_boundary_ids_overlap = false
@@ -2935,7 +2935,7 @@ og_num_intervals_before_ubp = 1
     desired_area = ${xydg_area}
   []
   [stitch_top_half_right_cif_wall_in_water_after_ubp]
-    type = StitchedMeshGenerator
+    type = StitchMeshGenerator
     inputs = 'xydg_mesh_top_half_right_cif_wall_in_water_after_ubp rename_boundaries_59'
     clear_stitched_boundary_ids = false
     prevent_boundary_ids_overlap = false
@@ -2955,7 +2955,7 @@ og_num_intervals_before_ubp = 1
     new_boundary = '${boundary_id_index_12}'
   []
   [stitch_top_half_left_cif_wall_in_water_after_ubp]
-    type = StitchedMeshGenerator
+    type = StitchMeshGenerator
     inputs = 'rename_boundaries_60 stitch_top_half_right_cif_wall_in_water_after_ubp'
     clear_stitched_boundary_ids = false
     prevent_boundary_ids_overlap = false
@@ -3005,7 +3005,7 @@ og_num_intervals_before_ubp = 1
     desired_area = ${xydg_area}
   []
   [stitch_top_half_right_water_after_ubp]
-    type = StitchedMeshGenerator
+    type = StitchMeshGenerator
     inputs = 'xydg_mesh_top_half_right_water_after_ubp rename_boundaries_61'
     clear_stitched_boundary_ids = false
     prevent_boundary_ids_overlap = false
@@ -3025,7 +3025,7 @@ og_num_intervals_before_ubp = 1
     new_boundary = '${boundary_id_index_12}'
   []
   [stitch_top_half_left_water_after_ubp]
-    type = StitchedMeshGenerator
+    type = StitchMeshGenerator
     inputs = 'rename_boundaries_62 stitch_top_half_right_water_after_ubp'
     clear_stitched_boundary_ids = false
     prevent_boundary_ids_overlap = false
@@ -3152,14 +3152,14 @@ og_num_intervals_before_ubp = 1
     desired_area = 1.0
   []
   [stitch_remeshed_bottom_core_region]
-    type = StitchedMeshGenerator
+    type = StitchMeshGenerator
     inputs = 'delete_bottom_core_blocks xydg_mesh_core_around_fcr_and_sr2'
     clear_stitched_boundary_ids = false
     prevent_boundary_ids_overlap = false
     stitch_boundaries_pairs = '${boundary_id_index_20} ${boundary_id_index_23}'
   []
   [stitch_core_halves]
-    type = StitchedMeshGenerator
+    type = StitchMeshGenerator
     inputs = 'rename_boundaries_63 stitch_remeshed_bottom_core_region'
     clear_stitched_boundary_ids = false
     prevent_boundary_ids_overlap = false
@@ -3264,7 +3264,7 @@ og_num_intervals_before_ubp = 1
     output_subdomain_name = ${core_cif_wall_block_id}
   []
   [stitch_cif_with_tf_to_core]
-    type = StitchedMeshGenerator
+    type = StitchMeshGenerator
     inputs = 'xydg_tf delete_core_cif_wall'
     clear_stitched_boundary_ids = false
     prevent_boundary_ids_overlap = false

@@ -154,28 +154,28 @@ y_center = ${fparse r}
   [fuel_kappa]
     type = HeatConductionMaterial
     block = '${fuel_blocks}'
-    # temp = Tsolid
+    # temperature = Tsolid
     thermal_conductivity = 19 # W/m/K
     specific_heat = 300 # reasonable value
   []
   [moderator_kappa]
     type = HeatConductionMaterial
     block = '${moderator_blocks}'
-    # temp = Tsolid
+    # temperature = Tsolid
     thermal_conductivity = 20 # W/m/K
     specific_heat = 500 # random value
   []
   [monolith_thermal_props]
     type = HeatConductionMaterial
     block = '${monolith_blocks}'
-    # temp = Tsolid
+    # temperature = Tsolid
     thermal_conductivity = 70 # typical value for G348 graphite
     specific_heat = 1830 # typical value for G348 graphite
   []
   [reflector_kappa]
     type = HeatConductionMaterial
     block = '${reflector_blocks}'
-    # temp = Tsolid
+    # temperature = Tsolid
     thermal_conductivity = 200 # W/m/K, typical value for Be
     specific_heat = 1825 # typical value for Be
   []

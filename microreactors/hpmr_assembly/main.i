@@ -155,14 +155,16 @@ hp_positions = '
     outputs = all
   []
   [fuel_compact_density]
-    type = Density
+    type = StrainAdjustedDensity
     block = ${fuel_blocks}
-    density = '${rho_fuel_compact}'
+    displacements = '0 0 0'
+    strain_free_density = '${rho_fuel_compact}'
   []
   [graph_density]
-    type = Density
+    type = StrainAdjustedDensity
     block = ${graph_blocks}
-    density = '${rho_graphite}'
+    displacements = '0 0 0'
+    strain_free_density = '${rho_graphite}'
   []
   [graph]
     type = GraphiteMatrixThermal

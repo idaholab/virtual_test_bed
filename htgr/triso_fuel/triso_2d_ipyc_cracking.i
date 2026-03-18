@@ -303,9 +303,9 @@ coordinates5 = '${fparse coordinates4+OPyC_thickness}'
     eigenstrain_name = UCO_TE_strain
   []
   [UCO_density]
-    type = Density
+    type = StrainAdjustedDensity
     block = fuel
-    density = 11000.0
+    strain_free_density = 11000.0
   []
   [fission_gas_release]
     type = UCOFGR
@@ -335,9 +335,9 @@ coordinates5 = '${fparse coordinates4+OPyC_thickness}'
     initial_density = 1050.0
   []
   [buffer_density]
-    type = Density
+    type = StrainAdjustedDensity
     block = buffer
-    density = 1050.0
+    strain_free_density = 1050.0
   []
   [buffer_TE]
     type = BufferThermalExpansionEigenstrain
@@ -405,9 +405,9 @@ coordinates5 = '${fparse coordinates4+OPyC_thickness}'
     thermal_conductivity_model = miller
   []
   [SiC_density]
-    type = Density
+    type = StrainAdjustedDensity
     block = SiC
-    density = 3200.0
+    strain_free_density = 3200.0
   []
   [SiC_thermal_expansion]
     type = ComputeThermalExpansionEigenstrain

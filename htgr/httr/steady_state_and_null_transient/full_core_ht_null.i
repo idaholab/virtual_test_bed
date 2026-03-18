@@ -523,46 +523,53 @@ extension = '_9MW'
   []
   # The base graphite densities come from table 1.27 of the NEA/NSC/DOC(2006)1 report and are then corrected with the volume fraction of graphite in each block
   [graphite_density_fuel33]
-    type = Density
+    type = StrainAdjustedDensity
     block = '${fuel_blocks_33pin}'
-    density = '${fparse 1770 * vol_frac_fuel33}'
+    displacements = '0 0 0'
+    strain_free_density = '${fparse 1770 * vol_frac_fuel33}'
   []
   [graphite_density_fuel31]
-    type = Density
+    type = StrainAdjustedDensity
     block = '${fuel_blocks_31pin}'
-    density = '${fparse 1770 * vol_frac_fuel31}'
+    displacements = '0 0 0'
+    strain_free_density = '${fparse 1770 * vol_frac_fuel31}'
   []
   [graphite_density_rr_fuel33]
-    type = Density
+    type = StrainAdjustedDensity
     block = '${rr_fuel_blocks_33pin}'
-    density = '${fparse 1760 * vol_frac_fuel33}'
+    displacements = '0 0 0'
+    strain_free_density = '${fparse 1760 * vol_frac_fuel33}'
   []
   [graphite_density_rr_fuel31]
-    type = Density
+    type = StrainAdjustedDensity
     block = '${rr_fuel_blocks_31pin}'
-    density = '${fparse 1760 * vol_frac_fuel31}'
+    displacements = '0 0 0'
+    strain_free_density = '${fparse 1760 * vol_frac_fuel31}'
   []
   [graphite_density_cr]
-    type = Density
+    type = StrainAdjustedDensity
     block = '${full_cr_blocks}'
-    density = '${fparse 1770 * vol_frac_cr}'
+    displacements = '0 0 0'
+    strain_free_density = '${fparse 1770 * vol_frac_cr}'
   []
   [graphite_density_rest]
-    type = Density
+    type = StrainAdjustedDensity
     block = '${full_pr_blocks}'
-    density = '${fparse 1760}' # In reality, the actual PR blocks are made of PGX graphite of density 1.732 g/cc but here we assume IG110 graphite for now.
+    displacements = '0 0 0'
+    strain_free_density = '${fparse 1760}' # In reality, the actual PR blocks are made of PGX graphite of density 1.732 g/cc but here we assume IG110 graphite for now.
   []
   [ss304_rpv]
     type = HeatConductionMaterial
     block = '${rpv_blocks}'
     thermal_conductivity_temperature_function = ssteel_304_k
     specific_heat = 500 # J/kg/K
-    temp = Tsolid
+    temperature = Tsolid
   []
   [ss304_density]
-    type = Density
+    type = StrainAdjustedDensity
     block = '${rpv_blocks}'
-    density = 8000 # typical value for ss304 in kg/m^3
+    displacements = '0 0 0'
+    strain_free_density = 8000 # typical value for ss304 in kg/m^3
   []
   [gap_conductance_mat]
     type = Variable2Material

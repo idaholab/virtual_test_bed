@@ -444,7 +444,7 @@ coolant_tc                    = 28
     [fuel_thermal_conduction]
     # Metallic Uranium Zirc Hydride fuel conduction params.
         type = ADHeatConductionMaterial
-        temp = bison_temp
+        temperature = bison_temp
         specific_heat_temperature_function = cp_f
         thermal_conductivity_temperature_function = tk_f
         block = fuel

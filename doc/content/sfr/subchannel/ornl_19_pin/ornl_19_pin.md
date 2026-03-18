@@ -75,17 +75,9 @@ These configurations are summarized in [cases].
 
 ### General parameters
 
-The general parameters on the experimental conditions are described here below.
-They set up the boundary conditions for the high-flow-rate test case.
+The general parameters on the experimental conditions are described here. The purpose is to define inlet conditions: Pressure, Temperature and mass-flux. For the low-flow-rate test case presented here, we have:
 
-```language=bash
-
- T_in = 588.5
- flow_area = 0.0004980799633447909 #m2
- mass_flux_in = ${fparse 55*3.78541/10/60/flow_area}  # [1e+6 kg/m^2-hour] turns into kg/m^2-sec
- P_out = 2.0e5 # Pa
-
-```
+!listing sfr/subchannel/ornl_19_pin/ornl_19_pin.i start=T_in end=P_out include-end=true
 
 ### Mesh
 
@@ -106,8 +98,10 @@ Sodium properties are used in this case.
 
 ### SubChannel
 
-The SubChannel block specifies the solver to be used in the subchannel solve.
-The type of problem used in this case is a liquid metal subchannel problem that uses sodium fluid properties. The parameters *beta* and *C_T* are used to model the crossflow and cross enthalpy-fluxes. Different solve procedures can be applied. In this case, we use an explicit, segregated solve. For more information about the mesh generator, please consult the website documentation on subchannel.
+The SubChannel type specifies the solver to be used in the SCM solve.
+The type of problem used in this case is a liquid metal subchannel problem that uses sodium fluid properties.
+Different solve procedures can be applied. In this case, we use an implicit non-segregated solve (monolithic).
+For more information about the mesh generator, please consult the website documentation on SCM. With Problem the user must input the variables in the AuxVariables block, with SubChannel the AuxVariables are defined automatically.
 
 !listing sfr/subchannel/ornl_19_pin/ornl_19_pin.i block=SubChannel language=cpp
 
@@ -144,11 +138,11 @@ A *MultiApp* is used for transferring the subchannel solution into a detailed me
 
 !listing sfr/subchannel/ornl_19_pin/ornl_19_pin.i block=MultiApps language=cpp
 
-A custom transfer, *MultiAppDetailedSolutionTransfer*, is used for this purpose.
+A custom transfer, *SCMSolutionTransfer*, is used for this purpose.
 
 !listing sfr/subchannel/ornl_19_pin/ornl_19_pin.i block=Transfers language=cpp
 
-The detailed mesh uses a *DetailedTriSubChannelMeshGenerator* and the solution variables are populated by the transfer.
+The detailed mesh uses a *SCMDetailedTriSubChannelMeshGenerator* and the solution variables are populated by the transfer.
 
 !listing sfr/subchannel/ornl_19_pin/ornl_19_pin_viz.i language=cpp
 

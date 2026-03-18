@@ -492,7 +492,7 @@ hp_fuel_gap_all = '64'
     output_subdomain_name = 126
   []
   [Stitch_Region1_to_4_and_21_to_26]
-    type = StitchedMeshGenerator
+    type = StitchMeshGenerator
     inputs = 'Region1_mesh Region2_mesh Region3_mesh Region4_mesh Region21_mesh Region22_mesh Region23_mesh Region24_mesh Region25_mesh  Region26_mesh'
     clear_stitched_boundary_ids = true
     prevent_boundary_ids_overlap =false
@@ -599,7 +599,7 @@ hp_fuel_gap_all = '64'
     output_subdomain_name = 107
   []
   [Stitch_Region5_6_7]
-    type = StitchedMeshGenerator
+    type = StitchMeshGenerator
     inputs = 'Region5_mesh Region6_mesh Region7_mesh'
     clear_stitched_boundary_ids = true
     prevent_boundary_ids_overlap =false
@@ -705,7 +705,7 @@ hp_fuel_gap_all = '64'
     output_subdomain_name = 110
   []
   [Stitch_Region8_9_10]
-    type = StitchedMeshGenerator
+    type = StitchMeshGenerator
     inputs = 'Region8_mesh Region9_mesh Region10_mesh'
     clear_stitched_boundary_ids = true
     prevent_boundary_ids_overlap =false
@@ -1083,7 +1083,7 @@ hp_fuel_gap_all = '64'
     output_subdomain_name = 120
   []
   [Stitch_Region11_to_20]
-    type = StitchedMeshGenerator
+    type = StitchMeshGenerator
     inputs = 'Region11_mesh Region12_mesh Region13_mesh Region14_mesh Region15_mesh Region16_mesh Region17_mesh Region18_mesh Region19_mesh Region20_mesh'
     clear_stitched_boundary_ids = true
     prevent_boundary_ids_overlap =false
@@ -1091,7 +1091,7 @@ hp_fuel_gap_all = '64'
     subdomain_remapping = false # see idaholab/moose#30802
   []
   [Stitch_Region_1_to_26]
-    type = StitchedMeshGenerator
+    type = StitchMeshGenerator
     inputs = 'Stitch_Region8_9_10 Stitch_Region5_6_7 Stitch_Region1_to_4_and_21_to_26 Stitch_Region11_to_20'
     clear_stitched_boundary_ids = true
     prevent_boundary_ids_overlap =false
@@ -1105,7 +1105,7 @@ hp_fuel_gap_all = '64'
     vector_value = '0 180 0'
   []
   [Stitch_mirror]
-    type = StitchedMeshGenerator
+    type = StitchMeshGenerator
     inputs = 'Stitch_Region_1_to_26 mirror_x'
     clear_stitched_boundary_ids = true
     prevent_boundary_ids_overlap =false
@@ -1200,7 +1200,7 @@ hp_fuel_gap_all = '64'
     new_block = '301 302 303 304 305 306 307 308 309 310'
   []
   [Stitch_rotation_parts_1]
-    type = StitchedMeshGenerator
+    type = StitchMeshGenerator
     inputs = 'rename_blocks_hp_pipe_zone ccg_hp_gap_slot'
     clear_stitched_boundary_ids = true
     prevent_boundary_ids_overlap =false
@@ -1214,7 +1214,7 @@ hp_fuel_gap_all = '64'
     vector_value = '0 0 90'
   []
   [Stitch_rotation_parts_2]
-    type = StitchedMeshGenerator
+    type = StitchMeshGenerator
     inputs = 'rotate_part_to_add_2 Stitch_rotation_parts_1'
     clear_stitched_boundary_ids = true
     prevent_boundary_ids_overlap =false
@@ -1228,7 +1228,7 @@ hp_fuel_gap_all = '64'
     vector_value = '0 0 180'
   []
   [Stitch_rotation_parts_final]
-    type = StitchedMeshGenerator
+    type = StitchMeshGenerator
     inputs = 'rotate_part_to_add_3 Stitch_rotation_parts_2'
     clear_stitched_boundary_ids = true
     prevent_boundary_ids_overlap =false
@@ -1351,7 +1351,7 @@ hp_fuel_gap_all = '64'
     external_boundary_name = 9527
   []
   [Stitch_internal_rings]
-    type = StitchedMeshGenerator
+    type = StitchMeshGenerator
     inputs = 'r11_ring Stitch_rotation_parts_final'
     clear_stitched_boundary_ids = true
     prevent_boundary_ids_overlap =false
@@ -1555,7 +1555,7 @@ hp_fuel_gap_all = '64'
       output_subdomain_name = 226
     []
     [Stitch_r22_ring]
-      type = StitchedMeshGenerator
+      type = StitchMeshGenerator
       inputs = 'r22_ring_mesh r23_ring_mesh r24_ring_mesh r25_ring_mesh r26_ring_mesh'
       clear_stitched_boundary_ids = true
       prevent_boundary_ids_overlap =false
@@ -1569,7 +1569,7 @@ hp_fuel_gap_all = '64'
         vector_value = '0 0 45'
     []
     [Stitch_r22_ring_quarter]
-        type = StitchedMeshGenerator
+        type = StitchMeshGenerator
         inputs = 'Stitch_r22_ring rotate_r22_ring_mesh_1'
         clear_stitched_boundary_ids = true
         prevent_boundary_ids_overlap =false
@@ -1717,7 +1717,7 @@ hp_fuel_gap_all = '64'
       output_subdomain_name = 130
     []
     [Stitch_r22_ring_27_28_29]
-      type = StitchedMeshGenerator
+      type = StitchMeshGenerator
       inputs = 'Stitch_r22_ring_quarter Region27_mesh Region28_mesh Region29_mesh'
       clear_stitched_boundary_ids = true
       prevent_boundary_ids_overlap =false
@@ -1725,7 +1725,7 @@ hp_fuel_gap_all = '64'
       subdomain_remapping = false # see idaholab/moose#30802
     []
     [Stitch_r22_ring_27_to_30]
-      type = StitchedMeshGenerator
+      type = StitchMeshGenerator
       inputs = 'Stitch_r22_ring_27_28_29 Region30_mesh'
       clear_stitched_boundary_ids = true
       prevent_boundary_ids_overlap =false
@@ -1739,7 +1739,7 @@ hp_fuel_gap_all = '64'
       vector_value = '0 180 0'
     []
     [Stitch_mirror_outer_zone_1]
-      type = StitchedMeshGenerator
+      type = StitchMeshGenerator
       inputs = 'Stitch_r22_ring_27_to_30 mirror_outer_zone_1'
       clear_stitched_boundary_ids = true
       prevent_boundary_ids_overlap =false
@@ -1753,7 +1753,7 @@ hp_fuel_gap_all = '64'
       vector_value = '0 0 180'
     []
     [Stitch_mirror_outer_zone_2]
-      type = StitchedMeshGenerator
+      type = StitchMeshGenerator
       inputs = 'Stitch_mirror_outer_zone_1 mirror_outer_zone_2'
       clear_stitched_boundary_ids = true
       prevent_boundary_ids_overlap =false
@@ -1761,7 +1761,7 @@ hp_fuel_gap_all = '64'
       subdomain_remapping = false # see idaholab/moose#30802
     []
     [Stitch_inner_outer]
-      type = StitchedMeshGenerator
+      type = StitchMeshGenerator
       inputs = 'Stitch_internal_rings Stitch_mirror_outer_zone_2'
       clear_stitched_boundary_ids = true
       prevent_boundary_ids_overlap =false

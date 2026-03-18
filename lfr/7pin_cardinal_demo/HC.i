@@ -126,25 +126,25 @@ powerdensity = ${fparse linearpower / (pi * (fuel_r_o * fuel_r_o - fuel_r_i * fu
 [Materials]
   [HeatConduct_Fuel]
     type = HeatConductionMaterial
-    temp = solid_temp
+    temperature = solid_temp
     thermal_conductivity = ${fuelconductance}
     block = 'Fuel'
   []
   [HeatConduct_Gap]
     type = HeatConductionMaterial
-    temp = solid_temp
+    temperature = solid_temp
     thermal_conductivity = ${gapconductance}
     block = 'HeliumHolePrism HeliumHole'
   []
   [HeatConduct_Clad]
     type = HeatConductionMaterial
-    temp = solid_temp
+    temperature = solid_temp
     thermal_conductivity = ${cladconductance}
     block = 'Clad Duct LowerReflector UpperReflector LowerReflectorPrism UpperReflectorPrism'
   []
   [HeatConduct_dummy]
     type = HeatConductionMaterial
-    temp = nek_bulk_temp
+    temperature = nek_bulk_temp
     thermal_conductivity = 1.0
     block = 'Lead'
   []
