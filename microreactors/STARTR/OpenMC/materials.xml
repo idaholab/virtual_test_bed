@@ -1,0 +1,96 @@
+<?xml version='1.0' encoding='utf-8'?>
+<materials>
+  <material depletable="true" id="1" name="UZrH Fuel Meat" temperature="899">
+    <density units="g/cm3" value="7.135"/>
+    <nuclide name="U235" wo="0.05925"/>
+    <nuclide name="U238" wo="0.24075"/>
+    <nuclide name="Zr90" wo="0.3488580884635241"/>
+    <nuclide name="Zr91" wo="0.07692450567733339"/>
+    <nuclide name="Zr92" wo="0.11887333806976173"/>
+    <nuclide name="Zr94" wo="0.12309079787532268"/>
+    <nuclide name="Zr96" wo="0.020253269914058087"/>
+    <nuclide name="H1" wo="0.011996265691781945"/>
+    <nuclide name="H2" wo="3.734308218054773e-06"/>
+    <sab name="c_Zr_in_ZrH"/>
+    <sab name="c_H_in_ZrH"/>
+  </material>
+  <material id="2" name="Zirconium" temperature="899">
+    <density units="g/cm3" value="6.505"/>
+    <nuclide ao="0.5145" name="Zr90"/>
+    <nuclide ao="0.1122" name="Zr91"/>
+    <nuclide ao="0.1715" name="Zr92"/>
+    <nuclide ao="0.1738" name="Zr94"/>
+    <nuclide ao="0.028" name="Zr96"/>
+  </material>
+  <material id="3" name="Graphite" temperature="899">
+    <density units="g/cm3" value="1.7"/>
+    <nuclide ao="0.988922" name="C12"/>
+    <nuclide ao="0.011078" name="C13"/>
+    <sab name="c_Graphite_30p"/>
+  </material>
+  <material id="4" name="Molybdenum" temperature="899">
+    <density units="g/cm3" value="10.223"/>
+    <nuclide ao="0.14649" name="Mo92"/>
+    <nuclide ao="0.09187" name="Mo94"/>
+    <nuclide ao="0.15873" name="Mo95"/>
+    <nuclide ao="0.16673" name="Mo96"/>
+    <nuclide ao="0.09582" name="Mo97"/>
+    <nuclide ao="0.24292" name="Mo98"/>
+    <nuclide ao="0.09744" name="Mo100"/>
+  </material>
+  <material id="5" name="Void" temperature="899">
+    <density units="g/cm3" value="0.001205"/>
+    <nuclide ao="0.752501453316" name="N14"/>
+    <nuclide ao="0.0027665466840000002" name="N15"/>
+    <nuclide ao="0.23122950028859998" name="O16"/>
+    <nuclide ao="8.7844999e-05" name="O17"/>
+    <nuclide ao="0.0004636547123999999" name="O18"/>
+    <nuclide ao="4.2790872e-05" name="Ar36"/>
+    <nuclide ao="8.068183e-06" name="Ar38"/>
+    <nuclide ao="0.012776140945" name="Ar40"/>
+    <nuclide ao="0.000122626328" name="C12"/>
+    <nuclide ao="1.373672e-06" name="C13"/>
+  </material>
+  <material id="6" name="304 Stainless Steel" temperature="899">
+    <density units="g/cm3" value="7.93"/>
+    <nuclide name="Mn55" wo="0.02"/>
+    <nuclide name="Ni58" wo="0.0638378200317604"/>
+    <nuclide name="Ni60" wo="0.025437164754268084"/>
+    <nuclide name="Ni61" wo="0.0011241911310318747"/>
+    <nuclide name="Ni62" wo="0.0036430811883128114"/>
+    <nuclide name="Ni64" wo="0.0009577428946268364"/>
+    <nuclide name="Cr50" wo="0.007930004583164795"/>
+    <nuclide name="Cr52" wo="0.1590287884675572"/>
+    <nuclide name="Cr53" wo="0.01837981495548285"/>
+    <nuclide name="Cr54" wo="0.004661391993795167"/>
+    <nuclide name="Fe54" wo="0.039236629647812646"/>
+    <nuclide name="Fe56" wo="0.6387156250179591"/>
+    <nuclide name="Fe57" wo="0.015014561865038722"/>
+    <nuclide name="Fe58" wo="0.0020331834691896086"/>
+  </material>
+  <material id="7" name="Sodium" temperature="899">
+    <density units="g/cm3" value="0.80655344285596"/>
+    <nuclide ao="1.0" name="Na23"/>
+  </material>
+  <material id="8" name="Boron Carbide" temperature="899">
+    <density units="g/cm3" value="2.52"/>
+    <nuclide ao="0.7928" name="B10"/>
+    <nuclide ao="3.2072" name="B11"/>
+    <nuclide ao="0.988922" name="C12"/>
+    <nuclide ao="0.011078" name="C13"/>
+  </material>
+  <material id="9" name="Beryllium Oxide" temperature="899">
+    <density units="g/cm3" value="3.01"/>
+    <nuclide ao="1.0" name="Be9"/>
+    <nuclide ao="0.9976206" name="O16"/>
+    <nuclide ao="0.000379" name="O17"/>
+    <nuclide ao="0.0020004" name="O18"/>
+    <sab name="c_Be_in_BeO"/>
+    <sab name="c_O_in_BeO"/>
+  </material>
+  <material id="10" name="Metallic Beryllium" temperature="899">
+    <density units="g/cm3" value="1.845"/>
+    <nuclide ao="1.0" name="Be9"/>
+    <sab name="c_Be"/>
+  </material>
+</materials>

@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<plots>
+  <plot basis="xy" color_by="material" filename="xy root universe" id="11" type="slice">
+    <pixels>1200 1200</pixels>
+    <origin>0 0 45.1235</origin>
+    <width>60.0 60.0</width>
+    <color id="1" rgb="46 139 87"/>
+    <color id="2" rgb="255 215 0"/>
+    <color id="3" rgb="176 196 222"/>
+    <color id="4" rgb="255 0 255"/>
+    <color id="5" rgb="135 206 235"/>
+    <color id="6" rgb="70 130 180"/>
+    <color id="7" rgb="255 192 203"/>
+    <color id="8" rgb="199 21 133"/>
+    <color id="9" rgb="218 165 32"/>
+    <color id="10" rgb="250 128 114"/>
+  </plot>
+  <plot basis="yz" color_by="material" filename="yz root universe" id="12" type="slice">
+    <pixels>1200 2400</pixels>
+    <origin>0 0 45.1235</origin>
+    <width>60.0 120.0</width>
+    <color id="1" rgb="46 139 87"/>
+    <color id="2" rgb="255 215 0"/>
+    <color id="3" rgb="176 196 222"/>
+    <color id="4" rgb="255 0 255"/>
+    <color id="5" rgb="135 206 235"/>
+    <color id="6" rgb="70 130 180"/>
+    <color id="7" rgb="255 192 203"/>
+    <color id="8" rgb="199 21 133"/>
+    <color id="9" rgb="218 165 32"/>
+    <color id="10" rgb="250 128 114"/>
+  </plot>
+</plots>
