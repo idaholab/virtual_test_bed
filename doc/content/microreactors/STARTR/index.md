@@ -2,11 +2,11 @@
 
 *Contacts: Travis Lange (Travis.Lange.at.inl.gov), Daniel Grammer (grammer_daniel.at.berkeley.edu)*
 
-*Model link: [STARTR](https://github.com/idaholab/virtual_test_bed/tree/devel/sfr/STARTR)*
+*Model link: [STARTR](https://github.com/idaholab/virtual_test_bed/tree/devel/microreactors/STARTR)*
 
 !tag name=Sodium-cooled Thermal-spectrum Advanced Research Test Reactor (STARTR)
      description=A starter sodium-cooled thermal reactor model based on MARVEL geometry
-     image=https://mooseframework.inl.gov/virtual_test_bed/doc/content/media/STARTR/MCNP_STARTR_xy_radial.png
+     image=https://mooseframework.inl.gov/virtual_test_bed/media/STARTR/MCNP_STARTR_xy_radial.png
      pairs=reactor_type:microreactor
            reactor:STARTR
            geometry:core
