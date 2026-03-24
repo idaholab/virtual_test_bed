@@ -11,7 +11,7 @@
   []
   [generate_xml]
     type = RunCommand
-    command = 'python STARTR_OpenMC_driver.py'
+    command = 'python STARTR_OpenMC_driver.py 0'
     prereq = 'filter'
   []
   [xml_diff]

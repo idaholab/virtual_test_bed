@@ -12,7 +12,13 @@ Sheets, 148, 1 (2018); https://doi.org/10.1015/j.nds.2018.02.001.
 """
 import openmc
 import numpy as np
+import sys
 from na_density import calc_na_density
+
+# Whether to plot the figures (requires openmc executable)
+plot_figures = True
+if len(sys.argv) > 1:
+    plot_figures = bool(int(sys.argv[1]))
 
 ########## GLOBAL VARIABLES ##########
 NUM_PELLETS = 5 # Number of uzrh pellets in fuel rod, 5 in STARTR, 3 in typical TRIGA rod
@@ -421,7 +427,8 @@ yz_fuel_rod_plot.filename = "yz fuel rod"
 
 plots = openmc.Plots([xy_fuel_rod_plot, yz_fuel_rod_plot])
 plots.export_to_xml()
-openmc.plot_geometry()
+if plot_figures:
+    openmc.plot_geometry()
 
 """
 At the center of STARTR is a void rod, which has the same cladding and fittings dimensions as the
@@ -523,7 +530,8 @@ yz_void_rod_plot.filename = "yz void rod"
 
 plots = openmc.Plots([xy_void_rod_plot, yz_void_rod_plot])
 plots.export_to_xml()
-openmc.plot_geometry()
+if plot_figures:
+    openmc.plot_geometry()
 
 """
 Now that we have all the necessary components for the lattice, we'll start working on the reactor core
@@ -648,7 +656,8 @@ yz_vessel_plot.filename = "yz vessel"
 
 plots = openmc.Plots([xy_vessel_plot, yz_vessel_plot])
 plots.export_to_xml()
-openmc.plot_geometry()
+if plot_figures:
+    openmc.plot_geometry()
 
 """
 Rather than typical control rods, STARTR uses control drums that house a 120 degree sweep of boron carbide
@@ -711,7 +720,8 @@ yz_control_drum_plot.filename = "yz rotational reflector"
 
 plots = openmc.Plots([xy_control_drum_plot, yz_control_drum_plot])
 plots.export_to_xml()
-openmc.plot_geometry()
+if plot_figures:
+    openmc.plot_geometry()
 
 ### Stationary Reflector Universe (Contains Drums)
 """
@@ -795,7 +805,8 @@ yz_stat_refl_plot.filename = "yz stationary reflector"
 
 plots = openmc.Plots([xy_stat_refl_plot, yz_stat_refl_plot])
 plots.export_to_xml()
-openmc.plot_geometry()
+if plot_figures:
+    openmc.plot_geometry()
 
 ### Final Universe
 """
@@ -882,7 +893,8 @@ yz_root_plot.filename = "yz root universe"
 
 plots = openmc.Plots([xy_root_plot, yz_root_plot])
 plots.export_to_xml()
-openmc.plot_geometry()
+if plot_figures:
+    openmc.plot_geometry()
 """
 If you want to plot the flux, fissions, energies, or other reactor physics, you need to generate a tallies.xml.
 This model is currently designed for k-eigenvalue calculations only. More details on tally options can be found
