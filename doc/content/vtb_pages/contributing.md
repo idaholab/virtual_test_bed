@@ -7,14 +7,11 @@ including, but not limited to, regulatory, industrial and academic institutions.
 
 Any contribution must:
 
-- use NEAMS tools, at least partially. The objective of this repository is also to show how to use NEAMS tools for nuclear reactor
-  modeling
-
 - utilize MooseDocs for documentation. MooseDocs files should be placed in `doc/content/<relevant_reactor>`.
   Please follow [this documentation template](template.md).
 
-- follow the MooseDocs style guide ([link](https://mooseframework.inl.gov/python/MooseDocs/standards.html)) for the documentation
-  and not use tabs and trailing whitespaces for both the documentation and input files
+- follow the MooseDocs style guide ([link](https://mooseframework.inl.gov/python/MooseDocs/standards.html)) for the documentation.
+  For example, it should not use tabs and trailing whitespaces for both the documentation and input files
 
 - have every input file contain a header indicating the authors of the model and their institution, the codes used to run
   the input file and briefly summarizing the simulation performed
@@ -32,9 +29,15 @@ Any contribution must:
   contributing allows others to engage earlier with the developers of the new model, and creates a discussion forum
   dedicated to the contribution
 
-- use International System (SI) units
-
 - be made in good faith and be of sufficient quality and interest
+
+
+We also prefer but +do not mandate+ that contributions:
+
+- use NEAMS tools, at least partially. One objective of this repository is to show how to use NEAMS tools for nuclear reactor
+  modeling
+
+- use International System (SI) units
 
 
 We can help you meet any of these requirements if you are not familiar with the tools used.
