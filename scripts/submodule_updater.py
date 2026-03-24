@@ -1,4 +1,13 @@
 #!/usr/bin/env python
+# /// script
+# requires-python = ">=3.14"
+# dependencies = [
+#     "gitpython>=3.1.46",
+#     "pygithub>=2.9.0",
+#     "python-gitlab>=6.5.0",
+#     "pyyaml>=6.0.3",
+# ]
+# ///
 
 """
 To use this script to update the VTBs submodules, from the scripts directory,
