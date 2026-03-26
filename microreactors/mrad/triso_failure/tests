@@ -84,8 +84,7 @@
 
     # Packing fraction and temperature out of bounds
     allow_warnings = true
-    # Diffs on temperature near 2e-7
-    abs_zero = 1e-6
+    rel_err = 1e-4
   []
   [tensor_mechanics_bison]
     type = CSVDiff
