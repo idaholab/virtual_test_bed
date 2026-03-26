@@ -114,6 +114,7 @@ duct_inside = '${fparse duct_outside - 2 * duct_thickness}'
   duct_HTC_closure = 'gnielinski'
   # friction model
   friction_closure = 'cheng'
+  full_output = true
 []
 
 [SCMClosures]
