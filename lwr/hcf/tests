@@ -4,15 +4,15 @@
     type = CSVDiff
     input = 'moose_hcf_mesher.i'
     csvdiff = 'mesh.csv'
+    executable_pattern = 'bison*|combined*'
     requirement = 'The system shall be able to generate a mesh for the HCF.'
-    capabilities = 'combinedapp | bisonapp'
   []
 
   [fuel_syntax]
     type = RunApp
     input = 'input.i'
     check_input = True
-    capabilities = 'bisonapp'
+    executable_pattern = 'bison*'
     prereq = 'mesh'
   []
 []
