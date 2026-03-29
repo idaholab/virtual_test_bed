@@ -157,7 +157,6 @@
     cli_args = 'Components/heat_pipe/initial_T=900'
     executable_pattern = 'sockeye*|dire_wolf*'
     # Capillary limit for vertical heat pipes is not accurate; see https://hpcgitlab.hpc.inl.gov/idaholab/sockeye/-/issues/65
-    # Cross-section warning due to missing fission-only
     allow_warnings = true
     prereq = 'fluids_sockeye'
   []
@@ -181,7 +180,6 @@
     check_input = True
     executable_pattern = 'sockeye*|dire_wolf*'
     # Capillary limit for vertical heat pipes is not accurate; see https://hpcgitlab.hpc.inl.gov/idaholab/sockeye/-/issues/65
-    # Cross-section warning due to missing fission-only
     allow_warnings = true
   []
 []
