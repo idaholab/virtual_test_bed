@@ -6,7 +6,7 @@
     type = RunApp
     input = ''
     cli_args = '--help'
-    # executable_pattern = 'cardinal*'
+    executable_pattern = 'cardinal*'
     required_python_packages = 'openmc numpy'
   []
   [generate_xml]
