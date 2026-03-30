@@ -5661,7 +5661,7 @@ n_urlr = 4
       growth_factor = 1.5
       optimal_iterations = 8
       linear_iteration_ratio = 150
-      dt = 0.05
+      dt = 0.02
       cutback_factor = 0.8
       cutback_factor_at_failure = 0.5
     []
@@ -5674,11 +5674,11 @@ n_urlr = 4
   []
 
   petsc_options_iname = '-pc_type -ksp_gmres_restart -mat_mffd_err'
-  petsc_options_value = 'lu       101                1e-5'
+  petsc_options_value = 'lu       101                1e-6'
   nl_rel_tol = 1e-5
   nl_abs_tol = 1e-6
   nl_max_its = 12
-  l_tol = 1e-4 # Relative linear tolerance for each Krylov solve
+  l_tol = 1e-5 # Relative linear tolerance for each Krylov solve
   l_max_its = 100 # Number of linear iterations for each Krylov solve
 
   [Quadrature]
