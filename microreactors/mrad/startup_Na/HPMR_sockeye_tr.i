@@ -103,11 +103,9 @@ htc_ext_cond = 152
     sp_clad = sp_ss316
     closures = closures
 
-    # For some reason, slope reconstruction during startup gives issues. This
-    # needs to be investigated.
     slope_reconstruction = NONE
     stop_vapor_at_condenser_pool = true
-    startup_front_option = continuum_flow
+    startup_front_option = NONE
     D_collision = 0.362e-9
     Kn_transition = 0.01
   []

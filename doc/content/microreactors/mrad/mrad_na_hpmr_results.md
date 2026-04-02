@@ -40,20 +40,20 @@ The model predicts that an abrupt reduction in heat removal capability triggers 
 ## Startup Transient Results
 
 !media media/mrad/nahpmr/hpmr_temp.png
-       style=display: block;margin-left:auto;margin-right:auto;width:60%;
+       style=display: block;margin-left:auto;margin-right:auto;width:80%;
        id=hpmr_temp_startup
        caption=Time evolution of the calculated average temperatures of different reactor components during the startup.
 
-As predicted by the multiphysics model, during HPMR startup, the thermal evolution of three representative HPMR components is shown in [hpmr_temp_startup]. Reactor temperatures initially rise rapidly while the heat pipes remain inactive. At approximately 600 seconds, the rate of increase slows, signaling heat pipes activation. Temperatures subsequently approach asymptotic values several hours after the power ramping concludes at 3,600 seconds.
+As predicted by the multiphysics model, during HPMR startup, the thermal evolution of three representative HPMR components is shown in [hpmr_temp_startup]. Reactor temperatures initially rise rapidly while the heat pipes remain inactive. At approximately 2,000-2,500 seconds, the rate of increase slows, signaling full heat pipes activation. Temperatures subsequently approach asymptotic values several hours after the power ramping concludes at 3,600 seconds.
 
-!media media/mrad/nahpmr/hp_front.png
-       style=display: block;margin-left:auto;margin-right:auto;width:60%;
-       id=hpmr_hp_front
-       caption=Time evolution of startup front position for the two representative heat pipes.
+!media media/mrad/nahpmr/hp_st_mass_flow_rate.png
+       style=display: block;margin-left:auto;margin-right:auto;width:80%;
+       id=hpmr_hp_st_mass_flow_rate
+       caption=Time evolution of startup mass flow rate for the two representative heat pipes along with the average heat pipe behavior.
 
-The progression of the startup fronts in representative heat pipes (see [hpmr_hp_front]) corroborates these trends: the vapor fronts reach the leading edge of the condenser at approximately 500 seconds and traverse its full length by approximately 1500-2000 seconds, coinciding with the temperature change observed in [hpmr_temp_startup]. This behavior is further validated by the heat removal rates shown in [hpmr_hp_ht_rm]. Overall, this work demonstrates that the LCVF heat pipe in Sockeye model can be successfully coupled with neutronics and solid heat conduction physics applications to create a full-core multiphysics HPMR model capable of capturing complex startup transients.
+The mass flow rate evolution of representative heat pipes (see [hpmr_hp_st_mass_flow_rate]) corroborates these trends: the mass flow rate begins to rise at approximately 500 seconds and its ramping rate saturates at approximately 2,000-2,500 seconds, coinciding with the temperature change observed in [hpmr_temp_startup]. This behavior is further validated by the heat removal rates shown in [hpmr_hp_ht_rm]. Overall, this work demonstrates that the Sockeye heat pipe model can be successfully coupled with neutronics and solid heat conduction physics applications to create a full-core multiphysics HPMR model capable of capturing complex startup transients.
 
 !media media/mrad/nahpmr/hp_ht_rm.png
        style=display: block;margin-left:auto;margin-right:auto;width:60%;
        id=hpmr_hp_ht_rm
-       caption=Time evolution of heat removal rate for the two representative heat pipes.
+       caption=Time evolution of heat removal rate for the two representative heat pipes along with the average heat pipe behavior.
