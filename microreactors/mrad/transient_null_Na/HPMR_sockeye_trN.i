@@ -1,12 +1,12 @@
 ################################################################################
 ## NEAMS Micro-Reactor Application Driver                                     ##
-## Heat Pipe Microreactor with Na Working Fluid Steady State (Na-HPMR) SS     ##
+## Heat Pipe Microreactor with Na Working Fluid Null Transient (Na-HPMR) TrN  ##
 ## Sockeye Grandchild Application input file                                  ##
 ## Liquid-Conductance Vapor-Flow (LCVF) Heat Pipe Model (Vapor-Only)          ##
 ################################################################################
 
-t_start = -5e4
-t_end = 0
+t_start = 0
+t_end = 200
 
 length_evap = 1.8
 length_adia = 0.3
@@ -87,7 +87,7 @@ htc_ext_cond = 1.0e6
     n_elems_ann  = ${n_elems_ann}
     n_elems_clad = ${n_elems_clad}
 
-    initial_T = ${T_ext_cond}
+    # initial_T = ${T_ext_cond}
 
     fill_ratio = ${fill_ratio}
     T_ref_fill_ratio = ${T_ref_fill_ratio}
@@ -153,25 +153,25 @@ htc_ext_cond = 1.0e6
 
 [AuxVariables]
   [T_wall_var]
-    initial_condition = ${T_ext_cond}
+    # initial_condition = ${T_ext_cond}
   []
   [operational_aux]
-    initial_condition = 1
+    # initial_condition = 1
   []
   [master_flux]
-    initial_condition = 0
+    # initial_condition = 0
   []
   [master_t_solid]
-    initial_condition = ${T_ext_cond}
+    # initial_condition = ${T_ext_cond}
   []
   [hp_temp_aux]
-    initial_condition = ${T_ext_cond}
+    # initial_condition = ${T_ext_cond}
   []
   [virtual_Text]
-    initial_condition = ${T_ext_cond}
+    # initial_condition = ${T_ext_cond}
   []
   [virtual_htc]
-    initial_condition = 1.0
+    # initial_condition = 1.0
   []
 []
 
