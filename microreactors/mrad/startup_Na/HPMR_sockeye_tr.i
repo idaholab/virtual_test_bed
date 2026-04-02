@@ -1,12 +1,14 @@
 ################################################################################
 ## NEAMS Micro-Reactor Application Driver                                     ##
-## Heat Pipe Microreactor with Na Working Fluid Steady State (Na-HPMR) SS     ##
+## Heat Pipe Microreactor with Na Working Fluid startup (Na-HPMR)             ##
 ## Sockeye Grandchild Application input file                                  ##
 ## Liquid-Conductance Vapor-Flow (LCVF) Heat Pipe Model (Vapor-Only)          ##
 ################################################################################
 
-t_start = -5e4
-t_end = 0
+# Multiphysics coupling using the vapor-only flow model.
+
+t_start = 0
+t_end = 10000
 
 length_evap = 1.8
 length_adia = 0.3
@@ -30,13 +32,15 @@ permeability = 2e-9
 R_pore = 15e-6
 
 fill_ratio = 1.1
-T_ref_fill_ratio = 600
 
+T_ref_fill_ratio = 1000.0
 T_ref_rho_wick = 1000.0
 T_ref_rho_clad = 1000.0
 
-T_ext_cond = 900
-htc_ext_cond = 1.0e6
+T_ext_cond = 700
+# The number is set so that a ~1800W power lead to ~900K hp temperature
+# More realistic simulation needs to be enabled by a secondary loop model in the future
+htc_ext_cond = 152
 
 [FluidProperties]
   [fp_2phase]
@@ -106,6 +110,8 @@ htc_ext_cond = 1.0e6
     Kn_transition = 0.01
   []
 
+  # This is the same as the HPMR MP case
+  # Direct adoption to ensure compatibility
   [evaporator_boundary]
     type = HSBoundaryExternalAppConvection
     boundary = 'heat_pipe:hs:evap:outer'
@@ -114,8 +120,6 @@ htc_ext_cond = 1.0e6
     htc_ext = virtual_htc
   []
 
-  # This works but is simplified
-  # Improvement needed in the future
   [condenser_boundary]
     type = HSBoundaryAmbientConvection
     boundary = 'heat_pipe:hs:cond:outer'
@@ -225,18 +229,18 @@ htc_ext_cond = 1.0e6
   [TimeStepper]
     type = IterationAdaptiveDT
     dt = 0.1
-    optimal_iterations = 15
+    optimal_iterations = 10
     iteration_window = 2
     growth_factor = 2
-    cutback_factor = 0.8
+    cutback_factor = 0.5
   []
 
+  # See this in some examples, but not sure about the mechanism
   [Quadrature]
     type = GAUSS
     order = SECOND
   []
 
-  ## PJFNK + superlu seems to make the problem converge faster
   solve_type = PJFNK
   petsc_options = '-snes_ksp_ew'
   petsc_options_iname = '-pc_type -pc_factor_mat_solver_package -ksp_gmres_restart'
@@ -254,14 +258,10 @@ htc_ext_cond = 1.0e6
 []
 
 [Outputs]
+  csv = true
   exodus = false
   [console]
     type = Console
     execute_postprocessors_on = 'NONE'
-  []
-  [csv]
-    type = CSV
-    execute_on = 'INITIAL FINAL'
-    enable = false
   []
 []

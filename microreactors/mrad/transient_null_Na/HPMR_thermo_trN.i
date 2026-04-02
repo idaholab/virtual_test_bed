@@ -1,25 +1,20 @@
 ################################################################################
 ## NEAMS Micro-Reactor Application Driver                                     ##
-## Heat Pipe Microreactor with Na Working Fluid Steady State (Na-HPMR) SS     ##
+## Heat Pipe Microreactor with Na Working Fluid Null Transient (Na-HPMR) TrN  ##
 ## BISON Child Application input file                                         ##
 ## Thermal Only Physics                                                       ##
 ################################################################################
 
 # The majority of the input file is the same as the K-HPMR model
-!include 'HPMR_thermo_ss_base.i'
+!include 'HPMR_thermo_trN_base.i'
 
-[Mesh]
-  # [fmg]
-  #   file := 'bison-mesh.cpr'
-  #   skip_partitioning = true
-  # []
-  parallel_type = distributed
+[Problem]
+  restart_file_base := '../steady_Na/HPMR_dfem_griffin_ss_out_bison0_cp/LATEST'
 []
 
-[Variables]
-  [temp]
-    initial_condition := 900
-  []
+[Mesh]
+  file := '../steady_Na/HPMR_dfem_griffin_ss_out_bison0_cp/LATEST'
+  parallel_type = distributed
 []
 
 [BCs]
@@ -47,16 +42,4 @@
   petsc_options_iname := '-pc_type -pc_factor_mat_solver_package -ksp_gmres_restart'
   petsc_options_value := 'lu       superlu_dist                  51'
   line_search = 'none'
-
-  dtmin := 1e-4
-  dtmax = 5000
-  num_steps := 4294967295
-
-  automatic_scaling = true
-  compute_scaling_once = false
-
-  [TimeStepper]
-    type = IterationAdaptiveDT
-    dt = 0.1
-  []
 []

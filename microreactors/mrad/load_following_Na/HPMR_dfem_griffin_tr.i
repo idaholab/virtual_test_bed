@@ -1,12 +1,12 @@
 ################################################################################
 ## NEAMS Micro-Reactor Application Driver                                     ##
-## Heat Pipe Microreactor with Na Working Fluid Steady State (Na-HPMR) SS     ##
+## Heat Pipe Microreactor with Na Working Fluid load following (Na-HPMR) LF   ##
 ## Griffin Main Application input file                                        ##
 ## DFEM-SN (1, 3) with CMFD acceleration                                      ##
 ################################################################################
 
 # The majority of the input file is the same as the K-HPMR model
-!include 'HPMR_dfem_griffin_ss_base.i'
+!include HPMR_dfem_griffin_tr_base.i
 
 [Mesh]
   # [fmg]
@@ -22,16 +22,10 @@
 []
 
 [AuxVariables]
-  [Tf]
-    initial_condition := 900
-  []
-  [Tm]
-    initial_condition := 900
-  []
   [nH]
-    initial_condition = 1.94
     order = CONSTANT
     family = MONOMIAL
+    initial_condition = 1.94
   []
 []
 
