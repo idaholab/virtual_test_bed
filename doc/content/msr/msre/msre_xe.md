@@ -2,11 +2,11 @@
 
 *Contact: Jun Fang, fangj.at.anl.gov*
 
-*Model link: [MSRE Xe Poisoning Model](https://github.com/idaholab/virtual_test_bed/tree/devel/msr/msre/steady_state)*
+*Model link: [MSRE Xe Poisoning Model](https://github.com/hapfang/virtual_test_bed/tree/xe/msr/msre/xe_poisoning)*
 
 !tag name=Molten Salt Reactor Experiment SAM Model
      description=Steady state and reactivity insertion accident models of the MSRE primary loop
-     image=https://mooseframework.inl.gov/virtual_test_bed/media/msr/msre/SAM_MSRE_1D.png
+     image=https://github.com/hapfang/virtual_test_bed/blob/xe/doc/content/media/msr/msre/xe_poisoning/ss_results.png
      pairs=reactor_type:MSR
                        reactor:MSRE
                        geometry:primary_loop
