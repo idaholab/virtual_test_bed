@@ -21,7 +21,12 @@
 
 ## Summary
 
-In addition to the previously reported Xe poisoning study using the coupled SAM-Griffin model, this page documents a parallel effort that extends the existing MSRE multiphysics Griffin-Pronghorn framework by incorporating Xe poisoning physics. The objective is to integrate fission-product transport and reactivity feedback effects into the established loop-scale multiphysics model so reactor dynamics reflect both thermal-hydraulic and neutronic responses to $^{135}Xe$ and $^{135}I$ behavior in circulating fuel salt.
+This page documents an effort that extends the existing MSRE multiphysics Griffin–Pronghorn framework by incorporating Xe poisoning physics. The objective is to integrate fission-product transport and reactivity feedback effects into the established loop-scale multiphysics model so reactor dynamics reflect both thermal-hydraulic and neutronic responses to ($^{135}\text{Xe}$) and ($^{135}\text{I}$) behavior in circulating fuel salt.
+
+Modeling xenon effects is essential because ($^{135}\text{Xe}$), with its large neutron absorption cross section, has a dominant influence on reactor reactivity, stability, and operational flexibility. In molten salt reactors, this challenge is further complicated by the flowing fuel, which transports xenon throughout the primary loop and introduces additional physics such as advection, diffusion, bubble stripping, and graphite interactions. These coupled phenomena can significantly alter spatial xenon distributions and transient reactivity behavior, directly impacting reactor control, restart capability, and load-following performance.
+
+Therefore, incorporating xenon transport and feedback within a tightly coupled multiphysics framework is critical for accurately predicting reactor dynamics and ensuring reliable analysis of MSR behavior under both steady-state and transient conditions.
+
 
 ## Model Description
 
