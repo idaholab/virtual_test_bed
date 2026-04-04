@@ -12,6 +12,7 @@
     csvdiff = 'null.csv null_pke_params.csv'
     abs_zero = 1e-8
     executable_pattern = 'griffin*|blue_crab*|dire_wolf*'
+    prereq = 'ss'
   []
   [iqs]
     type = CSVDiff
@@ -21,6 +22,7 @@
     capabilities = 'method=opt'
     abs_zero = 1e-8
     executable_pattern = 'griffin*|blue_crab*|dire_wolf*'
+    prereq = 'null'
   []
   [pke]
     type = CSVDiff

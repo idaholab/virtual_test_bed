@@ -1,6 +1,8 @@
 # Na-HPMR Multiphysics Model
 
-*Contact: Yinbin Miao (ymiao.at.anl.gov), Ahmed Abdelhameed (aabdelhameed.at.anl.gov)*
+*Contact: Yinbin Miao (ymiao.at.anl.gov)*
+
+*Primary Contributors: Yinbin Miao, Yan Cao, Ahmed Abdelhameed*
 
 *Model link: [HPMR Model](https://github.com/idaholab/virtual_test_bed/tree/devel/microreactors/mrad)*
 
@@ -44,4 +46,18 @@ Instead of the effective thermal conductance model used in the K-HPMR model, the
 
 ## Steady-State Case Simulation
 
-In the current Na-HPMR multiphysics model, only the steady-state case is simulated. Transient simulations are planned to be implemented in the near future.
+The steady-state simulation of this Na-HPMR is performed to establish the baseline performance of the microreactor design. This also serves as the initial conditions or reference status for the following transient simulations.
+
+## Transient Simulation
+
+Two types of transient simulations are constructed for the Na-HPMR model: the former is the loading following transient simulation, which is similar to the load following transient simulation performed for the K-HPMR configuration; the latter is the startup transient simulation, which mainly demonstrate the Sockeye LCVF heat pipe model's capability in modeling the heat pipe startup process in a full-core multiphysics scheme.
+
+### Load Following Transient Simulation
+
+The load following transient simulation for the Na-HPMR is performed using the same approach as the counterpart simulation for the K-HPMR. The transient is initiated by a significant reduction in the heat removal capability of the secondary coolant loop through alterning the condensor envelope surface boundary condition in the Sockeye model. The heat transfer coefficient (HTC) of that convective boundary condition is reduced by 99.99% (i.e., from 10$^6$ W/m$^2$-K to 100 W/m$^2$-K) to mimic the loss of heat removal capability in the secondary coolant loop. The transient simulation is performed for 2,000 seconds.
+
+### Startup Transient Simulation
+
+The startup transient simulation is conducted using a different and simplified approach compared to the load following transient simulation. The reactivity startup of the microreactor is achieved by precise control of the control drum rotation to compensate the reactivity feedback from the increasing temperature to maintain a designated power ramping profile. Such a startup procedure would be expensive to perform if a high-fidelity neutronics modeling approach is used. Alternatively, the startup neutronics can be modeled using point kinetics with a much lower computational cost. However, as the focus of the startup transient simulation is to demonstrate the capability of the Sockeye model in a multiphysics scheme instead of the neutronics behavior during startup, it is not essential to include a low-fidelity neutronics model such as point kinetics in the model. Instead, the startup transient simulation is performed by directly controlling the power ramping profile in the BISON model, while the Griffin model is bypassed. A linear power ramping profile which reaches the nominal power within 3,600 seconds is used for the startup transient simulation. The temperature evolution in different reactor components and the activation of the heat pipes are the focus of the analysis. It is also worth noting that the startup transient involved here is not a frozen startup. Instead, the initial temperature is set at 700 K, which is lower than the activation temperature of the sodium work fluid but higher than the melting point of sodium.
+
+To establish this initial state, the external boundary temperature at the condenser was reduced from 900 K to 700 K. To maintain a steady state condenser temperature of ~900 K at full power despite the 700 K external boundary, the heat transfer coefficient was adjusted to 152 W/m²K. This configuration holds the condenser near 900 K at approximately 1800 W per heat pipe (the design power level). While this simplified boundary condition effectively captures the desired startup temperature behavior, a coupled, high-fidelity secondary system model will be integrated in the near future for more realistic simulations.

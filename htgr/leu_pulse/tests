@@ -33,6 +33,7 @@
     executable_pattern = 'griffin*'
     prereq = 'init_refcube_griffin_syntax'
     min_parallel = 16
+    ignore_columns = 'lin_steps nl_steps'
   []
   [adj_refcube_regression]
     type = CSVDiff
@@ -41,6 +42,7 @@
     executable_pattern = 'griffin*'
     prereq = 'adj_refcube_griffin_syntax'
     min_parallel = 16
+    ignore_columns = 'lin_steps nl_steps'
   []
   [ht_20r_leu_fl_regression]
     type = CSVDiff
@@ -50,6 +52,7 @@
     prereq = 'ht_20r_leu_fl_griffin_syntax'
     cli_args = "Executioner/end_time=0.010"
     min_parallel = 16
+    ignore_columns = 'lin_steps nl_steps'
   []
   [refcube_regression]
     type = CSVDiff

@@ -98,7 +98,7 @@
   []
 
   [Cladding_load_pad_stitching]
-    type = StitchedMeshGenerator
+    type = StitchMeshGenerator
     inputs = 'cladding_extrude  load_pad_translate'
     clear_stitched_boundary_ids = true
     stitch_boundaries_pairs = '1000 2200'

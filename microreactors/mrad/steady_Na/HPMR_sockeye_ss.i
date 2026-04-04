@@ -40,7 +40,8 @@ htc_ext_cond = 1.0e6
 
 [FluidProperties]
   [fp_2phase]
-    type = SodiumIdealGasTwoPhaseFluidProperties
+    # Better convergence compare to SodiumIdealGasTwoPhaseFluidProperties
+    type = SodiumTwoPhaseFluidProperties
     emit_on_nan = none
   []
 []
@@ -100,7 +101,7 @@ htc_ext_cond = 1.0e6
 
     slope_reconstruction = NONE
     stop_vapor_at_condenser_pool = true
-    startup_front_option = continuum_flow
+    startup_front_option = NONE
     D_collision = 0.362e-9
     Kn_transition = 0.01
   []

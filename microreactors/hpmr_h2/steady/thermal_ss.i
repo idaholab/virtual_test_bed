@@ -169,29 +169,34 @@ qvalue_multiplier = 1.0
   #### DENSITY #####
   # units of kg/m^3
   [fuel_density]
-    type = Density
+    type = StrainAdjustedDensity
     block = '${fuel_blocks}'
-    density = 14.3e3 # same as in Serpent input
+    displacements = '0 0 0'
+    strain_free_density = 14.3e3 # same as in Serpent input
   []
   [moderator_density]
-    type = Density
+    type = StrainAdjustedDensity
     block = '${moderator_blocks}'
-    density = 4.3e3 # same as in Serpent input
+    displacements = '0 0 0'
+    strain_free_density = 4.3e3 # same as in Serpent input
   []
   [monolith_density]
-    type = Density
+    type = StrainAdjustedDensity
     block = '${monolith_blocks}'
-    density = 1.8e3 # same as in Serpent input
+    displacements = '0 0 0'
+    strain_free_density = 1.8e3 # same as in Serpent input
   []
   [reflector_density]
-    type = Density
+    type = StrainAdjustedDensity
     block = '${reflector_blocks}'
-    density = 1.85376e3 # same as in Serpent input
+    displacements = '0 0 0'
+    strain_free_density = 1.85376e3 # same as in Serpent input
   []
   [absorber_density]
-    type = Density
+    type = StrainAdjustedDensity
     block = '${absorber_blocks}'
-    density = 2.52e3 # same as in Serpent input
+    displacements = '0 0 0'
+    strain_free_density = 2.52e3 # same as in Serpent input
   []
   ### THERMAL CONDUCTIVITY ###
   # units of W/m-K

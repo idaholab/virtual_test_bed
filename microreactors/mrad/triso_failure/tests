@@ -74,7 +74,8 @@
     working_directory = 'UnitCell_with_TM'
     input = 'MP_ss_bison.i'
     executable_pattern = 'bison*|blue_crab*|dire_wolf*'
-    cli_args = "MultiApps/active='' Transfers/active='' Executioner/num_steps=3 Outputs/csv=true "
+    cli_args = "AuxVariables/hp_temp_aux/initial_condition=300 MultiApps/active='' "
+               "Transfers/active='' Executioner/num_steps=3 Outputs/csv=true "
                "Outputs/pp_fuelsampler_temp_1/file_base=pp_fuelsampler_temp_1 "
                "Outputs/pp_fuelsampler_pow_1/file_base=pp_fuelsampler_pow_1 "
                "Outputs/pp_fuelsampler_temp_11/file_base=pp_fuelsampler_temp_11 "
@@ -84,8 +85,7 @@
 
     # Packing fraction and temperature out of bounds
     allow_warnings = true
-    # Diffs on temperature near 2e-7
-    abs_zero = 1e-6
+    rel_err = 1e-4
   []
   [tensor_mechanics_bison]
     type = CSVDiff

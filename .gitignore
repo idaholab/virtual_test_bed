@@ -105,6 +105,7 @@ tmp_*
 !**/gold/*.vtu
 !**/gold/*.pvtu
 !**/gold/*.json
+!**/gold/*/*.xml
 !**/gold/*/*.e
 !**/gold/*/*.e-s*
 !**/gold/*/*.csv
@@ -112,6 +113,7 @@ tmp_*
 !**/gold/*/*.vtu
 !**/gold/*/*.pvtu
 !**/gold/*/*.json
+!**/gold/*/*.xml
 !**/gold/*/*/*.e
 !**/gold/*/*/*.e-s*
 !**/gold/*/*/*.csv
@@ -243,3 +245,5 @@ build
 doc/presentations/qualifying-exam/data/*
 
 *.dump
+
+scripts/config.yaml

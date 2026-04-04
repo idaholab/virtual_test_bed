@@ -279,26 +279,28 @@ cond = 0.2309 # He at 523K, 2.8MPa
   [Fuel_compact]
     type = HeatConductionMaterial
     block = '${fuel_blocks}'
-    temp = temp
+    temperature = temp
     thermal_conductivity_temperature_function = compact_k
     specific_heat_temperature_function = compact_cp
   []
   [Fuel_sleeve]
     type = HeatConductionMaterial
     block = '${sleeve_blocks} ${mod_blocks}'
-    temp = temp
+    temperature = temp
     thermal_conductivity_temperature_function = IG110_k
     specific_heat_temperature_function = IG110_cp
   []
   [Fuel_compact_density]
-    type = Density
+    type = StrainAdjustedDensity
     block = '${fuel_blocks}'
-    density = 2573 # kg/m^3 - obtained using the tpmain Fortran script with a packing fraction of 0.3
+    displacements = '0 0 0'
+    strain_free_density = 2573 # kg/m^3 - obtained using the tpmain Fortran script with a packing fraction of 0.3
   []
   [Fuel_sleeve_density]
-    type = Density
+    type = StrainAdjustedDensity
     block = '${sleeve_blocks} ${mod_blocks}'
-    density = 1770 # kg/m^3 - comes from table 1.27 of the NEA/NSC/DOC(2006)1 report
+    displacements = '0 0 0'
+    strain_free_density = 1770 # kg/m^3 - comes from table 1.27 of the NEA/NSC/DOC(2006)1 report
   []
 []
 

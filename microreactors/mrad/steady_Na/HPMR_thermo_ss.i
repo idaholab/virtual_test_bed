@@ -6,7 +6,15 @@
 ################################################################################
 
 # The majority of the input file is the same as the K-HPMR model
-!include '../steady/HPMR_thermo_ss.i'
+!include 'HPMR_thermo_ss_base.i'
+
+[Mesh]
+  # [fmg]
+  #   file := 'bison-mesh.cpr'
+  #   skip_partitioning = true
+  # []
+  parallel_type = distributed
+[]
 
 [Variables]
   [temp]
