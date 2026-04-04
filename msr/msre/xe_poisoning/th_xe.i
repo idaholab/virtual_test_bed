@@ -81,7 +81,6 @@ solid_blocks = 'core core_barrel'
 # GLOBAL PARAMETERS
 # ==============================================================================
 [GlobalParams]
-  fp = fluid_properties_obj
   porosity = 'porosity'
   rhie_chow_user_object = 'pins_rhie_chow_interpolator'
 
@@ -101,7 +100,7 @@ solid_blocks = 'core core_barrel'
   [restart]
     type = FileMeshGenerator
     use_for_exodus_restart = true
-    file = './neu_pump_out_flow_dnp0_restart.e'
+    file = './neu_xe_init.e'
   []
 []
 
@@ -113,26 +112,6 @@ solid_blocks = 'core core_barrel'
 # FV VARIABLES
 # ==============================================================================
 [Variables]
-  [superficial_vel_x]
-    type = PINSFVSuperficialVelocityVariable
-    initial_condition = 1e-8
-    block = ${fluid_blocks}
-  []
-  [superficial_vel_y]
-    type = PINSFVSuperficialVelocityVariable
-    initial_condition = 1e-8
-    block = ${fluid_blocks}
-  []
-  [pressure]
-    type = INSFVPressureVariable
-    initial_condition = ${p_outlet}
-    block = ${fluid_blocks}
-  []
-  [T_fluid]
-    type = INSFVEnergyVariable
-    initial_condition = ${T_Salt_initial}
-    block = ${fluid_blocks}
-  []
   [T_solid]
     type = INSFVEnergyVariable
     initial_condition = ${T_Salt_initial}
@@ -196,14 +175,18 @@ solid_blocks = 'core core_barrel'
     pressure_variable = 'pressure'
     fluid_temperature_variable = 'T_fluid'
 
+    # ICs
+    initial_velocity = '1e-8 1e-8'
+    initial_pressure = ${p_outlet}
+    initial_temperature = ${T_Salt_initial}
+
     # Numerical schemes
-    pressure_face_interpolation = average
     momentum_advection_interpolation = upwind
     mass_advection_interpolation = upwind
     energy_advection_interpolation = upwind
     velocity_interpolation = rc
 
-    # Porous & Friction treatement
+    # Porous & Friction treatment
     use_friction_correction = true
     friction_types = 'darcy forchheimer'
     friction_coeffs = 'Darcy_coefficient Forchheimer_coefficient'
@@ -211,7 +194,7 @@ solid_blocks = 'core core_barrel'
     porosity_smoothing_layers = 2
     turbulence_handling = 'mixing-length'
 
-    # fluid properties
+    # Fluid properties
     density = 'rho'
     dynamic_viscosity = 'mu'
     thermal_conductivity = 'kappa'
@@ -219,13 +202,12 @@ solid_blocks = 'core core_barrel'
 
     # Energy source-sink
     external_heat_source = 'power_density'
-    #energy_scaling = 2.0
 
     # Boundary Conditions
     wall_boundaries = 'left      top      bottom   right    loop_boundary bypass_line_boundary extraction return_line_boundary'
     momentum_wall_types = 'symmetry  slip     noslip   noslip   noslip    noslip   noslip noslip'
     energy_wall_types = 'heatflux  heatflux heatflux heatflux heatflux    heatflux heatflux heatflux'
-    energy_wall_function = '0        0        0        0        0         0      0    0'
+    energy_wall_functors = '0        0        0        0         0      0    0        0'
 
     # Constrain Pressure
     pin_pressure = true
@@ -233,12 +215,8 @@ solid_blocks = 'core core_barrel'
     pinned_pressure_point = '0.0 2.13859 0.0'
     pinned_pressure_type = point-value-uo
 
-    # Passive Scalar -- solved separetely to integrate porosity jumps
+    # Passive Scalar -- solved separately to integrate porosity jumps
     add_scalar_equation = false
-
-    #Scaling -- used mainly for nonlinear solves
-    momentum_scaling = 1e-3
-    mass_scaling = 10
   []
 []
 
@@ -703,7 +681,7 @@ solid_blocks = 'core core_barrel'
 # ==============================================================================
 # MATERIALS
 # ==============================================================================
-[Materials]
+[FunctorMaterials]
 
   # Setting up material porosities at fluid blocks
   [porosity]
@@ -741,6 +719,7 @@ solid_blocks = 'core core_barrel'
   # Setting up fluid properties at blocks material blocks
   [fluid_props_to_mat_props]
     type = GeneralFunctorFluidProps
+    fp = fluid_properties_obj       # Add this explicitly here
     pressure = 'pressure'
     T_fluid = 'T_fluid'
     speed = 'speed'
@@ -921,7 +900,7 @@ solid_blocks = 'core core_barrel'
   []
   [return_line_fraction]
     type = ParsedPostprocessor
-    function = '- vfr_return_line / vfr_pump'
+    expression = '- vfr_return_line / vfr_pump'
     pp_names = 'vfr_return_line vfr_pump'
   []
 []
@@ -981,7 +960,8 @@ solid_blocks = 'core core_barrel'
     input_files           = 'neu_xe.i'
     execute_on            = 'timestep_end'
 
-    no_backup_and_restore = true
+    keep_solution_during_restore = true
+    update_old_solution_when_keeping_solution_during_restore = false # Add this line
     enable                = true
   []
 []

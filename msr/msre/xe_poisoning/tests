@@ -1,0 +1,46 @@
+[Tests]
+  # Syntax checks
+  [neu_xe_syntax]
+    type = RunApp
+    input = 'neu_xe.i'
+    check_input = True
+    executable_pattern = 'griffin*'
+    cli_args = "MultiApps/active='' Transfers/active=''"
+  []
+
+  [th_xe_syntax]
+    type = RunApp
+    input = 'th_xe.i'
+    check_input = True
+    executable_pattern = 'pronghorn*'
+    capabilities = 'method=opt'
+  []
+
+  # Regression tests with CSV output
+  [neu_xe_regression]
+    prereq = neu_xe_syntax
+    type = CSVDiff
+    rel_err = 1.0E-4
+    input = 'neu_xe.i'
+    # Ensure this matches the [Outputs] block name in your .i file
+    csvdiff = 'neu_xe_out.csv'
+    executable_pattern = 'griffin*'
+    allow_warnings = true
+    cli_args = "MultiApps/active='' Transfers/active=''"
+    capabilities = 'method=opt'
+  []
+
+  [th_xe_regression]
+    prereq = th_xe_syntax
+    type = CSVDiff
+    rel_err = 1.0E-4
+    input = 'th_xe.i'
+    # Ensure this matches the [Outputs] block name in your .i file
+    csvdiff = 'th_xe_out.csv'
+    executable_pattern = 'pronghorn*'
+    allow_warnings = true
+    capabilities = 'method=opt'
+    cli_args = 'Executioner/num_steps=1'
+    min_parallel = 8
+  []
+[]
