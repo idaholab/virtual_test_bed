@@ -45,7 +45,7 @@ The computational domain includes the core, lower plenum, upper plenum, downcome
 
 ### Physics and Coupling Strategy
 
-To model Xe poisoning in the existing Griffin-Pronghorn MSRE framework, the +MOOSE MultiApps+ hierarchy is configured with +Pronghorn+ as the master application and +Griffin+ as the sub-application. This mirrors the SAM-Griffin coupling philosophy: the thermal-hydraulics application drives simulation flow and data exchange, while Griffin performs neutronics calculations for reactivity and power updates. At a high level, the coupling workflow is:
+To model Xe poisoning in the existing Griffin-Pronghorn MSRE framework, the +MOOSE MultiApps+ hierarchy is configured with +Pronghorn+ as the parent application and +Griffin+ as the child application. This mirrors the SAM-Griffin coupling philosophy: the thermal-hydraulics application drives simulation flow and data exchange, while Griffin performs neutronics calculations for reactivity and power updates. At a high level, the coupling workflow is:
 
 - +Thermal Hydraulics (Pronghorn):+ Solves weakly compressible porous-media conservation equations for mass, momentum, and energy to obtain temperature, pressure, and flow fields.
 - +Neutronics (Griffin):+ Solves a multigroup diffusion eigenvalue problem to obtain neutron flux and power distribution.
@@ -129,12 +129,12 @@ Key parameters used in the governing equations include:
 
 There are two primary input files in this coupled Xe-poisoning model:
 
-- Pronghorn thermal-hydraulics/species master input: `msr/msre/xe_poisoning/th_xe.i`
+- Pronghorn thermal-hydraulics/species parent input: `msr/msre/xe_poisoning/th_xe.i`
 - Griffin neutronics sub-application input: `msr/msre/xe_poisoning/neu_xe.i`
 
 ### Pronghorn Input File (`th_xe.i`)
 
-The Pronghorn input file acts as the **Master Application**. It is responsible for solving fluid flow, heat transfer, and the transport of physical species (iodine and xenon) throughout the primary loop.
+The Pronghorn input file acts as the **Parent Application**. It is responsible for solving fluid flow, heat transfer, and the transport of physical species (iodine and xenon) throughout the primary loop.
 
 #### Mesh
 
@@ -339,7 +339,7 @@ module load use.moose moose-apps bluecrab
 Use `mpiexec` to distribute the coupled solve. For this 2-D axisymmetric case, 6 cores are a practical balance between computational speed and communication overhead.
 
 ```language=bash
-# Execute the master input file using 6 processors
+# Execute the parent application input file using 6 processors
 mpiexec -n 6 blue_crab-opt -i th_xe.i 2>&1 | tee logfile
 ```
 
@@ -350,6 +350,6 @@ mpiexec -n 6 blue_crab-opt -i th_xe.i 2>&1 | tee logfile
 | :- | :- |
 | `mpiexec -n 6` | Launches MPI with 6 parallel processes. |
 | `blue_crab-opt` | Optimized executable containing both Pronghorn and Griffin physics. |
-| `-i th_xe.i` | Specifies the master input file; the sub-app input (`neu_xe.i`) is launched via the `[MultiApps]` block. |
+| `-i th_xe.i` | Specifies the parent application input file; the sub-app input (`neu_xe.i`) is launched via the `[MultiApps]` block. |
 | `2>&1` | Redirects standard error to standard output so all messages are captured together. |
 | `tee logfile` | Writes console output to `logfile` while still printing to screen for live monitoring. |

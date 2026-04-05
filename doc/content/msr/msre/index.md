@@ -6,7 +6,7 @@
 
 [Multiphysics RZ Model](multiphysics_rz_model/index.md)
 
-[Modeling Xeon poisoning](msre/msre_xe.md)
+[Modeling Xenon poisoning](msre/msre_xe.md)
 
 [Cardinal model of pipe thermal striping](cardinal_thermal_striping.md)
 
