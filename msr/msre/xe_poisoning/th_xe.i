@@ -19,7 +19,7 @@ core_radius = 0.69793684
 # Properties -------------------------------------------------------------------
 core_porosity = 0.222831853 # core porosity salt VF=0.222831853, Graphite VF=0.777168147
 down_comer_porosity = 1.0 # downcomer porosity
-lower_plenum_porosity = 0.5 # lower pelnum porosity
+lower_plenum_porosity = 0.5 # lower plenum porosity
 upper_plenum_porosity = 1.0 # upper pelnum porosity
 riser_porosity = 1.0 # riser porosity
 pump_porosity = 1.0 # pump porosity
@@ -213,7 +213,7 @@ solid_blocks = 'core core_barrel'
     pin_pressure = true
     pinned_pressure_value = ${p_outlet}
     pinned_pressure_point = '0.0 2.13859 0.0'
-    pinned_pressure_type = point-value-uo
+    pinned_pressure_type = point-value
 
     # Passive Scalar -- solved separately to integrate porosity jumps
     add_scalar_equation = false
@@ -961,8 +961,7 @@ solid_blocks = 'core core_barrel'
     execute_on            = 'timestep_end'
 
     keep_solution_during_restore = true
-    update_old_solution_when_keeping_solution_during_restore = false # Add this line
-    enable                = true
+    update_old_solution_when_keeping_solution_during_restore = true
   []
 []
 
