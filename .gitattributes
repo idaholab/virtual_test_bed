@@ -62,3 +62,4 @@ microreactors/mrad/isoxml/HP-MR_XS.xml filter=lfs diff=lfs merge=lfs -text
 microreactors/mrad/isoxml/HP-MR_XS_Na_HPMR.xml filter=lfs diff=lfs merge=lfs -text
 htgr/open-xe100/xs/xe100_sp_sph_cavity.xml filter=lfs diff=lfs merge=lfs -text
 microreactors/mrad/startup_Na/power_density_data/power_density_ss.e filter=lfs diff=lfs merge=lfs -text
+microreactors/mrad/isoxml/Na-HPMR_Serpent_ENDFB80_g11_u804.xml filter=lfs diff=lfs merge=lfs -text
