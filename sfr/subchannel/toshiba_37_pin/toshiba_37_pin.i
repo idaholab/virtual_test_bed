@@ -50,11 +50,16 @@ P_out = 2.0e5 # Pa
   verbose_subchannel = false
   # friction model
   friction_closure = 'cheng'
+  # mixing model
+  mixing_closure = 'cheng_todreas'
 []
 
 [SCMClosures]
   [cheng]
     type = SCMFrictionUpdatedChengTodreas
+  []
+  [cheng_todreas]
+    type = SCMMixingChengTodreas
   []
 []
 

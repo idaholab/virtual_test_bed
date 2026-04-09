@@ -51,11 +51,56 @@ unheated_length_exit = '${fparse 26.9*scale_factor}'
 []
 
 [AuxVariables]
+  [mdot]
+    block = subchannel
+  []
+  [SumWij]
+    block = subchannel
+  []
+  [P]
+    block = subchannel
+  []
+  [DP]
+    block = subchannel
+  []
+  [h]
+    block = subchannel
+  []
+  [T]
+    block = subchannel
+  []
+  [rho]
+    block = subchannel
+  []
+  [S]
+    block = subchannel
+  []
+  [w_perim]
+    block = subchannel
+  []
+  [mu]
+    block = subchannel
+  []
   [q_prime_init]
     block = fuel_pins
   []
   [power_history_field]
     block = fuel_pins
+  []
+  [q_prime]
+    block = fuel_pins
+  []
+  [Tpin]
+    block = fuel_pins
+  []
+  [Dpin]
+    block = fuel_pins
+  []
+  [displacement]
+    block = subchannel
+  []
+  [ff]
+    block = subchannel
   []
 []
 
@@ -65,12 +110,11 @@ unheated_length_exit = '${fparse 26.9*scale_factor}'
   []
 []
 
-[SubChannel]
+[Problem]
   type = TriSubChannel1PhaseProblem
   fp = sodium
   n_blocks = 1
   P_out = ${P_out}
-  CT = 2.6
   compute_density = true
   compute_viscosity = true
   compute_power = true
@@ -79,13 +123,21 @@ unheated_length_exit = '${fparse 26.9*scale_factor}'
   implicit = true
   segregated = false
   interpolation_scheme = 'upwind'
-  # friction model
+  pin_HTC_closure = 'gnielinski'
   friction_closure = 'cheng'
+  mixing_closure = 'cheng_todreas'
 []
 
 [SCMClosures]
   [cheng]
     type = SCMFrictionUpdatedChengTodreas
+  []
+  [gnielinski]
+    type = SCMHTCGnielinski
+  []
+  [cheng_todreas]
+    type = SCMMixingChengTodreas
+    CT = 2.6
   []
 []
 
@@ -220,8 +272,8 @@ unheated_length_exit = '${fparse 26.9*scale_factor}'
   [change_q_prime]
     type = ParsedAux
     variable = q_prime
-    args = 'q_prime_init power_history_field'
-    function = 'q_prime_init*power_history_field'
+    coupled_variables = 'q_prime_init power_history_field'
+    expression = 'q_prime_init*power_history_field'
     execute_on = 'INITIAL TIMESTEP_BEGIN'
   []
 []
