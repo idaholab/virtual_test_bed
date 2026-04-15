@@ -950,7 +950,7 @@ rho_in            = 6.3306  # Helium density at 7 MPa and 523.15 K (from NIST)
 
   [TimeStepper]
     type = IterationAdaptiveDT
-    growth_factor = 1.25
+    growth_factor = 1.5
     optimal_iterations = 10
     linear_iteration_ratio = 100
     dt = 0.1
@@ -961,7 +961,7 @@ rho_in            = 6.3306  # Helium density at 7 MPa and 523.15 K (from NIST)
   nl_rel_tol = 1e-5
   nl_abs_tol = 1e-4
   nl_max_its = 15
-  l_tol      = 1e-3
+  l_tol      = 1e-4
   l_max_its  = 100
 
   start_time = -200000
