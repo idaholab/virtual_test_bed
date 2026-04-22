@@ -221,11 +221,14 @@ T_ref_fill_ratio = '${fparse T_sink - 50}'
 []
 
 [Outputs]
-  csv = true
   print_linear_converged_reason = false
   print_nonlinear_converged_reason = false
   print_linear_residuals = false
 
+  [out]
+    type = CSV
+    show = 'T_secondary Text_avg htc_equiv_cond total_condenser_power'
+  []
   [console]
     type = Console
     execute_postprocessors_on = 'NONE'

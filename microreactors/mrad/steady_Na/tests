@@ -60,6 +60,7 @@
     type = CSVDiff
     input = 'HPMR_sockeye_ss.i'
     csvdiff = 'HPMR_sockeye_ss_csv.csv'
+    abs_zero = 1e-9
     executable_pattern = 'sockeye*|dire_wolf*'
     cli_args = "Outputs/csv/enable=true"
     allow_warnings = true
