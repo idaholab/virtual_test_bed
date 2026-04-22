@@ -38,9 +38,9 @@
 	path = apps/moose
 	url = https://github.com/idaholab/moose.git
 	ignore = dirty
-[submodule "apps/ci/mstdb"]
-	path = apps/ci/mstdb
-	url = git@code.ornl.gov:neams/mstdb.git
+[submodule "apps/ci/msd-tc"]
+	path = apps/ci/msd-tc
+	url = git@code.ornl.gov:neams/msd-tc.git
 	ignore = dirty
 [submodule "apps/mastodon"]
 	path = apps/mastodon
