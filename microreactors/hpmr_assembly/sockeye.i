@@ -52,7 +52,7 @@ htc_hx = 228.0
 
     position_evap_end = '0 0 0'
     direction_evap_to_cond = '0 0 1'
-    gravity_vector = '0 0 0'
+    gravity_vector = '-9.8 0 0'
 
     L_evap = ${length_evap}
     L_adia = ${length_adia}
