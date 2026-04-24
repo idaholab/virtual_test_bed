@@ -370,7 +370,7 @@ Dh_pipe           = 2 #1
 
   [TimeStepper]
     type = IterationAdaptiveDT
-    growth_factor = 1.25
+    growth_factor = 1.5
     optimal_iterations = 10
     linear_iteration_ratio = 100
     dt = 0.1
