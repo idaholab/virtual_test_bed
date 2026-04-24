@@ -204,7 +204,8 @@ These properties are applied using `HeatConductionMaterial` and `GenericConstant
   caption=Thermal materials
   id=lst:thermal_mat
 
-Since the materials in the drum region change based on the position of the control drum, `GenericFunctionMaterial` is used to manually set these properties. Based on the position (provided by a post-processor values), these functions define whether a supplied (x,y) location is outside or inside the absorber region and output the appropriate property value:
+Since the materials in the drum region change based on the position of the control drum, `ControlDrumMaterial` is used to set all these properties.
+Based on the drum position (provided by a post-processor values received from the main application), these materials choose one of the properties of all segments on local quadrature points by which segment of the control drum they are located, either absorber or graphite.
 
 !listing microreactors/drum_rotation/thermal_ss.i
   block=Functions

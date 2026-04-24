@@ -97,33 +97,6 @@ y_center = ${fparse r}
   []
 []
 
-[Functions]
-  [cos_theta_hat]
-    type = ParsedFunction
-    expression = '(cos(theta*pi/180) * (xc - x) + sin(theta*pi/180) * (yc - y)) / (sqrt((xc-x)^2+(yc-y)^2))'
-    symbol_names = 'theta xc yc'
-    symbol_values = 'drum_position ${x_center} ${y_center}'
-  []
-  [drum_k]
-    type = ParsedFunction
-    expression = 'if(cost < cos45, 200, 20)'
-    symbol_names = 'cost cos45'
-    symbol_values = 'cos_theta_hat 0.7071067811865476'
-  []
-  [drum_cp]
-    type = ParsedFunction
-    expression = 'if(cost < cos45, 1825, 1000)'
-    symbol_names = 'cost cos45'
-    symbol_values = 'cos_theta_hat 0.7071067811865476'
-  []
-  [drum_rho]
-    type = ParsedFunction
-    expression = 'if(cost < cos45, 1.85376e3, 2.52e3)'
-    symbol_names = 'cost cos45'
-    symbol_values = 'cos_theta_hat 0.7071067811865476'
-  []
-[]
-
 [Materials]
   #### DENSITY #####
   # units of kg/m^3
@@ -182,12 +155,25 @@ y_center = ${fparse r}
     thermal_conductivity = 200 # W/m/K, typical value for Be
     specific_heat = 1825 # typical value for Be
   []
-
-  [drum_material]
-    type = GenericFunctionMaterial
+  [drum_segment_props]
+    type = GenericConstantMaterial
     block = '${drum_blocks}'
-    prop_names  = 'thermal_conductivity    specific_heat density   thermal_conductivity_dT'
-    prop_values = 'drum_k                  drum_cp        drum_rho 0'
+    prop_names = 'seg1_rho seg1_k seg1_dkdt seg1_cp
+                  seg2_rho seg2_k seg2_dkdt seg2_cp'
+    prop_values = '1.85376e3 200 0 1825
+                   2.52e3    20  0 1000'
+  []
+  [drum_props]
+    type = ControlDrumMaterial
+    block = '${drum_blocks}'
+    drum_material_property = 'density thermal_conductivity thermal_conductivity_dT specific_heat'
+    rotation_centers = '${x_center} ${y_center} 0'
+    rotation_angle_functions = drum_position
+    segment_angles = '270 90'
+    segment_material_properties = 'seg1_rho  seg2_rho;
+                                   seg1_k    seg2_k;
+                                   seg1_dkdt seg2_dkdt;
+                                   seg1_cp   seg2_cp'
   []
 []
 
