@@ -25,7 +25,7 @@ num_layers_for_THM = 50 # number of elements in the THM model
 
 [Closures]
   [none]
-    type = Closures1PhaseNone
+    type = WallTemperature1PhaseClosures
   []
 []
 
