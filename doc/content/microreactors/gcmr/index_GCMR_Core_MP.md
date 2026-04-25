@@ -2,6 +2,8 @@
 
 *Contacts: Yinbin Miao (ymiao.at.anl.gov), Nicolas Stauff (nstauff.at.anl.gov)*
 
+*Primary Contributors: Yinbin Miao, Ahmed Abdelhameed, Yiqi Yu, Yan Cao, Nicolas Stauff*
+
 !tag name=Gas-Cooled Microreactor Core
      description=3D core model of a Gas Cooled Micro Reactor with heterogeneous transport
      image=https://mooseframework.inl.gov/virtual_test_bed/media/gcmr/FCMP/gcmr_ss.png
@@ -27,3 +29,5 @@ The GCMR multiphysics model, developed at Argonne National Laboratory [!citep](s
 [Single Channel Blockage Transient](gcmr/GCMR_Core_SCB.md)
 
 [Full Core Depressurization Transient](gcmr/GCMR_Core_DP.md)
+
+[Multiphysics Model with Poison Tracking](gcmr/GCMR_Core_MP_FP.md)

@@ -339,7 +339,7 @@ coolant_full_points_filename = '../component_positions/cc_positions_sixth.txt'
     app_type = ThermalHydraulicsApp
     positions_objects = cc_positions
     bounding_box_padding = ' 0.1 0.1 0.1'
-    input_files = 'MP_SAM_ss.i'
+    input_files = 'MP_SAM_ss_fp.i'
     execute_on = 'INITIAL TIMESTEP_END'
     max_procs_per_app = 1
     output_in_position = true
@@ -506,6 +506,5 @@ coolant_full_points_filename = '../component_positions/cc_positions_sixth.txt'
   [cp]
     type = Checkpoint
     wall_time_interval = '300' # Only write a checkpoint file every 5 minutes of wall time
-    execute_on = FINAL
   []
 []

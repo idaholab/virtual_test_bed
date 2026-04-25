@@ -1,7 +1,7 @@
 ################################################################################
 ## NEAMS Micro-Reactor Application Driver                                     ##
-## Gas Cooled Microreactor Full Core Steady State                             ##
-## Griffin Main Application input file                                        ##
+## Gas Cooled Microreactor Full Core Control Rod Insertion                    ##
+## Griffin Main Application input file with fission product tracking          ##
 ## DFEM-SN (1, 3) with CMFD acceleration                                      ##
 ## If using or referring to this model, please cite as explained in           ##
 ## https://mooseframework.inl.gov/virtual_test_bed/citing.html                ##
@@ -67,21 +67,27 @@ non_he_channel_blocks = '${fuel_blocks} ${mod_blocks} ${poison_blocks} ${ref_blo
 []
 
 [Executioner]
-  type = SweepUpdate
-  # Richardson iterations
-  richardson_abs_tol = 1e-8
-  richardson_rel_tol = 1e-9
-  richardson_value = eigenvalue
+  type = TransientSweepUpdate
+
+  richardson_abs_tol = 1e-6
+  richardson_rel_tol = 1e-7
   richardson_max_its = 1000
   inner_solve_type = GMRes
-  max_inner_its = 20
+  max_inner_its = 100
 
   cmfd_acceleration = true
   coarse_element_id = coarse_element_id
-  cmfd_eigen_solver_type = newton
-  diffusion_prec_type = lu
   prolongation_type = multiplicative
   max_diffusion_coefficient = 1
+
+  end_time = 172800
+  dtmax = 10
+  dtmin = 1e-3
+
+  [TimeStepper]
+    type = IterationAdaptiveDT
+    dt = 1
+  []
 []
 
 [Debug]
@@ -92,14 +98,14 @@ non_he_channel_blocks = '${fuel_blocks} ${mod_blocks} ${poison_blocks} ${ref_blo
 
 [AuxVariables]
   [Tf]
-    initial_condition = 725.0
+    # initial_condition = 725.0
     order = CONSTANT
     family = MONOMIAL
   []
   # We do not calculate hydrogen concentration evolution in this case
   # So nH is just used as a constant
   [nH]
-    initial_condition = 1.94
+    # initial_condition = 1.94
     order = CONSTANT
     family = MONOMIAL
   []
@@ -107,7 +113,7 @@ non_he_channel_blocks = '${fuel_blocks} ${mod_blocks} ${poison_blocks} ${ref_blo
 
 [TransportSystems]
   particle = neutron
-  equation_type = eigenvalue
+  equation_type = transient
   G = 11
   VacuumBoundary = 'top_boundary bottom_boundary side'
   ReflectingBoundary = 'cut_surf'
@@ -131,28 +137,52 @@ non_he_channel_blocks = '${fuel_blocks} ${mod_blocks} ${poison_blocks} ${ref_blo
 []
 
 [GlobalParams]
-  library_file = '../../ISOXML/GCMR_XS_2grid_detailed.xml'
-  library_name = GCMR_XS_2grid_detailed
+  is_meter = true
+  library_file = '../../ISOXML/GCMR_XS_Xe_TR.xml'
+  library_name = 'GCMR_XS_Xe_TR'
   isotopes = 'pseudo'
   densities = 1.0
-  is_meter = true
-  # power normalization
-  plus = true
   dbgmat = false
-  grid_names = 'Tfuel Hdens'
-  grid_variables = 'Tf nH'
+  grid_names = 'Tfuel'
+  grid_variables = 'Tf'
 []
 
 [PowerDensity]
-  power = 3.33e6 # 1/6 of 20 MWth rated power
+  power = 3.33e6
   power_density_variable = power_density
   integrated_power_postprocessor = integrated_power
+  poison_tracking_chains = 'XE135 SM149'
 []
 
 [Materials]
-  [mod]
+  [mod_fuel]
     type = CoupledFeedbackMatIDNeutronicsMaterial
-    block = '10  100 101 102 103 200 201 400 401 4000 4001 40000 40001 300 301 600 602 603 604 1000 1003 19000 29000 39000 49000 59000 19003 29003 39003 49003 59003 19900 29900 39900 49900 59900 19903 29903 39903 49903 59903 1777 1773 250'
+    block = '400 401 4000 4001 40000 40001'
+    plus = true
+  []
+  [mod_nonfuel_nocr]
+    type = CoupledFeedbackMatIDNeutronicsMaterial
+    block = '10 100 101 102 103 200 201 600 602 603 604 1000 1003 19000 29000 39000 49000 59000 19003 29003 39003 49003 59003 19900 29900 39900 49900 59900 19903 29903 39903 49903 59903 250'
+    plus = false
+  []
+  [mod_cr]
+    type = CoupledFeedbackRoddedNeutronicsMaterial
+    block = '1777 1773 300 301'
+    rod_segment_length = '2.2'
+    rod_withdrawn_direction = z
+    isotopes = 'pseudo; pseudo; pseudo'
+    densities = '1.0 1.0 1.0'
+    segment_material_ids = '807 809 805'
+    front_position_function = control_rod_position
+    diffusion_coefficient_scheme = user_supplied
+  []
+[]
+
+[Functions]
+  [control_rod_position]
+    type = ParsedFunction
+    # control rod is fully inserted at the beginning of the transient
+    value = '0.2'
   []
 []
 
@@ -160,30 +190,34 @@ non_he_channel_blocks = '${fuel_blocks} ${mod_blocks} ${poison_blocks} ${ref_blo
   [ss]
     type = TransportSolutionVectorFile
     transport_system = SN
-    writing = true
-    execute_on = final
+    writing = false
+    execute_on = initial
+  []
+  [restart_poison_densities]
+    type = SolutionVectorFile
+    var = 'poison_tracking'
+    writing = false
+    execute_on = initial
   []
 []
 
 [Outputs]
   csv = true
   perf_graph = true
-  wall_time_checkpoint = false
+  checkpoint = true
   [exodus]
     type = Exodus
-    execute_on = 'FINAL'
+    show = 'poison_tracking power_density Tf'
     enable = false
   []
 []
 
 [MultiApps]
   [bison]
-    type = FullSolveMultiApp
-    input_files = MP_BISON_ss.i
-    execute_on = 'timestep_end'
-    keep_solution_during_restore = true
-    # no need for steady state neutronics
-    update_old_solution_when_keeping_solution_during_restore = false
+    type = TransientMultiApp
+    input_files = MP_BISON_tr_fp.i
+    execute_on = 'initial timestep_end'
+    sub_cycling = false
   []
 []
 
@@ -195,10 +229,11 @@ non_he_channel_blocks = '${fuel_blocks} ${mod_blocks} ${poison_blocks} ${ref_blo
     source_variable = power_density
     from_postprocessors_to_be_preserved = integrated_power
     to_postprocessors_to_be_preserved = power_density
+    execute_on = 'timestep_end'
   []
   [from_sub_temp]
     type = MultiAppGeneralFieldShapeEvaluationTransfer
-    from_multi_app = bison
+    from_multi_app  = bison
     variable = Tf
     source_variable = Tfuel
     to_blocks = ${non_he_channel_blocks}
@@ -209,5 +244,28 @@ non_he_channel_blocks = '${fuel_blocks} ${mod_blocks} ${poison_blocks} ${ref_blo
     variable = Tf
     source_variable = Tfuel
     to_blocks = ${he_channel_blocks}
+  []
+[]
+
+[Postprocessors]
+  [NI]
+    type = ElementIntegralArrayVariablePostprocessor
+    variable = poison_tracking
+    component = 0
+  []
+  [NXe]
+    type = ElementIntegralArrayVariablePostprocessor
+    variable = poison_tracking
+    component = 1
+  []
+  [NPm]
+    type = ElementIntegralArrayVariablePostprocessor
+    variable = poison_tracking
+    component = 2
+  []
+  [NSm]
+    type = ElementIntegralArrayVariablePostprocessor
+    variable = poison_tracking
+    component = 3
   []
 []

@@ -469,7 +469,7 @@ coolant_full_points_filename = '../component_positions/cc_positions_sixth.txt'
   [total_heat]
     type = ParsedPostprocessor
     pp_names = 'mirror_heat ext_heat cc_heat'
-    function = 'mirror_heat+ext_heat+cc_heat'
+    expression = 'mirror_heat+ext_heat+cc_heat'
   []
 []
 

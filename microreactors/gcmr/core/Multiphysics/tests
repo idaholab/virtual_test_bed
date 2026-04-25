@@ -50,6 +50,40 @@
     max_time = 600
     working_directory = 'steady_state'
   []
+  [MP_Griffin_FP_syntax]
+    type = RunApp
+    check_input = true
+    input = 'MP_Griffin_ss_fp.i'
+    cli_args = "MultiApps/active='' Transfers/active=''"
+    executable_pattern = 'griffin*|blue_crab*'
+    capabilities = 'method=opt'
+    max_time = 600
+    # Griffin does not have the sam petsc option parameter
+    allow_unused = true
+    working_directory = 'steady_state_fp'
+    prereq = 'generate_griffin_mesh'
+  []
+  [MP_BISON_FP_syntax]
+    type = RunApp
+    check_input = true
+    input = 'MP_BISON_ss_fp.i'
+    cli_args = "MultiApps/active='' Transfers/active=''"
+    executable_pattern = 'bison*|blue_crab*'
+    capabilities = 'method=opt'
+    max_time = 600
+    working_directory = 'steady_state_fp'
+    prereq = 'generate_bison_mesh'
+  []
+  [MP_SAM_FP_syntax]
+    type = RunApp
+    check_input = true
+    input = 'MP_SAM_ss_fp.i'
+    cli_args = "--app ThermalHydraulicsApp"
+    executable_pattern = 'sam*|blue_crab*'
+    capabilities = 'method=opt'
+    max_time = 600
+    working_directory = 'steady_state_fp'
+  []
 
   # the same coarse mesh will be used
   [generate_mesh_coarse]
@@ -93,7 +127,7 @@
     # Griffin does not have the sam petsc option parameter
     allow_unused = true
     working_directory = 'null_transient'
-    prereq = 'generate_mesh_coarse'
+    prereq = 'MP_ss'
     min_parallel = 96
   []
   [MP_BISON_trN_syntax]
@@ -105,7 +139,7 @@
     capabilities = 'method=opt'
     max_time = 600
     working_directory = 'null_transient'
-    prereq = 'generate_mesh_coarse'
+    prereq = 'MP_ss'
     min_parallel = 96
   []
   [MP_SAM_trN_syntax]
@@ -134,7 +168,7 @@
     # Griffin does not have the sam petsc option parameter
     allow_unused = true
     working_directory = 'single_channel_blockage'
-    prereq = 'generate_mesh_coarse'
+    prereq = 'MP_ss'
     min_parallel = 96
   []
   [MP_BISON_scb_syntax]
@@ -146,7 +180,7 @@
     capabilities = 'method=opt'
     max_time = 600
     working_directory = 'single_channel_blockage'
-    prereq = 'generate_mesh_coarse'
+    prereq = 'MP_ss'
     min_parallel = 96
   []
   [MP_SAM_scb_syntax]
@@ -175,7 +209,7 @@
     # Griffin does not have the sam petsc option parameter
     allow_unused = true
     working_directory = 'depressurization'
-    prereq = 'generate_mesh_coarse'
+    prereq = 'MP_ss'
     min_parallel = 96
   []
   [MP_BISON_dp_syntax]
@@ -187,7 +221,7 @@
     capabilities = 'method=opt'
     max_time = 600
     working_directory = 'depressurization'
-    prereq = 'generate_mesh_coarse'
+    prereq = 'MP_ss'
     min_parallel = 96
   []
   [MP_SAM_dp_syntax]

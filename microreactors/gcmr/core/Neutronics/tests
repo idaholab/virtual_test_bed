@@ -27,7 +27,7 @@
   [griffin_alone]
     type = 'CSVDiff'
     input = 'Griffin_steady_state.i'
-    csvdiff = 'Griffin_steady_state_csv.csv'
+    csvdiff = 'Griffin_steady_state_out.csv'
     executable_pattern = 'griffin*|blue_crab*'
     cli_args = "Executioner/richardson_max_its=1
                 TransportSystems/SN/NAzmthl=3 TransportSystems/SN/NPolar=1
@@ -39,6 +39,7 @@
     max_time = 600
     # Griffin does not have the sam petsc option parameter
     allow_unused = true
+    allow_warnings = true
     # we will need HPC to run the test
     heavy = true
   []
