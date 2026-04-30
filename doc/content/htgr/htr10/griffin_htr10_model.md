@@ -1,6 +1,6 @@
 # HTR-10 Griffin Neutronics Model
 
-*Contact: Javier Ortensi, Javier.Ortensi@inl.gov*
+*Contact: Joshua Hanophy, Joshua.Hanophy.at.inl.gov*
 
 *Model link: [HTR-10 Griffin Model](https://github.com/idaholab/virtual_test_bed/tree/devel/htgr/htr10)*
 

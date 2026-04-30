@@ -1,6 +1,6 @@
 # HTR-10 Griffin Neutronics Results
 
-*Contact: Javier Ortensi, Javier.Ortensi@inl.gov*
+*Contact: Joshua Hanophy, Joshua.Hanophy.at.inl.gov*
 
 This section is a short summary of the results section of [!citep](HTR-10Benchmark)
 and looks at the various results carried out by Griffin for various HTR-10 calculations.
