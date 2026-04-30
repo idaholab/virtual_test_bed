@@ -1,6 +1,6 @@
 # 3D Multiphysics Simulation of Control Drum Inadvertent Rotation in HP-MR
 
-*Contact: Ahmed Amin Abdelhameed (aabdelhameed.at.anl.gov), Yinbin Miao (ymiao.at.anl.gov), Nicolas Stauff (nstauff.at.anl.gov)*
+*Contact: Yinbin Miao (ymiao.at.anl.gov), Nicolas Stauff (nstauff.at.anl.gov)*
 
 *Model link: [HPMR Model](https://github.com/idaholab/virtual_test_bed/tree/devel/microreactors/mrad/3D_core_drum_rotation_tr)*
 

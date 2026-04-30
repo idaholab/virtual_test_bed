@@ -1,6 +1,6 @@
 # GCMR Assembly Multiphysics Model
 
-*Point of Contact: Ahmed Abdelhameed (aabdelhameed.at.anl.gov), Yinbin Miao (ymiao.at.anl.gov), Nicolas Stauff (nstauff.at.anl.gov)*
+*Point of Contact: Yinbin Miao (ymiao.at.anl.gov), Nicolas Stauff (nstauff.at.anl.gov)*
 
 *Model link: [GCMR Assembly Model](https://github.com/idaholab/virtual_test_bed/tree/devel/microreactors/gcmr/assembly)*
 

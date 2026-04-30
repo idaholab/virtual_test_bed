@@ -1,6 +1,6 @@
 # Multiphysics Modeling of the Whole Core Gas-Cooled Microreactor (GCMR)
 
-*Contacts: Yinbin Miao (ymiao.at.anl.gov), Ahmed Abdelhameed (aabdelhameed.at.anl.gov), Nicolas Stauff (nstauff.at.anl.gov)*
+*Contacts: Yinbin Miao (ymiao.at.anl.gov), Nicolas Stauff (nstauff.at.anl.gov)*
 
 !tag name=Gas-Cooled Microreactor Core
      description=3D core model of a Gas Cooled Micro Reactor with heterogeneous transport

@@ -1,6 +1,6 @@
 # Gas-Cooled Microreactor Assembly
 
-*Contacts: Ahmed Abdelhameed (aabdelhameed.at.anl.gov), Yinbin Miao (ymiao.at.anl.gov), Nicolas Stauff (nstauff.at.anl.gov)*
+*Contacts: Yinbin Miao (ymiao.at.anl.gov), Nicolas Stauff (nstauff.at.anl.gov)*
 
 !tag name=Gas-Cooled Microreactor Assembly
      image=https://mooseframework.inl.gov/virtual_test_bed/media/gcmr/Fig_1.jpg
