@@ -4,15 +4,15 @@
 
 *Model link: [MSRE Xe Poisoning Model](https://github.com/hapfang/virtual_test_bed/tree/xe/msr/msre/xe_poisoning)*
 
-!tag name=Molten Salt Reactor Experiment SAM Model
+!tag name=Molten Salt Reactor Experiment MultiPhysics Primary loop Model
      description=Steady state and reactivity insertion accident models of the MSRE primary loop
      image=https://github.com/hapfang/virtual_test_bed/blob/xe/doc/content/media/msr/msre/xe_poisoning/ss_results.png
      pairs=reactor_type:MSR
                        reactor:MSRE
                        geometry:primary_loop
                        codes_used:BlueCrab;Griffin;Pronghorn
-                       transient:steady_state;RIA
-                       V_and_V:validation
+                       transient:steady_state;Xenon
+                       V_and_V:demonstration
                        input_features:checkpoint_restart
                        computing_needs:Workstation
                        fiscal_year:2024
@@ -82,7 +82,7 @@ Pronghorn uses a weakly compressible porous-media formulation. Momentum conserva
 
 #### Neutronics (Griffin)
 
-The neutron flux is computed with a 16-group diffusion approximation:
+The neutron flux is computed with a 16-group diffusion approximation using cross sections from the [base MSRE coupled model](https://virtualtestbed.inl.gov/msr/msre/multiphysics_rz_model/msre_multiphysics_core_model.html).
 
 \begin{equation}
 -\nabla \cdot D_g \nabla \phi_g + \Sigma_{r,g} \phi_g - \sum_{g' \neq g} \Sigma_{s,g' \to g} \phi_{g'} = \frac{\chi_g}{k_{eff}} \sum_{g'} \nu \Sigma_{f,g'} \phi_{g'}
@@ -90,7 +90,7 @@ The neutron flux is computed with a 16-group diffusion approximation:
 
 #### Reactivity Feedback and Xenon Poisoning
 
-Coupling between physics is achieved through cross-section updates. The macroscopic absorption cross section in Griffin is updated with local xenon concentration from Pronghorn:
+Coupling between physics is achieved through cross-section updates that account for temperature feedback and delayed neutron precursor (DNP) advection, in addition to xenon poisoning. The macroscopic absorption cross section in Griffin is updated with local xenon concentration from Pronghorn:
 
 \begin{equation}
 \Sigma_{a,g}(\vec{r}) = \Sigma_{a,g}^{base}(\vec{r}, T) + \sigma_{a,g}^{Xe135} C_{Xe135}(\vec{r})
@@ -316,6 +316,8 @@ Key observations from the spatial fields include:
 ### Reactivity Impact of Xe Poisoning
 
 A reference case without Xe poisoning was also evaluated. Comparison of $k_{eff}$ between poisoned and unpoisoned coupled cases indicates an estimated reactivity penalty of approximately -410 pcm, which is in good agreement with trends from the SAM-Griffin coupled study.
+
+This -410 pcm penalty is significantly lower than the values typically encountered in commercial light water reactors (often exceeding -2000 pcm). The reduced xenon poisoning in the MSRE is mainly due to two factors: the online gas stripping system in the pump bowl, which actively removes $^{135}Xe$ from the salt, and the relatively lower power density of the MSRE compared to a typical PWR, which leads to a lower steady-state xenon concentration.
 
 ### Current Status and Future Work
 
