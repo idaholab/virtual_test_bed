@@ -1,5 +1,13 @@
 [Tests]
   # Syntax checks
+  [generate_mesh]
+    type = RunApp
+    executable_pattern = 'griffin*|pronghorn*'
+    input = './mesh/strip_mesh.i'
+    cli_args = '--mesh-only'
+    working_directory = './mesh'
+  []
+
   [neu_xe_syntax]
     type = RunApp
     input = 'neu_xe.i'
