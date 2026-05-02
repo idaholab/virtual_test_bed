@@ -7,7 +7,7 @@
 # - Weakly compressible, turbulent flow formulation
 # MSRE: reference plant design based on 5MW of MSRE Experiment.
 # ==============================================================================
-# Author(s): Dr. Mauricio Tano, Dr. Samuel Walker
+# Author(s): Dr. Mauricio Tano, Dr. Samuel Walker, Dr. Jun Fang
 # ==============================================================================
 # ==============================================================================
 # MODEL PARAMETERS
@@ -20,7 +20,7 @@ core_radius = 0.69793684
 core_porosity = 0.222831853 # core porosity salt VF=0.222831853, Graphite VF=0.777168147
 down_comer_porosity = 1.0 # downcomer porosity
 lower_plenum_porosity = 0.5 # lower plenum porosity
-upper_plenum_porosity = 1.0 # upper pelnum porosity
+upper_plenum_porosity = 1.0 # upper plenum porosity
 riser_porosity = 1.0 # riser porosity
 pump_porosity = 1.0 # pump porosity
 elbow_porosity = 1.0 # elbow porosity
@@ -84,12 +84,8 @@ solid_blocks = 'core core_barrel'
   porosity = 'porosity'
   rhie_chow_user_object = 'pins_rhie_chow_interpolator'
 
-  u = superficial_vel_x
-  v = superficial_vel_y
-
   advected_interp_method = 'upwind'
   velocity_interp_method = 'rc'
-  mixing_length = 'mixing_length'
 []
 
 # ==============================================================================
@@ -108,6 +104,7 @@ solid_blocks = 'core core_barrel'
   kernel_coverage_check = false
   allow_initial_conditions_with_restart = true
 []
+
 # ==============================================================================
 # FV VARIABLES
 # ==============================================================================
@@ -116,39 +113,6 @@ solid_blocks = 'core core_barrel'
     type = INSFVEnergyVariable
     initial_condition = ${T_Salt_initial}
     block = ${solid_blocks}
-  []
-  [c1]
-    type = MooseVariableFVReal
-    block = ${fluid_blocks}
-  []
-  [c2]
-    type = MooseVariableFVReal
-    block = ${fluid_blocks}
-  []
-  [c3]
-    type = MooseVariableFVReal
-    block = ${fluid_blocks}
-  []
-  [c4]
-    type = MooseVariableFVReal
-    block = ${fluid_blocks}
-  []
-  [c5]
-    type = MooseVariableFVReal
-    block = ${fluid_blocks}
-  []
-  [c6]
-    type = MooseVariableFVReal
-    block = ${fluid_blocks}
-  []
-  # Species
-  [I135]
-    type = MooseVariableFVReal
-    block = ${fluid_blocks}
-  []
-  [Xe135]
-    type = MooseVariableFVReal
-    block = ${fluid_blocks}
   []
 []
 
@@ -161,62 +125,99 @@ solid_blocks = 'core core_barrel'
   []
 []
 
-[Modules]
-  [NavierStokesFV]
-    # Basic settings - weakly-compressible, turbulent flow with buoyancy
-    block = ${fluid_blocks}
-    compressibility = 'weakly-compressible'
-    porous_medium_treatment = true
-    add_energy_equation = true
-    gravity = '0.0 -9.81 0.0'
+[Physics]
+  [NavierStokes]
+    [Flow]
+      [flow]
+        block = ${fluid_blocks}
+        compressibility = 'weakly-compressible'
+        porous_medium_treatment = true
+        gravity = '0.0 -9.81 0.0'
 
-    # Variable naming
-    velocity_variable = 'superficial_vel_x superficial_vel_y'
-    pressure_variable = 'pressure'
-    fluid_temperature_variable = 'T_fluid'
+        # Variable naming
+        velocity_variable = 'superficial_vel_x superficial_vel_y'
+        pressure_variable = 'pressure'
 
-    # ICs
-    initial_velocity = '1e-8 1e-8'
-    initial_pressure = ${p_outlet}
-    initial_temperature = ${T_Salt_initial}
+        # ICs
+        initial_velocity = '1e-8 1e-8'
+        initial_pressure = ${p_outlet}
 
-    # Numerical schemes
-    momentum_advection_interpolation = upwind
-    mass_advection_interpolation = upwind
-    energy_advection_interpolation = upwind
-    velocity_interpolation = rc
+        # Numerical schemes
+        momentum_advection_interpolation = upwind
+        mass_advection_interpolation = upwind
+        velocity_interpolation = rc
 
-    # Porous & Friction treatment
-    use_friction_correction = true
-    friction_types = 'darcy forchheimer'
-    friction_coeffs = 'Darcy_coefficient Forchheimer_coefficient'
-    consistent_scaling = 100.0
-    porosity_smoothing_layers = 2
-    turbulence_handling = 'mixing-length'
+        # Porous & Friction treatment
+        use_friction_correction = true
+        friction_types = 'darcy forchheimer'
+        friction_coeffs = 'Darcy_coefficient Forchheimer_coefficient'
+        consistent_scaling = 1.0
+        porosity_smoothing_layers = 2
 
-    # Fluid properties
-    density = 'rho'
-    dynamic_viscosity = 'mu'
-    thermal_conductivity = 'kappa'
-    specific_heat = 'cp'
+        # Fluid properties
+        density = 'rho'
+        dynamic_viscosity = 'mu'
 
-    # Energy source-sink
-    external_heat_source = 'power_density'
+        # Boundary Conditions
+        wall_boundaries = 'left      top      bottom   right    loop_boundary bypass_line_boundary extraction return_line_boundary'
+        momentum_wall_types = 'symmetry  slip     noslip   noslip   noslip    noslip   noslip noslip'
 
-    # Boundary Conditions
-    wall_boundaries = 'left      top      bottom   right    loop_boundary bypass_line_boundary extraction return_line_boundary'
-    momentum_wall_types = 'symmetry  slip     noslip   noslip   noslip    noslip   noslip noslip'
-    energy_wall_types = 'heatflux  heatflux heatflux heatflux heatflux    heatflux heatflux heatflux'
-    energy_wall_functors = '0        0        0        0         0      0    0        0'
+        # Constrain Pressure
+        pin_pressure = true
+        pinned_pressure_value = ${p_outlet}
+        pinned_pressure_point = '0.0 2.13859 0.0'
+        pinned_pressure_type = point-value-uo
+      []
+    []
+    
+    [FluidHeatTransfer]
+      [ht]
+        block = ${fluid_blocks}
+        coupled_flow_physics = 'flow'
+        
+        # Variable naming and coupling
+        fluid_temperature_variable = 'T_fluid'
 
-    # Constrain Pressure
-    pin_pressure = true
-    pinned_pressure_value = ${p_outlet}
-    pinned_pressure_point = '0.0 2.13859 0.0'
-    pinned_pressure_type = point-value
+        # ICs
+        initial_temperature = ${T_Salt_initial}
 
-    # Passive Scalar -- solved separately to integrate porosity jumps
-    add_scalar_equation = false
+        # Numerical schemes
+        energy_advection_interpolation = upwind
+
+        # Fluid properties
+        thermal_conductivity = 'kappa'
+        specific_heat = 'cp'
+
+        # Energy source-sink
+        external_heat_source = 'power_density'
+
+        # Boundary Conditions (Inherits wall_boundaries from [flow])
+        energy_wall_types = 'heatflux  heatflux heatflux heatflux heatflux    heatflux heatflux heatflux'
+        energy_wall_functors = '0        0        0        0         0      0    0        0'
+      []
+    []
+
+    # ADD this entire new block:
+    [Turbulence]
+      [turb]
+        coupled_flow_physics = 'flow'
+        fluid_heat_transfer_physics = 'ht'
+        scalar_transport_physics = 'species'  # Point to the single merged block
+        turbulence_handling = 'mixing-length'
+        mixing_length_name = 'mixing_length'
+        Sc_t = '${Sc_t} ${Sc_t} ${Sc_t} ${Sc_t} ${Sc_t} ${Sc_t} ${Sc_t} ${Sc_t}'
+      []
+    []
+
+    # ScalarTransport is moved INSIDE NavierStokes
+    [ScalarTransport]
+      [species]  # Merged block for all scalars
+        passive_scalar_names = 'c1 c2 c3 c4 c5 c6 I135 Xe135'
+        block = ${fluid_blocks}
+        coupled_flow_physics = 'flow'
+        passive_scalar_advection_interpolation = upwind
+      []
+    []
   []
 []
 
@@ -291,102 +292,6 @@ solid_blocks = 'core core_barrel'
   []
 
   # Kernels for solve of delayed neutron precursor transport
-  [c1_time]
-    type = FVFunctorTimeKernel
-    variable = 'c1'
-  []
-  [c2_time]
-    type = FVFunctorTimeKernel
-    variable = 'c2'
-  []
-  [c3_time]
-    type = FVFunctorTimeKernel
-    variable = 'c3'
-  []
-  [c4_time]
-    type = FVFunctorTimeKernel
-    variable = 'c4'
-  []
-  [c5_time]
-    type = FVFunctorTimeKernel
-    variable = 'c5'
-  []
-  [c6_time]
-    type = FVFunctorTimeKernel
-    variable = 'c6'
-  []
-  [c1_advection]
-    type = PINSFVMassAdvection
-    variable = c1
-    rho = 'c1_porous'
-    block = ${fluid_blocks}
-  []
-  [c2_advection]
-    type = PINSFVMassAdvection
-    variable = c2
-    rho = 'c2_porous'
-    block = ${fluid_blocks}
-  []
-  [c3_advection]
-    type = PINSFVMassAdvection
-    variable = c3
-    rho = 'c3_porous'
-    block = ${fluid_blocks}
-  []
-  [c4_advection]
-    type = PINSFVMassAdvection
-    variable = c4
-    rho = 'c4_porous'
-    block = ${fluid_blocks}
-  []
-  [c5_advection]
-    type = PINSFVMassAdvection
-    variable = c5
-    rho = 'c5_porous'
-    block = ${fluid_blocks}
-  []
-  [c6_advection]
-    type = PINSFVMassAdvection
-    variable = c6
-    rho = 'c6_porous'
-    block = ${fluid_blocks}
-  []
-  [c1_turb_diffusion]
-    type = INSFVMixingLengthScalarDiffusion
-    schmidt_number = ${Sc_t}
-    variable = c1
-    block = ${fluid_blocks}
-  []
-  [c2_turb_diffusion]
-    type = INSFVMixingLengthScalarDiffusion
-    schmidt_number = ${Sc_t}
-    variable = c2
-    block = ${fluid_blocks}
-  []
-  [c3_turb_diffusion]
-    type = INSFVMixingLengthScalarDiffusion
-    schmidt_number = ${Sc_t}
-    variable = c3
-    block = ${fluid_blocks}
-  []
-  [c4_turb_diffusion]
-    type = INSFVMixingLengthScalarDiffusion
-    schmidt_number = ${Sc_t}
-    variable = c4
-    block = ${fluid_blocks}
-  []
-  [c5_turb_diffusion]
-    type = INSFVMixingLengthScalarDiffusion
-    schmidt_number = ${Sc_t}
-    variable = c5
-    block = ${fluid_blocks}
-  []
-  [c6_turb_diffusion]
-    type = INSFVMixingLengthScalarDiffusion
-    schmidt_number = ${Sc_t}
-    variable = c6
-    block = ${fluid_blocks}
-  []
   [c1_src]
     type = FVCoupledForce
     variable = c1
@@ -466,50 +371,6 @@ solid_blocks = 'core core_barrel'
     block = ${fluid_blocks}
   []
 # Kernels for solve of I and Xe transport 
-  [I135_time]
-    type = FVFunctorTimeKernel
-    variable = 'I135'
-  []
-  [Xe135_time]
-    type = FVFunctorTimeKernel
-    variable = 'Xe135'
-  []
-  [I135_advection]
-    type = PINSFVMassAdvection
-    variable = I135
-    rho = 'I135_porous'
-    block = ${fluid_blocks}
-  []
-  [Xe135_advection]
-    type = PINSFVMassAdvection
-    variable = Xe135
-    rho = 'Xe135_porous'
-    block = ${fluid_blocks}
-  []
-  [I135_diffusion]
-    type = FVDiffusion
-    coeff = mu_var
-    variable = I135
-    block = ${fluid_blocks}
-  []
-  [Xe135_diffusion]
-    type = FVDiffusion
-    coeff = mu_var
-    variable = Xe135
-    block = ${fluid_blocks}
-  []
-  [I135_turb_diffusion]
-    type = INSFVMixingLengthScalarDiffusion
-    schmidt_number = ${Sc_t}
-    variable = I135
-    block = ${fluid_blocks}
-  []
-  [Xe135_turb_diffusion]
-    type = INSFVMixingLengthScalarDiffusion
-    schmidt_number = ${Sc_t}
-    variable = Xe135
-    block = ${fluid_blocks}
-  []
   [I135_src]
     type = FVCoupledForce
     variable = I135
@@ -959,9 +820,7 @@ solid_blocks = 'core core_barrel'
     app_type              = GriffinApp
     input_files           = 'neu_xe.i'
     execute_on            = 'timestep_end'
-
-    keep_solution_during_restore = true
-    update_old_solution_when_keeping_solution_during_restore = true
+    enable                = true
   []
 []
 
