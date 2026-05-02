@@ -536,12 +536,6 @@ Salt_Density_initial = 2263.0
   nl_abs_tol = 1e-10
 
   free_power_iterations = 4 # important to obtain fundamental mode eigenvalue
-
-  # MultiApp
-  fixed_point_min_its = 2
-  fixed_point_max_its = 50
-  fixed_point_rel_tol = 1e-6
-  fixed_point_abs_tol = 1e-6
 []
 
 [Debug]

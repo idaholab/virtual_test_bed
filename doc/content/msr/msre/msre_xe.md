@@ -155,15 +155,15 @@ This block defines the finite-volume primary variables for the coupled thermal-h
 
 !listing msr/msre/xe_poisoning/th_xe.i block=Variables language=cpp
 
-#### Modules / NavierStokesFV
+#### Physics / NavierStokes
 
-`NavierStokesFV` streamlines porous-media thermal-hydraulic setup:
+The `NavierStokes` physics syntax streamlines the coupled porous-media thermal-hydraulic and species transport setup:
 
-- **Physics:** Weakly compressible porous-media formulation with Darcy-Forchheimer resistance to represent pressure loss in core and piping.
-- **Coupling:** `external_heat_source = 'power_density'` links TH energy deposition to Griffin-computed neutronics power.
-- **Numerics:** Upwind advection interpolation supports robust transport in high-velocity loop regions.
+- **Flow & Energy:** Weakly compressible porous-media formulation with Darcy-Forchheimer resistance and heat transfer.
+- **Turbulence:** Mixing-length model provides turbulent viscosity and diffusivity for heat and species transport.
+- **Scalar Transport:** Integrated advection for delayed neutron precursors (DNP) and fission-product species (`I135`, `Xe135`).
 
-!listing msr/msre/xe_poisoning/th_xe.i block=Modules language=cpp
+!listing msr/msre/xe_poisoning/th_xe.i block=Physics language=cpp
 
 #### FVBCs
 
@@ -175,13 +175,11 @@ Boundary conditions for species transport primarily enforce symmetry:
 
 #### FVKernels
 
-This section contains the governing transport/source terms:
+This section contains specific source, reaction, and component-level kernels:
 
-- **Transport terms:** Advection and turbulent-diffusion kernels for isotopes and DNP circulation.
-- **Reaction/source terms:**
-  - `I135` production from fission and depletion by decay.
-  - `Xe135` production from direct fission and I-135 decay growth, plus depletion pathways.
-- **Stripping model:** A dedicated kernel (e.g., pump-bowl stripping treatment) represents physical xenon removal from circulating salt.
+- **Source & Decay:** Handles fission production and radioactive decay for I-135, Xe-135, and the six DNP groups.
+- **Pump & Heat Transfer:** Includes `INSFVPump` kernels for momentum and `NSFVEnergyAmbientConvection` for heat exchange in the pump/HX block.
+- **Stripping Model:** A dedicated `NSFVEnergyAmbientConvection` kernel in the `strip` block represents physical xenon removal from the salt.
 
 !listing msr/msre/xe_poisoning/th_xe.i block=FVKernels language=cpp
 
