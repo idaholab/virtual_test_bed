@@ -59,18 +59,6 @@ Salt_Density_initial = 2263.0
 # AUXVARIABLES AND AUXKERNELS
 # ==============================================================================
 [AuxVariables]
-  [vel_x]
-    order = CONSTANT
-    family = MONOMIAL
-    initial_condition = 0.000
-    block = 'core lower_plenum upper_plenum down_comer riser pump elbow bypass_line strip return_line'
-  []
-  [vel_y]
-    order = CONSTANT
-    family = MONOMIAL
-    initial_condition = 0.000
-    block = 'core lower_plenum upper_plenum down_comer riser pump elbow bypass_line strip return_line'
-  []
   [T_salt]
     order = CONSTANT
     family = MONOMIAL
@@ -382,7 +370,7 @@ Salt_Density_initial = 2263.0
   []
   [auxvar_solution_s1]
     type = SolutionVectorFile
-    var = 'vel_x  vel_y  T_salt  T_solid  c1  c2  c3  c4  c5  c6
+    var = 'T_salt  T_solid  c1  c2  c3  c4  c5  c6
            ad_C12  ad_U235 ad_U238 ad_Be9  ad_Li7  ad_F9
            ad_Zr90 ad_Zr91 ad_Zr92 ad_Zr94 ad_Zr96 ad_Xe135'
     writing = true
