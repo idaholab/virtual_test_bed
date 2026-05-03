@@ -2,7 +2,7 @@
   # Syntax checks
   [generate_mesh]
     type = RunApp
-    executable_pattern = 'griffin*|pronghorn*'
+    executable_pattern = 'combined*|reactor*'
     input = './mesh/strip_mesh.i'
     cli_args = '--mesh-only'
     working_directory = './mesh'
