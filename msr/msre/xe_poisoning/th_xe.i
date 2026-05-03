@@ -197,7 +197,6 @@ solid_blocks = 'core core_barrel'
       []
     []
 
-    # ADD this entire new block:
     [Turbulence]
       [turb]
         coupled_flow_physics = 'flow'
