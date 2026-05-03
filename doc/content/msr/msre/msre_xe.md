@@ -21,7 +21,7 @@
 
 ## Summary
 
-This page documents an effort that extends the existing MSRE multiphysics Griffin–Pronghorn framework by incorporating Xe poisoning physics. The objective is to integrate fission-product transport and reactivity feedback effects into the established loop-scale multiphysics model so reactor dynamics reflect both thermal-hydraulic and neutronic responses to ($^{135}\text{Xe}$) and ($^{135}\text{I}$) behavior in circulating fuel salt.
+This page documents an effort that extends the existing MSRE multiphysics Griffin–Pronghorn studies by incorporating Xe poisoning physics. The objective is to integrate fission-product transport and reactivity feedback effects into the established loop-scale multiphysics model so reactor dynamics reflect both thermal-hydraulic and neutronic responses to ($^{135}\text{Xe}$) and ($^{135}\text{I}$) behavior in circulating fuel salt.
 
 Modeling xenon effects is essential because ($^{135}\text{Xe}$), with its large neutron absorption cross section, has a dominant influence on reactor reactivity, stability, and operational flexibility. In molten salt reactors, this challenge is further complicated by the flowing fuel, which transports xenon throughout the primary loop and introduces additional physics such as advection, diffusion, bubble stripping, and graphite interactions. These coupled phenomena can significantly alter spatial xenon distributions and transient reactivity behavior, directly impacting reactor control, restart capability, and load-following performance.
 
@@ -233,7 +233,7 @@ Griffin uses a 16-group CFEM-diffusion transport system:
 
 #### Mesh
 
-The neutronics solve uses an RZ mesh loaded via `FileMeshGenerator`, consistent with loop geometry used by the master app.
+The neutronics solve uses an RZ mesh loaded via `FileMeshGenerator`, consistent with loop geometry used by the parent application.
 
 !listing msr/msre/xe_poisoning/neu_xe.i block=Mesh language=cpp
 
@@ -280,7 +280,7 @@ This block converts fission rate into volumetric power density ($W/m^3$):
 
 ## Results
 
-The current Pronghorn-Griffin configuration represents an initial implementation of Xe-poisoning physics in a 2-D MSRE multiphysics framework. At this stage, results are limited to steady-state behavior; transient cases and additional Xe interactions with graphite and circulating bubbles are reserved for future studies.
+The current Pronghorn-Griffin configuration represents an initial implementation of Xe-poisoning physics in a 2-D MSRE multiphysics model. At this stage, results are limited to steady-state behavior; transient cases and additional Xe interactions with graphite and circulating bubbles are reserved for future studies.
 
 The coupled model was run on Idaho National Laboratory's Sawtooth cluster using the NEAMS BlueCRAB suite for a total simulated time of 400,000 s (about 111 h).
 
