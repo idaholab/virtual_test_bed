@@ -1,6 +1,6 @@
 # High Temperature Engineering Test Reactor (HTTR) Null Transient Model Description
 
-*Contact: Javier Ortensi javier.ortensi.at.inl.gov*
+*Contact: Joshua Hanophy, Joshua.Hanophy.at.inl.gov*
 
 *Model link: [HTTR Null Transient](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/httr)*
 

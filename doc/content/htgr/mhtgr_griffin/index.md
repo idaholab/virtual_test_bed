@@ -1,6 +1,6 @@
 # Griffin MHTGR Benchmark Model, Model Inputs, and Results
 
-*Contact: Javier Ortensi, javier.ortensi.at.inl.gov
+*Contact: Olin Calvin, olin.calvin@inl.gov*
 
 *Model link: [MHTGR Griffin Model](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/mhtgr/mhtgr_griffin)*
 

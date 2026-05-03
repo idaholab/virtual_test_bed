@@ -4,7 +4,7 @@
 
 !tag name=Gas-Cooled Microreactor Balance of Plant
      description=Startup and load follow transient simulation of the GCMR balance of plant coupled with core multiphysics
-     image=https://mooseframework.inl.gov/virtual_test_bed/media/gcmr/balance_of_plant/system_diagram.png 
+     image=https://mooseframework.inl.gov/virtual_test_bed/media/gcmr/balance_of_plant/system_diagram.png
      pairs=reactor_type:microreactor
                        reactor:GCMR
                        geometry:plant
@@ -17,8 +17,8 @@
                        fiscal_year:2023
                        institution:INL
                        sponsor:NRIC
-                       
-*Contact: Lise Charlot (lise.charlot.at.inl.gov)*
+
+*Contact: Lise Charlot, Joshua Hansel (joshua.hansel.at.inl.gov)*
 
 [System Description](gcmr/BOP_system_description.md)
 

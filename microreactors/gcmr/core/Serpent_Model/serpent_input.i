@@ -2,7 +2,8 @@
 % ANL GCMR Serpent (Version 2.1.32) Model Input
 % If using or referring to this model, please cite as explained in
 % https://mooseframework.inl.gov/virtual_test_bed/citing.html
-% Contacts: Ahmed Abdelhameed (aabdelhameed.at.anl.gov), Nicolas Stauff (nstauff.at.anl.gov)
+% Authors: Ahmed Abdelhameed, Nicolas Stauff
+% Contacts: Nicolas Stauff (nstauff.at.anl.gov)
 % -----------------------------------------------------------------------------------------
 set title "ANL GC MicroReactor"
 

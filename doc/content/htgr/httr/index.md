@@ -1,6 +1,6 @@
 # High Temperature Engineering Test Reactor (HTTR) Multiphysics Model
 
-*Contact: Javier Ortensi javier.ortensi.at.inl.gov*
+*Contact: Joshua Hanophy, Joshua.Hanophy.at.inl.gov*
 
 *Model link: [HTTR Steady State Multiphysics](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/httr)*
 
