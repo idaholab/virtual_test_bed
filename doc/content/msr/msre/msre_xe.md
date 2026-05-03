@@ -23,7 +23,7 @@
 
 This page documents an effort that extends the existing MSRE multiphysics Griffin–Pronghorn framework by incorporating Xe poisoning physics. The objective is to integrate fission-product transport and reactivity feedback effects into the established loop-scale multiphysics model so reactor dynamics reflect both thermal-hydraulic and neutronic responses to ($^{135}\text{Xe}$) and ($^{135}\text{I}$) behavior in circulating fuel salt.
 
-Modeling xenon effects is essential because ($^{135}\text{Xe}$), with its large neutron absorption cross section, has a dominant influence on reactor reactivity and stability. In molten salt reactors, $^{135}\text{I}$ and its daughter product $^{135}\text{Xe}$ are transported throughout the primary loop by the flowing fuel. This implementation specifically accounts for the **advection** and **diffusion** of both isotopes within the salt. Additionally, it models the **gaseous fission product removal** of $^{135}\text{Xe}$ (e.g., at the pump bowl), while $^{135}\text{I}$ remains entirely within the salt phase. Note that more complex interactions, such as xenon migration into the graphite moderator or transport via discrete helium bubbles, are currently outside the scope of this model.
+Modeling xenon effects is essential because ($^{135}\text{Xe}$), with its large neutron absorption cross section, has a dominant influence on reactor reactivity and stability. In molten salt reactors, $^{135}\text{I}$ and its daughter product $^{135}\text{Xe}$ are transported throughout the primary loop by the flowing fuel. This implementation specifically accounts for the advection and diffusion of both isotopes within the salt. Additionally, it models the gaseous fission product removal of $^{135}\text{Xe}$ (e.g., at the pump bowl), while $^{135}\text{I}$ remains entirely within the salt phase. Note that more complex interactions, such as xenon migration into the graphite moderator or transport via discrete helium bubbles, are currently outside the scope of this model.
 
 Therefore, incorporating xenon transport and feedback within a tightly coupled multiphysics framework is critical for accurately predicting reactor dynamics and ensuring reliable analysis of MSR behavior under both steady-state and transient conditions.
 
@@ -52,6 +52,9 @@ To model Xe poisoning in the existing Griffin-Pronghorn MSRE framework, the +MOO
 - +Species Transport (Pronghorn):+ Evolves $^{135}Xe$ and $^{135}I$ concentrations in the circulating fuel salt, including production, decay, and transport effects.
 - +Gas Removal Representation:+ Includes a pump-bowl treatment to represent stripping/removal of gaseous fission products such as $^{135}Xe$ during circulation.
 - +Coupling/Feedback:+ Power and temperature fields are exchanged between applications, and local xenon concentration updates absorption for neutronics.
+
+!alert note title=Explicit Coupling Implementation
+The exchange between Pronghorn and Griffin is handled via two-way explicit coupling. While data is transferred between the thermal-hydraulics and neutronics solvers at every timestep, the current implementation does not utilize fixed-point (Picard) iterations. This explicit treatment is computationally efficient and provides sufficient accuracy for the slow-evolving transients typical of $^{135}\text{Xe}$ poisoning and $^{135}\text{I}$ decay.
 
 ### Governing Equations and Closure Models
 
