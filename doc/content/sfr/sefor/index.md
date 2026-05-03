@@ -1,6 +1,6 @@
 # Southwest Experimental Fast Oxide Reactor (SEFOR) Numerical Models
 
-*Contacts: Donny Hartanto (hartantod.at.ornl.gov)*, Ahmed Amin E. Abdelhameed (aabdelhameed.at.anl.gov)*, Yan Cao  (ycao.at.anl.gov)*, Eva Davidson (davidsonee.at.ornl.gov), Emily Shemon (eshemon.at.anl.gov)
+*Contacts: Donny Hartanto (hartantod.at.ornl.gov), Yan Cao  (ycao.at.anl.gov)*, Eva Davidson (davidsonee.at.ornl.gov), Emily Shemon (eshemon.at.anl.gov)*
 
 *Model link: [SEFOR](https://github.com/idaholab/virtual_test_bed/tree/devel/sfr/sefor)*
 

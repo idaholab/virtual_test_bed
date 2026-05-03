@@ -1,6 +1,6 @@
 # Heat Pipe Microreactor with Hydrogen Redistribution (HPMR-H$_2$) Description
 
-*Contact: Stefano Terlizzi sbt5572.at.psu.edu, Javier Ortensi javier.ortensi.at.inl.gov*
+*Contact: Stefano Terlizzi sbt5572.at.psu.edu, Mustafa Jaradat Mustafa.Jaradat.at.inl.gov*
 
 ## Introduction
 

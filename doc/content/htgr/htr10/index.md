@@ -1,6 +1,6 @@
 # Griffin HTR-10 Model and Results
 
-*Contact: Javier Ortensi, Javier.Ortensi@inl.gov*
+*Contact: Joshua Hanophy, Joshua.Hanophy.at.inl.gov*
 
 *Model link: [HTR-10 Griffin Model](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/htr10)*
 

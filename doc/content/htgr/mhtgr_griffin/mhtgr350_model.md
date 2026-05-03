@@ -2,7 +2,7 @@
 
 ## Benchmark Description id=benchmark
 
-*Contact: Javier Ortensi, javier.ortensi.at.inl.gov
+*Contact: Olin Calvin, olin.calvin@inl.gov*
 
 The MHTGR-350 is a benchmark problem organized by the OECD/NEA ([!cite](mhtgr_benchmark)).
 The scope of the benchmark is twofold: 1) to establish a well-defined problem, based on a
