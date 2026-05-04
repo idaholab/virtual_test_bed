@@ -761,11 +761,11 @@ solid_blocks = 'core core_barrel'
   petsc_options_iname = '-pc_type -sub_pc_factor_shift_type -pc_factor_mat_solver_package'
   petsc_options_value = ' lu       NONZERO                  superlu_dist'
   automatic_scaling = true
+
+  # TODO: create custom convergence objects for each system to have an optimal behavior
   nl_abs_tol = 1e-6
-  #line_search = l2
   nl_max_its = 100
-  dtmin = 0.01
-  dtmax = 1e4
+  nl_forced_its = 1
 
   [TimeStepper]
     type = IterationAdaptiveDT
@@ -776,9 +776,10 @@ solid_blocks = 'core core_barrel'
     cutback_factor = 0.5
   []
 
+  dtmin = 0.01
+  dtmax = 1e4
   end_time = 4e5
   #steady_state_detection = true
-
 []
 
 [Outputs]
