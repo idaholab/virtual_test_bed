@@ -103,6 +103,12 @@ solid_blocks = 'core core_barrel'
 [Problem]
   kernel_coverage_check = false
   allow_initial_conditions_with_restart = true
+
+  # We segregate the solve of the advected species as they do not influence
+  # the velocity or temperature directly, only through neutronic feedback
+  # We separate the energy equations solve from pressure and momentum as
+  # this first order explicit coupling does not change the solution at steady state
+  nl_sys_names = 'ns energy c1 c2 c3 c4 c5 c6 xe_i'
 []
 
 # ==============================================================================
@@ -113,6 +119,8 @@ solid_blocks = 'core core_barrel'
     type = INSFVEnergyVariable
     initial_condition = ${T_Salt_initial}
     block = ${solid_blocks}
+
+    solver_sys = 'energy'
   []
 []
 
@@ -146,6 +154,7 @@ solid_blocks = 'core core_barrel'
         momentum_advection_interpolation = upwind
         mass_advection_interpolation = upwind
         velocity_interpolation = rc
+        system_names = 'ns'
 
         # Porous & Friction treatment
         use_friction_correction = true
@@ -169,12 +178,12 @@ solid_blocks = 'core core_barrel'
         pinned_pressure_type = point-value-uo
       []
     []
-    
+
     [FluidHeatTransfer]
       [ht]
         block = ${fluid_blocks}
         coupled_flow_physics = 'flow'
-        
+
         # Variable naming and coupling
         fluid_temperature_variable = 'T_fluid'
 
@@ -183,6 +192,7 @@ solid_blocks = 'core core_barrel'
 
         # Numerical schemes
         energy_advection_interpolation = upwind
+        system_names = 'energy'
 
         # Fluid properties
         thermal_conductivity = 'kappa'
@@ -206,6 +216,7 @@ solid_blocks = 'core core_barrel'
         turbulence_handling = 'mixing-length'
         mixing_length_name = 'mixing_length'
         Sc_t = '${Sc_t} ${Sc_t} ${Sc_t} ${Sc_t} ${Sc_t} ${Sc_t} ${Sc_t} ${Sc_t}'
+        system_names = 'ns'
       []
     []
 
@@ -216,6 +227,7 @@ solid_blocks = 'core core_barrel'
         block = ${fluid_blocks}
         coupled_flow_physics = 'flow'
         passive_scalar_advection_interpolation = upwind
+        system_names = 'c1 c2 c3 c4 c5 c6 xe_i xe_i'
       []
     []
   []
@@ -362,7 +374,7 @@ solid_blocks = 'core core_barrel'
     rate = ${lambda6}
     block = ${fluid_blocks}
   []
-# Kernels for solve of I and Xe transport 
+# Kernels for solve of I and Xe transport
   [I135_src]
     type = FVCoupledForce
     variable = I135
@@ -768,8 +780,8 @@ solid_blocks = 'core core_barrel'
 [Executioner]
   type = Transient
   solve_type = NEWTON
-  petsc_options_iname = '-pc_type -sub_pc_factor_shift_type'
-  petsc_options_value = ' lu       NONZERO'
+  petsc_options_iname = '-pc_type -sub_pc_factor_shift_type -pc_factor_mat_solver_package'
+  petsc_options_value = ' lu       NONZERO                  superlu_dist'
   automatic_scaling = true
   nl_abs_tol = 1e-6
   #line_search = l2
