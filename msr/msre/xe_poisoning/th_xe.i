@@ -471,14 +471,6 @@ solid_blocks = 'core core_barrel'
     initial_condition = 1.0
     block = ${fluid_blocks}
   []
-  [a_u_var]
-    type = MooseVariableFVReal
-    block = ${fluid_blocks}
-  []
-  [a_v_var]
-    type = MooseVariableFVReal
-    block = ${fluid_blocks}
-  []
   [mass_trans_var]
     type = MooseVariableFVReal
     block = ${fluid_blocks}
@@ -505,20 +497,6 @@ solid_blocks = 'core core_barrel'
     variable = 'rho_var'
     functor = 'rho'
     block = ${fluid_blocks}
-  []
-  [comp_a_u]
-    type = FunctorAux
-    functor = 'ax'
-    variable = 'a_u_var'
-    block = ${fluid_blocks}
-    execute_on = 'timestep_end'
-  []
-  [comp_a_v]
-    type = FunctorAux
-    functor = 'ay'
-    variable = 'a_v_var'
-    block = ${fluid_blocks}
-    execute_on = 'timestep_end'
   []
   [comp_mass_trans]
     type = FunctorAux
