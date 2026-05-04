@@ -197,6 +197,7 @@ solid_blocks = 'core core_barrel'
       []
     []
 
+    # ADD this entire new block:
     [Turbulence]
       [turb]
         coupled_flow_physics = 'flow'
@@ -223,26 +224,18 @@ solid_blocks = 'core core_barrel'
 [FVBCs]
   [sym_I135]
     type = INSFVSymmetryScalarBC
-    boundary = 'left top'
+    boundary = 'left'
     variable = I135
   []
   [sym_Xe135]
     type = INSFVSymmetryScalarBC
-    boundary = 'left top'
+    boundary = 'left'
     variable = Xe135
   []
 []
 
 [FVKernels]
   # Extra kernels for the thermal-hydraulics solve in the fluid
-  [pump_x]
-    type = INSFVPump
-    momentum_component = x
-    rhie_chow_user_object = 'pins_rhie_chow_interpolator'
-    variable = superficial_vel_x
-    block = 'pump'
-    pump_volume_force = ${pump_force}
-  []
   [pump_y]
     type = INSFVPump
     momentum_component = y
@@ -899,20 +892,6 @@ solid_blocks = 'core core_barrel'
     to_multi_app = griffin
     source_variable = 'T_solid'
     variable = 'T_solid'
-    execute_on = 'timestep_end'
-  []
-  [vel_x]
-    type = MultiAppGeneralFieldShapeEvaluationTransfer
-    to_multi_app = griffin
-    source_variable = 'superficial_vel_x'
-    variable = 'vel_x'
-    execute_on = 'timestep_end'
-  []
-  [vel_y]
-    type = MultiAppGeneralFieldShapeEvaluationTransfer
-    to_multi_app = griffin
-    source_variable = 'superficial_vel_y'
-    variable = 'vel_y'
     execute_on = 'timestep_end'
   []
 []
