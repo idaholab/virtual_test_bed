@@ -43,6 +43,6 @@ ax.spines['top'].set_visible(False)
 ax.spines['right'].set_visible(False)
 
 plt.tight_layout()
-plt.savefig('plot_xe.png', dpi=300, bbox_inches='tight')
+plt.savefig('xe_feedback.png', dpi=300, bbox_inches='tight')
 plt.show()
 

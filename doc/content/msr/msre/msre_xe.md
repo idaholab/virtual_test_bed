@@ -324,6 +324,10 @@ This -410 pcm penalty is significantly lower than the values typically encounter
 
 These results demonstrate that the 2-D Pronghorn-Griffin MSRE model can capture first-order Xe-poisoning behavior in a fully coupled loop simulation. Ongoing development will expand the model to transient operation and include additional physics for Xe interactions with graphite and circulating bubbles.
 
+## Postprocessing
+
+A Python plotting script, `plot_xe.py`, is located in the model folder for plotting the $^{135}Xe$ concentration data. This script reads the `th_xe_out.csv` output file and generates a plot (e.g., `xe_feedback.png`) showing the evolution of xenon concentration over time.
+
 ## Run Command
 
 The MSRE Xenon Poisoning Model is executed using the BlueCRAB physics suite, which provides the necessary coupling between Pronghorn (thermal-hydraulics) and Griffin (neutronics). The following example demonstrates how to initialize the environment and launch a parallel simulation on the INL Sawtooth cluster.
