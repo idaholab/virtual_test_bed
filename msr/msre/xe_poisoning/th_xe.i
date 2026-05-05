@@ -259,6 +259,14 @@ solid_blocks = 'core core_barrel'
 
 [FVKernels]
   # Extra kernels for the thermal-hydraulics solve in the fluid
+  [pump_x]
+    type = INSFVPump
+    momentum_component = x
+    rhie_chow_user_object = 'pins_rhie_chow_interpolator'
+    variable = superficial_vel_x
+    block = 'pump'
+    pump_volume_force = ${pump_force}
+  []
   [pump_y]
     type = INSFVPump
     momentum_component = y
