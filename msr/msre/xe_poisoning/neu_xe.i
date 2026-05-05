@@ -521,7 +521,8 @@ Salt_Density_initial = 2263.0
   petsc_options_iname = '-pc_type -pc_hypre_type -ksp_gmres_restart'
   petsc_options_value = 'hypre boomeramg 50'
   l_max_its = 5000
-  nl_abs_tol = 1e-10
+  # Avoid over-converging the problem
+  nl_abs_tol = 1e-7
 
   free_power_iterations = 4 # important to obtain fundamental mode eigenvalue
 []
