@@ -815,6 +815,10 @@ solid_blocks = 'core core_barrel'
     input_files           = 'neu_xe.i'
     execute_on            = 'timestep_end'
     enable                = true
+
+    # Restarting from the previous step is closer to the solution
+    keep_solution_during_restore = true
+    update_old_solution_when_keeping_solution_during_restore = true
   []
 []
 
