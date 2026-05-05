@@ -222,6 +222,9 @@ solid_blocks = 'core core_barrel'
         Sc_t = '${Sc_t} ${Sc_t} ${Sc_t} ${Sc_t} ${Sc_t} ${Sc_t} ${Sc_t} ${Sc_t}'
         system_names = 'ns'
 
+        # TODO: consider if having different mixing length near wall makes
+        # sense in this coarse mesh TH model
+
         # Explicit physics coupling (can be auto-detected)
         coupled_flow_physics = 'flow'
         fluid_heat_transfer_physics = 'ht'
@@ -233,6 +236,8 @@ solid_blocks = 'core core_barrel'
       [species]
         passive_scalar_names = 'c1 c2 c3 c4 c5 c6 I135 Xe135'
         block = ${fluid_blocks}
+
+        # Numerical scheme parameters
         passive_scalar_advection_interpolation = upwind
         system_names = 'c1 c2 c3 c4 c5 c6 xe_i xe_i'
 
@@ -784,6 +789,7 @@ solid_blocks = 'core core_barrel'
   # TODO: create custom convergence objects for each system to have an optimal behavior
   nl_abs_tol = 1e-6
   nl_max_its = 100
+  # force a solve to see the updated value on every step
   nl_forced_its = 1
 
   [TimeStepper]
