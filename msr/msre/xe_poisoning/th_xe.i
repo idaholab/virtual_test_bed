@@ -176,13 +176,15 @@ solid_blocks = 'core core_barrel'
         pinned_pressure_value = ${p_outlet}
         pinned_pressure_point = '0.0 2.13859 0.0'
         pinned_pressure_type = point-value-uo
+
+        # Explicit physics coupling (can be auto-detected)
+        coupled_turbulence_physics = 'turb'
       []
     []
 
     [FluidHeatTransfer]
       [ht]
         block = ${fluid_blocks}
-        coupled_flow_physics = 'flow'
 
         # Variable naming and coupling
         fluid_temperature_variable = 'T_fluid'
@@ -204,30 +206,39 @@ solid_blocks = 'core core_barrel'
         # Boundary Conditions (Inherits wall_boundaries from [flow])
         energy_wall_types = 'heatflux  heatflux heatflux heatflux heatflux    heatflux heatflux heatflux'
         energy_wall_functors = '0        0        0        0         0      0    0        0'
+
+        # Explicit physics coupling (can be auto-detected)
+        coupled_flow_physics = 'flow'
+        coupled_turbulence_physics = 'turb'
       []
     []
 
     # ADD this entire new block:
     [Turbulence]
       [turb]
-        coupled_flow_physics = 'flow'
-        fluid_heat_transfer_physics = 'ht'
-        scalar_transport_physics = 'species'  # Point to the single merged block
+        block = ${fluid_blocks}
         turbulence_handling = 'mixing-length'
         mixing_length_name = 'mixing_length'
         Sc_t = '${Sc_t} ${Sc_t} ${Sc_t} ${Sc_t} ${Sc_t} ${Sc_t} ${Sc_t} ${Sc_t}'
         system_names = 'ns'
+
+        # Explicit physics coupling (can be auto-detected)
+        coupled_flow_physics = 'flow'
+        fluid_heat_transfer_physics = 'ht'
+        scalar_transport_physics = 'species'
       []
     []
 
-    # ScalarTransport is moved INSIDE NavierStokes
     [ScalarTransport]
-      [species]  # Merged block for all scalars
+      [species]
         passive_scalar_names = 'c1 c2 c3 c4 c5 c6 I135 Xe135'
         block = ${fluid_blocks}
-        coupled_flow_physics = 'flow'
         passive_scalar_advection_interpolation = upwind
         system_names = 'c1 c2 c3 c4 c5 c6 xe_i xe_i'
+
+        # Explicit physics coupling (can be auto-detected)
+        coupled_flow_physics = 'flow'
+        # coupled_turbulence_physics = 'turb' # TODO: uncomment post typo fix in code
       []
     []
   []
