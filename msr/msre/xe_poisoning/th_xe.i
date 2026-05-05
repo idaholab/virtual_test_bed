@@ -5,9 +5,13 @@
 # Integrates:
 # - Porous media model for reactor primary loop
 # - Weakly compressible, turbulent flow formulation
+# - Delayed neutron precursor transport
+# - Xenon and Iodine production-consumption-advection
 # MSRE: reference plant design based on 5MW of MSRE Experiment.
 # ==============================================================================
-# Author(s): Dr. Mauricio Tano, Dr. Samuel Walker, Dr. Jun Fang
+# Author(s):
+# INL: Dr. Mauricio Tano, Dr. Samuel Walker, Dr. Guillaume Giudicelli
+# ANL: Dr. Jun Fang
 # ==============================================================================
 # ==============================================================================
 # MODEL PARAMETERS
