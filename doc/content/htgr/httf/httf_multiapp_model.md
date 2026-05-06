@@ -1,6 +1,6 @@
 # HTTF 3-D MultiApp Model Description
 
-*Contact: Thomas Freyman, Joshua Hansel (joshua.hansel.at.inl.gov)*
+*Contact: Thomas Freyman, Lise Charlot (lcharlot.at.sawtoothsim.com), Joshua Hansel (joshua.hansel.at.inl.gov)*
 
 *Model link: [HTTF MultiApp Model](https://github.com/idaholab/virtual_test_bed/tree/devel/htgr/httf)*
 
