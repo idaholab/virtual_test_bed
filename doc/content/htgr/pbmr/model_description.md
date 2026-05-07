@@ -1,6 +1,6 @@
 # Pebble Bed Modular Reactor (PBMR) Description
 
-*Contact: Joshua Hansel (joshua.hansel.at.inl.gov)*
+*Contact: Lise Charlot (lcharlot.at.sawtoothsim.com), Joshua Hansel (joshua.hansel.at.inl.gov)*
 
 *Model link: [PBMR Model](https://github.com/idaholab/virtual_test_bed/tree/devel/htgr/pbmr400)*
 
