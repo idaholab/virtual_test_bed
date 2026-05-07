@@ -18,7 +18,7 @@
                        institution:INL
                        sponsor:NRIC
 
-*Contact: Lise Charlot, Joshua Hansel (joshua.hansel.at.inl.gov)*
+*Contact: Lise Charlot (lcharlot.at.sawtoothsim.com), Joshua Hansel (joshua.hansel.at.inl.gov)*
 
 [System Description](gcmr/BOP_system_description.md)
 

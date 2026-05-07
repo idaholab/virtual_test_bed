@@ -1,5 +1,5 @@
 # Generic gas cooled micro reactor balance of plant with open-air recuperated Brayton cycle
-# POC: Lise Charlot, Joshua Hansel (joshua.hansel.at.inl.gov)
+# POC: Lise Charlot (lcharlot.at.sawtoothsim.com), Joshua Hansel (joshua.hansel.at.inl.gov)
 # this input file models a load-follow transient
 # If using or referring to this model, please cite as explained in
 # https://mooseframework.inl.gov/virtual_test_bed/citing.html#
