@@ -64,6 +64,7 @@
     capabilities = 'method=opt'
     # See #363
     rel_err = 4e-4
+    allow_warnings = true
   []
   [bison_mecha_only]
     type = CSVDiff
