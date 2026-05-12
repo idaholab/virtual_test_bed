@@ -7,8 +7,8 @@
 
 [Functions]
   [TimeStepperFunc]
-    x := '0.0  100   120   180  200  240   300  600'
-    y := '5.   2.    0.1   0.5    1.   1.5   2.   2.'
+    x := '0.0  20    120   180  200  240   300  600'
+    y := '1.0  2.    0.1   0.5    1.   1.5   2.   2.'
   []
   [head_func] # Dynamic pump head
     type = PiecewiseLinear
@@ -19,10 +19,6 @@
 []
 
 [Components]
-  [point_kinetics_basic]
-    # feedback_start_time        := 120
-  []
-
   [pump]
     Head   := head_func
   []
