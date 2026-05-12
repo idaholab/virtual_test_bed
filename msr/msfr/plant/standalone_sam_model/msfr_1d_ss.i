@@ -43,9 +43,10 @@
          5.2865E-03  4.9868E-03  4.7124E-03'
   []
   [TimeStepperFunc]
-    type = PiecewiseLinear
+    type = PiecewiseConstant
     x = '-1000   -998   -995   -990   -980    -950   -500  0.0'
-    y = ' 0.1     0.1    0.2    0.5    1.0     5.0   25.0 25.0'
+    y = ' 0.1     0.2    0.5    1.0    2.0     5.0   10.0  5.0'
+    direction = left_inclusive
   []
 []
 
@@ -600,6 +601,7 @@ beta_eff = '${fparse 8.42817E-05+6.84616E-04+4.79796E-04+1.03883E-03+5.49185E-04
   [csv]
     type = CSV
     execute_scalars_on = 'none'
+    sync_times = '0.0 120.0'
   []
   [checkpoint]
     type = Checkpoint
