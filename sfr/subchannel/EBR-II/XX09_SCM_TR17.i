@@ -50,6 +50,12 @@ unheated_length_exit = '${fparse 26.9*scale_factor}'
   []
 []
 
+[FluidProperties]
+  [sodium]
+    type = PBSodiumFluidProperties
+  []
+[]
+
 [AuxVariables]
   [mdot]
     block = subchannel
@@ -99,11 +105,8 @@ unheated_length_exit = '${fparse 26.9*scale_factor}'
   [displacement]
     block = subchannel
   []
-[]
-
-[FluidProperties]
-  [sodium]
-    type = PBSodiumFluidProperties
+  [ff]
+    block = subchannel
   []
 []
 
@@ -121,13 +124,21 @@ unheated_length_exit = '${fparse 26.9*scale_factor}'
   implicit = true
   segregated = false
   interpolation_scheme = 'upwind'
+  # Heat Transfer Correlations
+  pin_HTC_closure = 'gnielinski'
+  duct_HTC_closure = 'gnielinski'
   # friction model
   friction_closure = 'cheng'
+
+  full_output = true
 []
 
 [SCMClosures]
   [cheng]
     type = SCMFrictionUpdatedChengTodreas
+  []
+  [gnielinski]
+    type = SCMHTCGnielinski
   []
 []
 
@@ -260,8 +271,8 @@ unheated_length_exit = '${fparse 26.9*scale_factor}'
   [change_q_prime]
     type = ParsedAux
     variable = q_prime
-    args = 'q_prime_init power_history_field'
-    function = 'q_prime_init*power_history_field'
+    coupled_variables = 'q_prime_init power_history_field'
+    expression = 'q_prime_init*power_history_field'
     execute_on = 'INITIAL TIMESTEP_BEGIN'
   []
 []
