@@ -261,6 +261,7 @@ htc_ext_cond = 1.0e6
   []
   [csv]
     type = CSV
+    show = 'evaporator_boundary_integral condenser_boundary_integral'
     execute_on = 'INITIAL FINAL'
     enable = false
   []
