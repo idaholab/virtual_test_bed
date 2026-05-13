@@ -466,10 +466,10 @@ p_outlet          = 7.0e+6 # Reactor outlet pressure (Pa)
 
   [TimeStepper]
     type = IterationAdaptiveDT
-    growth_factor = 1.1
+    growth_factor = 1.5
     optimal_iterations = 10
     linear_iteration_ratio = 100
-    dt = 0.005 #0.0064 #0.01
+    dt = 0.01 #0.0064 #0.01
     cutback_factor = 0.8
     cutback_factor_at_failure = 0.8
   []
