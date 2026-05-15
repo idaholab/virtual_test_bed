@@ -1,7 +1,7 @@
 # Following Benchmark Specifications and Data Requirements for EBR-II Shutdown Heat Removal Tests SHRT-17 and SHRT-45R
 # Available at: https://publications.anl.gov/anlpubs/2012/06/73647.pdf
 ###################################################
-# Steady state subchannel calculation
+# Steady state subchannel calcultion
 # Thermal-hydraulics parameters
 ###################################################
 T_in = 624.70556 #Kelvin
@@ -75,12 +75,11 @@ unheated_length_exit = '${fparse 26.9*scale_factor}'
   []
 []
 
-[SubChannel]
+[Problem]
   type = TriSubChannel1PhaseProblem
   fp = sodium
   n_blocks = 1
   P_out = ${P_out}
-  CT = 2.6
   compute_density = true
   compute_viscosity = true
   compute_power = true
@@ -90,12 +89,10 @@ unheated_length_exit = '${fparse 26.9*scale_factor}'
   segregated = false
   interpolation_scheme = 'upwind'
   verbose_subchannel = true
-  # Heat Transfer Correlations
   pin_HTC_closure = 'gnielinski'
   duct_HTC_closure = 'gnielinski'
-  # friction model
   friction_closure = 'cheng'
-
+  mixing_closure = 'cheng_todreas'
   full_output = true
 []
 
@@ -105,6 +102,10 @@ unheated_length_exit = '${fparse 26.9*scale_factor}'
   []
   [gnielinski]
     type = SCMHTCGnielinski
+  []
+  [cheng_todreas]
+    type = SCMMixingChengTodreas
+    CT = 2.6
   []
 []
 

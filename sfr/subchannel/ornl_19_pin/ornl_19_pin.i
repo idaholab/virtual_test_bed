@@ -42,7 +42,6 @@ P_out = 2.0e5 # Pa
   fp = sodium
   n_blocks = 1
   P_out = 2.0e5
-  CT = 2.6
   compute_density = true
   compute_viscosity = true
   compute_power = true
@@ -56,11 +55,17 @@ P_out = 2.0e5 # Pa
   # friction model
   friction_closure = 'cheng'
   full_output = true
+  # mixing model
+  mixing_closure = 'cheng_todreas'
 []
 
 [SCMClosures]
   [cheng]
     type = SCMFrictionUpdatedChengTodreas
+  []
+  [cheng_todreas]
+    type = SCMMixingChengTodreas
+    CT = 2.6
   []
 []
 
