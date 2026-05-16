@@ -1,0 +1,28 @@
+[GENERAL]
+polynomialOrder = 3
+startFrom = run01_mcre0.f00230
+stopAt = numSteps
+numSteps = 10000000
+
+timeStepper = tombo1
+#dt = 1.0e-6
+#subCyclingSteps = 2
+dt = targetCFL=4 + max=1e-2 + initial=1e-6
+
+checkpointControl = steps
+checkpointInterval = 10000
+
+regularization = hpfrt + nModes=1 + scalingCoeff=1000
+
+[PRESSURE]
+residualTol = 1e-04
+initialGuess = projectionAconj+nVector=10
+
+[VELOCITY]
+boundaryTypeMap = W
+rho = 1.0
+viscosity = 1/2000  #1/10742.82
+residualTol = 1e-06
+
+[TEMPERATURE]
+solver = none
