@@ -217,7 +217,6 @@ solid_blocks = 'core core_barrel'
       []
     []
 
-    # ADD this entire new block:
     [Turbulence]
       [turb]
         block = ${fluid_blocks}
@@ -832,7 +831,6 @@ solid_blocks = 'core core_barrel'
     app_type              = GriffinApp
     input_files           = 'neu_xe.i'
     execute_on            = 'timestep_end'
-    enable                = true
 
     # Restarting from the previous step is closer to the solution
     keep_solution_during_restore = true
