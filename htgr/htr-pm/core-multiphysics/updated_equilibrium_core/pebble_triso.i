@@ -1,1 +1,1 @@
-../dlofc/pebble_triso.i
+../common_inputs/pebble_triso.i
