@@ -16,6 +16,8 @@
            sponsor:NRC
            institution:INL
 
+* Model Point of Contact: Mustafa Jaradat (mustafa.jaradat.at.inl.gov) *
+
 [Model Description](htr-pm/core-multiphysics/model-description.md)
 
 [Neutronics Model](htr-pm/core-multiphysics/neutronics-model.md)
