@@ -120,14 +120,12 @@ initial_temperature        = 500.0 # (K)
     T_solid = T_pebble
     solid = pebble_core
     block = '1'
-    output_properties = k_s
   []
   [pebble_shell]
     type = PronghornSteadyStateSolidMaterial
     T_solid = T_pebble
     solid = gmatrix
     block = '2'
-    output_properties = k_s
   []
 
   # TRISO.
@@ -136,35 +134,30 @@ initial_temperature        = 500.0 # (K)
     T_solid = T_triso
     solid = kernel
     block = '3'
-    output_properties = k_s
   []
   [buffer]
     type = PronghornSteadyStateSolidMaterial
     T_solid = T_triso
     solid = buffer
     block = '4'
-    output_properties = k_s
   []
   [ipyc]
     type = PronghornSteadyStateSolidMaterial
     T_solid = T_triso
     solid = ipyc
     block = '5'
-    output_properties = k_s
   []
   [sic]
     type = PronghornSteadyStateSolidMaterial
     T_solid = T_triso
     solid = sic
     block = '6'
-    output_properties = k_s
   []
   [opyc]
     type = PronghornSteadyStateSolidMaterial
     T_solid = T_triso
     solid = opyc
     block = '7'
-    output_properties = k_s
   []
 []
 
@@ -181,37 +174,37 @@ initial_temperature        = 500.0 # (K)
   []
   [buffer_k]
     type = ParsedFunction
-    value = 244.3/2*t^(-0.574)*(970/(2.2*(1930.-970)+970))*(1.-0.336*(1.-exp(-1.005*gam))-3.50e-2*gam)
+    expression = 244.3/2*t^(-0.574)*(970/(2.2*(1930.-970)+970))*(1.-0.336*(1.-exp(-1.005*gam))-3.50e-2*gam)
     symbol_names = 'gam'
     symbol_values = 'fluence'
   []
   [pyc_k]
     type = ParsedFunction
-    value = 244.3*t^(-0.574)*(1900/(2.2*(1930.-1900)+1900))*(1.-0.336*(1.-exp(-1.005*gam))-3.50e-2*gam)
+    expression = 244.3*t^(-0.574)*(1900/(2.2*(1930.-1900)+1900))*(1.-0.336*(1.-exp(-1.005*gam))-3.50e-2*gam)
     symbol_names = 'gam'
     symbol_values = 'fluence'
   []
   [sic_k]
     type = ParsedFunction
-    value = (17885/t+2.)*exp(-0.1277*gam)
+    expression = (17885/t+2.)*exp(-0.1277*gam)
     symbol_names = 'gam'
     symbol_values = 'fluence'
   []
   [gmatrix_k]
     type = ParsedFunction
-    value = 47.4*(1-9.7556E-4*(t-373.15)*exp(-6.036E-4*(t-273.15)))*(1740/(2.2*(1700.-1740)+1740))*(1.-0.336*(1.-exp(-1.005*gam))-3.50e-2*gam)
+    expression = 47.4*(1-9.7556E-4*(t-373.15)*exp(-6.036E-4*(t-273.15)))*(1740/(2.2*(1700.-1740)+1740))*(1.-0.336*(1.-exp(-1.005*gam))-3.50e-2*gam)
     symbol_names = 'gam'
     symbol_values = 'fluence'
   []
   [fluence]
     type = ParsedFunction
-    value = 7.41611E-06*bnp*bnp*bnp-5.36979E-06*bnp*bnp+1.37527E-02*bnp-4.48921E-02
+    expression = 7.41611E-06*bnp*bnp*bnp-5.36979E-06*bnp*bnp+1.37527E-02*bnp-4.48921E-02
     symbol_names = 'bnp'
     symbol_values = 'burnup'
   []
   [fima]
     type = ParsedFunction
-    value = -2.022642E-06*bnp*bnp+1.053601E-03*bnp
+    expression = -2.022642E-06*bnp*bnp+1.053601E-03*bnp
     symbol_names = 'bnp'
     symbol_values = 'burnup'
   []
