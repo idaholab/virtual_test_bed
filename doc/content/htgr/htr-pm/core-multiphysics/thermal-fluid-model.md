@@ -10,7 +10,7 @@ The cold fluid from the circulators enters the core via the vertical risers in t
 
 The radiative heat transfer at the outer boundary of the reactor vessel has a small impact on steady-state calculations and a larger impact during the loss of forced cooling (DLOFC) transients. Also, during the loss of flow transient, fluid inflow and outflow boundary conditions are not changed to wall boundary conditions, which leads to a significant change in the helium leaving the core due to thermal expansion, which tends to increase temperature estimates.
 
-The model for the thermal fluid calculations can be found in ```htgr/htr-pm-2/htr-pm-flow-fv-ss.i```.
+The model for the thermal fluid calculations can be found in [this input](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/htr-pm-2/htr-pm-flow-fv-ss.i).
 A depiction of the geometry and materials in the Pronghorn thermal-hydraulic model and the fluid flow path is shown in [thermo-fluid-model].
 
 !media htrpm_coremultiphysics/htr-pm-domain.png
@@ -27,26 +27,26 @@ The boundary condition for the Pronghorn model of the HTR-PM include:
 * Radiative and convective boundary conditions were applied between the pressure vessel and isothermal cylindrical reactor cavity cooling system (RCCS) panel with an inner diameter of 4 m, a temperature of $T_{\infty}=300$ K, a heat transfer coefficient of 5 W/m$^{2}$.K, and a surface emissivities are assumed to be 0.8.
 
 The model input starts by defining geometric parameters for the problem.
-Then, global parameters are defined in ```GlobalParams``` and the mesh is defined in the ```Mesh``` block
+Then, global parameters are defined in ```[GlobalParams]``` and the mesh is defined in the ```[Mesh]``` block
 
 !listing htgr/htr-pm/core-multiphysics/updated_equilibrium_core/htr-pm-flow-fv-ss.i block=GlobalParams
 
 !listing htgr/htr-pm/core-multiphysics/updated_equilibrium_core/htr-pm-flow-fv-ss.i block=Mesh
 
 
-The definition of the pronghorn Navier-Stokes equation for the solution of the weakly-compressible fluid, and the properties of the fluid go into ```Modules``` block.
+The definition of the pronghorn Navier-Stokes equation for the solution of the weakly-compressible fluid, and the properties of the fluid go into ```Physics``` block.
 
-!listing htgr/htr-pm/core-multiphysics/updated_equilibrium_core/htr-pm-flow-fv-ss.i block=Modules
+!listing htgr/htr-pm/core-multiphysics/updated_equilibrium_core/htr-pm-flow-fv-ss.i block=Physics
 
-Material properties are defined in the ```Materials``` block
+Material properties are defined in the ```[Materials]``` block
 
 !listing htgr/htr-pm/core-multiphysics/updated_equilibrium_core/htr-pm-flow-fv-ss.i block=Materials
 
-The characteristics of the execution of the problem are defined in ```Executioner``` block
+The characteristics of the execution of the problem are defined in ```[Executioner]``` block
 
 !listing htgr/htr-pm/core-multiphysics/updated_equilibrium_core/htr-pm-flow-fv-ss.i block=Executioner
 
-And control of output is defined in ```Outputs``` block
+And control of output is defined in ```[Outputs]``` block
 
 !listing htgr/htr-pm/core-multiphysics/updated_equilibrium_core/htr-pm-flow-fv-ss.i block=Outputs
 
@@ -73,19 +73,19 @@ The model also defines pebble and TRISO temperatures as follows
 
 !listing htgr/htr-pm/core-multiphysics/updated_equilibrium_core/pebble_triso.i block=Variables
 
-Materials are defined in ```Materials``` block
+Materials are defined in ```[Materials]``` block
 
 !listing htgr/htr-pm/core-multiphysics/updated_equilibrium_core/pebble_triso.i block=Materials
 
-materials thermal conductivity and burnup are defined in ```Functions``` block:
+materials thermal conductivity and burnup are defined in ```[Functions]``` block:
 
 !listing htgr/htr-pm/core-multiphysics/updated_equilibrium_core/pebble_triso.i block=Functions
 
-These properties are linked to a type of object in the ```UserObject``` block as follows
+These properties are linked to a type of object in the ```[UserObject]``` block as follows
 
 !listing htgr/htr-pm/core-multiphysics/updated_equilibrium_core/pebble_triso.i block=UserObjects
 
-The boundary condition is applied in the ```BCs``` block
+The boundary conditions are applied in the ```[BCs]``` block
 
 !listing htgr/htr-pm/core-multiphysics/updated_equilibrium_core/pebble_triso.i block=BCs
 
