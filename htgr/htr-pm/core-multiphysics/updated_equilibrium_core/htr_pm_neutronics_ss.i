@@ -9,7 +9,7 @@
 # ==============================================================================
 initial_temperature     = 500.0 # (K)
 total_power             = 250.0e+6  # Total reactor Power (W)
-burnup_group_boundaries = '5.35E+13 1.070E+14 1.604E+14 2.139E+14 2.674E+14 3.209E+14 3.743E+14 4.278E+14 4.818E+14' 
+burnup_group_boundaries = '5.35E+13 1.070E+14 1.604E+14 2.139E+14 2.674E+14 3.209E+14 3.743E+14 4.278E+14 4.818E+14'
 # ==============================================================================
 # parameters describing the reactor geometry
 core_height             = 11.0
@@ -46,7 +46,7 @@ pebble_unloading_rate   = ${fparse pebble_speed * area * 0.61 / pebble_volume}
     family                       = LAGRANGE
     order                        = FIRST
 	  n_delay_groups               = 6
-    fission_source_as_material   = true
+    fission_source_as_material   = false
     assemble_scattering_jacobian = true
     assemble_fission_jacobian    = true
   []
@@ -56,17 +56,17 @@ pebble_unloading_rate   = ${fparse pebble_speed * area * 0.61 / pebble_volume}
 # ==============================================================================
 [Mesh]
   type           = MeshGeneratorMesh
-  block_id       = '         1              2           3          4             5             6 
+  block_id       = '         1              2           3          4             5             6
                              7              8          61         71'
   block_name     = 'pebble_bed      upper_ref   lower_ref     cavity    hot_plenum   cold_plenum
-                    radial_ref   carbon_brick    riser cr' 
+                    radial_ref   carbon_brick    riser cr'
   #uniform_refine = 1
  [cartesian_mesh]
     type         = CartesianMeshGenerator
     dim          = 2
     # Total height: 16.8 m
     dx           = ' 0.250 0.250 0.250 0.250 0.250 0.250
-                     0.010 0.050 0.130 0.080 0.080 0.080 
+                     0.010 0.050 0.130 0.080 0.080 0.080
  		                 0.200 0.120 0.125 0.125'
     ix           = ' 1 1 1 1 1 1
                      1 1 1 1 1 1
@@ -84,7 +84,7 @@ pebble_unloading_rate   = ${fparse pebble_speed * area * 0.61 / pebble_volume}
                      8  8  8  8  8  8  8  8   8  8  8  8   8  8  8  8
                      7  7  7  7  7  7  7  7   7  7  7  7   7  7  8  8
                      7  7  7  7  7  7  7  7   7  7  7  7   7  7  8  8
-                     5  5  5  5  5  5  5  5   5  7  7  7  61  7  8  8  
+                     5  5  5  5  5  5  5  5   5  7  7  7  61  7  8  8
                      3  3  3  3  3  3  7  7  71  7  7  7  61  7  8  8
                      3  3  3  3  3  3  7  7  71  7  7  7  61  7  8  8
                      3  3  3  3  3  3  7  7  71  7  7  7  61  7  8  8
@@ -115,7 +115,7 @@ pebble_unloading_rate   = ${fparse pebble_speed * area * 0.61 / pebble_volume}
                      6  6  6  6  6  6  6  6  71  6  6  6   6  7  8  8
                      7  7  7  7  7  7  7  7  71  7  7  7   7  7  8  8
                      8  8  8  8  8  8  8  8  71  8  8  8   8  8  8  8 '
- []                                                        
+ []
  [assign_material_id]
    type                   = SubdomainExtraElementIDGenerator
    input                  = cartesian_mesh
@@ -223,7 +223,7 @@ pebble_unloading_rate   = ${fparse pebble_speed * area * 0.61 / pebble_volume}
     n_fresh_pebble_types   = 1
     execute_on             = 'INITIAL TIMESTEP_END'
   []
-  [Tfuel_max_aux]             
+  [Tfuel_max_aux]
     type                   = ArrayVarExtremeValueAux
     block                  = pebble_bed
     variable               = Tfuel_max
@@ -257,11 +257,11 @@ pebble_unloading_rate   = ${fparse pebble_speed * area * 0.61 / pebble_volume}
     n_fresh_pebble_types   = 1
     execute_on             = 'INITIAL TIMESTEP_END'
   []
- 
+
   [prompt_power_density_aux]
     type                   = VectorReactionRate
     block                  = 'pebble_bed'
-    scalar_flux            = 'sflux_g0 sflux_g1 sflux_g2 sflux_g3 sflux_g4 
+    scalar_flux            = 'sflux_g0 sflux_g1 sflux_g2 sflux_g3 sflux_g4
 	                            sflux_g5 sflux_g6 sflux_g7 sflux_g8'
     variable               = prompt_power_density
     cross_section          = kappa_sigma_fission
@@ -269,15 +269,17 @@ pebble_unloading_rate   = ${fparse pebble_speed * area * 0.61 / pebble_volume}
     dummies                = UnscaledTotalPower
     execute_on             = 'INITIAL timestep_end'
   []
-  
+
   [decay_heat_bybg_aux]
     type                   = ArrayVarIsotopeDecayHeatAux
     variable               = decay_heat_bybg
     isotopic_composition   = pebble_isotope_density
+    volume_fraction        = pebble_volume_fraction
     dataset                = ISOXML
     isoxml_data_file       = '../xsections/DRAGON5_DT_DH_295.xml'
     isoxml_lib_name        = 'DRAGON'
     execute_on             = 'INITIAL timestep_end'
+    dtl_physicality = DISABLE
   []
   [decay_heat_aux]
     type                   = ArrayVarReductionAux
@@ -290,8 +292,8 @@ pebble_unloading_rate   = ${fparse pebble_speed * area * 0.61 / pebble_volume}
     type       = ParsedAux
     block      = 'pebble_bed'
     variable   = power_density2
-    args       = 'prompt_power_density decay_heat'
-    function   = 'prompt_power_density + decay_heat'
+    coupled_variables = 'prompt_power_density decay_heat'
+    expression   = 'prompt_power_density + decay_heat'
     execute_on = 'INITIAL timestep_end'
   []
 
@@ -316,8 +318,8 @@ pebble_unloading_rate   = ${fparse pebble_speed * area * 0.61 / pebble_volume}
     type       = ParsedAux
     block      = 'pebble_bed'
     variable   = power_peaking
-    args       = 'power_density'
-    function   = 'power_density / 3.21525E+06'
+    coupled_variables = 'power_density'
+    expression = 'power_density / 3.21525E+06'
     execute_on = 'timestep_end'
   []
 []
@@ -356,11 +358,11 @@ pebble_unloading_rate   = ${fparse pebble_speed * area * 0.61 / pebble_volume}
   []
   [depletion_solution]
     type       = SolutionVectorFile
-    var        = 'pebble_isotope_density  pebble_volume_fraction   graphite_temperature    
-	                     triso_temperature           power_density  partial_power_density  
-                         scaled_sflux_g0         scaled_sflux_g1        scaled_sflux_g2
-                         scaled_sflux_g3         scaled_sflux_g4        scaled_sflux_g5
-                         scaled_sflux_g6         scaled_sflux_g7        scaled_sflux_g8'
+    var        = 'pebble_isotope_density  pebble_volume_fraction   graphite_temperature
+	                     triso_temperature           power_density  partial_power_density
+                         sflux_g0         sflux_g1        sflux_g2
+                         sflux_g3         sflux_g4        sflux_g5
+                         sflux_g6         sflux_g7        sflux_g8'
     writing    = true
     execute_on = 'FINAL'
   []
@@ -372,7 +374,7 @@ pebble_unloading_rate   = ${fparse pebble_speed * area * 0.61 / pebble_volume}
   []
   [init_power_density]
     type       = SolutionVectorFile
-    var        = 'prompt_power_density  decay_heat  pebble_isotope_density' 
+    var        = 'prompt_power_density  decay_heat  pebble_isotope_density'
     writing    = true
     execute_on = 'FINAL'
   []
@@ -380,38 +382,37 @@ pebble_unloading_rate   = ${fparse pebble_speed * area * 0.61 / pebble_volume}
 # ==============================================================================
 # MATERIALS
 # ==============================================================================
-[PebbleDepletion]
+[PebbleBed]
   block                           = 'pebble_bed'
   power                           = ${fparse total_power}
   integrated_power_postprocessor  = total_power
   power_density_variable          = power_density
   family                          = MONOMIAL
-  order                           = CONSTANT  
-  
+  order                           = CONSTANT
+
   porosity_name                   = porosity
   burnup_group_boundaries         = ${burnup_group_boundaries}
   strictness                      = 0
-  
+
   # cross section data
   library_file                    = '../xsections/HTR-PM_9G-Tnew.xml'
   library_name                    = 'HTR-PM'
   burnup_grid_name                = 'Burnup'
   fuel_temperature_grid_name      = 'Tfuel'
   moderator_temperature_grid_name = 'Tmod'
+  # avoid physicality check (old XS library)
+  dtl_physicality = DISABLE
 
   # transmutation data
   dataset                         = ISOXML
   isoxml_data_file                = '../xsections/DRAGON5_DT_DH_295.xml'
   isoxml_lib_name                 = 'DRAGON'
-  
+
   initial_moderator_temperature   = ${initial_temperature}
   initial_fuel_temperature        = ${initial_temperature}
   n_fresh_pebble_types            = 1
-  fresh_pebble_isotopes           = '       U234       U235       U238        O16        O17
-                                        Graphite       SI28       SI29       SI30        C12'
-  fresh_pebble_isotope_densities  = ' 1.0887E-07 1.3550E-05 1.4209E-04 3.1137E-04 1.1837E-07
-                                      8.5357E-02 3.1399E-04 1.5944E-05 1.0510E-05 3.4044E-04'
-  track_isotopes                  = '  U235    U236    U238   PU238   PU239   PU240   PU241   PU242   AM241 
+  fresh_pebble_compositions       = 'fresh_pebble'
+  track_isotopes                  = '  U235    U236    U238   PU238   PU239   PU240   PU241   PU242   AM241
                                      AM242M   CS135   CS137   XE135   XE136    I131    I135    SR90'
 
   [DepletionScheme]
@@ -419,9 +420,10 @@ pebble_unloading_rate   = ${fparse pebble_speed * area * 0.61 / pebble_volume}
     pebble_unloading_rate         = ${pebble_unloading_rate}
     pebble_flow_rate_distribution = '0.027777778 0.083333333 0.138888889 0.194444444 0.25 0.305555556'
     burnup_limit                  = 4.818E+14
+    units = "MWd/kg"
     major_streamline_axis         = y
     pebble_diameter               = 0.06
-    material_ids                  = '1; 1; 1; 1; 1; 1'
+    # material_ids                  = '1; 1; 1; 1; 1; 1'
     streamline_points = '${r_streamline_1} ${fparse core_height + axial_reflector_height} 0 ${r_streamline_1} ${axial_reflector_height} 0;
                          ${r_streamline_2} ${fparse core_height + axial_reflector_height} 0 ${r_streamline_2} ${axial_reflector_height} 0;
                          ${r_streamline_3} ${fparse core_height + axial_reflector_height} 0 ${r_streamline_3} ${axial_reflector_height} 0;
@@ -517,8 +519,27 @@ pebble_unloading_rate   = ${fparse pebble_speed * area * 0.61 / pebble_volume}
                        0 0 0 0 0 0 0 1.85321E+00 0
                        0 0 0 0 0 0 0 0 1.55236E+00'
     diffusion_coefficient_scheme = user_supplied
+    plus = true
   []
 []
+
+[Compositions]
+  [fresh_pebble]
+    type = IsotopeComposition
+    density_type = mass
+    isotope_densities = 'U234 1.0887E-07
+                         U235 1.3550E-05
+                         U238 1.4209E-04
+                         O16 3.1137E-04
+                         O17 1.1837E-07
+                         Graphite 8.5357E-02
+                         SI28 3.1399E-04
+                         SI29 1.5944E-05
+                         SI30 1.0510E-05
+                         C12 3.4044E-04'
+  []
+[]
+
 # ==============================================================================
 # MultiApps & Transfers
 # ==============================================================================
@@ -527,6 +548,7 @@ pebble_unloading_rate   = ${fparse pebble_speed * area * 0.61 / pebble_volume}
     type = FullSolveMultiApp
     input_files = 'htr-pm-flow-fv-ss.i'
     keep_solution_during_restore = true
+    update_old_solution_when_keeping_solution_during_restore = true
     positions = '0 0 0'
     execute_on = 'TIMESTEP_END'
     #max_procs_per_app = 20
@@ -609,7 +631,7 @@ pebble_unloading_rate   = ${fparse pebble_speed * area * 0.61 / pebble_volume}
     variable   = Burnup_avg
     execute_on = 'initial timestep_end'
   []
-  
+
   [UnscaledTotalPower]
     type                = FluxRxnIntegral
     block               = 'pebble_bed'
@@ -648,7 +670,7 @@ pebble_unloading_rate   = ${fparse pebble_speed * area * 0.61 / pebble_volume}
     variable    = power_peaking
     value_type  = max
   []
-   
+
   [decay_heat]
     type = ElementIntegralVariablePostprocessor
     variable = total_pebble_decay_heat
