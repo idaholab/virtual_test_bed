@@ -302,5 +302,5 @@ z_coord = 1.76 #m
     execute_vector_postprocessors_on = FINAL
     # sync_only = true
   []
-  wall_time_checkpoint = false
+  checkpoint = false
 []

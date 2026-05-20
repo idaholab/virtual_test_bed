@@ -302,6 +302,6 @@ y_coord = '${fparse (R_i-delta_center_radius)*sin(0.5*sector_angle)}'  #m
     execute_vector_postprocessors_on = FINAL
     # sync_only = true
   []
-  wall_time_checkpoint = false
+  checkpoint = false
 []
 
