@@ -238,5 +238,5 @@ Fmax_d = -1.887e+15
     execute_vector_postprocessors_on = FINAL
     # sync_only = true
   []
-  wall_time_checkpoint = false
+  checkpoint = false
 []
