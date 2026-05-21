@@ -32,6 +32,8 @@ Therefore, incorporating xenon transport and feedback within a tightly coupled m
 
 The model utilizes a 2-D axisymmetric configuration representing the full MSRE primary loop. Compared with the SAM-Griffin configuration, this Griffin-Pronghorn model resolves the complete loop in a computationally efficient 2-D form while preserving the dominant system-level transport and feedback behavior. For foundational details on the base mesh and geometry, refer to the [MSRE Multiphysics Core Model](https://mooseframework.inl.gov/virtual_test_bed/msr/msre/multiphysics_rz_model/msre_multiphysics_core_model.html).
 
+The total reactor power for this coupled model is set to $5.0\ \mathrm{MW}$ [!citep](osti_2562160). The pump head is selected to produce a loop circulation time of approximately $25\ \mathrm{s}$, which corresponds to a volumetric flow rate of about $3.14\times10^{-2}\ \mathrm{m^3\,s^{-1}}$ for the modeled loop volume. 
+
 ## Computational Model Description
 
 ### Geometry and Mesh
@@ -316,9 +318,9 @@ Key observations from the spatial fields include:
 
 ### Reactivity Impact of Xe Poisoning
 
-A reference case without Xe poisoning was also evaluated. Comparison of $k_{eff}$ between poisoned and unpoisoned coupled cases indicates an estimated reactivity penalty of approximately -410 pcm, which is in good agreement with trends from the SAM-Griffin coupled study.
+A reference case without Xe poisoning was also evaluated. Comparison of $k_{eff}$ between poisoned and unpoisoned coupled cases indicates an estimated reactivity penalty of approximately -337 pcm, which is in agreement with trends from the SAM-Griffin coupled study.
 
-This -410 pcm penalty is significantly lower than the values typically encountered in commercial light water reactors (often exceeding -2000 pcm). The reduced xenon poisoning in the MSRE is mainly due to two factors: the online gas stripping system in the pump bowl, which actively removes $^{135}Xe$ from the salt, and the relatively lower power density of the MSRE compared to a typical PWR, which leads to a lower steady-state xenon concentration.
+This -337 pcm penalty is significantly lower than the values typically encountered in commercial light water reactors (often exceeding -2000 pcm). The reduced xenon poisoning in the MSRE is mainly due to two factors: the online gas stripping system in the pump bowl, which actively removes $^{135}Xe$ from the salt, and the relatively lower power density of the MSRE compared to a typical PWR, which leads to a lower steady-state xenon concentration.
 
 ### Current Status and Future Work
 
