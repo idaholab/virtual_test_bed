@@ -649,6 +649,7 @@
   csv = true
   color = true
   progress = true
+  checkpoint = false
   [exodus]
     type = Exodus
     time_step_interval = 2
@@ -662,7 +663,6 @@
     type = Checkpoint
     time_step_interval = 3
     num_files = 2
-    wall_time_checkpoint = false
   []
   [pgraph]
     type = PerfGraphOutput

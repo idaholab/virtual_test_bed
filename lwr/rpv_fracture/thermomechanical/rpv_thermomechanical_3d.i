@@ -400,7 +400,7 @@
 []
 
 [Outputs]
-  wall_time_checkpoint = false
+  checkpoint = false
   exodus = true
   perf_graph = true
   csv = true
