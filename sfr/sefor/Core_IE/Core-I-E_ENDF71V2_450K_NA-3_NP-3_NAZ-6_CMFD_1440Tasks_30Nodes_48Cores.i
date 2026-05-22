@@ -790,5 +790,5 @@
 [Outputs]
   csv = true
   exodus = false
-  wall_time_checkpoint = false
+  checkpoint = false
 []

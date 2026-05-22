@@ -32,8 +32,7 @@
                 Executioner/coarse_element_id=coarse_element_id
                 Executioner/cmfd_eigen_solver_type=krylovshur
                 Outputs/csv=true
-                Outputs/checkpoint=false
-                Outputs/wall_time_checkpoint=false"
+                Outputs/checkpoint=false"
     # NOTE: I turned off the checkpoints to see if this solves the timeouts
     # If you see this time out, please add a note here
     prereq = 'xs_generation'
