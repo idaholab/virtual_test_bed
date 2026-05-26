@@ -19,6 +19,9 @@
                        sponsor:NEAMS
                        institution:ANL
 
+!alert note
+The CFD solver nekRS is not included in the VTB CI test suites yet. Users are encouraged to reach out to the nekRS developer team at Argonne by emailing the POC (Jun Fang at [fangj@anl.gov](mailto:fangj@anl.gov)). Additionally, a beta version of the nekRS tutorial is available at the [nekRS Documentation](https://nekrs.readthedocs.io/en/latest/index.html).
+
 ## Model Overview
 
 The LOTUS Molten Chloride Reactor (LMCR) is an open-core, fast-spectrum, liquid-fueled molten salt reactor concept that circulates chloride fuel salt through the reactor vessel and primary loop. The fuel salt, represented here by a UCl$_3$-NaCl eutectic mixture, provides both the fissile material and the primary heat-transfer medium [!citep](MCRreport2022,M3mcr2023). The high-fidelity computational fluid dynamics (CFD) model documented on this page represents an MCRE-like LMCR primary-loop configuration in which the unmoderated core cavity is connected to a curved inlet pipe, outlet pipe, pump region, and heat-exchanger leg. The checked-in nekRS case name is `mcre`, so the run files retain that historical name even though this VTB page documents the LMCR primary-loop LES benchmark.
