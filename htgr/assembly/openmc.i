@@ -287,7 +287,7 @@ num_layers_for_THM = 50 # number of elements in the THM model; for the converged
     from_multi_app = bison
   []
   [heat_flux_to_openmc]
-    type = MultiAppGeneralFieldNearestNodeTransfer
+    type = MultiAppGeneralFieldNearestLocationTransfer
     source_variable = flux
     variable = flux
     from_multi_app = bison
@@ -321,7 +321,7 @@ num_layers_for_THM = 50 # number of elements in the THM model; for the converged
     source_user_object = q_wall_avg
   []
   [T_wall_from_thm]
-    type = MultiAppGeneralFieldNearestNodeTransfer
+    type = MultiAppGeneralFieldNearestLocationTransfer
     source_variable = T_wall
     direction = from_multiapp
     multi_app = thm
@@ -329,7 +329,7 @@ num_layers_for_THM = 50 # number of elements in the THM model; for the converged
     target_boundary = 'fluid_solid_interface'
   []
   [T_bulk_from_thm]
-    type = MultiAppGeneralFieldNearestNodeTransfer
+    type = MultiAppGeneralFieldNearestLocationTransfer
     source_variable = T
     direction = from_multiapp
     multi_app = thm
@@ -338,14 +338,14 @@ num_layers_for_THM = 50 # number of elements in the THM model; for the converged
 
   # just for postprocessing purposes
   [pressure_from_thm]
-    type = MultiAppGeneralFieldNearestNodeTransfer
+    type = MultiAppGeneralFieldNearestLocationTransfer
     source_variable = p
     direction = from_multiapp
     multi_app = thm
     variable = thm_pressure
   []
   [velocity_from_thm]
-    type = MultiAppGeneralFieldNearestNodeTransfer
+    type = MultiAppGeneralFieldNearestLocationTransfer
     source_variable = vel_z
     direction = from_multiapp
     multi_app = thm
