@@ -7,8 +7,7 @@
     cli_args = 'Outputs/exodus=false'
     csvdiff = 'groove_r0p05_csv_line_0002.csv'
     min_parallel = 8
-    executable_pattern = "grizzly*"
-    capabilities = 'method=opt'
+    capabilities = 'method=opt & grizzlyapp'
     # Test is not fully converging results
     rel_err = 2e-5
     max_time = 600

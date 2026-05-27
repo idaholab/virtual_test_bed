@@ -3,7 +3,7 @@
   [add_deps]
     type = RunApp
     input = 'dummy.i'
-    executable_pattern = 'combined*|grizzly*'
+    capabilities = 'combinedapp | grizzlyapp'
   []
   [generate_csv_files]
     type = RunCommand
@@ -17,6 +17,6 @@
     input = 'dummy.i'
     prereq = 'generate_csv_files'
     delete_output_before_running = false
-    executable_pattern = 'combined*|grizzly*'
+    capabilities = 'combinedapp | grizzlyapp'
   []
 []

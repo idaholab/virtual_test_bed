@@ -3,14 +3,14 @@
     type = RunApp
     input = msfr_1d_ss.i
     check_input = True
-    executable_pattern = 'sam*|blue_crab*'
+    capabilities = 'samapp | bluecrabapp'
     cli_args = '--app SamApp'
   []
   [syntax_transient_1]
     type = RunApp
     input = msfr_1d_transient_01.i
     check_input = True
-    executable_pattern = 'sam*|blue_crab*'
+    capabilities = 'samapp | bluecrabapp'
     cli_args = '--app SamApp'
     prereq = 'steady'
   []
@@ -18,7 +18,7 @@
     type = RunApp
     input = msfr_1d_transient_02.i
     check_input = True
-    executable_pattern = 'sam*|blue_crab*'
+    capabilities = 'samapp | bluecrabapp'
     cli_args = '--app SamApp'
     prereq = 'steady'
   []
@@ -27,7 +27,7 @@
     type = CSVDiff
     input = msfr_1d_ss.i
     csvdiff = 'msfr_1d_ss_csv.csv'
-    executable_pattern = 'sam*|blue_crab*'
+    capabilities = 'method=opt & (samapp | bluecrabapp)' # times out in devel
     cli_args = "--app SamApp Outputs/csv/sync_times=0.0 Outputs/csv/sync_only=true
                 Executioner/set_sam_default_petsc_options=true --n-threads=4"
     prereq = 'syntax_steady'
@@ -35,13 +35,12 @@
     rel_err = 1e-4
     min_threads = 4
     max_time = 700
-    capabilities = 'method=opt' # times out in devel
   []
   [transient_1]
     type = CSVDiff
     input = msfr_1d_transient_01.i
     csvdiff = 'msfr_1d_transient_01_csv.csv'
-    executable_pattern = 'sam*|blue_crab*'
+    capabilities = 'samapp | bluecrabapp'
     cli_args = "--app SamApp Executioner/end_time=130 Executioner/set_sam_default_petsc_options=true --n-threads=4"
     prereq = 'syntax_transient_1 steady'
     abs_zero = 1e-4
@@ -52,7 +51,7 @@
     type = CSVDiff
     input = msfr_1d_transient_02.i
     csvdiff = 'msfr_1d_transient_02_csv.csv'
-    executable_pattern = 'sam*|blue_crab*'
+    capabilities = 'samapp | bluecrabapp'
     cli_args = "--app SamApp Executioner/end_time=130 Executioner/set_sam_default_petsc_options=true --n-threads=4"
     prereq = 'syntax_transient_2 steady'
     abs_zero = 1e-4

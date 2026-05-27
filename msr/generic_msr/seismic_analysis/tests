@@ -6,21 +6,21 @@
     input = basemat_with_isolators_new.i
     check_input = True
     allow_warnings = True
-    executable_pattern = 'mastodon*'
+    capabilities = 'mastodonapp'
   []
   [seismic_analysis_syntax1b]
     type = RunApp
     input = basemat_with_isolators_new_3D.i
     check_input = True
     allow_warnings = True
-    executable_pattern = 'mastodon*'
+    capabilities = 'mastodonapp'
   []
   [seismic_analysis_syntax2]
     type = RunApp
     input = building_basemat_with_isolators_new.i
     check_input = True
     allow_warnings = True
-    executable_pattern = 'mastodon*'
+    capabilities = 'mastodonapp'
   []
 
   # Regression tests
@@ -28,12 +28,11 @@
     type = CSVDiff
     input = 'basemat_with_isolators_new.i'
     csvdiff = 'basemat_with_isolators_new_out.csv'
-    executable_pattern = 'mastodon*'
     abs_zero = 1e-5
     # Tolerance set from p=4 and p=1 comparison
     rel_err = 2.5e-3
     max_time = 600
-    capabilities = 'method=opt'
+    capabilities = 'method=opt & mastodonapp'
     min_parallel = 4
     cli_args = 'Executioner/num_steps=70'
   []
@@ -41,12 +40,11 @@
     type = CSVDiff
     input = 'basemat_with_isolators_new_3D.i'
     csvdiff = 'basemat_with_isolators_new_3D_out.csv'
-    executable_pattern = 'mastodon*'
     abs_zero = 1e-5
     # Tolerance set from p=4 and p=1 comparison
     rel_err = 7e-4
     max_time = 600
-    capabilities = 'method=opt'
+    capabilities = 'method=opt & mastodonapp'
     min_parallel = 4
     cli_args = 'Executioner/num_steps=58'
   []
@@ -54,11 +52,10 @@
     type = CSVDiff
     input = 'building_basemat_with_isolators_new.i'
     csvdiff = 'building_basemat_with_isolators_new_out.csv'
-    executable_pattern = 'mastodon*'
     abs_zero = 1e-5
     rel_err = 1e-4
     max_time = 600
-    capabilities = 'method=opt'
+    capabilities = 'method=opt & mastodonapp'
     min_parallel = 4
     cli_args = 'Executioner/num_steps=2'
   []

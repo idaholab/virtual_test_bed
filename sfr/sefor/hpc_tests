@@ -7,8 +7,7 @@
     cli_args = 'Outputs/file_base=SEFORIE_3D'
     csvdiff = 'SEFORIE_3D_integral_0001.csv'
     requirement = 'The system shall be able to generate the SEFOR IE core mesh'
-    executable_pattern = 'combined*|reactor*|griffin*'
-    capabilities = 'method=opt'
+    capabilities = 'method=opt & (combinedapp | reactorapp | griffinapp)'
     max_time = 800
     hpc_mem_per_cpu = 15gb
   []
@@ -19,9 +18,8 @@
     cli_args = 'Outputs/file_base=SEFORII_3D'
     csvdiff = 'SEFORII_3D_integral_0001.csv'
     requirement = 'The system shall be able to generate the SEFOR II core mesh'
-    executable_pattern = 'combined*|reactor*|griffin*'
     max_time = 1600
-    capabilities = 'method=opt'
+    capabilities = 'method=opt & (combinedapp | reactorapp | griffinapp)'
     hpc_mem_per_cpu = 15gb
   []
 
@@ -32,7 +30,7 @@
     cli_args = "Mesh/loader/file='../Mesh/SEFORIE_3D.e'"
     check_input = true
     prereq = 'mesh_IE'
-    executable_pattern = 'griffin*'
+    capabilities = 'griffinapp'
     max_time = 400
     min_parallel = 10
     hpc_mem_per_cpu = 90gb
@@ -44,7 +42,7 @@
     cli_args = "Mesh/fmg/file='../Mesh/SEFORII_3D.e'"
     check_input = true
     prereq = 'mesh_II'
-    executable_pattern = 'griffin*'
+    capabilities = 'griffinapp'
     max_time = 4000
     # Replicated mesh:
     # at 10 procs, fails a 100GB allocation
