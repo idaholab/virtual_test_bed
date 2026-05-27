@@ -25,5 +25,6 @@
     # Exceedingly slow in devel mode
     capabilities = 'method=opt'
     max_time = '600'
+    min_slots = 4 # memory heavy
   []
 []

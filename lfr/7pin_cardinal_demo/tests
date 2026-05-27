@@ -73,6 +73,7 @@
     executable_pattern = 'cardinal*|combined*'
     prereq = 'syntax_conduction'
     min_parallel = 8
+    min_slots = 10 # memory heavy
   []
   [run_nekrs]
     type = RunApp

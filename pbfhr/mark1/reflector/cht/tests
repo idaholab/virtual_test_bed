@@ -7,6 +7,7 @@
     requirement = "The pbfhr reflector conjugate heat transfer input shall not deprecate syntax from the "
                   "MOOSE main application."
     executable_pattern = 'cardinal*'
+    min_slots = 2 # memory heavy
   []
   [nek_syntax]
     type = RunApp
