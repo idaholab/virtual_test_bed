@@ -4,7 +4,7 @@
     type = RunApp
     input = 'thermo.i'
     check_input = True
-    executable_pattern = 'combined*'
+    capabilities = 'combinedapp'
     required_submodule = 'apps/moose/modules/chemical_reactions/contrib/thermochimica apps/ci/mstdb'
     allow_warnings = true
   []
@@ -14,11 +14,10 @@
     type = CSVDiff
     input = 'thermo.i'
     csvdiff = 'thermo_out.csv'
-    executable_pattern = 'combined*'
     required_submodule = 'apps/moose/modules/chemical_reactions/contrib/thermochimica apps/ci/mstdb'
     allow_warnings = true
     min_parallel = 8
     max_time = 300
-    capabilities = 'method=opt'
+    capabilities = 'method=opt & combinedapp'
   []
 []

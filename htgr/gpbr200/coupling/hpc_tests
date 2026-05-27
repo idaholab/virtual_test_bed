@@ -5,7 +5,7 @@
     input = gpbr200_ss_gfnk_reactor.i
     csvdiff = 'gpbr200_ss_gfnk_reactor_out.csv gpbr200_ss_gfnk_reactor_out_pronghorn_th0.csv'
     ignore_columns = 'power_scaling'
-    executable_pattern = 'blue_crab*'
+    capabilities = 'bluecrabapp'
     # Only need to look at CSV file
     cli_args = 'Outputs/exodus=false pronghorn_th:Outputs/exodus=false'
     min_parallel = 32

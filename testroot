@@ -1,4 +1,4 @@
 allow_warnings = true
 allow_unused = false
 allow_override = false
-known_capabilities = "bisonapp bluecrabapp cardinalapp combinedapp direwolfapp griffinapp mastodonapp pronghornapp relap7app samapp sockeyeapp"
+known_capabilities = "bisonapp bluecrabapp cardinalapp combinedapp direwolfapp griffinapp grizzlyapp mastodonapp pronghornapp reactorapp relap7app sabertoothapp salamanderapp samapp sockeyeapp subchannelapp thermalhydraulicsapp tmap8app"

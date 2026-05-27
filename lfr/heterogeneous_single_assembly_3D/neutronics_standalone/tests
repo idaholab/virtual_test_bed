@@ -9,7 +9,7 @@
     min_parallel = 2
     cli_args = "Executioner/richardson_max_its=1
                 Executioner/set_sam_default_petsc_options=false"
-    executable_pattern = 'griffin*|blue_crab*'
+    capabilities = 'griffinapp | bluecrabapp'
     allow_unused = true
   []
   [lfr_neutronics_alone]
@@ -20,7 +20,7 @@
     min_parallel = 16
     cli_args = "Executioner/richardson_max_its=1
                 Executioner/set_sam_default_petsc_options=false"
-    executable_pattern = 'griffin*|blue_crab*'
+    capabilities = 'griffinapp | bluecrabapp'
     prereq = 'lfr_neutronics_syntax'
     skip = '#176'
     allow_unused = true

@@ -4,20 +4,19 @@
     input = 'msre_pke_ss.i'
     check_input = true
     cli_args = '--app SamApp'
-    executable_pattern = 'sam*|blue_crab*'
+    capabilities = 'samapp | bluecrabapp'
   []
   [steady_state]
     type = 'CSVDiff'
     input = 'msre_pke_ss.i'
     csvdiff = 'msre_pke_ss_csv.csv'
     cli_args = "--app SamApp Outputs/csv/execute_on='initial final'"
-    executable_pattern = 'sam*|blue_crab*'
+    capabilities = 'method=opt & (samapp | bluecrabapp)' # times out in devel
     prereq = 'steady_state_syntax'
     abs_zero = 1e-4
     rel_err = 5e-3
     min_parallel = 2
     max_time = 500
-    capabilities = 'method=opt' # times out in devel
   []
 
   [insertion_syntax]
@@ -25,7 +24,7 @@
     input = 'msre_insertion.i'
     check_input = true
     cli_args = '--app SamApp'
-    executable_pattern = 'sam*|blue_crab*'
+    capabilities = 'samapp | bluecrabapp'
     prereq = 'steady_state'
   []
   [insertion]
@@ -33,7 +32,7 @@
     input = 'msre_insertion.i'
     csvdiff = 'msre_insertion_csv.csv'
     cli_args = '--app SamApp Executioner/num_steps=100'
-    executable_pattern = 'sam*|blue_crab*'
+    capabilities = 'samapp | bluecrabapp'
     prereq = 'insertion_syntax'
     abs_zero = 1e-4
     rel_err = 1e-4

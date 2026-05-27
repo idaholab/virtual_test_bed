@@ -6,7 +6,7 @@
     type = RunApp
     check_input = true
     input = 'Griffin_steady_state.i'
-    executable_pattern = 'griffin*|blue_crab*'
+    capabilities = 'griffinapp | bluecrabapp'
     cli_args = "MultiApps/active='' Transfers/active=''
                 Executioner/set_sam_default_petsc_options=false"
     allow_unused = true
@@ -15,7 +15,6 @@
     type = 'CSVDiff'
     input = 'Griffin_steady_state.i'
     csvdiff = 'Griffin_steady_state_csv.csv'
-    executable_pattern = 'griffin*|blue_crab*'
     cli_args = "MultiApps/active='' Transfers/active=''
                 Executioner/richardson_max_its=1
                 TransportSystems/SN/NAzmthl=3 TransportSystems/SN/NPolar=1
@@ -24,7 +23,7 @@
     prereq = 'griffin_alone_syntax'
     min_parallel = 16
     rel_err = 1e-3
-    capabilities = 'method=opt'
+    capabilities = 'method=opt & (griffinapp | bluecrabapp)'
     max_time = 400
     allow_unused = true
     # Missing group cross section for energy deposition
@@ -36,7 +35,7 @@
     type = RunApp
     check_input = true
     input = 'BISON.i'
-    executable_pattern = 'blue_crab*'
+    capabilities = 'bluecrabapp'
     cli_args = "MultiApps/active='' Transfers/active=''"
     # Griffin in BlueCrab overrides material property output and emits a warning
     # Can be removed at next BlueCrab update (with Griffin from Dec 2024)
@@ -46,7 +45,7 @@
     type = 'CSVDiff'
     input = 'BISON.i'
     csvdiff = 'BISON_csv.csv'
-    executable_pattern = 'blue_crab*'
+    capabilities = 'bluecrabapp'
     cli_args = "MultiApps/active='' Transfers/active=''"
     prereq = 'bison_alone_syntax'
     min_parallel = 4
@@ -61,14 +60,14 @@
     type = RunApp
     check_input = true
     input = 'SAM_half.i'
-    executable_pattern = 'sam*|blue_crab*'
+    capabilities = 'samapp | bluecrabapp'
     cli_args = '--app SamApp'
   []
   [sam_alone]
     type = 'CSVDiff'
     input = 'SAM_half.i'
     csvdiff = 'SAM_half_csv.csv'
-    executable_pattern = 'sam*|blue_crab*'
+    capabilities = 'samapp | bluecrabapp'
     cli_args = '--app SamApp'
     prereq = 'sam_alone_syntax'
   []
@@ -76,14 +75,14 @@
     type = RunApp
     check_input = true
     input = 'SAM_full.i'
-    executable_pattern = 'sam*|blue_crab*'
+    capabilities = 'samapp | bluecrabapp'
     cli_args = '--app SamApp'
   []
   [sam_full_alone]
     type = 'CSVDiff'
     input = 'SAM_full.i'
     csvdiff = 'SAM_full_csv.csv'
-    executable_pattern = 'sam*|blue_crab*'
+    capabilities = 'samapp | bluecrabapp'
     cli_args = '--app SamApp'
     prereq = 'sam_full_alone_syntax'
   []
@@ -93,7 +92,7 @@
     type = 'CSVDiff'
     input = 'Griffin_steady_state.i'
     csvdiff = 'gcmr_steady_out.csv'
-    executable_pattern = 'griffin*|blue_crab*'
+    capabilities = 'griffinapp | bluecrabapp'
     cli_args = "filebase=gcmr_steady
                 Executioner/set_sam_default_petsc_options=false"
     prereq = 'griffin_alone bison_alone sam_full_alone sam_alone'
@@ -110,7 +109,7 @@
     check_input = true
     working_directory = '../Flow_blockage_transient'
     input = 'Griffin_transient.i'
-    executable_pattern = 'griffin*|blue_crab*'
+    capabilities = 'griffinapp | bluecrabapp'
     cli_args = "MultiApps/active='' Transfers/active=''"
     prereq = 'griffin_alone'
     allow_unused = true
@@ -121,7 +120,6 @@
     working_directory = '../Flow_blockage_transient'
     input = 'Griffin_transient.i'
     csvdiff = 'Griffin_transient_csv.csv'
-    executable_pattern = 'griffin*|blue_crab*'
     cli_args = "MultiApps/active='' Transfers/active=''
                 Executioner/richardson_max_its=1
                 TransportSystems/SN/NAzmthl=3 TransportSystems/SN/NPolar=1
@@ -132,7 +130,7 @@
     prereq = 'griffin_alone_transient_syntax'
     min_parallel = 16
     rel_err = 1e-3
-    capabilities = 'method=opt'
+    capabilities = 'method=opt & (griffinapp | bluecrabapp)'
     max_time = 800
     allow_unused = true
     # Missing group cross section for energy deposition
@@ -145,7 +143,7 @@
     check_input = true
     working_directory = '../Flow_blockage_transient'
     input = 'BISON_tr.i'
-    executable_pattern = 'blue_crab*'
+    capabilities = 'bluecrabapp'
     cli_args = "MultiApps/active='' Transfers/active=''
                 Problem/restart_file_base='../steady_state/BISON_out_cp/LATEST'
                 Mesh/fmg/file='../steady_state/BISON_out_cp/LATEST'
@@ -161,7 +159,7 @@
     working_directory = '../Flow_blockage_transient'
     input = 'BISON_tr.i'
     csvdiff = 'BISON_tr_csv.csv'
-    executable_pattern = 'blue_crab*'
+    capabilities = 'bluecrabapp'
     cli_args = "MultiApps/active='' Transfers/active=''
                 Problem/restart_file_base='../steady_state/BISON_out_cp/LATEST'
                 Mesh/fmg/file='../steady_state/BISON_out_cp/LATEST'
@@ -179,7 +177,7 @@
     check_input = true
     working_directory = '../Flow_blockage_transient'
     input = 'SAM_half_tr.i'
-    executable_pattern = 'sam*|blue_crab*'
+    capabilities = 'samapp | bluecrabapp'
     cli_args = '--app SamApp'
     prereq = 'sam_alone'
   []
@@ -188,7 +186,7 @@
     working_directory = '../Flow_blockage_transient'
     input = 'SAM_half_tr.i'
     csvdiff = 'SAM_half_tr_csv.csv'
-    executable_pattern = 'sam*|blue_crab*'
+    capabilities = 'samapp | bluecrabapp'
     cli_args = '--app SamApp Executioner/num_steps=10'
     prereq = 'sam_alone_transient_syntax'
   []
@@ -197,7 +195,7 @@
     check_input = true
     working_directory = '../Flow_blockage_transient'
     input = 'SAM_full_tr.i'
-    executable_pattern = 'sam*|blue_crab*'
+    capabilities = 'samapp | bluecrabapp'
     cli_args = '--app SamApp'
     prereq = 'sam_full_alone'
   []
@@ -206,7 +204,7 @@
     working_directory = '../Flow_blockage_transient'
     input = 'SAM_full_tr.i'
     csvdiff = 'SAM_full_tr_csv.csv'
-    executable_pattern = 'sam*|blue_crab*'
+    capabilities = 'samapp | bluecrabapp'
     cli_args = '--app SamApp Executioner/num_steps=10'
     prereq = 'sam_full_alone_transient_syntax'
   []
@@ -217,7 +215,7 @@
     working_directory = '../Flow_blockage_transient'
     input = 'Griffin_transient.i'
     csvdiff = 'gcmr_transient_out.csv'
-    executable_pattern = 'griffin*|blue_crab*'
+    capabilities = 'griffinapp | bluecrabapp'
     cli_args = "filebase=gcmr_transient"
     prereq = 'griffin_alone_transient bison_alone_transient
               sam_full_alone_transient sam_alone_transient'

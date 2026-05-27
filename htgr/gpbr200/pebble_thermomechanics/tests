@@ -3,7 +3,7 @@
     type = CSVDiff
     input = gpbr200_ss_bsht_pebble_triso.i
     csvdiff = gpbr200_ss_bsht_pebble_triso_out.csv
-    executable_pattern = 'bison*|blue_crab*'
+    capabilities = 'bisonapp | bluecrabapp'
     allow_warnings = true # Packing fraction outside of bounds
   []
 []

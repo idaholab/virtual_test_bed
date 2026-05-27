@@ -3,13 +3,13 @@
     type = RunApp
     check_input = true
     input = 'divertor_monoblock.i'
-    executable_pattern = 'tmap8*'
+    capabilities = 'tmap8app'
   []
   [divertor_alone]
     type = 'CSVDiff'
     input = 'divertor_monoblock.i'
     csvdiff = 'divertor_monoblock.csv'
-    executable_pattern = 'tmap8*'
+    capabilities = 'tmap8app'
     prereq = 'divertor_syntax'
   []
 []

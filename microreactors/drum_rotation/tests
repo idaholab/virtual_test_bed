@@ -5,7 +5,7 @@
     input = empire_2d_CD_fine.i
     cli_args = '--mesh-only'
     check_files = empire_2d_CD_fine_in.e
-    executable_pattern = 'griffin*|blue_crab*|dire_wolf*|sabertooth*'
+    capabilities = 'griffinapp | bluecrabapp | direwolfapp | sabertoothapp'
   []
 
   # Regression tests
@@ -17,9 +17,8 @@
     csvdiff = neutronics_eigenvalue_out.csv
     abs_zero = 1e-8
     rel_err = 1e-4
-    executable_pattern = 'griffin*|blue_crab*|dire_wolf*|sabertooth*'
     min_parallel = 16
-    capabilities = 'method=opt'
+    capabilities = 'method=opt & (griffinapp | bluecrabapp | direwolfapp | sabertoothapp)'
     max_time = 300
     prereq = fine_mesh
   []
@@ -27,9 +26,8 @@
     type = RunApp
     input = neutronics_adjoint.i
     cli_args = 'TransportSystems/sn/NPolar=1 TransportSystems/sn/NAzmthl=3'
-    executable_pattern = 'griffin*|blue_crab*|dire_wolf*|sabertooth*'
     min_parallel = 16
-    capabilities = 'method=opt'
+    capabilities = 'method=opt & (griffinapp | bluecrabapp | direwolfapp | sabertoothapp)'
     max_time = 100
     prereq = neutronics_eigenvalue
   []
@@ -42,9 +40,8 @@
     csvdiff = 'neutronics_transient_out.csv neutronics_transient_out_pke_params.csv'
     abs_zero = 1e-8
     rel_err = 1e-4
-    executable_pattern = 'griffin*|blue_crab*|dire_wolf*|sabertooth*'
     min_parallel = 16
-    capabilities = 'method=opt'
+    capabilities = 'method=opt & (griffinapp | bluecrabapp | direwolfapp | sabertoothapp)'
     max_time = 400
     prereq = neutronics_adjoint
   []

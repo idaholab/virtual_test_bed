@@ -72,12 +72,12 @@ applications, so the regression test may have the following line in the `tests`
 file:
 
 ```
-executable_pattern = 'bison*|blue_crab*|dire_wolf*'
+capabilities = 'bisonapp | bluecrabapp | direwolfapp'
 ```
 
 In this example, the developer has informed the test harness that this particular
-test can only be run by executables that meet one of the patterns `bison*`, `blue_crab*`,
-or `dire_wolf*`; if running the test suite with an incompatible executable, this
+test can only be run by executables that meet one of the patterns `bisonapp`, `bluecrabapp`,
+or `direwolfapp`; if running the test suite with an incompatible executable, this
 test will be skipped.
 
 Assuming you've already followed the instructions on [vtb_pages/getting_started.md],

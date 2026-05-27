@@ -8,7 +8,7 @@
                parametric_study_out_study_app4_csv_line_0040.csv parametric_study_out_study_app5_csv_line_0053.csv
                parametric_study_out_study_app6_csv_line_0064.csv parametric_study_out_study_app7_csv_line_0074.csv
                parametric_study_out_study_app8_csv_line_0082.csv parametric_study_out_study_app9_csv_line_0090.csv'
-    executable_pattern = 'combined*|grizzly*'
+    capabilities = 'combinedapp | grizzlyapp'
     allow_warnings = true
     min_parallel = 8
   []
@@ -16,7 +16,7 @@
     type = Exodiff
     input = CombinedExodus_AllResults.i
     exodiff = CombinedExodus_AllResults_out.e
-    executable_pattern = 'combined*|grizzly*'
+    capabilities = 'combinedapp | grizzlyapp'
     allow_warnings = true
     min_parallel = 8
     prereq = 'parametric_study'
