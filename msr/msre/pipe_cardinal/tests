@@ -10,7 +10,7 @@
     type = RunApp
     input = nek.i
     check_input = True
-    executable_pattern = 'cardinal*'
+    capabilities = cardinalapp
     min_parallel = 64
     skip = 'Not enough memory #438'
   []
@@ -25,5 +25,6 @@
     # Exceedingly slow in devel mode
     capabilities = 'method=opt'
     max_time = '600'
+    min_slots = 4 # memory heavy
   []
 []

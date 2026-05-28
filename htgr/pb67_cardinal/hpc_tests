@@ -2,7 +2,7 @@
   # [nek]
   #   type = RunApp
   #   input = nek.i
-  #   executable_pattern = 'cardinal*'
+  #   capabilities = cardinalapp
   #   min_parallel = 96
   #   max_time = 7200
   #   cli_args = "Outputs/exodus=false"

@@ -6,7 +6,8 @@
     cli_args = "MultiApps/active='' Transfers/active='' Executioner/num_steps=2"
     requirement = "The conduction heat transfer input shall not deprecate syntax from the "
                   "MOOSE main application."
-    executable_pattern = 'cardinal*'
+    capabilities = cardinalapp
+    min_parallel = 2 # memory heavy
   []
   [nek_syntax]
     type = RunApp
@@ -14,7 +15,7 @@
     check_input = true
     requirement = "The pbfhr reflector  fluid flow input shall not deprecate syntax from the "
                   "MOOSE main application."
-    executable_pattern = 'cardinal*'
+    capabilities = cardinalapp
     min_parallel = 16
     group = 'large_memory'
   []
