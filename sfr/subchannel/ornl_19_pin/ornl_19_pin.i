@@ -17,7 +17,7 @@ mass_flux_in = '${fparse rho *  vol_flow / flow_area}'
 P_out = 2.0e5 # Pa
 [TriSubChannelMesh]
   [subchannel]
-    type = SCMTriSubChannelMeshGenerator
+    type = SCMTriAssemblyMeshGenerator
     nrings = 3
     n_cells = 40
     flat_to_flat = 3.41e-2
@@ -52,6 +52,8 @@ P_out = 2.0e5 # Pa
   verbose_multiapps = true
   verbose_subchannel = true
   interpolation_scheme = upwind
+  # Heat Transfer Correlations
+  pin_HTC_closure = 'Dittus-Boelter'
   # friction model
   friction_closure = 'cheng'
   full_output = true
@@ -62,6 +64,9 @@ P_out = 2.0e5 # Pa
 [SCMClosures]
   [cheng]
     type = SCMFrictionUpdatedChengTodreas
+  []
+  [Dittus-Boelter]
+    type = SCMHTCDittusBoelter
   []
   [cheng_todreas]
     type = SCMMixingChengTodreas
@@ -246,9 +251,16 @@ P_out = 2.0e5 # Pa
 []
 
 [Transfers]
-  [xfer]
+  [subchannel_transfer]
     type = SCMSolutionTransfer
     to_multi_app = viz
-    variable = 'mdot SumWij P DP h T rho mu q_prime S'
+    variable = 'mdot SumWij P DP h T rho mu S displacement w_perim'
+  []
+
+  [pin_transfer]
+    type = SCMSolutionTransfer
+    transfer_type = pin
+    to_multi_app = viz
+    variable = 'q_prime'
   []
 []
