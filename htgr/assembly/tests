@@ -2,25 +2,28 @@
   issues = '#70'
   [generate_mesh]
     type = RunApp
-    executable_pattern = 'cardinal*'
+    capabilities = cardinalapp
     input = 'common_input.i solid.i'
     cli_args = '--mesh-only'
     working_directory = 'meshes'
+    min_slots = 6 # memory heavy
   []
   [syntax_openmc]
     type = RunApp
     input = 'common_input.i openmc.i'
     check_input = true
-    executable_pattern = 'cardinal*'
+    capabilities = cardinalapp
     prereq = generate_mesh
     max_time = 400
+    min_slots = 8 # memory heavy
   []
   [syntax_conduction]
     type = RunApp
     input = 'solid.i'
     check_input = true
-    executable_pattern = 'cardinal*'
+    capabilities = cardinalapp
     prereq = generate_mesh
+    min_slots = 5 # memory heavy
   []
   [syntax_thm]
     type = RunApp
@@ -33,7 +36,7 @@
     type = RunApp
     input = 'common_input.i openmc.i'
     cli_args = "Executioner/num_steps=2"
-    executable_pattern = 'cardinal*'
+    capabilities = cardinalapp
     prereq = 'syntax_openmc'
     min_parallel = 16
     max_time = 2000
@@ -43,7 +46,7 @@
     type = RunApp
     check_input = True
     input = 'solid.i'
-    executable_pattern = 'cardinal*'
+    capabilities = cardinalapp
     prereq = 'syntax_conduction'
   []
   [run_thm]

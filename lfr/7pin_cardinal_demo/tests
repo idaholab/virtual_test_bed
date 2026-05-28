@@ -34,7 +34,7 @@
     type = RunApp
     input = 'nek.i'
     check_input = true
-    executable_pattern = 'cardinal*'
+    capabilities = cardinalapp
     # need more memory
     min_parallel = 32
   []
@@ -46,7 +46,7 @@
     input = 'NT.i'
     csvdiff = NT_out.csv
     cli_args = "Executioner/richardson_max_its=1 Executioner/fixed_point_max_its=2"
-    executable_pattern = 'cardinal*'
+    capabilities = cardinalapp
     prereq = 'syntax_nekrs'
     min_parallel = 144
     max_time = 2000
@@ -73,12 +73,13 @@
     executable_pattern = 'cardinal*|combined*'
     prereq = 'syntax_conduction'
     min_parallel = 8
+    min_slots = 10 # memory heavy
   []
   [run_nekrs]
     type = RunApp
     input = 'nek.i'
     skip = '#79'
-    executable_pattern = 'cardinal*'
+    capabilities = cardinalapp
     prereq = 'syntax_nekrs'
   []
 []

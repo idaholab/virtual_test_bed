@@ -10,7 +10,7 @@
     type = RunApp
     input = nek.i
     check_input = True
-    executable_pattern = 'cardinal*'
+    capabilities = cardinalapp
     min_parallel = 16
     skip = 'Not enough memory #176'
   []
