@@ -7,13 +7,13 @@ This model extends the [Full Core GCMR Multiphysics Model](/GCMR_Core_Multiphysi
 1. A cross-section library tabulated over fission product concentrations (`GCMR_XS_Xe_TR.xml`) replaces the baseline library.
 2. Griffin's `PowerDensity` block activates spatially-resolved tracking of the I-135 $\rightarrow$ Xe-135 and Pm-149 $\rightarrow$ Sm-149 decay chains.
 
-The model is used to simulate a control rod insertion transient, demonstrating how fission product inventories evolve under a power reduction representative of a load-following maneuver.
+The model is used to simulate a shutdown transient by insertion of control rods, demonstrating how fission product inventories evolve after a shutdown.
 
 ## Fission Product Tracking Methodology
 
 ### Decay Chains
 
-Two fission product chains are currently supported by Griffin's poison tracking capability: $^{135}$Xe and $^{149}$Sm, which are covered by this model.
+Two fission product chains are currently supported by Griffin's poison tracking capability: $^{135}$Xe and $^{149}$Sm, which are both covered by this model.
 
 The $^{135}$Xe decay chain is given by:
 
@@ -42,6 +42,9 @@ The aforementioned four isotopes (I-135, Xe-135, Pm-149, and Sm-149) are tracked
 ### Cross-Section Library
 
 The baseline multiphysics model uses `GCMR_XS_2grid_detailed.xml`, tabulated over fuel temperature ($T_{fuel}$) and hydrogen stoichiometry in the YH moderator. This model instead uses `GCMR_XS_Xe_TR.xml`, which additionally incorporates the fission product concentrations, enabling the neutronics solver to account for the self-shielding and spectral effects of Xe-135 and Sm-149 as they evolve in space and time. For simplicity, `GCMR_XS_Xe_TR.xml` is only tabulated over fuel temperature ($T_{fuel}$) with three grid points (800K, 925K, and 1300K).
+
+As required by Griffin, the effective fission yields and microscopic cross-sections of the tracked isotopes are to be provided to the materials in fissionable regions in the ISOXML format XS file.
+
 
 ### Griffin Input Configuration
 
@@ -130,4 +133,4 @@ Notably, the low power density of the GCMR also leads to a low equilibrium Pm-14
       style=display: block;margin-left:auto;margin-right:auto;width:90%;
       caption=Spatial distributions of I-135, Xe-135, Pm-149, and Sm-149 at representative times during the control rod insertion transient. I-135, Xe-135, and Pm-149 closely follow the neutron flux distribution; Sm-149 shows a more homogeneous distribution.
 
-The spatial results confirm that I-135, Xe-135, and Pm-149 closely track the local neutron flux. Both I-135 and Pm-149 generation is directly tied to fission, so their concentrations are dependent on the local flux. Xe-135 is produced both from fission and from I-135 decay, and its removal is due to both decay and neutron absorption. At low flux conditions as in this case, as Xe-135 decay is the dominant removal mechanism, the equilibrium Xe-135 profile follows the flux profile. On the other hand, as Sm-149 is produced by Pm-149 decay and is removed only by neutron absorption, the flux term cancels out in its equilibrium concentration. So, the Sm-149 distribution is more homogeneous than the other three isotopes.
+The spatial results confirm that I-135, Xe-135, and Pm-149 closely track the local neutron flux. Both I-135 and Pm-149 generation is directly tied to fission, so their concentrations are dependent on the local flux in fissionable regions. Xe-135 is produced both from fission and from I-135 decay, and its removal is due to both decay and neutron absorption. At low flux conditions as in this case, as Xe-135 decay is the dominant removal mechanism, the equilibrium Xe-135 profile follows the flux profile. On the other hand, as Sm-149 is produced by Pm-149 decay and is removed only by neutron absorption, the flux term cancels out in its equilibrium concentration. So, the Sm-149 distribution is more homogeneous than the other three isotopes.
