@@ -78,7 +78,7 @@ non_he_channel_blocks = '${fuel_blocks} ${mod_blocks} ${poison_blocks} ${ref_blo
 
   cmfd_acceleration = true
   coarse_element_id = coarse_element_id
-  cmfd_eigen_solver_type = newton
+  diffusion_eigen_solver_type = newton
   diffusion_prec_type = lu
   prolongation_type = multiplicative
   max_diffusion_coefficient = 1
@@ -176,7 +176,7 @@ non_he_channel_blocks = '${fuel_blocks} ${mod_blocks} ${poison_blocks} ${ref_blo
   [control_rod_position]
     type = ParsedFunction
     # control rod is withrawn
-    value = '2.2'
+    expression = '2.2'
   []
 []
 
@@ -212,6 +212,8 @@ non_he_channel_blocks = '${fuel_blocks} ${mod_blocks} ${poison_blocks} ${ref_blo
     input_files = MP_BISON_ss_fp.i
     execute_on = 'timestep_end'
     keep_solution_during_restore = true
+    # not a transient to steady state
+    update_old_solution_when_keeping_solution_during_restore = false
   []
 []
 

@@ -78,7 +78,7 @@ non_he_channel_blocks = '${fuel_blocks} ${mod_blocks} ${poison_blocks} ${ref_blo
 
   cmfd_acceleration = true
   coarse_element_id = coarse_element_id
-  cmfd_eigen_solver_type = newton
+  diffusion_eigen_solver_type = newton
   diffusion_prec_type = lu
   prolongation_type = multiplicative
   max_diffusion_coefficient = 1

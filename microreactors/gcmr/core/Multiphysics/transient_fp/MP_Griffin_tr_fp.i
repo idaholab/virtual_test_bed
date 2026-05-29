@@ -182,7 +182,7 @@ non_he_channel_blocks = '${fuel_blocks} ${mod_blocks} ${poison_blocks} ${ref_blo
   [control_rod_position]
     type = ParsedFunction
     # control rod is fully inserted at the beginning of the transient
-    value = '0.2'
+    expression = '0.2'
   []
 []
 
