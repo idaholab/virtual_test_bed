@@ -192,12 +192,14 @@ non_he_channel_blocks = '${fuel_blocks} ${mod_blocks} ${poison_blocks} ${ref_blo
     transport_system = SN
     writing = false
     execute_on = initial
+    folder = '../steady_state_fp'
   []
   [restart_poison_densities]
     type = SolutionVectorFile
     var = 'poison_tracking'
     writing = false
     execute_on = initial
+    folder = '../steady_state_fp'
   []
 []
 

@@ -506,5 +506,6 @@ coolant_full_points_filename = '../component_positions/cc_positions_sixth.txt'
   [cp]
     type = Checkpoint
     wall_time_interval = '300' # Only write a checkpoint file every 5 minutes of wall time
+    additional_execute_on = FINAL
   []
 []
