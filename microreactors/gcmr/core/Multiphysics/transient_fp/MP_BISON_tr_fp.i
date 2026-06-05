@@ -482,5 +482,5 @@ coolant_full_points_filename = '../component_positions/cc_positions_sixth.txt'
     type = Exodus
     enable = false
   []
-  wall_time_checkpoint = false
+  checkpoint = false
 []
