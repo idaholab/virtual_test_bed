@@ -1,4 +1,5 @@
 [Tests]
+  issues = '#600'
   [coupling]
     type = RunApp
     input = gpbr200_ss_gfnk_reactor.i
