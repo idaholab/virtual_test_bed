@@ -1,5 +1,5 @@
 ---
-name: Model modification
+name: Model Modification
 about: Model enhancement, expansion to new transient, etc.
 title: ''
 labels: ''
