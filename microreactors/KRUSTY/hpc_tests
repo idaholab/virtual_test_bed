@@ -1,4 +1,5 @@
 [Tests]
+  issues = '#394 #477 #647'
   [transient_tests]
     # First, we generate coarse meshes for testing purpose
     [mesh_gen_griffin_coarse]

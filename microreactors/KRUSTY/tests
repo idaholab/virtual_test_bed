@@ -1,4 +1,5 @@
 [Tests]
+  issues = '#394 #477 #647'
   [syntax_check]
     [neutronics_griffin]
       type = RunApp
