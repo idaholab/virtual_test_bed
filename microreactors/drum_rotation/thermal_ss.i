@@ -163,9 +163,9 @@ y_center = ${fparse r}
   [drum_props]
     type = ControlDrumMaterial
     block = '${drum_blocks}'
-    drum_material_property = 'density thermal_conductivity thermal_conductivity_dT specific_heat'
+    drum_material_properties = 'density thermal_conductivity thermal_conductivity_dT specific_heat'
     rotation_centers = '${x_center} ${y_center} 0'
-    rotation_angle_functions = drum_position
+    rotation_angle_functors = drum_position
     segment_angles = '270 90'
     segment_material_properties = 'seg1_rho  seg2_rho;
                                    seg1_k    seg2_k;
