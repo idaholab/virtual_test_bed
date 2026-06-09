@@ -32,7 +32,7 @@
     input = 'MP_Griffin_ss.i'
     cli_args = 'Mesh/fmg/file="../mesh/Mesh_coarse_in.e"
                 TransportSystems/SN/NA=1
-                Executioner/richardson_max_its=1
+                Executioner/richardson_max_its=15
                 MultiApps/bison/cli_args="Mesh/fmg/file=../mesh/Mesh_coarse_in.e"'
     executable_pattern = 'blue_crab*'
     capabilities = 'method=opt'
@@ -49,7 +49,7 @@
     input = 'MP_Griffin_ss_fp.i'
     cli_args = 'Mesh/fmg/file="../mesh/Mesh_coarse_in.e"
                 TransportSystems/SN/NA=1
-                Executioner/richardson_max_its=1
+                Executioner/richardson_max_its=15
                 MultiApps/bison/cli_args="Mesh/fmg/file=../mesh/Mesh_coarse_in.e"'
     executable_pattern = 'blue_crab*'
     capabilities = 'method=opt'
@@ -94,8 +94,10 @@
     type = RunApp
     input = 'MP_Griffin_trN.i'
     cli_args = 'Mesh/fmg/file="../mesh/Mesh_coarse_in.e"
+                Mesh/parallel_type=DISTRIBUTED
                 TransportSystems/SN/NA=1
-                Executioner/richardson_max_its=1'
+                Executioner/richardson_max_its=1
+                Executioner/end_time=1'
     executable_pattern = 'blue_crab*'
     capabilities = 'method=opt'
     max_time = 18000
@@ -139,8 +141,10 @@
     type = RunApp
     input = 'MP_Griffin_scb.i'
     cli_args = 'Mesh/fmg/file="../mesh/Mesh_coarse_in.e"
+                Mesh/parallel_type=DISTRIBUTED
                 TransportSystems/SN/NA=1
-                Executioner/richardson_max_its=1'
+                Executioner/richardson_max_its=1
+                Executioner/end_time=1'
     executable_pattern = 'blue_crab*'
     capabilities = 'method=opt'
     max_time = 18000
@@ -184,15 +188,17 @@
     type = RunApp
     input = 'MP_Griffin_dp.i'
     cli_args = 'Mesh/fmg/file="../mesh/Mesh_coarse_in.e"
+    Mesh/parallel_type=DISTRIBUTED
                 TransportSystems/SN/NA=1
-                Executioner/richardson_max_its=1'
+                Executioner/richardson_max_its=1
+                Executioner/end_time=1'
     executable_pattern = 'blue_crab*'
     capabilities = 'method=opt'
     max_time = 18000
     # Griffin does not have the sam petsc option parameter
     allow_unused = true
     allow_warnings = true
-    working_directory = 'single_channel_blockage'
+    working_directory = 'depressurization'
     prereq = 'generate_mesh_coarse MP_Griffin_dp_syntax MP_BISON_dp_syntax MP_ss'
     min_parallel = 96
   []
@@ -230,7 +236,8 @@
     input = 'MP_Griffin_tr_fp.i'
     cli_args = 'Mesh/fmg/file="../mesh/Mesh_coarse_in.e"
                 TransportSystems/SN/NA=1
-                Executioner/richardson_max_its=1'
+                Executioner/richardson_max_its=1
+                Executioner/end_time=1'
     executable_pattern = 'blue_crab*'
     capabilities = 'method=opt'
     max_time = 18000
