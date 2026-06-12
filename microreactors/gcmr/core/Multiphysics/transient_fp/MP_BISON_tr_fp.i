@@ -1,6 +1,6 @@
 ################################################################################
 ## NEAMS Micro-Reactor Application Driver                                     ##
-## Gas Cooled Microreactor Full Core Single Coolant Channel Blockage          ##
+## Gas Cooled Microreactor Full Core Control Rod Insertion                    ##
 ## BISON Child Application input file                                         ##
 ## Heat Transfer in Solid Components                                          ##
 ## If using or referring to this model, please cite as explained in           ##
@@ -39,7 +39,7 @@ coolant_channel_bdries = 'coolant_channel_surf'
 coolant_full_points_filename = '../component_positions/cc_positions_sixth.txt'
 
 [Problem]
-  restart_file_base = '../steady_state/MP_Griffin_ss_out_bison0_cp_cp/LATEST'
+  restart_file_base = '../steady_state_fp/MP_Griffin_ss_fp_out_bison0_cp_cp/LATEST'
   force_restart = true
 []
 
@@ -49,7 +49,7 @@ coolant_full_points_filename = '../component_positions/cc_positions_sixth.txt'
 
 [Mesh]
   parallel_type = DISTRIBUTED
-  file = '../steady_state/MP_Griffin_ss_out_bison0_cp_cp/LATEST'
+  file = '../steady_state_fp/MP_Griffin_ss_fp_out_bison0_cp_cp/LATEST'
 []
 
 [Variables]
@@ -79,7 +79,7 @@ coolant_full_points_filename = '../component_positions/cc_positions_sixth.txt'
 [AuxVariables]
   [power_density]
     block = ${fuel_blocks}
-    family = L2_LAGRANGE
+    family = L2_LAGRANGE # transfer to FIRST L2_LAGRANGE gives a weird integrated power...
     order = FIRST
     # initial_condition = 3e6 #W/m^3
   []
@@ -93,13 +93,13 @@ coolant_full_points_filename = '../component_positions/cc_positions_sixth.txt'
     order = CONSTANT
     family = MONOMIAL
     # initial_condition = 1000.00
-    block = 'monolith reflector_quad reflector_tri' # Can set it on the monolith or coolant.
+    block = 'monolith reflector_quad reflector_tri'
   []
   [Tfluid] # Coolant temperature.
     order = CONSTANT
     family = MONOMIAL
     # initial_condition = ${Tcin}
-    block = 'monolith reflector_quad reflector_tri' # Can set it on the monolith or coolant.
+    block = 'monolith reflector_quad reflector_tri'
   []
   [power_density_scalar]
     family = SCALAR
@@ -324,12 +324,13 @@ coolant_full_points_filename = '../component_positions/cc_positions_sixth.txt'
     app_type = ThermalHydraulicsApp
     positions_objects = cc_positions
     bounding_box_padding = ' 0.1 0.1 0.1'
-    input_files = 'MP_SAM_scb.i'
+    input_files = 'MP_SAM_tr_fp.i'
     execute_on = 'INITIAL TIMESTEP_END'
     max_procs_per_app = 1
     output_in_position = true
-    cli_args_files = 'cli_args_file.txt'
-    sub_cycling = true
+    cli_args = AuxKernels/scale_htc/expression='0.997090723*htc'
+    # cli_args: this is a conversion to help with the energy balance.
+    sub_cycling = false
   []
 []
 
@@ -377,7 +378,7 @@ coolant_full_points_filename = '../component_positions/cc_positions_sixth.txt'
   nl_rel_tol = 1e-8
 
   start_time = 0
-  end_time = 3000
+  end_time = 172800
   dtmax = 1e4
   dtmin = 0.1
   dt = 100
@@ -479,7 +480,7 @@ coolant_full_points_filename = '../component_positions/cc_positions_sixth.txt'
   csv = true
   [exodus]
     type = Exodus
-    enable = true
+    enable = false
   []
   checkpoint = false
 []
