@@ -32,18 +32,24 @@
     input = 'htr-pm-flow-fv-ss.i'
     check_input = True
     executable_pattern = 'griffin*|blue_crab*|dire_wolf*|fenix*'
+    # warning from setting fp in porous media physics through global parameters
+    allow_warnings = true
   []
   [flow_syntax_fv_null]
     type = RunApp
     input = 'htr-pm-flow-fv-tr-null.i'
     check_input = True
     executable_pattern = 'griffin*|blue_crab*|dire_wolf*|fenix*'
+    # warning from setting fp in porous media physics through global parameters
+    allow_warnings = true
   []
   [flow_syntax_fv_dlofc]
     type = RunApp
     input = 'htr-pm-flow-fv-tr-dlofc.i'
     check_input = True
     executable_pattern = 'griffin*|blue_crab*|dire_wolf*|fenix*'
+    # warning from setting fp in porous media physics through global parameters
+    allow_warnings = true
   []
   [pebble_heat_conduction]
     type = RunApp
@@ -67,7 +73,8 @@
     type = CSVDiff
     input = htr_pm_neutronics_tr_null.i
     csvdiff = 'htr_pm_neutronics_tr_null.csv  htr_pm_neutronics_tr_null_out_flow0.csv'
-    prereq = 'neutronics_syntax_null'
+    # need a checkpoint
+    prereq = 'htr_pm_regression_1'
     executable_pattern = 'griffin*|blue_crab*'
     max_time = 400
     # XS branching ratio warning
@@ -77,7 +84,8 @@
     type = CSVDiff
     input = htr_pm_neutronics_tr_dlofc.i
     csvdiff = 'htr_pm_neutronics_tr_dlofc.csv  htr_pm_neutronics_tr_dlofc_out_flow0.csv'
-    prereq = 'neutronics_syntax_null'
+    # need a checkpoint
+    prereq = 'htr_pm_regression_1'
     executable_pattern = 'griffin*|blue_crab*'
     max_time = 400
     # XS branching ratio warning
