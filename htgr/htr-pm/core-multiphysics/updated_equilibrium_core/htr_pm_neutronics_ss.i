@@ -123,10 +123,9 @@ pebble_unloading_rate   = ${fparse pebble_speed * area * 0.61 / pebble_volume}
    subdomains             = '1 2 3 4 5 6 7 8 61 71'
    extra_element_ids      = '1 1 1 1 1 1 1 1 1 1'
  []
-[]
-[Problem]
   coord_type = RZ
 []
+
 # ==============================================================================
 # AUXVARIABLES AND AUXKERNELS
 # ==============================================================================
@@ -420,7 +419,6 @@ pebble_unloading_rate   = ${fparse pebble_speed * area * 0.61 / pebble_volume}
     pebble_unloading_rate         = ${pebble_unloading_rate}
     pebble_flow_rate_distribution = '0.027777778 0.083333333 0.138888889 0.194444444 0.25 0.305555556'
     burnup_limit                  = 4.818E+14
-    units = "MWd/kg"
     major_streamline_axis         = y
     pebble_diameter               = 0.06
     # material_ids                  = '1; 1; 1; 1; 1; 1'
@@ -485,8 +483,8 @@ pebble_unloading_rate   = ${fparse pebble_speed * area * 0.61 / pebble_volume}
     grid_names              = 'Tmod  Tmod  Tmod'
     grid_variables          = 'T_solid  T_solid  T_solid'
     plus                    = true
-	  isotopes                =  '   Graphite   U235 ;      Graphite            B10          B11            C12   U235;       Graphite            B10          B11            C12   U235'
-    densities               =  ' 6.4277e-02     0.0     6.4277e-02     1.6373e-03   5.9938e-03     1.6004e-02    0.0      6.4277e-02     1.6373e-03   5.9938e-03     1.6004e-02    0.0'
+	  isotopes                =  '   Graphite   ;      Graphite            B10          B11            C12  ;       Graphite            B10          B11            C12  '
+    densities               =  ' 6.4277e-02       6.4277e-02     1.6373e-03   5.9938e-03     1.6004e-02       6.4277e-02     1.6373e-03   5.9938e-03     1.6004e-02   '
 	  segment_material_ids    = '1   1   1'
 	  rod_segment_length      = 11.878
 	  front_position_function = 'CR_bott'
