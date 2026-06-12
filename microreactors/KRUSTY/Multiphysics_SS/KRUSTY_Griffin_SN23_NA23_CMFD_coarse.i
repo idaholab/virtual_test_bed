@@ -64,9 +64,10 @@
     type = FullSolveMultiApp
     input_files = KRUSTY_BISON_THERMOMECHANICS.i
     execute_on = 'timestep_end'
-    keep_solution_during_restore = true
-    # no matter for steady state neutronics (TODO: update to false)
-    update_old_solution_when_keeping_solution_during_restore = true
+    # This uses the end solution from previous iterations as an initial guess
+    # TODO: this could let the subapp accumulate "damage" or "plasticity"
+    # from every solve.
+    no_restore = true
     cli_args = "bison_mesh_file='../MESH/BISON_mesh_coarse.e'"
   []
 []
