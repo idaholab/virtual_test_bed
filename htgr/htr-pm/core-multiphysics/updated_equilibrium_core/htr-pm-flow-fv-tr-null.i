@@ -78,112 +78,93 @@ alpha_fluid_solid = 5e3
     file = 'htr_pm_griffin_ss_out_flow0.e'
     use_for_exodus_restart = true
   []
+  coord_type = RZ
 []
 
 [Problem]
-  coord_type = RZ
-  kernel_coverage_check = false
+  # kernel_coverage_check = false
 []
 
-[Modules]
-  [NavierStokesFV]
-    # restart!
-    #initialize_variables_from_mesh_file = true
-    #energy_scaling = 5e-6
 
-    # basic settings
-    block = ${fluid_blocks}
-    compressibility = 'weakly-compressible'
-    add_energy_equation = true
-    gravity = '0.0 -9.81 0.0'
-	
-	# Variables, defined below for the Exodus restart
-    velocity_variable = 'superficial_vel_x superficial_vel_y'
-    pressure_variable = 'pressure'
-    fluid_temperature_variable = 'T_fluid'
-	
-    # Porous treatement
-    porous_medium_treatment = true
-    friction_types = 'darcy forchheimer'
-    friction_coeffs = 'Darcy_coefficient Forchheimer_coefficient'
-    consistent_scaling = 50 #200 #1000
-    porosity_smoothing_layers = 0
+[Physics]
+  [NavierStokes]
+    [Flow/all]
+      # basic settings
+      block = ${fluid_blocks}
+      compressibility = 'weakly-compressible'
+      gravity = '0.0 -9.81 0.0'
+      initialize_variables_from_mesh_file = true
 
-    pressure_face_interpolation = average
-    momentum_advection_interpolation = upwind
-    mass_advection_interpolation = upwind
-    energy_advection_interpolation = upwind
+      # Porous treatement
+      porous_medium_treatment = true
+      friction_types = 'darcy forchheimer'
+      friction_coeffs = 'Darcy_coefficient Forchheimer_coefficient'
+      consistent_scaling = 50 # should be 1
+      porosity_smoothing_layers = 0
+      use_friction_correction = true
 
-    use_friction_correction = true
+      # numerical scheme
+      pressure_face_interpolation = average
+      momentum_advection_interpolation = upwind
+      mass_advection_interpolation = upwind
 
-    # convective heat transfer
-    ambient_convection_blocks = '1 2 3 5 6 61 71'
-    ambient_convection_alpha = 'alpha'
-    ambient_temperature = 'T_solid'
+      # fluid properties
+      density = 'rho'
+      dynamic_viscosity = 'mu'
 
-    # fluid properties
-    density = 'rho'
-    dynamic_viscosity = 'mu'
-    thermal_conductivity = 'kappa'
-    specific_heat = 'cp'
+      # boundary conditions
+      inlet_boundaries = 'reactor_inlet'
+      momentum_inlet_types = 'flux-mass'
+      flux_inlet_pps = 'set_inlet_mfr'
+      flux_inlet_directions = '0 1 0'
 
-    # boundary conditions
-    inlet_boundaries = 'reactor_inlet'
-    momentum_inlet_types = 'flux-mass'
-    flux_inlet_pps = 'set_inlet_mfr'
-    flux_inlet_directions = '0 1 0'
-    energy_inlet_types = 'flux-mass'
-    energy_inlet_function = '${T_inlet}'
+      outlet_boundaries = 'reactor_outlet'
+      momentum_outlet_types = 'fixed-pressure'
+      pressure_functors = '${p_outlet}'
 
-    outlet_boundaries = 'reactor_outlet'
-    momentum_outlet_types = 'fixed-pressure'
-    pressure_function = 'pressure_out_fn'
+      wall_boundaries =      'pbed_inner pbed_outer hot_plenum_walls cold_plenum_walls riser_walls bypass_wall'
+      momentum_wall_types =  'symmetry   slip       slip             slip              slip        slip'
+    []
+    [FluidHeatTransfer/all]
+      block = ${fluid_blocks}
+      initialize_variables_from_mesh_file = true
 
-    wall_boundaries =      'pbed_inner pbed_outer hot_plenum_walls cold_plenum_walls riser_walls bypass_wall'
-    momentum_wall_types =  'symmetry   slip       slip             slip              slip        slip'
-    energy_wall_types =    'heatflux   heatflux   heatflux         heatflux          heatflux    heatflux'
-    energy_wall_function = '0          0          0                0                 0           0'
-  []
+      # numerical scheme
+      energy_advection_interpolation = upwind
+      system_names = 'nl0'
 
-  [FluidProperties]
-    [fluid_properties_obj]
-      type = HeliumFluidProperties
+      # convective heat transfer
+      ambient_convection_blocks = '1 2 3 5 6 61 71'
+      ambient_convection_alpha = 'alpha'
+      ambient_temperature = 'T_solid'
+
+      # fluid properties
+      thermal_conductivity = 'kappa'
+      specific_heat = 'cp'
+
+      # boundary conditions
+      energy_inlet_types = 'flux-mass'
+      energy_inlet_functors = '${T_inlet}'
+
+      energy_wall_types =    'heatflux   heatflux   heatflux         heatflux          heatflux    heatflux'
+      energy_wall_functors = '0          0          0                0                 0           0'
     []
   []
 []
+
+[FluidProperties]
+  [fluid_properties_obj]
+    type = HeliumFluidProperties
+    allow_imperfect_jacobians = true
+  []
+[]
+
 
 [Variables]
   [T_solid]
     type = INSFVEnergyVariable
     block = '${solid_blocks}'
-	initial_from_file_var = T_solid
-	initial_from_file_timestep = LATEST
-  []
-  [T_fluid]
-    type = INSFVEnergyVariable
-    block = '${fluid_blocks}'
-    initial_from_file_var = T_fluid
-    initial_from_file_timestep = LATEST
-  []
-  [superficial_vel_x]
-    type = PINSFVSuperficialVelocityVariable
-    block = '${fluid_blocks}'
-    #initial_condition = 1e-10
-    initial_from_file_var = superficial_vel_x
-    initial_from_file_timestep = LATEST
-  []
-  [superficial_vel_y]
-    type = PINSFVSuperficialVelocityVariable
-    block = '${fluid_blocks}'
-    #initial_condition = 1e-10
-    initial_from_file_var = superficial_vel_y
-    initial_from_file_timestep = LATEST
-  []
-  [pressure]
-    type = INSFVPressureVariable
-    block = '${fluid_blocks}'
-    #initial_condition = 1e-10
-    initial_from_file_var = pressure
+    initial_from_file_var = T_solid
     initial_from_file_timestep = LATEST
   []
 []
@@ -396,7 +377,7 @@ alpha_fluid_solid = 5e3
 
   [core_delta_p]
     type = ParsedPostprocessor
-    function = 'pressure_inlet - pressure_outlet'
+    expression ='pressure_inlet - pressure_outlet'
     pp_names = 'pressure_inlet pressure_outlet'
     execute_on = 'initial TIMESTEP_END'
   []
@@ -425,9 +406,9 @@ alpha_fluid_solid = 5e3
     variable = T_solid
     execute_on = 'initial timestep_end'
     block = 'pebble_bed'
-    
+
   []
-  
+
   [ref_max_temperature]
     type = ElementExtremeValue
     variable = T_solid
@@ -470,7 +451,7 @@ alpha_fluid_solid = 5e3
     functor = 'k_s'
     execute_on  = 'initial timestep_end'
   []
-  
+
   [rpv_flux]
     type = ADSideDiffusiveFluxIntegral
     variable = T_solid
@@ -478,7 +459,7 @@ alpha_fluid_solid = 5e3
     boundary = 'right'
     execute_on  = 'initial timestep_end'
   []
-  
+
   [right_Temp]
     type = SideAverageValue
     boundary = 'right'
@@ -487,17 +468,17 @@ alpha_fluid_solid = 5e3
   []
   [rpv_radiation_out] # should be equal to 0 upon convergence
     type = ParsedPostprocessor
-    function = '0.8*5.6703e-8*316.6725395*(right_Temp^4 - 300.0^4)/1000.0'
+    expression ='0.8*5.6703e-8*316.6725395*(right_Temp^4 - 300.0^4)/1000.0'
     pp_names = 'right_Temp'
     execute_on  = 'initial timestep_end'
   []
   [rpv_convective_out]
     type = ParsedPostprocessor
-    function = '1.0*316.6725395*(right_Temp - 300.0)/1000.0'
+    expression ='1.0*316.6725395*(right_Temp - 300.0)/1000.0'
     pp_names = 'right_Temp'
     execute_on  = 'initial timestep_end'
   []
-  #[rpv_convective_out]    
+  #[rpv_convective_out]
   #  type = ConvectiveHeatTransferSideIntegral
   #  T_solid = T_solid
   #  boundary = 'right' # outer RVP
@@ -507,11 +488,11 @@ alpha_fluid_solid = 5e3
   #[]
   [rpv_tot_out] # should be equal to 0 upon convergence
     type = ParsedPostprocessor
-    function = 'rpv_convective_out + rpv_radiation_out '
+    expression ='rpv_convective_out + rpv_radiation_out '
     pp_names = 'rpv_convective_out rpv_radiation_out'
     execute_on  = 'initial timestep_end'
   []
-  
+
   #[Tf_inlet]
   #  type = SideAverageValue
   #  boundary = 'reactor_inlet'
@@ -525,7 +506,7 @@ alpha_fluid_solid = 5e3
   #  variable = T_fluid
   #  execute_on = 'TIMESTEP_END'
   #[]
-  
+
   #[Tf_inlet_vol]
   #  type = VolumetricFlowRate
   #  vel_x = superficial_vel_x
@@ -551,7 +532,7 @@ alpha_fluid_solid = 5e3
   []
   [He_Heat_Ext] # should be equal to 0 upon convergence
     type = ParsedPostprocessor
-    function = '96.0 * 5195.0 * (Tf_outlet_vol/outlet_vfr - 523.15) '
+    expression ='96.0 * 5195.0 * (Tf_outlet_vol/outlet_vfr - 523.15) '
     pp_names = 'Tf_outlet_vol outlet_vfr'
     execute_on  = 'initial timestep_end'
   []
@@ -568,6 +549,15 @@ alpha_fluid_solid = 5e3
 []
 
 [Materials]
+  ## natural htc for BC
+  [natural_htc_mat]
+    type = ADGenericConstantMaterial
+    prop_names = 'natural_htc'
+    prop_values = '5'
+  []
+[]
+
+[FunctorMaterials]
   ## Solid thermal properties
   [graphite_rho_and_cp]
     type = ADGenericFunctorMaterial
@@ -583,12 +573,6 @@ alpha_fluid_solid = 5e3
     prop_names =  'rho_s  cp_s'
     prop_values = '6      5000'
     block = 'refl_barrel_gap barrel_rpv_gap'
-  []
-  ## natural htc for BC
-  [natural_htc_mat]
-    type = ADGenericConstantMaterial
-    prop_names = 'natural_htc'
-    prop_values = '5'
   []
   [pebble_bed_ks]
     type = ADGenericFunctorMaterial
@@ -688,11 +672,11 @@ alpha_fluid_solid = 5e3
              riser
              bypass'
   []
-  
+
   [non_pebble_bed_eff_solid_conductivity]
     type = ADGenericVectorFunctorMaterial
     prop_names = 'effective_thermal_conductivity'
-    prop_values = '4 0 0'
+    prop_values = '4 4 4'
     block = 'refl_barrel_gap barrel_rpv_gap'
   []
   ## hydraulic diameter and porosity - fixed number per block
@@ -797,7 +781,7 @@ alpha_fluid_solid = 5e3
   [non_pebble_bed_eff_solid_conductivity_2]
     type = ADGenericVectorFunctorMaterial
     prop_names = 'kappa'
-    prop_values = '0 15 0'
+    prop_values = '15 15 15'
     block = 'top_cavity'
   []
   [effective_fluid_thermal_conductivity]

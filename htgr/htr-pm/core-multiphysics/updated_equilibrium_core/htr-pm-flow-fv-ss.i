@@ -734,7 +734,8 @@ alpha_fluid_solid = 5e3
   [non_pebble_bed_eff_solid_conductivity]
     type = ADGenericVectorFunctorMaterial
     prop_names = 'effective_thermal_conductivity'
-    prop_values = '4 0 0'
+    # cannot set to 0, and should be isotropic
+    prop_values = '4 4 4'
     block = 'refl_barrel_gap barrel_rpv_gap'
   []
 
@@ -841,7 +842,7 @@ alpha_fluid_solid = 5e3
   [non_pebble_bed_eff_solid_conductivity_2]
     type = ADGenericVectorFunctorMaterial
     prop_names = 'kappa'
-    prop_values = '0 15 0'
+    prop_values = '15 15 15'
     block = 'top_cavity'
   []
 
