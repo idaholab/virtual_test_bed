@@ -6,6 +6,8 @@
     check_input = True
     executable_pattern = 'griffin*|blue_crab*|dire_wolf*|fenix*'
     cli_args = "MultiApps/active='' Transfers/active=''"
+    # XS branching ratio warning
+    allow_warnings = true
   []
   [neutronics_syntax_null]
     type = RunApp
@@ -13,6 +15,8 @@
     check_input = True
     executable_pattern = 'griffin*|blue_crab*|dire_wolf*|fenix*'
     cli_args = "MultiApps/active='' Transfers/active=''"
+    # XS branching ratio warning
+    allow_warnings = true
   []
   [neutronics_syntax_dlofc]
     type = RunApp
@@ -20,6 +24,8 @@
     check_input = True
     executable_pattern = 'griffin*|blue_crab*|dire_wolf*|fenix*'
     cli_args = "MultiApps/active='' Transfers/active=''"
+    # XS branching ratio warning
+    allow_warnings = true
   []
   [flow_syntax_fv_ss]
     type = RunApp
@@ -46,7 +52,7 @@
     executable_pattern = 'griffin*|blue_crab*|dire_wolf*|fenix*'
   []
 
-# Regression tests
+  # Regression tests
   [htr_pm_regression_1]
     type = CSVDiff
     input = htr_pm_neutronics_ss.i
@@ -54,6 +60,8 @@
     prereq = 'neutronics_syntax_SS'
     executable_pattern = 'griffin*|blue_crab*'
     max_time = 400
+    # XS branching ratio warning
+    allow_warnings = true
   []
   [htr_pm_regression_2]
     type = CSVDiff
@@ -62,6 +70,8 @@
     prereq = 'neutronics_syntax_null'
     executable_pattern = 'griffin*|blue_crab*'
     max_time = 400
+    # XS branching ratio warning
+    allow_warnings = true
   []
   [htr_pm_regression_3]
     type = CSVDiff
@@ -70,6 +80,8 @@
     prereq = 'neutronics_syntax_null'
     executable_pattern = 'griffin*|blue_crab*'
     max_time = 400
+    # XS branching ratio warning
+    allow_warnings = true
   []
  []
-  
+
