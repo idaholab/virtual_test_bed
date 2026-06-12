@@ -176,4 +176,16 @@ mpirun -np 48 /path/to/sam-opt -i sam_input.i
 
 ```
 
+## HPC Resources
 
+Please provide the resources required to run each model:
+
+| Resource | Value |
+| :- | :- |
+| HPC Machine |  |
+| Number of nodes |  |
+| Number of processes |  |
+| Number of threads per process |  |
+| Run time |  |
+
+If there are multiple models, these can be different columns, or there can be multiple tables.
