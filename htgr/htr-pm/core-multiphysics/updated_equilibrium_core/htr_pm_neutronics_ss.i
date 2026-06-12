@@ -391,7 +391,7 @@ pebble_unloading_rate   = ${fparse pebble_speed * area * 0.61 / pebble_volume}
 
   porosity_name                   = porosity
   burnup_group_boundaries         = ${burnup_group_boundaries}
-  strictness                      = 0
+  # strictness                      = 0
 
   # cross section data
   library_file                    = '../xsections/HTR-PM_9G-Tnew.xml'
@@ -430,7 +430,7 @@ pebble_unloading_rate   = ${fparse pebble_speed * area * 0.61 / pebble_volume}
                          ${r_streamline_6} ${fparse core_height + axial_reflector_height} 0 ${r_streamline_6} ${axial_reflector_height} 0'
     streamline_segment_subdivisions = '20; 20; 20; 20; 20; 20'
     sweep_tol                       = 1e-7
-    sweep_max_iterations            = 100
+    sweep_max_iterations            = 200
   []
 
   # pebble conduction
@@ -649,19 +649,19 @@ pebble_unloading_rate   = ${fparse pebble_speed * area * 0.61 / pebble_volume}
     type        = ElementIntegralVariablePostprocessor
     block       = 'pebble_bed'
     variable    = prompt_power_density
-    execute_on  = 'transfer timestep_end'
+    execute_on  = 'INITIAL transfer timestep_end'
   []
   [total_power2]
     type        = ElementIntegralVariablePostprocessor
     block       = 'pebble_bed'
     variable    = power_density2
-	  execute_on  = 'transfer timestep_end'
+	  execute_on  = 'INITIAL transfer timestep_end'
   []
   [avg_power_density]
     type        = ElementAverageValue
     block       = 'pebble_bed'
     variable    = power_density
-    execute_on  = 'transfer timestep_end'
+    execute_on  = 'INITIAL transfer timestep_end'
   []
   [power_peak]
     type        = ElementExtremeValue
