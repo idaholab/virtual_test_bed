@@ -402,7 +402,7 @@ solid_blocks = 'core core_barrel'
     rate = ${lambda6}
     block = ${fluid_blocks}
   []
-# Kernels for solve of I and Xe transport 
+# Kernels for solve of I and Xe transport
   [I135_time]
     type = FVFunctorTimeKernel
     variable = 'I135'
