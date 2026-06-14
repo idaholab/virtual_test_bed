@@ -42,7 +42,7 @@ p_outlet = 1.50653e+05 # Reactor outlet pressure (Pa)
 T_inlet = 908.15 # Salt inlet temperature (K).
 T_Salt_initial = 923.0 # inital salt temperature (will change in steady-state)
 
-pump_force = -1.3e6 # pump force functor (set to get a loop circulation time of ~25 seconds)
+pump_force = -2.835e6 # pump force functor (set to get a loop circulation time of ~25 seconds)
 vol_hx = 1e10 # (W/(m3.K)) volumetric heat exchange coefficient for heat exchanger
 # Note: vol_hx need to be tuned to match intermediate HX performance for transients
 bulk_hx = 100.0 # (W/(m3.K)) core bulk volumetric heat exchange coefficient (already callibrated)
@@ -88,8 +88,12 @@ solid_blocks = 'core core_barrel'
   porosity = 'porosity'
   rhie_chow_user_object = 'pins_rhie_chow_interpolator'
 
+  u = superficial_vel_x
+  v = superficial_vel_y
+
   advected_interp_method = 'upwind'
   velocity_interp_method = 'rc'
+  mixing_length = 'mixing_length'
 []
 
 # ==============================================================================
@@ -107,14 +111,8 @@ solid_blocks = 'core core_barrel'
 [Problem]
   kernel_coverage_check = false
   allow_initial_conditions_with_restart = true
-
-  # We segregate the solve of the advected species as they do not influence
-  # the velocity or temperature directly, only through neutronic feedback
-  # We separate the energy equations solve from pressure and momentum as
-  # this first order explicit coupling does not change the solution at steady state
   nl_sys_names = 'ns energy c1 c2 c3 c4 c5 c6 xe_i'
 []
-
 # ==============================================================================
 # FV VARIABLES
 # ==============================================================================
@@ -123,8 +121,18 @@ solid_blocks = 'core core_barrel'
     type = INSFVEnergyVariable
     initial_condition = ${T_Salt_initial}
     block = ${solid_blocks}
-
     solver_sys = 'energy'
+  []
+  # Species
+  [I135]
+    type = MooseVariableFVReal
+    block = ${fluid_blocks}
+    solver_sys = 'xe_i'
+  []
+  [Xe135]
+    type = MooseVariableFVReal
+    block = ${fluid_blocks}
+    solver_sys = 'xe_i'
   []
 []
 
@@ -222,7 +230,7 @@ solid_blocks = 'core core_barrel'
         block = ${fluid_blocks}
         turbulence_handling = 'mixing-length'
         mixing_length_name = 'mixing_length'
-        Sc_t = '${Sc_t} ${Sc_t} ${Sc_t} ${Sc_t} ${Sc_t} ${Sc_t} ${Sc_t} ${Sc_t}'
+        Sc_t = '${Sc_t} ${Sc_t} ${Sc_t} ${Sc_t} ${Sc_t} ${Sc_t}'
         system_names = 'ns'
 
         # TODO: consider if having different mixing length near wall makes
@@ -237,18 +245,19 @@ solid_blocks = 'core core_barrel'
 
     [ScalarTransport]
       [species]
-        passive_scalar_names = 'c1 c2 c3 c4 c5 c6 I135 Xe135'
+        passive_scalar_names = 'c1 c2 c3 c4 c5 c6'
         block = ${fluid_blocks}
 
         # Numerical scheme parameters
         passive_scalar_advection_interpolation = upwind
-        system_names = 'c1 c2 c3 c4 c5 c6 xe_i xe_i'
+        system_names = 'c1 c2 c3 c4 c5 c6'
 
         # Explicit physics coupling (can be auto-detected)
         coupled_flow_physics = 'flow'
-        # coupled_turbulence_physics = 'turb' # TODO: uncomment post typo fix in code
+        coupled_turbulence_physics = 'turb'
       []
     []
+
   []
 []
 
@@ -267,14 +276,6 @@ solid_blocks = 'core core_barrel'
 
 [FVKernels]
   # Extra kernels for the thermal-hydraulics solve in the fluid
-  [pump_x]
-    type = INSFVPump
-    momentum_component = x
-    rhie_chow_user_object = 'pins_rhie_chow_interpolator'
-    variable = superficial_vel_x
-    block = 'pump'
-    pump_volume_force = ${pump_force}
-  []
   [pump_y]
     type = INSFVPump
     momentum_component = y
@@ -401,7 +402,51 @@ solid_blocks = 'core core_barrel'
     rate = ${lambda6}
     block = ${fluid_blocks}
   []
-# Kernels for solve of I and Xe transport
+# Kernels for solve of I and Xe transport 
+  [I135_time]
+    type = FVFunctorTimeKernel
+    variable = 'I135'
+  []
+  [Xe135_time]
+    type = FVFunctorTimeKernel
+    variable = 'Xe135'
+  []
+  [I135_advection]
+    type = PINSFVMassAdvection
+    variable = I135
+    rho = 'I135_porous'
+    block = ${fluid_blocks}
+  []
+  [Xe135_advection]
+    type = PINSFVMassAdvection
+    variable = Xe135
+    rho = 'Xe135_porous'
+    block = ${fluid_blocks}
+  []
+  [I135_diffusion]
+    type = FVDiffusion
+    coeff = mu_var
+    variable = I135
+    block = ${fluid_blocks}
+  []
+  [Xe135_diffusion]
+    type = FVDiffusion
+    coeff = mu_var
+    variable = Xe135
+    block = ${fluid_blocks}
+  []
+  [I135_turb_diffusion]
+    type = INSFVMixingLengthScalarDiffusion
+    schmidt_number = ${Sc_t}
+    variable = I135
+    block = ${fluid_blocks}
+  []
+  [Xe135_turb_diffusion]
+    type = INSFVMixingLengthScalarDiffusion
+    schmidt_number = ${Sc_t}
+    variable = Xe135
+    block = ${fluid_blocks}
+  []
   [I135_src]
     type = FVCoupledForce
     variable = I135
@@ -498,6 +543,14 @@ solid_blocks = 'core core_barrel'
     initial_condition = 1.0
     block = ${fluid_blocks}
   []
+  [a_u_var]
+    type = MooseVariableFVReal
+    block = ${fluid_blocks}
+  []
+  [a_v_var]
+    type = MooseVariableFVReal
+    block = ${fluid_blocks}
+  []
   [mass_trans_var]
     type = MooseVariableFVReal
     block = ${fluid_blocks}
@@ -524,6 +577,20 @@ solid_blocks = 'core core_barrel'
     variable = 'rho_var'
     functor = 'rho'
     block = ${fluid_blocks}
+  []
+  [comp_a_u]
+    type = FunctorAux
+    functor = 'ax'
+    variable = 'a_u_var'
+    block = ${fluid_blocks}
+    execute_on = 'timestep_end'
+  []
+  [comp_a_v]
+    type = FunctorAux
+    functor = 'ay'
+    variable = 'a_v_var'
+    block = ${fluid_blocks}
+    execute_on = 'timestep_end'
   []
   [comp_mass_trans]
     type = FunctorAux

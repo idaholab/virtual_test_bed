@@ -298,7 +298,7 @@ The core-averaged $^{135}Xe$ concentration increases monotonically and asymptoti
        id=xe_feedback
        caption=Development of core-averaged $^{135}Xe$ concentration during the steady-state coupled simulation.
 
-The converged average core concentration is $3.86\times10^{-11}$ atoms/barn-cm. The curve shows a rapid early rise followed by a saturation regime, consistent with the balance between I-135 decay production, Xe-135 burnout in high-flux regions, and loop transport.
+The converged average core concentration is $3.8\times10^{-11}$ atoms/barn-cm. The curve shows a rapid early rise followed by a saturation regime, consistent with the balance between I-135 decay production, Xe-135 burnout in high-flux regions, and loop transport.
 
 ### Steady-State Field Distributions in the Primary Loop
 
@@ -318,9 +318,9 @@ Key observations from the spatial fields include:
 
 ### Reactivity Impact of Xe Poisoning
 
-A reference case without Xe poisoning was also evaluated. Comparison of $k_{eff}$ between poisoned and unpoisoned coupled cases indicates an estimated reactivity penalty of approximately -337 pcm, which is in agreement with trends from the SAM-Griffin coupled study.
+A reference case without Xe poisoning was also evaluated. Comparison of $k_{eff}$ between poisoned and unpoisoned coupled cases indicates an estimated reactivity penalty of approximately -420.9 pcm, which is in excellent agreement with the SAM-Griffin study.
 
-This -337 pcm penalty is significantly lower than the values typically encountered in commercial light water reactors (often exceeding -2000 pcm). The reduced xenon poisoning in the MSRE is mainly due to two factors: the online gas stripping system in the pump bowl, which actively removes $^{135}Xe$ from the salt, and the relatively lower power density of the MSRE compared to a typical PWR, which leads to a lower steady-state xenon concentration.
+This -420.9 pcm penalty is significantly lower than the values typically encountered in commercial light water reactors (often exceeding -2000 pcm). The reduced xenon poisoning in the MSRE is mainly due to two factors: the online gas stripping system in the pump bowl, which actively removes $^{135}Xe$ from the salt, and the relatively lower power density of the MSRE compared to a typical PWR, which leads to a lower steady-state xenon concentration.
 
 ### Current Status and Future Work
 
