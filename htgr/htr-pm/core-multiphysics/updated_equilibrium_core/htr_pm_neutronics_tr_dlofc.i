@@ -500,7 +500,7 @@ burnup_group_boundaries = '5.35E+13 1.070E+14 1.604E+14 2.139E+14 2.674E+14 3.20
 [Compositions]
   [fresh_pebble]
     type = IsotopeComposition
-    density_type = mass
+    density_type = atomic
     isotope_densities = 'U234 1.0887E-07
                          U235 1.3550E-05
                          U238 1.4209E-04
