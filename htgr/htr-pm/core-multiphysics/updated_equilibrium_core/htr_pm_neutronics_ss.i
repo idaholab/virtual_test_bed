@@ -241,17 +241,17 @@ pebble_unloading_rate   = ${fparse pebble_speed * area * 0.61 / pebble_volume}
     execute_on             = 'INITIAL TIMESTEP_END'
   []
 
-  [prompt_power_density_aux]
-    type                   = VectorReactionRate
-    block                  = 'pebble_bed'
-    scalar_flux            = 'sflux_g0 sflux_g1 sflux_g2 sflux_g3 sflux_g4
-	                            sflux_g5 sflux_g6 sflux_g7 sflux_g8'
-    variable               = prompt_power_density
-    cross_section          = kappa_sigma_fission
-    scale_factor           = power_scaling2
-    dummies                = UnscaledTotalPower
-    execute_on             = 'INITIAL timestep_end'
-  []
+  # [prompt_power_density_aux]
+  #   type                   = VectorReactionRate
+  #   block                  = 'pebble_bed'
+  #   scalar_flux            = 'sflux_g0 sflux_g1 sflux_g2 sflux_g3 sflux_g4
+	#                             sflux_g5 sflux_g6 sflux_g7 sflux_g8'
+  #   variable               = prompt_power_density
+  #   cross_section          = kappa_sigma_fission
+  #   scale_factor           = power_scaling2
+  #   dummies                = UnscaledTotalPower
+  #   execute_on             = 'INITIAL timestep_end'
+  # []
 
   [pden_max_aux]
     type           = ArrayVarExtremeValueAux
@@ -276,7 +276,7 @@ pebble_unloading_rate   = ${fparse pebble_speed * area * 0.61 / pebble_volume}
     variable   = power_peaking
     coupled_variables = 'power_density'
     expression = 'power_density / 3.21525E+06'
-    execute_on = 'timestep_end'
+    execute_on = 'initial timestep_end'
   []
 []
 
@@ -330,7 +330,7 @@ pebble_unloading_rate   = ${fparse pebble_speed * area * 0.61 / pebble_volume}
   []
   [init_power_density]
     type       = SolutionVectorFile
-    var        = 'prompt_power_density  total_pebble_decay_heat pebble_isotope_density'
+    var        = 'prompt_power_density  total_pebble_decay_heat'
     writing    = true
     execute_on = 'FINAL'
   []
@@ -434,19 +434,21 @@ pebble_unloading_rate   = ${fparse pebble_speed * area * 0.61 / pebble_volume}
     densities      =  '8.93263E-02  0.0'
     material_id    = 1
   []
+  # control_rod at 68% density
   [control_rod]
     type                    = CoupledFeedbackRoddedNeutronicsMaterial
     block                   = 'cr'
     grid_names              = 'Tmod  Tmod  Tmod'
     grid_variables          = 'T_solid  T_solid  T_solid'
     plus                    = true
-	  isotopes                =  '   Graphite   ;      Graphite            B10          B11            C12  ;       Graphite            B10          B11            C12  '
+    isotopes                =  '   Graphite   ;      Graphite            B10          B11            C12  ;       Graphite            B10          B11            C12  '
     densities               =  ' 6.4277e-02       6.4277e-02     1.6373e-03   5.9938e-03     1.6004e-02       6.4277e-02     1.6373e-03   5.9938e-03     1.6004e-02   '
-	  segment_material_ids    = '1   1   1'
+    segment_material_ids    = '1   1   1'
 	  rod_segment_length      = 11.878
 	  front_position_function = 'CR_bott'
 	  rod_withdrawn_direction = 'y'
   []
+  # riser at 68% density
   [riser]
     type           = CoupledFeedbackNeutronicsMaterial
     block          = 'riser'
@@ -500,56 +502,91 @@ pebble_unloading_rate   = ${fparse pebble_speed * area * 0.61 / pebble_volume}
 # ==============================================================================
 [MultiApps]
   [flow]
-    type = FullSolveMultiApp
-    input_files = 'htr-pm-flow-fv-ss.i'
+    type                         = FullSolveMultiApp
+    input_files                  = 'htr-pm-flow-fv-ss.i'
     keep_solution_during_restore = true
     update_old_solution_when_keeping_solution_during_restore = true
-    positions = '0 0 0'
-    execute_on = 'TIMESTEP_END'
+    positions                    = '0 0 0'
+    execute_on                   = 'TIMESTEP_END'
     #max_procs_per_app = 20
   []
 []
 [Transfers]
   [power_density_to_flow]
-	  type = MultiAppNearestNodeTransfer
-    to_multi_app = flow
-    source_variable = power_density
-    variable = power_density
-	  fixed_meshes = true
-	  execute_on = 'TIMESTEP_END'
+    type              = MultiAppNearestNodeTransfer
+    to_multi_app      = flow
+    source_variable   = power_density
+    variable          = power_density
+    fixed_meshes      = true
+    execute_on        = 'TIMESTEP_END'
   []
   [T_solid_from_flow]
-	  type = MultiAppNearestNodeTransfer
-    from_multi_app = flow
-    source_variable = T_solid
-    variable = T_solid
-	  execute_on = 'TIMESTEP_END'
-	  fixed_meshes = true
+    type              = MultiAppNearestNodeTransfer
+    from_multi_app    = flow
+    source_variable   = T_solid
+    variable          = T_solid
+    execute_on        = 'TIMESTEP_END'
+    fixed_meshes      = true
   []
   [T_fluid_from_flow]
-	  type = MultiAppNearestNodeTransfer
-    from_multi_app = flow
-    source_variable = T_fluid
-    variable = T_fluid
-	  execute_on = 'TIMESTEP_END'
-	  fixed_meshes = true
+    type              = MultiAppNearestNodeTransfer
+    from_multi_app    = flow
+    source_variable   = T_fluid
+    variable          = T_fluid
+    execute_on        = 'TIMESTEP_END'
+    fixed_meshes      = true
   []
+[]
+# ==============================================================================
+# EXECUTION PARAMETERS
+# ==============================================================================
+[Preconditioning]
+  [SMP]
+    type = SMP
+    full = true
+  []
+[]
+[Executioner]
+  type                  = Eigenvalue
+  solve_type            = PJFNKMO
+  constant_matrices     = true
+  petsc_options_iname   = '-pc_type -pc_hypre_type -ksp_gmres_restart '
+  petsc_options_value   = 'hypre boomeramg 100'
+  line_search           = l2 #none
+
+  # Linear/nonlinear iterations.
+  l_max_its             = 200
+  l_tol                 = 1e-3
+  nl_max_its            = 200
+  nl_rel_tol            = 1e-5
+  nl_abs_tol            = 1e-6
+  fixed_point_max_its   = 50
+  fixed_point_rel_tol   = 1e-5
+  fixed_point_abs_tol   = 1e-6
+  free_power_iterations = 4
 []
 # ==============================================================================
 # POSTPROCESSORS DEBUG AND OUTPUTS
 # ==============================================================================
+[Outputs]
+  file_base  = htr_pm_griffin_ss_out
+  exodus     = true
+  csv        = true
+  perf_graph = true
+  execute_on = 'INITIAL FINAL TIMESTEP_END'
+[]
 [Postprocessors]
-  [max_T_solid]
+  [Tsolid_max]
     type       = ElementExtremeValue
     variable   = T_solid
     execute_on = 'initial timestep_end'
   []
-  [Tsolid_core]
+  [Tsolid_avg]
     type       = ElementAverageValue
     variable   = T_solid
     execute_on = 'initial timestep_end'
   []
-  [Tfluid_core]
+  [Tfluid_avg]
     type       = ElementAverageValue
     variable   = T_fluid
     execute_on = 'initial timestep_end'
@@ -594,7 +631,7 @@ pebble_unloading_rate   = ${fparse pebble_speed * area * 0.61 / pebble_volume}
     coupled_flux_groups = 'sflux_g0 sflux_g1 sflux_g2
                            sflux_g3 sflux_g4 sflux_g5
                            sflux_g6 sflux_g7 sflux_g8'
-    execute_on          = 'transfer timestep_end'
+    execute_on          = 'initial transfer timestep_end'
   []
   # [power_scaling2]
   #   type        = PowerModulateFactor
@@ -606,7 +643,7 @@ pebble_unloading_rate   = ${fparse pebble_speed * area * 0.61 / pebble_volume}
     type        = ElementIntegralVariablePostprocessor
     block       = 'pebble_bed'
     variable    = prompt_power_density
-    execute_on  = 'INITIAL transfer timestep_end'
+    execute_on  = 'initial transfer timestep_end'
   []
   [avg_power_density]
     type        = ElementAverageValue
@@ -618,6 +655,7 @@ pebble_unloading_rate   = ${fparse pebble_speed * area * 0.61 / pebble_volume}
     type        = ElementExtremeValue
     variable    = power_peaking
     value_type  = max
+    execute_on  = 'initial timestep_end'
   []
 
   [decay_heat]
@@ -626,41 +664,4 @@ pebble_unloading_rate   = ${fparse pebble_speed * area * 0.61 / pebble_volume}
     block = 'pebble_bed'
     execute_on = 'INITIAL TIMESTEP_END'
   []
-[]
-# ==============================================================================
-# EXECUTION PARAMETERS
-# ==============================================================================
-[Preconditioning]
-  [SMP]
-    type = SMP
-    full = true
-  []
-[]
-[Executioner]
-  type                  = Eigenvalue
-  solve_type            = PJFNKMO
-  constant_matrices     = true
-  petsc_options_iname   = '-pc_type -pc_hypre_type -ksp_gmres_restart '
-  petsc_options_value   = 'hypre boomeramg 100'
-  line_search           = l2 #none
-  # Linear/nonlinear iterations.
-  l_max_its             = 200
-  l_tol                 = 1e-3
-  nl_max_its            = 200
-  nl_rel_tol            = 1e-5
-  nl_abs_tol            = 1e-6
-  fixed_point_max_its   = 50
-  fixed_point_rel_tol   = 1e-5
-  fixed_point_abs_tol   = 1e-6
-  free_power_iterations = 4
-[]
-# ==============================================================================
-# POSTPROCESSORS DEBUG AND OUTPUTS
-# ==============================================================================
-[Outputs]
-  file_base  = htr_pm_griffin_ss_out
-  exodus     = true
-  csv        = true
-  perf_graph = true
-  execute_on = 'INITIAL FINAL TIMESTEP_END'
 []
