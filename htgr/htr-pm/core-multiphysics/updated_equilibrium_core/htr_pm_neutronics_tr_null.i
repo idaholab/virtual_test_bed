@@ -11,29 +11,13 @@
 total_power             = 250.0e+6  # Total reactor Power (W)
 burnup_group_boundaries = '5.35E+13 1.070E+14 1.604E+14 2.139E+14 2.674E+14 3.209E+14 3.743E+14 4.278E+14 4.818E+14'
 # ==============================================================================
-# parameters describing the reactor geometry
-core_height             = 11.0
-axial_reflector_height  = 3.228
-fuel_radius             = 1.5
-r_streamline_1          = 12.5e-2
-r_streamline_2          = 37.5e-2
-r_streamline_3          = 62.5e-2
-r_streamline_4          = 87.5e-2
-r_streamline_5          = 112.5e-2
-r_streamline_6          = 137.5e-2
-pebble_radius           = 3e-2
-pebble_volume           = ${fparse 4/3*pi * pebble_radius * pebble_radius * pebble_radius}
-residence_time          = 70.5
-pebble_speed            = ${fparse core_height / (residence_time * 3600 * 24)}
-area                    = ${fparse pi * fuel_radius * fuel_radius}
-pebble_unloading_rate   = ${fparse pebble_speed * area * 0.61 / pebble_volume}
-# ==============================================================================
 # GLOBAL PARAMETERS
 # ==============================================================================
 [GlobalParams]
   library_file = '../xsections/HTR-PM_9G-Tnew.xml'
   library_name = 'HTR-PM'
   is_meter     = true
+  plus         = true
 []
 [TransportSystems]
   particle           = neutron
@@ -46,9 +30,15 @@ pebble_unloading_rate   = ${fparse pebble_speed * area * 0.61 / pebble_volume}
     family                       = LAGRANGE
     order                        = FIRST
 	  n_delay_groups               = 6
+    # Note: by default Griffin only assembles the block-diagonal Jacobian
+    #       assembling other jacobians improves preconditioning
+    #       fission is only used in difusion
     assemble_scattering_jacobian = true
     assemble_fission_jacobian    = true
   []
+[]
+[Problem]
+  restart_file_base                     = 'htr_pm_griffin_ss_out_cp/LATEST'
 []
 # ==============================================================================
 # GEOMETRY AND MESH
@@ -168,10 +158,16 @@ pebble_unloading_rate   = ${fparse pebble_speed * area * 0.61 / pebble_volume}
   [porosity]
     family            = MONOMIAL
     order             = CONSTANT
-    initial_condition = 0.39
+    # initial_condition = 0.39 # loaded from file
     block             = 'pebble_bed'
   []
-  [prompt_power_density]
+  [Burnup]
+    order             = CONSTANT
+    family            = MONOMIAL
+    components        = 10
+    outputs           = none
+  []
+  [Burnup_avg]
     order  = CONSTANT
     family = MONOMIAL
   []
@@ -191,14 +187,6 @@ pebble_unloading_rate   = ${fparse pebble_speed * area * 0.61 / pebble_volume}
     order  = CONSTANT
     family = MONOMIAL
   []
-  # [dpden_avg]
-  #   order  = CONSTANT
-  #   family = MONOMIAL
-  # []
-  # [dpden_max]
-  #   order  = CONSTANT
-  #   family = MONOMIAL
-  # []
 []
 [AuxKernels]
   [Tfuel_avg_aux]
@@ -235,35 +223,15 @@ pebble_unloading_rate   = ${fparse pebble_speed * area * 0.61 / pebble_volume}
     value_type             = MAX
     execute_on             = 'INITIAL TIMESTEP_END'
   []
-  # [prompt_power_density_aux]
-  #   type          = VectorReactionRate
-  #   block         = 'pebble_bed'
-  #   scalar_flux   = 'sflux_g0 sflux_g1 sflux_g2 sflux_g3 sflux_g4
-	#                    sflux_g5 sflux_g6 sflux_g7 sflux_g8'
-  #   variable      = prompt_power_density
-  #   cross_section = kappa_sigma_fission
-  #   scale_factor  = power_scaling2
-  #   dummies       = UnscaledTotalPower
-  #   execute_on    = 'INITIAL timestep_end'
-  # []
-  # [isotope_density_aux]
-  #   type                    = ArrayVarBatemanSolve
-  #   variable                = pebble_isotope_density
-  #   dataset                 = ISOXML
-  #   isoxml_data_file        = '../xsections/DRAGON5_DT_DH_295.xml'
-  #   isoxml_lib_name         = 'DRAGON'
-  #   execute_on              = 'TIMESTEP_BEGIN'
-  #   # transmutation parameters
-  #   scalar_flux             = 'sflux_g0 sflux_g1 sflux_g2 sflux_g3 sflux_g4
-	#                              sflux_g5 sflux_g6 sflux_g7 sflux_g8'
-  #   scalar_flux_scaling     = power_scaling #2.0946120E+18
-  #   burnup_group_boundaries = ${burnup_group_boundaries}
-  #   burnup_grid_name        = 'Burnup'
-  #   array_grid_names        = 'Tfuel Tmod'
-  #   array_grid_variables    = 'triso_temperature graphite_temperature'
-  #   library_file            = '../xsections/HTR-PM_9G-Tnew.xml'
-  #   library_name            = 'HTR-PM'
-  # []
+  [Burnup_avg_aux]
+    type                   = PebbleAveragedAux
+    block                  = pebble_bed
+    variable               = Burnup_avg
+    array_variable         = Burnup
+    pebble_volume_fraction = pebble_volume_fraction
+    n_fresh_pebble_types   = 1
+    execute_on             = 'INITIAL TIMESTEP_END'
+  []
   [power_peaking_aux]
     type       = ParsedAux
     block      = 'pebble_bed'
@@ -289,53 +257,6 @@ pebble_unloading_rate   = ${fparse pebble_speed * area * 0.61 / pebble_volume}
     n_fresh_pebble_types   = 1
     execute_on             = 'INITIAL TIMESTEP_END'
   []
-  # [dpden_max_aux]
-  #   type           = ArrayVarExtremeValueAux
-  #   block          = 'pebble_bed'
-  #   variable       = dpden_max
-  #   array_variable = decay_heat_bybg
-  #   value_type     = MAX
-  #   execute_on     = 'INITIAL TIMESTEP_END'
-  # []
-  # [dpden_avg_aux]
-  #   type                   = PebbleAveragedAux
-  #   block                  = 'pebble_bed'
-  #   variable               = dpden_avg
-  #   array_variable         = decay_heat_bybg
-  #   pebble_volume_fraction = pebble_volume_fraction
-  #   n_fresh_pebble_types   = 1
-  #   execute_on             = 'INITIAL TIMESTEP_END'
-  # []
-[]
-[UserObjects]
-  [transport_solution]
-    type             = TransportSolutionVectorFile
-    transport_system = diff
-    writing          = false
-    execute_on       = 'INITIAL'
-    scale_with_keff  = false
-  []
-  [depletion_solution]
-    type        = SolutionVectorFile
-    var         = 'pebble_isotope_density  pebble_volume_fraction   graphite_temperature
-	                      triso_temperature           power_density  partial_power_density '
-    writing     = false
-    execute_on  = 'INITIAL'
-  []
-  [TH_solution]
-    type        = SolutionVectorFile
-    var         = 'T_solid T_fluid'
-    loading_var = 'T_solid T_fluid'
-    writing     = false
-    execute_on  = 'INITIAL'
-  []
-  [init_power_density]
-    type        = SolutionVectorFile
-    var         = 'prompt_power_density  total_pebble_decay_heat'
-    loading_var = 'prompt_power_density  total_pebble_decay_heat'
-    writing     = false
-    execute_on  = 'INITIAL'
-  []
 []
 # ==============================================================================
 # MATERIALS
@@ -351,7 +272,6 @@ pebble_unloading_rate   = ${fparse pebble_speed * area * 0.61 / pebble_volume}
 
   porosity_name                   = porosity
   burnup_group_boundaries         = ${burnup_group_boundaries}
-  # strictness                      = 0
 
   # cross section data
   library_file                    = '../xsections/HTR-PM_9G-Tnew.xml'
@@ -374,25 +294,6 @@ pebble_unloading_rate   = ${fparse pebble_speed * area * 0.61 / pebble_volume}
   track_isotopes                  = '  U235    U236    U238   PU238   PU239   PU240   PU241   PU242   AM241
                                      AM242M   CS135   CS137   XE135   XE136    I131    I135    SR90'
 
-  [DepletionScheme]
-    type                          = ConstantStreamlineEquilibrium
-    pebble_unloading_rate         = ${pebble_unloading_rate}
-    pebble_flow_rate_distribution = '0.027777778 0.083333333 0.138888889 0.194444444 0.25 0.305555556'
-    burnup_limit                  = 4.818E+14
-    major_streamline_axis         = y
-    pebble_diameter               = 0.06
-    # material_ids                  = '1; 1; 1; 1; 1; 1'
-    streamline_points = '${r_streamline_1} ${fparse core_height + axial_reflector_height} 0 ${r_streamline_1} ${axial_reflector_height} 0;
-                         ${r_streamline_2} ${fparse core_height + axial_reflector_height} 0 ${r_streamline_2} ${axial_reflector_height} 0;
-                         ${r_streamline_3} ${fparse core_height + axial_reflector_height} 0 ${r_streamline_3} ${axial_reflector_height} 0;
-                         ${r_streamline_4} ${fparse core_height + axial_reflector_height} 0 ${r_streamline_4} ${axial_reflector_height} 0;
-                         ${r_streamline_5} ${fparse core_height + axial_reflector_height} 0 ${r_streamline_5} ${axial_reflector_height} 0;
-                         ${r_streamline_6} ${fparse core_height + axial_reflector_height} 0 ${r_streamline_6} ${axial_reflector_height} 0'
-    streamline_segment_subdivisions = '20; 20; 20; 20; 20; 20'
-    sweep_tol                       = 1e-7
-    sweep_max_iterations            = 200
-  []
-
   # pebble conduction
   pebble_conduction_input_file                = 'pebble_triso.i'
   pebble_positions_file                       = 'pebble_heat_pos.txt'
@@ -411,7 +312,6 @@ pebble_unloading_rate   = ${fparse pebble_speed * area * 0.61 / pebble_volume}
     block          = 'upper_ref lower_ref'
     grid_names     = 'Tmod'
     grid_variables = 'T_solid'
-    plus           = true
     isotopes       =   'Graphite    U235'
     densities      =  '6.25284E-02  0.0'
     material_id    = 1
@@ -422,7 +322,6 @@ pebble_unloading_rate   = ${fparse pebble_speed * area * 0.61 / pebble_volume}
     block          = 'hot_plenum cold_plenum'
     grid_names     = 'Tmod'
     grid_variables = 'T_solid'
-    plus           = true
     isotopes       =   'Graphite      U235'
     densities      =  '7.14611E-02   0.0'
     material_id    = 1
@@ -432,7 +331,6 @@ pebble_unloading_rate   = ${fparse pebble_speed * area * 0.61 / pebble_volume}
     block          = 'radial_ref carbon_brick'
     grid_names     = 'Tmod'
     grid_variables = 'T_solid'
-    plus           = true
     isotopes       =   'Graphite     U235'
     densities      =  '8.93263E-02  0.0'
     material_id    = 1
@@ -443,7 +341,6 @@ pebble_unloading_rate   = ${fparse pebble_speed * area * 0.61 / pebble_volume}
     block                   = 'cr'
     grid_names              = 'Tmod  Tmod  Tmod'
     grid_variables          = 'T_solid  T_solid  T_solid'
-    plus                    = true
     isotopes                =  '   Graphite   ;      Graphite            B10          B11            C12  ;       Graphite            B10          B11            C12  '
     densities               =  ' 6.4277e-02       6.4277e-02     1.6373e-03   5.9938e-03     1.6004e-02       6.4277e-02     1.6373e-03   5.9938e-03     1.6004e-02   '
     segment_material_ids    = '1   1   1'
@@ -457,7 +354,6 @@ pebble_unloading_rate   = ${fparse pebble_speed * area * 0.61 / pebble_volume}
     block          = 'riser'
     grid_names     = 'Tmod'
     grid_variables = 'T_solid'
-    plus           = true
 	  isotopes       =  'Graphite     U235'
     densities      =  '6.07419E-02   0.0'
     material_id    = 1
@@ -480,8 +376,6 @@ pebble_unloading_rate   = ${fparse pebble_speed * area * 0.61 / pebble_volume}
                        0 0 0 0 0 0 0 1.85321E+00 0
                        0 0 0 0 0 0 0 0 1.55236E+00'
     diffusion_coefficient_scheme = user_supplied
-    # TODO: check
-    # plus = true
   []
 []
 
@@ -529,7 +423,6 @@ pebble_unloading_rate   = ${fparse pebble_speed * area * 0.61 / pebble_volume}
     variable          = T_solid
     execute_on        = 'TIMESTEP_END'
     fixed_meshes      = true
-    # relaxation_factor = '0.5 0.5'
   []
   [T_fluid_from_flow]
     type              = MultiAppNearestNodeTransfer
@@ -562,9 +455,10 @@ pebble_unloading_rate   = ${fparse pebble_speed * area * 0.61 / pebble_volume}
   nl_max_its            = 200
   nl_rel_tol            = 1e-5
   nl_abs_tol            = 1e-6
-  fixed_point_max_its   = 50
+  fixed_point_max_its   = 30
   fixed_point_rel_tol   = 1e-5
   fixed_point_abs_tol   = 1e-6
+  accept_on_max_fixed_point_iteration = true
 
   # time stepping
   [TimeStepper]
@@ -640,6 +534,13 @@ pebble_unloading_rate   = ${fparse pebble_speed * area * 0.61 / pebble_volume}
     value_type = max
     execute_on = 'initial timestep_end'
   []
+  [Burnup_avg]
+    type       = ElementAverageValue
+    block      = 'pebble_bed'
+    variable   = Burnup_avg
+    execute_on = 'initial timestep_end'
+  []
+
   [UnscaledTotalPower]
     type                = FluxRxnIntegral
     block               = 'pebble_bed'
@@ -649,12 +550,6 @@ pebble_unloading_rate   = ${fparse pebble_speed * area * 0.61 / pebble_volume}
                            sflux_g6 sflux_g7 sflux_g8'
     execute_on          = 'initial transfer timestep_end'
   []
-  # [power_scaling2]
-  #   type        = PowerModulateFactor
-  #   power_pp    = UnscaledTotalPower
-  #   rated_power = 2.344921322E+08
-  #   execute_on  = 'initial'
-  # []
   [prompt_power]
     type        = ElementIntegralVariablePostprocessor
     block       = 'pebble_bed'

@@ -248,58 +248,6 @@ burnup_group_boundaries = '5.35E+13 1.070E+14 1.604E+14 2.139E+14 2.674E+14 3.20
     variable = del_t
     function = del_t_function
   []
-  # [prompt_power_density_aux]
-  #   type          = VectorReactionRate
-  #   block         = 'pebble_bed'
-  #   scalar_flux   = 'sflux_g0 sflux_g1 sflux_g2 sflux_g3 sflux_g4
-	#                    sflux_g5 sflux_g6 sflux_g7 sflux_g8'
-  #   variable      = prompt_power_density
-  #   cross_section = kappa_sigma_fission
-  #   scale_factor  = power_scaling2
-  #   dummies       = UnscaledTotalPower
-  #   execute_on    = 'INITIAL timestep_end'
-  # []
-  # [isotope_density_aux]
-  #   type                    = ArrayVarBatemanSolve
-  #   variable                = pebble_isotope_density
-  #   dataset                 = ISOXML
-  #   isoxml_data_file        = '../xsections/DRAGON5_DT_DH_295.xml'
-  #   isoxml_lib_name         = 'DRAGON'
-  #   execute_on              = 'TIMESTEP_BEGIN'
-  #   # transmutation parameters
-  #   scalar_flux             = 'sflux_g0 sflux_g1 sflux_g2 sflux_g3 sflux_g4
-	#                              sflux_g5 sflux_g6 sflux_g7 sflux_g8'
-  #   scalar_flux_scaling     = power_scaling #2.0946120E+18
-  #   burnup_group_boundaries = ${burnup_group_boundaries}
-  #   burnup_grid_name        = 'Burnup'
-  #   array_grid_names        = 'Tfuel Tmod'
-  #   array_grid_variables    = 'triso_temperature graphite_temperature'
-  #   library_file            = '../xsections/HTR-PM_9G-Tnew.xml'
-  #   library_name            = 'HTR-PM'
-  # []
-  # [decay_heat_bybg_aux]
-  #   type                   = ArrayVarIsotopeDecayHeatAux
-  #   variable               = decay_heat_bybg
-  #   isotopic_composition   = pebble_isotope_density
-  #   dataset                = ISOXML
-  #   isoxml_data_file       = '../xsections/DRAGON5_DT_DH_295.xml'
-  #   isoxml_lib_name        = 'DRAGON'
-  #   execute_on             = 'INITIAL timestep_end'
-  # []
-  # [decay_heat_aux]
-  #   type                   = ArrayVarReductionAux
-  #   variable               = decay_heat
-  #   array_variable         = decay_heat_bybg
-  #   execute_on             = 'INITIAL timestep_end'
-  # []
-  # [power_density2_aux]
-  #   type       = ParsedAux
-  #   block      = 'pebble_bed'
-  #   variable   = power_density2
-  #   args       = 'prompt_power_density decay_heat'
-  #   function   = 'prompt_power_density + decay_heat'
-  #   execute_on = 'INITIAL timestep_end'
-  # []
   [power_peaking]
     type       = ParsedAux
     block      = 'pebble_bed'
@@ -325,23 +273,6 @@ burnup_group_boundaries = '5.35E+13 1.070E+14 1.604E+14 2.139E+14 2.674E+14 3.20
     n_fresh_pebble_types   = 1
     execute_on             = 'INITIAL TIMESTEP_END'
   []
-  # [dpden_max_aux]
-  #   type           = ArrayVarExtremeValueAux
-  #   block          = 'pebble_bed'
-  #   variable       = dpden_max
-  #   array_variable = decay_heat_bybg
-  #   value_type     = MAX
-  #   execute_on     = 'INITIAL TIMESTEP_END'
-  # []
-  # [dpden_avg_aux]
-  #   type                   = PebbleAveragedAux
-  #   block                  = 'pebble_bed'
-  #   variable               = dpden_avg
-  #   array_variable         = decay_heat_bybg
-  #   pebble_volume_fraction = pebble_volume_fraction
-  #   n_fresh_pebble_types   = 1
-  #   execute_on             = 'INITIAL TIMESTEP_END'
-  # []
 []
 [UserObjects]
   [transport_solution]
@@ -408,25 +339,6 @@ burnup_group_boundaries = '5.35E+13 1.070E+14 1.604E+14 2.139E+14 2.674E+14 3.20
   fresh_pebble_compositions       = 'fresh_pebble'
   track_isotopes                  = '  U235    U236    U238   PU238   PU239   PU240   PU241   PU242   AM241
                                      AM242M   CS135   CS137   XE135   XE136    I131    I135    SR90'
-
-  [DepletionScheme]
-    type                          = ConstantStreamlineEquilibrium
-    pebble_unloading_rate         = ${pebble_unloading_rate}
-    pebble_flow_rate_distribution = '0.027777778 0.083333333 0.138888889 0.194444444 0.25 0.305555556'
-    burnup_limit                  = 4.818E+14
-    major_streamline_axis         = y
-    pebble_diameter               = 0.06
-    # material_ids                  = '1; 1; 1; 1; 1; 1'
-    streamline_points = '${r_streamline_1} ${fparse core_height + axial_reflector_height} 0 ${r_streamline_1} ${axial_reflector_height} 0;
-                         ${r_streamline_2} ${fparse core_height + axial_reflector_height} 0 ${r_streamline_2} ${axial_reflector_height} 0;
-                         ${r_streamline_3} ${fparse core_height + axial_reflector_height} 0 ${r_streamline_3} ${axial_reflector_height} 0;
-                         ${r_streamline_4} ${fparse core_height + axial_reflector_height} 0 ${r_streamline_4} ${axial_reflector_height} 0;
-                         ${r_streamline_5} ${fparse core_height + axial_reflector_height} 0 ${r_streamline_5} ${axial_reflector_height} 0;
-                         ${r_streamline_6} ${fparse core_height + axial_reflector_height} 0 ${r_streamline_6} ${axial_reflector_height} 0'
-    streamline_segment_subdivisions = '20; 20; 20; 20; 20; 20'
-    sweep_tol                       = 1e-7
-    sweep_max_iterations            = 200
-  []
 
   # pebble conduction
   pebble_conduction_input_file                = 'pebble_triso.i'
@@ -548,86 +460,6 @@ burnup_group_boundaries = '5.35E+13 1.070E+14 1.604E+14 2.139E+14 2.674E+14 3.20
     positions                    = '0 0 0'
     execute_on                   = 'TIMESTEP_END'
   []
-  [pebble0]
-    type                         = FullSolveMultiApp
-    input_files                  = 'pebble_triso.i'
-    keep_solution_during_restore = true
-    positions_file               = 'pebble_heat_pos.txt'
-    execute_on                   = 'TIMESTEP_END'
-    # max_procs_per_app = 4
-  []
-  [pebble1]
-    type                         = FullSolveMultiApp
-    input_files                  = 'pebble_triso.i'
-    keep_solution_during_restore = true
-    positions_file               = 'pebble_heat_pos.txt'
-    execute_on                   = 'TIMESTEP_END'
-    # max_procs_per_app = 4
-  []
-  [pebble2]
-    type                         = FullSolveMultiApp
-    input_files                  = 'pebble_triso.i'
-    keep_solution_during_restore = true
-    positions_file               = 'pebble_heat_pos.txt'
-    execute_on                   = 'TIMESTEP_END'
-    # max_procs_per_app = 4
-  []
-  [pebble3]
-    type                         = FullSolveMultiApp
-    input_files                  = 'pebble_triso.i'
-    keep_solution_during_restore = true
-    positions_file               = 'pebble_heat_pos.txt'
-    execute_on                   = 'TIMESTEP_END'
-    # max_procs_per_app = 4
-  []
-  [pebble4]
-    type                         = FullSolveMultiApp
-    input_files                  = 'pebble_triso.i'
-    keep_solution_during_restore = true
-    positions_file               = 'pebble_heat_pos.txt'
-    execute_on                   = 'TIMESTEP_END'
-    # max_procs_per_app = 4
-  []
-  [pebble5]
-    type                         = FullSolveMultiApp
-    input_files                  = 'pebble_triso.i'
-    keep_solution_during_restore = true
-    positions_file               = 'pebble_heat_pos.txt'
-    execute_on                   = 'TIMESTEP_END'
-    # max_procs_per_app = 4
-  []
-  [pebble6]
-    type                         = FullSolveMultiApp
-    input_files                  = 'pebble_triso.i'
-    keep_solution_during_restore = true
-    positions_file               = 'pebble_heat_pos.txt'
-    execute_on                   = 'TIMESTEP_END'
-    # max_procs_per_app = 4
-  []
-  [pebble7]
-    type                         = FullSolveMultiApp
-    input_files                  = 'pebble_triso.i'
-    keep_solution_during_restore = true
-    positions_file               = 'pebble_heat_pos.txt'
-    execute_on                   = 'TIMESTEP_END'
-    # max_procs_per_app = 4
-  []
-  [pebble8]
-    type                         = FullSolveMultiApp
-    input_files                  = 'pebble_triso.i'
-    keep_solution_during_restore = true
-    positions_file               = 'pebble_heat_pos.txt'
-    execute_on                   = 'TIMESTEP_END'
-    # max_procs_per_app = 4
-  []
-  [pebble9]
-    type                         = FullSolveMultiApp
-    input_files                  = 'pebble_triso.i'
-    keep_solution_during_restore = true
-    positions_file               = 'pebble_heat_pos.txt'
-    execute_on                   = 'TIMESTEP_END'
-    # max_procs_per_app = 4
-  []
 []
 [Transfers]
   [power_density_to_flow]
@@ -645,7 +477,6 @@ burnup_group_boundaries = '5.35E+13 1.070E+14 1.604E+14 2.139E+14 2.674E+14 3.20
     variable          = T_solid
     execute_on        = 'TIMESTEP_END'
     fixed_meshes      = true
-	# relaxation_factor = '0.5 0.5'
   []
   [T_fluid_from_flow]
     type              = MultiAppNearestNodeTransfer
@@ -654,279 +485,6 @@ burnup_group_boundaries = '5.35E+13 1.070E+14 1.604E+14 2.139E+14 2.674E+14 3.20
     variable          = T_fluid
     execute_on        = 'TIMESTEP_END'
     fixed_meshes      = true
-  []
-  [pebble_send_Tsolid0]
-    type              = MultiAppVariableValueSamplePostprocessorTransfer
-    to_multi_app      = pebble0
-    postprocessor     = T_surface
-    source_variable   = T_solid
-  []
-  [pebble_send_Tsolid1]
-    type              = MultiAppVariableValueSamplePostprocessorTransfer
-    to_multi_app      = pebble1
-    postprocessor     = T_surface
-    source_variable   = T_solid
-  []
-  [pebble_send_Tsolid2]
-    type              = MultiAppVariableValueSamplePostprocessorTransfer
-    to_multi_app      = pebble2
-    postprocessor     = T_surface
-    source_variable   = T_solid
-  []
-  [pebble_send_Tsolid3]
-    type              = MultiAppVariableValueSamplePostprocessorTransfer
-    to_multi_app      = pebble3
-    postprocessor     = T_surface
-    source_variable   = T_solid
-  []
-  [pebble_send_Tsolid4]
-    type              = MultiAppVariableValueSamplePostprocessorTransfer
-    to_multi_app      = pebble4
-    postprocessor     = T_surface
-    source_variable   = T_solid
-  []
-  [pebble_send_Tsolid5]
-    type              = MultiAppVariableValueSamplePostprocessorTransfer
-    to_multi_app      = pebble5
-    postprocessor     = T_surface
-    source_variable   = T_solid
-  []
-  [pebble_send_Tsolid6]
-    type              = MultiAppVariableValueSamplePostprocessorTransfer
-    to_multi_app      = pebble6
-    postprocessor     = T_surface
-    source_variable   = T_solid
-  []
-  [pebble_send_Tsolid7]
-    type              = MultiAppVariableValueSamplePostprocessorTransfer
-    to_multi_app      = pebble7
-    postprocessor     = T_surface
-    source_variable   = T_solid
-  []
-  [pebble_send_Tsolid8]
-    type              = MultiAppVariableValueSamplePostprocessorTransfer
-    to_multi_app      = pebble8
-    postprocessor     = T_surface
-    source_variable   = T_solid
-  []
-  [pebble_send_Tsolid9]
-    type              = MultiAppVariableValueSamplePostprocessorTransfer
-    to_multi_app      = pebble9
-    postprocessor     = T_surface
-    source_variable   = T_solid
-  []
-  # TO Pebble Partial power density.
-  [pebble_send_ppd0]
-    type                      = MultiAppVariableValueSamplePostprocessorTransfer
-    to_multi_app              = pebble0
-    postprocessor             = pebble_power_density
-    source_variable           = partial_power_density
-    source_variable_component = 0
-  []
-  [pebble_send_ppd1]
-    type                      = MultiAppVariableValueSamplePostprocessorTransfer
-    to_multi_app              = pebble1
-    postprocessor             = pebble_power_density
-    source_variable           = partial_power_density
-    source_variable_component = 1
-  []
-  [pebble_send_ppd2]
-    type                      = MultiAppVariableValueSamplePostprocessorTransfer
-    to_multi_app              = pebble2
-    postprocessor             = pebble_power_density
-    source_variable           = partial_power_density
-    source_variable_component = 2
-  []
-  [pebble_send_ppd3]
-    type                      = MultiAppVariableValueSamplePostprocessorTransfer
-    to_multi_app              = pebble3
-    postprocessor             = pebble_power_density
-    source_variable           = partial_power_density
-    source_variable_component = 3
-  []
-  [pebble_send_ppd4]
-    type                      = MultiAppVariableValueSamplePostprocessorTransfer
-    to_multi_app              = pebble4
-    postprocessor             = pebble_power_density
-    source_variable           = partial_power_density
-    source_variable_component = 4
-  []
-  [pebble_send_ppd5]
-    type                      = MultiAppVariableValueSamplePostprocessorTransfer
-    to_multi_app              = pebble5
-    postprocessor             = pebble_power_density
-    source_variable           = partial_power_density
-    source_variable_component = 5
-  []
-  [pebble_send_ppd6]
-    type                      = MultiAppVariableValueSamplePostprocessorTransfer
-    to_multi_app              = pebble6
-    postprocessor             = pebble_power_density
-    source_variable           = partial_power_density
-    source_variable_component = 6
-  []
-  [pebble_send_ppd7]
-    type                      = MultiAppVariableValueSamplePostprocessorTransfer
-    to_multi_app              = pebble7
-    postprocessor             = pebble_power_density
-    source_variable           = partial_power_density
-    source_variable_component = 7
-  []
-  [pebble_send_ppd8]
-    type                      = MultiAppVariableValueSamplePostprocessorTransfer
-    to_multi_app              = pebble8
-    postprocessor             = pebble_power_density
-    source_variable           = partial_power_density
-    source_variable_component = 8
-  []
-  [pebble_send_ppd9]
-    type                      = MultiAppVariableValueSamplePostprocessorTransfer
-    to_multi_app              = pebble9
-    postprocessor             = pebble_power_density
-    source_variable           = partial_power_density
-    source_variable_component = 9
-  []
-  # FROM Pebble T_mod (Pebble average temperature)
-  [pebble_receive_T_mod_0]
-    type                      = MultiAppVariableValueSamplePostprocessorTransfer
-    from_multi_app            = pebble0
-    postprocessor             = T_mod
-    source_variable           = graphite_temperature
-    source_variable_component = 0
-  []
-  [pebble_receive_T_mod_1]
-    type                      = MultiAppVariableValueSamplePostprocessorTransfer
-    from_multi_app            = pebble1
-    postprocessor             = T_mod
-    source_variable           = graphite_temperature
-    source_variable_component = 1
-  []
-  [pebble_receive_T_mod_2]
-    type                      = MultiAppVariableValueSamplePostprocessorTransfer
-    from_multi_app            = pebble2
-    postprocessor             = T_mod
-    source_variable           = graphite_temperature
-    source_variable_component = 2
-  []
-  [pebble_receive_T_mod_3]
-    type                      = MultiAppVariableValueSamplePostprocessorTransfer
-    from_multi_app            = pebble3
-    postprocessor             = T_mod
-    source_variable           = graphite_temperature
-    source_variable_component = 3
-  []
-  [pebble_receive_T_mod_4]
-    type                      = MultiAppVariableValueSamplePostprocessorTransfer
-    from_multi_app            = pebble4
-    postprocessor             = T_mod
-    source_variable           = graphite_temperature
-    source_variable_component = 4
-  []
-  [pebble_receive_T_mod_5]
-    type                      = MultiAppVariableValueSamplePostprocessorTransfer
-    from_multi_app            = pebble5
-    postprocessor             = T_mod
-    source_variable           = graphite_temperature
-    source_variable_component = 5
-  []
-  [pebble_receive_T_mod_6]
-    type                      = MultiAppVariableValueSamplePostprocessorTransfer
-    from_multi_app            = pebble6
-    postprocessor             = T_mod
-    source_variable           = graphite_temperature
-    source_variable_component = 6
-  []
-  [pebble_receive_T_mod_7]
-    type                      = MultiAppVariableValueSamplePostprocessorTransfer
-    from_multi_app            = pebble7
-    postprocessor             = T_mod
-    source_variable           = graphite_temperature
-    source_variable_component = 7
-  []
-  [pebble_receive_T_mod_8]
-    type                      = MultiAppVariableValueSamplePostprocessorTransfer
-    from_multi_app            = pebble8
-    postprocessor             = T_mod
-    source_variable           = graphite_temperature
-    source_variable_component = 8
-  []
-  [pebble_receive_T_mod_9]
-    type                      = MultiAppVariableValueSamplePostprocessorTransfer
-    from_multi_app            = pebble9
-    postprocessor             = T_mod
-    source_variable           = graphite_temperature
-    source_variable_component = 9
-  []
-  # FROM Pebble T_fuel (TRISO average temperature)
-  [pebble_receive_T_fuel_0]
-    type                      = MultiAppVariableValueSamplePostprocessorTransfer
-    from_multi_app            = pebble0
-    postprocessor             = T_fuel
-    source_variable           = triso_temperature
-    source_variable_component = 0
-  []
-  [pebble_receive_T_fuel_1]
-    type                      = MultiAppVariableValueSamplePostprocessorTransfer
-    from_multi_app            = pebble1
-    postprocessor             = T_fuel
-    source_variable           = triso_temperature
-    source_variable_component = 1
-  []
-  [pebble_receive_T_fuel_2]
-    type                      = MultiAppVariableValueSamplePostprocessorTransfer
-    from_multi_app            = pebble2
-    postprocessor             = T_fuel
-    source_variable           = triso_temperature
-    source_variable_component = 2
-  []
-  [pebble_receive_T_fuel_3]
-    type                      = MultiAppVariableValueSamplePostprocessorTransfer
-    from_multi_app            = pebble3
-    postprocessor             = T_fuel
-    source_variable           = triso_temperature
-    source_variable_component = 3
-  []
-  [pebble_receive_T_fuel_4]
-    type                      = MultiAppVariableValueSamplePostprocessorTransfer
-    from_multi_app            = pebble4
-    postprocessor             = T_fuel
-    source_variable           = triso_temperature
-    source_variable_component = 4
-  []
-  [pebble_receive_T_fuel_5]
-    type                      = MultiAppVariableValueSamplePostprocessorTransfer
-    from_multi_app            = pebble5
-    postprocessor             = T_fuel
-    source_variable           = triso_temperature
-    source_variable_component = 5
-  []
-  [pebble_receive_T_fuel_6]
-    type                      = MultiAppVariableValueSamplePostprocessorTransfer
-    from_multi_app            = pebble6
-    postprocessor             = T_fuel
-    source_variable           = triso_temperature
-    source_variable_component = 6
-  []
-  [pebble_receive_T_fuel_7]
-    type                      = MultiAppVariableValueSamplePostprocessorTransfer
-    from_multi_app            = pebble7
-    postprocessor             = T_fuel
-    source_variable           = triso_temperature
-    source_variable_component = 7
-  []
-  [pebble_receive_T_fuel_8]
-    type                      = MultiAppVariableValueSamplePostprocessorTransfer
-    from_multi_app            = pebble8
-    postprocessor             = T_fuel
-    source_variable           = triso_temperature
-    source_variable_component = 8
-  []
-  [pebble_receive_T_fuel_9]
-    type                      = MultiAppVariableValueSamplePostprocessorTransfer
-    from_multi_app            = pebble9
-    postprocessor             = T_fuel
-    source_variable           = triso_temperature
-    source_variable_component = 9
   []
 []
 # ==============================================================================
@@ -940,22 +498,11 @@ burnup_group_boundaries = '5.35E+13 1.070E+14 1.604E+14 2.139E+14 2.674E+14 3.20
 []
 [Executioner]
   type = Transient
+
+  # solver parameters
   solve_type = NEWTON
   petsc_options_iname = '-pc_type -pc_hypre_type -ksp_gmres_restart '
   petsc_options_value = 'hypre boomeramg 100'
-
-  start_time = 0
-  [TimeStepper]
-    type = IterationAdaptiveDT
-    dt = 0.05
-    timestep_limiting_postprocessor = dt_max_pp
-    optimal_iterations = 10
-    iteration_window = 2
-    growth_factor = 2
-    cutback_factor = 0.5
-  []
-  end_time = 6.0e5
-  auto_advance = true
   line_search = l2 #none
   # Linear/nonlinear iterations.
   l_max_its = 200
@@ -966,6 +513,20 @@ burnup_group_boundaries = '5.35E+13 1.070E+14 1.604E+14 2.139E+14 2.674E+14 3.20
   fixed_point_max_its = 50
   fixed_point_rel_tol = 1e-5
   fixed_point_abs_tol = 1e-6
+
+  # time stepping
+  start_time = 0
+  end_time = 6.0e5
+  auto_advance = true
+  [TimeStepper]
+    type = IterationAdaptiveDT
+    dt = 0.05
+    timestep_limiting_postprocessor = dt_max_pp
+    optimal_iterations = 10
+    iteration_window = 2
+    growth_factor = 2
+    cutback_factor = 0.5
+  []
 []
 # ==============================================================================
 # POSTPROCESSORS DEBUG AND OUTPUTS
@@ -1032,12 +593,6 @@ burnup_group_boundaries = '5.35E+13 1.070E+14 1.604E+14 2.139E+14 2.674E+14 3.20
                            sflux_g6 sflux_g7 sflux_g8'
     execute_on          = 'initial'
   []
-  [power_scaling2]
-    type        = PowerModulateFactor
-    power_pp    = UnscaledTotalPower
-    rated_power = 2.344921322E+08 #2.344934400E+08 #2.33935E+08 # Power * (1-DHF_tot)
-    execute_on  = 'initial'
-  []
   [prompt_power]
     type        = ElementIntegralVariablePostprocessor
     block       = 'pebble_bed'
@@ -1049,18 +604,6 @@ burnup_group_boundaries = '5.35E+13 1.070E+14 1.604E+14 2.139E+14 2.674E+14 3.20
     variable = total_pebble_decay_heat
     block = 'pebble_bed'
     execute_on = 'INITIAL TIMESTEP_END'
-  []
-  [decay_heat2]
-    type = ElementIntegralVariablePostprocessor
-    variable = decay_heat
-    block = 'pebble_bed'
-    execute_on = 'INITIAL TIMESTEP_END'
-  []
-  [total_power2]
-    type        = ElementIntegralVariablePostprocessor
-    block       = 'pebble_bed'
-    variable    = power_density2
-	  execute_on  = 'initial timestep_end'
   []
   [power_peak]
     type        = ElementExtremeValue

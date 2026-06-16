@@ -34,6 +34,7 @@ pebble_unloading_rate   = ${fparse pebble_speed * area * 0.61 / pebble_volume}
   library_file = '../xsections/HTR-PM_9G-Tnew.xml'
   library_name = 'HTR-PM'
   is_meter     = true
+  plus         = true
 []
 [TransportSystems]
   particle           = neutron
@@ -179,6 +180,7 @@ pebble_unloading_rate   = ${fparse pebble_speed * area * 0.61 / pebble_volume}
     initial_condition = 0.39
     block             = 'pebble_bed'
   []
+  # Prompt power density is only added automatically for transients
   [prompt_power_density]
     order  = CONSTANT
     family = MONOMIAL
@@ -241,17 +243,17 @@ pebble_unloading_rate   = ${fparse pebble_speed * area * 0.61 / pebble_volume}
     execute_on             = 'INITIAL TIMESTEP_END'
   []
 
-  # [prompt_power_density_aux]
-  #   type                   = VectorReactionRate
-  #   block                  = 'pebble_bed'
-  #   scalar_flux            = 'sflux_g0 sflux_g1 sflux_g2 sflux_g3 sflux_g4
-	#                             sflux_g5 sflux_g6 sflux_g7 sflux_g8'
-  #   variable               = prompt_power_density
-  #   cross_section          = kappa_sigma_fission
-  #   scale_factor           = power_scaling2
-  #   dummies                = UnscaledTotalPower
-  #   execute_on             = 'INITIAL timestep_end'
-  # []
+  [prompt_power_density_aux]
+    type                   = VectorReactionRate
+    block                  = 'pebble_bed'
+    scalar_flux            = 'sflux_g0 sflux_g1 sflux_g2 sflux_g3 sflux_g4
+	                            sflux_g5 sflux_g6 sflux_g7 sflux_g8'
+    variable               = prompt_power_density
+    cross_section          = kappa_sigma_fission
+    scale_factor           = power_scaling
+    dummies                = UnscaledTotalPower
+    execute_on             = 'INITIAL timestep_end'
+  []
 
   [pden_max_aux]
     type           = ArrayVarExtremeValueAux
@@ -280,61 +282,62 @@ pebble_unloading_rate   = ${fparse pebble_speed * area * 0.61 / pebble_volume}
   []
 []
 
-[UserObjects]
-  [power_map]
-    type        = VariableCartesianCoreMap
-    variables   = 'power_density'
-    block       = pebble_bed
-    execute_on  = 'FINAL'
-    output_in   = 'power_ss.out'
-  []
-  [isotopic_map]
-    type      = VariableCartesianCoreMap
-	  variables = ' isotope_density_U235    isotope_density_U236   isotope_density_U238  isotope_density_PU238
-                 isotope_density_PU239   isotope_density_PU240  isotope_density_PU241  isotope_density_PU242
-                 isotope_density_AM241  isotope_density_AM242M  isotope_density_CS135  isotope_density_CS137
-                 isotope_density_XE135   isotope_density_XE136   isotope_density_I131   isotope_density_I135
-                 isotope_density_SR90'
-    block     = pebble_bed
-    execute_on= 'FINAL'
-    output_in = 'isotopics_ss.out'
-  []
-  [burnup_map]
-    type       = VariableCartesianCoreMap
-    variables  = 'Burnup_avg'
-    block      = pebble_bed
-    execute_on = 'FINAL'
-    output_in  = 'burnup_ss.out'
-  []
-  [transport_solution]
-    type             = TransportSolutionVectorFile
-    transport_system = diff
-    writing          = true
-    execute_on       = 'FINAL'
-  []
-  [depletion_solution]
-    type       = SolutionVectorFile
-    var        = 'pebble_isotope_density  pebble_volume_fraction   graphite_temperature
-	                     triso_temperature           power_density  partial_power_density
-                         sflux_g0         sflux_g1        sflux_g2
-                         sflux_g3         sflux_g4        sflux_g5
-                         sflux_g6         sflux_g7        sflux_g8'
-    writing    = true
-    execute_on = 'FINAL'
-  []
-  [TH_solution]
-    type       = SolutionVectorFile
-    var        = 'T_solid T_fluid'
-    writing    = true
-    execute_on = 'FINAL'
-  []
-  [init_power_density]
-    type       = SolutionVectorFile
-    var        = 'prompt_power_density  total_pebble_decay_heat'
-    writing    = true
-    execute_on = 'FINAL'
-  []
-[]
+# These objects were used for manual restart
+# [UserObjects]
+#   [power_map]
+#     type        = VariableCartesianCoreMap
+#     variables   = 'power_density'
+#     block       = pebble_bed
+#     execute_on  = 'FINAL'
+#     output_in   = 'power_ss.out'
+#   []
+#   [isotopic_map]
+#     type      = VariableCartesianCoreMap
+# 	  variables = ' isotope_density_U235    isotope_density_U236   isotope_density_U238  isotope_density_PU238
+#                  isotope_density_PU239   isotope_density_PU240  isotope_density_PU241  isotope_density_PU242
+#                  isotope_density_AM241  isotope_density_AM242M  isotope_density_CS135  isotope_density_CS137
+#                  isotope_density_XE135   isotope_density_XE136   isotope_density_I131   isotope_density_I135
+#                  isotope_density_SR90'
+#     block     = pebble_bed
+#     execute_on= 'FINAL'
+#     output_in = 'isotopics_ss.out'
+#   []
+#   [burnup_map]
+#     type       = VariableCartesianCoreMap
+#     variables  = 'Burnup_avg'
+#     block      = pebble_bed
+#     execute_on = 'FINAL'
+#     output_in  = 'burnup_ss.out'
+#   []
+#   [transport_solution]
+#     type             = TransportSolutionVectorFile
+#     transport_system = diff
+#     writing          = true
+#     execute_on       = 'FINAL'
+#   []
+#   [depletion_solution]
+#     type       = SolutionVectorFile
+#     var        = 'pebble_isotope_density  pebble_volume_fraction   graphite_temperature
+# 	                     triso_temperature           power_density  partial_power_density
+#                          sflux_g0         sflux_g1        sflux_g2
+#                          sflux_g3         sflux_g4        sflux_g5
+#                          sflux_g6         sflux_g7        sflux_g8'
+#     writing    = true
+#     execute_on = 'FINAL'
+#   []
+#   [TH_solution]
+#     type       = SolutionVectorFile
+#     var        = 'T_solid T_fluid'
+#     writing    = true
+#     execute_on = 'FINAL'
+#   []
+#   [init_power_density]
+#     type       = SolutionVectorFile
+#     var        = 'prompt_power_density  total_pebble_decay_heat'
+#     writing    = true
+#     execute_on = 'FINAL'
+#   []
+# []
 # ==============================================================================
 # MATERIALS
 # ==============================================================================
@@ -348,7 +351,6 @@ pebble_unloading_rate   = ${fparse pebble_speed * area * 0.61 / pebble_volume}
 
   porosity_name                   = porosity
   burnup_group_boundaries         = ${burnup_group_boundaries}
-  # strictness                      = 0
 
   # cross section data
   library_file                    = '../xsections/HTR-PM_9G-Tnew.xml'
@@ -370,6 +372,7 @@ pebble_unloading_rate   = ${fparse pebble_speed * area * 0.61 / pebble_volume}
   fresh_pebble_compositions       = 'fresh_pebble'
   track_isotopes                  = '  U235    U236    U238   PU238   PU239   PU240   PU241   PU242   AM241
                                      AM242M   CS135   CS137   XE135   XE136    I131    I135    SR90'
+  output_densities_to_exodus        = false
 
   [DepletionScheme]
     type                          = ConstantStreamlineEquilibrium
@@ -378,7 +381,6 @@ pebble_unloading_rate   = ${fparse pebble_speed * area * 0.61 / pebble_volume}
     burnup_limit                  = 4.818E+14
     major_streamline_axis         = y
     pebble_diameter               = 0.06
-    # material_ids                  = '1; 1; 1; 1; 1; 1'
     streamline_points = '${r_streamline_1} ${fparse core_height + axial_reflector_height} 0 ${r_streamline_1} ${axial_reflector_height} 0;
                          ${r_streamline_2} ${fparse core_height + axial_reflector_height} 0 ${r_streamline_2} ${axial_reflector_height} 0;
                          ${r_streamline_3} ${fparse core_height + axial_reflector_height} 0 ${r_streamline_3} ${axial_reflector_height} 0;
@@ -391,7 +393,7 @@ pebble_unloading_rate   = ${fparse pebble_speed * area * 0.61 / pebble_volume}
   []
 
   # pebble conduction
-  pebble_conduction_input_file                = 'pebble_triso.i'
+  pebble_conduction_input_file                = 'pebble_triso_ss.i'
   pebble_positions_file                       = 'pebble_heat_pos.txt'
   surface_temperature_sub_app_postprocessor   = T_surface
   surface_temperature_main_app_variable       = T_solid
@@ -408,7 +410,6 @@ pebble_unloading_rate   = ${fparse pebble_speed * area * 0.61 / pebble_volume}
     block          = 'upper_ref lower_ref'
     grid_names     = 'Tmod'
     grid_variables = 'T_solid'
-    plus           = true
     isotopes       =   'Graphite    U235'
     densities      =  '6.25284E-02  0.0'
     material_id    = 1
@@ -419,7 +420,6 @@ pebble_unloading_rate   = ${fparse pebble_speed * area * 0.61 / pebble_volume}
     block          = 'hot_plenum cold_plenum'
     grid_names     = 'Tmod'
     grid_variables = 'T_solid'
-    plus           = true
     isotopes       =   'Graphite      U235'
     densities      =  '7.14611E-02   0.0'
     material_id    = 1
@@ -429,7 +429,6 @@ pebble_unloading_rate   = ${fparse pebble_speed * area * 0.61 / pebble_volume}
     block          = 'radial_ref carbon_brick'
     grid_names     = 'Tmod'
     grid_variables = 'T_solid'
-    plus           = true
     isotopes       =   'Graphite     U235'
     densities      =  '8.93263E-02  0.0'
     material_id    = 1
@@ -440,7 +439,6 @@ pebble_unloading_rate   = ${fparse pebble_speed * area * 0.61 / pebble_volume}
     block                   = 'cr'
     grid_names              = 'Tmod  Tmod  Tmod'
     grid_variables          = 'T_solid  T_solid  T_solid'
-    plus                    = true
     isotopes                =  '   Graphite   ;      Graphite            B10          B11            C12  ;       Graphite            B10          B11            C12  '
     densities               =  ' 6.4277e-02       6.4277e-02     1.6373e-03   5.9938e-03     1.6004e-02       6.4277e-02     1.6373e-03   5.9938e-03     1.6004e-02   '
     segment_material_ids    = '1   1   1'
@@ -454,7 +452,6 @@ pebble_unloading_rate   = ${fparse pebble_speed * area * 0.61 / pebble_volume}
     block          = 'riser'
     grid_names     = 'Tmod'
     grid_variables = 'T_solid'
-    plus           = true
 	  isotopes       =  'Graphite     U235'
     densities      =  '6.07419E-02   0.0'
     material_id    = 1
@@ -476,7 +473,6 @@ pebble_unloading_rate   = ${fparse pebble_speed * area * 0.61 / pebble_volume}
                        0 0 0 0 0 0 0 1.85321E+00 0
                        0 0 0 0 0 0 0 0 1.55236E+00'
     diffusion_coefficient_scheme = user_supplied
-    plus = true
   []
 []
 
@@ -508,7 +504,6 @@ pebble_unloading_rate   = ${fparse pebble_speed * area * 0.61 / pebble_volume}
     update_old_solution_when_keeping_solution_during_restore = true
     positions                    = '0 0 0'
     execute_on                   = 'TIMESTEP_END'
-    #max_procs_per_app = 20
   []
 []
 [Transfers]
@@ -558,6 +553,9 @@ pebble_unloading_rate   = ${fparse pebble_speed * area * 0.61 / pebble_volume}
   l_max_its             = 200
   l_tol                 = 1e-3
   nl_max_its            = 200
+  # tolerances on the equilibrium calculation are
+  # similar to on the transients at this time, a small drift
+  # in the null transient could occur
   nl_rel_tol            = 1e-5
   nl_abs_tol            = 1e-6
   fixed_point_max_its   = 50
@@ -570,6 +568,7 @@ pebble_unloading_rate   = ${fparse pebble_speed * area * 0.61 / pebble_volume}
 # ==============================================================================
 [Outputs]
   file_base  = htr_pm_griffin_ss_out
+  checkpoint = true
   exodus     = true
   csv        = true
   perf_graph = true
@@ -633,12 +632,6 @@ pebble_unloading_rate   = ${fparse pebble_speed * area * 0.61 / pebble_volume}
                            sflux_g6 sflux_g7 sflux_g8'
     execute_on          = 'initial transfer timestep_end'
   []
-  # [power_scaling2]
-  #   type        = PowerModulateFactor
-  #   power_pp    = UnscaledTotalPower
-  #   rated_power = 2.344921322E+08
-  #   execute_on  = 'transfer timestep_end'
-  # []
   [prompt_power]
     type        = ElementIntegralVariablePostprocessor
     block       = 'pebble_bed'
