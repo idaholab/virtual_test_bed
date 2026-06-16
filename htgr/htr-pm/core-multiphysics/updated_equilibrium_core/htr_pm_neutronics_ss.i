@@ -46,7 +46,6 @@ pebble_unloading_rate   = ${fparse pebble_speed * area * 0.61 / pebble_volume}
     family                       = LAGRANGE
     order                        = FIRST
 	  n_delay_groups               = 6
-    fission_source_as_material   = false
     assemble_scattering_jacobian = true
     assemble_fission_jacobian    = true
   []
@@ -61,7 +60,7 @@ pebble_unloading_rate   = ${fparse pebble_speed * area * 0.61 / pebble_volume}
   block_name     = 'pebble_bed      upper_ref   lower_ref     cavity    hot_plenum   cold_plenum
                     radial_ref   carbon_brick    riser cr'
   #uniform_refine = 1
- [cartesian_mesh]
+  [cartesian_mesh]
     type         = CartesianMeshGenerator
     dim          = 2
     # Total height: 16.8 m
@@ -597,12 +596,12 @@ pebble_unloading_rate   = ${fparse pebble_speed * area * 0.61 / pebble_volume}
                            sflux_g6 sflux_g7 sflux_g8'
     execute_on          = 'transfer timestep_end'
   []
-  [power_scaling2]
-    type        = PowerModulateFactor
-    power_pp    = UnscaledTotalPower
-    rated_power = 2.344921322E+08
-    execute_on  = 'transfer timestep_end'
-  []
+  # [power_scaling2]
+  #   type        = PowerModulateFactor
+  #   power_pp    = UnscaledTotalPower
+  #   rated_power = 2.344921322E+08
+  #   execute_on  = 'transfer timestep_end'
+  # []
   [prompt_power]
     type        = ElementIntegralVariablePostprocessor
     block       = 'pebble_bed'
@@ -658,9 +657,6 @@ pebble_unloading_rate   = ${fparse pebble_speed * area * 0.61 / pebble_volume}
 # ==============================================================================
 # POSTPROCESSORS DEBUG AND OUTPUTS
 # ==============================================================================
-[Debug]
-  show_var_residual_norms = false
-[]
 [Outputs]
   file_base  = htr_pm_griffin_ss_out
   exodus     = true
