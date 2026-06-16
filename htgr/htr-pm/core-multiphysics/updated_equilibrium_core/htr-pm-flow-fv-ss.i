@@ -478,7 +478,7 @@ scaling = 1  #0.05
   end_time = 1e6
   [TimeStepper]
     type = IterationAdaptiveDT
-    dt = 1.0
+    dt = 0.5
     optimal_iterations = 9
     iteration_window = 2
     growth_factor = 2
