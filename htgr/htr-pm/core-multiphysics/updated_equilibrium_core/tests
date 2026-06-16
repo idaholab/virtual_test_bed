@@ -66,6 +66,7 @@
     prereq = 'neutronics_syntax_SS'
     executable_pattern = 'griffin*|blue_crab*'
     max_time = 400
+    min_parallel = 8
     # XS branching ratio warning
     allow_warnings = true
   []
