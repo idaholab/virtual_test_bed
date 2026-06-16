@@ -266,7 +266,7 @@ burnup_group_boundaries = '5.35E+13 1.070E+14 1.604E+14 2.139E+14 2.674E+14 3.20
     dataset                 = ISOXML
     isoxml_data_file        = '../xsections/DRAGON5_DT_DH_295.xml'
     isoxml_lib_name         = 'DRAGON'
-    execute_on              = 'INITIAL TIMESTEP_BEGIN'
+    execute_on              = 'TIMESTEP_BEGIN'
     # transmutation parameters
     scalar_flux             = 'sflux_g0 sflux_g1 sflux_g2 sflux_g3 sflux_g4
 	                             sflux_g5 sflux_g6 sflux_g7 sflux_g8'
@@ -377,10 +377,7 @@ burnup_group_boundaries = '5.35E+13 1.070E+14 1.604E+14 2.139E+14 2.674E+14 3.20
 # ==============================================================================
 # MATERIALS
 # ==============================================================================
-# ==============================================================================
-# MATERIALS
-# ==============================================================================
-[PebbleDepletion]
+[PebbleBed]
   block                           = 'pebble_bed'
   power                           = ${fparse total_power}
   integrated_power_postprocessor  = total_power
@@ -412,7 +409,35 @@ burnup_group_boundaries = '5.35E+13 1.070E+14 1.604E+14 2.139E+14 2.674E+14 3.20
   fresh_pebble_compositions       = 'fresh_pebble'
   track_isotopes                  = '  U235    U236    U238   PU238   PU239   PU240   PU241   PU242   AM241
                                      AM242M   CS135   CS137   XE135   XE136    I131    I135    SR90'
-  decay_heat                      = true
+
+  [DepletionScheme]
+    type                          = ConstantStreamlineEquilibrium
+    pebble_unloading_rate         = ${pebble_unloading_rate}
+    pebble_flow_rate_distribution = '0.027777778 0.083333333 0.138888889 0.194444444 0.25 0.305555556'
+    burnup_limit                  = 4.818E+14
+    major_streamline_axis         = y
+    pebble_diameter               = 0.06
+    # material_ids                  = '1; 1; 1; 1; 1; 1'
+    streamline_points = '${r_streamline_1} ${fparse core_height + axial_reflector_height} 0 ${r_streamline_1} ${axial_reflector_height} 0;
+                         ${r_streamline_2} ${fparse core_height + axial_reflector_height} 0 ${r_streamline_2} ${axial_reflector_height} 0;
+                         ${r_streamline_3} ${fparse core_height + axial_reflector_height} 0 ${r_streamline_3} ${axial_reflector_height} 0;
+                         ${r_streamline_4} ${fparse core_height + axial_reflector_height} 0 ${r_streamline_4} ${axial_reflector_height} 0;
+                         ${r_streamline_5} ${fparse core_height + axial_reflector_height} 0 ${r_streamline_5} ${axial_reflector_height} 0;
+                         ${r_streamline_6} ${fparse core_height + axial_reflector_height} 0 ${r_streamline_6} ${axial_reflector_height} 0'
+    streamline_segment_subdivisions = '20; 20; 20; 20; 20; 20'
+    sweep_tol                       = 1e-7
+    sweep_max_iterations            = 200
+  []
+
+  # pebble conduction
+  pebble_conduction_input_file                = 'pebble_triso.i'
+  pebble_positions_file                       = 'pebble_heat_pos.txt'
+  surface_temperature_sub_app_postprocessor   = T_surface
+  surface_temperature_main_app_variable       = T_solid
+  power_sub_app_postprocessor                 = pebble_power_density
+  fuel_temperature_sub_app_postprocessor      = T_fuel
+  moderator_temperature_sub_app_postprocessor = T_mod
+  decay_heat                                  = true
 []
 
 [Materials]

@@ -184,10 +184,6 @@ pebble_unloading_rate   = ${fparse pebble_speed * area * 0.61 / pebble_volume}
     order  = CONSTANT
     family = MONOMIAL
   []
-  [power_density2]
-    order  = CONSTANT
-    family = MONOMIAL
-  []
   [power_peaking]
     order  = CONSTANT
     family = MONOMIAL
@@ -199,17 +195,6 @@ pebble_unloading_rate   = ${fparse pebble_speed * area * 0.61 / pebble_volume}
   [pden_max]
     order  = CONSTANT
     family = MONOMIAL
-  []
-  [decay_heat_bybg]
-    family = MONOMIAL
-    order = CONSTANT
-    components = 10
-    block = 'pebble_bed'
-  []
-  [decay_heat]
-    family = MONOMIAL
-    order = CONSTANT
-    block = 'pebble_bed'
   []
 []
 [AuxKernels]
@@ -267,33 +252,6 @@ pebble_unloading_rate   = ${fparse pebble_speed * area * 0.61 / pebble_volume}
     scale_factor           = power_scaling2
     dummies                = UnscaledTotalPower
     execute_on             = 'INITIAL timestep_end'
-  []
-
-  [decay_heat_bybg_aux]
-    type                   = ArrayVarIsotopeDecayHeatAux
-    variable               = decay_heat_bybg
-    isotopic_composition   = pebble_isotope_density
-    volume_fraction        = pebble_volume_fraction
-    dataset                = ISOXML
-    isoxml_data_file       = '../xsections/DRAGON5_DT_DH_295.xml'
-    isoxml_lib_name        = 'DRAGON'
-    execute_on             = 'INITIAL timestep_end'
-    dtl_physicality = DISABLE
-  []
-  [decay_heat_aux]
-    type                   = ArrayVarReductionAux
-    variable               = decay_heat
-    array_variable         = decay_heat_bybg
-    execute_on             = 'INITIAL timestep_end'
-  []
-
-  [power_density2_aux]
-    type       = ParsedAux
-    block      = 'pebble_bed'
-    variable   = power_density2
-    coupled_variables = 'prompt_power_density decay_heat'
-    expression   = 'prompt_power_density + decay_heat'
-    execute_on = 'INITIAL timestep_end'
   []
 
   [pden_max_aux]
@@ -373,7 +331,7 @@ pebble_unloading_rate   = ${fparse pebble_speed * area * 0.61 / pebble_volume}
   []
   [init_power_density]
     type       = SolutionVectorFile
-    var        = 'prompt_power_density  decay_heat  pebble_isotope_density'
+    var        = 'prompt_power_density  total_pebble_decay_heat pebble_isotope_density'
     writing    = true
     execute_on = 'FINAL'
   []
@@ -651,12 +609,6 @@ pebble_unloading_rate   = ${fparse pebble_speed * area * 0.61 / pebble_volume}
     variable    = prompt_power_density
     execute_on  = 'INITIAL transfer timestep_end'
   []
-  [total_power2]
-    type        = ElementIntegralVariablePostprocessor
-    block       = 'pebble_bed'
-    variable    = power_density2
-	  execute_on  = 'INITIAL transfer timestep_end'
-  []
   [avg_power_density]
     type        = ElementAverageValue
     block       = 'pebble_bed'
@@ -672,12 +624,6 @@ pebble_unloading_rate   = ${fparse pebble_speed * area * 0.61 / pebble_volume}
   [decay_heat]
     type = ElementIntegralVariablePostprocessor
     variable = total_pebble_decay_heat
-    block = 'pebble_bed'
-    execute_on = 'INITIAL TIMESTEP_END'
-  []
-  [decay_heat2]
-    type = ElementIntegralVariablePostprocessor
-    variable = decay_heat
     block = 'pebble_bed'
     execute_on = 'INITIAL TIMESTEP_END'
   []
