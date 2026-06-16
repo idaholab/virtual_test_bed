@@ -29,7 +29,6 @@ burnup_group_boundaries = '5.35E+13 1.070E+14 1.604E+14 2.139E+14 2.674E+14 3.20
     family = LAGRANGE
     order = FIRST
 	  n_delay_groups = 6
-    fission_source_as_material = true
     assemble_scattering_jacobian = true
     assemble_fission_jacobian = true
   []
@@ -44,7 +43,7 @@ burnup_group_boundaries = '5.35E+13 1.070E+14 1.604E+14 2.139E+14 2.674E+14 3.20
   block_name     = 'pebble_bed      upper_ref   lower_ref     cavity    hot_plenum   cold_plenum
                     radial_ref   carbon_brick    riser cr'
   #uniform_refine = 1
- [cartesian_mesh]
+  [cartesian_mesh]
     type         = CartesianMeshGenerator
     dim          = 2
     # Total height: 16.8 m
@@ -200,14 +199,14 @@ burnup_group_boundaries = '5.35E+13 1.070E+14 1.604E+14 2.139E+14 2.674E+14 3.20
     order  = CONSTANT
     family = MONOMIAL
   []
-  [dpden_avg]
-    order  = CONSTANT
-    family = MONOMIAL
-  []
-  [dpden_max]
-    order  = CONSTANT
-    family = MONOMIAL
-  []
+  # [dpden_avg]
+  #   order  = CONSTANT
+  #   family = MONOMIAL
+  # []
+  # [dpden_max]
+  #   order  = CONSTANT
+  #   family = MONOMIAL
+  # []
 []
 [AuxKernels]
   [Tfuel_avg]
@@ -249,58 +248,58 @@ burnup_group_boundaries = '5.35E+13 1.070E+14 1.604E+14 2.139E+14 2.674E+14 3.20
     variable = del_t
     function = del_t_function
   []
-  [prompt_power_density_aux]
-    type          = VectorReactionRate
-    block         = 'pebble_bed'
-    scalar_flux   = 'sflux_g0 sflux_g1 sflux_g2 sflux_g3 sflux_g4
-	                   sflux_g5 sflux_g6 sflux_g7 sflux_g8'
-    variable      = prompt_power_density
-    cross_section = kappa_sigma_fission
-    scale_factor  = power_scaling2
-    dummies       = UnscaledTotalPower
-    execute_on    = 'INITIAL timestep_end'
-  []
-  [isotope_density_aux]
-    type                    = ArrayVarBatemanSolve
-    variable                = pebble_isotope_density
-    dataset                 = ISOXML
-    isoxml_data_file        = '../xsections/DRAGON5_DT_DH_295.xml'
-    isoxml_lib_name         = 'DRAGON'
-    execute_on              = 'TIMESTEP_BEGIN'
-    # transmutation parameters
-    scalar_flux             = 'sflux_g0 sflux_g1 sflux_g2 sflux_g3 sflux_g4
-	                             sflux_g5 sflux_g6 sflux_g7 sflux_g8'
-    scalar_flux_scaling     = power_scaling #2.0946120E+18
-    burnup_group_boundaries = ${burnup_group_boundaries}
-    burnup_grid_name        = 'Burnup'
-    array_grid_names        = 'Tfuel Tmod'
-    array_grid_variables    = 'triso_temperature graphite_temperature'
-    library_file            = '../xsections/HTR-PM_9G-Tnew.xml'
-    library_name            = 'HTR-PM'
-  []
-  [decay_heat_bybg_aux]
-    type                   = ArrayVarIsotopeDecayHeatAux
-    variable               = decay_heat_bybg
-    isotopic_composition   = pebble_isotope_density
-    dataset                = ISOXML
-    isoxml_data_file       = '../xsections/DRAGON5_DT_DH_295.xml'
-    isoxml_lib_name        = 'DRAGON'
-    execute_on             = 'INITIAL timestep_end'
-  []
-  [decay_heat_aux]
-    type                   = ArrayVarReductionAux
-    variable               = decay_heat
-    array_variable         = decay_heat_bybg
-    execute_on             = 'INITIAL timestep_end'
-  []
-  [power_density2_aux]
-    type       = ParsedAux
-    block      = 'pebble_bed'
-    variable   = power_density2
-    args       = 'prompt_power_density decay_heat'
-    function   = 'prompt_power_density + decay_heat'
-    execute_on = 'INITIAL timestep_end'
-  []
+  # [prompt_power_density_aux]
+  #   type          = VectorReactionRate
+  #   block         = 'pebble_bed'
+  #   scalar_flux   = 'sflux_g0 sflux_g1 sflux_g2 sflux_g3 sflux_g4
+	#                    sflux_g5 sflux_g6 sflux_g7 sflux_g8'
+  #   variable      = prompt_power_density
+  #   cross_section = kappa_sigma_fission
+  #   scale_factor  = power_scaling2
+  #   dummies       = UnscaledTotalPower
+  #   execute_on    = 'INITIAL timestep_end'
+  # []
+  # [isotope_density_aux]
+  #   type                    = ArrayVarBatemanSolve
+  #   variable                = pebble_isotope_density
+  #   dataset                 = ISOXML
+  #   isoxml_data_file        = '../xsections/DRAGON5_DT_DH_295.xml'
+  #   isoxml_lib_name         = 'DRAGON'
+  #   execute_on              = 'TIMESTEP_BEGIN'
+  #   # transmutation parameters
+  #   scalar_flux             = 'sflux_g0 sflux_g1 sflux_g2 sflux_g3 sflux_g4
+	#                              sflux_g5 sflux_g6 sflux_g7 sflux_g8'
+  #   scalar_flux_scaling     = power_scaling #2.0946120E+18
+  #   burnup_group_boundaries = ${burnup_group_boundaries}
+  #   burnup_grid_name        = 'Burnup'
+  #   array_grid_names        = 'Tfuel Tmod'
+  #   array_grid_variables    = 'triso_temperature graphite_temperature'
+  #   library_file            = '../xsections/HTR-PM_9G-Tnew.xml'
+  #   library_name            = 'HTR-PM'
+  # []
+  # [decay_heat_bybg_aux]
+  #   type                   = ArrayVarIsotopeDecayHeatAux
+  #   variable               = decay_heat_bybg
+  #   isotopic_composition   = pebble_isotope_density
+  #   dataset                = ISOXML
+  #   isoxml_data_file       = '../xsections/DRAGON5_DT_DH_295.xml'
+  #   isoxml_lib_name        = 'DRAGON'
+  #   execute_on             = 'INITIAL timestep_end'
+  # []
+  # [decay_heat_aux]
+  #   type                   = ArrayVarReductionAux
+  #   variable               = decay_heat
+  #   array_variable         = decay_heat_bybg
+  #   execute_on             = 'INITIAL timestep_end'
+  # []
+  # [power_density2_aux]
+  #   type       = ParsedAux
+  #   block      = 'pebble_bed'
+  #   variable   = power_density2
+  #   args       = 'prompt_power_density decay_heat'
+  #   function   = 'prompt_power_density + decay_heat'
+  #   execute_on = 'INITIAL timestep_end'
+  # []
   [power_peaking]
     type       = ParsedAux
     block      = 'pebble_bed'
@@ -326,23 +325,23 @@ burnup_group_boundaries = '5.35E+13 1.070E+14 1.604E+14 2.139E+14 2.674E+14 3.20
     n_fresh_pebble_types   = 1
     execute_on             = 'INITIAL TIMESTEP_END'
   []
-  [dpden_max_aux]
-    type           = ArrayVarExtremeValueAux
-    block          = 'pebble_bed'
-    variable       = dpden_max
-    array_variable = decay_heat_bybg
-    value_type     = MAX
-    execute_on     = 'INITIAL TIMESTEP_END'
-  []
-  [dpden_avg_aux]
-    type                   = PebbleAveragedAux
-    block                  = 'pebble_bed'
-    variable               = dpden_avg
-    array_variable         = decay_heat_bybg
-    pebble_volume_fraction = pebble_volume_fraction
-    n_fresh_pebble_types   = 1
-    execute_on             = 'INITIAL TIMESTEP_END'
-  []
+  # [dpden_max_aux]
+  #   type           = ArrayVarExtremeValueAux
+  #   block          = 'pebble_bed'
+  #   variable       = dpden_max
+  #   array_variable = decay_heat_bybg
+  #   value_type     = MAX
+  #   execute_on     = 'INITIAL TIMESTEP_END'
+  # []
+  # [dpden_avg_aux]
+  #   type                   = PebbleAveragedAux
+  #   block                  = 'pebble_bed'
+  #   variable               = dpden_avg
+  #   array_variable         = decay_heat_bybg
+  #   pebble_volume_fraction = pebble_volume_fraction
+  #   n_fresh_pebble_types   = 1
+  #   execute_on             = 'INITIAL TIMESTEP_END'
+  # []
 []
 [UserObjects]
   [transport_solution]
