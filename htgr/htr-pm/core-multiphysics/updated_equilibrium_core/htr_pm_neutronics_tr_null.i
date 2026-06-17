@@ -119,15 +119,11 @@ burnup_group_boundaries = '5.35E+13 1.070E+14 1.604E+14 2.139E+14 2.674E+14 3.20
 # AUXVARIABLES AND AUXKERNELS
 # ==============================================================================
 [Functions]
+  # no control rod profiles so we can run the null forever
   [CR_bott]
     type = PiecewiseLinear
-    x = ' 0.000    13.000    16.000    1.8e+5  '
-    y = '13.678    13.678     1.800    1.800'
-  []
-  [dt_max_fn]
-    type = PiecewiseLinear
-    x = '-10 0 16 30 1000 5000 20000 100000 200000 500000'
-    y = '  1 1 1  1  50   100  200   400   400   500'
+    x = ' 0.000    1e5'
+    y = '13.678    13.678'
   []
 []
 [AuxVariables]
@@ -405,15 +401,18 @@ burnup_group_boundaries = '5.35E+13 1.070E+14 1.604E+14 2.139E+14 2.674E+14 3.20
     input_files                  = 'htr-pm-flow-fv-tr-null.i'
     positions                    = '0 0 0'
     execute_on                   = 'TIMESTEP_END'
+
+    # allow sub-stepping
+    catch_up = true
+    max_catch_up_steps = 10
   []
 []
 [Transfers]
   [power_density_to_flow]
-    type              = MultiAppNearestNodeTransfer
+    type              = MultiAppShapeEvaluationTransfer
     to_multi_app      = flow
     source_variable   = power_density
     variable          = power_density
-    fixed_meshes      = true
     execute_on        = 'TIMESTEP_END'
   []
   [T_solid_from_flow]
@@ -422,7 +421,6 @@ burnup_group_boundaries = '5.35E+13 1.070E+14 1.604E+14 2.139E+14 2.674E+14 3.20
     source_variable   = T_solid
     variable          = T_solid
     execute_on        = 'TIMESTEP_END'
-    fixed_meshes      = true
   []
   [T_fluid_from_flow]
     type              = MultiAppNearestNodeTransfer
@@ -430,7 +428,6 @@ burnup_group_boundaries = '5.35E+13 1.070E+14 1.604E+14 2.139E+14 2.674E+14 3.20
     source_variable   = T_fluid
     variable          = T_fluid
     execute_on        = 'TIMESTEP_END'
-    fixed_meshes      = true
   []
 []
 # ==============================================================================
@@ -455,16 +452,17 @@ burnup_group_boundaries = '5.35E+13 1.070E+14 1.604E+14 2.139E+14 2.674E+14 3.20
   nl_max_its            = 200
   nl_rel_tol            = 1e-5
   nl_abs_tol            = 1e-6
-  fixed_point_max_its   = 30
   fixed_point_rel_tol   = 1e-5
   fixed_point_abs_tol   = 1e-6
+  # should not be needed for a null transient
+  fixed_point_max_its   = 30
   accept_on_max_fixed_point_iteration = true
 
   # time stepping
   [TimeStepper]
     type = IterationAdaptiveDT
-    dt = 0.05
-    timestep_limiting_postprocessor = dt_max_pp
+    # can take large steps
+    dt = 10
     optimal_iterations = 10
     iteration_window = 2
     growth_factor = 2
@@ -472,7 +470,6 @@ burnup_group_boundaries = '5.35E+13 1.070E+14 1.604E+14 2.139E+14 2.674E+14 3.20
   []
   start_time            = 0
   end_time              = 6.0e5
-  auto_advance          = true
 []
 # ==============================================================================
 # POSTPROCESSORS DEBUG AND OUTPUTS
@@ -487,11 +484,6 @@ burnup_group_boundaries = '5.35E+13 1.070E+14 1.604E+14 2.139E+14 2.674E+14 3.20
 [Postprocessors]
   [dt]
     type = TimestepSize
-  []
-  [dt_max_pp]
-    type       = FunctionValuePostprocessor
-    function   = dt_max_fn
-    execute_on = TIMESTEP_BEGIN
   []
   [Tsolid_max]
     type       = ElementExtremeValue

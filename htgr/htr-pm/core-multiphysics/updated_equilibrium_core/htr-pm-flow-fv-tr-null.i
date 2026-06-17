@@ -82,9 +82,10 @@ scaling = 1  #0.05
     type = FileMeshGenerator
     # for single-physics simulation restart (as the parent app)
     # file = 'htr-pm-flow-fv-ss_out.e'
-    # for multiphysics simulation restart (as a multiapp)
-    file = 'htr_pm_griffin_ss_out_flow0.e'
-    use_for_exodus_restart = true
+    # use_for_exodus_restart = true
+    # for multiphysics simulation (as a multiapp)
+    # We use the checkpoint to make sure to use the same partitioning
+    file = 'htr_pm_griffin_ss_out_flow0_cp/LATEST'
   []
   coord_type = RZ
 []
@@ -100,7 +101,8 @@ scaling = 1  #0.05
       block = ${fluid_blocks}
       compressibility = 'weakly-compressible'
       gravity = '0.0 -9.81 0.0'
-      initialize_variables_from_mesh_file = true
+      # for exodus restart
+      # initialize_variables_from_mesh_file = true
 
       # Porous treatement
       porous_medium_treatment = true
@@ -136,7 +138,8 @@ scaling = 1  #0.05
     []
     [FluidHeatTransfer/all]
       block = ${fluid_blocks}
-      initialize_variables_from_mesh_file = true
+      # for exodus restart
+      # initialize_variables_from_mesh_file = true
 
       # numerical scheme
       energy_advection_interpolation = upwind
@@ -166,8 +169,9 @@ scaling = 1  #0.05
   [T_solid]
     type = INSFVEnergyVariable
     block = '${solid_blocks}'
-    initial_from_file_var = T_solid
-    initial_from_file_timestep = LATEST
+    # for exodus restart
+    # initial_from_file_var = T_solid
+    # initial_from_file_timestep = LATEST
   []
 []
 
@@ -243,13 +247,13 @@ scaling = 1  #0.05
     type = MooseVariableFVReal
     block = 'pebble_bed'
     # restart from exodus
-    initial_from_file_var = power_density
-    initial_from_file_timestep = LATEST
+    # initial_from_file_var = power_density
+    # initial_from_file_timestep = LATEST
   []
 []
 
 [Functions]
-  # Porosity is constant, rampdown has been performed in steady-state inputs
+  # Viscosity is constant, rampdown has been performed in steady-state inputs
   [mu_ramp_fn]
     type = PiecewiseLinear
     x = '0  1 1e+7'
@@ -314,7 +318,7 @@ scaling = 1  #0.05
   end_time = 5.0e+05
   [TimeStepper]
     type = IterationAdaptiveDT
-    dt = 1
+    dt = 1e7
     timestep_limiting_postprocessor = dt_max_pp
     optimal_iterations = 10
     iteration_window = 2

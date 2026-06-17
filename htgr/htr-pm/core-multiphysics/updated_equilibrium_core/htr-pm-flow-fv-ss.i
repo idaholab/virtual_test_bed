@@ -493,6 +493,7 @@ scaling = 1  #0.05
 [Outputs]
   csv = true
   exodus = true
+  checkpoint = true
   [console]
     type = Console
     hide = 'area_pp_reactor_inlet set_inlet_mfr'
