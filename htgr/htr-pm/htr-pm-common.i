@@ -674,7 +674,7 @@ slip_wall_vertical_outer = 'pbed_outer btm_ref_vert_outer top_reflector_wall_ver
   # for the calculation of wall temperature in the
   # multi-D model
   [from_subApp_T_fluid]
-    type = MultiAppGeneralFieldNearestNodeTransfer
+    type = MultiAppGeneralFieldNearestLocationTransfer
     direction = from_multiapp
     multi_app = primary_loop
     source_variable = temperature
@@ -684,7 +684,7 @@ slip_wall_vertical_outer = 'pbed_outer btm_ref_vert_outer top_reflector_wall_ver
     execute_on = 'TIMESTEP_END'
   []
   [from_subApp_htc]
-    type = MultiAppGeneralFieldNearestNodeTransfer
+    type = MultiAppGeneralFieldNearestLocationTransfer
     direction = from_multiapp
     multi_app = primary_loop
     source_variable = htc_external
@@ -695,7 +695,7 @@ slip_wall_vertical_outer = 'pbed_outer btm_ref_vert_outer top_reflector_wall_ver
   []
 
   [from_subApp_T_fluid_bypass]
-    type = MultiAppGeneralFieldNearestNodeTransfer
+    type = MultiAppGeneralFieldNearestLocationTransfer
     direction = from_multiapp
     multi_app = primary_loop
     source_variable = temperature
@@ -705,7 +705,7 @@ slip_wall_vertical_outer = 'pbed_outer btm_ref_vert_outer top_reflector_wall_ver
     execute_on = 'TIMESTEP_END'
   []
   [from_subApp_htc_bypass]
-    type = MultiAppGeneralFieldNearestNodeTransfer
+    type = MultiAppGeneralFieldNearestLocationTransfer
     direction = from_multiapp
     multi_app = primary_loop
     source_variable = htc_external
