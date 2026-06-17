@@ -71,13 +71,9 @@ The mesh is identified as and contains assignment of materials IDs through ```as
 
 !listing htgr/htr-pm/core-multiphysics/updated_equilibrium_core/htr_pm_neutronics_ss.i block=Mesh
 
-Coordinate type is defined as
+Depletion for the pebbles is defined using the ```PebbleBed``` block as
 
-!listing htgr/htr-pm/core-multiphysics/updated_equilibrium_core/htr_pm_neutronics_ss.i block=Problem
-
-Depletion for the pebbles is defined using the ```PebbleDepletion``` block as
-
-!listing htr-pm/core-multiphysics/updated_equilibrium_core/htr_pm_neutronics_ss.i block=PebbleDepletion
+!listing htr-pm/core-multiphysics/updated_equilibrium_core/htr_pm_neutronics_ss.i block=PebbleBed
 
 Materials are defined using the ```Materials``` block as
 
@@ -104,10 +100,10 @@ streamline. Griffin assumes that the pebble loading and unloading rates are iden
 Full details on the equilibrium model can be found in [!citep](jaradat2023gas).
 
 The depletion setup is requested through the Griffin input.
-Specifically, in the input, the definition of the ```PebbleDepeletion``` as in the following is used to define
-the fuel as depletable material as
+Specifically, in the input, the definition of the ```DepletionScheme``` as in the following is used to define
+the fuel pebbles as depletable material as
 
-!listing htgr/htr-pm/core-multiphysics/updated_equilibrium_core/htr_pm_neutronics_ss.i block=PebbleDepletion
+!listing htgr/htr-pm/core-multiphysics/updated_equilibrium_core/htr_pm_neutronics_ss.i block=DepletionScheme
 
 ## Decay Heat Calculation
 
