@@ -21,6 +21,8 @@
     cli_args = "MultiApps/active='' Transfers/active=''"
     # XS branching ratio warning
     allow_warnings = true
+    min_parallel = 4
+    max_time = 400
   []
   [neutronics_syntax_dlofc]
     type = RunApp
@@ -32,6 +34,8 @@
     cli_args = "MultiApps/active='' Transfers/active=''"
     # XS branching ratio warning
     allow_warnings = true
+    min_parallel = 4
+    max_time = 400
   []
   [flow_syntax_fv_ss]
     type = RunApp
@@ -96,6 +100,7 @@
     executable_pattern = 'blue_crab*'
     # 190s on M4
     max_time = 600
+    min_parallel = 16
     # XS branching ratio warning
     allow_warnings = true
   []
@@ -109,6 +114,7 @@
     executable_pattern = 'blue_crab*'
     # 500s on M4
     max_time = 1500
+    min_parallel = 16
     # XS branching ratio warning
     allow_warnings = true
   []
