@@ -40,6 +40,8 @@
     input = 'htr-pm-flow-fv-tr-null.i'
     check_input = True
     executable_pattern = 'griffin*|blue_crab*|dire_wolf*|fenix*'
+    # need a checkpoint
+    prereq = 'htr_pm_regression_1'
     # warning from setting fp in porous media physics through global parameters
     allow_warnings = true
   []
@@ -48,6 +50,8 @@
     input = 'htr-pm-flow-fv-tr-dlofc.i'
     check_input = True
     executable_pattern = 'griffin*|blue_crab*|dire_wolf*|fenix*'
+    # need a checkpoint
+    prereq = 'htr_pm_regression_1'
     # warning from setting fp in porous media physics through global parameters
     allow_warnings = true
   []
@@ -77,7 +81,7 @@
     csvdiff = 'htr_pm_griffin_tr_null_out.csv htr_pm_griffin_tr_null_out_flow0.csv'
     cli_args = 'Executioner/num_steps=3 Executioner/fixed_point_abs_tol=1e-3'
     # need a checkpoint
-    prereq = 'htr_pm_regression_1'
+    prereq = 'htr_pm_regression_1 flow_syntax_fv_null'
     executable_pattern = 'blue_crab*'
     # 190s on M4
     max_time = 500
@@ -90,7 +94,7 @@
     cli_args = 'Executioner/num_steps=5 Executioner/start_time=0.95 Executioner/fixed_point_abs_tol=1e-3 MultiApps/flow/cli_args=Executioner/start_time=0.95'
     csvdiff = 'htr_pm_griffin_tr_dlofc_out.csv  htr_pm_griffin_tr_dlofc_out_flow0.csv'
     # need a checkpoint
-    prereq = 'htr_pm_regression_1'
+    prereq = 'htr_pm_regression_1 flow_syntax_fv_dlofc'
     executable_pattern = 'blue_crab*'
     # 500s on M4
     max_time = 1000
