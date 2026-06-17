@@ -81,9 +81,10 @@ scaling = 1  #0.05
     type = FileMeshGenerator
     # for single-physics simulation restart (as the parent app)
     # file = 'htr-pm-flow-fv-ss_out.e'
+    # use_for_exodus_restart = true
     # for multiphysics simulation restart (as a multiapp)
-    file = 'htr_pm_griffin_ss_out_flow0.e'
-    use_for_exodus_restart = true
+    # We use the checkpoint to make sure to use the same partitioning
+    file = 'htr_pm_griffin_ss_out_flow0_cp/LATEST'
   []
   coord_type = RZ
 []
@@ -95,8 +96,8 @@ scaling = 1  #0.05
 [Physics]
   [NavierStokes]
     [Flow/all]
-      # restart
-      initialize_variables_from_mesh_file = true
+      # exodus restart
+      # initialize_variables_from_mesh_file = true
 
       # basic settings
       block = ${fluid_blocks}
@@ -140,8 +141,8 @@ scaling = 1  #0.05
       time_derivative_contributes_to_RC_coefficients = false
     []
     [FluidHeatTransfer/all]
-      # restart
-      initialize_variables_from_mesh_file = true
+      # exodus restart
+      # initialize_variables_from_mesh_file = true
 
       fluid_temperature_variable = 'T_fluid'
       block = ${fluid_blocks}
@@ -177,8 +178,8 @@ scaling = 1  #0.05
     type = INSFVEnergyVariable
     block = '${solid_blocks}'
     # restart from exodus
-    initial_from_file_var = T_solid
-    initial_from_file_timestep = LATEST
+    # initial_from_file_var = T_solid
+    # initial_from_file_timestep = LATEST
   []
 []
 
@@ -251,17 +252,19 @@ scaling = 1  #0.05
     type = MooseVariableFVReal
     block = 'pebble_bed'
     # restart from exodus
-    initial_from_file_var = power_density
-    initial_from_file_timestep = LATEST
+    # initial_from_file_var = power_density
+    # initial_from_file_timestep = LATEST
   []
 []
 
 [Functions]
+  # viscosity was ramped in equilibrium calculation
   [mu_ramp_fn]
     type = PiecewiseLinear
     x = '0  1 1e+7'
     y = '1  1 1'
   []
+  # DLOFC transient
   [mfr_fn]
     type = PiecewiseLinear
     x = '    0    1       13'
@@ -272,6 +275,7 @@ scaling = 1  #0.05
     x = '  0          1           13'
     y = '${p_outlet}  ${p_outlet} 101325.0'
   []
+  # increase time steps as transient slows down
   [dt_max_fn]
     type = PiecewiseLinear
     x = '-10 0 16 30 1000 5000 20000 100000 200000 500000'

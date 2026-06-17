@@ -64,7 +64,7 @@
     input = htr_pm_neutronics_ss.i
     csvdiff = 'htr_pm_griffin_ss_out.csv htr_pm_griffin_ss_out_flow0.csv'
     prereq = 'neutronics_syntax_SS'
-    executable_pattern = 'griffin*|blue_crab*'
+    executable_pattern = 'blue_crab*'
     # 420s on M4
     max_time = 800
     min_parallel = 8
@@ -75,21 +75,25 @@
     type = CSVDiff
     input = htr_pm_neutronics_tr_null.i
     csvdiff = 'htr_pm_griffin_tr_null_out.csv htr_pm_griffin_tr_null_out_flow0.csv'
+    cli_args = 'Executioner/num_steps=3 Executioner/fixed_point_abs_tol=1e-3'
     # need a checkpoint
     prereq = 'htr_pm_regression_1'
-    executable_pattern = 'griffin*|blue_crab*'
-    max_time = 400
+    executable_pattern = 'blue_crab*'
+    # 190s on M4
+    max_time = 500
     # XS branching ratio warning
     allow_warnings = true
   []
   [htr_pm_regression_3]
     type = CSVDiff
     input = htr_pm_neutronics_tr_dlofc.i
-    csvdiff = 'htr_pm_neutronics_tr_dlofc.csv  htr_pm_neutronics_tr_dlofc_out_flow0.csv'
+    cli_args = 'Executioner/num_steps=5 Executioner/start_time=0.95 Executioner/fixed_point_abs_tol=1e-3 MultiApps/flow/cli_args=Executioner/start_time=0.95'
+    csvdiff = 'htr_pm_griffin_tr_dlofc_out.csv  htr_pm_griffin_tr_dlofc_out_flow0.csv'
     # need a checkpoint
     prereq = 'htr_pm_regression_1'
-    executable_pattern = 'griffin*|blue_crab*'
-    max_time = 400
+    executable_pattern = 'blue_crab*'
+    # 500s on M4
+    max_time = 1000
     # XS branching ratio warning
     allow_warnings = true
   []

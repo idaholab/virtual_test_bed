@@ -7,7 +7,7 @@
 # ==============================================================================
 # MODEL PARAMETERS
 # ==============================================================================
-initial_temperature     = 500.0 # (K)
+# initial_temperature     = 500.0 # (K)
 total_power             = 250.0e+6  # Total reactor Power (W)
 burnup_group_boundaries = '5.35E+13 1.070E+14 1.604E+14 2.139E+14 2.674E+14 3.209E+14 3.743E+14 4.278E+14 4.818E+14'
 #==========================================================================
@@ -32,6 +32,9 @@ burnup_group_boundaries = '5.35E+13 1.070E+14 1.604E+14 2.139E+14 2.674E+14 3.20
     assemble_scattering_jacobian = true
     assemble_fission_jacobian = true
   []
+[]
+[Problem]
+  restart_file_base                     = 'htr_pm_griffin_ss_out_cp/LATEST'
 []
 # ==============================================================================
 # GEOMETRY AND MESH
@@ -105,8 +108,6 @@ burnup_group_boundaries = '5.35E+13 1.070E+14 1.604E+14 2.139E+14 2.674E+14 3.20
    subdomains             = '1 2 3 4 5 6 7 8 61 71'
    extra_element_ids      = '1 1 1 1 1 1 1 1 1 1'
  []
-[]
-[Problem]
   coord_type = RZ
 []
 # ==============================================================================
@@ -158,7 +159,8 @@ burnup_group_boundaries = '5.35E+13 1.070E+14 1.604E+14 2.139E+14 2.674E+14 3.20
   [porosity]
     family = MONOMIAL
     order = CONSTANT
-    initial_condition = 0.39
+    # reloaded from file
+    # initial_condition = 0.39
     block = 'pebble_bed'
   []
   [del_t]
@@ -169,10 +171,6 @@ burnup_group_boundaries = '5.35E+13 1.070E+14 1.604E+14 2.139E+14 2.674E+14 3.20
     family = MONOMIAL
   []
   [power_density]
-    order = CONSTANT
-    family = MONOMIAL
-  []
-  [power_density2]
     order = CONSTANT
     family = MONOMIAL
   []
@@ -199,14 +197,6 @@ burnup_group_boundaries = '5.35E+13 1.070E+14 1.604E+14 2.139E+14 2.674E+14 3.20
     order  = CONSTANT
     family = MONOMIAL
   []
-  # [dpden_avg]
-  #   order  = CONSTANT
-  #   family = MONOMIAL
-  # []
-  # [dpden_max]
-  #   order  = CONSTANT
-  #   family = MONOMIAL
-  # []
 []
 [AuxKernels]
   [Tfuel_avg]
@@ -252,8 +242,8 @@ burnup_group_boundaries = '5.35E+13 1.070E+14 1.604E+14 2.139E+14 2.674E+14 3.20
     type       = ParsedAux
     block      = 'pebble_bed'
     variable   = power_peaking
-    args       = 'power_density'
-    function   = 'power_density / 3.21525E+06'
+    coupled_variables = 'power_density'
+    expression        = 'power_density / 3.21525E+06'
     execute_on = 'INITIAL timestep_end'
   []
   [pden_max_aux]
@@ -274,36 +264,6 @@ burnup_group_boundaries = '5.35E+13 1.070E+14 1.604E+14 2.139E+14 2.674E+14 3.20
     execute_on             = 'INITIAL TIMESTEP_END'
   []
 []
-[UserObjects]
-  [transport_solution]
-    type             = TransportSolutionVectorFile
-    transport_system = diff
-    writing          = false
-    execute_on       = 'INITIAL'
-    scale_with_keff  = false
-  []
-  [depletion_solution]
-    type        = SolutionVectorFile
-    var         = 'pebble_isotope_density  pebble_volume_fraction   graphite_temperature
-	                      triso_temperature           power_density  partial_power_density '
-    writing     = false
-    execute_on  = 'INITIAL'
-  []
-  [TH_solution]
-    type        = SolutionVectorFile
-    var         = 'T_solid T_fluid'
-	  loading_var = 'T_solid T_fluid'
-    writing     = false
-    execute_on  = 'INITIAL'
-  []
-  [init_power_density]
-    type        = SolutionVectorFile
-    var         =  'prompt_power_density  decay_heat '
-    loading_var = 'prompt_power_density  decay_heat '
-	  writing     = false
-    execute_on  = 'INITIAL'
-  []
-[]
 # ==============================================================================
 # MATERIALS
 # ==============================================================================
@@ -317,7 +277,6 @@ burnup_group_boundaries = '5.35E+13 1.070E+14 1.604E+14 2.139E+14 2.674E+14 3.20
 
   porosity_name                   = porosity
   burnup_group_boundaries         = ${burnup_group_boundaries}
-  # strictness                      = 0
 
   # cross section data
   library_file                    = '../xsections/HTR-PM_9G-Tnew.xml'
@@ -333,8 +292,8 @@ burnup_group_boundaries = '5.35E+13 1.070E+14 1.604E+14 2.139E+14 2.674E+14 3.20
   isoxml_data_file                = '../xsections/DRAGON5_DT_DH_295.xml'
   isoxml_lib_name                 = 'DRAGON'
 
-  initial_moderator_temperature   = ${initial_temperature}
-  initial_fuel_temperature        = ${initial_temperature}
+  # initial_moderator_temperature   = ${initial_temperature}
+  # initial_fuel_temperature        = ${initial_temperature}
   n_fresh_pebble_types            = 1
   fresh_pebble_compositions       = 'fresh_pebble'
   track_isotopes                  = '  U235    U236    U238   PU238   PU239   PU240   PU241   PU242   AM241
@@ -463,11 +422,10 @@ burnup_group_boundaries = '5.35E+13 1.070E+14 1.604E+14 2.139E+14 2.674E+14 3.20
 []
 [Transfers]
   [power_density_to_flow]
-	  type              = MultiAppNearestNodeTransfer
+	  type              = MultiAppShapeEvaluationTransfer
     to_multi_app      = flow
-    source_variable   = power_density2
+    source_variable   = power_density
     variable          = power_density
-    fixed_meshes      = true
 	  execute_on        = 'TIMESTEP_END'
   []
   [T_solid_from_flow]
@@ -476,7 +434,6 @@ burnup_group_boundaries = '5.35E+13 1.070E+14 1.604E+14 2.139E+14 2.674E+14 3.20
     source_variable   = T_solid
     variable          = T_solid
     execute_on        = 'TIMESTEP_END'
-    fixed_meshes      = true
   []
   [T_fluid_from_flow]
     type              = MultiAppNearestNodeTransfer
@@ -484,7 +441,6 @@ burnup_group_boundaries = '5.35E+13 1.070E+14 1.604E+14 2.139E+14 2.674E+14 3.20
     source_variable   = T_fluid
     variable          = T_fluid
     execute_on        = 'TIMESTEP_END'
-    fixed_meshes      = true
   []
 []
 # ==============================================================================
@@ -531,8 +487,12 @@ burnup_group_boundaries = '5.35E+13 1.070E+14 1.604E+14 2.139E+14 2.674E+14 3.20
 # ==============================================================================
 # POSTPROCESSORS DEBUG AND OUTPUTS
 # ==============================================================================
-[Debug]
-  show_var_residual_norms = false
+[Outputs]
+  file_base  = htr_pm_griffin_tr_dlofc_out
+  exodus     = true
+  csv        = true
+  perf_graph = true
+  execute_on = 'INITIAL FINAL TIMESTEP_END'
 []
 [Postprocessors]
   [dt]
@@ -611,11 +571,4 @@ burnup_group_boundaries = '5.35E+13 1.070E+14 1.604E+14 2.139E+14 2.674E+14 3.20
     value_type  = max
     execute_on  = 'initial timestep_end'
   []
-[]
-[Outputs]
-  file_base  = htr_pm_griffin_tr_dlofc_out
-  exodus     = true
-  csv        = true
-  perf_graph = true
-  execute_on = 'INITIAL FINAL TIMESTEP_END'
 []
