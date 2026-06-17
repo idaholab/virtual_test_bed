@@ -46,7 +46,7 @@ pebble_unloading_rate   = ${fparse pebble_speed * area * 0.61 / pebble_volume}
     scheme                       = CFEM-Diffusion
     family                       = LAGRANGE
     order                        = FIRST
-	  n_delay_groups               = 6
+    n_delay_groups               = 6
     assemble_scattering_jacobian = true
     assemble_fission_jacobian    = true
   []
@@ -67,7 +67,7 @@ pebble_unloading_rate   = ${fparse pebble_speed * area * 0.61 / pebble_volume}
     # Total height: 16.8 m
     dx           = ' 0.250 0.250 0.250 0.250 0.250 0.250
                      0.010 0.050 0.130 0.080 0.080 0.080
- 		                 0.200 0.120 0.125 0.125'
+                      0.200 0.120 0.125 0.125'
     ix           = ' 1 1 1 1 1 1
                      1 1 1 1 1 1
                      1 1 1 1'
@@ -247,7 +247,7 @@ pebble_unloading_rate   = ${fparse pebble_speed * area * 0.61 / pebble_volume}
     type                   = VectorReactionRate
     block                  = 'pebble_bed'
     scalar_flux            = 'sflux_g0 sflux_g1 sflux_g2 sflux_g3 sflux_g4
-	                            sflux_g5 sflux_g6 sflux_g7 sflux_g8'
+                              sflux_g5 sflux_g6 sflux_g7 sflux_g8'
     variable               = prompt_power_density
     cross_section          = kappa_sigma_fission
     scale_factor           = power_scaling
@@ -293,7 +293,7 @@ pebble_unloading_rate   = ${fparse pebble_speed * area * 0.61 / pebble_volume}
 #   []
 #   [isotopic_map]
 #     type      = VariableCartesianCoreMap
-# 	  variables = ' isotope_density_U235    isotope_density_U236   isotope_density_U238  isotope_density_PU238
+#     variables = ' isotope_density_U235    isotope_density_U236   isotope_density_U238  isotope_density_PU238
 #                  isotope_density_PU239   isotope_density_PU240  isotope_density_PU241  isotope_density_PU242
 #                  isotope_density_AM241  isotope_density_AM242M  isotope_density_CS135  isotope_density_CS137
 #                  isotope_density_XE135   isotope_density_XE136   isotope_density_I131   isotope_density_I135
@@ -318,7 +318,7 @@ pebble_unloading_rate   = ${fparse pebble_speed * area * 0.61 / pebble_volume}
 #   [depletion_solution]
 #     type       = SolutionVectorFile
 #     var        = 'pebble_isotope_density  pebble_volume_fraction   graphite_temperature
-# 	                     triso_temperature           power_density  partial_power_density
+#                   triso_temperature           power_density  partial_power_density
 #                          sflux_g0         sflux_g1        sflux_g2
 #                          sflux_g3         sflux_g4        sflux_g5
 #                          sflux_g6         sflux_g7        sflux_g8'
@@ -410,8 +410,8 @@ pebble_unloading_rate   = ${fparse pebble_speed * area * 0.61 / pebble_volume}
     block          = 'upper_ref lower_ref'
     grid_names     = 'Tmod'
     grid_variables = 'T_solid'
-    isotopes       =   'Graphite    U235'
-    densities      =  '6.25284E-02  0.0'
+    isotopes       = 'Graphite    U235'
+    densities      = '6.25284E-02  0.0'
     material_id    = 1
   []
   # upper lower plenum at 80% density
@@ -420,7 +420,7 @@ pebble_unloading_rate   = ${fparse pebble_speed * area * 0.61 / pebble_volume}
     block          = 'hot_plenum cold_plenum'
     grid_names     = 'Tmod'
     grid_variables = 'T_solid'
-    isotopes       =   'Graphite      U235'
+    isotopes       =   'Graphite     U235'
     densities      =  '7.14611E-02   0.0'
     material_id    = 1
   []
@@ -439,12 +439,12 @@ pebble_unloading_rate   = ${fparse pebble_speed * area * 0.61 / pebble_volume}
     block                   = 'cr'
     grid_names              = 'Tmod  Tmod  Tmod'
     grid_variables          = 'T_solid  T_solid  T_solid'
-    isotopes                =  '   Graphite   ;      Graphite            B10          B11            C12  ;       Graphite            B10          B11            C12  '
-    densities               =  ' 6.4277e-02       6.4277e-02     1.6373e-03   5.9938e-03     1.6004e-02       6.4277e-02     1.6373e-03   5.9938e-03     1.6004e-02   '
+    isotopes                =  '   Graphite ; Graphite    B10          B11         C12  ;      Graphite    B10         B11         C12  '
+    densities               =  ' 6.4277e-02   6.4277e-02  1.6373e-03   5.9938e-03  1.6004e-02  6.4277e-02  1.6373e-03  5.9938e-03  1.6004e-02   '
     segment_material_ids    = '1   1   1'
-	  rod_segment_length      = 11.878
-	  front_position_function = 'CR_bott'
-	  rod_withdrawn_direction = 'y'
+    rod_segment_length      = 11.878
+    front_position_function = 'CR_bott'
+    rod_withdrawn_direction = 'y'
   []
   # riser at 68% density
   [riser]
@@ -452,8 +452,8 @@ pebble_unloading_rate   = ${fparse pebble_speed * area * 0.61 / pebble_volume}
     block          = 'riser'
     grid_names     = 'Tmod'
     grid_variables = 'T_solid'
-	  isotopes       =  'Graphite     U235'
-    densities      =  '6.07419E-02   0.0'
+    isotopes       =  'Graphite     U235'
+    densities      =  '6.07419E-02  0.0'
     material_id    = 1
   []
   [cavity]
@@ -600,7 +600,7 @@ pebble_unloading_rate   = ${fparse pebble_speed * area * 0.61 / pebble_volume}
     type       = ElementExtremeValue
     block      = 'pebble_bed'
     value_type = max
-	  variable   = Tfuel_avg
+    variable   = Tfuel_avg
     execute_on = 'initial timestep_end'
   []
   [Tmod_avg]

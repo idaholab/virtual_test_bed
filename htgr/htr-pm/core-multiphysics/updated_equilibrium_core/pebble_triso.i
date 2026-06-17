@@ -39,7 +39,7 @@ initial_temperature        = 500.0 # (K)
   [triso_mesh]
     type = CartesianMeshGenerator
     dim = 1
-   	dx = '2.50e-04 9.00e-05 4.00e-05 3.50e-05 4.00e-05'
+     dx = '2.50e-04 9.00e-05 4.00e-05 3.50e-05 4.00e-05'
     ix = '21 8 3 3 3'
     subdomain_id = '3 4 5 6 7'
   []
@@ -246,7 +246,7 @@ initial_temperature        = 500.0 # (K)
   [pebble_core]
     type = CompositeSolidProperties
     materials = 'triso gmatrix'
-	  fractions = '0.090484107  0.909515893' # volume fractions.
+    fractions = '0.090484107  0.909515893' # volume fractions.
     k_mixing = 'chiew'
   []
 []

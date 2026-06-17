@@ -277,7 +277,7 @@
   [drag_Churchill]
     type = FunctorChurchillDragCoefficients
     block = 'riser top_reflector bottom_reflector'
-	  multipliers = ' 1.0e+05  1.0  1.0e+05 '
+    multipliers = ' 1.0e+05  1.0  1.0e+05 '
   []
 
   [drag_bypass]

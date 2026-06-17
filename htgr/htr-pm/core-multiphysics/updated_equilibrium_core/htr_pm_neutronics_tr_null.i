@@ -29,7 +29,7 @@ burnup_group_boundaries = '5.35E+13 1.070E+14 1.604E+14 2.139E+14 2.674E+14 3.20
     scheme                       = CFEM-Diffusion
     family                       = LAGRANGE
     order                        = FIRST
-	  n_delay_groups               = 6
+    n_delay_groups               = 6
     # Note: by default Griffin only assembles the block-diagonal Jacobian
     #       assembling other jacobians improves preconditioning
     #       fission is only used in difusion
@@ -56,7 +56,7 @@ burnup_group_boundaries = '5.35E+13 1.070E+14 1.604E+14 2.139E+14 2.674E+14 3.20
     # Total height: 16.8 m
     dx           = ' 0.250 0.250 0.250 0.250 0.250 0.250
                      0.010 0.050 0.130 0.080 0.080 0.080
- 		                 0.200 0.120 0.125 0.125'
+                      0.200 0.120 0.125 0.125'
     ix           = ' 1 1 1 1 1 1
                      1 1 1 1 1 1
                      1 1 1 1'
@@ -340,9 +340,9 @@ burnup_group_boundaries = '5.35E+13 1.070E+14 1.604E+14 2.139E+14 2.674E+14 3.20
     isotopes                =  '   Graphite   ;      Graphite            B10          B11            C12  ;       Graphite            B10          B11            C12  '
     densities               =  ' 6.4277e-02       6.4277e-02     1.6373e-03   5.9938e-03     1.6004e-02       6.4277e-02     1.6373e-03   5.9938e-03     1.6004e-02   '
     segment_material_ids    = '1   1   1'
-	  rod_segment_length      = 11.878
-	  front_position_function = 'CR_bott'
-	  rod_withdrawn_direction = 'y'
+    rod_segment_length      = 11.878
+    front_position_function = 'CR_bott'
+    rod_withdrawn_direction = 'y'
   []
   # riser at 68% density
   [riser]
@@ -350,7 +350,7 @@ burnup_group_boundaries = '5.35E+13 1.070E+14 1.604E+14 2.139E+14 2.674E+14 3.20
     block          = 'riser'
     grid_names     = 'Tmod'
     grid_variables = 'T_solid'
-	  isotopes       =  'Graphite     U235'
+    isotopes       =  'Graphite     U235'
     densities      =  '6.07419E-02   0.0'
     material_id    = 1
   []
@@ -510,7 +510,7 @@ burnup_group_boundaries = '5.35E+13 1.070E+14 1.604E+14 2.139E+14 2.674E+14 3.20
     type       = ElementExtremeValue
     block      = 'pebble_bed'
     value_type = max
-	  variable   = Tfuel_avg
+    variable   = Tfuel_avg
     execute_on = 'initial timestep_end'
   []
   [Tmod_avg]

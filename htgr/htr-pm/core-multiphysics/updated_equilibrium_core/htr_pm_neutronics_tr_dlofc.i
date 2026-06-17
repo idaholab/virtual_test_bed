@@ -28,7 +28,7 @@ burnup_group_boundaries = '5.35E+13 1.070E+14 1.604E+14 2.139E+14 2.674E+14 3.20
     scheme = CFEM-Diffusion
     family = LAGRANGE
     order = FIRST
-	  n_delay_groups = 6
+    n_delay_groups = 6
     assemble_scattering_jacobian = true
     assemble_fission_jacobian = true
   []
@@ -52,7 +52,7 @@ burnup_group_boundaries = '5.35E+13 1.070E+14 1.604E+14 2.139E+14 2.674E+14 3.20
     # Total height: 16.8 m
     dx           = ' 0.250 0.250 0.250 0.250 0.250 0.250
                      0.010 0.050 0.130 0.080 0.080 0.080
- 		                 0.200 0.120 0.125 0.125'
+                      0.200 0.120 0.125 0.125'
     ix           = ' 1 1 1 1 1 1
                      1 1 1 1 1 1
                      1 1 1 1'
@@ -352,12 +352,12 @@ burnup_group_boundaries = '5.35E+13 1.070E+14 1.604E+14 2.139E+14 2.674E+14 3.20
     plus = true
     #isotopes  =  '   Graphite   U235 ;      Graphite            C12           B10          B11   U235;        Graphite            C12           B10          B11   U235'
     #densities =  '6.074191E-02    0.0   6.074191E-02   8.734066E-03  8.734066E-04  7.860660E-03    0.0    6.074191E-02   8.734066E-03  8.734066E-04  7.860660E-03    0.0'
-	  isotopes  =  '   Graphite   U235 ;      Graphite            B10          B11            C12   U235;       Graphite            B10          B11            C12   U235'
+    isotopes  =  '   Graphite   U235 ;      Graphite            B10          B11            C12   U235;       Graphite            B10          B11            C12   U235'
     densities =  ' 6.4277e-02     0.0     6.4277e-02     1.6373e-03   5.9938e-03     1.6004e-02    0.0      6.4277e-02     1.6373e-03   5.9938e-03     1.6004e-02    0.0'
-	  segment_material_ids = '1   1   1'
-	  rod_segment_length = 11.878
-	  front_position_function = 'CR_bott'
-	  rod_withdrawn_direction = 'y'
+    segment_material_ids = '1   1   1'
+    rod_segment_length = 11.878
+    front_position_function = 'CR_bott'
+    rod_withdrawn_direction = 'y'
   []
   # riser at 68% density
   [riser]
@@ -366,8 +366,8 @@ burnup_group_boundaries = '5.35E+13 1.070E+14 1.604E+14 2.139E+14 2.674E+14 3.20
     grid_names = 'Tmod'
     grid_variables = 'T_solid'
     plus = true
-	  isotopes  =  'Graphite     U235'
-    densities =  '6.07419E-02	0.0'
+    isotopes  =  'Graphite     U235'
+    densities =  '6.07419E-02  0.0'
     material_id = 1
   []
   [cavity]
@@ -375,7 +375,7 @@ burnup_group_boundaries = '5.35E+13 1.070E+14 1.604E+14 2.139E+14 2.674E+14 3.20
     block = 'cavity'
     fromFile = false
     # computed from Serpent CMM
-	  neutron_speed  = '1.164872386937E+09 1.225755729920E+08 1.358941921623E+07 3.924789509810E+06 2.395847846182E+06 1.814298529894E+06 1.399342656828E+06 7.200528593684E+05 2.911858619061E+05'
+    neutron_speed  = '1.164872386937E+09 1.225755729920E+08 1.358941921623E+07 3.924789509810E+06 2.395847846182E+06 1.814298529894E+06 1.399342656828E+06 7.200528593684E+05 2.911858619061E+05'
     diffusion_coef = '4.68857E-01 1.52760E-01 1.21025E-01 1.08241E-01  1.72433E-01  1.65906E-01  1.96579E-01  1.79868E-01  2.14727E-01'
     sigma_r = '0 0 0 0 0 0 0 0 0'
     sigma_s = ' 7.10949E-01 0 0 0 0 0 0 0 0
@@ -422,11 +422,11 @@ burnup_group_boundaries = '5.35E+13 1.070E+14 1.604E+14 2.139E+14 2.674E+14 3.20
 []
 [Transfers]
   [power_density_to_flow]
-	  type              = MultiAppShapeEvaluationTransfer
+    type              = MultiAppShapeEvaluationTransfer
     to_multi_app      = flow
     source_variable   = power_density
     variable          = power_density
-	  execute_on        = 'TIMESTEP_END'
+    execute_on        = 'TIMESTEP_END'
   []
   [T_solid_from_flow]
     type              = MultiAppNearestNodeTransfer
@@ -528,7 +528,7 @@ burnup_group_boundaries = '5.35E+13 1.070E+14 1.604E+14 2.139E+14 2.674E+14 3.20
     type       = ElementExtremeValue
     block      = 'pebble_bed'
     value_type = max
-	  variable   = Tfuel_avg
+    variable   = Tfuel_avg
     execute_on  = 'initial timestep_end'
   []
   [Tmod_avg]
