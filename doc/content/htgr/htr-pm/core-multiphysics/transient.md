@@ -33,9 +33,9 @@ For the reader's information, ```Mesh``` is imported from a previous run instead
 
 !listing htgr/htr-pm/core-multiphysics/updated_equilibrium_core/htr-pm-flow-fv-tr-dlofc.i block=Mesh
 
-The ```Modules``` block, variables are imported from the Exodus file. Notice ```velocity_variable```, ```pressure_variable```, and ```fluid_temperature_variable``` definition in ```Modules```.
+The ```Physics``` block, variables are imported from the Exodus file. Notice ```velocity_variable```, ```pressure_variable```, and ```fluid_temperature_variable``` definition in ```Physics```.
 
-!listing htgr/htr-pm/core-multiphysics/updated_equilibrium_core/htr-pm-flow-fv-tr-dlofc.i block=Modules
+!listing htgr/htr-pm/core-multiphysics/updated_equilibrium_core/htr-pm-flow-fv-tr-dlofc.i block=Physics
 
 Additional initial conditions are imported from previous run as in the ```Variables``` block.
 

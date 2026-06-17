@@ -8,6 +8,8 @@
     cli_args = "MultiApps/active='' Transfers/active=''"
     # XS branching ratio warning
     allow_warnings = true
+    min_parallel = 4
+    max_time = 400
   []
   [neutronics_syntax_null]
     type = RunApp
