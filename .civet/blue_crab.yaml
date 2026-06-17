@@ -12,6 +12,7 @@ lfs_include:
   - microreactors/KRUSTY
   - htgr/pbmr400
   - htgr/htr10
+  - htgr/htr-pm/core-multiphysics
   - htgr/gpbr200
   - htgr/open-xe100
   - sfr/vtr
