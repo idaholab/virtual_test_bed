@@ -1,1 +1,0 @@
-../dlofc/pebble_triso.i
