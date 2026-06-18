@@ -76,12 +76,13 @@
   [htr_pm_regression_1]
     type = CSVDiff
     input = htr_pm_neutronics_ss.i
+    cli_args = "Outputs/exodus=false"
     csvdiff = 'htr_pm_griffin_ss_out.csv htr_pm_griffin_ss_out_flow0.csv'
     prereq = 'neutronics_syntax_SS'
     executable_pattern = 'blue_crab*'
     # 420s on M4 on 8 cores
     # 800s on civet on 16 cores
-    max_time = 1200
+    max_time = 1600
     min_parallel = 16
     # XS branching ratio warning
     allow_warnings = true
