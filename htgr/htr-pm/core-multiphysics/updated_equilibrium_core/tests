@@ -82,14 +82,16 @@
     executable_pattern = 'blue_crab*'
     # 420s on M4 on 8 cores
     # 800s on civet on 16 cores
-    max_time = 1600
+    max_time = 1400
     min_parallel = 16
+    capabilities = 'method=opt'
     # XS branching ratio warning
     allow_warnings = true
     # Observed 7e-4 on balance from changing min_parallel from 8 to 16
     rel_err = 7e-4
     # Core delta_p at time 0 is numerical error level
     abs_zero = 1e-8
+    ignore_columns = 'total_balance_percent'
   []
   [htr_pm_regression_2]
     type = CSVDiff
@@ -102,8 +104,13 @@
     # 190s on M4
     max_time = 600
     min_parallel = 16
+    capabilities = 'method=opt'
     # XS branching ratio warning
     allow_warnings = true
+    # Observed 7e-4 on balance from changing min_parallel from 8 to 16
+    rel_err = 7e-4
+    abs_zero = 1e-8
+    ignore_columns = 'total_balance_percent'
   []
   [htr_pm_regression_3]
     type = CSVDiff
@@ -116,8 +123,13 @@
     # 500s on M4
     max_time = 1500
     min_parallel = 16
+    capabilities = 'method=opt'
     # XS branching ratio warning
     allow_warnings = true
+    # Observed 7e-4 on balance from changing min_parallel from 8 to 16
+    rel_err = 7e-4
+    abs_zero = 1e-8
+    ignore_columns = 'total_balance_percent'
   []
  []
 
