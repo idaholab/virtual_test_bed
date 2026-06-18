@@ -14,6 +14,7 @@ lfs_include:
   - htgr/httr
   - htgr/gpbr200
   - htgr/open-xe100
+  - htgr/htr-pm/core-multiphysics
   - sfr/vtr
   - sfr/sefor
   - microreactors/gcmr/assembly/MESH

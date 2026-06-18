@@ -8,4 +8,5 @@ lfs_include:
   - microreactors/KRUSTY
   - htgr/pbmr400
   - htgr/open-xe100
+  - htgr/htr-pm/core-multiphysics
   - sfr/vtr

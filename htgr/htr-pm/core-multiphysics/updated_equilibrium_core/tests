@@ -4,7 +4,8 @@
     type = RunApp
     input = 'htr_pm_neutronics_ss.i'
     check_input = True
-    executable_pattern = 'griffin*|blue_crab*|dire_wolf*|fenix*'
+    executable_pattern = 'blue_crab*|fenix*'
+    # This does not remove the pebble creation, and thus we need to use blue_crab
     cli_args = "MultiApps/active='' Transfers/active=''"
     # XS branching ratio warning
     allow_warnings = true
@@ -15,7 +16,7 @@
     type = RunApp
     input = 'htr_pm_neutronics_tr_null.i'
     check_input = True
-    executable_pattern = 'griffin*|blue_crab*|dire_wolf*|fenix*'
+    executable_pattern = 'blue_crab*|fenix*'
     # need a checkpoint
     prereq = 'htr_pm_regression_1'
     cli_args = "MultiApps/active='' Transfers/active=''"
@@ -28,7 +29,7 @@
     type = RunApp
     input = 'htr_pm_neutronics_tr_dlofc.i'
     check_input = True
-    executable_pattern = 'griffin*|blue_crab*|dire_wolf*|fenix*'
+    executable_pattern = 'blue_crab*|fenix*'
     # need a checkpoint
     prereq = 'htr_pm_regression_1'
     cli_args = "MultiApps/active='' Transfers/active=''"
@@ -41,7 +42,7 @@
     type = RunApp
     input = 'htr-pm-flow-fv-ss.i'
     check_input = True
-    executable_pattern = 'griffin*|blue_crab*|dire_wolf*|fenix*'
+    executable_pattern = 'blue_crab*|pronghorn*|fenix*'
     # warning from setting fp in porous media physics through global parameters
     allow_warnings = true
   []
@@ -49,7 +50,7 @@
     type = RunApp
     input = 'htr-pm-flow-fv-tr-null.i'
     check_input = True
-    executable_pattern = 'griffin*|blue_crab*|dire_wolf*|fenix*'
+    executable_pattern = 'blue_crab*|fenix*'
     # need a checkpoint
     prereq = 'htr_pm_regression_1'
     # warning from setting fp in porous media physics through global parameters
@@ -59,7 +60,7 @@
     type = RunApp
     input = 'htr-pm-flow-fv-tr-dlofc.i'
     check_input = True
-    executable_pattern = 'griffin*|blue_crab*|dire_wolf*|fenix*'
+    executable_pattern = 'blue_crab*|fenix*'
     # need a checkpoint
     prereq = 'htr_pm_regression_1'
     # warning from setting fp in porous media physics through global parameters
@@ -69,7 +70,7 @@
     type = RunApp
     input = 'pebble_triso_ss.i'
     check_input = True
-    executable_pattern = 'griffin*|blue_crab*|dire_wolf*|fenix*'
+    executable_pattern = 'blue_crab*|fenix*'
   []
 
   # Regression tests
