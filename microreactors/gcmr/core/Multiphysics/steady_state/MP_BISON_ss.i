@@ -343,7 +343,7 @@ coolant_full_points_filename = '../component_positions/cc_positions_sixth.txt'
     execute_on = 'INITIAL TIMESTEP_END'
     max_procs_per_app = 1
     output_in_position = true
-    cli_args = "AuxKernels/scale_htc/function='0.997090723*htc'"
+    cli_args = "AuxKernels/scale_htc/expression='0.997090723*htc'"
     # cli_args: this is a conversion to help with the energy balance.
     sub_cycling = true
   []
@@ -506,5 +506,6 @@ coolant_full_points_filename = '../component_positions/cc_positions_sixth.txt'
   [cp]
     type = Checkpoint
     wall_time_interval = '300' # Only write a checkpoint file every 5 minutes of wall time
+    execute_on = FINAL
   []
 []

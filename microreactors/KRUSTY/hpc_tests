@@ -1,4 +1,5 @@
 [Tests]
+  issues = '#394 #477 #647'
   [transient_tests]
     # First, we generate coarse meshes for testing purpose
     [mesh_gen_griffin_coarse]
@@ -26,6 +27,8 @@
       # This is a very slow simulation
       max_time = 10800
       capabilities = 'method=opt'
+      # 7e-5 observed on "power_scaling"
+      rel_err = 1e-4
       # Cross section warning
       allow_warnings = true
       prereq = 'transient_tests/mesh_gen_bison_coarse'

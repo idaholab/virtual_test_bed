@@ -1,4 +1,5 @@
 [Tests]
+  issues = '#600'
   [coupling]
     type = CSVDiff
     input = gpbr200_ss_gfnk_reactor.i
@@ -11,6 +12,7 @@
     max_parallel = 32
     allow_warnings = true # Cross section and packing fraction warnings
     max_time = 1200 # About 3x predicted run-time
+    # Should be enough
     hpc_mem_per_cpu = 8G
   []
 []

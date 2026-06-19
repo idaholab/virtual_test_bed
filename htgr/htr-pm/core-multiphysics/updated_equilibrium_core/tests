@@ -1,0 +1,136 @@
+[Tests]
+  # Individual steady syntax checks
+  [neutronics_syntax_SS]
+    type = RunApp
+    input = 'htr_pm_neutronics_ss.i'
+    check_input = True
+    executable_pattern = 'blue_crab*|fenix*'
+    # This does not remove the pebble creation, and thus we need to use blue_crab
+    cli_args = "MultiApps/active='' Transfers/active=''"
+    # XS branching ratio warning
+    allow_warnings = true
+    min_parallel = 4
+    max_time = 400
+  []
+  [neutronics_syntax_null]
+    type = RunApp
+    input = 'htr_pm_neutronics_tr_null.i'
+    check_input = True
+    executable_pattern = 'blue_crab*|fenix*'
+    # need a checkpoint
+    prereq = 'htr_pm_regression_1'
+    cli_args = "MultiApps/active='' Transfers/active=''"
+    # XS branching ratio warning
+    allow_warnings = true
+    min_parallel = 4
+    max_time = 400
+  []
+  [neutronics_syntax_dlofc]
+    type = RunApp
+    input = 'htr_pm_neutronics_tr_dlofc.i'
+    check_input = True
+    executable_pattern = 'blue_crab*|fenix*'
+    # need a checkpoint
+    prereq = 'htr_pm_regression_1'
+    cli_args = "MultiApps/active='' Transfers/active=''"
+    # XS branching ratio warning
+    allow_warnings = true
+    min_parallel = 4
+    max_time = 400
+  []
+  [flow_syntax_fv_ss]
+    type = RunApp
+    input = 'htr-pm-flow-fv-ss.i'
+    check_input = True
+    executable_pattern = 'blue_crab*|pronghorn*|fenix*'
+    # warning from setting fp in porous media physics through global parameters
+    allow_warnings = true
+  []
+  [flow_syntax_fv_null]
+    type = RunApp
+    input = 'htr-pm-flow-fv-tr-null.i'
+    check_input = True
+    executable_pattern = 'blue_crab*|fenix*'
+    # need a checkpoint
+    prereq = 'htr_pm_regression_1'
+    # warning from setting fp in porous media physics through global parameters
+    allow_warnings = true
+  []
+  [flow_syntax_fv_dlofc]
+    type = RunApp
+    input = 'htr-pm-flow-fv-tr-dlofc.i'
+    check_input = True
+    executable_pattern = 'blue_crab*|fenix*'
+    # need a checkpoint
+    prereq = 'htr_pm_regression_1'
+    # warning from setting fp in porous media physics through global parameters
+    allow_warnings = true
+  []
+  [pebble_heat_conduction]
+    type = RunApp
+    input = 'pebble_triso_ss.i'
+    check_input = True
+    executable_pattern = 'blue_crab*|fenix*'
+  []
+
+  # Regression tests
+  [htr_pm_regression_1]
+    type = CSVDiff
+    input = htr_pm_neutronics_ss.i
+    cli_args = "Outputs/exodus=false"
+    csvdiff = 'htr_pm_griffin_ss_out.csv htr_pm_griffin_ss_out_flow0.csv'
+    prereq = 'neutronics_syntax_SS'
+    executable_pattern = 'blue_crab*'
+    # 420s on M4 on 8 cores
+    # 800s on civet on 16 cores
+    max_time = 1400
+    min_parallel = 16
+    capabilities = 'method=opt'
+    # XS branching ratio warning
+    allow_warnings = true
+    # Observed 7e-4 on balance from changing min_parallel from 8 to 16
+    rel_err = 7e-4
+    # Core delta_p at time 0 is numerical error level
+    abs_zero = 1e-8
+    ignore_columns = 'total_balance_percent'
+  []
+  [htr_pm_regression_2]
+    type = CSVDiff
+    input = htr_pm_neutronics_tr_null.i
+    csvdiff = 'htr_pm_griffin_tr_null_out.csv htr_pm_griffin_tr_null_out_flow0.csv'
+    cli_args = 'Executioner/num_steps=3 Executioner/fixed_point_abs_tol=1e-3'
+    # need a checkpoint
+    prereq = 'htr_pm_regression_1 flow_syntax_fv_null'
+    executable_pattern = 'blue_crab*'
+    # 190s on M4
+    max_time = 600
+    min_parallel = 16
+    capabilities = 'method=opt'
+    # XS branching ratio warning
+    allow_warnings = true
+    # Observed 7e-4 on balance from changing min_parallel from 8 to 16
+    rel_err = 7e-4
+    abs_zero = 1e-8
+    ignore_columns = 'total_balance_percent'
+  []
+  [htr_pm_regression_3]
+    type = CSVDiff
+    input = htr_pm_neutronics_tr_dlofc.i
+    cli_args = 'Executioner/num_steps=5 Executioner/start_time=0.95 Executioner/fixed_point_abs_tol=1e-3 MultiApps/flow/cli_args=Executioner/start_time=0.95'
+    csvdiff = 'htr_pm_griffin_tr_dlofc_out.csv  htr_pm_griffin_tr_dlofc_out_flow0.csv'
+    # need a checkpoint
+    prereq = 'htr_pm_regression_1 flow_syntax_fv_dlofc'
+    executable_pattern = 'blue_crab*'
+    # 500s on M4
+    max_time = 1500
+    min_parallel = 16
+    capabilities = 'method=opt'
+    # XS branching ratio warning
+    allow_warnings = true
+    # Observed 7e-4 on balance from changing min_parallel from 8 to 16
+    rel_err = 7e-4
+    abs_zero = 1e-8
+    ignore_columns = 'total_balance_percent'
+  []
+ []
+

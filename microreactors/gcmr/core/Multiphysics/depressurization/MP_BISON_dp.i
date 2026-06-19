@@ -324,11 +324,11 @@ coolant_full_points_filename = '../component_positions/cc_positions_sixth.txt'
     app_type = ThermalHydraulicsApp
     positions_objects = cc_positions
     bounding_box_padding = ' 0.1 0.1 0.1'
-    input_files = 'gcmr_SAM_full.i'
+    input_files = 'MP_SAM_dp.i'
     execute_on = 'INITIAL TIMESTEP_END'
     max_procs_per_app = 1
     output_in_position = true
-    cli_args = AuxKernels/scale_htc/function='0.997090723*htc'
+    cli_args = AuxKernels/scale_htc/expression='0.997090723*htc'
     # cli_args: this is a conversion to help with the energy balance.
     sub_cycling = false
   []
@@ -470,7 +470,7 @@ coolant_full_points_filename = '../component_positions/cc_positions_sixth.txt'
   [total_heat]
     type = ParsedPostprocessor
     pp_names = 'mirror_heat ext_heat cc_heat'
-    function = 'mirror_heat+ext_heat+cc_heat'
+    expression = 'mirror_heat+ext_heat+cc_heat'
   []
 []
 
