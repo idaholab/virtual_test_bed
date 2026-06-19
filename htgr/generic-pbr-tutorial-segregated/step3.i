@@ -71,18 +71,14 @@ flow_vel = '${fparse mass_flow_rate / flow_area / density}'
     porosity = porosity
     p_diffusion_kernel = p_diffusion
     pressure_baffle_sidesets = baffle
-    pressure_baffle_relaxation = 0.1
-    debug_baffle = false
+    pressure_baffle_relaxation = 1.0
     use_interpolated_density_in_bernoulli_jump = true
     use_flux_velocity_reconstruction = true
     use_reconstructed_pressure_gradient = true
     flux_velocity_reconstruction_relaxation = 1.0
     flux_velocity_reconstruction_zero_flux_sidesets = 'right left'
-    pressure_gradient_limiter = baffle
-    pressure_gradient_limiter_blend = 0.0
-    use_corrected_pressure_gradient = true
-    reconstructed_pressure_gradient_feedback_relaxation = 1.0
-    pressure_projection_method = consistent
+    use_corrected_pressure_gradient = false
+    reconstructed_pressure_gradient_feedback_relaxation = 0.2
   []
 []
 
@@ -92,11 +88,13 @@ flow_vel = '${fparse mass_flow_rate / flow_area / density}'
     solver_sys = u_system
     initial_condition = 0
   []
+
   [superficial_v]
     type = MooseLinearVariableFVReal
     solver_sys = v_system
     initial_condition = -${flow_vel}
   []
+
   [pressure]
     type = MooseLinearVariableFVReal
     solver_sys = pressure_system
@@ -162,6 +160,7 @@ flow_vel = '${fparse mass_flow_rate / flow_area / density}'
     porosity_outside_divergence = true
     use_two_point_stress_transmissibility = true
   []
+
   [v_advection]
     type = PorousLinearWCNSFVMomentumFlux
     variable = superficial_v
@@ -175,6 +174,7 @@ flow_vel = '${fparse mass_flow_rate / flow_area / density}'
     porosity_outside_divergence = true
     use_two_point_stress_transmissibility = true
   []
+
   [u_pressure]
     type = LinearFVMomentumPressureUO
     variable = superficial_u
@@ -183,6 +183,7 @@ flow_vel = '${fparse mass_flow_rate / flow_area / density}'
     porosity = porosity
     use_corrected_gradient = true
   []
+
   [v_pressure]
     type = LinearFVMomentumPressureUO
     variable = superficial_v
@@ -191,6 +192,7 @@ flow_vel = '${fparse mass_flow_rate / flow_area / density}'
     porosity = porosity
     use_corrected_gradient = true
   []
+
   [u_friction]
     type = LinearFVMomentumPorousFriction
     variable = superficial_u
@@ -203,6 +205,7 @@ flow_vel = '${fparse mass_flow_rate / flow_area / density}'
     v = superficial_v
     momentum_component = 'x'
   []
+
   [v_friction]
     type = LinearFVMomentumPorousFriction
     variable = superficial_v
@@ -215,14 +218,15 @@ flow_vel = '${fparse mass_flow_rate / flow_area / density}'
     v = superficial_v
     momentum_component = 'y'
   []
+
   [p_diffusion]
     type = LinearFVAnisotropicDiffusionJump
     variable = pressure
     diffusion_tensor = Ainv
     rhie_chow_user_object = rc
     use_nonorthogonal_correction = false
-    debug_baffle_jump = false
   []
+
   [HbyA_divergence]
     type = LinearFVDivergence
     variable = pressure
@@ -398,7 +402,7 @@ flow_vel = '${fparse mass_flow_rate / flow_area / density}'
   pressure_variable_relaxation = 1.0
   num_iterations = 1000
   pressure_absolute_tolerance = 1e-8
-  momentum_absolute_tolerance = '1e-3 1e-8'
+  momentum_absolute_tolerance = '1e-4 1e-8'
   momentum_petsc_options_iname = '-pc_type -pc_hypre_type'
   momentum_petsc_options_value = 'hypre boomeramg'
   pressure_petsc_options_iname = '-pc_type -pc_hypre_type'
