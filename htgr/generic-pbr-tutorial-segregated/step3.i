@@ -5,9 +5,12 @@
 # Idaho Falls, INL, August 15, 2023 04:03 PM
 # Author(s): Joseph R. Brennan, Dr. Sebastian Schunert, Dr. Mustafa K. Jaradat
 #            and Dr. Paolo Balestra.
+# ------------------------------------------------------------------------------
+# Converted to the segregated SIMPLE solver by Alberic Seydoux on Jun 18, 2026.
 # ==============================================================================
-bed_height = 10.0
+advected_interp_method = 'upwind'
 bed_radius = 1.2
+bed_height = 10.0
 cavity_height = 0.5
 bed_porosity = 0.39
 outlet_pressure = 5.5e6
@@ -36,6 +39,14 @@ flow_vel = '${fparse mass_flow_rate / flow_area / density}'
     new_block = 'bed cavity'
     input = gen
   []
+
+  [baffle]
+    type = SideSetsBetweenSubdomainsGenerator
+    primary_block = bed
+    paired_block = cavity
+    new_boundary = baffle
+    input = rename_blocks
+  []
   coord_type = RZ
 []
 
@@ -45,41 +56,62 @@ flow_vel = '${fparse mass_flow_rate / flow_area / density}'
   []
 []
 
-[Modules]
-  [NavierStokesFV]
-    # general control parameters
-    compressibility = 'weakly-compressible'
-    porous_medium_treatment = true
+[Problem]
+  linear_sys_names = 'u_system v_system pressure_system'
+  previous_nl_solution_required = true
+[]
 
-    # material property parameters
-    density = rho
-    dynamic_viscosity = mu
-
-    # porous medium treatment parameters
+[UserObjects]
+  [rc]
+    type = PorousRhieChowMassFlux
+    u = superficial_u
+    v = superficial_v
+    pressure = pressure
+    rho = rho_aux
     porosity = porosity
-    porosity_interface_pressure_treatment = 'bernoulli'
+    p_diffusion_kernel = p_diffusion
+    pressure_baffle_sidesets = baffle
+    pressure_baffle_relaxation = 0.1
+    debug_baffle = false
+    use_interpolated_density_in_bernoulli_jump = true
+    use_flux_velocity_reconstruction = true
+    use_reconstructed_pressure_gradient = true
+    flux_velocity_reconstruction_relaxation = 1.0
+    flux_velocity_reconstruction_zero_flux_sidesets = 'right left'
+    pressure_gradient_limiter = baffle
+    pressure_gradient_limiter_blend = 0.0
+    use_corrected_pressure_gradient = true
+    reconstructed_pressure_gradient_feedback_relaxation = 1.0
+    pressure_projection_method = consistent
+  []
+[]
 
-    # initial conditions
-    initial_velocity = '1e-6 1e-6 0'
-    initial_pressure = 5.4e6
-
-    # boundary conditions
-    inlet_boundaries = top
-    momentum_inlet_types = fixed-velocity
-    momentum_inlet_functors = '0 -${flow_vel}'
-    wall_boundaries = 'left right'
-    momentum_wall_types = 'slip slip'
-    outlet_boundaries = bottom
-    momentum_outlet_types = fixed-pressure
-    pressure_functors = ${outlet_pressure}
-
-    # friction control parameters
-    friction_types = 'darcy forchheimer'
-    friction_coeffs = 'Darcy_coefficient Forchheimer_coefficient'
+[Variables]
+  [superficial_u]
+    type = MooseLinearVariableFVReal
+    solver_sys = u_system
+    initial_condition = 0
+  []
+  [superficial_v]
+    type = MooseLinearVariableFVReal
+    solver_sys = v_system
+    initial_condition = -${flow_vel}
+  []
+  [pressure]
+    type = MooseLinearVariableFVReal
+    solver_sys = pressure_system
+    initial_condition = 5.4e6
   []
 []
 
 [FunctorMaterials]
+  [speed_material]
+    type = PINSFVSpeedFunctorMaterial
+    superficial_vel_x = superficial_u
+    superficial_vel_y = superficial_v
+    porosity = porosity
+  []
+
   [fluid_props_to_mat_props]
     type = GeneralFunctorFluidProps
     fp = fluid_properties_obj
@@ -88,6 +120,7 @@ flow_vel = '${fparse mass_flow_rate / flow_area / density}'
     T_fluid = ${T_fluid}
     speed = speed
     characteristic_length = ${pebble_diameter}
+    neglect_derivatives_of_density_time_derivative = false
   []
 
   [drag_pebble_bed]
@@ -115,56 +148,198 @@ flow_vel = '${fparse mass_flow_rate / flow_area / density}'
   []
 []
 
-[Executioner]
-  type = Transient
-  end_time = 100
-  [TimeStepper]
-    type = IterationAdaptiveDT
-    iteration_window = 2
-    optimal_iterations = 8
-    cutback_factor = 0.8
-    growth_factor = 2
-    dt = 1e-3
+[LinearFVKernels]
+  [u_advection]
+    type = PorousLinearWCNSFVMomentumFlux
+    variable = superficial_u
+    advected_interp_method = ${advected_interp_method}
+    mu = mu
+    u = superficial_u
+    v = superficial_v
+    momentum_component = 'x'
+    rhie_chow_user_object = rc
+    use_nonorthogonal_correction = false
+    porosity_outside_divergence = true
+    use_two_point_stress_transmissibility = true
   []
-  dtmax = 5
-  line_search = l2
-  solve_type = 'NEWTON'
-  petsc_options_iname = '-pc_type -pc_factor_shift_type -pc_factor_mat_solver_package'
-  petsc_options_value = 'lu NONZERO superlu_dist'
-  nl_rel_tol = 1e-8
-  nl_abs_tol = 1e-5
-  nl_max_its = 15
+  [v_advection]
+    type = PorousLinearWCNSFVMomentumFlux
+    variable = superficial_v
+    advected_interp_method = ${advected_interp_method}
+    mu = mu
+    u = superficial_u
+    v = superficial_v
+    momentum_component = 'y'
+    rhie_chow_user_object = rc
+    use_nonorthogonal_correction = false
+    porosity_outside_divergence = true
+    use_two_point_stress_transmissibility = true
+  []
+  [u_pressure]
+    type = LinearFVMomentumPressureUO
+    variable = superficial_u
+    momentum_component = 'x'
+    rhie_chow_user_object = rc
+    porosity = porosity
+    use_corrected_gradient = true
+  []
+  [v_pressure]
+    type = LinearFVMomentumPressureUO
+    variable = superficial_v
+    momentum_component = 'y'
+    rhie_chow_user_object = rc
+    porosity = porosity
+    use_corrected_gradient = true
+  []
+  [u_friction]
+    type = LinearFVMomentumPorousFriction
+    variable = superficial_u
+    Forchheimer_name = Forchheimer_coefficient
+    Darcy_name = Darcy_coefficient
+    porosity = porosity
+    rho = rho_aux
+    mu = mu
+    u = superficial_u
+    v = superficial_v
+    momentum_component = 'x'
+  []
+  [v_friction]
+    type = LinearFVMomentumPorousFriction
+    variable = superficial_v
+    Forchheimer_name = Forchheimer_coefficient
+    Darcy_name = Darcy_coefficient
+    porosity = porosity
+    rho = rho_aux
+    mu = mu
+    u = superficial_u
+    v = superficial_v
+    momentum_component = 'y'
+  []
+  [p_diffusion]
+    type = LinearFVAnisotropicDiffusionJump
+    variable = pressure
+    diffusion_tensor = Ainv
+    rhie_chow_user_object = rc
+    use_nonorthogonal_correction = false
+    debug_baffle_jump = false
+  []
+  [HbyA_divergence]
+    type = LinearFVDivergence
+    variable = pressure
+    face_flux = HbyA
+    force_boundary_execution = true
+  []
+[]
+
+[LinearFVBCs]
+  [top_u]
+    type = LinearFVAdvectionDiffusionFunctorDirichletBC
+    boundary = top
+    variable = superficial_u
+    functor = 0.0
+  []
+
+  [bottom_u]
+    type = LinearFVAdvectionDiffusionOutflowBC
+    boundary = bottom
+    variable = superficial_u
+    use_two_term_expansion = false
+  []
+
+  [top_v]
+    type = LinearFVAdvectionDiffusionFunctorDirichletBC
+    boundary = top
+    variable = superficial_v
+    functor = -${flow_vel}
+  []
+
+  [bottom_v]
+    type = LinearFVAdvectionDiffusionOutflowBC
+    boundary = bottom
+    variable = superficial_v
+    use_two_term_expansion = false
+  []
+
+  [symmetry-u]
+    type = LinearFVVelocitySymmetryBC
+    boundary = 'left right'
+    variable = superficial_u
+    u = superficial_u
+    v = superficial_v
+    momentum_component = x
+  []
+
+  [symmetry-v]
+    type = LinearFVVelocitySymmetryBC
+    boundary = 'left right'
+    variable = superficial_v
+    u = superficial_u
+    v = superficial_v
+    momentum_component = y
+  []
+
+  [top_p]
+    type = LinearFVExtrapolatedPressureBC
+    boundary = top
+    variable = pressure
+    use_two_term_expansion = true
+  []
+
+  [bottom_p]
+    type = LinearFVAdvectionDiffusionFunctorDirichletBC
+    boundary = bottom
+    variable = pressure
+    functor = ${outlet_pressure}
+  []
+
+  [pressure-symmetry]
+    type = LinearFVPressureSymmetryBC
+    boundary = 'left right'
+    variable = pressure
+    HbyA_flux = 'HbyA'
+  []
+[]
+
+[AuxVariables]
+  [rho_aux]
+    type = MooseLinearVariableFVReal
+  []
+[]
+
+[AuxKernels]
+  [assign_rho_aux]
+    type = FunctorAux
+    variable = rho_aux
+    functor = rho
+    execute_on = 'INITIAL NONLINEAR'
+  []
 []
 
 [Postprocessors]
   [inlet_mfr]
-    type = VolumetricFlowRate
-    advected_quantity = rho
-    vel_x = 'superficial_vel_x'
-    vel_y = 'superficial_vel_y'
-    boundary = 'top'
-    rhie_chow_user_object = pins_rhie_chow_interpolator
+    type = RhieChowMassFlowRate
+    boundary = top
+    rhie_chow_user_object = rc
   []
 
   [outlet_mfr]
-    type = VolumetricFlowRate
-    advected_quantity = rho
-    vel_x = 'superficial_vel_x'
-    vel_y = 'superficial_vel_y'
-    boundary = 'bottom'
-    rhie_chow_user_object = pins_rhie_chow_interpolator
+    type = RhieChowMassFlowRate
+    boundary = bottom
+    rhie_chow_user_object = rc
   []
 
   [inlet_pressure]
-    type = SideAverageValue
-    variable = pressure
+    type = SideAverageFunctorPostprocessor
+    functor = pressure
+    functor_argument = face
     boundary = top
     outputs = none
   []
 
   [outlet_pressure]
-    type = SideAverageValue
-    variable = pressure
+    type = SideAverageFunctorPostprocessor
+    functor = pressure
+    functor_argument = face
     boundary = bottom
     outputs = none
   []
@@ -210,6 +385,28 @@ flow_vel = '${fparse mass_flow_rate / flow_area / density}'
   []
 []
 
+[Executioner]
+  type = SIMPLE
+  momentum_l_abs_tol = 1e-14
+  pressure_l_abs_tol = 1e-14
+  momentum_l_tol = 0
+  pressure_l_tol = 0
+  rhie_chow_user_object = rc
+  momentum_systems = 'u_system v_system'
+  pressure_system = pressure_system
+  momentum_equation_relaxation = 0.4
+  pressure_variable_relaxation = 1.0
+  num_iterations = 1000
+  pressure_absolute_tolerance = 1e-8
+  momentum_absolute_tolerance = '1e-3 1e-8'
+  momentum_petsc_options_iname = '-pc_type -pc_hypre_type'
+  momentum_petsc_options_value = 'hypre boomeramg'
+  pressure_petsc_options_iname = '-pc_type -pc_hypre_type'
+  pressure_petsc_options_value = 'hypre boomeramg'
+  continue_on_max_its = false
+[]
+
 [Outputs]
   exodus = true
+  csv = true
 []
