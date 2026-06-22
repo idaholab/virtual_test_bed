@@ -50,7 +50,15 @@ The effective thermal conductivities are defined using `FunctorGapHeatTransferEf
 
 !listing htgr/generic-pbr-tutorial-segregated/step8.i start=effective_thermal_conductivity_barrel_gap end=kappa_f_pebble_bed
 
-In this object:
+The SIMPLE solid-energy solve uses the radial component of this effective
+conductivity. The component is extracted into `effective_thermal_conductivity_x`
+and used as the scalar diffusion coefficient:
+
+!listing htgr/generic-pbr-tutorial-segregated/step8.i block=assign_effective_thermal_conductivity_x
+
+!listing htgr/generic-pbr-tutorial-segregated/step8.i block=solid_energy_diffusion
+
+In each gap object:
 
 - `gap_direction` is the coordinate direction pointing through the gap (i.e., connecting the two faces delimiting the gap),
 - `gap_conductivity_function` is the molecular thermal conductivity of the gas in the gap as a function of temperature,

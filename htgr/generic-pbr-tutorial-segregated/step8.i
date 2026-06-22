@@ -457,6 +457,12 @@ axial_coordinate_shift = 1.167
   []
 []
 
+[FVInterpolationMethods]
+  [harm]
+    type = FVHarmonicAverage
+  []
+[]
+
 [LinearFVKernels]
   [u_advection]
     type = PorousLinearWCNSFVMomentumFlux
@@ -575,11 +581,12 @@ axial_coordinate_shift = 1.167
   []
 
   [solid_energy_diffusion]
-    type = LinearFVAnisotropicDiffusion
+    type = LinearFVDiffusion
     variable = T_solid
-    diffusion_tensor = effective_thermal_conductivity
+    diffusion_coeff = effective_thermal_conductivity_x
     use_nonorthogonal_correction = false
     block = 'pebble_bed bottom_reflector side_reflector bottom_plenum upper_plenum riser control_rods carbon_bricks refl_barrel_gap core_barrel barrel_rpv_gap rpv'
+    coeff_interp_method = harm
   []
 
   [source]
@@ -1096,6 +1103,11 @@ axial_coordinate_shift = 1.167
     type = MooseLinearVariableFVReal
     block = 'pebble_bed cavity bottom_reflector bottom_plenum upper_plenum riser control_rods'
   []
+
+  [effective_thermal_conductivity_x]
+    type = MooseLinearVariableFVReal
+    block = 'pebble_bed bottom_reflector side_reflector bottom_plenum upper_plenum riser control_rods carbon_bricks refl_barrel_gap core_barrel barrel_rpv_gap rpv'
+  []
 []
 
 [AuxKernels]
@@ -1154,6 +1166,15 @@ axial_coordinate_shift = 1.167
     functor = kappa
     component = 2
     block = 'pebble_bed cavity bottom_reflector bottom_plenum upper_plenum riser control_rods'
+    execute_on = 'INITIAL NONLINEAR TIMESTEP_END'
+  []
+
+  [assign_effective_thermal_conductivity_x]
+    type = ADFunctorVectorElementalAux
+    variable = effective_thermal_conductivity_x
+    functor = effective_thermal_conductivity
+    component = 0
+    block = 'pebble_bed bottom_reflector side_reflector bottom_plenum upper_plenum riser control_rods carbon_bricks refl_barrel_gap core_barrel barrel_rpv_gap rpv'
     execute_on = 'INITIAL NONLINEAR TIMESTEP_END'
   []
 
