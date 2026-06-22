@@ -13,23 +13,30 @@ rho_f                  = 5.3305
 bed_porosity           = 0.39
 bottom_reflector_Dh    = 0.1
 c_drag_old             = 10
+
 cp_f                   = 5200
 pebble_diameter        = 0.06
+
 power_fn_scaling       = 0.9792628
 offset                 = -0.29119
 thermal_mass_scaling   = 0.01
 rho_s                  = 1780
 cp_s                   = 1697
+
 mass_flow_rate         = 64.3
 riser_inner_radius     = 1.701
 riser_outer_radius     = 1.871
 flow_area              = '${fparse pi * (riser_outer_radius * riser_outer_radius - riser_inner_radius * riser_inner_radius)}'
 flow_vel               = '${fparse mass_flow_rate / (flow_area * rho_f)}'
+
 riser_Dh               = 0.17
 control_rod_Dh         = 0.1
+
 T_inlet                = 533.25
 h_inlet                = '${fparse cp_f * T_inlet}'
+
 advected_interp_method = 'upwind'
+
 axial_coordinate_shift = 1.167
 top_core               = 10.9515
 
@@ -688,11 +695,6 @@ top_core               = 10.9515
     type = ParsedFunction
     expression = '${power_fn_scaling} * (-1.0612e4 * pow((y-${axial_coordinate_shift})+${offset}, 4) + 1.5963e5 * pow((y-${axial_coordinate_shift})+${offset}, 3)
                    -6.2993e5 * pow((y-${axial_coordinate_shift})+${offset}, 2) + 1.4199e6 * ((y-${axial_coordinate_shift})+${offset}) + 5.5402e4)'
-  []
-
-  [rho_parsed]
-    type = ParsedFunction
-    expression = 'if((y-${axial_coordinate_shift}) < 10, 2.65 + 0.11*exp(0.40*(y-${axial_coordinate_shift})), 8.60161)'
   []
 
 []
