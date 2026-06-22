@@ -15,6 +15,8 @@
            sponsor:ART;NRIC
            institution:INL
 
+A companion version of this tutorial using the Newton solver is available at [Generic Pebble Bed HTGR Tutorial with Newton](generic-pbr-tutorial/index.md).
+
 ## Setting up your environment
 
 Navigate to the right virtual test bed directory

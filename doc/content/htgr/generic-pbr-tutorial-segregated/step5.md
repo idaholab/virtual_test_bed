@@ -7,7 +7,7 @@ Step 5 makes the following changes to the model:
 
 ## Parameters
 
-The inlet temperature is changed to $533.25$ K and the mass flow rate is changed to $64.3$ kg/s. These changes are are made by modifying the header of the file:
+The inlet temperature is changed to $533.25$ K and the mass flow rate is changed to $64.3$ kg/s. These changes are made by modifying the header of the file:
 
 !listing htgr/generic-pbr-tutorial-segregated/step5.i start=bed_radius end=Mesh
 
