@@ -55,9 +55,8 @@ The postprocessor named `heat_source_integral` should return $2 \times 10^8$.
 
 Properties used by the equations are provided as functors. The helium properties
 come from `GeneralFunctorFluidProps`, while `LinearFVEnthalpyFunctorMaterial`
-recovers the fluid temperature from pressure and enthalpy. The same KTA drag and
-linear Peclet fluid conductivity correlations used by the Newton physics are
-kept as functor materials:
+recovers the fluid temperature from pressure and enthalpy. The KTA drag and
+linear Peclet fluid conductivity correlations are kept as functor materials:
 
 !listing htgr/generic-pbr-tutorial-segregated/step4.i start=fluid_props end=kappa_h_material
 
