@@ -1235,6 +1235,21 @@ axial_coordinate_shift = 1.167
     expression = 'abs(cr_mfr / inlet_mfr * 100)'
   []
 
+  # Temporary diagnostics for comparing Newton and SIMPLE Step 8.
+  # [T_fluid_max]
+  #   type = ElementExtremeValue
+  #   variable = T_fluid
+  #   value_type = max
+  #   block = 'pebble_bed cavity bottom_reflector bottom_plenum upper_plenum riser control_rods'
+  # []
+  #
+  # [T_solid_max]
+  #   type = ElementExtremeValue
+  #   variable = T_solid
+  #   value_type = max
+  #   block = 'pebble_bed bottom_reflector side_reflector bottom_plenum upper_plenum riser control_rods carbon_bricks refl_barrel_gap core_barrel barrel_rpv_gap rpv'
+  # []
+
   [inlet_pressure]
     type = SideAverageValue
     variable = pressure
@@ -1298,6 +1313,12 @@ axial_coordinate_shift = 1.167
     pp_names = 'outlet_temperature_flow outlet_mfr'
     expression = 'outlet_temperature_flow / outlet_mfr'
   []
+
+  # [T_fluid_outlet_avg]
+  #   type = ParsedPostprocessor
+  #   pp_names = 'mass_flux_weighted_Tf_out'
+  #   expression = 'mass_flux_weighted_Tf_out'
+  # []
 []
 
 [Outputs]
