@@ -254,7 +254,7 @@ P_out = 2.0e5 # Pa
   [subchannel_transfer]
     type = SCMSolutionTransfer
     to_multi_app = viz
-    variable = 'mdot SumWij P DP h T rho mu S displacement w_perim'
+    variable = 'mdot SumWij P DP h T rho mu S w_perim'
   []
 
   [pin_transfer]
