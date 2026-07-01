@@ -5,7 +5,7 @@
         input = 'HPMR_OneSixth_Core_meshgenerator_tri.i'
         exodiff = 'HPMR_OneSixth_Core_meshgenerator_tri_rotate_bdry.e'
         exodiff_opts = '-pedantic'
-        executable_pattern = 'griffin*|blue_crab*|dire_wolf*'
+        capabilities = 'griffinapp | bluecrabapp | direwolfapp'
         cli_args = "--mesh-only 'HPMR_OneSixth_Core_meshgenerator_tri_rotate_bdry.e'"
         recover = false
     []
@@ -14,7 +14,7 @@
         input = 'HPMR_OneSixth_finercdrum.i'
         exodiff = 'HPMR_OneSixth_finercdrum_tri.e'
         exodiff_opts = '-pedantic'
-        executable_pattern = 'griffin*|blue_crab*|dire_wolf*'
+        capabilities = 'griffinapp | bluecrabapp | direwolfapp'
         cli_args = "--mesh-only 'HPMR_OneSixth_finercdrum_tri.e'"
         recover = false
     []
@@ -23,7 +23,7 @@
         input = 'HPMR_OneSixth_Core_meshgenerator_tri_fine.i'
         exodiff = 'HPMR_OneSixth_Core_meshgenerator_tri_rotate_bdry_fine.e'
         exodiff_opts = '-pedantic'
-        executable_pattern = 'griffin*|blue_crab*|dire_wolf*'
+        capabilities = 'griffinapp | bluecrabapp | direwolfapp'
         cli_args = "--mesh-only 'HPMR_OneSixth_Core_meshgenerator_tri_rotate_bdry_fine.e'"
         recover = false
     []

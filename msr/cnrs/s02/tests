@@ -9,6 +9,6 @@
     min_parallel = 4
     # Missing absorption cross section
     allow_warnings = true
-    executable_pattern = 'griffin*'
+    capabilities = 'griffinapp'
   []
 []

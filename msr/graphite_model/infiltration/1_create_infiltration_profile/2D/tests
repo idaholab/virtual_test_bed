@@ -4,7 +4,7 @@
     type = Exodiff
     input = 2D_CreateInfiltrationProfile.i
     exodiff = 2D_CreateInfiltrationProfile_out.e
-    executable_pattern = 'combined*|grizzly*'
+    capabilities = 'combinedapp | grizzlyapp'
     allow_warnings = true
   []
 []

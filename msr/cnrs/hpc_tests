@@ -10,7 +10,7 @@
     max_time = 3600
     # Missing absorption cross section
     allow_warnings = true
-    executable_pattern = 'griffin*'
+    capabilities = 'griffinapp'
   []
   [s13]
     type = CSVDiff
@@ -24,7 +24,7 @@
     rel_err = 4e-5
     # Missing absorption cross section
     allow_warnings = true
-    executable_pattern = 'griffin*'
+    capabilities = 'griffinapp'
   []
   [s14]
     type = CSVDiff
@@ -40,7 +40,7 @@
     rel_err = 2e-5
     # Missing absorption cross section
     allow_warnings = true
-    executable_pattern = 'griffin*'
+    capabilities = 'griffinapp'
   []
   [s21]
     type = CSVDiff
@@ -53,6 +53,6 @@
     max_time = 1500
     # Missing absorption cross section
     allow_warnings = true
-    executable_pattern = 'griffin*'
+    capabilities = 'griffinapp'
   []
 []
