@@ -68,7 +68,7 @@ non_hp_yh_blocks = '${fuel_blocks} ${air_blocks} ${b4c_blocks} ${mono_blocks} ${
     coarse_mesh = coarse_mesh
     extra_element_id_name = coarse_element_id
   []
- uniform_refine = 0
+  uniform_refine = 0
   parallel_type = distributed
   displacements = 'disp_x disp_y disp_z'
 []
@@ -111,8 +111,8 @@ non_hp_yh_blocks = '${fuel_blocks} ${air_blocks} ${b4c_blocks} ${mono_blocks} ${
   equation_type = transient
 
   G = 11
-  VacuumBoundary = '10000 2000 3000'
-  ReflectingBoundary = '147'
+  VacuumBoundary = 'side top bottom'
+  ReflectingBoundary = 'side_mirror'
 
   [sn]
     scheme = DFEM-SN
@@ -137,11 +137,6 @@ non_hp_yh_blocks = '${fuel_blocks} ${air_blocks} ${b4c_blocks} ${mono_blocks} ${
     order = CONSTANT
     family = MONOMIAL
   []
-  [nH]
-    # initial_condition = 1.94
-    order = CONSTANT
-    family = MONOMIAL
-  []
   [disp_x]
   []
   [disp_y]
@@ -157,12 +152,6 @@ non_hp_yh_blocks = '${fuel_blocks} ${air_blocks} ${b4c_blocks} ${mono_blocks} ${
     block = ${hp_blocks}
     user_object = Tf_avg
   []
-  [hp_nH]
-    type = SpatialUserObjectAux
-    variable = nH
-    block = ${hp_blocks}
-    user_object = nH_avg
-  []
 []
 
 [UserObjects]
@@ -172,16 +161,6 @@ non_hp_yh_blocks = '${fuel_blocks} ${air_blocks} ${b4c_blocks} ${mono_blocks} ${
     direction = z
     num_layers = 100
     block = ${non_hp_fuel_blocks}
-    # execute_on = 'LINEAR TIMESTEP_END'
-    # We probably do not need to do it at every linear iteration
-    execute_on = 'TIMESTEP_BEGIN'
-  []
-  [nH_avg]
-    type = LayeredAverage
-    variable = nH
-    direction = z
-    num_layers = 100
-    block = ${non_hp_yh_blocks}
     # execute_on = 'LINEAR TIMESTEP_END'
     # We probably do not need to do it at every linear iteration
     execute_on = 'TIMESTEP_BEGIN'
@@ -196,8 +175,8 @@ non_hp_yh_blocks = '${fuel_blocks} ${air_blocks} ${b4c_blocks} ${mono_blocks} ${
   is_meter = true
   plus = true
   dbgmat = false
-  grid_names = 'Tfuel' # Hdens - SWIFT
-  grid_variables = 'Tf' # nH - SWIFT
+  grid_names = 'Tfuel'
+  grid_variables = 'Tf'
 []
 
 [Materials]
@@ -305,26 +284,6 @@ non_hp_yh_blocks = '${fuel_blocks} ${air_blocks} ${b4c_blocks} ${mono_blocks} ${
     value_type = min
     variable = Tf
     block = 'fuel_quad fuel_tri'
-    execute_on = 'initial timestep_end'
-  []
-  [pp_nH_avg]
-    type = ElementAverageValue
-    variable = nH
-    block = 'moderator_quad moderator_tri'
-    execute_on = 'initial timestep_end'
-  []
-  [pp_nH_max]
-    type = ElementExtremeValue
-    value_type = max
-    variable = nH
-    block = 'moderator_quad moderator_tri'
-    execute_on = 'initial timestep_end'
-  []
-  [pp_nH_min]
-    type = ElementExtremeValue
-    value_type = min
-    variable = nH
-    block = 'moderator_quad moderator_tri'
     execute_on = 'initial timestep_end'
   []
   [_dt]

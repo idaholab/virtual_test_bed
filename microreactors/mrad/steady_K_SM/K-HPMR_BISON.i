@@ -48,7 +48,7 @@ non_hp_blocks = '${fuel_blocks} ${air_blocks} ${b4c_blocks} ${mono_blocks} ${mod
 [Mesh]
   [fmg]
     type = FileMeshGenerator
-    file = '../mesh/gold/HPMR_OneSixth_Core_meshgenerator_tri_hp_fine_in.e'
+    file = '../mesh/gold/HPMR_OneSixth_Core_meshgenerator_tri_hp_fine.e'
   []
   parallel_type = distributed
 []
@@ -56,6 +56,7 @@ non_hp_blocks = '${fuel_blocks} ${air_blocks} ${b4c_blocks} ${mono_blocks} ${mod
 [Variables]
   [temp]
     initial_condition = 800
+    block = ${non_hp_blocks}
   []
   [disp_x]
   []
@@ -66,11 +67,6 @@ non_hp_blocks = '${fuel_blocks} ${air_blocks} ${b4c_blocks} ${mono_blocks} ${mod
 []
 
 [Kernels]
-  [null]
-    type = NullKernel
-    variable = temp
-    block = ${hp_blocks}
-  []
   [heat_conduction]
     type = HeatConduction
     variable = temp
@@ -155,11 +151,6 @@ non_hp_blocks = '${fuel_blocks} ${air_blocks} ${b4c_blocks} ${mono_blocks} ${mod
     order = CONSTANT
     family = MONOMIAL
     initial_condition = 800
-  []
-  [stoich_griffin]
-    order = CONSTANT
-    family = MONOMIAL
-    initial_condition = 1.94
   []
   [Tmod]
     block = ${yh_blocks}
@@ -316,7 +307,7 @@ non_hp_blocks = '${fuel_blocks} ${air_blocks} ${b4c_blocks} ${mono_blocks} ${mod
   [no_z]
     type = DirichletBC
     variable = disp_z
-    boundary = 3000
+    boundary = 'bottom'
     value = 0.0
   []
   [InclinedNoDisplacementBC]
@@ -353,7 +344,7 @@ non_hp_blocks = '${fuel_blocks} ${air_blocks} ${b4c_blocks} ${mono_blocks} ${mod
     block = '${yh_blocks}'
     temperature = temp
     thermal_conductivity = 20 # W/m/K
-    specific_heat = 500 # random value
+    specific_heat = 500
   []
   [outer_ref_thermal]
     type = BeOThermal
@@ -366,7 +357,7 @@ non_hp_blocks = '${fuel_blocks} ${air_blocks} ${b4c_blocks} ${mono_blocks} ${mod
     block = ${air_blocks} # Helium gap
     temperature = temp
     thermal_conductivity = 0.15 # W/m/K
-    specific_heat = 5197 # random value
+    specific_heat = 5197
   []
   [axial_reflector_thermal]
     type = BeOThermal
@@ -534,7 +525,7 @@ non_hp_blocks = '${fuel_blocks} ${air_blocks} ${b4c_blocks} ${mono_blocks} ${mod
   []
   [to_sockeye_flux]
     type = MultiAppGeneralFieldNearestLocationTransfer
-    variable = master_flux
+    variable = total_flux
     source_variable = flux_uo_corr
     to_multi_app = sockeye
     execute_on = 'timestep_begin'
@@ -708,11 +699,11 @@ non_hp_blocks = '${fuel_blocks} ${air_blocks} ${b4c_blocks} ${mono_blocks} ${mod
     variable = power_density
     execute_on = 'initial timestep_end transfer'
   []
- [flux_uo_avg]
-   type = ElementAverageValue
-   variable = flux_uo_corr
-   block = 'reflector_quad monolith'
- []
+  [flux_uo_avg]
+    type = ElementAverageValue
+    variable = flux_uo_corr
+    block = 'reflector_quad monolith'
+  []
 []
 
 [Outputs]

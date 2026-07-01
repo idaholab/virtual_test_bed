@@ -56,6 +56,7 @@ restart_cp_file = '../steady_K_SM/K-HPMR_GRIFFIN_out_bison0_cp/LATEST'
 
 [Variables]
   [temp]
+    block = ${non_hp_blocks}
   []
   [disp_x]
   []
@@ -66,11 +67,6 @@ restart_cp_file = '../steady_K_SM/K-HPMR_GRIFFIN_out_bison0_cp/LATEST'
 []
 
 [Kernels]
-  [null]
-    type = NullKernel
-    variable = temp
-    block = ${hp_blocks}
-  []
   [heat_conduction]
     type = HeatConduction
     variable = temp
@@ -313,7 +309,7 @@ restart_cp_file = '../steady_K_SM/K-HPMR_GRIFFIN_out_bison0_cp/LATEST'
   [no_z]
     type = DirichletBC
     variable = disp_z
-    boundary = 3000
+    boundary = 'bottom'
     value = 0.0
   []
   [InclinedNoDisplacementBC]
@@ -350,7 +346,7 @@ restart_cp_file = '../steady_K_SM/K-HPMR_GRIFFIN_out_bison0_cp/LATEST'
     block = '${yh_blocks}'
     temperature = temp
     thermal_conductivity = 20 # W/m/K
-    specific_heat = 500 # random value
+    specific_heat = 500
   []
   [outer_ref_thermal]
     type = BeOThermal
@@ -363,7 +359,7 @@ restart_cp_file = '../steady_K_SM/K-HPMR_GRIFFIN_out_bison0_cp/LATEST'
     block = ${air_blocks} # Helium gap
     temperature = temp
     thermal_conductivity = 0.15 # W/m/K
-    specific_heat = 5197 # random value
+    specific_heat = 5197
   []
   [axial_reflector_thermal]
     type = BeOThermal
@@ -531,7 +527,7 @@ restart_cp_file = '../steady_K_SM/K-HPMR_GRIFFIN_out_bison0_cp/LATEST'
  []
  [to_sockeye_flux]
    type = MultiAppGeneralFieldNearestLocationTransfer
-   variable = master_flux
+   variable = total_flux
    source_variable = flux_uo_corr
    to_multi_app = sockeye
    execute_on = 'timestep_begin'

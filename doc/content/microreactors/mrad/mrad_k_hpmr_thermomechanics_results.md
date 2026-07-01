@@ -2,7 +2,7 @@
 
 A comprehensive multiphysics analysis of the 1/6 core HP-MR model was carried out for 
 nominal steady-state operation and a load following transient scenario, coupling the 
-Griffin CFEM-SN(1,3) neutronics solver, the BISON thermomechanical physics solver, and the Sockeye heat pipe solver.
+Griffin DFEM-SN(1,3) neutronics solver, the BISON thermomechanical physics solver, and the Sockeye heat pipe solver.
 
 ## Steady-State Results
 
@@ -27,7 +27,7 @@ The thermomechanical model results are in close agreement with those from the th
 
 These results confirm that, under nominal steady-state conditions, the inclusion of thermal expansion effects introduces negligible perturbations to the neutronics and thermal response of the HP-MR. The effective core geometry change due to thermal deformation is sufficiently small that neither neutron leakage nor the spatial power distribution is meaningfully altered, and the thermal feedback remains essentially unchanged between the two models.
 
-The primary benefit of the thermomechanical model is providing spatially resolved stress and strain distributions throughout the fuel compact ([hpmr_ss_disp]), which are entirely inaccessible from the thermal-only analysis. This enables more rigorous evaluation of TRISO fuel particle performance under irradiation conditions.
+The primary benefit of the thermomechanical model is providing spatially resolved stress and strain distributions throughout the fuel compact ([hpmr_ss_disp]), which are not computed from the thermal-only analysis. This enables more rigorous evaluation of TRISO fuel particle performance under irradiation conditions.
 
 !media media/mrad/K-HPMR_SS_PowTemp.png
        style=display: block;margin-left:auto;margin-right:auto;width:60%;
@@ -43,7 +43,7 @@ The primary benefit of the thermomechanical model is providing spatially resolve
 
 A sudden reduction in secondary-loop heat removal initiates the load following transient. With condenser-side heat removal rendered nearly ineffective, heat pipe temperatures increase, driving up core temperature. This activates the reactor's inherent negative temperature reactivity feedback mechanism that autonomously suppresses reactor power.
 
-This is clearly reflected in the core's thermal and power histories ([hpmr_lf_powtemp]). As the transient begins, average fuel and moderator temperatures increase, reaching a peak of ~900 K near t = 100 s. Simultaneously, the temperature-induced negative reactivity feedback rapidly curtails reactor power, which settles at ~50 kW within 200 seconds with no further significant variation. As this power suppression takes hold, temperatures recede and approach a new equilibrium of 846 K for the fuel and the moderator within the first 1000 seconds of the event. 
+This is clearly reflected in the core's thermal and power histories ([hpmr_lf_powtemp]). As the transient begins, average fuel and moderator temperatures increase, reaching a peak of ~900 K near t = 100 s. Simultaneously, the temperature-induced negative reactivity feedback rapidly curtails reactor power, which settles at ~50 kW within 200 seconds with no further significant variation. As this power suppression takes hold, temperatures recede and approach a new equilibrium of 846 K for the fuel and the moderator within the first 1,000 seconds of the event. 
 
 While the thermomechanics and thermal-only models produced similar results at steady-state, more noticeable differences emerge during the transient. The power response remains identical between the two models throughout the event, indicating that the reactivity feedback magnitude is not significantly affected by the inclusion of thermal expansion. However, the temperature histories show visible separation, particularly during the initial excursion peak. The thermal-only model predicts higher peak fuel and moderator temperatures compared to the thermomechanical model, with differences of up to ~2 K near t = 100 s. This divergence arises because thermal expansion in the thermomechanical model causes an immediate geometric response to the temperature rise, increasing neutron leakage and providing an additional, small negative reactivity contribution on top of the temperature feedback alone, which marginally moderates the temperature excursion. As the transient progresses and temperatures stabilize, the two models converge toward the same equilibrium, consistent with the near-identical steady-state results observed earlier. 
 
@@ -52,14 +52,14 @@ While the thermomechanics and thermal-only models produced similar results at st
        id=hpmr_lf_powtemp
        caption=Time evolution of reactor power, peak, and average fuel compact and moderator temperatures during the load following transient
 
-The structural deformation of core tracks this thermal evolution ([hpmr_lf_disp_mag]). During the initial temperature excursion, thermal expansion causes an immediate increase in core displacement, peaking at a magnitude of approximately $1.4\text{ mm}$. Because the bottom surface is constrained, the largest displacements occur near the upper region of the core. As temperatures stabilize, the thermal expansion relaxes into a new nominal deformation profile.
+The structural deformation of the core tracks this thermal evolution ([hpmr_lf_disp_mag]). During the initial temperature excursion, thermal expansion causes an immediate increase in core displacement, peaking at a magnitude of approximately $1.4\text{ mm}$. Because the bottom surface is constrained, the largest displacements occur near the upper region of the core. As temperatures stabilize, the thermal expansion relaxes into a new nominal deformation profile.
 
 !media media/mrad/K-HPMR_TR_Mag.png
        style=display: block;margin-left:auto;margin-right:auto;width:50%;
        id=hpmr_lf_disp_mag
        caption=Average displacement as a function of core height and time during the load following transient.
 
-Examination of the displacement components ([hpmr_lf_disp_comp]) indicates that the overall deformation is dominated by axial expansion (disp_z). The resulting deformation field remains continuous throughout the transient, indicating that the load following event produces a predictable, thermally driven expansion rather than introducing localized mechanical distortion or significant differential expansion.
+Examination of the displacement components ([hpmr_lf_disp_comp]) indicates that the overall deformation is dominated by axial expansion (disp_z). The resulting deformation field remains continuous throughout the transient, consistent with a smooth, thermally driven expansion. While the core components have differing thermal expansion coefficients and will undergo some degree of differential expansion, contact between components is not yet modeled in this analysis; as a result, the localized stress concentrations that could arise at component interfaces are not captured here.
 
 !media media/mrad/K-HPMR_TR_Disp.png
        style=display: block;margin-left:auto;margin-right:auto;width:100%;

@@ -222,8 +222,8 @@ q_evap = '${fparse Q_hp / S_evap}'
   [virtual_Text]
     type = ParsedAux
     variable = virtual_Text
-    coupled_variables = 'T_solid master_flux virtual_htc'
-    expression = 'master_flux/virtual_htc + T_solid'
+    coupled_variables = 'T_solid total_flux virtual_htc'
+    expression = 'total_flux/virtual_htc + T_solid'
   []
 []
 
@@ -243,7 +243,7 @@ q_evap = '${fparse Q_hp / S_evap}'
   [operational_aux]
     initial_condition = 1
   []
-  [master_flux]
+  [total_flux]
     initial_condition = ${q_evap}
   []
   [hp_temp_aux]
@@ -288,8 +288,6 @@ q_evap = '${fparse Q_hp / S_evap}'
     variable = operational_aux
     execute_on = 'initial timestep_begin TIMESTEP_END'
   []
-  # set `catastrophic_pp` as if it is recoverable for a solving to steady-state simulation
-  # this MUST be changed back to catestrophic in transient simulations
   [catastrophic_pp]
     type = HeatRemovalRateLimitScale
     heat_addition_pps = 'evaporator_boundary_integral'
@@ -372,9 +370,9 @@ q_evap = '${fparse Q_hp / S_evap}'
     type = FunctionValuePostprocessor
     function = scale_fcn
   []
-  [A_int_master_flux]
+  [A_int_total_flux]
     type = SideIntegralVariablePostprocessor
-    variable = master_flux
+    variable = total_flux
     boundary = 'hp:evap:inner'
     execute_on = 'INITIAL TIMESTEP_END'
   []
