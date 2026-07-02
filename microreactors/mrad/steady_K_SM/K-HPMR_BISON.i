@@ -205,13 +205,13 @@ non_hp_blocks = '${fuel_blocks} ${air_blocks} ${b4c_blocks} ${mono_blocks} ${mod
     type = NormalizationAux
     variable = disp_x_trans
     source_variable = disp_x
-    execute_on = 'NONLINEAR'
+    execute_on = 'NONLINEAR' #to keep disp_x_trans current for disp_x_trans_corr
   []
   [assign_disp_y_trans]
     type = NormalizationAux
     variable = disp_y_trans
     source_variable = disp_y
-    execute_on = 'NONLINEAR'
+    execute_on = 'NONLINEAR' #to keep disp_y_trans current for disp_y_trans_corr
   []
   [disp_x_trans_corr]
     type = NormalizationAux

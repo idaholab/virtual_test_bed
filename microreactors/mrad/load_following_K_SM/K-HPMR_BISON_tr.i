@@ -207,13 +207,13 @@ restart_cp_file = '../steady_K_SM/K-HPMR_GRIFFIN_out_bison0_cp/LATEST'
     type = NormalizationAux
     variable = disp_x_trans
     source_variable = disp_x
-    execute_on = 'NONLINEAR'
+    execute_on = 'NONLINEAR' #to keep disp_x_trans current for disp_x_trans_corr
   []
   [assign_disp_y_trans]
     type = NormalizationAux
     variable = disp_y_trans
     source_variable = disp_y
-    execute_on = 'NONLINEAR'
+    execute_on = 'NONLINEAR' #to keep disp_y_trans current for disp_y_trans_corr
   []
   [disp_x_trans_corr]
     type = NormalizationAux
