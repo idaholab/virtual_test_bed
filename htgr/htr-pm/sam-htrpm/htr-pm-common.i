@@ -620,18 +620,16 @@ slip_wall_vertical_outer = 'pbed_outer btm_ref_vert_outer top_reflector_wall_ver
   # Send riser and bypass wall temperature to
   # 1-D primary loop model
   [To_subApp_Twall_riser]
-    type = MultiAppUserObjectTransfer
-    direction = to_multiapp
-    user_object = Twall_riser_inner
+    type = MultiAppGeneralFieldUserObjectTransfer
+    to_multi_app = primary_loop
+    source_user_object = Twall_riser_inner
     variable = Twall_riser_inner_from_main
-    multi_app = primary_loop
   []
   [To_subApp_Twall_bypass]
-    type = MultiAppUserObjectTransfer
-    direction = to_multiapp
-    user_object = Twall_bypass_inner
+    type = MultiAppGeneralFieldUserObjectTransfer
+    to_multi_app = primary_loop
+    source_user_object = Twall_bypass_inner
     variable = Twall_bypass_inner_from_main
-    multi_app = primary_loop
   []
 
   # Send pebble-bed pressure drop to the
@@ -674,9 +672,8 @@ slip_wall_vertical_outer = 'pbed_outer btm_ref_vert_outer top_reflector_wall_ver
   # for the calculation of wall temperature in the
   # multi-D model
   [from_subApp_T_fluid]
-    type = MultiAppGeneralFieldNearestNodeTransfer
-    direction = from_multiapp
-    multi_app = primary_loop
+    type = MultiAppGeneralFieldNearestLocationTransfer
+    from_multi_app = primary_loop
     source_variable = temperature
     variable = T_fluid_external_riser
     from_blocks = 'riser'
@@ -684,9 +681,8 @@ slip_wall_vertical_outer = 'pbed_outer btm_ref_vert_outer top_reflector_wall_ver
     execute_on = 'TIMESTEP_END'
   []
   [from_subApp_htc]
-    type = MultiAppGeneralFieldNearestNodeTransfer
-    direction = from_multiapp
-    multi_app = primary_loop
+    type = MultiAppGeneralFieldNearestLocationTransfer
+    from_multi_app = primary_loop
     source_variable = htc_external
     variable = htc_external_riser
     from_blocks = 'riser'
@@ -695,9 +691,8 @@ slip_wall_vertical_outer = 'pbed_outer btm_ref_vert_outer top_reflector_wall_ver
   []
 
   [from_subApp_T_fluid_bypass]
-    type = MultiAppGeneralFieldNearestNodeTransfer
-    direction = from_multiapp
-    multi_app = primary_loop
+    type = MultiAppGeneralFieldNearestLocationTransfer
+    from_multi_app = primary_loop
     source_variable = temperature
     variable = T_fluid_external_bypass
     from_blocks = 'bypass'
@@ -705,9 +700,8 @@ slip_wall_vertical_outer = 'pbed_outer btm_ref_vert_outer top_reflector_wall_ver
     execute_on = 'TIMESTEP_END'
   []
   [from_subApp_htc_bypass]
-    type = MultiAppGeneralFieldNearestNodeTransfer
-    direction = from_multiapp
-    multi_app = primary_loop
+    type = MultiAppGeneralFieldNearestLocationTransfer
+    from_multi_app = primary_loop
     source_variable = htc_external
     variable = htc_external_bypass
     from_blocks = 'bypass'
@@ -718,11 +712,10 @@ slip_wall_vertical_outer = 'pbed_outer btm_ref_vert_outer top_reflector_wall_ver
   # Send radiation heat flux to the
   # 1-D RCCS model
   [QRad_to_subRCCS]
-    type = MultiAppUserObjectTransfer
-    direction = to_multiapp
-    user_object = QRad_UO
+    type = MultiAppGeneralFieldUserObjectTransfer
+    to_multi_app = rccs
+    source_user_object = QRad_UO
     variable = QRad
-    multi_app = rccs
     execute_on = TIMESTEP_END
     displaced_target_mesh = true
   []
@@ -730,11 +723,10 @@ slip_wall_vertical_outer = 'pbed_outer btm_ref_vert_outer top_reflector_wall_ver
   # Obtain RCCS panel temperature from the
   # 1-D RCCS model
   [TRad_from_RCCS_sub]
-   type = MultiAppUserObjectTransfer
-    direction = from_multiapp
-    user_object = TRad_UO
+    type = MultiAppGeneralFieldUserObjectTransfer
+    from_multi_app = rccs
+    source_user_object = TRad_UO
     variable = TRad
-    multi_app = rccs
     displaced_source_mesh = true
     execute_on = TIMESTEP_END
   []
@@ -744,7 +736,7 @@ slip_wall_vertical_outer = 'pbed_outer btm_ref_vert_outer top_reflector_wall_ver
 # parameters used in MultiApp transfer
 [UserObjects]
   [QRad_UO]
-    type = LayeredSideFluxAverage
+    type = LayeredSideDiffusiveFluxAverage
     variable = Ts
     direction = y
     num_layers = 45

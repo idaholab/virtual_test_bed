@@ -32,8 +32,8 @@ duct_inside = '${fparse duct_outside - 2 * duct_thickness}'
 ###################################################
 
 [TriSubChannelMesh]
-  [subchannel]
-    type = SCMTriSubChannelMeshGenerator
+  [assembly]
+    type = SCMTriAssemblyMeshGenerator
     nrings = '${fparse n_rings}'
     n_cells = 50
     flat_to_flat = '${fparse duct_inside}'
@@ -48,20 +48,9 @@ duct_inside = '${fparse duct_outside - 2 * duct_thickness}'
     spacer_k = '0.5 0.5'
   []
 
-  [fuel_pins]
-    type = SCMTriPinMeshGenerator
-    input = subchannel
-    nrings = '${fparse n_rings}'
-    n_cells = 50 #100
-    unheated_length_entry = '${fparse length_entry_fuel}'
-    heated_length = '${fparse length_heated_fuel}'
-    unheated_length_exit = '${fparse length_outlet_fuel}'
-    pitch = '${fparse fuel_pin_pitch}'
-  []
-
   [duct]
     type = SCMTriDuctMeshGenerator
-    input = fuel_pins
+    input = assembly
     nrings = '${fparse n_rings}'
     n_cells = 50 #100
     flat_to_flat = '${fparse duct_inside}'
@@ -262,7 +251,7 @@ duct_inside = '${fparse duct_outside - 2 * duct_thickness}'
   []
 
   [pin_transfer]
-    type = SCMPinSolutionTransfer
+    type = SCMSolutionTransfer
     to_multi_app = viz
     transfer_type = pin
     variable = 'Tpin Dpin q_prime'
