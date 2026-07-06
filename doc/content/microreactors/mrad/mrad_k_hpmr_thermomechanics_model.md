@@ -12,7 +12,7 @@
            geometry:core
            simulation_type:multiphysics
            V_and_V:demonstration
-           input_features:multiapps;reactor_meshing;mixed_restart;solid_mechanics
+           input_features:multiapps;reactor_meshing;mixed_restart
            transient:steady_state;load_follow
            codes_used:BlueCrab;Griffin;BISON;Sockeye
            computing_needs:HPC
