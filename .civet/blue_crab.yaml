@@ -13,8 +13,11 @@ lfs_include:
   - htgr/pbmr400
   - htgr/htr10
   - htgr/htr-pm/core-multiphysics
+  - htgr/httr/mesh/full_core/full_core_HTTR.e
+  - htgr/httr/mesh/full_core/thermal_mesh_in.e
   - htgr/gpbr200
   - htgr/open-xe100
   - sfr/vtr
   - msr/lotus/mesh
   - pbfhr/gFHR/data
+  - lfr/7pin_cardinal_demo
