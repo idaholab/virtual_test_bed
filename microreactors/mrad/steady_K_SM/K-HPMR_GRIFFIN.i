@@ -172,7 +172,7 @@ non_hp_yh_blocks = '${fuel_blocks} ${air_blocks} ${b4c_blocks} ${mono_blocks} ${
 [Materials]
   [mod]
     type = CoupledFeedbackMatIDNeutronicsMaterial
-    block = '200 203 100 103 301 303 10 503 600 601 201 101 400 401 250'
+    block = '${fuel_blocks} ${air_blocks} ${b4c_blocks} ${mono_blocks} ${mod_blocks} ${ref_blocks} ${hp_blocks}'
     displacements = 'disp_x disp_y disp_z'
   []
 []

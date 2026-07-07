@@ -416,9 +416,8 @@ q_evap = '${fparse Q_hp / S_evap}'
   scheme = bdf2
   line_search = none
 
-  # ensure nl_abs_tol >> nl_rel_tol
-  nl_abs_tol = 1e-6 #6
-  nl_rel_tol = 1e-6 #8
+  nl_abs_tol = 1e-6
+  nl_rel_tol = 1e-6
   nl_max_its = 100
 
   l_tol = 1e-6
