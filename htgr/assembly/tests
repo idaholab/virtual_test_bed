@@ -29,6 +29,7 @@
     type = RunApp
     input = 'thm.i'
     check_input = true
+    cli_args = '--app ThermalHydraulicsApp'
     capabilities = 'cardinalapp | thermalhydraulicsapp'
   []
 
@@ -53,6 +54,7 @@
     type = RunApp
     input = 'thm.i'
     check_input = true
+    cli_args = '--app ThermalHydraulicsApp'
     capabilities = 'cardinalapp | thermalhydraulicsapp'
     prereq = 'syntax_thm'
   []
