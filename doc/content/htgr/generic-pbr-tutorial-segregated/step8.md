@@ -40,7 +40,7 @@ The added non-gap solid blocks are included in the `effective_thermal_conductivi
 !listing htgr/generic-pbr-tutorial-segregated/step8.i block=effective_reflector_thermal_conductivity
 
 The properties of the gaps are taken care of differently. The gaps are in principle not
-a solid but a stagnant gas. However, we treat it like a solid with small density and
+solids but stagnant gases. However, we treat them like solids with small density and
 effective thermal conductivity that takes into account conduction and radiation. To this end
 `cp_s` and `rho_s` are defined as usual:
 
@@ -62,7 +62,7 @@ In each gap object:
 
 - `gap_direction` is the coordinate direction pointing through the gap (i.e., connecting the two faces delimiting the gap),
 - `gap_conductivity_function` is the molecular thermal conductivity of the gas in the gap as a function of temperature,
-- `radius_primary` signals that the geometry that is considered is cylindrical. It is the inner radius of the cylindrical gap. `radius_secondary` must be provided now,
+- `radius_primary` indicates that the considered geometry is cylindrical. It is the inner radius of the cylindrical gap. `radius_secondary` must be provided now,
 - `radius_secondary` is the outer radius of the cylindrical gap.
 
 ## Execution

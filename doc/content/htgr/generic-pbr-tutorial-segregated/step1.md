@@ -7,12 +7,12 @@ channel has no pressure drop or heat source. The inflow boundary
 is situated at the top, the outflow boundary is situated at the bottom,
 and the left and right boundaries are slip walls.
 
-We expect that velocity in the y-direction and pressure are uniform in the flow channel
+We expect that the y-direction velocity and pressure are uniform in the flow channel
 and velocity in the x-direction is 0. The heat equation is not solved at all,
 and the fluid temperature will not be added as a variable.
 
 This tutorial uses the finite volume method to discretize the thermal-hydraulics equations.
-We solve a steady-state directly using the SIMPLE solver.
+We solve directly to steady state using the SIMPLE solver.
 
 ### Geometry
 
@@ -36,7 +36,7 @@ To visualize the geometry, you can run:
 !listing
 ./pronghorn-opt -i step1.i --mesh-only
 
-This command produces the file `step1_in.e` that can be visualized using paraview.
+This command produces the file `step1_in.e` that can be visualized using ParaView.
 It is shown in [step1geom].
 
 !media generic-pbr-tutorial/step1_geometry.png
@@ -57,7 +57,7 @@ The second task is performed by the `GeneralFunctorFluidProps` object:
 
 !listing htgr/generic-pbr-tutorial-segregated/step1.i block=FunctorMaterials
 
-This object takes pressure and temperature provided to the parameters
+This object takes pressure and temperature provided by the parameters
 `pressure` and `T_fluid`, respectively, and computes fluid properties, such as
 density and viscosity. Density and viscosity are named `rho` and `mu`.
 Note that `T_fluid` is set to a constant value in this input file because
@@ -136,7 +136,7 @@ We use postprocessors to compute the inlet and outlet mass flow rates.
 !listing htgr/generic-pbr-tutorial-segregated/step1.i block=Postprocessors
 
 The `desired_mfr` postprocessor simply takes the `mass_flow_rate` parameter computed
-at the top of the input file and prints it to screen. This is the mass flow rate we
+at the top of the input file and prints it to the screen. This is the mass flow rate we
 want to achieve.
 
 The `inlet_mfr` and `outlet_mfr` are `RhieChowMassFlowRate` postprocessors. They
@@ -165,8 +165,8 @@ Execute `step1.i` by:
 !listing
 ./pronghorn-opt -i step1.i
 
-Execution should take less than 2 seconds. An exodus file `step1_out.e` and a CSV file
-`step1_out.csv` are created. The exodus file contains the pressure and superficial
+Execution should take less than 2 seconds. An Exodus file `step1_out.e` and a CSV file
+`step1_out.csv` are created. The Exodus file contains the pressure and superficial
 velocity solutions. These are constant at $p=5.5$ MPa and
 $\vec{v}=(0,-1.54191)$ m/s. Since they are not very relevant, they are not plotted here.
 The final postprocessor values are:

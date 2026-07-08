@@ -1,7 +1,7 @@
 ## Step 3
 
 In this step, we make the flow problem heterogeneous.
-Above the pebble bed in a pebble-bed reactor is usually a cavity that is only
+A cavity usually sits above the pebble bed in a pebble-bed reactor and is only
 filled with fluid, so it has a porosity of 1. The interface between the cavity
 and the bed is modeled as a sharp discontinuity in both porosity and momentum
 transfer; for example, the pressure drop is very small in the cavity and much
@@ -23,7 +23,7 @@ input file. `CartesianMeshGenerator` is explained in detail
 The main differences between `CartesianMeshGenerator` and
 `GeneratedMeshGenerator` are that `CartesianMeshGenerator` specifies the
 thickness of regions in the x, y, and z-direction instead of simply giving end
-point and number of elements and that it allows to assign `subdomain_id` for
+point and number of elements and that it allows assigning `subdomain_id` for
 each of the "macro-regions" laid out by the `dx` and `dy` parameters.
 In our case, we have one entry in `dx` and two entries in `dy` so we have
 $1 \times 2$ entries in `subdomain_id`. The order of entries in the
@@ -33,9 +33,9 @@ $1 \times 2$ entries in `subdomain_id`. The order of entries in the
 (0,0) (1,0), (2,0), ... , (0,1), (1,1), ... (nx,ny)
 
 where each `(ix,iy)` is one entry that gives the subdomain, or synonymously
-block id, of zone located at grid coordinates `ix` and `iy`.
+block id, of the zone located at grid coordinates `ix` and `iy`.
 The indexing goes from small to large coordinate values, so we fill the
-`subdomain_id` from the left bottom to the right top.
+`subdomain_id` from the bottom left to the top right.
 
 For convenience, we label block 1 as bed and block 2 as cavity using the
 `RenameBlockGenerator`:
@@ -65,7 +65,7 @@ by:
 !listing
 ./pronghorn-opt -i step3.i --mesh-only
 
-creating the file `step3_in.e` that can be visualized using paraview.
+creating the file `step3_in.e` that can be visualized using ParaView.
 
 !media generic-pbr-tutorial/step3_geometry.png
         style=width:10%

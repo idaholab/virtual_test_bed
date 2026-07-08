@@ -29,7 +29,7 @@ and create a link to your Pronghorn executable:
 !listing
 ln -s /path/to/projects/pronghorn/pronghorn-opt
 
-As an Idaho National Laboratory High Performance Computing user you do not need to create the link to the executable, you can just load the Pronghorn module and run all the inputs in this tutorial using `pronghorn-opt` instead of `./pronghorn-opt` e.g.:
+As an Idaho National Laboratory High Performance Computing user, you do not need to create the link to the executable. You can just load the Pronghorn module and run all the inputs in this tutorial using `pronghorn-opt` instead of `./pronghorn-opt`, e.g.:
 
 !listing
 pronghorn-opt -i step1.i
@@ -49,7 +49,7 @@ instead of
 
 [Step 5: Adding reflectors](generic-pbr-tutorial-segregated/step5.md)
 
-[Step 6: Adding plenums and riser](generic-pbr-tutorial-segregated/step6.md)
+[Step 6: Adding plenums and a riser](generic-pbr-tutorial-segregated/step6.md)
 
 [Step 7: Adding control rod bypass](generic-pbr-tutorial-segregated/step7.md)
 

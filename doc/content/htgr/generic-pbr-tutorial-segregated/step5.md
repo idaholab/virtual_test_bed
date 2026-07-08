@@ -17,7 +17,7 @@ The geometry is changed by updating the `[Mesh/cartesian_mesh]` block:
 
 !listing htgr/generic-pbr-tutorial-segregated/step5.i block=cartesian_mesh
 
-The mesh is drawn up by the inputs of dy and dx. The entries in the dx and dy represent the thickness of segments that total up to the total size of the model along the respective axis. The product of the sets of segments along the x-axis and y-axis create a grid of elements whose blocks can be set using the `subdomain_id` parameter. The entries in the `subdomain_id` parameter are ordered from the left bottom to the top right with
+The mesh is defined by the `dx` and `dy` inputs. The entries in `dx` and `dy` represent the thickness of segments that total up to the total size of the model along the respective axis. The product of the sets of segments along the x-axis and y-axis creates a grid of elements whose blocks can be set using the `subdomain_id` parameter. The entries in the `subdomain_id` parameter are ordered from the bottom left to the top right with
 entries in the bottom row of the geometry being filled first before moving to the second
 row and so forth.
 The bottom reflector has block id 3 while the side reflector has block id 4.
@@ -25,7 +25,7 @@ The blocks present in the `subdomain_id` are named using the following lines:
 
 !listing htgr/generic-pbr-tutorial-segregated/step5.i start=block_id end=side_reflector'
 
-In addition to adding the bottom and side reflector, several additional sidesets (or synonymously in MOOSE: boundaries) are created in the `Mesh` block and the dimension of the pebble bed are updated.
+In addition to adding the bottom and side reflector, several additional sidesets (or synonymously in MOOSE: boundaries) are created in the `Mesh` block and the dimensions of the pebble bed are updated.
 
 The addition of two blocks requires updates to most of the `block` parameters in Step 5.
 
@@ -95,7 +95,7 @@ diagonal tensor property everywhere. To that end we use `ADGenericVectorFunctorM
 Neither `rho_s` nor `cp_s` are modified by $1 - \epsilon$ because the solid
 energy equation uses the thermal conductivity tensor directly.
 
-We use the same paradigm for providing effective thermal conductivity, `kappa`, of the fluid as for providing the effective solid thermal conductivity (i.e.,`effective_thermal_conductivity`). The effective fluid thermal conductivity is identical to the
+We use the same paradigm for providing effective thermal conductivity, `kappa`, of the fluid as for providing the effective solid thermal conductivity (i.e., `effective_thermal_conductivity`). The effective fluid thermal conductivity is identical to the
 molecular thermal conductivity of helium almost everywhere. The exception is the pebble bed, where the thermal conductivity of the helium is
 increased to account for the braiding effect. Braiding refers to the lateral movement of fluid around pebbles on its way through the core
 which is not accounted for in porous medium models. The standard way of accounting for braiding is to increase the thermal conductivity of
@@ -116,7 +116,7 @@ The heat transfer coefficient in the bottom reflector is (somewhat arbitrarily)
 set to $2 \times 10^4$ W/m$^3$-K.
 
 For the pressure drop in the bottom reflector, we assume that the bottom
-reflector is made up of pipes if diameter $0.1$ m. The pressure drop in these
+reflector is made up of pipes of diameter $0.1$ m. The pressure drop in these
 pipes is estimated using the Churchill correlation that is available in Pronghorn via the `FunctorChurchillDragCoefficients` object:
 
 !listing htgr/generic-pbr-tutorial-segregated/step5.i block=drag_bottom_reflector
@@ -125,7 +125,7 @@ The `multipliers` parameter makes the pressure drop in the x-direction much
 larger than in the y-direction modeling a pipe oriented along
 the y-direction.
 
-Some materials based on correlations pick up a characteristic length as parameter `characteristic_length`. The characteristic length is usually different in different
+Some materials based on correlations pick up a characteristic length as a parameter `characteristic_length`. The characteristic length is usually different in different
 parts of the model so it is good practice to set it using `PiecewiseByBlockFunctorMaterial`.
 
 !listing htgr/generic-pbr-tutorial-segregated/step5.i block=characteristic_length
@@ -141,7 +141,7 @@ The appropriate way to get an average outlet temperature is to weight it by the 
 
 !listing htgr/generic-pbr-tutorial-segregated/step5.i block=mass_flux_weighted_Tf_out
 
-It works very similar to the `RhieChowMassFlowRate` postprocessors that are used to compute mass flow rate and enthalpy flow rates.
+It works very similarly to the `RhieChowMassFlowRate` postprocessors that are used to compute mass flow rate and enthalpy flow rates.
 
 ## Execution
 
@@ -150,7 +150,7 @@ It works very similar to the `RhieChowMassFlowRate` postprocessors that are used
 
 ## Results
 
-The geometry/mesh, fluid temperature, pressure, superficial vertical velocity, and solid temperature are shown in [step5mesh] to [step5T_solid].
+The geometry/mesh, fluid temperature, pressure, superficial vertical velocity, and solid temperature are shown in [step5mesh] through [step5T_solid].
 
 !media generic-pbr-tutorial/MeshP5.png
     style=width:20%

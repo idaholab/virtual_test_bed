@@ -42,7 +42,7 @@ We will use the KTA drag coefficient material in Pronghorn.
 To use this material, the characteristic length (aka hydraulic diameter)
 of the bed has to be set. For pebble beds, the characteristic length is the
 pebble diameter, which we assume to be $0.06$ m consistent with typical
-gas-cooled reactor pebbles. We create a real valued variable called
+gas-cooled reactor pebbles. We create a real-valued variable called
 `pebble_diameter` for convenience at the top of the input file:
 
 !listing htgr/generic-pbr-tutorial-segregated/step2.i start=T_fluid end=flow_vel
@@ -90,7 +90,7 @@ The `inlet_mfr` and `outlet_mfr` postprocessors use `RhieChowMassFlowRate` so
 that the measured mass flow rate is consistent with the face mass fluxes used by
 the SIMPLE pressure correction. Note that `inlet_pressure`,
 `outlet_pressure`, `integral_density`, `integral_mu`, and `area` are not printed
-to screen or written to the CSV file because the parameter `outputs` is set to
+to the screen or written to the CSV file because the parameter `outputs` is set to
 none.
 
 ## Executioner

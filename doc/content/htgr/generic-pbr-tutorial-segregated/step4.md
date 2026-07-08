@@ -8,7 +8,7 @@ transferred to the helium coolant via convection.
 Note that in this step, many parameters, such as mass flow rate and inlet
 temperature, and material property values, such as heat transfer coefficients,
 are not set to realistic values. The obtained results are therefore quite
-different from prototypical gas cooled reactors.
+different from prototypical gas-cooled reactors.
 
 ## Added Inputs
 
@@ -79,11 +79,11 @@ simple functor materials:
 
 ## Results
 
-From the screen output we find that at steady-state, the `enthalpy_balance`
+From the screen output we find that at steady state, the `enthalpy_balance`
 matches the `heat_source_integral`, indicating that Pronghorn conserves energy.
 
 The geometry/mesh, fluid temperature, solid temperature, and vertical superficial
-velocity are shown in [step4mesh] to [step4Velocity]. A few remarks
+velocity are shown in [step4mesh] through [step4Velocity]. A few remarks
 are in order:
 
 - Fluid temperature increases monotonically from top to bottom. The temperature

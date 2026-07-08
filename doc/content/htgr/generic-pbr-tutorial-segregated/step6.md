@@ -1,6 +1,6 @@
 ## Step 6
 
-We build upon the previous step by adding the upper/bottom plenum and the riser. The inlet boundary has moved from the top of the cavity to the bottom of the riser and the outlet changed from the bottom of the bottom reflector to the right side of the bottom plenum.
+We build upon the previous step by adding the upper and bottom plenums and the riser. The inlet boundary has moved from the top of the cavity to the bottom of the riser and the outlet boundary has moved from the bottom of the bottom reflector to the right side of the bottom plenum.
 
 In contrast to Step 5, the coolant now turns three times on its way from the inlet to the outlet boundary. The fluid flow path starts from the inlet, goes up into the riser, then across the upper plenum and cavity. Next, the flow goes down through the pebble-bed followed by the bottom reflector and bottom plenum. Finally, the flow will go through the outlet.
 
@@ -17,7 +17,7 @@ set the Darcy coefficient to a number that is large enough to ensure smooth conv
 
 ## Geometry
 
-The geometry is changed in `[Mesh/cartesian_mesh]`. Note, the addition
+The geometry is changed in `[Mesh/cartesian_mesh]`. Note the addition
 of the plenum and riser blocks.
 
 !listing htgr/generic-pbr-tutorial-segregated/step6.i block=cartesian_mesh
@@ -37,7 +37,7 @@ We added `GenericFunctorMaterial` in the `riser`, `upper_plenum`, and `bottom_pl
 
 !listing htgr/generic-pbr-tutorial-segregated/step6.i start=graphite_rho_and_cp_riser end=kappa_s_pebble_bed
 
-The difference to the already existing reflector definitions is the different
+The difference from the already existing reflector definitions is the different
 value of $1-\epsilon$ used in the conductivity multiplier.
 
 The drag coefficients in the `cavity`, `upper_plenum` and `bottom_plenum` are set using the `c_drag` material derived from `c_drag_old`:
@@ -67,9 +67,9 @@ To run step 6, you simply run:
 
 ## Results
 
-In [step6T_fluid], the fluid temperature and flow field are shown. The main difference of Step 6 to the previous steps is that
+In [step6T_fluid], the fluid temperature and flow field are shown. The main difference between Step 6 and the previous steps is that
 the flow turns multiple times before reaching the outlet.
-In [step6T_solid], the solid temperature along with the outline of the fluid domain are shown.
+In [step6T_solid], the solid temperature and the outline of the fluid domain are shown.
 
 !media generic-pbr-tutorial-segregated/T_fluidP6.png
         style=width:50%

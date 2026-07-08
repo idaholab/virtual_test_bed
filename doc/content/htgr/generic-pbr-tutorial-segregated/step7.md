@@ -10,7 +10,7 @@ the control rod is cooled during reactor operations.
 A portion of the side reflector between the riser and pebble bed is replaced by the `control_rods` block (block 8). The modification that needs to be made in the `cartesian_mesh` object is simple: some of the numbers that represent the side reflector are replaced by block number 8. We assume that the control rods are not inserted
 in this model, so the porous medium contains only flow volume and graphite. The geometry is depicted in [step7mesh].
 
-Note, the `control_rods` block defines both flow variables and
+Note the `control_rods` block defines both flow variables and
 `T_solid` and the corresponding block definitions must be updated.
 
 !media generic-pbr-tutorial/MeshP7.png
@@ -29,7 +29,7 @@ a diameter of $0.1$ m.
 ## Materials
 
 The control rod block has a porosity of $0.32$. The porosity is computed as the ratio of
-control rod channel area (number of control rods times the area of a circle of diameter $0.1$ m) and the
+control rod channel area (number of control rods times the area of a circle of diameter $0.1$ m) to the
 area of the porous flow region perpendicular to the vertical axis that represents the control rod in this model. The porosity is added here:
 
 !listing htgr/generic-pbr-tutorial-segregated/step7.i block=porosity
@@ -44,7 +44,7 @@ other non-pebble-bed regions using a `GenericFunctorMaterial`:
 !listing htgr/generic-pbr-tutorial-segregated/step7.i block=graphite_rho_and_cp_riser_control_rods
 
 The drag coefficient in the `control_rods` is used to adjust the bypass flow to
-between $2$ and $3$% of the nominal mass flow rate. The Darcy coefficient is set to
+between $2$% and $3$% of the nominal mass flow rate. The Darcy coefficient is set to
 $0$ and the Forchheimer coefficient is set by a `LinearFrictionFactorFunctorMaterial` object. The local speed used by this model is provided by the `speed_material` functor.
 
 !listing htgr/generic-pbr-tutorial-segregated/step7.i start=Darcy_control_rods end=[porosity]
@@ -58,7 +58,7 @@ The mass flow rate through the bypass flow channel is measured using this postpr
 
 !listing htgr/generic-pbr-tutorial-segregated/step7.i block=cr_mfr
 
-The postprocessor uses the Rhie-Chow face flux and is not outputted anywhere because of the `outputs = none` line.
+The postprocessor uses the Rhie-Chow face flux and is not output anywhere because of the `outputs = none` line.
 The fraction of mass flow going through the control rod channel is computed by
 `cr_mfr_fraction`:
 
