@@ -117,8 +117,6 @@ q_evap = '${fparse Q_hp / S_evap}'
 [Components]
   [hp]
     type = HeatPipeConduction
-
-    # Common to both HeatPipe2Phase and HeatPipeBlackbox
     position = '0 0 0'
     orientation = '0 0 1'
     length = '${length_evap} ${length_adia} ${length_cond}'
@@ -171,7 +169,6 @@ q_evap = '${fparse Q_hp / S_evap}'
     hs = hp
     T_ambient = ${T_ext_cond}
     htc_ambient = ${htc_ext_cond} #large value to approach an effective DirichletBC
-#    scale_pp = bc_scale_pp
   []
   [evaporator_boundary]
     type = HSBoundaryExternalAppConvection
@@ -227,21 +224,9 @@ q_evap = '${fparse Q_hp / S_evap}'
   []
 []
 
-[Functions]
-  [scale_fcn]
-    type = ParsedFunction
-    symbol_names = 'catastrophic_pp recoverable_pp operational_pp'
-    symbol_values = 'catastrophic_pp recoverable_pp operational_pp'
-    expression = 'catastrophic_pp*recoverable_pp*operational_pp'
-  []
-[]
-
 [AuxVariables]
   [T_wall_var]
     initial_condition = ${T_ext_cond}
-  []
-  [operational_aux]
-    initial_condition = 1
   []
   [total_flux]
     initial_condition = ${q_evap}
@@ -277,34 +262,6 @@ q_evap = '${fparse Q_hp / S_evap}'
     value1 = evaporator_boundary_integral
     value2 = Integral_BC_Cond
     execute_on = 'INITIAL TIMESTEP_END'
-  []
-#  [bc_scale_pp]
-#    type = FunctionValuePostprocessor
-#    function = 1.0
-#    execute_on = 'INITIAL TIMESTEP_END'
-#  []
-  [operational_pp]
-    type = ElementAverageValue
-    variable = operational_aux
-    execute_on = 'initial timestep_begin TIMESTEP_END'
-  []
-  [catastrophic_pp]
-    type = HeatRemovalRateLimitScale
-    heat_addition_pps = 'evaporator_boundary_integral'
-    limit_condenser_side = false
-    recoverable_heat_removal_limit_pps = 'hp_boiling_limit hp_capillary_limit hp_entrainment_limit'
-    catastrophic_heat_removal_limit_pps = ''
-    T = T_inner_avg
-    execute_on = 'INITIAL TIMESTEP_END'
-  []
-  [recoverable_pp]
-    type = HeatRemovalRateLimitScale
-    heat_addition_pps = 'evaporator_boundary_integral'
-    limit_condenser_side = false
-    catastrophic_heat_removal_limit_pps = ''
-    recoverable_heat_removal_limit_pps = 'hp_sonic_limit hp_viscous_limit'
-    T = T_inner_avg
-    execute_on = 'INITIAL linear nonlinear TIMESTEP_END'
   []
   [T_evap_inner]
     type = SideAverageValue
@@ -365,10 +322,6 @@ q_evap = '${fparse Q_hp / S_evap}'
     value1 = T_evap_inner
     value2 = T_cond_inner
     execute_on = 'INITIAL TIMESTEP_END'
-  []
-  [scale_pp]
-    type = FunctionValuePostprocessor
-    function = scale_fcn
   []
   [A_int_total_flux]
     type = SideIntegralVariablePostprocessor

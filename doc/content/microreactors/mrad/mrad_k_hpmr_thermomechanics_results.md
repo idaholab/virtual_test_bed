@@ -67,3 +67,22 @@ Examination of the displacement components ([hpmr_lf_disp_comp]) indicates that 
        caption=Time- and height-dependent displacement components during the load following transient.
 
 These results demonstrate the passive load-following capability of the HP-MR design. A loss of secondary cooling is accommodated entirely through inherent temperature reactivity feedback, allowing the reactor to autonomously settle at a reduced, stable power output without any active control action. The comparison between thermomechanics and thermal-only models further shows that thermal expansion contributes a modest but physically consistent supplementary feedback during transients, reducing the severity of peak temperature excursions, while the overall system response and equilibrium state remain governed primarily by temperature reactivity feedback.
+
+## Run Command
+
+The model is executed using the DireWolf executable. Below is an example run command:
+
+```bash
+mpiexec -n 500 /path/to/dire_wolf-opt -i K-HPMR_GRIFFIN.i
+mpiexec -n 500 /path/to/dire_wolf-opt -i K-HPMR_GRIFFIN_tr.i
+```
+
+## HPC Resources
+
+| Resource | Steady-State | Load Following |
+| :-- | - | - |
+| HPC Machine | Sawtooth | Sawtooth |
+| Number of nodes | 167 | 167 |
+| Number of processes | 500 | 500 |
+| Number of threads per process | 1 | 1 |
+| Run time | <24 hours | <72 hours |
