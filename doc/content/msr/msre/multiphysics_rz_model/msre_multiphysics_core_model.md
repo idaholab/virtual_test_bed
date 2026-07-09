@@ -198,25 +198,26 @@ This block defines the geometry of the core, as shown in [MSRE_pgh_mesh_blocks].
 
 !listing msr/msre/multiphysics_core_model/steady_state/th.i start=[Mesh] end=[Problem]
 
-#### Modules
+#### Physics
 
-This block defines the Module that will be used in this problem - specifically the Navier Stokes Finite Volume action.
+This block defines the various `Physics` that will be used in this problem - specifically the Navier Stokes flow and fluid heat transfer finite volume
+`Physics`. A `Physics` is simply a derived class of `Action`.
 
-The ```Navier Stokes Finite Volume``` action is used to define fluid properties, compute the "weakly-compressible" flow, and set up boundary conditions.
+The ```Navier Stokes Finite Volume``` `Physics` are used to compute the "weakly-compressible" flow, set up various helper materials and set up boundary conditions.
 
-Here, the action operates on the fluid blocks which are defined at the top of the header and are substituted using the `$` sign. Recall that the `$` sign refers to variable substitutions. "Weakly-compressible" with porous_medium_treatment is selected for this model and the energy equation is also included.
+Here, the `Physics` operates on the fluid blocks which are defined at the top of the header and are substituted using the `$` sign. Recall that the `$` sign refers to variable substitutions. "Weakly-compressible" with porous_medium_treatment is selected for this model and the energy equation is also included.
 
 Numerical schemes can be selected for solving the Navier Stokes equations with different methods of pressure and velocity interpolation.
 
 Porosity, friction, and turbulence treatment can be modified here using various correlations and models. Fluid properties are also set here and can be modified.
 
-The action also incorporates external physics like a volumetric heat source due to the power_density calculated by Griffin. Also, boundary conditions are set to constrain the different Navier Stokes equations.
+The `Physics` also incorporates external physics like a volumetric heat source due to the power_density calculated by Griffin. Also, boundary conditions are set to constrain the different Navier Stokes equations.
 
-The scalar equations for delayed neutron precursor groups are not included here in the action since they are defined externally elsewhere in the input file
+The scalar equations for delayed neutron precursor groups are not included here in the `Physics` since they are defined externally elsewhere in the input file
 
 Lastly, scaling factors can be tuned to increase convergence speed if needed.
 
-The action allows users to simply modify the equations that are solved, choose numerical schemes, define the porosity and friction treatment, define fluid properties, couple with other physics for energy deposition, and set boundary conditions.
+The `Physics` allows users to simply modify the equations that are solved, choose numerical schemes, define the porosity and friction treatment, define fluid properties, couple with other physics for energy deposition, and set boundary conditions.
 
 !listing msr/msre/multiphysics_core_model/steady_state/th.i start=[Modules] end=[FVKernels]
 
@@ -249,7 +250,7 @@ This block contains parameters applied to all the core components. The `fluid_pr
 !listing msr/msre/multiphysics_core_model/steady_state/th.i start=[FluidProperties] end=[Modules]
 
 
-Fluid properties are further defined within the ```Navier Stokes Finite Volume``` action and the Materials block.
+Fluid properties are further specified within the ```Navier Stokes Finite Volume``` `Physics` and the Materials block.
 
 !listing msr/msre/multiphysics_core_model/steady_state/th.i start=# fluid properties end=# Energy source-sink language=cpp
 
@@ -263,7 +264,7 @@ This block contains the variables that are explicitly solved for in this model. 
 
 #### Finite Volume Kernels
 
-Furthermore, corresponding to the variables are the finite volume kernels which operate on these variables. Most of the kernels are set implicitly within the Navier Stokes action. However Kernel tweaking is possible and here the pump, delayed neutron precursor group advection equations, and solid heat conduction are explicitly set.
+Furthermore, corresponding to the variables are the finite volume kernels which operate on these variables. Most of the kernels are set implicitly within the Navier Stokes `Physics`. However Kernel tweaking is possible and here the pump, delayed neutron precursor group advection equations, and solid heat conduction are explicitly set.
 
 !listing msr/msre/multiphysics_core_model/steady_state/th.i start=[FVKernels] end=[FVInterfaceKernels]
 

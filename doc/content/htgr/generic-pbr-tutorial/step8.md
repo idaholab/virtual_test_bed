@@ -11,8 +11,11 @@ The geometry is changed by modifying the `cartesian_mesh` block. The geometry is
         id=step8mesh
         caption=Geometry for Step 8.
 
-Note that only solid conduction blocks are added in Step 8 so that the `NavierStokesFV` remains
+Note that only solid conduction blocks are added in Step 8 so that the `Physics` remains
 unchanged.
+
+!alert note
+At the time this tutorial was designed, the `SolidHeatTransfer` finite volume `Physics` did not exist.
 
 ## Adding Boundary Conditions for T_solid
 

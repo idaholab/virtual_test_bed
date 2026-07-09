@@ -32,7 +32,7 @@ The geometry is depicted in [step6mesh].
         caption= Mesh for Step 6.
 
 The change in geometry requires updating the `T_solid` variable definition
-and the block parameter in the `NavierStokesFV` action.
+and the block parameter in the `NavierStokes/Flow` and `NavierStokes/FluidHeatTransfer` `Physics`.
 
 ## Materials
 

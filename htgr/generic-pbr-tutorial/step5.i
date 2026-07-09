@@ -194,54 +194,65 @@ bottom_reflector_Dh = 0.1
   []
 []
 
-[Modules]
-  [NavierStokesFV]
-    # general control parameters
-    compressibility = 'weakly-compressible'
-    porous_medium_treatment = true
-    add_energy_equation = true
-    block = 'pebble_bed cavity bottom_reflector'
+[Physics]
+  [NavierStokes]
+    [Flow/flow]
+      # general control parameters
+      compressibility = 'weakly-compressible'
+      porous_medium_treatment = true
+      block = 'pebble_bed cavity bottom_reflector'
 
-    # material property parameters
-    density = rho
-    dynamic_viscosity = mu
-    thermal_conductivity = kappa
+      # material property parameters
+      density = rho
+      dynamic_viscosity = mu
 
-    # porous medium treatment parameters
-    porosity = porosity
-    porosity_interface_pressure_treatment = 'bernoulli'
+      # porous medium treatment parameters
+      porosity = porosity
+      porosity_interface_pressure_treatment = 'bernoulli'
 
-    # initial conditions
-    initial_velocity = '1e-6 1e-6 0'
-    initial_pressure = 5.4e6
-    initial_temperature = ${T_inlet}
+      # initial conditions
+      initial_velocity = '1e-6 1e-6 0'
+      initial_pressure = 5.4e6
 
-    # inlet boundary conditions
-    inlet_boundaries = inlet
-    momentum_inlet_types = fixed-velocity
-    momentum_inlet_functors = '0 -${flow_vel}'
-    energy_inlet_types = fixed-temperature
-    energy_inlet_functors = '${T_inlet}'
+      # inlet boundary conditions
+      inlet_boundaries = inlet
+      momentum_inlet_types = fixed-velocity
+      momentum_inlet_functors = '0 -${flow_vel}'
 
-    # wall boundary conditions
-    wall_boundaries = 'bed_left bed_right'
-    momentum_wall_types = 'slip slip'
-    energy_wall_types = 'heatflux heatflux'
-    energy_wall_functors = '0 0'
+      # wall boundary conditions
+      wall_boundaries = 'bed_left bed_right'
+      momentum_wall_types = 'slip slip'
 
-    # outlet boundary conditions
-    outlet_boundaries = outlet
-    momentum_outlet_types = fixed-pressure
-    pressure_functors = ${outlet_pressure}
+      # outlet boundary conditions
+      outlet_boundaries = outlet
+      momentum_outlet_types = fixed-pressure
+      pressure_functors = ${outlet_pressure}
 
-    # friction control parameters
-    friction_types = 'darcy forchheimer'
-    friction_coeffs = 'Darcy_coefficient Forchheimer_coefficient'
+      # friction control parameters
+      friction_types = 'darcy forchheimer'
+      friction_coeffs = 'Darcy_coefficient Forchheimer_coefficient'
+    []
+    [FluidHeatTransfer/all]
+      block = 'pebble_bed cavity bottom_reflector'
 
-    # energy equation parameters
-    ambient_convection_blocks = 'pebble_bed bottom_reflector'
-    ambient_convection_alpha = 'alpha'
-    ambient_temperature = 'T_solid'
+      # material property parameters
+      specific_heat = cp
+      thermal_conductivity = kappa
+
+      # initial conditions
+      initial_temperature = '${T_inlet}'
+
+      # boundary conditions, see Flow physics for boundaries
+      energy_inlet_types = fixed-temperature
+      energy_inlet_functors = '${T_inlet}'
+      energy_wall_types = 'heatflux heatflux'
+      energy_wall_functors = '0 0'
+
+      # energy equation parameters
+      ambient_convection_blocks = 'pebble_bed bottom_reflector'
+      ambient_convection_alpha = 'alpha'
+      ambient_temperature = 'T_solid'
+    []
   []
 []
 

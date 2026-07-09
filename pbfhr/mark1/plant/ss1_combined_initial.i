@@ -190,69 +190,81 @@ outlet_pressure_val = 2e5
   allow_invalid_solution = true
 []
 
-[Modules]
-  [NavierStokesFV]
-    # General parameters
-    compressibility = 'incompressible'
-    porous_medium_treatment = true
-    add_energy_equation = true
-    boussinesq_approximation = true
-    block = ${blocks_fluid}
+[Physics]
+  [NavierStokes]
+    [Flow/flow]
+      # General parameters
+      compressibility = 'incompressible'
+      porous_medium_treatment = true
+      boussinesq_approximation = true
+      block = ${blocks_fluid}
 
-    # Variables
-    velocity_variable = 'superficial_vel_x superficial_vel_y'
-    pressure_variable = 'pressure'
-    fluid_temperature_variable = 'T_fluid'
+      # Variables
+      velocity_variable = 'superficial_vel_x superficial_vel_y'
+      pressure_variable = 'pressure'
 
-    # Material properties
-    density = ${rho_fluid}
-    dynamic_viscosity = 'mu'
-    thermal_conductivity = 'kappa'
-    specific_heat = 'cp'
-    thermal_expansion = 'alpha_b'
-    porosity = 'porosity'
+      # Material properties
+      density = ${rho_fluid}
+      dynamic_viscosity = 'mu'
+      thermal_expansion = 'alpha_b'
+      porosity = 'porosity'
 
-    # initial conditions
-    initial_velocity = '1e-12 ${inlet_vel_y_ini}'
-    initial_pressure = ${outlet_pressure_val}
-    initial_temperature = ${inlet_T_fluid}
+      # initial conditions
+      initial_velocity = '1e-12 ${inlet_vel_y_ini}'
+      initial_pressure = ${outlet_pressure_val}
 
-    # Boussinesq parameters
-    gravity = '0 -9.81 0'
-    ref_temperature = ${inlet_T_fluid}
+      # Boussinesq parameters
+      gravity = '0 -9.81 0'
+      ref_temperature = ${inlet_T_fluid}
 
-    # Wall boundary conditions
-    wall_boundaries = 'bed_left barrel_wall'
-    momentum_wall_types = 'slip slip'
-    energy_wall_types = 'heatflux heatflux'
-    energy_wall_functors = '0 0'
+      # Wall boundary conditions
+      wall_boundaries = 'bed_left barrel_wall'
+      momentum_wall_types = 'slip slip'
 
-    # Inlet boundary conditions
-    inlet_boundaries = 'bed_horizontal_bottom OR_horizontal_bottom'
-    momentum_inlet_types = 'fixed-velocity fixed-velocity'
-    momentum_inlet_functors = '0 inlet_vel_y_fun; 0 0'
-    energy_inlet_types = 'fixed-temperature heatflux'
-    energy_inlet_functors = 'T_inlet_fun 0'
-    # so the flux BCs have to be used consistently across all equations
+      # Inlet boundary conditions
+      inlet_boundaries = 'bed_horizontal_bottom OR_horizontal_bottom'
+      momentum_inlet_types = 'fixed-velocity fixed-velocity'
+      momentum_inlet_functors = '0 inlet_vel_y_fun; 0 0'
 
-    # Outlet boundary conditions
-    outlet_boundaries = 'bed_horizontal_top plenum_top OR_horizontal_top'
-    momentum_outlet_types = 'fixed-pressure fixed-pressure fixed-pressure'
-    pressure_functors = 'pressure_out_fun pressure_out_fun pressure_out_fun'
+      # Outlet boundary conditions
+      outlet_boundaries = 'bed_horizontal_top plenum_top OR_horizontal_top'
+      momentum_outlet_types = 'fixed-pressure fixed-pressure fixed-pressure'
+      pressure_functors = 'pressure_out_fun pressure_out_fun pressure_out_fun'
 
-    # Porous flow parameters
-    ambient_convection_blocks = ${blocks_pebbles}
-    ambient_convection_alpha = 'alpha'
-    ambient_temperature = 'T_solid'
+      # Friction in porous media
+      friction_types = 'darcy forchheimer'
+      friction_coeffs = 'Darcy_coefficient Forchheimer_coefficient'
 
-    # Friction in porous media
-    friction_types = 'darcy forchheimer'
-    friction_coeffs = 'Darcy_coefficient Forchheimer_coefficient'
+      # Numerical scheme
+      momentum_advection_interpolation = 'upwind'
+      mass_advection_interpolation = 'upwind'
+    []
+    [FluidHeatTransfer/all]
+      block = ${blocks_fluid}
+      fluid_temperature_variable = 'T_fluid'
+      initial_temperature = ${inlet_T_fluid}
 
-    # Numerical scheme
-    momentum_advection_interpolation = 'upwind'
-    mass_advection_interpolation = 'upwind'
-    energy_advection_interpolation = 'upwind'
+      # material properties
+      thermal_conductivity = 'kappa'
+      specific_heat = 'cp'
+
+      # inlet BCs, see Flow physics for inlet boundaries
+      energy_inlet_types = 'fixed-temperature heatflux'
+      energy_inlet_functors = 'T_inlet_fun 0'
+      # so the flux BCs have to be used consistently across all equations
+
+      # wall BCs, see Flow physics for wall boundaries
+      energy_wall_types = 'heatflux heatflux'
+      energy_wall_functors = '0 0'
+
+      # Porous flow parameters
+      ambient_convection_blocks = ${blocks_pebbles}
+      ambient_convection_alpha = 'alpha'
+      ambient_temperature = 'T_solid'
+
+      # Numerical scheme
+      energy_advection_interpolation = 'upwind'
+    []
   []
 []
 
