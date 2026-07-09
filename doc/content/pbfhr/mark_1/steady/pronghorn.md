@@ -36,12 +36,14 @@ is specific to the shape of this core. This is defined in the [UserObjects](http
 
 ## Variables
 
-The fluid variables are defined automatically by the `NavierStokesFV` action: the two velocity components, pressure and fluid temperature. They are defined over
+The fluid variables are defined automatically by the `NavierStokes` flow `Physics`: the two velocity components, pressure and fluid temperature. They are defined over
 the active region and the pebble reflector, the two fluid flow regions. The model may evolve in the future to model flow in the inner and outer reflectors.
 
 The solid temperature
-is defined in the entire domain, as the solid phase temperature in the pebble bed, and as the regular solid temperature in the rest of the core. It is defined as shown in the block below. The `NavierStokesFV` syntax may in the future
-include the definition of the solid variables as porous flow simulation capabilities increase.
+is defined in the entire domain, as the solid phase temperature in the pebble bed, and as the regular solid temperature in the rest of the core. It is defined as shown in the block below.
+
+!alert note
+The `NavierStokes` syntax can now include the definition of the solid variables using the `SolidHeatTransfer` physics.
 
 !listing /pbfhr/mark1/steady/ss1_combined.i block=Variables
 
@@ -52,7 +54,7 @@ energy. The conservation of energy for the solid / solid phase is solved simulta
 We could have used another [MultiApp](https://mooseframework.inl.gov/syntax/MultiApps/index.html) setup to compute the solid temperature, with the justification that it evolves on a longer timescale so it takes longer to reach steady state. However, the cost of the more expensive full-core solves and of the additional fluid flow solves, while the solid temperature is converging, is sufficiently offset by not needing to iterate the coupling between two applications. The workflow is also generally simplified.
 
 !alert note
-Legacy kernel syntax for the mass/momentum/energy equations, that does not use the `NavierStokesFV` action, is show [here](pronghorn_legacy.md).
+Legacy kernel syntax for the mass/momentum/energy equations, that does not use the `NavierStokes` `Physics`, is show [here](pronghorn_legacy.md).
 
 ## Conservation of fluid mass
 
@@ -76,12 +78,12 @@ approximation.)  The simplified conservation of mass is then given by,
   \nabla \cdot \vec{u}_D = 0
 \end{equation}
 
-This conservation is added by the `NavierStokesFV` action by simply specifying the compressibility
+This conservation is added by the `NavierStokes/Flow` action by simply specifying the compressibility
 of the fluid and the porous media treatment:
 
 ```
-[Modules]
-  [NavierStokesFV]
+[Physics]
+  [NavierStokes/Flow/fluid]
     # General parameters
     compressibility = 'incompressible'
     porous_medium_treatment = true
@@ -133,12 +135,12 @@ gives the form that is implemented for the FHR model,
 \end{equation}
 
 This equation is added automatically by specifying the compressibility and the porous media option to
-the `NavierStokesFV` action. The flow equations are restricted to the fluid domain using the `block`
-parameter, and the fluid energy equation is added similarly.
+the `NavierStokes` Physics. The flow equations are restricted to the fluid domain using the `block`
+parameter.
 
 ```
-[Modules]
-  [NavierStokesFV]
+[Physics]
+  [NavierStokes/Flow/fluid]
     # General parameters
     compressibility = 'incompressible'
     porous_medium_treatment = true
@@ -146,11 +148,19 @@ parameter, and the fluid energy equation is added similarly.
     ...
 ```
 
+The fluid energy equation is added similarly:
+
+```
+[Physics]
+  [NavierStokes/FluidHeatTransfer/fluid]
+    ...
+```
+
 The friction terms in the porous media treatment are specified in the action as below:
 
 ```
-[Modules]
-  [NavierStokesFV]
+[Physics]
+  [NavierStokes/Flow/fluid]
     ...
     # Friction in porous media
     friction_types = 'darcy forchheimer'
@@ -171,8 +181,8 @@ kernel for the $y$-momentum equation. The additional Boussinesq and gravity kern
 equation are added by specifying:
 
 ```
-[Modules]
-  [NavierStokesFV]
+[Physics]
+  [NavierStokes/Flow/fluid]
     ...
     boussinesq_approximation = true
 ```
@@ -206,13 +216,11 @@ The interphase heat transfer coefficient represents convective heat transfer bet
 We use the Wakao correlation [!citep](wakao1979), detailed in the [Pronghorn manual](https://inldigitallibrary.inl.gov/sites/sti/sti/Sort_24425.pdf) and commonly used in pebble-bed
 reactor analysis.
 
-The fluid energy equation is added automatically through the `add_energy_equation` parameter, and
+The fluid energy equation is added by the `FluidHeatTransfer` physics, and
 the volumetric heat convection with the solid phase is specified as below:
 
 ```
-[NavierStokesFV]
-  ...
-  add_energy_equation = true
+[NavierStokes/FluidHeatTransfer/all]
   ...
 
   # Porous flow parameters
@@ -273,11 +281,12 @@ in the solid phase.
 There are numerous options to initialize a [Variable](https://mooseframework.inl.gov/syntax/Variables/) or an [AuxVariable](https://mooseframework.inl.gov/syntax/AuxVariables/) in MOOSE. The `initial_condition` can
 be set directly in the relevant [Variables](https://mooseframework.inl.gov/syntax/Variables/) block. It can also be set using an initial condition, [ICs](https://mooseframework.inl.gov/syntax/ICs/index.html), block.
 The velocity variables have to be initialized to a non-zero value, to avoid numerical
-issues with advection at 0 velocity. Initializations are specified in the `NavierStokesFV` action:
+issues with advection at 0 velocity. Initializations are specified in the `NavierStokes/Flow` action:
 
 ```
-[Modules]
-  [NavierStokesFV]
+[Physics]
+  [NavierStokes/Flow/fluid]
+  ...
     # Initial conditions
     initial_velocity = '1e-6 ${inlet_vel_y} 0'
     initial_pressure = 2e5
@@ -303,7 +312,7 @@ ramp down is performed using a piecewise linear function and a functionalized ma
 ## Boundary conditions
 
 !alert note
-Legacy syntax for the boundary conditions of the mass/momentum/energy equations, that does not use the `NavierStokesFV` action, is shown [here](pronghorn_legacy.md).
+Legacy syntax for the boundary conditions of the mass/momentum/energy equations, that does not use the `NavierStokes/Flow` action, is shown [here](pronghorn_legacy.md).
 
 We first define the inlet of the core. We specify the velocity of the fluid at the inlet and its temperature. In
 this simplified model of the Mk1-FHR, there is no flow coming from the inner reflector. The velocity and
@@ -311,8 +320,9 @@ temperature are currently set to a constant value, but will be coupled in the fu
 primary loop.
 
 ```
-[Modules]
-  [NavierStokesFV]
+[Physics]
+  [NavierStokes/Flow/fluid]
+  ...
     # Inlet boundary conditions
     inlet_boundaries = 'bed_horizontal_bottom OR_horizontal_bottom'
     momentum_inlet_types = 'fixed-velocity fixed-velocity'
@@ -328,8 +338,8 @@ with the pebbles, so wall friction may be neglected. The heat transfer at the pe
 take place in the solid phase only, so it is set to 0 heat flux.
 
 ```
-[Modules]
-  [NavierStokesFV]
+[Physics]
+  [NavierStokes/Flow/fluid]
     ...
     # Wall boundary conditions
     wall_boundaries = 'bed_left barrel_wall'
@@ -344,8 +354,8 @@ large pressure drop. This is a known result of the simplified model. This bounda
 flow boundary condition. It may only be used sufficiently far from modifications of the flow path.
 
 ```
-[Modules]
-  [NavierStokesFV]
+[Physics]
+  [NavierStokes/Flow/fluid]
     ...
     # Outlet boundary conditions
     outlet_boundaries = 'bed_horizontal_top plenum_top OR_horizontal_top'
