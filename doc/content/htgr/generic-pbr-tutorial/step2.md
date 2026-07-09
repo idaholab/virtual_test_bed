@@ -42,9 +42,9 @@ gas-cooled reactor pebbles. We create a real valued variable called
 
 !listing htgr/generic-pbr-tutorial/step2.i start=T_fluid end=flow_vel
 
-Then we need to add the friction coefficients to the finite volume Navier-Stokes action. This is done by adding the `friction_types` and `friction_coeffs` parameters.
+Then we need to add the friction coefficients to the finite volume Navier-Stokes flow `Physics`. This is done by adding the `friction_types` and `friction_coeffs` parameters.
 
-!listing htgr/generic-pbr-tutorial/step2.i block=Modules
+!listing htgr/generic-pbr-tutorial/step2.i block=Physics
 
 Drag friction sources are often split up into a component that depends linearly
 on fluid speed, called the Darcy friction (Darcy coefficient does not depend on velocity) and one that depends quadratically on flow speed, called the Forchheimer friction (Forchheimer depends linearly on velocity). The same distinction is made in Pronghorn.

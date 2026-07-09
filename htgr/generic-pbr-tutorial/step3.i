@@ -45,8 +45,8 @@ flow_vel = '${fparse mass_flow_rate / flow_area / density}'
   []
 []
 
-[Modules]
-  [NavierStokesFV]
+[Physics]
+  [NavierStokes/Flow/flow]
     # general control parameters
     compressibility = 'weakly-compressible'
     porous_medium_treatment = true
