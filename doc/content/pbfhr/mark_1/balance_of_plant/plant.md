@@ -52,7 +52,7 @@ Flux boundary conditions are utilized as they are naturally conservative in a fi
 The fluxes for the mass, momentum and energy equations are all provided, computed by
 the boundary conditions based on the mass flow rates, local density and inlet surface area.
 
-!listing pbfhr/mark1/plant/ss1_combined.i block=Modules/NavierStokesFV start=inlet_boundaries end=pressure_function include-end=True
+!listing pbfhr/mark1/plant/ss1_combined.i block=Physics/NavierStokes/Flow start=inlet_boundaries end=pressure_function include-end=True
 
 In the other direction of the coupling, the boundary conditions that will be passed to SAM are collected using
 side integrals and flow rate postprocessors. These are executed at the end of each time step

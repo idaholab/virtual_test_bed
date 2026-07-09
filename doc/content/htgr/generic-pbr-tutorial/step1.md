@@ -82,7 +82,7 @@ The thermal-hydraulics problem is set up using the finite volume Navier-Stokes a
 This action is discussed in detail [here](https://mooseframework.inl.gov/source/actions/NSFVAction.html).
 The corresponding block in the input file is:
 
-!listing htgr/generic-pbr-tutorial/step1.i block=NavierStokesFV
+!listing htgr/generic-pbr-tutorial/step1.i block=NavierStokes/Flow
 
 Understanding the finite volume Navier-Stokes action is important.
 Therefore, each line will be explained.
@@ -100,7 +100,7 @@ This exchange is usually described by correlations. In this input file, no mass,
 much of each porous flow element is fluid. The porosity in this input file is defined
 as a variable and provided in the line:
 
-!listing htgr/generic-pbr-tutorial/step1.i block=NavierStokesFV start=porosity end=initial_velocity
+!listing htgr/generic-pbr-tutorial/step1.i block=NavierStokes/Flow start=porosity end=initial_velocity
 
 Note that porosity can also be provided as a functor material property which offers more flexibility
 when porosity smoothing is required. Porosity smoothing is not used in this tutorial because the
@@ -108,13 +108,13 @@ when porosity smoothing is required. Porosity smoothing is not used in this tuto
 The names of the density and dynamic viscosity functors need to be provided to the
 action:
 
-!listing htgr/generic-pbr-tutorial/step1.i block=NavierStokesFV start=density end=porosity
+!listing htgr/generic-pbr-tutorial/step1.i block=NavierStokes/Flow start=density end=porosity
 
 Note that these functors are defined by the `GeneralFunctorFluidProps` object discussed above.
 
 Initial conditions for the velocity and pressure are defined by the lines:
 
-!listing htgr/generic-pbr-tutorial/step1.i block=NavierStokesFV start=initial_velocity end=inlet_boundaries
+!listing htgr/generic-pbr-tutorial/step1.i block=NavierStokes/Flow start=initial_velocity end=inlet_boundaries
 
 Note that, since we solve a pseudo-transient, the initial conditions should be interpreted
 as initial guesses of the solution.
@@ -125,7 +125,7 @@ slightly harder to solve.
 
 The boundary conditions are set by these lines:
 
-!listing htgr/generic-pbr-tutorial/step1.i block=NavierStokesFV start=inlet_boundaries end=[]
+!listing htgr/generic-pbr-tutorial/step1.i block=NavierStokes/Flow start=inlet_boundaries end=[]
 
 The top boundary is the inlet boundary, where we specify the inlet velocity. The inlet velocity
 is $(0, -v_{in})$ where we note that the velocity is downward, leading to the negative sign.

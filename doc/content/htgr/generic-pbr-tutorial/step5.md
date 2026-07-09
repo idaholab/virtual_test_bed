@@ -31,10 +31,11 @@ The addition of two blocks requires updates to most of the `block` parameters in
 
 ## Updating the Action
 
-Step 5 is the first model with solid-only (i.e., no flow) blocks. Therefore, the blocks on which fluid flow is solved must be set in the `NavierStokesFV` and that is done using the `block` parameter:
+Step 5 is the first model with solid-only (i.e., no flow) blocks. Therefore, the blocks on which fluid flow is solved must be set in the `NavierStokes/Flow` and that is done using the `block` parameter:
 
-!listing htgr/generic-pbr-tutorial/step5.i start=NavierStokesFV end=porosity
+!listing htgr/generic-pbr-tutorial/step5.i start=NavierStokes/Flow end=porosity
 
+A similar change is done to the `FluidHeatTransfer` `Physics`.
 It is also imperative to block-restrict the fluid properties object to only
 operate on the fluid blocks:
 
