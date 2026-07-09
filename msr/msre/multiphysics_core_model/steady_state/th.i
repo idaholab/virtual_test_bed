@@ -143,63 +143,78 @@ solid_blocks = 'core core_barrel'
   []
 []
 
-[Modules]
-  [NavierStokesFV]
-    # Basic settings - weakly-compressible, turbulent flow with buoyancy
-    block = ${fluid_blocks}
-    compressibility = 'weakly-compressible'
-    porous_medium_treatment = true
-    add_energy_equation = true
-    gravity = '0.0 -9.81 0.0'
+[Physics]
+  [NavierStokes]
+    [Flow/fluid]
+      # Basic settings - weakly-compressible, turbulent flow with buoyancy
+      block = ${fluid_blocks}
+      compressibility = 'weakly-compressible'
+      porous_medium_treatment = true
+      gravity = '0.0 -9.81 0.0'
 
-    # Variable naming
-    velocity_variable = 'superficial_vel_x superficial_vel_y'
-    pressure_variable = 'pressure'
-    fluid_temperature_variable = 'T_fluid'
+      # Variable naming
+      velocity_variable = 'superficial_vel_x superficial_vel_y'
+      pressure_variable = 'pressure'
 
-    # ICs
-    initial_velocity = '1e-8 1e-8'
-    initial_pressure = ${p_outlet}
-    initial_temperature = ${T_Salt_initial}
+      # ICs
+      initial_velocity = '1e-8 1e-8'
+      initial_pressure = ${p_outlet}
 
-    # Numerical schemes
-    momentum_advection_interpolation = upwind
-    mass_advection_interpolation = upwind
-    energy_advection_interpolation = upwind
-    velocity_interpolation = rc
+      # Numerical schemes
+      momentum_advection_interpolation = upwind
+      mass_advection_interpolation = upwind
+      velocity_interpolation = rc
 
-    # Porous & Friction treatement
-    use_friction_correction = true
-    friction_types = 'darcy forchheimer'
-    friction_coeffs = 'Darcy_coefficient Forchheimer_coefficient'
-    consistent_scaling = 100.0
-    porosity_smoothing_layers = 2
-    turbulence_handling = 'mixing-length'
+      # Porous & Friction treatement
+      use_friction_correction = true
+      friction_types = 'darcy forchheimer'
+      friction_coeffs = 'Darcy_coefficient Forchheimer_coefficient'
+      consistent_scaling = 100.0
+      porosity_smoothing_layers = 2
 
-    # fluid properties
-    density = 'rho'
-    dynamic_viscosity = 'mu'
-    thermal_conductivity = 'kappa'
-    specific_heat = 'cp'
+      # fluid properties
+      density = 'rho'
+      dynamic_viscosity = 'mu'
 
-    # Energy source-sink
-    external_heat_source = 'power_density'
-    #energy_scaling = 2.0
+      # Boundary Conditions
+      wall_boundaries = 'left      top      bottom   right    loop_boundary '
+      momentum_wall_types = 'symmetry  slip     noslip   noslip   noslip'
 
-    # Boundary Conditions
-    wall_boundaries = 'left      top      bottom   right    loop_boundary '
-    momentum_wall_types = 'symmetry  slip     noslip   noslip   noslip'
-    energy_wall_types = 'heatflux  heatflux heatflux heatflux heatflux'
-    energy_wall_functors = '0        0        0        0        0'
+      # Constrain Pressure
+      pin_pressure = true
+      pinned_pressure_value = ${p_outlet}
+      pinned_pressure_point = '0.0 2.13859 0.0'
+      pinned_pressure_type = point-value-uo
+    []
+    [FluidHeatTransfer/fluid]
+      block = ${fluid_blocks}
 
-    # Constrain Pressure
-    pin_pressure = true
-    pinned_pressure_value = ${p_outlet}
-    pinned_pressure_point = '0.0 2.13859 0.0'
-    pinned_pressure_type = point-value-uo
+      # variable names
+      fluid_temperature_variable = 'T_fluid'
 
-    # Passive Scalar -- solved separetely to integrate porosity jumps
-    add_scalar_equation = false
+      # initial conditions
+      initial_temperature = ${T_Salt_initial}
+
+      # fluid properties
+      thermal_conductivity = 'kappa'
+      specific_heat = 'cp'
+
+      # Energy source-sink
+      external_heat_source = 'power_density'
+      #energy_scaling = 2.0
+
+      # Boundary conditions
+      energy_wall_types = 'heatflux  heatflux heatflux heatflux heatflux'
+      energy_wall_functors = '0        0        0        0        0'
+
+      # numerical scheme
+      energy_advection_interpolation = upwind
+    []
+    [Turbulence/fluid]
+      block = ${fluid_blocks}
+      turbulence_handling = 'mixing-length'
+      fluid_heat_transfer_physics = 'fluid'
+    []
   []
 []
 
