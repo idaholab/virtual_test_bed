@@ -3,14 +3,14 @@
     type = CSVDiff
     input = 'triso_1d.i'
     csvdiff = 'triso_1d_out.csv'
-    executable_pattern = 'bison*'
+    capabilities = 'bisonapp'
     rel_err = '1e-6'
   []
   [triso_2d_aspherical_bison]
     type = CSVDiff
     input = 'triso_2d_aspherical.i'
     csvdiff = 'triso_2d_aspherical_out.csv'
-    executable_pattern = 'bison*'
+    capabilities = 'bisonapp'
     cli_args = 'Executioner/num_steps=1'
     rel_err = '1e-6'
   []
@@ -18,7 +18,7 @@
     type = CSVDiff
     input = 'triso_2d_ipyc_cracking.i'
     csvdiff = 'triso_2d_ipyc_cracking_out.csv'
-    executable_pattern = 'bison*'
+    capabilities = 'bisonapp'
     cli_args = 'Executioner/num_steps=1'
     rel_err = '1e-6'
   []
@@ -26,10 +26,9 @@
     type = CSVDiff
     input = 'triso_3d.i'
     csvdiff = 'triso_3d_out.csv'
-    executable_pattern = 'bison*'
     cli_args = 'Executioner/num_steps=1'
     rel_err = '1e-6'
-    capabilities = 'method=opt'
+    capabilities = 'method=opt & bisonapp'
     max_time = '500'
   []
   [triso_bluecrab]
@@ -37,7 +36,7 @@
     input = 'triso_1d.i'
     csvdiff = 'triso_1d_out.csv'
     cli_args = '--app BisonApp'
-    executable_pattern = 'blue_crab*'
+    capabilities = 'bluecrabapp'
     rel_err = '1e-6'
     # Calculation eventually gets out of a range of a correlation
     allow_warnings = true

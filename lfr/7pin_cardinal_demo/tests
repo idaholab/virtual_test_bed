@@ -1,13 +1,13 @@
 [Tests]
   [generate_mesh_neutronics]
     type = RunApp
-    executable_pattern = 'griffin*|cardinal*'
+    capabilities = 'griffinapp | cardinalapp'
     input = 'NTmesh.i'
     cli_args = '--mesh-only'
   []
   [generate_mesh_heat]
     type = RunApp
-    executable_pattern = 'cardinal*|griffin*'
+    capabilities = 'cardinalapp | griffinapp'
     input = 'HCmesh.i'
     cli_args = '--mesh-only'
   []
@@ -17,7 +17,7 @@
     type = RunApp
     input = 'NT.i'
     check_input = true
-    executable_pattern = 'griffin*'
+    capabilities = 'griffinapp'
     cli_args = "MultiApps/active='' Transfers/active=''"
     prereq = 'generate_mesh_neutronics'
     max_time = 400
@@ -26,7 +26,7 @@
     type = RunApp
     input = 'HC.i'
     check_input = true
-    executable_pattern = 'cardinal*|combined*'
+    capabilities = 'cardinalapp | combinedapp'
     cli_args = "Transfers/active='' MultiApps/active=''"
     prereq = generate_mesh_heat
   []
@@ -60,7 +60,7 @@
     min_parallel = 8
     # for devel testing (observed timeout at 500s)
     max_time = 600
-    executable_pattern = 'griffin*'
+    capabilities = 'griffinapp'
     prereq = 'syntax_griffin'
     abs_zero = 1e-4
     rel_err = 1e-4
@@ -70,7 +70,7 @@
     input = 'HC.i'
     csvdiff = HC_out.csv
     cli_args = "Executioner/dt=0.01 Executioner/end_time=0.1 Outputs/time_step_interval=1 Transfers/active='' MultiApps/active=''"
-    executable_pattern = 'cardinal*|combined*'
+    capabilities = 'cardinalapp | combinedapp'
     prereq = 'syntax_conduction'
     min_parallel = 8
     min_slots = 10 # memory heavy

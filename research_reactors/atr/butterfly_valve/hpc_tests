@@ -11,6 +11,6 @@
     # 10 sawtooth nodes
     min_parallel = 480
     max_time = 7200
-    executable_pattern = 'combined*'
+    capabilities = 'combinedapp'
   []
 []

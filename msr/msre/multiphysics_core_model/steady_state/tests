@@ -2,7 +2,7 @@
   # Syntax checks
   [generate_mesh]
     type = RunApp
-    executable_pattern = 'griffin*|pronghorn*'
+    capabilities = 'griffinapp | pronghornapp'
     input = '../mesh/mesh.i'
     cli_args = '--mesh-only'
     working_directory = '../mesh'
@@ -11,7 +11,7 @@
     type = RunApp
     input = 'neu.i'
     check_input = True
-    executable_pattern = 'griffin*'
+    capabilities = 'griffinapp'
     cli_args = "MultiApps/active='' Transfers/active=''"
     prereq = generate_mesh
   []
@@ -19,9 +19,8 @@
     type = RunApp
     input = 'th.i'
     check_input = True
-    executable_pattern = 'pronghorn*'
     # TODO: remove this one https://github.com/idaholab/moose/pull/27614 is merged
-    capabilities = 'method=opt'
+    capabilities = 'method=opt & pronghornapp'
   []
   # Regression tests with CSV output over a minimum amount of time steps/computation
   [neu_msre]
@@ -30,10 +29,9 @@
     rel_err = 1.0E-4
     input = 'neu.i'
     csvdiff = 'msre_neutronics_ss_s2_out.csv'
-    executable_pattern = 'griffin*'
     allow_warnings = true
     cli_args = "MultiApps/active='' Transfers/active=''"
-    capabilities = 'method=opt'
+    capabilities = 'method=opt & griffinapp'
   []
   [th_msre]
     prereq = th_msre_syntax
@@ -41,9 +39,8 @@
     rel_err = 1.0E-4
     input = 'th.i'
     csvdiff = 'th_out.csv'
-    executable_pattern = 'pronghorn*'
     allow_warnings = true
-    capabilities = 'method=opt'
+    capabilities = 'method=opt & pronghornapp'
     min_parallel = 8
   []
 []

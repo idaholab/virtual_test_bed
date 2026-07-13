@@ -29,7 +29,8 @@
     type = RunApp
     input = 'thm.i'
     check_input = true
-    executable_pattern = 'cardinal*|thermal_hydraulics*'
+    cli_args = '--app ThermalHydraulicsApp'
+    capabilities = 'cardinalapp | thermalhydraulicsapp'
   []
 
   [run_multiphysics]
@@ -53,7 +54,8 @@
     type = RunApp
     input = 'thm.i'
     check_input = true
-    executable_pattern = 'cardinal*|thermal_hydraulics*'
+    cli_args = '--app ThermalHydraulicsApp'
+    capabilities = 'cardinalapp | thermalhydraulicsapp'
     prereq = 'syntax_thm'
   []
 

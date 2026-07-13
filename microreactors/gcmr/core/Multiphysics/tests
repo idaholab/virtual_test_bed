@@ -5,14 +5,14 @@
     type = RunApp
     input = 'Griffin_mesh.i'
     cli_args = '--mesh-only'
-    executable_pattern = 'griffin*|blue_crab*'
+    capabilities = 'griffinapp | bluecrabapp'
     working_directory = 'mesh'
   []
   [generate_bison_mesh]
     type = RunApp
     input = 'BISON_mesh.i'
     cli_args = '--mesh-only'
-    executable_pattern = 'griffin*|blue_crab*'
+    capabilities = 'griffinapp | bluecrabapp'
     working_directory = 'mesh'
     prereq = 'generate_griffin_mesh'
   []
@@ -21,8 +21,7 @@
     check_input = true
     input = 'MP_Griffin_ss.i'
     cli_args = "MultiApps/active='' Transfers/active=''"
-    executable_pattern = 'griffin*|blue_crab*'
-    capabilities = 'method=opt'
+    capabilities = 'method=opt & (griffinapp | bluecrabapp)'
     max_time = 600
     # Griffin does not have the sam petsc option parameter
     allow_unused = true
@@ -34,8 +33,7 @@
     check_input = true
     input = 'MP_BISON_ss.i'
     cli_args = "MultiApps/active='' Transfers/active=''"
-    executable_pattern = 'bison*|blue_crab*'
-    capabilities = 'method=opt'
+    capabilities = 'method=opt & (bisonapp | bluecrabapp)'
     max_time = 600
     working_directory = 'steady_state'
     prereq = 'generate_bison_mesh'
@@ -45,8 +43,7 @@
     check_input = true
     input = 'MP_SAM_ss.i'
     cli_args = "--app ThermalHydraulicsApp"
-    executable_pattern = 'sam*|blue_crab*'
-    capabilities = 'method=opt'
+    capabilities = 'method=opt & (samapp | bluecrabapp)'
     max_time = 600
     working_directory = 'steady_state'
   []
@@ -55,8 +52,7 @@
     check_input = true
     input = 'MP_Griffin_ss_fp.i'
     cli_args = "MultiApps/active='' Transfers/active=''"
-    executable_pattern = 'griffin*|blue_crab*'
-    capabilities = 'method=opt'
+    capabilities = 'method=opt & (griffinapp | bluecrabapp)'
     max_time = 600
     # Griffin does not have the sam petsc option parameter
     allow_unused = true
@@ -68,8 +64,7 @@
     check_input = true
     input = 'MP_BISON_ss_fp.i'
     cli_args = "MultiApps/active='' Transfers/active=''"
-    executable_pattern = 'bison*|blue_crab*'
-    capabilities = 'method=opt'
+    capabilities = 'method=opt & (bisonapp | bluecrabapp)'
     max_time = 600
     working_directory = 'steady_state_fp'
     prereq = 'generate_bison_mesh'
@@ -79,12 +74,10 @@
     check_input = true
     input = 'MP_SAM_ss_fp.i'
     cli_args = "--app ThermalHydraulicsApp"
-    executable_pattern = 'sam*|blue_crab*'
-    capabilities = 'method=opt'
+    capabilities = 'method=opt & (samapp | bluecrabapp)'
     max_time = 600
     working_directory = 'steady_state_fp'
   []
-
   [MP_SAM_scb_syntax]
     type = RunApp
     check_input = true
@@ -93,8 +86,7 @@
                 GlobalParams/initial_p=${Pout}
                 GlobalParams/initial_vel=${Vin}
                 GlobalParams/initial_T=${Tin}"
-    executable_pattern = 'sam*|blue_crab*'
-    capabilities = 'method=opt'
+    capabilities = 'method=opt & (samapp | bluecrabapp)'
     max_time = 600
     working_directory = 'single_channel_blockage'
   []
@@ -106,8 +98,7 @@
                 GlobalParams/initial_p=${Pout}
                 GlobalParams/initial_vel=${Vin}
                 GlobalParams/initial_T=${Tin}"
-    executable_pattern = 'sam*|blue_crab*'
-    capabilities = 'method=opt'
+    capabilities = 'method=opt & (samapp | bluecrabapp)'
     max_time = 600
     working_directory = 'depressurization'
   []

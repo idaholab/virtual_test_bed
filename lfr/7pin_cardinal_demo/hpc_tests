@@ -25,7 +25,7 @@
     min_parallel = 16
     # for devel testing
     max_time = 500
-    executable_pattern = 'griffin*'
+    capabilities = 'griffinapp'
     abs_zero = 1e-4
     rel_err = 2.1e-4
   []
@@ -39,7 +39,7 @@
                 Transfers/active='' MultiApps/active=''
                 Mesh/inactive='fmg'
                 Outputs/file_base=hpc_HC_out"
-    executable_pattern = 'cardinal*|moose*'
+    capabilities = 'cardinalapp | mooseapp'
     min_parallel = 8
   []
   [run_nekrs]

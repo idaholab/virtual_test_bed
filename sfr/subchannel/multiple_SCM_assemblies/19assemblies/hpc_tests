@@ -5,7 +5,7 @@
     input = abr_19assemblies.i
     check_files = abr_19assemblies_in.e
     cli_args = "--mesh-only"
-    executable_pattern = 'subchannel*|combined*'
+    capabilities = 'combinedapp'
   []
   # Regression checks for 19-assembly SCM models
   [SCM19]
@@ -18,7 +18,6 @@
     allow_warnings = true
     requirement = 'The system shall be able to solve a 19-assembly case using the subchannel solver'
     prereq = 'generate_mesh'
-    executable_pattern = 'subchannel*|combined*'
 
     # The test is not solved to full convergence due to its cost
     cli_args = 'Executioner/fixed_point_min_its=3 Executioner/fixed_point_max_its=3'
@@ -28,7 +27,7 @@
 
     # This is an expensive and slow test
     min_parallel = 10
-    capabilities = 'method=opt'
+    capabilities = 'method=opt & combinedapp'
     max_time = 1400
     hpc_mem_per_cpu = 6gb
   []

@@ -4,7 +4,7 @@
     type = Exodiff
     input = hotspotanalysis_2D.i
     exodiff = hotspotanalysis_2D_out.e
-    executable_pattern = 'combined*|grizzly*'
+    capabilities = 'combinedapp | grizzlyapp'
     allow_warnings = true
     min_parallel = 8
   []

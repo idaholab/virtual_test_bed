@@ -3,7 +3,7 @@
     type = RunApp
     input = cardinal.i
     check_input = True
-    executable_pattern = 'cardinal*|combined*'
+    capabilities = 'cardinalapp | combinedapp'
     cli_args = "MultiApps/active='' Transfers/active=''"
   []
   [syntax_check_nek]
@@ -19,11 +19,10 @@
     type = CSVDiff
     input = cardinal.i
     csvdiff = 'cardinal_out.csv'
-    executable_pattern = 'cardinal*|combined*'
     cli_args = "MultiApps/active='' Transfers/active='' Executioner/num_steps=10"
     prereq = 'syntax_check_cardinal'
     # Exceedingly slow in devel mode
-    capabilities = 'method=opt'
+    capabilities = 'method=opt & (cardinalapp | combinedapp)'
     max_time = '600'
     min_slots = 4 # memory heavy
   []

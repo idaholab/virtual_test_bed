@@ -4,7 +4,7 @@
     type = RunApp
     input = 'griffin.i'
     check_input = True
-    executable_pattern = 'blue_crab*'
+    capabilities = 'bluecrabapp'
     # A global params is applied to an object parameter which returns a warning because
     # it is not being used
     allow_warnings = true
@@ -13,7 +13,7 @@
     type = RunApp
     input = 'bison_mecha_only.i'
     check_input = True
-    executable_pattern = 'bison*|blue_crab*|dire_wolf*'
+    capabilities = 'bisonapp | bluecrabapp | direwolfapp'
     allow_warnings = True # material property unsupported outputs
   []
   [bison_thermal_only_syntax]
@@ -22,27 +22,27 @@
     check_input = True
     cli_args = "AuxKernels/active='GetPowerDensity_from_griffin' MultiApps/active='' "
                "Transfers/active=''"
-    executable_pattern = 'bison*|blue_crab*|dire_wolf*'
+    capabilities = 'bisonapp | bluecrabapp | direwolfapp'
     allow_warnings = True # material property unsupported outputs
   []
   [support_plate_syntax]
     type = RunApp
     input = 'core_support_plate_2d.i'
     check_input = True
-    executable_pattern = 'bison*|blue_crab*|dire_wolf*'
+    capabilities = 'bisonapp | bluecrabapp | direwolfapp'
   []
   [neutronics_without_multiapp_syntax]
     type = RunApp
     input = 'griffin.i'
     check_input = True
     cli_args = "MultiApps/active='' Transfers/active=''"
-    executable_pattern = 'griffin*|blue_crab*|dire_wolf*|fenix*'
+    capabilities = 'griffinapp | bluecrabapp | direwolfapp | salamanderapp'
   []
   [subchannel_syntax]
     type = RunApp
     input = 'sam_channel.i'
     check_input = True
-    executable_pattern = 'sam*|blue_crab*'
+    capabilities = 'samapp | bluecrabapp'
     cli_args = '--app SamApp'
   []
 
@@ -52,7 +52,7 @@
     input = 'griffin.i'
     csvdiff = 'assembly.csv'
     cli_args = 'Outputs/file_base=assembly'
-    executable_pattern = 'blue_crab*'
+    capabilities = 'bluecrabapp'
     prereq = 'full_simulation_syntax'
 
     # See issue #265
@@ -66,7 +66,7 @@
     input = 'bison_mecha_only.i'
     csvdiff = 'bison_mecha_only_out.csv'
     cli_args = 'Outputs/csv=true'
-    executable_pattern = 'bison*|blue_crab*|dire_wolf*'
+    capabilities = 'bisonapp | bluecrabapp | direwolfapp'
     allow_warnings = True # material property unsupported outputs
     prereq = 'bison_mecha_only_syntax'
   []
@@ -76,7 +76,7 @@
     csvdiff = 'bison_thermal_only_out.csv'
     cli_args = "Outputs/csv=true AuxKernels/active='GetPowerDensity_from_griffin' "
                "MultiApps/active='' Transfers/active=''"
-    executable_pattern = 'bison*|blue_crab*|dire_wolf*'
+    capabilities = 'bisonapp | bluecrabapp | direwolfapp'
     allow_warnings = True # material property unsupported outputs
     prereq = 'bison_thermal_only_syntax'
   []
@@ -85,7 +85,7 @@
     input = 'core_support_plate_2d.i'
     csvdiff = 'core_support_plate_2d_out.csv'
     cli_args = 'Outputs/csv=true'
-    executable_pattern = 'bison*|blue_crab*|dire_wolf*'
+    capabilities = 'bisonapp | bluecrabapp | direwolfapp'
     prereq = 'support_plate_syntax'
   []
   [neutronics_without_multiapp]
@@ -93,7 +93,7 @@
     input = 'griffin.i'
     csvdiff = 'griffin_out.csv'
     cli_args = "MultiApps/active='' Transfers/active=''"
-    executable_pattern = 'griffin*|blue_crab*|dire_wolf*|fenix*'
+    capabilities = 'griffinapp | bluecrabapp | direwolfapp | salamanderapp'
     prereq = 'neutronics_without_multiapp_syntax'
     allow_warnings = true # fission cross sections not provided, only nu-fission
   []
@@ -102,7 +102,7 @@
     input = 'sam_channel.i'
     csvdiff = 'sam_channel_out.csv'
     cli_args = '--app SamApp Outputs/csv=true'
-    executable_pattern = 'sam*|blue_crab*'
+    capabilities = 'samapp | bluecrabapp'
     prereq = 'subchannel_syntax'
   []
 []
