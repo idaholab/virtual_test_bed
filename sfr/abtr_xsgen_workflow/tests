@@ -26,7 +26,7 @@
                 TransportSystems/dfem_sn/NAzmthl=4
                 TransportSystems/dfem_sn/NPolar=3
                 Executioner/coarse_element_id=coarse_element_id
-                Executioner/cmfd_eigen_solver_type=krylovshur
+                Executioner/diffusion_eigen_solver_type=krylovshur
                 GlobalParams/library_file=gold/mcc3xs.xml"
     prereq = 'xs_generation_syntax'
     capabilities = 'method=opt'

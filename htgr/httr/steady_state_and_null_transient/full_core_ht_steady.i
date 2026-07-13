@@ -895,15 +895,15 @@ xi33 = 0.154815 # 33-pin fuel blocks
 []
 [Transfers]
   [pdens_to_bison]
-    type = MultiAppUserObjectTransfer
+    type = MultiAppGeneralFieldUserObjectTransfer
     to_multi_app = bison
-    user_object = average_power_UO
+    source_user_object = average_power_UO
     variable = power_density
   []
   [tmod_to_bison]
-    type = MultiAppUserObjectTransfer
+    type = MultiAppGeneralFieldUserObjectTransfer
     to_multi_app = bison
-    user_object = average_Tsolid_UO
+    source_user_object = average_Tsolid_UO
     variable = Tmod
   []
   [tfluid_to_bison]
@@ -931,42 +931,42 @@ xi33 = 0.154815 # 33-pin fuel blocks
     variable = T_wall:1
   []
   [tmod_to_relap]
-    type = MultiAppUserObjectTransfer
+    type = MultiAppGeneralFieldUserObjectTransfer
     to_multi_app = relap
-    user_object = average_Tsolid_UO
+    source_user_object = average_Tsolid_UO
     variable = T_wall:2
   []
   [tmod_to_relap_topbottom]
-    type = MultiAppUserObjectTransfer
+    type = MultiAppGeneralFieldUserObjectTransfer
     to_multi_app = relap
-    user_object = average_Tsolid_UO
+    source_user_object = average_Tsolid_UO
     variable = T_wall
   []
   [tfuel_from_bison]
-    type = MultiAppUserObjectTransfer
+    type = MultiAppGeneralFieldUserObjectTransfer
     from_multi_app = bison
-    user_object = average_Tfuel_UO
+    source_user_object = average_Tfuel_UO
     variable = Tfuel
     nearest_sub_app = true
   []
   [tsleeve_from_bison]
-    type = MultiAppUserObjectTransfer
+    type = MultiAppGeneralFieldUserObjectTransfer
     from_multi_app = bison
-    user_object = average_Tsleeve_UO
+    source_user_object = average_Tsleeve_UO
     variable = Tsleeve
     nearest_sub_app = true
   []
   [twall_from_bison]
-    type = MultiAppUserObjectTransfer
+    type = MultiAppGeneralFieldUserObjectTransfer
     from_multi_app = bison
-    user_object = inner_wall_temp_UO
+    source_user_object = inner_wall_temp_UO
     variable = inner_Twall
     nearest_sub_app = true
   []
   [heat_source_from_bison]
-    type = MultiAppUserObjectTransfer
+    type = MultiAppGeneralFieldUserObjectTransfer
     from_multi_app = bison
-    user_object = gap_conductance_UO
+    source_user_object = gap_conductance_UO
     variable = gap_conductance
     nearest_sub_app = true
   []
@@ -985,31 +985,31 @@ xi33 = 0.154815 # 33-pin fuel blocks
     reduction_type = sum
   []
   [tfluid_from_relap]
-    type = MultiAppUserObjectTransfer
+    type = MultiAppGeneralFieldUserObjectTransfer
     from_multi_app = relap
     variable = Tfluid
-    user_object = avg_Tfluid_UO
+    source_user_object = avg_Tfluid_UO
     nearest_sub_app = true
   []
   [hw_inner_from_relap]
-    type = MultiAppUserObjectTransfer
+    type = MultiAppGeneralFieldUserObjectTransfer
     from_multi_app = relap
     variable = Hw_inner
-    user_object = avg_Hw_inner_UO
+    source_user_object = avg_Hw_inner_UO
     nearest_sub_app = true
   []
   [hw_outer_from_relap]
-    type = MultiAppUserObjectTransfer
+    type = MultiAppGeneralFieldUserObjectTransfer
     from_multi_app = relap
     variable = Hw_outer
-    user_object = avg_Hw_outer_UO
+    source_user_object = avg_Hw_outer_UO
     nearest_sub_app = true
   []
   [hw_outer_homo_from_relap]
-    type = MultiAppUserObjectTransfer
+    type = MultiAppGeneralFieldUserObjectTransfer
     from_multi_app = relap
     variable = Hw_outer_homo
-    user_object = avg_Hw_outer_homo_UO
+    source_user_object = avg_Hw_outer_homo_UO
     nearest_sub_app = true
   []
   [tout_from_relap]

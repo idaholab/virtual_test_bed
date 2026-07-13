@@ -18,6 +18,10 @@ slug_diameter        = 5.277e-3  # 4.547e-3
 fuel_height          = 842.4e-3  # 800.0e-3
 plenum_height        = 782.2e-3  # 778.0e-3
 
+# the following are needed in multiple UPuZr Materials
+X_Zr = 0.225 #  U-20Pu-10Zr
+X_Pu = 0.171
+
 # ==============================================================================
 # GLOBAL PARAMETERS
 # ==============================================================================
@@ -157,6 +161,7 @@ active = 'fuel_elasticity_tensor fuel_elastic_stress fuel_thermal_expansion
   [fission_rate] # only needed with heat_source_standalone kernel
     type = UPuZrFissionRate
     rod_linear_power = power_history
+    X_Zr = ${X_Zr}
     axial_power_profile = axial_peaking_factors
     #X_Pu_function = 0.0
     # coeffs = '0.8952 -1.2801 '
@@ -169,6 +174,8 @@ active = 'fuel_elasticity_tensor fuel_elastic_stress fuel_thermal_expansion
     type = UPuZrElasticityTensor
     block = pellet
     porosity = porosity
+    X_Zr = ${X_Zr}
+    X_Pu = ${X_Pu}
     output_properties = 'youngs_modulus poissons_ratio'
     outputs = all
   []
