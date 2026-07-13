@@ -1,0 +1,141 @@
+      include "planar.f"
+c-----------------------------------------------------------------------
+      subroutine userchk
+
+      include 'SIZE'
+      include 'TOTAL'
+
+      common /cforce/ forcx(lx1,ly1,lz1,lelv)
+      common /pid_ctrl/ integral_error, prev_error, kp, ki, kd
+
+      real norm(3), pt(3), ucore, planar_ave_m1
+      real force, error, delt, utar
+      real integral_error, derivative_error, prev_error
+      real kp, ki, kd
+      logical first_call, file_exists
+      save first_call
+      data first_call /.true./
+
+      call nekrs_registerPtr('forcx', forcx)
+
+C     Initialize PID parameters (tune these as needed)
+      data kp /0.5/, ki /0.1/, kd /0.05/
+      data integral_error /0.0/, prev_error /0.0/
+      data delt /1.0/, utar /1.0/
+
+C     Check if PID data file exists before reading
+      if (first_call) then
+         inquire(file='pid_restart.dat', exist=file_exists)
+         if (file_exists) then
+            open(unit=10, file='pid_restart.dat', status='old')
+            read(10,*) kp, ki, kd, integral_error, prev_error
+            close(10)
+         endif
+         first_call = .false.
+      endif
+
+C     return the pressure loss
+      norm(1) = 1.0
+      norm(2) = 0.0
+      norm(3) = 0.0
+      pt(1)   = 0.8
+      pt(2)   = 0.0
+      pt(3)   = 0.0
+      ucore   = planar_ave_m1(vx,norm,pt,0.05)
+
+C     PID Controller to adjust force
+      error = utar - ucore
+      integral_error = integral_error + error * delt
+      derivative_error = (error - prev_error) / delt
+
+      force = kp * error + ki * integral_error + kd * derivative_error
+
+      prev_error = error
+
+      if(nio.eq.0) then
+         write(*,'(A, E12.4)') "ucore = ", ucore
+         write(*,'(A, E12.4)') "error = ", error
+         write(*,'(A, E12.4)') "force = ", force
+         write(*,* )
+      endif
+
+C     compute the momentum source 
+      n = nx1*ny1*nz1*nelv
+
+      do i = 1,n
+        xx = xm1(i,1,1,1)
+        yy = ym1(i,1,1,1)
+        if(yy.gt.3.0) then
+          if(xx.gt.-0.4.and.xx.lt.0.4) then
+            forcx(i,1,1,1) = -force
+          endif
+        endif
+      enddo
+
+C     Save PID data to file for restart
+      if (nio.eq.0 .and. mod(istep,10000).eq.0) then
+         open(unit=11, file='pid_restart.dat', status='replace')
+         write(11,*) kp, ki, kd, integral_error, prev_error
+         close(11)
+      endif
+
+      return
+      end
+c-----------------------------------------------------------------------
+      subroutine useric (ix,iy,iz,ieg)
+
+      include 'SIZE'
+      include 'TOTAL'
+      include 'NEKUSE'
+
+      ux   = 0.0
+      uy   = 0.0
+      uz   = 0.0
+      temp = 0.0
+
+      return
+      end
+c-----------------------------------------------------------------------
+      subroutine usrdat
+
+      return
+      end
+c-----------------------------------------------------------------------
+      subroutine usrdat2
+
+      include 'SIZE'
+      include 'TOTAL'
+
+      real Dhi
+      n = nx1*ny1*nz1*nelt
+
+C rescaled by the core diameter
+
+      Dhi = 1.0/0.5
+      call cmult(xm1,Dhi,n)
+      call cmult(ym1,Dhi,n)
+      call cmult(zm1,Dhi,n)
+
+      ! reconstruct boundary tags
+      do iel=1,nelv
+      do ifc=1,2*ndim
+         id_face = bc(5,ifc,iel,1)
+         if (id_face.eq.2) then          ! wall faces 
+             cbc(ifc,iel,1) = 'W  '
+             boundaryID(ifc,iel)=1
+         else
+             boundaryID(ifc,iel)=0
+         endif
+      enddo
+      enddo
+
+      return
+      end
+c-----------------------------------------------------------------------
+      subroutine usrdat3
+
+      include 'SIZE'
+      include 'TOTAL'
+
+      return
+      end
