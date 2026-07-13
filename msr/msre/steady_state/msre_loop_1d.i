@@ -47,9 +47,11 @@
     type     = PTFunctionsEOS
     rho      = fuel_salt_rho_func
     mu       = fuel_salt_mu_func
-    enthalpy = fuel_salt_enthalpy_func
     cp       = 2009.66
     k        = 1.0
+    T_max    = 1200
+    T_min    = 750
+    T_nodes  = 2
   []
   [hx_salt_eos]
     type      = SaltEquationOfState

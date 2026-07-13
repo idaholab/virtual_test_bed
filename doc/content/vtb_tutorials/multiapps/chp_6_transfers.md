@@ -53,7 +53,7 @@ This is similar to "Field Data -- Scalar Data Transfers". However, an array of d
 
 The typical array data type in MOOSE is a `VectorPostprocessor`. Thus, [`MultiAppVectorPostprocessorTransfer`](https://mooseframework.inl.gov/source/transfers/MultiAppVectorPostprocessorTransfer.html) can be used to distribute elements of a `VectorPostprocessor` array data in the parent application to single `Postprocessor`s in child applications and vice versa.
 
-A spatial `UserObject` is another array data type. [`MultiAppUserObjectTransfer`](https://mooseframework.inl.gov/source/transfers/MultiAppUserObjectTransfer.html) can be used to distribute values in a spatial `UserObject` in the parent application to single `AuxVariable`s in child applications.
+A spatial `UserObject` is another array data type. [`MultiAppGeneralFieldUserObjectTransfer`](https://mooseframework.inl.gov/source/transfers/MultiAppGeneralFieldUserObjectTransfer.html) can be used to distribute values in a spatial `UserObject` in the parent application to single `AuxVariable`s in child applications.
 
 #### Array Data -- Array Data Transfers
 

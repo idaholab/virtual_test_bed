@@ -597,9 +597,9 @@
     outputs = all
   []
   [fuel_density]
-    type = ADDensity
+    type = ADStrainAdjustedDensity
     block = 'fuel'
-    density = ${fuel_density}
+    strain_free_density = ${fuel_density}
     outputs = all
   []
   [fast_neutron_flux]
@@ -663,9 +663,9 @@
     outputs = all
   []
   [cladding_density]
-    type = ADDensity
+    type = ADStrainAdjustedDensity
     block = 'cladding'
-    density = ${cladding_density}
+    strain_free_density = ${cladding_density}
     outputs = all
   []
   [wastage_thickness]

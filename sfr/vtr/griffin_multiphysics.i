@@ -371,7 +371,7 @@
   # Radial expansion = horizontal displacements disp_x, disp_z from core_support_plate
   #------------------
   [disp_x_from_core_support_plate]
-    type = MultiAppNearestNodeTransfer
+    type = MultiAppGeneralFieldNearestLocationTransfer
     from_multi_app = core_support_plate
     source_boundary = 'plateTop'
     source_variable = disp_x
@@ -379,7 +379,7 @@
     fixed_meshes = true
   []
   [disp_z_from_core_support_plate]
-    type = MultiAppNearestNodeTransfer
+    type = MultiAppGeneralFieldNearestLocationTransfer
     from_multi_app = core_support_plate
     source_boundary = 'plateTop'
     source_variable = disp_z
@@ -387,7 +387,7 @@
     fixed_meshes = true
   []
   [bison_reporter_1]
-    type = MultiAppReporterTransfer
+    type = MultiAppGeneralFieldNearestLocationTransfer
     to_reporters = 'max_tfuel_r/value max_tclad_r/value max_tcool_r/value max_thcond_r/value'
     from_reporters = 'max_tfuel/value max_tclad/value max_tcool/value max_thcond/value'
     from_multi_app = bison_1
