@@ -1,0 +1,74 @@
+[Tests]
+  # Steady
+  # Syntax checks
+  [neutronics_griffin_syntax]
+    type = RunApp
+    input = 'K-HPMR_GRIFFIN.i'
+    check_input = True
+    executable_pattern = 'griffin*|blue_crab*|dire_wolf*'
+    cli_args = "MultiApps/active='' Transfers/active=''"
+  []
+  [thermomechanics_bison_syntax]
+    type = RunApp
+    input = 'K-HPMR_BISON.i'
+    check_input = True
+    executable_pattern = 'bison*|blue_crab*|dire_wolf*'
+    cli_args = "MultiApps/active='' Transfers/active=''"
+  []
+  [fluids_sockeye_syntax]
+    type = RunApp
+    input = 'K-HPMR_SOCKEYE.i'
+    check_input = True
+    executable_pattern = 'sockeye*|dire_wolf*'
+    allow_warnings = true
+  []
+
+  # Regression test
+  [coupled_simulation]
+    type = CSVDiff
+    input = 'K-HPMR_GRIFFIN.i'
+    csvdiff = 'K-HPMR_GRIFFIN_out.csv'
+    executable_pattern = 'dire_wolf*'
+    cli_args = "Executioner/richardson_max_its=2 Executioner/richardson_abs_tol=1e-1 Outputs/csv=true "
+               "Outputs/file_base=K-HPMR_GRIFFIN_out Outputs/exodus=false MultiApps/bison/cli_args='Outputs/exodus=false'"
+    min_parallel = 48
+    max_time = 3600
+    allow_warnings = true
+  []
+
+  # Load following
+  # Syntax checks
+  [neutronics_griffin_syntax_load]
+    type = RunApp
+    working_directory = '../load_following_K_SM'
+    input = 'K-HPMR_GRIFFIN_tr.i'
+    check_input = True
+    executable_pattern = 'dire_wolf*'
+    cli_args = "MultiApps/active='' Transfers/active=''"
+    prereq = 'coupled_simulation'
+    min_parallel = 48
+    allow_warnings = true
+  []
+  [thermomechanics_bison_syntax_load]
+    type = RunApp
+    working_directory = '../load_following_K_SM'
+    input = 'K-HPMR_BISON_tr.i'
+    check_input = True
+    executable_pattern = 'dire_wolf*'
+    cli_args = "MultiApps/active='' Transfers/active=''
+                Problem/restart_file_base='../steady_K_SM/K-HPMR_GRIFFIN_out_bison0_cp/LATEST'
+                Mesh/file='../steady/K-HPMR_GRIFFIN_out_bison0_cp/LATEST'
+                --distributed-mesh"
+    prereq = 'coupled_simulation'
+    min_parallel = 48
+  []
+  [fluids_sockeye_syntax_load]
+    type = RunApp
+    working_directory = '../load_following_K_SM'
+    input = 'K-HPMR_SOCKEYE_tr.i'
+    check_input = True
+    executable_pattern = 'dire_wolf*'
+    allow_warnings = true
+    prereq = 'coupled_simulation'
+  []
+[]
