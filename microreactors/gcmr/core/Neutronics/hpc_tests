@@ -14,6 +14,7 @@
                 TransportSystems/SN/NAzmthl=3 TransportSystems/SN/NPolar=1
                 Executioner/set_sam_default_petsc_options=false"
     min_parallel = 16
+    hpc_mem_per_cpu = 10G
     capabilities = 'method=opt & (griffinapp | bluecrabapp)'
     max_time = 600
     # Griffin does not have the sam petsc option parameter
@@ -29,6 +30,7 @@
     prereq = 'griffin_alone_syntax'
     min_parallel = 16
     rel_err = 1e-3
+    hpc_mem_per_cpu = 10G
     capabilities = 'method=opt & (griffinapp | bluecrabapp)'
     max_time = 600
     # Griffin does not have the sam petsc option parameter
