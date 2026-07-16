@@ -38,6 +38,7 @@
                   Executioner/dt=1e6"
       capabilities = 'bisonapp | bluecrabapp | direwolfapp'
       min_parallel = 8
+      hpc_mem_per_cpu = 10G
       # Material property output warning
       allow_warnings = true
     []
