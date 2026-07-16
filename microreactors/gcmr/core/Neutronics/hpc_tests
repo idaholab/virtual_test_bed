@@ -1,0 +1,40 @@
+[Tests]
+  [generate_mesh]
+    type = RunApp
+    input = 'Griffin_mesh.i'
+    cli_args = '--mesh-only'
+    executable_pattern = 'griffin*|blue_crab*'
+    working_directory = 'mesh'
+  []
+  [griffin_alone_syntax]
+    type = RunApp
+    check_input = true
+    input = 'Griffin_steady_state.i'
+    cli_args = "Executioner/richardson_max_its=1
+                TransportSystems/SN/NAzmthl=3 TransportSystems/SN/NPolar=1
+                Executioner/set_sam_default_petsc_options=false"
+    min_parallel = 16
+    hpc_mem_per_cpu = 10G
+    capabilities = 'method=opt & (griffinapp | bluecrabapp)'
+    max_time = 600
+    # Griffin does not have the sam petsc option parameter
+    allow_unused = true
+  []
+  [griffin_alone]
+    type = 'CSVDiff'
+    input = 'Griffin_steady_state.i'
+    csvdiff = 'Griffin_steady_state_out.csv'
+    cli_args = "Executioner/richardson_max_its=1
+                TransportSystems/SN/NAzmthl=3 TransportSystems/SN/NPolar=1
+                Executioner/set_sam_default_petsc_options=false"
+    prereq = 'griffin_alone_syntax'
+    min_parallel = 16
+    rel_err = 1e-3
+    hpc_mem_per_cpu = 10G
+    capabilities = 'method=opt & (griffinapp | bluecrabapp)'
+    max_time = 600
+    # Griffin does not have the sam petsc option parameter
+    allow_unused = true
+    allow_warnings = true
+  []
+[]

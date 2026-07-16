@@ -5,8 +5,7 @@
     type = CSVDiff
     input = 'XX09_SCM_SS17.i'
     csvdiff  = 'XX09_SCM_SS17_out.csv'
-    heavy = true
-    capabilities = 'method!=dbg'
+    capabilities = 'method!=dbg & (subchannelapp | combinedapp)'
     abs_zero = 1e-5
     valgrind = NONE
     recover = false
@@ -17,8 +16,7 @@
     type = CSVDiff
     input = 'XX09_SCM_SS45R.i'
     csvdiff  = 'XX09_SCM_SS45R_out.csv'
-    heavy = true
-    capabilities = 'method!=dbg'
+    capabilities = 'method!=dbg & (subchannelapp | combinedapp)'
     abs_zero = 1e-5
     valgrind = NONE
     recover = false
@@ -29,8 +27,7 @@
     type = CSVDiff
     input = 'XX09_SCM_SS45R_corrected.i'
     csvdiff  = 'XX09_SCM_SS45R_corrected_out.csv'
-    heavy = true
-    capabilities = 'method!=dbg'
+    capabilities = 'method!=dbg & (subchannelapp | combinedapp)'
     abs_zero = 1e-5
     valgrind = NONE
     recover = false
@@ -41,7 +38,6 @@
     type = CSVDiff
     input = 'XX09_SCM_SS17_corrected.i'
     csvdiff  = 'XX09_SCM_SS17_corrected_out.csv'
-    heavy = true
     capabilities = 'method!=dbg'
     abs_zero = 1e-5
     valgrind = NONE
@@ -53,8 +49,7 @@
     type = CSVDiff
     input = 'XX09_SCM_TR17.i'
     csvdiff  = 'XX09_SCM_TR17_out.csv'
-    heavy = true
-    capabilities = 'method!=dbg'
+    capabilities = 'method!=dbg & (subchannelapp | combinedapp)'
     abs_zero = 1e-5
     rel_err = 1e-4
     valgrind = NONE
@@ -66,8 +61,7 @@
     type = CSVDiff
     input = 'XX09_SCM_TR45R.i'
     csvdiff  = 'XX09_SCM_TR45R_out.csv'
-    heavy = true
-    capabilities = 'method!=dbg'
+    capabilities = 'method!=dbg & (subchannelapp | combinedapp)'
     abs_zero = 1e-5
     rel_err = 1e-4
     valgrind = NONE
