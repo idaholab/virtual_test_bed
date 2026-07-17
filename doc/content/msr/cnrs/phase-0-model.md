@@ -86,12 +86,14 @@ The horizontal velocity component distribution along AA` and BB` are presented i
 
 !media media/msr/cnrs/step01-results-a.png
   style=width:80%
+  caption=Horizontal velocity component distribution along AA` and BB`.
   id=step01-results-a
 
 The vertical velocity component distribution along AA` and BB` presented in [step01-results-b]
 
 !media media/msr/cnrs/step01-results-b.png
   style=width:80%
+  caption=Vertical velocity component distribution along AA` and BB`.
   id=step01-results-b
 
 The vertical velocity component distribution along BB` as the mesh is refined is presented
@@ -99,6 +101,7 @@ in [step01-results-c].
 
 !media media/msr/cnrs/step01-results-c.png
   style=width:80%
+  caption=Vertical velocity component distribution along BB` as the mesh is refined.
   id=step01-results-c
 
 ## Step 0.2:
@@ -142,6 +145,7 @@ rate distribution along AA` which is presented in [step02-results].
 !media media/msr/cnrs/step02-results.png
   style=width:60%
   id=step02-results
+  caption=Fission rate distribution along AA`.
 
 For results on the mesh refinement, the reader is referred to the publication
 [!citep](jaradat2024verification).
@@ -202,3 +206,4 @@ The fuel salt temperature distribution along AA` and BB` are in [step03-results]
 !media media/msr/cnrs/step03-results.png
   style=width:80%
   id=step03-results
+  caption=Fuel salt temperature distribution along AA` and BB`.

@@ -16,6 +16,7 @@ A depiction of the geometry and materials in the Pronghorn thermal-hydraulic mod
 !media htrpm_coremultiphysics/htr-pm-domain.png
   style=width:50%
   id=thermo-fluid-model
+  caption=Depiction of the geometry and masterials in the Pronghorn thermal-hydraulic model including the fluid flow path.
 
 The boundary condition for the Pronghorn model of the HTR-PM include:
 * Inlet helium flow rate of 96.0 kg/s.
@@ -63,6 +64,7 @@ The model set up is visually depicted in [pebble_conduction_model].
 !media htrpm_coremultiphysics/apps_setup_3.png
   style=width:50%
   id=pebble_conduction_model
+  caption=Depiction of the pebble conduction model.
 
 
 In this model, the mesh is defined as follows

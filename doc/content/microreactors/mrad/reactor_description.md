@@ -8,6 +8,8 @@ This core has a rated power of 2 MW thermal and its layout is shown in the Figur
 
 !media media/mrad/legacy/mrad_geometry/mrad_diagram.png
        style=width:50%
+       id=mdrad_diagram
+       caption=Layout of the core for the VTB MRAD model. Only one sixth of the core is shown.
 
 To achieve an optimum level of moderation, yttrium-hydride (YH2) pins are employed in addition to the graphite structure component, as YH2 provides more efficient neutron slowing-down capability, enabling the design of a more compact core. The yttrium-hydride is clad in a stainless steel envelope, with a helium gap between the YH2 and envelope and then another helium gap between the envelope and the graphite monolith.
 

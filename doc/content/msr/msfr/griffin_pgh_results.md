@@ -134,6 +134,7 @@ is depicted below.
 
 !media media/msr/msfr/PH_Griffin_SteadyState_NS.png
        style=width:30%
+       caption=Steady-state velocity magnitudes for the MSFR Griffin-Pronghorn model.
 
 ## Full Model Steady State
 
@@ -142,9 +143,11 @@ temperature fields in the MSFR:
 
 !media media/msr/msfr/PH_Griffin_v_SS.png
        style=width:30%
+       caption=Steady-state velocity in the MSFR.
 
 !media media/msr/msfr/PH_Griffin_T_SS.png
        style=width:30%
+       caption=Steady-state temperature in the MSFR.
 
 The maximum temperature of the simulation is around 1280 K. Note that despite
 some momentum diffusion occurring in the reactor core, the flow at the center is
@@ -166,6 +169,7 @@ maximum value for each group is unity.
 
 !media media/msr/msfr/PH_Griffin_DNP_SS.png
        style=width:100%
+       caption=Distributions of delayed neutron precursors for 3 of the 6 groups. Concentrations are normalized.
 
 Group 6 has the shortest half-life (240 ms), and its behavior is dominated by
 radioactive decay rather than advection. Consequently, its distribution

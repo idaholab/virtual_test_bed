@@ -14,7 +14,7 @@
             fiscal_year:2025
             institution:MIT
             sponsor:NEUP
-            V&V:demonstration
+            V_and_V:demonstration
 
 
 [3D metallic HCF cycle fuel performance](hcf_bison_model.md)
