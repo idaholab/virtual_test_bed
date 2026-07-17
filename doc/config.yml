@@ -49,6 +49,7 @@ Extensions:
         csv_file: summary.csv
         allowed_keys:
             - tutorials
+            - cross_sections
             - reactor_type
             - reactor
             - geometry

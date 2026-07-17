@@ -20,6 +20,7 @@ The set of input files to run the DLOFC can be thought of as the left hand side 
 !media media/htrpm_coremultiphysics/apps_setup_3.png
   style=width:50%
   id=apps_setup_3
+  caption=Schematic of the application setup for the DLOFC case.
 
 Thus, two inputs are required for this problem.
 These are the ```htr_pm_neutronics_tr_dlofc.i``` and ```htr-pm-flow-fv-tr-dlofc.i```

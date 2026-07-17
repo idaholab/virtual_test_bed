@@ -1,12 +1,12 @@
 # Phase 1 Model: Steady State MultiPhysics Coupling
 
 This phase of the benchmark is concerned with the steady state multiphysics solution.
-It is comprised of four steps and following is a description of the four steps and 
+It is comprised of four steps and following is a description of the four steps and
 their inputs.
 
 ## Step 1.1
 
-In this step, the influence of the delayed neutron precursor drift on the reactivity 
+In this step, the influence of the delayed neutron precursor drift on the reactivity
 and delayed neutron source distribution is explored.
 This step comprises a neutronic and Navier-Stokes solves.
 The neutronics solve is performed as a diffusion problem as defined in step 0.2.
@@ -26,21 +26,21 @@ as follows
 
 !listing msr/cnrs/s11/cnrs_s11_griffin_neutronics.i block=AuxVariables
 
-where pronghorn will be used to obtain the temperature distributions and the 
+where pronghorn will be used to obtain the temperature distributions and the
 delayed neutron precursor distributions.
 Operations to act on the auxiliary variables are defined in the ```AuxKernels```
 block
 
 !listing msr/cnrs/s11/cnrs_s11_griffin_neutronics.i block=AuxKernels
 
-The characteristics of executing the calculations are provided in the 
+The characteristics of executing the calculations are provided in the
 ```Executioner``` block as follows
 
 !listing msr/cnrs/s11/cnrs_s11_griffin_neutronics.i block=Executioner
 
-To obtain the temperature and delayed neutron precursor distribution, pronghorn 
+To obtain the temperature and delayed neutron precursor distribution, pronghorn
 is used to performed these thermo-fluid calculations.
-A ```MultiApps``` block is used to call the pronghorn solver as in the following 
+A ```MultiApps``` block is used to call the pronghorn solver as in the following
 block of code
 
 !listing msr/cnrs/s11/cnrs_s11_griffin_neutronics.i block=MultiApps
@@ -48,7 +48,7 @@ block of code
 where ''cnrs_s01_ns_flow.i'' is the pronghorn input.
 The transfer of variables between Griffin and pronghorn is instructed through the
 ```Transfers``` block, where the fission source is obtained using Griffin and sent
-to pronghorn. 
+to pronghorn.
 Then pronghorn is used to calculate the distribution of the precursor
 
 !listing msr/cnrs/s11/cnrs_s11_griffin_neutronics.i block=Transfers
@@ -56,7 +56,7 @@ Then pronghorn is used to calculate the distribution of the precursor
 
 The pronghorn input to obtain the delayed neutron precursor distribution and fuel
 temperature is similar in structure to the input developed in step 0.1.
-Some differences in the input file for the Navier-Stokes solve include modifying 
+Some differences in the input file for the Navier-Stokes solve include modifying
 the input to include introducing the ```fission_source``` as an auxiliary variable
 that pronghorn will expect to receive from the Griffin Solve.
 
@@ -64,12 +64,14 @@ that pronghorn will expect to receive from the Griffin Solve.
 
 ### Step 1.1 Results
 
-The delayed neutron source distribution along AA` and BB` are collected from 
-the results of the Griffin run. 
+The delayed neutron source distribution along AA` and BB` are collected from
+the results of the Griffin run.
 These are as follows
 
 !media media/msr/cnrs/step11-results.png
+  id=step11-results
   style=width:70%
+  caption=Delayed neutron source distribution along AA` and BB`.
 
 
 ## Step 1.2
@@ -100,20 +102,20 @@ solves as will be demonstrated later.
 
 Compared to the previous step (i.e. Step 1.1), there will be two pronghorn Navier-Stokes
 solutions to apply the temperature feedback.
-These are called in a ```MultiApps``` fashion as 
+These are called in a ```MultiApps``` fashion as
 
 !listing msr/cnrs/s12/cnrs_s12_griffin_neutronics.i block=MultiApps
 
 
-The first solve (i.e. ```ns_flow```)  will be used to solve for the flow field 
+The first solve (i.e. ```ns_flow```)  will be used to solve for the flow field
 (i.e. velocity field) and the delayed neutron precursor distribution.
-The input for the first solve will be the ```fission_source``` obtained by the Griffin 
+The input for the first solve will be the ```fission_source``` obtained by the Griffin
 transport solve.
-The second solve (i.e. ```ns_temp```) is used to solve for the 
+The second solve (i.e. ```ns_temp```) is used to solve for the
 temperature distribution given the fission source solution obtained by the transport
 solve.
-The inputs for the second solve are velocity field obtained by the ```ns_flow``` 
-solve, and the power density obtained by the Griffin transport solve. 
+The inputs for the second solve are velocity field obtained by the ```ns_flow```
+solve, and the power density obtained by the Griffin transport solve.
 The instructions of data transfer between the transport solve and the two Navier-Stokes
 solves are provided in the ```Transfers``` block as follows
 
@@ -122,7 +124,7 @@ solves are provided in the ```Transfers``` block as follows
 
 Te sequence of ```TransportSystems``` solve, ```ns_flow``` solve, and ```ns_temp```
 solve is performed till the convergence criteria is met.
-These are specified in the main input file (i.e. Griffin solve), within the 
+These are specified in the main input file (i.e. Griffin solve), within the
 ```Executioner``` block as follows
 
 !listing msr/cnrs/s12/cnrs_s12_griffin_neutronics.i block=Executioner
@@ -132,12 +134,16 @@ These are specified in the main input file (i.e. Griffin solve), within the
 The fuel salt temperature distribution along AA` and BB` is collected and plotted as follows
 
 !media media/msr/cnrs/step12-results-a.png
+  id=step12-results-a
   style=width:70%
+  caption=Fuel salt temperature distribution along AA` and BB`.
 
 The fission rate density is also reported along AA` and BB` in this exercise
 
 !media media/msr/cnrs/step12-results-b.png
+  id=step12-results-b
   style=width:70%
+  caption=Fission rate density along AA` and BB`.
 
 ## Step 1.3:
 
@@ -156,13 +162,13 @@ Power density instructions are provided in the ```PowerDensity``` block
 !listing msr/cnrs/s13/cnrs_s13_griffin_neutronics.i block=PowerDensity
 
 
-The set of auxiliary variables that will be obtained using the Navier-Stokes solves 
+The set of auxiliary variables that will be obtained using the Navier-Stokes solves
 are defined as follows
 
 !listing msr/cnrs/s13/cnrs_s13_griffin_neutronics.i block=AuxVariables
 
 
-The transport solve characteristics and the tolerances to converge the problem 
+The transport solve characteristics and the tolerances to converge the problem
 are specified as follows
 
 !listing msr/cnrs/s13/cnrs_s13_griffin_neutronics.i block=Executioner
@@ -186,6 +192,7 @@ The horizontal velocity component distribution along AA` is reported in [step13-
 !media media/msr/cnrs/step13-results-a.png
   style=width:60%
   id=step13-results-a
+  caption=Horizontal velocity component distribution along AA`.
 
 The vertical velocity component distribution along AA` and BB` is also reported
 in [step13-results-b].
@@ -193,6 +200,7 @@ in [step13-results-b].
 !media media/msr/cnrs/step13-results-b.png
   style=width:80%
   id=step13-results-b
+  caption=Vertical velocity component distribution along AA` and BB`.
 
 The fuel salt temperature distribution along AA` and BB` in this exercise is reported
 in [step13-results-c].
@@ -200,6 +208,7 @@ in [step13-results-c].
 !media media/msr/cnrs/step13-results-c.png
   style=width:80%
   id=step13-results-c
+  caption=Fuel salt temperature distribution along AA` and BB`.
 
 Finally, the delayed neutron source distribution along AA` and BB` is reported
 in [step13-results-d].
@@ -207,10 +216,11 @@ in [step13-results-d].
 !media media/msr/cnrs/step13-results-d.png
   style=width:80%
   id=step13-results-d
+  caption=The delayed neutron source distribution along AA` and BB`.
 
 ## Step 1.4:
 
-This phase performs a similar task to that of Step 1.3 for a combination of 
+This phase performs a similar task to that of Step 1.3 for a combination of
 reactor power and lid velocities.
 The set of reactor powers and lid velocities are presented in the following table
 
@@ -254,3 +264,4 @@ distribution depending on the lid velocity
 
 !media media/msr/cnrs/step14-results.png
   style=width:70%
+  caption=Delayed neutron precursor density distribution as a function of the lid velocity.
