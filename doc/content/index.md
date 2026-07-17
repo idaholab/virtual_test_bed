@@ -10,9 +10,9 @@
 
 !col! small=6 medium=6 large=6
 
-!media nric_logo.png style=width:80%;margin-top:50px;float:right link=https://nric.inl.gov/
+!media nric_logo.png style=width:80%;margin-top:50px;float:right link=https://nric.inl.gov/ alt=The National Reactor Innovation Center (NRIC) logo
 
-!media NEAMS.png style=width:40%;float:right link=https://neams.inl.gov/
+!media NEAMS.png style=width:40%;float:right link=https://neams.inl.gov/ alt=The Nuclear Energy Advanced Modeling and Simulation Program logo
 
 !col-end!
 !row-end!

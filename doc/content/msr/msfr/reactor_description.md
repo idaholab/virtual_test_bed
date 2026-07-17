@@ -14,6 +14,8 @@ more closely matches "Geometry II" from [!citep](rouch2014).
 Here a simplified 2D axisymmetric model is used. The geometry is shown below:
 
 !media media/msr/msfr/msfr_geometry/msfr_diagram.svg
+       id=geometry
+       caption=Geometry of the simplified 2D axisymmetric model
        style=width:50%
 
 The model includes a core region, a pump, and a heat exchanger. An interior
@@ -26,7 +28,9 @@ The exact dimensions of the VTB MSFR model are shown below. Note that this model
 is vertically symmetric except for the pump and heat exchanger.
 
 !media media/msr/msfr/msfr_geometry/msfr_dimensions.svg
+       id=exact-dimensions
        style=width:80%
+       caption=Exact dimensions of the model
 
 Per [!citep](brovchenko2019), the composition of the fuel salt is 19.985%
 ThF$_4$, 2.515% U$^{233}$F$_4$, and 77.5% LiF (by mole). The nominal inlet and

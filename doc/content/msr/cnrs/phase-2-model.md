@@ -15,7 +15,7 @@ The power gain in the reactor with the varying power can be calculated as a func
   G(f) = \frac{P_\text{max}(f)/P_\text{avg}(f)-1}{\gamma_\text{max}(f)/\gamma_\text{avg}(f)-1}
 \end{equation}
 
-There are two coupled inputs for this stage. 
+There are two coupled inputs for this stage.
 The first performs the neutronics calculations and the second performs the Navier-Stocks solution.
 The sinusoidal power behavior modeling is defined in the neutronics input as a function within the ```Functions``` module within the Navier-Stocks input.
 
@@ -30,12 +30,12 @@ This is requested in the ```Executioner``` block in the neutronics input as
 
 The rest of the transport solve input has a structure similar to that of the transport input
 in Step 1.3.
-The difference is in assigning a ```transient``` equation type instead of 
+The difference is in assigning a ```transient``` equation type instead of
 ```eigenvalue```, and changing ```type``` input in ```Executioner``` block
 to ```Transient```.
 
 
-On the Navier-Stokes solve side, the problem is still executed as a transient 
+On the Navier-Stokes solve side, the problem is still executed as a transient
 solver.
 However, instead of running the problem for a long time to achieve steady state,
 the problem is defined as follows
@@ -51,3 +51,4 @@ These results are displayed in [step21_result]
 !media media/msr/cnrs/PowerGain_PhaseShift.png
   style=width:80%
   id=step21_result
+  caption=Power gain and phase shift as a function of frequency.
