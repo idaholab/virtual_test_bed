@@ -29,7 +29,6 @@ n_rings = 10
     pin_diameter = '${fparse fuel_pin_diameter}'
     pitch = '${fparse fuel_pin_pitch}'
   []
-
 []
 
 [AuxVariables]
