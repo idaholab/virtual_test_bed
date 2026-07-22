@@ -2,7 +2,7 @@
 ## NEAMS Micro-Reactor Application Driver                                     ##
 ## Heat Pipe Microreactor Steady State                                        ##
 ## BISON Child Application input file                                         ##
-## Thermomechanical model                                                     ##
+## Thermomechanical model (Heat conduction, Thermal Expansion, Thermal Stress)##
 ## FY26 Summer Update for Solid Mechanics Implementation                      ##
 ################################################################################
 
@@ -31,9 +31,6 @@ outer_blocks = '${air_blocks} ${outer_ref_blocks} ${b4c_blocks}'
 hp_blocks = 'heat_pipes_quad heat_pipes_tri hp_ss hp_ss_up'
 non_hp_blocks = '${fuel_blocks} ${air_blocks} ${b4c_blocks} ${mono_blocks} ${mod_blocks} ${ref_blocks} ${outer_ref_blocks}'
 
-restart_cp_file = '../steady_K_SM/K-HPMR_GRIFFIN_out_bison0_cp/LATEST'
-
-
 [GlobalParams]
   flux_conversion_factor = 1
   fast_neutron_fluence = 0.0
@@ -46,17 +43,16 @@ restart_cp_file = '../steady_K_SM/K-HPMR_GRIFFIN_out_bison0_cp/LATEST'
   reference_vector = 'ref'
   extra_tag_vectors = 'ref'
   group_variables = 'disp_x disp_y disp_z'
-  restart_file_base = ${restart_cp_file}
+  restart_file_base = '../steady_K_SM/K-HPMR_GRIFFIN_out_bison0_cp/LATEST'
 []
 
 [Mesh]
-  file = ${restart_cp_file}
+  file = '../steady_K_SM/K-HPMR_GRIFFIN_out_bison0_cp/LATEST'
   parallel_type = distributed
 []
 
 [Variables]
   [temp]
-    block = ${non_hp_blocks}
   []
   [disp_x]
   []
@@ -67,6 +63,16 @@ restart_cp_file = '../steady_K_SM/K-HPMR_GRIFFIN_out_bison0_cp/LATEST'
 []
 
 [Kernels]
+  [null]
+    type = NullKernel
+    variable = temp
+    block = ${hp_blocks}
+    # temp has no physical meaning on hp_blocks -- heat pipe thermal-fluid
+    # physics is handled by Sockeye and coupled in via hp_temp_aux at heat_pipe_ht_surf.
+    # This kernel exists so that variable temp's domain covers hp_blocks, matching the
+    # whole-geometry sidesets (top/bottom/side_mirror) that hp_blocks must remain part
+    # of for mesh continuity/deformation. Contributes zero residual.
+  []
   [heat_conduction]
     type = HeatConduction
     variable = temp
@@ -190,12 +196,6 @@ restart_cp_file = '../steady_K_SM/K-HPMR_GRIFFIN_out_bison0_cp/LATEST'
     family = MONOMIAL
     block = 'reflector_quad monolith'
   []
-  [Tm_trans]
-    order = CONSTANT
-    family = MONOMIAL
-    # initial_condition = 800
-    block = ${mod_blocks}
-  []
   [disp_x_trans]
   []
   [disp_y_trans]
@@ -235,12 +235,6 @@ restart_cp_file = '../steady_K_SM/K-HPMR_GRIFFIN_out_bison0_cp/LATEST'
     variable = Tmod
     source_variable = temp
     execute_on = 'timestep_end'
-  []
-  [Tm_trans]
-    type = SpatialUserObjectAux
-    variable = Tm_trans
-    user_object = Tm_UO
-    block = ${mod_blocks}
   []
   [fuel_thermal_conductivity]
     type = MaterialRealAux
@@ -379,48 +373,48 @@ restart_cp_file = '../steady_K_SM/K-HPMR_GRIFFIN_out_bison0_cp/LATEST'
     block = mod_ss
   []
   [fuel_density]
-    type = Density
+    type = StrainAdjustedDensity
     block = ${fuel_blocks}
-    density = 2276.5
+    strain_free_density = 2276.5
   []
   [moderator_density]
-    type = Density
+    type = StrainAdjustedDensity
     block = '${yh_blocks}'
-    density = 4.3e3
+    strain_free_density = 4.3e3
   []
   [outer_ref_density]
-   type = Density
+   type = StrainAdjustedDensity
    block = '${outer_ref_blocks}'
-   density = 1848
+   strain_free_density = 1848
   []
   [monolith_density]
-    type = Density
+    type = StrainAdjustedDensity
     block = ${mono_blocks}
-    density = 1806
+    strain_free_density = 1806
   []
   [airgap_density]
-    type = Density
+    type = StrainAdjustedDensity
     block = ${air_blocks} #helium
-    density = 180
+    strain_free_density = 180
   []
   [axial_reflector_density]
-   type = Density
+   type = StrainAdjustedDensity
    block = ${ref_blocks}
-   density = 1848
+   strain_free_density = 1848
   []
   [B4C_density]
-    type = Density
+    type = StrainAdjustedDensity
     block = B4C
-    density = 2510
+    strain_free_density = 2510
   []
   [SS_density]
-    type = Density
-    density = 7990
+    type = StrainAdjustedDensity
+    strain_free_density = 7990
     block = mod_ss
   []
   [hp_dummy]
-    type = Density
-    density = 1000
+    type = StrainAdjustedDensity
+    strain_free_density = 1000
     block = ${hp_blocks}
   []
   # Core materials solid mechanics:
@@ -552,15 +546,6 @@ restart_cp_file = '../steady_K_SM/K-HPMR_GRIFFIN_out_bison0_cp/LATEST'
     num_layers = 100
     block = ${fuel_blocks}
   []
-  [Tm_UO]
-    type = NearestPointLayeredAverage
-    variable = temp
-    direction = z
-    num_layers = 100
-    block = ${yh_blocks}
-    execute_on = 'INITIAL TIMESTEP_END'
-    points_file = 'mod_centers.txt'
-  []
 []
 
 [Preconditioning]
@@ -626,7 +611,7 @@ restart_cp_file = '../steady_K_SM/K-HPMR_GRIFFIN_out_bison0_cp/LATEST'
   [mirror_side_integral]
     type = SideDiffusiveFluxIntegral
     variable = temp
-    boundary = '147'
+    boundary = 'side_mirror'
     diffusivity = thermal_conductivity
     execute_on = 'initial timestep_end'
   []

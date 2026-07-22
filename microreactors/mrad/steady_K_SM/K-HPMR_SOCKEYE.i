@@ -104,7 +104,6 @@ q_evap = '${fparse Q_hp / S_evap}'
 
 [GlobalParams]
   scaling_factor_temperature = 1e-2
-  fp_2phase = fp_2phase
 []
 
 [FluidProperties]
@@ -389,10 +388,5 @@ q_evap = '${fparse Q_hp / S_evap}'
     max_rows = 5
     execute_postprocessors_on = 'INITIAL TIMESTEP_END FINAL FAILED'
   []
-  [csv]
-    type = CSV
-    execute_on = 'INITIAL TIMESTEP_END FINAL FAILED'
-    execute_vector_postprocessors_on = 'FINAL FAILED'
-    enable = false
-  []
+  csv = false
 []

@@ -18,12 +18,11 @@ hp_blocks = 'heat_pipes_quad heat_pipes_tri hp_ss'
 
 non_hp_blocks = '${fuel_blocks} ${air_blocks} ${b4c_blocks} ${mono_blocks} ${mod_blocks} ${ref_blocks}'
 non_hp_fuel_blocks = '${air_blocks} ${b4c_blocks} ${mono_blocks} ${mod_blocks} ${ref_blocks}'
-non_hp_yh_blocks = '${fuel_blocks} ${air_blocks} ${b4c_blocks} ${mono_blocks} ${mod_clad_blocks} ${ref_blocks}'
 
 [Mesh]
   [fmg]
     type = FileMeshGenerator
-    file = '../mesh/gold/HPMR_OneSixth_Core_meshgenerator_tri.e'
+    file = '../mesh/gold/HPMR_OneSixth_Core_meshgenerator_tri_rotate_bdry.e'
   []
   [ps1]
     type = ParsedGenerateSideset
@@ -158,7 +157,7 @@ non_hp_yh_blocks = '${fuel_blocks} ${air_blocks} ${b4c_blocks} ${mono_blocks} ${
 []
 
 [GlobalParams]
-  library_file = 'fullcore_xml_G11_endfb8_ss_tr.xml'
+  library_file = '../isoxml/fullcore_xml_G11_endfb8_ss_tr.xml'
   library_name = fullcore_xml_G11_endfb8_ss_tr
   isotopes = 'pseudo'
   densities = 1.0

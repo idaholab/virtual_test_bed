@@ -2,7 +2,7 @@
 ## NEAMS Micro-Reactor Application Driver                                     ##
 ## Heat Pipe Microreactor Steady State                                        ##
 ## BISON Child Application input file                                         ##
-## Thermomechanical model                                                     ##
+## Thermomechanical model (Heat conduction, Thermal Expansion, Thermal Stress)##
 ## FY26 Summer Update for Solid Mechanics Implementation                      ##
 ################################################################################
 
@@ -56,7 +56,7 @@ non_hp_blocks = '${fuel_blocks} ${air_blocks} ${b4c_blocks} ${mono_blocks} ${mod
 [Variables]
   [temp]
     initial_condition = 800
-    block = ${non_hp_blocks}
+    #block = ${non_hp_blocks}
   []
   [disp_x]
   []
@@ -67,6 +67,16 @@ non_hp_blocks = '${fuel_blocks} ${air_blocks} ${b4c_blocks} ${mono_blocks} ${mod
 []
 
 [Kernels]
+  [null]
+    type = NullKernel
+    variable = temp
+    block = ${hp_blocks}
+    # temp has no physical meaning on hp_blocks -- heat pipe thermal-fluid
+    # physics is handled by Sockeye and coupled in via hp_temp_aux at heat_pipe_ht_surf.
+    # This kernel exists so that variable temp's domain covers hp_blocks, matching the
+    # whole-geometry sidesets (top/bottom/side_mirror) that hp_blocks must remain part
+    # of for mesh continuity/deformation. Contributes zero residual.
+  []
   [heat_conduction]
     type = HeatConduction
     variable = temp
@@ -188,12 +198,6 @@ non_hp_blocks = '${fuel_blocks} ${air_blocks} ${b4c_blocks} ${mono_blocks} ${mod
     family = MONOMIAL
     block = 'reflector_quad monolith'
   []
-  [Tm_trans]
-    order = CONSTANT
-    family = MONOMIAL
-    initial_condition = 800
-    block = ${mod_blocks}
-  []
   [disp_x_trans]
   []
   [disp_y_trans]
@@ -233,12 +237,6 @@ non_hp_blocks = '${fuel_blocks} ${air_blocks} ${b4c_blocks} ${mono_blocks} ${mod
     variable = Tmod
     source_variable = temp
     execute_on = 'timestep_end'
-  []
-  [Tm_trans]
-    type = SpatialUserObjectAux
-    variable = Tm_trans
-    user_object = Tm_UO
-    block = ${mod_blocks}
   []
   [fuel_thermal_conductivity]
     type = MaterialRealAux
@@ -377,49 +375,49 @@ non_hp_blocks = '${fuel_blocks} ${air_blocks} ${b4c_blocks} ${mono_blocks} ${mod
     block = mod_ss
   []
   [fuel_density]
-    type = Density
+    type = StrainAdjustedDensity
     block = ${fuel_blocks}
-    density = 2276.5
+    strain_free_density = 2276.5
   []
   [moderator_density]
-    type = Density
+    type = StrainAdjustedDensity
     block = '${yh_blocks}'
-    density = 4.3e3
+    strain_free_density = 4.3e3
   []
   [outer_ref_density]
-   type = Density
+   type = StrainAdjustedDensity
    block = '${outer_ref_blocks}'
-   density = 1848
+   strain_free_density = 1848
   []
   [monolith_density]
-    type = Density
+    type = StrainAdjustedDensity
     block = ${mono_blocks}
-    density = 1806
+    strain_free_density = 1806
   []
   [airgap_density]
-    type = Density
+    type = StrainAdjustedDensity
     block = ${air_blocks} #helium
-    density = 180
+    strain_free_density = 180
   []
   [axial_reflector_density]
-   type = Density
-   block = ${ref_blocks}
-   density = 1848
+    type = StrainAdjustedDensity
+    block = ${ref_blocks}
+    strain_free_density = 1848
   []
   [B4C_density]
-    type = Density
+    type = StrainAdjustedDensity
     block = B4C
-    density = 2510
+    strain_free_density = 2510
   []
   [SS_density]
-    type = Density
-    density = 7990
+    type = StrainAdjustedDensity
+    strain_free_density = 7990
     block = mod_ss
   []
   # dummy for hp_blocks
   [hp_dummy]
-    type = Density
-    density = 1000
+    type = StrainAdjustedDensity
+    strain_free_density = 1000
     block = ${hp_blocks}
   []
   # Core materials solid mechanics:
@@ -550,15 +548,6 @@ non_hp_blocks = '${fuel_blocks} ${air_blocks} ${b4c_blocks} ${mono_blocks} ${mod
     num_layers = 100
     block = ${fuel_blocks}
   []
-  [Tm_UO]
-    type = NearestPointLayeredAverage
-    variable = temp
-    direction = z
-    num_layers = 100
-    block = ${yh_blocks}
-    execute_on = 'INITIAL TIMESTEP_END'
-    points_file = 'mod_centers.txt'
-  []
 []
 
 [Preconditioning]
@@ -592,7 +581,7 @@ non_hp_blocks = '${fuel_blocks} ${air_blocks} ${b4c_blocks} ${mono_blocks} ${mod
 
   [TimeStepper]
     type = IterationAdaptiveDT
-    dt = 100
+    dt = 1000
     optimal_iterations = 100
     iteration_window = 3
     linear_iteration_ratio = 100
@@ -624,7 +613,7 @@ non_hp_blocks = '${fuel_blocks} ${air_blocks} ${b4c_blocks} ${mono_blocks} ${mod
   [mirror_side_integral]
     type = SideDiffusiveFluxIntegral
     variable = temp
-    boundary ='147'
+    boundary ='side_mirror'
     diffusivity = thermal_conductivity
     execute_on = 'initial timestep_end'
   []

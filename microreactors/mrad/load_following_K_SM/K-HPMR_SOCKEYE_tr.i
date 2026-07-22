@@ -95,7 +95,7 @@ R_wick_i = '${fparse R_wick_o - t_wick}'
 D_wick_i = '${fparse 2.0 * R_wick_i}'
 
 # BCs for condenser
-# T_ext_cond = 800.
+T_ext_cond = 800.
 htc_ext_cond = 1.0e2
 
 # Evaporator parameters
@@ -104,7 +104,6 @@ htc_ext_cond = 1.0e2
 
 [GlobalParams]
   scaling_factor_temperature = 1e-2
-  fp_2phase = fp_2phase
 []
 
 [FluidProperties]

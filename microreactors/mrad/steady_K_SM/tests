@@ -23,17 +23,33 @@
     allow_warnings = true
   []
 
-  # Regression test
-  [coupled_simulation]
+  # Regression tests
+  # BISON standalone and coupled simulation regression tests done in hpc_tests due to large mesh for solid mechanics solve.
+  [neutronics_griffin]
     type = CSVDiff
     input = 'K-HPMR_GRIFFIN.i'
     csvdiff = 'K-HPMR_GRIFFIN_out.csv'
-    executable_pattern = 'dire_wolf*'
-    cli_args = "Executioner/richardson_max_its=2 Executioner/richardson_abs_tol=1e-1 Outputs/csv=true "
-               "Outputs/file_base=K-HPMR_GRIFFIN_out Outputs/exodus=false MultiApps/bison/cli_args='Outputs/exodus=false'"
-    min_parallel = 48
-    max_time = 3600
+    executable_pattern = 'griffin*|blue_crab*|dire_wolf*'
+    # Setup outputs, reduce costs
+    cli_args = "MultiApps/active='' Transfers/active=''
+                Outputs/csv=true Outputs/exodus=false
+                --distributed-mesh TransportSystems/sn/order=CONSTANT Executioner/richardson_max_its=1"
+    min_parallel = 16
+    capabilities = 'method=opt'
+    max_time = 400
+    # Cross-section warning due to missing fission-only
     allow_warnings = true
+    prereq = 'neutronics_griffin_syntax'
+  []
+  [fluids_sockeye]
+    type = CSVDiff
+    input = 'K-HPMR_SOCKEYE.i'
+    csvdiff = 'K-HPMR_SOCKEYE_out.csv'
+    abs_zero = 1e-9
+    executable_pattern = 'sockeye*|dire_wolf*'
+    cli_args = "Outputs/csv/enable=true"
+    allow_warnings = true
+    prereq = 'fluids_sockeye_syntax'
   []
 
   # Load following
@@ -43,32 +59,24 @@
     working_directory = '../load_following_K_SM'
     input = 'K-HPMR_GRIFFIN_tr.i'
     check_input = True
-    executable_pattern = 'dire_wolf*'
+    executable_pattern = 'griffin*|blue_crab*|dire_wolf*'
     cli_args = "MultiApps/active='' Transfers/active=''"
-    prereq = 'coupled_simulation'
-    min_parallel = 48
+    prereq = 'neutronics_griffin'
+    # restart file was created in parallel
+    min_parallel = 16
+    # Cross-section warning due to missing fission-only
     allow_warnings = true
-  []
-  [thermomechanics_bison_syntax_load]
-    type = RunApp
-    working_directory = '../load_following_K_SM'
-    input = 'K-HPMR_BISON_tr.i'
-    check_input = True
-    executable_pattern = 'dire_wolf*'
-    cli_args = "MultiApps/active='' Transfers/active=''
-                Problem/restart_file_base='../steady_K_SM/K-HPMR_GRIFFIN_out_bison0_cp/LATEST'
-                Mesh/file='../steady/K-HPMR_GRIFFIN_out_bison0_cp/LATEST'
-                --distributed-mesh"
-    prereq = 'coupled_simulation'
-    min_parallel = 48
   []
   [fluids_sockeye_syntax_load]
     type = RunApp
     working_directory = '../load_following_K_SM'
     input = 'K-HPMR_SOCKEYE_tr.i'
     check_input = True
-    executable_pattern = 'dire_wolf*'
+    # Needs some initialization
+    cli_args = 'Components/hp/initial_T=800'
+    executable_pattern = 'sockeye*|dire_wolf*'
+    # Capillary limit for vertical heat pipes is not accurate; see https://hpcgitlab.hpc.inl.gov/idaholab/sockeye/-/issues/65
     allow_warnings = true
-    prereq = 'coupled_simulation'
+    prereq = 'fluids_sockeye'
   []
 []
