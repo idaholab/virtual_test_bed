@@ -1331,13 +1331,20 @@ fuel_assembly_boundary_name = fuel_assembly_boundary
   type = Steady
 []
 
-[Reporters]
-  [mesh_info]
-    type = MeshInfo
-    items = 'num_elements num_local_elements num_local_nodes num_nodes sidesets subdomains local_sidesets local_subdomains num_dofs num_dofs_auxiliary num_dofs_nonlinear num_local_dofs_nonlinear num_local_dofs_auxiliary num_local_dofs'
-  []
+[GlobalParams]
+  execute_on = 'final'
 []
 
-[Outputs]
-  csv = true
+# Output basic global information about sidesets and subdomains in the
+# mesh that should remain consistent regardless of minute differences
+[Reporters/mesh_info]
+  type = MeshInfo
+  items = 'sidesets subdomains'
+  sideset_items = 'bounding_box volume'
+  subdomain_items = 'bounding_box volume'
+[]
+
+[Outputs/out]
+  type = JSON
+  execute_system_information_on = NONE
 []

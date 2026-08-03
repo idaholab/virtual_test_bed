@@ -4099,7 +4099,6 @@ og_num_intervals_before_ubp = 1
 []
 
 [Problem]
-  kernel_coverage_check = false
   solve = false
 []
 
@@ -4111,31 +4110,17 @@ og_num_intervals_before_ubp = 1
   execute_on = 'final'
 []
 
-# [Postprocessors] doesn't work, 'the following blocks (ids) do not exist on the mesh: Fuel (65535) and Monolith (65535)'
-# [Fuel]
-#   type = VolumePostprocessor
-#   block = 'Fuel'
-# []
-#   [Monolith]
-#     type = VolumePostprocessor
-#     block = 'Monolith'
-#   []
-# []
-
-[AuxVariables]
-  [unused]
-  []
+# Output basic global information about sidesets and subdomains in the
+# mesh that should remain consistent regardless of minute differences
+[Reporters/mesh_info]
+  type = MeshInfo
+  items = 'sidesets subdomains'
+  sideset_items = 'bounding_box volume'
+  subdomain_items = 'bounding_box volume'
 []
 
-[Reporters]
-  [mesh_info]
-    type = MeshInfo
-  []
-[]
-
-[Outputs]
+[Outputs/json]
+  type = JSON
   file_base = '3D_AGN_201'
-  exodus = true
-  csv = true
-  json = true
+  execute_system_information_on = NONE
 []

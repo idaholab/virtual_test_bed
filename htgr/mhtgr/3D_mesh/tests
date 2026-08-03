@@ -9,15 +9,12 @@
     max_time = 600
   []
   [3D_MHTGR_mesh]
-    type = CSVDiff
+    type = JSONDiff
     input = '3D_mhtgr_final.i'
-    csvdiff = '3D_mhtgr_final_out.csv'
+    jsondiff = '3D_mhtgr_final_out.json'
     requirement = 'The system shall be able to create a mesh for a 3D model of the modular HTGR.'
     executable_pattern = 'combined*'
     # needed for devel testing
     max_time = 600
-
-    # Triangulation output depends on platform
-    rel_err = 1e-3
   []
 []
