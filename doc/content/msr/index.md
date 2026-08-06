@@ -11,3 +11,5 @@
 [CNRS multiphysics Modeling](cnrs/index.md)
 
 [Graphite Behavior in Molten Salt Environments](graphite_model/index.md)
+
+[Separate Effects Loop (SEL)](sel/sel_sam_model.md)
