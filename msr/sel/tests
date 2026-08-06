@@ -1,0 +1,25 @@
+[Tests]
+  [sel_ss_syntax]
+    type = RunApp
+    check_input = true
+    input = 'OnepinSS.i'
+    executable_pattern = 'sam*'
+    requirement = 'The SEL steady-state model should pass syntax check.'
+  []
+  [sel_nc_syntax]
+    type = RunApp
+    check_input = true
+    input = 'OnepinNC.i'
+    executable_pattern = 'sam*'
+    requirement = 'The SEL transient model should pass syntax check.'
+  []
+  [sel_ss_3steps]
+    type = CSVDiff
+    input = 'OnepinSS.i'
+    cli_args = 'Executioner/num_steps=3'
+    csvdiff = 'OnepinSS_csv.csv'
+    executable_pattern = 'sam*'
+    prereq = 'sel_ss_syntax'
+    requirement = 'The SEL steady-state model should converge and run successfully for a minimum of 3 steps and match the gold reference.'
+  []
+[]
