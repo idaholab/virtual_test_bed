@@ -118,7 +118,7 @@
     n_elems                         = 4
     eos                             = salt_eos
   []
-  
+
   [Pipe2]  # (to HX)
     type                            = PBOneDFluidComponent
     orientation                     = '0 -1 0'
@@ -271,7 +271,7 @@
     n_elems                         = 8
     eos                             = salt_eos
   []
-  
+
   [Pipe4]  # (downcomer)
     type                            = PBOneDFluidComponent
     orientation                     = '0 0 -1'
@@ -282,7 +282,7 @@
     n_elems                         = 16
     eos                             = salt_eos
   []
-  
+
   [Pipe5]  # (to pump)
     type                            = PBOneDFluidComponent
     orientation                     = '0 1 0'
@@ -293,7 +293,7 @@
     n_elems                         = 25
     eos                             = salt_eos
   []
-  
+
   [Pipe6]  # (to CH1)
     type                            = PBOneDFluidComponent
     orientation                     = '0 0 1'
@@ -304,7 +304,7 @@
     n_elems                         = 2
     eos                             = salt_eos
   []
-  
+
   [Pipe7]  # (ref)
     type                            = PBOneDFluidComponent
     orientation                     = '0 0 1'
@@ -507,7 +507,7 @@
     eos    = salt_eos
     input  = 'IHX(primary_out) IHX(primary_in)'
   []
-  
+
   [./HX_SE]
     type   = ComponentBoundaryEnergyBalance
     eos    = air_eos
