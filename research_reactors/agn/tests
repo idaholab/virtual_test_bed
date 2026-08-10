@@ -4,6 +4,7 @@
     input = 3D_AGN-201_Final.i
     check_input = True
     executable_pattern = 'combined*'
+    min_slots = 2 # memory heavy
     # Some stitching warnings due to RenameBoundaryMG adding boundary names on top of IDs
     allow_warnings = true
   []
@@ -14,6 +15,7 @@
     max_time = 1000
     # Some stitching warnings due to RenameBoundaryMG adding boundary names on top of IDs
     allow_warnings = true
+    min_slots = 2 # memory heavy
     requirement = 'The system shall be able to create a mesh for the 3D AGN-201 model.'
     executable_pattern = 'combined*'
   []

@@ -5,6 +5,7 @@
     input = HC_master.i
     check_input = True
     prereq = 'generate_mesh'
+    min_slots = 5 # memory heavy
     executable_pattern = 'subchannel*|combined*'
   []
   [SCM_syntax]
