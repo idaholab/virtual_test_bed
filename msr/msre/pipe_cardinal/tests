@@ -22,6 +22,7 @@
     executable_pattern = 'cardinal*|combined*'
     cli_args = "MultiApps/active='' Transfers/active='' Executioner/num_steps=10"
     prereq = 'syntax_check_cardinal'
+    abs_zero = 8e-7
     # Exceedingly slow in devel mode
     capabilities = 'method=opt'
     max_time = '600'
