@@ -1,0 +1,25 @@
+[Tests]
+  [nek]
+    type = RunApp
+    working_directory = 'cht'
+    input = solid.i
+    cli_args = 'Executioner/num_steps=10'
+    check_input = true
+    requirement = "The system shall be able to run a simulation of the reflector of flow in the PBFHR reflector."
+    executable_pattern = 'cardinal*'
+    min_parallel = 240
+    max_time = 3600
+  []
+  [nek_syntax]
+    type = RunApp
+    working_directory = 'conduction'
+    input = solid.i
+    cli_args = 'Executioner/num_steps=10'
+    check_input = true
+    executable_pattern = 'cardinal*'
+    min_parallel = 240
+    max_time = 3600
+    hpc_mem_per_cpu = 6G
+    requirement = "The system shall be able to run a simulation of the reflector of heat conduction in the PBFHR reflector."
+  []
+[]
