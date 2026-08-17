@@ -47,7 +47,7 @@
     csvdiff = 'K-HPMR_SOCKEYE_out.csv'
     abs_zero = 1e-9
     executable_pattern = 'sockeye*|dire_wolf*'
-    cli_args = "Outputs/csv/enable=true"
+    cli_args = "Outputs/csv=true"
     allow_warnings = true
     prereq = 'fluids_sockeye_syntax'
   []
