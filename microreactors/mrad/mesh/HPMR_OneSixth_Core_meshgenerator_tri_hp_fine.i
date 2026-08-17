@@ -352,7 +352,6 @@
     input = merge_hp_surf
     boundary_names = '1 3'
   []
-
   [ysurf]
     type = ParsedGenerateSideset
     input = clean_up
