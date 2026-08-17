@@ -1,6 +1,6 @@
 # CAD-based Workflow for Multiphysics modeling of a simplified tokamak model
 
-*Contact: Mahmoud Eltawila (tawila.at.illinois.edu), Pierre-Clement Simon (pierreclement.simon.at.inl.gov)*
+*Contact: Mahmoud Eltawila (tawila@illinois.edu), Pierre-Clément Simon (pierreclement.simon@inl.gov)*
 
 *Model link: [CAD Multiphysics example workflow](https://github.com/idaholab/salamander/tree/devel/test/tests/neutronics/cad_workflow)*
 
