@@ -59,7 +59,7 @@ non_hp_blocks = '${fuel_blocks} ${air_blocks} ${b4c_blocks} ${mono_blocks} ${mod
   [disp_y]
   []
   [disp_z]
-  [] 
+  []
 []
 
 [Kernels]
@@ -449,7 +449,7 @@ non_hp_blocks = '${fuel_blocks} ${air_blocks} ${b4c_blocks} ${mono_blocks} ${mod
     eigenstrain_name = ss_thermal_eigenstrain
     block = ${mod_clad_blocks}
     outputs = all
-  []  
+  []
   [thermal_exp_ref]
     type = BeOThermalExpansionEigenstrain
     block = ${ref_blocks}
@@ -469,7 +469,7 @@ non_hp_blocks = '${fuel_blocks} ${air_blocks} ${b4c_blocks} ${mono_blocks} ${mod
     temperature = temp
     elastic_constants_model = ornl
     block = ${mod_clad_blocks}
-  []  
+  []
   [elasticity_mod]
     type = ComputeIsotropicElasticityTensor
     block = ${yh_blocks}

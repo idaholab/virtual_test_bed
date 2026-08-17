@@ -215,21 +215,21 @@ non_hp_fuel_blocks = '${air_blocks} ${b4c_blocks} ${mono_blocks} ${mod_blocks} $
     variable = disp_x
     source_variable = disp_x_trans
     execute_on = 'initial timestep_end'
-  []   
+  []
   [from_bison_dispy]
     type = MultiAppGeneralFieldShapeEvaluationTransfer
     from_multi_app = bison
     variable = disp_y
     source_variable = disp_y_trans
     execute_on = 'initial timestep_end'
-  []    
+  []
   [from_bison_dispz]
     type = MultiAppGeneralFieldShapeEvaluationTransfer
     from_multi_app = bison
     variable = disp_z
     source_variable = disp_z
     execute_on = 'initial timestep_end'
-  []         
+  []
 []
 
 [UserObjects]

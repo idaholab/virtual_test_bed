@@ -228,7 +228,7 @@ non_hp_fuel_blocks = '${air_blocks} ${b4c_blocks} ${mono_blocks} ${mod_blocks} $
     execute_on = 'initial timestep_end'
     # error_on_miss = false
     # extrapolation_constant = 0
-  []   
+  []
   [from_bison_dispy]
     type = MultiAppGeneralFieldShapeEvaluationTransfer
     from_multi_app = bison
@@ -237,7 +237,7 @@ non_hp_fuel_blocks = '${air_blocks} ${b4c_blocks} ${mono_blocks} ${mod_blocks} $
     execute_on = 'initial timestep_end'
     # error_on_miss = false
     # extrapolation_constant = 0
-  []    
+  []
   [from_bison_dispz]
     type = MultiAppGeneralFieldShapeEvaluationTransfer
     from_multi_app = bison
@@ -246,7 +246,7 @@ non_hp_fuel_blocks = '${air_blocks} ${b4c_blocks} ${mono_blocks} ${mod_blocks} $
     execute_on = 'initial timestep_end'
     # error_on_miss = false
     # extrapolation_constant = 0
-  []         
+  []
 []
 
 [UserObjects]

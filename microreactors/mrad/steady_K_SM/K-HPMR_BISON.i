@@ -63,7 +63,7 @@ non_hp_blocks = '${fuel_blocks} ${air_blocks} ${b4c_blocks} ${mono_blocks} ${mod
   [disp_y]
   []
   [disp_z]
-  [] 
+  []
 []
 
 [Kernels]
@@ -452,7 +452,7 @@ non_hp_blocks = '${fuel_blocks} ${air_blocks} ${b4c_blocks} ${mono_blocks} ${mod
     eigenstrain_name = ss_thermal_eigenstrain
     block = ${mod_clad_blocks}
     outputs = all
-  []  
+  []
   [thermal_exp_ref]
     type = BeOThermalExpansionEigenstrain
     block = ${ref_blocks}
@@ -472,7 +472,7 @@ non_hp_blocks = '${fuel_blocks} ${air_blocks} ${b4c_blocks} ${mono_blocks} ${mod
     temperature = temp
     elastic_constants_model = ornl
     block = ${mod_clad_blocks}
-  []  
+  []
   [elasticity_mod]
     type = ComputeIsotropicElasticityTensor
     block = ${yh_blocks}
@@ -506,7 +506,7 @@ non_hp_blocks = '${fuel_blocks} ${air_blocks} ${b4c_blocks} ${mono_blocks} ${mod
    positions_file = 'hp_centers.txt'
    input_files = 'K-HPMR_SOCKEYE.i'
    execute_on = 'timestep_begin' # execute on timestep begin because hard to have a good initial guess on heat flux
-   max_procs_per_app = 1 
+   max_procs_per_app = 1
    output_in_position = true
    catch_up = true
    max_catch_up_steps = 1e4
@@ -517,7 +517,7 @@ non_hp_blocks = '${fuel_blocks} ${air_blocks} ${b4c_blocks} ${mono_blocks} ${mod
   [from_sockeye_temp]
     type = MultiAppGeneralFieldNearestLocationTransfer
     from_multi_app = sockeye
-    source_variable = hp_temp_aux 
+    source_variable = hp_temp_aux
     variable = hp_temp_aux
     execute_on = 'timestep_begin'
   []
