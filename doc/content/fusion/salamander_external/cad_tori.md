@@ -1,4 +1,4 @@
-# CAD-based Workflow for Multiphysics coupling of a simplified tokamak model
+# CAD-based Workflow for Multiphysics modeling of a simplified tokamak model
 
 *Contact: Mahmoud Eltawila (tawila.at.illinois.edu), Pierre-Clement Simon (pierreclement.simon.at.inl.gov)*
 
@@ -8,7 +8,7 @@
 
 !tag name=Divertor Monoblock
      image=https://mooseframework.inl.gov/virtual_test_bed/media/fusion/mcf/salamander_external/temp_coupl.png
-     description=CAD-based Workflow for Multiphysics coupling of a simplified tokamak model
+     description=CAD-based Workflow for Multiphysics of a simplified tokamak model
      pairs=reactor_type:fusion_MCF
             simulation_type:multiphysics
             geometry:simplified_tokamak
