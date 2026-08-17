@@ -11,9 +11,11 @@
      description=CAD-based Workflow for Multiphysics coupling of a simplified tokamak model
      pairs=reactor_type:fusion_MCF
             simulation_type:multiphysics
+            geometry:simplified_tokamak
             transient:steady_state
             V_and_V:demonstration
-            codes_used:Salamander
+            codes_used:Salamander;OpenMC
+            open_source:fully
             computing_needs:Workstation
             fiscal_year:2024
             sponsor:LDRD
