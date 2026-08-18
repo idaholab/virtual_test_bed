@@ -1,6 +1,6 @@
 ################################################################################
 ## NEAMS Micro-Reactor Application Driver                                     ##
-## Heat Pipe Microreactor Steady State                                        ##
+## Heat Pipe Microreactor Load Following                                      ##
 ## Griffin Main Application input file                                        ##
 ## DFEM-SN (1, 3) NA=2 with CMFD acceleration                                 ##
 ## FY26 Summer Update for Solid Mechanics Implementation                      ##

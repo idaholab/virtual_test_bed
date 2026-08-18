@@ -1,6 +1,6 @@
 ################################################################################
 ## NEAMS Micro-Reactor Application Driver                                     ##
-## Heat Pipe Microreactor Steady State                                        ##
+## Heat Pipe Microreactor Load Following                                      ##
 ## Sockeye Grandchild Application input file                                  ##
 ## Effective Heat Conduction Model with Operation Limits                      ##
 ## FY26 Summer Update for Solid Mechanics Implementation                      ##

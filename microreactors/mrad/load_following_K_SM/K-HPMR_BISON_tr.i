@@ -1,6 +1,6 @@
 ################################################################################
 ## NEAMS Micro-Reactor Application Driver                                     ##
-## Heat Pipe Microreactor Steady State                                        ##
+## Heat Pipe Microreactor Load Following                                      ##
 ## BISON Child Application input file                                         ##
 ## Thermomechanical model (Heat conduction, Thermal Expansion, Thermal Stress)##
 ## FY26 Summer Update for Solid Mechanics Implementation                      ##
