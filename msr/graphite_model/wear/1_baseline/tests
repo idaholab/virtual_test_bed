@@ -7,6 +7,6 @@
     cli_args = 'Executioner/num_steps=10'
     csvdiff = 'baseline_csv_line_0011.csv'
     min_parallel = 8
-    executable_pattern = "grizzly*"
+    capabilities = 'grizzlyapp'
   []
 []

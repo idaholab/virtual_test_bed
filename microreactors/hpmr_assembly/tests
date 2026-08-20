@@ -4,14 +4,14 @@
     input = mesh.i
     cli_args = '--mesh-only mesh.e'
     recover = False # No recover for --mesh-only
-    executable_pattern = 'dire_wolf*'
+    capabilities = 'direwolfapp'
   []
   [check_input]
     type = RunApp
     prereq = 'generate_mesh'
     input = 'main.i'
     check_input = True
-    executable_pattern = 'dire_wolf*'
+    capabilities = 'direwolfapp'
     allow_warnings = true
   []
   [test_one_step]
@@ -20,8 +20,7 @@
     input = 'main.i'
     cli_args = 'Executioner/num_steps=1'
     csvdiff = 'main.csv'
-    capabilities = 'method=opt'
-    executable_pattern = 'dire_wolf*'
+    capabilities = 'method=opt & direwolfapp'
     allow_warnings = true
   []
 []

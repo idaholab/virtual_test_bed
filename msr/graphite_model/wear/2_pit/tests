@@ -7,8 +7,7 @@
     cli_args = 'Outputs/exodus=false'
     csvdiff = 'pit_r0p05_csv_line_0002.csv'
     min_parallel = 8
-    executable_pattern = "grizzly*"
-    capabilities = 'method=opt'
+    capabilities = 'method=opt & grizzlyapp'
     # Timeout observed at 600s
     max_time = 800
     # Test is not fully converging results

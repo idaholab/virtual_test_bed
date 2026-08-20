@@ -4,7 +4,7 @@
     type = RunApp
     input = 'MHTGR.i'
     check_input = True
-    executable_pattern = 'sam*|blue_crab*'
+    capabilities = 'samapp | bluecrabapp'
     cli_args = '--app SamApp'
     allow_unused = true
   []
@@ -18,7 +18,7 @@
     cli_args = "--app SamApp Executioner/num_steps=5
                 Outputs/csv/execute_on='initial final'
                 Outputs/console/time_step_interval=1"
-    executable_pattern = 'blue_crab*|sam*'
+    capabilities = 'bluecrabapp | samapp'
     rel_err = 1e-4
     min_threads = 4
     max_time = 500

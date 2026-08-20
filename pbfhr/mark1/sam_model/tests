@@ -3,7 +3,7 @@
     type = CSVDiff
     input = pbfhr-ss.i
     csvdiff = 'pbfhr-ss_csv.csv'
-    executable_pattern = 'sam*|blue_crab*'
+    capabilities = 'samapp | bluecrabapp'
     cli_args = '--app SamApp Executioner/num_steps=2 Outputs/csv/time_step_interval=1'
     rel_err = 1e-4
     allow_warnings = true
@@ -12,7 +12,7 @@
     type = CSVDiff
     input = pbfhr-tr.i
     csvdiff = 'pbfhr-tr_csv.csv'
-    executable_pattern = 'sam*|blue_crab*'
+    capabilities = 'samapp | bluecrabapp'
     prereq = steady_state
     cli_args = "--app SamApp Executioner/num_steps=2 Outputs/csv/time_step_interval=1"
     rel_err = 5e-4

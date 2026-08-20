@@ -8,8 +8,7 @@
     rel_err = 1e-2
     max_time = 600
     min_parallel = 16
-    capabilities = 'method=opt'
-    executable_pattern = "grizzly*"
+    capabilities = 'method=opt & grizzlyapp'
     hpc_mem_per_cpu = 16G
   []
 []
