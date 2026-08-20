@@ -3,7 +3,7 @@
     type = CSVDiff
     input = griffin.i
     csvdiff = out_griffin.csv
-    executable_pattern = 'griffin*|blue_crab*'
+    capabilities = 'griffinapp | bluecrabapp'
     cli_args = ' TransportSystems/diff/order=FIRST Mesh/second_order=false Outputs/exodus=false'
     min_parallel = 32
     max_time = 800

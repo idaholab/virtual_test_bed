@@ -3,7 +3,7 @@
     type = CheckFiles
     input = stm_pebble_sampling.i
     check_files = 'stm_pebble_sampling_csv_study_results_0001.csv'
-    executable_pattern = 'bison*|blue_crab*'
+    capabilities = 'bisonapp | bluecrabapp'
     min_parallel = 10
     allow_warnings = true # Packing fraction and temperature bound warnings
   []
@@ -11,7 +11,7 @@
     type = JSONDiff
     input = stm_pebble_surrogate.i
     jsondiff = stm_pebble_surrogate_out.json
-    executable_pattern = 'bison*|blue_crab*'
+    capabilities = 'bisonapp | bluecrabapp'
     prereq = sample
   []
   [evaluate]
@@ -19,7 +19,7 @@
     input = gpbr200_ss_gfnk_reactor.i
     csvdiff = 'gpbr200_ss_gfnk_reactor_out.csv gpbr200_ss_gfnk_reactor_out_pronghorn_th0.csv'
     ignore_columns = 'power_scaling'
-    executable_pattern = 'blue_crab*'
+    capabilities = 'bluecrabapp'
     # Only need to look at CSV file
     cli_args = 'Outputs/exodus=false pronghorn_th:Outputs/exodus=false'
     min_parallel = 10
