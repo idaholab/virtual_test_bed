@@ -87,7 +87,6 @@ unheated_length_exit = '${fparse 26.9*scale_factor}'
 [Problem]
   type = TriSubChannel1PhaseProblem
   fp = sodium
-  n_blocks = 1
   P_out = ${P_out}
   compute_density = true
   compute_viscosity = true

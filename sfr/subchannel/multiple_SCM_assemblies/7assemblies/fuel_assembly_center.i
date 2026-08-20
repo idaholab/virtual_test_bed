@@ -85,7 +85,6 @@ duct_inside = '${fparse duct_outside - 2 * duct_thickness}'
 [SubChannel]
   type = TriSubChannel1PhaseProblem
   fp = sodium
-  n_blocks = 1
   P_out = ${P_out}
   compute_density = true
   compute_viscosity = true
