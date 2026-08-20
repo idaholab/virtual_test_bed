@@ -83,7 +83,7 @@
     cli_args = "MultiApps/active='' Transfers/active='' Executioner/num_steps=2 "
                "Executioner/nl_abs_tol=1e-1 Outputs/csv=true --distributed-mesh Outputs/exodus=false"
     min_parallel = 224
-    hpc_mem_per_cpu = 10gb
+    hpc_mem_per_cpu = 8gb
     capabilities = 'method=opt'
     abs_zero = 1e-7
     rel_err = 1e-6
@@ -103,7 +103,7 @@
     prereq = 'thermomechanics_bison'
     # restart file was created in parallel
     min_parallel = 224
-    hpc_mem_per_cpu = 10gb
+    hpc_mem_per_cpu = 8gb
     abs_zero = 1e-7
     rel_err = 1e-6
   []
@@ -118,7 +118,7 @@
                "Outputs/file_base=mrad_coupled_out Outputs/exodus=false MultiApps/bison/cli_args='Outputs/exodus=false;Executioner/nl_abs_tol=1e-1;Executioner/l_tol=1e-2' "
                "--distributed-mesh"
     min_parallel = 224
-    hpc_mem_per_cpu = 10gb
+    hpc_mem_per_cpu = 8gb
     max_time = 20000
     # Capillary limit for vertical heat pipes is not accurate; see https://hpcgitlab.hpc.inl.gov/idaholab/sockeye/-/issues/65
     # Cross-section warning due to missing fission-only
@@ -139,7 +139,7 @@
                "MultiApps/bison/cli_args='Outputs/exodus=false;Problem/restart_file_base=../steady/mrad_coupled_out_bison0_cp/LATEST;Mesh/file=../steady/mrad_coupled_out_bison0_cp/LATEST' "
                "--distributed-mesh"
     min_parallel = 224
-    hpc_mem_per_cpu = 10gb
+    hpc_mem_per_cpu = 8gb
     max_time = 10000
     # Capillary limit for vertical heat pipes is not accurate; see https://hpcgitlab.hpc.inl.gov/idaholab/sockeye/-/issues/65
     # Cross-section warning due to missing fission-only
