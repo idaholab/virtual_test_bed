@@ -22,7 +22,8 @@
     input = 'MP_FC_ss_bison.i'
     csvdiff = 'MP_FC_ss_bison_out.csv'
     cli_args = "MultiApps/active='' Transfers/active='' Executioner/num_steps=2 "
-               "Executioner/nl_abs_tol=1e-1 Outputs/csv=true --distributed-mesh Outputs/exodus=false"
+               "Executioner/nl_abs_tol=1e-1 --distributed-mesh Outputs/exodus=false "
+               "Outputs/csv=false Outputs/out/type=CSV Outputs/out/execute_on=TIMESTEP_END"
     min_parallel = 16
     capabilities = 'method=opt & (bisonapp | bluecrabapp | direwolfapp)'
     # Temperatures are out of range

@@ -45,7 +45,8 @@
     input = 'HPMR_thermo_ss.i'
     csvdiff = 'HPMR_thermo_ss_out.csv'
     cli_args = "MultiApps/active='' Transfers/active='' Executioner/num_steps=2 "
-               "Executioner/nl_abs_tol=1e-1 Outputs/csv=true --distributed-mesh Outputs/exodus=false"
+               "Executioner/nl_abs_tol=1e-1 Outputs/csv=true --distributed-mesh Outputs/exodus=false "
+               "Outputs/csv=false Outputs/out/type=CSV Outputs/out/execute_on=TIMESTEP_END"
     min_parallel = 16
     capabilities = 'method=opt & (bisonapp | bluecrabapp | direwolfapp)'
     # Temperatures are out of range
@@ -53,6 +54,7 @@
     max_time = 400
     rel_err = 2e-5
     prereq = 'heat_conduction_bison_syntax'
+    # skip these near 0 results
   []
   [fluids_sockeye]
     type = CSVDiff
