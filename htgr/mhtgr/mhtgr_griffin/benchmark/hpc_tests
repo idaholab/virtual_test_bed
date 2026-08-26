@@ -7,6 +7,5 @@
     cli_args = ' TransportSystems/diff/order=FIRST Mesh/second_order=false Outputs/exodus=false'
     min_parallel = 32
     max_time = 800
-    capabilities = 'method=opt' # much much too slow
   []
 []
