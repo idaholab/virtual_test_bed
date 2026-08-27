@@ -29,6 +29,7 @@
                 TransportSystems/dfem_sn/NPolar=3
                 Executioner/coarse_element_id=coarse_element_id
                 Executioner/cmfd_eigen_solver_type=krylovshur
+                Executioner/prolongation_type=additive
                 Outputs/csv=true
                 Outputs/checkpoint=false"
     # NOTE: I turned off the checkpoints to see if this solves the timeouts

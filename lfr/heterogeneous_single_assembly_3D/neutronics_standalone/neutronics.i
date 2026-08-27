@@ -474,6 +474,7 @@ totalpower = 3700000.0 # W
   max_inner_its = 7
 
   cmfd_acceleration = true
+  prolongation_type = additive
   coarse_element_id = coarse_element_id
 []
 
