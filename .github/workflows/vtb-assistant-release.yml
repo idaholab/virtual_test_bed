@@ -41,3 +41,20 @@ jobs:
           files: |
             vtb_assistant/dist/vtb-docs-skill.zip
             vtb_assistant/dist/vtb-assistant-plugin.zip
+      - name: Publish rolling latest release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: vtb-assistant-pack-latest
+          name: "VTB Assistant knowledge pack (latest)"
+          make_latest: false
+          body: >
+            Rolling "latest" build of the VTB Assistant knowledge pack — these
+            assets are overwritten every time this workflow runs, so this tag
+            always has the newest zips. For a permanently pinned historical
+            build, see the numbered `vtb-assistant-pack-<N>` releases instead.
+            `vtb-assistant-plugin.zip`: extract to `~/.claude/skills/vtb-assistant/`
+            for Claude Code (no build step, no marketplace).
+            `vtb-docs-skill.zip`: upload directly to claude.ai / ChatGPT Skills.
+          files: |
+            vtb_assistant/dist/vtb-docs-skill.zip
+            vtb_assistant/dist/vtb-assistant-plugin.zip
