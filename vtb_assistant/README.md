@@ -83,8 +83,11 @@ into `main` — see the next section.
 
 ## If you just want to use it (no cloning, no build)
 
-Every [Release](../../../releases/latest) includes two ready-to-use zips,
-rebuilt whenever `devel` merges into `main`:
+The [latest release](https://github.com/idaholab/virtual_test_bed/releases/tag/vtb-assistant-pack-latest)
+always has two ready-to-use zips, rebuilt (and the release's assets
+overwritten in place) whenever `devel` merges into `main`. Numbered
+`vtb-assistant-pack-<N>` releases are also published on every run, kept as a
+historical archive.
 
 - **`vtb-assistant-plugin.zip`** — for **Claude Code**. Download and
   extract it to `~/.claude/skills/vtb-assistant/` (user-level, loads in
