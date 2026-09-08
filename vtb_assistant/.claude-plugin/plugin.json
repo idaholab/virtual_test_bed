@@ -1,0 +1,9 @@
+{
+  "name": "vtb-assistant",
+  "description": "Find Virtual Test Bed (VTB) reactor models, explain VTB documentation, and generate or modify VTB input files.",
+  "version": "0.1.0",
+  "author": {
+    "name": "Zachary M. Prince",
+    "email": "zachary.prince@inl.gov"
+  }
+}

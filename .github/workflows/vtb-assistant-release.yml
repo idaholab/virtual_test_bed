@@ -1,0 +1,43 @@
+name: Build and release VTB Assistant knowledge pack
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "vtb_assistant/**"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: vtb_assistant
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v3
+      - run: uv sync --all-groups
+      - run: uv run --group harvest python build/harvest.py
+      - run: uv run --group harvest python build/build_reference_pack.py
+      - run: uv run ruff check .
+      - run: uv run pytest
+      - run: ./build/package_skill.sh
+      - run: ./build/package_plugin.sh
+      - name: Publish release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: vtb-assistant-pack-${{ github.run_number }}
+          name: "VTB Assistant knowledge pack (build ${{ github.run_number }})"
+          make_latest: false
+          body: >
+            Automated rebuild of the VTB Assistant knowledge pack, triggered
+            by this merge into main.
+            `vtb-assistant-plugin.zip`: extract to `~/.claude/skills/vtb-assistant/`
+            for Claude Code (no build step, no marketplace).
+            `vtb-docs-skill.zip`: upload directly to claude.ai / ChatGPT Skills.
+          files: |
+            vtb_assistant/dist/vtb-docs-skill.zip
+            vtb_assistant/dist/vtb-assistant-plugin.zip
