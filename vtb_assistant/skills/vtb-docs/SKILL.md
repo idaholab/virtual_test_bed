@@ -12,7 +12,7 @@ snapshot of `idaholab/virtual_test_bed` (CC-BY-4.0; see `ATTRIBUTION.md`).
 **Documentation and generation have different coverage.** Every bundled VTB
 model and code can be found and explained — including non-MOOSE codes like
 NekRS, OpenMC, MCNP, Serpent, and Nek5000 (check a model's `codes_used`
-tag). Only the 10 MVP apps listed under "Generating or modifying an input
+tag). Only the 10 apps listed under "Generating or modifying an input
 file" below are supported for generating or modifying an actual input
 file; a model built on NekRS, OpenMC, etc. can still be found and
 explained, just not authored as new input syntax. A coupled/MultiApps
@@ -155,7 +155,7 @@ this whenever handing over a generated/modified input, not just once.
 This skill grounds inputs in real VTB inputs but never runs or validates
 them against the actual application (see "Validation levels" below).
 
-**In scope (MVP):** single-app MOOSE inputs for bison, griffin, sam,
+**In scope:** single-app MOOSE inputs for bison, griffin, sam,
 pronghorn, grizzly, mastodon, relap-7, and sockeye (cardinal and blue_crab
 are coupling exceptions — see below). Every VTB model with a resolved
 source directory has its `.i` input files indexed automatically —

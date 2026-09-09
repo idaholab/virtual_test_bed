@@ -117,11 +117,3 @@ documentation and models, under that same license. `ATTRIBUTION.md`
 (generated alongside the pack, not committed, but bundled into both
 release zips) lists the full source URLs, retrieval dates, and the pinned
 source commit.
-
-## Out of scope for v1
-
-- An MCP server or hosted backend.
-- NekRS-only model generation/modification (parts of `msr/msre`,
-  `pbfhr/mark1/reflector`), and generating a *new* MultiApps/Transfers
-  coupling not already demonstrated in a bundled input.
-- A public Claude Code marketplace listing.

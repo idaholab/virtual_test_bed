@@ -6,8 +6,7 @@ The VTB Assistant is a skill/plugin for [Claude](https://claude.ai) and
 [ChatGPT](https://chatgpt.com) that finds Virtual Test Bed reactor models,
 explains VTB documentation, and generates or modifies VTB simulation input
 files. It works entirely from a bundled, curated snapshot of this repository
-searched by keyword at runtime. There is no server to stand up, no account
-to create beyond the AI platform itself, and no API key to manage.
+searched by keyword at runtime.
 
 ## Getting the Assistant
 
