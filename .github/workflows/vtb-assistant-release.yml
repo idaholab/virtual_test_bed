@@ -3,8 +3,8 @@ name: Build and release VTB Assistant knowledge pack
 on:
   push:
     branches: [main]
-    paths:
-      - "vtb_assistant/**"
+    paths-ignore:
+      - "apps/**"
   workflow_dispatch:
 
 permissions:

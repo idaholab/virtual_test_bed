@@ -10,8 +10,8 @@ searched by keyword at runtime.
 
 ## Getting the Assistant
 
-Every push to `devel` that touches `vtb_assistant/` rebuilds the Assistant
-and republishes it as the
+Every merge of `devel` into `main` rebuilds the Assistant's knowledge from
+the VTB repository's current state and republishes it as the
 [latest release](https://github.com/idaholab/virtual_test_bed/releases/tag/vtb-assistant-pack-latest),
 which always has two ready-to-use zips:
 
@@ -65,11 +65,12 @@ which always has two ready-to-use zips:
 
 ## Content Freshness
 
-The Assistant's knowledge is a static snapshot pinned to the commit it was
-built from (see the bundled `ATTRIBUTION.md` for the exact commit and
-retrieval date), not a live view of `devel`. It's regenerated whenever
-`vtb_assistant/` changes are merged, so it can lag the latest models by as
-much as one release cycle.
+The Assistant's knowledge is a static snapshot of this whole repository,
+models and documentation included, pinned to the commit it was built from
+(see the bundled `ATTRIBUTION.md` for the exact commit and retrieval date).
+It is not a live view of `devel`: it is regenerated whenever `devel` is
+merged into `main`, so it can lag content on `devel` by however long that
+merge takes, but it stays current with everything published on `main`.
 
 ## For Developers
 
