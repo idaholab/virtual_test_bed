@@ -11,20 +11,20 @@ start_time = -2.0e5
 
 # Generic gas cooled micro reactor balance of plant with open-air recuperated Brayton cycle
 # This input file models a startup transient
-# It uses a Balance of Plant system on VTB as a templet. 
+# It uses a Balance of Plant system on VTB as a templet.
 #https://mooseframework.inl.gov/virtual_test_bed/microreactors/gcmr/BOP_model_description.html
 
 #Several devlopment are made:
 
 #1. The parameters are changes according to 20 MWth GCMR concept design in the following reference:
-#N. Stauff et al., "Assessment and validation of NEAMS tools for high-fidelity multiphysics transient modeling of microreactors," Argonne National Laboratory (ANL), Argonne, IL (United States), 2024. 
-# The paramters such as mfr and pump_head_rated are adjusted to fit the TH condition into design specification. 
+#N. Stauff et al., "Assessment and validation of NEAMS tools for high-fidelity multiphysics transient modeling of microreactors," Argonne National Laboratory (ANL), Argonne, IL (United States), 2024.
+# The paramters such as mfr and pump_head_rated are adjusted to fit the TH condition into design specification.
 
 #2. The reactor core of the model is simplified as one coolant channel representing all the coolant channels in the core and coupled to a single heat structure representing the moderator, graphite and fuel.
 
 #3. The “is_tripped_fn” function is fixed to trigger the control logic correctly.
 
-#4. The recuperator is developed to function well. 
+#4. The recuperator is developed to function well.
 
 #5. The simulation time and time step are set appropriately to make sure the simulation reaches steady state.
 
@@ -76,7 +76,7 @@ vel_ini_sec = 0.00001 # m/s
 vel_y_ini_default = 0.00001 # m/s
 vel_z_ini_default = 0.00001 # m/s
 
-pri_press = 7e6 # Pa 
+pri_press = 7e6 # Pa
 
 ################################################################################################################
 ################  ********************      PRIMARY LOOP PARAMETERS     ********************  ##################
@@ -95,12 +95,12 @@ core_channel_n_elems = 50 # number of element in axial direction
 # numbers of channels and assemblies
 
 core_nb_assembly = 85  # number of assembly in the core(19 assemby A; 36 assembly B;30 assembly C)
-core_nb_coolant_per_assembly = 30.58 # average number of coolant channel in each assembly 
-core_nb_fuel_per_assembly = 46.66 # average number of fuel in each assembly 
+core_nb_coolant_per_assembly = 30.58 # average number of coolant channel in each assembly
+core_nb_fuel_per_assembly = 46.66 # average number of fuel in each assembly
 core_nb_moderator_per_assembly = 6 # number of moderator in each assembly {same number for all assemblies}
 
-core_nb_coolant_tot = 2599 # number of coolant channel in the core 
-core_nb_fuel_tot = 3966 # number of coolant channel in the core 
+core_nb_coolant_tot = 2599 # number of coolant channel in the core
+core_nb_fuel_tot = 3966 # number of coolant channel in the core
 
 # other parameters of the assembly
 
@@ -111,7 +111,7 @@ core_radius_moderator = 0.0075 # m  #Moderator compact radius
 
 # calculus of the equivalent parameters of a cylindrical heat structure around the coolant channel
 
-#area for each assembly 
+#area for each assembly
 core_section_assembly = '${fparse 3 * ( sqrt(3) / 2) * 6 * core_lattice_pitch * 6 * core_lattice_pitch}' # calculus of the assembly section (hexagonal) using the lattice pitch (1/6 of a side of the hexagon)
 
 #average area for fuel region in each assembly
@@ -120,7 +120,7 @@ core_section_fuel = '${fparse pi * core_radius_fuel * core_radius_fuel * core_nb
 #average area for moderator in each assembly Yttrium-hydride (YH2) moderator pins.(Cr, FeCrAl)
 core_section_moderator = '${fparse pi * core_radius_moderator * core_radius_moderator * core_nb_moderator_per_assembly }'
 
-#average area for graphite monolith in each assembly 
+#average area for graphite monolith in each assembly
 core_section_graphite = '${fparse core_section_assembly -  core_section_fuel - core_section_moderator}'
 
 
@@ -155,7 +155,7 @@ hx_nb_channels = 20000
 ###################    PIPES PARAMETERS    #######################
 ##################################################################
 
-pri_pipes_radius = 0.3 # m 
+pri_pipes_radius = 0.3 # m
 pri_pipes_area = '${fparse pi * pri_pipes_radius * pri_pipes_radius}'
 pri_pipes_D_h = '${fparse 2 * pi * pri_pipes_radius}'
 
@@ -172,7 +172,7 @@ PRI_L2 = 2. # m
 PRI_L3 = 2. # m
 PRI_L4 = 2. # m
 PRI_L5 = ${PRI_L1}
-PRI_L6 = ${fparse core_length_channel+PRI_L1+PRI_L2+PRI_L3+PRI_L4+PRI_L5+hx_length} # 12.4 # 11.4 # m # 
+PRI_L6 = ${fparse core_length_channel+PRI_L1+PRI_L2+PRI_L3+PRI_L4+PRI_L5+hx_length} # 12.4 # 11.4 # m #
 PRI_L_prz = 2. # m
 
 ##################################################################
@@ -400,7 +400,7 @@ sec_n_elems_hot = ${sec_n_elems_cold}
 
 # geometrical parameters of the turb and compressor
 A_ref_comp = '${fparse 1.5 * (SEC_A1 + SEC_A2)}'
-V_comp = '${fparse A_ref_comp * 4.0}' 
+V_comp = '${fparse A_ref_comp * 4.0}'
 
 A_ref_turb = '${fparse 0.5 * (SEC_A5 + SEC_A6)}'
 V_turb = '${fparse A_ref_turb * 4.0}'
@@ -503,7 +503,7 @@ eff_turb = 0.843
   ################################################################################################################
   ################  ********************      PRIMARY LOOP FUNCTIONS      ********************  ##################
   ################################################################################################################
-#used for pump Components 
+#used for pump Components
   [head_fcn]
     type = PiecewiseLinear
     data_file = ../param/bingham_head_data.csv
@@ -1119,7 +1119,7 @@ eff_turb = 0.843
 
     initial_p = ${p_sec}
     initial_vel_x = ${vel_ini_sec}
-    
+
 #The `use_scalar_variables` parameter referenced in [modules/thermal_hydraulics/deprecations/volume_junction_scalar_variables.md] has been deprecated
     use_scalar_variables=false
   []
@@ -1181,7 +1181,7 @@ eff_turb = 0.843
     flow_channel = cold_leg
     hs = recuperator
     hs_side = OUTER
-    Hw = 10000    
+    Hw = 10000
     P_hf ='${fparse pi * SEC_D_COLD*200}'
   []
   # heat transfer from hot leg to recuperator
@@ -1989,8 +1989,8 @@ eff_turb = 0.843
     type = SideAverageValue
     variable = T
     boundary = hot_leg:in
-  []  
-  
+  []
+
   [hot_leg_T_out]
     type = PointValue
     variable = T

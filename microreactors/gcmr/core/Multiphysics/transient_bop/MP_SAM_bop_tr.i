@@ -179,7 +179,7 @@ layers = 40 # Make sure the number of axial divisions in the fluid domain and so
     family = MONOMIAL
     # initial_condition = 2500.0
     block = 'pipe1'
-  []  
+  []
 []
 
 [AuxKernels]
