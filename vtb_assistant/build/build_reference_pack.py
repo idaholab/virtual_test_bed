@@ -840,7 +840,7 @@ def classify_parameters(
     nothing is asserted as a resolved reference without checking. A
     candidate editable parameter is a bare numeric/boolean literal.
     Everything else (enum-keyword strings like `execute_on = 'initial'`,
-    short descriptive text) is deliberately left unclassified rather than
+    short descriptive text) is deliberately left as-is rather than
     guessed at — see build/RECON_NOTES.md.
     """
     cross_references = []
