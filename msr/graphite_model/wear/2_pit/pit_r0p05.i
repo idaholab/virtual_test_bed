@@ -190,6 +190,7 @@ z_coord = 1.76 #m
   [thermal_expansion]
     type = StructuralGraphiteThermalExpansionEigenstrain
     eigenstrain_name = thermal_expansion
+    graphite_model = Shibata2010
     graphite_grade = IG_110
     stress_free_temperature = 300.0 #K
     fluence_conversion_factor = 1.0
@@ -199,6 +200,7 @@ z_coord = 1.76 #m
   [GraphiteGrade_creep]
     type = StructuralGraphiteCreepUpdate
     fluence_conversion_factor = 1.0
+    graphite_model = Bajpai2024
     graphite_grade = IG_110
     temperature = temperature
     creep_scale_factor = 1.0
@@ -208,6 +210,7 @@ z_coord = 1.76 #m
   [graphite_irrad_strain]
     type = StructuralGraphiteIrradiationEigenstrain
     temperature = temperature
+    graphite_model = Bajpai2024
     graphite_grade = IG_110
     fluence_conversion_factor = 1.0
     eigenstrain_name = irrad_strain
