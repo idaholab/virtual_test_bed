@@ -26,7 +26,7 @@ unheated_length_exit = '${fparse 26.9*scale_factor}'
 
 [TriSubChannelMesh]
   [subchannel]
-    type = SCMTriSubChannelMeshGenerator
+    type = SCMTriAssemblyMeshGenerator
     nrings = ${n_rings}
     n_cells = 50
     flat_to_flat = ${inner_duct_in}
@@ -38,19 +38,9 @@ unheated_length_exit = '${fparse 26.9*scale_factor}'
     hwire = ${wire_z_spacing}
   []
 
-  [fuel_pins]
-    type = SCMTriPinMeshGenerator
-    input = subchannel
-    nrings = ${n_rings}
-    n_cells = 50
-    unheated_length_exit = ${unheated_length_exit}
-    heated_length = ${heated_length}
-    pitch = ${fuel_pin_pitch}
-  []
-
   [duct]
     type = SCMTriDuctMeshGenerator
-    input = fuel_pins
+    input = subchannel
     nrings = ${n_rings}
     n_cells = 50
     flat_to_flat = ${inner_duct_in}
@@ -75,7 +65,7 @@ unheated_length_exit = '${fparse 26.9*scale_factor}'
   []
 []
 
-[Problem]
+[SubChannel]
   type = TriSubChannel1PhaseProblem
   fp = sodium
   n_blocks = 1
@@ -98,7 +88,7 @@ unheated_length_exit = '${fparse 26.9*scale_factor}'
 
 [SCMClosures]
   [cheng]
-    type = SCMFrictionUpdatedChengTodreas
+    type = SCMFrictionUpgradedChengTodreas
   []
   [gnielinski]
     type = SCMHTCGnielinski

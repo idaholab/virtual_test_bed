@@ -57,7 +57,7 @@ P_out = 2.0e5 # Pa
 
 [SCMClosures]
   [cheng]
-    type = SCMFrictionUpdatedChengTodreas
+    type = SCMFrictionUpgradedChengTodreas
   []
   [Dittus-Boelter]
     type = SCMHTCDittusBoelter
