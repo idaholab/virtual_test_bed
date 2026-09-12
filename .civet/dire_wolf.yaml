@@ -9,12 +9,13 @@ lfs_include:
   - microreactors/gcmr/assembly/MESH/Griffin_mesh.e
   - htgr/pbmr400
   - htgr/open-xe100
+  - htgr/httr/cross_sections
   - htgr/htr-pm/core-multiphysics
   - htgr/httr/mesh/full_core/full_core_HTTR.e
   - htgr/httr/mesh/full_core/thermal_mesh_in.e
-  - htgr/htr10/data/mesh/htr-10-critical-a-rev6.e
-  - htgr/htr10/data/mesh/htr-10-full-a-rev3.e
-  - htgr/gpbr200/data/gpbr200_dtl.xml
+  - htgr/htr10/data
+  - htgr/htr10/steady/gold
+  - htgr/gpbr200/data
   - sfr/vtr
   - msr/lotus/mesh/mcre_mesh.e
   - lfr/7pin_cardinal_demo/LFR9g_P5.xml

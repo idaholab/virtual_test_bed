@@ -7,7 +7,8 @@
     cli_args = 'Outputs/file_base=SEFORIE_3D'
     csvdiff = 'SEFORIE_3D_integral_0001.csv'
     requirement = 'The system shall be able to generate the SEFOR IE core mesh'
-    capabilities = 'method=opt & (combinedapp | reactorapp | griffinapp)'
+    capabilities = 'method=opt & (combinedapp | griffinapp)'
+    # removed reactorapp to avoid unnecessary cardinal testing
     max_time = 800
     hpc_mem_per_cpu = 15gb
   []
@@ -19,7 +20,7 @@
     csvdiff = 'SEFORII_3D_integral_0001.csv'
     requirement = 'The system shall be able to generate the SEFOR II core mesh'
     max_time = 1600
-    capabilities = 'method=opt & (combinedapp | reactorapp | griffinapp)'
+    capabilities = 'method=opt & (combinedapp | griffinapp)'
     hpc_mem_per_cpu = 15gb
   []
 

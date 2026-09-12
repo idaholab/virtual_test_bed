@@ -12,5 +12,8 @@
     max_time = 800
     # Test is not fully converging results
     rel_err = 5e-5
+    # disp_x passes through zero, which inflates the relative error on those
+    # rows even though every absolute difference is below 3e-9
+    abs_zero = 3e-5
   []
 []
