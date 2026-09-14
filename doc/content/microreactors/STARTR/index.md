@@ -13,7 +13,7 @@
            simulation_type:neutronics
            transient:steady_state
            codes_used:OpenMC;MCNP
-           open_source:true
+           open_source:fully
            computing_needs:workstation
            fiscal_year:2025
            institution:INL

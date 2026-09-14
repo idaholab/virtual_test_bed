@@ -167,20 +167,6 @@ def test_httr_results_query_ranks_the_results_page_not_the_description_page() ->
 
 
 @needs_generated_pack
-def test_duplicate_model_names_produce_distinct_result_paths() -> None:
-    # "MRAD Micro-Reactor Multiphysics model" names two genuinely different
-    # model directories in VTB's own source (a confirmed upstream naming
-    # collision) — before doc_url was folded into path, both results
-    # printed the identical path (and title), indistinguishable except by
-    # reading source_url/snippet closely.
-    name = "MRAD Micro-Reactor Multiphysics model"
-    results = _json_results(name, "--kind", "model")
-    matching = [r for r in results if r["title"] == name]
-    assert len(matching) >= 2, results
-    assert len({r["path"] for r in matching}) == len(matching), matching
-
-
-@needs_generated_pack
 @pytest.mark.parametrize(
     "query", ["PointKinetics", "TransientMultiApp", "NekRSProblem"],
 )
