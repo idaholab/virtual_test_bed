@@ -1,0 +1,43 @@
+name: Build and release VTB Assistant knowledge pack
+
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - "apps/**"
+  workflow_dispatch:
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: vtb_assistant
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4.3.0
+      - uses: astral-sh/setup-uv@caf0cab7a618c569241d31dcd442f54681755d39 # v3.2.4
+      - run: uv sync --all-groups
+      - run: uv run --group harvest python build/harvest.py
+      - run: uv run --group harvest python build/build_reference_pack.py
+      - run: uv run pytest
+      - run: ./build/package_skill.sh
+      - run: ./build/package_plugin.sh
+      - name: Publish release
+        uses: softprops/action-gh-release@3bb12739c298aeb8a4eeaf626c5b8d85266b0e65 # v2.6.2
+        with:
+          tag_name: vtb-assistant-pack-latest
+          name: "VTB Assistant knowledge pack (latest)"
+          make_latest: false
+          body: >
+            Rolling "latest" build of the VTB Assistant knowledge pack — these
+            assets are overwritten every time this workflow runs, so this tag
+            always has the newest zips, triggered by this merge into main.
+            `vtb-assistant-plugin.zip`: extract to `~/.claude/skills/vtb-assistant/`
+            for Claude Code (no build step, no marketplace).
+            `vtb-docs-skill.zip`: upload directly to claude.ai / ChatGPT Skills.
+          files: |
+            vtb_assistant/dist/vtb-docs-skill.zip
+            vtb_assistant/dist/vtb-assistant-plugin.zip
