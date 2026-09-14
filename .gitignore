@@ -247,3 +247,12 @@ doc/presentations/qualifying-exam/data/*
 *.dump
 
 scripts/config.yaml
+
+# vtb_assistant/ carries its own tracked build tooling and metadata that
+# collide with generic patterns above (bare "build", "*.json", "*.gitignore*")
+# meant for MOOSE build artifacts, not this subdirectory's hand-authored
+# source.
+!/vtb_assistant/build/
+!/vtb_assistant/build/**
+!/vtb_assistant/.gitignore
+!/vtb_assistant/.claude-plugin/plugin.json

@@ -1,0 +1,23 @@
+name: VTB Assistant CI
+
+on:
+  pull_request:
+    paths:
+      - "vtb_assistant/**"
+  push:
+    branches: [devel]
+    paths:
+      - "vtb_assistant/**"
+
+jobs:
+  lint-and-test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: vtb_assistant
+    steps:
+      - uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4.3.0
+      - uses: astral-sh/setup-uv@caf0cab7a618c569241d31dcd442f54681755d39 # v3.2.4
+      - run: uv sync --all-groups
+      - run: uv run ruff check .
+      - run: uv run pytest

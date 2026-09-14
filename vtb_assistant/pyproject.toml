@@ -1,0 +1,72 @@
+[project]
+name = "vtb-assistant"
+version = "0.1.0"
+description = "A skills-only plugin for Claude/ChatGPT to retrieve and interpret Virtual Test Bed documentation"
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = []
+
+[dependency-groups]
+dev = ["pytest", "ruff"]
+harvest = ["pyyaml>=6.0"]
+
+[tool.ruff]
+# Exclude a variety of commonly ignored directories.
+exclude = [
+    ".bzr",
+    ".direnv",
+    ".eggs",
+    ".git",
+    ".git-rewrite",
+    ".hg",
+    ".ipynb_checkpoints",
+    ".mypy_cache",
+    ".nox",
+    ".pants.d",
+    ".pyenv",
+    ".pytest_cache",
+    ".pytype",
+    ".ruff_cache",
+    ".svn",
+    ".tox",
+    ".venv",
+    ".vscode",
+    "__pypackages__",
+    "_build",
+    "buck-out",
+    "build/_cache",
+    "dist",
+    "node_modules",
+    "site-packages",
+    "venv",
+    "external",
+]
+
+# Same as Black.
+line-length = 88
+indent-width = 4
+
+# Assume Python 3.14
+target-version = "py314"
+
+[tool.ruff.lint]
+# Enable pycodestyle (E) and Pyflakes (F) codes by default.
+# D - NumPy docstring rules
+# I - Sorting imports
+# N801 - Class name should use CapWords convention
+# SIM - code simplification rules
+# TID - tidy imports
+select = ["D", "E", "F", "I", "N801", "SIM", "TID"]
+# D203 - 1 blank line required before class docstring
+# D212 - Multi-line docstring summary should start at the first line
+ignore = ["D203", "D212"]
+
+[tool.ruff.lint.per-file-ignores]
+# D1XX - Functions and methods should be documented for clarity, otherwise we don't care
+# E741 - ambiguous variable name
+# SLF001 - private member access
+"tests/**" = ["D100", "D101", "D102", "D103", "D104", "D105", "D106", "D107", "E741", "SLF001"]
+
+[tool.pytest.ini_options]
+addopts = ["-v"]
+testpaths = ["tests"]

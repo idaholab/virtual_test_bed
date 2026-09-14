@@ -1,0 +1,33 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+
+# Virtual Test Bed clone
+virtual_test_bed/
+
+# Harvest scratch cache (build/ itself holds tracked tooling source)
+build/_cache/
+
+# Generated knowledge pack (regenerate with build/harvest.py +
+# build/build_reference_pack.py; published as GitHub Release assets for
+# non-developer use — see README)
+skills/vtb-docs/references/
+skills/vtb-docs/assets/
+ATTRIBUTION.md
+
+# Caches
+.pytest_cache
+.ruff_cache
+.DS_Store
+
+# VSCode
+.vscode
+
+# Coding Agent
+.claude
