@@ -68,13 +68,13 @@ P_out = 2.0e5 # Pa
 
 [SCMClosures]
   [cheng]
-    type = SCMFrictionUpgradedChengTodreas
+    type = SCMFrictionChenTodreas
   []
   [Dittus-Boelter]
     type = SCMHTCDittusBoelter
   []
   [cheng_todreas]
-    type = SCMMixingChengTodreas
+    type = SCMMixingChenTodreas
     CT = 2
   []
 []
