@@ -306,9 +306,3 @@ script.
 - The enclosing `virtual_test_bed` checkout (`vtb_assistant/`'s parent
   dir) — `harvest.py`'s default `--source-dir`, since this tool lives
   inside the checkout it harvests.
-
-## Open questions
-
-Whether ChatGPT's "Skills" upload feature accepts the same
-`SKILL.md`-plus-folder zip format Claude uses hasn't been confirmed —
-verify manually before relying on it.
