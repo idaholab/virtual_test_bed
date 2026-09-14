@@ -268,10 +268,10 @@ every indexed input's recorded `blob_sha` must equal
 
 `EXECUTION_REQUIREMENTS` in `build_reference_pack.py` is a hand-curated
 constant (same style as `CODES_USED_TO_APP`), not something `harvest.py`
-fetches or parses. It's sourced from MOOSE's own application-access
-documentation, not from the VTB repo itself — the VTB's own one-sentence
-licensing disclaimer (`vtb_pages/models_by_codes_used.md`) is incomplete on
-its own and should not be trusted as the sole source:
+fetches or parses. Not from the VTB repo itself either way — the VTB's own
+one-sentence licensing disclaimer (`vtb_pages/models_by_codes_used.md`) is
+incomplete on its own and should not be trusted as the sole source — but
+the actual source splits by whether the code is a MOOSE-based app:
 
 - `applications/ncrc_root_<app>.md`-style pages (from
   `mooseframework.inl.gov/help/inl/applications.html`) are the
@@ -293,10 +293,29 @@ its own and should not be trusted as the sole source:
   entry with no link, so it gets a distinct third status,
   `"closed_source_no_documented_path"`, rather than a guess either way.
 
-The `applications/` directory (if present at the repo root) holds these
-source pages for reference while updating the constant by hand — it's
-scratch material, not a build input, and isn't fetched or parsed by any
-script.
+**Non-MOOSE codes are a separate sourcing path, not a gap.** `mcc3`,
+`mcnp`, `nek5000`, `nekrs`, `openmc`, `serpent`, and `shift` are referenced
+only via a model's `!tag codes_used` (via `CODES_USED_TO_APP`) — they
+aren't MOOSE-based apps, so neither MOOSE page above lists them at all.
+Each is instead checked by hand against the code's own official
+site/documentation, with `source_url` pointing there instead of at
+`NCRC_APPLICATIONS_PAGE_URL`/`TRACKED_APPS_PAGE_URL`: a public repo (e.g.
+`nek5000`, `nekrs`, `openmc`) is `"open_source"`; a registration/
+export-control gate is `"restricted_or_registration_required"` — RSICC
+(`https://rsicc.ornl.gov/`) for `mcc3`, `mcnp`, `serpent`, and `shift`,
+with `access_levels` reflecting what that specific gate offers (RSICC
+itself ships a binary for local install, hence `local_binary` — there is
+no NCRC-style INL-HPC or Conda-channel tier for these). Don't reuse
+`ACCESS_LEVEL_LEGEND`'s NCRC-specific wording as evidence either way for
+one of these — it describes what each level generally *means* (an HPC
+binary vs. a workstation binary vs. full source), not that the code came
+through NCRC specifically.
+
+The `applications/` directory (if present at the repo root) holds the
+MOOSE-app source pages for reference while updating the constant by
+hand — it's scratch material, not a build input, and isn't fetched or
+parsed by any script. There's no equivalent local mirror for the
+non-MOOSE codes' own sites; re-check those directly when refreshing.
 
 ## Reused as-is
 

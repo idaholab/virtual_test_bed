@@ -69,6 +69,15 @@ CODES_USED_TO_APP = {
     "relap7": "relap-7",
     "salamander": "salamander",
     "tmap8": "tmap8",
+    "direwolf": "dire_wolf",
+    "sabertooth": "sabertooth",
+    "mcc3": "mcc3",
+    "mcnp": "mcnp",
+    "nek5000": "nek5000",
+    "nekrs": "nekrs",
+    "openmc": "openmc",
+    "serpent2": "serpent",
+    "shift": "shift",
 }
 
 MOOSE_MODULE_INFO = {
@@ -108,17 +117,32 @@ ACCESS_LEVEL_LEGEND = {
     ),
 }
 
-# Hand-curated from MOOSE's own application-access documentation (dropped
-# into applications/ for reference while updating this constant by hand,
-# not fetched or parsed at build time — see build/RECON_NOTES.md). Sourcing
-# rule per app, applied by direct inspection of the two pages above:
+# Hand-curated (dropped into applications/ for reference while updating this
+# constant by hand, not fetched or parsed at build time — see
+# build/RECON_NOTES.md). Two disjoint sourcing paths, by whether the code is
+# a MOOSE-based app or not:
+#
+# MOOSE-based apps (the ones that actually appear on the two MOOSE pages
+# below) — sourcing rule per app, applied by direct inspection of the two
+# pages above:
 #   - has its own "## <Name>" section on NCRC_APPLICATIONS_PAGE_URL
 #     (an applications/ncrc_root_<app>.md page) -> "restricted_or_registration_required"
 #   - else listed under TRACKED_APPS_PAGE_URL's "Open-source Applications"
 #     with a real link -> "open_source"
 #   - else listed under TRACKED_APPS_PAGE_URL's "Closed Source Applications"
-#     with no NCRC page -> "closed_source_no_documented_path" (not a guess
-#     either way — sabertooth is the only VTB app in this bucket)
+#     with no NCRC page -> "closed_source_no_documented_path"
+#
+# Non-MOOSE codes referenced only via a model's `!tag codes_used` (mcc3,
+# mcnp, nek5000, nekrs, openmc, serpent, shift) never appear on either MOOSE
+# page — they aren't MOOSE-based apps at all, so that page-driven rule
+# doesn't apply. Each of these is instead sourced by direct inspection of
+# the code's own official site/documentation (`source_url` points there,
+# not at either MOOSE page): a public open-source repo -> "open_source"; a
+# registration/export-control gate such as RSICC -> "restricted_or_-
+# registration_required", with `access_levels` reflecting what that gate
+# actually offers (e.g. RSICC's own binary download -> `local_binary`, not
+# NCRC's INL-HPC/Conda-channel levels).
+#
 # Not a substitute for model-index.json's per-model `open_source_tier`:
 # this is per-*code*, not per-*model* — even an NCRC-restricted code can
 # have specific VTB models that run open-source (e.g. by stripping
@@ -399,6 +423,113 @@ EXECUTION_REQUIREMENTS = {
         "repo_url": "https://github.com/idaholab/TMAP8",
         "request_access_url": None,
         "source_url": TRACKED_APPS_PAGE_URL,
+    },
+    "mcc3": {
+        "access_status": "restricted_or_registration_required",
+        "description": (
+            "The MC^2-3 code is a multigroup cross section generation code for fast "
+            "reactor analysis, developed by improving the resonance self-shielding and "
+            "spectrum calculation methods of the MC^2-2."
+        ),
+        "doc_url": "https://www.osti.gov/servlets/purl/1891651",
+        "support_forum_url": None,
+        "build_status_url": None,
+        "access_levels": ["local_binary"],
+        "repo_url": None,
+        "request_access_url": "https://rsicc.ornl.gov/",
+        "source_url": "https://www.anl.gov/nse/mc23",
+    },
+    "mcnp": {
+        "access_status": "restricted_or_registration_required",
+        "description": (
+            "The MCNP®, Monte Carlo N-Particle®, code can be used for general-purpose "
+            "transport of many particles including neutrons, photons, electrons, ions, "
+            "and many other elementary particles, up to 1 TeV/nucleon."
+        ),
+        "doc_url": "https://mcnp.lanl.gov/pdf_files/TechReport_2026_LANL_LA-UR-26-23119Rev.1_KuleszaAdamsEtAl.pdf",
+        "support_forum_url": "https://mcnp.discourse.group/",
+        "build_status_url": None,
+        "access_levels": ["hpc_binary", "local_binary"],
+        "repo_url": None,
+        "request_access_url": "https://rsicc.ornl.gov/",
+        "source_url": "https://mcnp.lanl.gov/index.html",
+    },
+    "nek5000": {
+        "access_status": "open_source",
+        "description": (
+            "Nek5000 is a computational fluid dynamics code that simulates unsteady "
+            "incompressible fluid flow with thermal and passive scalar transport. It "
+            "can handle general two- and three-dimensional domains described by "
+            "isoparametric quad or hex elements."
+        ),
+        "doc_url": "https://nek5000.mcs.anl.gov/",
+        "support_forum_url": "https://groups.google.com/g/nek5000",
+        "build_status_url": "https://jenkins-ci.cels.anl.gov/job/Nek5000/",
+        "access_levels": [],
+        "repo_url": "https://github.com/Nek5000/Nek5000",
+        "request_access_url": None,
+        "source_url": "https://nek5000.mcs.anl.gov/",
+    },
+    "nekrs": {
+        "access_status": "open_source",
+        "description": (
+            "nekRS is a fast and scalable computational fluid dynamics (CFD) solver "
+            "targeting HPC applications."
+        ),
+        "doc_url": "https://nekrs.readthedocs.io/en/latest/",
+        "support_forum_url": "https://github.com/Nek5000/nekRS/discussions",
+        "build_status_url": "https://www.travis-ci.com/Nek5000/nekRS",
+        "access_levels": [],
+        "repo_url": "https://github.com/Nek5000/nekrs",
+        "request_access_url": None,
+        "source_url": "https://nekrs.readthedocs.io/en/latest/",
+    },
+    "openmc": {
+        "access_status": "open_source",
+        "description": (
+            "OpenMC is a community-developed Monte Carlo neutron and photon transport "
+            "code. It is capable of performing fixed source, k-eigenvalue, and "
+            "subcritical multiplication calculations on models built using either a "
+            "constructive solid geometry or CAD representation."
+        ),
+        "doc_url": "https://docs.openmc.org/en/stable/",
+        "support_forum_url": "https://openmc.discourse.group/",
+        "build_status_url": "https://github.com/openmc-dev/openmc/actions",
+        "access_levels": [],
+        "repo_url": "https://github.com/openmc-dev/openmc",
+        "request_access_url": None,
+        "source_url": "https://openmc.org/",
+    },
+    "serpent": {
+        "access_status": "restricted_or_registration_required",
+        "description": (
+            "Serpent is a multi-purpose three-dimensional continuous-energy neutron "
+            "and photon transport code, developed at VTT Technical Research Centre of "
+            "Finland since 2004."
+        ),
+        "doc_url": "https://serpent.vtt.fi/docs/",
+        "support_forum_url": None,
+        "build_status_url": None,
+        "access_levels": ["hpc_binary", "local_binary"],
+        "repo_url": None,
+        "request_access_url": "https://rsicc.ornl.gov/",
+        "source_url": "https://serpent.vtt.fi/",
+    },
+    "shift": {
+        "access_status": "restricted_or_registration_required",
+        "description": (
+            "Shift is a general-purpose Monte Carlo (MC) radiation transport code for "
+            "fission, fusion, and national security applications. Shift has been "
+            "adapted to efficiently run on GPUs in order to leverage leadership-class "
+            "supercomputers."
+        ),
+        "doc_url": "https://scale-manual.ornl.gov/6.3.3/index.html",
+        "support_forum_url": None,
+        "build_status_url": None,
+        "access_levels": ["hpc_binary", "local_binary"],
+        "repo_url": None,
+        "request_access_url": "https://rsicc.ornl.gov/",
+        "source_url": "https://www.ornl.gov/scale",
     },
 }
 
@@ -1172,10 +1303,14 @@ def write_attribution(
         "",
         "## Application access metadata",
         "",
-        "- `references/execution_requirements.json` — hand-curated from MOOSE's "
-        f"own application-access documentation, not from {UPSTREAM_REPO_URL}: "
-        f"[{NCRC_APPLICATIONS_PAGE_URL}]({NCRC_APPLICATIONS_PAGE_URL}) and "
-        f"[{TRACKED_APPS_PAGE_URL}]({TRACKED_APPS_PAGE_URL}).",
+        "- `references/execution_requirements.json` — hand-curated, not from "
+        f"{UPSTREAM_REPO_URL}. MOOSE-based apps are sourced from MOOSE's own "
+        f"application-access documentation: [{NCRC_APPLICATIONS_PAGE_URL}]"
+        f"({NCRC_APPLICATIONS_PAGE_URL}) and [{TRACKED_APPS_PAGE_URL}]"
+        f"({TRACKED_APPS_PAGE_URL}). Non-MOOSE codes referenced only via a "
+        "model's `codes_used` tag (e.g. MCNP, OpenMC, Serpent) are sourced "
+        "from each code's own official site/documentation instead — see "
+        "that entry's own `source_url`.",
         "",
     ]
     (REPO_ROOT / "ATTRIBUTION.md").write_text("\n".join(lines) + "\n")

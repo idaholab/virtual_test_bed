@@ -11,8 +11,8 @@ snapshot of `idaholab/virtual_test_bed` (CC-BY-4.0; see `ATTRIBUTION.md`).
 
 **Documentation and generation have different coverage.** Every bundled VTB
 model and code can be found and explained — including non-MOOSE codes like
-NekRS, OpenMC, MCNP, Serpent, and Nek5000 (check a model's `codes_used`
-tag). Only the 10 apps listed under "Generating or modifying an input
+NekRS, OpenMC, MCNP, Serpent, Nek5000, MC^2-3, and Shift (check a model's
+`codes_used` tag). Only the 10 apps listed under "Generating or modifying an input
 file" below are supported for generating or modifying an actual input
 file; a model built on NekRS, OpenMC, etc. can still be found and
 explained, just not authored as new input syntax. A coupled/MultiApps
@@ -95,26 +95,36 @@ be usable with the right access.
 
 For *which specific codes* need special access, look up the model's
 `codes_used_apps`/`tests_apps` in `references/execution_requirements.json`'s
-`apps` — sourced from MOOSE's own application-access documentation
-(`mooseframework.inl.gov`), not the VTB repo — and cite that entry rather
-than repeating a fixed list of app names regardless of which app the model
-actually uses:
+`apps` — not the VTB repo — and cite that entry rather than repeating a
+fixed list of app names regardless of which app the model actually uses.
+Most entries are MOOSE-based apps sourced from MOOSE's own
+application-access documentation (`mooseframework.inl.gov`); a handful are
+non-MOOSE codes referenced only via a model's `codes_used` tag (e.g. MCNP,
+OpenMC, Serpent, Shift, MC^2-3, Nek5000, NekRS) sourced instead from each
+code's own official site — check the entry's own `source_url` rather than
+assuming it's one of the two MOOSE pages:
 - `"open_source"` — cite `repo_url` (the actual place to get the code); no
   access request needed.
-- `"restricted_or_registration_required"` — NCRC-distributed. Cite
-  `doc_url` (if set) and `access_levels` against
-  `access_level_legend` (e.g. `local_binary` means it's usable on the
-  user's own workstation via NCRC's Conda channel, not just on INL HPC),
-  and point at `request_access_url` to actually get access.
+- `"restricted_or_registration_required"` — registration-gated (NCRC for
+  MOOSE-based apps; RSICC for several of the non-MOOSE codes above). Cite
+  `doc_url` (if set) and `access_levels` against `access_level_legend`
+  (e.g. `local_binary` means a binary usable on the user's own
+  workstation, not just on an HPC system — via NCRC's Conda channel for an
+  NCRC app, or a direct download from the registration gate itself, e.g.
+  RSICC, for one of the non-MOOSE codes), and point at
+  `request_access_url` to actually get access.
 - `"closed_source_no_documented_path"` — closed-source but neither an NCRC
   page nor an open-source repo turned up in either source checked. Say
   access isn't documented anywhere this pack has looked, and offer
-  `request_access_url` as a best-effort general pointer — don't imply it's
-  confirmed unavailable.
+  `request_access_url` as a best-effort general pointer if one is set
+  (`null` when even that isn't applicable) — don't imply it's confirmed
+  unavailable.
 
 Every entry also has `checked_at` (when this was last verified) and
-`source_url` (which of the two MOOSE pages it came from) — surface these
-if the user is deciding whether to double check for themselves.
+`source_url` (where that verification happened — one of the two MOOSE
+pages for a MOOSE-based app, or the code's own site for a non-MOOSE one)
+— surface these if the user is deciding whether to double check for
+themselves.
 
 A few capability tags — `combined`, `reactor`, `subchannel`,
 `thermal_hydraulics`, and `mooseapp` — name a generic MOOSE module or build
