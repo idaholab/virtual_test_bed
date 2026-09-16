@@ -14,7 +14,7 @@
            geometry:Stringer
            simulation_type:multiphysics
            transient:steady_state
-           codes_used:MOOSE_Combined;Griffin
+           codes_used:MOOSE_Combined
            computing_needs:Workstation;HPC
            fiscal_year:2025
            sponsor:NRC

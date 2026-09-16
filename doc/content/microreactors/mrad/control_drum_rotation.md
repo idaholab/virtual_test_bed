@@ -4,7 +4,7 @@
 
 *Model link: [HPMR Model](https://github.com/idaholab/virtual_test_bed/tree/devel/microreactors/mrad/3D_core_drum_rotation_tr)*
 
-!tag name=MRAD Micro-Reactor Multiphysics model
+!tag name=MRAD Micro-Reactor Drum Rotation Multiphysics model
      description=A core multiphysics model with steady state and control drum inadvertent rotation transient
      image=https://mooseframework.inl.gov/virtual_test_bed/media/mrad/mesh_hpmr_drum.png
      pairs=reactor_type:microreactor

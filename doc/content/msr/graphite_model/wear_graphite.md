@@ -14,7 +14,7 @@
            geometry:reflector
            simulation_type:multiphysics
            transient:transient
-           codes_used:Griffin
+           codes_used:MOOSE_Combined
            computing_needs:HPC
            fiscal_year:2025
            sponsor:NRC
