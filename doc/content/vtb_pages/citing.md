@@ -911,14 +911,16 @@ Richard L. Williamson, Jason D. Hales, Stephen R. Novascone, Giovanni Pastore, K
 Griffin
 
 ```
-@techreport{Griffin2020,
-            title = "Griffin User Manual",
-            institution = "Idaho National Laboratory",
-            author = {Mark DeHart and Fredrick N. Gleicher and Vincent Laboure and Javier Ortensi and Zachary Prince and Sebastian Schunert and Yaqi Wang},
-            number = {INL/EXT-19-54247},
-            year = 2020
-           }
-Mark DeHart, Fredrick N. Gleicher, Vincent Laboure, Javier Ortensi, Zachary Prince, Sebastian Schunert and Yaqi Wang, "Griffin User Manual", Idaho National Laboratory, INL/EXT-19-54247, 2020
+@article{WANG2025110917,
+title = {Griffin: A {MOOSE}-based reactor physics application for multiphysics simulation of advanced nuclear reactors},
+journal = {Annals of Nuclear Energy},
+volume = {211},
+pages = {110917},
+year = {2025},
+issn = {0306-4549},
+doi = {https://doi.org/10.1016/j.anucene.2024.110917},
+url = {https://www.sciencedirect.com/science/article/pii/S0306454924005802},
+author = {Yaqi Wang and Zachary M. Prince and Hansol Park and Olin W. Calvin and Namjae Choi and Yeon Sang Jung and Sebastian Schunert and Shikhar Kumar and Joshua T. Hanophy and Vincent M. Labouré and Changho Lee and Javier Ortensi and Logan H. Harbour and Jackson R. Harter}}
 ```
 
 Nek5000
