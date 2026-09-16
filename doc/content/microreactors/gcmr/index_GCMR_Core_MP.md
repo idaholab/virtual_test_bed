@@ -31,3 +31,5 @@ The GCMR multiphysics model, developed at Argonne National Laboratory [!citep](s
 [Full Core Depressurization Transient](gcmr/GCMR_Core_DP.md)
 
 [Multiphysics Model with Poison Tracking](gcmr/GCMR_Core_MP_FP.md)
+
+[Multiphysics Model with Balance-of-Plant](gcmr/GCMR_Core_MP_BOP.md)
