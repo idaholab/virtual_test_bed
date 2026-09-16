@@ -10,6 +10,7 @@
            simulation_type:thermal_hydraulics
            transient:steady_state
            codes_used:Pronghorn
+           open_source:partially
            computing_needs:Workstation
            fiscal_year:2024
            sponsor:ART;NRIC
