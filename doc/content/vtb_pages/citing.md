@@ -996,14 +996,13 @@ A.J. Novak, R.W. Carlsen, S. Schunert, P. Balestra, D. Reger, R.N. Slaybaugh and
 SAM
 
 ```
-@techreport{SAM2017,
-            title = "SAM Theory Manual",
-            institution = {Argonne National Laboratory},
-            author = {R. Hu},
-            number = {ANL/NE-17/4},
-            year = 2017
-           }
-R. Hu, "SAM Theory Manual", Argonne National Laboratory, ANL/NE-17/4 (2017)
+@article{Hu2024SAM,
+  author  = {Rui Hu and Ling Zou and Daniel O'Grady and Travis Mui and Zhiee Jhia Ooi and Guojun Hu and Eric Cervi and Gang Yang and David Andrs and Alex Lindsay and Cody Permann and Robert Salko and Quan Zhou and Lambert Fick and Alexander Heald and Haihua Zhao},
+  title   = {{SAM}: A Modern System Code for Advanced Non-{LWR} Safety Analysis},
+  journal = {Nuclear Technology},
+  year    = {2024},
+  doi     = {10.1080/00295450.2024.2409601}
+}
 ```
 
 RELAP-7
