@@ -23,3 +23,5 @@
 
 [Steady State Results](lotus_results.md)
 
+[CFD Model of LMCR Loop](lotus_cfd_model.md)
+

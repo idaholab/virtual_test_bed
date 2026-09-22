@@ -1,0 +1,34 @@
+static deviceMemory<dfloat> o_nekFUx;
+
+#ifdef __okl__
+
+#endif
+
+void userf(double time)
+{
+  nrs->o_NLT.copyFrom(o_nekFUx, nrs->fieldOffset);
+}
+
+/* UDF Functions */
+void UDF_Setup()
+{
+  nrs->userVelocitySource = &userf;
+}
+
+void UDF_ExecuteStep(double time, int tstep)
+{
+  auto mesh = nrs->mesh;
+  o_nekFUx.resize(nrs->fieldOffset);
+
+  if (tstep % 10 == 0) {
+    if (tstep == 0) {
+      o_nekFUx.copyFrom(nrs->cds->o_S);
+    } else {
+    nrs->copyToNek(time, tstep);
+    nek::userchk();
+    std::vector<double> FUx(nek::ptr<double>("forcx"), nek::ptr<double>("forcx") + mesh->Nlocal);
+    o_nekFUx.copyFrom(FUx, mesh->Nlocal, 0 * nrs->fieldOffset);
+    nrs->cds->o_S.copyFrom(o_nekFUx);
+    }
+  }
+}
