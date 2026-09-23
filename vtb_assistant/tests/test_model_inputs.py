@@ -1,5 +1,6 @@
 import json
 import re
+import shutil
 import subprocess
 import sys
 from pathlib import Path
@@ -243,13 +244,47 @@ def test_get_input_unknown_path_errors_cleanly() -> None:
     assert "unknown input path" in result.stderr
 
 
-def test_get_input_model_warns_and_groups_across_repo_path_collision() -> None:
-    # "MRAD Micro-Reactor Multiphysics model" names two genuinely different
-    # model directories in VTB's own source — this must warn and group by
-    # directory rather than silently pool both sets of inputs into one
-    # undifferentiated list.
-    result = _run_get_input("--model", "MRAD Micro-Reactor Multiphysics model")
+def test_get_input_model_warns_and_groups_across_repo_path_collision(
+    tmp_path: Path,
+) -> None:
+    # A model name isn't guaranteed unique in VTB's own source. A real
+    # instance of this ("MRAD Micro-Reactor Multiphysics model" naming two
+    # distinct directories) existed until upstream commit f98b881d renamed
+    # the duplicate !tag — so this runs get_input.py, unmodified, against a
+    # synthetic input-index.json rather than pinning to live doc content
+    # that upstream can (and did) fix out from under the test. --model must
+    # warn and group by directory rather than silently pool both sets of
+    # inputs into one undifferentiated list.
+    scripts_dir = tmp_path / "scripts"
+    model_inputs_dir = tmp_path / "references" / "model-inputs"
+    scripts_dir.mkdir(parents=True)
+    model_inputs_dir.mkdir(parents=True)
+    shutil.copy(GET_INPUT_SCRIPT, scripts_dir / "get_input.py")
+
+    collision_name = "Synthetic Collision Model"
+    index = [
+        {
+            "path": "zzz/model_a/input_a.i", "model_names": [collision_name],
+            "model_repo_path": "zzz/model_a", "is_primary": True, "aliases": [],
+        },
+        {
+            "path": "zzz/model_a/variant_b/input_b.i",
+            "model_names": [collision_name],
+            "model_repo_path": "zzz/model_a/variant_b", "is_primary": True,
+            "aliases": [],
+        },
+    ]
+    (model_inputs_dir / "input-index.json").write_text(json.dumps(index))
+    (model_inputs_dir / "inputs.jsonl").write_text("")
+
+    result = subprocess.run(
+        [sys.executable, str(scripts_dir / "get_input.py"), "--model", collision_name],
+        capture_output=True, text=True, check=False,
+    )
     assert result.returncode == 0, result.stderr
     assert "warning" in result.stderr.lower()
-    assert "# microreactors/mrad" in result.stdout
-    assert "# microreactors/mrad/3D_core_drum_rotation_tr" in result.stdout
+    lines = result.stdout.splitlines()
+    assert "# zzz/model_a" in lines
+    assert "# zzz/model_a/variant_b" in lines
+    assert "zzz/model_a/input_a.i [primary]" in lines
+    assert "zzz/model_a/variant_b/input_b.i [primary]" in lines
