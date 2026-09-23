@@ -55,19 +55,30 @@ def test_every_model_has_required_fields() -> None:
 
 
 def test_cross_repo_name_collision_is_detected() -> None:
-    # "MRAD Micro-Reactor Multiphysics model" is a confirmed real upstream
-    # collision — the same !tag name= names two genuinely different, both-
-    # real model directories. This must be flagged (so get_input.py --model
-    # knows to warn+group instead of silently pooling), and the harmless
-    # same-repo_path case (several VTB pages documenting one real
-    # directory, e.g. microreactors/KRUSTY) must NOT be flagged.
+    # A model name isn't guaranteed unique in VTB's own source. A real
+    # instance of this ("MRAD Micro-Reactor Multiphysics model" naming both
+    # microreactors/mrad and its 3D_core_drum_rotation_tr subdirectory)
+    # existed until upstream commit f98b881d renamed the duplicate !tag —
+    # so this is exercised against a synthetic model list rather than
+    # pinned to live doc content that upstream can (and did) fix out from
+    # under the test. Must flag: same name, different, both-existing
+    # repo_paths. Must NOT flag: same name pointing at a repo_path that
+    # doesn't resolve, or the harmless case of several doc pages sharing one
+    # real directory (e.g. microreactors/KRUSTY).
     pytest.importorskip("yaml")
     build = _load_build_module()
-    collisions = dict(build.find_cross_repo_name_collisions(_model_index()["models"]))
-    assert collisions.get("MRAD Micro-Reactor Multiphysics model") == sorted([
-        "microreactors/mrad", "microreactors/mrad/3D_core_drum_rotation_tr",
-    ])
-    assert "Kilopower Reactor Using Stirling TechnologY (KRUSTY)" not in collisions
+    models = [
+        {"name": "Collides", "repo_path": "zzz/a", "repo_path_exists": True},
+        {"name": "Collides", "repo_path": "zzz/a/variant", "repo_path_exists": True},
+        {"name": "Unresolved half", "repo_path": "zzz/a", "repo_path_exists": True},
+        {"name": "Unresolved half", "repo_path": "zzz/b", "repo_path_exists": False},
+        {"name": "Same dir twice", "repo_path": "zzz/c", "repo_path_exists": True},
+        {"name": "Same dir twice", "repo_path": "zzz/c", "repo_path_exists": True},
+    ]
+    collisions = dict(build.find_cross_repo_name_collisions(models))
+    assert collisions.get("Collides") == ["zzz/a", "zzz/a/variant"]
+    assert "Unresolved half" not in collisions
+    assert "Same dir twice" not in collisions
 
 
 def test_repo_path_exists_flag_is_accurate() -> None:
