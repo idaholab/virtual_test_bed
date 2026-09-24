@@ -27,4 +27,13 @@
         cli_args = "--mesh-only 'HPMR_OneSixth_Core_meshgenerator_tri_rotate_bdry_fine.e'"
         recover = false
     []
+    [mesh_generation_bison_hp]
+        type = 'Exodiff'
+        input = 'HPMR_OneSixth_Core_meshgenerator_tri_hp_fine.i'
+        exodiff = 'HPMR_OneSixth_Core_meshgenerator_tri_hp_fine.e'
+        exodiff_opts = '-pedantic'
+        executable_pattern = 'griffin*|blue_crab*|dire_wolf*'
+        cli_args = "--mesh-only 'HPMR_OneSixth_Core_meshgenerator_tri_hp_fine.e'"
+        recover = false
+    []
 []
