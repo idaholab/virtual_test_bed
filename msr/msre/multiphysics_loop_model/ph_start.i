@@ -47,7 +47,7 @@ D_H_plena             = '${fparse 2*core_radius}' # Hydraulic diameter of riser
 # ----------------------------------------------------------------------------------------------------------------
 #T_inlet_hx            = 904.55              # Salt inlet temperature (K)
 bulk_htc              = 20000.0             # (W/(m3.K)) core bulk volumetric heat exchange coefficient (already callibrated)
-#p_outlet              = 1.50653E+05         # 1.01325e+05 # Reactor outlet pressure (Pa)
+p_outlet              = 1.50653E+05         # 1.01325e+05 # Reactor outlet pressure (Pa), used as pressure IC
 #T_Salt_initial        = 922.              # inital salt temperature (will change in steady-state)
 #pump_force            = 1.1E+08             # pump force functor (set to get a loop circulation time of ~25 seconds)
 #vol_hx                = 1.0E+10             # (W/(m3.K)) volumetric heat exchange coefficient for heat exchanger
@@ -71,8 +71,8 @@ beta_4                = 0.00252807960458
 beta_5                = 0.00103842275185
 beta_6                = 0.000434699197035
 # ----------------------------------------------------------------------------------------------------------------
-fluid_blocks          = 'core core1 core2 lower_plenum upper_plenum down_comer riser'
-solid_blocks          = 'core core1 core_barrel'
+fluid_blocks          = 'core core2 lower_plenum upper_plenum down_comer riser'
+solid_blocks          = 'core core_barrel'
 non_solid_blocks      = 'core2 lower_plenum upper_plenum down_comer riser'
 # ================================================================================================================
 # GLOBAL PARAMETERS
@@ -89,47 +89,14 @@ non_solid_blocks      = 'core2 lower_plenum upper_plenum down_comer riser'
 # ================================================================================================================
 [Mesh]
  [Mesh_gen]
-  type                             = FileMeshGenerator
-  use_for_exodus_restart           = true
-  file = 'ph_initial.e'
+  type = FileMeshGenerator
+  file = '../mesh/mesh_in.e'
  []
-#  [ph_out-sam-in]
-#   type = RenameBoundaryGenerator
-#   new_boundary = ph_out_sam_in
-#   old_boundary = 'riser_inlet'
-#   input = Mesh_gen
-#  []
-#  [ph_outlet]
-#    type = SideSetsBetweenSubdomainsGenerator
-#    primary_block = 'riser'
-#    paired_block = 'pump'
-#    new_boundary = ph_outlet
-#    input = ph_out-sam-in
-#  []
-#  [ph_inlet]
-#   type = RenameBoundaryGenerator
-#   input = ph_outlet
-#   old_boundary = 'downcomer_inlet'
-#   new_boundary = 'ph_inlet'
-#  []
-#  [reference_plane]
-#    type = SideSetsBetweenSubdomainsGenerator
-#    primary_block = 'lower_plenum lower_plenum lower_plenum'
-#    paired_block = 'core core1 core2'
-#    new_boundary = reference_plane
-#    input = ph_inlet
-#  []
-#  [delete_blocks]
-#   type = BlockDeletionGenerator
-#   input = reference_plane
-#   block = 'pump elbow'
-#  []
   coord_type             = 'RZ'
 []
 
 [Problem]
   kernel_coverage_check = false
-  allow_initial_conditions_with_restart=true
 []
 
 # ================================================================================================================
@@ -139,23 +106,21 @@ non_solid_blocks      = 'core2 lower_plenum upper_plenum down_comer riser'
   [superficial_vel_x]
     type              = PINSFVSuperficialVelocityVariable
     block             = ${fluid_blocks}
-    initial_from_file_var =superficial_vel_x
-    #initial_condition = 0
+    initial_condition = 1e-8
     scaling = 1e-3
     #two_term_boundary_expansion = false
   []
   [superficial_vel_y]
     type              = PINSFVSuperficialVelocityVariable
     block             = ${fluid_blocks}
-    initial_from_file_var =superficial_vel_y
-    #initial_condition = 0
+    initial_condition = 1e-8
     scaling = 1e-3
     #two_term_boundary_expansion = false
   []
   [pressure]
     type              = INSFVPressureVariable
     block             = ${fluid_blocks}
-    initial_from_file_var =pressure
+    initial_condition = ${p_outlet}
     #two_term_boundary_expansion = false
   []
   [T_fluid]
@@ -166,9 +131,8 @@ non_solid_blocks      = 'core2 lower_plenum upper_plenum down_comer riser'
   []
   [T_solid]
     type              = INSFVEnergyVariable
-    initial_from_file_var = T_solid
+    initial_condition = 908.15
     block             = ${solid_blocks}
-    #initial_condition = 908.15
     #two_term_boundary_expansion = false
   []
   [c1]
@@ -393,7 +357,7 @@ non_solid_blocks      = 'core2 lower_plenum upper_plenum down_comer riser'
     type                  = FVCoupledForce
     variable              = T_solid
     v                     = prescribed_power_density_graph #power_density_graph
-    block                 = 'core core1'
+    block                 = 'core'
   []
   # ----------------------------------------------------------------------------------------------------------------
   [convection_core]
@@ -403,7 +367,7 @@ non_solid_blocks      = 'core2 lower_plenum upper_plenum down_comer riser'
     T_solid               = T_solid
     is_solid              = true
     h_solid_fluid         = ${bulk_htc}
-    block                 = 'core core1'
+    block                 = 'core'
   []
   [convection_core_completmeent]
     type                  = PINSFVEnergyAmbientConvection
@@ -412,7 +376,7 @@ non_solid_blocks      = 'core2 lower_plenum upper_plenum down_comer riser'
     T_solid               = T_solid
     is_solid              = false
     h_solid_fluid         = ${bulk_htc}
-    block                 = 'core core1'
+    block                 = 'core'
   []
   #   # ----------------------------------------------------------------------------------------------------------------
   #   # Kernels for solve of delayed neutron precursor transport
@@ -673,11 +637,11 @@ non_solid_blocks      = 'core2 lower_plenum upper_plenum down_comer riser'
 [AuxVariables]
   [power_density]
     type              = MooseVariableFVReal
-    initial_from_file_var =power_density
+    initial_condition = 0.
   []
   [power_density_fuel]
     type              = MooseVariableFVReal
-    initial_from_file_var =power_density_fuel
+    initial_condition = 0.
   []
   [prescribed_power_density_fuel]
     type              = MooseVariableFVReal
@@ -689,11 +653,11 @@ non_solid_blocks      = 'core2 lower_plenum upper_plenum down_comer riser'
   []
   [power_density_graph]
     type              = MooseVariableFVReal
-    initial_from_file_var = power_density_graph
+    initial_condition = 0.
   []
   [fission_source]
     type              = MooseVariableFVReal
-    initial_from_file_var =fission_source
+    initial_condition = 0.
   []
   [porosity_var]
     type              = MooseVariableFVReal
@@ -752,7 +716,7 @@ non_solid_blocks      = 'core2 lower_plenum upper_plenum down_comer riser'
     coupled_variables   = 'power_density'
     expression          = 'power_density * (1.0-${graph_heat_frac})'
     execute_on          = 'INITIAL timestep_end'
-    block               = 'core core1 core2'
+    block               = 'core core2'
   []
   [fuel_power_density_others]
     type                = ParsedAux
@@ -768,7 +732,7 @@ non_solid_blocks      = 'core2 lower_plenum upper_plenum down_comer riser'
     coupled_variables   = 'power_density'
     expression          = 'power_density * ${graph_heat_frac}'
     execute_on          = 'INITIAL timestep_end'
-    block               = 'core core1'
+    block               = 'core'
   []
 []
 # ================================================================================================================
@@ -789,7 +753,6 @@ non_solid_blocks      = 'core2 lower_plenum upper_plenum down_comer riser'
     type                    = ADPiecewiseByBlockFunctorMaterial
     prop_name               = 'porosity'
     subdomain_to_prop_value = 'core             ${core_porosity}
-                               core1            ${core_porosity}
                                core2            ${bypass_porosity}
                                lower_plenum     ${lower_plenum_porosity}
                                upper_plenum     ${upper_plenum_porosity}
@@ -807,7 +770,6 @@ non_solid_blocks      = 'core2 lower_plenum upper_plenum down_comer riser'
     type                    = PiecewiseByBlockFunctorMaterial
     prop_name               = 'characteristic_length'
     subdomain_to_prop_value = 'core             ${D_H_fuel_channel}
-                               core1            ${D_H_fuel_channel}
                                core2            ${D_H_fuel_channel}
                                lower_plenum     ${D_H_plena}
                                upper_plenum     ${D_H_plena}
@@ -864,7 +826,7 @@ non_solid_blocks      = 'core2 lower_plenum upper_plenum down_comer riser'
     type                    = ADGenericFunctorMaterial
     prop_names              = 'rho_s   cp_s   k_s'
     prop_values             = '${rho_graph} ${cp_graph} ${k_graph}'
-    block                   = 'core core1'
+    block                   = 'core'
   []
   [core_barrel_steel]
     type                    = ADGenericFunctorMaterial
@@ -889,11 +851,6 @@ non_solid_blocks      = 'core2 lower_plenum upper_plenum down_comer riser'
     type                    = FunctorChurchillDragCoefficients
     multipliers             = '100000 200 100000'
     block                   = 'core'
-  []
-  [isotropic_drag_core1]
-    type                    = FunctorChurchillDragCoefficients
-    multipliers             = '100000 200 100000'
-    block                   = 'core1'
   []
   [isotropic_drag_core2]
     type                    = FunctorChurchillDragCoefficients
@@ -1157,7 +1114,7 @@ non_solid_blocks      = 'core2 lower_plenum upper_plenum down_comer riser'
   []
   [core_vol]
     type                    = VolumePostprocessor
-    block                   = 'core core1'
+    block                   = 'core'
     execute_on              = 'initial timestep_end'
   []
   [loop_vol]
@@ -1182,26 +1139,26 @@ non_solid_blocks      = 'core2 lower_plenum upper_plenum down_comer riser'
     type                    = ElementExtremeValue
     value_type              = max
     variable                = T_fluid
-    block                   = 'core core1'
+    block                   = 'core'
     execute_on              = 'initial timestep_end'
   []
   [Tavg_core_fuel]
     type                    = ElementAverageValue
     variable                = T_fluid
-    block                   = 'core core1'
+    block                   = 'core'
     execute_on              = 'initial timestep_end'
   []
   [Tmax_mod]
     type                    = ElementExtremeValue
     value_type              = max
     variable                = T_solid
-    block                   = 'core core1'
+    block                   = 'core'
     execute_on              = 'initial timestep_end'
   []
   [Tavg_mod]
     type                    = ElementAverageValue
     variable                = T_solid
-    block                   = 'core core1'
+    block                   = 'core'
     execute_on              = 'initial timestep_end'
   []
   [power_total]
@@ -1260,7 +1217,7 @@ non_solid_blocks      = 'core2 lower_plenum upper_plenum down_comer riser'
   # #Calc circulation time
   [graphite_vol]
     type                    = VolumePostprocessor
-    block                   = 'core core1'
+    block                   = 'core'
     execute_on              = 'initial timestep_end'
   []
   [bypass_vol]

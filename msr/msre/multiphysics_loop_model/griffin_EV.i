@@ -18,10 +18,10 @@ Salt_Density_initial = 2263.0  # kg/m3
 # ================================================================================================================
 # ================================================================================================================
 
-solid_blocks         = 'core core1 core_barrel'
-salt_blocks          = 'core core1 core2 lower_plenum upper_plenum down_comer riser'
+solid_blocks         = 'core core_barrel'
+salt_blocks          = 'core core2 lower_plenum upper_plenum down_comer riser'
 non_solid_blocks     = 'core2 lower_plenum upper_plenum down_comer riser'
-all_blocks           = 'core core1 core2 lower_plenum upper_plenum down_comer core_barrel riser'
+all_blocks           = 'core core2 lower_plenum upper_plenum down_comer core_barrel riser'
 
 # GLOBAL PARAMETERS
 # ================================================================================================================
@@ -60,49 +60,8 @@ all_blocks           = 'core core1 core2 lower_plenum upper_plenum down_comer co
 # ================================================================================================================
 [Mesh]
  [Mesh_gen]
-  type                             = FileMeshGenerator
-  use_for_exodus_restart           = true
-  file = ph_initial_noflow_out.e
- []
- [ph_out-sam-in]
-   type = SideSetsBetweenSubdomainsGenerator
-   primary_block = 'upper_plenum '
-   paired_block = 'riser'
-   new_boundary = ph_out-sam-in
-   input = Mesh_gen
- []
- [ph_in-sam_out]
-   type = SideSetsBetweenSubdomainsGenerator
-   primary_block = 'down_comer'
-   paired_block = 'elbow'
-   new_boundary = ph_in-sam_out
-   input = ph_out-sam-in
- []
- [pronghorn_outlet]
-   type = SideSetsBetweenSubdomainsGenerator
-   primary_block = 'riser'
-   paired_block = 'pump'
-   new_boundary = ph_outlet
-   input = ph_in-sam_out
- []
- [pronghorn_inlet]
-   type = SideSetsBetweenSubdomainsGenerator
-   primary_block = 'down_comer'
-   paired_block = 'elbow'
-   new_boundary = ph_inlet
-   input = pronghorn_outlet
- []
- [reference_plane]
-   type = SideSetsBetweenSubdomainsGenerator
-   primary_block = 'lower_plenum lower_plenum lower_plenum'
-   paired_block = 'core core1 core2'
-   new_boundary = reference_plane
-   input = pronghorn_inlet
- []
- [delete_blocks]
-  type = BlockDeletionGenerator
-  input = reference_plane
-  block = 'pump elbow'
+  type = FileMeshGenerator
+  file = '../mesh/mesh_in.e'
  []
   coord_type             = 'RZ'
 []
@@ -408,7 +367,7 @@ all_blocks           = 'core core1 core2 lower_plenum upper_plenum down_comer co
   # ---------------------------------------------------------------------------------------------
   [update_ad_c_U235]
     type                = ParsedAux
-    block               = 'core core1'
+    block               = 'core'
     variable            = ad_U235
     coupled_variables   = 'T_salt'
     expression          = '2.159856E-05*(1.0-0.4798*(T_salt-${T_Salt_initial})/${Salt_Density_initial})'
@@ -416,7 +375,7 @@ all_blocks           = 'core core1 core2 lower_plenum upper_plenum down_comer co
   []
   [update_ad_c_U238]
     type                = ParsedAux
-    block               = 'core core1'
+    block               = 'core'
     variable            = ad_U238
     coupled_variables   = 'T_salt'
     expression          = '4.385162E-05*(1.0-0.4798*(T_salt-${T_Salt_initial})/${Salt_Density_initial})'
@@ -424,7 +383,7 @@ all_blocks           = 'core core1 core2 lower_plenum upper_plenum down_comer co
   []
   [update_ad_c_Be9]
     type                = ParsedAux
-    block               = 'core core1'
+    block               = 'core'
     variable            = ad_Be9
     coupled_variables   = 'T_salt'
     expression          = '2.116221E-03*(1.0-0.4798*(T_salt-${T_Salt_initial})/${Salt_Density_initial})'
@@ -432,7 +391,7 @@ all_blocks           = 'core core1 core2 lower_plenum upper_plenum down_comer co
   []
   [update_ad_c_Li7]
     type                = ParsedAux
-    block               = 'core core1'
+    block               = 'core'
     variable            = ad_Li7
     coupled_variables   = 'T_salt'
     expression          = '4.726958E-03*(1.0-0.4798*(T_salt-${T_Salt_initial})/${Salt_Density_initial})'
@@ -440,7 +399,7 @@ all_blocks           = 'core core1 core2 lower_plenum upper_plenum down_comer co
   []
   [update_ad_c_F9]
     type                = ParsedAux
-    block               = 'core core1'
+    block               = 'core'
     variable            = ad_F9
     coupled_variables   = 'T_salt'
     expression          = '1.067565E-02*(1.0-0.4798*(T_salt-${T_Salt_initial})/${Salt_Density_initial})'
@@ -448,7 +407,7 @@ all_blocks           = 'core core1 core2 lower_plenum upper_plenum down_comer co
   []
   [update_ad_c_Zr90]
     type                = ParsedAux
-    block               = 'core core1'
+    block               = 'core'
     variable            = ad_Zr90
     coupled_variables   = 'T_salt'
     expression          = '1.870786E-04*(1.0-0.4798*(T_salt-${T_Salt_initial})/${Salt_Density_initial})'
@@ -456,7 +415,7 @@ all_blocks           = 'core core1 core2 lower_plenum upper_plenum down_comer co
   []
   [update_ad_c_Zr91]
     type                = ParsedAux
-    block               = 'core core1'
+    block               = 'core'
     variable            = ad_Zr91
     coupled_variables   = 'T_salt'
     expression          = '4.079728E-05*(1.0-0.4798*(T_salt-${T_Salt_initial})/${Salt_Density_initial})'
@@ -464,7 +423,7 @@ all_blocks           = 'core core1 core2 lower_plenum upper_plenum down_comer co
   []
   [update_ad_c_Zr92]
     type                = ParsedAux
-    block               = 'core core1'
+    block               = 'core'
     variable            = ad_Zr92
     coupled_variables   = 'T_salt'
     expression          = '6.235937E-05*(1.0-0.4798*(T_salt-${T_Salt_initial})/${Salt_Density_initial})'
@@ -472,7 +431,7 @@ all_blocks           = 'core core1 core2 lower_plenum upper_plenum down_comer co
   []
   [update_ad_c_Zr94]
     type                = ParsedAux
-    block               = 'core core1'
+    block               = 'core'
     variable            = ad_Zr94
     coupled_variables   = 'T_salt'
     expression          = '6.319571E-05*(1.0-0.4798*(T_salt-${T_Salt_initial})/${Salt_Density_initial})'
@@ -480,7 +439,7 @@ all_blocks           = 'core core1 core2 lower_plenum upper_plenum down_comer co
   []
   [update_ad_Zr96]
     type                = ParsedAux
-    block               = 'core core1'
+    block               = 'core'
     variable            = ad_Zr96
     coupled_variables   = 'T_salt'
     expression          = '1.018111E-05*(1.0-0.4798*(T_salt-${T_Salt_initial})/${Salt_Density_initial})'
@@ -504,7 +463,7 @@ all_blocks           = 'core core1 core2 lower_plenum upper_plenum down_comer co
     densities      = ' ad_C12  ad_U235  ad_U238   ad_Be9   ad_Li7   ad_F9
                       ad_Zr90  ad_Zr91  ad_Zr92  ad_Zr94  ad_Zr96'
     material_id    = 1
-    block          = 'core core1'
+    block          = 'core'
   []
   [flow_loop]
     type           = CoupledFeedbackNeutronicsMaterial
