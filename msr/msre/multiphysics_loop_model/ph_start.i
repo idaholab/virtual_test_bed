@@ -276,86 +276,101 @@ non_solid_blocks      = 'core2 lower_plenum upper_plenum down_comer riser'
   reference_scalars = 'ref_ps_pp1 ref_ps_pp2 ref_ps_pp3 ref_ps_pp4 ref_ps_pp5 ref_ps_pp6'
 []
 
-[Modules]
-  [NavierStokesFV]
-    # Basic settings - weakly-compressible, turbulent flow with buoyancy
-    block                            = ${fluid_blocks}
-    compressibility                  = 'weakly-compressible'
-    porous_medium_treatment          = true
-    add_energy_equation              = true
-    gravity                          = '0.0 -9.8 0.0'
+[Physics]
+  [NavierStokes]
+    [Flow/fluid]
+      # Basic settings - weakly-compressible, turbulent flow with buoyancy
+      block                    = ${fluid_blocks}
+      compressibility          = 'weakly-compressible'
+      porous_medium_treatment  = true
+      gravity                  = '0.0 -9.8 0.0'
 
-    # Variable naming
-    velocity_variable                = 'superficial_vel_x superficial_vel_y'
-    pressure_variable                = 'pressure'
-    fluid_temperature_variable       = 'T_fluid'
+      # Variable naming
+      velocity_variable        = 'superficial_vel_x superficial_vel_y'
+      pressure_variable        = 'pressure'
 
-    # Numerical schemes
-    # pressure_face_interpolation      = average
-    momentum_advection_interpolation = upwind
-    mass_advection_interpolation     = upwind
-    energy_advection_interpolation  = upwind
-    velocity_interpolation           = rc
+      # Numerical schemes
+      # pressure_face_interpolation      = average
+      momentum_advection_interpolation = upwind
+      mass_advection_interpolation     = upwind
+      velocity_interpolation           = rc
 
+      # Porous & Friction treatement
+      use_friction_correction  = true
+      friction_types           = 'darcy forchheimer'
+      friction_coeffs          = 'Darcy_coefficient Forchheimer_coefficient'
+      consistent_scaling       = 100.0
+      porosity_smoothing_layers = 2
 
-    # Porous & Friction treatement
-    use_friction_correction          = true
-    friction_types                   = 'darcy forchheimer'
-    friction_coeffs                  = 'Darcy_coefficient Forchheimer_coefficient'
-    consistent_scaling               = 100.0
-    porosity_smoothing_layers        = 2
+      # fluid properties
+      density                  = 'rho'
+      dynamic_viscosity        = 'mu'
+      dont_create_materials    = true
 
-    # Mixing Length model
-    turbulence_handling              = 'mixing-length'
-    von_karman_const                  = 2.
-    von_karman_const_0                = 0.9
-    mixing_length_walls               ='right loop_boundary'
-    mixing_length_delta               = 0.15
+      # # # Boundary Conditions
+      inlet_boundaries = 'ph_inlet'
+      momentum_inlet_types ='flux-mass' #'fixed-velocity'
+      flux_inlet_pps = 'mfr_in' #'inlet_mdot' #'mfr_in' #'-20'
+      #flux_inlet_pps = 'h_inlet'
 
-    # fluid properties
-    density                          = 'rho'
-    dynamic_viscosity                = 'mu'
-    thermal_conductivity             = 'kappa'
-    specific_heat                    = 'cp'
-    dont_create_materials = true
+      #flux_inlet_pps = '908.15'
+      #momentum_inlet_function = '0 -0.9'
 
-    # Energy source-sink
-    external_heat_source             = 'power_density_fuel' #'prescribed_power_density_fuel'
+      outlet_boundaries = 'ph_outlet'
+      momentum_outlet_types = 'fixed-pressure'
+      pressure_functors = 'p_out' #'p_out' #'outlet_p'
 
-    # # # Boundary Conditions
-    inlet_boundaries = 'ph_inlet'
-    momentum_inlet_types ='flux-mass' #'fixed-velocity'
-    flux_inlet_pps = 'mfr_in' #'inlet_mdot' #'mfr_in' #'-20'
-    energy_inlet_types = 'flux-mass' #'heatflux' #'flux-mass' #'fixed-temperature'# 'heatflux' # 'fixed-temperature'
-    #energy_inlet_function =  'mdot_h_inlet_flux' #${fparse mdot/A * h_inlet}
-    energy_inlet_functors = 'temp_in' #'inlet_T' #'temp_in'
-    #flux_inlet_pps = 'h_inlet'
+      wall_boundaries                  = 'left    '#      bottom   right    loop_boundary'# core_barrel'
+      momentum_wall_types              = 'symmetry'#      noslip   noslip   noslip'# noslip'
 
-    #flux_inlet_pps = '908.15'
-    #momentum_inlet_function = '0 -0.9'
+      # Constrain Pressure
+      #pin_pressure                     = true
+      #pinned_pressure_value            = ${p_outlet}
+      #pinned_pressure_point            = '0.0 2.13859 0.0'
+      #pinned_pressure_type             = point-value-uo
 
-    outlet_boundaries = 'ph_outlet'
-    momentum_outlet_types = 'fixed-pressure'
-    pressure_functors = 'p_out' #'p_out' #'outlet_p'
+      #Scaling -- used mainly for nonlinear solves
+      # momentum_scaling                 = 1e-3
+      # mass_scaling                     = 10
+    []
+    [FluidHeatTransfer/fluid]
+      block = ${fluid_blocks}
 
-    wall_boundaries                  = 'left    '#      bottom   right    loop_boundary'# core_barrel'
-    momentum_wall_types              = 'symmetry'#      noslip   noslip   noslip'# noslip'
-    energy_wall_types                = 'heatflux'#  heatflux heatflux heatflux'
-    # energy_wall_function             = '0    '#'     0        0        0'
-    energy_wall_functors             = '0.0'
+      # variable names
+      fluid_temperature_variable       = 'T_fluid'
 
-    # Constrain Pressure
-    #pin_pressure                     = true
-    #pinned_pressure_value            = ${p_outlet}
-    #pinned_pressure_point            = '0.0 2.13859 0.0'
-    #pinned_pressure_type             = point-value-uo
+      # Numerical schemes
+      energy_advection_interpolation  = upwind
 
-    # Passive Scalar -- solved separetely to integrate porosity jumps
-    add_scalar_equation              = false
+      # fluid properties
+      thermal_conductivity             = 'kappa'
+      specific_heat                    = 'cp'
+      dont_create_materials            = true
 
-    #Scaling -- used mainly for nonlinear solves
-    # momentum_scaling                 = 1e-3
-    # mass_scaling                     = 10
+      # Energy source-sink
+      external_heat_source             = 'power_density_fuel' #'prescribed_power_density_fuel'
+
+      # Boundary Conditions
+      energy_inlet_types = 'flux-mass' #'heatflux' #'flux-mass' #'fixed-temperature'# 'heatflux' # 'fixed-temperature'
+      #energy_inlet_function =  'mdot_h_inlet_flux' #${fparse mdot/A * h_inlet}
+      energy_inlet_functors = 'temp_in' #'inlet_T' #'temp_in'
+
+      energy_wall_types                = 'heatflux'#  heatflux heatflux heatflux'
+      # energy_wall_function             = '0    '#'     0        0        0'
+      energy_wall_functors             = '0.0'
+    []
+    [Turbulence/fluid]
+      block = ${fluid_blocks}
+
+      # Mixing Length model
+      turbulence_handling              = 'mixing-length'
+      fluid_heat_transfer_physics      = 'fluid'
+      von_karman_const                 = 2.
+      von_karman_const_0               = 0.9
+      mixing_length_walls              = 'right loop_boundary'
+      mixing_length_delta              = 0.15
+      dont_create_materials            = true
+    []
   []
 []
 
