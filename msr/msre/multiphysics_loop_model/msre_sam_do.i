@@ -75,14 +75,10 @@ lambda_6              = 2.85299993
             3.6582E-03 3.5411E-03 3.4297E-03 3.3235E-03 3.2224E-03 3.1259E-03'
   []
   [time_stepper]
-    type = PiecewiseConstant
-    x = '-2000.0    -1950.0  -1900.0 -1500.0  -1000  -500     0.0 '
-    y = '    0.5        2.0      5.0    10.0     50.  100.0   100.0'
-    # direction = left_inclusive
-    # x            = '-500 -20   0    3e-5    0.005 2    50.0    100.0'
-    # y            = '  25 0.05  1e-5 0.001   0.05   0.05  10.0     10.0'
-    # x            = '-20  2    10.0    20 200'
-    # y            = '1    1  5     10.0'
+    type         = PiecewiseConstant
+    direction    = LEFT_INCLUSIVE
+    x = '-2000.0  -1998.0  -1980.0  -1900.0  -1500.0'
+    y = '    0.5      1.0      5.0     20.0    100.0'
   []
 []
 
@@ -112,7 +108,7 @@ lambda_6              = 2.85299993
     type = SalineMoltenSaltFluidProperties
     comp_name = "LiF BeF2 ZrF4 UF4" # This should be the MSRE fuel salt, but I did not find an exact completed reference in MSTDB-TP, using FLiBe for now
     comp_val = "0.6479 0.2996 0.0499 0.0026"
-    prop_def_file = "Molten_Salt_Thermophysical_Properties_.csv"
+    prop_def_file = "saline_data.csv"
   []
   # [salt]
   #   type = SalineMoltenSaltFluidProperties
@@ -277,7 +273,7 @@ lambda_6              = 2.85299993
     heat_source = 0
     A = 2.7885E-02
     Dh = 1.0566E-02
-    initial_T = 824.8167 #908.15 #824.8167
+    initial_T = 824.8167
   []
 
   [hx_j1]
@@ -287,7 +283,7 @@ lambda_6              = 2.85299993
     outputs = 'hx_tube2(in)'
     K = '0 0'
     Area = 2.7885E-02
-    initial_T = 824.8167 #908.15 #824.8167
+    initial_T = 824.8167
   []
 
   [hx_tube2]
@@ -300,7 +296,7 @@ lambda_6              = 2.85299993
     heat_source = 0
     A = 2.7885E-02
     Dh = 1.0566E-02
-    initial_T = 824.8167 #908.15 #824.8167
+    initial_T = 824.8167
   []
 
   [hx_j2]
@@ -310,7 +306,7 @@ lambda_6              = 2.85299993
     outputs = 'hx_tube3(in)'
     K = '0 0'
     Area = 2.7885E-02
-    initial_T = 908.15 #824.8167
+    initial_T = 824.8167
   []
 
   [hx_tube3]
@@ -323,15 +319,15 @@ lambda_6              = 2.85299993
     heat_source = 0
     A = 2.7885E-02
     Dh = 1.0566E-02
-    initial_T = 824.8167 #908.15 #824.8167
+    initial_T = 824.8167
   []
 
   [hx_s_in]
     type = PBTDJ
     input = 'hx_tube1(in)'
     eos = hx_salt_eos
-    v_bc = 1.6
-    T_bc = 824.8167 #908.15 #824.8167
+    v_bc = 1.25
+    T_bc = 824.8167
   []
 
   [hx_s_out]
@@ -339,7 +335,7 @@ lambda_6              = 2.85299993
     input = 'hx_tube3(out)'
     eos = hx_salt_eos
     p_bc = 1.0e5
-    T_bc = 866.4833 # 908.15 # 866.4833
+    T_bc = 866.4833
   []
 
   [hx_wall1]
@@ -354,7 +350,7 @@ lambda_6              = 2.85299993
     elem_number_axial = 26
     dim_hs = 2
     material_hs = 'alloy-mat'
-    Ts_init = 922 # 908.15 #922
+    Ts_init = 922
 
     HS_BC_type = 'Coupled Coupled'
     name_comp_left = hx_tube1
@@ -375,7 +371,7 @@ lambda_6              = 2.85299993
     elem_number_axial = 26
     dim_hs = 2
     material_hs = 'alloy-mat'
-    Ts_init = 922 #908.15 #922
+    Ts_init = 922
 
     HS_BC_type = 'Coupled Coupled'
     name_comp_left = hx_tube3
@@ -455,6 +451,14 @@ lambda_6              = 2.85299993
 []
 
 [Postprocessors]
+  [num_nonlinear_iterations]
+    type = NumNonlinearIterations
+    execute_on = 'timestep_end'
+  []
+  [num_linear_iterations]
+    type = NumLinearIterations
+    execute_on = 'timestep_end'
+  []
   [c1_inlet]
     type = ComponentBoundaryVariableValue
     variable = c1
@@ -507,13 +511,13 @@ lambda_6              = 2.85299993
   []
   [total_volume]
     type = ParsedPostprocessor
-    function = '${A_downcomer}*${length_downcomer}+${A_coreplenums}*${length_coreplenums}+
+    expression = '${A_downcomer}*${length_downcomer}+${A_coreplenums}*${length_coreplenums}+
     ${A_pipe1_s1}*${length_pipe1_s1}+${A_pipe1_s2}*${length_pipe1_s2}+${A_pipe2}*${length_pipe2}+
     ${length_hx_shell}*${A_hx_shell}+${A_pipe3_s1}*${length_pipe3_s1}+${A_pipe3_s2}*${length_pipe3_s2}'
   []
   [total_circulation_time]
     type = ParsedPostprocessor
-    function = 'total_volume/flow_rate'
+    expression = 'total_volume/flow_rate'
     pp_names = 'total_volume flow_rate'
   []
   # [bypass_vol]
@@ -538,12 +542,12 @@ lambda_6              = 2.85299993
   # []
   # [Salt_vol_core_and_plena]
   #   type = ParsedPostprocessor
-  #   function = 'graphite_vol*${core_porosity} + bypass_vol + lower_plenum_vol + upper_plenum_vol'
+  #   expression = 'graphite_vol*${core_porosity} + bypass_vol + lower_plenum_vol + upper_plenum_vol'
   #   pp_names = 'graphite_vol bypass_vol lower_plenum_vol upper_plenum_vol '
   # []
   # [Salt_vol_total]
   #   type = ParsedPostprocessor
-  #   function = 'Aux_vol + Salt_vol_core_and_plena'
+  #   expression = 'Aux_vol + Salt_vol_core_and_plena'
   #   pp_names = 'Aux_vol Salt_vol_core_and_plena'
   # []
 []
@@ -567,7 +571,7 @@ lambda_6              = 2.85299993
   # start_time = -2000
   # end_time = 0
   start_time = -2000
-  end_time  = -1000.
+  end_time  = -1000
   # scheme = implicit-euler
 
   [TimeStepper]

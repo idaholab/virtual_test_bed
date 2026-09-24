@@ -160,9 +160,8 @@ non_solid_blocks      = 'core2 lower_plenum upper_plenum down_comer riser'
   []
   [T_fluid]
     type              = INSFVEnergyVariable
-    initial_from_file_var = T_fluid
     block             = ${fluid_blocks}
-    #initial_condition = 908.15
+    initial_condition = 908.15
     #two_term_boundary_expansion = false
   []
   [T_solid]
@@ -213,7 +212,8 @@ non_solid_blocks      = 'core2 lower_plenum upper_plenum down_comer riser'
     type = SalineMoltenSaltFluidProperties
     comp_name = "LiF BeF2 ZrF4 UF4" # This should be the MSRE fuel salt, but I did not find an exact completed reference in MSTDB-TP, using FLiBe for now
     comp_val = "0.6479 0.2996 0.0499 0.0026"
-    prop_def_file = "Molten_Salt_Thermophysical_Properties_.csv"
+    prop_def_file = "saline_data.csv"
+    allow_imperfect_jacobians = true
   []
   # [salt]
   #   type = SalineMoltenSaltFluidProperties
@@ -241,9 +241,11 @@ non_solid_blocks      = 'core2 lower_plenum upper_plenum down_comer riser'
 
 [OverlappingDomainCoupling]
   subapp_filename = 'msre_sam_do.i'
+  max_procs_per_app = 1
   hydrodynamic_iteration_type = 'update'
   component_names = 'downcomer core_plenums'
   overlapped_branch_name = 'j_ip_c'
+  system_junction_names = 'j5 j_up_ps1'
   initial_boundary_massflowrate = '0 0'
   hydrodynamic_startup_time = -1999.
   component_orientation = 'in out'
@@ -271,7 +273,7 @@ non_solid_blocks      = 'core2 lower_plenum upper_plenum down_comer riser'
   passive_scalar_decay_constant = '${lambda_1} ${lambda_2} ${lambda_3} ${lambda_4} ${lambda_5} ${lambda_6}'
   initial_boundary_passive_scalar_value = '0. 0.; 0. 0.; 0. 0.; 0. 0.; 0. 0.; 0. 0.'
   boundary_passive_scalar_names = 'c1_in c1_out; c2_in c2_out; c3_in c3_out; c4_in c4_out; c5_in c5_out; c6_in c6_out'
-  reference_passive_scalars = 'ref_ps_pp1 ref_ps_pp2 ref_ps_pp3 ref_ps_pp4 ref_ps_pp5 ref_ps_pp6'
+  reference_scalars = 'ref_ps_pp1 ref_ps_pp2 ref_ps_pp3 ref_ps_pp4 ref_ps_pp5 ref_ps_pp6'
 []
 
 [Modules]
@@ -334,12 +336,13 @@ non_solid_blocks      = 'core2 lower_plenum upper_plenum down_comer riser'
 
     outlet_boundaries = 'ph_outlet'
     momentum_outlet_types = 'fixed-pressure'
-    pressure_function = 'p_out' #'p_out' #'outlet_p'
+    pressure_functors = 'p_out' #'p_out' #'outlet_p'
 
     wall_boundaries                  = 'left    '#      bottom   right    loop_boundary'# core_barrel'
     momentum_wall_types              = 'symmetry'#      noslip   noslip   noslip'# noslip'
     energy_wall_types                = 'heatflux'#  heatflux heatflux heatflux'
-    energy_wall_function             = '0    '#'     0        0        0'
+    # energy_wall_function             = '0    '#'     0        0        0'
+    energy_wall_functors             = '0.0'
 
     # Constrain Pressure
     #pin_pressure                     = true
@@ -821,7 +824,7 @@ non_solid_blocks      = 'core2 lower_plenum upper_plenum down_comer riser'
     neglect_derivatives_of_density_time_derivative = true
   []
   [enthalpy_material]
-    type = INSFVEnthalpyMaterial
+    type = INSFVEnthalpyFunctorMaterial
     temperature = 'T_fluid'
     rho = 'rho'
     assumed_constant_cp = false
@@ -959,6 +962,20 @@ non_solid_blocks      = 'core2 lower_plenum upper_plenum down_comer riser'
     # if above one, no good
     type = NumFailedTimeSteps
   []
+  [num_nonlinear_iterations]
+    type = NumNonlinearIterations
+    execute_on = 'timestep_end'
+  []
+  [num_linear_iterations]
+    type = NumLinearIterations
+    execute_on = 'timestep_end'
+  []
+  [sam_num_nonlinear_iterations]
+    type = Receiver
+  []
+  [sam_num_linear_iterations]
+    type = Receiver
+  []
   [area_pp_inlet]
     type = AreaPostprocessor
     boundary = 'ph_inlet'
@@ -1064,7 +1081,7 @@ non_solid_blocks      = 'core2 lower_plenum upper_plenum down_comer riser'
   []
   [pressure_core_delta]
     type                   = ParsedPostprocessor
-    function               = 'pressure_inlet - pressure_outlet'
+    expression             = 'pressure_inlet - pressure_outlet'
     pp_names               = 'pressure_inlet pressure_outlet'
     execute_on             = 'initial timestep_end'
   []
@@ -1100,7 +1117,7 @@ non_solid_blocks      = 'core2 lower_plenum upper_plenum down_comer riser'
   []
   [T_core_delta]
     type                   = ParsedPostprocessor
-    function               = 'T_core_outlet - T_core_inlet'
+    expression             = 'T_core_outlet - T_core_inlet'
     pp_names               = 'T_core_outlet T_core_inlet'
     execute_on             = 'initial timestep_end'
   []
@@ -1194,7 +1211,7 @@ non_solid_blocks      = 'core2 lower_plenum upper_plenum down_comer riser'
   []
   [power_total_2]
     type                   = ParsedPostprocessor
-    function             = 'power_ghrap_total + power_fuel_total'
+    expression             = 'power_ghrap_total + power_fuel_total'
     pp_names               = 'power_ghrap_total power_fuel_total'
     execute_on             = 'initial timestep_end'
   []
@@ -1217,12 +1234,12 @@ non_solid_blocks      = 'core2 lower_plenum upper_plenum down_comer riser'
   # []
   [rho_griffin]
     type = ParsedPostprocessor
-    function = "1/Keff- 1/1.061274"
+    expression = "1/Keff- 1/1.061274"
     pp_names = "Keff"
   []
   # [rho_Delta]
   #   type = ParsedPostprocessor
-  #   function = "1e5*(rho_squirrel- rho_griffin)"
+  #   expression = "1e5*(rho_squirrel- rho_griffin)"
   #   pp_names = "rho_squirrel rho_griffin"
   # []
   # #Calc circulation time
@@ -1253,12 +1270,12 @@ non_solid_blocks      = 'core2 lower_plenum upper_plenum down_comer riser'
   []
   [Salt_vol_core_and_plena]
     type = ParsedPostprocessor
-    function = 'graphite_vol*${core_porosity} + bypass_vol + lower_plenum_vol + upper_plenum_vol'
+    expression = 'graphite_vol*${core_porosity} + bypass_vol + lower_plenum_vol + upper_plenum_vol'
     pp_names = 'graphite_vol bypass_vol lower_plenum_vol upper_plenum_vol '
   []
   [Salt_vol_total]
     type = ParsedPostprocessor
-    function = 'Aux_vol + Salt_vol_core_and_plena'
+    expression = 'Aux_vol + Salt_vol_core_and_plena'
     pp_names = 'Aux_vol Salt_vol_core_and_plena'
   []
 
@@ -1279,7 +1296,7 @@ non_solid_blocks      = 'core2 lower_plenum upper_plenum down_comer riser'
   []
   [circulation_time_upper_plenum]
     type = ParsedPostprocessor
-    function = 'vol_upper_plenum/vfr_core'
+    expression = 'vol_upper_plenum/vfr_core'
     pp_names = 'vol_upper_plenum vfr_core'
   []
 
@@ -1291,7 +1308,7 @@ non_solid_blocks      = 'core2 lower_plenum upper_plenum down_comer riser'
   []
   [circulation_time_lower_plenum]
     type = ParsedPostprocessor
-    function = 'vol_lower_plenum/vfr_core'
+    expression = 'vol_lower_plenum/vfr_core'
     pp_names = 'vol_lower_plenum vfr_core'
   []
 []
@@ -1303,12 +1320,9 @@ non_solid_blocks      = 'core2 lower_plenum upper_plenum down_comer riser'
 [Functions]
   [time_stepper]
     type         = PiecewiseConstant
-    # x            = '-500 -20   0    3e-5    0.005 2    50.0    100.0'
-    # y            = '  25 0.05  1e-5 0.001   0.05   0.05  10.0     10.0'
-    # x            = '-20  2    10.0    20 200'
-    # y            = '1    1  5     10.0'
-    x = '-2000.0    -1950.0  -1900.0 -1500.0  -1000  -500     0.0 '
-    y = '    0.5        2.0      5.0    10.0     50.  100.0   100.0'
+    direction    = LEFT_INCLUSIVE
+    x = '-2000.0  -1998.0  -1980.0  -1900.0  -1500.0'
+    y = '    0.5      1.0      5.0     20.0    100.0'
   []
   [pump_mass_flow]
     type = PiecewiseLinear
@@ -1363,29 +1377,39 @@ non_solid_blocks      = 'core2 lower_plenum upper_plenum down_comer riser'
 [Executioner]
   type                             = Transient
   solve_type                       = NEWTON
-  petsc_options_iname              = '-pc_type -sub_pc_factor_shift_type'
-  petsc_options_value              = ' lu       NONZERO'
+  petsc_options_iname              = '-pc_type -pc_factor_shift_type -pc_factor_mat_solver_type'
+  petsc_options_value              = ' lu       NONZERO               superlu_dist'
   automatic_scaling                = true
   nl_abs_tol                       = 1e-6
+  nl_rel_tol                       = 1e-6
   nl_max_its                       = 50
+  dtmin = 1.e-3
+  dtmax = 100
+  # [TimeStepper]
+  #   type               = IterationAdaptiveDT
+  #   dt                 = 0.1
+  #   optimal_iterations = 6
+  #   iteration_window   = 2
+  #   growth_factor      = 1.5
+  #   cutback_factor     = 0.5
+  # []
   [TimeStepper]
     type                           = FunctionDT
     function                       = time_stepper
-    min_dt                         = 1e-3
   []
   auto_advance = true
   start_time                       = -2000
   end_time                         =  -1000
   steady_state_detection           = false # true
   steady_state_tolerance           = 1e-16
-  fixed_point_min_its = 3
-  fixed_point_max_its = 15
+  fixed_point_min_its = 1
+  fixed_point_max_its = 50
   custom_pp = overlapping_coupling_error
   disable_fixed_point_residual_norm_check = true
   accept_on_max_fixed_point_iteration     = true
   direct_pp_value = true
-  custom_abs_tol = 1e-6
-  custom_rel_tol = 1e-6
+  custom_abs_tol = 1e-3
+  custom_rel_tol = 1e-3
 []
 # ================================================================================================================
 # OUTPUTS & DEBUG
@@ -1396,6 +1420,7 @@ non_solid_blocks      = 'core2 lower_plenum upper_plenum down_comer riser'
 [Outputs]
   csv                              = true
   exodus                           = true
+  perf_graph                       = true
   print_linear_converged_reason    = false
   print_linear_residuals           = false
   print_nonlinear_converged_reason = false
@@ -1405,22 +1430,38 @@ non_solid_blocks      = 'core2 lower_plenum upper_plenum down_comer riser'
 # MULTIAPPS AND TRANSFERS
 # ================================================================================================================
 [MultiApps]
+  # active = ''
   [Griffin]
     type                         = FullSolveMultiApp
     input_files                  = 'griffin_EV.i'
     execute_on                   = 'timestep_end'
-    max_procs_per_app            = 48
     keep_solution_during_restore = true
+    update_old_solution_when_keeping_solution_during_restore = false
   []
 []
 
 [Transfers]
+  # active = ''
   [c1_inlet_transfer]
     type = MultiAppPostprocessorTransfer
     from_multi_app = sc_transient_app
     reduction_type = average
     from_postprocessor = c1_inlet
     to_postprocessor = c1_inlet
+  []
+  [sam_nonlinear_its]
+    type = MultiAppPostprocessorTransfer
+    from_multi_app = sc_transient_app
+    reduction_type = average
+    from_postprocessor = num_nonlinear_iterations
+    to_postprocessor = sam_num_nonlinear_iterations
+  []
+  [sam_linear_its]
+    type = MultiAppPostprocessorTransfer
+    from_multi_app = sc_transient_app
+    reduction_type = average
+    from_postprocessor = num_linear_iterations
+    to_postprocessor = sam_num_linear_iterations
   []
   [c1]
     type                   = MultiAppGeneralFieldShapeEvaluationTransfer
@@ -1467,6 +1508,22 @@ non_solid_blocks      = 'core2 lower_plenum upper_plenum down_comer riser'
     to_multi_app           = Griffin
     source_variable        = 'c6'
     variable               = 'c6'
+    execute_on             = 'timestep_end'
+    search_value_conflicts = false
+  []
+  [transfer_Tfluid]
+    type                   = MultiAppGeneralFieldShapeEvaluationTransfer
+    to_multi_app           = Griffin
+    source_variable        = 'T_fluid'
+    variable               = 'T_salt'
+    execute_on             = 'timestep_end'
+    search_value_conflicts = false
+  []
+  [transfer_Tsolid]
+    type                   = MultiAppGeneralFieldShapeEvaluationTransfer
+    to_multi_app           = Griffin
+    source_variable        = 'T_solid'
+    variable               = 'T_solid'
     execute_on             = 'timestep_end'
     search_value_conflicts = false
   []

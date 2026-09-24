@@ -312,7 +312,7 @@ all_blocks           = 'core core1 core2 lower_plenum upper_plenum down_comer co
     variable            = Peaking_factor
     source_variable     = power_density
     normalization       = power_avg
-    execute_on          = 'initial timestep_end'
+    execute_on          = 'timestep_end'
   []
   [build_dnp]
     type                = BuildArrayVariableAux
@@ -527,6 +527,14 @@ all_blocks           = 'core core1 core2 lower_plenum upper_plenum down_comer co
 # POSTPROCESSORS
 # ================================================================================================================
 [Postprocessors]
+  [num_nonlinear_iterations]
+    type = NumNonlinearIterations
+    execute_on = 'timestep_end'
+  []
+  [num_linear_iterations]
+    type = NumLinearIterations
+    execute_on = 'timestep_end'
+  []
   [Int_fission_source]
     type             = ElementIntegralVariablePostprocessor
     variable         = fission_source
