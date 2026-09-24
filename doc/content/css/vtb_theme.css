@@ -1,0 +1,123 @@
+/*
+  VTB color theme, derived from doc/content/media/nric_logo.png.
+  Overrides the CSS variables MOOSE's base theme (css/moose.css) uses for
+  nav/footer/buttons/links/etc., plus a couple of MOOSE's own selectors that
+  hard-code colors rather than using those variables.
+*/
+:root {
+    --nric-blue: rgba(0, 110, 151, 1.0);
+    --nric-dark-blue: rgba(18, 39, 54, 1.0);
+    --nric-teal: rgba(0, 191, 178, 1.0);
+    --nric-dark-teal: rgba(0, 85, 94, 1.0);
+    --nric-yellow: rgba(227, 233, 53, 1.0);
+
+    --inl-blue: var(--nric-blue);
+    --inl-blue-light: var(--nric-teal);
+    --dark-blue: rgba(0, 68, 92, 1.0);
+    --dark-navbar: rgba(0, 68, 92, 1.0);
+    --darkmode-inl-blue: var(--nric-teal);
+    --links-dark: rgba(64, 209, 197, 1.0);
+    --darkmode-back: rgba(0, 0, 0, 1.0);
+    --darkmode-navigator: rgba(0, 0, 0, 1.0);
+}
+
+.tabs .indicator {
+    background-color: var(--nric-yellow);
+}
+
+/* body text font */
+main,
+.card .card-content,
+.sidenav,
+.dropdown-content {
+    font-family: "Montserrat", sans-serif;
+}
+
+/* headings/buttons/nav font */
+h1, h2, h3, h4, h5, h6,
+.btn, .btn-large, .btn-small, .btn-flat,
+nav,
+.tabs .tab a,
+.card .card-title {
+    font-family: "Josefin Sans", sans-serif;
+}
+
+h1 {
+    background: linear-gradient(90deg, var(--nric-dark-blue), var(--nric-teal));
+    color: white;
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+    padding: 24px calc(50vw - 50% + 12px);
+    text-transform: uppercase;
+}
+
+/*
+  Pages with the scrollspy table-of-contents sidebar put the heading in a
+  ".col.l10" column instead of directly in the (centered) page container, so
+  the viewport-relative breakout above lands in the wrong place. Confine the
+  background to the actual content column instead, which also keeps it from
+  running under the sidebar.
+*/
+.col.l10 h1 {
+    width: auto;
+    margin-right: 0;
+    padding-right: 12px;
+}
+
+h2, h3, h4, h5, h6 {
+    color: var(--nric-blue);
+}
+
+.nric-nav-logo img {
+    height: 40px;
+    vertical-align: middle;
+    margin-right: 15px;
+}
+
+nav {
+    box-shadow: none;
+}
+
+nav .nav-wrapper.container {
+    width: 90%;
+}
+
+main .container {
+    width: 90%;
+}
+
+/* light mode settings */
+@media (prefers-color-scheme: light) {
+    nav {
+        background-color: #fff;
+        color: #000;
+    }
+
+    nav a,
+    nav ul a,
+    nav .brand-logo,
+    nav .button-collapse {
+        color: #000;
+    }
+
+    nav .github-mark,
+    nav .github-logo {
+        filter: none;
+    }
+}
+
+/* dark mode settings */
+@media (prefers-color-scheme: dark), (prefers-dark-interface) {
+    nav {
+        background-color: #000;
+    }
+
+    .table-of-contents {
+        scrollbar-color: var(--darkmode-gray) #000;
+    }
+
+    .table-of-contents::-webkit-scrollbar {
+        background-color: #000;
+    }
+}

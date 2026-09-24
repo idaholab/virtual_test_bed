@@ -11,6 +11,11 @@ Content:
 
 Renderer:
     type: MooseDocs.base.MaterializeRenderer
+    extra-css:
+        - https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@500;600&family=Montserrat:wght@400;500&display=swap
+        - css/vtb_theme.css
+    extra-js:
+        - js/vtb_nav_logo.js
 
 Extensions:
     MooseDocs.extensions.navigation:
