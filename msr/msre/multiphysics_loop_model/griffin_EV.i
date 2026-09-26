@@ -61,7 +61,7 @@ all_blocks           = 'core core2 lower_plenum upper_plenum down_comer core_bar
 [Mesh]
  [Mesh_gen]
   type = FileMeshGenerator
-  file = '../mesh/mesh_in.e'
+  file = 'mesh/mesh_in.e'
  []
   coord_type             = 'RZ'
 []

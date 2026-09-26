@@ -1,26 +1,5 @@
 # ==============================================================================
 # MSRE DO (domain-overlap) coupled model - Mesh generation
-# Core-only RZ mesh, generated from scratch instead of restarting from a
-# hand-produced exodus file (ph_initial.e / ph_initial_noflow_out.e).
-#
-# Dimensions below were measured directly from the mesh baked into
-# ph_initial.e (via a throwaway --mesh-only read), NOT copied from
-# msr/msre/multiphysics_core_model/mesh/mesh.i -- the DO model's core is a
-# different, independently-dimensioned MSRE geometry from the closed-loop
-# model's, even though the two share the same block layout/topology. All
-# dimensions are round numbers in inches (1 in = 0.0254 m), consistent with
-# the original design.
-#
-# Unlike the closed-loop model, this mesh never creates 'pump'/'elbow'
-# blocks at all: ph_initial.e itself has no such blocks (SAM already stands
-# in for that piping via msre_sam_do.i), so a temporary subdomain is deleted
-# above the down_comer/core_barrel instead, leaving only 'riser' at that
-# height -- directly generating only the blocks this model needs, rather
-# than generating a closed loop and trimming it after the fact.
-#
-# core / core1 (materially identical everywhere in ph_start.i/griffin_EV.i)
-# are merged into a single 'core' block; 'core2' (the outer bypass gap,
-# porosity=1, its own interface with core_barrel) is kept separate.
 # ==============================================================================
 core_inner_radius = 0.127      # innermost column; also the riser's radius above the core
 core_lattice_width = 0.564433  # 0.691433 - core_inner_radius; merged with the inner column into 'core'
@@ -38,15 +17,15 @@ riser_height         = 0.432    # 17 in
   type = MeshGeneratorMesh
   block_id = '1 5 2 3 4 6 7'
   block_name = 'core  core2  lower_plenum  upper_plenum  down_comer  core_barrel riser'
-  uniform_refine = 0
+  uniform_refine = 1
 
   [cartesian_mesh]
     type = CartesianMeshGenerator
     dim = 2
     dx = '${core_inner_radius}  ${core_lattice_width}  ${core2_width}  ${core_barrel_width}  ${down_comer_width}'
-    ix = '4                     16                     2                1                     2'
+    ix = '4                     10                     2                1                     2'
     dy = '${lower_plenum_height}  ${core_height}  ${upper_plenum_height}  ${riser_height}'
-    iy = '6                       40              6                       8'
+    iy = '6                       60              6                       8'
     subdomain_id = '2  2  2  2  2
                      1  1  5  6  4
                      3  3  3  6  4
