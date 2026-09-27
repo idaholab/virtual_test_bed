@@ -20,7 +20,7 @@
                 Outputs/console/time_step_interval=1"
     capabilities = 'bluecrabapp | samapp'
     rel_err = 1e-4
-    min_threads = 4
+    min_parallel = 4
     max_time = 500
   []
 []

@@ -8782,7 +8782,7 @@ core_init_v = -30.0 # Core is oriented in +z, flow is in -z direction
   nl_abs_tol = 1e-5
   nl_max_its = 15
 
-  l_tol = 1e-4
+  l_tol = 1e-5
   l_max_its = 100
 
   [Quadrature]
