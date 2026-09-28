@@ -69,6 +69,17 @@ h2, h3, h4, h5, h6 {
     color: var(--nric-blue);
 }
 
+/*
+  The front page's dark teal media box relies on MOOSE's dark-mode override
+  (.card background-color: transparent) to keep its caption card from showing
+  as a plain white box. Light mode has no such override, so mirror it here
+  unconditionally to keep the caption looking the same in both themes.
+*/
+.nric-media-box .card {
+    background-color: transparent;
+    color: var(--darkmode-fore);
+}
+
 .nric-nav-logo img {
     height: 40px;
     vertical-align: middle;
