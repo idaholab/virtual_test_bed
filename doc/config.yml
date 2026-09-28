@@ -36,6 +36,7 @@ Extensions:
             Support:
                 FAQ and Forum: https://github.com/idaholab/virtual_test_bed/discussions
                 Contact Us: vtb_pages/contact.md
+        breadcrumbs: false
     MooseDocs.extensions.appsyntax:
         active: false
     MooseDocs.extensions.ifelse:
