@@ -32,9 +32,7 @@ Extensions:
                 Updating the VTB: vtb_pages/updating.md
                 Contributing: vtb_pages/contributing.md
                 Citing: vtb_pages/citing.md
-            Models:
-                By Filter: https://mooseframework.inl.gov/virtual_test_bed/resources/filter/index.html
-                By Index: vtb_pages/manual_indexing.md
+            Models: vtb_pages/models.md
             Support:
                 FAQ and Forum: https://github.com/idaholab/virtual_test_bed/discussions
                 Contact Us: vtb_pages/contact.md

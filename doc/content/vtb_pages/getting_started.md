@@ -7,11 +7,7 @@
 Before getting started, note how to navigate this website:
 
 - The "Documentation" menu gives instructions on how to use the VTB and gives some tutorials.
-- The "Models" menu lists the models available in the VTB:
-
-  - [By Filter](https://mooseframework.inl.gov/virtual_test_bed/resources/filter/index.html) filters the available models by several criteria, such as reactor type, code used, or simulation type.
-  - [By Index](vtb_pages/manual_indexing.md) provides several manually maintained lists of the models, such as by reactor type or transient scenario.
-
+- The "Models" page lists the models available in the VTB.
 - The "Support" menu lists contact and help information.
 - The Github logo link will take you to the VTB Github repository.
 
