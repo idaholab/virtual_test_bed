@@ -22,13 +22,8 @@ length_pipe3_s1 = 0.96806
 A_pipe3_s2 = 0.01267
 length_pipe3_s2 = 1.0439
 
-# Delayed Neutron precursor data
-lambda_1              = 0.013336
-lambda_2              = 0.0327389985
-lambda_3              = 0.120779999
-lambda_4              = 0.302780002
-lambda_5              = 0.849489987
-lambda_6              = 2.85299993
+# Delayed Neutron precursor data (shared with ph_start.i via msre_do_common.i)
+!include msre_do_common.i
 
 [GlobalParams]
   global_init_P = 1e5 # Global initial fluid pressure
@@ -74,12 +69,6 @@ lambda_6              = 2.85299993
             4.8508E-03 4.6720E-03 4.5029E-03 4.3428E-03 4.1911E-03 4.0473E-03 3.9109E-03 3.7813E-03
             3.6582E-03 3.5411E-03 3.4297E-03 3.3235E-03 3.2224E-03 3.1259E-03'
   []
-  [time_stepper]
-    type         = PiecewiseConstant
-    direction    = LEFT_INCLUSIVE
-    x = '-2000.0  -1998.0  -1980.0  -1900.0  -1500.0'
-    y = '    0.5      1.0      5.0     20.0    100.0'
-  []
 []
 
 [EOS]
@@ -87,16 +76,7 @@ lambda_6              = 2.85299993
     type = PTFluidPropertiesEOS
     fp = salt
     p_0 = 101325.0
-    eos_test = true
   []
-  # [fuel_salt_eos] # Function-defined EOS for MSRE fuel salt, used in original SAM model
-  #   type = PTFunctionsEOS
-  #   rho = 2000 #fuel_salt_rho_func
-  #   mu = 9e-3 #fuel_salt_mu_func
-  #   enthalpy = fuel_salt_enthalpy_func
-  #   cp = 2000
-  #   k = 1.0
-  # []
   [hx_salt_eos]
     type = SaltEquationOfState
     salt_type = Flibe
@@ -106,16 +86,10 @@ lambda_6              = 2.85299993
 [MaterialProperties]
   [salt]
     type = SalineMoltenSaltFluidProperties
-    comp_name = "LiF BeF2 ZrF4 UF4" # This should be the MSRE fuel salt, but I did not find an exact completed reference in MSTDB-TP, using FLiBe for now
+    comp_name = "LiF BeF2 ZrF4 UF4"
     comp_val = "0.6479 0.2996 0.0499 0.0026"
     prop_def_file = "saline_data.csv"
   []
-  # [salt]
-  #   type = SalineMoltenSaltFluidProperties
-  #   comp_name = "LiF BeF2" # This should be the MSRE fuel salt, but I did not find an exact completed reference in MSTDB-TP, using FLiBe for now
-  #   comp_val = "0.66 0.34"
-  #   prop_def_file = "Molten_Salt_Thermophysical_Properties.csv"
-  # []
   [alloy-mat] # Based on Hastelloy N alloy
     type = SolidMaterialProps
     k = 23.6 # Thermal conductivity

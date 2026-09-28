@@ -53,17 +53,9 @@ p_outlet              = 1.50653E+05         # 1.01325e+05 # Reactor outlet press
 #vol_hx                = 1.0E+10             # (W/(m3.K)) volumetric heat exchange coefficient for heat exchanger
                                             # Note: vol_hx need to be tuned to match intermediate HX performance for transients
 # ----------------------------------------------------------------------------------------------------------------
-# Delayed Neutron Data
+# Delayed Neutron Data (lambda_* shared with msre_sam_do.i via msre_do_common.i)
 # ----------------------------------------------------------------------------------------------------------------
-# ----------------------------------------------------------------------------------------------------------------
-# Effective Delayed Neutron Data
-# ----------------------------------------------------------------------------------------------------------------
-lambda_1              = 0.013336
-lambda_2              = 0.0327389985
-lambda_3              = 0.120779999
-lambda_4              = 0.302780002
-lambda_5              = 0.849489987
-lambda_6              = 2.85299993
+!include msre_do_common.i
 beta_1                = 0.00022841247418
 beta_2                = 0.00118081389477
 beta_3                = 0.00112776325192
@@ -174,33 +166,11 @@ non_solid_blocks      = 'core2 lower_plenum upper_plenum down_comer riser'
 [FluidProperties]
   [salt]
     type = SalineMoltenSaltFluidProperties
-    comp_name = "LiF BeF2 ZrF4 UF4" # This should be the MSRE fuel salt, but I did not find an exact completed reference in MSTDB-TP, using FLiBe for now
+    comp_name = "LiF BeF2 ZrF4 UF4"
     comp_val = "0.6479 0.2996 0.0499 0.0026"
     prop_def_file = "saline_data.csv"
     allow_imperfect_jacobians = true
   []
-  # [salt]
-  #   type = SalineMoltenSaltFluidProperties
-  #   comp_name = "LiF BeF2" # This should be the MSRE fuel salt, but I did not find an exact completed reference in MSTDB-TP, using FLiBe for now
-  #   comp_val = "0.66 0.34"
-  #   prop_def_file = "Molten_Salt_Thermophysical_Properties.csv"
-  # []
-  # [salt]
-  #   type                             = SimpleFluidProperties
-  #   density0                         = 2000.0   # kg/m^3
-  #   thermal_expansion                = 0.000 # K^{-1}
-  #   cp                               = 2000.      # J/kg·K
-  #   viscosity                        = 0.009    # Pa-s11
-  #   thermal_conductivity             = 1.         # W/m·K
-  # []
-  # [salt]
-  #   type = TemperaturePressureFunctionFluidProperties
-  #   cp = 2000
-  #   k = 1
-  #   rho = 2000
-  #   mu = 0.009
-  #   T_ref = 908.15
-  # []
 []
 
 [OverlappingDomainCoupling]
@@ -369,7 +339,7 @@ non_solid_blocks      = 'core2 lower_plenum upper_plenum down_comer riser'
     h_solid_fluid         = ${bulk_htc}
     block                 = 'core'
   []
-  [convection_core_completmeent]
+  [convection_core_complement]
     type                  = PINSFVEnergyAmbientConvection
     variable              = T_fluid
     T_fluid               = T_fluid
@@ -441,42 +411,6 @@ non_solid_blocks      = 'core2 lower_plenum upper_plenum down_comer riser'
     rho                  = 'c6_porous'
     block                = ${fluid_blocks}
   []
-  #  [c1_turb_diffusion]
-  #    type                 = INSFVMixingLengthScalarDiffusion
-  #    schmidt_number       = ${Sc_t}
-  #    variable             = c1
-  #    block                = ${fluid_blocks}
-  #  []
-  #  [c2_turb_diffusion]
-  #    type                 = INSFVMixingLengthScalarDiffusion
-  #    schmidt_number       = ${Sc_t}
-  #    variable             = c2
-  #    block                = ${fluid_blocks}
-  #  []
-  #  [c3_turb_diffusion]
-  #    type                 = INSFVMixingLengthScalarDiffusion
-  #    schmidt_number       = ${Sc_t}
-  #    variable             = c3
-  #    block                = ${fluid_blocks}
-  #  []
-  #  [c4_turb_diffusion]
-  #    type                 = INSFVMixingLengthScalarDiffusion
-  #    schmidt_number       = ${Sc_t}
-  #    variable             = c4
-  #    block                = ${fluid_blocks}
-  #  []
-  #  [c5_turb_diffusion]
-  #    type                 = INSFVMixingLengthScalarDiffusion
-  #    schmidt_number       = ${Sc_t}
-  #    variable             = c5
-  #    block                = ${fluid_blocks}
-  #  []
-  #  [c6_turb_diffusion]
-  #    type                 = INSFVMixingLengthScalarDiffusion
-  #    schmidt_number       = ${Sc_t}
-  #    variable             = c6
-  #    block                = ${fluid_blocks}
-  #  []
   [c1_src]
     type                 = FVCoupledForce
     variable             = c1
@@ -1192,29 +1126,14 @@ non_solid_blocks      = 'core2 lower_plenum upper_plenum down_comer riser'
     variable         = fission_source
    execute_on       = 'initial timestep_end transfer'
   []
-  # [c1_total]
-  #   type             = ElementIntegralVariablePostprocessor
-  #   variable         = c1
-  #   execute_on       = 'initial timestep_end'
-  #  block             = ${fluid_blocks}
-  # []
   [Keff]
     type             = Receiver
   []
-  # [rho_squirrel]
-  #   type             = Receiver
-  # []
   [rho_griffin]
     type = ParsedPostprocessor
     expression = "1/Keff- 1/1.061274"
     pp_names = "Keff"
   []
-  # [rho_Delta]
-  #   type = ParsedPostprocessor
-  #   expression = "1e5*(rho_squirrel- rho_griffin)"
-  #   pp_names = "rho_squirrel rho_griffin"
-  # []
-  # #Calc circulation time
   [graphite_vol]
     type                    = VolumePostprocessor
     block                   = 'core'
@@ -1285,63 +1204,6 @@ non_solid_blocks      = 'core2 lower_plenum upper_plenum down_comer riser'
   []
 []
 
-
-# ================================================================================================================
-# Pump transient pump
-# ================================================================================================================
-[Functions]
-  [time_stepper]
-    type         = PiecewiseConstant
-    direction    = LEFT_INCLUSIVE
-    x = '-2000.0  -1998.0  -1980.0  -1900.0  -1500.0'
-    y = '    0.5      1.0      5.0     20.0    100.0'
-  []
-  [pump_mass_flow]
-    type = PiecewiseLinear
-    xy_data =
-    "
-    -500   0.000
-    -1   0.000
-    0 0.0
-    0.01	0.3217422
-    1.01	0.6955083
-    1.22	0.753172
-    1.51	0.8606388
-    1.71	1.3394747
-    2.01	4.1665807
-    2.21	5.9437789
-    2.52	15.2513386
-    2.8	    26.4035804
-    3.03	37.6882878
-    3.3	    48.4756182
-    3.53	56.672489
-    3.71	65.3763398
-    4.02	70.9800623
-    4.3	    76.1784862
-    4.52	80.7886618
-    4.86	85.0555664
-    5.05	87.468681
-    5.35	89.776737
-    5.57	91.9527784
-    5.76	93.0330588
-    6.02	94.0825221
-    6.33	95.2130242
-    6.56	95.7846775
-    6.75	96.1913261
-    7.02	97.3445998
-    7.22	98.3093899
-    7.53	99.4160455
-    7.82	99.8716087
-    10	100
-        "
-     []
-  # [mdot_h_inlet_flux]
-  #   type = ParsedFunction
-  #   expression = 'mdot_h_inlet_flux_pp'
-  #   symbol_names = 'mdot_h_inlet_flux_pp'
-  #   symbol_values = 'mdot_h_inlet_flux_pp'
-  # []
-[]
 
 # ================================================================================================================
 # EXECUTION PARAMETERS
