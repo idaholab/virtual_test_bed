@@ -31,15 +31,13 @@ length_pipe3_s2 = 1.0439
   global_init_T = 908.15 # Global initial temperature for fluid and solid
   Tsolid_sf = 1e-3
   gravity = '0 -9.8 0'
-  #scaling_factor_var = '1 1e-3 1e-6' # fluid model solver parameters
+  scaling_factor_var = '1 1e-3 1e-6' # fluid model solver parameters
   p_order = 2
   [PBModelParams]
-    pbm_scaling_factors = '1 1e-3 1e-6 '
     passive_scalar = 'c1 c2 c3 c4 c5 c6'
     passive_scalar_decay_constant = '${lambda_1} ${lambda_2} ${lambda_3} ${lambda_4} ${lambda_5} ${lambda_6}'
     passive_scalar_diffusivity = '0.000 0.000 0.000 0.000 0.000 0.000'
     global_init_PS = '0.000 0.000 0.000 0.000 0.000 0.000'
-    p_order = 2
   []
 []
 
