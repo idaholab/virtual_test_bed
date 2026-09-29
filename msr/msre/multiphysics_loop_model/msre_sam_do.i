@@ -22,8 +22,13 @@ length_pipe3_s1 = 0.96806
 A_pipe3_s2 = 0.01267
 length_pipe3_s2 = 1.0439
 
-# Delayed Neutron precursor data (shared with ph_start.i via msre_do_common.i)
-!include msre_do_common.i
+# Delayed Neutron precursor data
+lambda_1 = 0.013336
+lambda_2 = 0.0327389985
+lambda_3 = 0.120779999
+lambda_4 = 0.302780002
+lambda_5 = 0.849489987
+lambda_6 = 2.85299993
 
 [GlobalParams]
   global_init_P = 1e5 # Global initial fluid pressure
@@ -537,13 +542,8 @@ length_pipe3_s2 = 1.0439
 
 [Executioner]
   type = Transient
-  # dt = 0.2
-  # dtmin = 1.e-3
-  # dtmax = 10.0
-  # start_time = -2000
-  # end_time = 0
   start_time = -2000
-  end_time  = -1000
+  end_time = -1000
   # scheme = implicit-euler
 
   [TimeStepper]
@@ -561,6 +561,15 @@ length_pipe3_s2 = 1.0439
   [Quadrature]
     type = SIMPSON
     order = SECOND
+  []
+[]
+
+[Functions]
+  [time_stepper]
+    type = PiecewiseConstant
+    direction = LEFT_INCLUSIVE
+    x = '-2000.0  -1998.0  -1980.0  -1900.0  -1500.0'
+    y = '    0.5      1.0      5.0     20.0    100.0'
   []
 []
 
