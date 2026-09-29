@@ -15,6 +15,7 @@ lfs_include:
   - htgr/htr-pm/core-multiphysics
   - htgr/httr/mesh/full_core/full_core_HTTR.e
   - htgr/httr/mesh/full_core/thermal_mesh_in.e
+  - htgr/httr/cross_sections
   - htgr/gpbr200
   - htgr/open-xe100
   - sfr/vtr
