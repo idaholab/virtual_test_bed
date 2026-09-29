@@ -15,7 +15,9 @@ The Virtual Test Bed (VTB) is an [open repository](https://github.com/idaholab/v
 
 !style! class=nric-media-box style=background-color:var(--nric-dark-teal);padding:15px;border-radius:12px
 !media drum_rotation/transient.mp4
-  caption=Micro reactor power density and temperature fields over control drum rotation transient
+  caption=Micro reactor power density and temperature fields over control drum rotation transient.
+
+Model: [microreactors/drum_rotation/index.md]
 !style-end!
 
 !col-end!

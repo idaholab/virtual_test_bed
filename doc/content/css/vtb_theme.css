@@ -80,6 +80,10 @@ h2, h3, h4, h5, h6 {
     color: var(--darkmode-fore);
 }
 
+.nric-media-box a {
+    color: var(--nric-yellow);
+}
+
 .nric-nav-logo img {
     height: 40px;
     vertical-align: middle;
