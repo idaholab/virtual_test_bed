@@ -1119,6 +1119,7 @@ non_solid_blocks = 'core2 lower_plenum upper_plenum down_comer riser'
   []
   [Keff]
     type = Receiver
+    default = 1.0
   []
   [rho_griffin]
     type = ParsedPostprocessor

@@ -38,7 +38,6 @@
     prereq = griffin_syntax
     capabilities = 'method=opt & (griffinapp | bluecrabapp)'
     min_parallel = 8
-    max_parallel = 8
     rel_err = 1.0E-4
     allow_warnings = true
     # Inf at the INITIAL row, before eigenvalue is computed -- expected when
@@ -52,7 +51,6 @@
     prereq = sam_syntax
     capabilities = 'method=opt & (samapp | bluecrabapp)'
     cli_args = "--app SamApp Outputs/csv/execute_on='initial final'"
-    max_parallel = 1
     rel_err = 1.0E-4
     allow_warnings = true
   []
@@ -64,13 +62,8 @@
     capabilities = 'method=opt & bluecrabapp'
     cli_args = "MultiApps/active='' Transfers/active='' Executioner/num_steps=2 Outputs/file_base=ph_start_fluids_only_out"
     min_parallel = 32
-    max_parallel = 32
     rel_err = 1.0E-4
     allow_warnings = true
-    # Keff stays at its uninitialized Receiver value (0) with Griffin's
-    # transfers disabled, making rho_griffin (1/Keff - ...) infinite --
-    # expected for this fluids-only isolation test
-    ignore_columns = 'rho_griffin'
   []
 
   # Fully coupled regression test
@@ -82,12 +75,7 @@
     capabilities = 'method=opt & bluecrabapp'
     cli_args = "Executioner/num_steps=2"
     min_parallel = 32
-    max_parallel = 32
     rel_err = 1.0E-4
     allow_warnings = true
-    # Keff is a Receiver with no default and is only updated by Pull_Keff at
-    # timestep_end, so rho_griffin (1/Keff - ...) is always infinite on the
-    # INITIAL row, before the first transfer -- structural, not a regression
-    ignore_columns = 'rho_griffin'
   []
 []
