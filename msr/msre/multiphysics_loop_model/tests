@@ -1,0 +1,93 @@
+[Tests]
+  # Syntax checks
+  [generate_mesh]
+    type = RunApp
+    capabilities = 'griffinapp | pronghornapp | bluecrabapp'
+    input = 'mesh.i'
+    cli_args = '--mesh-only'
+    working_directory = 'mesh'
+  []
+  [griffin_syntax]
+    type = RunApp
+    input = 'griffin_EV.i'
+    check_input = True
+    capabilities = 'griffinapp | bluecrabapp'
+    prereq = generate_mesh
+  []
+  [sam_syntax]
+    type = RunApp
+    input = 'msre_sam_do.i'
+    check_input = True
+    capabilities = 'samapp | bluecrabapp'
+    cli_args = "--app SamApp"
+    prereq = generate_mesh
+  []
+  [ph_start_syntax]
+    type = RunApp
+    input = 'ph_start.i'
+    check_input = True
+    capabilities = 'bluecrabapp'
+    prereq = generate_mesh
+  []
+
+  # Individual regression tests
+  [griffin_ev]
+    type = CSVDiff
+    input = 'griffin_EV.i'
+    csvdiff = 'msre_ss_out.csv'
+    prereq = griffin_syntax
+    capabilities = 'method=opt & (griffinapp | bluecrabapp)'
+    min_parallel = 8
+    max_parallel = 8
+    rel_err = 1.0E-4
+    allow_warnings = true
+    # Inf at the INITIAL row, before eigenvalue is computed -- expected when
+    # running Griffin standalone, not a regression signal
+    ignore_columns = 'Int_fission_source_normalized'
+  []
+  [sam_do]
+    type = CSVDiff
+    input = 'msre_sam_do.i'
+    csvdiff = 'msre_sam_do_csv.csv'
+    prereq = sam_syntax
+    capabilities = 'method=opt & (samapp | bluecrabapp)'
+    cli_args = "--app SamApp Outputs/csv/execute_on='initial final'"
+    max_parallel = 1
+    rel_err = 1.0E-4
+    allow_warnings = true
+  []
+  [ph_start_fluids_only]
+    type = CSVDiff
+    input = 'ph_start.i'
+    csvdiff = 'ph_start_fluids_only_out.csv'
+    prereq = ph_start_syntax
+    capabilities = 'method=opt & bluecrabapp'
+    cli_args = "MultiApps/active='' Transfers/active='' Executioner/num_steps=2 Outputs/file_base=ph_start_fluids_only_out"
+    min_parallel = 32
+    max_parallel = 32
+    rel_err = 1.0E-4
+    allow_warnings = true
+    # Keff stays at its uninitialized Receiver value (0) with Griffin's
+    # transfers disabled, making rho_griffin (1/Keff - ...) infinite --
+    # expected for this fluids-only isolation test
+    ignore_columns = 'rho_griffin'
+  []
+
+  # Fully coupled regression test
+  [ph_start_coupled]
+    type = CSVDiff
+    input = 'ph_start.i'
+    csvdiff = 'ph_start_out.csv'
+    prereq = 'ph_start_fluids_only sam_do griffin_ev'
+    capabilities = 'method=opt & bluecrabapp'
+    cli_args = "Executioner/num_steps=2"
+    min_parallel = 32
+    max_parallel = 32
+    rel_err = 1.0E-4
+    allow_warnings = true
+    # Keff is a Receiver with no default and is only updated by Pull_Keff at
+    # timestep_end, so rho_griffin (1/Keff - ...) is always infinite on the
+    # INITIAL row, before the first transfer -- structural, not a regression
+    ignore_columns = 'rho_griffin'
+  []
+[]
