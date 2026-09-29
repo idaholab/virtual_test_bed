@@ -143,8 +143,6 @@ lambda_6 = 2.85299993
     orientation = '0 1 0'
     position = '0 0 0'
     eos = fuel_salt_eos
-    #heat_source = 1.65e7
-    #scalar_source = 10.0
   []
 
   [j_up_ps1]
@@ -428,14 +426,6 @@ lambda_6 = 2.85299993
 []
 
 [Postprocessors]
-  [num_nonlinear_iterations]
-    type = NumNonlinearIterations
-    execute_on = 'timestep_end'
-  []
-  [num_linear_iterations]
-    type = NumLinearIterations
-    execute_on = 'timestep_end'
-  []
   [c1_inlet]
     type = ComponentBoundaryVariableValue
     variable = c1

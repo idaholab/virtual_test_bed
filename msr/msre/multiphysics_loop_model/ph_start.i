@@ -30,8 +30,8 @@ k_steel = 15.0 # (W/(m.k)) density of steel
 # ----------------------------------------------------------------------------------------------------------------
 core_porosity = 0.222 # core porosity salt VF=0.222831853, Graphite VF=0.777168147
 down_comer_porosity = 1.0 # downcomer porosity
-lower_plenum_porosity = 1.0 # lower pelnum porosity
-upper_plenum_porosity = 1.0 # upper pelnum porosity
+lower_plenum_porosity = 1.0 # lower plenum porosity
+upper_plenum_porosity = 1.0 # upper plenum porosity
 riser_porosity = 1.0 # riser porosity
 #pump_porosity         = 1.0                 # pump porosity
 #elbow_porosity        = 1.0                 # elbow porosity
@@ -873,20 +873,6 @@ non_solid_blocks = 'core2 lower_plenum upper_plenum down_comer riser'
     # if above one, no good
     type = NumFailedTimeSteps
   []
-  [num_nonlinear_iterations]
-    type = NumNonlinearIterations
-    execute_on = 'timestep_end'
-  []
-  [num_linear_iterations]
-    type = NumLinearIterations
-    execute_on = 'timestep_end'
-  []
-  [sam_num_nonlinear_iterations]
-    type = Receiver
-  []
-  [sam_num_linear_iterations]
-    type = Receiver
-  []
   [area_pp_inlet]
     type = AreaPostprocessor
     boundary = 'ph_inlet'
@@ -1295,20 +1281,6 @@ non_solid_blocks = 'core2 lower_plenum upper_plenum down_comer riser'
     reduction_type = average
     from_postprocessor = c1_inlet
     to_postprocessor = c1_inlet
-  []
-  [sam_nonlinear_its]
-    type = MultiAppPostprocessorTransfer
-    from_multi_app = sc_transient_app
-    reduction_type = average
-    from_postprocessor = num_nonlinear_iterations
-    to_postprocessor = sam_num_nonlinear_iterations
-  []
-  [sam_linear_its]
-    type = MultiAppPostprocessorTransfer
-    from_multi_app = sc_transient_app
-    reduction_type = average
-    from_postprocessor = num_linear_iterations
-    to_postprocessor = sam_num_linear_iterations
   []
   [c1]
     type = MultiAppGeneralFieldShapeEvaluationTransfer

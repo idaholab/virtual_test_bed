@@ -486,14 +486,6 @@ all_blocks = 'core core2 lower_plenum upper_plenum down_comer core_barrel riser'
 # POSTPROCESSORS
 # ================================================================================================================
 [Postprocessors]
-  [num_nonlinear_iterations]
-    type = NumNonlinearIterations
-    execute_on = 'timestep_end'
-  []
-  [num_linear_iterations]
-    type = NumLinearIterations
-    execute_on = 'timestep_end'
-  []
   [Int_fission_source]
     type = ElementIntegralVariablePostprocessor
     variable = fission_source
