@@ -1,8 +1,10 @@
 # Molten Salt Reactor Experiment Model
 # Steady state simulation
 # Application : SAM
-# Authors: Jun Fang, Travis Mui
-# Date: 04/2025
+# Authors: Travis Mui, Jun Fang
+# Date: 09/2025
+# If using or referring to this model, please cite as explained in
+# https://mooseframework.inl.gov/virtual_test_bed/citing.html
 
 # Component Areas and Lengths
 A_downcomer = 0.1155292077

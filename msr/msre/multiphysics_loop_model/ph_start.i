@@ -7,7 +7,7 @@
 # - Weakly compressible, turbulent flow formulation
 # MSRE: reference plant design based on 10.0 MW of MSRE Experiment.
 # ================================================================================================================
-# Author(s): Dr. Mauricio Tano, Dr. Mustafa K. Jaradat, Dr. Ramiro Freile
+# Author(s): Dr. Ramiro Freile, Dr. Mauricio Tano, Dr. Mustafa K. Jaradat
 # ================================================================================================================
 # MODEL PARAMETERS
 # ================================================================================================================
