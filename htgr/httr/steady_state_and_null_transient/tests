@@ -1,4 +1,5 @@
 [Tests]
+  issues = '#349'
   # Steady state
   [syntax_steady_core_homogeneous_hc]
     type = RunApp

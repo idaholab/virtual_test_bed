@@ -45,6 +45,9 @@
     prereq = 'syntax_transient_1 steady'
     abs_zero = 1e-4
     rel_err = 2e-4
+    override_columns = 'Total_Reactivity_Dollars'
+    override_abs_zero = '5e-4'
+    override_rel_err = '1e-3'
     min_threads = 4
   []
   [transient_2]
@@ -56,6 +59,12 @@
     prereq = 'syntax_transient_2 steady'
     abs_zero = 1e-4
     rel_err = 1e-4
+    # Same zero-crossing issue as transient_1: Total_Reactivity_Dollars sits at
+    # ~2.5e-4 at the pump-trip onset (t=120.5s), just above abs_zero, making it
+    # sensitive to platform-level FP noise.
+    override_columns = 'Total_Reactivity_Dollars'
+    override_abs_zero = '5e-4'
+    override_rel_err = '1e-3'
     min_threads = 4
   []
 []
