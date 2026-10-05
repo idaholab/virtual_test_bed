@@ -590,7 +590,7 @@ start_time = -2e5
 
   automatic_scaling = true
   compute_scaling_once = false
-  
+
   [TimeStepper]
     type = IterationAdaptiveDT
     dt = 1
