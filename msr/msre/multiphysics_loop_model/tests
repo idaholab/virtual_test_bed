@@ -50,7 +50,7 @@
     csvdiff = 'msre_sam_do_csv.csv'
     prereq = sam_syntax
     capabilities = 'method=opt & (samapp | bluecrabapp)'
-    cli_args = "--app SamApp Outputs/csv/execute_on='initial final'"
+    cli_args = "--app SamApp Outputs/csv/execute_on='initial final' Components/core_plenums/heat_source=cosine_power"
     rel_err = 1.0E-4
     allow_warnings = true
   []

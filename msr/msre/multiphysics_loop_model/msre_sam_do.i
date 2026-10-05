@@ -74,6 +74,12 @@ lambda_6 = 2.85299993
             4.8508E-03 4.6720E-03 4.5029E-03 4.3428E-03 4.1911E-03 4.0473E-03 3.9109E-03 3.7813E-03
             3.6582E-03 3.5411E-03 3.4297E-03 3.3235E-03 3.2224E-03 3.1259E-03'
   []
+  [cosine_power] # Half-sine volumetric power shape, normalized to drop 10 MW total into core_plenums
+    type = NormalizedSineFunction
+    component = 0 # SAM tracks the internal axial coordinate via x regardless of 3-D orientation
+    length = ${length_coreplenums}
+    coeff = ${fparse 10e6 * pi / (2 * A_coreplenums * length_coreplenums)}
+  []
 []
 
 [EOS]
@@ -145,6 +151,7 @@ lambda_6 = 2.85299993
     orientation = '0 1 0'
     position = '0 0 0'
     eos = fuel_salt_eos
+    heat_source = 0 # overridden to cosine_power for the SAM-only regression test
   []
 
   [j_up_ps1]
