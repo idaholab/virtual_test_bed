@@ -1,5 +1,21 @@
 # Full Core GCMR Multiphysics Model with Balance-of-Plant
 
+#!tag name=GCMR_BOP_MP
+description=Multiphysics BOP model for Gas Cooled microreactor
+pairs=reactor_type:microreactor
+image=https://mooseframework.inl.gov/virtual_test_bed/media/gcmr/FCMP/coupling_hierarchy_strategy.png
+      reactor:GCMR
+      geometry:Plant
+      simulation_type:Multiphysics
+      input_features:checkpoint restart/multiapps
+      transient:steady/transient
+      codes_used:BISON;Griffin;SAM;THM;
+      open_source:partially/fully
+      computing_needs:Workstation/HPC
+      fiscal_year:2026
+      institution:ANL
+      sponsor:NEAMS
+
 ## Overview
 
 This model extends the [Full Core GCMR Multiphysics Model](/GCMR_Core_Multiphysics_models.md) by coupling the reactor core to a plant-level power conversion system, i.e., the balance of plant (BOP). The GCMR power conversion system employs an open-air recuperated Brayton cycle as the secondary loop, designed to convert the 20 MW$_{\text{th}}$ produced by the core into electrical power. The core neutronics (Griffin) and heat conduction (BISON) models are inherited from the baseline model and are not repeated here; the distinguishing feature of this model is the addition of a self-contained thermal-hydraulic loop model, built with the MOOSE Thermal-Hydraulics Module (THM), that represents the complete primary and secondary loops together with the turbomachinery dynamics.
@@ -13,7 +29,7 @@ Two simulation cases are provided:
 
 ## Balance-of-Plant Model
 
-The BOP loop is modeled with THM [!cite](SAMTheoryManual) and is referenced by BISON as a thermal-hydraulic sub-application. On the primary side, the core geometry is simplified to a one-dimensional/two-dimensional (1D–2D) representation, in which all coolant channels in the core are collapsed into a single representative channel coupled to a single cylindrical heat structure. This heat structure represents the combined fuel, graphite matrix, and moderator regions using concentric hollow cylinders with geometric parameters chosen to preserve the total volume of each material region.
+The BOP loop is modeled with THM [!cite](hansel2024) and is referenced by BISON as a thermal-hydraulic sub-application. On the primary side, the core geometry is simplified to a one-dimensional/two-dimensional (1D–2D) representation, in which all coolant channels in the core are collapsed into a single representative channel coupled to a single cylindrical heat structure. This heat structure represents the combined fuel, graphite matrix, and moderator regions using concentric hollow cylinders with geometric parameters chosen to preserve the total volume of each material region.
 
 On the secondary side, the model represents the complete Brayton cycle loop: ambient-temperature air enters a compressor, is preheated by exhaust gases in a recuperator, and is then further heated in a primary-to-secondary heat exchanger where the full 20 MW$_{\text{th}}$ is transferred from the helium primary loop. The heated air expands through a turbine, which drives both the compressor and an electrical generator via a common shaft. The turbine exhaust passes back through the recuperator to recover residual thermal energy before being released to the atmosphere.
 
@@ -148,3 +164,17 @@ The spatial fuel temperature distribution shifts accordingly. The maximum fuel t
       caption=Time evolution of the maximum, average, and minimum fuel temperatures during the load-following transient.
 
 The reactor self-regulates to the new equilibrium without operator intervention, demonstrating the passive load-following capability of the integrated BOP–core multiphysics model.
+
+## HPC Resources
+
+The resources required to run each model is listed below:
+
+| HPC Resources Required |
+
+| Resource | steady state | Transient |
+| - | - | - |
+| HPC Machine | Teton | Teton |
+| Number of nodes | 3 | 3 |
+| Number of processes | 480 | 480 |
+| Number of threads per process | 160 | 160 |
+| Run time(s) | 90,000 | 1,090,000 |
