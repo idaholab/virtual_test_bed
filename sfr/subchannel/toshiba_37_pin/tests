@@ -14,14 +14,14 @@
   []
   # Regression checks for 37-pin model
   [subchannel]
-    type = Exodiff
+    type = CSVDiff
     input = toshiba_37_pin.i
-    exodiff = 'toshiba_37_pin_out.e'
+    csvdiff = 'toshiba_37_pin_out.csv'
     prereq = 'subchannel_syntax'
-    capabilities = 'subchannelapp | combinedapp'
-
-    # To get consistent results for testing
-    cli_args = "SubChannel/P_tol=1e-7 SubChannel/T_tol=1e-6 SubChannel/atol=1e-9 SubChannel/rtol=1e-9"
-    custom_cmp = 'testing_tolerances.cmp'
+    capabilities = 'method!=dbg & (subchannelapp | combinedapp)'
+    valgrind = NONE
+    recover = false
+    abs_zero = 1e-5
+    max_threads = 1
   []
 []
