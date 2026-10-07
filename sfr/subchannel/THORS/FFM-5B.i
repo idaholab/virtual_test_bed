@@ -57,38 +57,29 @@ P_out = 2.0e5 # Pa
   segregated = false
   verbose_subchannel = true
   interpolation_scheme = exponential
-  # Heat Transfer Correlations
   pin_HTC_closure = 'Dittus-Boelter'
   # friction model
   friction_closure = 'cheng'
   full_output = true
-  # mixing model
   mixing_closure = 'cheng_todreas'
+
 []
 
 [SCMClosures]
   [cheng]
     type = SCMFrictionUpgradedChengTodreas
   []
-  [Dittus-Boelter]
-    type = SCMHTCDittusBoelter
-  []
   [cheng_todreas]
     type = SCMMixingChengTodreas
-    CT = 2
+    CT = 2.0
+  []
+  [Dittus-Boelter]
+    type = SCMHTCDittusBoelter
   []
 []
 
 [ICs]
-  [S_IC]
-    type = SCMTriFlowAreaIC
-    variable = S
-  []
 
-  [w_perim_IC]
-    type = SCMTriWettedPerimIC
-    variable = w_perim
-  []
 
   [T_ic]
     type = ConstantIC
@@ -106,6 +97,12 @@ P_out = 2.0e5 # Pa
     type = ConstantIC
     variable = DP
     value = 0.0
+  []
+
+  [Dpin_ic]
+    type = ConstantIC
+    variable = Dpin
+    value = 0.005842
   []
 
   [Viscosity_ic]
@@ -233,21 +230,28 @@ P_out = 2.0e5 # Pa
 []
 
 ################################################################################
+# A multiapp that projects data to a detailed mesh
+################################################################################
+
 [MultiApps]
-################################################################################
-#### A multiapp that projects the solution to a detailed mesh for visualization purposes
-################################################################################
   [viz]
     type = FullSolveMultiApp
-    input_files = 'FFM-5B_viz.i'
-    execute_on = 'FINAL'
+    input_files = "FFM-5B_viz.i"
+    execute_on = "timestep_end"
   []
 []
 
 [Transfers]
-  [subchannel_transfer]
+  [xfer_subchannel]
     type = SCMSolutionTransfer
     to_multi_app = viz
-    variable = 'mdot SumWij P DP h T rho mu S w_perim'
+    transfer_type = subchannel
+    variable = 'mdot SumWij P DP h T rho mu S displacement w_perim'
+  []
+  [xfer_q_prime]
+    type = SCMSolutionTransfer
+    to_multi_app = viz
+    transfer_type = pin
+    variable = q_prime
   []
 []

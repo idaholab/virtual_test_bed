@@ -14,7 +14,7 @@ P_out = 2.0e5 # Pa
   [subchannel]
     type = SCMTriAssemblyMeshGenerator
     nrings = 4
-    n_cells = 100
+    n_cells = 20
     flat_to_flat = 0.085
     heated_length = 1.0
     pin_diameter = 0.01
@@ -32,6 +32,48 @@ P_out = 2.0e5 # Pa
   []
 []
 
+[AuxVariables]
+  [mdot]
+    block = subchannel
+  []
+  [SumWij]
+    block = subchannel
+  []
+  [P]
+    block = subchannel
+  []
+  [DP]
+    block = subchannel
+  []
+  [h]
+    block = subchannel
+  []
+  [T]
+    block = subchannel
+  []
+  [Tpin]
+    block = fuel_pins
+  []
+  [Dpin]
+    block = fuel_pins
+  []
+  [rho]
+    block = subchannel
+  []
+  [mu]
+    block = subchannel
+  []
+  [S]
+    block = subchannel
+  []
+  [w_perim]
+    block = subchannel
+  []
+  [q_prime]
+    block = fuel_pins
+  []
+[]
+
 [SubChannel]
   type = TriSubChannel1PhaseProblem
   fp = sodium
@@ -44,46 +86,43 @@ P_out = 2.0e5 # Pa
   T_tol = 1.0e-3
   implicit = true
   segregated = false
+  staggered_pressure = false
   verbose_multiapps = true
   verbose_subchannel = false
-  # Heat Transfer Correlations
   pin_HTC_closure = 'Dittus-Boelter'
   # friction model
   friction_closure = 'cheng'
   full_output = true
-  # mixing model
   mixing_closure = 'cheng_todreas'
+
 []
 
 [SCMClosures]
   [cheng]
     type = SCMFrictionUpgradedChengTodreas
   []
-  [Dittus-Boelter]
-    type = SCMHTCDittusBoelter
-  []
   [cheng_todreas]
     type = SCMMixingChengTodreas
-    CT = 1.0
+  []
+  [Dittus-Boelter]
+    type = SCMHTCDittusBoelter
   []
 []
 
 [ICs]
-  [S_IC]
-    type = SCMTriFlowAreaIC
-    variable = S
-  []
 
-  [w_perim_IC]
-    type = SCMTriWettedPerimIC
-    variable = w_perim
-  []
 
   [q_prime_IC]
     type = SCMTriPowerIC
     variable = q_prime
     power = 1.000e5 # W
     filename = "pin_power_profile_37.txt"
+  []
+
+  [Dpin_ic]
+    type = ConstantIC
+    variable = Dpin
+    value = 0.01
   []
 
   [T_ic]
@@ -95,7 +134,7 @@ P_out = 2.0e5 # Pa
   [P_ic]
     type = ConstantIC
     variable = P
-    value = ${P_out}
+    value = 0.0
   []
 
   [DP_ic]
@@ -114,7 +153,7 @@ P_out = 2.0e5 # Pa
   [rho_ic]
     type = RhoFromPressureTemperatureIC
     variable = rho
-    p = P
+    p = ${P_out}
     T = T
     fp = sodium
   []
@@ -122,7 +161,7 @@ P_out = 2.0e5 # Pa
   [h_ic]
     type = SpecificEnthalpyFromPressureTemperatureIC
     variable = h
-    p = P
+    p = ${P_out}
     T = T
     fp = sodium
   []
@@ -135,13 +174,6 @@ P_out = 2.0e5 # Pa
 []
 
 [AuxKernels]
-  [P_out_bc]
-    type = ConstantAux
-    variable = P
-    boundary = outlet
-    value = ${P_out}
-    execute_on = 'timestep_begin'
-  []
   [T_in_bc]
     type = ConstantAux
     variable = T
@@ -161,12 +193,27 @@ P_out = 2.0e5 # Pa
 
 [Outputs]
   exodus = true
+  csv = true
 []
 
 [Executioner]
   type = Steady
 []
 
+[Postprocessors]
+  [T_Planar_Mean]
+    type = SCMPlanarMean
+    variable = T
+    execute_on = 'TIMESTEP_END'
+    height = 1.0
+  []
+
+  [DP_SubchannelDelta]
+    type = SubChannelDelta
+    variable = P
+    execute_on = 'TIMESTEP_END'
+  []
+[]
 ################################################################################
 # A multiapp that projects data to a detailed mesh
 ################################################################################
@@ -179,17 +226,17 @@ P_out = 2.0e5 # Pa
   []
 []
 
+###### Transfers to the detailedMesh at the end of the coupled simulations
 [Transfers]
   [subchannel_transfer]
     type = SCMSolutionTransfer
     to_multi_app = viz
-    variable = 'mdot SumWij P DP h T rho mu S w_perim'
+    variable = 'mdot SumWij P DP h T rho mu S'
   []
-
   [pin_transfer]
     type = SCMSolutionTransfer
     transfer_type = pin
     to_multi_app = viz
-    variable = 'q_prime'
+    variable = 'Tpin q_prime'
   []
 []
