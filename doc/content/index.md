@@ -31,13 +31,26 @@ The VTB is sponsored by the [National Reactor Innovation Center (NRIC)](https://
 
 !col-end!
 
-!col! small=6 medium=6 large=6 style=padding-left:2rem
+!col! small=6 medium=6 large=6
 
-!style! class=nric-media-box style=background-color:var(--nric-dark-teal);padding:15px;border-radius:12px
-!media drum_rotation/transient.mp4
-  caption=Micro reactor power density and temperature fields over control drum rotation transient.
-
+!style! class=nric-media-box
+!slideshow! interval=5 side_arrows=False
+!slide! drum_rotation/eigenvalue.png caption=Initial power and temperature profiles in microreactor control drum rotation simulation.
 Model: [microreactors/drum_rotation/index.md]
+!slide-end!
+
+!slide! msr/msre/MSRE_pgh_fields.png caption=Steady-state fuel salt temperature, velocity, and power density in the Molten Salt Reactor Experiment (MSRE).
+Model: [msr/msre/multiphysics_rz_model/index.md]
+!slide-end!
+
+!slide! vtr/sflux_g0_cold_hot.png caption=Normalized fast flux at core mid-plane in the Versatile Test Reactor (VTR).
+Model: [sfr/vtr/index.md]
+!slide-end!
+
+!slide! htgr/assembly_fluid_temp.png caption=Fluid and solid temperatures predicted for a prismatic HTGR assembly.
+Model: [htgr/assembly/index.md]
+!slide-end!
+!slideshow-end!
 !style-end!
 
 !col-end!
