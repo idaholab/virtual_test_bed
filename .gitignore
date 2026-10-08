@@ -256,3 +256,6 @@ scripts/config.yaml
 !/vtb_assistant/build/**
 !/vtb_assistant/.gitignore
 !/vtb_assistant/.claude-plugin/plugin.json
+
+# images generated on-the-fly
+doc/content/media/htgr/open-xe100/power_comparison.png
