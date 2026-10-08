@@ -11,6 +11,11 @@ Content:
 
 Renderer:
     type: MooseDocs.base.MaterializeRenderer
+    extra-css:
+        - https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@500;600&family=Montserrat:wght@400;500&display=swap
+        - css/vtb_theme.css
+    extra-js:
+        - js/vtb_nav_logo.js
 
 Extensions:
     MooseDocs.extensions.navigation:
@@ -27,12 +32,11 @@ Extensions:
                 Updating the VTB: vtb_pages/updating.md
                 Contributing: vtb_pages/contributing.md
                 Citing: vtb_pages/citing.md
-            Models:
-                By Filter: https://mooseframework.inl.gov/virtual_test_bed/resources/filter/index.html
-                By Index: vtb_pages/manual_indexing.md
+            Models: vtb_pages/models.md
             Support:
                 FAQ and Forum: https://github.com/idaholab/virtual_test_bed/discussions
                 Contact Us: vtb_pages/contact.md
+        breadcrumbs: false
     MooseDocs.extensions.appsyntax:
         active: false
     MooseDocs.extensions.ifelse:
