@@ -12,6 +12,12 @@
 
 [Na-HPMR Multiphysics results](mrad/mrad_na_hpmr_results.md)
 
+## Multiphysics Neutronics-Thermomechanics-Heat Pipe Model
+
+[K-HPMR Multiphysics model](mrad/mrad_k_hpmr_thermomechanics_model.md)
+
+[K-HPMR Multiphysics results](mrad/mrad_k_hpmr_thermomechanics_results.md)
+
 ## Legacy Thermal-Heat Pipe Model
 
 [Legacy Multiphysics model](mrad/legacy_mrad_model.md)
