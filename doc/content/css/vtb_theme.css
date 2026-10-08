@@ -84,6 +84,91 @@ h2, h3, h4, h5, h6 {
     color: var(--nric-yellow);
 }
 
+/*
+  Front page slideshow (gallery extension's Materialize carousel) inside the media
+  box. Each slide is laid out as a column: the image, then its caption below it (not
+  overlaid), with room reserved at the bottom for the indicator dots.
+*/
+.nric-media-box .carousel.moose-slideshow {
+    /* Fixed box height so it doesn't resize per slide; !important overrides the
+       inline height Materialize's JS computes from the first slide. */
+    height: 400px !important;
+}
+
+.nric-media-box .carousel.moose-slideshow .carousel-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start; /* anchor the image to the top of the box */
+    width: 100%;
+    height: 100%;
+    padding-bottom: 18px;        /* keep the group clear of the dots at the bottom */
+    box-sizing: border-box;
+}
+
+/*
+  The image wrapper shrink-wraps the image, so the caption sits directly beneath the
+  image, and the group is anchored to the top of the box by the carousel-item's
+  justify-content (the dots stay pinned at the bottom, so the gap between the caption
+  and the dots varies with the image height). The image is sized in normal flow with
+  max-width/max-height (not height:100% or object-fit), so it scales to fit while
+  preserving aspect ratio no matter how it is wrapped. MOOSE wraps it in a <picture>,
+  and Materialize's lightbox ('materialboxed') wraps that in a '.material-placeholder'
+  div at runtime; a percentage-height or absolute-positioning scheme breaks on that
+  injected wrapper (the image collapses to zero height), whereas a fixed max-height on
+  the image does not depend on any ancestor's height.
+*/
+.nric-media-box .carousel.moose-slideshow .carousel-item .material-placeholder,
+.nric-media-box .carousel.moose-slideshow .carousel-item picture {
+    display: block;
+    min-height: 0;
+    max-width: 100%;
+}
+
+.nric-media-box .carousel.moose-slideshow .carousel-item img {
+    display: block;
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 300px;
+    /* The slide box can be wider than the image (e.g. a long caption), so center it. */
+    margin: 0 auto;
+}
+
+.nric-media-box .carousel.moose-slideshow .carousel-caption {
+    flex: 0 0 auto;
+    margin: 0;
+    padding: 8px 15px 0;
+    text-align: center;
+    color: #fff;
+}
+
+/*
+  Arbitrary block content a slide may carry beneath its caption (e.g. a link to the
+  relevant model). The top margin gives the blank line between the caption and this
+  content; links are already colored by the '.nric-media-box a' rule above.
+*/
+.nric-media-box .carousel.moose-slideshow .carousel-item p {
+    flex: 0 0 auto;
+    margin: 1rem 0 0;
+    padding: 0 15px;
+    text-align: center;
+    color: #fff;
+}
+
+/*
+  Tighten the indicator dots toward the bottom of the box: smaller margins than
+  Materialize's 24px, and line-height:0 on the list to drop the inline-block
+  descender space that otherwise leaves a gap below the dots.
+*/
+.nric-media-box .carousel.moose-slideshow .indicators {
+    line-height: 0;
+}
+
+.nric-media-box .carousel.moose-slideshow .indicators .indicator-item {
+    margin: 6px 4px;
+}
+
 .nric-nav-logo img {
     height: 40px;
     vertical-align: middle;
