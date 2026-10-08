@@ -13,7 +13,7 @@
                        codes_used:SAM
                        computing_needs:Workstation
                        gpu_enabled:false
-                       transient:steady/transient
+                       transient:steady_state;transient
                        V_and_V:demonstration
                        fiscal_year:2025
                        sponsor:ARPA-E
@@ -40,7 +40,7 @@ The SAM input file adopts a block-structured syntax, and each block contains the
 
 ### GlobalParams style=font-size:125%
 
-This block contains the global parameters that are applied to all SAM components, such as the initial pressure (`1.e5` Pa), initial velocity (`2.0` m/s), and global initial temperature (`773.15` K). This section also specifies variable scaling factors (`scaling_factor_var = '1 1e-2 1e-5'`), which is a crucial numerical setup in SAM (based on MOOSE's PJFNK solver). Scaling handles variables like pressure, velocity, and temperature that have drastically different magnitudes, ensuring robust matrix preconditioning and solver convergence.
+This block contains the global parameters that are applied to all SAM components, such as the initial pressure (`1.e5` Pa), initial velocity (`2.0` m/s), and global initial temperature (`773.15` K). This section also specifies variable scaling factors (`scaling_factor_var = '1 1e-2 1e-5'`), which is a crucial numerical setup in SAM (based on MOOSE's PJFNK solver). The simulation solves equations for mass, momentum and energy conservation that have drastically different magnitudes, scaling them improves matrix preconditioning and solver convergence.
 
 !listing msr/sel/OnepinSS.i block=GlobalParams language=cpp
 
@@ -54,7 +54,7 @@ This block specifies the material equations of state for the three working fluid
 
 This is the main block in the input file. It provides the specifications for all physical components that make up the loop, converting the 3D facility geometry into an equivalent 1D system network using components such as the test section, heat exchangers, pumps, and connecting pipes.
 
-The test section is modeled as a `PBCoreChannel` incorporating the electrically heated `heater` pin. Key parameters such as hydraulic diameter (`Dh = 0.015494`) and flow area are carefully specified to represent the annular flow path between the single heater pin and the surrounding pipe wall. Heat transfer correlations are enhanced (`SC_HTC = 1.3`) to account for local flow phenomena:
+The test section is modeled as a `PBCoreChannel` incorporating the electrically heated `heater` pin. Key parameters such as hydraulic diameter (`Dh = 0.015494`) and flow area are carefully specified to represent the annular flow path between the single heater pin and the surrounding pipe wall. Heat transfer correlations are tuned (`SC_HTC = 1.3`) to account for local flow phenomena:
 
 !listing msr/sel/OnepinSS.i block=Components/CH1 language=cpp
 
@@ -62,7 +62,7 @@ The primary (IHX) and secondary (SHX) heat exchangers are modeled using the `PBH
 
 !listing msr/sel/OnepinSS.i block=Components/IHX language=cpp
 
-The molten salt pump (`Pump_p`) uses a `PBPump` component to drive forced convection. Its pressure head is defined via a time-dependent function (`pump_head`) that is central to both the steady-state and transient simulations. To reach the steady-state initial condition, the pump head is held at a constant value from a pseudo-transient start time of -20000 s up to 0 s to establish a steady 1 kg/s salt mass flow rate. For transient loss of flow simulations, a pump trip is initiated at time > 0, where the pump head function coasts down towards zero.
+The molten salt pump (`Pump_p`) uses a `PBPump` component to drive forced convection. Its pressure head is defined via a time-dependent function (`pump_head`) that is central to both the steady-state and transient simulations. To reach the steady-state initial condition, the pump head is held at a constant value from a pseudo-transient start time of -20,000 s up to 0 s to establish a steady 1 kg/s salt mass flow rate. For transient loss of flow simulations, a pump trip is initiated at time > 0, where the pump head function coasts down towards zero.
 
 !listing msr/sel/OnepinSS.i block=Components/Pump_p language=cpp
 
@@ -74,7 +74,7 @@ The Postprocessors block is used to extract and monitor macroscopic quantities o
 
 ### Executioner style=font-size:125%
 
-This block orchestrates the overall calculation process flow. It sets the solver type (e.g., `Transient`), start time, end time, and time-stepping scheme. It also configures the PETSc solver options (such as using the `lu` preconditioner with `petsc_options_value = '300 lu'`) to ensure that the highly non-linear fluid flow and conjugate heat transfer equations converge efficiently.
+This block orchestrates the overall calculation process flow. It sets the solver type (e.g., `Transient`), start time, end time, and time-stepping scheme. It also configures the PETSc solver options (such as using the `lu` preconditioner with `petsc_options_iname='-pc_type'` and `petsc_options_value = 'lu'`) to ensure that the solve for the non-linear fluid flow and conjugate heat transfer equations converge efficiently.
 
 !listing msr/sel/OnepinSS.i block=Executioner language=cpp
 
@@ -83,6 +83,7 @@ This block orchestrates the overall calculation process flow. It sets the solver
 ### Steady State Operating Conditions
 
 For a base case, salt flow rate 1 kg/s, and heater power of 11 kW:
+
 - 11.3 K coolant temperature rise
 - Peak pin centerline temperature 1135 K, pin surface temperature 1008 K
 - Air temperature rises to 780 K in PHX, cools down to 320 K in SHX for discharge to the environment.
