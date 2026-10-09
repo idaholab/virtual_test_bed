@@ -26,7 +26,7 @@ The CFD solver nekRS is not included in the VTB continuous integration test suit
 
 The LOTUS Molten Chloride Reactor (LMCR) is an open-core, fast-spectrum, liquid-fueled molten salt reactor concept that circulates chloride fuel salt through the reactor vessel and primary loop. The fuel salt, represented here by a UCl$_3$-NaCl eutectic mixture, provides both the fissile material and the primary heat-transfer medium [!citep](MCRreport2022,M3mcr2023). The high-fidelity computational fluid dynamics (CFD) model documented on this page represents an MCRE-like LMCR primary-loop configuration in which the unmoderated core cavity is connected to a curved inlet pipe, outlet pipe, pump region, and heat-exchanger leg. The checked-in nekRS case name is `mcre`, so the run files retain that historical name even though this VTB page documents the LMCR primary-loop LES benchmark.
 
-Because fission energy is deposited directly into the circulating fuel, the flow field controls more than pressure drop and heat removal. It also affects delayed neutron precursor residence time, spatial reactivity feedback, and the temperature field seen by lower-fidelity multiphysics models. The open core cavity does not contain internal structures that would homogenize the incoming jet. As a result, centrifugal acceleration from the upstream elbow drives the inlet stream toward the vessel wall, producing strongly three-dimensional recirculation, large coherent eddies, and persistent short-circuiting paths between the inlet and outlet.
+Because fission energy is deposited directly into the circulating fuel, the flow field controls more than pressure drop and heat removal. It also affects delayed neutron precursor residence time, spatial reactivity feedback, and the temperature field seen by lower-fidelity multiphysics models. Although reactor conceptual designs may include a bottom inlet grid or flow-straightening component to distribute and homogenize core flow, this component was intentionally omitted from the present CFD model to maintain a simplified geometry. As a result, without internal structures to homogenize the incoming jet in the open cavity, centrifugal acceleration from the upstream elbow drives the inlet stream toward the vessel wall, producing strongly three-dimensional recirculation, large coherent eddies, and persistent short-circuiting paths between the inlet and outlet.
 
 This nekRS model is intended to generate high-resolution large-eddy simulation (LES) data for understanding the LMCR primary-loop hydrodynamics and for calibrating engineering-scale thermal-hydraulic tools such as Pronghorn. The current checked-in case solves the incompressible isothermal flow problem with the temperature equation disabled, so the documented fields focus on velocity magnitude and the vertical velocity component. Accordingly, this study is centered on the loop flow velocity distribution and its turbulence characteristics.
 
@@ -79,7 +79,7 @@ The LES model uses the incompressible, constant-property form of the Navier-Stok
 
 where $u_i$ is velocity, $p$ is pressure, $\nu$ is kinematic viscosity, and $f_i$ is the user-defined momentum source used to drive the loop. The checked-in case disables the scalar temperature solve because this stage of the benchmark is focused on hydrodynamic mixing, residence-time behavior, and velocity-field statistics.
 
-The high-fidelity workflow uses lower-order transients to develop a turbulent initial condition before restarting at higher polynomial order for the production averaging run. In the documented analysis, initial transients were developed with $P=5$, while the final LES statistics targeting $Re \approx 10{,}742$ used $P=7$ for improved turbulent-scale resolution. 
+The high-fidelity workflow uses lower-order transients to develop a turbulent initial condition before restarting at higher polynomial order (or higher resolution) for the production averaging run. Here, "production averaging" refers to the stage where, after initial numerical transients have washed out and the flow has reached a statistically stationary turbulent state, the simulation is continued over an extended physical duration to compute time-averaged statistics (such as mean velocity fields and turbulent fluctuations) used for engineering calibration and benchmarking. In the documented analysis, initial transients were developed with $P=5$, while the final LES statistics targeting $Re \approx 10{,}742$ used $P=7$ for improved turbulent-scale resolution. 
 
 ## Case Setup
 
@@ -174,12 +174,24 @@ The LES data provide a reference for calibrating RANS and coarse-mesh system mod
 
 ## Running the Case
 
-A typical nekRS workflow is to compile the case, run a lower-cost transient to establish a turbulent state, and then restart at the production polynomial order for time averaging. The exact module names and executable paths depend on the target machine, but the following commands illustrate the expected sequence from the `msr/lotus/les` directory:
+A typical nekRS workflow is to run a lower-cost transient at a lower polynomial order to establish a turbulent state, and then restart at the production polynomial order for time averaging. From the `msr/lotus/les` directory, launch the simulation (for example, with 4 MPI ranks using `nrsmpi`):
 
 ```language=bash
-makenek mcre
-nekrs --setup mcre --backend CUDA
-nekrs --run mcre --backend CUDA
+nrsmpi mcre 4
 ```
 
-For CPU-only testing or debugging, replace the OCCA backend with the backend supported by the local nekRS installation. For production calculations, adjust `polynomialOrder`, `viscosity`, checkpoint cadence, and job size in `mcre.par` to match the target resolution and Reynolds number before launching the long averaging run.
+To restart the calculation at a higher polynomial order (e.g., transitioning from $P=5$ to $P=7$ for production averaging), update `mcre.par` under `[GENERAL]` by changing `polynomialOrder` and specifying the restart file with `startFrom`:
+
+```language=ini
+[GENERAL]
+polynomialOrder = 7
+startFrom = mcre0.f05000
+```
+
+No manual recompilation or preprocessing is needed after modifying `mcre.par`. When launched, nekRS automatically handles solution field interpolation between the different polynomial orders and continues the simulation using the standard run command:
+
+```language=bash
+nrsmpi mcre 4
+```
+
+For CPU-only testing or debugging, backend options can be specified as needed (e.g., `--backend CPU` or `--backend CUDA`). For production calculations, also ensure `viscosity`, `numSteps`, and checkpoint cadence in `mcre.par` match the target Reynolds number and averaging window.
