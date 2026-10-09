@@ -48,6 +48,9 @@ This block contains the global parameters that are applied to all SAM components
 
 This block specifies the material equations of state for the three working fluids in the system. The primary loop uses `PTFunctionsEOS` to define the temperature-dependent thermophysical properties of the molten salt (MgCl2-NaCl) via piece-wise linear interpolations (`PiecewiseLinear` functions defined in the `Functions` block). The secondary and tertiary loops use `AirEquationOfState` for pressurized air and `PTConstantEOS` for the cooling water, respectively.
 
+!alert note title=Thermophysical Property Source
+The thermophysical properties for the $\text{MgCl}_2\text{-NaCl}$ molten salt were obtained via private communication with an ARPA-E project industry partner, as the primary source contains proprietary information.
+
 !listing msr/sel/OnepinSS.i block=EOS language=cpp
 
 ### Components style=font-size:125%
