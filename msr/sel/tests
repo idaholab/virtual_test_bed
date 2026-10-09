@@ -9,6 +9,7 @@
   [sel_ss]
     type = CSVDiff
     input = 'OnepinSS.i'
+    cli_args = "Outputs/csv/execute_on='initial final'"
     csvdiff = 'OnepinSS_csv.csv'
     executable_pattern = 'sam*'
     prereq = 'sel_ss_syntax'
