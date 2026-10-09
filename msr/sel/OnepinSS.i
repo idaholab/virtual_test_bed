@@ -1,3 +1,15 @@
+# ==============================================================================
+# Model: Molten Salt Separate Effects Loop (SEL)
+# Application: SAM (System Analysis Module)
+# Simulation: Steady-state forced flow operating conditions (1 kg/s, 11 kW)
+# ------------------------------------------------------------------------------
+# Author(s): Thanh Hua (thua@anl.gov), Jun Fang (fangj@anl.gov)
+# Institution: Argonne National Laboratory (ANL)
+# Sponsor: ARPA-E
+# If using or referring to this model, please cite as explained on
+# https://mooseframework.inl.gov/virtual_test_bed/citing.html
+# ==============================================================================
+
 [GlobalParams]
   global_init_P      = 1.e5                       # Global initial fluid pressure
   global_init_V      = 2.0                        # Global initial fluid velocity

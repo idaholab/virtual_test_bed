@@ -1,3 +1,15 @@
+# ==============================================================================
+# Model: Molten Salt Separate Effects Loop (SEL)
+# Application: SAM (System Analysis Module)
+# Simulation: Loss-of-flow transient (pump trip) and natural circulation
+# ------------------------------------------------------------------------------
+# Author(s): Thanh Hua (thua@anl.gov), Jun Fang (fangj@anl.gov)
+# Institution: Argonne National Laboratory (ANL)
+# Sponsor: ARPA-E
+# If using or referring to this model, please cite as explained on
+# https://mooseframework.inl.gov/virtual_test_bed/citing.html
+# ==============================================================================
+
 [GlobalParams]
   global_init_P      = 1.e5                       # Global initial fluid pressure
   global_init_V      = 2.0                        # Global initial fluid velocity
