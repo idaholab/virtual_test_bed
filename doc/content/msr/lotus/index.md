@@ -14,7 +14,7 @@
            open_source:partially
            computing_needs:HPC
            fiscal_year:2024
-           institution:INL
+           institution:INL;ANL
            sponsor:NEAMS
 
 [Description of the reactor](lotus_description.md)
