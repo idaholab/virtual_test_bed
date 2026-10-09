@@ -2,7 +2,7 @@
 
 *Contact: Jun Fang, fangj.at.anl.gov*
 
-*Model link: [LMCR nekRS LES Model](https://github.com/idaholab/virtual_test_bed/tree/mcre/msr/lotus/les)*
+*Model link: [LMCR nekRS LES Model](https://github.com/idaholab/virtual_test_bed/tree/devel/msr/lotus/les)*
 
 !tag name=LMCR Primary Loop nekRS LES Model
      description=High-fidelity large-eddy simulation model of the LMCR primary loop using nekRS
@@ -20,7 +20,7 @@
                        institution:ANL
 
 !alert note
-The CFD solver nekRS is not included in the VTB CI test suites yet. Users are encouraged to reach out to the nekRS developer team at Argonne by emailing the POC (Jun Fang at [fangj@anl.gov](mailto:fangj@anl.gov)). Additionally, a beta version of the nekRS tutorial is available at the [nekRS Documentation](https://nekrs.readthedocs.io/en/latest/index.html).
+The CFD solver nekRS is not included in the VTB continuous integration test suite at this time. Users are encouraged to reach out to the nekRS developer team at Argonne by emailing the POC (Jun Fang at [fangj@anl.gov](mailto:fangj@anl.gov)). Additionally, a beta version of the nekRS tutorial is available at the [nekRS Documentation](https://nekrs.readthedocs.io/en/latest/index.html).
 
 ## Model Overview
 
@@ -31,7 +31,7 @@ Because fission energy is deposited directly into the circulating fuel, the flow
 This nekRS model is intended to generate high-resolution large-eddy simulation (LES) data for understanding the LMCR primary-loop hydrodynamics and for calibrating engineering-scale thermal-hydraulic tools such as Pronghorn. The current checked-in case solves the incompressible isothermal flow problem with the temperature equation disabled, so the documented fields focus on velocity magnitude and the vertical velocity component. Accordingly, this study is centered on the loop flow velocity distribution and its turbulence characteristics.
 
 !alert note
-The case files are stored in `msr/lotus/les`. The checked-in `mcre.par` file is a demonstration template. To speed up start-up and develop the turbulent state more quickly, begin runs with a lower polynomial order (for example $P=3$ or $P=5$) and a reduced Reynolds number. After the transient has developed, set the nondimensional viscosity to `1/10742.82` and restart at a higher polynomial order (for example $P=7$) to run the long averaging production calculation.
+The case files are stored in `msr/lotus/les`. The checked-in `mcre.par` file is a demonstration template. To speed up start-up and develop the turbulent state more quickly, you should begin runs with a lower polynomial order (for example $P=3$ or $P=5$) and a reduced Reynolds number. After the transient has developed, set the non-dimensional viscosity to `1/10742.82` and restart at a higher polynomial order (for example $P=7$) to run the long-averaging production calculation.
 
 ## System Specifications
 
