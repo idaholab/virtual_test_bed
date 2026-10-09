@@ -22,6 +22,7 @@
     input = 'neutronics_eigenvalue.i'
     check_input = True
     capabilities = 'direwolfapp'
+    max_time = 500
     prereq = neutronics_fine_mesh
   []
   [neutronics_only_syntax]
