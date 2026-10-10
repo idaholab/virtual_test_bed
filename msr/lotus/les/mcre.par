@@ -6,7 +6,7 @@ numSteps = 10000
 
 timeStepper = tombo1
 #dt = 1.0e-6
-#subCyclingSteps = 2
+#advectionSubCyclingSteps = 2
 dt = targetCFL=4 + max=1e-2 + initial=1e-6
 
 checkpointControl = steps
@@ -14,15 +14,12 @@ checkpointInterval = 1000
 
 regularization = hpfrt + nModes=1 + scalingCoeff=20
 
-[PRESSURE]
+[FLUID PRESSURE]
 residualTol = 1e-04
 initialGuess = projectionAconj+nVector=10
 
-[VELOCITY]
+[FLUID VELOCITY]
 boundaryTypeMap = W
 rho = 1.0
 viscosity = 1/10742.82
 residualTol = 1e-06
-
-[TEMPERATURE]
-solver = none
