@@ -114,7 +114,7 @@ A proportional-integral-derivative (PID) controller maintains the target mean co
 
 !listing msr/lotus/les/mcre.usr start=subroutine userchk end=c-----------------------------------------------------------------------
 
-The force field is transferred from the Nek user routine to nekRS through `mcre.udf`. Every ten time steps, nekRS copies the current solution to the Nek side, calls `userchk`, copies the updated `forcx` array into device memory, and applies it as a user velocity source.
+The force field is transferred from the Nek user routine to nekRS through `mcre.udf`. During setup (`UDF_Setup`), device memory is allocated and the initial force is evaluated from the velocity field. Every ten time steps during execution (`UDF_ExecuteStep`), nekRS copies the current solution to the Nek side, calls `userchk`, copies the updated `forcx` array into device memory, and applies it in `userf` via `nrs->userSource` as an explicit momentum source.
 
 !listing msr/lotus/les/mcre.udf
 
