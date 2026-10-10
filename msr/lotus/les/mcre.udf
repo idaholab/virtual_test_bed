@@ -1,0 +1,39 @@
+#ifdef __okl__
+
+#endif
+
+static deviceMemory<dfloat> o_nekFU;
+
+void userf(double time)
+{
+  nrs->fluid->o_explicitTerms().copyFrom(o_nekFU, nrs->fluid->fieldOffsetSum);
+}
+
+/* UDF Functions */
+void UDF_Setup()
+{
+  auto mesh = nrs->meshV;
+  nrs->userSource = &userf;
+
+  o_nekFU.resize(nrs->fluid->fieldOffsetSum);
+  platform->linAlg->fill(nrs->fluid->fieldOffsetSum, 0.0, o_nekFU);
+
+  double startTime = 0.0;
+  platform->options.getArgs("START TIME", startTime);
+  nrs->copyToNek(startTime, 0);
+  nek::userchk();
+  std::vector<dfloat> FUx(nek::ptr<double>("forcx"), nek::ptr<double>("forcx") + mesh->Nlocal);
+  o_nekFU.copyFrom(FUx, mesh->Nlocal, 0 * nrs->fieldOffset);
+}
+
+void UDF_ExecuteStep(double time, int tstep)
+{
+  auto mesh = nrs->meshV;
+
+  if (tstep % 10 == 0) {
+    nrs->copyToNek(time, tstep);
+    nek::userchk();
+    std::vector<dfloat> FUx(nek::ptr<double>("forcx"), nek::ptr<double>("forcx") + mesh->Nlocal);
+    o_nekFU.copyFrom(FUx, mesh->Nlocal, 0 * nrs->fieldOffset);
+  }
+}

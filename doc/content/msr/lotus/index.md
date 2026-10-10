@@ -14,7 +14,7 @@
            open_source:partially
            computing_needs:HPC
            fiscal_year:2024
-           institution:INL
+           institution:INL;ANL
            sponsor:NEAMS
 
 [Description of the reactor](lotus_description.md)
@@ -22,4 +22,6 @@
 [Griffin-Pronghorn Model](lotus_multiphysics_model.md)
 
 [Steady State Results](lotus_results.md)
+
+[High fidelity CFD Model of LMCR Loop](lotus_cfd_model.md)
 
