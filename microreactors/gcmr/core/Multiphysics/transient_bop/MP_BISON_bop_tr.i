@@ -50,7 +50,6 @@ start_time = -2e5
 
 [GlobalParams]
   flux_conversion_factor = 1
-  displacements = 'zero zero zero'
 []
 
 [Mesh]
@@ -323,41 +322,49 @@ start_time = -2e5
     type = StrainAdjustedDensity
     block = ${fuel_blocks}
     strain_free_density = 2276.5
+    displacements = 'zero zero zero'
   []
   [moderator_density]
     type = StrainAdjustedDensity
     block = ${mod_blocks}
     strain_free_density = 4.3e3
+    displacements = 'zero zero zero'
   []
   [monolith_density]
     type = StrainAdjustedDensity
     block = 10
     strain_free_density = 1806
+    displacements = 'zero zero zero'
   []
   [YH_Liner_Cr_density]
     type = StrainAdjustedDensity
     block = 102
     strain_free_density = 7190
+    displacements = 'zero zero zero'
   []
   [YH_Cladding_density]
     type = StrainAdjustedDensity
     block = 103
     strain_free_density = 7250
+    displacements = 'zero zero zero'
   []
   [Poison_blocks_density]
     type = StrainAdjustedDensity
     block = ${poison_blocks}
     strain_free_density = 2510
+    displacements = 'zero zero zero'
   []
   [control_rod_density]
     type = StrainAdjustedDensity
     block = 603 #B4C
     strain_free_density = 2510
+    displacements = 'zero zero zero'
   []
   [airgap_density]
     type = StrainAdjustedDensity
     block = ${he_void_blocks} #helium
     strain_free_density = 1000 #180
+    displacements = 'zero zero zero'
   []
 
   [reflector_density]
