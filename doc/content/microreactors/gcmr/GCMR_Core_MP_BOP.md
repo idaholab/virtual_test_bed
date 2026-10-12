@@ -175,5 +175,4 @@ The resources required to run each model is listed below:
 | HPC Machine | Teton | Teton |
 | Number of nodes | 3 | 3 |
 | Number of processes | 480 | 480 |
-| Number of threads per process | 160 | 160 |
 | Run time(s) | 90,000 | 1,090,000 |
