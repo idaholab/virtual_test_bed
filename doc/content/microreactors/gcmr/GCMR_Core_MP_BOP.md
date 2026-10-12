@@ -1,9 +1,9 @@
 # Full Core GCMR Multiphysics Model with Balance-of-Plant
 
-#!tag name=GCMR_BOP_MP
-description=Multiphysics BOP model for Gas Cooled microreactor
-pairs=reactor_type:microreactor
-image=https://mooseframework.inl.gov/virtual_test_bed/media/gcmr/FCMP/coupling_hierarchy_strategy.png
+!tag name=GCMR_BOP_MP
+    description=Multiphysics BOP model for Gas Cooled microreactor
+        image=https://mooseframework.inl.gov/virtual_test_bed/media/gcmr/FCMP/coupling_hierarchy_strategy.png
+        pairs=reactor_type:microreactor
       reactor:GCMR
       geometry:Plant
       simulation_type:Multiphysics
@@ -170,11 +170,9 @@ The reactor self-regulates to the new equilibrium without operator intervention,
 The resources required to run each model is listed below:
 
 | HPC Resources Required |
-
 | Resource | steady state | Transient |
 | - | - | - |
 | HPC Machine | Teton | Teton |
 | Number of nodes | 3 | 3 |
 | Number of processes | 480 | 480 |
-| Number of threads per process | 160 | 160 |
 | Run time(s) | 90,000 | 1,090,000 |

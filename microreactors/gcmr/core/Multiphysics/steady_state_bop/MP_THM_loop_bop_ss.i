@@ -1172,6 +1172,7 @@ eff_turb = 0.843
     flow_channel = cold_leg
     hs = recuperator
     hs_side = OUTER
+#Hw and P_hf is used to mimic the sophisticated Recuperator design that transfer enough energy from hot leg to cold leg.
     Hw = 10000
     P_hf ='${fparse pi * SEC_D_COLD*200}'
   []

@@ -578,6 +578,7 @@ eff_turb = 0.843
   # Generates generator torque curve
   [generator_torque_fn]
     type = ParsedFunction
+    # shaft speed is passed as time in the ShaftConnectedMotor
     expression = 'slope * t'
     symbol_names = 'slope'
     symbol_values = '${generator_torque_per_shaft_speed}'
