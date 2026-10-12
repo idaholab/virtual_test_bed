@@ -102,7 +102,7 @@ The checked-in parameter file uses the `tombo1` time stepper, a target-CFL adapt
 
 ### Boundary conditions and geometry scaling style=font-size:125%
 
-The case is nondimensionalized by the 0.5 m core diameter. This scaling is applied in `usrdat2`, where each mesh coordinate is multiplied by $1/0.5$. The same routine reconstructs wall boundary tags from the mesh boundary IDs so that all solid surfaces use no-slip wall conditions.
+The case is nondimensionalized using the reference core diameter $D = 0.5$ m as the characteristic length scale ($L_{\text{ref}} = D$) and the nominal mean core flow speed $U_{\text{ref}} \approx 0.03883$ m/s (from [lotus_les_specs]) as the characteristic velocity scale. Spatial scaling is applied in `usrdat2`, where each mesh coordinate is multiplied by $1/0.5$ to yield non-dimensional coordinates $x^* = x / L_{\text{ref}}$. The same routine reconstructs wall boundary tags from the mesh boundary IDs so that all solid surfaces use no-slip wall conditions.
 
 !listing msr/lotus/les/mcre.usr start=subroutine usrdat2 end=c-----------------------------------------------------------------------
 
@@ -110,7 +110,7 @@ The velocity boundary-type map in `mcre.par` is `W`, so the flow is not driven b
 
 ### Momentum-source flow control style=font-size:125%
 
-A proportional-integral-derivative (PID) controller maintains the target mean core velocity. During `userchk`, the code computes a planar average of the vertical velocity, compares it against the target nondimensional velocity of 1.0, and updates the axial forcing term. The force is applied in a selected vertical-pipe region and is saved periodically to `pid_restart.dat` so restarted simulations retain the controller history. The relevant user routine is included in the `mcre.usr` listing below.
+A proportional-integral-derivative (PID) controller maintains the target mean core velocity. During `userchk`, the code computes a planar average of the vertical velocity across the core, compares it against the target nondimensional velocity of 1.0 (`utar = 1.0`), and updates the axial forcing term. Because the reference velocity is $U_{\text{ref}} = 0.03883$ m/s, maintaining a non-dimensional core speed of $u^* \approx 1.0$ ensures that the simulated flow corresponds to the physical 25 kg/s operating point. The force is applied in a selected vertical-pipe region and is saved periodically to `pid_restart.dat` so restarted simulations retain the controller history. The relevant user routine is included in the `mcre.usr` listing below.
 
 !listing msr/lotus/les/mcre.usr start=subroutine userchk end=c-----------------------------------------------------------------------
 
@@ -126,6 +126,14 @@ The planar average used by the PID controller is evaluated by `planar.f`. The he
 
 ## LES Results
 
+All simulation results and velocity contours shown below are presented in non-dimensional units ($u^* = u / U_{\text{ref}}$). To convert non-dimensional velocities to physical dimensional values, multiply by the reference velocity scale:
+
+\begin{equation}
+u_{\text{dim}} = u^* \cdot U_{\text{ref}} = u^* \cdot 0.03883\text{ m/s} .
+\end{equation}
+
+Because the primary piping diameter ($d \approx 0.08$ m) is substantially smaller than the core vessel diameter ($D = 0.5$ m), the cross-sectional area ratio between the core and piping is approximately $(D/d)^2 \approx 39$. From mass continuity ($\dot{m} = \rho A v = \text{const}$), the fluid accelerates in the piping to a non-dimensional velocity of $u^* \approx 30\text{--}40$ when the core velocity is $u^* \approx 1$. In physical units, this corresponds to an expected primary piping velocity of approximately $1.2\text{--}1.55$ m/s ($40 \times 0.03883\text{ m/s} \approx 1.55\text{ m/s}$).
+
 ### Instantaneous velocity field style=font-size:125%
 
 Instantaneous $P=7$ velocity fields show a highly unsteady, asymmetric flow. The curved inlet pipe deflects the incoming salt jet toward the vessel wall, after which the jet breaks down into energetic three-dimensional eddies in the open cavity. The turbulence is dominated by large coherent structures rather than by small, nearly isotropic eddies, which is important for reduced-order modeling because the global circulation pattern controls the residence time distribution.
@@ -133,12 +141,12 @@ Instantaneous $P=7$ velocity fields show a highly unsteady, asymmetric flow. The
 !media msr/lotus/les/inst_Ux.png
        style=width:70%;margin-left:auto;margin-right:auto
        id=lotus_les_inst_ux
-       caption=Instantaneous vertical velocity, $U_x$, from the nekRS LES. The incoming jet is deflected by upstream curvature and produces strong local fluctuations.
+       caption=Instantaneous non-dimensional vertical velocity, $U_x^*$, from the nekRS LES. The incoming jet is deflected by upstream curvature and produces strong local fluctuations.
 
 !media msr/lotus/les/inst_Umag.png
        style=width:70%;margin-left:auto;margin-right:auto
        id=lotus_les_inst_umag
-       caption=Instantaneous velocity magnitude, $|U|$, showing energetic large-scale eddies in the open core cavity.
+       caption=Instantaneous non-dimensional velocity magnitude, $|U^*|$, showing energetic large-scale eddies in the open core cavity.
 
 The strongest instantaneous velocities occur along the impingement side of the vessel, where the inlet momentum enters the larger core volume. This behavior has potential implications for local wall heat transfer, thermal striping, and structural vibration. It also demonstrates why a high-fidelity reference solution is valuable: a steady or overly diffusive turbulence model may smooth out the coherent jet path that governs loop-scale mixing.
 
@@ -149,12 +157,12 @@ The time-averaged LES field reveals persistent macroscopic flow asymmetry. A hig
 !media msr/lotus/les/mean_Ux.png
        style=width:70%;margin-left:auto;margin-right:auto
        id=lotus_les_mean_ux
-       caption=Time-averaged vertical velocity, $\langle U_x \rangle$, showing the persistent asymmetric circulation pattern.
+       caption=Time-averaged non-dimensional vertical velocity, $\langle U_x^* \rangle$, showing the persistent asymmetric circulation pattern.
 
 !media msr/lotus/les/mean_Umag.png
        style=width:70%;margin-left:auto;margin-right:auto
        id=lotus_les_mean_umag
-       caption=Time-averaged velocity magnitude, $\langle |U| \rangle$, highlighting the high-speed wall stream and lower-speed recirculation zones.
+       caption=Time-averaged non-dimensional velocity magnitude, $\langle |U^*| \rangle$, highlighting the high-speed wall stream and lower-speed recirculation zones.
 
 Three features are especially important for reactor analysis:
 
