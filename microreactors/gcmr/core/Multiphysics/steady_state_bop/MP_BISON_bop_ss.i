@@ -30,7 +30,7 @@ monolith_blocks = '10'
 non_fuel_blocks = '${mod_blocks} ${poison_blocks} ${ref_blocks} ${he_void_blocks} ${small_parts_blocks} ${monolith_blocks}'
 non_yh_blocks = '${fuel_blocks} ${poison_blocks} ${ref_blocks} ${he_void_blocks} ${small_parts_blocks} ${monolith_blocks}'
 
-external_bdries = 'top_boundary bottom_boundary side'
+# external_bdries = 'top_boundary bottom_boundary side'
 # symmetric_bdries = 'cut_surf'
 coolant_channel_bdries = 'coolant_channel_surf'
 
@@ -48,6 +48,7 @@ start_time = -2e5
 
 [GlobalParams]
   flux_conversion_factor = 1
+  displacements = 'zero zero zero'
 []
 
 [Mesh]
@@ -166,6 +167,8 @@ start_time = -2e5
     order = CONSTANT
     block = '1000 1003 monolith'
   []
+  [zero]
+  []
 []
 
 [AuxScalarKernels]
@@ -283,7 +286,7 @@ start_time = -2e5
   [moderator_thermal]
     type = HeatConductionMaterial
     block = ${mod_blocks}
-    temp = temp
+    temperature = temp
     thermal_conductivity = 20 # W/m/K
     specific_heat = 500 # random value
   []
@@ -302,7 +305,7 @@ start_time = -2e5
   [Poison_blocks_thermal]
     type = HeatConductionMaterial
     block = ${poison_blocks}
-    temp = temp
+    temperature = temp
     thermal_conductivity = 92 # W/m/K
     specific_heat = 960 # random value
   []
@@ -310,7 +313,7 @@ start_time = -2e5
   [control_rod_thermal]
     type = HeatConductionMaterial
     block = 603 #B4C
-    temp = temp
+    temperature = temp
     thermal_conductivity = 92 # W/m/K
     specific_heat = 960 # random value
   []
@@ -326,50 +329,50 @@ start_time = -2e5
   [airgap_thermal]
     type = HeatConductionMaterial
     block = ${he_void_blocks} # Helium filled in the control rod hole
-    temp = temp
+    temperature = temp
     thermal_conductivity = 5 #0.15 # W/m/K
     specific_heat = 5197 # random value
   []
 
   [fuel_density]
-    type = Density
+    type = StrainAdjustedDensity
     block = ${fuel_blocks}
-    density = 2276.5
+    strain_free_density = 2276.5
   []
   [moderator_density]
-    type = Density
+    type = StrainAdjustedDensity
     block = ${mod_blocks}
-    density = 4.3e3
+    strain_free_density = 4.3e3
   []
   [monolith_density]
-    type = Density
+    type = StrainAdjustedDensity
     block = 10
-    density = 1806
+    strain_free_density = 1806
   []
   [YH_Liner_Cr_density]
-    type = Density
+    type = StrainAdjustedDensity
     block = 102
-    density = 7190
+    strain_free_density = 7190
   []
   [YH_Cladding_density]
-    type = Density
+    type = StrainAdjustedDensity
     block = 103
-    density = 7250
+    strain_free_density = 7250
   []
   [Poison_blocks_density]
-    type = Density
+    type = StrainAdjustedDensity
     block = ${poison_blocks}
-    density = 2510
+    strain_free_density = 2510
   []
   [control_rod_density]
-    type = Density
+    type = StrainAdjustedDensity
     block = 603 #B4C
-    density = 2510
+    strain_free_density = 2510
   []
   [airgap_density]
-    type = Density
+    type = StrainAdjustedDensity
     block = ${he_void_blocks} #helium
-    density = 1000 #180
+    strain_free_density = 1000 #180
   []
 
   [reflector_density]
