@@ -1260,7 +1260,8 @@ eff_turb = 0.843
     A_ref = ${A_ref_turb}
     volume = ${V_turb}
 
-    # A turbine is treated as an "inverse" compressor, this value determines if component is to be treated as turbine or compressor
+    # A turbine is treated as an "inverse" compressor, this value determines
+    # if component is to be treated as turbine or compressor
     # If treat_as_turbine is omitted, code automatically assumes it is a compressor
     treat_as_turbine = true
 
@@ -2082,7 +2083,8 @@ eff_turb = 0.843
     K_d = ${motor_K_d}
   []
 
-  # Determines when the PID system should be running and when it should begin the shutdown cycle. If needed: PID output, else: shutdown function
+  # Determines when the PID system should be running and when it should begin the shutdown cycle.
+  # If needed: PID output, else: shutdown function
   [logic]
     type = ParsedFunctionControl
     function = 'if(time_simulation-time_0 < 100, PID, if(motor > ${motor_shutdown_value}, PID, shutdown_fn))'
@@ -2212,9 +2214,7 @@ eff_turb = 0.843
   start_time = ${start_time}
   end_time = 0
 
-  automatic_scaling = true
-  compute_scaling_once = false
-
+  # Time stepping parameters
   [TimeStepper]
     type = IterationAdaptiveDT
     dt = 0.1
@@ -2227,6 +2227,7 @@ eff_turb = 0.843
   dtmin = 1e-6
   dtmax = 5e3
 
+  # Solver parameters
   solve_type = NEWTON
   nl_rel_tol = 1e-7
   nl_abs_tol = 1e-7
@@ -2237,6 +2238,9 @@ eff_turb = 0.843
   line_search = basic
   petsc_options_iname = '-pc_type'
   petsc_options_value = ' lu     '
+  automatic_scaling = true
+  # note: the option below is not usually recommended
+  compute_scaling_once = false
 []
 
 [Outputs]
@@ -2257,13 +2261,13 @@ eff_turb = 0.843
     type = Console
     max_rows = 5
     show = 'core_T_in core_T_out core_v_in core_p_difference core_m_dot_in core_power_difference
-    hx_pri_T_in hx_pri_T_out  hx_pri_p_difference  hx_pri_power_difference
-    pump_p_in pump_p_out pump_p_difference
+            hx_pri_T_in hx_pri_T_out  hx_pri_p_difference  hx_pri_power_difference
+            pump_p_in pump_p_out pump_p_difference
 
-    comp_T_in comp_T_out comp_p_in comp_p_out
-    turb_T_in turb_T_out turb_p_in turb_p_out
-    generator_power cycle_efficiency shaft_speed
-    hx_sec_T_in hx_sec_T_out  hx_sec_p_in hx_sec_p_out hx_sec_p_difference hx_sec_m_dot_in
-    hx_sec_m_dot_difference hot_leg_T_out'
+            comp_T_in comp_T_out comp_p_in comp_p_out
+            turb_T_in turb_T_out turb_p_in turb_p_out
+            generator_power cycle_efficiency shaft_speed
+            hx_sec_T_in hx_sec_T_out  hx_sec_p_in hx_sec_p_out hx_sec_p_difference hx_sec_m_dot_in
+            hx_sec_m_dot_difference hot_leg_T_out'
   []
 []
