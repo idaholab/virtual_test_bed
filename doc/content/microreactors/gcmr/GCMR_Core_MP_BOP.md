@@ -1,6 +1,6 @@
 # Full Core GCMR Multiphysics Model with Balance-of-Plant
 
-#!tag name=GCMR_BOP_MP
+!tag name=GCMR_BOP_MP
     description=Multiphysics BOP model for Gas Cooled microreactor
         image=https://mooseframework.inl.gov/virtual_test_bed/media/gcmr/FCMP/coupling_hierarchy_strategy.png
         pairs=reactor_type:microreactor
