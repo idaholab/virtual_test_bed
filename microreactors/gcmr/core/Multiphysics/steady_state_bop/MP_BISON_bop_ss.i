@@ -465,7 +465,7 @@ start_time = -2e5
     execute_on = 'TIMESTEP_END'
     max_procs_per_app = 1
     output_in_position = true
-    cli_args = AuxKernels/scale_htc/function='0.997090723*htc'
+    cli_args = AuxKernels/scale_htc/expression='0.997090723*htc'
     # cli_args: this is a conversion to help with the energy balance.
     sub_cycling = true
     max_failures = 1e6

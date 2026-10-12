@@ -11,12 +11,12 @@ start_time = -2.0e5
 
 # Generic gas cooled micro reactor balance of plant with open-air recuperated Brayton cycle
 # This input file models a startup transient
-# It uses a Balance of Plant system on VTB as a templet.
+# It uses a Balance of Plant system on VTB as a template.
 #https://mooseframework.inl.gov/virtual_test_bed/microreactors/gcmr/BOP_model_description.html
 
-#Several devlopment are made:
+# Change log:
 
-#1. The parameters are changes according to 20 MWth GCMR concept design in the following reference:
+#1. The parameters are changed according to 20 MWth GCMR concept design in the following reference:
 #N. Stauff et al., "Assessment and validation of NEAMS tools for high-fidelity multiphysics transient modeling of microreactors," Argonne National Laboratory (ANL), Argonne, IL (United States), 2024.
 # The paramters such as mfr and pump_head_rated are adjusted to fit the TH condition into design specification.
 
@@ -94,44 +94,44 @@ core_channel_n_elems = 50 # number of element in axial direction
 
 # numbers of channels and assemblies
 
-core_nb_assembly = 85  # number of assembly in the core(19 assemby A; 36 assembly B;30 assembly C)
-core_nb_coolant_per_assembly = 30.58 # average number of coolant channel in each assembly
+# core_nb_assembly = 85  # number of assembly in the core(19 assemby A; 36 assembly B;30 assembly C)
+# core_nb_coolant_per_assembly = 30.58 # average number of coolant channel in each assembly
 core_nb_fuel_per_assembly = 46.66 # average number of fuel in each assembly
 core_nb_moderator_per_assembly = 6 # number of moderator in each assembly {same number for all assemblies}
 
 core_nb_coolant_tot = 2599 # number of coolant channel in the core
-core_nb_fuel_tot = 3966 # number of coolant channel in the core
+# core_nb_fuel_tot = 3966 # number of coolant channel in the core
 
 # other parameters of the assembly
 
-core_lattice_pitch = 0.02 # m    #pitch between fuels optimal size of the lattice pitch to have a good burnup and a long life of the assembly for UN TRISO
-core_radius_fuel = 0.0085 # m  #fuel radius
-core_radius_moderator = 0.0075 # m  #Moderator compact radius
+# core_lattice_pitch = 0.02 # m    #pitch between fuels optimal size of the lattice pitch to have a good burnup and a long life of the assembly for UN TRISO
+# core_radius_fuel = 0.0085 # m  #fuel radius
+# core_radius_moderator = 0.0075 # m  #Moderator compact radius
 
 
 # calculus of the equivalent parameters of a cylindrical heat structure around the coolant channel
 
 #area for each assembly
-core_section_assembly = '${fparse 3 * ( sqrt(3) / 2) * 6 * core_lattice_pitch * 6 * core_lattice_pitch}' # calculus of the assembly section (hexagonal) using the lattice pitch (1/6 of a side of the hexagon)
+# core_section_assembly = '${fparse 3 * ( sqrt(3) / 2) * 6 * core_lattice_pitch * 6 * core_lattice_pitch}' # calculus of the assembly section (hexagonal) using the lattice pitch (1/6 of a side of the hexagon)
 
 #average area for fuel region in each assembly
-core_section_fuel = '${fparse pi * core_radius_fuel * core_radius_fuel * core_nb_fuel_per_assembly}'
+# core_section_fuel = '${fparse pi * core_radius_fuel * core_radius_fuel * core_nb_fuel_per_assembly}'
 
 #average area for moderator in each assembly Yttrium-hydride (YH2) moderator pins.(Cr, FeCrAl)
-core_section_moderator = '${fparse pi * core_radius_moderator * core_radius_moderator * core_nb_moderator_per_assembly }'
+# core_section_moderator = '${fparse pi * core_radius_moderator * core_radius_moderator * core_nb_moderator_per_assembly }'
 
 #average area for graphite monolith in each assembly
-core_section_graphite = '${fparse core_section_assembly -  core_section_fuel - core_section_moderator}'
+# core_section_graphite = '${fparse core_section_assembly -  core_section_fuel - core_section_moderator}'
 
 
 #equivalent radius of fuel for each assembly
-core_radius_equiv_fuel = '${fparse sqrt( core_section_fuel / (pi * core_nb_coolant_per_assembly))}' # calculus of the radius of the fuel in an equivalent cylindrical heat structure around each coolant channel
+# core_radius_equiv_fuel = '${fparse sqrt( core_section_fuel / (pi * core_nb_coolant_per_assembly))}' # calculus of the radius of the fuel in an equivalent cylindrical heat structure around each coolant channel
 
 #equivalent radius of moderator for each assembly
-core_radius_equiv_moderator = '${fparse sqrt( core_section_moderator / ( pi * core_nb_coolant_per_assembly))}' # calculus of the radius of the moderator in an equivalent cylindrical heat structure around each coolant channel
+# core_radius_equiv_moderator = '${fparse sqrt( core_section_moderator / ( pi * core_nb_coolant_per_assembly))}' # calculus of the radius of the moderator in an equivalent cylindrical heat structure around each coolant channel
 
 #equivalent radius of graphite for each assembly
-core_radius_equiv_graphite = '${fparse sqrt( core_section_graphite / ( pi * core_nb_coolant_per_assembly))}'   # calculus of the radius of the graphite in an equivalent cylindrical heat structure around each coolant channel
+# core_radius_equiv_graphite = '${fparse sqrt( core_section_graphite / ( pi * core_nb_coolant_per_assembly))}'   # calculus of the radius of the graphite in an equivalent cylindrical heat structure around each coolant channel
 
 
 # power
@@ -764,7 +764,6 @@ eff_turb = 0.843
     volume = 1e-3
     initial_p = ${pri_press}
     initial_vel_x = ${vel_ini_pri}
-    use_scalar_variables=false
   []
 
   [core]
@@ -830,7 +829,6 @@ eff_turb = 0.843
     volume = 1e-3
     initial_p = ${pri_press}
     initial_vel_x = ${vel_ini_pri}
-    use_scalar_variables=false
   []
 
   [pri_pipe2]
@@ -899,7 +897,6 @@ eff_turb = 0.843
     volume = 1e-3
     initial_p = ${pri_press}
     initial_vel_x = ${vel_ini_pri}
-    use_scalar_variables=false
   []
 
   [hx]
@@ -970,7 +967,6 @@ eff_turb = 0.843
     volume = 1e-3
     initial_p = ${pri_press}
     initial_vel_x = ${vel_ini_pri}
-    use_scalar_variables=false
   []
 
   [pri_pipe4]
@@ -1127,7 +1123,6 @@ eff_turb = 0.843
     initial_vel_x = ${vel_ini_sec}
 
 #The `use_scalar_variables` parameter referenced in [modules/thermal_hydraulics/deprecations/volume_junction_scalar_variables.md] has been deprecated
-    use_scalar_variables=false
   []
 
   # Outlet pipe from the compressor
@@ -1302,7 +1297,6 @@ eff_turb = 0.843
 
     initial_p = ${p_sec}
     initial_vel_x = ${vel_ini_sec}
-    use_scalar_variables=false
   []
 
   # Outlet pipe from turbine
