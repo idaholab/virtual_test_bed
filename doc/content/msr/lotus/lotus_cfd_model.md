@@ -98,7 +98,7 @@ The primary nekRS settings are shown below.
 
 !listing msr/lotus/les/mcre.par
 
-The checked-in parameter file uses the `tombo1` time stepper, a target-CFL adaptive time step with a maximum nondimensional time step of $10^{-2}$, checkpoint output every 1,000 steps, pressure residual tolerance of $10^{-4}$, and velocity residual tolerance of $10^{-6}$. The `hpfrt` regularization option is enabled to stabilize under-resolved high-order content during turbulent transients.
+The checked-in parameter file uses the second-order `tombo2` (BDF2) time stepper, a target-CFL adaptive time step with a maximum nondimensional time step of $10^{-2}$, checkpoint output every 1,000 steps, pressure residual tolerance of $10^{-4}$, and velocity residual tolerance of $10^{-6}$. The `hpfrt` regularization option is enabled to stabilize under-resolved high-order content during turbulent transients.
 
 ### Boundary conditions and geometry scaling style=font-size:125%
 
@@ -182,7 +182,7 @@ The LES data provide a reference for calibrating RANS and coarse-mesh system mod
 
 ## Running the Case
 
-A typical nekRS workflow is to run a lower-cost transient at a lower polynomial order to establish a turbulent state, and then restart at the production polynomial order for time averaging. From the `msr/lotus/les` directory, launch the simulation (for example, with 4 MPI ranks using `nrsmpi`):
+A typical nekRS workflow is to run a lower-cost transient at a lower polynomial order to establish a turbulent state, and then restart at the production polynomial order ($P=7$) for time averaging. The simulation employs second-order time stepping (`tombo2`) by default. From the `msr/lotus/les` directory, launch the simulation (for example, with 4 MPI ranks using `nrsmpi`):
 
 ```language=bash
 nrsmpi mcre 4
