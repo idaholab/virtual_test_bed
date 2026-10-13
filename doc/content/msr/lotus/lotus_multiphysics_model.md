@@ -1,5 +1,22 @@
 # Lotus Griffin-Pronghorn Model
 
+!tag name=Lotus Griffin-Pronghorn Steady State Model
+     description=Multiphysics, neutronics and computational fluid dynamics, model of the primary molten fuel loop of a generic molten chloride reactor in the LOTUS test bed
+     image=https://mooseframework.inl.gov/virtual_test_bed/media/msr/lotus/MCR_geometry.jpg
+     pairs=reactor_type:MSR
+           reactor:generic_MSR
+           geometry:core
+           simulation_type:multiphysics
+           input_features:multiapps
+           transient:steady_state
+           V_and_V:demonstration
+           codes_used:BlueCrab;Griffin;Pronghorn;MOOSE_NavierStokes
+           open_source:partially
+           computing_needs:HPC
+           fiscal_year:2024
+           institution:INL
+           sponsor:NEAMS
+
 *Contact: Mauricio Tano, mauricio.tanoretamales.at.inl.gov*
 
 *Model summarized, documented, and uploaded by Rodrigo de Oliveira and Samuel Walker*
@@ -348,4 +365,6 @@ Here, porosity and mixing length are incorporated as `Materials` into the model 
 
 !listing msr/lotus/steady_state/run_prec_transport.i block=Materials
 
+## Multiphysics steady-state results
 
+See [Steady State Results](lotus_multiphysics_results.md).
