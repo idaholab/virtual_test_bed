@@ -113,18 +113,32 @@ layers = 40 # Make sure the number of axial divisions in the fluid domain and so
   []
 []
 
-[ControlLogic]
-  [inlet_v_ctrl]
-    type = TimeFunctionComponentControl
-    component = inlet
-    parameter = vel
+[ChainControls]
+  # Gets the value of the Vin_func function
+  [inlet_v_fn]
+    type = GetFunctionValueChainControl
     function = Vin_func
+    execute_on = 'INITIAL TIMESTEP_BEGIN'
   []
-  [outlet_P_ctrl]
-    type = TimeFunctionComponentControl
-    component = outlet
-    parameter = p
+  # Sets the inlet vel parameter
+  [inlet_v_ctrl]
+    type = SetRealValueChainControl
+    parameter = component::inlet/vel
+    value = inlet_v_fn:value
+    execute_on = 'INITIAL TIMESTEP_BEGIN'
+  []
+  # Gets the value of the Pout_func function
+  [outlet_P_fn]
+    type = GetFunctionValueChainControl
     function = Pout_func
+    execute_on = 'INITIAL TIMESTEP_BEGIN'
+  []
+  # Sets the outlet p parameter
+  [outlet_P_ctrl]
+    type = SetRealValueChainControl
+    parameter = component::outlet/p
+    value = outlet_P_fn:value
+    execute_on = 'INITIAL TIMESTEP_BEGIN'
   []
 []
 

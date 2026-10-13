@@ -101,8 +101,8 @@ D_h = ${fparse (4 * A_channel)/((pi * D_RPV_inner) + (pi * D_barrel_outer))} # m
   [channel_inlet]
     type = InletMassFlowRateTemperature1Phase
     input = 'upcomer:in'
-    m_dot = ${m_dot_in} # Overwritten by ControlLogic below
-    T = ${T_in} # Overwritten by ControlLogic below
+    m_dot = ${m_dot_in} # Overwritten by ChainControls below
+    T = ${T_in} # Overwritten by ChainControls below
   []
   # Creates a single phase flow channel named upcomer
   [upcomer]
@@ -118,7 +118,7 @@ D_h = ${fparse (4 * A_channel)/((pi * D_RPV_inner) + (pi * D_barrel_outer))} # m
   [core_outlet]
     type = Outlet1Phase
     input = 'upcomer:out'
-    p = ${p_out} # Overwritten by ControlLogic below
+    p = ${p_out} # Overwritten by ChainControls below
   []
   # Assigns heat transfer between the upcomer and core barrel outer surface
   [ht_barrel]
@@ -136,28 +136,35 @@ D_h = ${fparse (4 * A_channel)/((pi * D_RPV_inner) + (pi * D_barrel_outer))} # m
   []
 []
 # Controls desired parameters in the Components block
-[ControlLogic]
+[ChainControls]
+  # Gets the value of the inlet_temp function
+  [T_in_fn]
+    type = GetFunctionValueChainControl
+    function = inlet_temp
+    execute_on = 'INITIAL TIMESTEP_BEGIN'
+  []
   # Sets the channel_inlet T parameter based on values from inlet_temp function
   [T_in]
-    type = TimeFunctionComponentControl
-    function = inlet_temp
-    component = channel_inlet
-    parameter = T
+    type = SetRealValueChainControl
+    parameter = component::channel_inlet/T
+    value = T_in_fn:value
+    execute_on = 'INITIAL TIMESTEP_BEGIN'
   []
-  # Creates a ParsedFunction used to control inlet mass flow rate. If t <= 180,000 s then use mdot_in_fn supplied in Functions.
+  # Creates a ParsedChainControl used to control inlet mass flow rate. If t <= 180,000 s then use mdot_in_fn supplied in Functions.
   # else, set mdot to 0 (simulates coolant shutoff from experiment)
   [mdot_control]
-    type = ParsedFunctionControl
-    function = 'if(t <= 180000, mdot_in_fn, 0)'
-    symbol_values = 'mdot_in_fn'
+    type = ParsedChainControl
+    expression = 'if(t <= 180000, mdot_in_fn, 0)'
     symbol_names = 'mdot_in_fn'
+    symbol_values = 'mdot_in_fn'
+    execute_on = 'INITIAL TIMESTEP_BEGIN'
   []
   # Takes value produced by mdot_control, and applies it to the channel_inlet m_dot parameter
   [mdot_applied]
-    type = SetComponentRealValueControl
-    component = channel_inlet
-    parameter = m_dot
+    type = SetRealValueChainControl
+    parameter = component::channel_inlet/m_dot
     value = mdot_control:value
+    execute_on = 'INITIAL TIMESTEP_BEGIN'
   []
 []
 [Preconditioning]
