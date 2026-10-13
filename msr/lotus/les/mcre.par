@@ -4,7 +4,7 @@ polynomialOrder = 7
 stopAt = numSteps
 numSteps = 10000
 
-timeStepper = tombo1
+timeStepper = tombo2
 #dt = 1.0e-6
 #advectionSubCyclingSteps = 2
 dt = targetCFL=4 + max=1e-2 + initial=1e-6
