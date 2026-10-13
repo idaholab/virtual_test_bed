@@ -6,7 +6,7 @@
 
 !tag name=LMCR Primary Loop nekRS LES Model
      description=High-fidelity large-eddy simulation model of the LMCR primary loop using nekRS
-     image=https://github.com/idaholab/virtual_test_bed/tree/mcre/doc/content/media/msr/lotus/les/mean_Umag.png
+     image=https://mooseframework.inl.gov/virtual_test_bed/media/msr/lotus/les/mean_Umag.png
      pairs=reactor_type:MSR
                        reactor:generic_MSR
                        geometry:primary_loop
