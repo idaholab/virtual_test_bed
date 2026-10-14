@@ -1974,39 +1974,71 @@ eff_turb = 0.843
 []
 
 # Control logics which govern startup of the motor, startup of the "heat_exchanger", and shutdown of the motor
-[ControlLogic]
-
+[ChainControls]
   # Sets desired shaft speed to be reached by motor NOTE: SHOULD BE SET LOWER THAN RATED TURBINE RPM
   [set_point]
-    type = GetFunctionValueControl
-    function = '${fparse speed_rated_rpm - 9000}'
+    type = ParsedChainControl
+    expression = '${fparse speed_rated_rpm - 9000}'
+    execute_on = 'INITIAL TIMESTEP_BEGIN'
+  []
+
+  # Gets the shaft speed (RPM)
+  [shaft_RPM_ctrl]
+    type = GetPostprocessorChainControl
+    postprocessor = shaft_RPM
+    execute_on = 'INITIAL TIMESTEP_BEGIN'
   []
 
   # PID with gains determined by iterative process NOTE: Gain values are system specific
   [initial_motor_PID]
-    type = PIDControl
+    type = PIDChainControl
     set_point = set_point:value
-    input = shaft_RPM
+    input = shaft_RPM_ctrl:value
 
-    initial_value = ${motor_ini_val}
+    initial_integral = ${motor_ini_val}
     K_p = ${motor_K_p}
     K_i = ${motor_K_i}
     K_d = ${motor_K_d}
+    execute_on = 'INITIAL TIMESTEP_BEGIN'
+  []
+
+  # Gets the postprocessor values and shutdown function used in the motor logic
+  [time_simulation_ctrl]
+    type = GetPostprocessorChainControl
+    postprocessor = time_simulation
+    execute_on = 'INITIAL TIMESTEP_BEGIN'
+  []
+  [sec_motor_torque_ctrl]
+    type = GetPostprocessorChainControl
+    postprocessor = sec_motor_torque
+    execute_on = 'INITIAL TIMESTEP_BEGIN'
+  []
+  [turbine_torque_ctrl]
+    type = GetPostprocessorChainControl
+    postprocessor = turbine_torque
+    execute_on = 'INITIAL TIMESTEP_BEGIN'
+  []
+  [shutdown_fn_ctrl]
+    type = GetFunctionValueChainControl
+    function = sec_motor_torque_fn_shutdown
+    execute_on = 'INITIAL TIMESTEP_BEGIN'
   []
 
   # Determines when the PID system should be running and when it should begin the shutdown cycle. If needed: PID output, else: shutdown function
   [logic]
-    type = ParsedFunctionControl
-    function = 'if(time_simulation < 100, PID, if(motor > ${motor_shutdown_value}, PID, shutdown_fn))'
+    type = ParsedChainControl
+    expression = 'if(time_simulation < 100, PID, if(motor > ${motor_shutdown_value}, PID, shutdown_fn))'
     symbol_names = 'time_simulation motor turb PID shutdown_fn'
-    symbol_values = 'time_simulation sec_motor_torque turbine_torque initial_motor_PID:output sec_motor_torque_fn_shutdown'
+    symbol_values = 'time_simulation_ctrl:value sec_motor_torque_ctrl:value turbine_torque_ctrl:value initial_motor_PID:value shutdown_fn_ctrl:value'
+    execute_on = 'INITIAL TIMESTEP_BEGIN'
   []
 
   # Takes the output generated in [logic] and applies it to the motor torque
   [motor_PID]
-    type = SetRealValueControl
+    type = SetRealValueChainControl
     parameter = Functions/motor_torque_fn/value
     value = logic:value
+    execute_on = 'INITIAL TIMESTEP_BEGIN'
   []
 []
 

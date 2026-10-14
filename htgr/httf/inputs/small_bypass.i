@@ -111,8 +111,8 @@ roughness = 0.00004 # m
   [channel_inlet]
     type = InletMassFlowRateTemperature1Phase
     input = 'core_channel:in'
-    m_dot = ${m_dot_in} # Overwritten by ControlLogic below
-    T = ${T_in} # Overwritten by ControlLogic below
+    m_dot = ${m_dot_in} # Overwritten by ChainControls below
+    T = ${T_in} # Overwritten by ChainControls below
   []
   # Creates a single phase flow channel named core_channel
   [core_channel]
@@ -128,7 +128,7 @@ roughness = 0.00004 # m
   [core_outlet]
     type = Outlet1Phase
     input = 'core_channel:out'
-    p = ${p_out} # Overwritten by ControlLogic below
+    p = ${p_out} # Overwritten by ChainControls below
   []
   # Assigns heat transfer between the core_channel and ceramic core
   [heat_transfer]
@@ -139,42 +139,50 @@ roughness = 0.00004 # m
   []
 []
 # Controls desired parameters in the Components block
-[ControlLogic]
-  # Converts the upcomer_temp function into a ParsedFunctionControl which can be applied to a Component
+[ChainControls]
+  # Evaluates the upcomer_temp function, with a default of 300 K at t = 0
   [inlet_temp_logic]
-    type = ParsedFunctionControl
-    function = 'if(t > 0, upcomer_temp, 300)'
-    symbol_values = 'upcomer_temp'
+    type = ParsedChainControl
+    expression = 'if(t > 0, upcomer_temp, 300)'
     symbol_names = 'upcomer_temp'
+    symbol_values = 'upcomer_temp'
+    execute_on = 'INITIAL TIMESTEP_BEGIN'
   []
   # Applies the output of inlet_temp_logic to the channel_inlet T parameter
   [inlet_temp]
-    type = SetComponentRealValueControl
-    component = channel_inlet
-    parameter = T
+    type = SetRealValueChainControl
+    parameter = component::channel_inlet/T
     value = inlet_temp_logic:value
+    execute_on = 'INITIAL TIMESTEP_BEGIN'
   []
-  # Sets the core_outlet p paremeter based on values from system_pressure function
-  [pressure_control]
-    type = TimeFunctionComponentControl
-    component = core_outlet
-    parameter = p
+  # Gets the value of the system_pressure function
+  [pressure_fn]
+    type = GetFunctionValueChainControl
     function = system_pressure
+    execute_on = 'INITIAL TIMESTEP_BEGIN'
   []
-  # Creates a ParsedFunction used to control inlet mass flow rate. If t <= 180,000 s then use mdot_in_fn supplied in Functions.
+  # Sets the core_outlet p parameter based on values from system_pressure function
+  [pressure_control]
+    type = SetRealValueChainControl
+    parameter = component::core_outlet/p
+    value = pressure_fn:value
+    execute_on = 'INITIAL TIMESTEP_BEGIN'
+  []
+  # Creates a ParsedChainControl used to control inlet mass flow rate. If t <= 180,000 s then use mdot_in_fn supplied in Functions.
   # else, set mdot to 0 (simulates coolant shutoff from experiment)
   [mdot_control]
-    type = ParsedFunctionControl
-    function = 'if(t <= 180000, mdot_in_fn, 0)'
-    symbol_values = 'mdot_in_fn'
+    type = ParsedChainControl
+    expression = 'if(t <= 180000, mdot_in_fn, 0)'
     symbol_names = 'mdot_in_fn'
+    symbol_values = 'mdot_in_fn'
+    execute_on = 'INITIAL TIMESTEP_BEGIN'
   []
   # Takes value produced by mdot_control, and applies it to the channel_inlet m_dot parameter
   [mdot_applied]
-    type = SetComponentRealValueControl
-    component = channel_inlet
-    parameter = m_dot
+    type = SetRealValueChainControl
+    parameter = component::channel_inlet/m_dot
     value = mdot_control:value
+    execute_on = 'INITIAL TIMESTEP_BEGIN'
   []
 []
 [Preconditioning]

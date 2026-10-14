@@ -1754,21 +1754,19 @@ eff_turb = 0.843
 []
 
 # Control logics which govern startup of the motor, startup of the "heat_exchanger", and shutdown of the motor
-[ControlLogic]
-
-  # Changes of power
-  [power_logic]
-    type = ParsedFunctionControl
-    function = 'power_fn'
-    symbol_names = 'power_fn'
-    symbol_values = 'power_fn'
+[ChainControls]
+  # Gets the value of the power_fn function (changes of power)
+  [power_fn_ctrl]
+    type = GetFunctionValueChainControl
+    function = power_fn
+    execute_on = 'INITIAL TIMESTEP_BEGIN'
   []
   # Applies heat source to the total_power block
   [power_applied]
-    type = SetComponentRealValueControl
-    component = total_power
-    parameter = power
-    value = power_logic:value
+    type = SetRealValueChainControl
+    parameter = component::total_power/power
+    value = power_fn_ctrl:value
+    execute_on = 'INITIAL TIMESTEP_BEGIN'
   []
 []
 

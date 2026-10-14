@@ -104,8 +104,8 @@ D_h = ${fparse (4 * A_channel)/((4 * outer_wall) + (4 * inner_wall))} # m
   [channel_inlet]
     type = InletMassFlowRateTemperature1Phase
     input = 'RCCS:in'
-    m_dot = ${m_dot_in} # Overwritten by ControlLogic below
-    T = 300 # Overwritten by ControlLogic below
+    m_dot = ${m_dot_in} # Overwritten by ChainControls below
+    T = 300 # Overwritten by ChainControls below
   []
   # Creates a single phase flow channel named RCCS
   [RCCS]
@@ -139,20 +139,32 @@ D_h = ${fparse (4 * A_channel)/((4 * outer_wall) + (4 * inner_wall))} # m
   []
 []
 # Controls desired parameters in the Components block
-[ControlLogic]
+[ChainControls]
+  # Gets the value of the inlet_temp function
+  [T_in_fn]
+    type = GetFunctionValueChainControl
+    function = inlet_temp
+    execute_on = 'INITIAL TIMESTEP_BEGIN'
+  []
   # Sets the channel_inlet T parameter based on values from inlet_temp function
   [T_in]
-    type = TimeFunctionComponentControl
-    function = inlet_temp
-    component = channel_inlet
-    parameter = T
+    type = SetRealValueChainControl
+    parameter = component::channel_inlet/T
+    value = T_in_fn:value
+    execute_on = 'INITIAL TIMESTEP_BEGIN'
   []
- # Sets the channel_inlet m_dot parameter based on values from mdot_in_fn function
-  [mdot_control]
-    type = TimeFunctionComponentControl
+  # Gets the value of the mdot_in_fn function
+  [mdot_in]
+    type = GetFunctionValueChainControl
     function = mdot_in_fn
-    component = channel_inlet
-    parameter = m_dot
+    execute_on = 'INITIAL TIMESTEP_BEGIN'
+  []
+  # Sets the channel_inlet m_dot parameter based on values from mdot_in_fn function
+  [mdot_control]
+    type = SetRealValueChainControl
+    parameter = component::channel_inlet/m_dot
+    value = mdot_in:value
+    execute_on = 'INITIAL TIMESTEP_BEGIN'
   []
 []
 [Preconditioning]
