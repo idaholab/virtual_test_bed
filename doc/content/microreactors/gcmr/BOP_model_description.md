@@ -197,7 +197,7 @@ This parameter is used in the [Functions](https://mooseframework.inl.gov/syntax/
 
 #### Motor
 
-A motor component of [ShaftConnectedMotor](https://mooseframework.inl.gov/source/components/ShaftConnectedMotor.html) type is added and connected to the [Shaft](https://mooseframework.inl.gov/source/components/Shaft.html). Its behavior is defined by the [Control](https://mooseframework.inl.gov/syntax/Controls/index.html) and [ControlLogic](https://mooseframework.inl.gov/syntax/ControlLogic/index.html) blocks (see below).
+A motor component of [ShaftConnectedMotor](https://mooseframework.inl.gov/source/components/ShaftConnectedMotor.html) type is added and connected to the [Shaft](https://mooseframework.inl.gov/source/components/Shaft.html). Its behavior is defined by the [Controls](https://mooseframework.inl.gov/syntax/Controls/index.html) and [ChainControls](https://mooseframework.inl.gov/syntax/ChainControls/index.html) blocks (see below).
 
 !listing microreactors/gcmr/balance_of_plant/htgr_startup_transient.i block=Components/motor
 
@@ -223,15 +223,15 @@ The recuperator includes two counter-current coolant channels (the `hot_leg` and
 
 ## Controls
 
-A [ControlLogic](https://mooseframework.inl.gov/syntax/ControlLogic/index.html) block is added to control the motor torque.
+A [ChainControls](https://mooseframework.inl.gov/syntax/ChainControls/index.html) block is added to control the motor torque.
 
-The `initial_motor_PID` of type [PIDControl](https://mooseframework.inl.gov/source/controllogic/PIDControl.html) defines the behavior of the motor at the beginning. It depends on the `set_point` block, whose type is a [GetFunctionValueControl](https://mooseframework.inl.gov/source/controllogic/GetFunctionValueControl.html). It declares the desired shaft speed, which is the rated shaft speed minus 9000 rpm (see the [turbine paragraph](#turbine))
+The `initial_motor_PID` of type [PIDChainControl](https://mooseframework.inl.gov/source/chaincontrols/PIDChainControl.html) defines the behavior of the motor at the beginning. It depends on the `set_point` block, whose type is a [ParsedChainControl](https://mooseframework.inl.gov/source/chaincontrols/ParsedChainControl.html). It declares the desired shaft speed, which is the rated shaft speed minus 9000 rpm (see the [turbine paragraph](#turbine)). The `PIDChainControl` reads the shaft speed through a `shaft_RPM_ctrl` block, of type [GetPostprocessorChainControl](https://mooseframework.inl.gov/source/chaincontrols/GetPostprocessorChainControl.html).
 
 As the shaft speed and heat transfer from the core progressively increase, the turbine generates torque and the need for the motor torque becomes smaller. Thus, it progressively decreases, and it is eventually shut off.
 
-A `motor_PID`, whose type is [SetComponentRealValueControl](https://mooseframework.inl.gov/source/controllogic/SetComponentRealValueControl.html), decides which value must be attributed to the motor torque. If the motor torque is too small, the motor is shut, using a `motor_torque_fn_shutdown` function written in the [Functions](https://mooseframework.inl.gov/syntax/Functions/index.html) block. Else, the behavior of the motor is still defined by the [PIDControl](https://mooseframework.inl.gov/source/controllogic/PIDControl.html). This condition is defined using the `logic` block, whose type is [ParsedFunctionControl](https://mooseframework.inl.gov/source/controllogic/ParsedFunctionControl.html). In this one, a time condition is added: if the elapsed time is too small, the condition on the motor torque value is not applicable. At the beginning of the simulation: the motor torque is small and increasing, but it should not be shut.
+A `motor_PID`, whose type is [SetRealValueChainControl](https://mooseframework.inl.gov/source/chaincontrols/SetValueChainControl.html), decides which value must be attributed to the motor torque. If the motor torque is too small, the motor is shut down, using a `motor_torque_fn_shutdown` function written in the [Functions](https://mooseframework.inl.gov/syntax/Functions/index.html) block. Else, the behavior of the motor is still defined by the [PIDChainControl](https://mooseframework.inl.gov/source/chaincontrols/PIDChainControl.html). This condition is defined using the `logic` block, whose type is [ParsedChainControl](https://mooseframework.inl.gov/source/chaincontrols/ParsedChainControl.html). The postprocessor and function values it needs (`time_simulation`, `sec_motor_torque`, `turbine_torque` and `sec_motor_torque_fn_shutdown`) are retrieved by [GetPostprocessorChainControl](https://mooseframework.inl.gov/source/chaincontrols/GetPostprocessorChainControl.html) and [GetFunctionValueChainControl](https://mooseframework.inl.gov/source/chaincontrols/GetFunctionValueChainControl.html) blocks. In this one, a time condition is added: if the elapsed time is too small, the condition on the motor torque value is not applicable. At the beginning of the simulation: the motor torque is small and increasing, but it should not be shut.
 
-!listing microreactors/gcmr/balance_of_plant/htgr_startup_transient.i block=ControlLogic
+!listing microreactors/gcmr/balance_of_plant/htgr_startup_transient.i block=ChainControls
 
 ## Startup and load follow transient
 
@@ -243,15 +243,15 @@ The model description above defines mainly the model used for the startup transi
 
 - the `time_trip_aux` and `PID_trip_status_aux` [AuxScalarKernels](https://mooseframework.inl.gov/syntax/AuxScalarKernels/index.html), which associated the previous functions results to the `time_trip` and `PID_trip_status` [AuxVariables](https://mooseframework.inl.gov/syntax/AuxVariables/index.html),
 
-- the [ControlLogic](https://mooseframework.inl.gov/syntax/ControlLogic/index.html) blocks that gave the retroaction on the motor behavior: the `set_point`, `initial_motor_PID`, `logic` and `motor_PID`,
+- the [ChainControls](https://mooseframework.inl.gov/syntax/ChainControls/index.html) blocks that gave the retroaction on the motor behavior: the `set_point`, `shaft_RPM_ctrl`, `initial_motor_PID`, `time_simulation_ctrl`, `sec_motor_torque_ctrl`, `turbine_torque_ctrl`, `shutdown_fn_ctrl`, `logic` and `motor_PID`,
 
 - the [Controls](https://mooseframework.inl.gov/syntax/Controls/index.html) that are associated: `PID_trip_status` and `time_PID`.
 
 The [AuxVariables](https://mooseframework.inl.gov/syntax/AuxVariables/index.html) defined to control the motor behavior are not disabled because the input file of the load follow transient needs to import data from the startup transient. To do so, some of the defined objects in the two input file, particularly the [AuxVariables](https://mooseframework.inl.gov/syntax/AuxVariables/index.html), need to be the same.
 
-Two [ControlLogic](https://mooseframework.inl.gov/syntax/ControlLogic/index.html) blocks are added to impose the core power during the load follow transient. A `power_logic`, whose type is [ParsedFunctionControl](https://mooseframework.inl.gov/source/controllogic/ParsedFunctionControl.html), calls a `power_fn` function, which defines the power dependance on the time. It is then transferred to a `power_applied` sub block (of type [SetComponentRealValueControl](https://mooseframework.inl.gov/source/controllogic/SetComponentRealValueControl.html)) which indicates to attribute this behavior to the `total_power` component block.
+Two [ChainControls](https://mooseframework.inl.gov/syntax/ChainControls/index.html) blocks are added to impose the core power during the load follow transient. A `power_fn_ctrl`, whose type is [GetFunctionValueChainControl](https://mooseframework.inl.gov/source/chaincontrols/GetFunctionValueChainControl.html), calls a `power_fn` function, which defines the power dependance on the time. It is then transferred to a `power_applied` sub block (of type [SetRealValueChainControl](https://mooseframework.inl.gov/source/chaincontrols/SetValueChainControl.html)) which indicates to attribute this behavior to the `total_power` component block.
 
-!listing microreactors/gcmr/balance_of_plant/htgr_load_follow_transient.i block=ControlLogic
+!listing microreactors/gcmr/balance_of_plant/htgr_load_follow_transient.i block=ChainControls
 
 The data are transferred from the startup transient results to the load follow simulation using a supplemental output in the first input file. In the [Outputs](https://mooseframework.inl.gov/syntax/Outputs/index.html) block, the `checkpoint` parameter is defined as `true`. The results saved in this output are then called in a [Problem](https://mooseframework.inl.gov/syntax/Problem/index.html) block in the load follow input file.
 
