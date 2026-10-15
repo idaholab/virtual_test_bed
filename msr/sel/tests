@@ -14,7 +14,7 @@
     executable_pattern = 'sam*'
     prereq = 'sel_ss_syntax'
     abs_zero = 1e-7
-    rel_err = 1e-2
+    rel_err = 1e-4
     requirement = 'The SEL steady-state model should converge and run successfully for the full simulation and match the gold reference.'
   []
   [sel_nc_syntax]
@@ -33,7 +33,7 @@
     executable_pattern = 'sam*'
     prereq = 'sel_nc_syntax'
     abs_zero = 1e-7
-    rel_err = 1e-2
+    rel_err = 1e-4
     requirement = 'The SEL transient model should restart from steady state, run for 3 steps, and match the gold reference.'
   []
 []
