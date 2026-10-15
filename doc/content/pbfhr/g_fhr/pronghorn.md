@@ -51,9 +51,9 @@ Next we introduce a simplified approach to solving the thermal-hydraulic equatio
 
 The Physics directly set up the numerical form of the thermal-hydraulic equations that will be solved rather than making the user define every single kernel explicitly. In this case the action uses a `weakly-compressible` formulation of the Navier-Stokes equations and adds in `porous_medium_treatment` to model flow through the graphite pebbles.
 
-Boundary conditions are set here, with no slip `wall_boundaries`, `inlet_boundaries`, and `outlet_boundaries` where in fluid dynamics fashion, the inlet is a `fixed-velocity`, and the outlet is a `fixed-pressure`.
+Boundary conditions are set here, with slip `wall_boundaries`, `inlet_boundaries`, and `outlet_boundaries` where in fluid dynamics fashion, the inlet is a `fixed-velocity`, and the outlet is a `fixed-pressure`.
 
-The heat convection from blocks to the coolant is defined in the `ambient_convection` section. Friction factors using the darcy and forchheimer friction factors are also read into the equations here. Lastly, the remaining advection interpolation methods for momentum and mass are defined as well.
+The volumetric heat exchange between the pebbles and the coolant is defined in the `ambient_convection` section, which is restricted to the pebble bed blocks. Friction factors using the darcy and forchheimer friction factors are also read into the equations here. Lastly, the remaining advection interpolation methods for momentum and mass are defined as well.
 
 A `Physics` is set up for every equation that is being solved. The `Physics` communicate with each other to verify their parameters to some extent, attempting to minimize the number of errors. The equations being solved here are:
 
@@ -68,7 +68,7 @@ A `Physics` is set up for every equation that is being solved. The `Physics` com
 !listing /pbfhr/gFHR/steady/gFHR_pronghorn_ss.i block=Physics/NavierStokes/FluidHeatTransfer
 
 
-- the solid energy conservation equation by the `SolidHeatTransfer` Physics
+- the solid energy conservation equation by the `SolidHeatTransfer` Physics. The solid temperature is only defined in the pebble bed and in the solid structures (reflector, barrel and vessel), not in the open flow regions such as the downcomer, the plena and the fluidic diode.
 
 
 !listing /pbfhr/gFHR/steady/gFHR_pronghorn_ss.i block=Physics/NavierStokes/SolidHeatTransfer
@@ -82,7 +82,7 @@ computing material properties, for outputting quantities of interests, and many 
 
 ## Functions
 
-The [Functions](https://mooseframework.inl.gov/syntax/Functions/index.html) block is defined next. Here functions are defined that can be used elsewhere in the input file. Most of these function define porosity for specific locations in the model using the `ParsedFunction` which is a versatile way of setting up various functions.
+The [Functions](https://mooseframework.inl.gov/syntax/Functions/index.html) block is defined next. Here functions are defined that can be used elsewhere in the input file, such as the time step size and the outlet pressure, using the `ParsedFunction` which is a versatile way of setting up various functions.
 
 !listing /pbfhr/gFHR/steady/gFHR_pronghorn_ss.i block=Functions
 
@@ -102,13 +102,23 @@ Very briefly we introduce the [Fluid Properties](https://mooseframework.inl.gov/
 
 Next we define [Functor Materials](https://mooseframework.inl.gov/moose/syntax/FunctormMterials/) which define specific materials which are functors and can be used and incorporated within the `Kernels` or `Auxiliary Kernels` to perform specific calculations.
 
-A few examples here are the `GeneralFunctorFluidProps` which performs the evaluation of thermophysical properties of the FliBe salt from the `FluidProperties` and the thermal hydraulic variables that are being solved for (i.e., T_fluid, pressure, speed). Additionally, the characteristic length or the hydraulic diameter, porosity, and friction factors of flow regions in the model can also be defined here and used in the Action or FVKernels.
+A few examples here are the `GeneralFunctorFluidProps` which performs the evaluation of thermophysical properties of the FliBe salt from the `FluidProperties` and the thermal hydraulic variables that are being solved for (i.e., T_fluid, pressure, speed). Additionally, the characteristic length or the hydraulic diameter, porosity, and friction factors of flow regions in the model can also be defined here and used in the Action or FVKernels. A single porosity field is used for both the flow and the heat transfer closures. The `wall_htc` material computes the areal heat transfer coefficient between the coolant and the structures in the downcomer and the fluidic diode with a Dittus-Boelter correlation.
 
 !listing /pbfhr/gFHR/steady/gFHR_pronghorn_ss.i block=FunctorMaterials
 
+## Fluid-structure heat transfer and boundary conditions
+
+The heat transfer between the coolant in the downcomer and the fluidic diode and the adjacent solid structures is modeled at their interface using a [FVConvectionCorrelationInterface](https://mooseframework.inl.gov/source/fviks/FVConvectionCorrelationInterface.html), using the `wall_htc` heat transfer coefficient defined above.
+
+!listing /pbfhr/gFHR/steady/gFHR_pronghorn_ss.i block=FVInterfaceKernels
+
+The heat removal from the outer surface of the vessel to the reactor cavity cooling system (RCCS) is modeled with a combination of conduction through a stagnant air gap and radiation.
+
+!listing /pbfhr/gFHR/steady/gFHR_pronghorn_ss.i block=FVBCs
+
 ## Postprocessors
 
-Nearing the end of the model, the [Postprocessors](https://mooseframework.inl.gov/syntax/Postprocessors/) block specifies calculations that should be made regarding the solution that may be used during picard iterations or for data analysis after convergence. There are many different types used in this model including `ElementExtremeValue`, `ParsedPostprocessor` which also gives the user a wide berth of possibilities to calculate specific values of interest, `ElementIntegralVariablePostprocessor`, and `SideAverageValue` to name a few. Here both postprocessors for the thermal-hydraulic solve are listed which operate on the pressure, velocity, and temperatures solved for in the numerical simulation, as well as values that were transferred in from Griffin like the `power_density`.
+Nearing the end of the model, the [Postprocessors](https://mooseframework.inl.gov/syntax/Postprocessors/) block specifies calculations that should be made regarding the solution that may be used during picard iterations or for data analysis after convergence. There are many different types used in this model including `ElementExtremeValue`, `ParsedPostprocessor` which also gives the user a wide berth of possibilities to calculate specific values of interest, `ElementIntegralVariablePostprocessor`, and `SideAverageValue` to name a few. Here both postprocessors for the thermal-hydraulic solve are listed which operate on the pressure, velocity, and temperatures solved for in the numerical simulation, as well as values that were transferred in from Griffin like the `power_density`. The `Heatflux_RCCS` postprocessor reports the total heat removed through the RCCS boundary, in W, by integrating the fluxes of the boundary conditions.
 
 !listing /pbfhr/gFHR/steady/gFHR_pronghorn_ss.i block=Postprocessors
 
