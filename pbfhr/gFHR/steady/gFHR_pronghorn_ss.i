@@ -15,4 +15,4 @@ pebble_bed_fluid_effective_conductivity_type=FunctorLinearPecletKappaFluid
 !include gFHR_pronghorn_ss_base.i
 
 # Set a parameter specifically required by the FunctorLinearPecletKappaFluid conductivity type
-FunctorMaterials/pebble_bed_fluid_effective_conductivity/porosity=porosity_energy
+FunctorMaterials/pebble_bed_fluid_effective_conductivity/porosity=porosity
