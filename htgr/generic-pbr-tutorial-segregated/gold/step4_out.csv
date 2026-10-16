@@ -1,0 +1,3 @@
+time,enthalpy_balance,heat_source_integral,inlet_mfr,outlet_mfr,pressure_drop
+0,0,0,0,0,0
+1,200000039.20969,200000039.20716,-60,59.999999999893,87446.663230298
