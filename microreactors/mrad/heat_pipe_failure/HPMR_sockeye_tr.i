@@ -384,7 +384,7 @@ T_ext_cond = 800.
     type = SideIntegralVariablePostprocessor
     variable = virtual_Text
     boundary  = 'hp:evap:inner'
-    execute_on = 'INITIAL LINEAR'
+    execute_on = 'INITIAL TIMESTEP_END'
   []
   [A_avg_T_aux]
     type = AverageNodalVariableValue
