@@ -22,7 +22,7 @@
                   TransportSystems/sn/NPolar=1
                   TransportSystems/sn/NAzmthl=3
                   TransportSystems/sn/NA=1"
-      capabilities = 'bisonapp | bluecrabapp | direwolfapp'
+      capabilities = 'griffinapp | bluecrabapp | direwolfapp'
       min_parallel = 40
       max_time = 3600
       heavy = true
