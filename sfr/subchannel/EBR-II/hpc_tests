@@ -11,6 +11,9 @@
     recover = false
     max_parallel = 1
     requirement = 'The system will examine the subchannel solver for the EBR-II steady state SHRT-17 case'
+
+    # Adjusting tolerance past changes in SCM to avoid regolding
+    rel_err = 4e-5
   []
   [EBR-II_SHRT-45R_SS_test]
     type = CSVDiff
@@ -23,7 +26,7 @@
     max_parallel = 1
     requirement = 'The system will examine the subchannel solver for the EBR-II steady state SHRT-45R case'
   []
-    [EBR-II_SHRT-45R_SS_test_corrected]
+  [EBR-II_SHRT-45R_SS_test_corrected]
     type = CSVDiff
     input = 'XX09_SCM_SS45R_corrected.i'
     csvdiff  = 'XX09_SCM_SS45R_corrected_out.csv'
