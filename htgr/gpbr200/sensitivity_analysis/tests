@@ -1,4 +1,5 @@
 [Tests]
+  issues = '#600'
   [grid_study]
     type = RunApp
     input = stm_grid_study.i
@@ -22,5 +23,7 @@
                 VectorPostprocessors/qois/csv_file=gold/stm_lhs_sampling_out_storage_0001.csv
                 GlobalParams/order=3'
     capabilities = 'method=opt & bluecrabapp'
+    # should be golded serially
+    max_parallel = 1
   []
 []

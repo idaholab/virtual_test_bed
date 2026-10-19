@@ -1,4 +1,5 @@
 [Tests]
+  issues = '#600'
   [grid_study]
     type = CSVDiff
     input = stm_grid_study.i
