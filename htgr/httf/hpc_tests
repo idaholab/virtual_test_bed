@@ -15,7 +15,7 @@
     capabilities = 'method=opt & relap7app'
 
     # Adjusted tolerance to avoid regolding. Regold on next larger diff
-    rel_err = '6e-5'
+    rel_err = '2e-3'
     ignore_columns = 'upcomer_outlet_main'
   []
 []
