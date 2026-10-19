@@ -23,8 +23,8 @@
     capabilities = 'bluecrabapp | direwolfapp'
     cli_args = "MultiApps/active='' Transfers/active=''"
     min_parallel = 192
-    # Observed variability on H postprocessing
-    rel_err = 1e-5
+    # Observed variability on H postprocessing from local regold (10 mpi)
+    rel_err = 2e-5
   []
 
   [griffin_only]
