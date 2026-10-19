@@ -99,8 +99,8 @@
     eos                             = salt_eos
     orientation                     = '0 0 1'
     position                        = '0 1.25 0.1'
-    A                               = 0.000806         # or 0.000806729
-    Dh                              = 0.015494         # previous Dh is not correct
+    A                               = 0.000806
+    Dh                              = 0.015494
     length                          = 0.5
     n_elems                         = 25
 
@@ -442,7 +442,7 @@
     input    = IHX(secondary_in)
   []
 
-    [water_flow] # Output mass flow rate at secondary inlet of IHX
+    [water_flow] # Output mass flow rate at secondary inlet of SHX
     type     = ComponentBoundaryFlow
     input    = SHX(secondary_in)
     []
@@ -488,25 +488,25 @@
     input    = IHX(secondary_out)
   []
 
-  [SHX_Tin_p]      # Temperature at IHX inlet
+  [SHX_Tin_p]      # Temperature at SHX inlet
     type     = ComponentBoundaryVariableValue
     variable = temperature
     input    = SHX(primary_in)
   []
 
-  [SHX_Tout_p]     # Temperature at IHX outlet
+  [SHX_Tout_p]     # Temperature at SHX outlet
     type     = ComponentBoundaryVariableValue
     variable = temperature
     input    = SHX(primary_out)
   []
 
-  [SHX_Tin_s]      # Temperature at IHX secondary inlet
+  [SHX_Tin_s]      # Temperature at SHX secondary inlet
     type     = ComponentBoundaryVariableValue
     variable = temperature
     input    = SHX(secondary_in)
   []
 
-  [SHX_Tout_s]     # Temperature at IHX secondary outlet
+  [SHX_Tout_s]     # Temperature at SHX secondary outlet
     type     = ComponentBoundaryVariableValue
     variable = temperature
     input    = SHX(secondary_out)

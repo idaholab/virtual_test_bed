@@ -9,7 +9,7 @@
      image=https://mooseframework.inl.gov/virtual_test_bed/media/msr/sel/sel_loop_temp.png
      pairs=reactor_type:MSR
                        reactor:SEL
-                       geometry:System-Level
+                       geometry:experiment_loop
                        codes_used:SAM
                        computing_needs:Workstation
                        gpu_enabled:false
@@ -89,7 +89,7 @@ For a base case, salt flow rate 1 kg/s, and heater power of 11 kW:
 
 - 11.3 K coolant temperature rise
 - Peak pin centerline temperature 1135 K, pin surface temperature 1008 K
-- Air temperature rises to 780 K in PHX, cools down to 320 K in SHX for discharge to the environment.
+- Air temperature rises to 780 K in PHX, cools down to 312.3 K in SHX for discharge to the environment.
 
 !media msr/sel/sel_loop_temp.png
        id=sel_loop_temp
@@ -101,7 +101,7 @@ For a base case, salt flow rate 1 kg/s, and heater power of 11 kW:
 | :- | :- | :- | :- | :- |
 | PHX | Salt | 772.5 | 783.8 | 1.0 |
 | PHX | Air | 300.0 | 781.3 | 0.022 |
-| SHX | Air | 778.2 | 319.8 | 0.022 |
+| SHX | Air | 778.2 | 312.3 | 0.022 |
 | SHX | Water | 300.0 | 319.8 | 0.13 |
 
 ### Natural Circulation in Pump Trip Transient
@@ -110,7 +110,7 @@ To simulate a loss-of-flow scenario, a pump trip is initiated at $t = 0$. The pu
 
 - +Flow Transition+: As the forced flow decays, the flow rate drops from the initial 1.0 kg/s but does not go to zero. Instead, a stable natural circulation flow of approximately 0.12 kg/s is successfully established in the loop, driven by the buoyancy difference between the hot salt in the heater test section and the cooler salt in the heat exchangers.
 - +Test Section Temperatures+: Due to the significantly reduced mass flow rate under constant 11 kW heating, the temperature rise across the test section ($\Delta T$) increases dramatically. The salt inlet temperature gradually drops to ~700 K as cooler salt returns from the PHX. Meanwhile, the outlet temperature experiences a transient peak near 825 K before settling around 795 K. This results in a steady-state natural circulation $\Delta T$ of approximately 95 K, up from the initial 11.3 K in forced flow.
-- +Heat Exchanger Performance+: Both the primary (PHX) and secondary (SHX) heat exchangers continue to operate effectively throughout the transient. In the PHX, the air outlet temperature smoothly tracks the transient peak of the incoming hot salt. Crucially, the SHX continues to successfully dump this heat into the water cooling sink, maintaining an extremely stable air discharge temperature of ~320 K (well below the 60°C / 333 K facility safety requirement).
+- +Heat Exchanger Performance+: Both the primary (PHX) and secondary (SHX) heat exchangers continue to operate effectively throughout the transient. In the PHX, the air outlet temperature smoothly tracks the transient peak of the incoming hot salt. Crucially, the SHX continues to successfully dump this heat into the water cooling sink, maintaining an extremely stable air discharge temperature of ~312–314 K (well below the 60°C / 333 K facility safety requirement).
 
 !media msr/sel/sel_transient_flowrate.png
        id=sel_transient_flowrate
