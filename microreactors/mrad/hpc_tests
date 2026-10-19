@@ -10,12 +10,13 @@
                "--distributed-mesh"
     min_parallel = 96
     max_time = 10000
+    # Runtime on 10 procs is 8100s
     # Capillary limit for vertical heat pipes is not accurate; see https://hpcgitlab.hpc.inl.gov/idaholab/sockeye/-/issues/65
     # Cross-section warning due to missing fission-only
     allow_warnings = true
 
     abs_zero = 1e-7
-    # Golded with 48 procs, now ran with 96
+    # Golded with 48 procs, now ran with 96, rel_err change = 6e-4
     rel_err = 6e-4
     ignore_columns = 'total_sink tb_integral mirror_side_integral hp_heat_integral'
   []
