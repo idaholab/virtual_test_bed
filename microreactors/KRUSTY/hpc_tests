@@ -25,7 +25,6 @@
       capabilities = 'griffinapp | bluecrabapp | direwolfapp'
       min_parallel = 40
       max_time = 3600
-      heavy = true
       # Cross section warning
       allow_warnings = true
     []
