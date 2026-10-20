@@ -5,7 +5,8 @@
     input = 'HPMR_dfem_griffin_ss.i'
     csvdiff = 'mrad_coupled_out.csv mrad_coupled_out_bison0.csv'
     capabilities = 'direwolfapp'
-    cli_args = "Executioner/richardson_max_its=20 Outputs/csv=true "
+    cli_args = "Outputs/checkpoint=true "
+               "Executioner/richardson_max_its=20 Outputs/csv=true "
                "Outputs/file_base=mrad_coupled_out Outputs/exodus=false MultiApps/bison/cli_args='Outputs/exodus=false' "
                "--distributed-mesh"
     min_parallel = 96
@@ -28,7 +29,8 @@
     input = 'HPMR_dfem_griffin_trN.i'
     csvdiff = 'mrad_coupled_null.csv mrad_coupled_null_bison0.csv'
     capabilities = 'direwolfapp'
-    cli_args = "Executioner/richardson_max_its=20 Executioner/end_time=5 "
+    cli_args = "Mesh/fmg/file=../steady/mrad_coupled_out_cp/LATEST "
+               "Executioner/richardson_max_its=20 Executioner/end_time=5 "
                "Outputs/csv=true Outputs/file_base=mrad_coupled_null Outputs/exodus=false "
                "MultiApps/bison/cli_args='Outputs/exodus=false';Problem/restart_file_base=../steady/mrad_coupled_out_bison0_cp/LATEST';Mesh/file=../steady/mrad_coupled_out_bison0_cp/LATEST' "
                "--distributed-mesh"
@@ -46,7 +48,8 @@
     input = 'HPMR_dfem_griffin_tr.i'
     csvdiff = 'mrad_coupled_load.csv mrad_coupled_load_bison0.csv'
     capabilities = 'direwolfapp'
-    cli_args = "Executioner/richardson_max_its=20 Executioner/end_time=5 Outputs/csv=true "
+    cli_args = "Mesh/fmg/file=../steady/mrad_coupled_out_cp/LATEST "
+               "Executioner/richardson_max_its=20 Executioner/end_time=5 Outputs/csv=true "
                "Outputs/file_base=mrad_coupled_load Outputs/exodus=false "
                "MultiApps/bison/cli_args='Outputs/exodus=false;Problem/restart_file_base=../steady/mrad_coupled_out_bison0_cp/LATEST;Mesh/file=../steady/mrad_coupled_out_bison0_cp/LATEST' "
                "--distributed-mesh"
@@ -64,7 +67,8 @@
     input = 'HPMR_dfem_griffin_tr.i'
     csvdiff = 'mrad_coupled_fail.csv mrad_coupled_fail_bison0.csv'
     capabilities = 'direwolfapp'
-    cli_args = "Executioner/richardson_max_its=20 Executioner/end_time=5 Outputs/csv=true "
+    cli_args = "Mesh/fmg/file=../steady/mrad_coupled_out_cp/LATEST "
+               "Executioner/richardson_max_its=20 Executioner/end_time=5 Outputs/csv=true "
                "Outputs/file_base=mrad_coupled_fail Outputs/exodus=false "
                "MultiApps/bison/cli_args='Outputs/exodus=false;Problem/restart_file_base=../steady/mrad_coupled_out_bison0_cp/LATEST;Mesh/file=../steady/mrad_coupled_out_bison0_cp/LATEST' "
                "--distributed-mesh"
