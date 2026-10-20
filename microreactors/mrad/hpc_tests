@@ -30,6 +30,8 @@
     csvdiff = 'mrad_coupled_null.csv mrad_coupled_null_bison0.csv'
     capabilities = 'direwolfapp'
     cli_args = "Mesh/fmg/file=../steady/mrad_coupled_out_cp/LATEST "
+               "Mesh/fmg/skip_partitioning=true "
+               "Mesh/allow_renumbering=false "
                "Mesh/skip_partitioning=true "
                "Executioner/richardson_max_its=20 Executioner/end_time=5 "
                "Outputs/csv=true Outputs/file_base=mrad_coupled_null Outputs/exodus=false "
@@ -50,6 +52,8 @@
     csvdiff = 'mrad_coupled_load.csv mrad_coupled_load_bison0.csv'
     capabilities = 'direwolfapp'
     cli_args = "Mesh/fmg/file=../steady/mrad_coupled_out_cp/LATEST "
+               "Mesh/fmg/skip_partitioning=true "
+               "Mesh/allow_renumbering=false "
                "Mesh/skip_partitioning=true "
                "Executioner/richardson_max_its=20 Executioner/end_time=5 Outputs/csv=true "
                "Outputs/file_base=mrad_coupled_load Outputs/exodus=false "
@@ -70,6 +74,8 @@
     csvdiff = 'mrad_coupled_fail.csv mrad_coupled_fail_bison0.csv'
     capabilities = 'direwolfapp'
     cli_args = "Mesh/fmg/file=../steady/mrad_coupled_out_cp/LATEST "
+               "Mesh/fmg/skip_partitioning=true "
+               "Mesh/allow_renumbering=false "
                "Mesh/skip_partitioning=true "
                "Executioner/richardson_max_its=20 Executioner/end_time=5 Outputs/csv=true "
                "Outputs/file_base=mrad_coupled_fail Outputs/exodus=false "
