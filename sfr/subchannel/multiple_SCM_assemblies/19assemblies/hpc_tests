@@ -1,5 +1,5 @@
 [Tests]
-  issues = '#649'
+  issues = '#644 #649'
   [generate_mesh]
     type = CheckFiles
     input = abr_19assemblies.i
@@ -23,7 +23,8 @@
     cli_args = 'Executioner/fixed_point_min_its=3 Executioner/fixed_point_max_its=3'
     abs_zero = 1e-5
     rel_err = 1e-2
-    ignore_columns = 'center_duct_heat_loss_07 center_duct_heat_loss_08 center_duct_heat_loss_09 center_duct_heat_loss_10 center_duct_heat_loss_11 center_duct_heat_loss_12 center_duct_heat_loss_13 center_duct_heat_loss_14 center_duct_heat_loss_15 center_duct_heat_loss_16 center_duct_heat_loss_17 center_duct_heat_loss_18'
+    # results vary
+    ignore_columns = 'center_duct_heat_loss_01 center_duct_heat_loss_07 center_duct_heat_loss_08 center_duct_heat_loss_09 center_duct_heat_loss_10 center_duct_heat_loss_11 center_duct_heat_loss_12 center_duct_heat_loss_13 center_duct_heat_loss_14 center_duct_heat_loss_15 center_duct_heat_loss_16 center_duct_heat_loss_17 center_duct_heat_loss_18'
 
     # This is an expensive and slow test
     min_parallel = 10

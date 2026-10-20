@@ -39,7 +39,7 @@
                 Transfers/active='' MultiApps/active=''
                 Mesh/inactive='fmg'
                 Outputs/file_base=hpc_HC_out"
-    capabilities = 'cardinalapp | mooseapp'
+    capabilities = 'cardinalapp | combinedapp'
     min_parallel = 8
   []
   [run_nekrs]

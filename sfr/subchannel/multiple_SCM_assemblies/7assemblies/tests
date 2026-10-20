@@ -1,4 +1,5 @@
 [Tests]
+  issues = '#644'
   # Syntax checks for 7-assembly SCM center model
   [Master_app_syntax]
     type = RunApp
