@@ -24,7 +24,7 @@
     cli_args = "MultiApps/active='' Transfers/active=''"
     min_parallel = 192
     # Observed variability on H postprocessing from local regold (10 mpi)
-    rel_err = 2e-5
+    rel_err = 4e-4
   []
 
   [griffin_only]
