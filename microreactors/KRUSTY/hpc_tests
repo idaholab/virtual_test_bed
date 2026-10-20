@@ -93,6 +93,8 @@
       # Cross section warning
       allow_warnings = true
       prereq = 'transient_tests/multiapp_ss_coarse'
+      # Difference between M4 mac 10procs and CIVET
+      rel_err = 2e-4
     []
     [multiapp_tr_coarse_30c]
       type = CSVDiff
@@ -114,6 +116,8 @@
       # Cross section warning
       allow_warnings = true
       prereq = 'transient_tests/multiapp_ss_coarse'
+      # Difference between M4 mac 10procs and CIVET
+      rel_err = 2e-4
     []
   []
 []
