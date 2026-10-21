@@ -1,4 +1,5 @@
 [Tests]
+  issues = '#308'
   # Generate the meshes
   [neutronics_coarse_mesh]
     type = CheckFiles
@@ -23,6 +24,8 @@
     check_input = True
     capabilities = 'direwolfapp'
     prereq = neutronics_fine_mesh
+    # Observed timeouts at 300
+    max_time = 500
   []
   [neutronics_only_syntax]
     type = RunApp
