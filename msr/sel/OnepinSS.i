@@ -425,13 +425,6 @@
 []
 
 [Postprocessors]
-  [pseudo_dt]
-    type       = PseudoTimestep
-    alpha      = 1.5
-    initial_dt = 0.1
-    method     = EXP
-  []
-
   [CH1_flow]       # Output mass flow rate at inlet of CH1
     type     = ComponentBoundaryFlow
     input    = CH1(in)
@@ -557,8 +550,10 @@
   dtmax               = 200.0
 
   [TimeStepper]
-    type            = PostprocessorDT
-    postprocessor   = pseudo_dt
+    type               = IterationAdaptiveDT
+    dt                 = 0.1
+    growth_factor      = 1.5
+    optimal_iterations = 10
   []
 
   petsc_options_iname   = '-ksp_gmres_restart -pc_type'
