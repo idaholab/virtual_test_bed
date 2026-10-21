@@ -2,7 +2,7 @@
 
 *Contact: Gang Yang, gang.yang.at.anl.gov*
 
-*Model link: [NACIE-UP ADP10 coupled model](https://github.com/idaholab/virtual_test_bed/tree/devel/lfr/nacie)*
+*Model link: [NACIE-UP ADP10 coupled model](https://github.com/idaholab/virtual_test_bed/tree/main/lfr/nacie)*
 
 !tag name=Coupled SAM and MOOSE Subchannel model of NACIE ADP10 Test
      description=Coupled system and subchannel simulation of the NACIE-UP ADP10 forced to natural circulation test with LBE coolant
