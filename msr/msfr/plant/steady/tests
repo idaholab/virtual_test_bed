@@ -1,4 +1,5 @@
 [Tests]
+  issues = '#132'
   # Syntax checks
   [coupled_multiphysics_syntax]
     type = RunApp
@@ -87,9 +88,20 @@
     type = CSVDiff
     csvdiff = 'msfr_system_1d_csv.csv'
     input = 'msfr_system_1d.i'
-    cli_args = 'Executioner/num_steps=100 Executioner/start_time=-200 --app SamApp'
+    # Make time history consistent between Albion and Rome runs
+    cli_args = "Executioner/num_steps=100 Executioner/start_time=-200 "
+               "Executioner/TimeStepper/type=CSVTimeSequenceStepper "
+               "Executioner/TimeStepper/file_name=gold/msfr_system_1d_csv.csv "
+               "Times/csv_times/type=CSVFileTimes "
+               "Times/csv_times/files=gold/msfr_system_1d_csv.csv "
+               "Outputs/csv/sync_times_object=csv_times "
+               "--app SamApp"
     # PTFunctionEOS warning: A user input enthalpy function is provided. Suggest providing valid temperature range to calculate enthalpy internally based on Cp.
     allow_warnings = True
+    # TimeStepper was replaced via cli_args
+    allow_unused = True
+    # Observed differences between civet & M4 mac
+    rel_err = 4.5e-5
     capabilities = 'samapp'
   []
 []
