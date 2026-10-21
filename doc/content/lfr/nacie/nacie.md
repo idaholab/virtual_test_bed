@@ -74,7 +74,7 @@ SCM uses `SCMTriAssemblyMeshGenerator` to construct the hexagonal bundle mesh an
 
 ### Domain-Overlapping Coupling
 
-The complete FPS domain is solved by both applications. At each coupled time step, the SAM main app transfers the FPS inlet temperature, inlet mass flux, and outlet pressure to the single SCM sub-app. SCM returns its average pressure gradient to SAM. The transfers are disabled during the initial portion of initialization and enabled after -8000 s.
+The complete FPS domain is solved by both applications. At each coupled time step, the SAM main app transfers the FPS inlet temperature, inlet mass flux, and outlet pressure to the single SCM sub-app. SCM returns its average pressure gradient to SAM. The transfers are disabled during the initial portion of initialization and enabled after the time in the simulation crosses -8000 s.
 
 !media lfr/nacie/nacie_coupling.png
        style=width:75%;margin-bottom:2%;margin:auto;
