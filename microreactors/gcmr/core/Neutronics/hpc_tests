@@ -19,6 +19,8 @@
     max_time = 600
     # Griffin does not have the sam petsc option parameter
     allow_unused = true
+    # need the mesh
+    prereq = 'generate_mesh'
   []
   [griffin_alone]
     type = 'CSVDiff'

@@ -17,6 +17,7 @@ lfs_include:
   - htgr/htr10/steady/gold
   - htgr/gpbr200/data
   - sfr/vtr
+  - sfr/sefor/Cross_Section
   - msr/lotus/mesh/mcre_mesh.e
   - lfr/7pin_cardinal_demo/LFR9g_P5.xml
   - pbfhr/gFHR/data/gFHR_4g_pebble.xml
