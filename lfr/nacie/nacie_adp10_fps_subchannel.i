@@ -561,10 +561,6 @@ T_in = 498.3
     cutback_factor_at_failure = 0.5
   []
 
-  [Quadrature]
-    type = TRAP
-    order = FIRST
-  []
 []
 
 [Outputs]
