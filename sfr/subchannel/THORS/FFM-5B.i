@@ -73,7 +73,7 @@ P_out = 2.0e5 # Pa
     type = SCMHTCDittusBoelter
   []
   [cheng_todreas]
-    type = SCMMixingChengTodreas
+    type = SCMMixingChenTodreas
     CT = 2
   []
 []

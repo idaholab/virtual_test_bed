@@ -113,7 +113,7 @@ duct_inside = '${fparse duct_outside - 2 * duct_thickness}'
     type = SCMHTCGnielinski
   []
   [cheng_todreas]
-    type = SCMMixingChengTodreas
+    type = SCMMixingChenTodreas
   []
 []
 
