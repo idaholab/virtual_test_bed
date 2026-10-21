@@ -1,4 +1,5 @@
 [Tests]
+  issue = '#904'
   [nacie_adp10_syntax]
     type = RunApp
     input = nacie_adp10.i
