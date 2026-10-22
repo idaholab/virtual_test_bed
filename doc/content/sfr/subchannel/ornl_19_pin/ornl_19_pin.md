@@ -142,7 +142,7 @@ A custom transfer, *SCMSolutionTransfer*, is used for this purpose.
 
 !listing sfr/subchannel/ornl_19_pin/ornl_19_pin.i block=Transfers language=cpp
 
-The detailed mesh uses a *SCMDetailedTriSubChannelMeshGenerator* and the solution variables are populated by the transfer.
+The detailed mesh uses a *SCMDetailedTriAssemblyMeshGenerator* and the solution variables are populated by the transfer.
 
 !listing sfr/subchannel/ornl_19_pin/ornl_19_pin_viz.i language=cpp
 

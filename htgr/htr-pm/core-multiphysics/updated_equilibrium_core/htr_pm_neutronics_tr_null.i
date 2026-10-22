@@ -254,6 +254,13 @@ burnup_group_boundaries = '5.35E+13 1.070E+14 1.604E+14 2.139E+14 2.674E+14 3.20
     execute_on             = 'INITIAL TIMESTEP_END'
   []
 []
+[Positions]
+  [pebble_positions]
+    type = FilePositions
+    files = 'pebble_heat_pos.txt'
+  []
+[]
+
 # ==============================================================================
 # MATERIALS
 # ==============================================================================
@@ -292,7 +299,7 @@ burnup_group_boundaries = '5.35E+13 1.070E+14 1.604E+14 2.139E+14 2.674E+14 3.20
 
   # pebble conduction
   pebble_conduction_input_file                = 'pebble_triso.i'
-  pebble_positions_file                       = 'pebble_heat_pos.txt'
+  pebble_positions_object_name                = pebble_positions
   surface_temperature_sub_app_postprocessor   = T_surface
   surface_temperature_main_app_variable       = T_solid
   power_sub_app_postprocessor                 = pebble_power_density

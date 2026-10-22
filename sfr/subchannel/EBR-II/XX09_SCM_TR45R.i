@@ -339,7 +339,7 @@ unheated_length_exit = '${fparse 26.9*scale_factor}'
     variable = 'mdot SumWij P DP h T rho mu S'
   []
   [pin_transfer]
-    type = SCMPinSolutionTransfer
+    type = SCMSolutionTransfer
     to_multi_app = viz
     variable = 'Tpin q_prime'
   []

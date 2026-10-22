@@ -163,7 +163,7 @@ active = 'fuel_elasticity_tensor fuel_elastic_stress fuel_thermal_expansion
   [fuel_elasticity_tensor]
      type = UPuZrElasticityTensor
      block = pellet
-     porosity = porosity
+     porosity_material = porosity
      output_properties = 'youngs_modulus poissons_ratio'
      outputs = all
   []
