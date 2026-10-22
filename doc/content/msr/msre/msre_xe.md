@@ -146,7 +146,7 @@ The Pronghorn input file acts as the **Parent Application**. It is responsible f
 The simulation uses a 2-D axisymmetric (RZ) coordinate system.
 
 - **Geometry:** The mesh represents the full primary loop, including the core, plenums, and piping regions.
-- **Initialization:** `FileMeshGenerator` loads a pre-existing mesh and restart-ready state. In practice, using Exodus restart settings (e.g., `use_for_exodus_restart = true`) allows the xenon study to start from a previously converged flow field.
+- **Mesh generation:** The mesh is generated on the fly by `mesh/strip_mesh.i` (run with `--mesh-only`, which writes `mesh/strip_mesh_in.e`). `FileMeshGenerator` then loads this same mesh in both the Pronghorn and Griffin inputs, so no binary mesh file needs to be stored in the repository.
 
 !listing msr/msre/xe_poisoning/th_xe.i block=Mesh language=cpp
 
@@ -348,6 +348,9 @@ module load use.moose moose-apps bluecrab
 Use `mpiexec` to distribute the coupled solve. For this 2-D axisymmetric case, 6 cores are a practical balance between computational speed and communication overhead.
 
 ```language=bash
+# Generate the mesh first (writes mesh/strip_mesh_in.e, used by both th_xe.i and neu_xe.i)
+cd mesh && blue_crab-opt -i strip_mesh.i --mesh-only && cd ..
+
 # Execute the parent application input file using 6 processors
 mpiexec -n 6 blue_crab-opt -i th_xe.i 2>&1 | tee logfile
 ```

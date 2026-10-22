@@ -1,9 +1,10 @@
 [Tests]
   # Syntax checks
+  # Mesh generated on the fly; shared by neu_xe.i and th_xe.i (no binary mesh in the repo)
   [generate_mesh]
     type = RunApp
-    executable_pattern = 'combined*|reactor*'
-    input = './mesh/strip_mesh.i'
+    executable_pattern = 'combined*|reactor*|griffin*|blue_crab*'
+    input = 'strip_mesh.i'
     cli_args = '--mesh-only'
     working_directory = './mesh'
   []
@@ -14,6 +15,7 @@
     check_input = True
     executable_pattern = 'griffin*'
     cli_args = "MultiApps/active='' Transfers/active=''"
+    prereq = generate_mesh
   []
 
   [th_xe_syntax]
@@ -22,6 +24,7 @@
     check_input = True
     executable_pattern = 'blue_crab*|combined*'
     capabilities = 'method=opt'
+    prereq = generate_mesh
   []
 
   # Regression tests with CSV output

@@ -101,16 +101,15 @@ solid_blocks = 'core core_barrel'
 # ==============================================================================
 [Mesh]
   coord_type = 'RZ'
-  [restart]
+  # Mesh generated on the fly by mesh/strip_mesh.i (--mesh-only), shared with neu_xe.i
+  [fmg]
     type = FileMeshGenerator
-    use_for_exodus_restart = true
-    file = './neu_xe_init.e'
+    file = './mesh/strip_mesh_in.e'
   []
 []
 
 [Problem]
   kernel_coverage_check = false
-  allow_initial_conditions_with_restart = true
   nl_sys_names = 'ns energy c1 c2 c3 c4 c5 c6 xe_i'
 []
 # ==============================================================================
