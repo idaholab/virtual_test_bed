@@ -48,11 +48,12 @@
   []
 
   [cladding_extrude]
-    type = MeshExtruderGenerator
-    extrusion_vector = '0 0 4.0'
+    type = AdvancedExtruderGenerator
+    direction = '0 0 1'
+    heights = 4.0
     num_layers = 400
-    bottom_sideset = '1201' # will be fixed boundary
-    top_sideset = '1202'
+    bottom_boundary = '1201' # will be fixed boundary
+    top_boundary = '1202'
     input = rename_cladding_1
   []
 
@@ -84,8 +85,9 @@
   []
 
   [load_pad_extrude]
-    type = MeshExtruderGenerator
-    extrusion_vector = '0 0 0.1'
+    type = AdvancedExtruderGenerator
+    direction = '0 0 1'
+    heights = 0.1
     num_layers = 10
     input = load_pad_center_removal
   []
@@ -190,9 +192,9 @@
   []
 []
 
-[Modules]
-  [TensorMechanics]
-    [Master]
+[Physics]
+  [SolidMechanics]
+    [QuasiStatic]
       [all]
         strain = FINITE
         volumetric_locking_correction = true

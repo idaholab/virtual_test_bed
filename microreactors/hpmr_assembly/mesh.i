@@ -119,19 +119,25 @@ length_hp = 1.8
   #   6: monolith_tri
   #   7: fuel
   #   8: heatpipe
-  [extrude]
-    type = NonuniformMeshExtruderGenerator
+  # Rename the 2D blocks so that their names, which are carried over by the extrusion,
+  # do not conflict with the final block names assigned in 'rename_blocks'
+  [rename_2d_blocks]
+    type = RenameBlockGenerator
     input = hex_assem
-    extrusion_vector = '0 0 1'
-    layer_thickness =    '20.0 160.0 20.0'
-    layer_subdivisions = '   4    32    4'
-    existing_subdomains = '0 1 2 3'
-    layers = '0 1 2'
-    new_ids = '2 1 1 1
-               6 7 5 8
-               4 3 3 8'
-    bottom_sideset = 'bottom'
-    top_sideset = 'top'
+    old_block = '0 1 2 3'
+    new_block = 'periphery_2d fuel_2d monolith_2d heatpipe_2d'
+  []
+  [extrude]
+    type = AdvancedExtruderGenerator
+    input = rename_2d_blocks
+    direction = '0 0 1'
+    heights =    '20.0 160.0 20.0'
+    num_layers = '   4    32    4'
+    subdomain_swaps = '0 2 1 1 2 1 3 1;
+                       0 6 1 7 2 5 3 8;
+                       0 4 1 3 2 3 3 8'
+    bottom_boundary = 'bottom'
+    top_boundary = 'top'
   []
 
   [rename_blocks]

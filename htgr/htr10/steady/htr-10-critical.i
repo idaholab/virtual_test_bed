@@ -161,15 +161,15 @@ TDC_blocks = '40 41'
 # ==============================================================================
 [Materials]
   [fissile]
-    type = MixedMatIDNeutronicsMaterial
+    type = MixedNeutronicsMaterial
     block = ${fuel_blocks}
   []
   [non_fissile]
-    type = MixedMatIDNeutronicsMaterial
+    type = MixedNeutronicsMaterial
     block = ${non_fuel_blocks}
   []
   [TDC-materials]
-    type = MixedMatIDNeutronicsMaterial
+    type = MixedNeutronicsMaterial
     block = ${TDC_blocks}
   []
 []

@@ -163,11 +163,11 @@ non_fuel_blocks = '10 11 12 13 14 15 18 22 32 40 41 42 43 44 45 46 50 52'
 # ==============================================================================
 [Materials]
   [fissile]
-    type = MixedMatIDNeutronicsMaterial
+    type = MixedNeutronicsMaterial
     block = ${fuel_blocks}
   []
   [non_fissile]
-    type = MixedMatIDNeutronicsMaterial
+    type = MixedNeutronicsMaterial
     block = ${non_fuel_blocks}
   []
 []

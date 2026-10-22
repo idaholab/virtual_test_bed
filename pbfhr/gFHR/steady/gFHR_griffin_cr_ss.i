@@ -274,14 +274,13 @@ Rho = 1973.8 # kg/m^3 900.0 K
     value = '3.38523' #Note that when position is 3.6947 CR is withdrawn
   []
 []
-
 [Positions]
-  [pebble_heat_positions]
+  [pebble_positions]
     type = FilePositions
     files = '../data/pebble_heat_pos_8r_20z.txt'
-    outputs = none
   []
 []
+
 # ==============================================================================
 # DEPLETION
 # ==============================================================================
@@ -346,7 +345,7 @@ Rho = 1973.8 # kg/m^3 900.0 K
 
   # pebble conduction
   pebble_conduction_input_file = ${pebble_conduction_input_file}
-  pebble_positions_object_name = pebble_heat_positions
+  pebble_positions_object_name = pebble_positions
   surface_temperature_sub_app_postprocessor = T_surface
   surface_temperature_main_app_variable = Tsolid
   power_sub_app_postprocessor = pebble_power_density_pp
