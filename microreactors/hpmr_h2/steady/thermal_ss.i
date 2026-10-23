@@ -303,10 +303,10 @@ qvalue_multiplier = 1.0
 
 [Transfers]
   [to_sockeye_twall]
-    type = MultiAppUserObjectTransfer
+    type = MultiAppGeneralFieldUserObjectTransfer
     to_multi_app = sockeye
     variable = T_ext_var
-    user_object = average_Twall_hp
+    source_user_object = average_Twall_hp
   []
   [from_sub_htc]
     type = MultiAppPostprocessorInterpolationTransfer

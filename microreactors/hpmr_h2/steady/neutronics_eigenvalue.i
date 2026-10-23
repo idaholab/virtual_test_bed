@@ -183,7 +183,7 @@ bison_ref_blocks = '${reflector_blocks} ${absorber_blocks}'
     bbox_factor = 15
   []
   [tfuel_from_modules]
-    type = MultiAppGeneralFieldNearestNodeTransfer
+    type = MultiAppGeneralFieldNearestLocationTransfer
     from_multi_app = bison
     source_variable = Tsolid
     variable = Tfuel
@@ -192,7 +192,7 @@ bison_ref_blocks = '${reflector_blocks} ${absorber_blocks}'
     bbox_factor = 15
   []
   [tmod_from_modules]
-    type = MultiAppGeneralFieldNearestNodeTransfer
+    type = MultiAppGeneralFieldNearestLocationTransfer
     from_multi_app = bison
     source_variable = Tsolid
     variable = Tmod
@@ -201,7 +201,7 @@ bison_ref_blocks = '${reflector_blocks} ${absorber_blocks}'
     bbox_factor = 15
   []
   [trefl_from_modules]
-    type = MultiAppGeneralFieldNearestNodeTransfer
+    type = MultiAppGeneralFieldNearestLocationTransfer
     from_multi_app = bison
     source_variable = Tsolid
     variable = Trefl
@@ -210,7 +210,7 @@ bison_ref_blocks = '${reflector_blocks} ${absorber_blocks}'
     bbox_factor = 15
   []
   [ch_from_modules]
-    type = MultiAppGeneralFieldNearestNodeTransfer
+    type = MultiAppGeneralFieldNearestLocationTransfer
     from_multi_app = bison
     source_variable = ch
     variable = ch

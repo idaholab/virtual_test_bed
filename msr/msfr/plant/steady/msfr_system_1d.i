@@ -47,17 +47,6 @@ core_power_val = 3e9
          7.8340E-03  7.2951E-03  6.8099E-03  6.3719E-03  5.9751E-03  5.6147E-03
          5.2865E-03  4.9868E-03  4.7124E-03'
   []
-  [fuel_salt_enthalpy_func] # approximated by cp*T
-    type = PiecewiseLinear
-    x = '   800     820     840     860     880     900
-            920     940     960     980    1000    1020
-           1040    1060    1080    1100    1120    1140
-           1160    1180    1200'
-    y = '890400  913216  937144  962184  988336 1015600
-        1043976 1073464 1104064 1135776 1168600 1202536
-        1237584 1273744 1311016 1349400 1388896 1429504
-        1471224 1514056 1558000'
-  []
   [TimeStepperFunc]
     type = PiecewiseLinear
     #x = '-200    -180   -160   -140   -100    -60     -50  -20  -10.  0.0  100'
@@ -85,7 +74,9 @@ core_power_val = 3e9
     cp = fuel_salt_cp_func
     mu = fuel_salt_mu_func
     k = fuel_salt_k_func
-    enthalpy = fuel_salt_enthalpy_func
+    T_max = 1200
+    T_min = 800
+    T_nodes = 21
   []
   [hx_salt_eos]
     type = SaltEquationOfState
