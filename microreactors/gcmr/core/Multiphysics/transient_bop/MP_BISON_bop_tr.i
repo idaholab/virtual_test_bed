@@ -355,7 +355,7 @@ start_time = -2e5
   [airgap_density]
     type = StrainAdjustedDensity
     block = ${he_void_blocks} #helium
-    strain_free_density = 1000 #180
+    strain_free_density = 180
     displacements = 'zero zero zero'
   []
 
