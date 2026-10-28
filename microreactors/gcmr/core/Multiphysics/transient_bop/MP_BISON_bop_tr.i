@@ -230,14 +230,6 @@ start_time = -2e5
     boundary = ${coolant_channel_bdries}
     variable = temp
   []
-  # #we can assume perfect insulation for simplicity for now
-  # [outside_bc]
-  #   type = ConvectiveFluxFunction # (Robin BC)
-  #   variable = temp
-  #   boundary = ${external_bdries}
-  #   coefficient = 0.15 # W/K/m^2
-  #   T_infinity = 300 # K air temperature at the top of the core
-  # []
 []
 
 [Materials]
@@ -314,7 +306,7 @@ start_time = -2e5
     type = HeatConductionMaterial
     block = ${he_void_blocks} # Helium filled in the control rod hole
     temperature = temp
-    thermal_conductivity = 5 #0.15 # W/m/K
+    thermal_conductivity = 0.15 # W/m/K
     specific_heat = 5197 # random value
   []
 
@@ -561,9 +553,6 @@ start_time = -2e5
   petsc_options_value = 'hypre boomeramg 100'
 
   solve_type = 'PJFNK'
-  # petsc_options = '-snes_ksp_ew'
-  # petsc_options_iname = '-pc_type -pc_factor_mat_solver_package -ksp_gmres_restart'
-  # petsc_options_value = 'lu       superlu_dist                  101' #51
 
   line_search = 'none'
 
@@ -576,12 +565,6 @@ start_time = -2e5
   end_time = 10000
   dtmax = 2 # 5
   dtmin = 1e-6
-
-  # Fixed point might not be needed for ss simulation
-  # fixed_point_max_its = 5
-  # accept_on_max_fixed_point_iteration = true
-  # fixed_point_rel_tol = 5e-8
-  # fixed_point_abs_tol = 5e-8
 
   automatic_scaling = true
   compute_scaling_once = false
