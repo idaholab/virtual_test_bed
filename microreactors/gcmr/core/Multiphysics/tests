@@ -43,7 +43,7 @@
     check_input = true
     input = 'MP_SAM_ss.i'
     cli_args = "--app ThermalHydraulicsApp"
-    capabilities = 'method=opt & (samapp | bluecrabapp)'
+    capabilities = 'method=opt & (combinedapp | bluecrabapp)'
     max_time = 600
     working_directory = 'steady_state'
   []
@@ -74,7 +74,7 @@
     check_input = true
     input = 'MP_SAM_ss_fp.i'
     cli_args = "--app ThermalHydraulicsApp"
-    capabilities = 'method=opt & (samapp | bluecrabapp)'
+    capabilities = 'method=opt & (combinedapp | bluecrabapp)'
     max_time = 600
     working_directory = 'steady_state_fp'
   []
@@ -86,7 +86,7 @@
                 GlobalParams/initial_p=${Pout}
                 GlobalParams/initial_vel=${Vin}
                 GlobalParams/initial_T=${Tin}"
-    capabilities = 'method=opt & (samapp | bluecrabapp)'
+    capabilities = 'method=opt & (combinedapp | bluecrabapp)'
     max_time = 600
     working_directory = 'single_channel_blockage'
   []
@@ -98,7 +98,7 @@
                 GlobalParams/initial_p=${Pout}
                 GlobalParams/initial_vel=${Vin}
                 GlobalParams/initial_T=${Tin}"
-    capabilities = 'method=opt & (samapp | bluecrabapp)'
+    capabilities = 'method=opt & (combinedapp | bluecrabapp)'
     max_time = 600
     working_directory = 'depressurization'
   []
@@ -110,9 +110,69 @@
                 GlobalParams/initial_p=${Pout}
                 GlobalParams/initial_vel=${Vin}
                 GlobalParams/initial_T=${Tin}"
-    executable_pattern = 'sam*|blue_crab*'
-    capabilities = 'method=opt'
+    capabilities = 'method=opt & (combinedapp | bluecrabapp)'
     max_time = 600
     working_directory = 'transient_fp'
+  []
+
+  # Balance of Plant (BOP) loop coupled full core models
+  # Transient Griffin/BISON inputs restart from the steady_state_bop output and
+  # are therefore not syntax-checked here (they require pre-generated restart
+  # artifacts), mirroring the fission-product (fp) convention above.
+  [MP_Griffin_BOP_syntax]
+    type = RunApp
+    check_input = true
+    input = 'MP_Griffin_bop_ss.i'
+    cli_args = "MultiApps/active='' Transfers/active=''"
+    capabilities = 'method=opt & (griffinapp | bluecrabapp)'
+    max_time = 600
+    # Griffin does not have the sam petsc option parameter
+    allow_unused = true
+    working_directory = 'steady_state_bop'
+    prereq = 'generate_griffin_mesh'
+  []
+  [MP_BISON_BOP_syntax]
+    type = RunApp
+    check_input = true
+    input = 'MP_BISON_bop_ss.i'
+    cli_args = "MultiApps/active='' Transfers/active=''"
+    capabilities = 'method=opt & (bisonapp | bluecrabapp)'
+    max_time = 600
+    working_directory = 'steady_state_bop'
+    prereq = 'generate_bison_mesh'
+  []
+  [MP_SAM_BOP_syntax]
+    type = RunApp
+    check_input = true
+    input = 'MP_SAM_bop_ss.i'
+    cli_args = "--app ThermalHydraulicsApp"
+    capabilities = 'method=opt & (combinedapp | thermalhydraulicsapp | bluecrabapp)'
+    max_time = 600
+    working_directory = 'steady_state_bop'
+  []
+  [MP_THM_loop_BOP_syntax]
+    type = RunApp
+    check_input = true
+    input = 'MP_THM_loop_bop_ss.i'
+    capabilities = 'method=opt & (combinedapp | thermalhydraulicsapp | bluecrabapp)'
+    max_time = 600
+    working_directory = 'steady_state_bop'
+  []
+  [MP_SAM_BOP_tr_syntax]
+    type = RunApp
+    check_input = true
+    input = 'MP_SAM_bop_tr.i'
+    cli_args = "--app ThermalHydraulicsApp"
+    capabilities = 'method=opt & (combinedapp | thermalhydraulicsapp | bluecrabapp)'
+    max_time = 600
+    working_directory = 'transient_bop'
+  []
+  [MP_THM_loop_BOP_tr_syntax]
+    type = RunApp
+    check_input = true
+    input = 'MP_THM_loop_bop_tr.i'
+    capabilities = 'method=opt & (combinedapp | thermalhydraulicsapp | bluecrabapp)'
+    max_time = 600
+    working_directory = 'transient_bop'
   []
 []
