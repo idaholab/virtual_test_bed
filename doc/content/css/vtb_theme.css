@@ -1,5 +1,5 @@
 /*
-  VTB color theme, derived from doc/content/media/nric_logo.png.
+  VTB color theme, derived from doc/content/media/logos/NRIC.png.
   Overrides the CSS variables MOOSE's base theme (css/moose.css) uses for
   nav/footer/buttons/links/etc., plus a couple of MOOSE's own selectors that
   hard-code colors rather than using those variables.
@@ -190,6 +190,21 @@ h2, h3, h4, h5, h6 {
     .vtb-item-title {
         color: var(--nric-yellow);
     }
+}
+
+/* Row of sponsor/lab logos at the bottom of the front page */
+.vtb-logos {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem 4rem;
+    margin: 3rem 0 1rem;
+}
+
+.vtb-logos img {
+    height: 3.5rem;
+    width: auto;
 }
 
 .nric-nav-logo img {

@@ -1,6 +1,6 @@
 !config navigation breadcrumbs=False scrollspy=False
 
-!style! halign=center color=var(--nric-blue) fontweight=500 style=font-family:Josefin Sans style=font-size:300%
+!style! class=vtb-home halign=center color=var(--nric-blue) fontweight=500 style=font-family:Josefin Sans style=font-size:300%
 VIRTUAL TEST BED
 !style-end!
 
@@ -43,3 +43,19 @@ Model: [microreactors/drum_rotation/index.md]
 !col-end!
 
 !row-end!
+
+!style! class=vtb-logos
+!media logos/NRIC.png
+       link=https://nric.inl.gov/
+       alt=National Reactor Innovation Center (NRIC)
+
+!media logos/INL_black.png
+       dark_src=media/logos/INL_white.png
+       link=https://inl.gov/
+       alt=Idaho National Laboratory (INL)
+
+!media logos/ANL_black.png
+       dark_src=media/logos/ANL_white.png
+       link=https://www.anl.gov/
+       alt=Argonne National Laboratory (ANL)
+!style-end!
