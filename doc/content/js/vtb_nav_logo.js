@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function () {
   a.className = "left nric-nav-logo";
 
   var img = document.createElement("img");
-  img.src = root + "media/nric_logo.png";
+  img.src = root + "media/logos/NRIC.png";
   img.alt = "The National Reactor Innovation Center (NRIC) logo";
   a.appendChild(img);
 
