@@ -1,3 +1,15 @@
+# NACIE-UP ADP10 coupled SAM and MOOSE Subchannel model
+# Author: Gang Yang, Argonne National Laboratory
+# Contact: gang.yang.at.anl.gov
+# Codes: System Analysis Module (SAM) and MOOSE Subchannel Module (SCM).
+# Run with: sam-opt -i nacie_adp10.i -w
+# Simulation: 30 kW lead-bismuth eutectic loop transition from forced to natural
+# circulation following gas-lift pump shutdown; SAM main app coupled to the
+# 19-pin fuel-pin simulator (FPS) SCM sub-app.
+# Companion input: nacie_adp10_fps_subchannel.i
+# Source: https://github.com/idaholab/virtual_test_bed/tree/main/lfr/nacie
+# Documentation: https://mooseframework.inl.gov/virtual_test_bed/lfr/nacie/nacie.html
+
 u_ref = 0.4
 
 u_init = ${fparse u_ref}
@@ -1104,7 +1116,7 @@ T_inlet_shell = 443.15
 [MultiApps]
   [sub_app]
     type = TransientMultiApp
-    app_type = SubchannelApp
+    app_type = SamApp
     execute_on = 'timestep_end'
     input_files = 'nacie_adp10_fps_subchannel.i'
   []

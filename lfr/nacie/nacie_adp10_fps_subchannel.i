@@ -1,3 +1,13 @@
+# NACIE-UP ADP10 fuel-pin simulator subchannel model
+# Author: Gang Yang, Argonne National Laboratory
+# Contact: gang.yang.at.anl.gov
+# Code: MOOSE Subchannel Module (SCM)
+# Simulation: 19-pin fuel-pin simulator (FPS), lead-bismuth
+# eutectic coolant, and 30 kW distributed over three axial power regions.
+# Main-app input: nacie_adp10.i, run with SAM, which includes SCM.
+# Source: https://github.com/idaholab/virtual_test_bed/tree/main/lfr/nacie
+# Documentation: https://mooseframework.inl.gov/virtual_test_bed/lfr/nacie/nacie.html
+
 flow_area = 654.1503e-6  
 mass_flux_in = ${fparse 2.5595/flow_area} #experimental data
 P_out = 8.356458e+05 
@@ -100,7 +110,7 @@ T_in = 498.3
 
 [SCMClosures]
   [cheng]
-    type = SCMFrictionUpdatedChengTodreas
+    type = SCMFrictionUpgradedChengTodreas
   []
   [kazimi_carelli]
     type = SCMHTCKazimiCarelli

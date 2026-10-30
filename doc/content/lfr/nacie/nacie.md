@@ -31,7 +31,7 @@ NACIE-UP is a rectangular LBE loop with two vertical pipes, which form the riser
        id=nacie-facility
        caption=Schematic of the NACIE-UP facility.
 
-In ADP10, all 19 FPS pins are electrically heated at a nominal total power of 30 kW. The test begins in forced circulation with an argon flow rate of 10 Nl/min. At 1225 s, the argon flow decreases from 10 Nl/min to zero over 1 s. The secondary water conditions remain at a 170 C inlet temperature and a 10 m3/h volumetric flow rate throughout the test [!citep](di_piazza2024nacieup).
+In ADP10, all 19 FPS pins are electrically heated at a nominal total power of 30 kW. The test begins in forced circulation with an argon flow rate of 10 normal liters per minute (Nl/min), where Nl denotes a liter of gas at normal temperature and pressure conditions. At 1225 s, the argon flow decreases from 10 Nl/min to zero over 1 s. The secondary water conditions remain at a 170 C inlet temperature and a 10 m3/h volumetric flow rate throughout the test [!citep](di_piazza2024nacieup).
 
 ## Coupled Model
 
@@ -117,10 +117,8 @@ The subchannel temperatures are compared with the measured transient response at
 
 ## Running the Model
 
-Run the main-app input with an application that includes both SAM and MOOSE Subchannel:
-
 ```
-combined-opt -i nacie_adp10.i -w
+sam-opt -i nacie_adp10.i -w
 ```
 
 The main app launches exactly one SCM sub-app input, `nacie_adp10_fps_subchannel.i`. The sub-app must remain in the same directory as the main-app input together with `uniform_19_pins.txt`, `QTFM_ADP10.csv`, and `T_WATER_ADP10.csv`.

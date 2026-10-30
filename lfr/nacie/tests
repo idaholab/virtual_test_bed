@@ -4,8 +4,7 @@
     type = RunApp
     input = nacie_adp10.i
     check_input = true
-    capabilities = bluecrabapp
-    cli_args = '--app SamApp'
+    capabilities = samapp
     requirement = 'The system shall parse the coupled NACIE ADP10 SAM and SCM model with one SCM child application.'
   []
 []
