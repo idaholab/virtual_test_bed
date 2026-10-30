@@ -58,7 +58,7 @@
     capabilities = 'method=opt & mastodonapp'
     min_parallel = 4
     # 652 MB / slot at 4 mpi
-    min_slots = 8
+    min_slots = 11
     cli_args = 'Executioner/num_steps=2'
   []
 []
