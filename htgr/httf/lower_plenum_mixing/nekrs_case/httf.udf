@@ -1,88 +1,76 @@
 //
 // nekRS User Defined File
 //
-#include "udf.hpp"
-#include "plugins/RANSktau.hpp"
-#include "plugins/tavg.hpp"
+#include "RANSktau.hpp"
+#include "tavg.hpp"
 
-static dfloat rho, mueLam;
-static occa::kernel scalarScaledAddKernel;
-static occa::kernel cliptKernel;
+std::unique_ptr<nrs_t::tavgLegacy_t> avg;
 
-void userq(nrs_t *nrs, dfloat time, occa::memory o_S, occa::memory o_FS)
+#ifdef __okl__
+
+#include "httf.oudf"
+
+#endif
+
+void userq(double time)
 {
-  mesh_t *mesh = nrs->meshV;
-  cds_t *cds   = nrs->cds;
-
   RANSktau::updateSourceTerms();
 }
 
-void uservp(nrs_t *nrs, dfloat time, occa::memory o_U, occa::memory o_S,
-            occa::memory o_UProp, occa::memory o_SProp)
+void uservp(double time)
 {
-  mesh_t *mesh = nrs->meshV;
-  cds_t *cds   = nrs->cds;
+  auto mesh = nrs->meshV;
 
   RANSktau::updateProperties();
 
   dfloat conductivity;
   platform->options.getArgs("SCALAR00 DIFFUSIVITY", conductivity);
   const dfloat Pr_t = 0.91;
-  occa::memory o_mue_t = RANSktau::o_mue_t();
-  occa::memory o_temp_mue = cds->o_diff + 0*cds->fieldOffset[0]*sizeof(dfloat);
-  scalarScaledAddKernel(mesh->Nlocal, conductivity, 1/Pr_t, o_mue_t, o_temp_mue);
+  scalarScaledAdd(mesh->Nlocal, conductivity, 1/Pr_t, RANSktau::o_mue_t(), nrs->scalar->o_diffusionCoeff("temperature"));
 }
 
-void UDF_LoadKernels(occa::properties& kernelInfo)
+void UDF_LoadKernels(deviceKernelProperties& kernelInfo)
 {
-  scalarScaledAddKernel = oudfBuildKernel(kernelInfo, "scalarScaledAdd");
-  cliptKernel  = oudfBuildKernel(kernelInfo, "cliptOKL");
-  RANSktau::buildKernel(kernelInfo);
 }
 
-void UDF_Setup(nrs_t *nrs)
+void UDF_Setup()
 {
-  tavg::setup(nrs);
+  avg = std::make_unique<nrs_t::tavgLegacy_t>();
 
-  mesh_t *mesh = nrs->meshV;
-  cds_t *cds = nrs->cds;
+  auto mesh = nrs->meshV;
 
-  udf.properties = &uservp;
-  udf.sEqnSource = &userq;
+  nrs->userProperties = &uservp;
+  nrs->userSource = &userq;
 
-  const int scalarFieldStart = 1;
-  platform->options.getArgs("VISCOSITY", mueLam); 
-  platform->options.getArgs("DENSITY", rho); 
-
-  RANSktau::setup(nrs, mueLam, rho, scalarFieldStart);
+  RANSktau::setup(nrs->scalar->nameToIndex.find("k")->second);
 
   //Inlet condition
-  nrs->o_usrwrk = platform->device.malloc(4*nrs->fieldOffset,sizeof(dfloat));
-  double *vin  = (double *) nek::scPtr(1);
-  double *t1in = (double *) nek::scPtr(2);
-  double *t2in = (double *) nek::scPtr(3);
-  double *t3in = (double *) nek::scPtr(4);
-  nrs->o_usrwrk.copyFrom(vin, mesh->Nlocal*sizeof(dfloat),0*nrs->fieldOffset*sizeof(dfloat));
-  nrs->o_usrwrk.copyFrom(t1in,mesh->Nlocal*sizeof(dfloat),1*nrs->fieldOffset*sizeof(dfloat));
-  nrs->o_usrwrk.copyFrom(t2in,mesh->Nlocal*sizeof(dfloat),2*nrs->fieldOffset*sizeof(dfloat));
-  nrs->o_usrwrk.copyFrom(t3in,mesh->Nlocal*sizeof(dfloat),3*nrs->fieldOffset*sizeof(dfloat));
+  auto& o_usrwrk = platform->app->bc->o_usrwrk;
+  o_usrwrk.resize(4*nrs->fieldOffset);
+  o_usrwrk.copyFrom(nek::ptr<double>("vin"), mesh->Nlocal, 0*nrs->fieldOffset);
+  o_usrwrk.copyFrom(nek::ptr<double>("t1in"), mesh->Nlocal, 1*nrs->fieldOffset);
+  o_usrwrk.copyFrom(nek::ptr<double>("t2in"), mesh->Nlocal, 2*nrs->fieldOffset);
+  o_usrwrk.copyFrom(nek::ptr<double>("t3in"), mesh->Nlocal, 3*nrs->fieldOffset);
 }
 
-void UDF_ExecuteStep(nrs_t *nrs, dfloat time, int tstep)
+void UDF_ExecuteStep(double time, int tstep)
 {
-  tavg::run(time);
+  if (nrs->timeStepConverged) {
+    avg->run(time);
+  }
 
-  mesh_t *mesh = nrs->meshV;
-  cds_t *cds = nrs->cds;
-  
-  cliptKernel(mesh->Nelements, cds->o_S);
+  auto mesh = nrs->meshV;
+
+  cliptOKL(mesh->Nelements, nrs->scalar->o_solution("temperature"));
 
   if ((tstep%1000)==0){
-    nek::ocopyToNek(time, tstep);
+    nrs->copyToNek(time, tstep);
     nek::userchk();
   }
 
-  if (nrs->isOutputStep) {
-    tavg::outfld();
+  if (nrs->checkpointStep) {
+    avg->writeToFile(mesh);
   }
+
+  if (nrs->lastStep) avg.reset();
 }
