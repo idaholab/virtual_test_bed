@@ -1,10 +1,8 @@
 //
 // nekRS User Defined File
 //
-#include "udf.hpp"
 
 static int updateProperties = 1;
-static occa::kernel cliptKernel;
 
 #ifdef __okl__
 
@@ -12,26 +10,22 @@ static occa::kernel cliptKernel;
 
 #endif
 
-void userq(nrs_t *nrs, double time, occa::memory o_S, occa::memory o_FS)
+void userq(double time)
 {
-  cds_t *cds = nrs->cds;
-  mesh_t *mesh = cds->mesh[0];
+  auto& scalar = nrs->scalar;
+  auto mesh = scalar->mesh("temperature");
   const dfloat qvolFluid = 0.0;
   const dfloat qvolSolid = 0.0;
-  cFill(mesh->Nelements, qvolFluid, qvolSolid, mesh->o_elementInfo, o_FS);
+  cFill(mesh->Nelements, qvolFluid, qvolSolid, mesh->o_elementInfo, scalar->o_explicitTerms("temperature"));
 }
 
-void uservp(nrs_t *nrs,
-            double time,
-            occa::memory o_U,
-            occa::memory o_S,
-            occa::memory o_UProp,
-            occa::memory o_SProp)
+void uservp(double time)
 {
-  cds_t *cds = nrs->cds;
+  auto& fluid = nrs->fluid;
+  auto& scalar = nrs->scalar;
 
   if (updateProperties) {
-    if (platform->comm.mpiRank == 0) {
+    if (platform->comm.mpiRank() == 0) {
       std::cout << "updating properties"
                 << "\n";
     }
@@ -43,34 +37,32 @@ void uservp(nrs_t *nrs,
     const dfloat conSolid = conFluid * 21.45;
 
     // velocity
-    const occa::memory o_mue = o_UProp.slice(0 * nrs->fieldOffset);
-    const occa::memory o_rho = o_UProp.slice(1 * nrs->fieldOffset);
-    cFill(nrs->meshV->Nelements, mue, 0, nrs->meshV->o_elementInfo, o_mue);
-    cFill(nrs->meshV->Nelements, rho, 0, nrs->meshV->o_elementInfo, o_rho);
+    const auto o_mue = fluid->o_prop.slice(0 * fluid->fieldOffset);
+    const auto o_rho = fluid->o_prop.slice(1 * fluid->fieldOffset);
+    cFill(fluid->mesh->Nelements, mue, 0, fluid->mesh->o_elementInfo, o_mue);
+    cFill(fluid->mesh->Nelements, rho, 0, fluid->mesh->o_elementInfo, o_rho);
     // temperature
-    const occa::memory o_con = o_SProp.slice(0 * cds->fieldOffset[0]);
-    const occa::memory o_rhoCp = o_SProp.slice(1 * cds->fieldOffset[0]);
-    cFill(cds->mesh[0]->Nelements, conFluid, conSolid, cds->mesh[0]->o_elementInfo, o_con);
-    cFill(cds->mesh[0]->Nelements, rhoCpFluid, rhoCpSolid, cds->mesh[0]->o_elementInfo, o_rhoCp);
+    auto mesh = scalar->mesh("temperature");
+    const auto o_con = scalar->o_diffusionCoeff("temperature");
+    const auto o_rhoCp = scalar->o_transportCoeff("temperature");
+    cFill(mesh->Nelements, conFluid, conSolid, mesh->o_elementInfo, o_con);
+    cFill(mesh->Nelements, rhoCpFluid, rhoCpSolid, mesh->o_elementInfo, o_rhoCp);
     updateProperties = 0;
   }
 }
 
-void UDF_LoadKernels(occa::properties& kernelInfo)
+void UDF_LoadKernels(deviceKernelProperties& kernelInfo)
 {
-  cliptKernel  = oudfBuildKernel(kernelInfo, "cliptOKL");
 }
 
-void UDF_Setup(nrs_t *nrs)
+void UDF_Setup()
 {
-  udf.sEqnSource = &userq;
-  udf.properties = &uservp;
+  nrs->userSource = &userq;
+  nrs->userProperties = &uservp;
 }
 
-void UDF_ExecuteStep(nrs_t *nrs, double time, int tstep)
+void UDF_ExecuteStep(double time, int tstep)
 {
-  mesh_t *mesh = nrs->meshV;
-  cds_t *cds = nrs->cds;
-
-  cliptKernel(mesh->Nelements, cds->o_S);
+  auto mesh = nrs->meshV;
+  cliptOKL(mesh->Nelements, nrs->scalar->o_solution("temperature"));
 }
