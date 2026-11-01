@@ -58,9 +58,11 @@ After the trip has been detected and recorded, the normal PID action on the moto
 
 The plant-level parameters (rated power, mass flow rate, pump/turbine performance, and shaft inertia) are collected at the top of the THM loop input file:
 
-!listing microreactors/gcmr/core/Multiphysics/steady_state_bop/MP_THM_loop_bop_ss.i block=GlobalParams
+!listing microreactors/gcmr/core/Multiphysics/bop_base/MP_THM_loop_bop_base.i block=GlobalParams
 
-The turbomachinery performance maps (compressor and turbine pressure ratios, Bingham pump head and torque) are tabulated in CSV files under the shared `param/` directory and read by the corresponding THM components. The complete component network, control logic, and postprocessors are defined in the loop input file, [`MP_THM_loop_bop_ss.i`](https://github.com/idaholab/virtual_test_bed/blob/main/microreactors/gcmr/core/Multiphysics/steady_state_bop/MP_THM_loop_bop_ss.i).
+The turbomachinery performance maps (compressor and turbine pressure ratios, Bingham pump head and torque) are tabulated in CSV files under the shared `param/` directory and read by the corresponding THM components. The complete component network, control logic, and postprocessors are defined in the loop input file, [`MP_THM_loop_bop_base.i`](https://github.com/idaholab/virtual_test_bed/blob/main/microreactors/gcmr/core/Multiphysics/bop_base/MP_THM_loop_bop_base.i).
+
+Each application input is split between a common base in the `bop_base/` directory, holding the parts shared by the startup and load-following cases, and short `steady_state_bop/` and `transient_bop/` inputs that include the base and only specify what differs between the two cases.
 
 ## Multiphysics Coupling
 
@@ -74,11 +76,11 @@ The high fidelity Griffin and Bison model are coupled with THM and SAM in a thre
 - `htgr` — the THM BOP loop, which returns the plant-computed core boundary conditions (inlet temperature, outlet pressure, and inlet velocity).
 - `coolant_full_MA` — the detailed per-channel helium coolant model (SAM/THM), identical in role to the baseline coolant model, which returns the fluid temperature, and convective heat transfer coefficient for each channel.
 
-!listing microreactors/gcmr/core/Multiphysics/steady_state_bop/MP_BISON_bop_ss.i block=MultiApps
+!listing microreactors/gcmr/core/Multiphysics/bop_base/MP_BISON_bop_base.i block=MultiApps
 
 Griffin is the main application and drives the outer Picard iteration. It calculates the power density and transfers it to BISON while BISON feedback fuel and moderator temperature for further iteration. Volumetric heating density in coolant channel is calculated in BISON and transferred to THM to serve as the heat source for the BOP loop, which is used to calculate the plant-level boundary conditions such as core inlet velocity, temperature and core outlet pressure. These parameters need to be transferred to SAM for fluid temperature and convective heat transfer coefficient calculation. Instead of transferring them directly, they go through BISON just for data transfer purposes. The wall temperature is also transferred to SAM from BISON to make a closure for the coupling system.
 
-!listing microreactors/gcmr/core/Multiphysics/steady_state_bop/MP_BISON_bop_ss.i block=Transfers
+!listing microreactors/gcmr/core/Multiphysics/bop_base/MP_BISON_bop_base.i block=Transfers
 
 ## Plant Startup Transient
 
@@ -86,11 +88,11 @@ Griffin is the main application and drives the outer Picard iteration. It calcul
 
 The startup transient (`steady_state_bop/`) simulates bringing the plant from a cold, static state to full-power steady-state operation, spanning approximately 55 hours of physical time. The simulation begins with all components at rest—no coolant flow, no shaft rotation, and all temperatures at ambient. The reactor power and the secondary motor torque are ramped up under control-logic supervision, and the run terminates once the plant reaches thermodynamic equilibrium. The converged state is written to a checkpoint that provides the initial condition for the load-following case.
 
-!listing microreactors/gcmr/core/Multiphysics/steady_state_bop/MP_THM_loop_bop_ss.i block=Outputs/cp
+!listing microreactors/gcmr/core/Multiphysics/bop_base/MP_THM_loop_bop_base.i block=Outputs/cp
 
 The startup sequence is orchestrated by the THM control logic, which ramps the reactor power, manages the PID-controlled motor, and triggers the motor-to-turbine handoff:
 
-!listing microreactors/gcmr/core/Multiphysics/steady_state_bop/MP_THM_loop_bop_ss.i block=ControlLogic
+!listing microreactors/gcmr/core/Multiphysics/bop_base/MP_THM_loop_bop_base.i block=ControlLogic
 
 ### Shaft and Turbomachinery Dynamics
 
@@ -134,7 +136,9 @@ The load-following transient (`transient_bop/`) starts from the converged startu
 
 The core neutronics and heat conduction sub-applications restart from the startup steady state. Griffin stores a vector file of neutronics variables of steady state so that the transient run can load them as initial condition. The BISON sub-application reads the converged solid-temperature field from the checkpoint written by the `steady_state_bop` case.
 
-!listing microreactors/gcmr/core/Multiphysics/transient_bop/MP_Griffin_bop_tr.i block=UserObjects/ss
+!listing microreactors/gcmr/core/Multiphysics/bop_base/MP_Griffin_bop_base.i block=UserObjects/ss
+
+!listing microreactors/gcmr/core/Multiphysics/transient_bop/MP_Griffin_bop_tr.i block=UserObjects
 
 !listing microreactors/gcmr/core/Multiphysics/transient_bop/MP_BISON_bop_tr.i block=Problem
 
