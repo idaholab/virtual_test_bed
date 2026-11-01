@@ -175,4 +175,43 @@
     max_time = 600
     working_directory = 'transient_bop'
   []
+
+  # Short regression tests of the BOP loop and coolant channel inputs, run standalone
+  # The channel wall temperature, normally transferred from BISON, is set to a constant
+  [MP_SAM_BOP_ss]
+    type = CSVDiff
+    input = 'MP_SAM_bop_ss.i'
+    cli_args = "--app ThermalHydraulicsApp Postprocessors/core_in_vel/default=10 "
+               "ICs/Tw/type=ConstantIC ICs/Tw/variable=T_wall ICs/Tw/value=900 "
+               "Executioner/num_steps=10 Outputs/csv/enable=true"
+    csvdiff = 'MP_SAM_bop_ss_csv.csv'
+    capabilities = 'combinedapp | thermalhydraulicsapp | bluecrabapp'
+    working_directory = 'steady_state_bop'
+  []
+  [MP_SAM_BOP_tr]
+    type = CSVDiff
+    input = 'MP_SAM_bop_tr.i'
+    cli_args = "--app ThermalHydraulicsApp Postprocessors/core_in_vel/default=10 "
+               "ICs/Tw/type=ConstantIC ICs/Tw/variable=T_wall ICs/Tw/value=900 "
+               "Executioner/num_steps=10 Outputs/csv/enable=true"
+    csvdiff = 'MP_SAM_bop_tr_csv.csv'
+    capabilities = 'combinedapp | thermalhydraulicsapp | bluecrabapp'
+    working_directory = 'transient_bop'
+  []
+  [MP_THM_loop_BOP_ss]
+    type = CSVDiff
+    input = 'MP_THM_loop_bop_ss.i'
+    cli_args = "--app ThermalHydraulicsApp Executioner/num_steps=10"
+    csvdiff = 'MP_THM_loop_bop_ss_csv.csv'
+    capabilities = 'combinedapp | thermalhydraulicsapp | bluecrabapp'
+    working_directory = 'steady_state_bop'
+  []
+  [MP_THM_loop_BOP_tr]
+    type = CSVDiff
+    input = 'MP_THM_loop_bop_tr.i'
+    cli_args = "--app ThermalHydraulicsApp Executioner/num_steps=10"
+    csvdiff = 'MP_THM_loop_bop_tr_csv.csv'
+    capabilities = 'combinedapp | thermalhydraulicsapp | bluecrabapp'
+    working_directory = 'transient_bop'
+  []
 []

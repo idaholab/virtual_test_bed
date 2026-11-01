@@ -329,7 +329,7 @@ start_time = -2e5
     type = HeatConductionMaterial
     block = ${he_void_blocks} # Helium filled in the control rod hole
     temperature = temp
-    thermal_conductivity = 5 #0.15 # W/m/K
+    thermal_conductivity = 0.15 # W/m/K
     specific_heat = 5197 # random value
   []
 
@@ -378,7 +378,7 @@ start_time = -2e5
   [airgap_density]
     type = StrainAdjustedDensity
     block = ${he_void_blocks} #helium
-    strain_free_density = 1000 #180
+    strain_free_density = 180
     displacements = 'zero zero zero'
   []
 

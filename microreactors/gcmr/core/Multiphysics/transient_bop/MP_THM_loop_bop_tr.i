@@ -96,8 +96,8 @@ core_channel_n_elems = 50 # number of element in axial direction
 
 # core_nb_assembly = 85  # number of assembly in the core(19 assemby A; 36 assembly B;30 assembly C)
 # core_nb_coolant_per_assembly = 30.58 # average number of coolant channel in each assembly
-core_nb_fuel_per_assembly = 46.66 # average number of fuel in each assembly
-core_nb_moderator_per_assembly = 6 # number of moderator in each assembly {same number for all assemblies}
+# core_nb_fuel_per_assembly = 46.66 # average number of fuel in each assembly
+# core_nb_moderator_per_assembly = 6 # number of moderator in each assembly {same number for all assemblies}
 
 core_nb_coolant_tot = 2599 # number of coolant channel in the core
 # core_nb_fuel_tot = 3966 # number of coolant channel in the core
@@ -854,7 +854,6 @@ eff_turb = 0.843
       volume = 1e-3
       initial_p = ${pri_press}
       initial_vel_x = ${vel_ini_pri}
-      use_scalar_variables=false
     []
     [pipe_prz]
       type = FlowChannel1Phase
@@ -1009,7 +1008,6 @@ eff_turb = 0.843
       density_rated = ${pump_density_rated}
       initial_p = ${pri_press}
       initial_vel_x = ${vel_ini_pri}
-      use_scalar_variables=false
     []
 
     [motor]
@@ -1123,7 +1121,6 @@ eff_turb = 0.843
     initial_p = ${p_sec}
     initial_vel_x = ${vel_ini_sec}
 
-#The `use_scalar_variables` parameter referenced in [modules/thermal_hydraulics/deprecations/volume_junction_scalar_variables.md] has been deprecated
   []
 
   # Outlet pipe from the compressor

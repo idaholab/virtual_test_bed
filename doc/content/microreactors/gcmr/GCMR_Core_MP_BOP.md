@@ -169,7 +169,7 @@ The reactor self-regulates to the new equilibrium without operator intervention,
 
 The resources required to run each model is listed below:
 
-| HPC Resources Required |
+!table id=hpc_resources caption=HPC resources required
 | Resource | steady state | Transient |
 | - | - | - |
 | HPC Machine | Teton | Teton |

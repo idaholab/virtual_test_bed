@@ -30,10 +30,10 @@ layers = 40 # Make sure the number of axial divisions in the fluid domain and so
 [FluidProperties]
   [He]
     type = IdealGasFluidProperties
-    molar_mass = 0.004003
-    mu = 4.2926127588e-05
-    k = 0.338475615
-    gamma = 1.66
+    molar_mass = 0.004
+    mu = 3.22639e-05
+    k = 0.2556
+    gamma = 1.67
   []
 []
 
