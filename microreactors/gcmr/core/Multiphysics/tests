@@ -154,6 +154,7 @@
     type = RunApp
     check_input = true
     input = 'MP_THM_loop_bop_ss.i'
+    cli_args = '--app ThermalHydraulicsApp'
     capabilities = 'method=opt & (combinedapp | thermalhydraulicsapp | bluecrabapp)'
     max_time = 600
     working_directory = 'steady_state_bop'
@@ -171,6 +172,7 @@
     type = RunApp
     check_input = true
     input = 'MP_THM_loop_bop_tr.i'
+    cli_args = '--app ThermalHydraulicsApp'
     capabilities = 'method=opt & (combinedapp | thermalhydraulicsapp | bluecrabapp)'
     max_time = 600
     working_directory = 'transient_bop'

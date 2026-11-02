@@ -94,8 +94,8 @@ coolant_full_points_filename = '../component_positions/cc_positions_sixth.txt'
 [AuxVariables]
   [power_density]
     block = ${fuel_blocks}
-    family = L2_LAGRANGE
-    order = FIRST
+    family = MONOMIAL
+    order = CONSTANT
     initial_condition = 3e6 # W/m^3
   []
   [Tfuel]

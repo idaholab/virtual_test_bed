@@ -131,8 +131,6 @@ start_time = -2e5
     order = CONSTANT
     block = '1000 1003 monolith'
   []
-  [zero]
-  []
 []
 
 [AuxScalarKernels]
@@ -294,49 +292,49 @@ start_time = -2e5
     type = StrainAdjustedDensity
     block = ${fuel_blocks}
     strain_free_density = 2276.5
-    displacements = 'zero zero zero'
+    displacements = '0 0 0'
   []
   [moderator_density]
     type = StrainAdjustedDensity
     block = ${mod_blocks}
     strain_free_density = 4.3e3
-    displacements = 'zero zero zero'
+    displacements = '0 0 0'
   []
   [monolith_density]
     type = StrainAdjustedDensity
     block = 10
     strain_free_density = 1806
-    displacements = 'zero zero zero'
+    displacements = '0 0 0'
   []
   [YH_Liner_Cr_density]
     type = StrainAdjustedDensity
     block = 102
     strain_free_density = 7190
-    displacements = 'zero zero zero'
+    displacements = '0 0 0'
   []
   [YH_Cladding_density]
     type = StrainAdjustedDensity
     block = 103
     strain_free_density = 7250
-    displacements = 'zero zero zero'
+    displacements = '0 0 0'
   []
   [Poison_blocks_density]
     type = StrainAdjustedDensity
     block = ${poison_blocks}
     strain_free_density = 2510
-    displacements = 'zero zero zero'
+    displacements = '0 0 0'
   []
   [control_rod_density]
     type = StrainAdjustedDensity
     block = 603 #B4C
     strain_free_density = 2510
-    displacements = 'zero zero zero'
+    displacements = '0 0 0'
   []
   [airgap_density]
     type = StrainAdjustedDensity
     block = ${he_void_blocks} #helium
     strain_free_density = 180
-    displacements = 'zero zero zero'
+    displacements = '0 0 0'
   []
 
   [reflector_density]
@@ -490,30 +488,26 @@ start_time = -2e5
   # coolant_full
   [Tw_to_coolant]
     # Wall temperature from user object is transferred to fluid domain.
-    type = MultiAppNearestNodeTransfer
+    type = MultiAppGeneralFieldNearestLocationTransfer
     to_multi_app = coolant_full_MA
     source_variable = Tw_trans # Exists in solid.
     variable = T_wall # Exists in coolant.
-    # execute_on = 'TIMESTEP_END'
-    fixed_meshes = true
   []
   [Tfluid_from_coolant]
     # Fluid temperature from fluid domain is transferred to solid domain.
-    type = MultiAppNearestNodeTransfer
+    type = MultiAppGeneralFieldNearestLocationTransfer
+    assume_nearest_app_holds_nearest_location = true
     from_multi_app = coolant_full_MA
     source_variable = Tfluid_trans
     variable = Tfluid # Exists in solid.
-    # execute_on = 'TIMESTEP_END'
-    fixed_meshes = true
   []
   [hfluid_from_coolant]
     # Convective HTC from fluid domain is transferred to solid domain.
-    type = MultiAppNearestNodeTransfer
+    type = MultiAppGeneralFieldNearestLocationTransfer
+    assume_nearest_app_holds_nearest_location = true
     from_multi_app = coolant_full_MA
     source_variable = hfluid_trans
     variable = hfluid # Exists in solid.
-    # execute_on = 'TIMESTEP_END'
-    fixed_meshes = true
   []
 []
 
