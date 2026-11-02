@@ -69,7 +69,7 @@ Each application input is split between a common base in the `common/` directory
 The high fidelity Griffin and Bison model are coupled with THM and SAM in a three-level MultiApp hierarchy of the baseline model and augments the BISON level with two thermal-hydraulic sub-applications:
 
 !media media/gcmr/FCMP/coupling_hierarchy_strategy.png
-      id=coupling_hierarchy_strategy
+      id=coupling_hierarchy_strategy_multiphy
       style=display: block;margin-left:auto;margin-right:auto;width:65%;
       caption= Coupling hierarchy and strategy of the multiphysics model
 
