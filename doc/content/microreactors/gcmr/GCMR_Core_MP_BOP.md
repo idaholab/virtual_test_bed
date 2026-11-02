@@ -5,10 +5,10 @@
      image=https://mooseframework.inl.gov/virtual_test_bed/media/gcmr/FCMP/coupling_hierarchy_strategy.png
      pairs=reactor_type:microreactor
            reactor:GCMR
-           geometry:Plant
+           geometry:plant
            simulation_type:Multiphysics
-           input_features:checkpoint restart/multiapps
-           transient:steady;transient
+           input_features:checkpoint_restart;multiapps
+           transient:steady;startup
            codes_used:BISON;Griffin;SAM;THM
            open_source:partially
            computing_needs:Workstation;HPC
