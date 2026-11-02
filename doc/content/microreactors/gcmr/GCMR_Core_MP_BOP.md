@@ -1,20 +1,20 @@
 # Full Core GCMR Multiphysics Model with Balance-of-Plant
 
 !tag name=GCMR_BOP_MP
-    description=Multiphysics BOP model for Gas Cooled microreactor
-        image=https://mooseframework.inl.gov/virtual_test_bed/media/gcmr/FCMP/coupling_hierarchy_strategy.png
-        pairs=reactor_type:microreactor
-      reactor:GCMR
-      geometry:Plant
-      simulation_type:Multiphysics
-      input_features:checkpoint restart/multiapps
-      transient:steady/transient
-      codes_used:BISON;Griffin;SAM;THM;
-      open_source:partially/fully
-      computing_needs:Workstation/HPC
-      fiscal_year:2026
-      institution:ANL
-      sponsor:NEAMS
+     description=Multiphysics BOP model for Gas Cooled microreactor
+     image=https://mooseframework.inl.gov/virtual_test_bed/media/gcmr/FCMP/coupling_hierarchy_strategy.png
+     pairs=reactor_type:microreactor
+           reactor:GCMR
+           geometry:Plant
+           simulation_type:Multiphysics
+           input_features:checkpoint restart/multiapps
+           transient:steady;transient
+           codes_used:BISON;Griffin;SAM;THM
+           open_source:partially
+           computing_needs:Workstation;HPC
+           fiscal_year:2026
+           institution:ANL
+           sponsor:NEAMS
 
 ## Overview
 
@@ -36,7 +36,7 @@ On the secondary side, the model represents the complete Brayton cycle loop: amb
 The THM BOP model also incorporates the mechanical dynamics of the turbomachinery shaft system, including the coupled rotational inertia of the compressor, turbine, and generator. A motor provides the initial torque to spin up the shaft from rest during reactor startup. The motor torque is governed by a proportional-integral-derivative (PID) controller, which rapidly increases the shaft speed during the first few seconds of the startup transient and then gradually reduces the motor torque to zero once the turbine generates sufficient torque to sustain operation independently.
 
 The following section describes in detail the PID trip and shutdown logic implemented in the THM framework for the gas cooled microreactor, as illustrated in the two figures. The objective of this logic is to supervise the shaft torque balance and, when necessary, to transfer the system from normal PID controlled operation to a controlled motor shutdown.
-During normal operation the motor torque is regulated by a PID controller so that the shaft speed remains at its design value. In this regime the turbine torque is expected to remain lower than the motor torque, and the PID loop simply adjusts the motor torque set point to maintain speed. When the motor torque is lower than its designated shutdown value, the PID system is considered “tripped.” 
+During normal operation the motor torque is regulated by a PID controller so that the shaft speed remains at its design value. In this regime the turbine torque is expected to remain lower than the motor torque, and the PID loop simply adjusts the motor torque set point to maintain speed. When the motor torque is lower than its designated shutdown value, the PID system is considered “tripped.”
 
 At that instant the logic performs two key actions:
 1.It records the trip time, t_"trip" , which is the time at which the torque imbalance was first detected.
@@ -44,7 +44,7 @@ At that instant the logic performs two key actions:
 
 After the trip has been detected and recorded, the normal PID action on the motor torque is effectively bypassed and replaced by a secondary function that drives the motor torque to zero (or another predefined shutdown value) according to a prescribed ramp.
 
-[Blocks_for_PID_control] shows the sketch of logic for PID control for GCMR. This structure allows the THM framework to represent the PID trip behavior in a transparent, modular way, facilitating verification of the control logic and straightforward modification for alternative shutdown strategies. [Sketch_of _logic_for_PID] described a tightly integrated set of Functions, AuxVariables, AuxScalarKernels, and Controls in detail. 
+[coupling_hierarchy_strategy] shows the sketch of logic for PID control for GCMR. This structure allows the THM framework to represent the PID trip behavior in a transparent, modular way, facilitating verification of the control logic and straightforward modification for alternative shutdown strategies. [coupling_hierarchy_strategy_2] described a tightly integrated set of Functions, AuxVariables, AuxScalarKernels, and Controls in detail.
 
 !media media/gcmr/FCMP/Blocks_for_PID_control.png
       id=coupling_hierarchy_strategy
@@ -52,9 +52,9 @@ After the trip has been detected and recorded, the normal PID action on the moto
       caption= Sketch of logic for PID control for GCMR
 
 !media media/gcmr/FCMP/Sketch_of_logic_for_PID.png
-      id=coupling_hierarchy_strategy
+      id=coupling_hierarchy_strategy_2
       style=display: block;margin-left:auto;margin-right:auto;width:65%;
-      caption= Detailed description on essential Functions, AuxVariables, AuxScalarKernels and Controls in THM for PID control 
+      caption= Detailed description on essential Functions, AuxVariables, AuxScalarKernels and Controls in THM for PID control
 
 The plant-level parameters (rated power, mass flow rate, pump/turbine performance, and shaft inertia) are collected at the top of the THM loop input file:
 
