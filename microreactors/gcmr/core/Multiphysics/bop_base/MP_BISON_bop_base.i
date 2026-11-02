@@ -9,106 +9,27 @@
 ## Common base for the steady state and transient inputs                      ##
 ################################################################################
 
-fuel_blocks = '400 4000 40000 401 4001 40001'
-# fuel_blocks = 'fuel_in fuel_mid fuel_out fuel_tri_in fuel_tri_mid fuel_tri_out'
-# he_channel_blocks = 'coolant coolant_tri'
-mod_blocks = '100 101'
-# mod_blocks = 'moderator moderator_tri'
-poison_blocks = '19000 29000 39000 49000 59000 19003 29003 39003 49003 59003 19900 29900 39900 49900 59900 19903 29903 39903 49903 59903'
-# poison_blocks = 'bp0_1 bp0_2 bp0_3 bp0_4 bp0_5 bp0_tr_1 bp0_tr_2 bp0_tr_3 bp0_tr_4 bp0_tr_5 bp1_1 bp1_2 bp1_3 bp1_4 bp1_5 bp1_tr_1 bp1_tr_2 bp1_tr_3 bp1_tr_4 bp1_tr_5'
-ref_blocks = '1000 1003 250 600 602 1777 1773'
-# ref_blocks = 'reflector_quad reflector_tri rad_ref cd_radial1 cd_radial2 control_ref control_ref_tri'
-he_void_blocks = '300 301 604'
-# he_void_blocks = 'control_hole control_hole_tri cd_coolant'
-
-cd_poison_blocks = '603'
-fecral_blocks = '103'
-cr_blocks = '102'
-small_parts_blocks = '${cd_poison_blocks} ${fecral_blocks} ${cr_blocks}'
-monolith_blocks = '10'
-
-non_fuel_blocks = '${mod_blocks} ${poison_blocks} ${ref_blocks} ${he_void_blocks} ${small_parts_blocks} ${monolith_blocks}'
-non_yh_blocks = '${fuel_blocks} ${poison_blocks} ${ref_blocks} ${he_void_blocks} ${small_parts_blocks} ${monolith_blocks}'
-
-# external_bdries = 'top_boundary bottom_boundary side'
-# symmetric_bdries = 'cut_surf'
-coolant_channel_bdries = 'coolant_channel_surf'
+!include ../common/MP_BISON_base.i
 
 TsInit = 400 # 873.15 # Solid initial temperature
 Tcin = 400 # 873.15
-# radiusTransfer = 0.015 # r + 0.009. Extends past the first mesh cell surrounding the coolant channel.
 
-coolant_full_points_filename = '../component_positions/cc_positions_sixth.txt'
 mod_points_filename = '../component_positions/mod_positions_sixth.txt'
 
 start_time = -2e5
 
-[Problem]
-[]
-
-[GlobalParams]
-  flux_conversion_factor = 1
-[]
-
-[Mesh]
-  parallel_type = DISTRIBUTED
-[]
-
-[Variables]
-  [temp]
-  []
-[]
-
-[Kernels]
-  [heat_conduction]
-    type = HeatConduction
-    variable = temp
-  []
-  [heat_source_fuel]
-    type = MatCoupledForce
-    variable = temp
-    block = ${fuel_blocks}
-    v = power_density
-    material_properties = power_density_scalar_mat
-  []
-[]
-
 [AuxVariables]
-  [power_density]
-    block = ${fuel_blocks}
-    family = MONOMIAL
-    order = CONSTANT
-  []
-  ##
-  [Tfuel]
-    order = CONSTANT
-    family = MONOMIAL
-  []
   [stoich_griffin]
     order = CONSTANT
     family = MONOMIAL
   []
   [hfluid] # Heat Transfer coefficient
-    # Calculated by SAM and then transfered with the scaling factor.
-    order = CONSTANT
-    family = MONOMIAL
     block = '1000 1003 monolith'
     # block = 'monolith reflector_quad reflector_tri' # Can set it on the monolith or coolant.
   []
   [Tfluid] # Coolant temperature.
-    order = CONSTANT
-    family = MONOMIAL
     block = '1000 1003 monolith'
     # block = 'monolith reflector_quad reflector_tri' # Can set it on the monolith or coolant.
-  []
-  [power_density_scalar]
-    family = SCALAR
-    order = FIRST
-  []
-  [Tw_trans] # Coolant temperature.
-    order = CONSTANT
-    family = MONOMIAL
-    block = 'monolith reflector_quad reflector_tri' # Can set it on the monolith or coolant.
   []
   [Tm_trans]
     order = CONSTANT
@@ -142,20 +63,6 @@ start_time = -2e5
 []
 
 [AuxKernels]
-  [assign_tfuel_f]
-    type = NormalizationAux
-    variable = Tfuel
-    source_variable = temp
-    execute_on = 'timestep_end'
-    block = ${fuel_blocks}
-  []
-  [assign_tfuel_nf]
-    type = SpatialUserObjectAux
-    variable = Tfuel
-    user_object = Tf_avg
-    execute_on = 'timestep_end'
-    block = ${non_fuel_blocks}
-  []
   [assign_stoich_g_yh]
     type = NormalizationAux
     variable = stoich_griffin
@@ -168,13 +75,8 @@ start_time = -2e5
     variable = stoich_griffin
     user_object = stoich_avg
     execute_on = 'timestep_end'
-    block = ${non_yh_blocks}
-  []
-  [Tw_trans] # Coolant temperature.
-    type = SpatialUserObjectAux
-    variable = Tw_trans
-    user_object = Tw_UO
-    block = 'monolith reflector_quad reflector_tri'
+    # all blocks except the yttrium hydride moderator
+    block = '${fuel_blocks} ${poison_blocks} ${ref_blocks} ${he_void_blocks} ${small_parts_blocks} ${monolith_blocks}'
   []
   [Tm_trans]
     type = SpatialUserObjectAux
@@ -200,163 +102,7 @@ start_time = -2e5
   []
 []
 
-[BCs]
-  [coolant_bc]
-    type = CoupledConvectiveHeatFluxBC
-    T_infinity = Tfluid
-    htc = hfluid
-    boundary = ${coolant_channel_bdries}
-    variable = temp
-  []
-[]
-
-[Materials]
-  [power_density_scalar_mat]
-    type = ParsedMaterial
-    property_name = power_density_scalar_mat
-    postprocessor_names = power_density_scalar_pp
-    expression = power_density_scalar_pp
-  []
-  [fuel_matrix_thermal]
-    type = GraphiteMatrixThermal
-    block = ${fuel_blocks}
-    # unirradiated_type = 'A3_27_1800'
-    packing_fraction = 0.4
-    specific_heat_scale_factor = 1.0
-    thermal_conductivity_scale_factor = 1.0
-    fast_neutron_fluence = 0 #6.75E+24 # this value is nuetron fluence over 0.1MeV
-    temperature = temp
-  []
-  [monolith_matrix_thermal]
-    type = GraphiteMatrixThermal
-    block = 'monolith'
-    # unirradiated_type = 'A3_27_1800'
-    packing_fraction = 0
-    specific_heat_scale_factor = 1.0
-    thermal_conductivity_scale_factor = 1.0
-    fast_neutron_fluence = 0 #6.75E+24 # this value is nuetron fluence over 0.1MeV
-    temperature = temp
-  []
-  [moderator_thermal]
-    type = HeatConductionMaterial
-    block = ${mod_blocks}
-    temperature = temp
-    thermal_conductivity = 20 # W/m/K
-    specific_heat = 500 # random value
-  []
-  [YH_liner_Cr_thermal]
-    type = ChromiumThermal
-    block = 102
-    temperature = temp
-    outputs = all
-  []
-  [YH_Cladding_thermal]
-    type = FeCrAlThermal
-    block = 103
-    temperature = temp
-    outputs = all
-  []
-  [Poison_blocks_thermal]
-    type = HeatConductionMaterial
-    block = ${poison_blocks}
-    temperature = temp
-    thermal_conductivity = 92 # W/m/K
-    specific_heat = 960 # random value
-  []
-
-  [control_rod_thermal]
-    type = HeatConductionMaterial
-    block = 603 #B4C
-    temperature = temp
-    thermal_conductivity = 92 # W/m/K
-    specific_heat = 960 # random value
-  []
-
-  [Reflector_thermal]
-    type = BeOThermal
-    block = ${ref_blocks}
-    fluence_conversion_factor = 1
-    temperature = temp
-    outputs = all
-  []
-
-  [airgap_thermal]
-    type = HeatConductionMaterial
-    block = ${he_void_blocks} # Helium filled in the control rod hole
-    temperature = temp
-    thermal_conductivity = 0.15 # W/m/K
-    specific_heat = 5197 # random value
-  []
-
-  [fuel_density]
-    type = StrainAdjustedDensity
-    block = ${fuel_blocks}
-    strain_free_density = 2276.5
-    displacements = '0 0 0'
-  []
-  [moderator_density]
-    type = StrainAdjustedDensity
-    block = ${mod_blocks}
-    strain_free_density = 4.3e3
-    displacements = '0 0 0'
-  []
-  [monolith_density]
-    type = StrainAdjustedDensity
-    block = 10
-    strain_free_density = 1806
-    displacements = '0 0 0'
-  []
-  [YH_Liner_Cr_density]
-    type = StrainAdjustedDensity
-    block = 102
-    strain_free_density = 7190
-    displacements = '0 0 0'
-  []
-  [YH_Cladding_density]
-    type = StrainAdjustedDensity
-    block = 103
-    strain_free_density = 7250
-    displacements = '0 0 0'
-  []
-  [Poison_blocks_density]
-    type = StrainAdjustedDensity
-    block = ${poison_blocks}
-    strain_free_density = 2510
-    displacements = '0 0 0'
-  []
-  [control_rod_density]
-    type = StrainAdjustedDensity
-    block = 603 #B4C
-    strain_free_density = 2510
-    displacements = '0 0 0'
-  []
-  [airgap_density]
-    type = StrainAdjustedDensity
-    block = ${he_void_blocks} #helium
-    strain_free_density = 180
-    displacements = '0 0 0'
-  []
-
-  [reflector_density]
-    type = GenericConstantMaterial
-    block = ${ref_blocks}
-    prop_names = 'density fast_neutron_fluence porosity'
-    prop_values = '3000 0 0'
-  []
-[]
-
 [UserObjects]
-  # UserObject to convert the temperature distribution on the inner coolant
-  # surface to a 1D profile.
-  [Tw_UO]
-    type = NearestPointLayeredSideAverage
-    variable = temp
-    direction = z
-    num_layers = 100
-    boundary = ${coolant_channel_bdries}
-    execute_on = 'TIMESTEP_END'
-    points_file = ${coolant_full_points_filename}
-  []
   [Tm_UO]
     type = NearestPointLayeredAverage
     variable = temp
@@ -367,13 +113,6 @@ start_time = -2e5
     points_file = ${mod_points_filename}
   []
 
-  [Tf_avg]
-    type = LayeredAverage
-    variable = temp
-    direction = z
-    num_layers = 100
-    block = ${fuel_blocks}
-  []
   [stoich_avg]
     type = LayeredAverage
     variable = stoich
@@ -394,11 +133,6 @@ start_time = -2e5
 []
 
 [Positions]
-  [cc_positions]
-    type = FilePositions
-    files = ${coolant_full_points_filename}
-    outputs = none
-  []
   [mod_positions]
     type = FilePositions
     files = ${mod_points_filename}
@@ -487,50 +221,21 @@ start_time = -2e5
 
   # coolant_full
   [Tw_to_coolant]
-    # Wall temperature from user object is transferred to fluid domain.
-    type = MultiAppGeneralFieldNearestLocationTransfer
     to_multi_app = coolant_full_MA
-    source_variable = Tw_trans # Exists in solid.
-    variable = T_wall # Exists in coolant.
   []
   [Tfluid_from_coolant]
-    # Fluid temperature from fluid domain is transferred to solid domain.
-    type = MultiAppGeneralFieldNearestLocationTransfer
-    assume_nearest_app_holds_nearest_location = true
     from_multi_app = coolant_full_MA
-    source_variable = Tfluid_trans
-    variable = Tfluid # Exists in solid.
   []
   [hfluid_from_coolant]
-    # Convective HTC from fluid domain is transferred to solid domain.
-    type = MultiAppGeneralFieldNearestLocationTransfer
-    assume_nearest_app_holds_nearest_location = true
     from_multi_app = coolant_full_MA
-    source_variable = hfluid_trans
-    variable = hfluid # Exists in solid.
-  []
-[]
-
-[Preconditioning]
-  [SMP]
-    type = SMP
-    full = true
   []
 []
 
 [Executioner]
-  type = Transient
-
-  petsc_options_iname = '-pc_type -pc_hypre_type -ksp_gmres_restart '
-  petsc_options_value = 'hypre boomeramg 100'
-
   solve_type = 'PJFNK'
-
-  line_search = 'none'
 
   l_max_its = 25
   nl_abs_tol = 1e-5
-  nl_rel_tol = 1e-8
   nl_max_its = 30
 
   dtmin = 1e-6
@@ -560,93 +265,6 @@ start_time = -2e5
     pp_names = '_t'
     constant_names = 't0'
     constant_expressions = '${start_time}'
-  []
-  [fuel_temp_avg]
-    type = ElementAverageValue
-    variable = temp
-    block = ${fuel_blocks}
-  []
-  [fuel_temp_max]
-    type = ElementExtremeValue
-    variable = temp
-    block = ${fuel_blocks}
-  []
-  [fuel_temp_min]
-    type = ElementExtremeValue
-    variable = temp
-    block = ${fuel_blocks}
-    value_type = min
-  []
-  [mod_temp_avg]
-    type = ElementAverageValue
-    variable = temp
-    block = ${mod_blocks}
-  []
-  [mod_temp_max]
-    type = ElementExtremeValue
-    variable = temp
-    block = ${mod_blocks}
-  []
-  [mod_temp_min]
-    type = ElementExtremeValue
-    variable = temp
-    block = ${mod_blocks}
-    value_type = min
-  []
-  [monolith_temp_avg]
-    type = ElementAverageValue
-    variable = temp
-    block = 10
-  []
-  [monolith_temp_max]
-    type = ElementExtremeValue
-    variable = temp
-    block = 10
-  []
-  [monolith_temp_min]
-    type = ElementExtremeValue
-    variable = temp
-    block = 10
-    value_type = min
-  []
-  [heatpipe_surface_temp_avg]
-    type = SideAverageValue
-    variable = temp
-    boundary = ${coolant_channel_bdries}
-  []
-  [power_density]
-    type = ElementIntegralVariablePostprocessor
-    block = ${fuel_blocks}
-    variable = power_density
-    execute_on = 'initial timestep_end transfer'
-  []
-  [power_density_scalar_pp]
-    type = ScalarVariable
-    variable = power_density_scalar
-    execute_on = 'initial timestep_end'
-  []
-  [cc_heat]
-    type = SideDiffusiveFluxIntegral
-    variable = temp
-    boundary = ${coolant_channel_bdries}
-    diffusivity = thermal_conductivity
-  []
-  [ext_heat]
-    type = SideDiffusiveFluxIntegral
-    variable = temp
-    boundary = 'side bottom_boundary top_boundary'
-    diffusivity = thermal_conductivity
-  []
-  [mirror_heat]
-    type = SideDiffusiveFluxIntegral
-    variable = temp
-    boundary = 'cut_surf'
-    diffusivity = thermal_conductivity
-  []
-  [total_heat]
-    type = ParsedPostprocessor
-    pp_names = 'mirror_heat ext_heat cc_heat'
-    expression = 'mirror_heat+ext_heat+cc_heat'
   []
 
   # from loop
@@ -682,15 +300,12 @@ start_time = -2e5
 []
 
 [Outputs]
-  perf_graph = true
-  color = true
   csv = true
   [console]
     type = Console
     verbose = true
   []
   [exodus]
-    type = Exodus
     execute_on = 'FINAL'
     # simulation_time_interval = 60
     # enable = false

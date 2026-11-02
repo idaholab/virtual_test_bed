@@ -62,7 +62,7 @@ The plant-level parameters (rated power, mass flow rate, pump/turbine performanc
 
 The turbomachinery performance maps (compressor and turbine pressure ratios, Bingham pump head and torque) are tabulated in CSV files under the shared `param/` directory and read by the corresponding THM components. The complete component network, control logic, and postprocessors are defined in the loop input file, [`MP_THM_loop_bop_base.i`](https://github.com/idaholab/virtual_test_bed/blob/main/microreactors/gcmr/core/Multiphysics/bop_base/MP_THM_loop_bop_base.i).
 
-Each application input is split between a common base in the `bop_base/` directory, holding the parts shared by the startup and load-following cases, and short `steady_state_bop/` and `transient_bop/` inputs that include the base and only specify what differs between the two cases.
+Each application input is split between a common base in the `common/` directory, shared with all the other full core multiphysics models, a base in the `bop_base/` directory, holding the parts shared by the startup and load-following cases, and short `steady_state_bop/` and `transient_bop/` inputs that include the base and only specify what differs between the two cases.
 
 ## Multiphysics Coupling
 
@@ -136,7 +136,7 @@ The load-following transient (`transient_bop/`) starts from the converged startu
 
 The core neutronics and heat conduction sub-applications restart from the startup steady state. Griffin stores a vector file of neutronics variables of steady state so that the transient run can load them as initial condition. The BISON sub-application reads the converged solid-temperature field from the checkpoint written by the `steady_state_bop` case.
 
-!listing microreactors/gcmr/core/Multiphysics/bop_base/MP_Griffin_bop_base.i block=UserObjects/ss
+!listing microreactors/gcmr/core/Multiphysics/common/MP_Griffin_base.i block=UserObjects/ss
 
 !listing microreactors/gcmr/core/Multiphysics/transient_bop/MP_Griffin_bop_tr.i block=UserObjects
 
