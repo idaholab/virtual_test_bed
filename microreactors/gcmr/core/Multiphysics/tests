@@ -203,7 +203,14 @@
   [MP_THM_loop_BOP_ss]
     type = CSVDiff
     input = 'MP_THM_loop_bop_ss.i'
-    cli_args = "--app ThermalHydraulicsApp Executioner/num_steps=10"
+    # Small fixed time steps so that the startup from rest converges at every step regardless
+    # of the direct solver (petsc, mumps and superlu_dist agree to 2e-7)
+    cli_args = "--app ThermalHydraulicsApp Executioner/num_steps=10 Executioner/TimeStepper/dt=0.01 "
+               "Executioner/TimeStepper/growth_factor=1 Executioner/nl_abs_tol=1e-6 Executioner/nl_max_its=30"
+    # the compressor torques are nearly zero at the start of the startup
+    abs_zero = 1e-8
+    # the loop solve does not converge in parallel
+    max_parallel = 1
     csvdiff = 'MP_THM_loop_bop_ss_csv.csv'
     capabilities = 'combinedapp | thermalhydraulicsapp | bluecrabapp'
     working_directory = 'steady_state_bop'
@@ -211,7 +218,14 @@
   [MP_THM_loop_BOP_tr]
     type = CSVDiff
     input = 'MP_THM_loop_bop_tr.i'
-    cli_args = "--app ThermalHydraulicsApp Executioner/num_steps=10"
+    # Small fixed time steps so that the startup from rest converges at every step regardless
+    # of the direct solver (petsc, mumps and superlu_dist agree to 2e-7)
+    cli_args = "--app ThermalHydraulicsApp Executioner/num_steps=10 Executioner/TimeStepper/dt=0.01 "
+               "Executioner/TimeStepper/growth_factor=1 Executioner/nl_abs_tol=1e-6 Executioner/nl_max_its=30"
+    # the compressor torques are nearly zero at the start of the startup
+    abs_zero = 1e-8
+    # the loop solve does not converge in parallel
+    max_parallel = 1
     csvdiff = 'MP_THM_loop_bop_tr_csv.csv'
     capabilities = 'combinedapp | thermalhydraulicsapp | bluecrabapp'
     working_directory = 'transient_bop'
