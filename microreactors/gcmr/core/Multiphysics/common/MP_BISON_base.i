@@ -46,6 +46,8 @@ coolant_full_points_filename = '../component_positions/cc_positions_sixth.txt'
 []
 
 [Variables]
+  [temp]
+  []
 []
 
 [Kernels]
