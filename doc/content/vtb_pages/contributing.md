@@ -7,23 +7,23 @@ including, but not limited to, regulatory, industrial and academic institutions.
 
 Any contribution must:
 
+- be releasable as an open-source model. Placing a model on this repository, from the moment the pull request is made,
+  will make it available to everyone
+
 - utilize MooseDocs for documentation. MooseDocs files should be placed in `doc/content/<relevant_reactor>`.
   Please follow [this documentation template](template.md).
 
 - follow the MooseDocs style guide ([link](https://mooseframework.inl.gov/python/MooseDocs/standards.html)) for the documentation.
-  For example, it should not use tabs and trailing whitespaces for both the documentation and input files
+  For example, tabs and trailing whitespaces should not be present in either the documentation or input files
 
 - have every input file contain a header indicating the authors of the model and their institution, the codes used to run
-  the input file and briefly summarizing the simulation performed
+  the input file, and a brief summary of the simulation performed
 
 - be tested, using either syntax checking to avoid deprecation, or reasonably sized regression tests. This
   requirement is waived for simulation tools which cannot leverage the CIVET testing suite.
-  See [#running_tests] for instructions on how to check your tests.
+  See [#running_tests] for instructions on how to verify that your tests pass.
 
 - use the Git Large File System (lfs) to host any large file (3D mesh for example)
-
-- be releasable as an open source model. Placing a model on this repository, from the moment the pull request is made,
-  will make it available to everyone
 
 - be made through a pull request to the repository, referencing an issue you create in the repository. Creating an issue before
   contributing allows others to engage earlier with the developers of the new model, and creates a discussion forum
@@ -39,6 +39,8 @@ We also prefer but +do not mandate+ that contributions:
 
 - use International System (SI) units
 
+- provide plot scripts where possible. See [vtb_pages/utilities.md#vtbplot] for a VTB plot class
+  that can be used for line plots.
 
 We can help you meet any of these requirements if you are not familiar with the tools used.
 We reserve the right to refuse any contribution which does not meet these requirements.
