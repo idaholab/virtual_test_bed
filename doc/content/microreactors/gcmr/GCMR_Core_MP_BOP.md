@@ -24,12 +24,12 @@ Whereas the baseline model prescribes fixed core inlet conditions (inlet tempera
 
 Two simulation cases are provided:
 
-1. A **plant startup transient** (`steady_state_bop/`), which brings the plant from a cold, static state to full-power steady-state operation. The converged end state is stored via a checkpoint and serves as the initial condition for the transient case.
-2. A **load-following transient** (`transient_bop/`), which reduces the secondary motor torque to modulate the helium mass flow rate and demonstrates the passive self-regulation of the coupled core–BOP system.
+1. A +plant startup transient+ (`steady_state_bop/`), which brings the plant from a cold, static state to full-power steady-state operation. The converged end state is stored via a checkpoint and serves as the initial condition for the transient case.
+2. A +load-following transient+ (`transient_bop/`), which reduces the secondary motor torque to modulate the helium mass flow rate and demonstrates the passive self-regulation of the coupled core–BOP system.
 
 ## Balance-of-Plant Model
 
-The BOP loop is modeled with THM [!cite](hansel2024) and is referenced by BISON as a thermal-hydraulic sub-application. On the primary side, the core geometry is simplified to a one-dimensional/two-dimensional (1D–2D) representation, in which all coolant channels in the core are collapsed into a single representative channel coupled to a single cylindrical heat structure. This heat structure represents the combined fuel, graphite matrix, and moderator regions using concentric hollow cylinders with geometric parameters chosen to preserve the total volume of each material region.
+The BOP loop is modeled with THM [!citep](hansel2024) and is referenced by BISON as a thermal-hydraulic sub-application. On the primary side, the core geometry is simplified to a one-dimensional/two-dimensional (1D–2D) representation, in which all coolant channels in the core are collapsed into a single representative channel coupled to a single cylindrical heat structure. This heat structure represents the combined fuel, graphite matrix, and moderator regions using concentric hollow cylinders with geometric parameters chosen to preserve the total volume of each material region.
 
 On the secondary side, the model represents the complete Brayton cycle loop: ambient-temperature air enters a compressor, is preheated by exhaust gases in a recuperator, and is then further heated in a primary-to-secondary heat exchanger where the full 20 MW$_{\text{th}}$ is transferred from the helium primary loop. The heated air expands through a turbine, which drives both the compressor and an electrical generator via a common shaft. The turbine exhaust passes back through the recuperator to recover residual thermal energy before being released to the atmosphere.
 
@@ -112,7 +112,7 @@ The key operational milestone in the startup sequence is the motor-to-turbine to
 
 ### Thermal Response
 
-The primary loop temperatures reflect the thermal equilibration of both the core and the secondary loop. The core helium inlet temperature reaches approximately 797 K within approximately 20 hours of startup ([tr_bop_st_loop]), while the core outlet temperature stabilizes at approximately 1050 K, yielding the design-point temperature rise of approximately 200 K across the core. The maximum, average, and minimum fuel temperatures reach approximately 1130 K, 1000 K, and 835 K, respectively ([tr_bop_st_tempf]). These values are consistent with the steady-state multiphysics results reported for the [baseline model](/GCMR_Core_Multiphysics_models.md), confirming the self-consistency of the primary and secondary loop thermal coupling.
+The primary loop temperatures reflect the thermal equilibration of both the core and the secondary loop. The core helium inlet temperature reaches approximately 797 K within approximately 20 hours of startup (see [tr_bop_st_loop]), while the core outlet temperature stabilizes at approximately 1050 K, yielding the design-point temperature rise of approximately 200 K across the core. The maximum, average, and minimum fuel temperatures reach approximately 1130 K, 1000 K, and 835 K, respectively (see [tr_bop_st_tempf]). These values are consistent with the steady-state multiphysics results reported for the [baseline model](/GCMR_Core_Multiphysics_models.md), confirming the self-consistency of the primary and secondary loop thermal coupling.
 
 !media media/gcmr/FCMP/tr_bop_st_loop.png
       id=tr_bop_st_loop
