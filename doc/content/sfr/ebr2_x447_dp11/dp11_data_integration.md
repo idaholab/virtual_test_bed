@@ -22,7 +22,7 @@ Unlike other metallic fuel pins irradiated during the [!ac](IFR) program, all th
 
 ## Pin Design Data 
 
-The fuel pin design data of DP11 are provided as a CSV file with the same format as the pin design data file available in [!ac](FIPD). Note that the pin design data items that are not used by BISON or not openly available have been removed. This CSV file that contains the essential pin design data for Pin DP11 is read by BISON's [`FIPDRodletMeshGenerator`](https://mooseframework.inl.gov/bison/source/meshgenerators/FIPDRodletMeshGenerator.html) to generate the axisymmetric 2D mesh as well as the corresponding `MeshMetaData`.
+The fuel pin design data of DP11 are provided as a CSV file with the same legacy format as the pin design legacy data file available in [!ac](FIPD). Note that the pin design data items that are not used by BISON or not openly available have been removed. This CSV file that contains the essential pin design data for Pin DP11 is read by BISON's [`FIPDRodletMeshGenerator`](https://mooseframework.inl.gov/bison/source/meshgenerators/FIPDRodletMeshGenerator.html) to generate the axisymmetric 2D mesh as well as the corresponding `MeshMetaData`.
 
 ## Operating Conditions and Irradiation History
 
