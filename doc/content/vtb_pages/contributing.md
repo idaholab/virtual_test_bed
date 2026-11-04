@@ -42,6 +42,12 @@ We also prefer but +do not mandate+ that contributions:
 - provide plot scripts where possible. See [vtb_pages/utilities.md#vtbplot] for a VTB plot class
   that can be used for line plots.
 
+- make the plots in the documentation +on-the-fly+ when possible, instead of committing the images.
+  If a plot can be made from files that are in the repository, such as the gold files of a test,
+  MooseDocs can run the plot script when the documentation is built. The plot then stays consistent
+  with the files it is made from and no image has to be stored in the repository.
+  See [vtb_pages/plotting.md#on-the-fly-plots] for how to do this.
+
 We can help you meet any of these requirements if you are not familiar with the tools used.
 We reserve the right to refuse any contribution which does not meet these requirements.
 

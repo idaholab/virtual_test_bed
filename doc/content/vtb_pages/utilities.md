@@ -59,3 +59,5 @@ The balance-of-plant plots in [BOP_results.md] are made with `VTBPlot` by
 Running `python plot.py startup` or `python plot.py load_follow` in that directory, after running the
 corresponding input file, writes one image per plot.
 
+For making the plots of the documentation from plot scripts when the documentation is built, see
+[vtb_pages/plotting.md#on-the-fly-plots].
