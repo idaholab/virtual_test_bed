@@ -31,6 +31,7 @@ Extensions:
                 VTB Assistant: vtb_pages/vtb_assistant.md
                 Updating the VTB: vtb_pages/updating.md
                 Contributing: vtb_pages/contributing.md
+                Utilities: vtb_pages/utilities.md
                 Citing: vtb_pages/citing.md
             Models: vtb_pages/models.md
             Support:
