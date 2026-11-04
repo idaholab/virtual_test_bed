@@ -1,0 +1,29 @@
+[Tests]
+  issue = '#904'
+  [nacie_adp10_syntax]
+    type = RunApp
+    input = nacie_adp10.i
+    check_input = true
+    capabilities = samapp
+    requirement = 'The system shall parse the coupled NACIE ADP10 SAM and SCM model with one SCM child application.'
+  []
+
+  [scm_only]
+    type = CSVDiff
+    input = nacie_adp10_fps_subchannel.i
+    cli_args = 'Executioner/end_time=-9000'
+    csvdiff = 'nacie_adp10_fps_subchannel_csv.csv'
+    capabilities = 'method=opt & combinedapp'
+    requirement = 'The system shall simulate part of the startup of the NACIE ADP10 SCM model.'
+    max_time = 400
+  []
+  [regression]
+    type = CSVDiff
+    input = nacie_adp10.i
+    cli_args = 'Executioner/end_time=-8000'
+    csvdiff = 'nacie_adp10_csv.csv nacie_adp10_out_sub_app0_csv.csv'
+    capabilities = 'method=opt & samapp'
+    requirement = 'The system shall simulate part of the startup of the coupled NACIE ADP10 SAM and SCM model with one SCM child application.'
+    max_time = 400
+  []
+[]
