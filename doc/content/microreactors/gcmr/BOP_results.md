@@ -43,7 +43,7 @@ The primary pressures are shown in [startup_primary_P]: as expected, the pressur
       id=startup_primary_P
       caption= Startup transient - primary pressures
 
-The secondary pressures are shown in [startup_secondary_P]: a steady state in obtained after approximately 20,000 s. As expected, it dramatically increases during the steady state between the inlet and outlet of the compressor. From its outlet to the turbine inlet, it decreases slowly from 5.8 bar to 4.8 bar, due to the loss of pressure in the channels, and diminishes mainly in the turbine. In its outlet, the pressure value is 1.6 bar.
+The secondary pressures are shown in [startup_secondary_P]: a steady state in obtained after approximately 20,000 s. As expected, it dramatically increases during the steady state between the inlet and outlet of the compressor. From its outlet to the turbine inlet, it decreases slowly from 5.8 bar to 4.8 bar, due to the loss of pressure in the channels, and diminishes mainly in the turbine. In its outlet, the pressure value is 1.1 bar.
 
 !media media/gcmr/balance_of_plant/results_startup/startup_secondary_P.png
       style=display: block;margin-left:auto;margin-right:auto;width:50%;
@@ -51,14 +51,14 @@ The secondary pressures are shown in [startup_secondary_P]: a steady state in ob
       caption= Startup transient - secondary pressures
 
 
-The temperatures are shown in [startup_T]: once again, the steady state is reached after approximately 20,000 s. Helium is heated in the core from 890 K to 1190 K during the steady state and releases this thermal power to the secondary flow in the heat exchanger. In this component, its temperature increases from 490 K to 1170 K. The wall (the surface between the moderator and the fluid) temperature increases over the length of the core but stays under 1300 K.
+The temperatures are shown in [startup_T]: once again, the steady state is reached after approximately 20,000 s. Helium is heated in the core from 840 K to 1205 K during the steady state and releases this thermal power to the secondary flow in the heat exchanger. In this component, its temperature increases from 490 K to 1175 K. The wall (the surface between the moderator and the fluid) temperature increases over the length of the core but stays under 1350 K.
 
 !media media/gcmr/balance_of_plant/results_startup/startup_T.png
       style=display: block;margin-left:auto;margin-right:auto;width:50%;
       id=startup_T
       caption= Startup transient - temperatures in the two loops
 
-The extracted powers are shown in [startup_power]: As expected, they increase in the core and in the heat exchanger go from zero to the operating value of 15 MWth. At the same time, the power extracted by the generator increases from zero to 2 MWe.
+The extracted powers are shown in [startup_power]: As expected, they increase in the core and in the heat exchanger go from zero to the operating value of 15 MWth. At the same time, the power extracted by the generator increases from zero to 2.2 MWe.
 
 !media media/gcmr/balance_of_plant/results_startup/startup_power.png
       style=display: block;margin-left:auto;margin-right:auto;width:50%;
@@ -110,14 +110,14 @@ The primary pressures are shown in [load_follow_primary_P]: the input power is s
       id=load_follow_primary_P
       caption= Load follow transient - primary pressures
 
-The secondary pressures are shown in [load_follow_secondary_P]: the steady state values after the first modulation are as expected lower than when the core delivers 100% of its nominal power. The pressure out of the compressor is about 5.15 bar and 1.45 bar out of the turbine. Another steady state, equivalent to the initial values, is then obtained after the second modulation.
+The secondary pressures are shown in [load_follow_secondary_P]: the steady state values after the first modulation are as expected lower than when the core delivers 100% of its nominal power. The pressure out of the compressor is about 5.15 bar and 1.05 bar out of the turbine. Another steady state, equivalent to the initial values, is then obtained after the second modulation.
 
 !media media/gcmr/balance_of_plant/results_load_follow/load_follow_secondary_P.png
       style=display: block;margin-left:auto;margin-right:auto;width:50%;
       id=load_follow_secondary_P
       caption= Load follow transient - secondary pressures
 
-The temperatures are shown in [load_follow_T]: once again, a new steady state with lower values is obtained after the first modulation. The helium flow is heated in the core from 855 K to 1090 K and releases this heat to the air flow of the secondary loop in the heat exchanger. Its temperature increases from 480 K to 1080 K.
+The temperatures are shown in [load_follow_T]: once again, a new steady state with lower values is obtained after the first modulation. The helium flow is heated in the core from 815 K to 1100 K and releases this heat to the air flow of the secondary loop in the heat exchanger. Its temperature increases from 480 K to 1080 K.
 As expected, the inlet temperature on the secondary side of the heat exchanger is about the same. The only effect of the modulation on the air flow before the heat exchanger is in fact due to the compressor, which is on the same shaft than the turbine.
 The steady state after the second modulation presents as expected the same values than with the initial conditions.
 
@@ -126,7 +126,7 @@ The steady state after the second modulation presents as expected the same value
       id=load_follow_T
       caption= Load follow transient - temperatures
 
-The extracted powers in [load_follow_power] are equal in the core and in the heat exchanger and reach a steady state at 12 MWth after the first modulation. The generator extracts approximately 1.6 MWe.
+The extracted powers in [load_follow_power] are equal in the core and in the heat exchanger and reach a steady state at 12 MWth after the first modulation. The generator extracts approximately 1.9 MWe.
 After 100,000s, a new steady state is also reached with the same values than at the beginning of the simulation.
 
 !media media/gcmr/balance_of_plant/results_load_follow/load_follow_power.png
