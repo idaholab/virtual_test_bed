@@ -4,12 +4,13 @@ deviceNumber = LOCAL-RANK
 
 [GENERAL]
 polynomialOrder = 4
-startFrom = 7pin0.f00001+pu
+startFrom = 7pin0.f00001+u+p
 stopAt = numSteps
 numSteps = 280000
 dt = 1.0e-02 # 0.91062394603710 ms
 variableDT = no
 timeStepper = tombo2
+scalars = temperature
 #extrapolation = subCycling
 #subCyclingSteps = 1
 
@@ -18,14 +19,14 @@ writeControl = STEPS
 writeInterval = 5000
 
 
-[PRESSURE]
+[FLUID PRESSURE]
 residualTol = 1e-04
 
-[VELOCITY]
+[FLUID VELOCITY]
 solver = none
 
-[TEMPERATURE]
-boundaryTypeMap = t, I, f, f
+[SCALAR TEMPERATURE]
+boundaryTypeMap = udfDirichlet, zeroNeumann, udfNeumann, udfNeumann
 residualTol = 1e-6
 rhoCp = 1.0
 conductivity = -106
