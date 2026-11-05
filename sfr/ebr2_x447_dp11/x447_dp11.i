@@ -28,7 +28,8 @@
   # Pin design parameters from FIPD database
   [gen]
     type = FIPDRodletMeshGenerator
-    fipd_geom_file = ${raw 'fipd/ ${pin_id} _design.csv'}
+    fipd_geom_file = ${raw 'fipd/ ${pin_id} _design_legacy.csv'}
+    file_format = LEGACY
 
     gap_bottom_length = ${gap_bottom_length}                 # arbitrary
     cladding_bottom_plug_length = ${top_bot_cladding_height} # arbitrary
