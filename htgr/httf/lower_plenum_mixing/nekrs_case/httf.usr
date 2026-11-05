@@ -167,19 +167,16 @@ c-----------------------------------------------------------------------
      &     ,w4(lx1*ly1*lz1*lelv)
      &     ,w5(lx1*ly1*lz1*lelv)
 
-      common /NRSSCPTR/ nrs_scptr(10)
-      integer*8 nrs_scptr
-
       common /mywalldist/ ywd(lx1,ly1,lz1,lelt)
       real ywd
 
       if(istep.eq.0)then
          call distf(ywd,1,'W  ',w1,w2,w3,w4,w5)
          call getinlet
-         nrs_scptr(1) = loc(vin(1,1,1,1))
-         nrs_scptr(2) = loc(t1in(1,1,1,1))
-         nrs_scptr(3) = loc(t2in(1,1,1,1))
-         nrs_scptr(4) = loc(t3in(1,1,1,1))
+         call nekrs_registerPtr('vin', vin)
+         call nekrs_registerPtr('t1in', t1in)
+         call nekrs_registerPtr('t2in', t2in)
+         call nekrs_registerPtr('t3in', t3in)
       endif
 
       return
