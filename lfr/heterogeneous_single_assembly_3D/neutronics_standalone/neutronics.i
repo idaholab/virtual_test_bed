@@ -284,7 +284,7 @@ totalpower = 3700000.0 # W
 
   # This assembles the 7 pins into an assembly with a duct
   [ASM]
-    type = HexIDPatternedMeshGenerator
+    type = PatternedHexMeshGenerator
     inputs = 'Pin1 Pin2 Pin3 Pin4 Pin5 Pin6 Pin7'
     pattern_boundary = hexagon
     hexagon_size = ${half_asmpitch}

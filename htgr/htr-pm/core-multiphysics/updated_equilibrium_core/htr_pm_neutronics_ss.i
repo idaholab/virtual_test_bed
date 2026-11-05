@@ -338,6 +338,13 @@ pebble_unloading_rate   = ${fparse pebble_speed * area * 0.61 / pebble_volume}
 #     execute_on = 'FINAL'
 #   []
 # []
+[Positions]
+  [pebble_positions]
+    type = FilePositions
+    files = 'pebble_heat_pos.txt'
+  []
+[]
+
 # ==============================================================================
 # MATERIALS
 # ==============================================================================
@@ -394,7 +401,7 @@ pebble_unloading_rate   = ${fparse pebble_speed * area * 0.61 / pebble_volume}
 
   # pebble conduction
   pebble_conduction_input_file                = 'pebble_triso_ss.i'
-  pebble_positions_file                       = 'pebble_heat_pos.txt'
+  pebble_positions_object_name                = pebble_positions
   surface_temperature_sub_app_postprocessor   = T_surface
   surface_temperature_main_app_variable       = T_solid
   power_sub_app_postprocessor                 = pebble_power_density
@@ -508,7 +515,7 @@ pebble_unloading_rate   = ${fparse pebble_speed * area * 0.61 / pebble_volume}
 []
 [Transfers]
   [power_density_to_flow]
-    type              = MultiAppNearestNodeTransfer
+    type              = MultiAppGeneralFieldNearestLocationTransfer
     to_multi_app      = flow
     source_variable   = power_density
     variable          = power_density
@@ -516,7 +523,7 @@ pebble_unloading_rate   = ${fparse pebble_speed * area * 0.61 / pebble_volume}
     execute_on        = 'TIMESTEP_END'
   []
   [T_solid_from_flow]
-    type              = MultiAppNearestNodeTransfer
+    type              = MultiAppGeneralFieldNearestLocationTransfer
     from_multi_app    = flow
     source_variable   = T_solid
     variable          = T_solid
@@ -524,7 +531,7 @@ pebble_unloading_rate   = ${fparse pebble_speed * area * 0.61 / pebble_volume}
     fixed_meshes      = true
   []
   [T_fluid_from_flow]
-    type              = MultiAppNearestNodeTransfer
+    type              = MultiAppGeneralFieldNearestLocationTransfer
     from_multi_app    = flow
     source_variable   = T_fluid
     variable          = T_fluid

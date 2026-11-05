@@ -7,10 +7,15 @@
 
 [Mesh]
   [gmg]
-    type = GeneratedIDMeshGenerator
+    type = GeneratedMeshGenerator
     dim = 2
-    depletion_ids = 0
-    material_ids = 1
+  []
+  [ids]
+    type = SubdomainExtraElementIDGenerator
+    input = gmg
+    subdomains = 0
+    extra_element_id_names = 'depletion_id material_id'
+    extra_element_ids = '0; 1'
   []
 []
 

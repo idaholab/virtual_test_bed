@@ -56,7 +56,7 @@ The full input blocks can be found below.
 !listing msr/generic_msr/depletion/0D_No_Iodine_Removal_1G.i
          block=Problem
 
-Here a very simple mesh is generated using the [!style color=orange](GeneratedIDMeshGenerator)
+Here a very simple mesh is generated using a [!style color=orange](GeneratedMeshGenerator) with depletion and material IDs assigned by a [!style color=orange](SubdomainExtraElementIDGenerator),
 which is not currently used explicitly for this problem. Additionally, a simple problem statement
 is also specified. The reason for this, is because the majority of this model is actually a
 [!style color=orange](VectorPostprocessor) which will be discussed shortly.

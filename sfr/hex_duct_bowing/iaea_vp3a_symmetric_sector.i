@@ -94,9 +94,9 @@
   []
 []
 
-[Modules]
-  [TensorMechanics]
-    [Master]
+[Physics]
+  [SolidMechanics]
+    [QuasiStatic]
       [all]
         strain = FINITE
         volumetric_locking_correction = true
