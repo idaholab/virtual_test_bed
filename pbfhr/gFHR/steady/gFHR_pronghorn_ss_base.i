@@ -40,16 +40,14 @@ velocity_interp_method = 'rc'
 core_power_density = 1.999987E+07
 blocks_fluid = 'flow1 flow2 flow3 flow4 flow5 dio1 dio2 dio3 flowp inlet outlet '
 
-blocks_free_flow = 'flow1 flow2 flow5 dio1 dio2 dio3 inlet outlet '
 blocks_bed = 'flow3 flow4 flowp'
-blocks_non_bed = 'flow1 flow2 flow5 dio1 dio2 dio3 reflector
-                  barrel vessel1 vessel2 inlet outlet '
+blocks_free_flow = 'flow1 flow2 flow5 dio1 dio2 dio3 inlet outlet'
+blocks_structure = 'reflector barrel vessel1 vessel2'
+# open-flow blocks exchanging heat with the adjacent structures through their walls
+blocks_wall_htc = 'flow1 dio1 dio2 dio3'
 
-# volumetric heat transfer coefficients computed
-# from areal heat transfer coefficients
+# Dittus-Boelter coefficient for the fluid-structure wall heat transfer
 C_DB = 0.023
-ApV_flow_1 = 40
-ApV_diode = 40
 
 # Forchheimer coefficient in an open plenum
 Forch_open = 1.25
@@ -66,8 +64,9 @@ Forch_open = 1.25
   velocity_interp_method = ${velocity_interp_method}
   rho = 'rho'
   force_define_density = true
-  acceleration = '0.0 -9.8 0.0'
   rhie_chow_user_object = 'pins_rhie_chow_interpolator'
+  # also used by the pebble bed conductivity (bed deformation ratio)
+  acceleration = '0.0 -9.81 0.0'
 []
 
 [Debug]
@@ -75,7 +74,7 @@ Forch_open = 1.25
 []
 
 [Mesh]
-  block_id = '  1     2     3     4     5    6    7    8    9     10           12     13      14      20      21  ' #30 is a buffer layer to protect the porosity smoothing and ensure conservation
+  block_id = '  1     2     3     4     5    6    7    8    9     10           12     13      14      20      21  '
   block_name = 'flow1 flow2 flow3 flow4 flow5 dio1 dio2 dio3 flowp reflector   barrel vessel1 vessel2 inlet outlet'
   coord_type = RZ
   rz_coord_axis = Y
@@ -189,6 +188,13 @@ Forch_open = 1.25
     paired_block = 2
     new_boundary = MF_3
   []
+  [fluid_structure_interface]
+    type = SideSetsBetweenSubdomainsGenerator
+    input = Mass_Flow_Sensor_3
+    primary_block = '1 6 7 8'
+    paired_block = '10 12 13 14'
+    new_boundary = fluid_structure
+  []
   uniform_refine = 0
 []
 
@@ -245,23 +251,23 @@ Forch_open = 1.25
         energy_inlet_types = 'fixed-temperature'
         energy_inlet_functors = 'Inlet_Temperature_BC'
 
-        # Wall convection is modeled with a volumetric term
+        # Wall convection to the structures is modeled with FVInterfaceKernels
         energy_wall_types = 'heatflux'
         energy_wall_functors = '0'
 
         thermal_conductivity = 'kappa'
         effective_conductivity = false
 
-        # Porous flow parameters
-        ambient_convection_blocks = ${blocks_fluid}
+        # Fluid-pebble heat exchange
+        ambient_convection_blocks = ${blocks_bed}
         ambient_convection_alpha = 'alpha'
         ambient_temperature = 'T_solid'
       []
     []
     [SolidHeatTransfer]
       [solid]
-        # On all blocks
-        block = '${blocks_bed} ${blocks_non_bed}'
+        # Pebble bed and solid structures only, no solid in the open-flow regions
+        block = '${blocks_bed} ${blocks_structure}'
         initial_temperature = 823.14
 
         thermal_conductivity_solid = 'eff_solid_conductivity'
@@ -272,8 +278,8 @@ Forch_open = 1.25
         external_heat_source = power_density
         external_heat_source_blocks = 'flow3'
 
-        # Porous flow parameters
-        ambient_convection_blocks = ${blocks_fluid}
+        # Fluid-pebble heat exchange
+        ambient_convection_blocks = ${blocks_bed}
         ambient_convection_alpha = 'alpha'
       []
     []
@@ -352,26 +358,6 @@ Forch_open = 1.25
     symbol_names = 'dt'
     expression = 'dt'
   []
-  [porosity_core]
-    type = ParsedFunction
-    expression = 0.4011505932
-  []
-  [porosity_cones]
-    type = ParsedFunction
-    expression = 0.75
-  []
-  [porosity_plena]
-    type = ParsedFunction
-    expression = 0.9999
-  []
-  [porosity_pipe]
-    type = ParsedFunction
-    expression = 0.9999
-  []
-  [porosity_diode]
-    type = ParsedFunction
-    expression = 0.9999
-  []
   [Outlet_Average_Pressure_Function]
     type = ParsedFunction
     symbol_names = 'OAP'
@@ -447,7 +433,7 @@ Forch_open = 1.25
     type = ConstantAux
     variable = T_fluid_WD
     value = 0
-    block = 'reflector barrel vessel1 vessel2'
+    block = ${blocks_structure}
   []
   [porosity_out]
     type = FunctorAux
@@ -536,26 +522,6 @@ Forch_open = 1.25
   []
 
   ## Porosity
-  [porosity_energy]
-    type = ADPiecewiseByBlockFunctorMaterial
-    prop_name = porosity_energy
-    subdomain_to_prop_value = '1 ${porosity_free_flow}
-                               2 ${porosity_free_flow}
-                               3 ${porosity_bed}
-                               4 ${porosity_cone}
-                               5 ${porosity_free_flow}
-                               6 ${porosity_free_flow}
-                               7 ${porosity_free_flow}
-                               8 ${porosity_free_flow}
-                               9 ${porosity_cone}
-                               20 ${porosity_free_flow}
-                               21 ${porosity_free_flow}
-                               10 ${porosity_solid}
-                               12 ${porosity_solid}
-                               13 ${porosity_solid}
-                               14 ${porosity_solid}'
-  []
-
   [porosity]
     type = ADPiecewiseByBlockFunctorMaterial
     prop_name = porosity
@@ -631,7 +597,7 @@ Forch_open = 1.25
     type = ADGenericVectorFunctorMaterial
     prop_names = 'kappa'
     prop_values = 'k k k'
-    block = ${blocks_non_bed}
+    block = ${blocks_free_flow}
   []
 
   ## Drag coefficients
@@ -659,35 +625,14 @@ Forch_open = 1.25
   [pebble_bed_alpha]
     type = FunctorPetrovicPebbleBedHTC
     block = ${blocks_bed}
-    porosity = porosity_energy
+    porosity = porosity
   []
 
-  [equivalent_alpha_flow1]
+  # Areal heat transfer coefficient at the walls of the downcomer and diodes
+  [wall_htc]
     type = FunctorDittusBoelterWallHTC
-    C = '${fparse C_DB * ApV_flow_1}'
-    block = flow1
-  []
-
-  [equivalent_alpha_diodes]
-    type = FunctorDittusBoelterWallHTC
-    C = '${fparse C_DB * ApV_diode}'
-    block = 'dio1 dio2 dio3'
-  []
-
-  [convert_wall_htc_to_alpha]
-    type = ADGenericFunctorMaterial
-    prop_names = 'alpha'
-    prop_values = 'wall_htc'
-    block = 'dio1 dio2 dio3 flow1'
-  []
-
-  # in some regions we do not care about volumetric
-  # heat transfer, but we might have to do sanity checks here
-  [alpha_null]
-    type = ADGenericFunctorMaterial
-    prop_names = 'alpha'
-    prop_values = '0'
-    block = 'flow2 flow5 outlet  inlet'
+    C = ${C_DB}
+    block = ${blocks_wall_htc}
   []
 
   ## Solid phase properties
@@ -702,7 +647,7 @@ Forch_open = 1.25
     wall_distance = bed_geometry
     T_solid = T_solid
     block = ${blocks_bed}
-    porosity = porosity_energy
+    porosity = porosity
   []
 
   [pebble_bed_solid_properties]
@@ -733,24 +678,13 @@ Forch_open = 1.25
     block = '${blocks_bed}'
   []
 
-  # Modeling solid everywhere. Open flow regions are modeled
-  # as very low density/conductivity regions. Heat transfer
-  # through them will be facilitated by conjugate heat transfer
-  # from the adjacent walls that is converted to a volumetric term
-  [dummy_open_flow_region_solid_props]
-    type = ADGenericFunctorMaterial
-    prop_names = 'rho_s cp_s k_s'
-    prop_values = '1 1 1e-4'
-    block = '${blocks_free_flow}'
-  []
-
   # write k_s into kappa_s so we can use the same
   # kernel everywhere
   [non_pebble_bed_eff_solid_conductivity]
     type = ADGenericVectorFunctorMaterial
     prop_names = 'eff_solid_conductivity'
     prop_values = 'k_s k_s k_s'
-    block = '${blocks_free_flow} reflector barrel vessel1 vessel2'
+    block = ${blocks_structure}
   []
 
   [pebble_bed_eff_solid_conductivity]
@@ -770,9 +704,6 @@ Forch_open = 1.25
     cp_s = '(0.54212 - 2.42667E-06 * t - 9.02725E+01 * pow(t, -1) - 4.34493E+04 * pow(t, -2) + 1.59309E+07 * pow(t, -3.) - 1.43688E+09 * pow(t, -4.)) * 4184.'
     k_s = 15.0 # from Kairos
   []
-  [StainlessSteel]
-    type = StainlessSteel
-  []
   [bed_geometry]
     type = WallDistanceCylindricalBed
     top = ${bed_height}
@@ -785,6 +716,22 @@ Forch_open = 1.25
 # ==============================================================================
 # BOUNDARY CONDITIONS
 # ==============================================================================
+[FVInterfaceKernels]
+  # Convective heat transfer between the coolant and the structures
+  [fluid_structure_convection]
+    type = FVConvectionCorrelationInterface
+    variable1 = T_fluid
+    variable2 = T_solid
+    subdomain1 = ${blocks_wall_htc}
+    subdomain2 = ${blocks_structure}
+    boundary = fluid_structure
+    T_fluid = T_fluid
+    T_solid = T_solid
+    h = wall_htc
+    wall_cell_is_bulk = true
+  []
+[]
+
 [FVBCs]
   # Radial conduction/radiation trough the stagnating Air BCs.
   [T_solid_conduction]
@@ -884,10 +831,23 @@ Forch_open = 1.25
     variable = T_fluid
     execute_on = 'INITIAL TIMESTEP_END TRANSFER'
   []
-  [Heatflux_RCCS]
-    type = SideIntegralVariablePostprocessor
+  # Heat removed through the RCCS boundary [W]
+  [Heat_RCCS_conduction]
+    type = SideFVFluxBCIntegral
     boundary = 'RCSS'
-    variable = T_solid
+    fvbcs = 'T_solid_conduction'
+    outputs = none
+  []
+  [Heat_RCCS_radiation]
+    type = SideFVFluxBCIntegral
+    boundary = 'RCSS'
+    fvbcs = 'T_solid_radiation'
+    outputs = none
+  []
+  [Heatflux_RCCS]
+    type = ParsedPostprocessor
+    pp_names = 'Heat_RCCS_conduction Heat_RCCS_radiation'
+    expression = 'Heat_RCCS_conduction + Heat_RCCS_radiation'
   []
   [Tfluid_core]
     type = ElementAverageValue
