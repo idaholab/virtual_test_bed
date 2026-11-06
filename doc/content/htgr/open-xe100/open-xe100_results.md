@@ -81,105 +81,107 @@ shows the steady-state case.
 
 ## Transient Results
 
-The IQS and PKE transient parameters are plotted and compared:
+The IQS and PKE transient parameters are plotted and compared below. These plots are made from the
+gold files when the documentation is built. To make them from your own results, run
+`htgr/open-xe100/plot_iqs_vs_pke.py` (see [vtb_pages/utilities.md#vtbplot] for the plotting class it uses)
+in the directory containing the results of `xe100_iqs.i` and `xe100_pke.i`.
 
-!media htgr/open-xe100/plots.py
-        image_name=power_comparison.png
+!media htgr/open-xe100/iqs_vs_pke/power_comparison.py
         style=width:70%
         id=iqs_vs_pke_power
         caption=Comparison of normalized power between the IQS and PKE methods with the same reactivity profile imposed.
 
-!media open-xe100/iqs_vs_pke_Lambda.png
+!media htgr/open-xe100/iqs_vs_pke/mean_generation_time.py
         style=width:70%
         id=iqs_vs_pke_Lambda
         caption=Comparison of mean generation time ($\Lambda$) between the IQS and PKE transient results.
 
-!media open-xe100/iqs_vs_pke_beta-0.png
+!media htgr/open-xe100/iqs_vs_pke/beta-0.py
         style=width:70%
         id=iqs_vs_pke_beta-0
         caption=Comparison of delayed neutron precursor fraction for the 0th group ($\beta_0$) between the IQS and PKE transient results.
 
-!media open-xe100/iqs_vs_pke_beta-1.png
+!media htgr/open-xe100/iqs_vs_pke/beta-1.py
         style=width:70%
         id=iqs_vs_pke_beta-1
         caption=Comparison of delayed neutron precursor fraction for the 1st group ($\beta_1$) between the IQS and PKE transient results.
 
-!media open-xe100/iqs_vs_pke_beta-2.png
+!media htgr/open-xe100/iqs_vs_pke/beta-2.py
         style=width:70%
         id=iqs_vs_pke_beta-2
         caption=Comparison of delayed neutron precursor fraction for the 2nd group ($\beta_2$) between the IQS and PKE transient results.
 
-!media open-xe100/iqs_vs_pke_beta-3.png
+!media htgr/open-xe100/iqs_vs_pke/beta-3.py
         style=width:70%
         id=iqs_vs_pke_beta-3
         caption=Comparison of delayed neutron precursor fraction for the 3rd group ($\beta_3$) between the IQS and PKE transient results.
 
-!media open-xe100/iqs_vs_pke_beta-4.png
+!media htgr/open-xe100/iqs_vs_pke/beta-4.py
         style=width:70%
         id=iqs_vs_pke_beta-4
         caption=Comparison of delayed neutron precursor fraction for the 4th group ($\beta_4$) between the IQS and PKE transient results.
 
-!media open-xe100/iqs_vs_pke_beta-5.png
+!media htgr/open-xe100/iqs_vs_pke/beta-5.py
         style=width:70%
         id=iqs_vs_pke_beta-5
         caption=Comparison of delayed neutron precursor fraction for the 5th group ($\beta_5$) between the IQS and PKE transient results.
 
-!media open-xe100/iqs_vs_pke_lambda-0.png
+!media htgr/open-xe100/iqs_vs_pke/lambda-0.py
         style=width:70%
         id=iqs_vs_pke_lambda-0
         caption=Comparison of delayed neutron precursor decay constant for the 0th group ($\lambda_0$) between the IQS and PKE transient results.
 
-!media open-xe100/iqs_vs_pke_lambda-1.png
+!media htgr/open-xe100/iqs_vs_pke/lambda-1.py
         style=width:70%
         id=iqs_vs_pke_lambda-1
         caption=Comparison of delayed neutron precursor decay constant for the 1st group ($\lambda_1$) between the IQS and PKE transient results.
 
-!media open-xe100/iqs_vs_pke_lambda-2.png
+!media htgr/open-xe100/iqs_vs_pke/lambda-2.py
         style=width:70%
         id=iqs_vs_pke_lambda-2
         caption=Comparison of delayed neutron precursor decay constant for the 2nd group ($\lambda_2$) between the IQS and PKE transient results.
 
-!media open-xe100/iqs_vs_pke_lambda-3.png
+!media htgr/open-xe100/iqs_vs_pke/lambda-3.py
         style=width:70%
         id=iqs_vs_pke_lambda-3
         caption=Comparison of delayed neutron precursor decay constant for the 3rd group ($\lambda_3$) between the IQS and PKE transient results.
 
-!media open-xe100/iqs_vs_pke_lambda-4.png
+!media htgr/open-xe100/iqs_vs_pke/lambda-4.py
         style=width:70%
         id=iqs_vs_pke_lambda-4
         caption=Comparison of delayed neutron precursor decay constant for the 4th group ($\lambda$_4) between the IQS and PKE transient results.
 
-!media open-xe100/iqs_vs_pke_lambda-5.png
+!media htgr/open-xe100/iqs_vs_pke/lambda-5.py
         style=width:70%
         id=iqs_vs_pke_lambda-5
         caption=Comparison of delayed neutron precursor decay constant for the 5th group ($\lambda_5$) between the IQS and PKE transient results.
 
-!media open-xe100/iqs_vs_pke_c-0.png
+!media htgr/open-xe100/iqs_vs_pke/c-0.py
         style=width:70%
         id=iqs_vs_pke_c-0
         caption=Comparison of delayed neutron precursor concentration for the 0th group ($C_0$) between the IQS and PKE transient results.
 
-!media open-xe100/iqs_vs_pke_c-1.png
+!media htgr/open-xe100/iqs_vs_pke/c-1.py
         style=width:70%
         id=iqs_vs_pke_c-1
         caption=Comparison of delayed neutron precursor concentration for the 1st group ($C_1$) between the IQS and PKE transient results.
 
-!media open-xe100/iqs_vs_pke_c-2.png
+!media htgr/open-xe100/iqs_vs_pke/c-2.py
         style=width:70%
         id=iqs_vs_pke_c-2
         caption=Comparison of delayed neutron precursor concentration for the 2nd group ($C_2$) between the IQS and PKE transient results.
 
-!media open-xe100/iqs_vs_pke_c-3.png
+!media htgr/open-xe100/iqs_vs_pke/c-3.py
         style=width:70%
         id=iqs_vs_pke_c-3
         caption=Comparison of delayed neutron precursor concentration for the 3rd group ($C_3$) between the IQS and PKE transient results.
 
-!media open-xe100/iqs_vs_pke_c-4.png
+!media htgr/open-xe100/iqs_vs_pke/c-4.py
         style=width:70%
         id=iqs_vs_pke_c-4
         caption=Comparison of delayed neutron precursor concentration for the 4th group ($C_4$) between the IQS and PKE transient results.
 
-!media open-xe100/iqs_vs_pke_c-5.png
+!media htgr/open-xe100/iqs_vs_pke/c-5.py
         style=width:70%
         id=iqs_vs_pke_c-5
         caption=Comparison of delayed neutron precursor concentration for the 5th group ($C_5$) between the IQS and PKE transient results.
