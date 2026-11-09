@@ -2,13 +2,15 @@
 // nekRS User Defined File
 //
 
-#include <math.h>
-#include "udf.hpp"
+#ifdef __okl__
 
-/* UDF Functions */                                                      
+#include "7pin.oudf"
 
+#endif
 
-void UDF_LoadKernels(occa::properties & kernelInfo)
+/* UDF Functions */
+
+void UDF_LoadKernels(deviceKernelProperties & kernelInfo)
 {
 }
 
@@ -16,12 +18,10 @@ void UDF_Setup0(MPI_Comm comm, setupAide &options)
 {
 }
 
-void UDF_Setup(nrs_t *nrs)
+void UDF_Setup()
 {
 }
 
-
-void UDF_ExecuteStep(nrs_t *nrs, dfloat time, int tstep)
+void UDF_ExecuteStep(double time, int tstep)
 {
-    nrs->flow = 0;
 }
