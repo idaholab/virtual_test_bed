@@ -11,6 +11,11 @@ In `!vtbcontact`, do not put quotes around the values, and separate multiple
 contacts with `;` in both `name` and `email` (the n-th name is paired with the n-th email).
 Both `name` and `email` are required; each email is rendered as a `mailto:` link.
 
+!vtb_vv_summary
+Describe any verification and validation (V&V) work documented for the model, one item per line, with no blank line(s) between them.
+Providing no items (a blank line after the command) is valid; a message will print to the model page saying that no V&V items are documented.
+Inline markdown such as [links](index.md) may be used.
+
 *Model link: [Model Name](hyperlink)*
 
 !devel! example caption=Example of a page tag for the automated model indexing (remove # before tag)

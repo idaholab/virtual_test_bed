@@ -20,6 +20,8 @@
            sponsor:NEAMS
            institution:INL
 
+!vtb_vv_summary
+
 ## Problem Description
 
 This problem consists of a fictitious heat-pipe-cooled micro-reactor (HPMR) assembly,
