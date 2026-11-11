@@ -1,6 +1,15 @@
 # Model Name
 
-*Contact: Model Developer, model_developer.at.institute.com (contact email)*
+!vtbcontact name=Model Developer email=model_developer@institute.com
+
+!devel! example caption=Example of the contact command, with multiple contacts
+!vtbcontact name=Model Developer;Second Developer email=model_developer@institute.com;second_developer@institute.com
+!devel-end!
+
+!alert note
+In `!vtbcontact`, do not put quotes around the values, and separate multiple
+contacts with `;` in both `name` and `email` (the n-th name is paired with the n-th email).
+Both `name` and `email` are required; each email is rendered as a `mailto:` link.
 
 *Model link: [Model Name](hyperlink)*
 

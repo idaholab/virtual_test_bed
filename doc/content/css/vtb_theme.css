@@ -92,6 +92,12 @@ h2, h3, h4, h5, h6 {
     color: var(--nric-yellow);
 }
 
+/* Model contact box ("!vtbcontact"): an .nric-media-box with the dark blue background and white text */
+.nric-media-box.vtb-contact {
+    background-color: var(--nric-dark-blue);
+    color: #fff;
+}
+
 /*
   Front page highlights: emphasize the lead-in label of each item. Links use
   --nric-blue (teal in dark mode), so the labels use other NRIC colors to stay

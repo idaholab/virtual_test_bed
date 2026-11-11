@@ -71,3 +71,4 @@ Extensions:
             - sponsor
             - institution
             - V_and_V
+    virtual_test_bed.MooseDocs.extensions.vtbcommands: {}
