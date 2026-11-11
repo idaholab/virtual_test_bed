@@ -664,7 +664,7 @@ that are sufficiently close to the periphery to be affected by the lateral insul
   id=fluid_temp
   caption=Fluid temperature predicted by [!ac](THM) (tubes and inset) and solid temperature predicted by MOOSE (five slices). Note the use of three separate color scales.
 
-Finally, Fig. [assembly_averages] shows the radially-averaged fission distribution and fluid, compact, and graphite temperatures (left);
+Finally, [assembly_averages] shows the radially-averaged fission distribution and fluid, compact, and graphite temperatures (left);
 and velocity and pressure (right) as a function of axial position. The negative
 temperature feedback results in a top-peaked power distribution. The fuel temperature
 peaks near the mid-plane due to the combined effects of the relatively high power

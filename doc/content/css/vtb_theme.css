@@ -80,8 +80,12 @@ h2, h3, h4, h5, h6 {
     color: var(--darkmode-fore);
 }
 
+/* Dark teal rounded box for media (e.g. the front page slideshow), used as class=nric-media-box */
 .nric-media-box {
+    background-color: var(--nric-dark-teal);
     color: var(--darkmode-fore);
+    padding: 15px;
+    border-radius: 12px;
 }
 
 .nric-media-box a {
@@ -205,6 +209,29 @@ h2, h3, h4, h5, h6 {
 .vtb-logos img {
     height: 3.5rem;
     width: auto;
+}
+
+/* Slideshow image inside media box */
+.nric-media-box .carousel.moose-slideshow .carousel-item img {
+    max-height: 300px;
+    /* The slide box can be wider than the image (e.g. a long caption), so center it. */
+    margin: 0 auto;
+}
+/* Image caption */
+.nric-media-box .carousel.moose-slideshow .carousel-caption {
+    color: #fff;
+}
+/* Text below caption */
+.nric-media-box .carousel.moose-slideshow .carousel-item p {
+    color: #fff;
+}
+/* Slideshow dots */
+.nric-media-box .carousel.moose-slideshow .indicators .indicator-item {
+    background-color: rgba(255, 255, 255, 0.5);
+}
+/* Slideshow active dot */
+.nric-media-box .carousel.moose-slideshow .indicators .indicator-item.active {
+    background-color: #fff;
 }
 
 .nric-nav-logo img {
