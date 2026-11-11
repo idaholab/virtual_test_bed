@@ -238,7 +238,7 @@ This block is used to control the transfer of information between the `MainApp` 
 
 !listing htgr/htr-pm/sam-htrpm/ss-main.i block=2Dto1D_temperature_in_transfer language=cpp
 
-`MultiAppUserObjectTransfer` is used to transfer the value of an `UserObject` from one `App` to a `variable` on the other `App` as below. The `direction` parameter is used to determine the direction of the data transfer, i.e. from `MainApp` to `SubApp` or the other way round where the `multi_app` parameter is used for setting the `SubApp` of choice.
+`MultiAppGeneralFieldUserObjectTransfer` is used to transfer the value of an `UserObject` from one `App` to a `variable` on the other `App` as below. The `direction` parameter is used to determine the direction of the data transfer, i.e. from `MainApp` to `SubApp` or the other way round where the `multi_app` parameter is used for setting the `SubApp` of choice.
 
 !listing htgr/htr-pm/sam-htrpm/ss-main.i block=To_subApp_Twall_riser language=cpp
 

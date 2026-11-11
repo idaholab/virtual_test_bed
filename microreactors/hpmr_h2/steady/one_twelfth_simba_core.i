@@ -168,7 +168,7 @@
   []
   [cd_0]
     type = HexagonConcentricCircleAdaptiveBoundaryMeshGenerator
-    inputs = 'Assembly_1 Assembly_1 Assembly_1 Assembly_1 Assembly_1 Assembly_1'
+    meshes_to_adapt_to = 'Assembly_1 Assembly_1 Assembly_1 Assembly_1 Assembly_1 Assembly_1'
     sides_to_adapt = '0 1 2 3 4 5'
     num_sectors_per_side = '8 8 8 8 8 8'
     hexagon_size = 16.1765

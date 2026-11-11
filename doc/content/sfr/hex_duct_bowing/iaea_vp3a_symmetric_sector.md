@@ -6,7 +6,7 @@
 
 ## High Level Summary of Model
 
-This model examines the restrained thermal bowed deformation of a 3D hexagonal assembly (duct) which is subject to thermal gradients along the axial and radial directions bowing into a sector of a reactor core. The ducts are mechanically fixed at the bottom. The model specification is based on Verification Problem 3A (VP3A) in the series of benchmark problems published in [!cite](IWGFR_75) to support the verification and validation of Liquid Metal Fast Breeder Reactor (LMFBR) analysis codes organized by The International Atomic Energy Agency (IAEA)’s International Working Group on Fast Reactors (IWGFR). This model employs the MOOSE Tensor Mechanics Module to model the thermo-mechanical deformation response due to the thermal gradients in the duct, and the Contact Module to model the inter-assembly contact at specific locations along the ducts. This type of deformation is present in liquid-metal cooled fast reactors and serves as an important reactivity feedback effect. The results obtained from this MOOSE-based model demonstrate proper set up of a single assembly thermal duct bowing problem which can be used to build larger and more complex models.
+This model examines the restrained thermal bowed deformation of a 3D hexagonal assembly (duct) which is subject to thermal gradients along the axial and radial directions bowing into a sector of a reactor core. The ducts are mechanically fixed at the bottom. The model specification is based on Verification Problem 3A (VP3A) in the series of benchmark problems published in [!cite](IWGFR_75) to support the verification and validation of Liquid Metal Fast Breeder Reactor (LMFBR) analysis codes organized by The International Atomic Energy Agency (IAEA)’s International Working Group on Fast Reactors (IWGFR). This model employs the MOOSE Solid Mechanics Module to model the thermo-mechanical deformation response due to the thermal gradients in the duct, and the Contact Module to model the inter-assembly contact at specific locations along the ducts. This type of deformation is present in liquid-metal cooled fast reactors and serves as an important reactivity feedback effect. The results obtained from this MOOSE-based model demonstrate proper set up of a single assembly thermal duct bowing problem which can be used to build larger and more complex models.
 
 ## Computational Model Description
 
@@ -50,7 +50,7 @@ In this example, known as IAEA Verification Problem 3A (VP3A), a known linearly 
 | Poisson's Ratio | $0.3$ |
 | Coefficient of Thermal Expansion | $18\times10^{-6}{/^\circ C}$ |
 
-The geometry and phenomenon in this model are relevant to core-bowing phenomena present in liquid-metal cooled fast reactor design and analysis. The core bowing present in reactor assemblies induces reactivity feedback effects due to sensitivity of fast neutron reactors to leakage pathways. The MOOSE Reactor Module is used to generate the duct mesh, and the MOOSE Tensor Mechanics module is used to calculate the thermo-mechanical response of the duct due to differential thermal expansion and the MOOSE Contact Module is used to simulate the contact behavior between ducts as they bow into one another. This work was originally performed as part of an assessment of the MOOSE Tensor Mechanics module for calculating radial core expansion for fast reactors in [!cite](moose_tm_assess_2021) and [!cite](continued_verification_2022) funded under the NEAMS program. The temperature along the cold ($T_1$) corner of the duct is defined by [eq:temp1]:
+The geometry and phenomenon in this model are relevant to core-bowing phenomena present in liquid-metal cooled fast reactor design and analysis. The core bowing present in reactor assemblies induces reactivity feedback effects due to sensitivity of fast neutron reactors to leakage pathways. The MOOSE Reactor Module is used to generate the duct mesh, and the MOOSE Solid Mechanics module is used to calculate the thermo-mechanical response of the duct due to differential thermal expansion and the MOOSE Contact Module is used to simulate the contact behavior between ducts as they bow into one another. This work was originally performed as part of an assessment of the MOOSE Tensor Mechanics module for calculating radial core expansion for fast reactors in [!cite](moose_tm_assess_2021) and [!cite](continued_verification_2022) funded under the NEAMS program. The temperature along the cold ($T_1$) corner of the duct is defined by [eq:temp1]:
 
 \begin{equation}\label{eq:temp1}
 T_1(z) =
@@ -87,35 +87,35 @@ The core sector was meshed using CUBIT v15.5 [!cite](cubit15). The mesh is defin
 
 ## Variables
 
-The `TensorMechanics` module solves for the displacement variables in x, y, and z directions. These represent the (x,y,z) components of the vector displacement at each node in the duct. 
+The `SolidMechanics` module solves for the displacement variables in x, y, and z directions. These represent the (x,y,z) components of the vector displacement at each node in the duct.
 
 !listing /sfr/hex_duct_bowing/iaea_vp3a_symmetric_sector.i block=Variables
 
 ## Thermal Gradient Function
 
-The applied temperature along the duct is defined with a MOOSE function, `temp_func`, of type `ParsedFunction` which specifies linear variation of temperature along the active core region in both the radial and axial directions as in [eq:temp1] and [eq:temp2]. The variable `t` is included so the temperature can be increased incrementally over a pseudo-time to allow for convergence of the contact algorithm. 
+The applied temperature along the duct is defined with a MOOSE function, `temp_func`, of type `ParsedFunction` which specifies linear variation of temperature along the active core region in both the radial and axial directions as in [eq:temp1] and [eq:temp2]. The variable `t` is included so the temperature can be increased incrementally over a pseudo-time to allow for convergence of the contact algorithm.
 
 !listing /sfr/hex_duct_bowing/iaea_vp3a_symmetric_sector.i block=Functions
 
-The MOOSE AuxVariable, `temp`, is defined as the placeholder for temperature. The Tensor Mechanics module will use this variable to calculate the duct thermal expansion. 
+The MOOSE AuxVariable, `temp`, is defined as the placeholder for temperature. The Solid Mechanics module will use this variable to calculate the duct thermal expansion.
 
 !listing /sfr/hex_duct_bowing/iaea_vp3a_symmetric_sector.i block=AuxVariables
 
-Since the duct temperature is space-dependent rather than a constant value, the MOOSE AuxKernel of type `FunctionAux`  instructs MOOSE to retrieve the temperature from the temp_func  Function and stores it in the AuxVariable, `temp`. 
+Since the duct temperature is space-dependent rather than a constant value, the MOOSE AuxKernel of type `FunctionAux`  instructs MOOSE to retrieve the temperature from the temp_func  Function and stores it in the AuxVariable, `temp`.
 
 !listing /sfr/hex_duct_bowing/iaea_vp3a_symmetric_sector.i block=AuxKernels
 
 ## Boundary Conditions
 
-The bottom surface of the duct is fixed from translation in all directions (X, Y, and Z displacements) to simulate a cantilever beam bending. This is achieved through the assignment of Dirichlet boundary conditions in the BCs block. The `variable` parameter represents the variable on which this BC operates, and the `value` parameter is the value of the variable at the specified boundary. For this model, a “fixed” boundary sideset was named to easily reference the bottom of the duct to assign the boundary condition. 
+The bottom surface of the duct is fixed from translation in all directions (X, Y, and Z displacements) to simulate a cantilever beam bending. This is achieved through the assignment of Dirichlet boundary conditions in the BCs block. The `variable` parameter represents the variable on which this BC operates, and the `value` parameter is the value of the variable at the specified boundary. For this model, a “fixed” boundary sideset was named to easily reference the bottom of the duct to assign the boundary condition.
 
 !listing /sfr/hex_duct_bowing/iaea_vp3a_symmetric_sector.i block=BCs
 
-## Tensor Mechanics Module
+## Solid Mechanics Module
 
-The Tensor Mechanics Module is a library of code modules which models the mechanical deformation and stress of solids. The basic set of calculations required for stress calculation problems include computing the strain, the elasticity/constitutive relationship, and the stress tensors. In this model, finite strain formulation is used to account for large relative deformations in the thin wall cross-section. For thermal expansion calculations, an eigenstrain, which is a mechanical deformation not caused by external stresses, is defined as `thermal_expansion`. 
+The Solid Mechanics Module is a library of code modules which models the mechanical deformation and stress of solids. The basic set of calculations required for stress calculation problems include computing the strain, the elasticity/constitutive relationship, and the stress tensors. In this model, finite strain formulation is used to account for large relative deformations in the thin wall cross-section. For thermal expansion calculations, an eigenstrain, which is a mechanical deformation not caused by external stresses, is defined as `thermal_expansion`.
 
-!listing /sfr/hex_duct_bowing/iaea_vp3a_symmetric_sector.i block=Modules
+!listing /sfr/hex_duct_bowing/iaea_vp3a_symmetric_sector.i block=Physics
 
 To compute the stresses and relate them with the strains, the elasticity (constitutive relationship) tensor is required. The constitutive relationship between the stress and the strain is shown in [eq:elasticity]
 
@@ -124,7 +124,7 @@ To compute the stresses and relate them with the strains, the elasticity (consti
 \sigma_{ij} = C_{ijkl}\Delta\epsilon_{kl}
 \end{equation}
 
-Where $C$ is the elasticity tensor, and $\delta\epsilon$ is the incremental strain. Because the material is defined as steel, which is considered an isotropic material, the elasticity tensor is computed with `ComputeIsotropicElasticityTensor` material property, which requires the Young’s Modulus (modulus of elasticity) and Poisson’s ratio. The stress tensor is also required, which is calculated with `ComputeFiniteStrainElasticStress`, because the finite strain formulation is defined in the `TensorMechanics` block. To compute the thermal expansion due to the temperature, `temp`, the `ComputeThermalExpansionEigenstrain` property is added to compute the eigenstrain which is defined in the `TensorMechanics` block. Then the total strain in the duct is the summation of the elastic strain and the eigenstrain.
+Where $C$ is the elasticity tensor, and $\delta\epsilon$ is the incremental strain. Because the material is defined as steel, which is considered an isotropic material, the elasticity tensor is computed with `ComputeIsotropicElasticityTensor` material property, which requires the Young’s Modulus (modulus of elasticity) and Poisson’s ratio. The stress tensor is also required, which is calculated with `ComputeFiniteStrainElasticStress`, because the finite strain formulation is defined in the `Physics/SolidMechanics/QuasiStatic` block. To compute the thermal expansion due to the temperature, `temp`, the `ComputeThermalExpansionEigenstrain` property is added to compute the eigenstrain which is defined in the `Physics/SolidMechanics/QuasiStatic` block. Then the total strain in the duct is the summation of the elastic strain and the eigenstrain.
 
 !listing /sfr/hex_duct_bowing/iaea_vp3a_symmetric_sector.i block=Materials
 
@@ -135,24 +135,24 @@ Contact was enforced at the ACLP and TLP with node-face contact using a friction
 !media hex_duct_bowing/lp_sideset.png
   id=lp_sideset
   caption=Example of duct 1 ACLP sidesets showing each face on the load pad is assigned to its own sideset.
-  style=width:20%;margin-left:auto;margin-right:auto  
+  style=width:20%;margin-left:auto;margin-right:auto
 
 !listing /sfr/hex_duct_bowing/iaea_vp3a_symmetric_sector.i block=Contact
 
 ## Results
 
-As a debugging check, the temperature calculated with the defined function is plotted in [vp3a_gradient_defl] to ensure the temperatures have been correctly mapped to the duct. We can visually verify that the temperature below the active core region is 400&deg;C, the temperature increases through the active core region, and above the active core the temperature on each side of the duct is held constant. The deformation output from the MOOSE simulation is also plotted in [vp3a_gradient_defl]. Duct 1 visibly bows from the high temperature side (bottom) towards the cooler temperature side (top) into the sector of ducts and contacts at the top of the duct.  
+As a debugging check, the temperature calculated with the defined function is plotted in [vp3a_gradient_defl] to ensure the temperatures have been correctly mapped to the duct. We can visually verify that the temperature below the active core region is 400&deg;C, the temperature increases through the active core region, and above the active core the temperature on each side of the duct is held constant. The deformation output from the MOOSE simulation is also plotted in [vp3a_gradient_defl]. Duct 1 visibly bows from the high temperature side (bottom) towards the cooler temperature side (top) into the sector of ducts and contacts at the top of the duct.
 
 !media hex_duct_bowing/vp3a_temp_defl.png
   id=vp3a_gradient_defl
-  caption=Temperature gradient mapping of the duct (left) and duct bowing (right). 
+  caption=Temperature gradient mapping of the duct (left) and duct bowing (right).
   style=width:60%;margin-left:auto;margin-right:auto
 
-Since MOOSE models only the duct walls, the centerline deformation of the duct is estimated by averaging the  deformation of the flat faces at each axial height. The deformation from MOOSE simulation output for duct 1 is plotted in [duct1_3a_plot] along with the calculation results from the participants from the IAEA report [!cite](IWGFR_75) and agree well. A comparison of the deformation values at the core top, ACLP, and TLP are presented in [bowing_results], comparing the IAEA and MOOSE results. The values are all in good agreement, with MOOSE giving the maximum displacement of 8.59 mm at the TLP for duct 1 and the IAEA 8.54 mm. This benchmark verifies the MOOSE physics modules (Tensor Mechanics and Contact) for a small cluster of assemblies undergoing thermal bowing along the corner direction of the hexagonal assembly and contacting at load pads. Notable, reflective boundary conditions and a prior knowledge about which ducts would contact were used to substantially reduce the computational cost of the full sector problem.
+Since MOOSE models only the duct walls, the centerline deformation of the duct is estimated by averaging the  deformation of the flat faces at each axial height. The deformation from MOOSE simulation output for duct 1 is plotted in [duct1_3a_plot] along with the calculation results from the participants from the IAEA report [!cite](IWGFR_75) and agree well. A comparison of the deformation values at the core top, ACLP, and TLP are presented in [bowing_results], comparing the IAEA and MOOSE results. The values are all in good agreement, with MOOSE giving the maximum displacement of 8.59 mm at the TLP for duct 1 and the IAEA 8.54 mm. This benchmark verifies the MOOSE physics modules (Solid Mechanics and Contact) for a small cluster of assemblies undergoing thermal bowing along the corner direction of the hexagonal assembly and contacting at load pads. Notable, reflective boundary conditions and a prior knowledge about which ducts would contact were used to substantially reduce the computational cost of the full sector problem.
 
 !media hex_duct_bowing/duct1_3a_plot.png
   id=duct1_3a_plot
-  caption=Duct bowing results for MOOSE calculations compared with closed-form solution results. 
+  caption=Duct bowing results for MOOSE calculations compared with closed-form solution results.
   style=width:30%;margin-left:auto;margin-right:auto
 
 !table id=bowing_results caption=Bowing results (in mm) at the top of the core, ACLP, and the TLP locations.
@@ -169,7 +169,7 @@ Since MOOSE models only the duct walls, the centerline deformation of the duct i
 
 ## Run Command
 
-This model requires the openly available Tensor Mechanics and Contact Modules which can be independently compiled from a MOOSE framework installation or leveraged from a MOOSE application which links to a version of MOOSE containing both these modules. 
+This model requires the openly available Solid Mechanics and Contact Modules which can be independently compiled from a MOOSE framework installation or leveraged from a MOOSE application which links to a version of MOOSE containing both these modules.
 
 ```language=bash
 mpirun -np 20 /path/to/APP -i iaea_vp3a_symmetric_sector.i

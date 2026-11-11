@@ -6,7 +6,7 @@
 
 ## High Level Summary of Model
 
-This model examines the free (unrestrained) thermal bowed deformation of a single, 3D hexagonal assembly (duct) which is subject to thermal gradients along the radial and axial directions. The duct is mechanically fixed at the bottom. The model specification is taken directly from Verification Problem 1 (VP1) in the series of benchmark problems published in [!cite](IWGFR_75) to support the verification and validation of Liquid Metal Fast Breeder Reactor (LMFBR) analysis codes organized by The International Atomic Energy Agency (IAEA)’s International Working Group on Fast Reactors (IWGFR). Eleven participating agencies in nine different countries contributed numerical solutions to the set of benchmarks. This model employs the MOOSE Tensor Mechanics Module to model the thermo-mechanical deformation response due to the thermal gradients in the duct. This type of deformation is present in liquid-metal cooled fast reactors and serves as an important reactivity feedback effect. The results obtained from this MOOSE-based model demonstrate proper set up of a single assembly thermal duct bowing problem which can be used to build larger and more complex models.
+This model examines the free (unrestrained) thermal bowed deformation of a single, 3D hexagonal assembly (duct) which is subject to thermal gradients along the radial and axial directions. The duct is mechanically fixed at the bottom. The model specification is taken directly from Verification Problem 1 (VP1) in the series of benchmark problems published in [!cite](IWGFR_75) to support the verification and validation of Liquid Metal Fast Breeder Reactor (LMFBR) analysis codes organized by The International Atomic Energy Agency (IAEA)’s International Working Group on Fast Reactors (IWGFR). Eleven participating agencies in nine different countries contributed numerical solutions to the set of benchmarks. This model employs the MOOSE Solid Mechanics Module to model the thermo-mechanical deformation response due to the thermal gradients in the duct. This type of deformation is present in liquid-metal cooled fast reactors and serves as an important reactivity feedback effect. The results obtained from this MOOSE-based model demonstrate proper set up of a single assembly thermal duct bowing problem which can be used to build larger and more complex models.
 
 ## Computational Model Description
 
@@ -45,7 +45,7 @@ In this example, known as IAEA Verification Problem 1 (VP1), a known linearly va
 | Poisson's Ratio | $0.3$ |
 | Coefficient of Thermal Expansion | $18\times10^{-6}{/^\circ C}$ |
 
-The geometry and phenomenon in this model are relevant to core-bowing phenomena present in liquid-metal cooled fast reactor design and analysis. The core bowing  present in reactor assemblies induces reactivity feedback effects due to sensitivity of fast neutron reactors to leakage pathways. The MOOSE Reactor Module is used to generate the duct mesh, and the MOOSE Tensor Mechanics module is used to calculate the thermo-mechanical response of the duct due to differential thermal expansion. This work was originally performed as part of an assessment of the MOOSE Tensor Mechanics module for calculating radial core expansion for fast reactors [!cite](moose_tm_assess_2021) funded under the NEAMS program. The temperature along the cold ($T_1$) corner of the duct is defined by [eq:temp1]:
+The geometry and phenomenon in this model are relevant to core-bowing phenomena present in liquid-metal cooled fast reactor design and analysis. The core bowing  present in reactor assemblies induces reactivity feedback effects due to sensitivity of fast neutron reactors to leakage pathways. The MOOSE Reactor Module is used to generate the duct mesh, and the MOOSE Solid Mechanics module is used to calculate the thermo-mechanical response of the duct due to differential thermal expansion. This work was originally performed as part of an assessment of the MOOSE Tensor Mechanics module for calculating radial core expansion for fast reactors [!cite](moose_tm_assess_2021) funded under the NEAMS program. The temperature along the cold ($T_1$) corner of the duct is defined by [eq:temp1]:
 
 \begin{equation}\label{eq:temp1}
 T_1(z) =
@@ -94,7 +94,7 @@ w(z) =
 
 ## Mesh Block
 
-The mesh was created with the MOOSE Reactor Module. First, a 2D duct cross-section is created with `PolygonConcentricCircleMeshGenerator`, followed by removal of the duct interior by  `BlockDeletionGenerator` to create a thin-walled hexagonal duct. The 2D duct is extruded to 3D using `MeshExtruderGenerator`. We note that while the presence of load pads is not important physically for this particular problem as no contact occurs, load pads are modeled so that this mesh can be re-used in more complex multi-assembly models. Therefore, the same steps are taken to create the load pad, which is moved axially along the duct to the correct position using `TransformGenerator` and stitched to the duct with `StitchedMeshGenerator`. Sidesets are renamed using `RenameBoundaryGenerator`, which are useful to name the duct and load pad faces for creating contact sets or for post-processing. The sideset on the bottom of the duct is renamed to “fixed” so the boundary conditions can be applied by easily identifying the sideset by name.  The mesh of the top-down view and the duct at the load pad is shown in [duct1_mesh].
+The mesh was created with the MOOSE Reactor Module. First, a 2D duct cross-section is created with `PolygonConcentricCircleMeshGenerator`, followed by removal of the duct interior by  `BlockDeletionGenerator` to create a thin-walled hexagonal duct. The 2D duct is extruded to 3D using `AdvancedExtruderGenerator`. We note that while the presence of load pads is not important physically for this particular problem as no contact occurs, load pads are modeled so that this mesh can be re-used in more complex multi-assembly models. Therefore, the same steps are taken to create the load pad, which is moved axially along the duct to the correct position using `TransformGenerator` and stitched to the duct with `StitchedMeshGenerator`. Sidesets are renamed using `RenameBoundaryGenerator`, which are useful to name the duct and load pad faces for creating contact sets or for post-processing. The sideset on the bottom of the duct is renamed to “fixed” so the boundary conditions can be applied by easily identifying the sideset by name.  The mesh of the top-down view and the duct at the load pad is shown in [duct1_mesh].
 
 !listing /sfr/hex_duct_bowing/single_duct_linear_gradient.i block=Mesh
 
@@ -105,7 +105,7 @@ The mesh was created with the MOOSE Reactor Module. First, a 2D duct cross-secti
 
 ## Variables
 
-The `TensorMechanics` module solves for the displacement variables in $x$, $y$, and $z$ directions. These represent the $(x,y,z)$ components of the vector displacement at each node in the duct.
+The `SolidMechanics` module solves for the displacement variables in $x$, $y$, and $z$ directions. These represent the $(x,y,z)$ components of the vector displacement at each node in the duct.
 
 !listing /sfr/hex_duct_bowing/single_duct_linear_gradient.i block=Variables
 
@@ -115,7 +115,7 @@ The applied temperature along the duct is defined with a MOOSE function, `temp_f
 
 !listing /sfr/hex_duct_bowing/single_duct_linear_gradient.i block=Functions
 
-The MOOSE AuxVariable, `temp`, is defined as the placeholder for temperature with the initial condition of 400&deg;C, which is the temperature of the duct below the active core region. The Tensor Mechanics module will use this variable to calculate the duct thermal expansion.
+The MOOSE AuxVariable, `temp`, is defined as the placeholder for temperature with the initial condition of 400&deg;C, which is the temperature of the duct below the active core region. The Solid Mechanics module will use this variable to calculate the duct thermal expansion.
 
 !listing /sfr/hex_duct_bowing/single_duct_linear_gradient.i block=AuxVariables
 
@@ -129,11 +129,11 @@ The bottom surface of the duct is fixed from translation in all directions ($x$,
 
 !listing /sfr/hex_duct_bowing/single_duct_linear_gradient.i block=BCs
 
-## Tensor Mechanics Module
+## Solid Mechanics Module
 
-The Tensor Mechanics Module is a library of code modules which models the mechanical deformation and stress of solids. The basic set of calculations required for stress calculation problems include computing the strain, the elasticity/constitutive relationship, and the stress tensors. In this model, finite strain formulation is used to account for large relative deformations in the thin wall cross-section. For thermal expansion calculations, an eigenstrain, which is a mechanical deformation not caused by external stresses, is defined as `thermal_expansion`.
+The Solid Mechanics Module is a library of code modules which models the mechanical deformation and stress of solids. The basic set of calculations required for stress calculation problems include computing the strain, the elasticity/constitutive relationship, and the stress tensors. In this model, finite strain formulation is used to account for large relative deformations in the thin wall cross-section. For thermal expansion calculations, an eigenstrain, which is a mechanical deformation not caused by external stresses, is defined as `thermal_expansion`.
 
-!listing /sfr/hex_duct_bowing/single_duct_linear_gradient.i block=Modules
+!listing /sfr/hex_duct_bowing/single_duct_linear_gradient.i block=Physics
 
 To compute the stresses and relate them with the strains, the elasticity (constitutive relationship) tensor is required. The constitutive relationship between the stress and the strain is shown in [eq:elasticity]:
 
@@ -142,7 +142,7 @@ To compute the stresses and relate them with the strains, the elasticity (consti
 \sigma_{ij} = C_{ijkl}\Delta\epsilon_{kl}
 \end{equation}
 
-Where $C$ is the elasticity tensor, and $\Delta\epsilon$ is the incremental strain. Because the material is defined as steel, which is considered an isotropic material, the elasticity tensor is computed with `ComputeIsotropicElasticityTensor` material property, which requires the Young’s Modulus (modulus of elasticity) and Poisson’s ratio. The stress tensor is also required, which is calculated with `ComputeFiniteStrainElasticStress`, because the finite strain formulation is defined in the `TensorMechanics` block. To compute the thermal expansion due to the temperature, `temp`, the `ComputeThermalExpansionEigenstrain` property is added to compute the eigenstrain which is defined in the `TensorMechanics` block. Then the total strain in the duct is the summation of the elastic strain and the eigenstrain. 
+Where $C$ is the elasticity tensor, and $\Delta\epsilon$ is the incremental strain. Because the material is defined as steel, which is considered an isotropic material, the elasticity tensor is computed with `ComputeIsotropicElasticityTensor` material property, which requires the Young’s Modulus (modulus of elasticity) and Poisson’s ratio. The stress tensor is also required, which is calculated with `ComputeFiniteStrainElasticStress`, because the finite strain formulation is defined in the `Physics/SolidMechanics/QuasiStatic` block. To compute the thermal expansion due to the temperature, `temp`, the `ComputeThermalExpansionEigenstrain` property is added to compute the eigenstrain which is defined in the `Physics/SolidMechanics/QuasiStatic` block. Then the total strain in the duct is the summation of the elastic strain and the eigenstrain. 
 
 !listing /sfr/hex_duct_bowing/single_duct_linear_gradient.i block=Materials
 
@@ -171,7 +171,7 @@ A closed form solution is available for the expected deformation of the duct cen
 
 ## Run Command
 
-This model requires the openly available Reactor and Tensor Mechanics Modules which can be independently compiled from a MOOSE framework installation or leveraged from a MOOSE application which links to a version of MOOSE containing both these modules. 
+This model requires the openly available Reactor and Solid Mechanics Modules which can be independently compiled from a MOOSE framework installation or leveraged from a MOOSE application which links to a version of MOOSE containing both these modules. 
 
 ```language=bash
 mpirun -np 20 /path/to/APP  -i hex_duct_linear_gradient.i

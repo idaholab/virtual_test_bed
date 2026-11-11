@@ -52,7 +52,7 @@ half_asmpitch = ${fparse flat_to_flat / 2 + duct_thickness}
   []
   # This assembles the 7 pins into an assembly with a duct
   [./hex_assembly]
-    type = HexIDPatternedMeshGenerator
+    type = PatternedHexMeshGenerator
     inputs = 'P'
     pattern_boundary = hexagon
     assign_type = 'pattern'  # assigns pin_id 0-6 according to pattern below
