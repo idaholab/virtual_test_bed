@@ -40,6 +40,12 @@ The same Griffin-based neutronics model as described in [/GCMR_Core_Neutronics.m
 
 Similar to the neutronics only GCMR fuel-core model the neutronics model here uses multi-group cross-sections generated with Serpent-2 and converted into ISOXML format. These cross-sections are tabulated over two grid variables: fuel temperature and hydrogen stoichiometry in the hydride moderator. The fuel temperature values are dynamically provided by the coupled heat conduction model, while the hydrogen content is assumed constant throughout the simulation. The cross-section grid spans fuel temperatures of 725, 825, 925, 1200, and 1700 K, and hydrogen stoichiometry levels of 0, 1, and 2. The same Serpent input described in [/GCMR_Core_Neutronics.md] was used to generate the cross-sections with expanded temperature and hydrogen stoichiometry grid values. Although a constant and uniform hydrogen stoichiometry of 1.94 is used in this model, the set up is ready to take the hydrogen stoichiometry from the corresponding model, such as SWIFT [!citep](matthews2021swift), in the future.
 
+The neutronics input shared by all the full core multiphysics models is:
+
+!listing microreactors/gcmr/core/Multiphysics/common/MP_Griffin_base.i
+
+The steady state model includes it and only specifies what is specific to the steady state:
+
 !listing microreactors/gcmr/core/Multiphysics/steady_state/MP_Griffin_ss.i
 
 ## Heat Conduction Model
@@ -48,11 +54,23 @@ The BISON-based heat conduction model is built upon using a similar approach as 
 
 The coolant channels are designed to be the main heat removal mechanism of the GCMR. Therefore, the external surface of the core is assumed to be effective insulated from the environment. A convective boundary condition with a low heat transfer coefficient (HTC) values of 0.15 W/K$\cdot$m$^2$ and ambient environment temperature of 300 K.
 
+The heat conduction input shared by all the full core multiphysics models is:
+
+!listing microreactors/gcmr/core/Multiphysics/common/MP_BISON_base.i
+
+The steady state model includes it and only specifies what is specific to the steady state:
+
 !listing microreactors/gcmr/core/Multiphysics/steady_state/MP_BISON_ss.i
 
 ## Coolant Channel Model
 
 The coolant channel model also follows a similar input structure to the model from [/GCMR_Assembly_Model_Description.md]. The model utilizes the MOOSE Thermal Hydraulics Module through SAM. With updates to the component type, additional parameters were specified. In the model with `FlowChannel1Phase` components, the wall heat transfer coefficient and the Darcy friction factors are computed using the Dittus-Boelter correlation and the Churchill correlation, respectively. The `HeatTransferFromExternalAppTemperature1Phase` component and a `LayeredAverage` user object were utilized to enable heat transfer at the solid-fluid interface of the model. The number of axial layers used for temperature transfer was set to a total of 40 layers. The component and user object are used collectively to calculate the temperature and heat transfer coefficients and transferring temperature information at every time step via MOOSE’s MultiApp transfer system.
+
+The coolant channel input shared by all the full core multiphysics models is:
+
+!listing microreactors/gcmr/core/Multiphysics/common/MP_SAM_base.i
+
+The steady state model includes it and only specifies what is specific to the steady state:
 
 !listing microreactors/gcmr/core/Multiphysics/steady_state/MP_SAM_ss.i
 
