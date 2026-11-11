@@ -19,3 +19,5 @@
 [2D Generic Heat Pipe Microreactor (gHPMR)](gHPMR/index.md)
 
 [Sodium-cooled Thermal-spectrum Advanced Research Test Reactor (STARTR)](STARTR/index.md)
+
+[Demonstration of Microreactor Experiments (DOME)](dome/index.md)

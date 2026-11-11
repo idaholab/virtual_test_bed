@@ -1,0 +1,56 @@
+# These test specifications appear here instead of the respective subdirectories
+# because the mesh-generation tests are pre-requisites for the simulation tests,
+# and pre-requisites must appear within a test's "tests" file.
+
+[Tests]
+  [mesh]
+    [generate]
+      # generate reactor meshes
+      [cyl_in_box]
+        type = RunApp
+        working_directory = 'mesh/reactors'
+        input = 'cyl_in_box.i'
+        cli_args = '--mesh-only cyl_in_box.e'
+      []
+      # generate shield+reactor meshes
+      [loaded_cylinder]
+        type = RunApp
+        working_directory = 'mesh/final'
+        input = 'shield_with_core.i'
+        cli_args = '--mesh-only shield_with_core.e'
+        prereq = 'mesh/generate/cyl_in_box'
+      []
+    []
+
+    # test shield+reactor meshes
+    [test]
+      [loaded_cylinder]
+        type = CSVDiff
+        working_directory = 'mesh/final'
+        input = 'shield_with_core_test.i'
+        csvdiff = 'shield_with_core_test_out.csv'
+        prereq = 'mesh/generate/loaded_cylinder'
+      []
+    []
+  []
+
+  # thermal simulations
+  [simulation]
+    [thermal_file]
+      [cyl_ss]
+        type = RunApp
+        working_directory = 'thermal/thermal_file'
+        input = sim_cyl_ss.i
+        check_input = True
+        prereq = 'mesh/generate/loaded_cylinder'
+      []
+      [cyl_tr]
+        type = RunApp
+        working_directory = 'thermal/thermal_file'
+        input = sim_cyl_tr.i
+        check_input = True
+        prereq = 'mesh/generate/loaded_cylinder'
+      []
+    []
+  []
+[]
