@@ -92,7 +92,7 @@ h2, h3, h4, h5, h6 {
     color: var(--nric-yellow);
 }
 
-/* Model contact and V&V summary boxes ("!vtbcontact", "!vtb_vv_summary"): an .nric-media-box with the dark blue background and white text */
+/* Model contact and V&V summary boxes ("!vtb_contact", "!vtb_vv_summary"): an .nric-media-box with the dark blue background and white text */
 .nric-media-box.vtb-contact,
 .nric-media-box.vtb-summary {
     background-color: var(--nric-dark-blue);

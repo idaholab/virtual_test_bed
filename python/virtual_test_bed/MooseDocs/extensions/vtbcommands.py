@@ -17,7 +17,7 @@ def make_extension(**kwargs):
 
 # Extension to add various VTB documentation commands
 class VtbCommandsExtension(command.CommandExtension):
-    """Adds VTB-specific commands, e.g., "!vtbcontact"."""
+    """Adds VTB-specific commands, e.g., "!vtb_contact"."""
 
     def extend(self, reader, renderer):
         self.requires(command, core)
@@ -34,7 +34,7 @@ def _split(value):
 
 # Command to render the contacts for a model
 class VtbContactCommand(command.CommandComponent):
-    COMMAND = "vtbcontact"
+    COMMAND = "vtb_contact"
     SUBCOMMAND = None
 
     @staticmethod
@@ -57,13 +57,13 @@ class VtbContactCommand(command.CommandComponent):
 
         if not names:
             LOG.error(
-                "%s: No 'name' provided for '!vtbcontact'; check markdown file.",
+                "%s: No 'name' provided for '!vtb_contact'; check markdown file.",
                 page.name,
             )
             return parent
         if len(emails) != len(names):
             LOG.error(
-                "%s: '!vtbcontact' has %d 'name' entries but %d 'email' entries; "
+                "%s: '!vtb_contact' has %d 'name' entries but %d 'email' entries; "
                 "each contact needs exactly one email, and ';' must separate each entry.",
                 page.name,
                 len(names),

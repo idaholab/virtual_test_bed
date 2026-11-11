@@ -1,6 +1,6 @@
 # SAM Generic PBR Model
 
-!vtbcontact name=Zhiee Jhia Ooi;Stephen Bajorek email=zooi@anl.gov;stephen.bajorek@nrc.gov
+!vtb_contact name=Zhiee Jhia Ooi;Stephen Bajorek email=zooi@anl.gov;stephen.bajorek@nrc.gov
 
 *Model link: [HTR-PM SAM Model](https://github.com/idaholab/virtual_test_bed/tree/main/htgr/htr-pm/ss)*
 
