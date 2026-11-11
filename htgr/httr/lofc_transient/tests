@@ -1,0 +1,58 @@
+[Tests]
+  # These are syntax-only checks. Full LOFC regression runs require generated
+  # restart data and HPC resources, so they are not part of the default suite.
+  [syntax_A01a_Griffin_initial]
+    type = RunApp
+    input = case/A01a_Griffin_initial.i
+    capabilities = 'griffinapp | bluecrabapp | direwolfapp'
+    check_input = true
+  []
+  [syntax_A01b_Griffin]
+    type = RunApp
+    input = case/A01b_Griffin.i
+    capabilities = 'griffinapp | bluecrabapp | direwolfapp'
+    check_input = true
+  []
+  [syntax_A02b_Griffin]
+    type = RunApp
+    input = case/A02b_Griffin.i
+    capabilities = 'griffinapp | bluecrabapp | direwolfapp'
+    check_input = true
+  []
+  [syntax_B01_Proxy]
+    type = RunApp
+    input = case/B01_Proxy.i
+    capabilities = 'bluecrabapp | griffinapp'
+    check_input = true
+  []
+  [syntax_B02_Proxy]
+    type = RunApp
+    input = case/B02_Proxy.i
+    capabilities = 'bluecrabapp | griffinapp'
+    check_input = true
+  []
+  [syntax_C01_Pronghorn]
+    type = RunApp
+    input = case/C01_Pronghorn.i
+    capabilities = 'pronghornapp | bluecrabapp'
+    check_input = true
+  []
+  [syntax_C02_Pronghorn]
+    type = RunApp
+    input = case/C02_Pronghorn.i
+    capabilities = 'pronghornapp | bluecrabapp'
+    check_input = true
+  []
+  [syntax_D01_Bison]
+    type = RunApp
+    input = case/D01_Bison.i
+    capabilities = 'bisonapp | bluecrabapp'
+    check_input = true
+  []
+  [syntax_D02_Bison]
+    type = RunApp
+    input = case/D02_Bison.i
+    capabilities = 'bisonapp | bluecrabapp'
+    check_input = true
+  []
+[]

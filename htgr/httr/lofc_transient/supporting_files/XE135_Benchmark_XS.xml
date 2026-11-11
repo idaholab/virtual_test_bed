@@ -1,0 +1,154 @@
+<ISOXML>
+  <Multigroup_Cross_Section_Libraries Name="XE135-BENCHMARK" NGroup="1" Description="Default Description">
+    <Multigroup_Cross_Section_Library ID="1" Ver="1.0" Generator="INL">
+      <Tabulation>Burnup</Tabulation>
+      <Burnup>0.0000000E+00</Burnup>
+      <AllReactions>Total Scattering FissionSpectrum nuFission Fission kappaFission Absorption Removal Transport NGamma NAlpha N2Alpha N2N N3N N4N NNProton NProton NDeuteron NTriton Flux NeutronVelocity</AllReactions>
+      <LibrarywiseReactions>Flux NeutronVelocity</LibrarywiseReactions>
+      <Librarywise L="0" I="1" NS="1">
+        <Flux index="g">1</Flux>
+        <NeutronVelocity>6.17391e5</NeutronVelocity>
+      </Librarywise>
+      <Table gridIndex="1">
+        <Isotope MAT="9228" Name="U235" L="1" I=" 0" NS="1">
+          <Total index="g">1</Total>
+          <Removal index="g">0</Removal>
+          <Transport index="g">1</Transport>
+          <Absorption index="g">0</Absorption>
+          <NGamma index="g">0</NGamma>
+          <NAlpha index="g">0.0000000E+00</NAlpha>
+          <N2Alpha index="g">0.0000000E+00</N2Alpha>
+          <N2N index="g">0</N2N>
+          <N3N index="g">0</N3N>
+          <N4N index="g">0</N4N>
+          <NNProton index="g">  0.0000000E+00</NNProton>
+          <NProton index="g">  0.0000000E+00</NProton>
+          <NDeuteron index="g">  0.0000000E+00</NDeuteron>
+          <NTriton index="g">  0.0000000E+00</NTriton>
+          <nuFission index="p">1</nuFission>
+          <Fission index="g">1e-8</Fission>
+          <kappaFission index="g">1</kappaFission>
+          <FissionSpectrum index="g">  1.0000000E+00</FissionSpectrum>
+          <Scattering index="pgl" profile="1" has2l="false">
+            <Profile>
+              1   1
+              1   1
+            </Profile>
+            <Value>
+              9.3020573E+00
+              1.2557451E+00
+            </Value>
+          </Scattering>
+        </Isotope>
+        <Isotope Name="U236" L="1" I=" 0" NS="1">
+          <Total index="g">  0.0</Total>
+          <Removal index="g">  0.0</Removal>
+          <Transport index="g">  1.0</Transport>
+          <Absorption index="g"> 0.0</Absorption>
+          <NGamma index="g">  0.0</NGamma>
+          <NAlpha index="g">  0.0</NAlpha>
+          <N2Alpha index="g">  0.0</N2Alpha>
+          <N2N index="g">  0.0</N2N>
+          <N3N index="g">  0.0</N3N>
+          <N4N index="g">  0.0</N4N>
+          <NNProton index="g">  0.0</NNProton>
+          <NProton index="g">  0.0</NProton>
+          <NDeuteron index="g">  0.0</NDeuteron>
+          <NTriton index="g">  0.0</NTriton>
+          <nuFission index="p">  0.0</nuFission>
+          <Fission index="g">  0.0</Fission>
+          <kappaFission index="g">  0.0</kappaFission>
+          <FissionSpectrum index="g">  0.0</FissionSpectrum>
+          <Scattering index="pgl" profile="1" has2l="false">
+            <Profile>
+              1   1
+              1   1
+            </Profile>
+            <Value>
+              1.0
+              0.0
+            </Value>
+          </Scattering>
+        </Isotope>
+        <Isotope MAT="5349" Name="I135" L="1" I=" 0" NS="1">
+          <Total index="g">7</Total>
+          <Removal index="g">7</Removal>
+          <Transport index="g">7</Transport>
+          <Absorption index="g">7</Absorption>
+          <NGamma index="g">0</NGamma>
+          <NAlpha index="g">0</NAlpha>
+          <N2Alpha index="g">0</N2Alpha>
+          <N2N index="g">0</N2N>
+          <N3N index="g">0</N3N>
+          <N4N index="g">0</N4N>
+          <NNProton index="g">0</NNProton>
+          <NProton index="g">0</NProton>
+          <NDeuteron index="g">0</NDeuteron>
+          <NTriton index="g">0</NTriton>
+          <Scattering index="pgl" profile="1" has2l="false">
+            <Profile>
+              1   1
+              1   1
+            </Profile>
+            <Value>
+              0
+              0
+            </Value>
+          </Scattering>
+        </Isotope>
+        <Isotope MAT="5458" Name="XE135" L="1" I=" 0" NS="1">
+          <Total index="g">3.5e6</Total>
+          <Removal index="g">3.5e6</Removal>
+          <Transport index="g">3.5e6</Transport>
+          <Absorption index="g">3.5e6</Absorption>
+          <NGamma index="g">0</NGamma>
+          <NAlpha index="g">0</NAlpha>
+          <N2Alpha index="g">0</N2Alpha>
+          <N2N index="g">0</N2N>
+          <N3N index="g">0</N3N>
+          <N4N index="g">0</N4N>
+          <NNProton index="g">0</NNProton>
+          <NProton index="g">0</NProton>
+          <NDeuteron index="g">0</NDeuteron>
+          <NTriton index="g">0</NTriton>
+          <Scattering index="pgl" profile="1" has2l="false">
+            <Profile>
+              1   1
+              1   1
+            </Profile>
+            <Value>
+              0
+              0
+            </Value>
+          </Scattering>
+        </Isotope>
+        <Isotope Name="CS135" L="1" I=" 0" NS="1">
+          <Total index="g">  0.0</Total>
+          <Removal index="g">  0.0</Removal>
+          <Transport index="g">  1.0</Transport>
+          <Absorption index="g">  0.0</Absorption>
+          <NGamma index="g">  0.0</NGamma>
+          <NAlpha index="g">  0.0</NAlpha>
+          <N2Alpha index="g">  0.0</N2Alpha>
+          <N2N index="g">  0.0</N2N>
+          <N3N index="g">  0.0</N3N>
+          <N4N index="g">  0.0</N4N>
+          <NNProton index="g"> 0.0</NNProton>
+          <NProton index="g">  0.0</NProton>
+          <NDeuteron index="g">  0.0</NDeuteron>
+          <NTriton index="g">  0.0</NTriton>
+          <Scattering index="pgl" profile="1" has2l="false">
+            <Profile>
+              1   1
+              1   1
+            </Profile>
+            <Value>
+              1.0
+              0.0
+            </Value>
+          </Scattering>
+        </Isotope>
+      </Table>
+    </Multigroup_Cross_Section_Library>
+  </Multigroup_Cross_Section_Libraries>
+</ISOXML>
