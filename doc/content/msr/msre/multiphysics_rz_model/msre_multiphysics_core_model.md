@@ -1,4 +1,4 @@
-# Molten Salt Reactor Experiment (MSRE) Multiphysics Model
+# Molten Salt Reactor Experiment (MSRE) Multiphysics Core Model
 
 *Contact: Mauricio Tano, mauricio.tanoretamales\@inl.gov*
 
