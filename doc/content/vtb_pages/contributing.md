@@ -49,7 +49,7 @@ Please follow these guidelines:
 
 - Place documentation files in `doc/content/<reactor_type>/<model_directory>`, using the
   same sub-directory names as the input files.
-- Start from [this documentation template](template.md).
+- Start from [this documentation template](https://github.com/idaholab/virtual_test_bed/blob/devel/doc/template.md).
 - Follow the [MooseDocs style guide](https://mooseframework.inl.gov/python/MooseDocs/standards.html) for the documentation.
   For example, tabs and trailing whitespaces should not be present in either the documentation or input files.
 - Provide plot scripts where possible. See [vtb_pages/utilities.md#vtbplot] for a VTB plot class
