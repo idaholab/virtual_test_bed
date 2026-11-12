@@ -16,6 +16,10 @@
                        sponsor:NRC
                        institution:ANL
 
+!vtb_model_summary contact_names=Zhiee Jhia Ooi;Stephen Bajorek
+                   contact_emails=zooi@anl.gov;stephen.bajorek@nrc.gov
+                   github_url=https://github.com/idaholab/virtual_test_bed/tree/main/htgr/htr-pm/ss
+
 [SAM HTR-PM model](htr-pm/sam-model/htr-pm_model.md)
 
 [SAM HTR-PM results](htr-pm/sam-model/htr-pm_results.md)
