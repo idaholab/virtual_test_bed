@@ -92,6 +92,36 @@ h2, h3, h4, h5, h6 {
     color: var(--nric-yellow);
 }
 
+/* Model contact and V&V summary boxes ("!vtb_contact", "!vtb_vv_summary"): an .nric-media-box with the dark blue background and white text */
+.nric-media-box.vtb-contact,
+.nric-media-box.vtb-summary {
+    background-color: var(--nric-dark-blue);
+    color: #fff;
+}
+
+/* Tighter vertical spacing for the contact and V&V summary boxes */
+.nric-media-box.vtb-contact,
+.nric-media-box.vtb-summary,
+.nric-media-box.vtb-summary-none {
+    padding-top: 6px;
+    padding-bottom: 6px;
+}
+
+.nric-media-box.vtb-contact p,
+.nric-media-box.vtb-contact ul,
+.nric-media-box.vtb-summary p,
+.nric-media-box.vtb-summary ul,
+.nric-media-box.vtb-summary-none p {
+    margin-top: 4px;
+    margin-bottom: 4px;
+}
+
+/* "!vtb_vv_summary" with no V&V items: NRIC yellow box with dark blue text */
+.nric-media-box.vtb-summary-none {
+    background-color: var(--nric-yellow);
+    color: var(--nric-dark-blue);
+}
+
 /*
   Front page highlights: emphasize the lead-in label of each item. Links use
   --nric-blue (teal in dark mode), so the labels use other NRIC colors to stay
