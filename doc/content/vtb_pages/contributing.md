@@ -3,64 +3,75 @@
 The Virtual Test Bed welcomes contributions in advanced nuclear reactor modeling from all horizons,
 including, but not limited to, regulatory, industrial and academic institutions.
 
-## Requirements for new models
+Contributions to the VTB are made through Github pull (merge) requests. Before opening a pull
+request, please see the directions below. Pull requests require that at least one commit reference
+an issue number for the repository.
+
+## New Models
 
 Any contribution must:
 
-- be releasable as an open-source model. Placing a model on this repository, from the moment the pull request is made,
-  will make it available to everyone
+- be releasable as an open-source model. Contributing a model, from the moment the pull request is made,
+  makes it available to everyone.
+- be made in good faith and be of sufficient quality and interest. If you would like to discuss
+  your model before preparing a contribution, please [contact us](vtb_pages/contact.md). Alternatively
+  you may create an issue on Github and start a discussion there for your proposed contribution.
+- undergo a review process with the VTB team. Please ensure that you have sufficient
+  time and funding to address the review.
+- provide any files needed to run the model, including input files, mesh files, etc.
+- provide testing if using any NEAMS codes.
+- provide documentation using [MooseDocs](https://mooseframework.inl.gov/python/MooseDocs/index.html).
 
-- utilize MooseDocs for documentation. MooseDocs files should be placed in `doc/content/<relevant_reactor>`.
-  Please follow [this documentation template](template.md).
+The VTB team can help you meet any of these requirements if you are not familiar with the tools used.
 
-- follow the MooseDocs style guide ([link](https://mooseframework.inl.gov/python/MooseDocs/standards.html)) for the documentation.
-  For example, tabs and trailing whitespaces should not be present in either the documentation or input files
-
-- have every input file contain a header indicating the authors of the model and their institution, the codes used to run
-  the input file, and a brief summary of the simulation performed
-
-- be tested, using either syntax checking to avoid deprecation, or reasonably sized regression tests. This
-  requirement is waived for simulation tools which cannot leverage the CIVET testing suite.
-  See [#running_tests] for instructions on how to verify that your tests pass.
-
-- use the Git Large File System (lfs) to host any large file (3D mesh for example)
-
-- be made through a pull request to the repository, referencing an issue you create in the repository. Creating an issue before
-  contributing allows others to engage earlier with the developers of the new model, and creates a discussion forum
-  dedicated to the contribution
-
-- be made in good faith and be of sufficient quality and interest
-
-
-We also prefer but +do not mandate+ that contributions:
-
-- use NEAMS tools, at least partially. One objective of this repository is to show how to use NEAMS tools for nuclear reactor
-  modeling
-
-- use International System (SI) units
-
-- provide plot scripts where possible. See [vtb_pages/utilities.md#vtbplot] for a VTB plot class
-  that can be used for line plots.
-
-- make the plots in the documentation +on-the-fly+ when possible, instead of committing the images.
-  If a plot can be made from files that are in the repository, such as the gold files of a test,
-  MooseDocs can run the plot script when the documentation is built. The plot then stays consistent
-  with the files it is made from and no image has to be stored in the repository.
-  See [vtb_pages/plotting.md#on-the-fly-plots] for how to do this.
-
-We can help you meet any of these requirements if you are not familiar with the tools used.
-We reserve the right to refuse any contribution which does not meet these requirements.
+We also prefer but do not require that models employ International System (SI) units.
 
 !alert note
 If the copyright on the model should be retained by the contributer, please contact the support
 team ahead of time so we can design the appropriate process.
 
-!alert note
-If the model or the documentation you wish to contribute needs to be cleared for export control
-by your home institution, please either make the pull request to the internal gitlab repository,
-or wait for clearance before making a pull request to the public GitHub repository.
+The sections that follow provide guidance for each type of file.
 
-## Contributing fixes or improvements
+### Input Files
+
+All files needed to run the model must be provided; please follow these guidelines:
+
+- Begin each input file with a header indicating the authors of the model and their institution,
+  the codes used to run the input file, and a brief summary of the simulation performed.
+- Use the Git Large File System (lfs) to host any large file (such as a 3D mesh).
+- Ensure input files are as easy to read as possible. For example, use comments where useful,
+  and delete any commented-out lines that serve no purpose.
+
+### Documentation
+
+Documentation is implemented using [MooseDocs](https://mooseframework.inl.gov/python/MooseDocs/index.html).
+Please follow these guidelines:
+
+- Place documentation files in `doc/content/<reactor_type>/<model_directory>`, using the
+  same sub-directory names as the input files.
+- Start from [this documentation template](template.md).
+- Follow the [MooseDocs style guide](https://mooseframework.inl.gov/python/MooseDocs/standards.html) for the documentation.
+  For example, tabs and trailing whitespaces should not be present in either the documentation or input files.
+- Provide plot scripts where possible. See [vtb_pages/utilities.md#vtbplot] for a VTB plot class
+  that can be used for line plots.
+- Make the plots in the documentation +on-the-fly+ when possible, instead of committing the images.
+  If a plot can be made from files that are in the repository, such as the gold files of a test,
+  MooseDocs can run the plot script when the documentation is built. The plot then stays consistent
+  with the files it is made from and no image has to be stored in the repository.
+  See [vtb_pages/plotting.md#on-the-fly-plots] for how to do this.
+
+### Testing
+
+The VTB continuously tests models that use codes available for CIVET testing.
+
+- Some models may use eligible codes but a full simulation may not reasonable due to requiring
+  excessive computational resources. If this is the case, a test may choose to run the model
+  for a shorter period of time or use a smaller mesh. If this is still too expensive, input
+  syntax-checking tests may be used.
+- Use the Git Large File System (lfs) to host any large output file needed for testing.
+- See [#running_tests] for instructions on how to verify that your tests pass.
+
+## Fixes and Improvements
 
 Fixes and improvements of existing models are welcome. Those should be made using the pull request system.
 Please first report the defect or potential for improvement as an issue in order to engage the discussion
