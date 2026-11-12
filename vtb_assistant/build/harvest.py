@@ -437,8 +437,6 @@ def walk_doc_content(source_dir: Path) -> list[dict]:
     content_dir = source_dir / "doc" / "content"
     pages = []
     for md_path in sorted(content_dir.rglob("*.md")):
-        if md_path.name == "template.md":
-            continue
         relpath = md_path.relative_to(content_dir)
         text = md_path.read_text(encoding="utf-8", errors="replace")
         model_link_match = MODEL_LINK_RE.search(text)

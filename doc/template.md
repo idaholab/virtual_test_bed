@@ -1,22 +1,13 @@
 # Model Name
 
-!vtb_contact name=Model Developer email=model_developer@institute.com
+!vtb_model_summary contact_names=Model Developer contact_emails=model_developer@institute.com
 
-!devel! example caption=Example of the contact command, with multiple contacts
-!vtb_contact name=Model Developer;Second Developer email=model_developer@institute.com;second_developer@institute.com
+!devel! example caption=Example of the model summary command
+!vtb_model_summary contact_names=Model Developer;Second Developer
+                   contact_emails=model_developer@institute.com;second_developer@institute.com
+                   vv_summary=Verified against the analytical solution in [the verification page](index.md);
+                              Validated against the experimental data of [!citep](Hu2017)
 !devel-end!
-
-!alert note
-In `!vtb_contact`, do not put quotes around the values, and separate multiple
-contacts with `;` in both `name` and `email` (the n-th name is paired with the n-th email).
-Both `name` and `email` are required; each email is rendered as a `mailto:` link.
-
-!vtb_vv_summary
-Describe any verification and validation (V&V) work documented for the model, one item per line, with no blank line(s) between them.
-Providing no items (a blank line after the command) is valid; a message will print to the model page saying that no V&V items are documented.
-Inline markdown such as [links](index.md) may be used.
-
-*Model link: [Model Name](hyperlink)*
 
 !devel! example caption=Example of a page tag for the automated model indexing (remove # before tag)
 #!tag name=model_name
