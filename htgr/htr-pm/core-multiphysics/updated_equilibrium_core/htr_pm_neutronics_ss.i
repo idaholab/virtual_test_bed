@@ -255,6 +255,9 @@ pebble_unloading_rate   = ${fparse pebble_speed * area * 0.61 / pebble_volume}
     execute_on             = 'INITIAL timestep_end'
   []
 
+  # 'partial_power_density' is computed by an array auxkernel, and MOOSE computes all regular
+  # auxkernels before array ones within an execution order group. The reductions below need a
+  # later group to see the current step's partial power densities.
   [pden_max_aux]
     type           = ArrayVarExtremeValueAux
     block          = 'pebble_bed'
@@ -262,6 +265,7 @@ pebble_unloading_rate   = ${fparse pebble_speed * area * 0.61 / pebble_volume}
     array_variable = partial_power_density
     value_type     = MAX
     execute_on     = 'INITIAL TIMESTEP_END'
+    execution_order_group = 1
   []
   [pden_avg_aux]
     type                   = PebbleAveragedAux
@@ -271,6 +275,7 @@ pebble_unloading_rate   = ${fparse pebble_speed * area * 0.61 / pebble_volume}
     pebble_volume_fraction = pebble_volume_fraction
     n_fresh_pebble_types   = 1
     execute_on             = 'INITIAL TIMESTEP_END'
+    execution_order_group  = 1
   []
   [power_peaking_aux]
     type       = ParsedAux

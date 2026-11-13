@@ -246,6 +246,9 @@ burnup_group_boundaries = '5.35E+13 1.070E+14 1.604E+14 2.139E+14 2.674E+14 3.20
     expression        = 'power_density / 3.21525E+06'
     execute_on = 'INITIAL timestep_end'
   []
+  # 'partial_power_density' is computed by an array auxkernel, and MOOSE computes all regular
+  # auxkernels before array ones within an execution order group. The reductions below need a
+  # later group to see the current step's partial power densities.
   [pden_max_aux]
     type           = ArrayVarExtremeValueAux
     block          = 'pebble_bed'
@@ -253,6 +256,7 @@ burnup_group_boundaries = '5.35E+13 1.070E+14 1.604E+14 2.139E+14 2.674E+14 3.20
     array_variable = partial_power_density
     value_type     = MAX
     execute_on     = 'INITIAL TIMESTEP_END'
+    execution_order_group = 1
   []
   [pden_avg_aux]
     type                   = PebbleAveragedAux
@@ -262,6 +266,7 @@ burnup_group_boundaries = '5.35E+13 1.070E+14 1.604E+14 2.139E+14 2.674E+14 3.20
     pebble_volume_fraction = pebble_volume_fraction
     n_fresh_pebble_types   = 1
     execute_on             = 'INITIAL TIMESTEP_END'
+    execution_order_group  = 1
   []
 []
 # ==============================================================================
