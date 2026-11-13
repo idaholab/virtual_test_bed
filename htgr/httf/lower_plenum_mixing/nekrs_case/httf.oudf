@@ -27,19 +27,19 @@
  }
 }
 
-void velocityDirichletConditions(bcData *bc)
+void udfDirichlet(bcData *bc)
 {
-  bc->u = 0.0;
-  bc->v = bc->usrwrk[bc->idM + 0*bc->fieldOffset];
-  bc->w = 0.0;
-}
-
-void scalarDirichletConditions(bcData *bc)
-{
-  bc->s = 0;
-  if(bc->id==1){
-    if(bc->scalarId == 0) bc->s = bc->usrwrk[bc->idM + 1*bc->fieldOffset];
-    if(bc->scalarId == 1) bc->s = bc->usrwrk[bc->idM + 2*bc->fieldOffset];
-    if(bc->scalarId == 2) bc->s = bc->usrwrk[bc->idM + 3*bc->fieldOffset];
-  } 
+  if (isField("fluid velocity")) {
+    bc->uxFluid = 0.0;
+    bc->uyFluid = bc->usrwrk[bc->idxVol + 0*bc->fieldOffset];
+    bc->uzFluid = 0.0;
+  }
+  else {
+    bc->sScalar = 0;
+    if(bc->id==1){
+      if(isField("scalar temperature")) bc->sScalar = bc->usrwrk[bc->idxVol + 1*bc->fieldOffset];
+      if(isField("scalar k")) bc->sScalar = bc->usrwrk[bc->idxVol + 2*bc->fieldOffset];
+      if(isField("scalar tau")) bc->sScalar = bc->usrwrk[bc->idxVol + 3*bc->fieldOffset];
+    }
+  }
 }

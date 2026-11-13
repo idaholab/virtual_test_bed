@@ -1,23 +1,23 @@
 // Boundary conditions
-void velocityDirichletConditions(bcData *bc)
+void udfDirichlet(bcData *bc)
 {
-  bc->u = 0.0;
-  bc->v = 0.0;
-  bc->w = 0.0;
-  if(bc->id==1) { //vertical inlet
-     bc->v =-1.0; 
-    }
-  if(bc->id==2) { //horizontal inlet
-     bc->w = 1.0;
-    }
-}
-
-void scalarDirichletConditions(bcData *bc)
-{
-  bc->s = 0.0;
-  if(bc->id==1) { //vertical inlet
-     bc->s = 1.0;
-    }
+  if (isField("fluid velocity")) {
+    bc->uxFluid = 0.0;
+    bc->uyFluid = 0.0;
+    bc->uzFluid = 0.0;
+    if(bc->id==1) { //vertical inlet
+       bc->uyFluid =-1.0;
+      }
+    if(bc->id==2) { //horizontal inlet
+       bc->uzFluid = 1.0;
+      }
+  }
+  else if (isField("scalar temperature")) {
+    bc->sScalar = 0.0;
+    if(bc->id==1) { //vertical inlet
+       bc->sScalar = 1.0;
+      }
+  }
 }
 
 @kernel void cliptOKL(const dlong Nelements,
