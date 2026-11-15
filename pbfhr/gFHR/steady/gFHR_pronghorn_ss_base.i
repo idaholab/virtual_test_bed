@@ -846,7 +846,7 @@ Forch_open = 1.25
     fvbcs = 'T_solid_radiation'
     outputs = none
   []
-  [Heatflux_RCCS]
+  [Heat_to_RCCS]
     type = ParsedPostprocessor
     pp_names = 'Heat_RCCS_conduction Heat_RCCS_radiation'
     expression = 'Heat_RCCS_conduction + Heat_RCCS_radiation'
