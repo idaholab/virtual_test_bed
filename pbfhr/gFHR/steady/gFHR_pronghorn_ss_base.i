@@ -69,9 +69,9 @@ Forch_open = 1.25
   acceleration = '0.0 -9.81 0.0'
 []
 
-# [Debug]
-#   show_var_residual_norms = true
-# []
+[Debug]
+  # show_var_residual_norms = true
+[]
 
 [Mesh]
   coord_type = RZ
