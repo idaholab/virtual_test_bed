@@ -74,8 +74,6 @@ Forch_open = 1.25
 # []
 
 [Mesh]
-  block_id = '  1     2     3     4     5    6    7    8    9     10           12     13      14      20      21  '
-  block_name = 'flow1 flow2 flow3 flow4 flow5 dio1 dio2 dio3 flowp reflector   barrel vessel1 vessel2 inlet outlet'
   coord_type = RZ
   rz_coord_axis = Y
 
@@ -106,12 +104,19 @@ Forch_open = 1.25
    21 10 10 10 10 10 12 12 13'
   []
 
+  [add_names]
+    type = RenameBlockGenerator
+    input = 'cartesian_mesh'
+    old_block = '  1     2     3     4     5    6    7    8    9     10           12     13      14      20      21  '
+    new_block = 'flow1 flow2 flow3 flow4 flow5 dio1 dio2 dio3 flowp reflector   barrel vessel1 vessel2 inlet outlet'
+  []
+
   [CL_SS]
     type = SideSetsAroundSubdomainGenerator
-    input = cartesian_mesh
+    input = add_names
     fixed_normal = true
     normal = '-1 0 0'
-    block = '2 3 4 14 21'
+    block = 'flow2 flow3 flow4 vessel2 outlet'
     new_boundary = 'centerline'
   []
   [Inlet]
@@ -119,7 +124,7 @@ Forch_open = 1.25
     input = CL_SS
     fixed_normal = true
     normal = '1 0 0'
-    block = '20'
+    block = 'inlet'
     new_boundary = 'inlet'
   []
   [Outlet]
@@ -127,35 +132,35 @@ Forch_open = 1.25
     input = Inlet
     fixed_normal = true
     normal = '0 1 0'
-    block = '21'
+    block = 'outlet'
     new_boundary = 'outlet'
   []
   [vertical_walls_01]
     type = SideSetsBetweenSubdomainsGenerator
     input = Outlet
-    primary_block = '1 20'
-    paired_block = 13
+    primary_block = 'flow1 inlet'
+    paired_block = 'vessel1'
     new_boundary = wall1
   []
   [vertical_walls_02]
     type = SideSetsBetweenSubdomainsGenerator
     input = vertical_walls_01
-    primary_block = 2
-    paired_block = 14
+    primary_block = 'flow2'
+    paired_block = 'vessel2'
     new_boundary = wall1
   []
   [vertical_walls_03]
     type = SideSetsBetweenSubdomainsGenerator
     input = vertical_walls_02
-    primary_block = '1 8'
-    paired_block = 12
+    primary_block = 'flow1 dio3'
+    paired_block = 'barrel'
     new_boundary = wall1
   []
   [vertical_walls_04]
     type = SideSetsBetweenSubdomainsGenerator
     input = vertical_walls_03
     primary_block = '1 2 3 4 5 6 7 8 9 21'
-    paired_block = 10
+    paired_block = 'reflector'
     new_boundary = wall1
   []
   [RCSS_Boundary]
@@ -163,38 +168,38 @@ Forch_open = 1.25
     input = vertical_walls_04
     fixed_normal = true
     include_only_external_sides = true
-    block = '13 14'
+    block = 'vessel1 vessel2'
     normal = '1 0 0'
     new_boundary = RCSS
   []
   [Mass_Flow_Sensor_1]
     type = SideSetsBetweenSubdomainsGenerator
     input = RCSS_Boundary
-    primary_block = '6'
-    paired_block = 7
+    primary_block = 'dio1'
+    paired_block = 'dio2'
     new_boundary = MF_1
   []
   [Mass_Flow_Sensor_2]
     type = SideSetsBetweenSubdomainsGenerator
     input = Mass_Flow_Sensor_1
-    primary_block = '7'
-    paired_block = 8
+    primary_block = 'dio2'
+    paired_block = 'dio3'
     new_boundary = MF_2
   []
   [Mass_Flow_Sensor_3]
     type = SideSetsBetweenSubdomainsGenerator
     input = Mass_Flow_Sensor_2
-    primary_block = '1'
-    paired_block = 2
+    primary_block = 'flow1'
+    paired_block = 'flow2'
     new_boundary = MF_3
   []
   [fluid_structure_interface]
     type = SideSetsBetweenSubdomainsGenerator
     input = Mass_Flow_Sensor_3
     # fluid-only regions
-    primary_block = '1 2 4 5 6 7 8'
+    primary_block = 'flow1 flow2 flow4 flow5 dio1 dio2 dio3'
     # structures
-    paired_block = '10 12 13 14'
+    paired_block = '${blocks_structure}'
     new_boundary = fluid_structure
   []
   uniform_refine = 0
