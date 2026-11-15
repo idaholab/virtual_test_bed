@@ -44,7 +44,7 @@ blocks_bed = 'flow3 flow4 flowp'
 blocks_free_flow = 'flow1 flow2 flow5 dio1 dio2 dio3 inlet outlet'
 blocks_structure = 'reflector barrel vessel1 vessel2'
 # open-flow blocks exchanging heat with the adjacent structures through their walls
-blocks_wall_htc = 'flow1 dio1 dio2 dio3'
+blocks_wall_htc = 'flow1 flow2 flow4 flow5 dio1 dio2 dio3'
 
 # Dittus-Boelter coefficient for the fluid-structure wall heat transfer
 C_DB = 0.023
@@ -69,9 +69,9 @@ Forch_open = 1.25
   acceleration = '0.0 -9.81 0.0'
 []
 
-[Debug]
-  show_var_residual_norms = true
-[]
+# [Debug]
+#   show_var_residual_norms = true
+# []
 
 [Mesh]
   block_id = '  1     2     3     4     5    6    7    8    9     10           12     13      14      20      21  '
@@ -191,7 +191,9 @@ Forch_open = 1.25
   [fluid_structure_interface]
     type = SideSetsBetweenSubdomainsGenerator
     input = Mass_Flow_Sensor_3
-    primary_block = '1 6 7 8'
+    # fluid-only regions
+    primary_block = '1 2 4 5 6 7 8'
+    # structures
     paired_block = '10 12 13 14'
     new_boundary = fluid_structure
   []
@@ -1000,7 +1002,6 @@ Forch_open = 1.25
   # Automatic scaling
   automatic_scaling = true
   off_diagonals_in_auto_scaling = true
-  compute_scaling_once = false
 []
 
 [Outputs]
