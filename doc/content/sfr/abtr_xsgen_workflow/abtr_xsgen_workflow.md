@@ -16,7 +16,7 @@
                        V_and_V:demonstration
                        input_features:data_driven_mesh;reactor_meshing;cross_section_generation
                        computing_needs:HPC
-                       cross_sections:MCC3
+                       cross_sections:MC2-3
                        fiscal_year:2024
                        institution:ANL
                        sponsor:NEAMS
