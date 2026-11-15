@@ -16,7 +16,7 @@
                        computing_needs:HPC
                        input_features:reactor_meshing;multiapps
                        V_and_V:demonstration
-                       cross_sections:MC2
+                       cross_sections:MC2-3
                        open_source:partially
                        fiscal_year:2023
                        institution:ANL

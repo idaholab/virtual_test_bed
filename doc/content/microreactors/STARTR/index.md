@@ -14,7 +14,7 @@
            transient:steady_state
            codes_used:OpenMC;MCNP
            open_source:fully
-           computing_needs:workstation
+           computing_needs:Workstation
            fiscal_year:2025
            institution:INL
            sponsor:NRIC
