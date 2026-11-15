@@ -1,15 +1,16 @@
 # Full Core GCMR Multiphysics Model with Balance-of-Plant
 
-!tag name=GCMR_BOP_MP
+!tag name=Gas-Cooled Microreactor Core Multiphysics and Balance of Plant
      description=Multiphysics BOP model for Gas Cooled microreactor
      image=https://mooseframework.inl.gov/virtual_test_bed/media/gcmr/FCMP/coupling_hierarchy_strategy.png
      pairs=reactor_type:microreactor
            reactor:GCMR
            geometry:plant
            simulation_type:Multiphysics
+           V_and_V:demonstration
            input_features:checkpoint_restart;multiapps
-           transient:steady;startup
-           codes_used:BISON;Griffin;SAM;THM
+           transient:steady_state;startup
+           codes_used:BISON;Griffin;SAM;MOOSE_ThermalHydraulics
            open_source:partially
            computing_needs:Workstation;HPC
            fiscal_year:2026
