@@ -181,6 +181,9 @@ Rho = 1973.8 # kg/m^3 900.0 K
 []
 
 [AuxKernels]
+  # 'partial_power_density' is computed by an array auxkernel, and MOOSE computes all regular
+  # auxkernels before array ones within an execution order group. The reductions below, and
+  # 'power_peaking' which consumes one of them, need a later group to see the current values.
   [pden_max]
     type = ArrayVarExtremeValueAux
     block = 'pebble_bed'
@@ -188,6 +191,7 @@ Rho = 1973.8 # kg/m^3 900.0 K
     array_variable = partial_power_density
     value_type = MAX
     execute_on = 'INITIAL TIMESTEP_END'
+    execution_order_group = 1
   []
   [pden_avg]
     type = PebbleAveragedAux
@@ -197,6 +201,7 @@ Rho = 1973.8 # kg/m^3 900.0 K
     pebble_volume_fraction = pebble_volume_fraction
     n_fresh_pebble_types = 1
     execute_on = 'INITIAL TIMESTEP_END'
+    execution_order_group = 1
   []
   [power_peaking_aux]
     type = ParsedAux
@@ -204,6 +209,7 @@ Rho = 1973.8 # kg/m^3 900.0 K
     variable = power_peaking
     coupled_variables = 'total_power_density pden_avg'
     expression = 'total_power_density / pden_avg'
+    execution_order_group = 1
   []
   [Tfuel_avg]
     type = PebbleAveragedAux
