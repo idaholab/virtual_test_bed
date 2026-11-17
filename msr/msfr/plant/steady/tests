@@ -88,18 +88,20 @@
     type = CSVDiff
     csvdiff = 'msfr_system_1d_csv.csv'
     input = 'msfr_system_1d.i'
-    # Make time history consistent between Albion and Rome runs
-    cli_args = "Executioner/num_steps=100 Executioner/start_time=-200 "
-               "Executioner/TimeStepper/type=CSVTimeSequenceStepper "
-               "Executioner/TimeStepper/file_name=gold/msfr_system_1d_csv.csv "
-               "Times/csv_times/type=CSVFileTimes "
-               "Times/csv_times/files=gold/msfr_system_1d_csv.csv "
-               "Outputs/csv/sync_times_object=csv_times "
+    # Start from roughly the steady core velocity, 2 m/s (1.8e4 kg/s through 2.24 m^2 at about
+    # 4.1e3 kg/m^3), instead of the 0.01 m/s default. Below the buoyancy velocity floor of the SUPG
+    # stabilization (about sqrt(g*beta) = 0.05 m/s for beta = 2.1e-4 1/K) the first Newton solve
+    # fails for most first time steps, and the cutback adds an output row that shifts every
+    # later row. From 2 m/s the first solve converges in at most 12 Newton iterations for first
+    # time steps between 0.05 and 4 s.
+    # The loops are relaxed by t=-50, so comparing at fixed times, instead of at every step, keeps
+    # the result independent of the time step history. The relaxed state differs by less than 1e-7
+    # between initial velocities of 1 and 2 m/s.
+    cli_args = "GlobalParams/global_init_V=2.0 Executioner/start_time=-200 Executioner/end_time=0 "
+               "Outputs/csv/sync_times='-100 -50 0' Outputs/csv/sync_only=true "
                "--app SamApp"
     # PTFunctionEOS warning: A user input enthalpy function is provided. Suggest providing valid temperature range to calculate enthalpy internally based on Cp.
     allow_warnings = True
-    # TimeStepper was replaced via cli_args
-    allow_unused = True
     # Observed differences between civet & M4 mac
     rel_err = 4.5e-5
     capabilities = 'samapp'
