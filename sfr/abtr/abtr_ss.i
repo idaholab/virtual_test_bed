@@ -19,10 +19,18 @@
 []
 
 [Functions]
+  # Steps of 25 s while the DHX loop settles. The natural-circulation DHX flow (about 0.02 m/s)
+  # reverses twice (near t=-470 and t=-370) and then decays, and 50 s steps under-resolve it:
+  # DHX_flow at t=-39 is 0.538 kg/s with 50 s steps but 0.763, 0.765, 0.767 and 0.769 kg/s with
+  # 25, 12.5, 10 and 5 s steps. With 25 s steps, turning the SUPG buoyancy floor off changes
+  # DHX_flow by 1.4e-5 and DHX_heatremoval by 2.1e-5 (relative), versus 1.8e-4 and 9.4e-4 with
+  # 50 s steps. The t=-39 row varies by 7e-8 over 1, 2 and 4 MPI ranks and by 7e-7 between the
+  # default solver tolerances and nl_rel_tol=1e-10, nl_abs_tol=1e-9, l_tol=1e-8, against the
+  # test rel_err of 1e-4.
   [time_stepper]
     type = PiecewiseConstant
     x = '-500 -490    -10     0       2     3   10   11  380   381    440   441   1e5'
-    y = ' 1.0    50.       50.0 0.2     0.2   0.5  0.5    2    2     2      2     5     5'
+    y = ' 1.0    25.       25.0 0.2     0.2   0.5  0.5    2    2     2      2     5     5'
   []
 
   [ppf_axial]
@@ -1230,7 +1238,10 @@
   []
   [csv]
     type = CSV
-    time_step_interval = 10
+    # Fixed output times keep the rows independent of the step history: the start, the end of the
+    # 1 s steps, and t=-39, which is away from the DHX flow reversals near t=-470 and t=-370.
+    sync_times = '-500 -490 -39'
+    sync_only = true
     execute_scalars_on = 'NONE'
     hide = 'CH1:fuel_Fuel_Doppler_Reactivity CH1:pipe_Coolant_Density_Reactivity CH1_Fuel_Axial_Expansion_Reactivity CH2:fuel_Fuel_Doppler_Reactivity CH2:pipe_Coolant_Density_Reactivity CH2_Fuel_Axial_Expansion_Reactivity CH3:fuel_Fuel_Doppler_Reactivity CH3:pipe_Coolant_Density_Reactivity CH3_Fuel_Axial_Expansion_Reactivity CH4:fuel_Fuel_Doppler_Reactivity CH4:pipe_Coolant_Density_Reactivity CH4_Fuel_Axial_Expansion_Reactivity'
   []
