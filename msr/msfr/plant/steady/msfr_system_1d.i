@@ -14,11 +14,6 @@ core_power_val = 3e9
 
 [GlobalParams]
   global_init_P = 1e5
-  # Start from roughly the steady core velocity, 2 m/s (1.8e4 kg/s through 2.24 m^2 at about
-  # 4.1e3 kg/m^3). Below the buoyancy velocity floor of the SUPG stabilization (about
-  # sqrt(g*beta) = 0.05 m/s for beta = 2.1e-4 1/K) the first Newton solve fails for most first
-  # time steps. From 2 m/s it converges in at most 12 Newton iterations for first time steps
-  # between 0.05 and 4 s.
   global_init_V = 2.0
   global_init_T = 898.15
   Tsolid_sf = 1e-3

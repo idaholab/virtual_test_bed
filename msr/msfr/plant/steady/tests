@@ -88,10 +88,6 @@
     type = CSVDiff
     csvdiff = 'msfr_system_1d_csv.csv'
     input = 'msfr_system_1d.i'
-    # The loops are relaxed by t=-50, so comparing at fixed times, instead of at every step, keeps
-    # the result independent of the time step history. The relaxed state differs by less than 1e-7
-    # between initial velocities of 1 and 2 m/s. The end time and output times are set here
-    # because run_ns.i also uses this input and compares its own CSV output.
     cli_args = "Executioner/start_time=-200 Executioner/end_time=0 "
                "Outputs/csv/sync_times='-100 -50 0' Outputs/csv/sync_only=true "
                "--app SamApp"

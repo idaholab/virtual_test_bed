@@ -5649,9 +5649,6 @@ n_urlr = 4
 
 [Executioner]
   type = Transient
-  # Start 60 h before t=0 so the slowest mode (RCCS water and wall, time constant about 34000 s)
-  # has decayed to about 3e-5 relative at t=0. From -54000 s the RCCS water energy R56_E is still
-  # 3.5e-3 from its steady value.
   start_time = -216000
   end_time = 0.0 # 144000
   dt = 1.00
