@@ -39,9 +39,15 @@
     prereq = 'ulof_syntax'
     rel_err = 1E-4
     abs_zero = 1E-7
-    override_columns = 'DHX_heatremoval'
-    override_rel_err = '1E-2'
-    override_abs_zero = '1E-6'
+    # DHX_heatremoval (1.3e-6 at t=0, 2e-4 of its peak of 6e-3) and feedback-doppler (crosses
+    # zero near t=21: 1.5e-7 against a peak of 1.5e-4) are near a physical zero, so the default
+    # abs_zero of 1E-7 leaves them compared relatively. Absolute noise on feedback-doppler is
+    # at most 8e-11 (1/2/4 ranks, SUPG buoyancy floor on/off, tighter nl/l tolerances). A floor
+    # of 1E-6 treats only the t=21 value as zero; the other feedback-doppler rows then agree to
+    # 5e-6 relative. DHX_heatremoval keeps rel_err of 1E-2 and floor of 1E-6.
+    override_columns = 'DHX_heatremoval feedback-doppler'
+    override_rel_err = '1E-2 1E-4'
+    override_abs_zero = '1E-6 1E-6'
     # to avoid timeouts in devel
     max_time = 400
   []
