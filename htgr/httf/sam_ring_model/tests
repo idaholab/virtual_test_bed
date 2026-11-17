@@ -14,16 +14,13 @@
     input = 'HTTF-SS.i'
     csvdiff = HTTF-SS_csv.csv
     prereq = rings_syntax
-    # Start 60 h (-216000 s) before t=0, four times the model default of -54000 s, so the slowest
-    # mode (RCCS water and wall, time constant about 34000 s) has decayed to about 3e-5 relative at
-    # t=0. From -54000 s the RCCS water energy R56_E is still 3.5e-3 from its steady value. At this
-    # start the result changes by at most 3e-6 over 1, 2, 4 and 8 ranks and for
+    # The result changes by at most 3e-6 over 1, 2, 4 and 8 ranks and for
     # nl_rel_tol = nl_abs_tol = l_tol = 1e-8, and by 1.1e-4 for dtmax = 900 instead of 3600.
     # R54_E and R54C_T_in (RCCS air inlet, where the channel velocity of about 0.008 m/s is below
     # the SUPG buoyancy velocity floor of about 0.18 m/s) change by 3.8e-3 and 1.1e-3 with
     # GlobalParams/buoyancy_supg = false. This is an O(h) stabilization effect, so these two
     # columns follow the SUPG stabilization scheme.
-    cli_args = '--app SamApp Executioner/start_time=-216000 Outputs/csv/sync_times=0.0 Outputs/csv/sync_only=true'
+    cli_args = '--app SamApp Outputs/csv/sync_times=0.0 Outputs/csv/sync_only=true'
     capabilities = 'bluecrabapp | samapp'
     rel_err = 1e-3
     min_parallel = 4
