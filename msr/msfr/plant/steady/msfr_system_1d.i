@@ -14,7 +14,7 @@ core_power_val = 3e9
 
 [GlobalParams]
   global_init_P = 1e5
-  global_init_V = 0.01
+  global_init_V = 2.0
   global_init_T = 898.15
   Tsolid_sf = 1e-3
   scaling_factor_var = '1 1e-3 1e-6'

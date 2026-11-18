@@ -39,9 +39,11 @@
     prereq = 'ulof_syntax'
     rel_err = 1E-4
     abs_zero = 1E-7
-    override_columns = 'DHX_heatremoval'
-    override_rel_err = '1E-2'
-    override_abs_zero = '1E-6'
+    # DHX_heatremoval and feedback-doppler are near a physical zero,
+    # so the default abs_zero of 1E-7 leaves them compared relatively
+    override_columns = 'DHX_heatremoval feedback-doppler'
+    override_rel_err = '1E-2 1E-4'
+    override_abs_zero = '1E-6 1E-6'
     # to avoid timeouts in devel
     max_time = 400
   []
