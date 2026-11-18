@@ -22,7 +22,7 @@
   [time_stepper]
     type = PiecewiseConstant
     x = '-500 -490    -10     0       2     3   10   11  380   381    440   441   1e5'
-    y = ' 1.0    50.       50.0 0.2     0.2   0.5  0.5    2    2     2      2     5     5'
+    y = ' 1.0    25.       25.0 0.2     0.2   0.5  0.5    2    2     2      2     5     5'
   []
 
   [ppf_axial]
@@ -1230,7 +1230,8 @@
   []
   [csv]
     type = CSV
-    time_step_interval = 10
+    sync_times = '-500 -490 -39'
+    sync_only = true
     execute_scalars_on = 'NONE'
     hide = 'CH1:fuel_Fuel_Doppler_Reactivity CH1:pipe_Coolant_Density_Reactivity CH1_Fuel_Axial_Expansion_Reactivity CH2:fuel_Fuel_Doppler_Reactivity CH2:pipe_Coolant_Density_Reactivity CH2_Fuel_Axial_Expansion_Reactivity CH3:fuel_Fuel_Doppler_Reactivity CH3:pipe_Coolant_Density_Reactivity CH3_Fuel_Axial_Expansion_Reactivity CH4:fuel_Fuel_Doppler_Reactivity CH4:pipe_Coolant_Density_Reactivity CH4_Fuel_Axial_Expansion_Reactivity'
   []
