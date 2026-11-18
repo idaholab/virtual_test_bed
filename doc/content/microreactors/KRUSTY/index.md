@@ -1,9 +1,5 @@
 # Kilopower Reactor Using Stirling TechnologY (KRUSTY)
 
-*Contacts: Yan Cao (ycao.at.anl.gov), Yinbin Miao (ymiao.at.anl.gov), Kun Mo (kunmo.at.anl.gov), Nicolas Stauff (nstauff.at.anl.gov)*
-
-*Model link: [KRUSTY](https://github.com/idaholab/virtual_test_bed/tree/devel/microreactors/KRUSTY)*
-
 !tag name=Kilopower Reactor Using Stirling TechnologY (KRUSTY)
      description=Steady state multiphysics simulation of the core of the Kilopower Reactor Using Stirling TechnologY using NEAMS tools
      image=https://mooseframework.inl.gov/virtual_test_bed/media/KRUSTY/krusty_quarter_mesh.png
@@ -20,14 +16,15 @@
            sponsor:NEAMS
            institution:ANL
 
-[Model Description](KRUSTY/Model_Description.md)
+!vtb_model_summary
+  contact_names=Yan Cao;Yinbin Miao;Kun Mo;Nicolas Stauff;
+  contact_emails=ycao@anl.gov;ymiao@anl.gov;kunmo@anl.gov;nstauff@anl.gov
+  github_url=https://github.com/idaholab/virtual_test_bed/tree/devel/microreactors/KRUSTY
 
-[Simplified KRUSTY Monte Carlo Model](KRUSTY/Simplified_KRUSTY_Monte_Carlo_Model.md)
-
-[Griffin-BISON Multiphysics Steady State Model](KRUSTY/Griffin-BISON_Multiphysics_Steady_State_Model.md)
-
-[Neutronic and Multiphysics Steady State Results](KRUSTY/Neutronic_Multiphysics_Steady_State_Results.md)
-
-[Griffin-BISON Multiphysics 15 Ȼ Reactivity Insertion Test](KRUSTY/Griffin-BISON_Multiphysics_15C_Reactivity_Insertion_Test.md)
-
-[Griffin-BISON Multiphysics 30 Ȼ Reactivity Insertion Test](KRUSTY/Griffin-BISON_Multiphysics_30C_Reactivity_Insertion_Test.md)
+!vtb_model_nav
+    KRUSTY/Model_Description.md
+    KRUSTY/Simplified_KRUSTY_Monte_Carlo_Model.md
+    KRUSTY/Griffin-BISON_Multiphysics_Steady_State_Model.md
+    KRUSTY/Neutronic_Multiphysics_Steady_State_Results.md
+    KRUSTY/Griffin-BISON_Multiphysics_15C_Reactivity_Insertion_Test.md
+    KRUSTY/Griffin-BISON_Multiphysics_30C_Reactivity_Insertion_Test.md
