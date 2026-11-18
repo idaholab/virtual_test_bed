@@ -1,9 +1,5 @@
 # Heat-Pipe Microreactor Assembly
 
-*Contact: Joshua Hansel (joshua.hansel.at.inl.gov)*
-
-*Model link: [Heat-Pipe Microreactor Assembly](https://github.com/idaholab/virtual_test_bed/tree/devel/microreactors/hpmr_assembly)*
-
 !tag name=Heat-Pipe Microreactor Assembly
      description=Model of an assembly with thermal coupling between the assembly and heat pipes
      image=https://mooseframework.inl.gov/virtual_test_bed/media/hpmr_assembly/core.jpg
@@ -20,7 +16,9 @@
            sponsor:NEAMS
            institution:INL
 
-!vtb_vv_summary
+!vtb_model_summary github_url=https://github.com/idaholab/virtual_test_bed/tree/devel/microreactors/hpmr_assembly
+                   contact_names=Joshua Hansel
+                   contact_emails=joshua.hansel@inl.gov
 
 ## Problem Description
 

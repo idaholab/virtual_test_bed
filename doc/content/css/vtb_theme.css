@@ -92,34 +92,36 @@ h2, h3, h4, h5, h6 {
     color: var(--nric-yellow);
 }
 
-/* Model contact and V&V summary boxes ("!vtb_contact", "!vtb_vv_summary"): an .nric-media-box with the dark blue background and white text */
-.nric-media-box.vtb-contact,
-.nric-media-box.vtb-summary {
+/* Model summary box ("!vtb_model_summary"): an .nric-media-box with the dark blue background and white text */
+.nric-media-box.vtb-model-summary {
     background-color: var(--nric-dark-blue);
     color: #fff;
-}
-
-/* Tighter vertical spacing for the contact and V&V summary boxes */
-.nric-media-box.vtb-contact,
-.nric-media-box.vtb-summary,
-.nric-media-box.vtb-summary-none {
     padding-top: 6px;
     padding-bottom: 6px;
 }
 
-.nric-media-box.vtb-contact p,
-.nric-media-box.vtb-contact ul,
-.nric-media-box.vtb-summary p,
-.nric-media-box.vtb-summary ul,
-.nric-media-box.vtb-summary-none p {
+/* Tighter vertical spacing inside the model summary box */
+.nric-media-box.vtb-model-summary p,
+.nric-media-box.vtb-model-summary ul {
     margin-top: 4px;
     margin-bottom: 4px;
 }
 
-/* "!vtb_vv_summary" with no V&V items: NRIC yellow box with dark blue text */
-.nric-media-box.vtb-summary-none {
+/* "VIEW ON GITHUB" button of "!vtb_model_summary": NRIC yellow with dark blue text */
+.nric-media-box.vtb-model-summary a.vtb-github-button {
+    display: inline-block;
+    margin: 4px 0;
+    padding: 0.4rem 1.2rem;
+    border-radius: 6px;
     background-color: var(--nric-yellow);
     color: var(--nric-dark-blue);
+    font-family: "Josefin Sans", sans-serif;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+}
+
+.nric-media-box.vtb-model-summary a.vtb-github-button:hover {
+    background-color: #fff;
 }
 
 /*

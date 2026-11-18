@@ -1,25 +1,10 @@
 # Model Name
 
-!vtb_contact name=Model Developer email=model_developer@institute.com
+Start each page with the `!tag` command; remove the following example from the code block, and edit
+each field according to the new model:
 
-!devel! example caption=Example of the contact command, with multiple contacts
-!vtb_contact name=Model Developer;Second Developer email=model_developer@institute.com;second_developer@institute.com
-!devel-end!
-
-!alert note
-In `!vtb_contact`, do not put quotes around the values, and separate multiple
-contacts with `;` in both `name` and `email` (the n-th name is paired with the n-th email).
-Both `name` and `email` are required; each email is rendered as a `mailto:` link.
-
-!vtb_vv_summary
-Describe any verification and validation (V&V) work documented for the model, one item per line, with no blank line(s) between them.
-Providing no items (a blank line after the command) is valid; a message will print to the model page saying that no V&V items are documented.
-Inline markdown such as [links](index.md) may be used.
-
-*Model link: [Model Name](hyperlink)*
-
-!devel! example caption=Example of a page tag for the automated model indexing (remove # before tag)
-#!tag name=model_name
+```
+!tag name=model_name
       description=<Short blurb describing the model>
       image=<Link to the image on the online website. See other model documentation pages for examples>
       pairs=reactor_type:MSR/FHR/SFR/...
@@ -34,7 +19,27 @@ Inline markdown such as [links](index.md) may be used.
                        fiscal_year:2024
                        institution:ANL/INL/...
                        sponsor:NRC/NEAMS/NEUP/...
-!devel-end!
+```
+
+Follow this with the `!vtb_model_summary` command; remove the following example from the code block and edit:
+
+```
+!vtb_model_summary github_url=https://github.com/idaholab/virtual_test_bed/tree/devel/<reactor_type>/<model_directory>
+                   contact_names=Model Developer;Second Developer
+                   contact_emails=model_developer@institute.com;second_developer@institute.com
+                   vv_summary=Verified against the analytical solution in [the verification page](index.md);
+                              Validated against the experimental data of [!citep](Hu2017)
+```
+
+This has the following parameters:
+
+- `contact_names` and `contact_emails` (required): contact names and email addresses for the model, separated with `;`.
+- `github_url` (optional): GitHub URL for the model directory.
+- `vv_summary` (optional): list of verification and validation (V&V) efforts that have been performed
+  on the model and documented. Items are separated with `;`. If not provided, a default message
+  is printed declaring a lack of documented V&V.
+
+Do not use quotes in any of the values, even if spaces are used (such as in author names and V&V items).
 
 ## High Level Summary of Model
 
