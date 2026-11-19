@@ -17,6 +17,7 @@
 *-prof
 *-devel
 *.e
+!htgr/httr/lofc_transient/supporting_files/ProxyMesh.e
 *.bin
 *.nav
 *.log
@@ -63,6 +64,8 @@ temp_print_trace.*
 *.mpx
 *.btr
 *.xml
+!htgr/httr/lofc_transient/supporting_files/XE135_Benchmark_DT.xml
+!htgr/httr/lofc_transient/supporting_files/XE135_Benchmark_XS.xml
 *.gmv
 *.plt
 *.png
