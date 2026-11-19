@@ -2,35 +2,33 @@
 // nekRS User Defined File
 //
 
-#include <math.h>
-#include "udf.hpp"
+#ifdef __okl__
 
-static occa::kernel cliptKernel; // clipping
+#include "pb67.oudf"
 
-void clipt(nrs_t *nrs)
+#endif
+
+void clipt()
 {
-  mesh_t *mesh = nrs->meshV;
-  cds_t* cds = nrs->cds;
-  cliptKernel(mesh->Nelements, cds->o_S);
+  auto mesh = nrs->scalar->mesh("temperature");
+  cliptOKL(mesh->Nelements, nrs->scalar->o_solution("temperature"));
 }
 
 /* UDF Functions */
 
-void UDF_LoadKernels(occa::properties & kernelInfo)
-{
- // avg::buildKernel(nrs);
-  cliptKernel = oudfBuildKernel(kernelInfo, "cliptOKL");
-}
-
-void UDF_Setup(nrs_t *nrs)
+void UDF_LoadKernels(deviceKernelProperties & kernelInfo)
 {
 }
 
-void UDF_ExecuteStep(nrs_t *nrs, dfloat time, int tstep)
+void UDF_Setup()
 {
-  clipt(nrs);
-  if (nrs->isOutputStep) {
-    nek::ocopyToNek(time, tstep);
+}
+
+void UDF_ExecuteStep(double time, int tstep)
+{
+  clipt();
+  if (nrs->checkpointStep) {
+    nrs->copyToNek(time, tstep);
     nek::userchk();
   }
 }
