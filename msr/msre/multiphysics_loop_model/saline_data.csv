@@ -1,0 +1,4 @@
+// MSRE fuel salt thermophysical properties (LiF-BeF2-ZrF4-UF4)
+// Sources: Cantor 1973 ORNL-TM-0732, MSTDB-TP
+formula,molecularWeight,comp,melt,melt_unc,melt_ref,boil,boil_unc,boil_ref,rho_a,rho_b,rho_range,rho_unc,rho_ref,mu_a,mu_b,mu_a2,mu_b2,mu_c,mu_range,mu_unc,mu_ref,k_a,k_b,k_range,k_unc,k_ref,cp_a,cp_b,cp_c,cp_d,cp_unc,cp_ref,sigma_a,sigma_b,sigma_range,sigma_unc,sigma_ref
+LiF-BeF2-ZrF4-UF4,40.0506,0.6479-0.2996-0.0499-0.0026,----,----,----,----,----,----,2.71,0.000562,797.5-1034.3,1,Cantor 1973 [29],1.24E-01,3.13E+04,----,----,----,----,----,----,1.22,----,----,----,----,57.83959809,0.025931924,4744097.275,-7.51E-06,----,https://moltensalt.org/references/static/downloads/pdf/ORNL-TM-0732.pdf,----,----,----,----,----
