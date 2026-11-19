@@ -1,5 +1,5 @@
 [GENERAL] 
-startFrom = tjunc.old UP
+startFrom = tjunc.old+u+p
 polynomialOrder = 5
 
 numSteps = 50000
@@ -8,17 +8,16 @@ writeInterval = 5000
 
 timeStepper = tombo2
 regularization = hpfrt + nModes = 1 + scalingCoeff = 20
+scalars = temperature
 
-[MESH]
-writeToFieldFile = yes
-
-[PRESSURE]
+[FLUID PRESSURE]
 residualTol = 1e-06
 
-[VELOCITY]
-boundaryTypeMap = v, v, O, W
+[FLUID VELOCITY]
+boundaryTypeMap = udfDirichlet, udfDirichlet, zeroNeumann, zeroDirichlet
 residualTol = 1e-08
 
-[TEMPERATURE]
-boundaryTypeMap = t, t, I, I
+[SCALAR TEMPERATURE]
+boundaryTypeMap = udfDirichlet, udfDirichlet, zeroNeumann, zeroNeumann
+mesh = fluid + solid
 residualTol = 1e-08

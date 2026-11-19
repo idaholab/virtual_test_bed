@@ -14,25 +14,23 @@ writeInterval = 2.0
 
 #regularization = hpfrt + nModes=1 + scalingCoeff=0.2/${dt}
 regularization = hpfrt + nModes=1 + scalingCoeff=10
-subCyclingSteps = 2
+advectionSubCyclingSteps = 2
+scalars = temperature
 
 #verbose=true
 
 #[PROBLEMTYPE]
 #equation = navierStokes+variableViscosity
 
-[MESH]
-writeToFieldFile = yes
-
-[PRESSURE]
+[FLUID PRESSURE]
 residualTol = 1e-04
 smootherType = Chebyshev+JAC
 
-[VELOCITY]
-boundaryTypeMap = inlet,outlet,wall
+[FLUID VELOCITY]
+boundaryTypeMap = udfDirichlet, zeroNeumann, zeroDirichlet
 residualTol = 1e-06
 density = 1.0
 viscosity = -4321.57 
 
-[TEMPERATURE]
+[SCALAR TEMPERATURE]
 solver = none
