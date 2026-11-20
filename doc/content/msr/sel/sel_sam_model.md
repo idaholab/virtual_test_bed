@@ -21,7 +21,7 @@
 
 ## Model Overview
 
-The SEL SAM model is a system-level representation of the Molten Salt Separate Effects Loop (SEL). The working fluid is a molten salt mixture of MgCl2-NaCl. The model simulates the primary loop with forced convection (salt mass flow rate of 1 kg/s) in an electrically heated 1-pin test section configuration (11 kW heating power). 
+The SEL SAM model is a system-level representation of the Molten Salt Separate Effects Loop (SEL). The working fluid is a molten salt mixture of MgCl2-NaCl. The model simulates the primary loop with forced convection (salt mass flow rate of 1 kg/s) in an electrically heated 1-pin test section configuration (11 kW heating power).
 
 In addition to the primary loop, the model includes a secondary loop where pressurized air cools the primary heat exchanger (PHX) and is subsequently cooled by a water-based secondary heat exchanger (SHX) before being safely vented. This is in accordance with building safety requirements which mandate the air to be reduced in temperature (< 60°C) before venting to the environment.
 
@@ -93,8 +93,8 @@ For a base case, salt flow rate 1 kg/s, and heater power of 11 kW:
 
 !media msr/sel/sel_loop_temp.png
        id=sel_loop_temp
-       caption=Steady State Loop Temperature
-       style=width:80%
+       caption=Steady-state loop temperature. Note that heat exchanger coils are simplified to straight line segments.
+       style=display:block;margin-left:auto;margin-right:auto;width:40%
 
 !table id=steady_state_conditions caption=Steady State Operating Conditions
 | Component | Fluid | Inlet Temperature (K) | Outlet Temperature (K) | Mass flow rate (kg/s) |
