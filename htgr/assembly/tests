@@ -15,7 +15,7 @@
     capabilities = cardinalapp
     prereq = generate_mesh
     max_time = 400
-    min_slots = 8 # memory heavy
+    min_slots = 11 # 1125 MB per slot observed during https://civet.inl.gov/job/4364969/ during step Test found in recipe file ./recipes/moosebuild/cardinal/Test_vtb.cfg. Usage is over or within 100 MB of the total memory limit based on a 900 MB per slot limit.
   []
   [syntax_conduction]
     type = RunApp
@@ -23,7 +23,7 @@
     check_input = true
     capabilities = cardinalapp
     prereq = generate_mesh
-    min_slots = 5 # memory heavy
+    min_slots = 6 # 880 MB per slot observed during https://civet.inl.gov/job/4364969/ during step Test found in recipe file ./recipes/moosebuild/cardinal/Test_vtb.cfg. Usage is over or within 100 MB of the total memory limit based on a 900 MB per slot limit.
   []
   [syntax_thm]
     type = RunApp
@@ -49,6 +49,7 @@
     input = 'solid.i'
     capabilities = cardinalapp
     prereq = 'syntax_conduction'
+    min_slots = 6 # 4404 MB per slot observed during https://civet.inl.gov/job/4364969/ during step Test found in recipe file ./recipes/moosebuild/cardinal/Test_vtb.cfg. Usage is over or within 100 MB of the total memory limit based on a 900 MB per slot limit.
   []
   [run_thm]
     type = RunApp
