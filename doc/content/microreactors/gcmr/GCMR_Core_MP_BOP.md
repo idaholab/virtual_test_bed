@@ -2,7 +2,7 @@
 
 !tag name=Gas-Cooled Microreactor Core Multiphysics and Balance of Plant
      description=Multiphysics BOP model for Gas Cooled microreactor
-     image=https://mooseframework.inl.gov/virtual_test_bed/media/gcmr/FCMP/coupling_hierarchy_strategy.png
+     image=https://mooseframework.inl.gov/virtual_test_bed/media/gcmr/FCMP/coupling_domains.png
      pairs=reactor_type:microreactor
            reactor:GCMR
            geometry:plant
@@ -69,10 +69,15 @@ Each application input is split between a common base in the `common/` directory
 
 The high fidelity Griffin and Bison model are coupled with THM and SAM in a three-level MultiApp hierarchy of the baseline model and augments the BISON level with two thermal-hydraulic sub-applications:
 
-!media media/gcmr/FCMP/coupling_hierarchy_strategy.png
-      id=coupling_hierarchy_strategy_multiphy
+!media media/gcmr/FCMP/coupling_domains.png
+      id=coupling_domains
       style=display: block;margin-left:auto;margin-right:auto;width:65%;
-      caption= Coupling hierarchy and strategy of the multiphysics model
+      caption=Coupling domains and balance-of-plant loop of the multiphysics model.
+
+!media media/gcmr/FCMP/coupling_hierarchy.png
+      id=coupling_hierarchy
+      style=display: block;margin-left:auto;margin-right:auto;width:65%;
+      caption= Coupling hierarchy of the multiphysics model.
 
 - `htgr` — the THM BOP loop, which returns the plant-computed core boundary conditions (inlet temperature, outlet pressure, and inlet velocity).
 - `coolant_full_MA` — the detailed per-channel helium coolant model (SAM/THM), identical in role to the baseline coolant model, which returns the fluid temperature, and convective heat transfer coefficient for each channel.
