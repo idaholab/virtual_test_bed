@@ -41,6 +41,29 @@ This has the following parameters:
 
 Do not use quotes in any of the values, even if spaces are used (such as in author names and V&V items).
 
+### Models with multiple pages style=font-size:125%
+
+If the model is documented on several pages, the pages are listed on the home page of the model, with
+the `!vtb_model_nav` command, placed after `!vtb_model_summary`. The command is followed by the
+pages of the model, one per line and indented, in the order in which they are to be read:
+
+```
+!vtb_model_nav
+    <model_directory>/model_description.md
+    <model_directory>/results.md
+```
+
+This creates a "Contents" section on the home page, with a link to each page, titled with the first
+heading of the page. It also adds navigation buttons to each of the listed pages:
+
+- below the title of the page, "Model Home" and "Previous", which links to the page before it in the list
+  (not shown on the first page);
+- at the end of the page, before the references, "Model Home" and "Next", which links to the page after it
+  (not shown on the last page).
+
+The pages themselves do not need any command, but they must start with a heading (`# Title`), which is
+used for the title in the buttons. A page can only be listed on the home page of one model.
+
 ## High Level Summary of Model
 
 High level introduction is expected here about the model of interest. Figures and tables can be added
