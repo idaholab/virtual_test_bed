@@ -1,0 +1,62 @@
+[Tests]
+  # Chained regression tests for the welding -> cooldown pipeline (abbreviated runs).
+  # The full simulation (3857 + 206 time steps, ~14.5 h on 12 ranks) is not tested here; its
+  # results are kept as reference in welding/gold/weld_full_scl.csv and
+  # cooldown/gold/cooldown_full_scl.csv.
+  [weld_syntax]
+    type = RunApp
+    input = 'weld.i'
+    check_input = True
+    capabilities = 'grizzlyapp'
+  []
+  [weld_abbrev]
+    # 20 time steps to t = 50 s: delay period plus the first 25 s of pass 1 (torch on, element
+    # activation). t = 50 s is a sync time, so the final step is checkpointed and the last CSV row
+    # and the last checkpoint belong to the same time, as the cooldown restart requires.
+    type = CSVDiff
+    input = 'weld.i'
+    cli_args = 'Executioner/num_steps=20 Outputs/exodus/enable=false'
+    csvdiff = '40mm/scl.csv'
+    rel_err = 1e-5
+    abs_zero = 1e-9
+    # the cooldown restarts from this checkpoint, which requires the same number of ranks
+    min_parallel = 12
+    max_parallel = 12
+    max_time = 900
+    capabilities = 'method=opt & grizzlyapp'
+    prereq = 'weld_syntax'
+  []
+  [cooldown_syntax]
+    type = RunApp
+    working_directory = '../cooldown'
+    input = 'cooldown.i'
+    check_input = True
+    # the mesh is read from the welding checkpoint written by weld_abbrev
+    min_parallel = 12
+    max_parallel = 12
+    capabilities = 'method=opt & grizzlyapp'
+    prereq = 'weld_abbrev'
+  []
+  [cooldown_abbrev]
+    # Restart from the final weld_abbrev checkpoint (../welding/40mm/weld_cp/LATEST) with the
+    # bottom-node displacement BCs read from ../welding/40mm/scl.csv (no values passed here):
+    # exercises the complete MOOSE-native welding -> cooldown transfer. The three PointValue
+    # postprocessors added below record the constrained displacements, so the gold file checks
+    # that they equal the welding-end values (last row of welding/gold/40mm/scl.csv).
+    type = CSVDiff
+    working_directory = '../cooldown'
+    input = 'cooldown.i'
+    cli_args = "Executioner/num_steps=3 Outputs/exodus/enable=false
+                Postprocessors/xzfix_bot_disp_x/type=PointValue Postprocessors/xzfix_bot_disp_x/variable=disp_x Postprocessors/xzfix_bot_disp_x/point='-75 450 0'
+                Postprocessors/xzfix_bot_disp_z/type=PointValue Postprocessors/xzfix_bot_disp_z/variable=disp_z Postprocessors/xzfix_bot_disp_z/point='-75 450 0'
+                Postprocessors/zfix_bot_disp_z/type=PointValue Postprocessors/zfix_bot_disp_z/variable=disp_z Postprocessors/zfix_bot_disp_z/point='75 450 0'"
+    csvdiff = '40mm/scl.csv'
+    rel_err = 1e-5
+    abs_zero = 1e-9
+    min_parallel = 12
+    max_parallel = 12
+    max_time = 600
+    capabilities = 'method=opt & grizzlyapp'
+    prereq = 'cooldown_syntax'
+  []
+[]
