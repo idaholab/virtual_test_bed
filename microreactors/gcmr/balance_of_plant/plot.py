@@ -99,7 +99,7 @@ def plotPower(data, test):
     t_hours = data["time"] / 3600.0
     plot = VTBPlot("Time [h]", "Power [MW]")
     plot.plot(t_hours, data["core_power_difference"] * 1e-6, label="Power transferred in the core")
-    plot.plot(t_hours, -data["hx_pri_power_difference"] * 1e-6, label="Power transferred in the heat exchanger")
+    plot.plot(t_hours, -data["hx_pri_power_difference"] * 1e-6, label="Power transferred in the heat exchanger", linestyle="--")
     plot.plot(t_hours, -data["generator_power"] * 1e-6, label="Power transferred in the generator")
     plot.legend()
     plot.finish(test + "_power.png")
