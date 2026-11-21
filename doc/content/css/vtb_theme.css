@@ -98,6 +98,7 @@ h2, h3, h4, h5, h6 {
     color: #fff;
     padding-top: 6px;
     padding-bottom: 6px;
+    font-size: 0.85rem;
 }
 
 /* Tighter vertical spacing inside the model summary box */
@@ -107,21 +108,110 @@ h2, h3, h4, h5, h6 {
     margin-bottom: 4px;
 }
 
-/* "VIEW ON GITHUB" button of "!vtb_model_summary": NRIC yellow with dark blue text */
+/* Columns of the model summary box: fiscal year, computing needs, codes used, contacts */
+.vtb-summary-columns {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    gap: 0.5rem 1.5rem;
+    margin: 8px 0;
+}
+
+.vtb-summary-column {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 0;
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+
+.vtb-summary-column.vtb-summary-wide {
+    flex: 2 1 0;
+}
+
+/* Narrow windows: let the columns wrap */
+@media (max-width: 992px) {
+    .vtb-summary-columns {
+        flex-wrap: wrap;
+    }
+
+    .vtb-summary-column {
+        flex: 1 1 9rem;
+    }
+}
+
+/* Small uppercase heading above the content */
+.vtb-summary-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    opacity: 0.75;
+}
+
+.vtb-summary-column ul {
+    margin: 0;
+    padding: 0;
+}
+
+/* The V&V items keep their bullets */
+.vtb-summary-column ul.browser-default {
+    padding-left: 1.2rem;
+}
+
+/* GitHub logo of "!vtb_model_summary": the white logo of the header bar, no background */
+.vtb-summary-column.vtb-summary-github {
+    flex: 0 0 auto;
+}
+
 .nric-media-box.vtb-model-summary a.vtb-github-button {
     display: inline-block;
-    margin: 4px 0;
-    padding: 0.4rem 1.2rem;
-    border-radius: 6px;
-    background-color: var(--nric-yellow);
-    color: var(--nric-dark-blue);
-    font-family: "Josefin Sans", sans-serif;
-    font-weight: 600;
-    letter-spacing: 0.05em;
+    line-height: 0;
+}
+
+.nric-media-box.vtb-model-summary a.vtb-github-button img {
+    height: 36px;
+    filter: invert(100%);
 }
 
 .nric-media-box.vtb-model-summary a.vtb-github-button:hover {
-    background-color: #fff;
+    opacity: 0.7;
+}
+
+/*
+  Buttons of a multi-page model: home and previous on one line after the title of each page, home
+  and next on one line at the end of the page
+*/
+.vtb-page-nav {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 0.5rem;
+    margin: 2rem 0 1rem 0;
+}
+
+.vtb-page-nav.vtb-page-nav-top {
+    margin: 0 0 1rem 0;
+}
+
+/* Same background as the model summary box */
+.vtb-page-nav a.vtb-nav-button {
+    display: inline-block;
+    padding: 0.4rem 1.2rem;
+    border-radius: 6px;
+    background-color: var(--nric-dark-blue);
+    color: #fff;
+    font-family: "Josefin Sans", sans-serif;
+    font-weight: 600;
+}
+
+/* "Previous:"/"Next:" label, distinct from the page title */
+.vtb-page-nav a.vtb-nav-button .vtb-nav-label {
+    color: var(--nric-yellow);
+}
+
+.vtb-page-nav a.vtb-nav-button:hover {
+    background-color: var(--nric-dark-teal);
 }
 
 /*
