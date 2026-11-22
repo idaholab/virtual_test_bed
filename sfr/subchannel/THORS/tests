@@ -27,6 +27,9 @@
     csvdiff  = 'FFM-5B_out.csv'
     capabilities = 'method!=dbg & (subchannelapp | combinedapp)'
     abs_zero = 1e-5
+    # Platform-dependent summation order in the SCM crossflow solve moves these values by about
+    # 1e-5 relative; the default of 5.5e-6 is tighter than that margin
+    rel_err = 5e-5
     valgrind = NONE
     recover = false
     max_parallel = 1
