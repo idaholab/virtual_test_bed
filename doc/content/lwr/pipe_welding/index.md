@@ -13,11 +13,11 @@
                        open_source:partially
                        fiscal_year:2026
                        institution:ANL
-                       sponsor:TBD
+                       sponsor:NRC
 
 !vtb_model_summary github_url=https://github.com/idaholab/virtual_test_bed/tree/devel/lwr/pipe_welding
-                   contact_names=TBD
-                   contact_emails=TBD
+                   contact_names=Bipul Barua;Cheng-Hau Yang
+                   contact_emails=barau@anl.gov;chenghau.yang@anl.gov
                    vv_summary=Regression tests of the chained welding and cooldown stages;
                               Displacement transfer from welding to cooldown verified to round-off in [the cooldown page](pipe_welding_cooldown.md)
 

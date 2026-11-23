@@ -1,6 +1,8 @@
 # Multi-Pass Pipe Welding Model: Stage 2, 3D Cooldown
 
-*Contact: TBD*
+*Contact: Bipul Barua, barau@anl.gov; Cheng-Hau Yang, chenghau.yang@anl.gov*
+
+*Sponsor: U.S. Nuclear Regulatory Commission (NRC), Office of Nuclear Regulatory Research (RES)*
 
 *Model developed by Bipul Barua (Argonne National Laboratory); VTB integration and validation by Cheng-Hau Yang (Argonne National Laboratory)*
 
