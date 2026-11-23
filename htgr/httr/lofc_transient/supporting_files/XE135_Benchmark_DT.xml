@@ -1,0 +1,28 @@
+<DecayTransmutationLibrary Name="XE135_Bench_DT" Generator="INL" Ver="1.0">
+  <Isotope Name="I135" ZAID="531350" DecayConstant="2.931e-05">
+    <DecayEnergy>1.9168</DecayEnergy>
+    <DecayTypes>BetaMinus</DecayTypes>
+    <DecayBranchingRatios>1</DecayBranchingRatios>
+    <DecayDaughters>XE135</DecayDaughters>
+  </Isotope>
+  <Isotope Name="XE135" ZAID="541350" DecayConstant="2.107e-05">
+    <DecayEnergy>0</DecayEnergy>
+    <DecayTypes>BetaMinus</DecayTypes>
+    <DecayBranchingRatios>1</DecayBranchingRatios>
+    <DecayDaughters>CS135</DecayDaughters>
+  </Isotope>
+  <Isotope Name="CS135" ZAID="551350" DecayConstant="0"/>
+  <Isotope Name="U235" ZAID="922350" DecayConstant="0">
+    <NXTypes>NGamma Fission</NXTypes>
+    <NXBranchingRatios>1 1</NXBranchingRatios>
+    <NXDaughters>U236 FissionProducts</NXDaughters>
+    <FissionData>
+      <NeutronInduced IncidentNeutronEnergy="2.53e-08" RecoverableFissionEnergy="200">
+        <FissionProduct Name="I135">0.02938</FissionProduct>
+        <FissionProduct Name="Sink">2</FissionProduct>
+        <FissionProduct Name="XE135">0.001783</FissionProduct>
+      </NeutronInduced>
+    </FissionData>
+  </Isotope>
+  <Isotope Name="U236" ZAID="922360" DecayConstant="0"/>
+</DecayTransmutationLibrary>
