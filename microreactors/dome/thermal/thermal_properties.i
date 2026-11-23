@@ -7,7 +7,7 @@ nwc_k = 1.7
 # heavy-weight concrete
 hwc_rho = 3684.00
 hwc_cp = 670
-hwc_k = 2.77 
+hwc_k = 2.77
 
 # water
 water_rho = 998.0
