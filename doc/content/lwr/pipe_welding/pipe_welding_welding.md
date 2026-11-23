@@ -16,9 +16,16 @@ pressure vessel. Welding residual stresses result from the strongly non-uniform 
 cooling during welding, in combination with temperature-dependent plasticity and creep of the
 weld and base metal. They are a key input to integrity assessments of welded components.
 
-This example computes the residual stresses in a multi-pass circumferential (girth) weld in a
-pipe with a 40 mm thick wall. It is an internally developed pipe welding model and is not based
-on external proprietary pressure vessel data. The simulation has two stages:
+### Model Background
+
+The model is based on the eight-pass circumferential weld simulation of a Type 316H stainless
+steel cylindrical vessel with a 40 mm thick wall described by [!citet](barua2024assessment). The
+study adapted a sample problem from the R5 procedure and modeled progressive weld metal
+deposition with a moving ellipsoidal heat source. The authors compared their predicted
+through-thickness axial residual stress profiles with the experimental measurements and numerical
+results reported in R5.
+
+The VTB example provides an updated BlackBear implementation in two stages.
 
 1. **Welding** (this page): 8 weld passes deposited one after another, t = 0 to 9625 s.
 2. **[Cooldown](pipe_welding_cooldown.md)**: restart from the final welding state, release of the
@@ -124,13 +131,19 @@ the heat source in the weld groove is heated close to the melting temperature us
 For each pass, a `ParsedAux` sets `weld = 1` in the elements whose circumferential angle `phi` has
 been passed by the torch, which sweeps $2\pi$ during the 1200 s of the pass. The
 `CoupledVarThresholdElementSubdomainModifier` moves these elements into the active block and
-updates the moving boundary. The temperature and displacements of newly activated nodes are
-initialized by first-order patch recovery from the neighboring active elements
-(`NodalPatchRecoveryVariable` user objects, strategy `POLYNOMIAL_NEIGHBOR`).
+updates the moving boundary.
 
 !listing /lwr/pipe_welding/welding/weld_objects.i block=AuxKernels
 
 !listing /lwr/pipe_welding/welding/weld_objects.i block=MeshModifiers
+
+### Element Activation and Nodal Patch Recovery
+
+As weld elements are activated, the model uses `NodalPatchRecoveryVariable` to fit first-order
+polynomials for temperature and displacement on neighboring active elements. The
+`POLYNOMIAL_NEIGHBOR` strategy extrapolates those polynomials to initialize the newly activated
+nodes. Section 4.1 of [!citet](yang2025improved) describes this approach to initializing
+variables on the updated active domain.
 
 !listing /lwr/pipe_welding/welding/weld_objects.i block=UserObjects
 
@@ -215,3 +228,5 @@ Reference results of the full simulation are in `welding/gold/weld_full_scl.csv`
 | Number of processes | 12 |
 | Number of threads per process | 1 |
 | Run time | about 14 hours (3857 time steps) |
+
+!bibtex bibliography

@@ -140,3 +140,12 @@ cooldown. The highest stresses are found in the weld region at mid-height.
   with an earlier implementation of the same model.
 - **Displacement transfer verified:** the imposed bottom-node displacements equal the welding-end
   nodal values to round-off (≤ 3e-15 mm), and are held at every output time of the cooldown.
+
+### Residual Stress and Subsequent Fracture Analysis
+
+The residual stress field at the end of cooldown can serve as the initial stress state for
+subsequent structural integrity and fracture assessments. [!citet](munday2026integrated) investigate
+the integration of weld residual stress evolution and crack propagation using the extended finite
+element method (XFEM). The VTB example ends with the residual stress calculation after cooldown.
+
+!bibtex bibliography
