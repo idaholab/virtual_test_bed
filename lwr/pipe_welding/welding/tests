@@ -7,7 +7,7 @@
     type = RunApp
     input = 'weld.i'
     check_input = True
-    capabilities = 'grizzlyapp'
+    capabilities = 'blackbearapp'
   []
   [weld_abbrev]
     # 20 time steps to t = 50 s: delay period plus the first 25 s of pass 1 (torch on, element
@@ -23,7 +23,7 @@
     min_parallel = 12
     max_parallel = 12
     max_time = 900
-    capabilities = 'method=opt & grizzlyapp'
+    capabilities = 'method=opt & blackbearapp'
     prereq = 'weld_syntax'
   []
   [cooldown_syntax]
@@ -34,7 +34,7 @@
     # the mesh is read from the welding checkpoint written by weld_abbrev
     min_parallel = 12
     max_parallel = 12
-    capabilities = 'method=opt & grizzlyapp'
+    capabilities = 'method=opt & blackbearapp'
     prereq = 'weld_abbrev'
   []
   [cooldown_abbrev]
@@ -56,7 +56,7 @@
     min_parallel = 12
     max_parallel = 12
     max_time = 600
-    capabilities = 'method=opt & grizzlyapp'
+    capabilities = 'method=opt & blackbearapp'
     prereq = 'cooldown_syntax'
   []
 []
