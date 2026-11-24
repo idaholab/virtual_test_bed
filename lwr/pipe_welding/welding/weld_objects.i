@@ -41,7 +41,8 @@
   # temperature of each pass is close to the melting point of 316H (Barua and Messner 2024, Sec. 6.3).
   # volumetric_heat [W/mm^3] = 2*efficiency*Pfraction*scale/(pi*a*b) * exp(-2*dt^2/a^2 - 2*dn^2/b^2)
   # with a, b, dt, dn in mm: scale (= base_power) is a heat input per unit length [W/mm], not the
-  # torch power in W. The volume integral of volumetric_heat [W] is the total_heat postprocessor.
+  # torch power in W. total_heat is the volume integral of volumetric_heat over the active blocks:
+  # the instantaneous applied heat rate [W], not the cumulative energy.
   [ellipsoidal_heat_source]
     type = ADMovingEllipsoidalHeatSource
     spatiotemporal_path = path

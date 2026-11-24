@@ -67,8 +67,10 @@ q = \frac{2 \eta P}{\pi a b} \exp\left(-\frac{2 d_t^2}{a^2} - \frac{2 d_n^2}{b^2
 where $\eta$ is the efficiency, $P$ the base value times the pass factor, $a$ and $b$ the
 semi-axes (mm), and $d_t$ and $d_n$ the distances along and normal to the torch path. Because
 $a$ and $b$ are in mm, $P$ acts as a heat input per unit length (W/mm), not as the torch power in
-W. The volume integral of $q$, i.e. the heat input in W, is reported by the `total_heat`
-postprocessor.
+W. The `total_heat` postprocessor reports the volume integral of $q$ over the active blocks (base
+metal and deposited weld metal), i.e. the instantaneous rate of heat applied to the model (W), not
+the cumulative energy. The part of the heat source that lies in weld metal not yet deposited is
+neither applied nor included in `total_heat`.
 
 Files used by this stage include:
 
@@ -200,8 +202,8 @@ creep strain is negligible.
 
 ### `Postprocessors`
 
-Peak temperature, total heat input, and stresses, strains and temperatures at inner-surface
-(`_id`), mid-wall (`_mid`) and outer-surface (`_od`) points. The displacements of the two bottom
+Peak temperature, applied heat rate (`total_heat`, W), and stresses, strains and temperatures at
+inner-surface (`_id`), mid-wall (`_mid`) and outer-surface (`_od`) points. The displacements of the two bottom
 nodes, `xzfix_bot_disp_x`, `xzfix_bot_disp_z` and `zfix_bot_disp_z`, are recorded as well; the
 cooldown stage uses their final values as boundary conditions.
 
@@ -251,6 +253,13 @@ of `ADMovingEllipsoidalHeatSource` introduced in BlackBear in November 2026 (Bla
 changes.
 
 Reference results of the full simulation are in `welding/gold/weld_full_scl.csv`.
+
+!alert note title=Total heat in the full-run reference
+`welding/gold/weld_full_scl.csv` was produced by an earlier version of the inputs in which
+`total_heat` also integrated the heat source over weld metal not yet deposited. Its `total_heat`
+column therefore overestimates the applied heat rate (by about a factor of two at the start of the
+first pass). The heat-source kernel was already restricted to the active blocks, so the heat
+applied to the model and the other columns are not affected.
 
 ## HPC Resources
 
