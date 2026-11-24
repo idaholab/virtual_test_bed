@@ -20,10 +20,7 @@
                    contact_names=Bipul Barua;Cheng-Hau Yang
                    contact_emails=barau@anl.gov;chenghau.yang@anl.gov
                    vv_summary=Demonstration case: the model has not been validated against measured weld residual stresses;
-                              Heat input calibrated so that the peak temperature of each pass is close to the melting point of 316H, see [the welding page](pipe_welding_welding.md);
-                              Final residual stresses agree to within 2% with an earlier implementation of the same model, see [the cooldown page](pipe_welding_cooldown.md);
-                              Displacement transfer from welding to cooldown verified to round-off in [the cooldown page](pipe_welding_cooldown.md);
-                              Regression tests of the chained welding and cooldown stages
+                              Code-to-code comparison: the final residual stresses agree to within 2% with an earlier implementation of the same model, see [the cooldown page](pipe_welding_cooldown.md)
 
 This is a demonstration case of a 3D multi-pass welding and cooldown simulation with element
 activation and restart. The residual stress field it computes can be used as the initial state of

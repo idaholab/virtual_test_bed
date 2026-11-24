@@ -515,20 +515,35 @@
   []
 []
 
+[Times]
+  # every output_interval (25 s) from t = 0 to the end of welding
+  [output_times]
+    type = TimeIntervalTimes
+    time_interval = ${output_interval}
+    start_time = 0
+    end_time = ${total_weld_time}
+    outputs = 'none'
+  []
+[]
+
+# The time stepper hits the sync times of all outputs: output_times (Exodus and Checkpoint) and
+# pass_sync_times (CSV). Exodus and CSV still write every time step (sync_only = false).
 [Outputs]
   print_linear_residuals = false
-  sync_times = ${sync_times}
   [exodus]
     type = Exodus
     file_base = ${exo_file_base}
+    sync_times_object = output_times
   []
   [csv]
     type = CSV
     file_base = ${csv_file_base}
+    sync_times = ${pass_sync_times}
   []
   [cp]
     type = Checkpoint
     file_base = ${cp_file_base}
+    sync_times_object = output_times
     time_step_interval = 25
     num_files = 48
   []

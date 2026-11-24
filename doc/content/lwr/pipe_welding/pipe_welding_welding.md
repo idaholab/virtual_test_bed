@@ -85,8 +85,10 @@ Files used by this stage include:
 
 `common_config.i` and `weld_config.i` define the parameters used in the rest of the input with
 the `${...}` syntax: thickness and file names, reference and melting temperatures, number and
-duration of the passes, heat source size and power, and the time stepping. The `sync_times`
-force a time step and output every 25 s and just after the start of each pass.
+duration of the passes, heat source size and power, and the time stepping. The time stepper is
+forced to hit every `output_interval` = 25 s (a `TimeIntervalTimes` object) and the
+`pass_sync_times`, computed from the pass parameters: one maximum time step before the first pass
+starts and 0.1 s after the start of each later pass.
 
 !listing /lwr/pipe_welding/welding/weld_config.i
 
@@ -218,12 +220,14 @@ limited to 2.5 s.
 
 !listing /lwr/pipe_welding/welding/common_objects_R5_plas.i block=Executioner
 
-### `Outputs`
+### `Times` and `Outputs`
 
 Exodus results (`40mm/out.e*`), CSV postprocessor history (`40mm/scl.csv`) and checkpoints
-(`40mm/weld_cp`), all used by the cooldown stage.
+(`40mm/weld_cp`), all used by the cooldown stage. Exodus and CSV write every time step;
+checkpoints are written every 25 time steps and at the `output_times`. The time stepper hits the
+sync times of all outputs: `output_times` (Exodus and checkpoint) and `pass_sync_times` (CSV).
 
-!listing /lwr/pipe_welding/welding/common_objects_R5_plas.i block=Outputs
+!listing /lwr/pipe_welding/welding/common_objects_R5_plas.i block=Times Outputs
 
 ## Running the model
 

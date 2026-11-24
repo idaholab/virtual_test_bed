@@ -135,8 +135,13 @@ cooldown. The highest stresses are found in the weld region at mid-height.
 - **Final residual stresses** (t = 720000 s, reference results): von Mises 144.5 MPa at the inner
   surface point and 480 MPa at the outer surface point. The final stresses agree to within 2%
   with an earlier implementation of the same model.
-- **Displacement transfer verified:** the imposed bottom-node displacements equal the welding-end
-  nodal values to round-off (≤ 3e-15 mm), and are held at every output time of the cooldown.
+- **Consistency check of the displacement transfer:** the bottom-node displacements imposed in the
+  cooldown are read from the welding CSV output (`PiecewiseLinear` functions applied with
+  `ADFunctionDirichletBC`). To check the transfer, the values of `disp_x` and `disp_z` at these
+  nodes in the cooldown solution were compared with the last row of the welding CSV. They differ
+  by at most 3e-15 mm (round-off) and stay constant during the cooldown. The `cooldown_abbrev`
+  test records these nodal values with `PointValue` postprocessors at every output, so its gold
+  file checks the same property on the abbreviated run.
 
 ### Residual Stress and Subsequent Fracture Analysis
 
