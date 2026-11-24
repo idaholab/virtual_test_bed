@@ -72,16 +72,18 @@
     family = LAGRANGE
     block = ${base_blocks}
   []
-  # phi, weld and tbegin are also needed on the not yet deposited weld-pass blocks
+  # phi, weld and tbegin are also needed on the not yet deposited weld-pass blocks, so they are
+  # not block restricted (block = '' overrides GlobalParams/block). An explicit list of the
+  # weld-pass blocks would fail in the Exodus output once a pass is complete and its block is empty.
   [phi]
     order = CONSTANT
     family = MONOMIAL
-    block = '${base_blocks} ${weld_blocks}'
+    block = ''
   []
   [weld]
     order = CONSTANT
     family = MONOMIAL
-    block = '${base_blocks} ${weld_blocks}'
+    block = ''
   []
   [a]
     order = CONSTANT
@@ -91,7 +93,7 @@
     order = CONSTANT
     family = MONOMIAL
     initial_condition = 1e12
-    block = '${base_blocks} ${weld_blocks}'
+    block = ''
   []
 []
 
