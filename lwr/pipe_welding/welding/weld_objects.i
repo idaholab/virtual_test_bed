@@ -188,7 +188,6 @@
     v = disp_x
     vector_tag = reaction
     remove_variable_scaling = true
-    execute_on = 'TIMESTEP_END'
   []
   [ry]
     type = TagVectorAux
@@ -196,7 +195,6 @@
     v = disp_y
     vector_tag = reaction
     remove_variable_scaling = true
-    execute_on = 'TIMESTEP_END'
   []
   [rz]
     type = TagVectorAux
@@ -204,7 +202,6 @@
     v = disp_z
     vector_tag = reaction
     remove_variable_scaling = true
-    execute_on = 'TIMESTEP_END'
   []
   [phi]
     type = ParsedAux
