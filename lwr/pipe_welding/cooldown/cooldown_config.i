@@ -1,11 +1,12 @@
 # Multi-Pass Pipe Welding and Cooldown Residual Stress Model (VTB: lwr/pipe_welding)
+# Documentation: https://mooseframework.inl.gov/virtual_test_bed/lwr/pipe_welding/index.html
 # Authors: Bipul Barua (original model), Cheng-Hau Yang (VTB integration and validation)
 # Institution: Argonne National Laboratory
 # Codes: Grizzly (BlackBear objects: SpatioTemporalPath, ADMovingEllipsoidalHeatSource)
 # Cooldown stage parameters, including the welding outputs it reads (checkpoint, CSV).
 
 cp_file_base = '${thickness}/cooldown'
-heat_transfer_coefficient = 10e-6
+heat_transfer_coefficient = 10e-6 # W/(mm^2 K) (= 10 W/(m^2 K))
 
 # Restart source: checkpoint directory written by the welding stage (resolved via LATEST,
 # i.e. the newest checkpoint by modification time = the final step of an uninterrupted run).
@@ -20,7 +21,7 @@ weld_csv = '../welding/40mm/scl.csv'
 # weld
 total_passes = 8
 pass_weld_time = 1200
-delay_time = 25 #300
+delay_time = 25 # s, delay before the first pass starts
 total_weld_time = '${fparse pass_weld_time*total_passes + delay_time}'
 
 # cooldown
@@ -31,5 +32,3 @@ dt = 2.5
 dtmax = 3600
 dtmin = 1e-8
 sync_times = '${total_weld_time} ${fparse total_weld_time+dt} ${fparse (total_weld_time+load_release_time)} ${fparse end_of_cooldown/2} ${end_of_cooldown}'
-
-disp_save_in = ''

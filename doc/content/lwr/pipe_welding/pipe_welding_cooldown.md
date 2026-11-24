@@ -18,13 +18,15 @@ ambient temperature by radiation and convection, to obtain the final residual st
 ## Computational Model Description
 
 The cooldown uses the same mesh, variables, kernels and materials as the welding stage
-(`common_objects_R5_plas.i`), with three differences:
+(`common_objects_R5_plas.i`), without the auxiliary variables of the element activation (`phi`,
+`weld`, `a`, `tbegin`), and with three differences:
 
 1. **Restart.** The mesh and the complete solution state, including the stateful plastic and
    creep variables, are restored from the final welding checkpoint
    (`Problem/restart_file_base = ../welding/40mm/weld_cp/LATEST`).
 2. **Clamp release.** The clamp constraints of the welding stage are replaced by nodal forces equal
-   to the clamp reactions at the end of welding (`rx`, `ry`, `rz`). These forces are reduced
+   to the clamp reactions at the end of welding (`rx`, `ry`, `rz`, restored from the checkpoint
+   and not updated during the cooldown). These forces are reduced
    linearly to zero over `load_release_time` = 360 s, so the clamps are released smoothly.
 3. **Minimal support.** Rigid-body motion is prevented by two bottom nodes, held at their
    displacements at the end of welding, and the symmetry condition on `yfix_bot`.
@@ -109,11 +111,6 @@ files are produced in `cooldown/40mm/`:
 - the checkpoint directory `cooldown_cp`
 
 Reference results of the full simulation are in `cooldown/gold/cooldown_full_scl.csv`.
-
-!alert warning title=Required BlackBear version
-As for the [welding stage](pipe_welding_welding.md), the model was developed and tested with a
-standalone BlackBear executable. Compatibility with the Grizzly version used by the VTB has not
-been verified yet.
 
 ## HPC Resources
 

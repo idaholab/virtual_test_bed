@@ -1,4 +1,5 @@
 # Multi-Pass Pipe Welding and Cooldown Residual Stress Model (VTB: lwr/pipe_welding)
+# Documentation: https://mooseframework.inl.gov/virtual_test_bed/lwr/pipe_welding/index.html
 # Authors: Bipul Barua (original model), Cheng-Hau Yang (VTB integration and validation)
 # Institution: Argonne National Laboratory
 # Codes: Grizzly (BlackBear objects: SpatioTemporalPath, ADMovingEllipsoidalHeatSource)
@@ -26,13 +27,8 @@
   []
 []
 
-# [BlackBear port] Current BlackBear replaced FunctionSpatioTemporalPath (MALAMUTE) with a
-# single piecewise-linear SpatioTemporalPath read from one CSV (columns t,x,y,z).
-# path_txyz.csv = path_x.csv + path_y.csv + path_z.csv merged on their identical time column
-# (1930 vertices), so the torch POSITION is unchanged.
-# Not portable: the old options update_interval, verbose, smoothing = true,
-# smoothing_time_window = 60, smoothing_points = 20. Smoothing only affected the path
-# direction/velocity (heat-source orientation); the new path uses the current segment direction.
+# Torch path: piecewise-linear interpolation of the (t, x, y, z) vertices in path_txyz.csv
+# (1930 vertices). The heat source is oriented along the current path segment.
 [SpatioTemporalPaths]
   [path]
     type = SpatioTemporalPath
@@ -41,9 +37,14 @@
 []
 
 [Materials]
+  # R5 gives no welding procedure details, so the heat input was calibrated so that the peak
+  # temperature of each pass is close to the melting point of 316H (Barua and Messner 2024, Sec. 6.3).
+  # volumetric_heat [W/mm^3] = 2*efficiency*Pfraction*scale/(pi*a*b) * exp(-2*dt^2/a^2 - 2*dn^2/b^2)
+  # with a, b, dt, dn in mm: scale (= base_power) is a heat input per unit length [W/mm], not the
+  # torch power in W. The volume integral of volumetric_heat [W] is the total_heat postprocessor.
   [ellipsoidal_heat_source]
     type = ADMovingEllipsoidalHeatSource
-    spatiotemporal_path = path # [BlackBear port] was: path = path
+    spatiotemporal_path = path
     power = Pfraction
     efficiency = 0.8
     scale = ${base_power}
@@ -60,9 +61,8 @@
   []
 []
 
-# [BlackBear port] Current MOOSE: NodalPatchRecoveryVariable 'var' -> 'variable'; parameter
-# 'use_specific_elements = true' removed (it only restricted parallel ghost-element syncing to the
-# elements requested by the subdomain modifier; current MOOSE always syncs only those).
+# Patch recovery of T and displacements, used by the mesh modifier below to initialize the
+# newly activated weld elements (reinitialization_strategy = POLYNOMIAL_NEIGHBOR).
 [UserObjects]
   [extrapolation_patch_T]
     type = NodalPatchRecoveryVariable
@@ -106,7 +106,7 @@
     moving_boundaries = 'moving_moving'
     moving_boundary_subdomain_pairs = moving
 
-    # --- new for setting IC --- #
+    # initial values of the newly activated elements, fitted from the active neighbors
     old_subdomain_reinitialized = false
     reinitialize_subdomains = ${base_blocks}
 
@@ -180,9 +180,36 @@
 []
 
 [AuxKernels]
+  # Nodal reaction forces (unscaled displacement residuals) at the end of each time step. They are
+  # restored from the final welding checkpoint and released gradually in the cooldown stage.
+  [rx]
+    type = TagVectorAux
+    variable = rx
+    v = disp_x
+    vector_tag = reaction
+    remove_variable_scaling = true
+    execute_on = 'TIMESTEP_END'
+  []
+  [ry]
+    type = TagVectorAux
+    variable = ry
+    v = disp_y
+    vector_tag = reaction
+    remove_variable_scaling = true
+    execute_on = 'TIMESTEP_END'
+  []
+  [rz]
+    type = TagVectorAux
+    variable = rz
+    v = disp_z
+    vector_tag = reaction
+    remove_variable_scaling = true
+    execute_on = 'TIMESTEP_END'
+  []
   [phi]
     type = ParsedAux
     variable = phi
+    block = '${base_blocks} ${weld_blocks}'
     expression = 'atan(z/x)+${pi}'
     use_xyzt = true
     execute_on = 'INITIAL LINEAR TIMESTEP_BEGIN'

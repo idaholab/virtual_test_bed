@@ -1,4 +1,5 @@
 # Multi-Pass Pipe Welding and Cooldown Residual Stress Model (VTB: lwr/pipe_welding)
+# Documentation: https://mooseframework.inl.gov/virtual_test_bed/lwr/pipe_welding/index.html
 # Authors: Bipul Barua (original model), Cheng-Hau Yang (VTB integration and validation)
 # Institution: Argonne National Laboratory
 # Codes: Grizzly (BlackBear objects: SpatioTemporalPath, ADMovingEllipsoidalHeatSource)
@@ -38,14 +39,13 @@
   []
 []
 
-# [BlackBear port] The original used FunctionCoupledNodalForce, a custom NodalKernel that only
-# existed (untracked) in the MALAMUTE MOOSE tree:  residual = -coef * v * release(t), Jacobian = 0.
-# BlackBear has no such object, so the same residual is built from standard MOOSE objects:
+# Clamp release: the clamp reactions at the end of welding are applied as nodal forces that are
+# reduced linearly to zero:
 #   r*_released = r* * release(t)   (ParsedAux, evaluated at the new time at TIMESTEP_BEGIN)
 #   CoupledForceNodalKernel:  residual = -coef * r*_released, Jacobian = 0 (v is an aux variable)
 # r* (rx, ry, rz) are the weld-end nodal reactions restored from the checkpoint; they are not
-# updated during cooldown (disp_save_in = ''), exactly as before.
-# The r*_released aux variables are new relative to the checkpoint; MOOSE restart supports this.
+# updated during cooldown (no TagVectorAux in this stage).
+# The r*_released aux variables are not in the checkpoint; MOOSE restart supports this.
 [AuxVariables]
   [rx_released]
     block = ${base_blocks}

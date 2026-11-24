@@ -1,4 +1,5 @@
 # Multi-Pass Pipe Welding and Cooldown Residual Stress Model (VTB: lwr/pipe_welding)
+# Documentation: https://mooseframework.inl.gov/virtual_test_bed/lwr/pipe_welding/index.html
 # Authors: Bipul Barua (original model), Cheng-Hau Yang (VTB integration and validation)
 # Institution: Argonne National Laboratory
 # Codes: Grizzly (BlackBear objects: SpatioTemporalPath, ADMovingEllipsoidalHeatSource)

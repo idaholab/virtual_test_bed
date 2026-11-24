@@ -38,8 +38,12 @@ elements of each weld pass as the torch passes over them.
 
 ## Computational Model Description
 
-The model uses mm, s, MPa and K. The pipe axis is the $y$ axis; the inner and outer radii are
-75 mm and 115 mm.
+The model uses length in mm, time in s and temperature in K. The solid mechanics part uses force
+in N and stress in MPa (N/mm$^2$); the heat transfer part uses energy in J, power in W and mass in
+kg, so that density is in kg/mm$^3$, specific heat in J/(kg$\cdot$K), thermal conductivity in
+W/(mm$\cdot$K) and heat fluxes in W/mm$^2$. The two parts are coupled only through the temperature
+and the (dimensionless) thermal strain, so this combination is consistent. The pipe axis is the
+$y$ axis; the inner and outer radii are 75 mm and 115 mm.
 
 !media lwr/pipe_welding/fig1_geometry_and_mesh.png
       id=pipe_welding_mesh
@@ -50,9 +54,21 @@ The mesh `vessel_40mm_coarse_v05.exo` has 16,640 hexahedral elements and 18,214 
 blocks `basemetal`, `weld_to_base` and `weldpass-1` to `weldpass-8`. Elements of a weld pass are
 moved to the active block `weld_to_base` when they are deposited.
 
-Each pass takes 1200 s and the first one starts after a 25 s delay. The heat input of pass $n$ is
-scaled by a pass-dependent factor (1, 0.8, 0.66, 0.71, 0.64, 0.71, 0.58, 0.67), starting from a
-base power of 500 with an efficiency of 0.8.
+Each pass takes 1200 s and the first one starts after a 25 s delay. R5 gives no details of the
+welding procedure, so the heat input was calibrated so that the peak temperature of each pass is
+close to the melting point of 316H [!citep](barua2024assessment). The heat input of pass $n$ is
+scaled by a pass-dependent factor (1, 0.8, 0.66, 0.71, 0.64, 0.71, 0.58, 0.67) of a calibrated
+base value of 500 with an efficiency of 0.8. `ADMovingEllipsoidalHeatSource` evaluates the
+volumetric heat (W/mm$^3$) as
+
+!equation
+q = \frac{2 \eta P}{\pi a b} \exp\left(-\frac{2 d_t^2}{a^2} - \frac{2 d_n^2}{b^2}\right),
+
+where $\eta$ is the efficiency, $P$ the base value times the pass factor, $a$ and $b$ the
+semi-axes (mm), and $d_t$ and $d_n$ the distances along and normal to the torch path. Because
+$a$ and $b$ are in mm, $P$ acts as a heat input per unit length (W/mm), not as the torch power in
+W. The volume integral of $q$, i.e. the heat input in W, is reported by the `total_heat`
+postprocessor.
 
 Files used by this stage include:
 
@@ -71,6 +87,15 @@ duration of the passes, heat source size and power, and the time stepping. The `
 force a time step and output every 25 s and just after the start of each pass.
 
 !listing /lwr/pipe_welding/welding/weld_config.i
+
+### `Problem` and `GlobalParams`
+
+`GlobalParams/block` sets the default computational domain to the active blocks
+`basemetal` and `weld_to_base`. All block-restrictable objects use these blocks unless they set
+`block` themselves, and the kernel and material coverage checks are limited to them, so the
+not yet deposited weld-pass blocks are excluded without disabling the checks.
+
+!listing /lwr/pipe_welding/welding/common_objects_R5_plas.i block=Problem GlobalParams
 
 ### `Mesh`
 
@@ -93,7 +118,9 @@ indicator `weld`.
 ### `Physics/SolidMechanics/QuasiStatic`
 
 Small-strain, incremental quasi-static mechanics on the active blocks with a thermal
-eigenstrain. The nodal residuals of the displacements are saved in `rx`, `ry` and `rz`.
+eigenstrain. The displacement residuals of the stress divergence kernels are accumulated in the
+`reaction` vector tag, and `TagVectorAux` kernels (in `weld_objects.i`) copy them into `rx`, `ry`
+and `rz` at the end of each time step. At the clamped nodes they are the reaction forces.
 
 !listing /lwr/pipe_welding/welding/common_objects_R5_plas.i block=Physics/SolidMechanics/QuasiStatic
 
@@ -157,10 +184,17 @@ and convection from the inner and outer surfaces and from the moving weld surfac
 
 ### `Materials`
 
-Temperature-dependent density, specific heat, thermal conductivity and Young's modulus
-(`ADPiecewiseLinearInterpolationMaterial`), instantaneous thermal expansion, and an inelastic
-response combining isotropic plasticity (yield stress 235 MPa with the hardening function
-`isohard`) and power-law creep, combined by `ADComputeMultipleInelasticStress`.
+Temperature-dependent thermal conductivity and Young's modulus and constant density and specific
+heat (`ADPiecewiseLinearInterpolationMaterial`), and temperature-dependent instantaneous thermal
+expansion. Following [!citet](barua2024assessment), the weld residual stresses mostly depend on
+the room-temperature flow stress, so the plasticity model uses the room-temperature data of R5 at
+all temperatures: linear isotropic hardening from an elastic limit of 235 MPa to 480 MPa at 1%
+plastic strain (hardening function `isohard`), and perfect plasticity beyond. The total strain
+during welding and cooldown is the sum of thermal, elastic and plastic strains only
+[!citep](barua2024assessment). A power-law creep model (`neg_creep`) is kept in
+`ADComputeMultipleInelasticStress`, but its coefficient is reduced from the 316H value
+$1.82 \times 10^{-4}$ MPa$^{-n}$s$^{-1}$ to $1.82 \times 10^{-40}$ MPa$^{-n}$s$^{-1}$, so that the
+creep strain is negligible.
 
 !listing /lwr/pipe_welding/welding/common_objects_R5_plas.i block=Materials
 
@@ -214,8 +248,7 @@ restarts from the welding checkpoint. `run_pipeline.sh` takes care of this.
 The model uses the piecewise-linear `SpatioTemporalPath` and the `spatiotemporal_path` parameter
 of `ADMovingEllipsoidalHeatSource` introduced in BlackBear in November 2026 (BlackBear commit
 25cd931). It was developed and tested with a standalone BlackBear executable that includes these
-changes. Compatibility with the Grizzly version used by the VTB, which includes BlackBear as a
-submodule, has not been verified yet.
+changes.
 
 Reference results of the full simulation are in `welding/gold/weld_full_scl.csv`.
 

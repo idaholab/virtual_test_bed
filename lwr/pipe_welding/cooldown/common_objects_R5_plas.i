@@ -1,20 +1,25 @@
 # Multi-Pass Pipe Welding and Cooldown Residual Stress Model (VTB: lwr/pipe_welding)
+# Documentation: https://mooseframework.inl.gov/virtual_test_bed/lwr/pipe_welding/index.html
 # Authors: Bipul Barua (original model), Cheng-Hau Yang (VTB integration and validation)
 # Institution: Argonne National Laboratory
 # Codes: Grizzly (BlackBear objects: SpatioTemporalPath, ADMovingEllipsoidalHeatSource)
 # Restart, variables, kernels, materials, executioner and outputs of the cooldown stage.
+# Units: mm, s, K; mechanics in N and MPa (N/mm^2); heat transfer in J, W and kg (density in kg/mm^3).
 
+# Kernel and material coverage checks are restricted to the active blocks by GlobalParams/block.
 [Problem]
-  kernel_coverage_check = false
-  material_coverage_check = false
   boundary_restricted_node_integrity_check = false
   material_dependency_check = false
   boundary_restricted_elem_integrity_check = false
+  extra_tag_vectors = 'reaction'
   restart_file_base = ${weld_cp_dir}/LATEST
 []
 
 [GlobalParams]
   displacements = 'disp_x disp_y disp_z'
+  # Default computational domain: base metal plus deposited weld metal. Also sets the kernel and
+  # material coverage checks to ONLY_LIST on these blocks.
+  block = ${base_blocks}
 []
 
 [Mesh]
@@ -66,22 +71,6 @@
     family = LAGRANGE
     block = ${base_blocks}
   []
-  [phi]
-    order = CONSTANT
-    family = MONOMIAL
-  []
-  [weld]
-    order = CONSTANT
-    family = MONOMIAL
-  []
-  [a]
-    order = CONSTANT
-    family = MONOMIAL
-  []
-  [tbegin]
-    order = CONSTANT
-    family = MONOMIAL
-  []
 []
 
 [AuxKernels]
@@ -116,7 +105,9 @@
         volumetric_locking_correction = true
         strain = ${strain}
         incremental = true
-        save_in = ${disp_save_in}
+        # displacement residual of the stress divergence kernels, i.e. the nodal reaction forces at
+        # the Dirichlet nodes; not extracted here: rx, ry, rz keep the welding-end values
+        extra_vector_tags = 'reaction'
         generate_output = "stress_xx stress_yy stress_zz
                            stress_xy stress_xz stress_yz
                            vonmises_stress
@@ -149,6 +140,7 @@
   [CTE_base]
     type = PiecewiseLinear
     x = '-1000 298.15 323.15 373.15 423.15 473.15 523.15 573.15 623.15 673.15 723.15 773.15 823.15 873.15 923.15 973.15 1023.15 1523.15 1673.15 10000'
+    # x: temperature [K], y: instantaneous coefficient of thermal expansion [1/K]
     y = '14.3033525e-6 14.3033525e-6 14.6621025e-6 15.3796025e-6 16.0971025e-6 16.8146025e-6 17.5321025e-6 18.2496025e-6 18.9671025e-6 19.6846025e-6 20.4021025e-6 21.1196025e-6 21.8371025e-6 22.5546025e-6 23.2721025e-6 23.9896025e-6 24.7071025e-6 31.8821025e-6 0 0'
   []
   [time]
@@ -156,6 +148,8 @@
     expression = t
   []
   [isohard]
+    # R5 room-temperature data of the weld (Barua and Messner 2024, Sec. 6.4), used at all temperatures
+    # x: equivalent plastic strain [-], y: flow stress [MPa]
     type = PiecewiseLinear
     x = '0 0.002 0.01 10000'
     y = '235 240 480 480'
@@ -175,7 +169,7 @@
   [elasticity_tensor]
     type = ADComputeVariableIsotropicElasticityTensor
     youngs_modulus = youngs_modulus
-    poissons_ratio = 0.31
+    poissons_ratio = 0.31 # [-]
     block = ${base_blocks}
   []
   [radial_return_stress_load]
@@ -189,20 +183,24 @@
   []
   [isoplasticity]
     type = ADIsotropicPlasticityStressUpdate
-    yield_stress = 235
+    yield_stress = 235 # MPa
     hardening_function = isohard
     block = ${base_blocks}
     max_inelastic_increment = 0.0001
     relative_tolerance = 1e-08
     absolute_tolerance = 1e-11
   []
+  # Creep is negligible by design: during welding and cooldown the total strain is thermal + elastic
+  # + plastic only (Barua and Messner 2024, Eq. 6.1). The 316H coefficient 1.82e-4 MPa^-n s^-1 is
+  # reduced to 1.82e-40 MPa^-n s^-1 so that the creep strain stays negligible.
+  # creep rate = coefficient * stress^n_exponent * exp(-activation_energy / (gas_constant * T))
   [neg_creep]
     type = ADPowerLawCreepStressUpdate
     temperature = T
-    coefficient = 1.82e-40 #A # actural value: 1.82e-4
-    n_exponent = 6.4656 #exponent over stress
-    activation_energy = 314e03 #
-    gas_constant = 8.3143 #check unit
+    coefficient = 1.82e-40 # MPa^-n s^-1
+    n_exponent = 6.4656 # [-]
+    activation_energy = 314e03 # J/mol
+    gas_constant = 8.3143 # J/(mol K)
     block = ${base_blocks}
     relative_tolerance = 1e-08 # dfault = 1e-08
     absolute_tolerance = 1e-11 # dfault = 1e-11
@@ -210,6 +208,7 @@
   [youngs_modulus]
     type = ADPiecewiseLinearInterpolationMaterial
     x = '-1000 273.15 288.741836735 304.333673469 319.925510204 335.517346939 351.109183673 366.701020408 382.292857143 397.884693878 413.476530612 429.068367347 444.660204082 460.252040816 475.843877551 491.435714286 507.02755102 522.619387755 538.21122449 553.803061224 569.394897959 584.986734694 600.578571429 616.170408163 631.762244898 647.354081633 662.945918367 678.537755102 694.129591837 709.721428571 725.313265306 740.905102041 756.496938776 772.08877551 787.680612245 803.27244898 818.864285714 834.456122449 850.047959184 865.639795918 881.231632653 896.823469388 912.415306122 928.007142857 943.598979592 959.190816327 974.782653061 990.374489796 1005.96632653 1021.55816327 1037.15 1648.15 3000'
+    # x: temperature [K], y: Young's modulus [MPa]
     y = '196500.0 196500.0 195564.489796 194505.306122 193257.959184 192010.612245 190763.265306 189515.918367 188451.428571 187515.918367 186580.408163 185644.897959 184709.387755 183773.877551 182784.489796 181537.142857 180289.795918 179042.44898 178096.326531 177160.816327 176225.306122 175053.061224 173805.714286 172558.367347 171483.265306 170547.755102 169612.244898 168568.979592 167321.632653 166074.285714 164783.673469 163224.489796 161665.306122 160106.122449 158837.55102 157590.204082 156342.857143 154869.387755 153310.204082 151751.020408 150191.836735 148632.653061 147073.469388 145417.142857 143546.122449 141675.102041 139804.081633 137933.061224 136062.040816 134191.020408 132320.0 132320.0 132320.0'
     property = youngs_modulus
     variable = T
@@ -221,6 +220,7 @@
     coupled_variables = 'T'
     expression = 'epsilon*sigma*(T^4-Tinf^4)'
     constant_names = 'epsilon sigma Tinf'
+    # radiative heat flux [W/mm^2]; emissivity [-], Stefan-Boltzmann constant [W/(mm^2 K^4)], K
     constant_expressions = '0.25 5.67037e-14 ${T0}'
     block = ${base_blocks}
   []
@@ -229,7 +229,7 @@
     property = 'density'
     variable = T
     x = '-1000 3000'
-    y = '8030e-9 8030e-9'
+    y = '8030e-9 8030e-9' # kg/mm^3 (= 8030 kg/m^3)
     block = ${base_blocks}
   []
   [specific_heat]
@@ -237,7 +237,7 @@
     property = 'specific_heat'
     variable = T
     x = '-1000 3000'
-    y = '550 550'
+    y = '550 550' # J/(kg K)
     block = ${base_blocks}
   []
   [thermalconductivity]
@@ -245,7 +245,7 @@
     property = 'thermal_conductivity'
     variable = T
     x = '-1000 298.15 373.15 473.15 573.15 673.15 773.15 873.15 973.15 1023.15 2500 3000'
-    y = '14.1e-3 14.1e-3 15.4e-3 16.8e-3 18.3e-3 19.7e-3 21.2e-3 22.4e-3 23.9e-3 24.6e-3 24.6e-3 24.6e-3' ##W/mm-K
+    y = '14.1e-3 14.1e-3 15.4e-3 16.8e-3 18.3e-3 19.7e-3 21.2e-3 22.4e-3 23.9e-3 24.6e-3 24.6e-3 24.6e-3' # W/(mm K)
     block = ${base_blocks}
   []
 []
@@ -279,177 +279,177 @@
 
   [Tc_id]
     type = PointValue
-    point = ${id_point} #point = '75 600 0'
+    point = ${id_point}
     variable = Tc
     outputs = 'csv'
   []
   [Sxx_id]
     type = PointValue
-    point = ${id_point} #point = '75 600 0'
+    point = ${id_point}
     variable = stress_xx
     outputs = 'csv'
   []
   [Syy_id]
     type = PointValue
-    point = ${id_point} #point = '75 600 0'
+    point = ${id_point}
     variable = stress_yy
     outputs = 'csv'
   []
   [Szz_id]
     type = PointValue
-    point = ${id_point} #point = '75 600 0'
+    point = ${id_point}
     variable = stress_zz
     outputs = 'csv'
   []
   [Sxy_id]
     type = PointValue
-    point = ${id_point} #point = '75 600 0'
+    point = ${id_point}
     variable = stress_xy
     outputs = 'csv'
   []
   [Sxz_id]
     type = PointValue
-    point = ${id_point} #point = '75 600 0'
+    point = ${id_point}
     variable = stress_xz
     outputs = 'csv'
   []
   [Syz_id]
     type = PointValue
-    point = ${id_point} #point = '75 600 0'
+    point = ${id_point}
     variable = stress_yz
     outputs = 'csv'
   []
   [Svm_id]
     type = PointValue
-    point = ${id_point} #point = '75 600 0'
+    point = ${id_point}
     variable = vonmises_stress
     outputs = 'csv'
   []
   [Exx_id]
     type = PointValue
-    point = ${id_point} #point = '75 600 0'
+    point = ${id_point}
     variable = mechanical_strain_xx
     outputs = 'csv'
   []
   [Eyy_id]
     type = PointValue
-    point = ${id_point} #point = '75 600 0'
+    point = ${id_point}
     variable = mechanical_strain_yy
     outputs = 'csv'
   []
   [Ezz_id]
     type = PointValue
-    point = ${id_point} #point = '75 600 0'
+    point = ${id_point}
     variable = mechanical_strain_zz
     outputs = 'csv'
   []
   [Exy_id]
     type = PointValue
-    point = ${id_point} #point = '75 600 0'
+    point = ${id_point}
     variable = mechanical_strain_xy
     outputs = 'csv'
   []
   [Exz_id]
     type = PointValue
-    point = ${id_point} #point = '75 600 0'
+    point = ${id_point}
     variable = mechanical_strain_xz
     outputs = 'csv'
   []
   [Eyz_id]
     type = PointValue
-    point = ${id_point} #point = '75 600 0'
+    point = ${id_point}
     variable = mechanical_strain_yz
     outputs = 'csv'
   []
 
   [Tc_mid]
     type = PointValue
-    point = ${mid_point} #point = '85 600 0'
+    point = ${mid_point}
     variable = Tc
     outputs = 'csv'
   []
 
   [Tc_od]
     type = PointValue
-    point = ${od_point} #point = '95 600 0'
+    point = ${od_point}
     variable = Tc
     outputs = 'csv'
   []
   [Sxx_od]
     type = PointValue
-    point = ${od_point} #point = '95 600 0'
+    point = ${od_point}
     variable = stress_xx
     outputs = 'csv'
   []
   [Syy_od]
     type = PointValue
-    point = ${od_point} #point = '95 600 0'
+    point = ${od_point}
     variable = stress_yy
     outputs = 'csv'
   []
   [Szz_od]
     type = PointValue
-    point = ${od_point} #point = '95 600 0'
+    point = ${od_point}
     variable = stress_zz
     outputs = 'csv'
   []
   [Sxy_od]
     type = PointValue
-    point = ${od_point} #point = '95 600 0'
+    point = ${od_point}
     variable = stress_xy
     outputs = 'csv'
   []
   [Sxz_od]
     type = PointValue
-    point = ${od_point} #point = '95 600 0'
+    point = ${od_point}
     variable = stress_xz
     outputs = 'csv'
   []
   [Syz_od]
     type = PointValue
-    point = ${od_point} #point = '95 600 0'
+    point = ${od_point}
     variable = stress_yz
     outputs = 'csv'
   []
   [Svm_od]
     type = PointValue
-    point = ${od_point} #point = '95 600 0'
+    point = ${od_point}
     variable = vonmises_stress
     outputs = 'csv'
   []
   [Exx_od]
     type = PointValue
-    point = ${od_point} #point = '95 600 0'
+    point = ${od_point}
     variable = mechanical_strain_xx
     outputs = 'csv'
   []
   [Eyy_od]
     type = PointValue
-    point = ${od_point} #point = '95 600 0'
+    point = ${od_point}
     variable = mechanical_strain_yy
     outputs = 'csv'
   []
   [Ezz_od]
     type = PointValue
-    point = ${od_point} #point = '95 600 0'
+    point = ${od_point}
     variable = mechanical_strain_zz
     outputs = 'csv'
   []
   [Exy_od]
     type = PointValue
-    point = ${od_point} #point = '95 600 0'
+    point = ${od_point}
     variable = mechanical_strain_xy
     outputs = 'csv'
   []
   [Exz_od]
     type = PointValue
-    point = ${od_point} #point = '95 600 0'
+    point = ${od_point}
     variable = mechanical_strain_xz
     outputs = 'csv'
   []
   [Eyz_od]
     type = PointValue
-    point = ${od_point} #point = '95 600 0'
+    point = ${od_point}
     variable = mechanical_strain_yz
     outputs = 'csv'
   []
@@ -482,10 +482,10 @@
   [TimeStepper]
     type = IterationAdaptiveDT #change time step based on iterations
     dt = ${dt} #initial time step
-    growth_factor = 3 #1.5
-    cutback_factor = 0.25 #0.2
-    cutback_factor_at_failure = 0.25 #0.1
-    optimal_iterations = 15 #8 #for nonlinear
+    growth_factor = 3
+    cutback_factor = 0.25
+    cutback_factor_at_failure = 0.25
+    optimal_iterations = 15 # nonlinear iterations
     linear_iteration_ratio = 100000
     iteration_window = 2
   []
@@ -505,7 +505,7 @@
   [cp]
     type = Checkpoint
     file_base = ${cp_file_base}
-    time_step_interval = 25 # [BlackBear port] was 'interval' (deprecated name, same meaning)
+    time_step_interval = 25
     num_files = 48
   []
 []
