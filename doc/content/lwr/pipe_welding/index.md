@@ -19,7 +19,7 @@
 !vtb_model_summary github_url=https://github.com/idaholab/virtual_test_bed/tree/devel/lwr/pipe_welding
                    contact_names=Bipul Barua;Cheng-Hau Yang
                    contact_emails=barau@anl.gov;chenghau.yang@anl.gov
-                   vv_summary=Demonstration case: the model has not been validated against measured weld residual stresses
+                   vv_summary=Through-thickness axial residual stresses compared with the measurements and analysis of the R5 sample problem by Barua and Messner (2024), see [the welding page](pipe_welding_welding.md)
 
 This is a demonstration case of a 3D multi-pass welding and cooldown simulation with element
 activation and restart. The residual stress field it computes can be used as the initial state of
