@@ -1,10 +1,12 @@
 [Tests]
+  issues = '#278 #927'
   [startup_syntax]
     type = 'RunApp'
     input = 'htgr_startup_transient.i'
     cli_args = '--app ThermalHydraulicsApp'
     check_input = true
-    capabilities = 'combinedapp | thermalhydraulicsapp | relap7app'
+    capabilities = 'combinedapp'
+    # | thermalhydraulicsapp | relap7app'
   []
   [startup]
     type = 'CSVDiff'
@@ -13,7 +15,8 @@
     cli_args = "Executioner/num_steps=10 --app ThermalHydraulicsApp"
     rel_err = 5e-6
     abs_zero = 1e-7
-    capabilities = 'combinedapp | thermalhydraulicsapp | relap7app'
+    capabilities = 'combinedapp'
+    # | thermalhydraulicsapp | relap7app'
     prereq = 'startup_syntax'
   []
 
@@ -22,7 +25,8 @@
     input = 'htgr_load_follow_transient.i'
     cli_args = '--app ThermalHydraulicsApp'
     check_input = true
-    capabilities = 'combinedapp | thermalhydraulicsapp | relap7app'
+    capabilities = 'combinedapp'
+    # | thermalhydraulicsapp | relap7app'
     prereq = 'startup'
   []
 []
