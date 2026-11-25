@@ -144,8 +144,7 @@ cooldown. The highest stresses are found in the weld region at mid-height.
       caption=Final von Mises residual stress on the outer surface of the pipe after cooldown, at t = 720000 s.
 
 - **Final residual stresses** (t = 720000 s, reference results): von Mises 144.5 MPa at the inner
-  surface point and 480 MPa at the outer surface point. The final stresses agree to within 2%
-  with an earlier implementation of the same model.
+  surface point and 480 MPa at the outer surface point.
 - **Consistency check of the displacement transfer:** the bottom-node displacements imposed in the
   cooldown are read from the welding CSV output (`PiecewiseLinear` functions applied with
   `ADFunctionDirichletBC`). To check the transfer, the values of `disp_x` and `disp_z` at these
