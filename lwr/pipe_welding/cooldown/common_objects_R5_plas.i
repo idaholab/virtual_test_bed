@@ -175,9 +175,9 @@
   [radial_return_stress_load]
     type = ADComputeMultipleInelasticStress
     inelastic_models = 'isoplasticity neg_creep'
-    max_iterations = 1000 #default = 50
-    relative_tolerance = 1e-08 #default = 1e-05
-    absolute_tolerance = 1e-11 # dfault = 1e-05
+    max_iterations = 1000
+    relative_tolerance = 1e-08
+    absolute_tolerance = 1e-11
     perform_finite_strain_rotations = false
     block = ${base_blocks}
   []
@@ -202,8 +202,8 @@
     activation_energy = 314e03 # J/mol
     gas_constant = 8.3143 # J/(mol K)
     block = ${base_blocks}
-    relative_tolerance = 1e-08 # dfault = 1e-08
-    absolute_tolerance = 1e-11 # dfault = 1e-11
+    relative_tolerance = 1e-08
+    absolute_tolerance = 1e-11
   []
   [youngs_modulus]
     type = ADPiecewiseLinearInterpolationMaterial

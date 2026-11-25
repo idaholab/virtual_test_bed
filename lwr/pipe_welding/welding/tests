@@ -10,7 +10,7 @@
   # files. The abbreviated tests therefore add five PointValue probes near the start of pass 1,
   # where the torch has passed by t = 50 s:
   #   *_haz:  heat-affected base metal, (-75.78, 592.41, -5.96), active from t = 0
-  #   *_weld: weld metal of pass 1, (-75.78, 598.68, -5.96), deposited before t = 42.5 s
+  #   *_weld: weld metal of pass 1, (-75.78, 598.68, -5.96), active from t = 17.5 s
   [weld_syntax]
     type = RunApp
     input = 'weld.i'
