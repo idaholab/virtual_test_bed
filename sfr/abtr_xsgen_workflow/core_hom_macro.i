@@ -81,7 +81,7 @@
   # 900: (reflector_assembly, 0), (reflector_assembly, 1), (reflector_assembly, 2), (reflector_assembly, 3)
   # 1000: (shielding_assembly, 0), (shielding_assembly, 1), (shielding_assembly, 2), (shielding_assembly, 3)
   [material_core_grid1]
-    type = MixedMatIDNeutronicsMaterial
+    type = MixedNeutronicsMaterial
     isotopes = 'pseudo_REG'
     densities = '1.0'
     block = '100 300 400 700 800 900 1000'
@@ -93,7 +93,7 @@
   # 500: (fuel_assembly_2, 1)
   # 600: (fuel_assembly_3, 1)
   [material_core_grid2]
-    type = MixedMatIDNeutronicsMaterial
+    type = MixedNeutronicsMaterial
     isotopes = 'pseudo_REG'
     densities = '1.0'
     block = '200 500 600'

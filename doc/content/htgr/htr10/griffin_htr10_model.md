@@ -224,14 +224,12 @@ In this example, we define three types of materials: fissile,
 non-fissile, and TDC.
 TDC is short for "tensor diffusion coefficient".
 For each of these materials we specify the type as a
-[!style color=orange](MixedMatIDNeutronicsMaterial).
+[!style color=orange](MixedNeutronicsMaterial).
 This type uses neutronics properties based on mixed isotopes
 from the multi-group cross section library.
 In this example, we have a pseudo mixture and density that is
 defined in the `[GlobalParameters]` block.
-The [!style color=orange](MixedMatIDNeutronicsMaterial) type differs
-from [!style color=orange](MixedNeutronicsMaterial) because it reads
-in the material ids directly from the mesh.
+The material ids are read in directly from the mesh.
 We must specify which blocks are fissile materials with the
 [!style color=red](block) card.
 For each block id, we also need to identify the densities and isotopes.

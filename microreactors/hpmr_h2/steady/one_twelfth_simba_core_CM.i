@@ -136,12 +136,12 @@
   []
 
   [extruder]
-    type = NonuniformMeshExtruderGenerator
+    type = AdvancedExtruderGenerator
     input = scale
-    extrusion_vector = '0 0 1'
-    layer_thickness = '0.2 1.6 0.2'
-    layer_subdivisions = '2 16 2'
-    bottom_sideset = back
-    top_sideset = front
+    direction = '0 0 1'
+    heights = '0.2 1.6 0.2'
+    num_layers = '2 16 2'
+    bottom_boundary = back
+    top_boundary = front
   []
 []

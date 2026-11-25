@@ -354,6 +354,7 @@
     temperature = temp
     block = 'fuel'
     youngs_model = LANL
+    porosity_material = porosity
   []
   [fuel_stress]
     type = ComputeMultipleInelasticStress

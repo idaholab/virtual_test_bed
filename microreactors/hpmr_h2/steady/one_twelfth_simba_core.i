@@ -168,7 +168,7 @@
   []
   [cd_0]
     type = HexagonConcentricCircleAdaptiveBoundaryMeshGenerator
-    inputs = 'Assembly_1 Assembly_1 Assembly_1 Assembly_1 Assembly_1 Assembly_1'
+    meshes_to_adapt_to = 'Assembly_1 Assembly_1 Assembly_1 Assembly_1 Assembly_1 Assembly_1'
     sides_to_adapt = '0 1 2 3 4 5'
     num_sectors_per_side = '8 8 8 8 8 8'
     hexagon_size = 16.1765
@@ -354,17 +354,17 @@
   []
 
   [extruder]
-    type = NonuniformMeshExtruderGenerator
+    type = AdvancedExtruderGenerator
     input = scale
-    extrusion_vector = '0 0 1'
-    layer_thickness = '0.2 1.6 0.2'
-    layer_subdivisions = '2 16 2'
-    bottom_sideset = back
-    top_sideset = front
+    direction = '0 0 1'
+    heights = '0.2 1.6 0.2'
+    num_layers = '2 16 2'
+    bottom_boundary = back
+    top_boundary = front
 
-    existing_subdomains = '1 2 3 4 5 6 7 8'
-    layers = '0 2'
-    new_ids = '18 19 18 19 19 18 19 19
-               16 17 16 17 17  6  7 17' # axial reflector replaces HP only at the bottom
+    # axial reflector replaces HP only at the bottom
+    subdomain_swaps = '1 18 2 19 3 18 4 19 5 19 6 18 7 19 8 19;
+                       ;
+                       1 16 2 17 3 16 4 17 5 17 6 6 7 7 8 17'
   []
 []

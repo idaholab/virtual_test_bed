@@ -20,7 +20,7 @@
   custom_pp = eigenvalue
   custom_rel_tol = 1e-6
   force_fixed_point_solve = true
-  cmfd_eigen_solver_type = newton
+  diffusion_eigen_solver_type = newton
 []
 
 [TransportSystems]
