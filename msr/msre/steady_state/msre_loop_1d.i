@@ -20,11 +20,6 @@
     x    = '750       1200'
     y    = '2285.31   2032.41'
   []
-  [fuel_salt_enthalpy_func] # Approximated by Cp*T
-    type = PiecewiseLinear
-    x    = '750        1200'
-    y    = '1.51E+06   2.41E+06'
-  []
   [fuel_salt_mu_func]
     type = PiecewiseLinear
     x    = '750  760  770  780  790  800  810  820
@@ -47,9 +42,12 @@
     type     = PTFunctionsEOS
     rho      = fuel_salt_rho_func
     mu       = fuel_salt_mu_func
-    enthalpy = fuel_salt_enthalpy_func
     cp       = 2009.66
     k        = 1.0
+    T_max    = 1200
+    T_min    = 750
+    T_nodes  = 2
+    h_0      = 1.51e6 # J/kg, enthalpy at T_min
   []
   [hx_salt_eos]
     type      = SaltEquationOfState

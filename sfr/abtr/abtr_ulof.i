@@ -1122,17 +1122,17 @@
   []
 
   [DHX_heatremoval]
-    type = HeatExchangerHeatRemovalRate
+    type = ConjugateTransferIntegral
     block = 'DHX:primary_pipe'
     heated_perimeter = '${fparse 2.5944/250e6}'
   []
   [IHX_heatremoval]
-    type = HeatExchangerHeatRemovalRate
+    type = ConjugateTransferIntegral
     block = 'IHX:primary_pipe'
     heated_perimeter = '${fparse 558.414/250e6}'
   []
   [NaHX_heatremoval]
-    type = HeatExchangerHeatRemovalRate
+    type = ConjugateTransferIntegral
     block = 'NaHX:secondary_pipe'
     heated_perimeter = '${fparse 558.414/250e6}'
   []

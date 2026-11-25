@@ -198,7 +198,7 @@ pbed_d      = 3.0  # Pebble bed diameter (m)
   fixed_point_abs_tol                 = 1e-3
   fixed_point_max_its            = 10
   relaxation_factor              = 0.8
-  relaxed_variables              = 'p T vel_x vel_y'
+  transformed_variables          = 'p T vel_x vel_y'
   accept_on_max_fixed_point_iteration = true
 
   [Quadrature]

@@ -744,7 +744,7 @@ slip_wall_vertical_outer = 'pbed_outer btm_ref_vert_outer top_reflector_wall_ver
 # parameters used in MultiApp transfer
 [UserObjects]
   [QRad_UO]
-    type = LayeredSideFluxAverage
+    type = LayeredSideDiffusiveFluxAverage
     variable = Ts
     direction = y
     num_layers = 45

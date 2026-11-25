@@ -811,7 +811,7 @@
     execute_on = timestep_end
   []
   [DHX_q]
-    type = HeatExchangerHeatRemovalRate
+    type = ConjugateTransferIntegral
     heated_perimeter = 78.51971015
     block = 'DHX:primary_pipe'
     execute_on = timestep_end
