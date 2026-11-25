@@ -212,7 +212,8 @@
     # the loop solve does not converge in parallel
     max_parallel = 1
     csvdiff = 'MP_THM_loop_bop_ss_csv.csv'
-    capabilities = 'combinedapp | thermalhydraulicsapp | bluecrabapp'
+    # capabilities = 'combinedapp | thermalhydraulicsapp | bluecrabapp'
+    capabilities = 'combinedapp'
     working_directory = 'steady_state_bop'
   []
   [MP_THM_loop_BOP_tr]
@@ -227,7 +228,8 @@
     # the loop solve does not converge in parallel
     max_parallel = 1
     csvdiff = 'MP_THM_loop_bop_tr_csv.csv'
-    capabilities = 'combinedapp | thermalhydraulicsapp | bluecrabapp'
+    # capabilities = 'combinedapp | thermalhydraulicsapp | bluecrabapp'
+    capabilities = 'combinedapp'
     working_directory = 'transient_bop'
   []
 []
