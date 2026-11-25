@@ -3,6 +3,14 @@
   # The full simulation (3857 + 206 time steps, ~14.5 h on 12 ranks) is not tested here; its
   # results are kept as reference in welding/gold/weld_full_scl.csv and
   # cooldown/gold/cooldown_full_scl.csv.
+  #
+  # The model's *_id, *_od and Tc_mid probes (x = 75, 95, 115 mm at y = 600 mm, z = 0) lie in weld
+  # passes 1, 3-6 and 7-8, which are not yet deposited at t = 50 s (they are activated at
+  # t = 585, 2987.5 and 7785 s in the full run), so these columns are zero in both abbreviated gold
+  # files. The abbreviated tests therefore add five PointValue probes near the start of pass 1,
+  # where the torch has passed by t = 50 s:
+  #   *_haz:  heat-affected base metal, (-75.78, 592.41, -5.96), active from t = 0
+  #   *_weld: weld metal of pass 1, (-75.78, 598.68, -5.96), deposited before t = 42.5 s
   [weld_syntax]
     type = RunApp
     input = 'weld.i'
@@ -15,7 +23,12 @@
     # and the last checkpoint belong to the same time, as the cooldown restart requires.
     type = CSVDiff
     input = 'weld.i'
-    cli_args = 'Executioner/num_steps=20 Outputs/exodus/enable=false'
+    cli_args = "Executioner/num_steps=20 Outputs/exodus/enable=false
+                Postprocessors/T_haz/type=PointValue Postprocessors/T_haz/variable=T Postprocessors/T_haz/point='-75.78 592.41 -5.96'
+                Postprocessors/Svm_haz/type=PointValue Postprocessors/Svm_haz/variable=vonmises_stress Postprocessors/Svm_haz/point='-75.78 592.41 -5.96'
+                Postprocessors/eps_p_haz/type=PointValue Postprocessors/eps_p_haz/variable=effective_plastic_strain Postprocessors/eps_p_haz/point='-75.78 592.41 -5.96'
+                Postprocessors/T_weld/type=PointValue Postprocessors/T_weld/variable=T Postprocessors/T_weld/point='-75.78 598.68 -5.96'
+                Postprocessors/eps_p_weld/type=PointValue Postprocessors/eps_p_weld/variable=effective_plastic_strain Postprocessors/eps_p_weld/point='-75.78 598.68 -5.96'"
     csvdiff = '40mm/scl.csv'
     rel_err = 1e-5
     abs_zero = 1e-9
@@ -42,14 +55,20 @@
     # bottom-node displacement BCs read from ../welding/40mm/scl.csv (no values passed here):
     # exercises the complete MOOSE-native welding -> cooldown transfer. The three PointValue
     # postprocessors added below record the constrained displacements, so the gold file checks
-    # that they equal the welding-end values (last row of welding/gold/40mm/scl.csv).
+    # that they equal the welding-end values (last row of welding/gold/40mm/scl.csv). The five
+    # *_haz / *_weld probes are the same as in weld_abbrev.
     type = CSVDiff
     working_directory = '../cooldown'
     input = 'cooldown.i'
     cli_args = "Executioner/num_steps=3 Outputs/exodus/enable=false
                 Postprocessors/xzfix_bot_disp_x/type=PointValue Postprocessors/xzfix_bot_disp_x/variable=disp_x Postprocessors/xzfix_bot_disp_x/point='-75 450 0'
                 Postprocessors/xzfix_bot_disp_z/type=PointValue Postprocessors/xzfix_bot_disp_z/variable=disp_z Postprocessors/xzfix_bot_disp_z/point='-75 450 0'
-                Postprocessors/zfix_bot_disp_z/type=PointValue Postprocessors/zfix_bot_disp_z/variable=disp_z Postprocessors/zfix_bot_disp_z/point='75 450 0'"
+                Postprocessors/zfix_bot_disp_z/type=PointValue Postprocessors/zfix_bot_disp_z/variable=disp_z Postprocessors/zfix_bot_disp_z/point='75 450 0'
+                Postprocessors/T_haz/type=PointValue Postprocessors/T_haz/variable=T Postprocessors/T_haz/point='-75.78 592.41 -5.96'
+                Postprocessors/Svm_haz/type=PointValue Postprocessors/Svm_haz/variable=vonmises_stress Postprocessors/Svm_haz/point='-75.78 592.41 -5.96'
+                Postprocessors/eps_p_haz/type=PointValue Postprocessors/eps_p_haz/variable=effective_plastic_strain Postprocessors/eps_p_haz/point='-75.78 592.41 -5.96'
+                Postprocessors/T_weld/type=PointValue Postprocessors/T_weld/variable=T Postprocessors/T_weld/point='-75.78 598.68 -5.96'
+                Postprocessors/eps_p_weld/type=PointValue Postprocessors/eps_p_weld/variable=effective_plastic_strain Postprocessors/eps_p_weld/point='-75.78 598.68 -5.96'"
     csvdiff = '40mm/scl.csv'
     rel_err = 1e-5
     abs_zero = 1e-9
