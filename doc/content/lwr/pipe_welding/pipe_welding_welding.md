@@ -239,8 +239,9 @@ MOOSE_EXEC=/path/to/app/grizzly-opt ./run_pipeline.sh            # welding, then
 ```
 
 which runs `mpiexec -n 12 grizzly-opt -i weld.i` in `welding/`. On 12 processors (Intel Xeon Gold
-6346) the 3857 time steps take about 14 hours. The following output files are produced in
-`welding/40mm/`:
+6346) the 3857 time steps take about 14 hours; set `NP` to change the number of processors (for
+example `NP=20`, about 10 hours, see HPC Resources below). The following output files
+are produced in `welding/40mm/`:
 
 - Exodus results files: `out.e` and `out.e-s*` (a new file is started whenever the active mesh changes)
 - the CSV postprocessor history `scl.csv`
@@ -267,12 +268,27 @@ applied to the model and the other columns are not affected.
 
 ## HPC Resources
 
-| Resource | Value |
-| :- | :- |
-| Machine | Workstation (Intel Xeon Gold 6346, 32 cores) |
-| Number of nodes | 1 |
-| Number of processes | 12 |
-| Number of threads per process | 1 |
-| Run time | about 14 hours (3857 time steps) |
+| Resource | Original run | Updated run |
+| :- | :- | :- |
+| Machine | Workstation (2 $\times$ Intel Xeon Gold 6346, 32 cores) | same |
+| Number of nodes | 1 | 1 |
+| Number of processes | 12 | 20 |
+| Number of threads per process | 1 | 1 |
+| Time steps | 3857 | 3857 |
+| Nonlinear / linear iterations | 10,183 / 104,123 | 10,183 / 104,123 |
+| Failed nonlinear solves | 0 | 0 |
+| Run time | 51,306 s (about 14 hours) | 36,397 s (about 10 hours) |
+| Peak memory per process | not recorded | about 1.0 GB |
+
+The original run produced the reference results `welding/gold/weld_full_scl.csv`. The updated run
+uses inputs that differ from the original ones in the block restriction of the auxiliary objects and
+the `total_heat` postprocessor and in how the clamp reactions are stored (a reaction vector tag
+instead of `save_in`); it still used the explicit list of sync times, which the current
+`output_times` and `pass_sync_times` reproduce exactly. These changes are not expected to change the
+solution: the two runs take the same time steps, and all postprocessors except `total_heat` agree to
+within $10^{-9}$ relative (temperature, displacement, stress and plastic strain fields at the end of
+welding to within $10^{-10}$). The pass-averaged `total_heat` is 53 to 92% of the reference value
+(see the note above). The runs were made on a shared workstation, so the run times are a reference
+performance comparison, not a controlled MPI scaling study.
 
 !bibtex bibliography

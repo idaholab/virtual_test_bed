@@ -103,8 +103,8 @@ MOOSE_EXEC=/path/to/app/grizzly-opt ./run_pipeline.sh cooldown
 ```
 
 which runs `mpiexec -n 12 grizzly-opt -i cooldown.i` in `cooldown/`, with the rank count of the
-welding checkpoint. On 12 processors the 206 time steps take about 15 minutes. The following output
-files are produced in `cooldown/40mm/`:
+welding checkpoint. On 12 processors the 206 time steps take about 15 minutes (about 11 minutes on
+20 processors). The following output files are produced in `cooldown/40mm/`:
 
 - the Exodus results file `out.e`, whose final time step contains the residual stress field
 - the CSV postprocessor history `scl.csv`
@@ -114,13 +114,24 @@ Reference results of the full simulation are in `cooldown/gold/cooldown_full_scl
 
 ## HPC Resources
 
-| Resource | Value |
-| :- | :- |
-| Machine | Workstation (Intel Xeon Gold 6346, 32 cores) |
-| Number of nodes | 1 |
-| Number of processes | 12 (same as the welding stage) |
-| Number of threads per process | 1 |
-| Run time | about 15 minutes (206 time steps) |
+| Resource | Original run | Updated run |
+| :- | :- | :- |
+| Machine | Workstation (2 $\times$ Intel Xeon Gold 6346, 32 cores) | same |
+| Number of nodes | 1 | 1 |
+| Number of processes | 12 (same as the welding stage) | 20 (same as the welding stage) |
+| Number of threads per process | 1 | 1 |
+| Time steps | 206 | 206 |
+| Nonlinear / linear iterations | 118 / 1,510 | 118 / 1,510 |
+| Failed nonlinear solves | 0 | 0 |
+| Run time | 884 s (about 15 minutes) | 633 s (about 11 minutes) |
+| Peak memory per process | not recorded | about 0.9 GB |
+
+The original run produced the reference results `cooldown/gold/cooldown_full_scl.csv`. The updated
+run restarts from the updated welding run (see HPC Resources on
+[the welding page](pipe_welding_welding.md) for the input changes); its postprocessors agree with
+the reference results to within $5 \times 10^{-10}$ relative at all 207 output times, and the final
+residual stress fields to within $10^{-10}$. The run times are a reference performance comparison on
+a shared workstation, not a controlled MPI scaling study.
 
 ## Results
 
