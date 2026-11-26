@@ -5,13 +5,13 @@
     type = RunApp
     input = FFM-5B.i
     check_input = True
-    capabilities = 'subchannelapp | combinedapp'
+    capabilities = 'combinedapp'
   []
   [viz_syntax]
     type = RunApp
     input = FFM-5B_viz.i
     check_input = True
-    capabilities = 'subchannelapp | combinedapp'
+    capabilities = 'combinedapp'
   []
   [python_script]
     type = RunCommand
@@ -25,7 +25,7 @@
     type = CSVDiff
     input = 'FFM-5B.i'
     csvdiff  = 'FFM-5B_out.csv'
-    capabilities = 'method!=dbg & (subchannelapp | combinedapp)'
+    capabilities = 'method!=dbg & (combinedapp)'
     abs_zero = 1e-5
     # difference between opt & devel
     rel_err = 5e-5
