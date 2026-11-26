@@ -6,34 +6,34 @@
     input = HC_master.i
     check_input = True
     prereq = 'generate_mesh'
-    capabilities = 'subchannelapp | combinedapp'
+    capabilities = 'combinedapp'
     min_slots = 5 # memory heavy
   []
   [SCM_syntax]
     type = RunApp
     input = fuel_assembly_center.i
     check_input = True
-    capabilities = 'subchannelapp | combinedapp'
+    capabilities = 'combinedapp'
   []
   [SCM_viz_syntax]
     type = RunApp
     input = 3d.i
     check_input = True
-    capabilities = 'subchannelapp | combinedapp'
+    capabilities = 'combinedapp'
   []
   [generate_mesh]
     type = CheckFiles
     input = abr_7assemblies.i
     check_files = abr_7assemblies_in.e
     cli_args = "--mesh-only"
-    capabilities = 'subchannelapp | combinedapp'
+    capabilities = 'combinedapp'
   []
   # Regression checks for 7-assembly SCM models
   [SCM7]
     type = CSVDiff
     input = HC_master.i
     csvdiff = 'HC_master_out.csv HC_master_out_subchannel0.csv'
-    capabilities = 'method!=dbg & (subchannelapp | combinedapp)'
+    capabilities = 'method!=dbg & (combinedapp)'
     valgrind = NONE
     recover = false
     abs_zero = 1e-5

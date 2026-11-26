@@ -4,13 +4,13 @@
     type = RunApp
     input = toshiba_37_pin.i
     check_input = True
-    capabilities = 'subchannelapp | combinedapp'
+    capabilities = 'combinedapp'
   []
   [viz_syntax]
     type = RunApp
     input = toshiba_37_pin_viz.i
     check_input = True
-    capabilities = 'subchannelapp | combinedapp'
+    capabilities = 'combinedapp'
   []
   # Regression checks for 37-pin model
   [subchannel]
@@ -18,7 +18,7 @@
     input = toshiba_37_pin.i
     csvdiff = 'toshiba_37_pin_out.csv'
     prereq = 'subchannel_syntax'
-    capabilities = 'method!=dbg & (subchannelapp | combinedapp)'
+    capabilities = 'method!=dbg & (combinedapp)'
     valgrind = NONE
     recover = false
     abs_zero = 1e-5

@@ -4,20 +4,20 @@
     type = RunApp
     input = ornl_19_pin.i
     check_input = True
-    capabilities = 'subchannelapp | combinedapp'
+    capabilities = 'combinedapp'
   []
   [viz_syntax]
     type = RunApp
     input = ornl_19_pin_viz.i
     check_input = True
-    capabilities = 'subchannelapp | combinedapp'
+    capabilities = 'combinedapp'
   []
   # Regression checks for 19-pin model
   [ORNL-19]
     type = CSVDiff
     input = ornl_19_pin.i
     csvdiff = ornl_19_pin_out.csv
-    capabilities = 'method!=dbg & (subchannelapp | combinedapp)'
+    capabilities = 'method!=dbg & (combinedapp)'
     valgrind = NONE
     recover = false
     abs_zero = 1e-5
