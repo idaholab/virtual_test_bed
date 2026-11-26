@@ -1,4 +1,5 @@
 [Tests]
+  issues = '#826'
   # Individual steady syntax checks
   [neutronics_syntax_SS]
     type = RunApp
