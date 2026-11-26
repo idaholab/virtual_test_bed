@@ -20,16 +20,17 @@
     prereq = 'FFM-5B'
   []
 
-  # Regression checks for THORS model
+    # Regression checks for THORS model
     [FFM-5B]
     type = CSVDiff
     input = 'FFM-5B.i'
     csvdiff  = 'FFM-5B_out.csv'
     capabilities = 'method!=dbg & (subchannelapp | combinedapp)'
     abs_zero = 1e-5
+    # difference between opt & devel
+    rel_err = 5e-5
     valgrind = NONE
     recover = false
-    max_parallel = 1
     prereq = 'channel_syntax'
     requirement = 'The system will examine the subchannel solver for the FFM-5B low flow case'
   []
