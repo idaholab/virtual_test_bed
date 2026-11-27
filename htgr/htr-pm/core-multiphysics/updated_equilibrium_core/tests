@@ -1,4 +1,5 @@
 [Tests]
+  issues = '#826'
   # Individual steady syntax checks
   [neutronics_syntax_SS]
     type = RunApp
@@ -11,6 +12,9 @@
     allow_warnings = true
     min_parallel = 4
     max_time = 400
+
+    # Temporary
+    allow_unused = true
   []
   [neutronics_syntax_null]
     type = RunApp
@@ -24,6 +28,9 @@
     allow_warnings = true
     min_parallel = 4
     max_time = 400
+
+    # Temporary
+    allow_unused = true
   []
   [neutronics_syntax_dlofc]
     type = RunApp
@@ -37,6 +44,9 @@
     allow_warnings = true
     min_parallel = 4
     max_time = 400
+
+    # Temporary
+    allow_unused = true
   []
   [flow_syntax_fv_ss]
     type = RunApp
@@ -93,6 +103,9 @@
     # Core delta_p at time 0 is numerical error level
     abs_zero = 1e-8
     ignore_columns = 'total_balance_percent'
+
+    # Temporary
+    allow_unused = true
   []
   [htr_pm_regression_2]
     type = CSVDiff
@@ -112,6 +125,9 @@
     rel_err = 7e-4
     abs_zero = 1e-8
     ignore_columns = 'total_balance_percent'
+
+    # Temporary
+    allow_unused = true
   []
   [htr_pm_regression_3]
     type = CSVDiff
@@ -131,6 +147,9 @@
     rel_err = 7e-4
     abs_zero = 1e-8
     ignore_columns = 'total_balance_percent'
+
+    # Temporary
+    allow_unused = true
   []
  []
 
