@@ -21,8 +21,8 @@ The cooldown uses the same mesh, variables, kernels and materials as the welding
 (`common_objects_R5_plas.i`), without the auxiliary variables of the element activation (`phi`,
 `weld`, `a`, `tbegin`), and with three differences:
 
-1. **Restart.** The mesh and the complete solution state, including the stateful plastic and
-   creep variables, are restored from the final welding checkpoint
+1. **Restart.** The mesh and the complete solution state, including the stateful plastic
+   variables, are restored from the final welding checkpoint
    (`Problem/restart_file_base = ../welding/40mm/weld_cp/LATEST`).
 2. **Clamp release.** The clamp constraints of the welding stage are replaced by nodal forces equal
    to the clamp reactions at the end of welding (`rx`, `ry`, `rz`, restored from the checkpoint
@@ -74,7 +74,7 @@ three `*_weld_end` functions provide the welding-end displacements of the bottom
 
 The scaled reactions `rx_released = rx * release(t)` (and likewise for `ry` and `rz`) are
 evaluated at the start of each time step. A `CoupledForceNodalKernel` applies each one to the
-former clamp nodes.
+clamp nodes.
 
 !listing /lwr/pipe_welding/cooldown/cooldown_objects.i block=AuxVariables
 
@@ -99,12 +99,13 @@ Same solver as the welding stage. The time step grows to at most 3600 s.
 After the welding stage, from `lwr/pipe_welding`:
 
 ```
-MOOSE_EXEC=/path/to/app/grizzly-opt ./run_pipeline.sh cooldown
+MOOSE_EXEC=/path/to/blackbear-opt ./run_pipeline.sh cooldown
 ```
 
-which runs `mpiexec -n 12 grizzly-opt -i cooldown.i` in `cooldown/`, with the rank count of the
-welding checkpoint. On 12 processors the 206 time steps take about 15 minutes (about 11 minutes on
-20 processors). The following output files are produced in `cooldown/40mm/`:
+which runs `mpiexec -n 12 $MOOSE_EXEC -i cooldown.i` in `cooldown/` (a BlackBear or Grizzly
+executable), with the rank count of the welding checkpoint. With the 20 processes of the reference
+run, the 206 time steps take about 11 minutes. The following output files are produced in
+`cooldown/40mm/`:
 
 - the Exodus results file `out.e`, whose final time step contains the residual stress field
 - the CSV postprocessor history `scl.csv`
@@ -114,24 +115,17 @@ Reference results of the full simulation are in `cooldown/gold/cooldown_full_scl
 
 ## HPC Resources
 
-| Resource | Original run | Updated run |
-| :- | :- | :- |
-| Machine | Workstation (2 $\times$ Intel Xeon Gold 6346, 32 cores) | same |
-| Number of nodes | 1 | 1 |
-| Number of processes | 12 (same as the welding stage) | 20 (same as the welding stage) |
-| Number of threads per process | 1 | 1 |
-| Time steps | 206 | 206 |
-| Nonlinear / linear iterations | 118 / 1,510 | 118 / 1,510 |
-| Failed nonlinear solves | 0 | 0 |
-| Run time | 884 s (about 15 minutes) | 633 s (about 11 minutes) |
-| Peak memory per process | not recorded | about 0.9 GB |
-
-The original run produced the reference results `cooldown/gold/cooldown_full_scl.csv`. The updated
-run restarts from the updated welding run (see HPC Resources on
-[the welding page](pipe_welding_welding.md) for the input changes); its postprocessors agree with
-the reference results to within $5 \times 10^{-10}$ relative at all 207 output times, and the final
-residual stress fields to within $10^{-10}$. The run times are a reference performance comparison on
-a shared workstation, not a controlled MPI scaling study.
+| Resource | Value |
+| :- | :- |
+| Machine | Workstation (2 $\times$ Intel Xeon Gold 6346, 32 cores) |
+| Number of nodes | 1 |
+| Number of processes | 20 (same as the welding stage) |
+| Number of threads per process | 1 |
+| Time steps | 206 |
+| Nonlinear / linear iterations | 121 / 1,555 |
+| Failed nonlinear solves | 0 |
+| Run time | 683 s (about 11 minutes) |
+| Peak memory per process | about 0.9 GB |
 
 ## Results
 
@@ -143,13 +137,13 @@ cooldown. The highest stresses are found in the weld region at mid-height.
       style=width:60%
       caption=Final von Mises residual stress on the outer surface of the pipe after cooldown, at t = 720000 s.
 
-- **Final residual stresses** (t = 720000 s, reference results): von Mises 144.5 MPa at the inner
+- **Final residual stresses** (t = 720000 s, reference results): von Mises 141.3 MPa at the inner
   surface point and 480 MPa at the outer surface point.
 - **Consistency check of the displacement transfer:** the bottom-node displacements imposed in the
   cooldown are read from the welding CSV output (`PiecewiseLinear` functions applied with
   `ADFunctionDirichletBC`). To check the transfer, the values of `disp_x` and `disp_z` at these
   nodes in the cooldown solution were compared with the last row of the welding CSV. They differ
-  by at most 3e-15 mm (round-off) and stay constant during the cooldown. The `cooldown_abbrev`
+  by at most 4e-15 mm (round-off) and stay constant during the cooldown. The `cooldown_abbrev`
   test records these nodal values with `PointValue` postprocessors at every output, so its gold
   file checks the same property on the abbreviated run.
 

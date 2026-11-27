@@ -15,7 +15,7 @@ weld_blocks = 'weldpass-1 weldpass-2 weldpass-3 weldpass-4 weldpass-5 weldpass-6
 subdomain_block_id = '11'
 total_passes = 8
 # Calibrated heat input [W/mm] (peak temperature ~ melting point of 316H); see weld_objects.i
-base_power = 500 # W/mm, for the 40 mm wall (325 W/mm was used for a 5 mm wall)
+base_power = 500 # W/mm
 elip_a = 40 # mm, semi-axis along the torch path
 elip_b = 20 # mm, semi-axis normal to the torch path
 elm_weld_time = 120

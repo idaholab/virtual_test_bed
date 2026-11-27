@@ -8,7 +8,7 @@
 thickness = '40mm'
 exo_file_base = '${thickness}/out'
 csv_file_base = '${thickness}/scl'
-mesh_file = 'vessel_${thickness}_coarse_v05.exo'
+mesh_file = '../mesh/vessel_${thickness}.exo'
 base_blocks = 'basemetal weld_to_base'
 # Postprocessor probe points in the weld region (y = 600 mm) [mm]: inner surface, outer surface, mid-wall
 id_point = '75 600 0'

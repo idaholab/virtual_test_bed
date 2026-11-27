@@ -8,9 +8,6 @@
 
 # Kernel and material coverage checks are restricted to the active blocks by GlobalParams/block.
 [Problem]
-  boundary_restricted_node_integrity_check = false
-  material_dependency_check = false
-  boundary_restricted_elem_integrity_check = false
   extra_tag_vectors = 'reaction'
 []
 
@@ -72,9 +69,9 @@
     family = LAGRANGE
     block = ${base_blocks}
   []
-  # phi, weld and tbegin are also needed on the not yet deposited weld-pass blocks, so they are
-  # not block restricted (block = '' overrides GlobalParams/block). An explicit list of the
-  # weld-pass blocks would fail in the Exodus output once a pass is complete and its block is empty.
+  # phi, weld and tbegin also exist on the weld-pass blocks that are not yet deposited: block = ''
+  # overrides GlobalParams/block (variables do not accept ANY_BLOCK_ID, and a list of the weld-pass
+  # blocks fails in the Exodus output once a completed pass block is empty)
   [phi]
     order = CONSTANT
     family = MONOMIAL
@@ -94,6 +91,10 @@
     family = MONOMIAL
     initial_condition = 1e12
     block = ''
+  []
+  [effective_plastic_strain]
+    order = CONSTANT
+    family = MONOMIAL
   []
 []
 
@@ -117,6 +118,13 @@
     function = time
     variable = time
   []
+  # equivalent plastic strain of isoplasticity (generate_output = effective_plastic_strain would add a
+  # second material declaring a property of the same name)
+  [effective_plastic_strain]
+    type = ADMaterialRealAux
+    variable = effective_plastic_strain
+    property = effective_plastic_strain
+  []
 []
 
 [Physics/SolidMechanics/QuasiStatic]
@@ -139,8 +147,7 @@
                            mechanical_strain_xy mechanical_strain_xz mechanical_strain_yz
                            max_principal_stress mid_principal_stress min_principal_stress
                            plastic_strain_xx plastic_strain_yy plastic_strain_zz
-                           plastic_strain_xy plastic_strain_xz plastic_strain_yz
-                           effective_plastic_strain"
+                           plastic_strain_xy plastic_strain_xz plastic_strain_yz"
   []
 []
 
@@ -198,7 +205,7 @@
   []
   [radial_return_stress_load]
     type = ADComputeMultipleInelasticStress
-    inelastic_models = 'isoplasticity neg_creep'
+    inelastic_models = 'isoplasticity'
     max_iterations = 1000
     relative_tolerance = 1e-08
     absolute_tolerance = 1e-11
@@ -211,21 +218,6 @@
     hardening_function = isohard
     block = ${base_blocks}
     max_inelastic_increment = 0.0001
-    relative_tolerance = 1e-08
-    absolute_tolerance = 1e-11
-  []
-  # Creep is negligible by design: during welding and cooldown the total strain is thermal + elastic
-  # + plastic only (Barua and Messner 2024, Eq. 6.1). The 316H coefficient 1.82e-4 MPa^-n s^-1 is
-  # reduced to 1.82e-40 MPa^-n s^-1 so that the creep strain stays negligible.
-  # creep rate = coefficient * stress^n_exponent * exp(-activation_energy / (gas_constant * T))
-  [neg_creep]
-    type = ADPowerLawCreepStressUpdate
-    temperature = T
-    coefficient = 1.82e-40 # MPa^-n s^-1
-    n_exponent = 6.4656 # [-]
-    activation_energy = 314e03 # J/mol
-    gas_constant = 8.3143 # J/(mol K)
-    block = ${base_blocks}
     relative_tolerance = 1e-08
     absolute_tolerance = 1e-11
   []
