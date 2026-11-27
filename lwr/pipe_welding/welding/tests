@@ -1,4 +1,14 @@
 [Tests]
+  [mesh_syntax]
+    type = RunApp
+    working_directory = '../mesh'
+    input = 'mesh.i'
+    # mesh.i has no Executioner, so --mesh-only is needed; with check_input the mesh is built but
+    # not written
+    cli_args = '--mesh-only'
+    check_input = True
+    capabilities = 'blackbearapp'
+  []
   # Chained regression tests for the welding -> cooldown pipeline (abbreviated runs).
   # The full simulation (3857 + 206 time steps, about 11.8 h on 20 ranks) is not tested here; its
   # results are kept as reference in welding/gold/weld_full_scl.csv and
