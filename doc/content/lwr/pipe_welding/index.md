@@ -16,7 +16,7 @@
                        institution:ANL
                        sponsor:NRC
 
-!vtb_model_summary github_url=https://github.com/idaholab/virtual_test_bed/tree/devel/lwr/pipe_welding
+!vtb_model_summary github_url=https://github.com/idaholab/virtual_test_bed/tree/main/lwr/pipe_welding
                    contact_names=Bipul Barua;Cheng-Hau Yang
                    contact_emails=barau@anl.gov;chenghau.yang@anl.gov
                    vv_summary=Through-thickness axial residual stresses compared with the measurements and analysis of the R5 sample problem by Barua and Messner (2024), see [the welding page](pipe_welding_welding.md)

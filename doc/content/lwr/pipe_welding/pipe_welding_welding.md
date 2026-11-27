@@ -6,7 +6,7 @@
 
 *Model developed by Bipul Barua (Argonne National Laboratory); VTB integration and validation by Cheng-Hau Yang (Argonne National Laboratory)*
 
-*Model link: [Pipe Welding Model](https://github.com/idaholab/virtual_test_bed/tree/devel/lwr/pipe_welding)*
+*Model link: [Pipe Welding Model](https://github.com/idaholab/virtual_test_bed/tree/main/lwr/pipe_welding)*
 
 ## High Level Summary of Model
 

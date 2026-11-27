@@ -6,7 +6,7 @@
 
 *Model developed by Bipul Barua (Argonne National Laboratory); VTB integration and validation by Cheng-Hau Yang (Argonne National Laboratory)*
 
-*Model link: [Pipe Welding Model](https://github.com/idaholab/virtual_test_bed/tree/devel/lwr/pipe_welding)*
+*Model link: [Pipe Welding Model](https://github.com/idaholab/virtual_test_bed/tree/main/lwr/pipe_welding)*
 
 ## High Level Summary of Model
 
@@ -36,7 +36,7 @@ The cooldown uses the same mesh, variables, kernels and materials as the welding
 Two quantities are transferred from the welding stage, both without hard-coded values:
 
 - **State:** through the checkpoint restart (`weld_cp_dir` in `cooldown_config.i`).
-- **Bottom-node displacements:** `xzfix_bot_disp_x` and `xzfix_bot_disp_z` at (−75, 450, 0), and
+- **Bottom-node displacements:** `xzfix_bot_disp_x` and `xzfix_bot_disp_z` at (-75, 450, 0), and
   `zfix_bot_disp_z` at (75, 450, 0). They are read from the welding CSV output (`weld_csv` in
   `cooldown_config.i`) by `PiecewiseLinear` functions and imposed with `ADFunctionDirichletBC`.
   `PiecewiseLinear` does not extrapolate, so for all cooldown times it returns the value at the
